@@ -1,0 +1,1219 @@
+[
+ {
+  "id": "kneel-before-the-rightful-heir",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Kneel Before the Rightful Heir",
+  "level": 16,
+  "traits": [
+   "auditory",
+   "linguistic",
+   "mental",
+   "mythic",
+   "visual"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You command that your foes bow down before you or face your wrath. All enemies within 40 feet who can see and hear you must attempt a Will saving throw against your class DC or spell DC, whichever is higher. Regardless of the result, a creature is then temporarily immune to Kneel Before the Rightful Heir for 24 hours. --- **Critical Success** The creature is unaffected. **Success** The creature takes 3d6 damage. **Failure** The creature takes 6d6 damage. **Critical Failure** The creature takes 6d6 damage and is Clumsy 2 for as long as it's taking that persistent damage. The persistent mental damage can be ended only if the creature Drops Prone in a location that you can see and doesn't Stand until their next turn. An affected creature is aware of this restriction."
+ },
+ {
+  "id": "knockout-dram",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Knockout Dram",
+  "level": 7,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "ingested",
+   "poison"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This soporific chemical comes in liquid form and is virtually undetectable by taste or scent. It's most commonly slipped into a victim's drink to quickly induce a deep unconsciousness. --- **Activate** ⟨1⟩ Interact (Ingested) **Saving Throw** **Onset** 1 minute **Maximum Duration** 10 hours **Stage 1** fall unconscious and can't attempt Perception checks to wake up (1 minute) **Stage 2** sleep normally (1d4 hours)"
+ },
+ {
+  "id": "kraken-bottle",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Kraken Bottle",
+  "level": 18,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "expandable"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨2⟩ (manipulate) --- Coiled tentacles make it all but impossible to see anything else inside this ampoule. When opened, a Gargantuan kraken bursts forth, which can appear in water instead of on the ground. Its arms attempt to grasp up to four creatures with a reach of 60 feet. The kraken repositions grabbed creatures to a different space within its reach unless the target succeeds at a save. If the kraken is in water, it then releases a cloud of ink in an . This cloud has no effect outside of water. Creatures inside the cloud are undetected, can't use their sense of smell, and are exposed to kraken ink poison. The cloud dissipates after 1 minute. Krakens are immune to this poison. **Saving Throw** --- **Maximum Duration** 10 rounds **Stage 1** 4d6 damage and Sickened 1 (1 round) **Stage 2** 5d6 damage and Sickened 2 (1 round) --- **Craft Requirements** Supply the corpse of a kraken."
+ },
+ {
+  "id": "lambent-perfume",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Lambent Perfume",
+  "level": 6,
+  "traits": [
+   "censer",
+   "fire",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This ceramic incense burner is shaped like a three-headed ibis in the form of Atreia, spreading his wings and preparing to take flight; it hangs on a thin, golden chain. --- **Activate—Light Incense** ⟨2⟩ (aura, manipulate) **Frequency** once per day **Cost** incense worth at least 1 sp **Effect** Sparkling golden mist escapes the ibis's open beaks, spreading in a . This perfume mist is calming and restorative. A creature that ends its turn within the censer's smoke while sickened or under an affliction can attempt a new saving throw to overcome it. A creature with multiple afflictions, or that is both sickened and has an affliction, chooses one to attempt to overcome each time it ends its turn in the aura. After attempting a new saving throw against an affliction, a creature is temporarily immune to *lambent perfume* for the purpose of overcoming that affliction for 24 hours."
+ },
+ {
+  "id": "lamentation-of-the-faithless",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Lamentation of the Faithless",
+  "level": 25,
+  "traits": [
+   "artifact",
+   "divine",
+   "magical",
+   "unholy",
+   "versatile-p"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "The weapon wielded in battle by Szuriel, Rider of War, is a perpetually blood-covered blade that has taken more lives than even the gods can count. *Lamentation of the Faithless* is a *+4 major striking quickstrike unholy greatsword* with a blade of unyielding jet-black steel that absorbs all incident light, counteracting all light effects in a 15-foot radius with a +37 modifier as long as the weapon is unsheathed. Any creature within range attempting to use a spell or ability with the light trait must first succeed at a , or the attempt fails. Whenever the blade strikes and deals damage to a living creature, its wielder regains 1d12 Hit Points. --- **Activate—Lo and Behold** ⟨1⟩ (manipulate, unholy, visual) **Frequency** once per day **Effect** You raise Lamentation of the Faithless high above the battlefield, presenting its terrible glory for all to witness. All creatures within 60 feet that are able to see the sword must attempt a save. Creatures with the unholy trait are immune to this effect, but creatures with the holy trait take a –2 status penalty on this save. **Critical Success** The creature is unaffected. **Success** The creature is stricken by crushing despair. It becomes Slowed 1 as it sobs uncontrollably, and it can't use reactions while it's slowed. **Failure** As success, but the creature is also blinded for 1 round. **Critical Failure** As failure, but the duration of the blinded condition is 1 minute. --- **Destruction** *Lamentation of the Faithless* can only be destroyed if it's driven into the ground within the walls of the secluded garden at the summit of Heaven's mountain by a risen, repentant fiend, whereupon it shatters and crumbles to dust."
+ },
+ {
+  "id": "leader-of-all",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Leader of All",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You accept anyone who would follow you on your adventures. You can take followers from any common ancestry, and from uncommon or rare ancestries at the GM's discretion. Your follower gains the traits, size, Speeds, languages, and other special abilities listed in their ancestry. For example, elf followers have the elf and humanoid traits, a 30-foot speed, low-light vision, and the typical languages for elves. Followers don't use their ancestry's Hit Points or attribute boosts and flaws. They also don't gain abilities that would allow them to use actions beyond the standard ones available to a follower, such as Activating an Item or Casting a Spell."
+ },
+ {
+  "id": "lesser-aetheric-irritant",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Lesser Aetheric Irritant",
+  "level": 1,
+  "traits": [
+   "consumable",
+   "gadget",
+   "sonic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Aetheric Irritant May contain spoilers from Convocation Source Rival Academies pg. 92 Usage held in 1 hand Bulk L Activate (manipulate) An aetheric irritant is a chime that can emit a subsonic frequency that otherworldly beings find unpleasant. When you Activate an aetheric irritant, you sound the chime and place it on the ground in a square within your reach. Creatures with the fey, spirit, or undead traits must attempt a Will save when they enter the affected area and at the beginning of every turn they are in the affected area. Those who fail the save treat the area as difficult terrain until the beginning of their next turn. A creature that critically succeeds at the save is immune to all aetheric irritants for 24 hours. An aetheric irritant continues to hum until it shakes itself to pieces after 10 minutes of being activated or it is moved, whichever comes first. Lesser Aetheric Irritant Source Rival Academies pg. 92 Price 4 gp The aetheric irritant affects an area in a 10-foot emanation and the Will DC is 15. Moderate Aetheric Irritant Source Rival Academies pg. 92 Price 11 gp The aetheric irritant affects an area in a 15-foot emanation and the Will DC is 18. Greater Aetheric Irritant Source Rival Academies pg. 92 Price 275 gp The aetheric irritant affects an area in a 20-foot emanation and the Will DC is 28. Major Aetheric Irritant Source Rival Academies pg. 92 Price 2,750 gp The aetheric irritant affects an area in a 30-foot emanation and the Will DC is 36."
+ },
+ {
+  "id": "lesser-dragon-scute",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Lesser Dragon Scute",
+  "level": 12,
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Dragon Scute Source Draconic Codex pg. 223 Usage held in 1 hand Bulk L The thick plates that form the strongest points in a dragon’s armor can be used as powerful defensive catalysts. Using one of these scales to cast mountain resilience causes the target’s skin to grow a thick layer of draconic scales. Instead of the spell’s normal effects, the target gains damage resistance based on the type and dragon’s tradition. Lesser Dragon Scute Source Draconic Codex pg. 223 Price 400 gp The scale can be used with mountain resilience of 6th rank or higher. Arcane resistance 5 against all damage from spells Divine resistance 10 to spirit, vitality, and void Occult resistance 10 to mental Primal resistance 7 to bludgeoning, piercing, slashing, and poison Moderate Dragon Scute Source Draconic Codex pg. 223 Price 2,000 gp The scale can be used with mountain resilience of 8th rank or higher. Arcane resistance 7 against all damage from spells Divine resistance 15 to spirit, vitality, and void Occult resistance 15 to mental Primal resistance 10 to bludgeoning, piercing, slashing, and poison Greater Dragon Scute Source Draconic Codex pg. 223 Price 14,000 gp The scale can be used with mountain resilience of 10th rank. Arcane resistance 10 against all damage from spells Divine resistance 20 to spirit, vitality, and void Occult resistance 20 to mental Primal resistance 15 to bludgeoning, piercing, slashing, and poison"
+ },
+ {
+  "id": "lesser-durian-bomb",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Lesser Durian Bomb",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "plant",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Durian Bomb May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 77 Usage held in 1 hand Bulk L Activate Strike Whereas a durian’s aroma ranges from pleasant to revolting depending on the person, a durian bomb is a fruit that’s been alchemically modified for maximum revulsion. Many types of this bomb grant an item bonus to attack rolls. On a successful Strike, a durian bomb deals the listed piercing damage to the target. Any creature hit by the bomb or in its splash area must attempt a Fortitude saving throw with a DC based on the bomb’s type. Creatures in the splash area treat the results of their saving throw as one step better. Creatures sickened by a durian bomb are unable to smell anything else while the sickened condition lasts, suppressing any scent special sense they might have. Once a creature is sickened by a durian bomb, they’re immune to the sickened condition caused by other durian bombs for 1 minute. Critical Success The target is unaffected. Success The creature is sickened 1. Failure The creature is dazzled for 1 round and sickened 1. Critical Failure The creature is dazzled for 1 round and sickened 2. Lesser Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 4 gp The bomb deals 1d4 piercing damage, and the DC is 15. Moderate Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 12 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d4 points of piercing damage, and the DC is 17. Greater Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 275 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d4 points of piercing damage, and the DC is 28. Major Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 2,750 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d4 points of piercing damage, and the DC is 37."
+ },
+ {
+  "id": "lesser-inflammation-flask",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Lesser Inflammation Flask",
+  "level": 2,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "disease",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Inflamation Flask May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 75 Usage held in 1 hand Bulk L Activate Strike This flask contains a caustic irritant that makes a target’s skin, scales, or carapace extremely sensitive to further nicks and burns. An inflammation flask deals the listed acid damage and acid splash damage. On a hit, the target also gains weakness to acid, fire, and slashing damage for 3 rounds. Many types of inflammation flask grant a bonus to attack rolls. The target can end the weakness effect by three means: being drenched with water (such as submersion or exposure to an area water effect), being Administered First Aid (whose DC in based on the bomb type), or regaining Hit Points from a single effect equal to twice the inflammation flask’s level. A creature that critically fails to Administer First Aid in this way deals untyped damage to the target equal to the inflammation flask’s initial acid damage. Lesser Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 5 gp The bomb deals 1d6 acid damage and 1 acid splash damage. The target gains weakness 1 to acid, fire, and slashing damage, and theMedicine DC is 17. Moderate Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 15 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d6 acid damage and 2 acid splash damage. The target gains weakness 2 to acid, fire, and slashing damage, and the Medicine DC is 20. Greater Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 340 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d6 acid damage and 3 acid splash damage. The target gains weakness 3 to acid, fire, and slashing damage, and the Medicine DC is 30. Major Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 3,750 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d6 acid damage and 4 acid splash damage. The target gains weakness 4 to acid, fire, and slashing damage, and the Medicine DC is 38."
+ },
+ {
+  "id": "lesser-irritating-seedpod",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Lesser Irritating Seedpod",
+  "level": 3,
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Irritating Seedpod May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 77 Usage held in 1 hand Bulk L Activate Cast a Spell (add 1 action) When you crack open this soft, spongy seedpod, you can use it as a catalyst when casting a mist spell. When you do, irritating pollen fills the area for the spell’s duration. Creatures in the area must attempt a Fortitude saving throw at the listed DC to avoid sneezing uncontrollably. On a failed save, the creature gains the listed condition for the listed time. A creature that succeeds at this saving throw becomes temporarily immune to the irritating seedpod’s pollen for 10 minutes. Lesser Irritating Seedpod Source Pathfinder #203 Shepherd of Decay pg. 77 Price 11 gp The DC is 15. On a failed save, the creature becomes slowed 1 for 1 round. Rather than last for the duration of the spell, the irritating pollen only remains in the area for 1 round. Irritating Seedpod Source Pathfinder #203 Shepherd of Decay pg. 77 Price 55 gp The DC is 21. On a failed save, the creature becomes slowed 1 for 1 round. Greater Irritating Seedpod Source Pathfinder #203 Shepherd of Decay pg. 77 Price 190 gp The DC is 24. On a failed save, the creature becomes slowed 1 for 3 rounds. Major Irritating Seedpod Source Pathfinder #203 Shepherd of Decay pg. 77 Price 800 gp The DC is 29. On a failed save, the creature becomes slowed 2 for 1 round, then slowed 1 for 3 rounds."
+ },
+ {
+  "id": "lesser-maelstromic-destabilizer",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Lesser Maelstromic Destabilizer",
+  "level": 2,
+  "traits": [
+   "consumable",
+   "gadget",
+   "spirit"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Maelstromic Destabilizer May contain spoilers from Convocation Source Rival Academies pg. 92 Usage held in 1 hand Bulk L Activate (manipulate) A maelstromic destabilizer is a whirling gyroscope of burnished bronze and glass. It strengthens the bonds that hold a creature to this world by weakening those same bonds to every other nearby creature. When activated, the destabilizer emits a constant pleasant chime as it spins. For the next minute, the creature holding the gadget gains the listed resistance to spirit damage, while all creatures not immune to spirit damage in a 10-foot emanation gain the listed weakness to spirit damage. Lesser Maelstromic Destabilizer Source Rival Academies pg. 92 Price 6 gp The value for the spirit resistance and weakness is 2. Moderate Maelstromic Destabilizer Source Rival Academies pg. 92 Price 65 gp The value for the spirit resistance and weakness is 5. Major Maelstromic Destabilizer Source Rival Academies pg. 92 Price 2,750 gp The value for the spirit resistance and weakness is 10."
+ },
+ {
+  "id": "lesser-portable-seal",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Lesser Portable Seal",
+  "level": 6,
+  "traits": [
+   "consumable",
+   "gadget",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Portable Seal May contain spoilers from Convocation Source Rival Academies pg. 93 Usage held in 2 hands Bulk L Activate (manipulate) A portable seal is a stiff framework of copper wires and strategically placed hinges, so that when the device is snapped open it forms an instant geometric design. A tiny Stasian coil is attached, which when activated runs a mixture of occult energy and high-voltage electricity through the wire. The design covers a 5-foot burst when unfolded and must be unfolded into an area free of major obstructions such as rocks or hostile creatures. When a creature with the summoned trait attempts to enter the seal’s area or make a melee Strike against a creature in that area, the summoned creature must attempt a Will save. Success The action occurs normally, and the creature is immune to the effects of this portable seal this round. Failure The movement or Strike is disrupted, but the creature is immune to further effects of the portable seal this round. Critical Failure The movement or Strike is disrupted. Lesser Portable Seal Source Rival Academies pg. 93 Price 45 gp The Will DC is 20. Moderate Portable Seal Source Rival Academies pg. 93 Price 400 gp The Will DC is 28. Major Portable Seal Source Rival Academies pg. 93 Price 5,000 gp The Will DC is 36."
+ },
+ {
+  "id": "liberty-or-death",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Liberty or Death",
+  "level": 18,
+  "traits": [
+   "death",
+   "incapacitation",
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** A creature has been the target of your Ultimatum of Liberation for at least 1 minute --- You have given a despot enough time to think, and now is the time for them to forfeit their control or die. Spend a Mythic Point and make a Strike at mythic proficiency against the required creature. If you succeed and deal damage, the target must succeed on a save against your class DC or spell DC (whichever is higher) or die. If the target succeeds, they are immune to this ability for 24 hours."
+ },
+ {
+  "id": "lifes-blood",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Life's Blood",
+  "level": 9,
+  "traits": [
+   "healing",
+   "samsaran",
+   "vitality"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your journey to enlightenment has made your blood possess nigh-immortal properties, allowing you to heal others. You sacrifice some of your vitality to heal another willing living creature that's adjacent to you, coating its wounds with your blood. You lose Hit Points, plus an additional 1d6 Hit Points for every 2 levels you have beyond 10th. This damage can't be resisted, prevented, or negated in any way. The target creature regains a number of Hit Points equal to the damage you took. Creatures you heal in this manner are then temporarily immune to your Life's Blood for 24 hours."
+ },
+ {
+  "id": "limestone-shield",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Limestone Shield",
+  "level": 7,
+  "traits": [
+   "earth",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This tower shield is a slab of limestone, shaved to a portable size and weight. The shield has Hardness 7 and 28 Hit Points. **Activate—Limestone Wall** ⟨2⟩ (concentrate, manipulate) **Frequency** once per day --- **Effect** You set the shield down as it expands up to 60 feet wide and 10 feet tall. Each square of the wall has AC 10, Hardness 7, and 28 Hit Points, and it's immune to critical hits and precision damage. If a section is destroyed, this effect ends, and your limestone shield is broken. You can Dismiss this activation, which otherwise lasts for 1 minute. **Activate—Block Elements** ⟨5⟩ (concentrate) **Frequency** once per day **Trigger** You're targeted by an effect with the air, fire, or water trait --- **Effect** The shield expands to block the triggering effect, granting you standard cover from that effect."
+ },
+ {
+  "id": "live-off-borrowed-time",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Live Off Borrowed Time",
+  "level": 14,
+  "traits": [
+   "mythic",
+   "occult"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per minute **Trigger** Your turn begins. --- You tap into the future to steal a bit of time from yourself a few seconds from now that you can use immediately. You become quickened for 1 round, and can use the extra action to take any basic or specialty basic 1-action action. You gain this extra action immediately and can use it this turn. At the end of your turn, you become Slowed 1 and are immune to the quickened condition until the end of your next turn."
+ },
+ {
+  "id": "living-forge",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Living Forge",
+  "level": 0,
+  "traits": [
+   "polymorph",
+   "transmutation"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Living Forge Source Highhelm pg. 114 Aspect Forge Activate command, Interact; Frequency once per day; Effect The relic is absorbed into your body, and you transform into an elemental being of red-hot steel. You gain the effects of 7th-level elemental form and use the statistics for the forge battle form below. In this form, you can re-shape your limbs into different objects, such as a blade or hammer, by using an Interact action. Changing your limbs in this way allows you to choose between bludgeoning, physical, or slashing damage. Forge Speed 30 feet; fire resistance 10, weakness 5 to cold and water; Melee forgestrike, Damage 1d10 modular; 1d4 persistent fire."
+ },
+ {
+  "id": "living-statue",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Living Statue",
+  "level": 0,
+  "traits": [
+   "earth"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Living Statue Source GM Core pg. 313 Aspect Earth Your relic's energies have given you control over the boundary between flesh and stone. You can cast 6th-rank petrify and sure footing (to remove petrification only) as innate spells, each once per day. As long as you are standing on the earth, your body reflexively petrifies at the moment you are struck, granting you resistance 5 to physical damage (except adamantine). This increases to 8 in caves or subterranean environments."
+ },
+ {
+  "id": "lucky-coin",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Lucky Coin",
+  "level": 2,
+  "traits": [
+   "fortune",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Lucky Coin May contain spoilers from Troubles in Grayce Source Troubles in Grayce pg. 118 Usage held in 1 hand These coins—copper, silver, or gold depending on their potency—were not minted for circulation. Rather, friendly fey helped to create them as wards against the abilities of some gremlins, namely pugwampis. The coins are said to protect the bearer against misfortunes of all stripes, though, not merely those of gremlins and have come to be seen as good luck charms the world over. Each coin, regardless of the metal used to mint it, has a canine face on both sides; on one side, the face's mouth is open in a wide smile, while the other shows the face snarling. Activate—Guarded Fortune fortune, manipulate Trigger You fail a skill check due to a misfortune effect; Effect Flip the coin. If it lands on the smiling face, reroll the triggering check; since this activation has the fortune effect, any misfortune effect is canceled out for this check. You must use the new result, even if it's worse. If it lands on the snarling face, nothing happens. Either way, you're temporarily immune to Guarded Fortune for 1 hour. Craft Requirements Any checks made to craft this item while under a misfortune effect are automatic critical failures. Lucky Coin (Lucky Copper) Source Troubles in Grayce pg. 118 Price 30 gp Lucky Coin (Lucky Silver) Source Troubles in Grayce pg. 118 Price 140 gp You can use Guarded Fortune when you fail a skill check or a saving throw due to a misfortune effect. Lucky Coin (Lucky Gold) Source Troubles in Grayce pg. 118 Price 450 gp You can use Guarded Fortune when you fail a skill check, saving throw, or attack roll due to a misfortune effect."
+ },
+ {
+  "id": "lucky-coin-lucky-copper",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Lucky Coin (Lucky Copper)",
+  "level": 2,
+  "traits": [
+   "fortune",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Lucky Coin May contain spoilers from Troubles in Grayce Source Troubles in Grayce pg. 118 Usage held in 1 hand These coins—copper, silver, or gold depending on their potency—were not minted for circulation. Rather, friendly fey helped to create them as wards against the abilities of some gremlins, namely pugwampis. The coins are said to protect the bearer against misfortunes of all stripes, though, not merely those of gremlins and have come to be seen as good luck charms the world over. Each coin, regardless of the metal used to mint it, has a canine face on both sides; on one side, the face's mouth is open in a wide smile, while the other shows the face snarling. Activate—Guarded Fortune fortune, manipulate Trigger You fail a skill check due to a misfortune effect; Effect Flip the coin. If it lands on the smiling face, reroll the triggering check; since this activation has the fortune effect, any misfortune effect is canceled out for this check. You must use the new result, even if it's worse. If it lands on the snarling face, nothing happens. Either way, you're temporarily immune to Guarded Fortune for 1 hour. Craft Requirements Any checks made to craft this item while under a misfortune effect are automatic critical failures. Lucky Coin (Lucky Copper) Source Troubles in Grayce pg. 118 Price 30 gp Lucky Coin (Lucky Silver) Source Troubles in Grayce pg. 118 Price 140 gp You can use Guarded Fortune when you fail a skill check or a saving throw due to a misfortune effect. Lucky Coin (Lucky Gold) Source Troubles in Grayce pg. 118 Price 450 gp You can use Guarded Fortune when you fail a skill check, saving throw, or attack roll due to a misfortune effect."
+ },
+ {
+  "id": "lucky-coin-lucky-gold",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Lucky Coin (Lucky Gold)",
+  "level": 8,
+  "traits": [
+   "fortune",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Lucky Coin May contain spoilers from Troubles in Grayce Source Troubles in Grayce pg. 118 Usage held in 1 hand These coins—copper, silver, or gold depending on their potency—were not minted for circulation. Rather, friendly fey helped to create them as wards against the abilities of some gremlins, namely pugwampis. The coins are said to protect the bearer against misfortunes of all stripes, though, not merely those of gremlins and have come to be seen as good luck charms the world over. Each coin, regardless of the metal used to mint it, has a canine face on both sides; on one side, the face's mouth is open in a wide smile, while the other shows the face snarling. Activate—Guarded Fortune fortune, manipulate Trigger You fail a skill check due to a misfortune effect; Effect Flip the coin. If it lands on the smiling face, reroll the triggering check; since this activation has the fortune effect, any misfortune effect is canceled out for this check. You must use the new result, even if it's worse. If it lands on the snarling face, nothing happens. Either way, you're temporarily immune to Guarded Fortune for 1 hour. Craft Requirements Any checks made to craft this item while under a misfortune effect are automatic critical failures. Lucky Coin (Lucky Copper) Source Troubles in Grayce pg. 118 Price 30 gp Lucky Coin (Lucky Silver) Source Troubles in Grayce pg. 118 Price 140 gp You can use Guarded Fortune when you fail a skill check or a saving throw due to a misfortune effect. Lucky Coin (Lucky Gold) Source Troubles in Grayce pg. 118 Price 450 gp You can use Guarded Fortune when you fail a skill check, saving throw, or attack roll due to a misfortune effect."
+ },
+ {
+  "id": "lucky-coin-lucky-silver",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Lucky Coin (Lucky Silver)",
+  "level": 5,
+  "traits": [
+   "fortune",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Lucky Coin May contain spoilers from Troubles in Grayce Source Troubles in Grayce pg. 118 Usage held in 1 hand These coins—copper, silver, or gold depending on their potency—were not minted for circulation. Rather, friendly fey helped to create them as wards against the abilities of some gremlins, namely pugwampis. The coins are said to protect the bearer against misfortunes of all stripes, though, not merely those of gremlins and have come to be seen as good luck charms the world over. Each coin, regardless of the metal used to mint it, has a canine face on both sides; on one side, the face's mouth is open in a wide smile, while the other shows the face snarling. Activate—Guarded Fortune fortune, manipulate Trigger You fail a skill check due to a misfortune effect; Effect Flip the coin. If it lands on the smiling face, reroll the triggering check; since this activation has the fortune effect, any misfortune effect is canceled out for this check. You must use the new result, even if it's worse. If it lands on the snarling face, nothing happens. Either way, you're temporarily immune to Guarded Fortune for 1 hour. Craft Requirements Any checks made to craft this item while under a misfortune effect are automatic critical failures. Lucky Coin (Lucky Copper) Source Troubles in Grayce pg. 118 Price 30 gp Lucky Coin (Lucky Silver) Source Troubles in Grayce pg. 118 Price 140 gp You can use Guarded Fortune when you fail a skill check or a saving throw due to a misfortune effect. Lucky Coin (Lucky Gold) Source Troubles in Grayce pg. 118 Price 450 gp You can use Guarded Fortune when you fail a skill check, saving throw, or attack roll due to a misfortune effect."
+ },
+ {
+  "id": "lucky-copper",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Lucky Copper",
+  "level": 2,
+  "traits": [
+   "fortune",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "These coins—copper, silver, or gold depending on their potency—were not minted for circulation. Rather, friendly fey helped to create them as wards against the abilities of some gremlins, namely pugwampis. The coins are said to protect the bearer against misfortunes of all stripes, though, not merely those of gremlins and have come to be seen as good luck charms the world over. Each coin, regardless of the metal used to mint it, has a canine face on both sides; on one side, the face's mouth is open in a wide smile, while the other shows the face snarling. **Activate—Guarded Fortune** ⟨4⟩ (fortune, manipulate) **Trigger** You fail a skill check due to a misfortune effect --- **Effect** Flip the coin. If it lands on the smiling face, reroll the triggering check; since this activation has the fortune effect, any misfortune effect is canceled out for this check. You must use the new result, even if it's worse. If it lands on the snarling face, nothing happens. Either way, you're temporarily immune to Guarded Fortune for 1 hour. --- **Craft Requirements** Any checks made to craft this item while under a misfortune effect are automatic critical failures."
+ },
+ {
+  "id": "lucky-gold",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Lucky Gold",
+  "level": 8,
+  "traits": [
+   "fortune",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "These coins—copper, silver, or gold depending on their potency—were not minted for circulation. Rather, friendly fey helped to create them as wards against the abilities of some gremlins, namely pugwampis. The coins are said to protect the bearer against misfortunes of all stripes, though, not merely those of gremlins and have come to be seen as good luck charms the world over. Each coin, regardless of the metal used to mint it, has a canine face on both sides; on one side, the face's mouth is open in a wide smile, while the other shows the face snarling. **Activate—Guarded Fortune** ⟨4⟩ (fortune, manipulate) **Trigger** You fail a skill check, a saving throw, or an attack roll due to a misfortune effect --- **Effect** Flip the coin. If it lands on the smiling face, reroll the triggering check; since this activation has the fortune effect, any misfortune effect is canceled out for this check. You must use the new result, even if it's worse. If it lands on the snarling face, nothing happens. Either way, you're temporarily immune to Guarded Fortune for 1 hour. --- **Craft Requirements** Any checks made to craft this item while under a misfortune effect are automatic critical failures."
+ },
+ {
+  "id": "lucky-silver",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Lucky Silver",
+  "level": 5,
+  "traits": [
+   "fortune",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "These coins—copper, silver, or gold depending on their potency—were not minted for circulation. Rather, friendly fey helped to create them as wards against the abilities of some gremlins, namely pugwampis. The coins are said to protect the bearer against misfortunes of all stripes, though, not merely those of gremlins and have come to be seen as good luck charms the world over. Each coin, regardless of the metal used to mint it, has a canine face on both sides; on one side, the face's mouth is open in a wide smile, while the other shows the face snarling. **Activate—Guarded Fortune** ⟨4⟩ (fortune, manipulate) **Trigger** You fail a skill check or a saving throw due to a misfortune effect --- **Effect** Flip the coin. If it lands on the smiling face, reroll the triggering check; since this activation has the fortune effect, any misfortune effect is canceled out for this check. You must use the new result, even if it's worse. If it lands on the snarling face, nothing happens. Either way, you're temporarily immune to Guarded Fortune for 1 hour. --- **Craft Requirements** Any checks made to craft this item while under a misfortune effect are automatic critical failures."
+ },
+ {
+  "id": "lumber-lords-axe",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Lumber Lord's Axe",
+  "level": 11,
+  "traits": [
+   "magical",
+   "sweep"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This unassuming tool wouldn't look out of place on the belt of an industrious laborer. Grooves worn into the wooden handle over years of use and an irregularly sharpened blade give it the distinct impression of being cherished, and the potent scent of freshly chopped wood always clings to the axe's blade despite any attempt to clean it or remove the odor. A creature that holds or carries this *+2 striking cold iron battle axe* feels an obligation to tell the truth and receives a –4 status penalty to its attempts to Lie. A lumber lord's axe deals 1d6 additional slashing damage to creatures with the fungus or plant trait, as long as the creatures aren't disguised as non-fungus or non-plant creatures. It's up to GM discretion whether this additional damage applies against a creature disguised as a fungus or plant creature. **Activate—Transformative Polish** 1 minute (manipulate) **Frequency** once per day --- **Effect** You polish and sharpen the axe, after which its scent grows even more powerful and the axe's blade transforms into your choice of standard-grade adamantine or standard-grade dawnsilver for 1 hour; then after this duration, the woodcutter's axe reverts to cold iron."
+ },
+ {
+  "id": "maelstromic-destabilizer",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Maelstromic Destabilizer",
+  "level": 2,
+  "traits": [
+   "consumable",
+   "gadget",
+   "spirit"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Maelstromic Destabilizer May contain spoilers from Convocation Source Rival Academies pg. 92 Usage held in 1 hand Bulk L Activate (manipulate) A maelstromic destabilizer is a whirling gyroscope of burnished bronze and glass. It strengthens the bonds that hold a creature to this world by weakening those same bonds to every other nearby creature. When activated, the destabilizer emits a constant pleasant chime as it spins. For the next minute, the creature holding the gadget gains the listed resistance to spirit damage, while all creatures not immune to spirit damage in a 10-foot emanation gain the listed weakness to spirit damage. Lesser Maelstromic Destabilizer Source Rival Academies pg. 92 Price 6 gp The value for the spirit resistance and weakness is 2. Moderate Maelstromic Destabilizer Source Rival Academies pg. 92 Price 65 gp The value for the spirit resistance and weakness is 5. Major Maelstromic Destabilizer Source Rival Academies pg. 92 Price 2,750 gp The value for the spirit resistance and weakness is 10."
+ },
+ {
+  "id": "maelstromic-destabilizer-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Maelstromic Destabilizer (Lesser)",
+  "level": 2,
+  "traits": [
+   "consumable",
+   "gadget",
+   "spirit"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- A maelstromic destabilizer is a whirling gyroscope of burnished bronze and glass. It strengthens the bonds that hold a creature to this world by weakening those same bonds to every other nearby creature. When activated, the destabilizer emits a constant pleasant chime as it spins. For the next minute, the creature holding the gadget gains resistance 2 to spirit damage, while all creatures not immune to spirit damage in a gains weakness 2 to spirit damage."
+ },
+ {
+  "id": "maelstromic-destabilizer-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Maelstromic Destabilizer (Major)",
+  "level": 17,
+  "traits": [
+   "consumable",
+   "gadget",
+   "spirit"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- A maelstromic destabilizer is a whirling gyroscope of burnished bronze and glass. It strengthens the bonds that hold a creature to this world by weakening those same bonds to every other nearby creature. When activated, the destabilizer emits a constant pleasant chime as it spins. For the next minute, the creature holding the gadget gains resistance 10 to spirit damage, while all creatures not immune to spirit damage in a gains weakness 10 to spirit damage."
+ },
+ {
+  "id": "maelstromic-destabilizer-moderate",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Maelstromic Destabilizer (Moderate)",
+  "level": 7,
+  "traits": [
+   "consumable",
+   "gadget",
+   "spirit"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- A maelstromic destabilizer is a whirling gyroscope of burnished bronze and glass. It strengthens the bonds that hold a creature to this world by weakening those same bonds to every other nearby creature. When activated, the destabilizer emits a constant pleasant chime as it spins. For the next minute, the creature holding the gadget gains resistance 5 to spirit damage, while all creatures not immune to spirit damage in a gains weakness 5 to spirit damage."
+ },
+ {
+  "id": "mageslayer",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Mageslayer",
+  "level": 8,
+  "traits": [
+   "forceful",
+   "magical",
+   "sweep"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This roughly forged *+1 striking scimitar* is a favorite instrument of battlefield operatives seeking to weaken an enemy's forces by strategically eliminating their magical support. A mageslayer deals an additional 1d6 spirit damage to any creature it Strikes that's capable of casting spells from the arcane tradition. When wearing or wielding a mageslayer, you gain resistance 5 to damage from spells from the arcane tradition."
+ },
+ {
+  "id": "magical-adaptation",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Magical Adaptation",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "innateSpells"
+  ],
+  "inRegistries": [],
+  "text": "When an obstacle bars your path, you pull a trick from your sleeve to overcome it. You can cast Darkvision, Gecko Grip, and 4th-rank Water Breathing as innate primal spells, each once per day."
+ },
+ {
+  "id": "magical-experiment",
+  "lane": "defense",
+  "collection": "backgrounds",
+  "name": "Magical Experiment",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "effectChoices",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "At some point in your life, powerful people performed magical experiments on you that changed you permanently. You may have signed up for this voluntarily, but it may have been against your will. You still bear the marks, as well as the abilities. You gain one ability boost. It must be to **Constitution**. You're trained in Occultism and the Academia Lore skill. You gain one special ability as a result of the magical experimentation. Work with the GM to select an appropriate ability from the following list or to come up with another special ability. --- - **Enhanced Senses** You gain low-light vision (or darkvision if you already had low-light vision) and an imprecise sense with a range of 30 feet, such as scent, thoughtsense, tremorsense, or wavesense. - **Resistant Skin** The experiments rendered your skin tougher and resilient to a particular type of damage. You gain resistance equal to half your level (minimum resistance 1) against two of the following types of energy damage, one chosen by you and the other chosen by the GM: acid, cold, electricity, fire, or sonic. - **Touch Telepathy** The experiments to your body allowed you to link minds via touch. You gain telepathy with creatures as long as you are in physical contact. This allows you to communicate mentally with any creatures you're in physical contact with, as long as you both share a language. This doesn't give any special access to their thoughts, and communicates no more information than normal speech would. --- ## Background details **Attribute Boosts** Constitution **Trained Skill** Occultism **Lore** Academia Lore"
+ },
+ {
+  "id": "magical-prosthetic-eye",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Magical Prosthetic Eye",
+  "level": 1,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This prosthetic eye converts visible light into a telepathic signal that is relayed to the wearer's mind using magic. As the wearer's mind must process the telepathic signal in the same way as it would a nerve impulse, the acuity and other abilities related to the vision provided by the magical prosthetic eye matches that of other members of your ancestry (for instance, a goblin with a magical prosthetic eye would be able to see in darkvision, while a human wearing the same prosthetic would need illumination). You can remove or replace a magical prosthetic eye using an Interact action."
+ },
+ {
+  "id": "magical-resistance",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Magical Resistance",
+  "level": 5,
+  "traits": [
+   "automaton"
+  ],
+  "engineFieldsPresent": [
+   "choice",
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "Your animating magic provides some defense. Choose one of the following energy damage types: cold, electricity, or sonic. You gain resistance 5 to that damage type. **Enhancement** You tap deeper into your animating magic, and your resistances improve. Choose one of the following benefits: you gain resistance 5 to the remaining two damage types from the above list, or your chosen resistance increases to a value equal to 1 + half your level."
+ },
+ {
+  "id": "maguss-analysis",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Magus's Analysis",
+  "level": 1,
+  "traits": [
+   "magus"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You make an assessment informed by your knowledge of how a creature fights. Attempt a check to Recall Knowledge about a creature. You gain a +1 circumstance bonus to your check if you previously hit the creature with a Strike this turn. If your check is successful, recharge your Spellstrike. The subject of your check is temporarily immune to Magus's Analysis for 1 day."
+ },
+ {
+  "id": "majestic-presence",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Majestic Presence",
+  "level": 13,
+  "traits": [
+   "dragonblood",
+   "emotion",
+   "fear",
+   "mental",
+   "visual"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "By taking an impressive stance, the full force of your personality cows lesser beings. Each creature in a must attempt a save against the higher of your class DC or spell DC. Regardless of the result of the saving throw, the creature is temporarily immune to your Majestic Presence for 24 hours. --- **Critical Success** The creature is unaffected. **Success** The creature is Frightened 1. **Failure** The creature is Frightened 2. **Critical Failure** The creature is Frightened 4."
+ },
+ {
+  "id": "major-aetheric-irritant",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Major Aetheric Irritant",
+  "level": 17,
+  "traits": [
+   "consumable",
+   "gadget",
+   "sonic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Aetheric Irritant May contain spoilers from Convocation Source Rival Academies pg. 92 Usage held in 1 hand Bulk L Activate (manipulate) An aetheric irritant is a chime that can emit a subsonic frequency that otherworldly beings find unpleasant. When you Activate an aetheric irritant, you sound the chime and place it on the ground in a square within your reach. Creatures with the fey, spirit, or undead traits must attempt a Will save when they enter the affected area and at the beginning of every turn they are in the affected area. Those who fail the save treat the area as difficult terrain until the beginning of their next turn. A creature that critically succeeds at the save is immune to all aetheric irritants for 24 hours. An aetheric irritant continues to hum until it shakes itself to pieces after 10 minutes of being activated or it is moved, whichever comes first. Lesser Aetheric Irritant Source Rival Academies pg. 92 Price 4 gp The aetheric irritant affects an area in a 10-foot emanation and the Will DC is 15. Moderate Aetheric Irritant Source Rival Academies pg. 92 Price 11 gp The aetheric irritant affects an area in a 15-foot emanation and the Will DC is 18. Greater Aetheric Irritant Source Rival Academies pg. 92 Price 275 gp The aetheric irritant affects an area in a 20-foot emanation and the Will DC is 28. Major Aetheric Irritant Source Rival Academies pg. 92 Price 2,750 gp The aetheric irritant affects an area in a 30-foot emanation and the Will DC is 36."
+ },
+ {
+  "id": "major-clay-sphere",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Major Clay Sphere",
+  "level": 14,
+  "traits": [
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Clay Sphere May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 80 Usage affixed to armor or a weapon This dry clay ball becomes malleable when activated, shifting into a variety of forms. The spell attack roll of any spell cast by Activating this item is +7 and the spell DC 17. Armor You gain resistance 2 to precision damage and a +1 item bonus to saving throws against effects with the morph or polymorph traits. Weapon After you cast a morph or polymorph spell by activating the clay sphere, the weapon becomes malleable, shifting its form to your whims. Your Strikes with the affixed weapon have the versatile bludgeoning, versatile piercing, and versatile slashing trait for 1 minute. Until the end of your next turn, Strikes with the affixed weapon have their damage dice increase by one step. Activate Cast a Spell; Effect You cast gouging claw. Clay Sphere Source Pathfinder #202: Severed at the Root pg. 80 Price 55 gp Greater Clay Sphere Source Pathfinder #202: Severed at the Root pg. 80 Price 225 gp Resistance when affixed to armor is 5, item bonus when affixed to armor is +2, the spell attack roll is +10, and the spell DC is 20. Activate Cast a Spell; Frequency once per day; Effect You cast enlarge. Major Clay Sphere Source Pathfinder #202: Severed at the Root pg. 80 Price 4,200 gp Resistance when affixed to armor is 10, item bonus when affixed to armor is +3, the spell attack roll is +21, and the spell DC is 31. Activate Cast a Spell; Frequency once per day; Effect You cast cursed metamorphosis. Activate Cast a Spell; Frequency once per day; Effect You cast plant form."
+ },
+ {
+  "id": "major-durian-bomb",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Major Durian Bomb",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "plant",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Durian Bomb May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 77 Usage held in 1 hand Bulk L Activate Strike Whereas a durian’s aroma ranges from pleasant to revolting depending on the person, a durian bomb is a fruit that’s been alchemically modified for maximum revulsion. Many types of this bomb grant an item bonus to attack rolls. On a successful Strike, a durian bomb deals the listed piercing damage to the target. Any creature hit by the bomb or in its splash area must attempt a Fortitude saving throw with a DC based on the bomb’s type. Creatures in the splash area treat the results of their saving throw as one step better. Creatures sickened by a durian bomb are unable to smell anything else while the sickened condition lasts, suppressing any scent special sense they might have. Once a creature is sickened by a durian bomb, they’re immune to the sickened condition caused by other durian bombs for 1 minute. Critical Success The target is unaffected. Success The creature is sickened 1. Failure The creature is dazzled for 1 round and sickened 1. Critical Failure The creature is dazzled for 1 round and sickened 2. Lesser Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 4 gp The bomb deals 1d4 piercing damage, and the DC is 15. Moderate Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 12 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d4 points of piercing damage, and the DC is 17. Greater Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 275 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d4 points of piercing damage, and the DC is 28. Major Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 2,750 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d4 points of piercing damage, and the DC is 37."
+ },
+ {
+  "id": "major-flag-of-the-stronghold",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Major Flag of the Stronghold",
+  "level": 20,
+  "traits": [
+   "aura",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Flag of the Stronghold Source Battlecry! pg. 140 Usage affixed or held in 1 hand Bulk L This magical banner is off-white with a depiction of a stronghold that’s often colored in a striking blue. Those who stand under the banner are prepared to face the weapons of war and defend their keep until the end. You and allies within the banner’s aura gain resistance 5 to damage from siege weapons. Flag of the Stronghold Source Battlecry! pg. 140 Price 1,000 gp Major Flag of the Stronghold Source Battlecry! pg. 140 Price 70,000 gp The resistance to damage from siege weapons increases to 10."
+ },
+ {
+  "id": "major-foxglove-token",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Major Foxglove Token",
+  "level": 12,
+  "traits": [
+   "magical",
+   "poison",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters"
+  ],
+  "inRegistries": [],
+  "text": "Foxglove Token May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 78 Usage affixed to armor or a weapon Bulk L This small piece of wood is finely carved to depict a foxglove. The spell DC of any spell cast by Activating this item is 17. Armor You gain resistance 2 to poison damage. Weapon After you cast a plant spell by activating the foxglove token, your Strikes with the weapon it's attached to deal an additional 1d4 poison damage until the end of your next turn. Activate Cast a Spell; Effect You cast puff of poison. Foxglove Token Source Pathfinder #202: Severed at the Root pg. 78 Price 55 gp Greater Foxglove Token Source Pathfinder #202: Severed at the Root pg. 78 Price 425 gp Resistance when affixed to armor is 5, extra damage when affixed to a weapon is 1d6, and the spell DC is 24. Activate Cast a Spell; Frequency once per day; Effect You cast 3rd-rank noxious vapors. Major Foxglove Token Source Pathfinder #202: Severed at the Root pg. 78 Price 1,750 gp Resistance when affixed to armor is 10, extra damage when affixed to a weapon is 1d8, and the spell DC is 29. Activate Cast a Spell; Frequency once per day; Effect You cast petal storm. Activate Cast a Spell; Frequency once per day; Effect You cast 4th-rank wall of thorns."
+ },
+ {
+  "id": "major-heartmoss",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Major Heartmoss",
+  "level": 12,
+  "traits": [
+   "healing",
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Heartmoss May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 79 Usage affixed to armor or a weapon Bulk L This burgundy moss grows in heart-shaped clumps and releases a pleasant, calming scent. The spell DC of any spell cast by Activating this item is 17. Armor You gain resistance 2 to mental damage and a +1 item bonus to saving throws against effects with the emotion trait. Weapon After you cast a healing spell by activating the heartmoss, the weapon exudes a soothing scent. Your Strikes with the affixed weapon have the nonlethal trait for 1 minute. Until the end of your next turn, Strikes with the affixed weapon cause the target to be stupefied 1 for 1 round if it hits (or for 3 rounds on a critical hit). Activate Cast a Spell; Effect You cast stabilize. Heartmoss Source Pathfinder #202: Severed at the Root pg. 79 Price 55 gp Greater Heartmoss Source Pathfinder #202: Severed at the Root pg. 79 Price 450 gp Resistance when affixed to armor is 5, stupefied value when affixed to a weapon is 2, and the spell DC is 24. Activate Cast a Spell; Frequency once per day; Effect You cast 3rd-rank heal. Major Heartmoss Source Pathfinder #202: Severed at the Root pg. 79 Price 1,750 gp Resistance when affixed to armor is 10, stupefied value when affixed to a weapon is 3, and the spell DC is 29. Activate Cast a Spell; Frequency once per day; Effect You cast 4th-rank sound body. Activate Cast a Spell; Frequency once per day; Effect You cast healing well."
+ },
+ {
+  "id": "major-hexwise-banner",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Major Hexwise Banner",
+  "level": 20,
+  "traits": [
+   "aura",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Hexwise Banner Source Battlecry! pg. 140 Usage affixed or held in 1 hand Bulk L Multicolored threads are woven through this magical banner, causing it to appear purple in some light and green in others. The shimmering light offers hope and safety in the face of powerful magic wielders. You and allies within the banner’s aura gain resistance 5 to damage from spells; for spells that apply multiple instances of damage, such as force barrage, this applies only to the first instance of damage. Hexwise Banner Source Battlecry! pg. 140 Price 1,000 gp Major Hexwise Banner Source Battlecry! pg. 140 Price 70,000 gp The resistance to damage from spells increases to 10."
+ },
+ {
+  "id": "major-inflammation-flask",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Major Inflammation Flask",
+  "level": 18,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "disease",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Inflamation Flask May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 75 Usage held in 1 hand Bulk L Activate Strike This flask contains a caustic irritant that makes a target’s skin, scales, or carapace extremely sensitive to further nicks and burns. An inflammation flask deals the listed acid damage and acid splash damage. On a hit, the target also gains weakness to acid, fire, and slashing damage for 3 rounds. Many types of inflammation flask grant a bonus to attack rolls. The target can end the weakness effect by three means: being drenched with water (such as submersion or exposure to an area water effect), being Administered First Aid (whose DC in based on the bomb type), or regaining Hit Points from a single effect equal to twice the inflammation flask’s level. A creature that critically fails to Administer First Aid in this way deals untyped damage to the target equal to the inflammation flask’s initial acid damage. Lesser Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 5 gp The bomb deals 1d6 acid damage and 1 acid splash damage. The target gains weakness 1 to acid, fire, and slashing damage, and theMedicine DC is 17. Moderate Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 15 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d6 acid damage and 2 acid splash damage. The target gains weakness 2 to acid, fire, and slashing damage, and the Medicine DC is 20. Greater Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 340 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d6 acid damage and 3 acid splash damage. The target gains weakness 3 to acid, fire, and slashing damage, and the Medicine DC is 30. Major Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 3,750 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d6 acid damage and 4 acid splash damage. The target gains weakness 4 to acid, fire, and slashing damage, and the Medicine DC is 38."
+ },
+ {
+  "id": "major-irritating-seedpod",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Major Irritating Seedpod",
+  "level": 14,
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Irritating Seedpod May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 77 Usage held in 1 hand Bulk L Activate Cast a Spell (add 1 action) When you crack open this soft, spongy seedpod, you can use it as a catalyst when casting a mist spell. When you do, irritating pollen fills the area for the spell’s duration. Creatures in the area must attempt a Fortitude saving throw at the listed DC to avoid sneezing uncontrollably. On a failed save, the creature gains the listed condition for the listed time. A creature that succeeds at this saving throw becomes temporarily immune to the irritating seedpod’s pollen for 10 minutes. Lesser Irritating Seedpod Source Pathfinder #203 Shepherd of Decay pg. 77 Price 11 gp The DC is 15. On a failed save, the creature becomes slowed 1 for 1 round. Rather than last for the duration of the spell, the irritating pollen only remains in the area for 1 round. Irritating Seedpod Source Pathfinder #203 Shepherd of Decay pg. 77 Price 55 gp The DC is 21. On a failed save, the creature becomes slowed 1 for 1 round. Greater Irritating Seedpod Source Pathfinder #203 Shepherd of Decay pg. 77 Price 190 gp The DC is 24. On a failed save, the creature becomes slowed 1 for 3 rounds. Major Irritating Seedpod Source Pathfinder #203 Shepherd of Decay pg. 77 Price 800 gp The DC is 29. On a failed save, the creature becomes slowed 2 for 1 round, then slowed 1 for 3 rounds."
+ },
+ {
+  "id": "major-maelstromic-destabilizer",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Major Maelstromic Destabilizer",
+  "level": 17,
+  "traits": [
+   "consumable",
+   "gadget",
+   "spirit"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Maelstromic Destabilizer May contain spoilers from Convocation Source Rival Academies pg. 92 Usage held in 1 hand Bulk L Activate (manipulate) A maelstromic destabilizer is a whirling gyroscope of burnished bronze and glass. It strengthens the bonds that hold a creature to this world by weakening those same bonds to every other nearby creature. When activated, the destabilizer emits a constant pleasant chime as it spins. For the next minute, the creature holding the gadget gains the listed resistance to spirit damage, while all creatures not immune to spirit damage in a 10-foot emanation gain the listed weakness to spirit damage. Lesser Maelstromic Destabilizer Source Rival Academies pg. 92 Price 6 gp The value for the spirit resistance and weakness is 2. Moderate Maelstromic Destabilizer Source Rival Academies pg. 92 Price 65 gp The value for the spirit resistance and weakness is 5. Major Maelstromic Destabilizer Source Rival Academies pg. 92 Price 2,750 gp The value for the spirit resistance and weakness is 10."
+ },
+ {
+  "id": "major-portable-seal",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Major Portable Seal",
+  "level": 18,
+  "traits": [
+   "consumable",
+   "gadget",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Portable Seal May contain spoilers from Convocation Source Rival Academies pg. 93 Usage held in 2 hands Bulk L Activate (manipulate) A portable seal is a stiff framework of copper wires and strategically placed hinges, so that when the device is snapped open it forms an instant geometric design. A tiny Stasian coil is attached, which when activated runs a mixture of occult energy and high-voltage electricity through the wire. The design covers a 5-foot burst when unfolded and must be unfolded into an area free of major obstructions such as rocks or hostile creatures. When a creature with the summoned trait attempts to enter the seal’s area or make a melee Strike against a creature in that area, the summoned creature must attempt a Will save. Success The action occurs normally, and the creature is immune to the effects of this portable seal this round. Failure The movement or Strike is disrupted, but the creature is immune to further effects of the portable seal this round. Critical Failure The movement or Strike is disrupted. Lesser Portable Seal Source Rival Academies pg. 93 Price 45 gp The Will DC is 20. Moderate Portable Seal Source Rival Academies pg. 93 Price 400 gp The Will DC is 28. Major Portable Seal Source Rival Academies pg. 93 Price 5,000 gp The Will DC is 36."
+ },
+ {
+  "id": "major-stalk-goggles",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Major Stalk Goggles",
+  "level": 8,
+  "traits": [
+   "invested",
+   "magical",
+   "morph"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Stalk Goggles May contain spoilers from Gatewalkers Source Gatewalkers (Hardcover) pg. 230 Usage worn eyepiece These black leather goggle frames have no lenses. Instead, when a character puts them on and invests them, the wearer’s eyes transform and lengthen into snail-like eyestalks. The wobbly eyestalks stretch out through the lens holes and up over the wearer’s head on lengthened optic nerves. Activate—Looksee (concentrate) Frequency once per day; Effect By focusing hard, you can watch for enemies in all directions. You gain all-around vision for 1 minute; during this time, you can’t be flanked. Stalk Goggles Source Gatewalkers (Hardcover) pg. 231 Price 20 gp Greater Stalk Goggles Source Gatewalkers (Hardcover) pg. 231 Price 60 gp When you activate the goggles, you also gain a +1 item bonus to Perception checks involving sight for the duration of the effect. Major Stalk Goggles Source Gatewalkers (Hardcover) pg. 231 Price 450 gp When you activate the goggles, you also gain a +2 item bonus to Perception checks involving sight and low-light vision for the duration of the effect"
+ },
+ {
+  "id": "major-stormshard",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Major Stormshard",
+  "level": 18,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Stormshard May contain spoilers from Triumph of the Tusk Source Pathfinder #208: Hoof, Cinder, and Storm pg. 78 Usage held in 1 hand Bulk L These shards of coalesced necromantic essence are sometimes found in the wake of an ancestor storm. Howling spirits are faintly visible, trapped inside the jagged, dark-green glass. You can use the shard to cow the undead or briefly release the tormented souls from inside the glass. While you hold the stormshard, you gain a +1 item bonus to Intimidation checks to influence the undead. In addition, you can Demoralize undead creatures, even if those creatures are mindless or otherwise immune to emotion, fear, or mental effects. Activate—Free the Spirits (concentrate, manipulate) Frequency once per day; Effect You briefly release the spirits from the stormshard before drawing them back into the glass. Each creature in a 10-foot emanation takes 4d8 void damage (DC 20 basic Fortitude save). You treat the result of your saving throw as one degree of success better than its outcome. Greater Stormshard Source Pathfinder #208: Hoof, Cinder, and Storm pg. 79 Price 1,800 gp The item bonus increases to +2. When activating the stormshard to release the spirits, the damage increases to 8d8 (DC 29). In addition, you can choose to increase the radius of the emanation by up to 10 feet. Major Stormshard Source Pathfinder #208: Hoof, Cinder, and Storm pg. 79 Price 19,000 gp The item bonus increases to +3. When activating the stormshard, the damage increases to 13d8 (DC 38), and you can increase the radius of the emanation by up to 20 feet. Stormshard Source Pathfinder #208: Hoof, Cinder, and Storm pg. 79 Price 230 gp"
+ },
+ {
+  "id": "major-timepiece-standard",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Major Timepiece Standard",
+  "level": 20,
+  "traits": [
+   "aura",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Timepiece Standard Source Battlecry! pg. 141 Usage affixed or held in 1 hand Bulk L This magical banner seems to impossibly be made from many turning gears that encourage viewers to keep perfect time. Whenever you or an ally within the banner’s aura uses the Delay or Ready action, you or the ally gain 5 temporary Hit Points that last for 1 minute and then become immune to this effect for 10 minutes. Timepiece Standard Source Battlecry! pg. 141 Price 1,000 gp Major Timepiece Standard Source Battlecry! pg. 141 Price 70,000 gp The temporary Hit Points granted increase to 10."
+ },
+ {
+  "id": "make-em-sweat",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Make 'em Sweat",
+  "level": 12,
+  "traits": [
+   "investigator"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your line of questioning lets a suspect know you can see right through them, shaking them to the core. When you succeed at using Pointed Question, the target is also Frightened 1 (or Frightened 2 on a critical success). This added effect is an emotion and fear effect, but the other effects of Pointed Question still apply even if the target is immune to fear."
+ },
+ {
+  "id": "mantle-of-amazing-health",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Mantle of Amazing Health",
+  "level": 19,
+  "traits": [
+   "apex",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This ragged cloak doesn't appear to be anything special at first glance, seemingly made from mangy black bear fur with various rings of blackened iron piercing the edge of the skin. While somewhat off-putting, the mantle grants a +2 status bonus to all Fortitude saving throws against disease and poison. When you invest the mantle, you either increase your Constitution modifier by 1 or increase it to +4, whichever would give you a higher value. **Activate** ⟨5⟩ (manipulate) **Frequency** once per round **Trigger** You take damage --- **Effect** Drawing the cloak around you, you reduce the damage taken by 10. --- **Activate** ⟨2⟩ (concentrate, manipulate) **Frequency** once per hour --- **Effect** If you're currently afflicted by a poison or a disease, you can hold the cloak tight to your body and immediately attempt a saving throw to end the effect. If that saving throw succeeds, you end the effect of either the poison or disease no matter the stage of the affliction. Furthermore, you gain immunity to that poison or disease for 24 hours."
+ },
+ {
+  "id": "marked-for-rebuke",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Marked For Rebuke",
+  "level": 18,
+  "traits": [
+   "archetype",
+   "spellshape"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You declare that an enemy is fit for further punishment in the sight of your deity. If the next action you perform is to Cast a Spell that deals damage, one creature of your choice that takes damage from the spell is marked for rebuke until the end of your next turn. A creature marked this way gains weakness 10 to all damage and becomes immune to Marked for Rebuke for 24 hours."
+ },
+ {
+  "id": "marking-snare",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Marking Snare",
+  "level": 1,
+  "traits": [
+   "consumable",
+   "mechanical",
+   "snare",
+   "trap"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "This snare is often used to mark intruders for later tracking or identification. When you create this snare, you must decide whether to make it a dye or a scent marker. Either type of marking grants a +2 circumstance bonus to Track the creature for up to 24 hours or until the dye or scent is washed off (requiring at least a gallon of water and 10 minutes of scrubbing). A creature that enters a square of the snare must attempt a save. --- **Success** The creature is unaffected. **Failure** The snare marks the creature. **Critical Failure** The snare marks the creature, and the creature is blinded until the end of its next turn."
+ },
+ {
+  "id": "mask-of-pain",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Mask of Pain",
+  "level": 9,
+  "traits": [
+   "orc"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** You succeed at a Demoralize check. --- **Requirements** You're wearing your *warmask*. --- Your mask has grown into a manifestation of your pain, which you can release. The creature you successfully Demoralized takes 2d6 damage, or 4d6 damage if you're legendary in Intimidation. The target is then temporarily immune to additional damage from Mask of Pain for 24 hours."
+ },
+ {
+  "id": "mask-of-the-mantis",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Mask of the Mantis",
+  "level": 5,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "The traditional headwear for the Red Mantis assassin is the *mask of the mantis*. Most of these masks are constructed from hard leather helmets that serve to obscure the assassin's identity and give them the appearance of possessing a mantis's head. Some variants, however, consist only of the mask itself, and are meant to be worn over the face. Regardless of the shape and style, all masks of the mantis function the same. Members of the Vernai can use any *mask of the mantis* to enhance their frightening presence—something they often do simply to reveal their standing in the society without speaking a word, as detailed fully in the entry for Vernai's Ire activation below. While wearing a *mask of the mantis*, you gain a +1 item bonus to Perception checks. --- **Activate—Enhance Vision** ⟨2⟩ (concentrate, manipulate) **Frequency** once per day **Effect** You cast either Darkvision or See the Unseen on yourself. --- **Activate—Vernai's Ire** ⟨1⟩ (concentrate) **Requirements** You are a member of the Vernai **Effect** You cause the *mask of the mantis's* eyes to shimmer with crimson light, granting yourself a far more harrowing visage. This light creates illumination equivalent to that of a candle. You can use this ability again to extinguish the frightening glow, but as long as Vernai's Ire remains active, you gain a +1 item bonus to Intimidation checks."
+ },
+ {
+  "id": "mask-of-the-mantis-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Mask of the Mantis (Greater)",
+  "level": 11,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "The traditional headwear for the Red Mantis assassin is the *mask of the mantis*. Most of these masks are constructed from hard leather helmets that serve to obscure the assassin's identity and give them the appearance of possessing a mantis's head. Some variants, however, consist only of the mask itself, and are meant to be worn over the face. Regardless of the shape and style, all masks of the mantis function the same. Members of the Vernai can use any *mask of the mantis* to enhance their frightening presence—something they often do simply to reveal their standing in the society without speaking a word, as detailed fully in the entry for Vernai's Ire activation below. While wearing a *mask of the mantis*, you gain a +2 item bonus to Perception checks. --- **Activate—Enhance Vision** ⟨2⟩ (concentrate, manipulate) **Frequency** once per day **Effect** You cast either a 5th-rank Darkvision or See the Unseen on yourself. --- **Activate—Vernai's Ire** ⟨1⟩ (concentrate) **Requirements** You are a member of the Vernai **Effect** You cause the *mask of the mantis's* eyes to shimmer with crimson light, granting yourself a far more harrowing visage. This light creates illumination equivalent to that of a candle. You can use this ability again to extinguish the frightening glow, but as long as Vernai's Ire remains active, you gain a +2 item bonus to Intimidation checks."
+ },
+ {
+  "id": "mask-of-the-mantis-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Mask of the Mantis (Major)",
+  "level": 18,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "The traditional headwear for the Red Mantis assassin is the *mask of the mantis*. Most of these masks are constructed from hard leather helmets that serve to obscure the assassin's identity and give them the appearance of possessing a mantis's head. Some variants, however, consist only of the mask itself, and are meant to be worn over the face. Regardless of the shape and style, all masks of the mantis function the same. Members of the Vernai can use any *mask of the mantis* to enhance their frightening presence—something they often do simply to reveal their standing in the society without speaking a word, as detailed fully in the entry for Vernai's Ire activation below. While wearing a *mask of the mantis*, you gain a +3 item bonus to Perception checks. --- **Activate—Enhance Vision** ⟨2⟩ (concentrate, manipulate) **Frequency** once per day **Effect** You cast either a 5th-rank Darkvision or See the Unseen on yourself. --- **Activate—Vernai's Ire** ⟨1⟩ (concentrate) **Requirements** You are a member of the Vernai **Effect** You cause the *mask of the mantis's* eyes to shimmer with crimson light, granting yourself a far more harrowing visage. This light creates illumination equivalent to that of a candle. You can use this ability again to extinguish the frightening glow, but as long as Vernai's Ire remains active, you gain a +3 item bonus to Intimidation checks. --- **Activate—Locate Target** 10 minutes (concentrate) **Frequency** once per day **Effect** You cast Pinpoint. If the target of this spell is a creature for which you've accepted a contract to assassinate, you are considered to have seen the creature in person for the purposes of *pinpoint's* requirements."
+ },
+ {
+  "id": "masquerade-of-seasons-stance",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Masquerade of Seasons Stance",
+  "level": 4,
+  "traits": [
+   "bard",
+   "rogue",
+   "stance",
+   "swashbuckler"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [
+   "core.stances"
+  ],
+  "text": "You have mastered the opening steps to the Masquerade of Seasons, a dance that channels the power of spring, summer, winter, and autumn. Choose one of the following traits: water, fire, void, or cold. You gain resistance 5 to damage dealt by effects with the chosen trait. You can use an action to reenter this stance at any time, changing the granted resistance to another of the available options. If you are at least 12th level, the granted resistance increases to be equal to half your level."
+ },
+ {
+  "id": "megaflora",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Megaflora",
+  "level": 0,
+  "traits": [
+   "plant"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Megaflora Source GM Core pg. 317 Aspect Plant Activate (concentrate, manipulate) Frequency once per day; Effect With a pulse of natural energy, your relic grows massive plants in an instant. The megaflora is of one of the following types, chosen by the GM when the relic gains this gift. A megaflora appears in an unoccupied 10-foot space within 30 feet and has 50 Hit Points, weakness 5 to fire, AC 37, Reflex +20, and Fortitude +30. It persists for 1 minute or until reduced to 0 Hit Points. Corpseflower A single putrid-smelling flower grows at the target location. While the flower persists, each round at the end of your turn, all creatures in a 20-foot burst centered on the plant except you must succeed at a Fortitude save or be sickened 2 (also stunned 2 on a critical failure). This is a poison effect. Thorns A 10-foot-tall thorned plant or bamboo stalk grows at the target location. While the stalk persists, each round at the end of your turn, sharp stakes erupt from the ground, dealing 6d8 piercing damage to all creatures in a 20-foot burst centered on the plant except you (basic Reflex). Tree of Life A large tree bearing life-giving fruit grows at the target location. While the tree persists, living creatures within reach of the tree can use an Interact action to pick and eat one of the tree's fruits, regaining 2d8+5 Hit Points; picking a fruit without eating it causes the fruit to instantly vanish. This is a healing and wood effect, and a given creature can heal from the tree only once per round."
+ },
+ {
+  "id": "mercenary-reversal",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Mercenary Reversal",
+  "level": 18,
+  "traits": [
+   "auditory",
+   "commander",
+   "concentrate",
+   "incapacitation",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You and your allies are currently outnumbered by enemies on the battlefield. --- Even though the fight seems to be surging against you and your compatriots, you know that a key ally can always turn the tide. Choose a target you are currently observing. You assail it with a list of reasons why it should join you and why its defeat if it does not is surely inevitable. The target attempts a save against your class DC with the following results. --- **Critical Success** The target is uninterested in joining you and is temporarily immune to further uses of this ability for 24 hours. **Success** The target is Stunned 1 as it is forced to consider the merits of your offer. **Failure** The target swaps sides and joins you for the duration of the battle. It gains the controlled condition, but it can attempt a save whenever it takes damage or whenever you direct it to take an action that goes against its nature. On a success, the effect ends and it rejoins its former allies. **Critical Failure** As a failure, but the target is so impressed by your leadership that it thanks you for the privilege of fighting alongside you; if it is still alive at the end of combat, it turns over any coins, wealth or other monetary possessions it has as tribute."
+ },
+ {
+  "id": "mesmerizing-gaze",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Mesmerizing Gaze",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "emotion",
+   "mental",
+   "visual"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "When you meet someone's gaze, they're unable to look away from you. Choose one target creature you can see and that can see you. That creature must succeed at a save or be fascinated with you until the end of your next turn; the DC is the higher of your class DC or spell DC. If the creature succeeds at its save or its fascination ends due to a hostile action, it becomes temporarily immune to your Mesmerizing Gaze for 1 day."
+ },
+ {
+  "id": "mimic-protections",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Mimic Protections",
+  "level": 20,
+  "traits": [
+   "ranger"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "By adopting resonant reflections, you have learned to copy the abilities of other creatures as well. When you use Hunt Prey on a foe within 100 feet, you gain resistance 10 to all damage types that target has resistance or immunity to for as long as the foe remains within 100 feet."
+ },
+ {
+  "id": "mindrender-baton",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Mindrender Baton",
+  "level": 15,
+  "traits": [
+   "tech"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This short, green, metal baton uses potent transmissions along brainwave frequencies to control the minds of nearby creatures. This Numerian item's effects are high-tech in nature, not magical. A mindrender baton's power is provided via a battery, but King Irovetti has used his supply of them over the years. Whether or not you want to allow the PCs to discover replacement batteries to recharge this device is left to you to decide, but certainly batteries are not available in markets outside of Numeria itself-and even there, their availability isn't guaranteed. When this campaign begins, the mindrender baton Irovetti carries is fully powered and has 10 charges available. Charges are expended whenever the device is activated, as detailed below for each activation's \"Charges\" entry. The mindrender baton can be used as a club. --- **Activate** ⟨2⟩ Interact (mental); **Charges** 1 **Frequency** once per day **Effect** You point the mindrender baton at a target creature within 60 feet and cause the target to suffer cripplingly painful headaches. The target takes 11d6 damage (), and is Stunned 2 on a critical failure. --- **Activate** ⟨2⟩ Interact (incapacitation, mental); **Charges** 2 **Frequency** once per day **Effect** You point the mindrender baton at a target creature within 30 feet and disrupt the target's thoughts so that it sees the carrier of the mindrender baton as its commander and liege. The target must attempt save. --- **Critical Success** The target is unaffected. **Success** The target is Stunned 1 as it fights off the intrusion into its mind. **Failure** You take command of the target and it becomes controlled, following your orders; if you issue an obviously self-destructive order, the target doesn't act until you issue a new order. The creature can attempt a new save at the end of each of its turns; on a success, the effect ends. Another character can attempt a (master) or (master) check against the effect's DC of 31 to remove this effect before then, but if this attempt fails, the commanded creature becomes temporarily immune to that character's attempts to remove the effect via skills for 24 hours. **Critical Failure** As failure, but the target receives a new save only if you give a new order that is against its nature, such as to kill its allies. Otherwise, this effect persists for 24 hours, or until another character ends it via a skill check."
+ },
+ {
+  "id": "miraculous-repair",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Miraculous Repair",
+  "level": 9,
+  "traits": [
+   "arcane",
+   "ardande",
+   "concentrate",
+   "naari",
+   "oread",
+   "suli",
+   "sylph",
+   "talos",
+   "undine"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Geniekin can't grant magical wishes, but some echo of power lingers within you. Faced with a mechanism that is damaged but not destroyed, you can wish it back into a functional state for a period of 10 minutes. The object must be mundane and no larger than 5 Bulk, such as a disabled locking mechanism in a door. For 10 minutes, the object functions as it should, ignoring any damage to its mechanism. This doesn't grant you any knowledge of what a device might do or how it ought to function. Once the 10 minutes are up, the object falls back into disrepair and is temporarily immune to Miraculous Repair for 1 day."
+ },
+ {
+  "id": "mirror-of-sorshen",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Mirror of Sorshen",
+  "level": 25,
+  "traits": [
+   "artifact",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The silvery glass of this oval mirror displays alluring sights. Its dark wooden frame is studded with small green gems and is carved with a pair of sensuous humanoid shapes—one on the edge of each side of the glass. The *Mirror of Sorshen* can form a bond with a spellcaster who has legendary proficiency in Arcana or Occultism, who becomes the mirror's owner. Regardless of where the mirror is, as long as the bond remains, the owner is aware of everything the mirror is currently reflecting and can use the mirror's activations. Whenever an intelligent creature looks in the mirror, they see an image of a person, creature, or item they find powerfully enticing in some way. The specific image varies depending on the observer, even when more than one creature is looking into the mirror at the same time. Observers are fascinated by the images in the mirror unless they succeed at a save each round. On a failure, they stare blankly at the mirror for as long as it remains in view, and if it leaves their view, they stare toward the last place they saw the mirror for several minutes thereafter. This is an emotion, incapacitation, and visual effect. Creatures that are fascinated by the mirror are so deeply entranced that they don't end their fascinated condition automatically even if a creature uses hostile actions against them or their allies; instead, they can attempt a save to end the fascination. At the GM's discretion, a truly innocent creature or a creature that has renounced all worldly pleasures might be immune to the mirror's fascination. **Activate—Second Glance** ⟨2⟩ (concentrate, emotion, incapacitation, visual) --- **Effect** You force a creature looking at the mirror to attempt an additional Will save against the mirror's fascination effect, even if they succeeded at their save. **Activate—Irresistible Desire** ⟨3⟩ (concentrate, emotion, incapacitation, mental) **Requirements** The target must be fascinated by the mirror --- **Effect** You control the target for 30 days, with the effect of a critically failed saving throw against Dominate. If the victim sees the mirror again at any point before this duration expires, the control extends for an additional 30 days from the moment it looked at the mirror again. While there is no initial saving throw, the DC to break free due to commands against the creature's nature is 35. **Destruction** The *Mirror of Sorshen* shatters into a thousand pieces if an intelligent but completely innocent creature resists the mirror's attraction and then accidentally drops it."
+ },
+ {
+  "id": "moderate-aetheric-irritant",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Moderate Aetheric Irritant",
+  "level": 3,
+  "traits": [
+   "consumable",
+   "gadget",
+   "sonic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Aetheric Irritant May contain spoilers from Convocation Source Rival Academies pg. 92 Usage held in 1 hand Bulk L Activate (manipulate) An aetheric irritant is a chime that can emit a subsonic frequency that otherworldly beings find unpleasant. When you Activate an aetheric irritant, you sound the chime and place it on the ground in a square within your reach. Creatures with the fey, spirit, or undead traits must attempt a Will save when they enter the affected area and at the beginning of every turn they are in the affected area. Those who fail the save treat the area as difficult terrain until the beginning of their next turn. A creature that critically succeeds at the save is immune to all aetheric irritants for 24 hours. An aetheric irritant continues to hum until it shakes itself to pieces after 10 minutes of being activated or it is moved, whichever comes first. Lesser Aetheric Irritant Source Rival Academies pg. 92 Price 4 gp The aetheric irritant affects an area in a 10-foot emanation and the Will DC is 15. Moderate Aetheric Irritant Source Rival Academies pg. 92 Price 11 gp The aetheric irritant affects an area in a 15-foot emanation and the Will DC is 18. Greater Aetheric Irritant Source Rival Academies pg. 92 Price 275 gp The aetheric irritant affects an area in a 20-foot emanation and the Will DC is 28. Major Aetheric Irritant Source Rival Academies pg. 92 Price 2,750 gp The aetheric irritant affects an area in a 30-foot emanation and the Will DC is 36."
+ },
+ {
+  "id": "moderate-dragon-scute",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Moderate Dragon Scute",
+  "level": 16,
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Dragon Scute Source Draconic Codex pg. 223 Usage held in 1 hand Bulk L The thick plates that form the strongest points in a dragon’s armor can be used as powerful defensive catalysts. Using one of these scales to cast mountain resilience causes the target’s skin to grow a thick layer of draconic scales. Instead of the spell’s normal effects, the target gains damage resistance based on the type and dragon’s tradition. Lesser Dragon Scute Source Draconic Codex pg. 223 Price 400 gp The scale can be used with mountain resilience of 6th rank or higher. Arcane resistance 5 against all damage from spells Divine resistance 10 to spirit, vitality, and void Occult resistance 10 to mental Primal resistance 7 to bludgeoning, piercing, slashing, and poison Moderate Dragon Scute Source Draconic Codex pg. 223 Price 2,000 gp The scale can be used with mountain resilience of 8th rank or higher. Arcane resistance 7 against all damage from spells Divine resistance 15 to spirit, vitality, and void Occult resistance 15 to mental Primal resistance 10 to bludgeoning, piercing, slashing, and poison Greater Dragon Scute Source Draconic Codex pg. 223 Price 14,000 gp The scale can be used with mountain resilience of 10th rank. Arcane resistance 10 against all damage from spells Divine resistance 20 to spirit, vitality, and void Occult resistance 20 to mental Primal resistance 15 to bludgeoning, piercing, slashing, and poison"
+ },
+ {
+  "id": "moderate-durian-bomb",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Moderate Durian Bomb",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "plant",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Durian Bomb May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 77 Usage held in 1 hand Bulk L Activate Strike Whereas a durian’s aroma ranges from pleasant to revolting depending on the person, a durian bomb is a fruit that’s been alchemically modified for maximum revulsion. Many types of this bomb grant an item bonus to attack rolls. On a successful Strike, a durian bomb deals the listed piercing damage to the target. Any creature hit by the bomb or in its splash area must attempt a Fortitude saving throw with a DC based on the bomb’s type. Creatures in the splash area treat the results of their saving throw as one step better. Creatures sickened by a durian bomb are unable to smell anything else while the sickened condition lasts, suppressing any scent special sense they might have. Once a creature is sickened by a durian bomb, they’re immune to the sickened condition caused by other durian bombs for 1 minute. Critical Success The target is unaffected. Success The creature is sickened 1. Failure The creature is dazzled for 1 round and sickened 1. Critical Failure The creature is dazzled for 1 round and sickened 2. Lesser Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 4 gp The bomb deals 1d4 piercing damage, and the DC is 15. Moderate Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 12 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d4 points of piercing damage, and the DC is 17. Greater Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 275 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d4 points of piercing damage, and the DC is 28. Major Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 2,750 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d4 points of piercing damage, and the DC is 37."
+ },
+ {
+  "id": "moderate-inflammation-flask",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Moderate Inflammation Flask",
+  "level": 4,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "disease",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Inflamation Flask May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 75 Usage held in 1 hand Bulk L Activate Strike This flask contains a caustic irritant that makes a target’s skin, scales, or carapace extremely sensitive to further nicks and burns. An inflammation flask deals the listed acid damage and acid splash damage. On a hit, the target also gains weakness to acid, fire, and slashing damage for 3 rounds. Many types of inflammation flask grant a bonus to attack rolls. The target can end the weakness effect by three means: being drenched with water (such as submersion or exposure to an area water effect), being Administered First Aid (whose DC in based on the bomb type), or regaining Hit Points from a single effect equal to twice the inflammation flask’s level. A creature that critically fails to Administer First Aid in this way deals untyped damage to the target equal to the inflammation flask’s initial acid damage. Lesser Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 5 gp The bomb deals 1d6 acid damage and 1 acid splash damage. The target gains weakness 1 to acid, fire, and slashing damage, and theMedicine DC is 17. Moderate Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 15 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d6 acid damage and 2 acid splash damage. The target gains weakness 2 to acid, fire, and slashing damage, and the Medicine DC is 20. Greater Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 340 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d6 acid damage and 3 acid splash damage. The target gains weakness 3 to acid, fire, and slashing damage, and the Medicine DC is 30. Major Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 3,750 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d6 acid damage and 4 acid splash damage. The target gains weakness 4 to acid, fire, and slashing damage, and the Medicine DC is 38."
+ },
+ {
+  "id": "moderate-maelstromic-destabilizer",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Moderate Maelstromic Destabilizer",
+  "level": 7,
+  "traits": [
+   "consumable",
+   "gadget",
+   "spirit"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Maelstromic Destabilizer May contain spoilers from Convocation Source Rival Academies pg. 92 Usage held in 1 hand Bulk L Activate (manipulate) A maelstromic destabilizer is a whirling gyroscope of burnished bronze and glass. It strengthens the bonds that hold a creature to this world by weakening those same bonds to every other nearby creature. When activated, the destabilizer emits a constant pleasant chime as it spins. For the next minute, the creature holding the gadget gains the listed resistance to spirit damage, while all creatures not immune to spirit damage in a 10-foot emanation gain the listed weakness to spirit damage. Lesser Maelstromic Destabilizer Source Rival Academies pg. 92 Price 6 gp The value for the spirit resistance and weakness is 2. Moderate Maelstromic Destabilizer Source Rival Academies pg. 92 Price 65 gp The value for the spirit resistance and weakness is 5. Major Maelstromic Destabilizer Source Rival Academies pg. 92 Price 2,750 gp The value for the spirit resistance and weakness is 10."
+ },
+ {
+  "id": "moderate-portable-seal",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Moderate Portable Seal",
+  "level": 12,
+  "traits": [
+   "consumable",
+   "gadget",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Portable Seal May contain spoilers from Convocation Source Rival Academies pg. 93 Usage held in 2 hands Bulk L Activate (manipulate) A portable seal is a stiff framework of copper wires and strategically placed hinges, so that when the device is snapped open it forms an instant geometric design. A tiny Stasian coil is attached, which when activated runs a mixture of occult energy and high-voltage electricity through the wire. The design covers a 5-foot burst when unfolded and must be unfolded into an area free of major obstructions such as rocks or hostile creatures. When a creature with the summoned trait attempts to enter the seal’s area or make a melee Strike against a creature in that area, the summoned creature must attempt a Will save. Success The action occurs normally, and the creature is immune to the effects of this portable seal this round. Failure The movement or Strike is disrupted, but the creature is immune to further effects of the portable seal this round. Critical Failure The movement or Strike is disrupted. Lesser Portable Seal Source Rival Academies pg. 93 Price 45 gp The Will DC is 20. Moderate Portable Seal Source Rival Academies pg. 93 Price 400 gp The Will DC is 28. Major Portable Seal Source Rival Academies pg. 93 Price 5,000 gp The Will DC is 36."
+ },
+ {
+  "id": "momentary-respite",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Momentary Respite",
+  "level": 16,
+  "traits": [
+   "healing",
+   "mythic"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per day --- **Trigger** You lose Hit Points from persistent damage. Your sense of destiny manifests as rapid physical healing. Spend a Mythic Point. You regain 8d8 Hit Points and remove any persistent damage condition affecting you. Until the end of your next turn, you're immune to persistent damage (though you would take any other effects of an attack or spell that would also give you persistent damage)."
+ }
+]

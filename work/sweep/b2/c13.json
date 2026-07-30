@@ -1,0 +1,1171 @@
+[
+ {
+  "id": "zetogeki-hide-armor",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Zetogeki Hide Armor",
+  "level": 8,
+  "traits": [
+   "earth",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This *+1 fire-resistant hide armor* is adorned with the shale-like scales of the zetogeki, a giant reptile that dwells near sites of volcanic activity. Like the armor's namesake, you can adjust the scales to better absorb kinetic energy at the cost of some mobility. --- **Activate—Shift Scales** ⟨1⟩ **Frequency** once per day **Effect** Until the end of your next turn, you gain resistance 5 to bludgeoning, piercing, and slashing damage, but your Speeds are reduced by 10 feet (minimum 5 feet)."
+ },
+ {
+  "id": "accolade-robe-greater",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Accolade Robe (Greater)",
+  "level": 17,
+  "traits": [
+   "arcane",
+   "focused",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Although not all wizards have gone through formal training, it's become tradition to enchant robes representing the arduous training required and festoon them with honors one has earned. Typically, an *accolade robe* is styled after a single wizard school, with appropriate colors and symbols. Wearing these robes grants a +3 item bonus to Arcana checks. The pockets of the robe tie to an extradimensional space that can hold 1 Bulk of items, none of which can have greater than light Bulk. The items must be related to spellcasting and academics—spellbooks, scrolls, wands, scholarly journals, and other academic supplies the GM allows. These items do not count against your Bulk limit. You can Interact to retrieve or stow items normally. --- **Activate—Review** ⟨1⟩ (concentrate, manipulate) **Effect** You retrieve an item of your choice from the robe's storage, then Recall Knowledge. You can activate the robe's Review once per minute as a free action. --- **Activate—Extra Credit** ⟨4⟩ (concentrate) **Frequency** once per day **Effect** You gain 1 Focus Point, which you can spend only to cast a school spell. If you don't spend this Focus Point by the end of this turn, it is lost. --- **Craft Requirements** You are a wizard of the associated school."
+ },
+ {
+  "id": "aegis-for-the-innocent",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Aegis for the Innocent",
+  "level": 14,
+  "traits": [
+   "manipulate",
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "core.modes(feat-gated)"
+  ],
+  "text": "**Requirements** Your nimbus is active. --- You transfer a portion of your divine spark to an ally, temporarily dimming your nimbus to encase an ally in a barrier of light that repels attackers. Select a willing creature within the bright light of your nimbus. You surround the target in a protective barrier of light; this is a centered on the target. This barrier lasts for 1 minute, or until you Dismiss it. While the Aegis of the Innocent is active, the area of your nimbus is halved. The target gains a +1 status bonus to AC. Any enemy within the barrier, or entering the barrier, must attempt a saving throw against your class DC or your spell DC. A creature needs to attempt this save only once each round. --- **Critical Success** The creature is unaffected. **Success** The creature becomes dazzled for 1 round and treats the space within the barrier as difficult terrain. **Failure** The creature becomes dazzled for 1 minute, is pushed 10 feet, and treats the space within the barrier as difficult terrain. If a creature would be pushed into a solid barrier or another creature, it stops at that point and takes damage. **Critical Failure** As failure, but the creature is also blinded for 1 round."
+ },
+ {
+  "id": "aeon-stone-rainbow-prism",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Aeon Stone (Rainbow Prism)",
+  "level": 13,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "While this aeon stone orbits your head, the flat part of its base tumbles to briefly face creatures you can see within 30 feet, as though the stone is watching them. You can activate this stone in two ways. **Activate** ⟨2⟩ envision --- **Effect** The aeon stone captures the image of a creature of your size that you can see within 30 feet. It can have up to 3 images captured at a time; if you capture a fourth, you decide which image it replaces. **Activate** ⟨2⟩ envision **Frequency** three times per day **Requirements** The prism is storing at least one image of a creature of your size --- **Effect** The aeon stone casts a 3rd-rank Illusory Disguise on you, which must be of one of the creatures it has currently captured. While you are under the effects of this spell, the aeon stone is invisible. The resonant power allows the stone to capture up to 5 images. If removed from the *wayfinder*, you must decide which images to lose."
+ },
+ {
+  "id": "alchemical-fuse",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Alchemical Fuse",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "fire"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "An alchemical fuse is a length of treated cord that can be used to time the detonation of an alchemical bomb or a stick of pyronite, or simply as a timer—at the GM's option, fuses can be used as timers to trigger other devices that can be triggered with a single appropriate action, as well. --- **Activate** ⟨1⟩ Interact --- **Effect** You attach the alchemical fuse to an alchemical bomb, stick of pyronite, or other device that can be triggered by a fuse. Alternately, you can attach one fuse to another to extend its burn time by 1 round. --- **Activate** ⟨1⟩ Interact --- **Effect** You light the alchemical fuse with an adjacent fire source or a fire source that you hold in a hand. If you have a tindertwig in your other hand, you can activate the tindertwig and use it to light a fuse with the same Interact action. A lit fuse takes 1 round per attached fuse to burn down. During the round that the fuse runs out, the device to which the fuse has been attached explodes or otherwise activates at the end of your turn. For a bomb, this deals splash damage, and for pyronite, it deals pyronite's normal damage. An alchemical fuse burns underwater or in up to moderate wind. --- **Activate** ⟨1⟩ Interact --- **Effect** You extinguish the fuse."
+ },
+ {
+  "id": "aloof-firmament",
+  "lane": "toggle",
+  "collection": "classFeatures",
+  "name": "Aloof Firmament",
+  "level": 1,
+  "traits": [
+   "magus"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featFeatGrants"
+  ],
+  "text": "You're a philosopher of the sword who codifies your study of qinggong along principles arcane and martial. Your blade teaches morality and immortality, and you illustrate its lessons with an academician's rigor. Through your training, you've learned to move about with grace and create opportunity to strike foes. You gain the Cat Fall general feat, though you benefit from it only as long as you aren't using a shield and are wearing light or no armor. While in Arcane Cascade stance, your steps become even lighter, giving you the benefits of the Quick Jump general feat. When you Fly, Leap, High Jump, or Long Jump while in that stance, your movement doesn't trigger reactions. If you take one of these actions, the next Strike you make before the end of your turn with a one-handed weapon in the sword group has greater damage from Arcane Cascade. Increase the extra damage to 4; increase it to 6 if you have weapon specialization, or to 8 if you have greater weapon specialization. You must have your other hand completely free; the extra damage doesn't apply if you have a free-hand weapon or other item in that hand, even if you would normally be able to use the hand for other things. **Conflux Spell** Sky Laughs at Waves"
+ },
+ {
+  "id": "anchor-of-aquatic-exploration",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Anchor of Aquatic Exploration",
+  "level": 9,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "No matter how often it's washed, the last crystals of salt rime never quite leave this pitted anchor. When you're holding the anchor of aquatic exploration, you can breathe underwater; however, you can't Swim, losing any Swim speed you have, automatically failing any Athletics checks to Swim, and so on. Instead, when you enter a body of water, you sink to the bottom at a rate of 25 feet per round and can move across the bottom at your normal Speed. You're protected from environmental effects of deep water such as pressure, cold temperatures, and any negative consequences of depressurization. **Activate** 1 minute (manipulate) **Frequency** once per day **Requirements** You're underwater --- **Effect** You spend one minute digging the anchor into the seabed, after which the anchor casts a Cozy Cabin spell, summoning a sunken ship instead of a cabin. The sunken ship is filled with breathable air."
+ },
+ {
+  "id": "ancient-scale-azarketi",
+  "lane": "toggle",
+  "collection": "heritages",
+  "name": "Ancient Scale Azarketi",
+  "traits": [],
+  "engineFieldsPresent": [
+   "senses"
+  ],
+  "inRegistries": [],
+  "text": "Your lineage stems from azarketis who remain dedicated to their deep-sea roots. Divorced from land society, you're a foreigner to any world above a thousand fathoms deep. You gain darkvision. Your body is dotted with phosphorescent spots that emit a guiding light and help you communicate. The spots - located primarily on your face, arms, and hands - illuminate a 10-foot radius around you with dim light. You can activate, deactivate, or change the arrangement of lights as an action, which has the concentration trait."
+ },
+ {
+  "id": "animist-apparition-spellcasting",
+  "lane": "toggle",
+  "collection": "classFeatures",
+  "name": "Animist & Apparition Spellcasting",
+  "level": 1,
+  "traits": [
+   "animist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your role as a spiritual medium connecting the mortal Universe to the realms beyond lets you cast your magic in two distinct ways: you both learn and prepare spells from the divine tradition yourself, and you also channel the knowledge and power of your attuned apparitions, gaining spell slots and a repertoire of spells from them that you can cast spontaneously. Regardless of which source you're drawing on, you are a spellcaster and can cast spells of the divine tradition using the Cast a Spell activity. As an animist, your incantations might take the form of reciting relevant snippets of legends—stories passed down orally—or they might see you calling nearby spirits to honor ancient vows. Your gestures could be elegant dances or full-body convulsions as generations of memories and otherworldly energies inherited from your spiritual allies surge through you. Some of your spells require you to attempt a spell attack to see how effective they are, or have your enemies roll against your spell DC (typically by attempting a saving throw). Since your key attribute is Wisdom, your spell attack modifiers and spell DC use your Wisdom modifier. The clearly delineated partnership between an animist and their apparitions means you can't cast your animist spells using your apparition spell slots or vice versa—your magics remain complementary and harmonious, yet as distinct as the two worlds from which they come. ### Animist Spellcasting As a keeper of knowledge, you are constantly learning new techniques and spells. Each day, you can prepare one 1st-rank spell and 2 cantrips from among the common spells on the divine spell list or from other divine spells you've gained access to and learned via Learn a Spell. Prepared spells remain available to you until you cast them or until you prepare your spells again. The number of spells you can prepare is called your spell slots. As you increase in level as an animist, the number of spells you can prepare each day increases, as does the highest rank of spell you can cast, as shown in Animist Spells Per Day. You are a prepared spellcaster for the purposes of determining how you interact with staves and other items or effects that differentiate between prepared and spontaneous spellcasters. ### Apparition Spellcasting You can draw upon your attuned apparitions as a second source of magical knowledge and power. You gain additional spontaneous spell slots and a spell repertoire from your attuned apparitions. At first level, you can cast two apparition cantrips and one 1st-rank apparition spell per day. You must have the spell in your apparition spell repertoire to cast it; this is a collection of spells granted to you by all your attuned apparitions. You can cast any spell in your apparition spell repertoire by using an apparition spell slot of an appropriate spell rank. Any of these spells that aren't normally on the divine list are still divine spells if you cast them this way. As you increase in level, you gain further apparition spell slots, and your apparitions grant you higher-rank apparition spells, as detailed in each apparition entry. ### Heightening Spells When you gain spell slots of 2nd rank and higher, yo"
+ },
+ {
+  "id": "anylength-rope",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Anylength Rope",
+  "level": 3,
+  "traits": [
+   "magical",
+   "transmutation"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Anylength Rope Source Firebrands pg. 84 Usage held in 1 hand Bulk L This 50-foot length of silk rope is lightweight and appears to be inlaid with golden threads. The rope can hold up to 3,000 pounds and is particularly durable, with a Hardness of 5 and 24 Hit Points. Activate command; Frequency once per minute; Effect You command the rope to split, declaring a specific length or amount, such as “ten feet of rope,” “half of the rope,” and so on. The rope splits itself into the requested piece, leaving the remaining length intact. If the rope isn't long enough to provide the requested amount, the activation fails. Activate envision, Interact ; Frequency once per day; Requirements The rope is split into two or more pieces; Effect The rope attempts to reassemble itself. All pieces of the rope within 500 feet slither back toward you, moving 50 feet per round, over the span of 1 minute. Obstacles and other creatures can prevent a piece of rope from reaching you. Once all pieces reach you or the minute has passed, the pieces rejoin, becoming a single rope. The length of this reformed rope is equal to the total length of all the pieces together; if a piece is missing, the rope is now shorter than its original 50-foot length. Any pieces that didn't rejoin with the rest of the rope remain where they are after the minute passes. Anylength Rope (Lesser) Source Firebrands pg. 84 Price 45 gp Bulk L Anylength Rope (Moderate) Source Firebrands pg. 84 Price 125 gp Bulk L The rope is 75 feet long. You can activate the moderate anylength rope once per hour instead of once per day. Anylength Rope (Greater) Source Firebrands pg. 84 Price 300 gp Bulk L The rope is 100 feet long. You can activate the greater anylength rope without any frequency limit."
+ },
+ {
+  "id": "aon-creative-spark",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Creative Spark",
+  "level": 0,
+  "traits": [
+   "conjuration",
+   "fire"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Creative Spark Aspect Forge Activate Two Actions command, Interact; Frequency once per day; Effect You strike the relic against a piece of flint and summon a fire wisp to assist you, which appears in an unoccupied square next to you. The fire wisp doesn't act in combat, but it can assist you while you Craft items. You gain a +1 bonus to Crafting checks involving blacksmithing and general metalworking, increasing to +2 at 9th level and +3 at 17th level. Once per day, when you roll a critical failure on a Crafting check related to blacksmithing, you get a failure instead. The wisp replaces the need for a forge while blacksmithing, but you still require other equipment and tools. The wisp remains for up to 10 minutes or until you Dismiss it. You can extend this duration by an additional 10 minutes if you feed the wisp one light Bulk worth of charcoal or firewood, or one pint of oil."
+ },
+ {
+  "id": "aon-elements-of-creation",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Elements of Creation",
+  "level": 0,
+  "traits": [
+   "air",
+   "conjuration",
+   "earth",
+   "water"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Elements of Creation Aspect Forge Prerequisite creative spark gift When you activate creative spark, you can choose to summon an air wisp, a water wisp, and an earth wisp in unoccupied squares next to you, in addition to the fire wisp. Unlike a typical earth wisp, the summoned earth wisp takes the form of a small iron creature resembling an anvil crossed with a horned beetle. Like the fire wisp, these additional wisps don't act in combat but can assist you while you Craft items. While all four wisps are assisting you, the bonus you gain from creative spark is doubled, and your outcome for Crafting checks related to blacksmithing is one degree of success better than your roll. In addition, being assisted by all four wisps replaces the need for any equipment other than blacksmithing tools when crafting metal items. The wisps last for up to 10 minutes or until you Dismiss them all together as an action. If you extend the duration of the fire wisp, it also extends the duration for the other wisps."
+ },
+ {
+  "id": "aon-feral-claws",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Feral Claws",
+  "level": 0,
+  "traits": [
+   "morph"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Feral Claws Aspect Beast Prerequisite The relic is a worn item. Activate Single Action (concentrate); Effect Your hands transform into a pair of claws. These grant you a claw unarmed attack that deals 1d6 slashing damage and has the agile and finesse traits. This lasts until you Dismiss the effect."
+ },
+ {
+  "id": "aon-fulcrum-lenses",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Fulcrum Lenses",
+  "level": 9,
+  "traits": [],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Fulcrum lenses are unique magical crystals that each contain a sliver of Nhimbaloth's essence. They belong to a larger set of lenses created to manipulate or even bind the Empty Death; most of the other lenses are long lost and likely destroyed. The Haruvex family came into possession of four of the lenses, and they knew that bringing them together focused Nhimbaloth's attention in unprecedented and dangerous ways. Belcorra brought all four lenses to the Abomination Vaults with her, intending to install them in Gauntlight for her ultimate revenge upon Absalom. She also created a special receptacle called the Fulcrum Lattice to hold the lenses so that their power could be focused together. She realized the danger of keeping the fulcrum lenses too close together until the right time and spread them out among loyal groups in the Abomination Vaults' lowest levels for safekeeping. Belcorra keeps only the most powerful lens, the Ebon Fulcrum Lens , with her—indeed, as a ghost, it's the only one she can carry. If the heroes can bring the other three lenses to bear against Belcorra, they can draw Nhimbaloth's dread glare to the sorcerer. Despite her loyalty, Belcorra can't hope to keep her spirit intact when Nhimbaloth gazes directly upon it. The fulcrum lenses are more than mere receptacles of Nhimbaloth's essence. Each grants those who use it a fragment of the Great Old One's power. This concave lens has a drifting crimson cloud resembling slowly swirling blood within it. While you have the Crimson Fulcrum Lens invested, you seethe with malevolent fury you can barely contain. You gain a +2 item bonus to saving throws against fear effects and a +2 item bonus to your melee Strike damage (this increases to a +4 item bonus to damage if the melee Strike is a jaws attack). You can also activate the lens in the following ways. Activate Two Actions Interact; Frequency once per day; Effect You grasp the Crimson Fulcrum Lens in one hand and make a Strike that doesn't require that hand. The Strike deals an additional 1d8 precision damage (or 2d8 precision damage if you make a jaws Strike) and doesn't count toward your multiple attack penalty. Activate Two Actions Interact (attack, possession); Effect While grasping the lens, make a melee spell attack roll with a modifier of +18. On a hit, you force the splinter of Nhimbaloth's essence from the lens to possess the target. You're no longer invested in the lens, and the target gains the benefits as though it had invested the lens but can't activate the lens's other abilities. This effect is permanent, but it can be ended by any effect that removes a possession effect. The lens doesn't have any magical abilities until the possession effect ends; when it does, the essence returns to the lens. This strangest and most powerful of the fulcrum lenses resembles a chip of smooth obsidian containing three dark glimmers of Nhimbaloth's essence. Incorporeal creatures can touch and hold the Ebon Fulcrum Lens . While you have the Ebon Fulcrum Lens invested, and you're a corporeal creature, you become insubstantial, gain the incorporeal trait, and are drained 2. Your drained condition can't be reduced below 2 as long as you h"
+ },
+ {
+  "id": "aon-greater-mat-of-resilence",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Greater Mat of Resilence",
+  "level": 12,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This light but sturdy woven mat, a miniature version of the floating foundations used in villages of the Dirt Sea, is carried tied in a tight roll. When you use an action to unfurl the mat onto an unoccupied horizontal space, the mat covers the existing terrain to create a smooth surface that can be walked on as if it were solid ground. Difficult or hazardous terrain in that square may be treated as normal while the mat of resilience covers it. The mat can be rolled back up or moved to an adjacent square using an Interact action, but it cannot be moved or put away while a creature is atop it. Activate—Steady Ground Single Action (envision) Effect You unfurl the mat and choose which shape it takes, either a 10-foot square or a 20-foot by 5-foot line. Activate—Sturdy Foundation Single Action (manipulate) Requirements A creature is atop the mat; Effect The creature enters a simple stance that makes the most of the mat’s stabilizing magic. While in this stance, if at least half of the creature’s space is atop the mat, it cannot gain the off-guard condition. The mat’s surfaces increase to a 20-foot square and a 40- foot by 5-foot line."
+ },
+ {
+  "id": "aon-judgment-of-the-monolith",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Judgment of the Monolith",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can use the oaths bound in your ka stone to compel the truth from the living and the dead. You can activate your ka stone to target a single living creature, causing that creature to experience the effects of being in a zone of truth. You can also activate it with a 10-minute activation (envision) to cast talking corpse."
+ },
+ {
+  "id": "aon-mat-of-resilence",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Mat of Resilence",
+  "level": 7,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This light but sturdy woven mat, a miniature version of the floating foundations used in villages of the Dirt Sea, is carried tied in a tight roll. When you use an action to unfurl the mat onto an unoccupied horizontal space, the mat covers the existing terrain to create a smooth surface that can be walked on as if it were solid ground. Difficult or hazardous terrain in that square may be treated as normal while the mat of resilience covers it. The mat can be rolled back up or moved to an adjacent square using an Interact action, but it cannot be moved or put away while a creature is atop it. Activate—Steady Ground Single Action (envision) Effect You unfurl the mat and choose which shape it takes, either a 10-foot square or a 20-foot by 5-foot line. Activate—Sturdy Foundation Single Action (manipulate) Requirements A creature is atop the mat; Effect The creature enters a simple stance that makes the most of the mat’s stabilizing magic. While in this stance, if at least half of the creature’s space is atop the mat, it cannot gain the off-guard condition. The mat’s surfaces increase to a 20-foot square and a 40- foot by 5-foot line."
+ },
+ {
+  "id": "aon-petal-dance",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Petal Dance",
+  "level": 0,
+  "traits": [
+   "plant"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Petal Dance Aspect Plant Activate Two Actions (concentrate) Frequency once per hour; Effect You discorporate into a cloud of petals and leaves. This grants you the swarm trait, immunity to falling damage, resistance 5 to bludgeoning and slashing damage, and weakness 5 to area and splash damage. You can fit into spaces only a few inches wide, moving your constituent petals through the gap. You don't gain the swarm mind ability, so you're still affected normally by mental effects. As a swarm, you can't speak, cast spells, use manipulate actions requiring your hands, activate your magic items, or make any of your Strikes with your normal body. You remain in this form for 1 minute or until you Dismiss the activation. At 13th level, the relic gains a reaction that triggers when you fall or take damage, applying this gift's resistances, weaknesses, and immunity to falling damage to the triggering effect."
+ },
+ {
+  "id": "aon-tide-of-death",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Tide of Death",
+  "level": 0,
+  "traits": [
+   "void",
+   "negative"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Tide of Death Aspect Death Prerequisite death gaze gift You can Activate death gaze with 3 actions instead of 2. If you do, it targets all living creatures within 30 feet except for you. If you have the void healing ability, you can include yourself to be healed."
+ },
+ {
+  "id": "aon-wombat-burrow",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Wombat Burrow",
+  "level": 10,
+  "traits": [
+   "earth",
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "While in Wombat Stance, you gain a Burrow speed equal to the Speed bonus granted by your Incredible Movement ability. You can Burrow through earth and soil, but not solid rock."
+ },
+ {
+  "id": "aon-wyrm-s-flight",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Wyrm's Flight",
+  "level": 0,
+  "traits": [
+   "transmutation"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Wyrm's Flight Aspect Dragon Activate Two Actions command, envision; Frequency once per day; Effect Ghostly draconic wings grant you a fly Speed equal to your Speed or 20 feet, whichever is greater. This lasts for 10 minutes or until you Dismiss the effect. At 17th level, you can Activate and Dismiss the ability as often as you want, and it has unlimited duration."
+ },
+ {
+  "id": "attunement-to-stone",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Attunement to Stone",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You become attuned to the stone around you. When in contact with a stone surface, you gain tremorsense (imprecise) 5 feet along that surface, and you can activate your *ka stone* to cast One with Stone."
+ },
+ {
+  "id": "aura-shaping",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Aura Shaping",
+  "level": 10,
+  "traits": [
+   "kineticist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You control the size of your kinetic aura. You can make your kinetic aura's emanation any size from a to a (you must choose a multiple of 5). You choose the size when you Channel Elements and can change it when you use a stance impulse that affects your kinetic aura. Increase the maximum size you can choose by 5 feet at 15th and 20th levels."
+ },
+ {
+  "id": "axe-of-the-dwarven-lords",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Axe of the Dwarven Lords",
+  "level": 26,
+  "traits": [
+   "dwarf",
+   "magical",
+   "sweep",
+   "thrown-30",
+   "two-hand-d12"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "The blade of this *+4 major striking Keen Returning Quickstrike dwarven waraxe* is carved with an intricate design depicting countless generations of great dwarven warriors and leaders. The axe has the thrown 30 feet weapon trait, in addition to the normal weapon traits for a dwarven waraxe. Strikes with the axe deal an additional 1d6 damage to orcs. While the axe is in your possession, you gain a +4 item bonus when Crafting armor, jewelry, metalworking, stonemasonry, snares, traps, and weapons. If you are a dwarf, you gain greater darkvision while holding the axe. If you are not a dwarf, you are Stupefied 4 while holding the axe, and if you are an orc, you are also Drained 4 and Enfeebled 4 while holding it. --- **Activate** ⟨3⟩ envision, Interact **Frequency** once per week **Effect** The axe casts a 10th-rank Summon Elemental spell to conjure an elite elemental avalanche. The spell is automatically sustained, requiring no action on your part but still allowing you to command the elemental on each of your turns. You can Dismiss the Spell. --- **Destruction** If an orc beheads a dwarven king with the *Axe of the Dwarven Lords*, the axe rusts away to nothing."
+ },
+ {
+  "id": "barricade-stone",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Barricade Stone",
+  "level": 6,
+  "traits": [
+   "conjuration",
+   "consumable",
+   "magical",
+   "structure"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Barricade Stone May contain spoilers from Strength of Thousands Source Pathfinder #171: Hurricane's Howl pg. 75 Bulk when not activated Activate command, Interact The ancient inhabitants of Bloodsalt crafted these magic rocks to construct defenses quickly. In its stone form, a barricade stone appears to be a simple pebble with an unnaturally geometric shape. The size and shape of the stone's final form depends on the type of barricade stone. When you activate the barricade stone, you drop it on the ground, throw it up to 20 feet away, or sling it using a sling weapon. Upon landing, the stone instantly and permanently expands. The stone grows to its maximum size. While normally items with the structure trait put creatures in their area inside the structure, this effect creates solid stone, so it can't be placed in an area where there are creatures. While it's likely to take some time even with the right tools, an activated barricade stone can be destroyed the same as any normal stone structure (Hardness 14, HP 56). Barricade Stone (Sphere) Source Pathfinder #171: Hurricane's Howl pg. 75 Price 40 gp This smooth marble keeps its shape when activated, growing into a spherical boulder 10 feet in diameter. If stationary, the boulder can be pushed 5 feet with a successful DC 24 Athletics check. If the marble was thrown or slung, the boulder retains its momentum, moving 25 feet away from you each round. A creature in the boulder's way takes 4d6 bludgeoning damage (DC 20 basic Reflex save; on a failure, the creature is knocked prone). Barricade Stone (Cube) Source Pathfinder #171: Hurricane's Howl pg. 75 Price 80 gp This seemingly simple six-sided die was designed to block a corridor. When activated, it grows to fill a solid square or rectangular space no more than 20 feet on any side. The cube fills spaces well enough that Tiny creatures can't slip through, but it's far from a perfect seal. Liquids, gases, and minuscule creatures such as insects can still find ways around it. Depending on the irregularities of the space the cube fills, it might be possible to see or hear past it. Barricade Stone (Cylinder) Source Pathfinder #171: Hurricane's Howl pg. 75 Price 160 gp When activated, this cylinder expands to a diameter of 5 feet, 10 feet, or 20 feet, depending on the command, with respective maximum heights of 80 feet, 40 feet, and 20 feet. If a dimension can't be reached due to contact with another solid surface, the cylinder ceases to grow in that direction. You can activate the cylinder horizontally instead of vertically. If you do, the cylinder moves similarly to the sphere barricade stone, with the following changes: both DCs increase to 27, the damage increases to 6d6, and a creature that critically fails its Reflex save against the rolling cylinder gains the wounded 1 condition (or increases the value of its wounded condition by 1)."
+ },
+ {
+  "id": "barricade-stone-cylinder",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Barricade Stone (Cylinder)",
+  "level": 10,
+  "traits": [
+   "consumable",
+   "magical",
+   "structure"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨2⟩ command, Interact --- The ancient inhabitants of Bloodsalt crafted these magic rocks to construct defenses quickly. In its stone form, a *barricade stone* appears to be a simple pebble with an unnaturally geometric shape. The size and shape of the stone's final form depends on the type of barricade stone. When you activate the *barricade stone*, you drop it on the ground, throw it up to 20 feet away, or sling it using a sling weapon. Upon landing, the stone instantly and permanently expands. The stone grows to its maximum size. While normally items with the structure trait put creatures in their area inside the structure, this effect creates solid stone, so it can't be placed in an area where there are creatures. While it's likely to take some time even with the right tools, an activated *barricade stone* can be destroyed the same as any normal stone structure (Hardness 14, HP 56). --- **Type: Cylinder** When activated, this cylinder expands to a diameter of 5 feet, 10 feet, or 20 feet, depending on the command, with respective maximum heights of 80 feet, 40 feet, and 20 feet. If a dimension can't be reached due to contact with another solid surface, the cylinder ceases to grow in that direction. You can activate the cylinder horizontally instead of vertically. If you do, the cylinder moves similarly to the *Barricade Stone (Sphere)*, with the following changes: both DCs increase to 27, the damage increases to 6d6 damage, and a creature that critically fails its Reflex save against the rolling cylinder gains the Wounded 1 condition (or increases the value of its wounded condition by 1)."
+ },
+ {
+  "id": "bioluminescent-stripes",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Bioluminescent Stripes",
+  "level": 1,
+  "traits": [
+   "graft",
+   "invested",
+   "light",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "A line of glands embedded in your skin secretes a chemical that glows when it interacts with the air. As a single action, you can activate your bioluminescent stripes to glow with a bright light in a 20-foot radius and dim light for the next 20 feet. While you are glowing, you can't be undetected and you take a –4 item penalty to Stealth checks to Hide and Sneak. You can Dismiss the glow as a free action."
+ },
+ {
+  "id": "black-powder-flash",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Black Powder Flash",
+  "level": 10,
+  "traits": [
+   "archetype",
+   "visual"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're in Powder Punch Stance. --- You ignite a pinch of black powder in a foe's face. Choose an adjacent creature. It must attempt a save against your class DC. --- **Critical Success** The creature is unaffected. **Success** The creature is dazzled for 1 round. **Failure** The creature is blinded for 1 round and dazzled for 1 minute. The creature can rub its eyes as an Interact action to end this blinded condition. **Critical Failure** The creature is blinded for 1 round and dazzled for 1 hour."
+ },
+ {
+  "id": "blade-byrnie",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Blade Byrnie",
+  "level": 7,
+  "traits": [
+   "flexible",
+   "noisy"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Instead of chain links, this *+1 chain shirt* is assembled from metal \"leaves\" that each resemble a small blade. **Activate** ⟨1⟩ (manipulate) --- **Effect** You pull a link from the armor, which transforms into a *+1 striking Dagger*. The dagger disappears and reappears as a link in the armor after you Strike with it, or at the end of this turn if you don't make a Strike. You can Activate the blade byrnie in place of an Interact action to draw a weapon for abilities such as the Quick Draw feat. Upgrading the runes on the blade byrnie makes the daggers pulled from it more powerful. The daggers have a *+2 weapon potency* rune if the armor has a *+2 armor potency* rune, or a *+3 weapon potency* rune if the armor has a *+3 armor potency* rune."
+ },
+ {
+  "id": "blade-byrnie-greater",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Blade Byrnie (Greater)",
+  "level": 13,
+  "traits": [
+   "flexible",
+   "noisy"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Instead of chain links, this *+2 resilient chain shirt* is assembled from metal \"leaves\" that each resemble a small blade. **Activate** ⟨1⟩ (manipulate) --- **Effect** You pull a link from the armor, which transforms into a *+2 greater striking Dagger*. The dagger disappears and reappears as a link in the armor after you Strike with it, or at the end of this turn if you don't make a Strike. You can Activate the blade byrnie in place of an Interact action to draw a weapon for abilities such as the Quick Draw feat. Upgrading the runes on the blade byrnie makes the daggers pulled from it more powerful. The daggers have a *+2 weapon potency* rune if the armor has a *+2 armor potency* rune, or a *+3 weapon potency* rune if the armor has a *+3 armor potency* rune."
+ },
+ {
+  "id": "blade-byrnie-major",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Blade Byrnie (Major)",
+  "level": 19,
+  "traits": [
+   "flexible",
+   "noisy"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Instead of chain links, this *+3 greater resilient chain shirt* is assembled from metal \"leaves\" that each resemble a small blade. **Activate** ⟨1⟩ (manipulate) --- **Effect** You pull a link from the armor, which transforms into a *+3 greater striking Dagger*. The dagger disappears and reappears as a link in the armor after you Strike with it, or at the end of this turn if you don't make a Strike. You can Activate the blade byrnie in place of an Interact action to draw a weapon for abilities such as the Quick Draw feat. Upgrading the runes on the blade byrnie makes the daggers pulled from it more powerful. The daggers have a *+2 weapon potency* rune if the armor has a *+2 armor potency* rune, or a *+3 weapon potency* rune if the armor has a *+3 armor potency* rune."
+ },
+ {
+  "id": "blade-phantoms-guide",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Blade Phantom's Guide",
+  "level": 11,
+  "traits": [
+   "consumable",
+   "magical",
+   "whetstone"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- A blade phantom's guide is a metal rectangle, often on a chain, etched with an image of a warrior in a fighting stance. When you apply a *blade phantom's guide* to a weapon, it summons a spiritual fragment of a warrior who was adept with that weapon. For 1 minute, you treat your proficiency with that weapon as equal to your highest weapon proficiency. This effect cannot affect a weapon whose level is higher than the *blade phantom's guide* (11th)."
+ },
+ {
+  "id": "blazing-streak",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Blazing Streak",
+  "level": 10,
+  "traits": [
+   "flourish",
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're in Stoked Flame Stance. --- Stride twice, making Strikes against up to four different creatures within reach at any point during your movement. Flashing sparks Strikes made during Blazing Streak deal fire damage instead of slashing."
+ },
+ {
+  "id": "blazing-talon-surge",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Blazing Talon Surge",
+  "level": 6,
+  "traits": [
+   "fire",
+   "flourish",
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are in Rain of Embers Stance. --- You rush forward and latch onto your enemy with talons of hungering fire. Stride once. If you end your movement within reach of at least one enemy, you can make a fire talon Strike against that enemy that deals an additional 1d4 damage. If it hits and deals damage, you can attempt an Athletics check to Grapple the creature you hit."
+ },
+ {
+  "id": "blessed-reformer",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Blessed Reformer",
+  "level": 14,
+  "traits": [
+   "divine",
+   "holy",
+   "shove"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "The Empyreal word for \"repent\" is etched in golden lettering on the shaft of this *+2 greater striking merciful dawnsilver warhammer*. If you are unholy, you are Enfeebled 2 while carrying or wielding this weapon. **Activate** ⟨2⟩ (concentrate, manipulate) **Frequency** once per hour **Effect** You hold your weapon aloft, calling on righteousness to steel your resolve. You cast protection targeting yourself. --- **Redeemer Wielder** If you're a champion with the redemption cause, you also gain the following two benefits. - When you critically hit an unholy creature with the blessed reformer, until the end of your next turn, the creature takes a –10-foot penalty to its Speeds and can't Step. - You can Activate the weapon in the following way. **Activate** ⟨1⟩ (concentrate, manipulate) **Frequency** once per day **Requirements** You hit a creature using the blessed reformer as your last action --- **Effect** You cast Calm at the same rank as your champion focus spells. It must target the creature you hit, and the creature takes a status penalty on its save against the spell equal to the blessed reformer's number of weapon damage dice. --- **Craft Requirements** You're a champion with the redemption cause. The initial materials must include 140 gp of dawnsilver."
+ },
+ {
+  "id": "blessed-tattoo",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Blessed Tattoo",
+  "level": 4,
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨2⟩ envision, Interact **Frequency** once per day --- **Effect** You gain the effect of Protection against evil. You can activate the tattoo as a reaction instead of a two-action activity, triggered when a demon attacks you or you attempt a saving throw against a demon's ability."
+ },
+ {
+  "id": "boots-of-free-running",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Boots of Free Running",
+  "level": 5,
+  "traits": [
+   "invested",
+   "magical",
+   "transmutation"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Boots of Free Running Source Firebrands pg. 84 Usage worn shoes Bulk 1 Access Second-mark members of the Firebrands have access to this item. These comfortable and practical boots slip on easily and fill you with boundless energy. The treads of these boots provide exceptional traction, with improved grip on surfaces you would traditionally have difficulty traversing. While wearing the boots, you gain a +1 item bonus to Acrobatics checks to Balance and to Athletics checks to High Jump and Long Jump. Activate envision; Frequency once per day; Effect The traction of your boots improves, allowing you to run along vertical surfaces for 1 minute. When you Stride, you can run up solid vertical surfaces, like walls, at your full Speed. You must start your movement on a horizontal surface. If you end a Stride off the ground, you must Stride along the surface again until you reach a horizontal surface or you begin to fall (though you can Grab an Edge, if applicable). If you have means of walking on water, such as with water walk or similar abilities, you can also run along flimsy vertical surfaces, as well as vertical liquids such as a waterfall. Boots of Free Running (Lesser) Source Firebrands pg. 84 Price 135 gp Bulk 1 Boots of Free Running (Moderate) Source Firebrands pg. 84 Price 1,350 gp Bulk 1 The bonus is +2. You can activate the moderate boots of free running once per hour instead of once per day. Boots of Free Running (Greater) Source Firebrands pg. 84 Price 13,500 gp Bulk 1 The bonus is +3. You can activate the greater boots of free running without a frequency limit."
+ },
+ {
+  "id": "bottled-air",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Bottled Air",
+  "level": 7,
+  "traits": [
+   "air",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Appearing to be an ordinary corked glass bottle, this item contains a limitless supply of fresh air. You must uncork the bottle with an Interact action before you can activate it. **Activate—Breathe In** ⟨1⟩ (manipulate) --- **Effect** You draw a breath of air from the bottle. This allows you to breathe even in an airless or toxic environment. Air doesn't escape the mouth of the bottle, so leaving the open bottle in an airless environment doesn't change the environment."
+ },
+ {
+  "id": "bright-fetchling",
+  "lane": "toggle",
+  "collection": "heritages",
+  "name": "Bright Fetchling",
+  "traits": [],
+  "engineFieldsPresent": [
+   "innateSpells"
+  ],
+  "inRegistries": [],
+  "text": "Your body proves that shadow can't exist without light. Perhaps your eyes glow brighter or your veins occasionally pulse with light. You emit dim light within 5 feet of you. You can activate or suppress this ability as an action, which has the concentrate trait. Additionally, you can force fragments of your shadow to glow and cast Light as an occult innate cantrip. Cantrips are heightened to a spell rank equal to half your level rounded up."
+ },
+ {
+  "id": "bullet-dancer-burn",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Bullet Dancer Burn",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're wielding a simple combination weapon or an attached bayonet or reinforced stock. --- The fiery blaze of your weapon shocks your enemies. While in Bullet Dancer Stance, when you successfully Strike an opponent with the melee form of a combination weapon or a bayonet or reinforced stock attached to a simple firearm, the next ranged Strike you make against that opponent doesn't trigger reactions that would trigger on a ranged attack, such as Reactive Strike. While in Bullet Dancer Stance, when you make a successful ranged Strike against an opponent within your melee reach using a firearm, the next melee attack against that opponent with that weapon or a weapon attached to it deals an additional 1 fire damage and 1 persistent fire damage per weapon damage die of the attached firearm. The benefit on your next Strike from either use of Bullet Dancer Burn is lost if not used by the end of your next turn."
+ },
+ {
+  "id": "bullet-dancer-dedication",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Bullet Dancer Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You mix guns and melee into a deadly art. You gain the Bullet Dancer Stance action. You are also granted familiarity with bayonets, reinforced stocks, martial firearms, and martial combination weapons; for the purposes of proficiency and abilities from this archetype, you treat bayonets, reinforced stocks, martial firearms, and martial combination weapons as simple weapons. You gain access to uncommon combination weapons that have a firearm ranged form. **Bullet Dancer Stance** ⟨1⟩ (stance)"
+ },
+ {
+  "id": "bullet-dancer-reload",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Bullet Dancer Reload",
+  "level": 10,
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're in Bullet Dancer Stance. --- You've learned to reload your firearms with uncanny grace, the ammunition simply falling into place as though part of a well-practiced kata. You Strike with a simple firearm, and then Interact to reload that same firearm. You don't need a free hand to reload your weapon in this way."
+ },
+ {
+  "id": "cape-of-illumination",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Cape of Illumination",
+  "level": 5,
+  "traits": [
+   "evocation",
+   "invested",
+   "light",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Cape of Illumination Source Firebrands pg. 85 Usage worn cloak Bulk L Access Second-mark members of the Firebrands have access to this item. This golden cape, embroidered with vibrant red sun rays, sparkles like sunlight reflecting off the ocean. Activate command, Interact; Effect The cape glows with the effects of 1st-level light. You can Activate the cape again to Dismiss the effect. Activate envision, Interact; Frequency once per day; Effect You draw the cape and unleash a blinding flash of light. All enemies within 30 feet that can see you must attempt a DC 19 Fortitude save. Critical Success The creature is unaffected. Success The creature is dazzled for 1 round. Failure The creature is blinded for 1 round and dazzled for 1 minute. The creature can spend an Interact action rubbing its eyes to end the blinded condition. Critical Failure The creature is blinded for 1 round and dazzled for 1 hour. Cape of Illumination (Lesser) Source Firebrands pg. 85 Price 135 gp Bulk L Cape of Illumination (Moderate) Source Firebrands pg. 85 Price 600 gp Bulk L The cape glows with the effects of 4th-level light. The save DC is 25. Cape of Illumination (Greater) Source Firebrands pg. 85 Price 5,750 gp Bulk L The cape glows with the effects of 7th-level light. The frequency is once per hour. The save DC is 34."
+ },
+ {
+  "id": "cape-of-illumination-greater",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Cape of Illumination (Greater)",
+  "level": 15,
+  "traits": [
+   "invested",
+   "light",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This golden cape, embroidered with vibrant red sun rays, sparkles like sunlight reflecting off the ocean. **Activate** ⟨2⟩ command, Interact **Effect** The cape glows with the effects of 7th-rank Light. You can Activate the cape again to Dismiss the effect. --- **Activate** ⟨2⟩ envision, Interact **Frequency** once per hour **Effect** You draw the cape and unleash a blinding flash of light. All enemies within 30 feet that can see you must attempt a save. --- **Critical Success** The creature is unaffected. **Success** The creature is dazzled for 1 round. **Failure** The creature is blinded for 1 round and dazzled for 1 minute. The creature can spend an Interact action rubbing its eyes to end the blinded condition. **Critical Failure** The creature is blinded for 1 round and dazzled for 1 hour."
+ },
+ {
+  "id": "cape-of-illumination-lesser",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Cape of Illumination (Lesser)",
+  "level": 5,
+  "traits": [
+   "invested",
+   "light",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This golden cape, embroidered with vibrant red sun rays, sparkles like sunlight reflecting off the ocean. **Activate** ⟨2⟩ command, Interact **Effect** The cape glows with the effects of 1st-rank Light. You can Activate the cape again to Dismiss the effect. --- **Activate** ⟨2⟩ envision, Interact **Frequency** once per day **Effect** You draw the cape and unleash a blinding flash of light. All enemies within 30 feet that can see you must attempt a save. --- **Critical Success** The creature is unaffected. **Success** The creature is dazzled for 1 round. **Failure** The creature is blinded for 1 round and dazzled for 1 minute. The creature can spend an Interact action rubbing its eyes to end the blinded condition. **Critical Failure** The creature is blinded for 1 round and dazzled for 1 hour."
+ },
+ {
+  "id": "cape-of-illumination-moderate",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Cape of Illumination (Moderate)",
+  "level": 9,
+  "traits": [
+   "invested",
+   "light",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This golden cape, embroidered with vibrant red sun rays, sparkles like sunlight reflecting off the ocean. **Activate** ⟨2⟩ command, Interact **Effect** The cape glows with the effects of 4th-rank Light. You can Activate the cape again to Dismiss the effect. --- **Activate** ⟨2⟩ envision, Interact **Frequency** once per day **Effect** You draw the cape and unleash a blinding flash of light. All enemies within 30 feet that can see you must attempt a save. --- **Critical Success** The creature is unaffected. **Success** The creature is dazzled for 1 round. **Failure** The creature is blinded for 1 round and dazzled for 1 minute. The creature can spend an Interact action rubbing its eyes to end the blinded condition. **Critical Failure** The creature is blinded for 1 round and dazzled for 1 hour."
+ },
+ {
+  "id": "capture-magic",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Capture Magic",
+  "level": 8,
+  "traits": [
+   "magus"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Trigger** You succeed at your save against a foe's harmful spell, or a foe fails a spell attack roll against you from a harmful spell. --- When you resist a spell, you capture some of its magic for your own use. You enter your Arcane Cascade stance, using the triggering spell to determine what damage type your Arcane Cascade deals. Alternatively, if you're already in Arcane Cascade, you can instead amplify its effects temporarily. Until the end of your next turn, you gain a +2 status bonus to the damage from your Arcane Cascade."
+ },
+ {
+  "id": "caydens-tankard",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Cayden's Tankard",
+  "level": 25,
+  "traits": [
+   "agile",
+   "artifact",
+   "divine",
+   "thrown-20"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This ordinary-looking silver tankard functions as a *+4 major striking returning shockwave light hammer* when wielded as a weapon. Imbued with Cayden Cailean's courage, you are immune to fear effects. Any liquid poured into the tankard transforms into a strong, alcoholic ambrosia that remains contained safely within until you drink it. Drinking the ambrosia Activates the tankard, with one of the following effects. If you aren't the one blessed to borrow the tankard, you are Drained 4 and Enfeebled 4 while holding it, and its magic doesn't function for you. --- **Activate** ⟨5⟩ (manipulate) **Trigger** You are targeted or included in the area of a fear effect **Effect** Calmly swigging a drink on the battlefield turns your foe's attempt to frighten you against them. The fear effect is counteracted for all targets, and the creature that created the effect must attempt a saving throw as if it alone were the original target of the effect. --- **Activate** ⟨2⟩ (concentrate, manipulate) **Frequency** once per hour **Effect** You drink from the tankard, ending the controlled, grabbed, immobilized, paralyzed, restrained, and slowed conditions on yourself and creatures of your choice within 120 feet of you, as well as anything giving such targets a circumstance penalty to Speed. Any effect causing these conditions ends, and if the source of the effect is an item, that item can't produce the effect for 1 week, provided it is of a level lower than the tankard's. If a target needs to Escape an effect imposing any of these conditions, it automatically does so on its next attempt. You can Activate this ability even if one of the listed conditions would normally prevent you from doing so (such as paralyzed). --- **Activate** ⟨2⟩ (concentrate, manipulate) **Frequency** once per day **Effect** You enhance yourself with a shard of Cayden's divine fortune and cast indestructibility. --- **Destruction** If an unholy creature carries Cayden's Tankard into the Starstone Cathedral, drinks from it, and returns outside with it, the tankard shatters."
+ },
+ {
+  "id": "channel-elements",
+  "lane": "toggle",
+  "collection": "classFeatures",
+  "name": "Channel Elements",
+  "level": 1,
+  "traits": [
+   "aura",
+   "kineticist",
+   "primal"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** Your kinetic gate isn't active. --- You tap into your kinetic gate to make elements flow around you. Your kinetic aura activates, and as a part of this action, you can use a 1-action Elemental Blast or a 1-action stance impulse. Your kinetic aura is a 10-foot emanation where pieces of your kinetic element (or all your kinetic elements, if you can channel more than one) flow around you. The kinetic aura can't damage anything or affect the environment around you unless another ability allows it to. Channel Elements has the traits of all your kinetic elements. Your kinetic aura automatically deactivates if you're knocked out, you use an impulse with the overflow trait, or you Dismiss the aura. Though you can't use new impulses while your kinetic aura is deactivated, ones you already used remain, and you can still Sustain any that can be sustained. Stance impulses are linked to your kinetic aura and end when the aura deactivates."
+ },
+ {
+  "id": "channeled-protection",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Channeled Protection",
+  "level": 4,
+  "traits": [
+   "animist",
+   "apparition",
+   "aura"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Requirements** You are in Channeler's Stance and your last action was to Cast a Spell from your spell slots. --- Your apparition uses excess energy to protect you. You and all adjacent allies gain a +1 status bonus to your AC and to your Reflex saving throws until the start of your next turn. If the spell was at least 7th rank, the status bonus increase to +2."
+ },
+ {
+  "id": "claw-and-talon-flow",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Claw and Talon Flow",
+  "level": 12,
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're in either claw stance or talon stance. --- You fluidly shift between your two stances. You use the unarmed attack associated with your current clawdancer stance, then switch into the other stance (if you're in claw stance, make a frenzied claw Strike and then shift to talon stance, or vice versa)."
+ },
+ {
+  "id": "claw-snag",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Claw Snag",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** A creature attempts to Escape while you have them grabbed or restrained. --- You hook into the target, pulling yourself forward and rending flesh. Shift into claw stance if you aren't in it already, then make a frenzied claw Strike against the triggering creature."
+ },
+ {
+  "id": "clawdancer-dedication",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Clawdancer Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've practiced the art of fighting with your natural claws, hooking them into prey and thrashing at targets surrounding you. You gain the following two actions, which let you assume specific stances to strike more effectively with your claws. Claw Stance Talon Stance"
+ },
+ {
+  "id": "clawed-bracers",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Clawed Bracers",
+  "level": 7,
+  "traits": [
+   "invested",
+   "primal"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Animal claws are woven into the thick leather of these bracers. --- **Activate—Extend Claws** ⟨1⟩ (manipulate, morph) **Frequency** once per hour **Effect** The bracers fuse temporarily with your forearms, with the claws extending to your fingertips. You gain a climb Speed of 20 feet and a claw unarmed attack with the agile and finesse traits that deals 1d6 slashing damage. This lasts for 10 minutes or until you Dismiss it."
+ },
+ {
+  "id": "clinging-shadows-initiate",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Clinging Shadows Initiate",
+  "level": 8,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [
+   "focusSpells"
+  ],
+  "inRegistries": [],
+  "text": "You learn a mystical stance that transforms your qi into sticky smoke that shrouds your limbs. You gain the Clinging Shadows Stance qi spell. While entering the stance is a qi spell, the shadow grasp attacks it grants are not, so you can use them as often as you like while in the stance."
+ },
+ {
+  "id": "cloak-of-elvenkind",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Cloak of Elvenkind",
+  "level": 7,
+  "traits": [
+   "illusion",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "innateSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This cloak is deep green with a voluminous hood, embroidered with gold trim and symbols significant in elven culture. The cloak allows you to cast the Ghost Sound cantrip as an arcane innate spell. When you adjust the cloak's clasp (an Interact action), the cloak transforms to match the environment around you and muffles your sounds, granting you a +1 item bonus to Stealth checks. --- **Activate** ⟨2⟩ Interact **Frequency** once per day --- **Effect** You draw the hood up and gain the effects of , with the spell's normal duration or until you pull the hood back down, whichever comes first. If you're also wearing Boots of Elvenkind you can activate this ability twice per day."
+ },
+ {
+  "id": "cloak-of-elvenkind-greater",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Cloak of Elvenkind (Greater)",
+  "level": 12,
+  "traits": [
+   "illusion",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "innateSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This cloak is deep green with a voluminous hood, embroidered with gold trim and symbols significant in elven culture. The cloak allows you to cast the Ghost Sound cantrip as an arcane innate spell. When you adjust the cloak's clasp (an Interact action), the cloak transforms to match the environment around you and muffles your sounds, granting you a +2 item bonus to Stealth checks. --- **Activate** ⟨2⟩ Interact **Frequency** once per day --- **Effect** You draw the hood up and gain the effects of a 4th-rank , with the spell's normal duration or until you pull the hood back down, whichever comes first. If you're also wearing Boots of Elvenkind, you can activate this ability twice per day, and it allows you to Sneak in forest environments even when creatures are currently observing you."
+ },
+ {
+  "id": "cobra-envenom",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Cobra Envenom",
+  "level": 10,
+  "traits": [
+   "monk",
+   "poison"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Frequency** once per minute **Requirements** You are in Cobra Stance. --- You slightly dislocate your joints to lash out with devious intent and the power to envenom your foe. Make a cobra fang Strike. Your reach with this Strike is 5 feet greater than normal. If this Strike hits, the persistent poison damage from your venomous trait increases to 1d4 damage per weapon damage die. --- **Special** If you have this feat, the circumstance bonus to Fortitude saves and Fortitude DC granted by Cobra Stance increases from +1 to +2."
+ },
+ {
+  "id": "collar-of-inconspicuousness",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Collar of Inconspicuousness",
+  "level": 8,
+  "traits": [
+   "companion",
+   "invested",
+   "primal"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This leather collar's worn and almost threadbare look belies its magical nature. When your companion wears and invests the collar, it gains the ability to change its appearance from that of a ferocious animal into a more inconspicuous form. **Activate—Adorable Guise** ⟨1⟩ envision --- **Effect** You touch your animal companion to transform it into a nonthreatening Tiny creature of the same family or a similar creature (for instance, a house cat instead of a tiger, or a puppy instead of a wolf). This has the effects of Pest Form (2nd rank, or 4th rank if your companion can fly). The effect lasts until you Dismiss it."
+ },
+ {
+  "id": "communal-sustain",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Communal Sustain",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per round --- Choose one spell with a sustained duration that one of your allies has in effect. You must be within 30 feet of the chosen ally. The ally can Sustain the Spell once as a free action, triggered at the start of their next turn."
+ },
+ {
+  "id": "confounding-image",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Confounding Image",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "When you cast Mirror Image, you can modify its duration to be sustained up to 1 minute and modify its range to 30 feet. If you do, replace the spell's standard effects with the following: You create an illusory duplicate of yourself that appears in an unoccupied square within range. The image takes up space and has a reach of 5 feet, and your allies can flank with the image. It doesn't have any other attributes a creature would normally have other than an AC equal to your spell DC and saving throw modifiers equal to your spell DC - 10. If the image is hit by an attack or fails a save, or if you ever move more than 30 feet from it, the spell ends. Creatures can move through its space without hindrance. When you Sustain the Spell, you can move the image to an unoccupied square within range."
+ },
+ {
+  "id": "convergent-tides",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Convergent Tides",
+  "level": 2,
+  "traits": [
+   "magus",
+   "water"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your footwork is like the convergence of tides, granting your body supernatural power and fluidity. While you're in Arcane Cascade stance, you ignore difficult terrain caused by water, such as walking along a flooded path or swimming in rough water."
+ },
+ {
+  "id": "cordelias-construct-key",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Cordelia's Construct Key",
+  "level": 8,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Worn on a necklace, this intricate key grants you greater facility with constructs. The key alerts you to constructs lurking around you. Whether or not you are Investigating, the GM automatically rolls secret Recall Knowledge checks for you when you see a construct pretending to be a normal object, statue, or the like. Typically, this check is Arcana, Crafting, or an appropriate Lore skill. On a success, you recognize the presence of the construct and gain the usual benefits of Recall Knowledge. While you're wearing the key, if your attack reduces a construct to 0 Hit Points, instead of destroying it completely, you can send it into a dormant state, from which you can study its inner workings and possibly (at the GM's discretion) spend time and money to reprogram or repurpose it. Even if you don't subvert it, you can Repair a construct rendered dormant this way, allowing you to return tomb guardians to their vigil after you've battled them. Additionally, you can activate the key in two ways to call a construct to serve you. --- **Activate** ⟨2⟩ command, Interact **Frequency** once per hour --- **Effect** You turn the key in the air and create a magic glyph. The key casts 3rd-rank Summon Construct. --- **Activate** 1 minute (command, envision, Interact) **Frequency** once per day --- **Effect** You place the key on a Small object and turn it, creating a simple animated object for 1 hour. The animated object has the statistics of an Animated Broom but has no bristles Strike and can't attack. It performs simple and broad menial tasks for you in exploration or downtime but is too slow to react to individual commands to assist you in a combat encounter."
+ },
+ {
+  "id": "cordelias-construct-key-greater",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Cordelia's Construct Key (Greater)",
+  "level": 12,
+  "traits": [
+   "conjuration",
+   "invested",
+   "magical",
+   "transmutation"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Cordelia's Construct Key Source PFS Guide pg. 123 Usage worn Worn on a necklace, this intricate key grants you greater facility with constructs. The key alerts you to constructs lurking around you. Whether or not you are Investigating, the GM automatically rolls secret Recall Knowledge checks for you when you see a construct pretending to be a normal object, statue, or the like. Typically, this check is Arcana, Crafting, or an appropriate Lore skill. On a success, you recognize the presence of the construct and gain the usual benefits of Recall Knowledge. While you're wearing the key, if your attack reduces a construct to 0 Hit Points, instead of destroying it completely, you can send it into a dormant state, from which you can study its inner workings and possibly (at the GM's discretion) spend time and money to reprogram or repurpose it. Even if you don't subvert it, you can Repair a construct rendered dormant this way, allowing you to return tomb guardians to their vigil after you've battled them. Additionally, you can activate the key in two ways to call a construct to serve you. Activate command, Interact; Frequency once per hour; Effect You turn the key in the air and create a magic glyph. The key casts 3rd-level summon construct. Activate 1 minute (command, envision, Interact); Frequency once per day; Effect You place the key on a Small object and turn it, creating a simple animated object for 1 hour. The animated object has the statistics of an animated broom but has no bristles Strike and can't attack. It performs simple and broad menial tasks for you in exploration or downtime but is too slow to react to individual commands to assist you in a combat encounter. Cordelia's Construct Key Source PFS Guide pg. 123 Price 450 gp Usage worn Cordelia's Construct Key (Greater) Source PFS Guide pg. 123 Price 1,750 gp Usage worn A greater key allows you to fully comprehend and thus partially bypass a construct's resistances. You ignore the first 5 resistance a construct has against your damaging effects, whether martial or magical. Additionally, the key's first activation casts a 5th-level summon construct, and its second activation lasts 8 hours."
+ },
+ {
+  "id": "cordelias-greater-construct-key",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Cordelia's Greater Construct Key",
+  "level": 12,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Worn on a necklace, this intricate key grants you greater facility with constructs. The key alerts you to constructs lurking around you. Whether or not you are Investigating, the GM automatically rolls secret Recall Knowledge checks for you when you see a construct pretending to be a normal object, statue, or the like. Typically, this check is Arcana, Crafting, or an appropriate Lore skill. On a success, you recognize the presence of the construct and gain the usual benefits of Recall Knowledge. While you're wearing the key, if your attack reduces a construct to 0 Hit Points, instead of destroying it completely, you can send it into a dormant state, from which you can study its inner workings and possibly (at the GM's discretion) spend time and money to reprogram or repurpose it. Even if you don't subvert it, you can Repair a construct rendered dormant this way, allowing you to return tomb guardians to their vigil after you've battled them. Additionally, you can activate the key in two ways to call a construct to serve you. A greater key allows you to fully comprehend and thus partially bypass a construct's resistances. You ignore the first 5 resistance a construct has against your damaging effects, whether martial or magical. --- **Activate** ⟨2⟩ command, Interact **Frequency** once per hour --- **Effect** You turn the key in the air and create a magic glyph. The key casts 5th-rank Summon Construct. --- **Activate** 1 minute (command, envision, Interact) **Frequency** once per day --- **Effect** You place the key on a Small object and turn it, creating a simple animated object for 8 hours. The animated object has the statistics of an Animated Broom but has no bristles Strike and can't attack. It performs simple and broad menial tasks for you in exploration or downtime but is too slow to react to individual commands to assist you in a combat encounter."
+ },
+ {
+  "id": "cowl-of-keys",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Cowl of Keys",
+  "level": 17,
+  "traits": [
+   "apex",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This simple, tattered cloak is a faded green and features small, stylized keys sewn throughout its length. While wearing the cloak, you fade into the shadows and gain a +3 item bonus to Stealth checks. When you invest the cloak, you either increase your Dexterity score by 2 or increase it to 18, whichever would give you a higher score. **Activate** ⟨1⟩ Interact **Effect** You brush your hand against the cloak and your fingers transform into picks, tension wrenches, skeleton keys, and any other tools, providing you with a full set of Thieves' Tools. This transformation doesn't otherwise hamper the normal use of your fingers or hands. These tools never break when you critically fail your check to Pick a Lock. You can Activate the cloak again to revert your fingers to normal. --- **Activate** ⟨2⟩ envision, Interact **Frequency** once per day **Effect** You place your hand against a wall, floor, or ceiling. You create a magical doorway within the surface that a creature can move through, as if the door had always been there. The doorway can penetrate up to 10 feet of material; particularly thick material, such as heavy stone walls, can cause this effect to fail, expending its use for the day. You can use an Interact action on the door to remove it from the surface and return it to its previous shape."
+ },
+ {
+  "id": "cracked-mountain",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Cracked Mountain",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** You would be reduced to 0 Hit Points but not immediately killed. **Requirements** You are in Tenacious Stance. --- You fight on, staying on your feet and lashing out at a foe. You avoid being knocked out and remain at 1 Hit Point, and your wounded condition increases by 1. Make a melee Strike at an enemy within reach. You immediately end your Tenacious Stance."
+ },
+ {
+  "id": "crane-flutter",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Crane Flutter",
+  "level": 6,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Trigger** You are targeted with an attack by an observed attacker. **Requirements** You are in Crane Stance. --- You interpose your arm between yourself and your opponent. Your circumstance bonus to AC from Crane Stance increases to +3 against the triggering attack. If the attack misses you and the attacker is within your reach, you can immediately make a crane wing Strike against the attacker at a -2 penalty."
+ },
+ {
+  "id": "creative-spark",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Creative Spark",
+  "level": 0,
+  "traits": [
+   "conjuration",
+   "fire"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Creative Spark Source Highhelm pg. 114 Aspect Forge Activate command, Interact; Frequency once per day; Effect You strike the relic against a piece of flint and summon a fire wisp to assist you, which appears in an unoccupied square next to you. The fire wisp doesn't act in combat, but it can assist you while you Craft items. You gain a +1 bonus to Crafting checks involving blacksmithing and general metalworking, increasing to +2 at 9th level and +3 at 17th level. Once per day, when you roll a critical failure on a Crafting check related to blacksmithing, you get a failure instead. The wisp replaces the need for a forge while blacksmithing, but you still require other equipment and tools. The wisp remains for up to 10 minutes or until you Dismiss it. You can extend this duration by an additional 10 minutes if you feed the wisp one light Bulk worth of charcoal or firewood, or one pint of oil."
+ },
+ {
+  "id": "cross-the-final-horizon",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Cross the Final Horizon",
+  "level": 20,
+  "traits": [
+   "archetype",
+   "electricity",
+   "force",
+   "sonic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're in Sky and Heaven Stance. --- You Stride up to your Speed, and your ki enshrouds your limbs in terrifying stormy energy, increasing the reach of your Sky and Heaven Stance unarmed attacks by 5 feet. At the end of your movement, make up to three Strikes against a target you can reach, each at a –2 penalty. Each attack counts toward your multiple attack penalty, but the multiple attack penalty doesn't increase until after you've made all your attacks. Instead of the usual slashing or piercing damage, the damage for these Strikes is either electricity or sonic, as you choose with each Strike. If you successfully hit with all three Strikes, the target is Drained 3."
+ },
+ {
+  "id": "crown-of-insight",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Crown of Insight",
+  "level": 7,
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "A series of evenly spaced, unblinking tattooed eyes line your skin. When you enter an area that contains creatures within 60 feet that are unnoticed to you, the GM rolls a secret Perception check for you against the creatures' Stealth DCs. On a success, the creature becomes undetected by you, rather than unnoticed, and on a critical success, the creature becomes hidden to you. All creatures in the area are then temporarily immune to your crown of insight for 24 hours. The crown of insight doesn't help you find hidden items or traps, nor can it help you discern a creature hiding in plain sight, such as a gargoyle pretending to be an inanimate statue. Additionally, since the effect occurs when you move to enter an area that contains creatures, it doesn't detect an unnoticed creature Sneaking up on you."
+ },
+ {
+  "id": "cruel-piercing",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Cruel Piercing",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You learn to impale your targets. When you're in Golden Erinys Stance, you gain the Puncture Flesh action."
+ },
+ {
+  "id": "culverts-collapse",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Culvert's Collapse",
+  "level": 6,
+  "traits": [
+   "monk",
+   "water"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are in Flood Stance and were damaged by an enemy since your previous turn. --- Under your foes' onslaught, the water within your violent blood stirs. Your killing intent swells, your agonies marshaling your inevitable resurgence. Make a flooded river Strike against the enemy who dealt damage to you since your previous turn. That Strike deals an additional 1d8 bleed damage."
+ },
+ {
+  "id": "curled-cure-gel",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Curled Cure Gel",
+  "level": 7,
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** Treat Wounds --- Curled cure secretes a gel that gently warms the skin and stimulates healing. You can Activate the item as part of the same activity you use to Treat Wounds. If you successfully Treat Wounds, you can also reduce the value of one of the targets' clumsy, enfeebled, or stupefied conditions by 1. The target of your Treat Wounds is then temporarily immune to curled cure gel for 24 hours, whether or not your attempt to Treat Wounds was successful."
+ },
+ {
+  "id": "curse-maelstrom-dedication",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Curse Maelstrom Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "A horrible curse has left a lingering stain on your soul, and its effects continue to plague you even if the curse's other effects have ended. You can choose to suppress it, but if you instead let it manifest, you can channel its power in your favor. During an encounter, when you succeed at a check, the GM can offer to have you roll again, taking the second result. This is a misfortune effect. If you do so, you enter a curse maelstrom state. If the misfortune effect is somehow canceled or negated (by a fortune effect, for example), you don't enter a curse maelstrom state. In addition, the curse is jealous of its place within your soul and gladly lashes out whenever others dare to usurp that position, granting you its power without the usual price. If a foe places a misfortune effect on your roll and the effect applies to your roll, you enter a curse maelstrom state, and if you fail a saving throw against a foe's curse effect and are affected by the curse, you also enter a curse maelstrom state. No matter the source, you can only enter a curse maelstrom state during an encounter, and if you don't end the state on your own, it ends at the end of the encounter. Once it ends, you can't enter a curse maelstrom state again for 1 minute. While in a curse maelstrom state, you can't benefit from fortune effects, and they also don't cancel misfortune effects on you; they simply have no effect. While in this state, all creatures other than you within a take a -1 status penalty to all saving throws and skill checks due to the storm of bad luck swirling out of your body. You gain the Expel Maelstrom action, which you can use to focus the brunt of your curses onto an unlucky target."
+ }
+]

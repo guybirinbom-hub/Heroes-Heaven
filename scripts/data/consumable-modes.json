@@ -1,0 +1,4318 @@
+[
+ {
+  "id": "item-addiction-suppressant-greater",
+  "name": "Addiction Suppressed",
+  "fromItemId": "addiction-suppressant-greater",
+  "duration": "1 day",
+  "survivesRest": true,
+  "note": "Addictions are afflictions whose ongoing save is a Fortitude save. Also suppresses that addiction's effects for the day without increasing the addiction DC.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 3,
+    "appliesWhen": "against the ongoing save for the suppressed drug's addiction"
+   }
+  ]
+ },
+ {
+  "id": "item-addiction-suppressant-lesser",
+  "name": "Addiction Suppressed",
+  "fromItemId": "addiction-suppressant-lesser",
+  "duration": "1 day",
+  "survivesRest": true,
+  "note": "Addictions are afflictions whose ongoing save is a Fortitude save, so the bonus is targeted there. For the same day it also suppresses that addiction's effects as if you'd taken a dose, without the drug's effects and without raising the addiction DC.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "against the ongoing save for the suppressed drug's addiction"
+   }
+  ]
+ },
+ {
+  "id": "item-addiction-suppressant-major",
+  "name": "Addiction Suppressed",
+  "fromItemId": "addiction-suppressant-major",
+  "duration": "1 day",
+  "survivesRest": true,
+  "note": "Addictions are afflictions whose ongoing save is a Fortitude save. Also suppresses that addiction's effects for the day without increasing the addiction DC.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 4,
+    "appliesWhen": "against the ongoing save for the suppressed drug's addiction"
+   }
+  ]
+ },
+ {
+  "id": "item-addiction-suppressant-moderate",
+  "name": "Addiction Suppressed",
+  "fromItemId": "addiction-suppressant-moderate",
+  "duration": "1 day",
+  "survivesRest": true,
+  "note": "Addictions are afflictions whose ongoing save is a Fortitude save. Also suppresses that addiction's effects for the day without increasing the addiction DC.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "against the ongoing save for the suppressed drug's addiction"
+   }
+  ]
+ },
+ {
+  "id": "item-affliction-suppressant-greater",
+  "name": "Affliction Suppressant",
+  "fromItemId": "affliction-suppressant-greater",
+  "duration": "10 minutes",
+  "note": "Doesn't apply to a daily save against a disease or curse; it covers initial exposure and saves from stages of 10 minutes or less.",
+  "modifiers": [
+   {
+    "value": 3,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against afflictions"
+   }
+  ]
+ },
+ {
+  "id": "item-affliction-suppressant-lesser",
+  "name": "Affliction Suppressant",
+  "fromItemId": "affliction-suppressant-lesser",
+  "duration": "10 minutes",
+  "note": "Too short-lived to apply to a daily save against a disease or curse; it covers initial exposure and saves from stages of 10 minutes or less.",
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against afflictions"
+   }
+  ]
+ },
+ {
+  "id": "item-affliction-suppressant-major",
+  "name": "Affliction Suppressant",
+  "fromItemId": "affliction-suppressant-major",
+  "duration": "10 minutes",
+  "note": "On drinking it you may attempt a save against one affliction of 14th level or lower affecting you; on a success its symptoms are suppressed for 10 minutes without its duration elapsing. Doesn't apply to a daily save against a disease or curse.",
+  "modifiers": [
+   {
+    "value": 4,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against afflictions"
+   }
+  ]
+ },
+ {
+  "id": "item-affliction-suppressant-moderate",
+  "name": "Affliction Suppressant",
+  "fromItemId": "affliction-suppressant-moderate",
+  "duration": "10 minutes",
+  "note": "Doesn't apply to a daily save against a disease or curse; it covers initial exposure and saves from stages of 10 minutes or less.",
+  "modifiers": [
+   {
+    "value": 2,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against afflictions"
+   }
+  ]
+ },
+ {
+  "id": "item-animal-turning-fulu",
+  "name": "Concealed from Beast",
+  "fromItemId": "animal-turning-fulu",
+  "duration": "until the start of your next turn",
+  "note": "The +2 item bonus to AC is against the triggering Strike only — one roll, not a duration, so it is not a sheet modifier. The lasting part is concealment from that one creature until the start of your next turn.",
+  "modifiers": []
+ },
+ {
+  "id": "item-antidote-greater",
+  "name": "Antidote",
+  "fromItemId": "antidote-greater",
+  "duration": "6 hours",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 4,
+    "appliesWhen": "against poisons"
+   }
+  ]
+ },
+ {
+  "id": "item-antidote-lesser",
+  "name": "Antidote",
+  "fromItemId": "antidote-lesser",
+  "duration": "6 hours",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "against poisons"
+   }
+  ]
+ },
+ {
+  "id": "item-antidote-major",
+  "name": "Antidote",
+  "fromItemId": "antidote-major",
+  "duration": "6 hours",
+  "note": "On drinking, immediately attempt a save against one poison of 14th level or lower affecting you; on a success it is neutralized (one-time, not part of the ongoing mode).",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 4,
+    "appliesWhen": "against poisons"
+   }
+  ]
+ },
+ {
+  "id": "item-antidote-moderate",
+  "name": "Antidote",
+  "fromItemId": "antidote-moderate",
+  "duration": "6 hours",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 3,
+    "appliesWhen": "against poisons"
+   }
+  ]
+ },
+ {
+  "id": "item-antifungal-salve-greater",
+  "name": "Antifungal Salve (Greater)",
+  "fromItemId": "antifungal-salve-greater",
+  "duration": "6 hours",
+  "note": "Duration is stated in the following sentence: \"The bonus lasts for 6 hours.\"",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 4,
+    "appliesWhen": "against afflictions with the fungus trait or from fungus creatures"
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "item",
+    "value": 4,
+    "appliesWhen": "against afflictions with the fungus trait or from fungus creatures"
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "item",
+    "value": 4,
+    "appliesWhen": "against afflictions with the fungus trait or from fungus creatures"
+   }
+  ]
+ },
+ {
+  "id": "item-antifungal-salve-lesser",
+  "name": "Antifungal Salve (Lesser)",
+  "fromItemId": "antifungal-salve-lesser",
+  "duration": "6 hours",
+  "note": "Duration is stated in the following sentence: \"The bonus lasts for 6 hours.\"",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "against afflictions with the fungus trait or from fungus creatures"
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "against afflictions with the fungus trait or from fungus creatures"
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "against afflictions with the fungus trait or from fungus creatures"
+   }
+  ]
+ },
+ {
+  "id": "item-antifungal-salve-major",
+  "name": "Antifungal Salve (Major)",
+  "fromItemId": "antifungal-salve-major",
+  "duration": "6 hours",
+  "note": "Duration is stated in the following sentence: \"The bonus lasts for 6 hours.\" On application only, the target may immediately attempt a save against one fungal affliction of 14th level or lower affecting them; on a success the affliction is neutralized — a one-shot cure outside the mode.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 4,
+    "appliesWhen": "against afflictions with the fungus trait or from fungus creatures"
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "item",
+    "value": 4,
+    "appliesWhen": "against afflictions with the fungus trait or from fungus creatures"
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "item",
+    "value": 4,
+    "appliesWhen": "against afflictions with the fungus trait or from fungus creatures"
+   }
+  ]
+ },
+ {
+  "id": "item-antifungal-salve-moderate",
+  "name": "Antifungal Salve (Moderate)",
+  "fromItemId": "antifungal-salve-moderate",
+  "duration": "6 hours",
+  "note": "Duration is stated in the following sentence: \"The bonus lasts for 6 hours.\"",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 3,
+    "appliesWhen": "against afflictions with the fungus trait or from fungus creatures"
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "item",
+    "value": 3,
+    "appliesWhen": "against afflictions with the fungus trait or from fungus creatures"
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "item",
+    "value": 3,
+    "appliesWhen": "against afflictions with the fungus trait or from fungus creatures"
+   }
+  ]
+ },
+ {
+  "id": "item-antiplague-greater",
+  "name": "Antiplague",
+  "fromItemId": "antiplague-greater",
+  "duration": "24 hours",
+  "survivesRest": true,
+  "note": "Applies to the daily save against a disease's progression.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 4,
+    "appliesWhen": "against diseases"
+   }
+  ]
+ },
+ {
+  "id": "item-antiplague-lesser",
+  "name": "Antiplague",
+  "fromItemId": "antiplague-lesser",
+  "duration": "24 hours",
+  "survivesRest": true,
+  "note": "Applies to the daily save against a disease's progression.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "against diseases"
+   }
+  ]
+ },
+ {
+  "id": "item-antiplague-major",
+  "name": "Antiplague",
+  "fromItemId": "antiplague-major",
+  "duration": "24 hours",
+  "survivesRest": true,
+  "note": "Applies to the daily save against a disease's progression. On drinking, immediately attempt a save against one disease of 14th level or lower affecting you; on a success you are cured (one-time, not part of the ongoing mode).",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 4,
+    "appliesWhen": "against diseases"
+   }
+  ]
+ },
+ {
+  "id": "item-antiplague-moderate",
+  "name": "Antiplague",
+  "fromItemId": "antiplague-moderate",
+  "duration": "24 hours",
+  "survivesRest": true,
+  "note": "Applies to the daily save against a disease's progression.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 3,
+    "appliesWhen": "against diseases"
+   }
+  ]
+ },
+ {
+  "id": "item-antivenom-potion",
+  "name": "Antivenom",
+  "fromItemId": "antivenom-potion",
+  "duration": "1 minute",
+  "note": "On drinking, you may immediately attempt a check to end any persistent poison damage you're taking - a one-time effect outside the duration.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "untyped",
+    "value": 1,
+    "appliesWhen": "to avoid taking persistent poison damage"
+   }
+  ]
+ },
+ {
+  "id": "item-aroma-concealer",
+  "name": "Aroma Concealer",
+  "fromItemId": "aroma-concealer",
+  "duration": "1 hour",
+  "note": "Takes 1 minute to apply and one dose covers a Medium or smaller creature; the effect lasts 1 hour after applying. The same +2 also applies to the DC to Track the creature by scent. If applied to an ally, the mode belongs on their sheet.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "stealth",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "to Hide or Sneak against creatures relying primarily on smell"
+   }
+  ]
+ },
+ {
+  "id": "item-ashes-of-the-war-god",
+  "name": "War God's Ashes",
+  "fromItemId": "ashes-of-the-war-god",
+  "duration": "1 hour",
+  "note": "The ashes have two other uses instead of the elixir option, both lasting 1 day and both handled as gear rather than as this mode: applied to armor it becomes +3 major resilient armor, applied to a weapon it becomes a +3 major striking weapon. In each case existing property runes are retained.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "athletics",
+    "type": "item",
+    "value": 3
+   },
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 3
+   }
+  ]
+ },
+ {
+  "id": "item-auric-noodles",
+  "name": "Auric Noodles",
+  "fromItemId": "auric-noodles",
+  "duration": "24 hours or until your next daily preparations, whichever comes first",
+  "survivesRest": true,
+  "note": "Identify Magic is rolled with Arcana, Nature, Occultism, or Religion, so the bonus is listed on those four. For the same duration you can also move at full speed while using the Detect Magic exploration activity, which is not a sheet number.",
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "item",
+    "target": "skill",
+    "detail": "arcana",
+    "appliesWhen": "checks to Identify Magic"
+   },
+   {
+    "value": 1,
+    "type": "item",
+    "target": "skill",
+    "detail": "nature",
+    "appliesWhen": "checks to Identify Magic"
+   },
+   {
+    "value": 1,
+    "type": "item",
+    "target": "skill",
+    "detail": "occultism",
+    "appliesWhen": "checks to Identify Magic"
+   },
+   {
+    "value": 1,
+    "type": "item",
+    "target": "skill",
+    "detail": "religion",
+    "appliesWhen": "checks to Identify Magic"
+   }
+  ]
+ },
+ {
+  "id": "item-aurochs-jerky",
+  "name": "Aurochs Jerky",
+  "fromItemId": "aurochs-jerky",
+  "duration": "1 hour",
+  "note": "Cosmetic horns grow for the duration; you can end the effect early with a free action (concentrate). Separately, the jerky's Aurochs' Endurance activation (4 actions, triggered when you begin your turn fatigued) suppresses fatigued for 10 minutes and grants a +2 item bonus to saves against effects that would fatigue you - that is its own, shorter mode.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 1
+   }
+  ]
+ },
+ {
+  "id": "item-bendy-arm-mutagen-greater",
+  "name": "Bendy-Arm (Greater)",
+  "fromItemId": "bendy-arm-mutagen-greater",
+  "duration": "1 hour",
+  "note": "Reach increases by 10 feet at this grade, and the damage drawback is -1 per damage die to all weapon and unarmed attack damage (not a flat -1).",
+  "modifiers": [
+   {
+    "value": 3,
+    "type": "item",
+    "target": "skill",
+    "detail": "acrobatics",
+    "appliesWhen": "on checks to Escape, Squeeze, and Tumble Through"
+   },
+   {
+    "value": -1,
+    "type": "untyped",
+    "target": "skill",
+    "detail": "athletics"
+   },
+   {
+    "value": -1,
+    "type": "untyped",
+    "target": "skill",
+    "detail": "stealth"
+   },
+   {
+    "value": -1,
+    "type": "untyped",
+    "target": "skill",
+    "detail": "thievery"
+   },
+   {
+    "value": -1,
+    "type": "untyped",
+    "target": "attack"
+   }
+  ]
+ },
+ {
+  "id": "item-bendy-arm-mutagen-lesser",
+  "name": "Bendy-Arm (Lesser)",
+  "fromItemId": "bendy-arm-mutagen-lesser",
+  "duration": "1 minute",
+  "note": "Two printed effects the numbers can't express: your reach increases by 5 feet, and the damage drawback is -1 PER DAMAGE DIE to all weapon and unarmed attack damage (not a flat -1), so it should not be emitted as a damage modifier.",
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "item",
+    "target": "skill",
+    "detail": "acrobatics",
+    "appliesWhen": "on checks to Escape, Squeeze, and Tumble Through"
+   },
+   {
+    "value": -1,
+    "type": "untyped",
+    "target": "skill",
+    "detail": "athletics"
+   },
+   {
+    "value": -1,
+    "type": "untyped",
+    "target": "skill",
+    "detail": "stealth"
+   },
+   {
+    "value": -1,
+    "type": "untyped",
+    "target": "skill",
+    "detail": "thievery"
+   },
+   {
+    "value": -1,
+    "type": "untyped",
+    "target": "attack"
+   }
+  ]
+ },
+ {
+  "id": "item-bendy-arm-mutagen-major",
+  "name": "Bendy-Arm (Major)",
+  "fromItemId": "bendy-arm-mutagen-major",
+  "duration": "1 hour",
+  "note": "Reach increases by 15 feet at this grade, and the damage drawback is -1 per damage die to all weapon and unarmed attack damage (not a flat -1).",
+  "modifiers": [
+   {
+    "value": 4,
+    "type": "item",
+    "target": "skill",
+    "detail": "acrobatics",
+    "appliesWhen": "on checks to Escape, Squeeze, and Tumble Through"
+   },
+   {
+    "value": -1,
+    "type": "untyped",
+    "target": "skill",
+    "detail": "athletics"
+   },
+   {
+    "value": -1,
+    "type": "untyped",
+    "target": "skill",
+    "detail": "stealth"
+   },
+   {
+    "value": -1,
+    "type": "untyped",
+    "target": "skill",
+    "detail": "thievery"
+   },
+   {
+    "value": -1,
+    "type": "untyped",
+    "target": "attack"
+   }
+  ]
+ },
+ {
+  "id": "item-bendy-arm-mutagen-moderate",
+  "name": "Bendy-Arm (Moderate)",
+  "fromItemId": "bendy-arm-mutagen-moderate",
+  "duration": "10 minutes",
+  "note": "Reach increases by 5 feet, and the damage drawback is -1 per damage die to all weapon and unarmed attack damage (not a flat -1). The drawback penalties stay at -1 at this grade.",
+  "modifiers": [
+   {
+    "value": 2,
+    "type": "item",
+    "target": "skill",
+    "detail": "acrobatics",
+    "appliesWhen": "on checks to Escape, Squeeze, and Tumble Through"
+   },
+   {
+    "value": -1,
+    "type": "untyped",
+    "target": "skill",
+    "detail": "athletics"
+   },
+   {
+    "value": -1,
+    "type": "untyped",
+    "target": "skill",
+    "detail": "stealth"
+   },
+   {
+    "value": -1,
+    "type": "untyped",
+    "target": "skill",
+    "detail": "thievery"
+   },
+   {
+    "value": -1,
+    "type": "untyped",
+    "target": "attack"
+   }
+  ]
+ },
+ {
+  "id": "item-boulderhead-bock",
+  "name": "Boulderhead Bock",
+  "fromItemId": "boulderhead-bock",
+  "duration": "1 hour",
+  "modifiers": [
+   {
+    "target": "save",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "against effects that would make you stunned or stupefied"
+   },
+   {
+    "target": "perception",
+    "type": "item",
+    "value": -2
+   }
+  ]
+ },
+ {
+  "id": "item-brewers-regret",
+  "name": "Brewer's Regret",
+  "fromItemId": "brewers-regret",
+  "duration": "1 hour",
+  "note": "The bonus covers all saving throws, so no single save is named. Separately, consuming it reduces your doomed value by 1 (minimum 0) — that is a one-time change, not part of the mode, and it is limited to once per day and shares that limit with Restoration.",
+  "modifiers": [
+   {
+    "value": 2,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against death and void effects"
+   }
+  ]
+ },
+ {
+  "id": "item-brewers-regret-greater",
+  "name": "Brewer's Regret (Greater)",
+  "fromItemId": "brewers-regret-greater",
+  "duration": "1 hour",
+  "note": "The bonus covers all saving throws, so no single save is named. Separately, consuming it reduces your doomed value by 1 (minimum 0) — a one-time change, not part of the mode, usable once per day and shared with Restoration.",
+  "modifiers": [
+   {
+    "value": 3,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against death and void effects"
+   }
+  ]
+ },
+ {
+  "id": "item-caydens-brew",
+  "name": "Cayden's Brew",
+  "fromItemId": "caydens-brew",
+  "duration": "1 hour",
+  "note": "While the brew lasts you can spend a single action to breathe out intoxicating vapor audible for 100 feet; creatures in it save or become clumsy and stupefied. You can't do so again for 1d4 rounds.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "against fear effects"
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "against fear effects"
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "against fear effects"
+   }
+  ]
+ },
+ {
+  "id": "item-caydens-brew-double",
+  "name": "Cayden's Brew (Double)",
+  "fromItemId": "caydens-brew-double",
+  "duration": "1 hour",
+  "note": "While the brew lasts you can spend a single action to breathe out intoxicating vapor audible for 100 feet; creatures in it save or become clumsy and stupefied. You can't use the breath weapon again for 1d4 rounds.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "against fear effects"
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "against fear effects"
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "against fear effects"
+   }
+  ]
+ },
+ {
+  "id": "item-caydens-brew-triple",
+  "name": "Cayden's Brew (Triple)",
+  "fromItemId": "caydens-brew-triple",
+  "duration": "1 hour",
+  "note": "While the brew lasts you can spend a single action to breathe out intoxicating vapor audible for 100 feet; creatures in it save or become clumsy and stupefied. You can't use the breath weapon again for 1d4 rounds.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "against fear effects"
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "against fear effects"
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "against fear effects"
+   }
+  ]
+ },
+ {
+  "id": "item-champions-laurels-amateur",
+  "name": "Champion's Laurels (Amateur)",
+  "fromItemId": "champions-laurels-amateur",
+  "duration": "1 minute",
+  "note": "Activation gives a +1 status bonus to the single triggering Acrobatics or Athletics check — one roll, no duration, so nothing to model as a sheet bonus. On a critical success: 2 temporary Hit Points for 1 minute.",
+  "modifiers": []
+ },
+ {
+  "id": "item-champions-laurels-professional",
+  "name": "Champion's Laurels (Professional)",
+  "fromItemId": "champions-laurels-professional",
+  "duration": "1 minute",
+  "note": "Activation gives a +2 status bonus to the single triggering Acrobatics or Athletics check — one roll, no duration. On a critical success: 10 temporary Hit Points for 1 minute.",
+  "modifiers": []
+ },
+ {
+  "id": "item-champions-laurels-renowned",
+  "name": "Champion's Laurels (Renowned)",
+  "fromItemId": "champions-laurels-renowned",
+  "duration": "1 minute",
+  "note": "Activation gives a +3 status bonus to the single triggering Acrobatics or Athletics check — one roll, no duration. On a critical success: 18 temporary Hit Points for 1 minute.",
+  "modifiers": []
+ },
+ {
+  "id": "item-chilled-fire-noodles",
+  "name": "Chilled Fire Noodles",
+  "fromItemId": "chilled-fire-noodles",
+  "duration": "1 hour",
+  "note": "For 1 hour you ignore the fatigued condition's -1 status penalty to AC and saving throws. The fatigued condition itself is not removed and its other effects still apply.",
+  "modifiers": []
+ },
+ {
+  "id": "item-chilled-fire-noodles-greater",
+  "name": "Chilled Fire Noodles (Greater)",
+  "fromItemId": "chilled-fire-noodles-greater",
+  "duration": "4 hours",
+  "note": "For 4 hours you ignore the fatigued condition's -1 status penalty to AC and saving throws. The fatigued condition itself is not removed and its other effects still apply.",
+  "modifiers": []
+ },
+ {
+  "id": "item-chivalric-emblem",
+  "name": "Chivalric Emblem",
+  "fromItemId": "chivalric-emblem",
+  "duration": "1 hour",
+  "note": "The bonus does not begin at activation — it starts only once you witness an ally drop to 0 HP or take damage from a critical Strike, and then lasts for whatever remains of the hour.",
+  "modifiers": [
+   {
+    "target": "attack",
+    "type": "circumstance",
+    "value": 1,
+    "appliesWhen": "with the emblazoned weapon, against the creature that damaged your ally"
+   },
+   {
+    "target": "damage",
+    "type": "circumstance",
+    "value": 1,
+    "appliesWhen": "with the emblazoned weapon, against the creature that damaged your ally"
+   }
+  ]
+ },
+ {
+  "id": "item-cinnamon-seers",
+  "name": "Cinnamon Seers",
+  "fromItemId": "cinnamon-seers",
+  "duration": "1 hour",
+  "note": "Recall Knowledge can be attempted with many different skills, so no single skill is named. Secondary effect (reaction, fortune): when you gain no information from a Recall Knowledge check you can reroll it - the seer then becomes inert, ends the mode, and you're temporarily immune until your next daily preparations.",
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "item",
+    "target": "skill",
+    "appliesWhen": "checks to Recall Knowledge"
+   }
+  ]
+ },
+ {
+  "id": "item-cloud-buns-greater",
+  "name": "Cloud Buns",
+  "fromItemId": "cloud-buns-greater",
+  "duration": "1 minute",
+  "note": "Grants a fly Speed of 30 feet, or your Speed if that's lower, for the duration.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "acrobatics",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "to Maneuver in Flight"
+   }
+  ]
+ },
+ {
+  "id": "item-covenant-tea",
+  "name": "Covenant Tea",
+  "fromItemId": "covenant-tea",
+  "duration": "10 minutes (1 hour with the Tea Ceremony activation)",
+  "note": "The same +1 item bonus also applies to your Perception DC (the DC others roll against), which is not the same statistic as your Perception check — not expressed in the modifiers above. Drinking it via the 10-minute Tea Ceremony activation extends the duration to 1 hour.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "diplomacy",
+    "type": "item",
+    "value": 1
+   }
+  ]
+ },
+ {
+  "id": "item-crackling-bubble-gum-greater",
+  "name": "Bubble Gum (Greater)",
+  "fromItemId": "crackling-bubble-gum-greater",
+  "duration": "up to 10 minutes",
+  "note": "Secondary Effect deals 8d4 sonic in a burst; the -10-foot Speed penalty for 1 minute applies to creatures that fail the save, not to you.",
+  "modifiers": [
+   {
+    "value": 2,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against auditory and sonic effects"
+   }
+  ]
+ },
+ {
+  "id": "item-crackling-bubble-gum-lesser",
+  "name": "Bubble Gum (Lesser)",
+  "fromItemId": "crackling-bubble-gum-lesser",
+  "duration": "up to 10 minutes",
+  "note": "Secondary Effect (blow the bubble) deals 4d4 sonic in a burst and inflicts a -10-foot item penalty to Speed for 1 minute on creatures that fail — that penalty lands on the targets, not on you, and ends the gum.",
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against auditory and sonic effects"
+   }
+  ]
+ },
+ {
+  "id": "item-crackling-bubble-gum-major",
+  "name": "Bubble Gum (Major)",
+  "fromItemId": "crackling-bubble-gum-major",
+  "duration": "up to 10 minutes",
+  "note": "Secondary Effect deals 9d4 sonic in a burst; the -10-foot Speed penalty for 1 minute applies to creatures that fail the save, not to you.",
+  "modifiers": [
+   {
+    "value": 3,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against auditory and sonic effects"
+   }
+  ]
+ },
+ {
+  "id": "item-crackling-bubble-gum-moderate",
+  "name": "Bubble Gum (Moderate)",
+  "fromItemId": "crackling-bubble-gum-moderate",
+  "duration": "up to 10 minutes",
+  "note": "Secondary Effect deals 6d4 sonic in a burst; the -10-foot Speed penalty for 1 minute applies to creatures that fail the save, not to you.",
+  "modifiers": [
+   {
+    "value": 2,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against auditory and sonic effects"
+   }
+  ]
+ },
+ {
+  "id": "item-crimson-godsblood-serum",
+  "name": "Godsblood Wrath",
+  "fromItemId": "crimson-godsblood-serum",
+  "duration": "1 minute",
+  "note": "Umbrella entry: the value is not printed in its own sentence - +2 is taken from the lesser grade because this row is level 6. It duplicates the separate lesser row, so consider dropping one. Separately, the first time in that minute you're reduced to 0 HP without being killed, you avoid being knocked out, regain 2d8+5 Hit Points, become confused for 1 round, and your wounded value increases by 1 - none of that is a modifier.",
+  "modifiers": [
+   {
+    "target": "damage",
+    "type": "status",
+    "value": 2,
+    "appliesWhen": "on physical damage rolls"
+   }
+  ]
+ },
+ {
+  "id": "item-crimson-godsblood-serum-greater",
+  "name": "Crimson Godsblood (Greater)",
+  "fromItemId": "crimson-godsblood-serum-greater",
+  "duration": "1 minute",
+  "note": "One-shot rider inside the same minute: the first time you're reduced to 0 Hit Points but not immediately killed, you avoid being knocked out, regain 6d8+20 Hit Points, become confused for 1 round, and your wounded condition increases by 1. Healing and the wounded increase are not modifiers.",
+  "modifiers": [
+   {
+    "target": "damage",
+    "type": "status",
+    "value": 4,
+    "appliesWhen": "on physical damage rolls"
+   }
+  ]
+ },
+ {
+  "id": "item-crimson-godsblood-serum-lesser",
+  "name": "Crimson Godsblood (Lesser)",
+  "fromItemId": "crimson-godsblood-serum-lesser",
+  "duration": "1 minute",
+  "note": "One-shot rider inside the same minute: the first time you're reduced to 0 Hit Points but not immediately killed, you avoid being knocked out, regain 2d8+5 Hit Points, become confused for 1 round, and your wounded condition increases by 1. Healing and the wounded increase are not modifiers.",
+  "modifiers": [
+   {
+    "target": "damage",
+    "type": "status",
+    "value": 2,
+    "appliesWhen": "on physical damage rolls"
+   }
+  ]
+ },
+ {
+  "id": "item-crimson-godsblood-serum-moderate",
+  "name": "Godsblood Serum",
+  "fromItemId": "crimson-godsblood-serum-moderate",
+  "duration": "1 minute",
+  "note": "The first time during the minute you're reduced to 0 HP but not immediately killed, you avoid being knocked out, regain 3d8+10 HP, become confused for 1 round, and your wounded condition increases by 1 (one-time, not a sheet modifier).",
+  "modifiers": [
+   {
+    "value": 3,
+    "type": "status",
+    "target": "damage",
+    "appliesWhen": "physical damage rolls"
+   }
+  ]
+ },
+ {
+  "id": "item-deadweight-mutagen-greater",
+  "name": "Deadweight (Greater)",
+  "fromItemId": "deadweight-mutagen-greater",
+  "duration": "1 hour",
+  "note": "The same +3 item bonus also applies to your Fortitude and Reflex DCs against attempts to Shove or Trip you - a defense DC, not a save roll. At this grade you can also Shove or Trip creatures up to two sizes larger than you. Drawback: you gain the encumbered condition and can't remove it while the mutagen lasts.",
+  "modifiers": [
+   {
+    "value": 3,
+    "type": "item",
+    "target": "skill",
+    "detail": "athletics",
+    "appliesWhen": "on checks to Shove and Trip"
+   },
+   {
+    "value": 3,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against effects that attempt to force you to move or knock you prone"
+   }
+  ]
+ },
+ {
+  "id": "item-deadweight-mutagen-lesser",
+  "name": "Deadweight (Lesser)",
+  "fromItemId": "deadweight-mutagen-lesser",
+  "duration": "1 minute",
+  "note": "The same +1 item bonus also applies to your Fortitude and Reflex DCs against attempts to Shove or Trip you - a defense DC, not a save roll, so it isn't emitted as a save modifier. Drawback: you gain the encumbered condition and can't remove it while the mutagen lasts.",
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "item",
+    "target": "skill",
+    "detail": "athletics",
+    "appliesWhen": "on checks to Shove and Trip"
+   },
+   {
+    "value": 1,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against effects that attempt to force you to move or knock you prone"
+   }
+  ]
+ },
+ {
+  "id": "item-deadweight-mutagen-major",
+  "name": "Deadweight (Major)",
+  "fromItemId": "deadweight-mutagen-major",
+  "duration": "1 hour",
+  "note": "The same +4 item bonus applies to your Fortitude and Reflex DCs when a creature tries to Shove or Trip you (that is a DC, not a save you roll). You can attempt to Shove or Trip creatures up to three sizes larger than you. Drawback: you gain the encumbered condition and can't remove it while the mutagen lasts.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "athletics",
+    "type": "item",
+    "value": 4,
+    "appliesWhen": "on Athletics checks to Shove or Trip"
+   },
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 4,
+    "appliesWhen": "against effects that attempt to force you to move or knock you prone"
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "item",
+    "value": 4,
+    "appliesWhen": "against effects that attempt to force you to move or knock you prone"
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "item",
+    "value": 4,
+    "appliesWhen": "against effects that attempt to force you to move or knock you prone"
+   }
+  ]
+ },
+ {
+  "id": "item-deadweight-mutagen-moderate",
+  "name": "Deadweight (Moderate)",
+  "fromItemId": "deadweight-mutagen-moderate",
+  "duration": "10 minutes",
+  "note": "The same +2 item bonus also applies to your Fortitude and Reflex DCs against attempts to Shove or Trip you - a defense DC, not a save roll. Drawback: you gain the encumbered condition and can't remove it while the mutagen lasts.",
+  "modifiers": [
+   {
+    "value": 2,
+    "type": "item",
+    "target": "skill",
+    "detail": "athletics",
+    "appliesWhen": "on checks to Shove and Trip"
+   },
+   {
+    "value": 2,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against effects that attempt to force you to move or knock you prone"
+   }
+  ]
+ },
+ {
+  "id": "item-delve-scale",
+  "name": "Delve Scale",
+  "fromItemId": "delve-scale",
+  "duration": "1 minute",
+  "note": "Also grants a burrow Speed of 15 feet for the duration (a new movement type, not a bonus to an existing Speed).",
+  "modifiers": [
+   {
+    "value": 2,
+    "type": "item",
+    "target": "skill",
+    "detail": "athletics",
+    "appliesWhen": "on Athletics checks to High Jump or Long Jump"
+   }
+  ]
+ },
+ {
+  "id": "item-diplomats-charcuterie",
+  "name": "Diplomat's Charcuterie",
+  "fromItemId": "diplomats-charcuterie",
+  "duration": "24 hours or until your next daily preparations, whichever comes first",
+  "survivesRest": true,
+  "note": "Eaten over a 10-minute activation; the mode should clear at the next daily preparations even if 24 hours have not elapsed.",
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "item",
+    "target": "skill",
+    "detail": "diplomacy",
+    "appliesWhen": "on Diplomacy checks to Make an Impression"
+   },
+   {
+    "value": 1,
+    "type": "item",
+    "target": "perception",
+    "appliesWhen": "on Perception checks to Sense Motive"
+   }
+  ]
+ },
+ {
+  "id": "item-dragonfly-fulu",
+  "name": "Dragonfly Fulu",
+  "fromItemId": "dragonfly-fulu",
+  "duration": "1 minute",
+  "note": "While active you can High Jump or Long Jump as a single action without the Stride requirement, and can jump from a nonsolid substance such as air or water -- but using that last option ends the fulu after you jump.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "athletics",
+    "type": "status",
+    "value": 2,
+    "appliesWhen": "on Athletics checks to High Jump or Long Jump"
+   }
+  ]
+ },
+ {
+  "id": "item-dragonfly-potion",
+  "name": "Dragonfly Potion",
+  "fromItemId": "dragonfly-potion",
+  "duration": "1 minute",
+  "note": "Also grants a fly Speed equal to your land Speed, low-light vision, and you can't be flanked except by creatures higher level than you — none of those are numeric modifiers (the fly Speed is a new movement type, not a +N to Speed).",
+  "modifiers": [
+   {
+    "value": 2,
+    "type": "item",
+    "target": "perception",
+    "appliesWhen": "visual Perception checks"
+   }
+  ]
+ },
+ {
+  "id": "item-dragons-blood-pudding-greater",
+  "name": "Dragon's Blood Pudding (Greater)",
+  "fromItemId": "dragons-blood-pudding-greater",
+  "duration": "1 round (while quickened)",
+  "note": "You are quickened for 1 round and can spend the extra action only to Step, Stride, Strike, or Demoralize. The counteract check against slowed (+20 counteract modifier) resolves once on consumption and is not part of the mode.",
+  "modifiers": [
+   {
+    "value": 3,
+    "type": "item",
+    "target": "skill",
+    "detail": "intimidation",
+    "appliesWhen": "a Demoralize made with the quickened action"
+   }
+  ]
+ },
+ {
+  "id": "item-dragons-blood-pudding-major",
+  "name": "Dragon's Blood Pudding (Major)",
+  "fromItemId": "dragons-blood-pudding-major",
+  "duration": "2 rounds (while quickened)",
+  "note": "Major grade gives quickened for 2 rounds (not 1), and the extra action can only Step, Stride, Strike, or Demoralize. The counteract check against slowed (+31 counteract modifier) resolves once on consumption.",
+  "modifiers": [
+   {
+    "value": 4,
+    "type": "item",
+    "target": "skill",
+    "detail": "intimidation",
+    "appliesWhen": "a Demoralize made with the quickened action"
+   }
+  ]
+ },
+ {
+  "id": "item-dragons-blood-pudding-moderate",
+  "name": "Dragon's Blood Pudding (Moderate)",
+  "fromItemId": "dragons-blood-pudding-moderate",
+  "duration": "1 round (while quickened)",
+  "note": "You are quickened for 1 round and can spend the extra action only to Step, Stride, Strike, or Demoralize (you scream when you use it). The counteract check against slowed (+9 counteract modifier) resolves once on consumption and is not part of the mode.",
+  "modifiers": [
+   {
+    "value": 2,
+    "type": "item",
+    "target": "skill",
+    "detail": "intimidation",
+    "appliesWhen": "a Demoralize made with the quickened action"
+   }
+  ]
+ },
+ {
+  "id": "item-drakeheart-mutagen-greater",
+  "name": "Drakeheart Mutagen",
+  "fromItemId": "drakeheart-mutagen-greater",
+  "duration": "1 hour or until you use Final Surge, whichever comes first",
+  "note": "AC: the +6 item bonus REPLACES your worn armor's AC bonus (armor's is also an item bonus) - it does not add to it. You still use your proficiency in the armor you're wearing. Also imposes a Dexterity cap of +2 (use your lowest cap). The app cannot yet apply either of those two adjustments, so subtract them from the displayed AC by hand. Grants the Final Surge action, which also ends the mutagen.",
+  "modifiers": [
+   {
+    "target": "ac",
+    "type": "item",
+    "value": 6
+   },
+   {
+    "target": "perception",
+    "type": "item",
+    "value": 3
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "untyped",
+    "value": -1
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "untyped",
+    "value": -1
+   },
+   {
+    "target": "skill",
+    "type": "untyped",
+    "value": -1,
+    "appliesWhen": "on skill checks to Recall Knowledge"
+   }
+  ]
+ },
+ {
+  "id": "item-drakeheart-mutagen-lesser",
+  "name": "Drakeheart Mutagen",
+  "fromItemId": "drakeheart-mutagen-lesser",
+  "duration": "1 minute or until you use Final Surge, whichever comes first",
+  "note": "AC: the +4 item bonus REPLACES your worn armor's AC bonus (armor's is also an item bonus) - it does not add to it. You still use your proficiency in the armor you're wearing. Also imposes a Dexterity cap of +2 (use your lowest cap). The app cannot yet apply either of those two adjustments, so subtract them from the displayed AC by hand. Grants the Final Surge action, which also ends the mutagen.",
+  "modifiers": [
+   {
+    "target": "ac",
+    "type": "item",
+    "value": 4
+   },
+   {
+    "target": "perception",
+    "type": "item",
+    "value": 1
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "untyped",
+    "value": -1
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "untyped",
+    "value": -1
+   },
+   {
+    "target": "skill",
+    "type": "untyped",
+    "value": -1,
+    "appliesWhen": "on skill checks to Recall Knowledge"
+   }
+  ]
+ },
+ {
+  "id": "item-drakeheart-mutagen-major",
+  "name": "Drakeheart Mutagen",
+  "fromItemId": "drakeheart-mutagen-major",
+  "duration": "1 hour or until you use Final Surge, whichever comes first",
+  "note": "AC: the +7 item bonus REPLACES your worn armor's AC bonus (armor's is also an item bonus) - it does not add to it. You still use your proficiency in the armor you're wearing. Also imposes a Dexterity cap of +2 (use your lowest cap). The app cannot yet apply either of those two adjustments, so subtract them from the displayed AC by hand. Grants the Final Surge action, which also ends the mutagen.",
+  "modifiers": [
+   {
+    "target": "ac",
+    "type": "item",
+    "value": 7
+   },
+   {
+    "target": "perception",
+    "type": "item",
+    "value": 4
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "untyped",
+    "value": -1
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "untyped",
+    "value": -1
+   },
+   {
+    "target": "skill",
+    "type": "untyped",
+    "value": -1,
+    "appliesWhen": "on skill checks to Recall Knowledge"
+   }
+  ]
+ },
+ {
+  "id": "item-drakeheart-mutagen-moderate",
+  "name": "Drakeheart Mutagen",
+  "fromItemId": "drakeheart-mutagen-moderate",
+  "duration": "10 minutes or until you use Final Surge, whichever comes first",
+  "note": "AC: the +5 item bonus REPLACES your worn armor's AC bonus (armor's is also an item bonus) - it does not add to it. You still use your proficiency in the armor you're wearing. Also imposes a Dexterity cap of +2 (use your lowest cap). The app cannot yet apply either of those two adjustments, so subtract them from the displayed AC by hand. Grants the Final Surge action, which also ends the mutagen.",
+  "modifiers": [
+   {
+    "target": "ac",
+    "type": "item",
+    "value": 5
+   },
+   {
+    "target": "perception",
+    "type": "item",
+    "value": 2
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "untyped",
+    "value": -1
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "untyped",
+    "value": -1
+   },
+   {
+    "target": "skill",
+    "type": "untyped",
+    "value": -1,
+    "appliesWhen": "on skill checks to Recall Knowledge"
+   }
+  ]
+ },
+ {
+  "id": "item-egg-cream-fizz",
+  "name": "Egg Cream Fizz",
+  "fromItemId": "egg-cream-fizz",
+  "duration": "10 minutes",
+  "note": "+5-foot item bonus to your Speed for the full 10 minutes. Speed is not a mode-modifier target in this app, so track it from this note (same handling as Triple Time and Panache). Exactly ONE syrup rider applies, fixed when the drink was created; the third option, Vanilla, instead lets you Step into difficult terrain and has no number.",
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "item",
+    "target": "skill",
+    "detail": "acrobatics",
+    "appliesWhen": "Chocolate syrup only — Acrobatics checks to Balance, Maneuver in Flight, and Squeeze"
+   },
+   {
+    "value": 1,
+    "type": "item",
+    "target": "skill",
+    "detail": "athletics",
+    "appliesWhen": "Strawberry syrup only — Athletics checks to Climb, Leap, and Swim"
+   }
+  ]
+ },
+ {
+  "id": "item-eidetic-potion",
+  "name": "Eidetic Memory",
+  "fromItemId": "eidetic-potion",
+  "duration": "1 week (or until you first benefit from the bonus)",
+  "survivesRest": true,
+  "note": "Only what you observe during the 1 round after drinking is locked. The memory stays locked for 1 week or until you benefit from the bonus once, whichever comes first, so the mode should switch off after its first use. You can only have one memory locked at a time; locking a new one makes the old memory fallible.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "crafting",
+    "type": "status",
+    "value": 2,
+    "appliesWhen": "to create an artistic rendition of the locked memory"
+   },
+   {
+    "target": "skill",
+    "detail": "society",
+    "type": "status",
+    "value": 2,
+    "appliesWhen": "to create a Forgery of the locked memory"
+   }
+  ]
+ },
+ {
+  "id": "item-elixir-of-life-greater",
+  "name": "Elixir of Life",
+  "fromItemId": "elixir-of-life-greater",
+  "duration": "10 minutes",
+  "note": "Bonus applies to all saving throws (no save type specified) against diseases and poisons. The 7d6+18 Hit Points are restored instantly and are not part of the mode.",
+  "modifiers": [
+   {
+    "target": "save",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "against diseases and poisons"
+   }
+  ]
+ },
+ {
+  "id": "item-elixir-of-life-lesser",
+  "name": "Elixir of Life",
+  "fromItemId": "elixir-of-life-lesser",
+  "duration": "10 minutes",
+  "note": "Bonus applies to all saving throws (no save type specified) against diseases and poisons. The 3d6+6 Hit Points are restored instantly and are not part of the mode.",
+  "modifiers": [
+   {
+    "target": "save",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "against diseases and poisons"
+   }
+  ]
+ },
+ {
+  "id": "item-elixir-of-life-major",
+  "name": "Elixir of Life",
+  "fromItemId": "elixir-of-life-major",
+  "duration": "10 minutes",
+  "note": "Bonus applies to all saving throws (no save type specified) against diseases and poisons. The 8d6+21 Hit Points are restored instantly and are not part of the mode.",
+  "modifiers": [
+   {
+    "target": "save",
+    "type": "item",
+    "value": 3,
+    "appliesWhen": "against diseases and poisons"
+   }
+  ]
+ },
+ {
+  "id": "item-elixir-of-life-minor",
+  "name": "Elixir of Life",
+  "fromItemId": "elixir-of-life-minor",
+  "duration": "10 minutes",
+  "note": "Bonus applies to all saving throws (no save type specified) against diseases and poisons. The 1d6 Hit Points are restored instantly and are not part of the mode.",
+  "modifiers": [
+   {
+    "target": "save",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "against diseases and poisons"
+   }
+  ]
+ },
+ {
+  "id": "item-elixir-of-life-moderate",
+  "name": "Elixir of Life",
+  "fromItemId": "elixir-of-life-moderate",
+  "duration": "10 minutes",
+  "note": "Bonus applies to all saving throws (no save type specified) against diseases and poisons. The 5d6+12 Hit Points are restored instantly and are not part of the mode.",
+  "modifiers": [
+   {
+    "target": "save",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "against diseases and poisons"
+   }
+  ]
+ },
+ {
+  "id": "item-elixir-of-life-true",
+  "name": "Elixir of Life",
+  "fromItemId": "elixir-of-life-true",
+  "duration": "10 minutes",
+  "note": "Bonus applies to all saving throws (no save type specified) against diseases and poisons. The 10d6+27 Hit Points are restored instantly and are not part of the mode.",
+  "modifiers": [
+   {
+    "target": "save",
+    "type": "item",
+    "value": 4,
+    "appliesWhen": "against diseases and poisons"
+   }
+  ]
+ },
+ {
+  "id": "item-elixir-of-the-peaks-greater",
+  "name": "Elixir of the Peaks",
+  "fromItemId": "elixir-of-the-peaks-greater",
+  "duration": "1 day",
+  "survivesRest": true,
+  "note": "Only functions while in mountainous terrain. Also protects you from the effects of severe cold and against extreme cold.",
+  "modifiers": [
+   {
+    "value": 3,
+    "type": "item",
+    "target": "skill",
+    "detail": "athletics",
+    "appliesWhen": "checks made to Climb, High Jump, or Long Jump"
+   },
+   {
+    "value": 3,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against the effects of high altitude"
+   }
+  ]
+ },
+ {
+  "id": "item-elixir-of-the-peaks-lesser",
+  "name": "Elixir of the Peaks",
+  "fromItemId": "elixir-of-the-peaks-lesser",
+  "duration": "1 hour",
+  "note": "Only functions while in mountainous terrain. Also protects you from the effects of severe cold (this grade does not mention extreme cold).",
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "item",
+    "target": "skill",
+    "detail": "athletics",
+    "appliesWhen": "checks made to Climb, High Jump, or Long Jump"
+   },
+   {
+    "value": 1,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against the effects of high altitude"
+   }
+  ]
+ },
+ {
+  "id": "item-elixir-of-the-peaks-major",
+  "name": "Elixir of the Peaks",
+  "fromItemId": "elixir-of-the-peaks-major",
+  "duration": "7 days",
+  "survivesRest": true,
+  "note": "Only functions while in mountainous terrain. Also protects you from the effects of severe cold and against extreme cold.",
+  "modifiers": [
+   {
+    "value": 3,
+    "type": "item",
+    "target": "skill",
+    "detail": "athletics",
+    "appliesWhen": "checks made to Climb, High Jump, or Long Jump"
+   },
+   {
+    "value": 3,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against the effects of high altitude"
+   }
+  ]
+ },
+ {
+  "id": "item-elixir-of-the-peaks-moderate",
+  "name": "Elixir of the Peaks",
+  "fromItemId": "elixir-of-the-peaks-moderate",
+  "duration": "1 day",
+  "survivesRest": true,
+  "note": "Only functions while in mountainous terrain. Also protects you from the effects of severe cold (this grade does not mention extreme cold).",
+  "modifiers": [
+   {
+    "value": 2,
+    "type": "item",
+    "target": "skill",
+    "detail": "athletics",
+    "appliesWhen": "checks made to Climb, High Jump, or Long Jump"
+   },
+   {
+    "value": 2,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against the effects of high altitude"
+   }
+  ]
+ },
+ {
+  "id": "item-elysian-dew",
+  "name": "Elysian Dew",
+  "fromItemId": "elysian-dew",
+  "duration": "1 minute",
+  "note": "The bonuses come from a 10-foot emanation and are refreshed each turn you start inside it, lasting until the start of your next turn; allies in the aura get the same benefit. You and they also gain 5 temporary Hit Points per turn, which is not a sheet modifier. If you're unholy the potion fails to work and you must succeed at a save or be drained 2.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 1
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "item",
+    "value": 1
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "item",
+    "value": 1
+   },
+   {
+    "target": "skill",
+    "detail": "acrobatics",
+    "type": "item",
+    "value": 1
+   },
+   {
+    "target": "skill",
+    "detail": "athletics",
+    "type": "item",
+    "value": 1
+   }
+  ]
+ },
+ {
+  "id": "item-emetic-paste-greater",
+  "name": "Emetic Paste",
+  "fromItemId": "emetic-paste-greater",
+  "duration": "1 hour",
+  "note": "The immediate Fortitude save to reduce sickened is instantaneous; only the hour-long bonus is the mode. Applied to an ally instead, the mode is theirs.",
+  "modifiers": [
+   {
+    "value": 4,
+    "type": "item",
+    "target": "save",
+    "detail": "fortitude",
+    "appliesWhen": "on saves to reduce your sickened condition"
+   }
+  ]
+ },
+ {
+  "id": "item-emetic-paste-lesser",
+  "name": "Emetic Paste",
+  "fromItemId": "emetic-paste-lesser",
+  "duration": "1 hour",
+  "note": "Activating it also grants one immediate Fortitude save to reduce sickened (that save is instantaneous; only the hour-long bonus is the mode). If you instead apply the paste to a sickened ally within reach, the mode belongs to them, not you.",
+  "modifiers": [
+   {
+    "value": 2,
+    "type": "item",
+    "target": "save",
+    "detail": "fortitude",
+    "appliesWhen": "on saves to reduce your sickened condition"
+   }
+  ]
+ },
+ {
+  "id": "item-emetic-paste-moderate",
+  "name": "Emetic Paste",
+  "fromItemId": "emetic-paste-moderate",
+  "duration": "1 hour",
+  "note": "The immediate Fortitude save to reduce sickened is instantaneous; only the hour-long bonus is the mode. Applied to an ally instead, the mode is theirs.",
+  "modifiers": [
+   {
+    "value": 3,
+    "type": "item",
+    "target": "save",
+    "detail": "fortitude",
+    "appliesWhen": "on saves to reduce your sickened condition"
+   }
+  ]
+ },
+ {
+  "id": "item-empaths-cordial",
+  "name": "Empath's Cordial",
+  "fromItemId": "empaths-cordial",
+  "duration": "1 hour",
+  "note": "You sense general emotions within 30 feet; a creature that failed its save against Calm can't be detected.",
+  "modifiers": [
+   {
+    "target": "perception",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "to discern what emotions a specific creature is experiencing (DC set by the GM)"
+   },
+   {
+    "target": "perception",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "to Sense Motive against creatures whose emotions you can sense"
+   }
+  ]
+ },
+ {
+  "id": "item-energizing-pill",
+  "name": "Energizing Pill",
+  "fromItemId": "energizing-pill",
+  "duration": "1 hour",
+  "note": "Duration comes from the preceding sentence: the pill \"remains for 1 hour\" in your mouth. The bonus is specifically to initiative rolled with Perception, not to Perception checks generally. Secondary Effect (reaction): when you would become clumsy, drained, enfeebled, frightened, sickened, slowed, or stupefied, reduce that condition's value by 1 (to 0 means you don't gain it) — a one-shot, not part of the ongoing bonus, and the printed text does not say it ends or expends the pill.",
+  "modifiers": [
+   {
+    "target": "perception",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "on initiative rolls"
+   }
+  ]
+ },
+ {
+  "id": "item-energizing-tea",
+  "name": "Energizing Tea",
+  "fromItemId": "energizing-tea",
+  "duration": "10 minutes (1 hour with the Tea Ceremony activation)",
+  "note": "Drinking it via the 10-minute Tea Ceremony activation extends the duration to 1 hour.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "athletics",
+    "type": "item",
+    "value": 1
+   },
+   {
+    "target": "skill",
+    "detail": "acrobatics",
+    "type": "item",
+    "value": 1
+   }
+  ]
+ },
+ {
+  "id": "item-escape-fulu",
+  "name": "Escape Fulu",
+  "fromItemId": "escape-fulu",
+  "duration": "1 minute",
+  "note": "The Escape bonus applies to whichever check you use to Escape, including an unarmed attack roll.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "stealth",
+    "type": "status",
+    "value": 2,
+    "appliesWhen": "on Stealth checks to Hide or Sneak"
+   },
+   {
+    "target": "skill",
+    "detail": "athletics",
+    "type": "status",
+    "value": 2,
+    "appliesWhen": "when you attempt to Escape"
+   },
+   {
+    "target": "skill",
+    "detail": "acrobatics",
+    "type": "status",
+    "value": 2,
+    "appliesWhen": "when you attempt to Escape"
+   }
+  ]
+ },
+ {
+  "id": "item-fake-blood-pack",
+  "name": "Fake Blood",
+  "fromItemId": "fake-blood-pack",
+  "duration": "4 hours",
+  "note": "Ends early if the blood is washed off. The fake blood doesn't count as bleed damage, so bleed-triggered abilities don't fire - which can give the ruse away.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "deception",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "on Deception checks made to fake an injury"
+   }
+  ]
+ },
+ {
+  "id": "item-feyfoul-greater",
+  "name": "Feyfoul (Greater)",
+  "fromItemId": "feyfoul-greater",
+  "duration": "8 hours",
+  "note": "The dose is spritzed on a person like perfume; the mode belongs to whoever is wearing it.",
+  "modifiers": [
+   {
+    "value": 3,
+    "type": "item",
+    "target": "save",
+    "detail": "will",
+    "appliesWhen": "against mental effects generated by fey creatures"
+   }
+  ]
+ },
+ {
+  "id": "item-feyfoul-lesser",
+  "name": "Feyfoul (Lesser)",
+  "fromItemId": "feyfoul-lesser",
+  "duration": "1 minute",
+  "note": "The dose is spritzed on a person like perfume; the mode belongs to whoever is wearing it.",
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "item",
+    "target": "save",
+    "detail": "will",
+    "appliesWhen": "against mental effects generated by fey creatures"
+   }
+  ]
+ },
+ {
+  "id": "item-feyfoul-moderate",
+  "name": "Feyfoul (Moderate)",
+  "fromItemId": "feyfoul-moderate",
+  "duration": "1 hour",
+  "note": "The dose is spritzed on a person like perfume; the mode belongs to whoever is wearing it.",
+  "modifiers": [
+   {
+    "value": 2,
+    "type": "item",
+    "target": "save",
+    "detail": "will",
+    "appliesWhen": "against mental effects generated by fey creatures"
+   }
+  ]
+ },
+ {
+  "id": "item-fulu-of-the-drunken-monkey",
+  "name": "Fulu of the Drunken Monkey",
+  "fromItemId": "fulu-of-the-drunken-monkey",
+  "duration": "1 minute",
+  "note": "The two entries are alternatives, not cumulative: if the triggering poison was normal alcohol you automatically succeed at the triggering save and get the +4 against alcohol instead of the +2 against that poison. The printed alcohol bonus says 'saves' without naming a save type, so it is left untargeted.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "status",
+    "value": 2,
+    "appliesWhen": "against the same poison that triggered the fulu"
+   },
+   {
+    "target": "save",
+    "type": "status",
+    "value": 4,
+    "appliesWhen": "instead of the +2, if the triggering poison was ordinary alcohol: on saves against alcohol"
+   }
+  ]
+ },
+ {
+  "id": "item-fungal-walk-musk",
+  "name": "Fungal Walk Musk",
+  "fromItemId": "fungal-walk-musk",
+  "duration": "1 day",
+  "survivesRest": true,
+  "note": "For the same day, fungus creatures take a -4 penalty to Perception checks to Seek or otherwise notice you (-6 if mindless) - that penalty is on them, not you. The effect ends immediately if you're submerged in water or subject to another olfactory effect.",
+  "modifiers": [
+   {
+    "target": "ac",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "against melee attacks from fungus creatures with no vision"
+   }
+  ]
+ },
+ {
+  "id": "item-gecko-potion",
+  "name": "Gecko Grip",
+  "fromItemId": "gecko-potion",
+  "duration": "5 minutes",
+  "note": "Also grants a +1 item bonus to your Reflex DC against Disarm attempts — a defense DC, not a saving throw, so it is not modeled as a save modifier.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "athletics",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "to Climb"
+   },
+   {
+    "target": "skill",
+    "detail": "thievery",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "to Palm an Object"
+   }
+  ]
+ },
+ {
+  "id": "item-ghost-fowl-porridge",
+  "name": "Ghost Fowl Porridge",
+  "fromItemId": "ghost-fowl-porridge",
+  "duration": "1 hour",
+  "note": "You also have resistance 3 to physical damage for the hour.",
+  "modifiers": [
+   {
+    "target": "save",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "against being petrified"
+   }
+  ]
+ },
+ {
+  "id": "item-ginger-chew",
+  "name": "Ginger Chew",
+  "fromItemId": "ginger-chew",
+  "duration": "1 hour",
+  "note": "Secondary Effect: spend 1 action to reduce your sickened value by 1; the chew then becomes inert, so the mode should switch off.",
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "item",
+    "target": "save",
+    "detail": "fortitude",
+    "appliesWhen": "against being sickened"
+   }
+  ]
+ },
+ {
+  "id": "item-golden-liberators-feather",
+  "name": "Celestial Wings",
+  "fromItemId": "golden-liberators-feather",
+  "duration": "until the end of your turn",
+  "note": "Also grants a fly Speed of 50 feet for the duration (a new movement type, not a bonus to your Speed). The 1-action version's 8d8 buffet damage to adjacent enemies is instantaneous.",
+  "modifiers": [
+   {
+    "target": "ac",
+    "type": "circumstance",
+    "value": 4,
+    "appliesWhen": "against reactions triggered by your movement"
+   }
+  ]
+ },
+ {
+  "id": "item-greater-crimson-godsblood-serum",
+  "name": "Godsblood Wrath (Greater)",
+  "fromItemId": "greater-crimson-godsblood-serum",
+  "duration": "1 minute",
+  "note": "The first time during the minute you're reduced to 0 HP but not killed, you avoid being knocked out, regain 6d8+20 Hit Points, become confused for 1 round, and your wounded condition increases by 1.",
+  "modifiers": [
+   {
+    "target": "damage",
+    "type": "status",
+    "value": 4,
+    "appliesWhen": "on physical damage rolls"
+   }
+  ]
+ },
+ {
+  "id": "item-grudgestone",
+  "name": "Grudgestone",
+  "fromItemId": "grudgestone",
+  "duration": "1 minute or until the target dies",
+  "note": "Free-action activation triggered when a creature critically hits you; the bonus ends early if that creature dies.",
+  "modifiers": [
+   {
+    "target": "damage",
+    "type": "status",
+    "value": 3,
+    "appliesWhen": "on Strikes with the affixed weapon against the creature that critically hit you"
+   }
+  ]
+ },
+ {
+  "id": "item-grudgestone-greater",
+  "name": "Grudgestone (Greater)",
+  "fromItemId": "grudgestone-greater",
+  "duration": "1 minute or until the target dies",
+  "note": "Free-action activation triggered when a creature critically hits you; the bonus ends early if that creature dies.",
+  "modifiers": [
+   {
+    "target": "damage",
+    "type": "status",
+    "value": 5,
+    "appliesWhen": "on Strikes with the affixed weapon against the creature that critically hit you"
+   }
+  ]
+ },
+ {
+  "id": "item-hagbane-biscuit",
+  "name": "Hagbane",
+  "fromItemId": "hagbane-biscuit",
+  "duration": "10 minutes",
+  "note": "For the duration, weapons you wield count as cold iron for any physical attacks made against hags. The Recall Knowledge bonus is not tied to one specific skill.",
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "status",
+    "target": "perception",
+    "appliesWhen": "checks to pierce a hag's disguise"
+   },
+   {
+    "value": 1,
+    "type": "status",
+    "target": "skill",
+    "appliesWhen": "skill checks to Recall Knowledge about hags (any applicable skill)"
+   },
+   {
+    "value": 1,
+    "type": "status",
+    "target": "save",
+    "appliesWhen": "against hags' abilities and spells"
+   }
+  ]
+ },
+ {
+  "id": "item-healing-vapor-greater",
+  "name": "Healing Vapor",
+  "fromItemId": "healing-vapor-greater",
+  "duration": "10 minutes",
+  "note": "While standing in the vapor you regain 2 Hit Points every minute (healing over time, not a sheet modifier). Only the first four living creatures benefit, overlapping vapors don't stack, and strong wind disperses it.",
+  "modifiers": [
+   {
+    "value": 2,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against diseases and poisons"
+   }
+  ]
+ },
+ {
+  "id": "item-healing-vapor-lesser",
+  "name": "Healing Vapor",
+  "fromItemId": "healing-vapor-lesser",
+  "duration": "10 minutes",
+  "note": "While standing in the vapor you regain 1 Hit Point every 2 minutes (healing over time, not a sheet modifier). The mist affects only the first four living creatures in it, overlapping vapors don't stack, and strong wind disperses it.",
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against diseases and poisons"
+   }
+  ]
+ },
+ {
+  "id": "item-healing-vapor-major",
+  "name": "Healing Vapor",
+  "fromItemId": "healing-vapor-major",
+  "duration": "10 minutes",
+  "note": "While standing in the vapor you regain 3 Hit Points every minute (healing over time, not a sheet modifier). Only the first four living creatures benefit, overlapping vapors don't stack, and strong wind disperses it.",
+  "modifiers": [
+   {
+    "value": 3,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against diseases and poisons"
+   }
+  ]
+ },
+ {
+  "id": "item-healing-vapor-moderate",
+  "name": "Healing Vapor",
+  "fromItemId": "healing-vapor-moderate",
+  "duration": "10 minutes",
+  "note": "While standing in the vapor you regain 1 Hit Point every minute (healing over time, not a sheet modifier). Only the first four living creatures benefit, overlapping vapors don't stack, and strong wind disperses it.",
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against diseases and poisons"
+   }
+  ]
+ },
+ {
+  "id": "item-heartblood-ring",
+  "name": "Heartblood (Stage 1)",
+  "fromItemId": "heartblood-ring",
+  "duration": "1 week (Stage 1)",
+  "survivesRest": true,
+  "note": "On first entering Stage 1 you are affected as if by regenerate, and each round it attempts to counteract a disease or poison (bonus = class DC - 10). You have fast healing equal to half your level and resistance to void and poison damage equal to half your level. Treat any save against death, paralyze, or sleep effects as one degree better. Your appearance shifts to vigorous adulthood. The bonus also applies to any other defense, not just saves. Stage 2 (1 month) adds low-light vision (or darkvision if you already had low-light), reduces current and maximum HP by 2 x your level, makes you Doomed 1, and leaves you dazzled in bright light/sunlight.",
+  "modifiers": [
+   {
+    "target": "save",
+    "type": "circumstance",
+    "value": 1,
+    "appliesWhen": "against death effects, disease, paralysis, poison, and sleep"
+   }
+  ]
+ },
+ {
+  "id": "item-hydra-mutagen",
+  "name": "Hydra Mutagen",
+  "fromItemId": "hydra-mutagen",
+  "duration": "10 minutes",
+  "note": "The +3 item bonus also applies to any Intelligence- or Wisdom-based Lore skills. You gain all-around vision. Once during the effect, if you fail or critically fail a Will save against a mental effect, you can treat the result as one degree better. Drawback: you are Clumsy 1 for the same 10 minutes (apply as a condition).",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "arcana",
+    "type": "item",
+    "value": 3
+   },
+   {
+    "target": "skill",
+    "detail": "crafting",
+    "type": "item",
+    "value": 3
+   },
+   {
+    "target": "skill",
+    "detail": "occultism",
+    "type": "item",
+    "value": 3
+   },
+   {
+    "target": "skill",
+    "detail": "society",
+    "type": "item",
+    "value": 3
+   },
+   {
+    "target": "skill",
+    "detail": "medicine",
+    "type": "item",
+    "value": 3
+   },
+   {
+    "target": "skill",
+    "detail": "nature",
+    "type": "item",
+    "value": 3
+   },
+   {
+    "target": "skill",
+    "detail": "religion",
+    "type": "item",
+    "value": 3
+   },
+   {
+    "target": "skill",
+    "detail": "survival",
+    "type": "item",
+    "value": 3
+   }
+  ]
+ },
+ {
+  "id": "item-ichthyosis-mutagen",
+  "name": "Ichthyosis Mutagen",
+  "fromItemId": "ichthyosis-mutagen",
+  "duration": "1 minute",
+  "note": "Benefit for the same minute: \"you gain fast healing 2 and automatically succeed at flat checks to recover from persistent bleed damage\" - neither is a sheet number. Separately, for 24 hours any creature attempting to Track you gains a +4 circumstance bonus; that bonus is on the tracker's sheet, not yours.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "untyped",
+    "value": -2
+   }
+  ]
+ },
+ {
+  "id": "item-impossible-cake",
+  "name": "Impossible Cake",
+  "fromItemId": "impossible-cake",
+  "duration": "10 minutes",
+  "modifiers": [
+   {
+    "value": 2,
+    "type": "item",
+    "target": "skill",
+    "detail": "deception",
+    "appliesWhen": "Impersonate, or Lie about knowledge of the item type the cake resembled"
+   }
+  ]
+ },
+ {
+  "id": "item-impossible-cake-greater",
+  "name": "Impossible Cake (Greater)",
+  "fromItemId": "impossible-cake-greater",
+  "duration": "30 minutes",
+  "modifiers": [
+   {
+    "value": 3,
+    "type": "item",
+    "target": "skill",
+    "detail": "deception",
+    "appliesWhen": "Impersonate, or Lie about knowledge of the item type the cake resembled"
+   }
+  ]
+ },
+ {
+  "id": "item-impossible-cake-major",
+  "name": "Impossible Cake (Major)",
+  "fromItemId": "impossible-cake-major",
+  "duration": "1 hour",
+  "modifiers": [
+   {
+    "value": 4,
+    "type": "item",
+    "target": "skill",
+    "detail": "deception",
+    "appliesWhen": "Impersonate, or Lie about knowledge of the item type the cake resembled"
+   }
+  ]
+ },
+ {
+  "id": "item-infiltrators-elixir",
+  "name": "Infiltrator's Guise",
+  "fromItemId": "infiltrators-elixir",
+  "duration": "10 minutes",
+  "note": "Applies to your Deception DC only, not to Deception checks. While disguised you add your level to that DC even if untrained, and drinking counts as setting up a disguise to Impersonate. \"After the form takes hold, you retain it for the next 10 minutes.\"",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "deception",
+    "type": "status",
+    "value": 4,
+    "appliesWhen": "to your Deception DC to avoid others seeing through your disguise"
+   }
+  ]
+ },
+ {
+  "id": "item-insight-coffee-greater",
+  "name": "Insight Coffee",
+  "fromItemId": "insight-coffee-greater",
+  "duration": "1 hour",
+  "note": "+4 item bonus to checks with the single skill this coffee was brewed for (chosen when it was crafted). Apply it yourself — the app doesn't know which skill your cup is.",
+  "modifiers": []
+ },
+ {
+  "id": "item-insight-coffee-lesser",
+  "name": "Insight Coffee",
+  "fromItemId": "insight-coffee-lesser",
+  "duration": "1 hour",
+  "note": "+2 item bonus to checks with the single skill this coffee was brewed for (chosen when it was crafted). Apply it yourself — the app doesn't know which skill your cup is.",
+  "modifiers": []
+ },
+ {
+  "id": "item-insight-coffee-moderate",
+  "name": "Insight Coffee",
+  "fromItemId": "insight-coffee-moderate",
+  "duration": "1 hour",
+  "note": "+3 item bonus to checks with the single skill this coffee was brewed for (chosen when it was crafted). Apply it yourself — the app doesn't know which skill your cup is.",
+  "modifiers": []
+ },
+ {
+  "id": "item-iron-medallion",
+  "name": "Iron Medallion",
+  "fromItemId": "iron-medallion",
+  "duration": "1 minute",
+  "note": "Triggered when you attempt a Will save against a fear effect but haven't rolled yet. On the triggering save only, a failure becomes a success and a critical failure becomes a failure.",
+  "modifiers": [
+   {
+    "target": "save",
+    "type": "status",
+    "value": 2,
+    "appliesWhen": "against fear effects"
+   }
+  ]
+ },
+ {
+  "id": "item-journeybread-power",
+  "name": "Power Journeybread",
+  "fromItemId": "journeybread-power",
+  "duration": "4 hours",
+  "note": "Also, while active, the number of minutes you can Hustle becomes your Constitution modifier x 20. Eating one journeybread covers all the food and water you need for a day; subsisting on nothing else for a week makes you temporarily immune until you eat and drink normally for 24 hours.",
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "item",
+    "target": "skill",
+    "detail": "athletics",
+    "appliesWhen": "on Athletics checks to Climb, Force Open, and Swim"
+   },
+   {
+    "value": 1,
+    "type": "item",
+    "target": "save",
+    "detail": "fortitude",
+    "appliesWhen": "against being sickened"
+   }
+  ]
+ },
+ {
+  "id": "item-lastwall-soup",
+  "name": "Lastwall Soup",
+  "fromItemId": "lastwall-soup",
+  "duration": "1 hour",
+  "note": "The bonus covers both Stealth checks and your Stealth DC against undead. Eating a bowl also counts as a full meal.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "stealth",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "against undead"
+   }
+  ]
+ },
+ {
+  "id": "item-lastwall-soup-greater",
+  "name": "Lastwall Soup",
+  "fromItemId": "lastwall-soup-greater",
+  "duration": "1 hour",
+  "note": "The bonus also applies to your Stealth DC against undead. You also gain 10 temporary Hit Points that last for 10 minutes (temporary HP is not a modifier). A bowl is as nourishing as a full meal.",
+  "modifiers": [
+   {
+    "value": 3,
+    "type": "item",
+    "target": "skill",
+    "detail": "stealth",
+    "appliesWhen": "checks and DCs against undead"
+   }
+  ]
+ },
+ {
+  "id": "item-lastwall-soup-improved",
+  "name": "Lastwall Soup",
+  "fromItemId": "lastwall-soup-improved",
+  "duration": "1 hour",
+  "note": "The bonus also applies to your Stealth DC against undead. A bowl is as nourishing as a full meal.",
+  "modifiers": [
+   {
+    "value": 3,
+    "type": "item",
+    "target": "skill",
+    "detail": "stealth",
+    "appliesWhen": "checks and DCs against undead"
+   }
+  ]
+ },
+ {
+  "id": "item-lesser-crimson-godsblood-serum",
+  "name": "Godsblood Wrath (Lesser)",
+  "fromItemId": "lesser-crimson-godsblood-serum",
+  "duration": "1 minute",
+  "note": "The first time during the minute you're reduced to 0 HP but not killed, you avoid being knocked out, regain 2d8+5 Hit Points, become confused for 1 round, and your wounded condition increases by 1.",
+  "modifiers": [
+   {
+    "target": "damage",
+    "type": "status",
+    "value": 2,
+    "appliesWhen": "on physical damage rolls"
+   }
+  ]
+ },
+ {
+  "id": "item-longnight-tea",
+  "name": "Longnight Tea",
+  "fromItemId": "longnight-tea",
+  "duration": "1 hour (8 hours with the Tea Ceremony activation)",
+  "note": "Brewed as a 10-minute Tea Ceremony the duration becomes 8 hours and the tea also removes the fatigued condition (a one-time cure, not part of the ongoing bonus).",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "against sleep effects"
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "against sleep effects"
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "against sleep effects"
+   }
+  ]
+ },
+ {
+  "id": "item-magnetic-suit",
+  "name": "Magnetic Suit",
+  "fromItemId": "magnetic-suit",
+  "duration": "10 minutes",
+  "note": "You pick attract OR repel when you Activate the suit; only that half of the list applies for the 10 minutes, which is why each entry names its setting. While attracting, allies within the listed area gain a +1 status bonus to AC - that benefit is on their sheets, not yours. The suit is useless after the duration ends.",
+  "modifiers": [
+   {
+    "target": "ac",
+    "type": "status",
+    "value": -1,
+    "appliesWhen": "set to attract, against attacks made by metal weapons"
+   },
+   {
+    "target": "ac",
+    "type": "status",
+    "value": 1,
+    "appliesWhen": "set to repel, against attacks made with metal weapons"
+   },
+   {
+    "target": "skill",
+    "detail": "athletics",
+    "type": "status",
+    "value": 1,
+    "appliesWhen": "set to attract, to Climb metal objects or Grapple metal creatures"
+   },
+   {
+    "target": "skill",
+    "detail": "athletics",
+    "type": "status",
+    "value": -1,
+    "appliesWhen": "set to attract, to Shove metal creatures"
+   },
+   {
+    "target": "skill",
+    "detail": "athletics",
+    "type": "status",
+    "value": 1,
+    "appliesWhen": "set to repel, to Shove metal creatures"
+   },
+   {
+    "target": "skill",
+    "detail": "athletics",
+    "type": "status",
+    "value": -1,
+    "appliesWhen": "set to repel, to Climb metal objects or Grapple metal creatures"
+   }
+  ]
+ },
+ {
+  "id": "item-magnetic-suit-greater",
+  "name": "Magnetic Suit",
+  "fromItemId": "magnetic-suit-greater",
+  "duration": "10 minutes",
+  "note": "Attract or repel is chosen at activation; only that half applies. Allies within the listed area gain a +2 status bonus to AC while you attract - their sheet, not yours.",
+  "modifiers": [
+   {
+    "target": "ac",
+    "type": "status",
+    "value": -2,
+    "appliesWhen": "set to attract, against attacks made by metal weapons"
+   },
+   {
+    "target": "ac",
+    "type": "status",
+    "value": 2,
+    "appliesWhen": "set to repel, against attacks made with metal weapons"
+   },
+   {
+    "target": "skill",
+    "detail": "athletics",
+    "type": "status",
+    "value": 2,
+    "appliesWhen": "set to attract, to Climb metal objects or Grapple metal creatures"
+   },
+   {
+    "target": "skill",
+    "detail": "athletics",
+    "type": "status",
+    "value": -2,
+    "appliesWhen": "set to attract, to Shove metal creatures"
+   },
+   {
+    "target": "skill",
+    "detail": "athletics",
+    "type": "status",
+    "value": 2,
+    "appliesWhen": "set to repel, to Shove metal creatures"
+   },
+   {
+    "target": "skill",
+    "detail": "athletics",
+    "type": "status",
+    "value": -2,
+    "appliesWhen": "set to repel, to Climb metal objects or Grapple metal creatures"
+   }
+  ]
+ },
+ {
+  "id": "item-magnetic-suit-major",
+  "name": "Magnetic Suit",
+  "fromItemId": "magnetic-suit-major",
+  "duration": "10 minutes",
+  "note": "Attract or repel is chosen at activation; only that half applies. Allies within the listed area gain a +3 status bonus to AC while you attract - their sheet, not yours.",
+  "modifiers": [
+   {
+    "target": "ac",
+    "type": "status",
+    "value": -3,
+    "appliesWhen": "set to attract, against attacks made by metal weapons"
+   },
+   {
+    "target": "ac",
+    "type": "status",
+    "value": 3,
+    "appliesWhen": "set to repel, against attacks made with metal weapons"
+   },
+   {
+    "target": "skill",
+    "detail": "athletics",
+    "type": "status",
+    "value": 3,
+    "appliesWhen": "set to attract, to Climb metal objects or Grapple metal creatures"
+   },
+   {
+    "target": "skill",
+    "detail": "athletics",
+    "type": "status",
+    "value": -3,
+    "appliesWhen": "set to attract, to Shove metal creatures"
+   },
+   {
+    "target": "skill",
+    "detail": "athletics",
+    "type": "status",
+    "value": 3,
+    "appliesWhen": "set to repel, to Shove metal creatures"
+   },
+   {
+    "target": "skill",
+    "detail": "athletics",
+    "type": "status",
+    "value": -3,
+    "appliesWhen": "set to repel, to Climb metal objects or Grapple metal creatures"
+   }
+  ]
+ },
+ {
+  "id": "item-malleable-mixture-greater",
+  "name": "Malleable Mixture (Greater)",
+  "fromItemId": "malleable-mixture-greater",
+  "duration": "10 minutes",
+  "note": "The bonus is printed against your Fortitude and Reflex DCs (the defense side of those saves), so it only matters when someone Grapples, Shoves, or Trips you. Also lets you fit into and through small or narrow spaces as though you were 2 sizes smaller than normal (minimum Tiny) - not a sheet number.",
+  "modifiers": [
+   {
+    "value": 3,
+    "type": "item",
+    "target": "save",
+    "detail": "fortitude",
+    "appliesWhen": "against attempts to Grapple, Shove, or Trip you"
+   },
+   {
+    "value": 3,
+    "type": "item",
+    "target": "save",
+    "detail": "reflex",
+    "appliesWhen": "against attempts to Grapple, Shove, or Trip you"
+   }
+  ]
+ },
+ {
+  "id": "item-malleable-mixture-lesser",
+  "name": "Malleable Mixture",
+  "fromItemId": "malleable-mixture-lesser",
+  "duration": "1 minute",
+  "note": "The bonus is to your Fortitude and Reflex DCs (your defenses against those maneuvers), not to save rolls you make. Also, for the minute you can fit into and through small or narrow spaces as though you were 1 size smaller (minimum Small).",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "to your Fortitude DC against attempts to Grapple or Shove you"
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "to your Reflex DC against attempts to Trip you"
+   }
+  ]
+ },
+ {
+  "id": "item-marking-snare",
+  "name": "Marked Quarry",
+  "fromItemId": "marking-snare",
+  "duration": "up to 24 hours",
+  "survivesRest": true,
+  "note": "Ends early if the dye or scent is washed off (a gallon of water and 10 minutes of scrubbing). On a critical failure the marked creature is also blinded until the end of its next turn.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "survival",
+    "type": "circumstance",
+    "value": 2,
+    "appliesWhen": "to Track the creature marked by the snare"
+   }
+  ]
+ },
+ {
+  "id": "item-matsukis-medicinal-wine",
+  "name": "Medicinal Wine",
+  "fromItemId": "matsukis-medicinal-wine",
+  "duration": "24 hours",
+  "survivesRest": true,
+  "note": "The bonus also applies to your daily save against a disease's progression. Separately, on drinking you must save or be off-guard for 10 minutes (and clumsy 1 for that same 10 minutes on a critical failure) — a short-lived drawback, not part of the 24-hour bonus.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "against diseases and poisons"
+   }
+  ]
+ },
+ {
+  "id": "item-menders-soup",
+  "name": "Mender's Soup",
+  "fromItemId": "menders-soup",
+  "duration": "24 hours or until your next daily preparations, whichever comes first",
+  "survivesRest": true,
+  "note": "Duration sentence: \"After you eat the soup, its effects last 24 hours or until you make your next daily preparations, whichever comes first.\" Items you successfully Repair recover an extra 5 Hit Points. If you eat the soup across the whole time a Craft check requires (typically each day for at least 4 days), the +1 also applies to that Craft check.",
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "item",
+    "target": "skill",
+    "detail": "crafting",
+    "appliesWhen": "on Crafting checks to Repair"
+   }
+  ]
+ },
+ {
+  "id": "item-moderate-crimson-godsblood-serum",
+  "name": "Godsblood Wrath (Moderate)",
+  "fromItemId": "moderate-crimson-godsblood-serum",
+  "duration": "1 minute",
+  "note": "The first time during the minute you're reduced to 0 HP but not killed, you avoid being knocked out, regain 3d8+10 Hit Points, become confused for 1 round, and your wounded condition increases by 1.",
+  "modifiers": [
+   {
+    "target": "damage",
+    "type": "status",
+    "value": 3,
+    "appliesWhen": "on physical damage rolls"
+   }
+  ]
+ },
+ {
+  "id": "item-monkey-pin",
+  "name": "Monkey Pin",
+  "fromItemId": "monkey-pin",
+  "duration": "until the end of your turn",
+  "note": "Activating the talisman lets you Climb immediately with a +1 item bonus on that single check. On that check and until the end of your turn, a successful Athletics check to Climb moves you your full Speed, and a critical failure becomes a failure instead.",
+  "modifiers": []
+ },
+ {
+  "id": "item-moon-blossom-tea",
+  "name": "Moon Blossom Tea",
+  "fromItemId": "moon-blossom-tea",
+  "duration": "1 hour (4 hours with the Tea Ceremony activation)",
+  "note": "The text says \"all initiative rolls\", so it covers initiative rolled with Perception or with a skill (Stealth, Deception, …); `all-checks` plus the appliesWhen condition is the only encoding in ModeTargetKind that reaches both, and being conditional it stars those stats rather than folding into any number. It also grants the Evade Peril reaction: turn a failed Reflex save into a success, reducing the tea's remaining duration by 1 hour (ending it if that hits 0). Tea Ceremony extends the duration to 4 hours.",
+  "modifiers": [
+   {
+    "target": "all-checks",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "on initiative rolls"
+   }
+  ]
+ },
+ {
+  "id": "item-navigators-feather",
+  "name": "Navigator's Feather",
+  "fromItemId": "navigators-feather",
+  "duration": "24 hours",
+  "survivesRest": true,
+  "note": "The triggering Survival check itself is rolled twice and you take the higher result (fortune) - that part is a one-time roll, not part of the mode. After 24 hours the feather disintegrates.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "survival",
+    "type": "circumstance",
+    "value": 1,
+    "appliesWhen": "to Sense Direction toward the same destination as when you activated the talisman"
+   },
+   {
+    "target": "skill",
+    "detail": "survival",
+    "type": "circumstance",
+    "value": 1,
+    "appliesWhen": "to Track the same creature as when you activated the talisman"
+   }
+  ]
+ },
+ {
+  "id": "item-oily-button",
+  "name": "Oily Button",
+  "fromItemId": "oily-button",
+  "duration": "until the start of the opponent's next turn",
+  "note": "This replaces the usual +2 from a successful Disarm (circumstance bonuses don't stack, so the +4 simply supersedes it). The prolonged -2 circumstance penalty to attacks and firm-grasp checks lands on the opponent, not on you.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "athletics",
+    "type": "circumstance",
+    "value": 4,
+    "appliesWhen": "to Disarm that opponent of the item, before the start of its next turn"
+   }
+  ]
+ },
+ {
+  "id": "item-olfactory-obfuscator-greater",
+  "name": "Scentless",
+  "fromItemId": "olfactory-obfuscator-greater",
+  "duration": "8 hours",
+  "note": "Also: creatures with imprecise scent don't detect you with that sense unless they Seek for you, and you are concealed from creatures that perceive you with precise scent.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "stealth",
+    "type": "item",
+    "value": 4,
+    "appliesWhen": "against Seek attempts by creatures using only scent-based senses (no bonus if they also use another sense)"
+   }
+  ]
+ },
+ {
+  "id": "item-olfactory-obfuscator-lesser",
+  "name": "Olfactory Obfuscator",
+  "fromItemId": "olfactory-obfuscator-lesser",
+  "duration": "10 minutes",
+  "note": "Creatures with imprecise scent don't detect you with that sense unless they Seek for you, and you are concealed from creatures that perceive you with precise scent.",
+  "modifiers": [
+   {
+    "value": 4,
+    "type": "item",
+    "target": "skill",
+    "detail": "stealth",
+    "appliesWhen": "against attempts to Seek you by creatures using only scent-based senses"
+   }
+  ]
+ },
+ {
+  "id": "item-ommatophoric-mutagen",
+  "name": "Ommatophoric Mutagen",
+  "fromItemId": "ommatophoric-mutagen",
+  "duration": "1 minute",
+  "note": "You gain all-around vision and low-light vision if you don't already have it. Drawback: you can't close your eyes, taking the -2 penalty to saves against visual effects for the same 1 minute.",
+  "modifiers": [
+   {
+    "target": "perception",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "on visual Perception checks"
+   },
+   {
+    "target": "save",
+    "type": "untyped",
+    "value": -2,
+    "appliesWhen": "against effects with the visual trait"
+   }
+  ]
+ },
+ {
+  "id": "item-one-days-breath",
+  "name": "One Day's Breath",
+  "fromItemId": "one-days-breath",
+  "duration": "24 hours",
+  "survivesRest": true,
+  "note": "You don't need to breathe for the duration. If you spend 1 Mythic Point when you activate it, you don't need to breathe for 7 days instead.",
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "status",
+    "target": "save",
+    "appliesWhen": "against inhaled threats, such as inhaled poisons"
+   }
+  ]
+ },
+ {
+  "id": "item-oozepick",
+  "name": "Oozepick",
+  "fromItemId": "oozepick",
+  "duration": "1 hour",
+  "note": "While it lasts the ooze also counts as a set of thieves' tools.",
+  "modifiers": [
+   {
+    "value": 2,
+    "type": "item",
+    "target": "skill",
+    "detail": "thievery",
+    "appliesWhen": "Pick a Lock or Disable a Device on the mechanism the ooze was first poured into"
+   }
+  ]
+ },
+ {
+  "id": "item-oozepick-greater",
+  "name": "Oozepick (Greater)",
+  "fromItemId": "oozepick-greater",
+  "duration": "8 hours",
+  "note": "While it lasts the ooze also counts as a set of thieves' tools.",
+  "modifiers": [
+   {
+    "value": 3,
+    "type": "item",
+    "target": "skill",
+    "detail": "thievery",
+    "appliesWhen": "Pick a Lock or Disable a Device on the mechanism the ooze was first poured into"
+   }
+  ]
+ },
+ {
+  "id": "item-pallesthetic-mutagen",
+  "name": "Pallesthetic Mutagen",
+  "fromItemId": "pallesthetic-mutagen",
+  "duration": "1 minute",
+  "note": "Also grants precise echolocation 40 feet and imprecise tremorsense 60 feet; drawback: you are blinded for 1 minute.",
+  "modifiers": [
+   {
+    "target": "perception",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "using the granted echolocation or tremorsense"
+   }
+  ]
+ },
+ {
+  "id": "item-peace-in-dreams-tea",
+  "name": "Peace in Dreams Tea",
+  "fromItemId": "peace-in-dreams-tea",
+  "duration": "1 hour (8 hours with the Tea Ceremony activation)",
+  "note": "Brewed as a 10-minute Tea Ceremony the effects last 8 hours, and while you are asleep the item bonus increases to +2 — a variable value the flat modifiers above cannot express.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "against mental effects"
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "against mental effects"
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "against mental effects"
+   }
+  ]
+ },
+ {
+  "id": "item-philter-of-empty-dreams",
+  "name": "Empty Dreams",
+  "fromItemId": "philter-of-empty-dreams",
+  "duration": "8 hours",
+  "note": "You have no dreams for the duration. If you're addicted to midnight milk, the potion attempts to counteract the addiction (counteract rank 4, +15 modifier) - a one-time effect.",
+  "modifiers": [
+   {
+    "target": "save",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "against dream- or nightmare-themed effects"
+   }
+  ]
+ },
+ {
+  "id": "item-phoenix-cinder",
+  "name": "Phoenix Cinder (Stage 1)",
+  "fromItemId": "phoenix-cinder",
+  "duration": "1 week (Stage 1)",
+  "survivesRest": true,
+  "note": "On first entering Stage 1 you are affected as if by Regenerate, and you are immune to fire for 3 days. While in this stage or higher you have fast healing equal to half your level and resistance to fire damage equal to half your level, and you treat any save against fire effects as one degree better. The bonus applies to any other defense, not just saves. You can cast Ignition as an innate spell, and once per day you can wreathe yourself in flame for 1 minute (adjacent creatures that hit you in melee, touch you, or hit you with an unarmed attack take 2d6; dismissable). Stage 2 (1 month) allows the activation once per hour but reduces current and maximum HP by 2 x your level and adds a weakness.",
+  "modifiers": [
+   {
+    "target": "save",
+    "type": "circumstance",
+    "value": 1,
+    "appliesWhen": "against fire"
+   }
+  ]
+ },
+ {
+  "id": "item-poison-fizz-greater",
+  "name": "Poison Fizz (Greater)",
+  "fromItemId": "poison-fizz-greater",
+  "duration": "1 hour",
+  "note": "Secondary Effect sprays a poison mist at other creatures (damage, plus blinded on a critical failure) and ends the candy.",
+  "modifiers": [
+   {
+    "value": 3,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against poison and being petrified"
+   }
+  ]
+ },
+ {
+  "id": "item-poison-fizz-lesser",
+  "name": "Poison Fizz (Lesser)",
+  "fromItemId": "poison-fizz-lesser",
+  "duration": "1 hour",
+  "note": "Secondary Effect sprays a poison mist at other creatures (damage, plus blinded on a critical failure) and ends the candy.",
+  "modifiers": [
+   {
+    "value": 2,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against poison and being petrified"
+   }
+  ]
+ },
+ {
+  "id": "item-poison-fizz-moderate",
+  "name": "Poison Fizz (Moderate)",
+  "fromItemId": "poison-fizz-moderate",
+  "duration": "1 hour",
+  "note": "Same printed +2 as the lesser version. Secondary Effect sprays a poison mist at other creatures and ends the candy.",
+  "modifiers": [
+   {
+    "value": 2,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against poison and being petrified"
+   }
+  ]
+ },
+ {
+  "id": "item-potency-crystal",
+  "name": "Potency Crystal",
+  "fromItemId": "potency-crystal",
+  "duration": "until the end of this turn",
+  "note": "Triggered before you roll an attack with the affixed weapon. Damage increases to two weapon damage dice for the rest of the turn — a die-count change, not a flat bonus.",
+  "modifiers": [
+   {
+    "target": "attack",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "with the affixed weapon"
+   }
+  ]
+ },
+ {
+  "id": "item-potency-crystal-greater",
+  "name": "Potency Crystal (Greater)",
+  "fromItemId": "potency-crystal-greater",
+  "duration": "until the end of this turn",
+  "note": "Damage increases to three weapon damage dice for the rest of the turn — a die-count change, not a flat bonus.",
+  "modifiers": [
+   {
+    "target": "attack",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "with the affixed weapon"
+   }
+  ]
+ },
+ {
+  "id": "item-potency-crystal-major",
+  "name": "Potency Crystal (Major)",
+  "fromItemId": "potency-crystal-major",
+  "duration": "until the end of this turn",
+  "note": "Damage increases to four weapon damage dice for the rest of the turn — a die-count change, not a flat bonus.",
+  "modifiers": [
+   {
+    "target": "attack",
+    "type": "item",
+    "value": 3,
+    "appliesWhen": "with the affixed weapon"
+   }
+  ]
+ },
+ {
+  "id": "item-potion-of-minute-echoes",
+  "name": "Minute Echoes",
+  "fromItemId": "potion-of-minute-echoes",
+  "duration": "1 minute",
+  "note": "Also, each time you Seek, your hearing becomes a precise sense until the beginning of your next turn, letting you pinpoint creatures by echo.",
+  "modifiers": [
+   {
+    "target": "perception",
+    "type": "status",
+    "value": 2,
+    "appliesWhen": "to checks to hear"
+   }
+  ]
+ },
+ {
+  "id": "item-preserved-moonflower",
+  "name": "Preserved Moonflower",
+  "fromItemId": "preserved-moonflower",
+  "duration": "10 minutes",
+  "note": "Also reduces your wounded condition by up to 2 on consumption (instantaneous). Eating more than one preserved moonflower dish in a day grants no further benefit and makes you drained 1.",
+  "modifiers": [
+   {
+    "target": "save",
+    "type": "status",
+    "value": 2,
+    "appliesWhen": "against void effects"
+   }
+  ]
+ },
+ {
+  "id": "item-rovagugs-mud",
+  "name": "Rovagug's Mud",
+  "fromItemId": "rovagugs-mud",
+  "duration": "1 hour",
+  "note": "Applies to all three saves. Also grants a 1-action breath of bitter vapor that damages creatures and objects in the area and reduces Hardness by 5 for 1d4 rounds; can't be used again for that time.",
+  "modifiers": [
+   {
+    "target": "save",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "against incapacitation effects"
+   }
+  ]
+ },
+ {
+  "id": "item-rovagugs-mud-greater",
+  "name": "Rovagug's Mud (Greater)",
+  "fromItemId": "rovagugs-mud-greater",
+  "duration": "1 hour",
+  "note": "Applies to all three saves. Breath weapon decreases Hardness by 10 for 1d4 rounds; can't be used again for that time.",
+  "modifiers": [
+   {
+    "target": "save",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "against incapacitation effects"
+   }
+  ]
+ },
+ {
+  "id": "item-sanguine-mutagen-greater",
+  "name": "Sanguine (Greater)",
+  "fromItemId": "sanguine-mutagen-greater",
+  "duration": "1 hour",
+  "note": "A success on a save against a disease, poison, or fatiguing effect becomes a critical success. Drawback: whenever you take piercing or slashing damage, you take an extra 1d6.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 3
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "item",
+    "value": 3
+   },
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 4,
+    "appliesWhen": "total instead of +3, against disease, poison, or effects that would make you fatigued"
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "item",
+    "value": 4,
+    "appliesWhen": "total instead of +3, against disease, poison, or effects that would make you fatigued"
+   }
+  ]
+ },
+ {
+  "id": "item-sanguine-mutagen-lesser",
+  "name": "Sanguine (Lesser)",
+  "fromItemId": "sanguine-mutagen-lesser",
+  "duration": "1 minute",
+  "note": "Drawback: whenever you take piercing or slashing damage, you take an extra 1d6.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 1
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "item",
+    "value": 1
+   },
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "total instead of +1, against disease, poison, or effects that would make you fatigued"
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "total instead of +1, against disease, poison, or effects that would make you fatigued"
+   }
+  ]
+ },
+ {
+  "id": "item-sanguine-mutagen-major",
+  "name": "Sanguine (Major)",
+  "fromItemId": "sanguine-mutagen-major",
+  "duration": "1 hour",
+  "note": "On saves against a disease, poison, or fatiguing effect, a success becomes a critical success and a critical failure becomes a failure. Drawback: whenever you take piercing or slashing damage, you take an extra 1d6.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 4
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "item",
+    "value": 4
+   }
+  ]
+ },
+ {
+  "id": "item-sanguine-mutagen-moderate",
+  "name": "Sanguine (Moderate)",
+  "fromItemId": "sanguine-mutagen-moderate",
+  "duration": "10 minutes",
+  "note": "Drawback: whenever you take piercing or slashing damage, you take an extra 1d6.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 2
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "item",
+    "value": 2
+   },
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 3,
+    "appliesWhen": "total instead of +2, against disease, poison, or effects that would make you fatigued"
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "item",
+    "value": 3,
+    "appliesWhen": "total instead of +2, against disease, poison, or effects that would make you fatigued"
+   }
+  ]
+ },
+ {
+  "id": "item-scholars-drop",
+  "name": "Scholar's Drop",
+  "fromItemId": "scholars-drop",
+  "duration": "1 hour",
+  "note": "Secondary Effect (requires being fatigued): ignore the effects of fatigued for 10 minutes; the drop's other effects end, and afterward you're temporarily immune for 1 hour. Three uses in a day make you immune to scholar's drops until a full night's rest.",
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against effects that could render you fatigued"
+   }
+  ]
+ },
+ {
+  "id": "item-seed-pod-of-rooted-wisdom",
+  "name": "Rooted Wisdom",
+  "fromItemId": "seed-pod-of-rooted-wisdom",
+  "duration": "10 minutes",
+  "note": "The pod holds three separate seeds; only the first one creates this mode. The second makes your next 10 words comprehensible to any creature that understands a language, and the third lets you recall the route to any place you've stayed at for more than an hour in the past day - both instantaneous.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "status",
+    "value": 1,
+    "appliesWhen": "against fear effects"
+   }
+  ]
+ },
+ {
+  "id": "item-sense-dulling-hood-greater",
+  "name": "Sense-Dulling Hood",
+  "fromItemId": "sense-dulling-hood-greater",
+  "duration": "1 hour",
+  "note": "The Perception penalty stays -1 at this grade and runs for the same hour as the bonus.",
+  "modifiers": [
+   {
+    "value": 4,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against auditory, olfactory, and visual effects"
+   },
+   {
+    "value": -1,
+    "type": "untyped",
+    "target": "perception"
+   }
+  ]
+ },
+ {
+  "id": "item-sense-dulling-hood-lesser",
+  "name": "Sense-Dulling Hood",
+  "fromItemId": "sense-dulling-hood-lesser",
+  "duration": "10 minutes",
+  "note": "The Perception penalty is printed with no bonus type and applies to all rolls and checks using Perception for the full duration.",
+  "modifiers": [
+   {
+    "value": 2,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against auditory, olfactory, and visual effects"
+   },
+   {
+    "value": -1,
+    "type": "untyped",
+    "target": "perception"
+   }
+  ]
+ },
+ {
+  "id": "item-servers-stew",
+  "name": "Server's Stew",
+  "fromItemId": "servers-stew",
+  "duration": "1 hour",
+  "note": "For the same hour you can speak and understand one language chosen when the stew was cooked (the cook's own language). It does not let you read that language.",
+  "modifiers": [
+   {
+    "value": 2,
+    "type": "item",
+    "target": "skill",
+    "detail": "diplomacy",
+    "appliesWhen": "checks made in the language the stew granted"
+   }
+  ]
+ },
+ {
+  "id": "item-shielding-salve",
+  "name": "Shielding Salve",
+  "fromItemId": "shielding-salve",
+  "duration": "1 round",
+  "note": "The first time a physical attack or a force barrage hits the target during that round, the salve prevents 5 damage and the effect ends immediately. It can be slathered on any creature or object, so if you use it on someone else the mode belongs to them, not you.",
+  "modifiers": [
+   {
+    "target": "ac",
+    "type": "circumstance",
+    "value": 1
+   }
+  ]
+ },
+ {
+  "id": "item-shrinking-potion-greater",
+  "name": "Shrinking (Greater)",
+  "fromItemId": "shrinking-potion-greater",
+  "duration": "1 hour",
+  "note": "Grants the effects of a 4th-rank shrink spell with no onset for 1 hour: you and all your gear become smaller. The Stealth bonus lasts as long as you're shrunken.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "stealth",
+    "type": "item",
+    "value": 2
+   }
+  ]
+ },
+ {
+  "id": "item-silver-crescent-greater",
+  "name": "Silver Crescent (Greater)",
+  "fromItemId": "silver-crescent-greater",
+  "duration": "1 hour",
+  "note": "You shed cool white light like a torch. While shedding it you can't be concealed if you're visible, and if you're invisible you're concealed rather than undetected. Secondary Effect (light ray) affects other creatures and makes the crescent inert.",
+  "modifiers": [
+   {
+    "value": 3,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against olfactory effects"
+   }
+  ]
+ },
+ {
+  "id": "item-silver-crescent-lesser",
+  "name": "Silver Crescent (Lesser)",
+  "fromItemId": "silver-crescent-lesser",
+  "duration": "1 hour",
+  "note": "You shed cool white light like a torch. While shedding it you can't be concealed if you're visible, and if you're invisible you're concealed rather than undetected. Secondary Effect (light ray at a distant square) affects other creatures and makes the crescent inert.",
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against olfactory effects"
+   }
+  ]
+ },
+ {
+  "id": "item-silver-crescent-moderate",
+  "name": "Silver Crescent (Moderate)",
+  "fromItemId": "silver-crescent-moderate",
+  "duration": "1 hour",
+  "note": "You shed cool white light like a torch. While shedding it you can't be concealed if you're visible, and if you're invisible you're concealed rather than undetected. Secondary Effect (light ray) affects other creatures and makes the crescent inert.",
+  "modifiers": [
+   {
+    "value": 2,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against olfactory effects"
+   }
+  ]
+ },
+ {
+  "id": "item-silvertongue-mutagen-greater",
+  "name": "Silvertongue Mutagen",
+  "fromItemId": "silvertongue-mutagen-greater",
+  "duration": "1 hour",
+  "note": "The -2 item penalty ALSO applies to every Lore skill - apply it by hand (skill modifiers are keyed per-Lore, e.g. lore:warfare, so a blanket Lore penalty cannot be encoded). Critical failures with Deception, Diplomacy, Intimidation, or Performance become failures instead. Choose one skill you are trained in; you become untrained in it for the duration. All your failures to Recall Knowledge become critical failures.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "deception",
+    "type": "item",
+    "value": 3
+   },
+   {
+    "target": "skill",
+    "detail": "diplomacy",
+    "type": "item",
+    "value": 3
+   },
+   {
+    "target": "skill",
+    "detail": "intimidation",
+    "type": "item",
+    "value": 3
+   },
+   {
+    "target": "skill",
+    "detail": "performance",
+    "type": "item",
+    "value": 3
+   },
+   {
+    "target": "skill",
+    "detail": "arcana",
+    "type": "item",
+    "value": -2
+   },
+   {
+    "target": "skill",
+    "detail": "crafting",
+    "type": "item",
+    "value": -2
+   },
+   {
+    "target": "skill",
+    "detail": "occultism",
+    "type": "item",
+    "value": -2
+   },
+   {
+    "target": "skill",
+    "detail": "society",
+    "type": "item",
+    "value": -2
+   }
+  ]
+ },
+ {
+  "id": "item-silvertongue-mutagen-lesser",
+  "name": "Silvertongue Mutagen",
+  "fromItemId": "silvertongue-mutagen-lesser",
+  "duration": "1 minute",
+  "note": "The -2 item penalty ALSO applies to every Lore skill - apply it by hand (skill modifiers are keyed per-Lore, e.g. lore:warfare, so a blanket Lore penalty cannot be encoded). Critical failures with Deception, Diplomacy, Intimidation, or Performance become failures instead. Choose one skill you are trained in; you become untrained in it for the duration. All your failures to Recall Knowledge become critical failures.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "deception",
+    "type": "item",
+    "value": 1
+   },
+   {
+    "target": "skill",
+    "detail": "diplomacy",
+    "type": "item",
+    "value": 1
+   },
+   {
+    "target": "skill",
+    "detail": "intimidation",
+    "type": "item",
+    "value": 1
+   },
+   {
+    "target": "skill",
+    "detail": "performance",
+    "type": "item",
+    "value": 1
+   },
+   {
+    "target": "skill",
+    "detail": "arcana",
+    "type": "item",
+    "value": -2
+   },
+   {
+    "target": "skill",
+    "detail": "crafting",
+    "type": "item",
+    "value": -2
+   },
+   {
+    "target": "skill",
+    "detail": "occultism",
+    "type": "item",
+    "value": -2
+   },
+   {
+    "target": "skill",
+    "detail": "society",
+    "type": "item",
+    "value": -2
+   }
+  ]
+ },
+ {
+  "id": "item-silvertongue-mutagen-major",
+  "name": "Silvertongue Mutagen",
+  "fromItemId": "silvertongue-mutagen-major",
+  "duration": "1 hour",
+  "note": "The -2 item penalty ALSO applies to every Lore skill - apply it by hand (skill modifiers are keyed per-Lore, e.g. lore:warfare, so a blanket Lore penalty cannot be encoded). Critical failures with Deception, Diplomacy, Intimidation, or Performance become failures instead. Choose one skill you are trained in; you become untrained in it for the duration. All your failures to Recall Knowledge become critical failures.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "deception",
+    "type": "item",
+    "value": 4
+   },
+   {
+    "target": "skill",
+    "detail": "diplomacy",
+    "type": "item",
+    "value": 4
+   },
+   {
+    "target": "skill",
+    "detail": "intimidation",
+    "type": "item",
+    "value": 4
+   },
+   {
+    "target": "skill",
+    "detail": "performance",
+    "type": "item",
+    "value": 4
+   },
+   {
+    "target": "skill",
+    "detail": "arcana",
+    "type": "item",
+    "value": -2
+   },
+   {
+    "target": "skill",
+    "detail": "crafting",
+    "type": "item",
+    "value": -2
+   },
+   {
+    "target": "skill",
+    "detail": "occultism",
+    "type": "item",
+    "value": -2
+   },
+   {
+    "target": "skill",
+    "detail": "society",
+    "type": "item",
+    "value": -2
+   }
+  ]
+ },
+ {
+  "id": "item-silvertongue-mutagen-moderate",
+  "name": "Silvertongue Mutagen",
+  "fromItemId": "silvertongue-mutagen-moderate",
+  "duration": "10 minutes",
+  "note": "The -2 item penalty ALSO applies to every Lore skill - apply it by hand (skill modifiers are keyed per-Lore, e.g. lore:warfare, so a blanket Lore penalty cannot be encoded). Critical failures with Deception, Diplomacy, Intimidation, or Performance become failures instead. Choose one skill you are trained in; you become untrained in it for the duration. All your failures to Recall Knowledge become critical failures.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "deception",
+    "type": "item",
+    "value": 2
+   },
+   {
+    "target": "skill",
+    "detail": "diplomacy",
+    "type": "item",
+    "value": 2
+   },
+   {
+    "target": "skill",
+    "detail": "intimidation",
+    "type": "item",
+    "value": 2
+   },
+   {
+    "target": "skill",
+    "detail": "performance",
+    "type": "item",
+    "value": 2
+   },
+   {
+    "target": "skill",
+    "detail": "arcana",
+    "type": "item",
+    "value": -2
+   },
+   {
+    "target": "skill",
+    "detail": "crafting",
+    "type": "item",
+    "value": -2
+   },
+   {
+    "target": "skill",
+    "detail": "occultism",
+    "type": "item",
+    "value": -2
+   },
+   {
+    "target": "skill",
+    "detail": "society",
+    "type": "item",
+    "value": -2
+   }
+  ]
+ },
+ {
+  "id": "item-sneaky-key",
+  "name": "Sneaky Key",
+  "fromItemId": "sneaky-key",
+  "duration": "1 minute",
+  "note": "Requires you to be trained in Thievery. The first time you get a success or critical success to Pick a Lock, you achieve one additional success toward opening a complex lock.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "thievery",
+    "type": "status",
+    "value": 1,
+    "appliesWhen": "to Pick a Lock"
+   }
+  ]
+ },
+ {
+  "id": "item-soothing-toddy",
+  "name": "Soothing Toddy",
+  "fromItemId": "soothing-toddy",
+  "duration": "1 hour",
+  "note": "The second bonus covers only ONE trait, fixed when the toddy was made: Amaretto = auditory, Limoncello = olfactory, Whiskey = visual.",
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against emotion effects"
+   },
+   {
+    "value": 1,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against effects with the liquor's trait (Amaretto = auditory, Limoncello = olfactory, Whiskey = visual)"
+   }
+  ]
+ },
+ {
+  "id": "item-spiderfoot-brew-greater",
+  "name": "Spiderfoot (Greater)",
+  "fromItemId": "spiderfoot-brew-greater",
+  "duration": "1 hour",
+  "note": "You also gain a climb Speed of 25 feet for the duration.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "athletics",
+    "type": "item",
+    "value": 3,
+    "appliesWhen": "on Athletics checks to Climb"
+   }
+  ]
+ },
+ {
+  "id": "item-spiderfoot-brew-lesser",
+  "name": "Spiderfoot (Lesser)",
+  "fromItemId": "spiderfoot-brew-lesser",
+  "duration": "1 minute",
+  "note": "You also gain a climb Speed of 15 feet for the duration.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "athletics",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "on Athletics checks to Climb"
+   }
+  ]
+ },
+ {
+  "id": "item-spiderfoot-brew-moderate",
+  "name": "Spiderfoot (Moderate)",
+  "fromItemId": "spiderfoot-brew-moderate",
+  "duration": "10 minutes",
+  "note": "You also gain a climb Speed of 20 feet for the duration.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "athletics",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "on Athletics checks to Climb"
+   }
+  ]
+ },
+ {
+  "id": "item-spiritsight-tea",
+  "name": "Spiritsight Tea",
+  "fromItemId": "spiritsight-tea",
+  "duration": "10 minutes (with the Tea Ceremony: 30 minutes of seeing invisible, 8 hours of the item bonus)",
+  "note": "Display side of the same mode: for 10 minutes you can see invisible creatures and objects (they appear as translucent shapes and are concealed to you), your eyes glow softly, and the tea sheds candlelight. The Tea Ceremony activation raises see-invisible to 30 minutes and the item bonus to 8 hours.",
+  "modifiers": [
+   {
+    "target": "perception",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "on checks to Seek incorporeal creatures"
+   }
+  ]
+ },
+ {
+  "id": "item-sprite-apple-chartreuse",
+  "name": "Sprite Apple (Chartreuse)",
+  "fromItemId": "sprite-apple-chartreuse",
+  "duration": "10 minutes",
+  "note": "Duration/light: \"For 10 minutes after consuming a sprite apple, you shed bright light in a [emanation] (and dim light for the next 20 feet).\" The bonus is granted to every creature standing in that bright light, allies and enemies alike, not to you exclusively. While shedding the light you can't be concealed if you're visible, and if you're invisible you're concealed rather than undetected.",
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "item",
+    "target": "skill",
+    "detail": "nature"
+   },
+   {
+    "value": 1,
+    "type": "item",
+    "target": "skill",
+    "detail": "diplomacy",
+    "appliesWhen": "against animals or plants, and only with Animal Empathy, Plant Empathy, or a similar ability"
+   }
+  ]
+ },
+ {
+  "id": "item-sprite-apple-pink",
+  "name": "Sprite Apple (Pink)",
+  "fromItemId": "sprite-apple-pink",
+  "duration": "10 minutes",
+  "note": "Duration/light: \"For 10 minutes after consuming a sprite apple, you shed bright light in a [emanation] (and dim light for the next 20 feet).\" Every creature in the bright light gets the bonus, not just you. While shedding the light you can't be concealed if you're visible, and if you're invisible you're concealed rather than undetected.",
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "item",
+    "target": "skill",
+    "detail": "performance"
+   }
+  ]
+ },
+ {
+  "id": "item-sprite-apple-teal",
+  "name": "Sprite Apple (Teal)",
+  "fromItemId": "sprite-apple-teal",
+  "duration": "10 minutes",
+  "note": "Duration/light: \"For 10 minutes after consuming a sprite apple, you shed bright light in a [emanation] (and dim light for the next 20 feet).\" Every creature in the bright light gets the bonus, not just you. While shedding the light you can't be concealed if you're visible, and if you're invisible you're concealed rather than undetected.",
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against fear effects"
+   }
+  ]
+ },
+ {
+  "id": "item-star-of-cynosure",
+  "name": "Star of Cynosure",
+  "fromItemId": "star-of-cynosure",
+  "duration": "1 minute",
+  "note": "Separately, on the triggering Will save only, a failure becomes a success and a critical failure becomes a failure — a one-shot upgrade, not part of the ongoing bonus.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "status",
+    "value": 2,
+    "appliesWhen": "against spells with the mental trait"
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "status",
+    "value": 2,
+    "appliesWhen": "against spells with the mental trait"
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "status",
+    "value": 2,
+    "appliesWhen": "against spells with the mental trait"
+   }
+  ]
+ },
+ {
+  "id": "item-starsong-nectar",
+  "name": "Starsong Nectar",
+  "fromItemId": "starsong-nectar",
+  "duration": "10 minutes",
+  "note": "The +3 covers attack rolls (including spell attacks), initiative, Perception, all saves, and all skills. You aren't off-guard from flanking or from hidden/undetected creatures. Once per round you may spend a 1-action concentrate activation to roll two d20s and take the higher on attacks, Perception, saves, and skill checks until the start of your next turn. If you show too much caution (GM's discretion) you must save or the effect ends; you are temporarily immune for 24 hours afterward.",
+  "modifiers": [
+   {
+    "target": "all-checks",
+    "type": "status",
+    "value": 3
+   }
+  ]
+ },
+ {
+  "id": "item-static-muscular-relay",
+  "name": "Static Relay",
+  "fromItemId": "static-muscular-relay",
+  "duration": "1 minute",
+  "note": "Ends early the moment you're hit by an attack or fail a Reflex save, whichever comes first.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "circumstance",
+    "value": 2
+   },
+   {
+    "target": "ac",
+    "type": "circumstance",
+    "value": 2
+   }
+  ]
+ },
+ {
+  "id": "item-statue-skin-salve",
+  "name": "Statue Skin",
+  "fromItemId": "statue-skin-salve",
+  "duration": "20 minutes (stone layer); 8 hours (Impersonate bonus)",
+  "note": "For the first 20 minutes a thin layer of stone gives resistance 3 to piercing and slashing damage. The Impersonate bonus ends early if the body is fully submerged in water. If applied to an ally instead of yourself, the whole effect belongs on their sheet.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "deception",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "to Impersonate a statue or a creature made of stone"
+   }
+  ]
+ },
+ {
+  "id": "item-sun-orchid-poultice",
+  "name": "Sun Orchid Vigor",
+  "fromItemId": "sun-orchid-poultice",
+  "duration": "1 hour",
+  "note": "Also grants 20 temporary Hit Points for the hour (temp HP, not a modifier). On application it immediately reduces your clumsy, drained, and enfeebled values by 2 - a one-time effect, not part of the duration.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 3
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "item",
+    "value": 3
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "item",
+    "value": 3
+   }
+  ]
+ },
+ {
+  "id": "item-sure-step-potion",
+  "name": "Sure-Step",
+  "fromItemId": "sure-step-potion",
+  "duration": "1 hour",
+  "note": "You can Step into difficult terrain and you aren't off-guard on uneven ground.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "acrobatics",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "to Balance"
+   }
+  ]
+ },
+ {
+  "id": "item-ten-days-breath",
+  "name": "Ten Day's Breath",
+  "fromItemId": "ten-days-breath",
+  "duration": "10 days",
+  "survivesRest": true,
+  "note": "You don't need to breathe for the duration. If you spend 1 Mythic Point when you activate it, you don't need to breathe for 1 year instead.",
+  "modifiers": [
+   {
+    "value": 3,
+    "type": "status",
+    "target": "save",
+    "appliesWhen": "against inhaled threats, such as inhaled poisons"
+   }
+  ]
+ },
+ {
+  "id": "item-theatrical-mutagen-greater",
+  "name": "Theatrical (Greater)",
+  "fromItemId": "theatrical-mutagen-greater",
+  "duration": "10 minutes",
+  "note": "You also gain a +10-foot status bonus to your Speed. If you're untrained in Acrobatics, Crafting, or Performance, your proficiency bonus for those checks equals your level instead of +0. Drawback: after any round in which you don't spend at least 1 action to Interact with an object, Perform, Step, or Stride, you're off-guard until the start of your next turn.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "acrobatics",
+    "type": "item",
+    "value": 3
+   },
+   {
+    "target": "skill",
+    "detail": "crafting",
+    "type": "item",
+    "value": 3
+   },
+   {
+    "target": "skill",
+    "detail": "performance",
+    "type": "item",
+    "value": 3
+   },
+   {
+    "target": "perception",
+    "type": "untyped",
+    "value": -1
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "untyped",
+    "value": -1
+   }
+  ]
+ },
+ {
+  "id": "item-theatrical-mutagen-lesser",
+  "name": "Theatrical (Lesser)",
+  "fromItemId": "theatrical-mutagen-lesser",
+  "duration": "1 minute",
+  "note": "You also gain a +5-foot status bonus to your Speed. If you're untrained in Acrobatics, Crafting, or Performance, your proficiency bonus for those checks equals your level instead of +0. Drawback: after any round in which you don't spend at least 1 action to Interact with an object, Perform, Step, or Stride, you're off-guard until the start of your next turn.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "acrobatics",
+    "type": "item",
+    "value": 1
+   },
+   {
+    "target": "skill",
+    "detail": "crafting",
+    "type": "item",
+    "value": 1
+   },
+   {
+    "target": "skill",
+    "detail": "performance",
+    "type": "item",
+    "value": 1
+   },
+   {
+    "target": "perception",
+    "type": "untyped",
+    "value": -1
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "untyped",
+    "value": -1
+   }
+  ]
+ },
+ {
+  "id": "item-theatrical-mutagen-major",
+  "name": "Theatrical (Major)",
+  "fromItemId": "theatrical-mutagen-major",
+  "duration": "1 hour",
+  "note": "You also gain a +10-foot status bonus to your Speed. If you're untrained in Acrobatics, Crafting, or Performance, your proficiency bonus for those checks equals your level instead of +0. Drawback: after any round in which you don't spend at least 1 action to Interact with an object, Perform, Step, or Stride, you're off-guard until the start of your next turn.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "acrobatics",
+    "type": "item",
+    "value": 4
+   },
+   {
+    "target": "skill",
+    "detail": "crafting",
+    "type": "item",
+    "value": 4
+   },
+   {
+    "target": "skill",
+    "detail": "performance",
+    "type": "item",
+    "value": 4
+   },
+   {
+    "target": "perception",
+    "type": "untyped",
+    "value": -1
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "untyped",
+    "value": -1
+   }
+  ]
+ },
+ {
+  "id": "item-theatrical-mutagen-moderate",
+  "name": "Theatrical (Moderate)",
+  "fromItemId": "theatrical-mutagen-moderate",
+  "duration": "1 minute",
+  "note": "You also gain a +5-foot status bonus to your Speed. If you're untrained in Acrobatics, Crafting, or Performance, your proficiency bonus for those checks equals your level instead of +0. Drawback: after any round in which you don't spend at least 1 action to Interact with an object, Perform, Step, or Stride, you're off-guard until the start of your next turn.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "acrobatics",
+    "type": "item",
+    "value": 2
+   },
+   {
+    "target": "skill",
+    "detail": "crafting",
+    "type": "item",
+    "value": 2
+   },
+   {
+    "target": "skill",
+    "detail": "performance",
+    "type": "item",
+    "value": 2
+   },
+   {
+    "target": "perception",
+    "type": "untyped",
+    "value": -1
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "untyped",
+    "value": -1
+   }
+  ]
+ },
+ {
+  "id": "item-therapeutic-snap-peas",
+  "name": "Therapeutic Snap Peas",
+  "fromItemId": "therapeutic-snap-peas",
+  "duration": "1 minute",
+  "note": "Only applies if you include yourself among the up to 5 chosen creatures; otherwise the mode belongs on the ally's sheet. The 4d8+10 healing is instantaneous. The alternate Beanstalk activation (10 minutes) grows a beanstalk lasting 8 hours that feeds up to 8 Large-or-smaller creatures; eating the pods heals 30 HP and allows a new save against one poison or disease — all instantaneous, no mode.",
+  "modifiers": [
+   {
+    "target": "save",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "against poisons or diseases"
+   }
+  ]
+ },
+ {
+  "id": "item-three-days-breath",
+  "name": "Three Day's Breath",
+  "fromItemId": "three-days-breath",
+  "duration": "3 days",
+  "survivesRest": true,
+  "note": "You don't need to breathe for the duration. If you spend 1 Mythic Point when you activate it, you don't need to breathe for 30 days instead.",
+  "modifiers": [
+   {
+    "value": 2,
+    "type": "status",
+    "target": "save",
+    "appliesWhen": "against inhaled threats, such as inhaled poisons"
+   }
+  ]
+ },
+ {
+  "id": "item-trackers-stew",
+  "name": "Tracker's Stew",
+  "fromItemId": "trackers-stew",
+  "duration": "24 hours or until your next daily preparations, whichever comes first",
+  "survivesRest": true,
+  "note": "While the stew lasts you can Cover Tracks or Track at full Speed, or do both at half Speed.",
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "item",
+    "target": "skill",
+    "detail": "survival",
+    "appliesWhen": "on checks to Cover Tracks and Track"
+   }
+  ]
+ },
+ {
+  "id": "item-tricky-liniment",
+  "name": "Tricky Liniment",
+  "fromItemId": "tricky-liniment",
+  "duration": "8 hours",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "acrobatics",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "to Escape or to Squeeze"
+   }
+  ]
+ },
+ {
+  "id": "item-unassuming-face-paint",
+  "name": "Unassuming Face Paint",
+  "fromItemId": "unassuming-face-paint",
+  "duration": "10 minutes",
+  "note": "The same +2 item bonus applies to your Stealth DCs as well as checks. You also appear plain and inconspicuous for the duration. The mode ends immediately if you take a hostile action.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "stealth",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "while blending into a crowd"
+   }
+  ]
+ },
+ {
+  "id": "item-valorous-coin",
+  "name": "Valorous Coin",
+  "fromItemId": "valorous-coin",
+  "duration": "1 hour (the bonus itself runs for 1 minute once triggered, and that minute ends the coin)",
+  "note": "The coin does nothing until you drop below a quarter of your Hit Points while wielding the affected weapon. That grants temporary Hit Points equal to your level for 1 minute (not a modifier) alongside the bonus. When the minute ends, so do all effects and the coin's remaining duration, and you're fatigued until you're healed to your maximum Hit Points.",
+  "modifiers": [
+   {
+    "target": "attack",
+    "type": "circumstance",
+    "value": 1,
+    "appliesWhen": "with the affected weapon, for 1 minute after you're reduced below a quarter of your Hit Points"
+   },
+   {
+    "target": "damage",
+    "type": "circumstance",
+    "value": 1,
+    "appliesWhen": "with the affected weapon, for 1 minute after you're reduced below a quarter of your Hit Points"
+   }
+  ]
+ },
+ {
+  "id": "item-vermin-repellent-agent-greater",
+  "name": "Vermin Repellent",
+  "fromItemId": "vermin-repellent-agent-greater",
+  "duration": "4 hours",
+  "note": "Attacking arthropods must save or become frightened (fleeing on a critical failure), then are temporarily immune for 1 minute. That effect lands on the attacker.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 3,
+    "appliesWhen": "against poisons"
+   }
+  ]
+ },
+ {
+  "id": "item-vermin-repellent-agent-lesser",
+  "name": "Vermin Repellent",
+  "fromItemId": "vermin-repellent-agent-lesser",
+  "duration": "4 hours",
+  "note": "While active, arthropods must save when attacking you with a melee Strike or swarm attack (Success frightened 1, Failure frightened 2, Critical Failure frightened 2 and fleeing), then are temporarily immune for 1 minute. That save affects the attacker, not you.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "against poisons"
+   }
+  ]
+ },
+ {
+  "id": "item-vermin-repellent-agent-major",
+  "name": "Vermin Repellent",
+  "fromItemId": "vermin-repellent-agent-major",
+  "duration": "4 hours",
+  "note": "Attacking arthropods must save or become frightened (fleeing on a critical failure), then are temporarily immune for 1 minute. That effect lands on the attacker.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 4,
+    "appliesWhen": "against poisons"
+   }
+  ]
+ },
+ {
+  "id": "item-vermin-repellent-agent-moderate",
+  "name": "Vermin Repellent",
+  "fromItemId": "vermin-repellent-agent-moderate",
+  "duration": "4 hours",
+  "note": "Attacking arthropods must save or become frightened (fleeing on a critical failure), then are temporarily immune for 1 minute. That effect lands on the attacker.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "against poisons"
+   }
+  ]
+ },
+ {
+  "id": "item-vital-earth",
+  "name": "Vital Earth",
+  "fromItemId": "vital-earth",
+  "duration": "24 hours",
+  "survivesRest": true,
+  "note": "For 24 hours you don't need air or water. Anyone attempting to Administer First Aid or Treat Wounds on you doesn't need a healer's toolkit and gains a +1 item bonus to that Medicine check — that bonus applies to the healer's roll, not yours.",
+  "modifiers": []
+ },
+ {
+  "id": "item-war-blood-mutagen-greater",
+  "name": "War Blood Mutagen (Greater)",
+  "fromItemId": "war-blood-mutagen-greater",
+  "duration": "1 hour",
+  "note": "Drawback: you can't voluntarily release the weapon without succeeding at a check (which ends the mutagen), and concentrate actions require a successful check or the action is lost. Disarm or other removal attempts must exceed DC 40.",
+  "modifiers": [
+   {
+    "value": 3,
+    "type": "item",
+    "target": "attack",
+    "appliesWhen": "attacks with the chosen melee weapon fused to your hands"
+   },
+   {
+    "value": 3,
+    "type": "item",
+    "target": "save",
+    "detail": "will",
+    "appliesWhen": "against fear effects"
+   }
+  ]
+ },
+ {
+  "id": "item-war-blood-mutagen-lesser",
+  "name": "War Blood Mutagen (Lesser)",
+  "fromItemId": "war-blood-mutagen-lesser",
+  "duration": "1 minute",
+  "note": "Drawback: the weapon is fused to you - you can't voluntarily release it without succeeding at an Athletics check (DC 25), which ends the mutagen and takes a single action, and any concentrate action requires a DC 5 flat check or the action is lost. Disarm or other removal attempts must exceed DC 25.",
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "item",
+    "target": "attack",
+    "appliesWhen": "attacks with the chosen melee weapon fused to your hands"
+   },
+   {
+    "value": 1,
+    "type": "item",
+    "target": "save",
+    "detail": "will",
+    "appliesWhen": "against fear effects"
+   }
+  ]
+ },
+ {
+  "id": "item-war-blood-mutagen-major",
+  "name": "War Blood Mutagen (Major)",
+  "fromItemId": "war-blood-mutagen-major",
+  "duration": "1 hour",
+  "note": "Drawback: you can't voluntarily release the weapon without succeeding at a check (which ends the mutagen), and concentrate actions require a successful check or the action is lost. Disarm or other removal attempts must exceed DC 50.",
+  "modifiers": [
+   {
+    "value": 4,
+    "type": "item",
+    "target": "attack",
+    "appliesWhen": "attacks with the chosen melee weapon fused to your hands"
+   },
+   {
+    "value": 4,
+    "type": "item",
+    "target": "save",
+    "detail": "will",
+    "appliesWhen": "against fear effects"
+   }
+  ]
+ },
+ {
+  "id": "item-war-blood-mutagen-moderate",
+  "name": "War Blood Mutagen (Moderate)",
+  "fromItemId": "war-blood-mutagen-moderate",
+  "duration": "10 minutes",
+  "note": "Drawback: you can't voluntarily release the weapon without succeeding at a check (which ends the mutagen), and concentrate actions require a successful check or the action is lost. Disarm or other removal attempts must exceed DC 30.",
+  "modifiers": [
+   {
+    "value": 2,
+    "type": "item",
+    "target": "attack",
+    "appliesWhen": "attacks with the chosen melee weapon fused to your hands"
+   },
+   {
+    "value": 2,
+    "type": "item",
+    "target": "save",
+    "detail": "will",
+    "appliesWhen": "against fear effects"
+   }
+  ]
+ },
+ {
+  "id": "item-warding-element-draught",
+  "name": "Warding Element",
+  "fromItemId": "warding-element-draught",
+  "duration": "10 minutes",
+  "note": "The element is fixed when the draught is distilled: Blood (metal), Effervescent Gas (air), Grains (earth), Hot Peppers (fire), Spring Water (water), Wormwood (wood). Pick the matching trait when the mode is switched on.",
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "item",
+    "target": "ac",
+    "appliesWhen": "against alchemical effects, spells, and magic effects with the draught's elemental trait"
+   },
+   {
+    "value": 1,
+    "type": "item",
+    "target": "save",
+    "appliesWhen": "against alchemical effects, spells, and magic effects with the draught's elemental trait"
+   }
+  ]
+ },
+ {
+  "id": "item-wine-of-the-blood",
+  "name": "Wine of the Blood",
+  "fromItemId": "wine-of-the-blood",
+  "duration": "1 minute",
+  "note": "Status bonuses don't stack — a Will save against an emotion effect gets +2, not +3. Instantaneous on drinking and outside the mode: you recover 2d10 Hit Points, and the wine attempts to counteract every negative emotion effect on you (counteract rank 3, modifier +9).",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "status",
+    "value": 1
+   },
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "status",
+    "value": 2,
+    "appliesWhen": "against emotion effects"
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "status",
+    "value": 2,
+    "appliesWhen": "against emotion effects"
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "status",
+    "value": 2,
+    "appliesWhen": "against emotion effects"
+   }
+  ]
+ }
+]

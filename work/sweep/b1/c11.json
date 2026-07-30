@@ -1,0 +1,1225 @@
+[
+ {
+  "id": "blight-bomb-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Blight Bomb (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Blight bombs contain volatile toxic chemicals that rot flesh. A blight bomb deals 3d4 poison damage, 3d4 persistent poison damage, and 3 poison splash damage. You gain a +2 item bonus to attack rolls."
+ },
+ {
+  "id": "blight-bomb-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Blight Bomb (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Blight bombs contain volatile toxic chemicals that rot flesh. A blight bomb deals 4d4 poison damage, 4d4 persistent poison damage, and 4 poison splash damage. You gain a +3 item bonus to attack rolls."
+ },
+ {
+  "id": "blight-bomb-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Blight Bomb (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Blight bombs contain volatile toxic chemicals that rot flesh. A blight bomb deals 2d4 poison damage, 2d4 persistent poison damage, and 2 poison splash damage. You gain a +1 item bonus to attack rolls."
+ },
+ {
+  "id": "blight-survivor",
+  "lane": "situational",
+  "collection": "backgrounds",
+  "name": "Blight Survivor",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "innateSpells",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Centuries ago, the elven witch Silisifex played an important role in the fight against Treerazer. With her deep knowledge, power over primal magic, and abiding faith in Calistria, she was one of the first elves to directly fight against the encroaching fiendish blight that was Tanglebriar. Her discoveries, teachings, and lore have continued to protect and inspire elves to this very day, centuries after she vanished mysteriously on a mission into Tanglebriar back in 3050 ar. Whether you're a primal spellcaster or merely someone whose life was impacted by Tanglebriar's blight, Silisifex's discoveries and methods for combating the demonic corruption of nature has benefited you significantly over the course of your life and may even have saved you from being corrupted yourself. Alternately, you could have had close friends or family members who became corrupted only to have been restored before that corruption could become permanent. Many have succumbed to the influence of Tanglebriar over the ages, but you count yourself as one of the survivors of this corruption. Using your hard-earned experience to help others survive their encounter with the blight has, in part, defined your role in Kyonin or abroad. Choose two attribute boosts. One must be to **Constitution** or **Wisdom**, and one is a free attribute boost. You're trained in the Nature skill and the Fungus Lore skill. You gain the Natural Medicine skill feat. In addition, once you're 4th level, you gain the ability to cast Cleanse Affliction as an innate primal spell once per day. This spell automatically heightens to a rank equal to half your level, rounded up. If you're cleansing an affliction with the fungus trait, you gain a +4 status bonus to your counteract check. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Nature **Lore** Fungus Lore **Skill Feat** Natural Medicine"
+ },
+ {
+  "id": "blightburn-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Blightburn Bomb",
+  "level": 15,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "disease",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Blightburn bombs have radioactive materials sealed inside flasks treated with lead. The bomb grants a +2 item bonus to attack rolls and deals 3d6 poison damage, 3d4 persistent poison damage, and 3 poison splash damage. A creature that takes the persistent poison damage deals the splash damage again from its current position as the radiation continues to harm nearby creatures. The persistent damage can last up to 1 minute. Blightburn bombs also expose the primary target to blightburn sickness. --- **Saving Throw** **Onset** 1d4 days **Stage 1** Drained 1 (1 day) **Stage 2** drained 1 and Sickened 1 (1 day) **Stage 3** Drained 2 and Sickened 2 (1 week) **Stage 4** Drained 3 and Sickened 3 (1 month) **Stage 5** increase drained condition by 1 (1 year)"
+ },
+ {
+  "id": "blightburn-bomb-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Blightburn Bomb (Greater)",
+  "level": 20,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "disease",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Blightburn bombs have radioactive materials sealed inside flasks treated with lead. The bomb grants a +3 item bonus to attack rolls and deals 4d6 poison damage, 4d4 persistent poison damage, and 4 poison splash damage. A creature that takes the persistent poison damage deals the splash damage again from its current position as the radiation continues to harm nearby creatures. The persistent damage can last up to 1 minute. Blightburn bombs also expose the primary target to blightburn sickness. --- **Saving Throw** **Onset** 1d4 days **Stage 1** Drained 1 (1 day) **Stage 2** drained 1 and Sickened 1 (1 day) **Stage 3** Drained 2 and Sickened 2 (1 week) **Stage 4** Drained 3 and Sickened 3 (1 month) **Stage 5** increase drained condition by 1 (1 year)"
+ },
+ {
+  "id": "blood-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Blood Bomb",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Blood Bomb May contain spoilers from Sky King's Tomb Source Pathfinder #194: Cult of the Cave Worm pg. 79 Usage held in 1 hand Bulk L Activate Strike This flask is full of shrapnel and anti-coagulants designed to make targets bleed out. It deals 1 slashing damage, the listed persistent bleed damage, and the listed slashing splash damage. Many types grant an item bonus to attack rolls. Blood Bomb (Lesser) Source Pathfinder #194: Cult of the Cave Worm pg. 79 Price 4 gp Bulk L It deals 1d6 persistent bleed damage and 1 slashing splash damage. Blood Bomb (Moderate) Source Pathfinder #194: Cult of the Cave Worm pg. 79 Price 11 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d6 persistent bleed damage and 2 slashing splash damage. Blood Bomb (Greater) Source Pathfinder #194: Cult of the Cave Worm pg. 79 Price 275 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 3d6 persistent bleed damage and 3 slashing splash damage. Blood Bomb (Major) Source Pathfinder #194: Cult of the Cave Worm pg. 79 Price 2,750 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 6d6 persistent bleed damage and 4 slashing splash damage."
+ },
+ {
+  "id": "blood-bomb-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Blood Bomb (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This flask is full of shrapnel and anti-coagulants designed to make targets bleed out. It deals 1 slashing, 3d6 persistent bleed damage and 3 slashing splash damage. You gain a +2 item bonus to attack rolls."
+ },
+ {
+  "id": "blood-bomb-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Blood Bomb (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This flask is full of shrapnel and anti-coagulants designed to make targets bleed out. It deals 1 slashing, 6d6 persistent bleed damage and 4 slashing splash damage. You gain a +3 item bonus to attack rolls."
+ },
+ {
+  "id": "blood-bomb-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Blood Bomb (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This flask is full of shrapnel and anti-coagulants designed to make targets bleed out. It deals 1 slashing, 2d6 persistent bleed damage and 2 slashing splash damage. You gain a +1 item bonus to attack rolls."
+ },
+ {
+  "id": "bloodletting-claws",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Bloodletting Claws",
+  "level": 4,
+  "traits": [
+   "evolution",
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your eidolon inflicts bleeding wounds on a telling blow. If your eidolon critically hits with a melee unarmed Strike that deals slashing or piercing damage, its target takes 1d6. Your eidolon gains an item bonus to this bleed damage equal to the unarmed attack's item bonus to attack rolls. This is a critical specialization effect."
+ },
+ {
+  "id": "bloodline-robe",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Bloodline Robe",
+  "level": 12,
+  "traits": [
+   "focused",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "dynamicSkillBonus"
+  ],
+  "inRegistries": [],
+  "text": "Each *bloodline robe* has a design that befits a particular sorcerer bloodline, depicting creatures of that bloodline or using styles common among them. You gain a +2 item bonus to each of your bloodline skills. --- **Activate** ⟨1⟩ (concentrate) **Frequency** once per day **Requirements** You're benefiting from your blood magic effect or gained its benefit earlier this turn **Effect** You're quickened on your next turn. You can use the extra action only as part of casting a bloodline spell. --- **Activate** ⟨4⟩ (concentrate) **Frequency** once per day **Effect** You gain 1 Focus Point, which you can use only to cast a sorcerer bloodline spell. If not used by the end of your turn, this Focus Point is lost. --- **Craft Requirements** You are a sorcerer of the bloodline tied to the robe."
+ },
+ {
+  "id": "bodysnatcher",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Bodysnatcher",
+  "level": 14,
+  "traits": [
+   "archetype",
+   "divine",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "core.stances"
+  ],
+  "text": "Your secret-stealing maggots reveal how to devour more than just the flesh and secrets of a victim; you can ingest and assume their whole physical appearance. When you Consume Flesh of a creature of your size or smaller, you can assume the physical form of the creature immediately after becoming satiated or fully satiated. Using Bodysnatcher counts as creating a disguise for the Impersonate use of Deception. Your transformation automatically defeats Perception DCs to determine you are a member of the ancestry or creature type into which you transformed, and you gain a +4 circumstance bonus to your Deception DC to prevent others from seeing through your disguise. You do not gain the special abilities, skills, voice, memories, or other characteristics of the creature you consumed, only their physical form. Unlike Change Shape, Bodysnatcher can be used to gain the appearance of a specific individual whose flesh you've consumed. This effect lasts until you are no longer satiated and can only be used once per individual creature."
+ },
+ {
+  "id": "bombers-eye-elixir",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Bomber's Eye Elixir",
+  "level": 4,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Bomber's Eye Elixir Source Player Core 2 pg. 286, GM Core pg. 246 Usage held in 1 hand Bulk L Activate (manipulate) This tincture lets you pinpoint your foes. For the next 5 minutes, your alchemical bomb Strikes reduce the circumstance bonus to AC your targets gain from cover. Bomber's Eye Elixir (Lesser) Source Player Core 2 pg. 286, GM Core pg. 246, Core Rulebook pg. 547 Price 14 gp Bulk L Reduce your targets’ circumstance bonus by 1. Bomber's Eye Elixir (Greater) Source Player Core 2 pg. 286, GM Core pg. 246, Core Rulebook pg. 547 Price 700 gp Bulk L Reduce your targets’ circumstance bonus by 2."
+ },
+ {
+  "id": "bottled-lightning",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Bottled Lightning",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "electricity",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Bottled Lightning Source Player Core 2 pg. 284 Usage held in 1 hand Bulk L Activate Strike Bottled lightning is packed with volatile reagents that create a blast of electricity when they're exposed to air. Bottled lightning deals the listed electricity damage and electricity splash damage. On a hit, the target becomes off-guard until the start of your next turn. Many types grant an item bonus to attack rolls. Bottled Lightning (Lesser) Source Player Core 2 pg. 284, Core Rulebook pg. 545 Price 3 gp Bulk L The bomb deals 1d6 electricity damage and 1 electricity splash damage. Bottled Lightning (Moderate) Source Player Core 2 pg. 284, Core Rulebook pg. 545 Price 10 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d6 electricity damage and 2 electricity splash damage. Bottled Lightning (Greater) Source Player Core 2 pg. 284, Core Rulebook pg. 545 Price 250 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 3d6 electricity damage and 3 electricity splash damage. Bottled Lightning (Major) Source Player Core 2 pg. 284, Core Rulebook pg. 545 Price 2,500 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 4d6 electricity damage and 4 electricity splash damage."
+ },
+ {
+  "id": "bottled-lightning-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Bottled Lightning (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "electricity",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Bottled lightning is packed with volatile reagents that create a blast of electricity when they are exposed to air. Bottled lightning deals 3d6 electricity damage and 3 electricity splash damage. On a hit, the target becomes off-guard until the start of your next turn. You gain a +2 item bonus to attack rolls."
+ },
+ {
+  "id": "bottled-lightning-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Bottled Lightning (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "electricity",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Bottled lightning is packed with volatile reagents that create a blast of electricity when they are exposed to air. Bottled lightning deals 4d6 electricity damage and 4 electricity splash damage. On a hit, the target becomes off-guard until the start of your next turn. You gain a +3 item bonus to attack rolls."
+ },
+ {
+  "id": "bottled-lightning-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Bottled Lightning (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "electricity",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Bottled lightning is packed with volatile reagents that create a blast of electricity when they are exposed to air. Bottled lightning deals 2d6 electricity damage and 2 electricity splash damage. On a hit, the target becomes off-guard until the start of your next turn. You gain a +1 item bonus to attack rolls."
+ },
+ {
+  "id": "boulder-seed",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Boulder Seed",
+  "level": 12,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This bomb is made of volatile fluids that rapidly expand and harden when exposed to air. A boulder seed grants a +2 item bonus to attack rolls and deals 3d4 bludgeoning damage and 3 bludgeoning splash damage. When activated, the bomb fills a with hardened foam, which creates a boulder as hard as wood (Hardness 5, HP 20) that pushes the primary target of Medium size or smaller occupying that space 5 feet away from you. On a critical hit, the target also falls prone. The splash zone fills with rubble, creating difficult terrain. The \"boulder\" the bomb creates fails all saving throws and loses 1 Hardness per round, disintegrating into fine powder when the boulder's Hardness is reduced to 0. At that time, the difficult terrain the bomb created also disappears."
+ },
+ {
+  "id": "boulder-seed-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Boulder Seed (Greater)",
+  "level": 18,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This bomb is made of volatile fluids that rapidly expand and harden when exposed to air. A greater boulder seed grants a +3 item bonus to attack rolls and deals 4d4 bludgeoning damage and 4 bludgeoning splash damage. When activated, the bomb fills a with hardened foam, which creates a boulder as hard as stone (Hardness 10, HP 40) that pushes the primary target of Large size or smaller occupying that space 5 feet away from you. On a critical hit, the target also falls prone. The splash zone fills with rubble, creating difficult terrain. The \"boulder\" the bomb creates fails all saving throws and loses 1 Hardness per round, disintegrating into fine powder when the boulder's Hardness is reduced to 0. At that time, the difficult terrain the bomb created also disappears."
+ },
+ {
+  "id": "bounce-boost",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Bounce Boost",
+  "level": 1,
+  "traits": [
+   "tripkee"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Bounce Boost Source High Seas pg. 21 Prerequisites Trained in Athletics Trigger An adjacent ally attempts to High Jump or Long Jump. You’ve learned to use your own athletic abilities and springy legs to help others who need a boost with their leaps. The triggering ally gains a +1 circumstance bonus to their Athletics check to High Jump or Long Jump. This bonus increases to +2 if you’re an expert in Athletics, +3 if you’re a master, and +4 if you’re legendary. Additionally, the triggering ally’s Leap distance on a successful check increases by 2 feet for a High Jump or 5 feet for a Long Jump, even if it would allow the ally to Leap further than their land Speed."
+ },
+ {
+  "id": "bracers-of-pain",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Bracers of Pain",
+  "level": 12,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "These simple bracers look plain on the exterior, but a series of small, sharp studs line the interior like rows of shark teeth. While these bracers are worn and invested, you gain a +2 item bonus to Will saves. **Activate—Sharp Focus** ⟨4⟩ (concentrate) **Trigger** You gain an effect that makes you immobilized, slowed, stupefied, or paralyzed --- **Effect** Your bracers snap tight onto your wrists, driving the studs into your skin to shock you into focus. You can attempt to counteract the effect causing your condition, with a counteract rank of 6th and a counteract modifier of +22. On a success, you lose the condition. If you have more than one condition from the same source, you only need one counteract check against them."
+ },
+ {
+  "id": "brazier-of-harmony",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Brazier of Harmony",
+  "level": 5,
+  "traits": [
+   "censer",
+   "fire",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "The *brazier of harmony* is a circular, orb-shaped censer etched with celebrating creatures shaking hands and dancing. The brazier contains a pleasant-smelling potpourri of dried flowers and incenses, designed to create a calm atmosphere that encourages meditation, thoughtfulness, and camaraderie. While holding the lit censer, you gain a +1 item bonus to Diplomacy checks, whether the censer is activated or not. --- **Activate—Light Incense** ⟨2⟩ (aura, manipulate) **Frequency** once per day **Cost** incense worth at least 1 sp **Effect** When the incense is lit, pleasant, floral smoke surrounds the censer in a , creating a space of peace and harmony. Each creature that breathes the smoke is affected by 3rd-rank Calm and is then temporarily immune for 24 hours. The spell's effects end when the incense burns out."
+ },
+ {
+  "id": "breakthrough-innovation",
+  "lane": "situational",
+  "collection": "classFeatures",
+  "name": "Breakthrough Innovation",
+  "level": 7,
+  "traits": [
+   "inventor"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've made a breakthrough in your field of study and discovered a powerful new way to enhance your innovation. Choose a breakthrough modification of your innovation's type to apply to your innovation. You can choose an initial modification of your innovation's type instead if you prefer. ### Breakthrough Armor Modifications - **Antimagic Plating** Whether you used some clever adaptation of the magic-negating skymetal known as noqual or created magical protections of your own design, you've strengthened your armor against magic. While wearing the armor, you gain a +1 circumstance bonus to all saving throws against spells and to AC against spells. Against spells that target the armor directly (like heat metal), you instead gain a +4 circumstance bonus to all saving throws and to AC. - **Camouflage Pigmentation (Subterfuge Suit Only)** You've modified your armor's exterior to let you blend into your surroundings with ease, as long as you stay still. While wearing your armor, you can Hide even without cover or concealment, as the pigmentation shifts to match your surroundings. - **Dense Plating** You have encased your armor in robust plating. While wearing your armor, you gain resistance to slashing damage equal to half your level. - **Enhanced Resistance** You've improved upon your initial modification's ability to resist damage. The resistance from your initial armor modification adds your full level, instead of half your level (for instance, phlogistonic regulator's resistance would increase to your level). If you have more than one initial modification that gives resistance, choose which one this applies to. - **Heavy Construction (Power Suit Only)** You've expanded your innovation into a heavy bulwark, and your groundbreaking design ensures you don't take any of the drawbacks for such heavy defenses. Your innovation becomes heavy armor, and your proficiency in your innovation armor (but no other heavy armor) advances to be equal to your proficiency in medium armor. If your Strength modifier is at least +3, you remove the Speed penalty entirely instead of reducing it to –5 feet. The armor's adjusted statistics are: *AC Bonus* +5; *Dex Cap* +1; *Check Penalty* –2; *Speed Penalty* –10 feet; *Strength* +3; *Bulk* 3; *Group* composite; *Armor Traits* bulwark, entrench. - **Hyper Boosters** You've improved your speed boosters' power through a breakthrough that significantly increases the energy flow without risking exploding. You gain a +10-foot status bonus to your Speed, which increases to a +20-foot status bonus when you're in Overdrive. If you're legendary in Crafting, it instead increases to a +30-foot status bonus when you're in Overdrive. You must have the speed boosters modification to select this modification. - **Layered Mesh** You've woven an incredibly powerful network of interlocking mesh around your armor, which catches piercing attacks and diffuses them. While wearing your armor, you gain resistance to piercing damage equal to half your level. - **Tensile Absorption** You've enhanced the tensile capabilities of your armor, enabling it to bend with bludgeoning attacks. While wearing your armor, you gain resistance to bludgeoning dam"
+ },
+ {
+  "id": "burn-it",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Burn It!",
+  "level": 1,
+  "traits": [
+   "goblin"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Fire fascinates you. Your spells and alchemical items that deal fire damage gain a status bonus to damage equal to half the spell's rank or one-quarter the item's level (minimum bonus +1). You also gain a +1 status bonus to any persistent fire damage you deal."
+ },
+ {
+  "id": "busine-of-divine-reinforcements",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Busine of Divine Reinforcements",
+  "level": 15,
+  "traits": [
+   "divine",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This long, straight, trumpet-like instrument is made of well-polished brass and adorned with imagery of angels fighting demons or religious symbols. When played as an instrument, the busine generates powerful and harmonious notes and grants a +2 item bonus to Performance checks. --- **Activate** ⟨2⟩ Interact (auditory) **Frequency** once per minute **Effect** You play a few notes on the busine. Evil creatures within 60 feet who hear the notes must succeed at a save or be stunned for 1 round, or 2 rounds on a critical failure; this is an incapacitation effect. --- **Activate** ⟨3⟩ command, envision, Interact **Frequency** once per day **Effect** You blow into the busine and conjure a celestial with the effects of a 6th-rank Summon Celestial spell, but there are no alignment restrictions to define which celestials you can call. The celestial will fight only evil creatures and leaves after all present evil creatures have been defeated or the spell's duration ends, whichever comes first. You can Sustain the Activation to extend the spell's duration, as normal. If you have a deity and the conjured celestial's alignment is one of your deity's preferred alignments, the effect functions as a normal 6th-rank *summon celestial* spell instead, meaning the celestial will fight any creature, not just evil creatures, and will perform other tasks as you command."
+ },
+ {
+  "id": "cape-of-grand-entrances",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Cape of Grand Entrances",
+  "level": 9,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This regal blue cape is crafted from a hefty yet elegant velvet embroidered with ornate silver stars and dragons. Falling in a cascade of fabric, the cape rustles and flows in all the right ways and hangs upon your shoulders in a way that flatters your form and figure. You draw the eyes of those around you and gain a +2 item bonus to your Performance checks. **Activate** ⟨2⟩ envision, Interact **Frequency** once per day --- **Effect** With a flourish of your cape, you make a grand entrance that draws the attention of those around you. You cast Enthrall with a DC of 25 (). The spell gains the visual trait and loses the auditory trait. You Sustain the Spell by continuing to sweep the cape about."
+ },
+ {
+  "id": "cassock-of-devotion",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Cassock of Devotion",
+  "level": 11,
+  "traits": [
+   "divine",
+   "focused",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Each *cassock of devotion* depicts scenes related to the domains of a certain deity. It serves as a religious symbol of that deity, and it doesn't need to be wielded to provide that benefit. You gain a +2 item bonus to Religion checks and a +1 item bonus to the divine skill of the deity to whom the cassock is dedicated. **Activate** ⟨4⟩ envision **Frequency** once per day --- **Effect** You gain 1 Focus Point, which you can spend only to cast a cleric domain spell for a domain belonging to the deity the cassock is dedicated to. If you don't spend this Focus Point by the end of this turn, it is lost. **Craft Requirements** You are a cleric who worships the deity tied to the cassock."
+ },
+ {
+  "id": "channelers-stance",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Channeler's Stance",
+  "level": 1,
+  "traits": [
+   "animist",
+   "stance"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.stances"
+  ],
+  "text": "You enter a stance that allows power to flow through you. While in this stance, whenever you cast or Sustain an apparition spell or vessel spell that deals energy damage, you gain a status bonus to the spell's damage equal to the spell's rank. Each time you Cast a Spell that has the vitality or void traits and that restores Hit Points while in this stance, the spells' targets gain a status bonus to the initial amount of healing received equal to the spell's rank. This bonus healing does not apply to healing over time effects (such as fast healing or regeneration)."
+ },
+ {
+  "id": "charlatans-cape",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Charlatan's Cape",
+  "level": 10,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This bright red-and-gold cape is often interlaced with glittery threads and serves as a distraction. While wearing the cape, you gain a +2 item bonus to Deception checks. **Activate—Puff of Smoke** ⟨2⟩ (manipulate) **Frequency** once per day --- **Effect** You cast Translocate. The space you leave and the one you appear in are filled with puffs of smoke that make anyone within concealed until they leave the smoke or the end of your next turn, at which point the smoke dissipates. Strong winds immediately disperse the smoke."
+ },
+ {
+  "id": "charlatans-gloves",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Charlatan's Gloves",
+  "level": 3,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "innateSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Tiny silver hooks decorate these fine silk gloves. They grant a +1 item bonus to Thievery and allow you to cast Telekinetic Hand as an innate occult spell."
+ },
+ {
+  "id": "charlatans-gloves-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Charlatan's Gloves (Greater)",
+  "level": 9,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "innateSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Tiny silver hooks decorate these fine silk gloves. They grant a +2 item bonus to Thievery and allow you to cast Telekinetic Hand as an innate occult spell. If you are also wearing a *charlatan's cape*, whenever you would move an object using *telekinetic hand*, you may instead have it disappear in a puff of smoke and reappear hovering in a space adjacent to yours. This is a teleportation effect. The item hovers until the end of your turn or until retrieved with an Interact action."
+ },
+ {
+  "id": "choir-politic",
+  "lane": "situational",
+  "collection": "classFeatures",
+  "name": "Choir Politic",
+  "level": 1,
+  "traits": [
+   "witch"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "When your patron speaks, it is a chorus of voices sounding as one. They first appeared to you in the faces of your neighbors in the middle of a town festival or council meeting, when the success of an endeavor hinged on everyone working together. With the strength of your patron behind you, you then rallied the community together for a common goal. Your patron might be a single entity gathering a coterie of subjects together for an unknown cause or a like-minded covenant of deities and spirits. Whatever the case, your patron—and by extension, you—understands that mortals are stronger together. **Spell List** divine **Patron Skill** Society **Lesson of Community Knowledge** Your patron taught you the importance of pooling information to help a group with a common cause. You gain the Share Vision hex cantrip and your familiar learns Share Lore. **Familiar of Bolstering Aid** Your familiar knows all manner of tricks that can help! When you Cast or Sustain a hex, and your familiar is adjacent to an ally, that ally gains a +2 status bonus to the next non-attack skill check that ally attempts before the start of your next turn."
+ },
+ {
+  "id": "choker-of-elocution",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Choker of Elocution",
+  "level": 6,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This platinum choker bears characters from a language's alphabet, and it gives knowledge of that language and the associated culture's customs. You gain a +1 item bonus to Society checks and the ability to understand, speak, and write the chosen language. Your excellent elocution reduces the DC of the flat check to perform an auditory action while deafened from 5 to 3. **Craft Requirements** You know the language the choker grants."
+ },
+ {
+  "id": "choker-of-elocution-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Choker of Elocution (Greater)",
+  "level": 10,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This platinum choker bears characters from three language's alphabet, and it gives knowledge of those languages and the associated culture's customs. You gain a +2 item bonus to Society checks and the ability to understand, speak, and write the chosen languages. Your excellent elocution reduces the DC of the flat check to perform an auditory action while deafened from 5 to 3. **Craft Requirements** You know the languages the choker grants."
+ },
+ {
+  "id": "chosen-ward",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Chosen Ward",
+  "level": 14,
+  "traits": [
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You have designated an ally to be you and your companion's ward, making it your primary directive to shield them from harm. During your daily preparations, choose an ally who isn't your united companion. While either you or your united companion are adjacent to your ward, you grant them a +1 circumstance bonus to their AC and Reflex saves. When your ward attempts a Reflex saving throw while adjacent to either you or your united companion, you can spend a Mythic Point as a reaction to allow your ward to roll that Reflex save twice and take the better result. This is a fortune effect. --- **Special** If you have the Defend Our Union feat, it can also be triggered when a foe successfully Strikes your ward; if used in this way, the damage to your ward is reduced if your Strike is successful instead."
+ },
+ {
+  "id": "circlet-of-persuasion",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Circlet of Persuasion",
+  "level": 17,
+  "traits": [
+   "apex",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This elegant silver band often resembles curling fig leaves and fits around your brow. You gain a +2 item bonus to Deception and Diplomacy checks. When you invest the circlet, you either increase your Charisma score by 2 or increase it to 18, whichever would give you a higher score. **Activate** ⟨2⟩ envision **Frequency** once per hour --- **Effect** You cast a 4th-rank Charm spell (DC 38)."
+ },
+ {
+  "id": "civil-service",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Civil Service",
+  "level": 1,
+  "traits": [
+   "general",
+   "kingdom"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "Civil Service Source Kingmaker Adventure Path pg. 531 Everyone has a place and a role, and as long as those roles are filled, the government functions. When you select this feat, choose one leadership role; that role is now supported by your efficient civil servants, so its vacancy penalty is no longer applicable. If you wish to change the leadership role to which Civil Service applies, you can do so using the New Leadership activity at the start of a Kingdom turn. You gain a +2 status bonus to New Leadership checks."
+ },
+ {
+  "id": "clan-protector",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Clan Protector",
+  "level": 5,
+  "traits": [
+   "dwarf"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your Clan Dagger can protect your allies as easily as yourself. When you use an Interact action to gain a circumstance bonus to AC from your clan dagger's parry trait, you can grant the circumstance bonus to an adjacent ally instead of gaining it yourself. You can use multiple Interact actions to protect multiple allies, or to protect yourself and an ally. The ally benefits from the bonus to AC only when they are adjacent to you."
+ },
+ {
+  "id": "cloak-of-elvenkind",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Cloak of Elvenkind",
+  "level": 7,
+  "traits": [
+   "illusion",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "innateSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This cloak is deep green with a voluminous hood, embroidered with gold trim and symbols significant in elven culture. The cloak allows you to cast the Ghost Sound cantrip as an arcane innate spell. When you adjust the cloak's clasp (an Interact action), the cloak transforms to match the environment around you and muffles your sounds, granting you a +1 item bonus to Stealth checks. --- **Activate** ⟨2⟩ Interact **Frequency** once per day --- **Effect** You draw the hood up and gain the effects of , with the spell's normal duration or until you pull the hood back down, whichever comes first. If you're also wearing Boots of Elvenkind you can activate this ability twice per day."
+ },
+ {
+  "id": "cloak-of-elvenkind-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Cloak of Elvenkind (Greater)",
+  "level": 12,
+  "traits": [
+   "illusion",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "innateSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This cloak is deep green with a voluminous hood, embroidered with gold trim and symbols significant in elven culture. The cloak allows you to cast the Ghost Sound cantrip as an arcane innate spell. When you adjust the cloak's clasp (an Interact action), the cloak transforms to match the environment around you and muffles your sounds, granting you a +2 item bonus to Stealth checks. --- **Activate** ⟨2⟩ Interact **Frequency** once per day --- **Effect** You draw the hood up and gain the effects of a 4th-rank , with the spell's normal duration or until you pull the hood back down, whichever comes first. If you're also wearing Boots of Elvenkind, you can activate this ability twice per day, and it allows you to Sneak in forest environments even when creatures are currently observing you."
+ },
+ {
+  "id": "cloak-of-illusions",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Cloak of Illusions",
+  "level": 7,
+  "traits": [
+   "invested",
+   "occult"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "innateSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This cloak flows, covering and concealing the wearer's body. The cloak allows you to cast Figment as an occult innate cantrip. Although naturally a dull gray, while invested the cloak picks up colors and patterns from its surroundings, granting a +1 item bonus to Stealth checks. **Activate—Draw Hood** ⟨2⟩ (manipulate) **Frequency** once per day --- **Effect** You draw the hood up and gain the effects of , with the spell's normal duration or until you pull the hood back down, whichever comes first."
+ },
+ {
+  "id": "cloak-of-illusions-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Cloak of Illusions (Greater)",
+  "level": 12,
+  "traits": [
+   "invested",
+   "occult"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "innateSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This cloak flows, covering and concealing the wearer's body. The cloak allows you to cast Figment as an occult innate cantrip. Although naturally a dull gray, while invested the cloak picks up colors and patterns from its surroundings, granting a +2 item bonus to Stealth checks. **Activate—Draw Hood** ⟨2⟩ (manipulate) **Frequency** once per day --- **Effect** You draw the hood up and gain the effects of a 4th-rank , with the spell's normal duration or until you pull the hood back down, whichever comes first."
+ },
+ {
+  "id": "cloak-of-social-graces",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Cloak of Social Graces",
+  "level": 7,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Cloak of Social Graces Source High Seas pg. 50 Usage worn cloak Bulk L Access You're from Hermea These cloaks are created from hand-dyed leather decorated with gemstones, appealing to the individual tastes of the owner. The beautiful decorations of these cloaks encourage their owner to wear them no matter the season, making it visibly part of their unique style. Wearing the cloak boosts self-confidence, granting a +1 item bonus to Diplomacy checks. Activate—Overcome Self-Doubt (concentrate, manipulate) Frequency once per day; Effect You readjust your cloak, straightening the collar and brushing out any wrinkles. You gain the effects of a heroism spell for 1 minute. Cloak of Social Graces Source High Seas pg. 50 Price 380 gp Greater Cloak of Social Graces Source High Seas pg. 50 Price 3,000 gp The item bonus is +2, and when you activate the cloak, you gain the benefits of a 6th-rank heroism spell for 1 minute. Major Cloak of Social Graces Source High Seas pg. 50 Price 40,000 gp The item bonus is +3, and when you activate the cloak, you gain the benefits of a 9th-rank heroism spell for 1 minute."
+ },
+ {
+  "id": "cloak-of-swiftness",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Cloak of Swiftness",
+  "level": 17,
+  "traits": [
+   "apex",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This thin cloak is surprisingly light, as if clouds or the very wind were woven together to make the garment. The cloak grants you a +3 item bonus to Acrobatics checks. When you invest the cloak, you either increase your Dexterity modifier by 1 or increase it to +4, whichever would give you a higher value. --- **Activate—Ride the Wind** ⟨1⟩ (manipulate) **Frequency** once per day **Effect** You tug on the cloak, wrapping yourself in the power of wind. You gain a fly Speed of 30 feet for 1 hour. While wrapped in the cloak, you become translucent, causing you to become concealed for the duration."
+ },
+ {
+  "id": "clockwork-heels",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Clockwork Heels",
+  "level": 7,
+  "traits": [
+   "clockwork"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This clockwork footwear features a marvelous mechanical heel built into the base to increase your speed. When you lean your weight onto your heel, a springboard triggers and pops out small metal wheels that propel you forward. You gain a +5-foot item bonus to your Speed."
+ },
+ {
+  "id": "cloister-robe",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Cloister Robe",
+  "level": 9,
+  "traits": [
+   "divine",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Cloister Robe Source Treasure Vault (Remastered) pg. 148 Usage worn garment Bulk 1 Base Armor Explorer's Clothing The most devoted, cloistered clerics wear a cloister robe. Decorations symbolic of a specific deity adorn the robe, and the robe's colors and the complexity of its construction fit the deity's outlook. The robe serves as a religious symbol of that deity, and it doesn't need to be wielded to provide that benefit. The robe is +1 resilient explorer's clothing and grants a +1 item bonus to Religion checks. The robe doesn't grant any benefits to a wearer who doesn't worship the deity tied to the robe. In addition, when you cast a domain spell from one of the deity's domains, you gain resistance to damage from divine spells until the end of your next turn. This resistance is equal to half the robe's level. Craft Requirements You are a cleric who worships the deity tied to the robe. Cloister Robe (Lesser) Source Treasure Vault (Remastered) pg. 148 Price 600 gp Bulk 1 Cloister Robe (Moderate) Source Treasure Vault (Remastered) pg. 148 Price 1,800 gp Bulk 1 The robe is +2 resilient explorer's clothing, and it grants a +2 item bonus to Religion checks. Cloister Robe (Greater) Source Treasure Vault (Remastered) pg. 148 Price 6,000 gp Bulk 1 The robe is +2 greater resilient explorer's clothing with the focused trait. It also has the skill bonuses and activation of devoted vestments. Cloister Robe (Major) Source Treasure Vault (Remastered) pg. 148 Price 32,000 gp Bulk 1 As greater cloister robe, but the robe is +3 greater resilient explorer's clothing."
+ },
+ {
+  "id": "cloister-robe-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Cloister Robe (Greater)",
+  "level": 15,
+  "traits": [
+   "divine",
+   "focused",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "The most devoted, cloistered clerics wear a *cloister robe*. Decorations symbolic of a specific deity adorn the robe, and the robe's colors and the complexity of its construction fit the deity's outlook. The robe serves as a religious symbol of that deity, and it doesn't need to be wielded to provide that benefit. The robe is *+2 greater resilient explorer's clothing* and grants a +2 item bonus to Religion checks. The robe doesn't grant any benefits to a wearer who doesn't worship the deity tied to the robe. In addition, when you cast a domain spell from one of the deity's domains, you gain resistance to damage from divine spells until the end of your next turn. This resistance is equal to half the robe's level. --- **Activate—Domain Devotion** ⟨4⟩ (concentrate) **Frequency** once per day **Effect** Gain 1 Focus Point, which you can spend only to cast a cleric domain spell for a domain belonging to the deity the vestments are dedicated to. If you don't spend this point by the end of this turn, it is lost. --- **Craft Requirements** You are a cleric who worships the deity tied to the robe."
+ },
+ {
+  "id": "cloister-robe-lesser",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Cloister Robe (Lesser)",
+  "level": 9,
+  "traits": [
+   "divine",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "The most devoted, cloistered clerics wear a *cloister robe*. Decorations symbolic of a specific deity adorn the robe, and the robe's colors and the complexity of its construction fit the deity's outlook. The robe serves as a religious symbol of that deity, and it doesn't need to be wielded to provide that benefit. The robe is *+1 resilient explorer's clothing* and grants a +1 item bonus to Religion checks. The robe doesn't grant any benefits to a wearer who doesn't worship the deity tied to the robe. In addition, when you cast a domain spell from one of the deity's domains, you gain resistance to damage from divine spells until the end of your next turn. This resistance is equal to half the robe's level. --- **Craft Requirements** You are a cleric who worships the deity tied to the robe."
+ },
+ {
+  "id": "cloister-robe-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Cloister Robe (Major)",
+  "level": 19,
+  "traits": [
+   "divine",
+   "focused",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "The most devoted, cloistered clerics wear a *cloister robe*. Decorations symbolic of a specific deity adorn the robe, and the robe's colors and the complexity of its construction fit the deity's outlook. The robe serves as a religious symbol of that deity, and it doesn't need to be wielded to provide that benefit. The robe is *+3 greater resilient explorer's clothing* and grants a +2 item bonus to Religion checks. The robe doesn't grant any benefits to a wearer who doesn't worship the deity tied to the robe. In addition, when you cast a domain spell from one of the deity's domains, you gain resistance to damage from divine spells until the end of your next turn. This resistance is equal to half the robe's level. --- **Activate—Domain Devotion** ⟨4⟩ (concentrate) **Frequency** once per day **Effect** Gain 1 Focus Point, which you can spend only to cast a cleric domain spell for a domain belonging to the deity the vestments are dedicated to. If you don't spend this point by the end of this turn, it is lost. --- **Craft Requirements** You are a cleric who worships the deity tied to the robe."
+ },
+ {
+  "id": "cloister-robe-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Cloister Robe (Moderate)",
+  "level": 12,
+  "traits": [
+   "divine",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "The most devoted, cloistered clerics wear a *cloister robe*. Decorations symbolic of a specific deity adorn the robe, and the robe's colors and the complexity of its construction fit the deity's outlook. The robe serves as a religious symbol of that deity, and it doesn't need to be wielded to provide that benefit. The robe is *+2 resilient explorer's clothing* and grants a +2 item bonus to Religion checks. The robe doesn't grant any benefits to a wearer who doesn't worship the deity tied to the robe. In addition, when you cast a domain spell from one of the deity's domains, you gain resistance to damage from divine spells until the end of your next turn. This resistance is equal to half the robe's level. --- **Craft Requirements** You are a cleric who worships the deity tied to the robe."
+ },
+ {
+  "id": "clue-in",
+  "lane": "situational",
+  "collection": "classFeatures",
+  "name": "Clue In",
+  "level": 1,
+  "traits": [
+   "concentrate",
+   "investigator"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Frequency** once per 10 minutes **Trigger** Another creature attempts a check that could help get you closer to answering the question at the heart of one of your active investigations. --- You share information with the triggering creature. They gain a circumstance bonus to their check equal to your investigation bonus from Pursue a Lead. The GM can add any relevant traits to this reaction depending on the situation, such as auditory and linguistic if you're conveying information verbally."
+ },
+ {
+  "id": "clue-them-all-in",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Clue Them All In",
+  "level": 8,
+  "traits": [
+   "investigator"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can clue in all your allies at once. When you use the Clue In reaction, any of your allies who are attempting the same check to investigate one of your active investigations receive the circumstance bonus from Clue In. If you use this ability during an encounter, they must attempt their check within 1 round of when you Clued them In."
+ },
+ {
+  "id": "cobra-envenom",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Cobra Envenom",
+  "level": 10,
+  "traits": [
+   "monk",
+   "poison"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per minute **Requirements** You are in Cobra Stance. --- You slightly dislocate your joints to lash out with devious intent and the power to envenom your foe. Make a cobra fang Strike. Your reach with this Strike is 5 feet greater than normal. If this Strike hits, the persistent poison damage from your venomous trait increases to 1d4 damage per weapon damage die. --- **Special** If you have this feat, the circumstance bonus to Fortitude saves and Fortitude DC granted by Cobra Stance increases from +1 to +2."
+ },
+ {
+  "id": "cobra-stance",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Cobra Stance",
+  "level": 4,
+  "traits": [
+   "monk",
+   "stance"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "core.stances"
+  ],
+  "text": "You enter a tight stance, coiled up like a lashing cobra with your hands poised as venomous fangs. While in this stance, the only Strikes you can make are cobra fang unarmed attacks. These deal 1d4 piercing damage; are in the brawling group; and have the agile, deadly d10, finesse, unarmed, and venomous traits. While in Cobra Stance, you gain a +1 circumstance bonus to Fortitude saves and your Fortitude DC, and you gain poison resistance equal to half your level."
+ },
+ {
+  "id": "come-and-get-me",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Come and Get Me",
+  "level": 10,
+  "traits": [
+   "barbarian",
+   "concentrate",
+   "rage"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You open yourself to attacks so you can respond in turn. Until your rage ends, you are off-guard, and damage rolls against you gain a +2 circumstance bonus. If a creature hits you, that creature is off-guard to you until the end of your next turn. If you hit it before the end of your next turn, you gain temporary Hit Points equal to your Constitution modifier, or double that on a critical hit. These temporary Hit Points last until the end of your rage."
+ },
+ {
+  "id": "commitment-to-liberty",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Commitment to Liberty",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** A creature has an ally grabbed or restrained. --- You can't abide when a foe has one of your allies in its grip. Make a Strike against the required creature. If this Strike hits, the grabbed or restrained ally can immediately attempt to Escape as a free action. If the Strike was a critical hit, that ally gains a +2 circumstance bonus to their Escape attempt."
+ },
+ {
+  "id": "commitment-to-protection",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Commitment to Protection",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "auditory",
+   "mental",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You attempt to guide an ally into a more defensive pose against a particular danger. Attempt a Warfare Lore check against the hard DC for the level of a creature or hazard you can see. An ally of your choice within 30 feet gains an effect based on the outcome. If you're legendary in Warfare Lore, when you roll a failure or critical failure, you get a success instead. --- **Critical Success** The ally gains a +2 circumstance bonus to AC against the target creature's or hazard's next attack. **Success** As critical success, but the bonus is +1. **Critical Failure** The ally takes a –1 circumstance penalty to AC against the target creature's or hazard's next attack."
+ },
+ {
+  "id": "confabulator",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Confabulator",
+  "level": 2,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Even when caught in falsehoods, you pile lie upon lie. Reduce the circumstance bonus a target gains for your previous attempts to Create a Diversion or Lie to it from +4 to +2. If you're a master in Deception, reduce the bonus to +1, and if you're legendary, your targets don't get these bonuses at all."
+ },
+ {
+  "id": "connect-the-dots",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Connect the Dots",
+  "level": 6,
+  "traits": [
+   "auditory",
+   "concentrate",
+   "investigator",
+   "linguistic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Ephemeral connections between people, places, and concepts are invisible to most, but seeing them is your stock and trade. Choose an ally and a non-allied creature. You must be able to see both of them. You briefly study the way they both move and attempt a Perception check against the higher of the non-allied creature's Deception DC or Will DC. Both targets are then temporarily immune to Connect the Dots for 10 minutes. --- **Critical Success** You spot a way for your ally to take advantage of the other target's flaws and let them know about it. Your ally gains your Pursue a Lead investigation bonus as a circumstance bonus to all its Strikes or skill checks against the creature until the start of your next turn. **Success** As critical success, but your ally gains the bonus only for their next Strike or skill check against the creature. **Failure** You fail to make a connection. **Critical Failure** You misconstrue a vital piece of information, which temporarily disconcerts you. You are Stupefied 1 until the end of your next turn."
+ },
+ {
+  "id": "construct-eidolon",
+  "lane": "situational",
+  "collection": "classFeatures",
+  "name": "Construct Eidolon",
+  "level": 1,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Your eidolon is a mental construct based on an astral thoughtform and given physical presence and life by its connection to you, its shape limited only by your imagination. Your eidolon's appearance and physical form vary based on your shared vision for its construction, from clockworks to stuffed dolls and everything between, and it's not uncommon for that appearance to change greatly as your construct gains evolutions. Because it arises from an astral entity, your construct is no mindless servitor, but a fully thinking being with its own ideas, goals, and even emotions. These entities are extremely diverse; while many construct eidolons come from a powerful symbiotic connection with astral denizens, just as many arise from the forgotten memories of ancient empires and craftworks drifting across the Silver Sea of the Astral Plane. **Tradition** arcane **Traits** astral, construct, eidolon **Home Plane** Astral Plane --- **Size** Medium **Suggested Attacks** fist (bludgeoning) **Warrior Construct** Str 18, Dex 14, Con 16, Int 12, Wis 10, Cha 8; +2 AC (+3 Dex cap) **Scout Construct** Str 14, Dex 18, Con 16, Int 12, Wis 10, Cha 8; +1 AC (+4 Dex cap) **Skills** Arcana, Crafting **Senses** darkvision **Language** one common mortal language **Speed** 25 feet --- **Eidolon Abilities** *Initial* construct heart; *Symbiosis* reconfigured evolution; *Transcendence* ultimate reconfiguration ## Construct Heart Your construct eidolon has a link directly to your life force, which renders it a living creature and therefore susceptible to many ailments that bother only the living, though it does possess some resistances to these effects. It doesn't have a construct's normal immunities, but does gain a +2 circumstance bonus to saving throws against death effects, disease, necromancy, and poison effects, as well as effects causing the fatigued or sickened conditions. Additionally, its astral essence bleeds off slowly, and it only needs to succeed at a to remove persistent bleed damage (or DC 5 after receiving particularly effective aid). ## Reconfigured Evolution 7th Your construct eidolon is particularly easy to reconfigure, gaining an additional evolution that suits both of your whims. Choose one additional evolution feat of 6th level or lower. Your eidolon gains that feat. You can Retrain this feat for any other evolution feat of 6th level or lower with only a single day of downtime if you succeed at a Crafting check, with a standard DC of your eidolon's level. If you fail, you can try again on a later day. Many summoners choose Eidolon's Wrath for this ability. ## Ultimate Reconfiguration 17th Your construct eidolon becomes even more customizable. Choose an evolution feat of 16th level or lower. Your eidolon gains that feat. You can spend downtime to adjust it using Crafting, just like the feat from reconfigured evolution. Many summoners select Ever-Vigilant Senses for this ability."
+ },
+ {
+  "id": "consume-power",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Consume Power",
+  "level": 6,
+  "traits": [
+   "impulse",
+   "kineticist",
+   "metal",
+   "primal"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** You would take acid, electricity, fire, or sonic damage. --- You absorb energy and hold it in your kinetic gate. You gain resistance equal to your level to the triggering damage—choose one eligible type of resistance. If this reaction prevents any damage, you gain a status bonus equal to half your level to the damage roll of the next metal impulse you use before the end of your next turn."
+ },
+ {
+  "id": "cooperative-leadership",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Cooperative Leadership",
+  "level": 1,
+  "traits": [
+   "general",
+   "kingdom"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Cooperative Leadership Source Kingmaker Adventure Path pg. 531 Your leaders are skilled at working with one another. When a leader uses the Focused Attention kingdom activity to aid another leader's kingdom check, the circumstance bonus granted by a success is increased to +3. At 11th level, your leaders' collaborative style leads them to ever greater successes when they work together. When a leader uses the Focused Attention kingdom activity to aid another leader's check, treat a critical failure on the aided check as a failure. If your kingdom has at least the expert rank in the skill used in the aided check, treat a failure on the check as a success. (This does not allow you to ever improve a critical failure to a success.)"
+ },
+ {
+  "id": "coral-athamaru",
+  "lane": "situational",
+  "collection": "heritages",
+  "name": "Coral Athamaru",
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Coral covers patches of your body, which provides a natural layer of defense. Coral athamarus often choose Coral Symbiotes and other related ancestry feats. The coral plates are medium armor in the plate armor group that grant a +4 item bonus to AC, a Dex cap of +1, a check penalty of –2, a Speed penalty of –5 feet, a Strength value of +3, and have the aquadynamic and comfort traits. You can never wear other armor or remove the coral. You can etch armor runes onto the coral."
+ },
+ {
+  "id": "core-cannon",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Core Cannon",
+  "level": 17,
+  "traits": [
+   "arcane",
+   "automaton",
+   "concentrate"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per day --- Your body transforms into a powerful magical cannon. While immobile as a cannon, you can fire blasts of energy directly from your core, devastating your foes. You become immobilized until you use an Interact action to revert back to your standard form. While in your cannon form, the only actions you can use are to Strike with an energy blast unarmed attack or to Interact to revert back to your standard form. You can remain in your cannon form for up to 1 minute or until you take the action to revert back to your standard form, whichever comes first. Energy blasts are a special ranged unarmed attack. You can only make energy blast Strikes while you're in your cannon form. Your energy blasts deal 3d8 fire damage and 3d6 force damage, which increases to 4d8 fire damage and 3d6 force damage at level 20. You gain the item bonus to attack rolls with your energy blasts from the highest potency rune on any Handwraps of Mighty Blows you are wearing or any weapon you are wielding, but striking and property runes have no effect on your energy blasts. Energy blasts have a range increment of 120 feet. On a critical hit with an energy blast, the target takes 10 persistent fire damage. Your energy blast doesn't add critical specialization effects. If it matters for an effect dependent on weapon damage dice, an energy blast's number of weapon damage dice is three, or four at level 20."
+ },
+ {
+  "id": "coronet-of-stars",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Coronet of Stars",
+  "level": 17,
+  "traits": [
+   "apex",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This short golden crown bears a number of gems, each placed in the center of an engraving of a star. While wearing the crown, you are overcome with a nurturing instinct and understand the best ways to help others. You gain a +3 item bonus to Medicine checks. When you invest the crown, you either increase your Wisdom score by 2 or increase it to 18, whichever would give you a higher score. **Activate** ⟨5⟩ envision **Frequency** once per day **Trigger** A living creature within 60 feet would die **Effect** You reach out to the creature with a lifeline. The triggering creature receives the effects of Breath of Life, except they recover 7d8 Hit Points. --- **Activate** ⟨5⟩ command **Frequency** once per hour **Trigger** An ally within 60 feet fails a non-secret check --- **Effect** You call out to your ally and offer a reassurance. The triggering ally rerolls the failed check and takes the higher result. This is a fortune effect."
+ },
+ {
+  "id": "corpse-killers-defiance",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Corpse-Killer's Defiance",
+  "level": 10,
+  "traits": [
+   "barbarian",
+   "swashbuckler"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** You destroy an undead foe. --- You defy Tar-Baphon with every undead you destroy, using your victory to rally your allies. Allies that can see you gain a +1 status bonus to attack and damage rolls against undead for 1 round, or a +2 status bonus to attack and damage rolls against undead for 2 rounds if the undead foe destroyed was a creature of your level or higher."
+ },
+ {
+  "id": "corpsecaller-round",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Corpsecaller Round",
+  "level": 9,
+  "traits": [
+   "consumable",
+   "magical",
+   "void"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Ammunition** round **Activate** ⟨1⟩ Interact --- This bullet is crafted entirely from obsidian and engraved with hair-thin runes. When an activated *corpsecaller round* hits a target, the struck creature is called to the grave. It takes 4d10 damage with a saving throw. --- **Critical Success** The foe is unaffected. **Success** The foe takes half damage. **Failure** The foe takes full damage and is Doomed 1. If the foe dies within the next 24 hours, its corpse is tethered to the Void, making it easier to raise as an undead. Creatures using the create undead ritual on the foe's corpse receive a +2 circumstance bonus to their primary and secondary skill checks for the ritual. **Critical Failure** As failure, except the foe takes double damage and is Doomed 2."
+ },
+ {
+  "id": "courageous-advance",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Courageous Advance",
+  "level": 4,
+  "traits": [
+   "auditory",
+   "bard",
+   "concentrate",
+   "spellshape"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "With a rousing call, you exhort an ally to advance. If your next action is to cast the Courageous Anthem composition cantrip, one ally of your choice who gains a status bonus from the spell can immediately use their reaction to Stride."
+ },
+ {
+  "id": "courageous-assault",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Courageous Assault",
+  "level": 10,
+  "traits": [
+   "auditory",
+   "bard",
+   "concentrate",
+   "spellshape"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "With a mighty shout, you can stir an ally to attack. If your next action is to cast the Courageous Anthem composition cantrip, one ally of your choice who gains a status bonus from the spell can immediately use their reaction to make a melee Strike."
+ },
+ {
+  "id": "courageous-onslaught",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Courageous Onslaught",
+  "level": 16,
+  "traits": [
+   "auditory",
+   "bard",
+   "concentrate",
+   "spellshape"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You use your performance to orchestrate an onslaught against your enemies. If your next action is to cast the Courageous Anthem composition cantrip, one ally of your choice who gains a status bonus from the spell can immediately use their reaction to Stride and then make a melee Strike."
+ },
+ {
+  "id": "coven-spell",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Coven Spell",
+  "level": 12,
+  "traits": [
+   "spellshape",
+   "witch"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** An ally within 30 feet Casts a Spell. --- You rhyme with your ally's incantations or echo their movements, linking your magic to empower their spell in one of two ways: - If their spell deals damage and doesn't have a duration, you grant that spell a status bonus to damage equal to its rank. - If their spell doesn't have a spellshape effect applied to it, apply the effects of any one spellshape feat you know to the spell. The spellshape feat must be one that can be applied to the triggering spell, and you must be able to use it (for instance, if the spellshape feat is usable only a limited number of times per day)."
+ },
+ {
+  "id": "cowl-of-keys",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Cowl of Keys",
+  "level": 17,
+  "traits": [
+   "apex",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This simple, tattered cloak is a faded green and features small, stylized keys sewn throughout its length. While wearing the cloak, you fade into the shadows and gain a +3 item bonus to Stealth checks. When you invest the cloak, you either increase your Dexterity score by 2 or increase it to 18, whichever would give you a higher score. **Activate** ⟨1⟩ Interact **Effect** You brush your hand against the cloak and your fingers transform into picks, tension wrenches, skeleton keys, and any other tools, providing you with a full set of Thieves' Tools. This transformation doesn't otherwise hamper the normal use of your fingers or hands. These tools never break when you critically fail your check to Pick a Lock. You can Activate the cloak again to revert your fingers to normal. --- **Activate** ⟨2⟩ envision, Interact **Frequency** once per day **Effect** You place your hand against a wall, floor, or ceiling. You create a magical doorway within the surface that a creature can move through, as if the door had always been there. The doorway can penetrate up to 10 feet of material; particularly thick material, such as heavy stone walls, can cause this effect to fail, expending its use for the day. You can use an Interact action on the door to remove it from the surface and return it to its previous shape."
+ },
+ {
+  "id": "coyote-cloak",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Coyote Cloak",
+  "level": 3,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This dusty coat is made of mangy brown-and-gray coyote fur. You gain a +1 item bonus to Survival checks. If you critically succeed at your Survival check to Subsist, you can feed twice as many additional creatures."
+ },
+ {
+  "id": "coyote-cloak-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Coyote Cloak (Greater)",
+  "level": 9,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This dusty coat is made of mangy brown-and-gray coyote fur. You gain a +2 item bonus to Survival checks. If you critically succeed at your Survival check to Subsist, you can feed four times as many additional creatures."
+ }
+]

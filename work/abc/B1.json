@@ -1,0 +1,190 @@
+[
+ {
+  "id": "maestros-instrument-moderate",
+  "collection": "items",
+  "name": "Maestro's Instrument (Moderate)",
+  "level": 10,
+  "traits": [
+   "magical"
+  ],
+  "text": "A *maestro's instrument* can be crafted in the form of any variety of handheld musical instruments. A *maestro's instrument* grants you a +2 item bonus to Performance checks while playing music with the instrument. --- **Activate—Charming Performance** ⟨2⟩ (manipulate) **Frequency** once per day **Effect** You play the instrument, causing it to cast a 4th-rank Charm spell with DC 27. --- **Craft Requirements** You must supply a casting of *charm* of the appropriate rank.",
+  "currentFlat": {
+   "skills": {
+    "performance": 2
+   }
+  },
+  "openQuestion": "Currently applied unconditionally via passiveEffects.skills.performance = 2, but the text limits it to \"while playing music with the instrument\". Move it to the situational registry, or keep it in the flat total?"
+ },
+ {
+  "id": "maestros-instrument-greater",
+  "collection": "items",
+  "name": "Maestro's Instrument (Greater)",
+  "level": 18,
+  "traits": [
+   "magical"
+  ],
+  "text": "A *maestro's instrument* can be crafted in the form of any variety of handheld musical instruments. A *maestro's instrument* grants you a +3 item bonus to Performance checks while playing music with the instrument. --- **Activate—Charming Performance** ⟨2⟩ (manipulate) **Frequency** once per day **Effect** You play the instrument, causing it to cast a 8th-rank Charm spell with DC 38. --- **Craft Requirements** You must supply a casting of *charm* of the appropriate rank.",
+  "currentFlat": {
+   "skills": {
+    "performance": 3
+   }
+  },
+  "openQuestion": "Currently applied unconditionally via passiveEffects.skills.performance = 3, but the text limits it to \"while playing music with the instrument\". Move it to the situational registry, or keep it in the flat total?"
+ },
+ {
+  "id": "conch-of-otherworldly-seas",
+  "collection": "items",
+  "name": "Conch of Otherworldly Seas",
+  "level": 12,
+  "traits": [
+   "magical",
+   "water"
+  ],
+  "text": "Magical writing covers the surface of this beautiful conch shell, which emits a blue light from inside. A *conch of otherworldly seas* is a virtuoso handheld musical instrument that grants a +2 item bonus to Performance checks attempted while using it. The conch is a planar key for Interplanar Teleport and similar magic to travel to the Plane of Water. When using it this way, you can attune it to the waters of your destination to make it more likely to arrive where you intend to be, appearing 1d6×25 miles from your intended destination instead of 1d10×25 miles away. --- **Activate—Voice of Oceans** ⟨1⟩ (manipulate) **Effect** You hold the horn to your ear and can understand and speak Thalassic as long as it remains there. --- **Activate—Sounds of the Deep** 10 minutes (concentrate, manipulate) **Effect** You hold the horn to your ear and touch the correct series of runes inscribed on its surface, causing the conch to cast a 5th-rank spell for your benefit. Provided you choose a location that's underwater, you can extend the spell's range to 1 mile and hear with perfect clarity.",
+  "currentFlat": {
+   "skills": {
+    "performance": 2
+   }
+  },
+  "openQuestion": "Instrument bonuses: keep the +2 in the maths via passiveEffects (current behaviour, over-applies to non-instrument Performance) and use the star only to explain the condition, or drop it from passiveEffects and make it star-only? The same call governs every magical instrument in the data set."
+ },
+ {
+  "id": "camouflaging-chromatophores",
+  "collection": "items",
+  "name": "Camouflaging Chromatophores",
+  "level": 4,
+  "traits": [
+   "graft",
+   "invested",
+   "magical"
+  ],
+  "text": "Camouflaging Chromatophores Source Howl of the Wild pg. 97 Usage implanted Special cells in your skin can change color to help you blend in with your environment. You gain the listed item bonus to Stealth checks to Sneak and Hide. Activate—Background Adaptation (concentrate) Frequency once per day; Effect For 1 minute, you can Hide without needing cover or concealment to do so. This doesn’t allow you to Sneak without ending your movement in cover or concealment, however, as your skin’s attempts to match the background as you move produce noticeable rippling waves of color. Camouflaging Chromatophores (Lesser) Source Howl of the Wild pg. 98 Price 95 gp The bonus is +1. Camouflaging Chromatophores (Greater) Source Howl of the Wild pg. 98 Price 665 gp The bonus is +2, and you can use Background Adaptation once per hour.",
+  "currentFlat": {
+   "skills": {
+    "stealth": 1
+   }
+  },
+  "openQuestion": "This record's core.json passiveEffects already folds a flat +1 into ALL Stealth checks, but the printed bonus applies only to Sneak and Hide. Should the flat passiveEffects bonus be removed in favour of the situational marker (avoiding an inflated Stealth total on e.g. Stealth checks that aren't Sneak/Hide), or kept because the app treats Stealth ≈ Sneak/Hide in practice?"
+ },
+ {
+  "id": "camouflaging-chromatophores-lesser",
+  "collection": "items",
+  "name": "Camouflaging Chromatophores (Lesser)",
+  "level": 4,
+  "traits": [
+   "graft",
+   "invested",
+   "magical"
+  ],
+  "text": "Special cells in your skin can change color to help you blend in with your environment. You gain a +1 item bonus to Stealth checks to Sneak and Hide. --- **Activate—Background Adaptation** ⟨2⟩ (concentrate) **Frequency** once per day **Effect** For 1 minute, you can Hide without needing cover or concealment to do so. This doesn't allow you to Sneak without ending your movement in cover or concealment, however, as your skin's attempts to match the background as you move produce noticeable rippling waves of color.",
+  "currentFlat": {
+   "skills": {
+    "stealth": 1
+   }
+  },
+  "openQuestion": "core.json's passiveEffects on this item grants a flat +1 to ALL Stealth checks while the printed bonus is limited to Sneak and Hide — should the flat bonus be dropped so the restriction is expressed only by the situational marker?"
+ },
+ {
+  "id": "camouflaging-chromatophores-greater",
+  "collection": "items",
+  "name": "Camouflaging Chromatophores (Greater)",
+  "level": 9,
+  "traits": [
+   "graft",
+   "invested",
+   "magical"
+  ],
+  "text": "Special cells in your skin can change color to help you blend in with your environment. You gain a +2 item bonus to Stealth checks to Sneak and Hide. --- **Activate—Background Adaptation** ⟨2⟩ (concentrate) **Frequency** once per hour **Effect** For 1 minute, you can Hide without needing cover or concealment to do so. This doesn't allow you to Sneak without ending your movement in cover or concealment, however, as your skin's attempts to match the background as you move produce noticeable rippling waves of color.",
+  "currentFlat": {
+   "skills": {
+    "stealth": 2
+   }
+  },
+  "openQuestion": "core.json's passiveEffects on this item grants a flat +2 to ALL Stealth checks while the printed bonus is limited to Sneak and Hide — should the flat bonus be dropped so the restriction is expressed only by the situational marker?"
+ },
+ {
+  "id": "whip-tail",
+  "collection": "items",
+  "name": "Whip Tail",
+  "level": 3,
+  "traits": [
+   "graft",
+   "invested",
+   "magical"
+  ],
+  "text": "You have a strong, prehensile tail. You gain a tail unarmed attack that deals 1d6 bludgeoning damage. This tail is in the brawling group. You gain a +1 item bonus to Acrobatics checks to Balance and to Athletics checks to Climb. You can also use your tail for the Grab an Edge action, even if your hands are otherwise occupied.",
+  "currentFlat": {
+   "skills": {
+    "acrobatics": 1,
+    "athletics": 1
+   }
+  },
+  "openQuestion": "core.json's passiveEffects on this graft grants a flat +1 to ALL Acrobatics and ALL Athletics, but the printed bonus only covers Balance and Climb — should those flat bonuses be removed so the two situational markers carry it? (Left as-is, every Tumble Through / Grapple / Long Jump is inflated by +1.)"
+ },
+ {
+  "id": "arachnolute",
+  "collection": "items",
+  "name": "Arachnolute",
+  "level": 11,
+  "traits": [
+   "magical"
+  ],
+  "text": "The strings of this spider-shaped lute are made from the webbing of a goliath spider and the tuning pegs are crafted from the spider's spinnerets. An *arachnolute* grants you a +2 item bonus to Performance checks while playing music with the instrument. --- **Activate—Web Chord** ⟨2⟩ (manipulate) **Frequency** once per hour **Effect** Sticky webbing sprays in a as you strum the lute's strings. Each creature in the area of the webbing is immobilized unless it succeeds at a save. --- **Craft Requirements** The initial materials must include the spinnerets of a goliath spider, as well as a spool of its webbing.",
+  "currentFlat": {
+   "skills": {
+    "performance": 2
+   }
+  },
+  "openQuestion": "core.json's passiveEffects folds a flat +2 into ALL Performance for this instrument, but the printed bonus only covers performances played on the instrument (not singing, oratory, dance, acting — and not Performance used for Impress by other means). Should instrument item bonuses stay flat, or become situational-only across the whole instrument family?"
+ },
+ {
+  "id": "paws-of-the-grogrisant",
+  "collection": "items",
+  "name": "Paws of the Grogrisant",
+  "level": 17,
+  "traits": [
+   "apex",
+   "invested",
+   "primal"
+  ],
+  "text": "Princess Eutropia commissioned Taldor's Imperial College of Heralds to preserve the paws that fell off the Mantle of the Grogrisant. A few weeks later, the college presented this pair of boots. You gain a +3 item bonus to Athletics checks and saves against forced movement. When you invest in the boots, you either increase your Strength modifier by 1 or increase it to +4, whichever would give you a higher value. **Activate—Grogrisant Leap** ⟨1⟩ (concentrate) **Frequency** once per day --- **Effect** The Grogrisant's legendary strength and reflexes empower your movement. You Leap, doubling the vertical and horizontal distance of your Leap action. If you land adjacent to a creature, you can Strike that creature once as part of this action.",
+  "currentFlat": {
+   "skills": {
+    "athletics": 3
+   }
+  },
+  "openQuestion": "The sentence parses two ways: (a) +3 to ALL Athletics checks AND +3 to saves against forced movement, or (b) +3 to Athletics checks against forced movement and saves against forced movement. core.json already encodes reading (a) via passiveEffects.skills.athletics = 3. Confirm reading (a) is intended before adding the save marker."
+ },
+ {
+  "id": "fan-of-falling-words",
+  "collection": "items",
+  "name": "Fan of Falling Words",
+  "level": 10,
+  "traits": [
+   "magical"
+  ],
+  "text": "This folding handheld paper fan appears blank when first found, but if the wielder unfolds its leaves as an Interact action, they display an ink-brush painting of the wielder's choice. The fan must be closed and opened again to display a different painting. While held, the *fan of falling words* grants you a +2 item bonus to Performance checks to act or perform comedy, orate, or sing. **Activate—Whispered World** ⟨3⟩ (concentrate, manipulate) **Frequency** once per day --- **Effect** You manifest the tapestry of your words, causing the image you depict on the fan to leap off its leaves. The fan casts illusory scene to your specifications ( save). While this only takes 3 actions to perform (as opposed to the spell's normal 10 minutes of casting), the effect has no range, and the it creates is centered on you.",
+  "currentFlat": {
+   "skills": {
+    "performance": 2
+   }
+  },
+  "openQuestion": "This record already carries passiveEffects.skills.performance = 2, which adds +2 to EVERY Performance check — but the text limits it to acting, comedy, oratory and singing (so not Dance or Play an Instrument). Should the flat passiveEffect be narrowed and replaced by a situational marker, or kept as-is and the marker skipped?"
+ },
+ {
+  "id": "lacquered-waist-drum",
+  "collection": "items",
+  "name": "Lacquered Waist Drum",
+  "level": 11,
+  "traits": [
+   "magical"
+  ],
+  "text": "This hourglass-shaped drum has two heads, each of which produces a different sound when struck. When played together, the resonance of the two sounds is effective in repelling evil spirits. This drum can be played as an instrument, granting a +2 item bonus to Performance. **Activate—Memories of Life** ⟨2⟩ (concentrate, manipulate, vitality) **Frequency** once per hour --- **Effect** You play both heads of the drums, generating a pulse of energy that targets one creature within 30 feet that has the undead trait. This deals 5d8 damage ( save) to that creature; if the undead also has the ghost trait, the ghost becomes Sickened 1 if it fails the save. **Activate—Memories of Joy** ⟨3⟩ (concentrate, manipulate, vitality) **Frequency** once per hour --- **Effect** You raucously play both heads of the drums, accompanied with shouting and dancing. This display generates a pulse of energy in a from you. All undead creatures within this area must attempt a save. --- **Critical Success** The creature takes no damage. **Success** The creature takes 2d8 damage. Failure The creature takes 5d8 damage; if the creature has the ghost trait, it becomes Stupefied 1 for 1 minute. **Critical Failure** The creature takes 10d8 damage; if the creature has the ghost trait, it becomes Stupefied 2 for 1 minute.",
+  "currentFlat": {
+   "skills": {
+    "performance": 2
+   }
+  },
+  "openQuestion": "The record already carries passiveEffects.skills.performance = 2 (flat). The text conditions the bonus on the drum being \"played as an instrument\" (it is held in two hands), which would exclude Performance checks to sing, orate, act or dance. Treat it as instrument-only situational, or leave it as the current flat bonus?"
+ }
+]

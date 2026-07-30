@@ -1,10 +1,15 @@
-import type { ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import type { ActionCost, Character, ContentDatabase } from '../rules/types';
 import { formatMod } from '../rules/derive';
-import { RANK_LABEL, type StatBreakdown } from '../rules/explain';
+import { RANK_LABEL, nameOfRecord, recordMarkersFor, type StatBreakdown } from '../rules/explain';
 import { skillActionsFor } from '../rules/skillActions';
-import { ActionGlyph, RankPill } from './widgets';
+import { ActionGlyph, RankPill, SituationalStar } from './widgets';
 import { useEscapeClose } from './useEscapeClose';
+import { DescBody } from './DescBody';
+
+/** An action name to its core.json id — the same kebab-casing MainTab uses, so a marker authored
+ *  against "treat-wounds" is found from either surface. */
+const actionSlug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
 /** Parse a skill-action cost string ("1 action", "free", "reaction", "1 to 3 actions") into
  *  an ActionCost so it renders as glyphs. Returns null for non-action text ("varies",
@@ -43,6 +48,8 @@ export function StatDetailModal({
   editor?: ReactNode;
 }) {
   useEscapeClose(onClose);
+  // Ruling H: the star note is capped at one line, and this holds the full text it was trimmed from.
+  const [fullText, setFullText] = useState<{ name: string; html: string; id?: string; bucket?: string } | null>(null);
   const b = breakdown;
   const featNames = new Set(character.feats.map((f) => content.feats[f.featId]?.name).filter(Boolean) as string[]);
   const actions = b.skill && b.rank ? skillActionsFor(b.skill, b.rank, (n) => featNames.has(n)) : [];
@@ -100,9 +107,29 @@ export function StatDetailModal({
             <section className="sd-sec">
               <div className="sd-sec-label">Situational (apply when it fits)</div>
               <ul className="sd-situational">
-                {b.situational.map((s, i) => (
-                  <li key={i}>{s}</li>
-                ))}
+                {b.situational.map((s, i) => {
+                  // Notes are capped at about one line, so the trigger stays readable in a list. The
+                  // record itself holds the full wording, and this is the click that opens it —
+                  // without it, a trimmed note would be the only version the player ever sees.
+                  const rec = s.sourceId && s.sourceCollection
+                    ? (content[s.sourceCollection] as Record<string, { name?: string; description?: string } | undefined>)?.[s.sourceId]
+                    : undefined;
+                  return (
+                    <li key={i} className={s.dcOnly ? 'sd-sit-dc' : undefined}>
+                      {s.text}
+                      {rec?.description && (
+                        <button
+                          type="button"
+                          className="sd-sit-more"
+                          title={`Read all of ${rec.name ?? 'this'}`}
+                          onClick={() => setFullText({ name: rec.name ?? '', html: rec.description!, id: s.sourceId, bucket: s.sourceCollection })}
+                        >
+                          Full text
+                        </button>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </section>
           )}
@@ -149,6 +176,20 @@ export function StatDetailModal({
                           <i className="ti ti-chevron-right" aria-hidden="true" />
                         </span>
                         <span className="sd-act-name">{a.name}</span>
+                        {/* Ruling D: "Magic Hands show the d10 in () in the treat wounds action, with a *
+                            linking to the feat". A skill action renders HERE, not in the activity list,
+                            so this is where its marker has to be. */}
+                        {(() => {
+                          const marks = recordMarkersFor(character, content, 'action', actionSlug(a.name));
+                          if (!marks.length) return null;
+                          const val = marks.find((m) => m.value)?.value;
+                          return (
+                            <span className="action-mark" title={marks.map((m) => `${nameOfRecord(content, m.sourceId)}: ${m.note}`).join('\n')}>
+                              {val && <span className="action-mark-val">({val})</span>}
+                              <SituationalStar />
+                            </span>
+                          );
+                        })()}
                         {(() => {
                           const cost = parseActionCost(a.costText);
                           if (cost) return <span className="sd-act-cost"><ActionGlyph cost={cost} /></span>;
@@ -176,6 +217,24 @@ export function StatDetailModal({
           )}
         </div>
       </div>
+
+      {/* The full printed text of a note that was capped to one line. Stacked over this modal rather
+          than replacing it, so closing it returns you to the stat you were reading. */}
+      {fullText && (
+        <div className="picker-overlay" onClick={(e) => { e.stopPropagation(); setFullText(null); }}>
+          <div className="picker confirm-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="picker-head">
+              <span>{fullText.name}</span>
+              <button className="picker-close" onClick={() => setFullText(null)} aria-label="Close">
+                <i className="ti ti-x" aria-hidden="true" />
+              </button>
+            </div>
+            <div className="confirm-body">
+              <DescBody description={fullText.html} astKey={fullText.bucket} astId={fullText.id} onExit={() => setFullText(null)} />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

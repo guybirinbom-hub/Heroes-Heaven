@@ -1,0 +1,1233 @@
+[
+ {
+  "id": "five-feather-wreath-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Five-Feather Wreath (Greater)",
+  "level": 8,
+  "traits": [
+   "air",
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "Identical feathers radiate from the center of this spellheart, held in place by woven straw. The spell attack roll of any spell cast by Activating this item is +14, and the spell DC is 24. - **Armor** You gain a +1 item bonus to Acrobatics checks and resistance 5 to falling damage. - **Weapon** After you cast an air spell by Activating the *wreath*, you can Fly 5 feet as a single action, or you can Fly 25 feet as a free action if the spell you cast wasn't a cantrip. This must be your next action, and if you don't have a fly Speed, you must end the flight on solid ground or fall. --- **Activate** Cast a Spell **Effect** You cast Gale Blast. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast Wall of Wind."
+ },
+ {
+  "id": "five-feather-wreath-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Five-Feather Wreath (Major)",
+  "level": 12,
+  "traits": [
+   "air",
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "Identical feathers radiate from the center of this spellheart, held in place by woven straw. The spell attack roll of any spell cast by Activating this item is +19, and the spell DC is 29. - **Armor** You gain a +2 item bonus to Acrobatics checks and resistance 10 to falling damage. - **Weapon** After you cast an air spell by Activating the *wreath*, you can Fly 5 feet as a single action, or you can Fly 40 feet as a free action if the spell you cast wasn't a cantrip. This must be your next action, and if you don't have a fly Speed, you must end the flight on solid ground or fall. --- **Activate** Cast a Spell **Effect** You cast Gale Blast. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast 4th rank Wall of Wind. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast Air Walk."
+ },
+ {
+  "id": "flickering",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Flickering",
+  "level": 6,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "A flickering rune causes a weapon to shimmer, grow blurry and indistinct, and momentarily turn invisible at random intervals for a second or two. A flickering weapon adds its item bonus from its potency rune to the DC against attempts to Disarm or Steal it. On a critical hit, the weapon flashes bright pulses of color into the creature's eyes, Dazzling the creature for 1 round (this effect has the visual trait). **Activate** ⟨2⟩ envision, Interact **Frequency** once per day --- **Effect** The flickering weapon casts Blur to your specification."
+ },
+ {
+  "id": "forests-heart",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Forest's Heart",
+  "level": 16,
+  "traits": [
+   "animist",
+   "apparition",
+   "divine",
+   "stance",
+   "wandering"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "core.stances"
+  ],
+  "text": "**Requirements** Your attuned apparition grants Forest Lore or Herbalism Lore as one of its apparition skills. --- You adopt a stance that allows your apparitions to channel spiritual energy down through you to inhabit roots, control vines, and command plant-life from the ground you stand on to fight on your behalf. You call forth roots, vines, or other plant growth native to the region and can use them to make unarmed attacks. These deal 4d8 damage, are in the brawling group, and have the finesse, grapple, and reach 30 feet traits. Attacks made with these unarmed attacks don't gain additional damage from striking runes, but can benefit from the item bonus to attack rolls and property runes of Handwraps of Mighty Blows you wear."
+ },
+ {
+  "id": "forgefathers-seal",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Forgefather's Seal",
+  "level": 24,
+  "traits": [
+   "artifact",
+   "divine"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This rune was created by Torag, god of the forge, protection, and strategy, and shared with his greatest artisans and warriors. Torag designed a small number of these seals as gifts to allied good deities; each one is nearly identical but has a different spell effect when using the reaction activation; for instance, Sarenrae's seal casts Sunburst instead of *earthquake*. A seal constantly rings with the quiet sound of a hammer striking an anvil when etched onto a *runestone*. A *Forgefather's seal* can be etched only onto armor that can bear two or more property runes, and it is so powerful that it takes the place of two property runes. While wearing armor etched with a *Forgefather's seal*, you gain fire resistance 40. You ignore the armor's check penalty and Speed penalty (if any); if the armor is light or medium, increase its item bonus to AC by 1. In addition, any shield you wield automatically recovers 10 Hit Points at the start of your turn each round. --- **Activate—Retributive Rebuff** ⟨5⟩ (manipulate) **Frequency** once per hour **Trigger** You are hit by an attack **Effect** The *Forgefather's seal* glows and your armor shakes as it absorbs the blow. The attack's damage is reduced by 100 and you cast Earthquake (DC 40), centered directly on the triggering creature. You decide the area of the *earthquake* when you Cast the Spell, from as small as the size of the creature and up to a . --- **Activate—Seal of Mending** ⟨3⟩ (manipulate) **Frequency** once per day **Effect** You call upon on the restorative powers of the seal to repair an item within reach. The rune instantly restores the item to full Hit Points, even if the item was destroyed, using the effects of the Remake spell, so long as the majority of the item is available for the repair. The seal can restore even magic items and artifacts of its level or lower. Once you have used this ability, the seal's ability to automatically repair shields becomes inactive until the next time you make your daily preparations. --- **Activate—Stalwart Sacrifice** ⟨4⟩ (concentrate) **Trigger** You have not acted yet on your turn **Effect** You call upon Torag to defend your allies and those around you, sacrificing yourself in the process. Creatures of your choosing within 60 feet recover all their Hit Points. If any of the creatures are dead, they are instead brought back to life with half of their maximum Hit Points. The chosen creatures also gain a +4 status bonus to AC and saving throws, and fast healing 15 for 1 hour. You can use this ability to bring back to life a creature that requires a Wish ritual or divine intervention to raise from the dead, as long as you choose no other creatures within 60 feet to recover. Once you use this activation, you are turned into a perfect statue made from stone or metal that depicts you in a glorious pose honoring your sacrifice, and you can never be restored. The *Forgefather's seal* remains on this statue and can be transferred to another suit of armor or a runestone as normal. --- **Destruction** Using the *Forgefather's seal* ability to bring the dead back to life on an evil demigod causes it to shatter in a violent explosion that destroys the seal an"
+ },
+ {
+  "id": "fortified-elixirs",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Fortified Elixirs",
+  "level": 6,
+  "traits": [
+   "alchemist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your treatments for diseases and poisons can be very efficacious, though they tend not to last as long. A creature that is under the effect of an infused Antidote or Antiplague that you created can choose to reroll a failed Fortitude saving throw against an appropriate affliction (poison for antidote and disease for antiplague). The creature doesn't gain the elixir's usual item bonus to the reroll, and after the reroll, the elixir's duration immediately ends. This is a fortune effect."
+ },
+ {
+  "id": "fortified-fiefs",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Fortified Fiefs",
+  "level": 1,
+  "traits": [
+   "general",
+   "kingdom"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Fortified Fiefs Source Kingmaker Adventure Path pg. 531 Prerequisites Trained in Defense Your vassals take their duty to protect those under their stewardship seriously, and your engineers emphasize the value of a strong defense when it comes to building settlements and fortifications. You gain a +2 circumstance bonus to checks attempted as part of the Fortify Hex activity and on activities to build or repair a Barracks, Castle, Garrison, Keep, Stone Wall, or Wooden Wall. In addition, you gain a +1 status bonus to all kingdom checks attempted during dangerous events that directly impact your settlements' defenses."
+ },
+ {
+  "id": "free-and-fair",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Free and Fair",
+  "level": 7,
+  "traits": [
+   "general",
+   "kingdom"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Free and Fair Source Kingmaker Adventure Path pg. 531 Your reputation for transparency and fairness in conducting elections, appointments, and other changes in government inspires tremendous public trust. You gain a +2 circumstance bonus to Loyalty-based checks attempted as part of the New Leadership and Pledge of Fealty activities. If you fail or critically fail such a check, you can spend 2 RP to reroll the check (but without the +2 circumstance bonus); attempting this adds the Fortune trait. You must take the result of the second roll, even if it is worse than the original roll."
+ },
+ {
+  "id": "frost-vial",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Frost Vial",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "cold",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Frost Vial Source Player Core 2 pg. 285 Usage held in 1 hand Bulk L Activate Strike The bright blue liquid reagents in this vial rapidly absorb heat when exposed to air. A frost vial deals the listed cold damage and cold splash damage. On a hit, the target takes a status penalty to its Speeds until the end of its next turn. Many types of frost vial also grant an item bonus to attack rolls. Frost Vial (Lesser) Source Player Core 2 pg. 285, Core Rulebook pg. 545 Price 3 gp Bulk L The bomb deals 1d6 cold damage and 1 cold splash damage, and the target takes a –5-foot penalty. Frost Vial (Moderate) Source Player Core 2 pg. 285, Core Rulebook pg. 545 Price 10 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d6 cold damage and 2 cold splash damage, and the target takes a –10-foot penalty. Frost Vial (Greater) Source Player Core 2 pg. 285, Core Rulebook pg. 545 Price 250 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 3d6 cold damage and 3 cold splash damage, and the target takes a –10-foot penalty. Frost Vial (Major) Source Player Core 2 pg. 285, Core Rulebook pg. 545 Price 2,500 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 4d6 cold damage and 4 cold splash damage, and the target takes a –15-foot penalty."
+ },
+ {
+  "id": "frost-vial-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Frost Vial (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "cold",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- The bright blue liquid reagents in this vial rapidly absorb heat when exposed to air. A frost vial deals 3d6 cold damage and 3 cold splash damage. On a hit, the target takes a –10-foot status penalty to its Speeds until the end of its next turn. You gain a +2 item bonus to attack rolls."
+ },
+ {
+  "id": "frost-vial-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Frost Vial (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "cold",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- The bright blue liquid reagents in this vial rapidly absorb heat when exposed to air. A frost vial deals 4d6 cold damage and 4 cold splash damage. On a hit, the target takes a –15-foot status penalty to its Speeds until the end of its next turn. You gain a +3 item bonus to attack rolls."
+ },
+ {
+  "id": "frost-vial-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Frost Vial (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "cold",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- The bright blue liquid reagents in this vial rapidly absorb heat when exposed to air. A frost vial deals 2d6 cold damage and 2 cold splash damage. On a hit, the target takes a –10-foot status penalty to its Speeds until the end of its next turn. You gain a +1 item bonus to attack rolls."
+ },
+ {
+  "id": "furious-strike",
+  "lane": "situational",
+  "collection": "classFeatures",
+  "name": "Furious Strike",
+  "level": 1,
+  "traits": [
+   "eidolon"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your eidolon channels its anger into a furious attack. It makes a melee Strike. This counts as two attacks when calculating your multiple attack penalty. If this Strike hits, your eidolon deals an extra die of weapon damage and gains a +1 circumstance bonus to the damage roll. If you're at least 10th level, increase this to two extra dice with a +2 circumstance bonus, and if you're at least 18th level, increase it to three extra dice with a +3 circumstance bonus."
+ },
+ {
+  "id": "gaffe-glasses",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Gaffe Glasses",
+  "level": 3,
+  "traits": [
+   "cursed",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "These wire-rim glasses appear to be Glasses of Sociability, making you think they grant a +1 item bonus to Diplomacy when they grant none. The GM secretly adjusts your Diplomacy checks to ignore the bonus, and if you have multiple +1 item bonuses to Diplomacy, the glasses take precedence, negating those bonuses. **Activate** ⟨1⟩ (concentrate) --- **Effect** Like glasses of sociability, with the same limitations, you stare at another creature. If you've met and exchanged names, you expect to instantly remember the target's name. However, you recall the worst possible incorrect name, such as mistaking a famous artist for their hated rival. This blunder doesn't prevent you from realizing the creature's real name after you've been corrected. Once you use this activation, the glasses fuse to you."
+ },
+ {
+  "id": "games",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Games",
+  "level": 0,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Games Source Grand Bazaar pg. 58 Hands 2 Usage held in 2 hands Bulk L A nigh-infinite assortment of games exist in Golarion. Simple games, including dice, a deck of cards, or dominoes, cost 5 sp. Board games vary in cost from 1 gp for dexterity games like Bungle, 3 gp for colorful children's games like Cauldron Quest, and 5 gp for complex strategy games like Kingmaker and Abendego Raiders. Lavish game sets can cost much more than these prices, as they are made of expensive components and are intricately crafted works of art unto themselves. Games Source Grand Bazaar pg. 58 Price 5 sp (-5 gp, see text) Bulk L Loaded Dice Source Grand Bazaar pg. 58 Price 5 gp Bulk L These dice are weighted on one side to ensure they always land with the desired number facing up. Loaded dice grant you a +1 item bonus to Games Lore checks to gamble with the dice. You can determine a die is loaded while handling it with a successful secret DC 20 Perception check. Determining dice are loaded without handling the dice is more difficult, especially since smart cheaters switch loaded dice in and out so they don't suspiciously roll the same number over and over. In this case, an observer must succeed at a secret Perception check against the roller's Games Lore or Thievery DC to notice the switches or the patterns."
+ },
+ {
+  "id": "gate-attenuator",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Gate Attenuator",
+  "level": 3,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "*Gate attenuators* are typically worn near the body's core and are shaped like portals or passageways, making literal the elemental gates kineticists possess within their bodies. The appearance can vary from a simple disk with a hole in the middle to a design matching a city gate of a particular settlement. If you're a kineticist, the attenuator grants you a +1 item bonus to your impulse attack modifier (but not to your impulse DC). When you invest a *gate attenuator*, attune it to one element of your choice. Designs on the attenuator's surface transform to match that element, and the attenuator gains the element's trait until it's no longer invested or is attuned to a different element. --- **Activate - Elemental Spell** ⟨2⟩ (concentrate) **Frequency** once per day **Effect** The *gate attenuator* casts a 1st-rank spell, with a spell attack modifier of +7 and spell DC of 17. If you're a kineticist and the spell's element matches one of your kinetic elements, you can use your impulse attack modifier instead of the spell attack modifier or your impulse DC instead of the spell DC. The spell corresponds to the element the item is attuned to, and it gains that element's trait if it doesn't already have it: **air** Gust of Wind **earth** Pummeling Rubble **fire** Dehydrate **metal** **water** Snowball **wood** Flourishing Flora"
+ },
+ {
+  "id": "gate-attenuator-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Gate Attenuator (Greater)",
+  "level": 11,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "*Gate attenuators* are typically worn near the body's core and are shaped like portals or passageways, making literal the elemental gates kineticists possess within their bodies. The appearance can vary from a simple disk with a hole in the middle to a design matching a city gate of a particular settlement. If you're a kineticist, the attenuator grants you a +2 item bonus to your impulse attack modifier (but not to your impulse DC). When you invest a *gate attenuator*, attune it to one element of your choice. Designs on the attenuator's surface transform to match that element, and the attenuator gains the element's trait until it's no longer invested or is attuned to a different element. --- **Activate - Elemental Spell** ⟨2⟩ (concentrate) **Frequency** once per day **Effect** The gate attenuator casts a 5th-rank spell, with a spell attack modifier of +18 and spell DC of 28. If you're a kineticist and the spell's element matches one of your kinetic elements, you can use your impulse attack modifier instead of the spell attack modifier or your impulse DC instead of the spell DC. The spell corresponds to the element the item is attuned to, and it gains that element's trait if it doesn't already have it: **air** Pressure Zone **earth** Sand Form **fire** Flames of Ego **metal** Impaling Spike **water** Freezing Rain **wood** Entwined Roots"
+ },
+ {
+  "id": "gate-attenuator-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Gate Attenuator (Major)",
+  "level": 17,
+  "traits": [
+   "apex",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "When you invest the *major gate attenuator*, you either increase your Constitution modifier by 1 or increase it to +4, whichever would give you a higher score. *Gate attenuators* are typically worn near the body's core and are shaped like portals or passageways, making literal the elemental gates kineticists possess within their bodies. The appearance can vary from a simple disk with a hole in the middle to a design matching a city gate of a particular settlement. If you're a kineticist, the attenuator grants you a +2 item bonus to your impulse attack modifier (but not to your impulse DC). When you invest a *gate attenuator*, attune it to one element of your choice. Designs on the attenuator's surface transform to match that element, and the attenuator gains the element's trait until it's no longer invested or is attuned to a different element. --- **Activate - Elemental Spell** ⟨2⟩ (concentrate) **Frequency** once per day **Effect** The *gate attenuator* casts an 8th-rank spell, with a spell attack modifier of +27 and a spell DC of 37.If you're a kineticist and the spell's element matches one of your kinetic elements, you can use your impulse attack modifier instead of the spell attack modifier or your impulse DC instead of the spell DC. The spell corresponds to the element the item is attuned to, and it gains that element's trait if it doesn't already have it: **air** Whirlwind **earth** Earthquake **fire** Boil Blood **metal** Rust Cloud **water** Whirlpool **wood** Pollen Pods"
+ },
+ {
+  "id": "ghost-charge",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Ghost Charge",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "positive",
+   "splash",
+   "vitality"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Ghost Charge Source Player Core 2 pg. 285 Usage held in 1 hand Bulk L Activate Strike These spring-loaded metal canisters contain a mixture of chemicals and salts that drain and disintegrate nearby undead creatures. A ghost charge deals the listed vitality damage and splash damage, though as usual for vitality damage, this damage harms only undead and creatures with void healing. Ghost charges are designed to explode even on contact with a spiritual substance, making them ideal for damaging incorporeal undead. A primary target that takes damage from a ghost charge becomes enfeebled until the start of your next turn. Many types grant an item bonus to attack rolls. Ghost Charge (Lesser) Source Player Core 2 pg. 285, Advanced Player's Guide pg. 253 Price 3 gp Bulk L The bomb deals 1d8 vitality damage and 1 vitality splash damage, and the target is enfeebled 1 until the start of your next turn. Ghost Charge (Moderate) Source Player Core 2 pg. 285, Advanced Player's Guide pg. 253 Price 10 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d8 vitality damage and 2 vitality splash damage, and the target is enfeebled 1 until the start of your next turn. Ghost Charge (Greater) Source Player Core 2 pg. 285, Advanced Player's Guide pg. 253 Price 250 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 3d8 vitality damage and 3 vitality splash damage, and the target is enfeebled 2 until the start of your next turn. Ghost Charge (Major) Source Player Core 2 pg. 285, Advanced Player's Guide pg. 253 Price 2,500 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 4d8 vitality damage and 4 vitality splash damage, and the target is enfeebled 2 until the start of your next turn."
+ },
+ {
+  "id": "ghost-charge-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Ghost Charge (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash",
+   "vitality"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- These spring-loaded metal canisters contain a mixture of chemicals and salts that drain and disintegrate nearby undead creatures. A *ghost charge* gives a +2 item bonus to attack rolls, deals 3d8 vitality damage and 3 vitality splash damage, though as usual for vitality damage, this damage harms only undead and creatures with void healing. A primary target that takes damage from a *ghost charge* becomes Enfeebled 2 until the start of your next turn. *Ghost charges* are designed to explode even on contact with a spiritual substance, making them ideal for damaging incorporeal undead."
+ },
+ {
+  "id": "ghost-charge-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Ghost Charge (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash",
+   "vitality"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- These spring-loaded metal canisters contain a mixture of chemicals and salts that drain and disintegrate nearby undead creatures. A *ghost charge* gives a +3 item bonus to attack rolls, deals 4d8 vitality damage and 4 vitality splash damage, though as usual for vitality damage, this damage harms only undead and creatures with void healing. A primary target that takes damage from a *ghost charge* becomes Enfeebled 2 until the start of your next turn. *Ghost charges* are designed to explode even on contact with a spiritual substance, making them ideal for damaging incorporeal undead."
+ },
+ {
+  "id": "ghost-charge-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Ghost Charge (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash",
+   "vitality"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- These spring-loaded metal canisters contain a mixture of chemicals and salts that drain and disintegrate nearby undead creatures. A *ghost charge* gives a +1 item bonus to attack rolls, deals 2d8 vitality damage and 2 vitality splash damage, though as usual for vitality damage, this damage harms only undead and creatures with void healing. A primary target that takes damage from a *ghost charge* becomes Enfeebled 1 until the start of your next turn. *Ghost charges* are designed to explode even on contact with a spiritual substance, making them ideal for damaging incorporeal undead."
+ },
+ {
+  "id": "glaive-of-the-artist",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Glaive of the Artist",
+  "level": 14,
+  "traits": [
+   "deadly-d8",
+   "forceful",
+   "magical",
+   "reach"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This *+2 Holy greater striking glaive* has a long, multi-tailed rainbow-colored banner affixed to the butt of the pole in the style of Shelyn's religious symbol. While wielding the glaive, you gain a +2 item bonus on Crafting and Performance checks. --- **Activate** ⟨1⟩ Interact **Frequency** once per round --- **Effect** You furl one of the colored tails around the pole, causing the glaive to gain the effects of your choice of the corrosive, flaming, frost, shocking, or thundering property runes for 1 round, depending on the tail you chose. --- **Activate** ⟨2⟩ Interact **Frequency** once per day --- **Effect** You thrust the blade of the glaive into the ground, activating the power of the banner. (The blade can penetrate any non-metallic surface when used in this way, and does not leave a mark when withdrawn.) As long as the glaive is thrust into the ground and standing upright, all allies within 60 feet who can see the glaive's banner gain a +2 item bonus to Performance checks."
+ },
+ {
+  "id": "glasses-of-sociability",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Glasses of Sociability",
+  "level": 3,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "These wire-rim glasses with large, circular lenses were invented for the sole purpose of avoiding awkward confrontations at social gatherings. They grant you a +1 item bonus to Diplomacy. --- **Activate** ⟨1⟩ envision --- **Effect** You stare at another creature and instantly remember their name if you've met and exchanged names. The glasses rely on your latent memories, so if the creature is disguising their identity, the glasses don't penetrate the disguise. If a doppelganger was disguised as an innkeeper you met, the glasses would give you the innkeeper's name, and if a noble you met before was in disguise as a masked vigilante, the glasses wouldn't reveal their name."
+ },
+ {
+  "id": "gloaming-arc",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Gloaming Arc",
+  "level": 11,
+  "traits": [
+   "forceful",
+   "magical",
+   "shadow",
+   "sweep"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This black *+2 striking scimitar* reflects light only along its edge, like a thin crescent moon. It grants a +1 item bonus to Stealth while you're holding it, increasing to a +2 item bonus if it has a *+3 weapon potency* rune. **Activate** ⟨3⟩ envision, Interact **Frequency** once per day --- **Effect** Attempt a melee Strike with the gloaming arc. On a hit, you slice away the target's shadow from its body and it must attempt a save. --- **Critical Success** The target is unaffected. **Success** The target is Enfeebled 1 for 1 round. **Failure** The target is Enfeebled 2 for 1 minute and Drained 1. The target doesn't cast a shadow until it is no longer drained. **Critical Failure** As failure, but Drained 2."
+ },
+ {
+  "id": "glue-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Glue Bomb",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Glue Bomb Source Player Core 2 pg. 285, GM Core pg. 245 Usage held in 1 hand Bulk L Activate Strike A glue bomb is a harmless explosive mechanism bursting with sticky substances. When you hit a creature with a glue bomb, that creature takes a status penalty to its Speeds for 1 minute. Many types of glue bomb also grant an item bonus to attack rolls. On a critical hit, a creature in contact with a solid surface becomes stuck to the surface and immobilized for 1 round, and a creature flying via wings has its wings tangled, causing it to fall safely to the ground and become unable to Fly again for 1 round. Glue bombs aren't effective when used on a creature that's in water. The target can end any effects by Escaping or spending a total of 3 manipulate actions to carefully remove the sticky substances. These manipulate actions don't have to be consecutive, and other creatures can provide the actions as well. Glue Bomb (Lesser) Source Player Core 2 pg. 285, GM Core pg. 245 Price 3 gp Bulk L The target takes a –10-foot penalty, and the Escape DC is 17. Glue Bomb (Moderate) Source Player Core 2 pg. 285, GM Core pg. 245 Price 10 gp Bulk L You gain a +1 item bonus to attack rolls. The target takes a –15-foot penalty, and the Escape DC is 19. Glue Bomb (Greater) Source Player Core 2 pg. 285, GM Core pg. 245 Price 250 gp Bulk L You gain a +2 item bonus to attack rolls. The target takes a –15-foot penalty, and the Escape DC is 28. Glue Bomb (Major) Source Player Core 2 pg. 285, GM Core pg. 245 Price 2,500 gp Bulk L You gain a +3 item bonus to attack rolls. The target takes a –20-foot penalty, and the Escape DC is 37."
+ },
+ {
+  "id": "glue-bomb-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Glue Bomb (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- A glue bomb is a harmless explosive mechanism bursting with sticky substances. When you hit a creature with a glue bomb, that creature takes a –15-foot status penalty to its Speeds for 1 minute. You gain a +2 item bonus to attack rolls, and the Escape DC is 28. On a critical hit, a creature in contact with a solid surface becomes stuck to the surface and immobilized for 1 round, and a creature flying via wings has its wings tangled, causing it to fall safely to the ground and become unable to Fly again for 1 round. Glue bombs are not effective when used on a creature that is in water. The target can end any effects by Escaping or spending a total of 3 Interact actions to carefully remove the sticky substances. These Interact actions don't have to be consecutive, and other creatures can provide the actions as well."
+ },
+ {
+  "id": "glue-bomb-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Glue Bomb (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- A glue bomb is a harmless explosive mechanism bursting with sticky substances. When you hit a creature with a glue bomb, that creature takes a –20-foot status penalty to its Speeds for 1 minute. You gain a +3 item bonus to attack rolls, and the Escape DC is 37. On a critical hit, a creature in contact with a solid surface becomes stuck to the surface and immobilized for 1 round, and a creature flying via wings has its wings tangled, causing it to fall safely to the ground and become unable to Fly again for 1 round. Glue bombs are not effective when used on a creature that is in water. The target can end any effects by Escaping or spending a total of 3 Interact actions to carefully remove the sticky substances. These Interact actions don't have to be consecutive, and other creatures can provide the actions as well."
+ },
+ {
+  "id": "glue-bomb-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Glue Bomb (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- A glue bomb is a harmless explosive mechanism bursting with sticky substances. When you hit a creature with a glue bomb, that creature takes a –15-foot status penalty to its Speeds for 1 minute. You gain a +1 item bonus to attack rolls, and the Escape DC is 19. On a critical hit, a creature in contact with a solid surface becomes stuck to the surface and immobilized for 1 round, and a creature flying via wings has its wings tangled, causing it to fall safely to the ground and become unable to Fly again for 1 round. Glue bombs are not effective when used on a creature that is in water. The target can end any effects by Escaping or spending a total of 3 Interact actions to carefully remove the sticky substances. These Interact actions don't have to be consecutive, and other creatures can provide the actions as well."
+ },
+ {
+  "id": "golden-gloves",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Golden Gloves",
+  "level": 19,
+  "traits": [
+   "apex",
+   "holy",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "These golden-threaded gloves fit snuggly past the elbows, and imbue all other worn clothing with an aristocratic mien. The gloves grant you a +3 item bonus to Society skill checks. When you invest the gloves, you either increase your Intelligence score by 2 or increase it to 18, whichever would give you a higher score. This gives you additional trained skills and languages, as normal for increasing your Intelligence modifier. You must select skills and languages the first time you invest the gloves, and whenever you invest the same *golden gloves*, you get the same skills and languages you chose the first time. If you are unholy, you become Enfeebled 2 when invested in these gloves. **Activate—Heaven's Wings** ⟨2⟩ (manipulate, visual) **Frequency** once per hour --- **Effect** You throw wide your arms, putting the *golden gloves* on full display and causing a blazing halo to form above your head. All enemies within a 40-feet emanation must make a save or be dazzled for 1 minute (or blinded for 1 minute on critical failure). Unholy creatures take a –2 item penalty to their roll. The halo then melts into your body and attempts to counteract any one affliction you are currently suffering of your choice with a counteract rank of 9 and a counteract modifier of +31."
+ },
+ {
+  "id": "goo-grenade",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Goo Grenade",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Goo Grenade Source Impossible Lands pg. 306 Usage held in 1 hand Bulk L Access Characters from Nex have access to this item. Activate Strike A goo grenade is a flask filled with a fast-growing, short-lived alchemical ooze. When you hit a creature with a goo grenade, that creature takes persistent acid damage and a circumstance penalty to its Speeds from the clinging goo. The target can end any penalties, conditions, and persistent damage caused by the bomb by Escaping or spending a total of 3 Interact actions to pry themselves free of the ooze. These Interact actions don't have to be consecutive, and other creatures can provide the actions as well. Goo Grenade (Lesser) Source Impossible Lands pg. 306 Price 3 gp Bulk L The target takes 1d4 acid damage, 1 persistent acid damage, and 1 acid splash damage. They take a –5-foot circumstance penalty to their Speeds. The Escape DC is 15. Goo Grenade (Moderate) Source Impossible Lands pg. 306 Price 10 gp Bulk L You gain a +1 item bonus to attack rolls. The target takes 2d4 acid damage, 2 persistent acid damage, and 2 acid splash damage. They take a –5-foot circumstance penalty to their Speeds. The Escape DC is 17. Goo Grenade (Greater) Source Impossible Lands pg. 306 Price 250 gp Bulk L You gain a +2 item bonus to attack rolls. The target takes 3d4 acid damage, 3 persistent acid damage, and 3 acid splash damage. They take a –10-foot circumstance penalty to their Speeds. The Escape DC is 26. Goo Grenade (Major) Source Impossible Lands pg. 306 Price 2,500 gp Bulk L You gain a +3 item bonus to attack rolls. The target takes 4d4 acid damage, 4 persistent acid damage, and 4 acid splash damage. They take a –10-foot circumstance penalty to their Speeds. The Escape DC is 35."
+ },
+ {
+  "id": "goo-grenade-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Goo Grenade (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike A goo grenade is a flask filled with a fast-growing, short-lived alchemical ooze. When you hit a creature with a goo grenade, that creature takes 3d4 acid damage, 3 persistent acid damage, and 3 acid splash damage, and a -10 circumstance penalty to its Speeds from the clinging goo. You gain a +2 item bonus to attack rolls. The target can end any penalties, conditions, and persistent damage caused by the bomb by Escaping or spending a total of 3 Interact actions to pry themselves free of the ooze. These Interact actions don't have to be consecutive, and other creatures can provide the actions as well."
+ },
+ {
+  "id": "goo-grenade-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Goo Grenade (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike A goo grenade is a flask filled with a fast-growing, short-lived alchemical ooze. When you hit a creature with a goo grenade, that creature takes 4d4 acid damage, 4 persistent acid damage, and 4 acid splash damage, and a -10 circumstance penalty to its Speeds from the clinging goo. You gain a +3 item bonus to attack rolls. The target can end any penalties, conditions, and persistent damage caused by the bomb by Escaping or spending a total of 3 Interact actions to pry themselves free of the ooze. These Interact actions don't have to be consecutive, and other creatures can provide the actions as well."
+ },
+ {
+  "id": "goo-grenade-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Goo Grenade (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike A goo grenade is a flask filled with a fast-growing, short-lived alchemical ooze. When you hit a creature with a goo grenade, that creature takes 2d4 acid damage, 2 persistent acid damage, and 2 acid splash damage, and a -5 circumstance penalty to its Speeds from the clinging goo. You gain a +1 item bonus to attack rolls. The target can end any penalties, conditions, and persistent damage caused by the bomb by Escaping or spending a total of 3 Interact actions to pry themselves free of the ooze. These Interact actions don't have to be consecutive, and other creatures can provide the actions as well."
+ },
+ {
+  "id": "gorget-of-the-primal-roar",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Gorget of the Primal Roar",
+  "level": 11,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This engraved duskwood gorget seems to vibrate with ferocity, granting you a +2 item bonus to Intimidation checks. **Activate—Primal Roar** ⟨1⟩ (auditory, concentrate, emotion, fear, mental) **Frequency** once during the duration of each polymorph effect **Requirements** You're in a non-humanoid form via a polymorph effect --- **Effect** You unleash a bestial roar, attempting a single check compared to the Will DCs of all enemies within 30 feet to impose the effects below. --- **Critical Success** The creature is Frightened 2. **Success** The creature is Frightened 1. **Failure** The creature is unaffected."
+ },
+ {
+  "id": "graymist",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Graymist",
+  "level": 21,
+  "traits": [
+   "apex",
+   "artifact",
+   "divine",
+   "intelligent",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This black cape flows more like a vaporous liquid than fabric. The cape grants you a +3 item bonus to Stealth checks. When you invest the cape, you either increase your Dexterity score by 2 or increase it to 18, whichever is higher. --- **Activate** ⟨5⟩ Interact **Frequency** once per hour **Trigger** A creature misses you with an attack **Effect** Attempt a Stealth check against the triggering creature's Perception DC. If you roll a success, you're hidden from that creature until the end of your next turn or until right after you use a hostile action against that creature. If you roll a critical success, you're hidden from that creature until the end of your next turn, even if you use hostile actions against that creature. --- **Activate** ⟨2⟩ Interact **Frequency** once per day **Effect** With a twirl of the cape, you transform yourself into a puff of gray smoke. You cast Vapor Form on yourself."
+ },
+ {
+  "id": "greater-aether-marbles",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Greater Aether Marbles",
+  "level": 18,
+  "traits": [
+   "bomb",
+   "consumable",
+   "force",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Aether Marbles May contain spoilers from Gatewalkers Source Gatewalkers (Hardcover) pg. 235 Usage held in 1 hand Bulk L Activate Strike Aether marbles create violent, lingering eddies of force that extend partially into unseen planes. When the bomb explodes, it deals the listed force damage and force splash damage. Many aether marbles grant an item bonus to attack rolls. Surfaces in the splash area are filled with twisting eddies of force, which are difficult terrain for incorporeal creatures but not for corporeal ones. The force eddies in a square disperse after an incorporeal creature enters the square. Lesser Aether Marbles Source Gatewalkers (Hardcover) pg. 235 Price 19 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d6 force damage and 2 force splash damage. Moderate Aether Marbles Source Gatewalkers (Hardcover) pg. 235 Price 360 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d6 force damage and 3 force splash damage. Greater Aether Marbles Source Gatewalkers (Hardcover) pg. 235 Price 3,400 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d6 force damage and 4 force splash damage."
+ },
+ {
+  "id": "greater-cloak-of-social-graces",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Greater Cloak of Social Graces",
+  "level": 13,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Cloak of Social Graces Source High Seas pg. 50 Usage worn cloak Bulk L Access You're from Hermea These cloaks are created from hand-dyed leather decorated with gemstones, appealing to the individual tastes of the owner. The beautiful decorations of these cloaks encourage their owner to wear them no matter the season, making it visibly part of their unique style. Wearing the cloak boosts self-confidence, granting a +1 item bonus to Diplomacy checks. Activate—Overcome Self-Doubt (concentrate, manipulate) Frequency once per day; Effect You readjust your cloak, straightening the collar and brushing out any wrinkles. You gain the effects of a heroism spell for 1 minute. Cloak of Social Graces Source High Seas pg. 50 Price 380 gp Greater Cloak of Social Graces Source High Seas pg. 50 Price 3,000 gp The item bonus is +2, and when you activate the cloak, you gain the benefits of a 6th-rank heroism spell for 1 minute. Major Cloak of Social Graces Source High Seas pg. 50 Price 40,000 gp The item bonus is +3, and when you activate the cloak, you gain the benefits of a 9th-rank heroism spell for 1 minute."
+ },
+ {
+  "id": "greater-defoliation-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Greater Defoliation Bomb",
+  "level": 12,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "negative",
+   "splash",
+   "void"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Defoliation Bomb May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 77 Usage held in 1 hand Bulk L Activate Strike This brightly painted ceramic sphere contains chemicals that cause plants to wither and die. A defoliation bomb deals the listed void damage, persistent void damage, and splash damage to all plants in the area. Non-creature plants in the area immediately wither and die. Many types grant a bonus to attack rolls. Lesser Defoliation Bomb Source Pathfinder #202: Severed at the Root pg. 77 Price 7 gp The bomb deals 1d6 void damage, 1d4 persistent void damage, and 1 void splash damage. Moderate Defoliation Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 18 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d6 void damage, 2d4 persistent void damage, and 2 void splash damage. Greater Defoliation Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 35 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d6 void damage, 3d4 persistent void damage, and 3 void splash damage. Major Defoliation Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 3,600 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d6 void damage, 4d4 persistent void damage, and 4 void splash damage."
+ },
+ {
+  "id": "greater-durian-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Greater Durian Bomb",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "plant",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Durian Bomb May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 77 Usage held in 1 hand Bulk L Activate Strike Whereas a durian’s aroma ranges from pleasant to revolting depending on the person, a durian bomb is a fruit that’s been alchemically modified for maximum revulsion. Many types of this bomb grant an item bonus to attack rolls. On a successful Strike, a durian bomb deals the listed piercing damage to the target. Any creature hit by the bomb or in its splash area must attempt a Fortitude saving throw with a DC based on the bomb’s type. Creatures in the splash area treat the results of their saving throw as one step better. Creatures sickened by a durian bomb are unable to smell anything else while the sickened condition lasts, suppressing any scent special sense they might have. Once a creature is sickened by a durian bomb, they’re immune to the sickened condition caused by other durian bombs for 1 minute. Critical Success The target is unaffected. Success The creature is sickened 1. Failure The creature is dazzled for 1 round and sickened 1. Critical Failure The creature is dazzled for 1 round and sickened 2. Lesser Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 4 gp The bomb deals 1d4 piercing damage, and the DC is 15. Moderate Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 12 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d4 points of piercing damage, and the DC is 17. Greater Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 275 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d4 points of piercing damage, and the DC is 28. Major Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 2,750 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d4 points of piercing damage, and the DC is 37."
+ },
+ {
+  "id": "greater-inflammation-flask",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Greater Inflammation Flask",
+  "level": 12,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "disease",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Inflamation Flask May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 75 Usage held in 1 hand Bulk L Activate Strike This flask contains a caustic irritant that makes a target’s skin, scales, or carapace extremely sensitive to further nicks and burns. An inflammation flask deals the listed acid damage and acid splash damage. On a hit, the target also gains weakness to acid, fire, and slashing damage for 3 rounds. Many types of inflammation flask grant a bonus to attack rolls. The target can end the weakness effect by three means: being drenched with water (such as submersion or exposure to an area water effect), being Administered First Aid (whose DC in based on the bomb type), or regaining Hit Points from a single effect equal to twice the inflammation flask’s level. A creature that critically fails to Administer First Aid in this way deals untyped damage to the target equal to the inflammation flask’s initial acid damage. Lesser Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 5 gp The bomb deals 1d6 acid damage and 1 acid splash damage. The target gains weakness 1 to acid, fire, and slashing damage, and theMedicine DC is 17. Moderate Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 15 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d6 acid damage and 2 acid splash damage. The target gains weakness 2 to acid, fire, and slashing damage, and the Medicine DC is 20. Greater Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 340 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d6 acid damage and 3 acid splash damage. The target gains weakness 3 to acid, fire, and slashing damage, and the Medicine DC is 30. Major Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 3,750 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d6 acid damage and 4 acid splash damage. The target gains weakness 4 to acid, fire, and slashing damage, and the Medicine DC is 38."
+ },
+ {
+  "id": "greater-killers-belt",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Greater Killer’s Belt",
+  "level": 9,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Killer's Belt Source Battlecry! pg. 150 Usage worn belt Bulk L Small blood-red rubies decorate this black leather belt, which is a fashion accessory for only the most bloodthirsty soldiers. When you wear this belt, you gain a +1 item bonus to Intimidation checks. Activate—Bleeding Rubies (manipulate) Frequency once per day; Requirements You have a free hand and your last action was to deal damage to an enemy with a Strike or spell attack roll; Effect You pull a ruby off your belt and crush it into dust. As this dust reaches the enemy you just harmed, it embeds into the skin, causing them to bleed. The target takes 1d6 persistent bleed damage. The ruby reappears on the belt after 24 hours. Killer’s Belt Source Battlecry! pg. 150 Price 95 gp Greater Killer’s Belt Source Battlecry! pg. 150 Price 650 gp The belt grants a +2 item bonus to Intimidation checks, and the persistent bleed damage dealt by Bleeding Rubies increases to 2d6."
+ },
+ {
+  "id": "greater-nail-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Greater Nail Bomb",
+  "level": 12,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Nail Bomb May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 78 Usage held in 1 hand Bulk L Activate Strike This pressurized iron casing bursts open when struck, releasing cold iron shrapnel. The bomb deals the listed piercing damage and piercing splash damage from a cold iron source. Many types grant a bonus to attack rolls. Lesser Nail Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 8 gp The bomb deals 2d4 piercing damage and 1 piercing splash damage. Moderate Nail Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 16 gp You gain a +1 item bonus to attack rolls. The bomb deals 4d4 piercing damage and 2 piercing splash damage. Greater Nail Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 350 gp You gain a +2 item bonus to attack rolls. The bomb deals 6d4 piercing damage and 3 piercing splash damage. Major Nail Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 4,000 gp You gain a +3 item bonus to attack rolls. The bomb deals 8d4 piercing damage and 4 piercing splash damage."
+ },
+ {
+  "id": "greater-sailors-collar",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Greater Sailor’s Collar",
+  "level": 10,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Sailor's Collar Source Battlecry! pg. 152 Usage worn Bulk L Veteran sailors like to wear this jaunty blue collar, tied with a small bow in the front and tucked into the belt. It can even save your life if you fall overboard. When wearing the sailor’s collar, you gain a +1 item bonus to Athletics check. Activate—Gasp for Air (air, concentrate) Frequency once per day; Trigger You fail a Swim check; Effect Your collar inflates, giving you something to breathe from. You can breathe underwater for 1 minute. Sailor’s Collar Source Battlecry! pg. 152 Price 80 gp Greater Sailor’s Collar Source Battlecry! pg. 152 Price 850 gp You gain a +2 item bonus to Athletics checks. When you Gasp for Air, you additionally gain a 10-foot swim Speed for 1 minute."
+ },
+ {
+  "id": "greater-sihedron-medallion",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Greater Sihedron Medallion",
+  "level": 9,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Sihedron Medallion May contain spoilers from Revenge of the Runelords Source Pathfinder Adventure Path #219: Lord of the Trinity Star pg. 69 Usage worn These amulets once served as tokens of loyalty between the runelords and their favored agents. Though they vary in appearance, they all share a common design—a leather or metallic cord attached to a metal disc inscribed with the seven-pointed star known as the Sihedron. For original Sihedron medallions created before Earthfall, a runelord of old Thassilon (not a character with the runelord archetype) doesn’t reduce the DC of any scrying spell they cast against a creature that wears a Sihedron medallion even if they have never met the target or are unaware of the target’s identity. If such a runelord successfully scries on a creature wearing an original Sihedron medallion, they can use the wearer’s voice to issue messages to those in the vicinity. Sihedron medallions created in more modern times don’t possess this disadvantage. A dead body that wears a Sihedron medallion doesn’t decay, and bugs or other pests (such as maggots) are prevented from consuming the remains, but unlike the effects of peaceful rest, this doesn’t offer any protection against undeath, nor does it have an impact on spells that require the corpse to have died within a certain amount of time. Activate—Bolster Flesh (concentrate, manipulate) Frequency once per day; Effect Your flesh is augmented with magical vitality. You gain 10 temporary Hit Points for 8 hours. Sihedron Medallion Source Pathfinder Adventure Path #219: Lord of the Trinity Star pg. 69 Price 16 gp Usage worn Activate (concentrate, manipulate) Greater Sihedron Medallion Source Pathfinder Adventure Path #219: Lord of the Trinity Star pg. 69 Price 70 gp Usage worn Activate (concentrate, manipulate) The medallion grants a +1 item bonus to saving throws and grants 16 temporary Hit Points when activated. Major Sihedron Medallion Source Pathfinder Adventure Path #219: Lord of the Trinity Star pg. 69 Price 650 gp Usage worn Activate (concentrate, manipulate) The medallion grants a +2 item bonus to saving throws and grants 25 temporary Hit Points when activated."
+ },
+ {
+  "id": "greater-silversoul-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Greater Silversoul Bomb",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "mental",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Silversoul Bomb May contain spoilers from Season of Ghosts Source Season of Ghosts (Hardcover) pg. 295 Usage held in 1 hand Bulk L Activate Strike This rare alchemical bomb gathers and concentrates the emotions that linger in a burial ground where generations of beloved ancestors have been interred, infusing that powerful emotional energy into the alchemically prepared powdered silver stored within the bomb. This energy glows with a soft, silver radiance and, if stored in a clear container, allows a silversoul bomb to be used as a torch to illuminate an area. A silversoul bomb grants an item bonus to attack rolls and deals mental damage plus additional effects, according to the bomb’s type. Nindorus are particularly harmed by silversoul bombs and take the listed persistent mental damage, according to the bomb’s type. Against nindorus, the bomb’s item bonus also applies to its save DC to resist being dazzled or blinded. Creatures that have weakness to silver (including most nindorus) have an equal amount of weakness to the mental damage caused by a silversoul bomb, due to the silver infused into the energy within. Silversoul Bomb Source Season of Ghosts (Hardcover) pg. 296 Price 10 gp You gain a +1 item bonus to attack rolls, and the bomb deals 2d4 mental damage, 1d6 persistent mental damage to nindorus, and 2 mental splash damage. A creature that takes splash damage from the bomb and fails a DC 17 Fortitude save is dazzled for 1 round as glowing silver particles cling to its face. Greater Silversoul Bomb Source Season of Ghosts (Hardcover) pg. 296 Price 250 gp You gain a +2 item bonus to attack rolls, and the bomb deals 3d4 mental damage, 2d6 persistent mental damage to nindorus, and 3 mental splash damage. A creature that takes splash damage from the bomb and fails a DC 28 Fortitude save is blinded for 1 round and then dazzled for 1 round thereafter. Major Silversoul Bomb Source Season of Ghosts (Hardcover) pg. 296 Price 2,500 gp You gain a +3 item bonus to attack rolls, and the bomb deals 4d4 mental damage, 3d6 persistent mental damage to nindorus, and 4 mental splash damage. A creature that takes splash damage from the bomb is dazzled for 1 round unless it fails a DC 37 Fortitude save, in which case it’s permanently blinded."
+ },
+ {
+  "id": "greater-spider-satchel",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Greater Spider Satchel",
+  "level": 12,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Spider Satchel May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 75 Usage held in 1 hand Bulk L Activate Strike The Verduran Forest’s tiny tent-trap spider lays her eggs in a pyramidal web, and her young hatch only in response to intense vibration, such as the struggles of an ensnared insect or even songbird. Sadistic alchemists gather and augment these eggs, packing them in silken satchels that disgorge thousands of biting spider babies on impact. Many types of spider satchel grant a bonus to attack rolls. Until shaken off—or for the desperate target, incinerated—these spiders make it difficult to concentrate on anything other than escaping the swarm. The fascination effect ends automatically if a creature uses further hostile actions against the target, but hostile actions against the target’s allies don’t automatically end the effect. Lesser Spider Satchel Source Pathfinder #203 Shepherd of Decay pg. 75 Price 6 gp The bomb deals 1d6 persistent poison damage, 1 poison splash damage, and fascinates the target while the persistent damage lasts. Moderate Spider Satchel Source Pathfinder #203 Shepherd of Decay pg. 76 Price 16 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d6 persistent poison damage, 2 poison splash damage, and fascinates the target while the persistent damage lasts. Greater Spider Satchel Source Pathfinder #203 Shepherd of Decay pg. 76 Price 350 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d6 persistent poison damage, 3 poison splash damage, and fascinates the target while the persistent damage lasts. Major Spider Satchel Source Pathfinder #203 Shepherd of Decay pg. 76 Price 4,000 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d6 persistent poison damage, 4 poison splash damage, and fascinates the target while the persistent damage lasts."
+ },
+ {
+  "id": "greater-tenderizer-grenade",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Greater Tenderizer Grenade",
+  "level": 11,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "plant",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Tenderizer Grenade May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 77 Usage held in 1 hand Bulk L Activate Strike Made from the acidic flesh of an especially astringent fruit found on the Plane of Wood, this bomb’s contents soften, oxidize, and season whatever they touch. Many types of this bomb grant an item bonus to attack rolls. On a successful Strike, a tenderizer grenade deals the listed acid damage to the target and the listed acid splash damage. Any resistances the target has against bludgeoning, piercing, and slashing damage are reduced by an amount based on the bomb’s type. In addition, the target is showered with appetizing esters, oils, and salts, making them off-guard against jaws Strikes, fangs Strikes, or similar Strikes with a creature’s mouth. These additional effects last until the end of your next turn, or for 1 minute on a critical hit. Lesser Tenderizer Grenade Source Pathfinder #203 Shepherd of Decay pg. 77 Price 4 gp The bomb deals 1d6 acid damage. Moderate Tenderizer Grenade Source Pathfinder #203 Shepherd of Decay pg. 77 Price 12 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d6 points of acid damage. Greater Tenderizer Grenade Source Pathfinder #203 Shepherd of Decay pg. 77 Price 275 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d6 points of acid damage. Major Tenderizer Grenade Source Pathfinder #203 Shepherd of Decay pg. 77 Price 2,750 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d6 points of acid damage."
+ },
+ {
+  "id": "guardian-shield",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Guardian Shield",
+  "level": 11,
+  "traits": [
+   "divine",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "A *guardian shield* is a steel shield engraved with the symbol of a good deity. --- **Activate** ⟨2⟩ command, Interact **Frequency** once per day --- **Effect** You conjure a Medium guardian with the effects of the Spiritual Guardian spell, but it carries a shield instead of weapons and can't attack. The guardian appears in an unoccupied space next to an ally of your choice within range and uses the Raise a Shield action, granting that ally a +2 circumstance bonus to AC until the beginning of your next turn or until your ally is no longer adjacent to the spiritual guardian. Each time you Sustain the Activation, the guardian moves to the ally, as long as the ally remains within range, and Raises its Shield, granting its bonus again until the beginning of your next turn or until your ally is no longer adjacent to the spiritual guardian. When the ally receiving the AC bonus takes damage beyond the 10 that's redirected to the guardian, you can use a reaction to have the guardian reduce damage for your ally even more by interposing itself further. When it blocks damage in this way, it reduces the damage your ally takes by an additional 20 (for a total of 30 damage reduced), but Dismisses the guardian, immediately ending the activation. | Hardness | HP | BT | | --- | --- | --- | | 9 | 36 | 18 |"
+ },
+ {
+  "id": "guardian-staff",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Guardian Staff",
+  "level": 6,
+  "traits": [
+   "magical",
+   "staff",
+   "two-hand-d8"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "A *guardian staff* is formed from ivory strands woven in a diamond pattern and capped with a glowing ruby. Those charged with protecting others value this staff's spells. --- **Activate** ⟨1⟩ (concentrate) **Effect** You raise the staff and choose an ally within 10 feet. A ruby-colored plane of force appears like a shield near the ally, granting them a +1 circumstance bonus to AC until the start of your next turn. If you use this action again, any creature you previously granted this bonus to loses it. --- **Activate** Cast a Spell **Effect** You expend a number of charges from the staff to cast a spell from its list. - **Cantrip** Forbidding Ward - **1st** Sanctuary, Spirit Link - **2nd** Share Life, Spirit Link --- **Craft Requirements** Supply one casting of all listed ranks of all listed spells."
+ },
+ {
+  "id": "guardian-staff-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Guardian Staff (Greater)",
+  "level": 10,
+  "traits": [
+   "magical",
+   "staff",
+   "two-hand-d8"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "A *guardian staff* is formed from ivory strands woven in a diamond pattern and capped with a glowing ruby. Those charged with protecting others value this staff's spells. --- **Activate** ⟨1⟩ (concentrate) **Effect** You raise the staff and choose an ally within 10 feet. A ruby-colored plane of force appears like a shield near the ally, granting them a +1 circumstance bonus to AC until the start of your next turn. If you use this action again, any creature you previously granted this bonus to loses it. --- **Activate** Cast a Spell **Effect** You expend a number of charges from the staff to cast a spell from its list. - **Cantrip** Forbidding Ward - **1st** Sanctuary, Spirit Link - **2nd** Share Life, Spirit Link - **3rd** Life Connection, Spirit Link - **4th** Spirit Link, Unfettered Movement --- **Craft Requirements** Supply one casting of all listed ranks of all listed spells."
+ },
+ {
+  "id": "guardian-staff-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Guardian Staff (Major)",
+  "level": 14,
+  "traits": [
+   "magical",
+   "staff",
+   "two-hand-d8"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "A *guardian staff* is formed from ivory strands woven in a diamond pattern and capped with a glowing ruby. Those charged with protecting others value this staff's spells. --- **Activate** ⟨1⟩ (concentrate) **Effect** You raise the staff and choose an ally within 10 feet. A ruby-colored plane of force appears like a shield near the ally, granting them a +1 circumstance bonus to AC until the start of your next turn. If you use this action again, any creature you previously granted this bonus to loses it. --- **Activate** Cast a Spell **Effect** You expend a number of charges from the staff to cast a spell from its list. - **Cantrip** Forbidding Ward - **1st** Sanctuary, Spirit Link - **2nd** Share Life, Spirit Link - **3rd** Life Connection, Spirit Link - **4th** Spirit Link, Unfettered Movement - **5th** Blessing of Defiance, Death Ward, Spirit Link - **6th** Repulsion, Scintillating Safeguard, Spirit Link, Unfettered Movement --- **Craft Requirements** Supply one casting of all listed ranks of all listed spells."
+ },
+ {
+  "id": "guardians-deflection",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Guardian's Deflection",
+  "level": 4,
+  "traits": [
+   "swashbuckler"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Guardian's Deflection Source Player Core 2 pg. 165 Trigger An ally within your melee reach is hit by an attack, you can see the attacker, and a +2 circumstance bonus to AC would turn the critical hit into a hit or the hit into a miss. Requirements You are wielding a single one-handed melee weapon and have your other hand or hands free. You use your weapon to deflect the attack against your ally, granting a +2 circumstance bonus to their AC against the triggering attack. This turns the triggering critical hit into a hit, or the triggering hit into a miss. You gain panache until the end of your next turn."
+ },
+ {
+  "id": "guardians-deflection-fighter",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Guardian's Deflection (Fighter)",
+  "level": 6,
+  "traits": [
+   "fighter"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** An ally within your melee reach is hit by an attack, you can see the attacker, and the ally gaining a +2 circumstance bonus to AC would turn the critical hit into a hit or the hit into a miss. **Requirements** You are wielding a single one-handed melee weapon and hold nothing else in your hands. --- You use your weapon to deflect the attack against your ally, granting a +2 circumstance bonus to their Armor Class against the triggering attack. This turns the triggering critical hit into a hit, or the triggering hit into a miss."
+ },
+ {
+  "id": "guardians-deflection-swashbuckler",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Guardian's Deflection (Swashbuckler)",
+  "level": 4,
+  "traits": [
+   "swashbuckler"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** An ally within your melee reach is hit by an attack, you can see the attacker, and a +2 circumstance bonus to AC would turn the critical hit into a hit or the hit into a miss. **Requirements** You are wielding a single one-handed melee weapon and have your other hand or hands free. --- You use your weapon to deflect the attack against your ally, granting a +2 circumstance bonus to their AC against the triggering attack. This turns the triggering critical hit into a hit, or the triggering hit into a miss. You gain panache until the end of your next turn."
+ },
+ {
+  "id": "guiding-shot",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Guiding Shot",
+  "level": 2,
+  "traits": [
+   "commander",
+   "flourish"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are wielding a ranged weapon. --- Your ranged attack helps guide your allies into striking your enemy's weak point. Attempt a Strike with the required weapon. If the Strike hits, the next creature other than you to attack the same target before the start of your next turn gains a +1 circumstance bonus to their roll, or a +2 circumstance bonus if your Strike was a critical hit."
+ },
+ {
+  "id": "guise-of-the-smirking-devil",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Guise of the Smirking Devil",
+  "level": 9,
+  "traits": [
+   "auditory",
+   "invested",
+   "magical",
+   "void"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This ice-blue half-mask is adorned with a wicked silver grin that covers the wearer's mouth, leaving the rest of the face uncovered. You gain a +2 item bonus to Intimidation checks. **Activate—Hideous Wail** ⟨2⟩ (concentrate, manipulate) **Frequency** once per day --- **Effect** The mask emits a soul-chilling scream that deals damage to each living creature in a ( save). --- **Craft Requirements** Supply a casting of Wails of the Damned."
+ },
+ {
+  "id": "guise-of-the-smirking-devil-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Guise of the Smirking Devil (Greater)",
+  "level": 19,
+  "traits": [
+   "auditory",
+   "invested",
+   "magical",
+   "void"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This ice-blue half-mask is adorned with a wicked silver grin that covers the wearer's mouth, leaving the rest of the face uncovered. You gain a +3 item bonus to Intimidation checks. **Activate—Hideous Wail** ⟨2⟩ (concentrate, manipulate) **Frequency** once per day --- **Effect** The mask casts a 9th-rank Wails of the Damned Each living creature in a takes damage and must attempt a save. **Critical Success** The creature is unaffected. **Success** The creature takes full damage. **Failure** The creature takes full damage and is drained 1d4. **Critical Failure** The creature takes double damage and is Drained 4."
+ },
+ {
+  "id": "hairpin-of-blooming-flowers",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Hairpin of Blooming Flowers",
+  "level": 7,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "The flower that adorns this hairpin is a blooming lotus flower that varies in color; it regrows in a day after the item is activated. Whether or not the hairpin's flower is in bloom, as long as you wear it and it's invested, it grants a +1 item bonus to Diplomacy checks. **Activate—Scatter Petals** ⟨2⟩ (concentrate, manipulate) **Frequency** once per day --- **Effect** You pluck the flower from the hairpin and scatter the petals, creating a flurry of color in a centered on you. You become concealed for 1 minute or until you move from your current location. Any creature within the when you Activate the Item must succeed at a save or become dazzled until the end of its next turn (or blinded until the end of its next turn on a critical failure). The flower blooms again the next day."
+ },
+ {
+  "id": "handwraps-of-mighty-blows",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Handwraps of Mighty Blows",
+  "level": 2,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "As you invest these embroidered strips of cloth, you must meditate and slowly wrap them around your hands. These handwraps have weapon runes etched into them to give your unarmed attacks the benefits of those runes, making your unarmed attacks work like magic weapons. For example, *+1 striking handwraps of mighty blows* would give you a +1 item bonus to attack rolls with your unarmed attacks and increase the damage of your unarmed attacks from one weapon die to two (normally 2d4 instead of 1d4, but if your fists have a different weapon damage die or you have other unarmed attacks, use two of that die size instead). You can upgrade, add, and transfer runes to and from the handwraps just as you would for a weapon, and you can attach talismans to the handwraps. Treat the handwraps as melee weapons of the brawling group with light Bulk for these purposes. Property runes apply only when they would be applicable to the unarmed attack you're using. For example, a property that must be applied to a slashing weapon wouldn't function when you attacked with a fist, but you would gain its benefits if you attacked with a claw or some other slashing unarmed attack."
+ },
+ {
+  "id": "handwraps-of-mighty-blows-1",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Handwraps of Mighty Blows (+1)",
+  "level": 2,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Handwraps of Mighty Blows Source GM Core pg. 290 Usage worn gloves Base Weapon Fist As you invest these embroidered strips of cloth, you must meditate and slowly wrap them around your hands. These handwraps have weapon runes etched into them to give your unarmed attacks the benefits of those runes, making your unarmed attacks work like magic weapons. For example_, +1 striking handwraps of mighty blows_ would give you a +1 item bonus to attack rolls with your unarmed attacks and increase the damage of your unarmed attacks from one weapon die to two (normally 2d4 instead of 1d4, but if your fists have a different weapon damage die or you have other unarmed attacks, use two of that die size instead). You can upgrade, add, and transfer runes to and from the handwraps just as you would for a weapon, and you can attach talismans to the handwraps. Treat the handwraps as melee weapons of the brawling group with light Bulk for these purposes. Property runes apply only when they would be applicable to the unarmed attack you're using. For example, a property that must be applied to a slashing weapon wouldn't function when you attacked with a fist, but you would gain its benefits if you attacked with a claw or some other slashing unarmed attack. The entries below list the most typical combinations of fundamental runes. Handwraps of Mighty Blows (+1) Source GM Core pg. 290, Core Rulebook pg. 611 Price 35 gp Handwraps of Mighty Blows (+1 striking) Source GM Core pg. 290, Core Rulebook pg. 611 Price 100 gp Handwraps of Mighty Blows (+2 striking) Source GM Core pg. 290, Core Rulebook pg. 611 Price 1,000 gp Handwraps of Mighty Blows (+2 greater striking) Source GM Core pg. 290, Core Rulebook pg. 611 Price 2,000 gp Handwraps of Mighty Blows (+3 greater striking) Source GM Core pg. 290, Core Rulebook pg. 611 Price 10,000 gp Handwraps of Mighty Blows (+3 major striking) Source GM Core pg. 290, Core Rulebook pg. 611 Price 40,000 gp"
+ },
+ {
+  "id": "handwraps-of-mighty-blows-1-striking",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Handwraps of Mighty Blows (+1 striking)",
+  "level": 4,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Handwraps of Mighty Blows Source GM Core pg. 290 Usage worn gloves Base Weapon Fist As you invest these embroidered strips of cloth, you must meditate and slowly wrap them around your hands. These handwraps have weapon runes etched into them to give your unarmed attacks the benefits of those runes, making your unarmed attacks work like magic weapons. For example_, +1 striking handwraps of mighty blows_ would give you a +1 item bonus to attack rolls with your unarmed attacks and increase the damage of your unarmed attacks from one weapon die to two (normally 2d4 instead of 1d4, but if your fists have a different weapon damage die or you have other unarmed attacks, use two of that die size instead). You can upgrade, add, and transfer runes to and from the handwraps just as you would for a weapon, and you can attach talismans to the handwraps. Treat the handwraps as melee weapons of the brawling group with light Bulk for these purposes. Property runes apply only when they would be applicable to the unarmed attack you're using. For example, a property that must be applied to a slashing weapon wouldn't function when you attacked with a fist, but you would gain its benefits if you attacked with a claw or some other slashing unarmed attack. The entries below list the most typical combinations of fundamental runes. Handwraps of Mighty Blows (+1) Source GM Core pg. 290, Core Rulebook pg. 611 Price 35 gp Handwraps of Mighty Blows (+1 striking) Source GM Core pg. 290, Core Rulebook pg. 611 Price 100 gp Handwraps of Mighty Blows (+2 striking) Source GM Core pg. 290, Core Rulebook pg. 611 Price 1,000 gp Handwraps of Mighty Blows (+2 greater striking) Source GM Core pg. 290, Core Rulebook pg. 611 Price 2,000 gp Handwraps of Mighty Blows (+3 greater striking) Source GM Core pg. 290, Core Rulebook pg. 611 Price 10,000 gp Handwraps of Mighty Blows (+3 major striking) Source GM Core pg. 290, Core Rulebook pg. 611 Price 40,000 gp"
+ },
+ {
+  "id": "handwraps-of-mighty-blows-2-greater-striking",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Handwraps of Mighty Blows (+2 greater striking)",
+  "level": 12,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Handwraps of Mighty Blows Source GM Core pg. 290 Usage worn gloves Base Weapon Fist As you invest these embroidered strips of cloth, you must meditate and slowly wrap them around your hands. These handwraps have weapon runes etched into them to give your unarmed attacks the benefits of those runes, making your unarmed attacks work like magic weapons. For example_, +1 striking handwraps of mighty blows_ would give you a +1 item bonus to attack rolls with your unarmed attacks and increase the damage of your unarmed attacks from one weapon die to two (normally 2d4 instead of 1d4, but if your fists have a different weapon damage die or you have other unarmed attacks, use two of that die size instead). You can upgrade, add, and transfer runes to and from the handwraps just as you would for a weapon, and you can attach talismans to the handwraps. Treat the handwraps as melee weapons of the brawling group with light Bulk for these purposes. Property runes apply only when they would be applicable to the unarmed attack you're using. For example, a property that must be applied to a slashing weapon wouldn't function when you attacked with a fist, but you would gain its benefits if you attacked with a claw or some other slashing unarmed attack. The entries below list the most typical combinations of fundamental runes. Handwraps of Mighty Blows (+1) Source GM Core pg. 290, Core Rulebook pg. 611 Price 35 gp Handwraps of Mighty Blows (+1 striking) Source GM Core pg. 290, Core Rulebook pg. 611 Price 100 gp Handwraps of Mighty Blows (+2 striking) Source GM Core pg. 290, Core Rulebook pg. 611 Price 1,000 gp Handwraps of Mighty Blows (+2 greater striking) Source GM Core pg. 290, Core Rulebook pg. 611 Price 2,000 gp Handwraps of Mighty Blows (+3 greater striking) Source GM Core pg. 290, Core Rulebook pg. 611 Price 10,000 gp Handwraps of Mighty Blows (+3 major striking) Source GM Core pg. 290, Core Rulebook pg. 611 Price 40,000 gp"
+ },
+ {
+  "id": "handwraps-of-mighty-blows-2-striking",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Handwraps of Mighty Blows (+2 striking)",
+  "level": 10,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Handwraps of Mighty Blows Source GM Core pg. 290 Usage worn gloves Base Weapon Fist As you invest these embroidered strips of cloth, you must meditate and slowly wrap them around your hands. These handwraps have weapon runes etched into them to give your unarmed attacks the benefits of those runes, making your unarmed attacks work like magic weapons. For example_, +1 striking handwraps of mighty blows_ would give you a +1 item bonus to attack rolls with your unarmed attacks and increase the damage of your unarmed attacks from one weapon die to two (normally 2d4 instead of 1d4, but if your fists have a different weapon damage die or you have other unarmed attacks, use two of that die size instead). You can upgrade, add, and transfer runes to and from the handwraps just as you would for a weapon, and you can attach talismans to the handwraps. Treat the handwraps as melee weapons of the brawling group with light Bulk for these purposes. Property runes apply only when they would be applicable to the unarmed attack you're using. For example, a property that must be applied to a slashing weapon wouldn't function when you attacked with a fist, but you would gain its benefits if you attacked with a claw or some other slashing unarmed attack. The entries below list the most typical combinations of fundamental runes. Handwraps of Mighty Blows (+1) Source GM Core pg. 290, Core Rulebook pg. 611 Price 35 gp Handwraps of Mighty Blows (+1 striking) Source GM Core pg. 290, Core Rulebook pg. 611 Price 100 gp Handwraps of Mighty Blows (+2 striking) Source GM Core pg. 290, Core Rulebook pg. 611 Price 1,000 gp Handwraps of Mighty Blows (+2 greater striking) Source GM Core pg. 290, Core Rulebook pg. 611 Price 2,000 gp Handwraps of Mighty Blows (+3 greater striking) Source GM Core pg. 290, Core Rulebook pg. 611 Price 10,000 gp Handwraps of Mighty Blows (+3 major striking) Source GM Core pg. 290, Core Rulebook pg. 611 Price 40,000 gp"
+ },
+ {
+  "id": "handwraps-of-mighty-blows-3-greater-striking",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Handwraps of Mighty Blows (+3 greater striking)",
+  "level": 16,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Handwraps of Mighty Blows Source GM Core pg. 290 Usage worn gloves Base Weapon Fist As you invest these embroidered strips of cloth, you must meditate and slowly wrap them around your hands. These handwraps have weapon runes etched into them to give your unarmed attacks the benefits of those runes, making your unarmed attacks work like magic weapons. For example_, +1 striking handwraps of mighty blows_ would give you a +1 item bonus to attack rolls with your unarmed attacks and increase the damage of your unarmed attacks from one weapon die to two (normally 2d4 instead of 1d4, but if your fists have a different weapon damage die or you have other unarmed attacks, use two of that die size instead). You can upgrade, add, and transfer runes to and from the handwraps just as you would for a weapon, and you can attach talismans to the handwraps. Treat the handwraps as melee weapons of the brawling group with light Bulk for these purposes. Property runes apply only when they would be applicable to the unarmed attack you're using. For example, a property that must be applied to a slashing weapon wouldn't function when you attacked with a fist, but you would gain its benefits if you attacked with a claw or some other slashing unarmed attack. The entries below list the most typical combinations of fundamental runes. Handwraps of Mighty Blows (+1) Source GM Core pg. 290, Core Rulebook pg. 611 Price 35 gp Handwraps of Mighty Blows (+1 striking) Source GM Core pg. 290, Core Rulebook pg. 611 Price 100 gp Handwraps of Mighty Blows (+2 striking) Source GM Core pg. 290, Core Rulebook pg. 611 Price 1,000 gp Handwraps of Mighty Blows (+2 greater striking) Source GM Core pg. 290, Core Rulebook pg. 611 Price 2,000 gp Handwraps of Mighty Blows (+3 greater striking) Source GM Core pg. 290, Core Rulebook pg. 611 Price 10,000 gp Handwraps of Mighty Blows (+3 major striking) Source GM Core pg. 290, Core Rulebook pg. 611 Price 40,000 gp"
+ },
+ {
+  "id": "handwraps-of-mighty-blows-3-major-striking",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Handwraps of Mighty Blows (+3 major striking)",
+  "level": 19,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Handwraps of Mighty Blows Source GM Core pg. 290 Usage worn gloves Base Weapon Fist As you invest these embroidered strips of cloth, you must meditate and slowly wrap them around your hands. These handwraps have weapon runes etched into them to give your unarmed attacks the benefits of those runes, making your unarmed attacks work like magic weapons. For example_, +1 striking handwraps of mighty blows_ would give you a +1 item bonus to attack rolls with your unarmed attacks and increase the damage of your unarmed attacks from one weapon die to two (normally 2d4 instead of 1d4, but if your fists have a different weapon damage die or you have other unarmed attacks, use two of that die size instead). You can upgrade, add, and transfer runes to and from the handwraps just as you would for a weapon, and you can attach talismans to the handwraps. Treat the handwraps as melee weapons of the brawling group with light Bulk for these purposes. Property runes apply only when they would be applicable to the unarmed attack you're using. For example, a property that must be applied to a slashing weapon wouldn't function when you attacked with a fist, but you would gain its benefits if you attacked with a claw or some other slashing unarmed attack. The entries below list the most typical combinations of fundamental runes. Handwraps of Mighty Blows (+1) Source GM Core pg. 290, Core Rulebook pg. 611 Price 35 gp Handwraps of Mighty Blows (+1 striking) Source GM Core pg. 290, Core Rulebook pg. 611 Price 100 gp Handwraps of Mighty Blows (+2 striking) Source GM Core pg. 290, Core Rulebook pg. 611 Price 1,000 gp Handwraps of Mighty Blows (+2 greater striking) Source GM Core pg. 290, Core Rulebook pg. 611 Price 2,000 gp Handwraps of Mighty Blows (+3 greater striking) Source GM Core pg. 290, Core Rulebook pg. 611 Price 10,000 gp Handwraps of Mighty Blows (+3 major striking) Source GM Core pg. 290, Core Rulebook pg. 611 Price 40,000 gp"
+ },
+ {
+  "id": "hardshell-surki",
+  "lane": "situational",
+  "collection": "heritages",
+  "name": "Hardshell Surki",
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your carapace is much denser than that of other surkis, offering you a suit of your very own armor. Your carapace is medium armor in the plate armor group that grants a +4 item bonus to AC, a Dex cap of +1, a check penalty of –2, a Speed penalty of –5 feet, a Strength value of +3, and has the comfort trait. You can never wear other armor or remove your carapace. You can etch armor runes onto your carapace. - **Evolution** The magical circulatory system that runs between your nodes has become a reinforcing network that strengthens your carapace with magical energy. If you're struck by a critical hit that deals physical damage, you can use your reaction to attempt a . If successful, the attack becomes a normal hit. - **Evolution** Your abdominal nodes can project a field around you that guards you against the type of magic you're most familiar with. You gain the Dampening Harmonics action."
+ },
+ {
+  "id": "hardshell-surki-carapace",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Hardshell Surki Carapace",
+  "level": 1,
+  "traits": [
+   "comfort"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Note** Hardshell Surki heritage only --- Your carapace is medium armor in the plate armor group that grants a +4 item bonus to AC, a Dex cap of +1, a check penalty of –2, a Speed penalty of –5 feet, a Strength value of +3, and has the comfort trait. You can never wear other armor or remove your carapace. You can etch armor runes onto your carapace."
+ },
+ {
+  "id": "hasty-celebration",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Hasty Celebration",
+  "level": 5,
+  "traits": [
+   "emotion",
+   "tanuki",
+   "visual"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per hour **Trigger** You critically succeed at an attack roll against an enemy, or an enemy critically fails their saving throw against one of your effects. --- After even the briefest success, you get caught up in the moment and begin to party, cheering your allies on. You grant all allies within 60 feet a +2 circumstance bonus to attack rolls and damage until the end of your next turn. Unfortunately, while you sing and dance, you aren't keeping an eye on your surroundings like you should, making you off-guard to all enemies until the end of your next turn as well."
+ },
+ {
+  "id": "healers-gloves",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Healer's Gloves",
+  "level": 4,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "These clean, white gloves never show signs of blood, even when used to stitch up wounds or treat other ailments. They give you a +1 item bonus to Medicine checks. --- **Activate—Healer's Touch** ⟨1⟩ (manipulate) **Frequency** once per day **Effect** You can soothe the wounds of a willing, living, adjacent creature, restoring Hit Points to that creature. This is a healing vitality effect. You can't harm undead with this healing."
+ },
+ {
+  "id": "healers-gloves-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Healer's Gloves (Greater)",
+  "level": 9,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "These clean, white gloves never show signs of blood, even when used to stitch up wounds or treat other ailments. They give you a +2 item bonus to Medicine checks. --- **Activate—Healer's Touch** ⟨1⟩ (manipulate) **Frequency** once per day **Effect** You can soothe the wounds of a willing, living, adjacent creature, restoring Hit Points to that creature. This is a healing vitality effect. You can't harm undead with this healing."
+ },
+ {
+  "id": "heartstone",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Heartstone",
+  "level": 9,
+  "traits": [
+   "invested",
+   "occult"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This gemstone grants its wearer a +2 item bonus to saving throws. Each *heartstone* is powered by the spirit of a specific night hag. If it's separated from her for 24 hours (or she's been dead for 24 hours), it becomes a nonmagical gemstone. A heartstone allows the hag to use additional occult innate spells: Ethereal Jaunt (9th level) and Seize Soul at will, and Shadow Blast twice per day. --- **Activate** ⟨1⟩ command **Requirements** You must be touching the *heartstone*. --- **Effect** The *heartstone* attempts to counteract one disease affecting you (counteract rank 5, counteract modifier +18). --- **Craft Requirements** You must be a night hag."
+ },
+ {
+  "id": "helm-of-zeal",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Helm of Zeal",
+  "level": 11,
+  "traits": [
+   "divine",
+   "focused",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "dynamicSkillBonus"
+  ],
+  "inRegistries": [],
+  "text": "This elaborate helmet is emblazoned with the divine symbols of a deity chosen when the helmet was crafted. You gain a +2 item bonus to that deity's Divine Skill. **Activate—Rally to the Cause** ⟨4⟩ (concentrate) **Frequency** once per day --- **Effect** You gain 1 Focus Point, which you can spend only to cast a devotion spell. If you don't spend this Focus Point by the end of this turn, it's lost. **Activate—Divine Fervor** ⟨4⟩ (concentrate) **Frequency** once per day **Trigger** You've just used your champion's reaction --- **Effect** You gain an additional reaction you can use only for your champion's reaction. You lose this reaction if you don't use it by the start of your next turn. **Craft Requirements** You're a champion of the deity represented by the helmet."
+ },
+ {
+  "id": "helm-of-zeal-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Helm of Zeal (Greater)",
+  "level": 18,
+  "traits": [
+   "divine",
+   "focused",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "effectChoices",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This elaborate helmet is emblazoned with the divine symbols of a deity chosen when the helmet was crafted. You gain a +3 item bonus to that deity's Divine Skill. **Activate—Rally to the Cause** ⟨4⟩ (concentrate) **Frequency** once per day --- **Effect** You gain 1 Focus Point, which you can spend only to cast a devotion spell. If you don't spend this Focus Point by the end of this turn, it's lost. **Activate—Divine Fervor** ⟨4⟩ (concentrate) **Frequency** once per hour **Trigger** You've just used your champion's reaction --- **Effect** You gain an additional reaction you can use only for your champion's reaction. You lose this reaction if you don't use it by the start of your next turn. **Craft Requirements** You're a champion of the deity represented by the helmet."
+ },
+ {
+  "id": "helpful-halfling",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Helpful Halfling",
+  "level": 9,
+  "traits": [
+   "halfling"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "When you aid a friend with a task, you find many ways to help and avoid interfering. On a critical success to Aid, you grant your ally a +3 circumstance bonus if you have expert proficiency in the skill (rather than +2), and you grant your ally a +4 circumstance bonus if you have master proficiency (rather than +3). If you roll a critical failure on a check to Aid, you don't give your ally a -1 circumstance penalty to their check."
+ }
+]

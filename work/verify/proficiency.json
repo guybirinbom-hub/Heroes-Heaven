@@ -1,0 +1,404 @@
+[
+ {
+  "id": "accursed-magic",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Accursed Magic",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "innateSpells",
+   "spellcastingGrant"
+  ],
+  "text": "When the curse within you spills out, you can lay curses on others and claim them for yourself with ease. You can cast Claim Curse. At 10th level, you can also cast Seal Fate, and at 12th level, you can also cast Inevitable Disaster. You can cast these spells once per day as occult innate spells, but only while within your curse maelstrom state. If you couldn't already cast occult spells, these spells use Wisdom as your spellcasting attribute, and you become trained in the spell attack modifier and spell DC statistics."
+ },
+ {
+  "id": "as-on-the-board-so-on-the-battlefield",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "As on the Board, so on the Battlefield",
+  "level": 7,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "text": "You're a master of strategy games, able to translate strategies and mechanics from these games to the actual battles they were created to simulate. You can use your proficiency rank in Games Lore for anything that requires proficiency in Warfare Lore (such as prerequisites) and use your Games Lore modifier in place of your Warfare Lore modifier for checks. You can use Games Lore to make-an-impression on military professionals, such as mercenaries and commanders. Your reputation as a strategist opens up opportunities while you're in a military camp, near a battlefield, or somewhere else that has numerous non-hostile soldiers, allowing you to Earn Income with Games Lore with a task level of at least your level –1. If you lead a troop and have had time to create a skirmish bond with them, you've also spent time going over the finer points of strategy and even played against many members of your troop. Once per day, you can roll Games Lore for initiative when leading this troop."
+ },
+ {
+  "id": "barding-light-small-or-medium",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Barding (Light; Small or Medium)",
+  "level": 0,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "text": "Barding Source Player Core pg. 295 Bulk L You can purchase special armor for animals, called barding (shown on Table 6–18). All animals have a trained proficiency rank in light barding, and combat-trained animals are trained in heavy barding. Barding uses the same rules as armor except for the following. The Price and Bulk of barding depend on the animal’s size. Unlike for a suit of armor, barding’s Strength entry is listed as a modifier, not a score. Barding can’t be etched with magic runes, though special magical barding might be available. Barding Barding Size Price AC Bonus Dex Cap Check Penalty Speed Penalty Bulk Strength Light Small or Medium 10 gp +1 +5 -1 -5 ft. 2 +3 Large 20 gp +1 +5 -1 -5 ft. 4 +3 Heavy Small or Medium (Level 2) 25 gp +3 +3 -3 -10 ft. 4 +5 Large (Level 3) 50 gp +3 +3 -3 -10 ft. 8 +5 Barding (Light; Small or Medium) Source Player Core pg. 295, Core Rulebook pg. 295 Price 10 gp Bulk 2 Barding (Light; Large) Source Player Core pg. 295, Core Rulebook pg. 295 Price 20 gp Bulk 4 Barding (Heavy; Small or Medium) Source Player Core pg. 295, Core Rulebook pg. 295 Price 25 gp Bulk 4 Barding (Heavy; Large) Source Player Core pg. 295, Core Rulebook pg. 295 Price 50 gp Bulk 8"
+ },
+ {
+  "id": "bloodline-spells",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Bloodline Spells",
+  "level": 1,
+  "traits": [
+   "sorcerer"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Your bloodline grants you bloodline spells, special spells unique to your lineage. Bloodline spells are a type of focus spell. It costs 1 Focus Point to cast a focus spell, and you start with a focus pool of 1 Focus Point. You refill your focus pool during your daily preparations, and you can regain 1 Focus Point by spending 10 minutes using the Refocus activity. Unlike other characters, you don't need to do anything specific to Refocus, as the power flowing through your veins naturally replenishes your focus pool. Focus spells are automatically heightened to half your level rounded up, much like cantrips. Focus spells don't require spell slots; you can't cast them using spell slots. The maximum Focus Points your focus pool can hold is equal to the number of focus spells you have, but can never be more than 3 points. You learn the initial bloodline spell, which is unique to your bloodline. ### Reading a Bloodline Entry A bloodline entry contains the following information. **Tradition** You use this magical tradition and spell list **Bloodline Skills** You become trained in the listed skills. **Sorcerous Gifts** You automatically add the spells listed here to your spell repertoire, as described in the Spell Repertoire feature. At 1st level, you gain a cantrip and a 1st-rank spell. You learn the other spells on the list as soon as you gain the ability to cast sorcerer spells of that rank. **Bloodline Spells** You automatically gain the initial bloodline spell at 1st level and can gain more by selecting the Advanced Bloodline and Greater Bloodline feats. **Blood Magic** Whenever you cast a bloodline spell using a Focus Point or a sorcerous gift spell using a spell slot, you choose one blood magic effect you know to benefit from. You begin play with the benefit listed in your bloodline and can gain others through sorcerer feats. If the blood magic effect offers a choice, make it before resolving the spell. The blood magic effect occurs after resolving any checks for the spell's initial effects and, against a foe, applies only if the spell is a successful attack or the foe fails its saving throw. If the spell has an area, you must designate yourself or one target in the area when you cast the spell to be the target of the blood magic effect. All references to spell rank refer to the rank of the spell you cast."
+ },
+ {
+  "id": "champions-laurels",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Champions Laurels",
+  "level": 2,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Champions Laurels May contain spoilers from Myth-Speaker Source Pathfinder #216: The Acropolis Pyre pg. 81 Usage affixed to armor Activate (concentrate) Trigger You are about to roll an Acrobatics or Athletics check, and you are trained or better in the skill; Requirements You can perceive at least 12 allies or friendly bystanders encouraging you. This elegant crown of laurels can be worn on the head, atop a helmet, or even wrapped around the neck as a torc, signaling the wearer's athletic achievements in a past competition. When you Activate the laurels, you draw strength from your adoring crowd and gain a status bonus to the triggering check. If you critically succeed at the check, you gain temporary Hit Points equal to the item's level that last for 1 minute. Champions Laurels (Amateur) Source Pathfinder #216: The Acropolis Pyre pg. 81 Price 6 gp These laurels grant a +1 status bonus to the check. Champions Laurels (Professional) Source Pathfinder #216: The Acropolis Pyre pg. 81 Price 160 gp These laurels grant a +2 status bonus to the check. Champions Laurels (Renowned) Source Pathfinder #216: The Acropolis Pyre pg. 81 Price 3,200 gp These laurels grant a +3 status bonus to the check."
+ },
+ {
+  "id": "commitment-to-equality",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Commitment to Equality",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "auditory",
+   "mental",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "text": "You help an ally shake off any impediment that would give an enemy an unfair advantage. You rally a creature within 30 feet in an attempt to reduce its frightened or stupefied condition. If a creature has multiple conditions from this list, choose one. When you're a master in Diplomacy, add clumsy and enfeebled to the list of conditions. When you're legendary in Diplomacy, add stunned to the list of conditions; if the stunned condition has a duration instead of a value, you can't use Commitment to Equality to reduce it. Attempt a Diplomacy check against the saving throw DC of the effect that caused the condition; if there was no saving throw DC, use the hard DC for the level of the creature, hazard, or item that caused the effect. You can't treat a condition that came from an artifact or effect above 20th level unless you're legendary in Diplomacy; even if you can, the counteract DC increases by 10. You can't treat a condition that is part of a curse or disease or is a natural state of the target. Once you attempt to treat a target's condition, that target is immune to further attempts for 1 hour, regardless of the result. --- **Critical Success** Reduce the condition's value by 2. **Success** Reduce the condition's value by 1. **Critical Failure** Increase the condition's value by 1."
+ },
+ {
+  "id": "crystal-ward-spells",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Crystal Ward Spells",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "focusSpells"
+  ],
+  "text": "Your study of crystals and the energies held within a gem's facets grants you special arcane crystal ward spells, which are a type of focus spell. It costs 1 Focus Point to cast a focus spell, and you start with a focus pool of 1 Focus Point. You refill your focus pool when you make your next daily preparations, and you can regain 1 Focus Point by spending 10 minutes using the Refocus activity to research and memorize the properties of gems. Focus spells are automatically heightened to half your level rounded up. Certain feats can give you more focus spells and increase the size of your focus pool, though your focus pool can never hold more than 3 Focus Points. You gain the Electrified Crystal Ward focus spell, and you are trained in arcane spell attack rolls and spell DCs. Your spellcasting ability is Intelligence."
+ },
+ {
+  "id": "dracomancer",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Dracomancer",
+  "level": 9,
+  "traits": [
+   "kobold"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices",
+   "spellcastingGrant"
+  ],
+  "text": "The power infused into you by your draconic benefactor's presence allows you to manifest their most iconic spells. Choose one 1st-rank spell and one 2nd-rank spell from those listed for a dragon spellcaster of your draconic benefactor's type, (for example, Fear and for a conspirator dragon benefactor). You can cast each of these spells once per day as innate spells of the same tradition as your draconic benefactor. You gain the trained proficiency rank in the spell attack modifier and spell DC statistics, and your key spellcasting attribute is Charisma."
+ },
+ {
+  "id": "efficient-explorer",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Efficient Explorer",
+  "level": 4,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "text": "You are more efficient at exploring uncharted territories. As long as you're in a hex that is predominantly a terrain in which you are trained in an associated Lore skill, you grant your group one additional hexploration activity."
+ },
+ {
+  "id": "energized-cartridge",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Energized Cartridge",
+  "level": 4,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "text": "**Usage** affixed to a firearm or crossbow **Activate** ⟨4⟩ (concentrate) **Trigger** You attempt an attack roll with the affixed firearm or crossbow **Requirements** You're trained in use of the affixed firearm or crossbow. --- This simple brass shell casing contains trace amounts of alchemical ingredients and is usually attached to the underside of the affixed weapon's barrel. When activated, it causes the ammunition fired from the affixed weapon to transform into your choice of acid, cold, electricity, or fire, dealing damage of the appropriate energy type instead of its usual damage as well as 1d6 persistent damage of the same type on a critical hit."
+ },
+ {
+  "id": "fascinating-performance",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Fascinating Performance",
+  "level": 1,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "text": "When you Perform, compare your result to the Will DC of one observer. If you succeed, the target is fascinated by you for 1 round. If the observer is in a situation that demands immediate attention, such as combat, you must critically succeed to fascinate it and the Perform action gains the incapacitation trait. You must choose which creature you're trying to fascinate before you roll your check, and the target is then temporarily immune for 1 hour. If you're an expert in Performance, you can fascinate up to four observers; if you're a master, you can fascinate up to 10 observers; and if you're legendary, you can fascinate any number of observers at the same time."
+ },
+ {
+  "id": "fluttering-distraction",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Fluttering Distraction",
+  "level": 10,
+  "traits": [
+   "archetype",
+   "manipulate",
+   "misfortune"
+  ],
+  "engineFieldsPresent": [],
+  "text": "**Trigger** An enemy attempts a ranged or melee Strike against an ally within 30 feet. **Requirements** You're wielding two fans, one in each hand. --- You're trained in snapping and fluttering your fans to draw the eyes of observers around you. You manipulate your fans to create a distraction. The enemy must roll its attack twice and take the lower result."
+ },
+ {
+  "id": "goblin-weapon-expertise",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Goblin Weapon Expertise",
+  "level": 13,
+  "traits": [
+   "goblin"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Goblin Weapon Expertise Source Core Rulebook pg. 49 Prerequisites Goblin Weapon Familiarity Your goblin affinity blends with your class training, granting you great skill with goblin weapons. Whenever you gain a class feature that grants you expert or greater proficiency in a given weapon or weapons, you also gain that proficiency in the dogslicer, horsechopper, and all goblin weapons in which you are trained."
+ },
+ {
+  "id": "haunting-memories",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Haunting Memories",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Your soul bears metaphysical impressions of the innumerable other spirits imprisoned with you in the Final Blade from which you escaped, allowing you to draw upon their memories. When you make your daily preparations, you can either gain the expert proficiency rank in one skill in which you're untrained or raise your proficiency rank to master in one skill in which you're trained or better. You also gain one skill feat with a minimum requirement of your new rank in the chosen skill. For the purpose of meeting level prerequisites for this feat, your level is equal to half your level. This proficiency and feat last until you make your daily preparations again. Since the proficiency is temporary, you can't use it as a prerequisite for any permanent character option."
+ },
+ {
+  "id": "influence-nature",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Influence Nature",
+  "level": 7,
+  "traits": [
+   "downtime",
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "text": "With patience and time, you can make bird calls, leave game trails, and ultimately influence the behavior of a certain type of animals in the region to favor and even aid you in the days to come. The GM determines the DC of any check required and the amount of time your work requires (usually at least a day or two of downtime). While you can't directly control how you've influenced nature, you can hope for certain effects, such as easier hunts or birds falling silent whenever danger is approaching. If you're legendary in Nature, you can elicit these same adjustments to animal behavior in the area by spending only 10 minutes."
+ },
+ {
+  "id": "kinetic-expertise",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Kinetic Expertise",
+  "level": 7,
+  "traits": [
+   "kineticist"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Your kinetic gate grows stronger, making your elements harder to resist. The power flowing from you is even harder to resist. Your proficiency rank for your kineticist class DC increases to expert."
+ },
+ {
+  "id": "like-a-roach",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Like a Roach",
+  "level": 1,
+  "traits": [
+   "downtime",
+   "reincarnated"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Living with the bare necessities isn't terribly hard for someone who has defied death, and like a cockroach, you always know how to survive. When you Subsist during downtime, the DC for your skill check is reduced by 2. You don't need a minimum proficiency rank to Subsist in unusual environments, nor do you take a –5 penalty if you Subsist after 8 hours or less of exploration."
+ },
+ {
+  "id": "mature-trained-companion",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Mature Trained Companion",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Your animal companion grows up, becoming a mature animal companion. Increase its proficiency rank in Performance to expert instead of one of the three skill increases for mature. It gains the Mesmerizing Performance advanced maneuver, rather than the normal advanced maneuver for its type."
+ },
+ {
+  "id": "mycoweave-shield-major",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Mycoweave Shield (Major)",
+  "level": 16,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "text": "This shield is grown entirely of specially treated fungi, giving it the appearance of a frilly disc. The shield has Hardness 6, HP 110, and BT 55. When left atop at least 1 bulk of organic matter, it gains fast healing 1; after 10 minutes 1 Bulk of the organic matter has been consumed by the shield. This shield doubles its hardness against bludgeoning, electricity, and sonic damage. **Activate** ⟨5⟩ manipulate **Trigger** The shield is broken --- **Effect** The shield spews spores into one adjacent square, dealing 3d6 damage to all creatures in within it; a successful save negates the damage. --- **Craft Requirements** You are trained in Nature, and can cast a fungus spell or are fungus."
+ },
+ {
+  "id": "phantom-piano",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Phantom Piano",
+  "level": 12,
+  "traits": [
+   "focused",
+   "intelligent",
+   "occult"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "text": "**Perception** +22; precise vision 30 feet, imprecise hearing 30 feet **Communication** telepathy (any languages the possessing spirit knew in life) **Skills** Diplomacy +23, Music Lore +23, Performance +25, Society +21 **Int** +3, **Wis** +4, **Cha** +5 **Will** +22 --- When a skilled musician dies before reaching their full potential or accomplishing an important goal, their soul might refuse to move on to the Boneyard. Rather than becoming undead, the spirit possesses an instrument they played in life, turning it into an intelligent item and a virtuoso instrument. (Other *phantom instruments* exist, but most are heavy.) A *phantom piano* offers a bargain to any bard or other skilled musician who finds it: receive musical aid as you dedicate yourself to reaching the success the spirit felt they were denied in life. The piano refuses to play for those who reject this deal. If you accept, the piano asks only that you practice with it and perform for increasingly refined and august audiences, requiring a successful Performance check appropriate to your proficiency level. The piano sets no strict timeline, but at the GM's discretion, if you go too long without making progress, the piano can cease cooperating with you until it's satisfied with your dedication once again. While you keep up your end of the bargain, the piano grants you a +2 item bonus to Performance checks made with it. The piano also provides access to composition spells based on your Performance proficiency rank, as if you had the corresponding feat. The spells you can use comprise a cumulative list, but you can cast them only when using the piano. You must spend the actions and Focus Points required to cast these spells. **Trained:** Courageous Anthem, Uplifting Overture **Expert:** Hymn of Healing, Rallying Anthem **Master:** Symphony of the Unfettered Heart **Legendary:** Soothing Ballad A *phantom piano* has the following activations. --- **Activate** ⟨1⟩ (concentrate) **Effect** The piano shrinks down to a figurine of light Bulk compact enough to store in a pouch, or from figurine form back to instrument form. In figurine form, the piano doesn't function as an instrument or provide magic other than this activation. --- **Activate** ⟨4⟩ (concentrate) **Frequency** once per day **Effect** You gain 1 Focus Point, which you can spend only to Cast a Spell the piano provides you."
+ },
+ {
+  "id": "quick-repair",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Quick Repair",
+  "level": 1,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "text": "For you, the Repair activity loses the exploration trait and takes 1 minute instead of 10 minutes. If you're a master in Crafting, it takes 3 actions. If you're legendary, it takes 1 action."
+ },
+ {
+  "id": "respite-of-a-thousand-roofs",
+  "lane": "proficiency",
+  "collection": "heritages",
+  "name": "Respite of a Thousand Roofs",
+  "traits": [
+   "yaksha"
+  ],
+  "engineFieldsPresent": [],
+  "text": "You swore a vow to shelter and feed the poor. Your vow grants you adroitness with carpentry, cook pot, and cloth; you become trained in Crafting and Cooking Lore, and you gain the Improvise Tool skill feat. --- **Additional Edict** help the impoverished to the extent you're able by repairing their abodes and clothing or by feeding them"
+ },
+ {
+  "id": "sakuras-sprig",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Sakura's Sprig",
+  "level": 5,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "text": "**Activate** ⟨4⟩ (concentrate) **Trigger** You strike an unholy target with the affixed weapon **Requirements** You're trained in the affixed weapon. --- This small glowing sprig of cherry tree flowers is only granted by Sakura, the kami of Silvertree. When activated, the affixed weapon gains the holy trait for the triggering attack and all other attacks for 1 minute."
+ },
+ {
+  "id": "silvertongue-mutagen-greater",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Silvertongue Mutagen (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Your features become striking, and your voice becomes musical and commanding, though emotion clouds your reason. **Benefit** You gain a +3 item bonus to Deception, Diplomacy, Intimidation and Performance checks. Your critical failures with any of these skills become failures instead. **Drawback** You take a -2 item penalty to Arcana, Crafting, Lore, Occultism, and Society checks. Choose one skill in which you are trained; for the duration, you become untrained in that skill. All your failures to Recall Knowledge become critical failures. **Duration** 1 hour."
+ },
+ {
+  "id": "sound-mirror",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Sound Mirror",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "innateSpells"
+  ],
+  "text": "You twist not just the visual, but the auditory as well, allowing you to pass without a sound and create minor noises as distractions—perfect for misdirection and infiltration. You can cast Silence on yourself as a 2nd-rank innate occult spell and as a 1st-rank innate occult spell, each once per day. You also can cast Figment as an innate occult cantrip. You become trained in the spell attack modifier and spell DC statistics, and your key spellcasting attribute for alter ego archetype spells is Charisma."
+ },
+ {
+  "id": "suns-fury",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Sun's Fury",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "focusSpells",
+   "spellcastingGrant"
+  ],
+  "text": "The Old Sun Gods have granted you a gift in your fight against Walkena. You gain the Sun's Fury focus spell. If you don't already have one, you gain a focus pool of 1 Focus Point, which you can regain using the Refocus activity to pray to the Old Sun Gods; if you already have a focus pool, increase the number of Focus Points in your focus pool by 1. Your Bright Lion focus spells are divine spells; when you gain this feat, if you aren't already, you become trained in divine spell attacks and spell DCs, using Charisma as your spellcasting ability score."
+ },
+ {
+  "id": "the-trader",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "The Trader",
+  "level": 20,
+  "traits": [
+   "artifact",
+   "harrow-court",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "text": "**Suit** Books (Int) **Alignment** neutral --- *The Trader* represents trades and exchanges of information. As long as you have *The Trader* invested, you gain a +2 item bonus to Diplomacy checks made to Gather Information. This increases to a +3 item bonus if you are at least 17th level. **Activate** ⟨2⟩ envision, Interact **Frequency** once per day --- **Effect** The Trader allows you to make an exchange with yourself. Press the card to your brow, and then select two skills. Your proficiency rank with those two skills swaps for 1 hour. For example, if you were a master in Athletics and untrained in Crafting, you would become untrained in Athletics and a master in Crafting. If making this swap would break prerequisites to feats, you lose access to those feats until your skill proficiencies change back in an hour."
+ },
+ {
+  "id": "unconventional-weaponry",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Unconventional Weaponry",
+  "level": 1,
+  "traits": [
+   "human"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "text": "You've familiarized yourself with a particular weapon, potentially from another ancestry or culture. Choose an uncommon simple or martial weapon with a trait corresponding to an ancestry (such as dwarf, goblin, or orc) or that is common in another culture. You gain access to that weapon, and for the purpose of proficiency, you treat it as a simple weapon. If you are trained in all martial weapons, you can instead choose an uncommon advanced weapon that has an ancestry's trait or is common in another culture. You gain access to that weapon and have familiarity with that weapon. For the purpose of proficiency, you treat it as a martial weapon."
+ },
+ {
+  "id": "vindicator",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Vindicator",
+  "level": 1,
+  "traits": [
+   "ranger"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "text": "You have been specially trained to use guile and magic to reveal hidden threats. You must select Vindicator Dedication as your 2nd-level class feat. **Prerequisites:** You must be a ranger. **Vindicator Adjustments:** You must choose a deity to be a follower of, and you gain your deity's sanctification. You are trained in Religion instead of Nature. You are trained in your deity's favored weapon. If your deity's favored weapon is a simple weapon or unarmed attack with a damage die smaller than d6, you gain the Deadly Simplicity feat. If your deity's favored weapon is an advanced weapon, your proficiency with it is equal to your proficiency with martial weapons. You must choose the vindication edge for your hunter's edge. You learn warden spells as divine spells instead of primal spells, and your spellcasting attribute is Wisdom. When you gain domain spells via the Domain Initiate or Advanced Domain feats, they are warden spells for the purposes of all your vindicator feats and abilities. ## Vindication Edge Your specialized training gives you a unique edge that allows you to more effectively bring the tools of your faith to bear against the monsters that lurk in the night or hide among the faithful. You gain a +1 status bonus to your spell attack rolls against your hunted prey, and they take a –1 status penalty to their saving throws against divine spells you cast. You gain the Vindicator's Mark warden spell. ## Trackless Journey 5th Vindicators can choose to gain the benefits of this class feature in either urban or natural terrain, chosen at the time the class feature is gained. ## Masterful Hunter 17th The masterful hunter class feature gives an additional benefit based on your hunter's edge. Included here is the additional benefit for the vindication edge. **Vindication:** You combine skill and magic to swiftly defeat your prey. The status bonus to divine spell attack rolls against your hunted prey increases to +2, and the status penalty to their saving throws against divine spells you cast is –2."
+ }
+]

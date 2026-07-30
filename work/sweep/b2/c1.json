@@ -1,0 +1,1254 @@
+[
+ {
+  "id": "aon-quickening-emotion",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Quickening Emotion",
+  "level": 0,
+  "traits": [
+   "emotion",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Quickening Emotion Aspect Emotion Activate Reaction (concentrate) Trigger You are the target of an emotion effect from a hostile source; Effect The relic attempts a counteract check. If the check succeeds, the relic absorbs the effect completely, negating it. Instead, you're quickened for up to 1 minute, but no longer than the triggering effect's duration. You then become temporarily immune to this effect for 1 hour."
+ },
+ {
+  "id": "aon-remember-thy-names",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Remember thy Names",
+  "level": 16,
+  "traits": [
+   "auditory",
+   "linguistic",
+   "mental",
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You peer into the eyes of a target of your Ultimatum of Liberation, as you say aloud the names of their victims, searing them into the oppressor’s mind, cursing them to feel their victims’ pain. The target takes 12d6 mental damage (basic Will save against your class DC or spell DC, whichever is higher). If the target fails or critically fails this check, they also take 2d6 persistent mental damage. For the next hour, when the target stops taking this persistent damage, you or one of your allies can mention a victim’s name as a single action to the target, forcing them to succeed at another Will save or begin taking the persistent damage again. This is a curse effect. Once you use Remember Their Names on a target, the target is immune to it for 24 hours."
+ },
+ {
+  "id": "aon-rolling-geode",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Rolling Geode",
+  "level": 0,
+  "traits": [
+   "earth"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Rolling Geode Aspect Earth Activate Two Actions (concentrate) Frequency once per hour; Effect Stone and crystal form a sphere that chases your foes. You create a geode in an unoccupied square within 30 feet. You can spend a single action, which has the concentrate trait, to move the geode up to 30 feet along the ground. If the geode enters a creature's space, the creature must succeed at a basic Reflex save or take 2d6 bludgeoning damage; a creature can take damage this way only once per turn, even if you roll the geode through its space multiple times. The geode persists for up to 1 minute or until destroyed or Dismissed; it has AC 5, Hardness 10, and 40 Hit Points, and is immune to critical hits and precision damage."
+ },
+ {
+  "id": "aon-seer-s-array",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Seer's Array",
+  "level": 0,
+  "traits": [
+   "relic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Seer's Array Aspects Mind and Time Diviners through the ages have employed a variety of tools to glimpse the future, but one who assembles five pieces of a seer's array gains strong second sight. Seer's arrays can be found across Golarion, from the caravans of Varisian harrowers to the scale diviners at the court of the Dragon King of Xa Hoi. A diviner who wears the array is bound to be sought after for counsel, and those who consult such farsighted individuals do well to heed any advice given. Set Items : Pendant of the Occult (level 3), Staff of the Unblinking Eye (level 6), Clarity Goggles (Lesser) (level 8), Crystal Ball (Clear Quartz) (level 14), Amulet of the Third Eye (level 17) Gifts : The set grants the following gifts. - 1: Recalculate - 2: Borrow Time - 3: Time Jump - 4: Precognition - 5: Time Reversal Collective Features : The set grants the following features. Two Items : The circumstance bonus from recalculate increases by 1. Three Items : Creatures become temporarily immune to the relic's borrow time gift for 1 hour. Four Items : You can use the relic's time jump once per hour. For each use after the first in a given day, you must attempt a flat check with a DC of 9 + the number of times you've used the gift that day. If you fail, you can still complete the time jump, but after that the gift is no longer available until you next complete your daily preparations. You can roll the flat check before using the gift and decide not to do so after seeing the roll. However, any failure applies to the next use of the gift that day, making your next use your last that day. Five Items : You can use the relic's precognition once per hour. Each use after the first requires a flat check like for time jump at four items, but this flat check affects your use of precognition."
+ },
+ {
+  "id": "aon-siccatite-buckler-standard-grade",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Siccatite Buckler (Standard-Grade)",
+  "level": 8,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Siccatite shields radiate extreme temperatures that protect them from energy damage. A protective coating on the wielder's side of the shield protects them from siccatite's radiant heat or cold but makes the shields bulkier than average. Standard-grade siccatite shields have resistance 10 to the corresponding energy type: fire damage for a hot siccatite shield or cold damage for a cold siccatite shield, as it takes even more extreme temperatures to affect them. They also provide some resistance to opposing temperatures because of their own extreme temperature, which extends to you when you Raise the Shield. The shield has resistance 5 to the opposing damage type (cold damage for a hot siccatite shield or fire damage for a cold siccatite shield), and while you have a siccatite shield Raised, you gain that resistance to the opposing damage type as well. For a high-grade siccatite shield, the resistances increase from 10 to 20 for damage of the corresponding type, and from 5 to 10 for damage of the opposing type. The shield has Hardness 4, HP 16, BT 8. Resistance 10 to the corresponding damage type and 5 to the opposing type. Craft Requirements siccatite worth at least 50 gp The shield has Hardness 6, HP 24, BT 12. Resistance 10 to the corresponding damage type and 5 to the opposing type. Craft Requirements siccatite worth at least 55 gp The shield has Hardness 7, HP 28, BT 14. Resistance 20 to the corresponding damage type and 10 to the opposing type. Craft Requirements siccatite worth at least 4,000 gp The shield has Hardness 10, HP 40, BT 20. Resistance 20 to the corresponding damage type and 10 to the opposing type. Craft Requirements siccatite worth at least 4,400 gp"
+ },
+ {
+  "id": "aon-siccatite-shield",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Siccatite Shield",
+  "level": 8,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Siccatite shields radiate extreme temperatures that protect them from energy damage. A protective coating on the wielder's side of the shield protects them from siccatite's radiant heat or cold but makes the shields bulkier than average. Standard-grade siccatite shields have resistance 10 to the corresponding energy type: fire damage for a hot siccatite shield or cold damage for a cold siccatite shield, as it takes even more extreme temperatures to affect them. They also provide some resistance to opposing temperatures because of their own extreme temperature, which extends to you when you Raise the Shield. The shield has resistance 5 to the opposing damage type (cold damage for a hot siccatite shield or fire damage for a cold siccatite shield), and while you have a siccatite shield Raised, you gain that resistance to the opposing damage type as well. For a high-grade siccatite shield, the resistances increase from 10 to 20 for damage of the corresponding type, and from 5 to 10 for damage of the opposing type. The shield has Hardness 4, HP 16, BT 8. Resistance 10 to the corresponding damage type and 5 to the opposing type. Craft Requirements siccatite worth at least 50 gp The shield has Hardness 6, HP 24, BT 12. Resistance 10 to the corresponding damage type and 5 to the opposing type. Craft Requirements siccatite worth at least 55 gp The shield has Hardness 7, HP 28, BT 14. Resistance 20 to the corresponding damage type and 10 to the opposing type. Craft Requirements siccatite worth at least 4,000 gp The shield has Hardness 10, HP 40, BT 20. Resistance 20 to the corresponding damage type and 10 to the opposing type. Craft Requirements siccatite worth at least 4,400 gp"
+ },
+ {
+  "id": "aon-sisterstone-armor",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Sisterstone Armor",
+  "level": 5,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Sisterstone armor incorporates stone plates. A creature wearing sisterstone armor gains the following activation to help defend an ally threatened by undead creatures. Activate Reaction command; Trigger The ally deals damage to an undead creature; Requirements A reciprocal field is active between this armor and an ally's sisterstone armor or sisterstone weapon; Effect You call on the energy in your armor to protect your companion from retaliation. The ally gains resistance 2 to all damage dealt by undead creatures for 1 round. The resistance is 3 if your sisterstone armor is standard grade, or resistance 4 if it's high grade."
+ },
+ {
+  "id": "aon-vengful-remnant",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Vengful Remnant",
+  "level": 14,
+  "traits": [
+   "archetype",
+   "concentrate",
+   "manipulate",
+   "occult"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You wreathe yourself in the tatters of all the souls claimed by your blade. Until the start of your next turn, you gain resistance 10 to all damage except force, ghost touch, spirit, and vitality, doubled if the source of the damage is non-magical. If you slay a significant foe not immune to spirit damage with your spectral dagger while under this effect, its duration increases until the end of your next turn."
+ },
+ {
+  "id": "aon-warcaller-s-chime",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Warcaller's Chime",
+  "level": 4,
+  "traits": [
+   "evocation",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "The Nantambu Chime-Ringers created these magical chimes to aid in their defense of their city. Each chime is made from elaborately carved wood depicting the nature of a given chime's power. Activate Two Actions envision; Effect You ring the chime, unleashing its magic. The specifics of each chime, as well as the activation's frequency (if any), appear in its entry below. This chime features carvings of destructive runes. When activated, it creates the effects of a 3rd-level sound burst centered on you (DC 20 Fortitude save). Instead of the spell's normal range, it has a 5-foot emanation. In addition, creatures that critically fail their save are knocked prone by the chime's effect. You can use this chime once per day. A series of shattered mountains are carved into this chime. When activated, you touch the chime against an unattended object, casting shatter upon the object, ignoring the object's Hardness if it's 6 or lower. You can use this chime once per day. This chime's carvings depict skulls and other grim icons. When activated, it creates an aura of fear in a 5-foot emanation for 1 round. Creatures in the aura must attempt a DC 27 Will save. On a failure, they become frightened 1 (frightened 2 on a critical failure). Affected creatures can't reduce their frightened condition below frightened 1 while the chime is ringing. You can Sustain the Activation to sustain the aura, up to a total of 5 rounds. This chime can be used only once per day, whether or not you Sustain the aura. This chime's carvings depict a series of warding runes that evoke feelings of serene protection. When activated, you touch the chime to yourself or a willing creature. The target gains the effects of sanctuary (DC 20 Will save). You can use this chime up to five times per day, but each use must target a different creature. This chime features several elemental runes in its carvings. When activated, it creates a defensive aura in a 5-foot emanation. As you activate the chime, choose acid, cold, electricity, fire, or sonic. You and creatures in the aura gain resistance 5 against the damage type you chose. This aura remains active for 10 minutes. This chime can be used once per week. This chime's carvings depict blooming flowers. When activated, it creates a small aura of healing in a 5-foot emanation. Creatures in the aura gain fast healing 15. This aura remains active for 3 rounds. This chime can be used once per week."
+ },
+ {
+  "id": "appetizing-flavor-snare",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Appetizing Flavor Snare",
+  "level": 1,
+  "traits": [
+   "consumable",
+   "mechanical",
+   "snare",
+   "trap"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "You construct this snare around a sealed bladder containing substances that local predators find delicious, such as scent glands from prey animals or fresh carrion. The first creature to enter the square must succeed at a save or be doused with the substances. For 1 hour, animals attracted to the flavor (such as most predators, at the GM's discretion) can smell the creature from double the usual distance of their scent and are likely to approach to investigate the smell. A creature can wash away the appetizing flavor with 1 minute of vigorous scrubbing."
+ },
+ {
+  "id": "arbor-wine",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Arbor Wine",
+  "level": 9,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Watering grape or berry bushes with certain alchemical liquids as they grow results in a ruby-red drink that's rich and heady. The vines develop a connection to their natural environment and impart it onto the wine's imbiber. For 1 minute after drinking a glass of arbor wine, you have tremorsense at a range of 30 feet."
+ },
+ {
+  "id": "arbor-wine-aged",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Arbor Wine (Aged)",
+  "level": 12,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Arbor Wine Source Treasure Vault (Remastered) pg. 47 Usage held in 1 hand Bulk L Activate (manipulate) Watering grape or berry bushes with certain alchemical liquids as they grow results in a ruby-red drink that’s rich and heady. The vines develop a connection to their natural environment and impart it onto the wine’s imbiber. For 1 minute after drinking a glass of arbor wine, you have tremorsense at a range of 30 feet. Arbor Wine Source Treasure Vault (Remastered) pg. 47 Price 130 gp Bulk L Arbor Wine (Aged) Source Treasure Vault (Remastered) pg. 47 Price 350 gp Bulk L Arbor wine that has been aged for several years—or artificially aged with alchemy—develops both a greater complexity of flavor and a stronger connection to nature. When you drink aged arbor wine, vegetation in a 20-foot emanation around you begins to writhe, becoming difficult terrain until the start of your next turn."
+ },
+ {
+  "id": "arboreal-staff",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Arboreal Staff",
+  "level": 12,
+  "traits": [
+   "intelligent",
+   "magical",
+   "primal",
+   "staff",
+   "two-hand-d8"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "**Perception** +25; precise vision (low-light) 60 feet, imprecise hearing 30 feet, imprecise tremorsense 30 feet (only when touching the ground) **Communication** speech (Arboreal, Common, Fey; *speak with plants*) **Skills** Diplomacy +22, Forest Lore +25, Nature +25 **Int** +4, **Wis** +6, **Cha** +4 **Will** +27 --- Rather than passing on when they feel their death approaching, a rare few elderly arboreals undergo a ritual of preservation. This rite fuses the arboreal's consciousness into a branch, allowing their spirit to live on within the object. The branch functions as a greater verdant staff, though the arboreal spirit allows only partners willing to safeguard nature to use the staff's spells. An arboreal who decides to become an *arboreal staff* is more connected to shorter-lived species than others of their kind. Most choose to endure to share their knowledge with future generations, but they take a long view in ways that can be frustrating to their wielders. In addition to the activation and spells of a *greater verdant staff*, an *arboreal staff* can cast the spells it holds as if it were the staff's wielder, though it usually does so only to benefit a partner. The staff also has *earthbind* available as a 3rd-rank spell. --- **Activate** Cast a Spell **Effect** You expend a number of charges from the staff to cast a spell from its list. - **Cantrips** Tangle Vine - **1st** Runic Body, Runic Weapon - **2nd** Entangling Flora, Oaken Resilience, One with Plants, Shape Wood - **3rd** Wall of Thorns, Speak with Plants, Earthbind - **4th** Oaken Resilience, Speak with Plants - **5th** Plant Form, Wall of Thorns"
+ },
+ {
+  "id": "arboreals-revenge",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Arboreal's Revenge",
+  "level": 6,
+  "traits": [
+   "concussive",
+   "cursed",
+   "magical",
+   "scatter-10"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This walnut and brass *+1 striking blunderbuss* has a natural look, with wood worn smooth by time, but left knotted and gnarled. The handgrip beneath the flared muzzle is a well-positioned bulging tree knot, and the long stock looks as if it was grown to fit you. On closer examination, the whorls and rings in the wood resemble eyes. *Arboreal's revenge* is a haunted firearm constructed with wood hewn from a living arboreal, slaying the arboreal and trapping its spirit in the firearm. Perhaps a patient wielder could one day put the arboreal's spirit to rest, or at least come to terms with it, abating the drawbacks of the weapon while keeping its advantages. When you first fire *arboreal's revenge*, the blunderbuss fuses with you, after which it's almost impossible to remove it from your possession with a Cleanse Affliction or similar effect, like many cursed items. You gain weakness 5 to fire and the flat check for you to recover from persistent fire damage increases from 15 to 17, or from 10 to 12 if you receive appropriate help. Whenever you wield *arboreal's revenge*, the arboreal spirit bound to the blunderbuss attempts to overtake you. The wood handgrip sprouts roots which grow around your hand, binding both of your hands to the firearm. You gain a +4 circumstance bonus to your Reflex DC when defending against checks to Disarm you. However, you can't Release your grip on the blunderbuss until you forcibly tear off the roots, though they do allow you to move your hands enough (and only enough) to reload and fire the blunderbuss. Tearing off the roots takes 1 minute. The arboreal haunting the firearm can use the following two effects whenever it wants, often using them at random. You can coax it into performing them each intentionally once per day, with the following activations. --- **Activate—Arboreal Growth** ⟨4⟩ (concentrate) **Frequency** once per day **Effect** The arboreal haunting the blunderbuss attempts to regrow itself into a new physical body by sprouting from the bodies of all the creatures that the firearm recently harmed. You and all creatures within 60 feet damaged by *arboreal's revenge* within the last minute must attempt a saving throw. On a failure, they take a –10-foot circumstance penalty to their Speeds as roots rapidly sprout from their wounds, which lasts until they escape show-dc=all dc=20. --- **Activate—Arboreal's Grace** ⟨2⟩ (manipulate) **Frequency** once per day **Effect** You cast Oaken Resilience from the blunderbuss as a 2nd-rank primal spell. However, the weakness to fire imposed by oaken resilience is cumulative with the weakness to fire imposed by this weapon's curse, for a total of weakness 8 to fire."
+ },
+ {
+  "id": "arcane-standard",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Arcane Standard",
+  "level": 10,
+  "traits": [
+   "aura",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This magical banner has glittery, arcane threads cross-woven into the fabric, causing it to reflect light in little sparkles. While holding an arcane standard, you can use the following ability. **Activate—Magical Weakness** ⟨1⟩ (concentrate) **Frequency** once per turn --- **Effect** The magic of the banner causes energy to linger, tearing away at its target, leaving them vulnerable to more. One creature within the banner's aura that has taken acid, cold, electricity, fire, or sonic damage this turn gains weakness 5 to that damage type for 1 round. --- *PFS Note:* If a PC uses this item's Magical Weakness ability against a creature which has taken more than one type of energy damage, the player chooses which energy type the creature gains weakness to."
+ },
+ {
+  "id": "arctic-worm-chitin-shield",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Arctic Worm Chitin Shield",
+  "level": 12,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This tower shield is crafted from interlocking sections of an arctic cave worm's chitin that are rimed with constant frost. It has Hardness 13, HP 104, and BT 52. --- **Activate—Misty Chill** ⟨1⟩ (cold, concentrate, manipulate) **Effect** You Raise the Shield and an icy mist begins to flow off it. Until the beginning of your next turn, you gain resistance 5 to cold and any creature that ends its turn adjacent to you takes 3d6 damage ( save). --- **Craft Requirements** The initial raw materials must include chitin from an arctic cave worm."
+ },
+ {
+  "id": "aroma-concealer",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Aroma Concealer",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "oil"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** 1 minute (Interact) --- This oily mix of herbs and natural detergents can be applied to a creature to reduce and cover any ordinary odors they produce. The creature receives a +2 item bonus to Stealth checks to Hide or Sneak against creatures using primarily smell. This bonus also applies to the DC to Track the creature by scent. The listed amount is enough to cover one Medium or smaller creature and takes 1 minute to apply. The effect lasts for 1 hour after applying."
+ },
+ {
+  "id": "aromatic-ammunition",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Aromatic Ammunition",
+  "level": 2,
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- The components of this ammunition emit a strong smell when combined during its activation. A creature hit by an activated aromatic ammunition gains a distinct odor for up to 1 hour or until the scent is washed off (requiring at least a gallon of water and 10 minutes of scrubbing). Any creatures within 30 feet smell the target, allowing even those with a weak sense of smell to detect its presence, and all creatures gain a +1 item bonus to Track the affected creature for as long as it has the odor. A creature that has imprecise or precise scent doubles the range at which they can detect the target using their scent compared to the normal range of their scent."
+ },
+ {
+  "id": "arundhat",
+  "lane": "defense",
+  "collection": "deities",
+  "name": "Arundhat",
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Arundhat is a goddess of the Vudran pantheon known as the bringer of blossoms and scent. **Title** The Sacred Perfume **Areas of Concern** Blossoms, diplomacy, scent **Edicts** Offer appropriate flowers to other divinities, practice herbalism, tend to sacred flowers **Anathema** Dispose of waste near flowers, dispose of withered flowers improperly, harvest flowers without offering the proper prayers **Religious Symbol** lamp with flower as flame **Sacred Animal** sunbird **Sacred Colors** pink, white --- ## Divine details **Divine Font** Heal **Divine Skill** Nature **Favored Weapon** Staff **Domains** Healing, Magic, Nature, Protection (Alternate: Passion) **Sanctification** Can be Holy **Cleric Spells** 1st: Summon Plant or Fungus, 2nd: One with Plants, 8th: Burning Blossoms"
+ },
+ {
+  "id": "assassinate",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Assassinate",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You have designated a mark using Mark for Death and are completely unnoticed by your mark. --- You strike with one swift movement, trying to instantly slay your mark. Make a Strike against your mark. If you hit, your mark takes an additional 6d6 precision damage with a save against the higher of your class DC or spell DC. If the mark critically fails, it dies unless its level is higher than yours. Regardless of the result of its save, the creature is temporarily immune to your Assassinate for 1 day."
+ },
+ {
+  "id": "attunement-to-stone",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Attunement to Stone",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You become attuned to the stone around you. When in contact with a stone surface, you gain tremorsense (imprecise) 5 feet along that surface, and you can activate your *ka stone* to cast One with Stone."
+ },
+ {
+  "id": "aurochs-jerky",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Aurochs Jerky",
+  "level": 9,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "processed"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨2⟩ Interact --- Aurochs meat already makes for tough jerky, but with the right alchemical treatment, it becomes legendarily resilient and imparts that durability to those who eat it. Eating the jerky causes a pair of inch-long horns to grow from your forehead (or causes your existing horns to grow noticeably) for 1 hour. During this time, you gain a +1 item bonus to Fortitude saves. You can end the effect prematurely, causing the horns to retract or revert to their normal size, with a free action that has the concentrate trait. --- **Aurochs' Endurance** ⟨4⟩ (concentrate) **Trigger** You begin your turn and are fatigued **Effect** You suppress the fatigued condition for 10 minutes. During this time, you are not immune to fatigue and can become fatigued by subsequent effects, but you gain a +2 item bonus to saving throws against effects that would fatigue you."
+ },
+ {
+  "id": "auspicious-mount",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Auspicious Mount",
+  "level": 16,
+  "traits": [
+   "champion"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Guided by your ongoing care, your steed has developed incredible intelligence and skill. The mount you gained with Faithful Steed is now a specialized animal companion. You can select one of the usual specializations or the auspice specialization. A faithful steed with the auspice specialization gains the following benefits. - It gains the celestial, fiend, or monitor trait—whichever best matches your deity's servitors, and its appearance shifts to look more like those servitors. It also gains the holy trait if it's a celestial or the unholy trait if it's a fiend. - Its Intelligence modifier increases by 2 and its Wisdom modifier by 1. - Its proficiency rank in Religion increases to expert. - It can speak the language associated with your deity's servitors (such as Empyrean for celestials, Chthonian for demons, or Requian for psychopomps). - Its maximum Hit Points increase by 20, increasing to 25 at 18th level and 30 at 20th level. If the mount has the celestial trait, the extra HP increase by 5, and the mount gains weakness 5 to unholy. If it has the fiend trait, the extra HP increase by 5, and the mount gains weakness 5 to holy. - It gains wings that grant it a fly Speed equal to its land Speed."
+ },
+ {
+  "id": "avenging-runelord-dedication",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Avenging Runelord Dedication",
+  "level": 12,
+  "traits": [
+   "destiny",
+   "mythic"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [
+   "featGrantsLane"
+  ],
+  "text": "The call of a long dead runelord has infected your soul and transformed your fate. Choose one of the following sins: envy, gluttony, greed, sloth, or wrath. You become trained in Arcana. If you are already trained in Arcana, you become trained in the skill of your choice. At 14th level, you gain expert proficiency in Arcana. At 16th level, if you gain master proficiency in Arcana. You have familiarity with weapons in the polearm and spear weapon groups—for the purposes of proficiency, you treat any of these that are martial weapons as simple weapons and any that are advanced weapons as martial weapons. You learn the Thassilonian language. You gain the ability to cast an arcane spell as an innate spell. This spell must be chosen from the following list: Darkvision, Mystic Armor, Runic Body, Runic Weapon, See the Unseen, Sending, or Truesight; alternatively, you can choose any spell of 6th rank or lower from the sin spells listed for your chosen sin. You can cast this spell as an arcane innate spell once per day. The spell is automatically heightened to a spell rank equal to half your level rounded up. Use mythic proficiency to determine any attack rolls or spell DCs. Your obsession with revenge allows you to reflexively lash out at those who harm you with blasts of arcane magic. You gain the Runelord's Response reaction."
+ },
+ {
+  "id": "axe-of-the-dwarven-lords",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Axe of the Dwarven Lords",
+  "level": 26,
+  "traits": [
+   "dwarf",
+   "magical",
+   "sweep",
+   "thrown-30",
+   "two-hand-d12"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "The blade of this *+4 major striking Keen Returning Quickstrike dwarven waraxe* is carved with an intricate design depicting countless generations of great dwarven warriors and leaders. The axe has the thrown 30 feet weapon trait, in addition to the normal weapon traits for a dwarven waraxe. Strikes with the axe deal an additional 1d6 damage to orcs. While the axe is in your possession, you gain a +4 item bonus when Crafting armor, jewelry, metalworking, stonemasonry, snares, traps, and weapons. If you are a dwarf, you gain greater darkvision while holding the axe. If you are not a dwarf, you are Stupefied 4 while holding the axe, and if you are an orc, you are also Drained 4 and Enfeebled 4 while holding it. --- **Activate** ⟨3⟩ envision, Interact **Frequency** once per week **Effect** The axe casts a 10th-rank Summon Elemental spell to conjure an elite elemental avalanche. The spell is automatically sustained, requiring no action on your part but still allowing you to command the elemental on each of your turns. You can Dismiss the Spell. --- **Destruction** If an orc beheads a dwarven king with the *Axe of the Dwarven Lords*, the axe rusts away to nothing."
+ },
+ {
+  "id": "azarim",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Azarim",
+  "level": 7,
+  "traits": [
+   "chaotic",
+   "deadly-d8",
+   "disarm",
+   "divine",
+   "finesse",
+   "good",
+   "holy",
+   "intelligent",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "**Perception**: +12; darkvision 30 feet, hearing 30 feet (imprecise) **Communication** telepath (Celestial, Common, Dwarven, Sakvroth) **Skills** Alcohol Lore +13, Deception +15, Diplomacy +13, Religion +13, Society +15 **Int** +2, **Wis** +2, **Cha** +4 **Will** +15 --- In life, the dwarven rogue Azarim was always something of an outsider among her people for her fast and loose relationship with dwarven tradition. However, she still harbored in her heart a fierce pride in what dwarves had accomplished. She had long fought against the cult of Droskar, seeing it as emblematic of all the worst parts of dwarven culture. By the time she infiltrated Droskar's Crucible in 4065 AR, the cult was already in decline. She knew portions of Droskar's Crucible were built by the worshippers of Torag who preceded the cult and that something of great power had been locked away in the Lower Vault, but not what that object was. If she could gain control over the cult, she could simultaneously use them to open the Lower Vault and convince them to set aside their worship of Droskar-if not for her own patron, Cayden Cailean, then any other faith with a more positive leaning. Unfortunately, her attempt to seize control of the cult using their own traditions against them backfired when she succumbed to the Soul Smith. Unlike the others who were slain by the Soul Smith, Azarim's soul managed to somewhat escape being bound into the Soul Smith's soul chain by instead seeking shelter in her own magic rapier. Frustrated at the fact her soul slipped away but ignorant of where that soul fled to, the Soul Smith returned to his tasks and soon forgot about Azarim-she was, to the undead dwarf, just another in a long line of failures. Today, *Azarim* is an intelligent *+1 striking Shifting rapier*. The rapier has been waiting patiently for centuries for a new, like-minded ally to take her up in arms against her foes. While she prefers to exist in the form of a rapier, she can use one of her actions to activate her shifting rune to take the shape of another weapon as needed. While *Azarim* prefers to be wielded by chaotic good characters, particularly those who worship Cayden Cailean, she's open-minded and eager to work with any wielder who seeks to oppose corrupting or toxic traditions in society, particularly those who work against the influence of the cult of Droskar. To wielders she doesn't approve of, she works to convince them to either change their ways or to hand her over to someone who she can work with, resorting to her ability to induce weakness in her carrier as needed when simply having them discard her is the only option left. *Azarim* deals an additional 1d6 damage to worshippers of Droskar, to creatures allied with Droskar's faith, and to those who are under the influence of Droskar's faith-which includes the Kobold King Merlokrep for as long as he continues to wear his crown as well as most of the intelligent inhabitants of the deeper levels of Droskar's Crucible. --- **Activate** ⟨5⟩ **Trigger** A creature picks up *Azarim* or begins its turn carrying *Azarim* **Effect** The creature who carries *Azarim* becomes Enfeebled 2. This condition persists as long as t"
+ },
+ {
+  "id": "backfire-mantle",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Backfire Mantle",
+  "level": 3,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This vivid red cloak of sturdy fabric is favored by aggressive battle alchemists and mages, as well as those cautious warriors who need to advance into the fray ahead of the blast-happy back line. The mantle interposes to protect you from your own and allies' magic, granting you a +1 circumstance bonus to Reflex saves against your own spells, as well as those of your allies. You also gain resistance 3 to splash damage from your own alchemical items and those of your allies."
+ },
+ {
+  "id": "banish-falsehoods-of-flesh",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Banish Falsehoods of Flesh",
+  "level": 14,
+  "traits": [
+   "animist",
+   "concentrate",
+   "divine"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your ability to manipulate supernatural energy allows you to deploy divine magic directly against a disguised enemy to reveal them as they truly are, or to cleanse an ally from an unwilling transformation. Attempt a Religion check to counteract a polymorph effect currently affecting a creature within 30 feet of you that you are aware of. The target is then temporarily immune to Banish Falsehoods of Flesh for 1 day."
+ },
+ {
+  "id": "banner-of-the-rising-star",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Banner of the Rising Star",
+  "level": 20,
+  "traits": [
+   "aura",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "A single pale star shines bravely amid the dark cloth of this magical banner. The star can be seen even in the dead of night. While holding a banner of the rising star, you can use the following ability. **Activate—Rise Up** ⟨1⟩ (concentrate, healing) **Frequency** once per day --- **Effect** The magical banner lifts your allies from the brink of death. An ally within the banner's aura with the dying condition regains Hit Points, does not increase their wounded condition, and can Stand as a free action. They become immune to Rise Up for 1 day."
+ },
+ {
+  "id": "banners-inspiration",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Banner's Inspiration",
+  "level": 4,
+  "traits": [
+   "brandish",
+   "commander",
+   "emotion",
+   "flourish",
+   "mental",
+   "visual"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You wave your banner, inspiring allies to throw off the shackles of fear. Each ally currently benefiting from your commander's banner reduces their frightened condition by 1 and can immediately attempt a new saving throw against any one mental effect currently affecting them. Regardless of the result, any ally that attempts this save is temporarily immune to Banner's Inspiration for 10 minutes. --- *PFS Note:* This feat allows a new saving throw, so anything that happens on a failed save still occurs if a PC fails."
+ },
+ {
+  "id": "barricade-snare",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Barricade Snare",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Using clever gnomish engineering, you can quickly erect small barriers in which your snares are hidden. When you prepare snares for quick deployment, you can prepare some of them as barricade snares. A barricade snare consists of a small barricade in which the snare is hidden, but it costs two of your quick deployment snares. Though creatures can automatically see the barricade, the snare hidden inside the barricade must be detected like a standard snare, but with a +2 circumstance bonus to the DC. The barricade occupies the same space as the snare and is 5 feet high; it provides standard cover, can be Climbed with a successful check, has an AC of 10, Hardness 5, and 20 Hit Points, and is immune to critical hits and precision damage. The barricade lasts as long as the snare does. A creature triggers and is affected by the hidden snare when it attempts to Climb the barricade or successfully attacks the barricade while adjacent to it. The snare and barricade are destroyed when the snare is triggered or if the barricade is destroyed, whichever comes first. --- **Special** Even if you have the Surprise Snare feat, you must craft a barricade snare in an empty square."
+ },
+ {
+  "id": "battle-assessment",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Battle Assessment",
+  "level": 4,
+  "traits": [
+   "rogue",
+   "secret"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "With careful observation during battle, you identify an enemy's strengths and weaknesses. The GM rolls a secret Perception check for you against the Deception or Stealth DC (whichever is higher) of an enemy of your choice who is not concealed from you, hidden from you, or undetected by you, and who is engaged in combat. The GM might apply a penalty for the distance between you and the enemy. The enemy is then temporarily immune to your Battle Assessment for 1 day. --- **Critical Success** The GM chooses two of the following pieces of information about the enemy to tell you: which of the enemy's weaknesses is highest, which of the enemy's saving throws has the lowest modifier, one immunity the enemy has, or which of the enemy's resistances is highest. If the event of a tie, the GM should pick one at random. **Success** The GM chooses one piece of information from the above list to tell you about the enemy. **Critical Failure** The GM gives you false information (the GM makes up the information)."
+ },
+ {
+  "id": "battle-medicine",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Battle Medicine",
+  "level": 1,
+  "traits": [
+   "general",
+   "healing",
+   "manipulate",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're holding or wearing a healer's toolkit. --- You can patch up wounds, even in combat. Attempt a Medicine check with the same DC as for Treat Wounds and restore the corresponding amount of HP; this doesn't remove the wounded condition. As with Treat Wounds, you can attempt checks against higher DCs if you have the minimum proficiency rank. The target is then to your Battle Medicine for 1 day. This does not make them immune to, or otherwise count as, Treat Wounds."
+ },
+ {
+  "id": "battle-medics-baton",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Battle Medic's Baton",
+  "level": 3,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This short bronze rod has the form of a serpent coiled around it. While you hold it, you gain a +1 item bonus to Medicine checks. **Activate** ⟨2⟩ (concentrate, manipulate) **Frequency** once per hour **Requirements** You have the Battle Medicine action --- **Effect** You use Battle Medicine. The target is temporarily immune to your Battle Medicine for 1 hour instead of 1 day."
+ },
+ {
+  "id": "battle-prayer",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Battle Prayer",
+  "level": 7,
+  "traits": [
+   "divine",
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Calling out to your deity, you recite scripture to harm a foe. When you select this feat, choose chaos, evil, good, or law. Your choice must match one of your deity's alignment components. This action has the trait corresponding to the chosen alignment. Attempt a Religion check against the Will DC of a foe within 30 feet. The foe is then temporarily immune to Battle Prayers from your deity for 1 day. --- **Critical Success** You deal damage of the chosen alignment type, or 6d6 damage if you have legendary proficiency in Religion. **Success** You deal damage of the chosen alignment type, or 3d6 damage if you have legendary proficiency in Religion. **Failure** There is no effect. **Critical Failure** The backlash of your foe's will against your prayer prevents you from using Battle Prayer again for 10 minutes."
+ },
+ {
+  "id": "battlefront-sabotage",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Battlefront Sabotage",
+  "level": 10,
+  "traits": [
+   "archetype",
+   "incapacitation"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You have a free hand. --- You know methods of sabotaging your enemy's war machines and weaponry. You can attempt to sabotage a siege weapon or vehicle with a check against the standard DC of the weapon or vehicle's level. --- **Critical Success** The next time the weapon is Launched or the vehicle moves, it targets or moves to a square of your choice instead of its intended target. **Success** As critical success, but the weapon or vehicle targets or moves to a random square. **Failure** The sabotage fails. Additionally, you can use Battlefront Sabotage to sabotage a weapon an enemy is wielding. Choose a creature wielding a melee or ranged weapon within your reach and attempt a Thievery check against their Reflex DC. On a success, the weapon's wielder must succeed at a the next time it attempts a Strike with that weapon or the action is disrupted, as part of the weapon's structural integrity falters. The creature is then temporarily immune to Battlefront Sabotage of their weapons for 10 minutes."
+ },
+ {
+  "id": "beast-eidolon",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Beast Eidolon",
+  "level": 1,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Your eidolon is a manifestation of the life force of nature in the form of a powerful magical beast that often has animal features, possibly even several from different species. You might have learned the way to connect with the world's life force via a specific philosophy or practice, such as the beliefs of the god callers of Sarkoris, or formed a bond on your own. Regardless, your link to your eidolon allows you both to grow in power and influence to keep your home safe from those who would despoil it. **Tradition** primal **Traits** beast, eidolon **Home Plane** Material Plane --- **Size** Medium **Suggested Attacks** claw (slashing), jaws (piercing), fangs (piercing), hoof (bludgeoning), horn (piercing) **Wrathful Berserker** Str 18, Dex 14, Con 16, Int 8, Wis 12, Cha 10; +2 AC (+3 Dex cap) **Enraged Assassin** Str 14, Dex 18, Con 16, Int 8, Wis 12, Cha 10; +1 AC (+4 Dex cap) **Skills** Intimidation, Nature **Senses** low-light vision **Language** Sylvan **Speed** 25 feet --- **Eidolon Abilities** *Initial* beast's charge; *Symbiosis* primal roar; *Transcendence* whirlwind maul ## Beast's Charge Your eidolon can make a ferocious charge or pounce on foes, allowing it to quickly engage. It gains the Beast's Charge activity. ## Primal Roar 7th Your eidolon can bellow a terrifying roar, screech, croak, or other overpowering sound to frighten foes. It gains the Primal Roar activity. ## Whirlwind Maul 17th Your eidolon thrashes violently, damaging many foes in its reach. It gains the Whirlwind Maul activity."
+ },
+ {
+  "id": "beasts-of-slumbering-steel",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Beasts of Slumbering Steel",
+  "level": 18,
+  "traits": [
+   "impulse",
+   "kineticist",
+   "metal",
+   "primal"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You conjure metal elemental mounts made of interlocking metal pieces. Target up to 5 Medium or smaller willing creatures within 30 feet. Large mounts appear underneath them, and the targets can immediately Mount the creatures. Each mount can take four different forms. One form has only a land Speed of 80 feet, and the other forms each have a land Speed of 30 feet with a climb, fly, or swim Speed of 60 feet. Each rider chooses the initial form and can change the form as a single action, which has the concentration trait. The mounts have AC 40, Fortitude +30, Reflex +30, Will +25, and 180 Hit Points. They're mindless and immune to bleed, healing, paralyzed, poison, and sleep. They can't attack. They remain for 1 minute or until you use this impulse again. You can use this impulse as a 1-minute exploration activity to make the duration 1 hour, but this halves the mounts' defenses and HP."
+ },
+ {
+  "id": "beguiling-crown",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Beguiling Crown",
+  "level": 20,
+  "traits": [
+   "apex",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This hugely massive crown is bedazzled with glimmering jewels and enchanted with powerful magics that make the gold seem to ripple and surge like strange glimmering tide pools. While uncomfortable to wear, the crown beguiles those within the wearer's presence. Creatures within 30 feet of you automatically improve their attitude toward you by one step (up to friendly). This doesn't prevent hostile creatures from attacking you, but it might give you a chance to talk to them before they strike. The dazzling nature of the crown makes it hard for you to read the intentions of others, and you take a –4 status penalty to your Perception DC when someone uses Deception against you. When you invest the crown, you either increase your Charisma modifier by 1 or increase it to +4, whichever would give you a higher value. **Activate** ⟨1⟩ (concentrate) **Frequency** once per round --- **Effect** You're the subject of the Sanctuary spell until the end of your next turn. --- **Activate** ⟨5⟩ (concentrate) **Frequency** once per hour **Trigger** A creature succeeds at an attack roll against you --- **Effect** The creature must succeed at a save or the attack roll becomes a failure and the target is friendly to you until the end of its turn. On a critical failure, the target becomes friendly to you, drops to their knees, and begs your forgiveness for 1 minute or until another creature takes a hostile action against them. --- **Activate** ⟨2⟩ (concentrate, fortune, mental) **Frequency** once per day --- **Effect** Choose one living creature within 30 feet of you. That creature must succeed at a saving throw or become helpful to you for the next 24 hours. If they succeed, they become friendly to you for 1 hour. If they critically succeed they're immune to this effect for 1 year."
+ },
+ {
+  "id": "belimariuss-invidious-halberd",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Belimarius's Invidious Halberd",
+  "level": 17,
+  "traits": [
+   "reach",
+   "versatile-s"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "**Perception** +29; darkvision, imprecise hearing within 60 feet **Communication** speech (Azlanti, Elven, Thassilonian) **Skills** Arcana +33, Deception +29, Society +31 **Int** +8, **Wis** +6, **Cha** +4 **Will** +31 --- *Belimarius's Invidious Halberd* is a *+3 greater striking keen spell reservoir high-grade dawnsilver halberd* (at this time, their spell reservoir contains Slow). As the halberd passed from the hands of one runelord of envy to the next, the halberd's self-loathing and hatred of the arcane spellcasters they were forced to serve grew. Their own limited arcane magic paled in comparison to their powerful wielders, after all, and the halberd seethed at this perceived inequality. They only grudgingly abide their wielders—runelord or otherwise—and are only truly happy when they're used to cut down those who can cast arcane spells. The halberd can use 3 actions per turn, acting on their wielder's turn, and has a reaction. These actions and reaction don't count against their wielder's. --- **Activate—Absorb Arcana** ⟨5⟩ (arcane, concentrate) **Trigger** The halberd damages a creature capable of casting arcane spells **Effect** The halberd attempts to absorb one of the creature's prepared arcane spells or arcane spell slots. If the creature struck fails a save, it loses an arcane spell (or lose an unused arcane spell slot) as if it'd cast that spell. The spell or slot lost is randomly determined from the highest rank available, starting at 6th rank and working down. The halberd passes this absorbed energy on to their wielder, who becomes quickened for 1 round and can use the extra action only to Strike with the halberd. --- **Activate—Detonate Magic** ⟨2⟩ (arcane, concentrate) **Frequency** once per day **Effect** The halberd casts Detonate Magic (DC 37). --- **Activate—Manipulate Mind** ⟨2⟩ (arcane, concentrate) **Frequency** once per hour **Effect** The halberd casts a 9th-rank Rewrite Memory (DC 37). --- **Activate—Shattermind** ⟨4⟩ (arcane, concentrate) **Trigger** The halberd critically hits a creature capable of casting arcane spells **Effect** The creature struck is targeted with a 9th-rank Never Mind spell (DC 37). --- **Destruction** *Belimarius's Invidious Halberd* is destroyed if it's hurled under the feet of the Oliphaunt of Jandelay while there's no current runelord of envy living in the world."
+ },
+ {
+  "id": "benevolent-spirit-deck",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Benevolent Spirit Deck",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "concentrate"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Requirements** You have an active harrow omen. --- You manifest a ghostly deck of harrow cards that seek to protect you or an ally. Select one willing target within 30 feet; the cards move through the air to surround that target, protecting them from harm and granting a +1 status bonus to AC and resistance 5 to a type of damage associated with your active harrow omen. This resistance increases to 10 if you're at least 10th level and 15 if you're 15th level. This effect lasts as long as you sustain it, up to 1 minute, or until you no longer have an active harrow omen. Once the effect ends, you lose your active harrow omen. **Hammers:** cold damage **Keys:** fire damage **Shields:** poison damage **Books:** electricity damage **Stars:** mental damage **Crowns:** acid damage"
+ },
+ {
+  "id": "bestial-snarling",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Bestial Snarling",
+  "level": 2,
+  "traits": [
+   "auditory",
+   "bard",
+   "emotion",
+   "fear",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can convey the subtle menace of a low growl or predatory rumble. Attempt a or check, and compare it to the Will DC of each enemy adjacent to you. If you have an animal minion, such as an animal companion or summoned animal, you can also compare it to each enemy adjacent to them. For each creature that you succeed at, it's Frightened 1 (or Frightened 2 if it's an animal). Regardless of the result, each target is temporarily immune to your Bestial Snarling for 10 minutes."
+ },
+ {
+  "id": "bewitching-bloom",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Bewitching Bloom",
+  "level": 2,
+  "traits": [
+   "enchantment",
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Bewitching Bloom Source Treasure Vault (Remastered) pg. 119 Usage tattooed on the body While dormant, this tattoo appears to be a simple flower bud, but when activated the flower swiftly blossoms, remaining that way until the next time you make your daily preparations. These blooms are colorful, elegant representations of distinct flower species, as determined by its type. Activate (concentrate) Frequency once per day; Effect Choose a willing ally you can see within 30 feet. The ally fills with an emotion themed to the flower and gains the benefit listed for the type of bewitching bloom you have. Bewitching Bloom (Amaranth) Source Treasure Vault (Remastered) pg. 119 Price 5,500 gp The ally feels impervious, immortal. The next time they would take damage from a hazard, an enemy's attack, or an effect created by an enemy, that damage can't reduce the ally below 1 HP. This benefit ends if unused before the start of your next turn. Bewitching Bloom (Bellflower) Source Treasure Vault (Remastered) pg. 119 Price 350 gp A need for freedom trills through your ally's blood. Until the end of that ally's next turn, they gain a +2 status bonus to rolls to recover from the confused, frightened, grabbed, paralyzed, and restrained conditions. When you Activate the bloom, the target can attempt a new save against a condition the bonus applies to, or they can use a reaction to attempt to Escape being grabbed, immobilized, or restrained, provided such an attempt is allowed. Bewitching Bloom (Cherry Blossom) Source Treasure Vault (Remastered) pg. 119 Price 50 gp The ally understands the fleeting nature of life and accepts fate. For 1 minute, any recovery checks the ally attempts have a DC of 10 instead of 10 + the ally's dying value. The cherry blossom's activation can target an unconscious or dying ally. Bewitching Bloom (Lilac) Source Treasure Vault (Remastered) pg. 119 Price 25 gp Memories bubble to the surface of your ally's mind. The ally attempts to Recall Knowledge with a +2 status bonus to the check from these vibrant memories. Bewitching Bloom (Lotus) Source Treasure Vault (Remastered) pg. 119 Price 600 gp A glow envelops your ally as a sense of enlightened peace ripples out from within. The ally gains a +2 status bonus to Will saves against mental effects for 1 minute. This bonus increases to +3 against emotion effects. Bewitching Bloom (Magnolia) Source Treasure Vault (Remastered) pg. 119 Price 220 gp Your ally seems more charming, though no one can pinpoint why. They gain a +1 status bonus to Diplomacy checks for 10 minutes. Once on their next turn, the ally can attempt to draw a creature's attention. To do so, the ally must spend 1 action (which has the emotion, mental, and visual traits) to select a creature the ally can see and make eye contact in a way the target can see. The target must succeed at a DC 20 Will save or be fascinated with your ally until the end of that ally's next turn. If the save succeeds or the effect ends, the target is temporarily immune to being fascinated by any magnolia bewitching bloom for 24 hours. Bewitching Bloom (Purple Iris) Source Treasure Vault (Remastered) pg. 119 Price 1,200 gp Your ally takes on a regal bearing"
+ },
+ {
+  "id": "bewitching-bloom-magnolia",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Bewitching Bloom (Magnolia)",
+  "level": 6,
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "While dormant, this tattoo appears to be a simple flower bud, but when activated the flower swiftly blossoms, remaining that way until the next time you make your daily preparations. These blooms are colorful, elegant representations of magnolia flowers. **Activate** ⟨2⟩ envision **Frequency** once per day --- **Effect** Choose a willing ally you can see within 30 feet. Your ally seems more charming, though no one can pinpoint why. They gain a +1 status bonus to Diplomacy checks for 10 minutes. Once on their next turn, the ally can attempt to draw a creature's attention. To do so, the ally must spend 1 action (which has the emotion, mental, and visual traits) to select a creature the ally can see and make eye contact in a way the target can see. The target must succeed at a save or be fascinated with your ally until the end of that ally's next turn. If the save succeeds or the effect ends, the target is temporarily immune to being fascinated by any *magnolia bewitching bloom* for 24 hours."
+ },
+ {
+  "id": "blast-suit",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Blast Suit",
+  "level": 9,
+  "traits": [
+   "bulwark",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Crafted from heavy steel plating and riveted together with cunning precision, this suit of +1 resilient Full Plate is specifically designed to protect against sudden explosions. This added layer of security comes at the cost of movement, however. **Activate** ⟨5⟩ command **Trigger** You're affected by an area effect that requires a Reflex save, or you would take splash damage from a scatter weapon --- **Effect** The *blast suit* locks together into a rigid bulwark, protecting you from the blast but preventing you from moving from your position under any circumstances. You become immobilized, gain a +2 circumstance bonus to your Reflex save against area effects, and gain resistance 5 to all damage you would normally take from area effects and scatter splash damage (this doesn't damage the *blast suit*). These effects persist for as long as the suit remains in the locked position. You can Interact with the suit to unlock it."
+ },
+ {
+  "id": "bless-tonic",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Bless Tonic",
+  "level": 7,
+  "traits": [
+   "general",
+   "skill",
+   "vitality"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You channel vitality energy into restoratives that ward against harm. When you Craft an alchemical item that restores Hit Points (rather than create it with advanced alchemy, Quick Alchemy, or another means), it becomes a blessed alchemical item and gains the vitality trait. For example, an Elixir of Life would become a blessed elixir of life. When a creature regains Hit Points using a blessed alchemical item, the overflowing energy grants them void resistance 5 for 1 round, or void resistance 10 if you are legendary in Crafting."
+ },
+ {
+  "id": "blisterwort",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Blisterwort",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "injury",
+   "poison"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨2⟩ (manipulate) --- This clear, viscous liquid causes lesions and blisters that spread quickly. The victim's pain response increases and flesh breaks easily under physical stress. **Saving Throw** **Maximum Duration** 6 rounds **Stage 1** 4d6 damage and weakness 2 to physical and force damage **Stage 2** 5d6 damage and weakness 4 to physical and force damage **Stage 3** 7d6 damage and weakness 6 to physical and force damage"
+ },
+ {
+  "id": "blood-booster-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Blood Booster (Lesser)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "healing"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- This elixir bolsters your body's natural defenses and ability to resist maladies that travel through or affect blood. For 10 minutes you receive resistance 5 to persistent bleed and persistent poison damage, and you lower the DC for any flat checks to end persistent bleed or persistent poison damage as if you received particularly appropriate aid. At the GM's discretion, blood booster elixirs can also automatically counteract non-magical effects that specifically rely on thinning the drinker's blood, such as a skull peeler's anticoagulant."
+ },
+ {
+  "id": "bloodhound-mask",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Bloodhound Mask",
+  "level": 2,
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Bloodhound Mask Source Advanced Player's Guide pg. 254 Usage held in 1 hand Bulk L Activate Interact This wide, single-use mask is designed to be slipped over your mouth and nose and its alchemical filter activated all with one hand. Once activated, the mask sharpens odors, giving you imprecise scent with the listed range. You can't wear other masks while you're wearing a bloodhound mask. When you use Survival to Track a creature by its scent, your proficiency bonus is equal to your level even if you're untrained, and the mask grants you the listed item bonus to your Survival check. The GM sets the Survival DC based on the area's ability to hold scent rather than on visual clues, as normal for using scent. Bloodhound Mask (Lesser) Source Advanced Player's Guide pg. 254 Price 6 gp Bulk L The range is 15 feet, the item bonus is +1, and the duration is 10 minutes. Bloodhound Mask (Moderate) Source Advanced Player's Guide pg. 254 Price 40 gp Bulk L The range is 30 feet, the item bonus is +2, and the duration is 1 hour. Bloodhound Mask (Greater) Source Advanced Player's Guide pg. 254 Price 250 gp Bulk L The range is 60 feet, the item bonus is +3, and the duration is 8 hours."
+ },
+ {
+  "id": "bloodhound-mask-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Bloodhound Mask (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Activate** ⟨1⟩ Interact **Duration** 8 hours This wide, single-use mask is designed to be slipped over your mouth and nose and its alchemical filter activated all with one hand. Once activated, the mask sharpens odors, giving you imprecise scent with a 60 foot range. You can't wear other masks while you're wearing a bloodhound mask. When you use Survival to Track a creature by its scent, your proficiency bonus is equal to your level even if you're untrained, and the mask grants you a +3 item bonus to your Survival check. The GM sets the Survival DC based on the area's ability to hold scent rather than on visual clues, as normal for using scent."
+ },
+ {
+  "id": "bloodhound-mask-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Bloodhound Mask (Lesser)",
+  "level": 2,
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Activate** ⟨1⟩ Interact **Duration** 10 minutes This wide, single-use mask is designed to be slipped over your mouth and nose and its alchemical filter activated all with one hand. Once activated, the mask sharpens odors, giving you imprecise scent with a 15 foot range. You can't wear other masks while you're wearing a bloodhound mask. When you use Survival to Track a creature by its scent, your proficiency bonus is equal to your level even if you're untrained, and the mask grants you a +1 item bonus to your Survival check. The GM sets the Survival DC based on the area's ability to hold scent rather than on visual clues, as normal for using scent."
+ },
+ {
+  "id": "bloodhound-mask-moderate",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Bloodhound Mask (Moderate)",
+  "level": 6,
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Activate** ⟨1⟩ Interact **Duration** 1 hour This wide, single-use mask is designed to be slipped over your mouth and nose and its alchemical filter activated all with one hand. Once activated, the mask sharpens odors, giving you imprecise scent a 30 foot range. You can't wear other masks while you're wearing a bloodhound mask. When you use Survival to Track a creature by its scent, your proficiency bonus is equal to your level even if you're untrained, and the mask grants you a +2 item bonus to your Survival check. The GM sets the Survival DC based on the area's ability to hold scent rather than on visual clues, as normal for using scent."
+ },
+ {
+  "id": "bloodhound-olfactory-stimulators",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Bloodhound Olfactory Stimulators",
+  "level": 5,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "These *olfactory stimulators* can be enhanced to better localize scents. --- **Activate** ⟨4⟩ (concentrate) **Frequency** once per day --- **Effect** Your olfactory stimulators twitch as they gather even more information. You gain imprecise scent with a range of 30 feet for 1 minute."
+ },
+ {
+  "id": "bloodline-mutation",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Bloodline Mutation",
+  "level": 20,
+  "traits": [
+   "sorcerer"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You permanently mutate to become more like the creatures of your bloodline. You gain the appropriate trait or traits for those types of creatures (aberration for aberrant, angel and celestial for angelic, demon and fiend for demonic, and so on). You gain low-light vision or darkvision, if one is appropriate for creatures with those traits. Choose one of the following. - If the creatures associated with your bloodline have the ability to fly, you gain a fly Speed equal to your land Speed. - If the creatures associated with your bloodline are aquatic or amphibious, you become amphibious, able to breathe water and air equally well, and you gain a swim Speed equal to your land Speed. - If creatures associated with your bloodline have a resistance or immunity to acid, cold, electricity, fire, void, or sonic, choose an energy type your bloodline is immune or resistant to and gain resistance 20 against that energy type."
+ },
+ {
+  "id": "blooming-lotus-seed-pod",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Blooming Lotus Seed Pod",
+  "level": 7,
+  "traits": [
+   "consumable",
+   "magical",
+   "plant",
+   "wood"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "The seeds of this lotus seed pod scatter with incredible ease and accuracy, quickly growing into temporary plants. --- **Activate - Floating Pads** ⟨1⟩ (manipulate) **Effect** You scatter the blooming lotus seed pod's seeds across a non-damaging liquid surface within 40 feet of you, where they form into 5 lotus pads that each float in place in a separate square within range for 1 minute. Each lotus pad has a 10- foot radius and can support 1 Large creature, 2 Medium creatures, or 4 Small creatures. --- **Activate - Blooming Flower** 10 minutes (manipulate) **Effect** You plant the blooming lotus seed pod in the ground and a giant lotus flower blooms in that square. Over the next 8 hours, creatures who sleep for at least 6 hours within 30 feet of the lotus flower gain the benefits of long-term rest as though they'd spent an entire day and night resting, and all creatures within the affected area are immune to the effects of the Nightmare spell and other magical effects that affect only sleeping creatures."
+ },
+ {
+  "id": "boleras-interrogation",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Bolera's Interrogation",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** Three times per day --- You focus your attention on a single creature within 30 feet. That creature must attempt a save against your Perception DC. On a failure, the creature finds itself unable to speak any deliberate and intentional lies and takes a -2 penalty to Deception checks. On a critical failure, the penalty to Deception checks is -4. This effect lasts for 10 minutes as long as you are within 30 feet of the target and the target is aware that you are using the ability against it. If you begin a new interrogation, this effect ends for any previous target. After your interrogation ends, the target is immune to this ability for 24 hours."
+ },
+ {
+  "id": "bone-swarm",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Bone Swarm",
+  "level": 17,
+  "traits": [
+   "concentrate",
+   "polymorph",
+   "skeleton"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [
+   "core.stances"
+  ],
+  "text": "**Frequency** once per day --- You scatter your body and transform into a whirling storm of bones for up to 1 minute or until you spend a single action to return to your normal shape. You become Huge, gain the swarm trait, and gain a fly Speed of 40 feet. As a swarm, you have the following characteristics. - You are immune to the grabbed, prone, and restrained conditions. - You have weakness 5 to area and splash damage. - You can occupy the same space as other creatures and must do so to use your damaging ability. - As a 2-action activity, you can deal 10d6 damage to all creatures sharing your space ( save with a DC equal to your class DC or spell DC, whichever is higher). - You can't speak, Cast Spells, use manipulate actions requiring your hands, Activate magic items, or make any Strikes with your normal body. - You don't gain the swarm mind ability, so you are still affected normally by mental effects. You also retain the benefits of skeleton feats that don't require communication or the use of hands."
+ },
+ {
+  "id": "bonekeepers-bane",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Bonekeeper's Bane",
+  "level": 13,
+  "traits": [
+   "kholo"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Whenever an enemy starts its turn adjacent to you, it must attempt a Will saving throw against your class DC or spell DC, whichever is highest. On a failure, the enemy takes a –1 status penalty to attack rolls and skill checks for as long as it remains adjacent to you. Regardless of the result of its save, the creature is then temporarily immune to bonekeeper's bane for 24 hours."
+ },
+ {
+  "id": "borrow-time",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Borrow Time",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per minute **Trigger** Your turn begins. --- You reach ahead and make use of time that's yet to be. You become quickened and can use the extra action to Step, Stride, or Strike. You gain this extra action immediately and can use it this turn. At the end of your turn, you become Stunned 1."
+ },
+ {
+  "id": "borrowed-ability",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Borrowed Ability",
+  "level": 2,
+  "traits": [
+   "deviant",
+   "magical",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Your touch opens a conduit into the mind of your target, the emptiness within you pulling skills and memories through. You touch an adjacent creature and choose any skill you believe they are trained or better in. If you choose a skill that they are trained or better in, you borrow their proficiency in that skill, becoming trained in that skill for 1 minute. If they are not trained in the skill you choose, the GM chooses the next most applicable skill (for instance, choosing Acrobatics instead of Athletics). At 12th level, you can become an expert in the skill if the target is as well. If the target of Borrowed Ability is unwilling, the effects depend on the target's Will save. --- **Critical Success** The target resists your touch completely. **Success** Your borrowing is unstable. At the beginning of each of your turns, you must either relinquish your hold on the borrowed skill (as a free action), or attempt another backlash check for your deviation; the ability ends if you fail. **Failure** Borrowed Ability lasts for its full duration. --- **Awakening** You gain some of the target's defensive abilities. When you use Borrowed Ability, you also gain a +1 circumstance bonus to one of your saving throws for the duration, matching the target's highest saving throw. You can choose to apply a –1 circumstance penalty to the target's saving throw when you do so. **Awakening** Your touch establishes a lingering link through which you can sense what your target does. When you use Borrowed Ability, you gain any special senses—such as darkvision, scent, or tremorsense—that the target possesses. If the target does not have a sense that you normally have (for instance, an ooze that has no vision), you lose those senses as well. Your senses remain altered for the duration of Borrowed Ability."
+ },
+ {
+  "id": "bottled-omen",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Bottled Omen",
+  "level": 4,
+  "traits": [
+   "consumable",
+   "fortune",
+   "magical",
+   "potion"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Interact --- This potion holds a tiny, tightly wrapped scroll and tastes like paper. Upon drinking it, you gain a burst of insight into your immediate future—and how to potentially avoid it. When you attempt a saving throw, you can roll twice and use the better result. The potion's magic ends when you make use of this effect, or after 1 minute. You then become immune to *bottled omen* potions for 24 hours."
+ },
+ {
+  "id": "bracers-of-devotion",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Bracers of Devotion",
+  "level": 11,
+  "traits": [
+   "divine",
+   "focused",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Champions adorn these bracers with the symbol of their deity or the text of the tenets they follow. While they're clasped around your forearms, reassuring focus and devotion flow into you through them. Each time you spend a Focus Point to cast a devotion spell, your Blessing of the Devoted gains a benefit until the start of your next turn, depending on its type. - **Blessed Armament** The bracers hold your weapon in place. You gain a +2 item bonus against attempts to Disarm you of your blessed armament. - **Blessed Shield** While raised, the shield grants you resistance 10 to unholy if you're holy, resistance 10 to holy if you're unholy, or resistance 5 to holy and unholy if you're neither. - **Blessed Swiftness** The bonus to Speed is +10 feet. --- **Activate** ⟨4⟩ (concentrate) **Frequency** once per day **Effect** You gain 1 Focus Point, which you can use only to cast a champion devotion spell. If not used by the end of your turn, this Focus Point is lost. --- **Craft Requirements** You are a champion."
+ },
+ {
+  "id": "branch-of-the-great-sugi",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Branch of the Great Sugi",
+  "level": 7,
+  "traits": [
+   "disarm",
+   "finesse",
+   "magical",
+   "nonlethal",
+   "reach",
+   "trip"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This large tree branch is alive, despite having been harvested from the sugi tree it once belonged to. This long, flexible, and limber branch is a *+1 striking whip*. When used to Strike, the branch snaps with the sound of a cracking whip but fills the air surrounding the point of impact with the pleasant scent of freshly cut cedar and a sprinkling of fallen leaves on the ground. **Activate—A Multitude of Branches** ⟨3⟩ (concentrate, manipulate) **Frequency** once per day --- **Effect** You place the *branch of the great sugi* on the corpse of an unholy creature, then cause the branch to suddenly grow into a sugi tree, up to 25 feet tall with a 2-foot-wide trunk. As it grows, it emits a pulse of soothing energy, restoring 3d8+8 Hit Points to all creatures in a . A character can Climb the tree with a successful check, and its branches effortlessly support the weight of any Medium or smaller creature. The sugi tree reverts to its whip form after 1 hour unless you transform it back before then. **Activate—A Single Branch** ⟨1⟩ (manipulate) You transform the *branch of the great sugi* from its tree form back into its whip form."
+ },
+ {
+  "id": "brandish-the-gorgons-gaze",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Brandish the Gorgon's Gaze",
+  "level": 1,
+  "traits": [
+   "earth",
+   "transcendence",
+   "visual"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You Raise your Mirrored Aegis, though it seems to lose some of its usual luster in favor of the dull sheen of stone. If you Shield Block a melee attack with the mirrored aegis before the beginning of your next turn, the gorgon's eyes upon it flash at the triggering creature, who must attempt a save against your class DC. On a failure, they are Slowed 1 for 1 minute as their body partially petrifies. Regardless of the outcome, that creature is temporarily immune to this effect for 24 hours."
+ },
+ {
+  "id": "break-the-suns-legs",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Break the Sun's Legs",
+  "level": 1,
+  "traits": [
+   "cold",
+   "concentrate",
+   "darkness",
+   "transcendence"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You make a slashing motion over the brightest source of light, whether it's a torch or the sun in the sky. A gash appears over the light source, visible to all, and devours the light. The entire area within a around you is affected by a 9th-rank Darkness spell for 1 minute. The stolen light is channeled to your eyes, granting you greater darkvision for the duration of the effect."
+ },
+ {
+  "id": "breastplate-of-the-mountain",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Breastplate of the Mountain",
+  "level": 20,
+  "traits": [
+   "apex",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Constructed of dull gray metal, this breastplate is decorated with the symbol of a craggy black mountaintop. This breastplate functions as a *+3 greater resilient breastplate*. When you're Shoved or otherwise forced to move, you can reduce the amount you move by up to 10 feet. When you invest the breastplate, you either increase your Constitution modifier by 1 or increase it to +4, whichever would give you a higher value. **Activate** ⟨2⟩ (manipulate) **Frequency** once per day --- **Effect** You pound a solid and constant rhythm on your breastplate and cast a 7th-rank regeneration spell on yourself. --- **Activate** ⟨1⟩ (manipulate) **Frequency** once per day --- **Effect** With a single tap, you gain immunity to poison for 1 minute. --- **Activate** ⟨5⟩ (concentrate) **Frequency** once per day **Trigger** You fail or critically fail a Fortitude saving throw --- **Effect** If you failed the saving throw, it becomes a success. If you critically failed, it becomes a failure instead."
+ },
+ {
+  "id": "breath-of-hungry-death",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Breath of Hungry Death",
+  "level": 16,
+  "traits": [
+   "acid",
+   "archetype",
+   "divine",
+   "incapacitation",
+   "occult"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** Once per hour --- You have uncovered occult mysteries that allow you to unleash the devastating hunger of Kabriri upon your foes with a single exhalation, releasing a massive cloud of flesh-eating gas that glows with a sickly green light. You deal 7d6 acid and 7d6 void damage to all creatures within a ( save with a DC equal to your class DC or spell DC, whichever is higher). A creature that gets a critical failure on this Reflex save is also paralyzed for 1 round. A creature that succeeds at this save becomes temporarily immune to Breath of Hungry Death for 24 hours. When a creature is killed using Breath of Hungry Death, its body is reduced to a smoldering pile of ash wafting with necrotic fumes. You can use a reaction to immediately inhale these fumes and become satiated or fully satiated as if you had used Consume Flesh."
+ },
+ {
+  "id": "breath-of-vital-ash",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Breath of Vital Ash",
+  "level": 10,
+  "traits": [
+   "exemplar",
+   "ikon"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Usage** imbued into a body ikon --- Reddish ash stains your ikon, impossible to clean off. Every time you exhale, a tinge of red and a scent of spiced smoke float upon your breath. The imbued ikon gains the following ability. **Transcendence—Mark the Center** ⟨1⟩ (transcendence)"
+ },
+ {
+  "id": "breathtaking-vapor",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Breathtaking Vapor",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "inhaled",
+   "poison"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- This colorless mist has a mild, waxy scent that precedes acute shortness of breath. Creatures that don't need to breathe can still take the poison's damage but are immune to its other effects. **Saving Throw** **Onset** 1 round **Maximum Duration** 6 rounds **Stage 1** 6d6 damage, Drained 1, and can't breathe **Stage 2** 8d6 damage, Drained 2, and reduce remaining air by 1 additional round **Stage 3** 10d6 damage, Drained 3, and reduce remaining air by 2 additional rounds"
+ },
+ {
+  "id": "briar",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Briar",
+  "level": 20,
+  "traits": [
+   "artifact",
+   "magical",
+   "two-hand-d12"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "*Briar* was formed ages ago by the Eldest when they tore from Nyrissa's mind and spirit her capability to love, then solidified this emotional energy into a sword. They entrusted *Briar's* safe keeping to the Lantern King, who mischievously kept moving the sword from world to world, always near to the regions Nyrissa was focused on but always hidden from her so that he could privately enjoy the delicious irony that the thing she sought so ardently was always kept just out of reach. When first recovered by the PCs, Briar is a *+3 greater striking cold iron bastard sword*, but its additional powers remain dormant. These powers can be awakened as the PCs progress through Chapter 10. The process of awakening Briar requires that the weapon be present when First World blooms are defeated or when powerful creatures from the First World are slain-*Briar* need not be the weapon that defeats a bloom or slays a monster, but it must be in the immediate area (within 500 feet). Defeating a bloom or slaying a 17th-level or greater monster from the First World- including all creatures closely associated with a bloom-gives *Briar* a Sharpness Point. As it accumulates these points, it gains additional powers, as detailed below. Once *Briar* gains the capability to speak, it can relate to its partner the sad tale of its creation, including the fact that it was created by the Lantern King using Nyrissa's capacity to love. *Briar* knows that without love, Nyrissa is as good as dead, and it suspects that only by being used to slay Nyrissa can it be returned to her soul. It doesn't know about the Lantern King's additional machinations, the nature of the *Apology*, or Nyrissa's reasons for attacking the Stolen Lands, and as such doesn't realize there is another method to be reunited with the nymph queen-see the end of Chapter 10. The first time *Briar* is brought within 30 feet of Nyrissa, it automatically gains enough Sharpness Points to reach 20 points. --- **1 Sharpness Point** *Briar* becomes a +3 greater striking shifting cold iron bastard sword. --- **4 Sharpness Points** *Briar* becomes a *+3 major striking shifting cold iron bastard sword*. It gains the Intelligent trait, becomes chaotic neutral, and gains the following statistics. **Perception** +30, normal vision and hearing within 30 feet **Communication** empathy (partner only) **Skills** First World Lore +30, Nature +28 Int +0, Wis +0, Cha +3 Will +30 **Activate** ⟨1⟩ (command) **Frequency** three times per day **Effect** *Briar* casts Oaken Resilience on its partner. --- **8 Sharpness Points** *Briar* becomes a *+4 major striking shifting cold iron bastard sword*. Its statistics improve as follows. **Perception** +32, normal vision, darkvision, and hearing within 60 feet **Communication** speech (Aklo, Common, and Sylvan) **Skills** First World Lore +32, Nature +30 Int +2, Wis +2, Cha +5 +32 **Activate** ⟨1⟩ (command) **Frequency** three times per day **Effect** *Briar* casts a 4th-rank Oaken Resilience on its partner. **Activate** ⟨5⟩ **Frequency** once per day **Trigger** *Briar* damages a plant creature **Effect** Briar draws moisture out of the plant creature's body, dealing 10d10 damage () --- **1"
+ },
+ {
+  "id": "broadleaf-shield",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Broadleaf Shield",
+  "level": 6,
+  "traits": [
+   "magical",
+   "plant",
+   "wood"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "effectChoices",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Though it resembles an enormous leaf freshly plucked from a tree, a *broadleaf shield* is extremely durable. It also regrows rapidly, fully repairing itself when broken if it's left in sunlight for 10 consecutive minutes. At each dawn, the leaf transforms to an appearance appropriate for the season. While you're wielding the shield, you gain resistance 3 to a damage type depending on the shield's color. This resistance doubles while you have the shield raised. - **Pink** (void resistance) In spring, the leaf is a delicate blossom-like pink and exudes the energy of life. - **Green** (fire resistance) In summer, the leaf is a deep, rich green with a waxy coating. - **Orange** (poison resistance) In autumn, the leaf turns orange, red, or yellow and dehydrates slightly. - **Brown** (cold resistance) In winter, the leaf turns dead, dry, and brown. --- **Activate - Change Season** ⟨1⟩ (concentrate) **Frequency** once per day **Effect** The shield transforms as though living through seasons in a moment, becoming the color of your choice for 5 minutes."
+ },
+ {
+  "id": "broadleaf-shield-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Broadleaf Shield (Greater)",
+  "level": 9,
+  "traits": [
+   "magical",
+   "plant",
+   "wood"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "effectChoices",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Though it resembles an enormous leaf freshly plucked from a tree, a *broadleaf shield* is extremely durable. It also regrows rapidly, fully repairing itself when broken if it's left in sunlight for 10 consecutive minutes. At each dawn, the leaf transforms to an appearance appropriate for the season. While you're wielding the shield, you gain resistance 4 to a damage type depending on the shield's color. This resistance doubles while you have the shield raised. - **Pink** (void resistance) In spring, the leaf is a delicate blossom-like pink and exudes the energy of life. - **Green** (fire resistance) In summer, the leaf is a deep, rich green with a waxy coating. - **Orange** (poison resistance) In autumn, the leaf turns orange, red, or yellow and dehydrates slightly. - **Brown** (cold resistance) In winter, the leaf turns dead, dry, and brown. --- **Activate - Change Season** ⟨1⟩ (concentrate) **Frequency** once per day **Effect** The shield transforms as though living through seasons in a moment, becoming the color of your choice for 5 minutes."
+ },
+ {
+  "id": "broadleaf-shield-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Broadleaf Shield (Major)",
+  "level": 13,
+  "traits": [
+   "magical",
+   "plant",
+   "wood"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "effectChoices",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Though it resembles an enormous leaf freshly plucked from a tree, a *broadleaf shield* is extremely durable. It also regrows rapidly, fully repairing itself when broken if it's left in sunlight for 10 consecutive minutes. At each dawn, the leaf transforms to an appearance appropriate for the season. While you're wielding the shield, you gain resistance 5 to a damage type depending on the shield's color. This resistance doubles while you have the shield raised. - **Pink** (void resistance) In spring, the leaf is a delicate blossom-like pink and exudes the energy of life. - **Green** (fire resistance) In summer, the leaf is a deep, rich green with a waxy coating. - **Orange** (poison resistance) In autumn, the leaf turns orange, red, or yellow and dehydrates slightly. - **Brown** (cold resistance) In winter, the leaf turns dead, dry, and brown. --- **Activate - Change Season** ⟨1⟩ (concentrate) **Frequency** once per day **Effect** The shield transforms as though living through seasons in a moment, becoming the color of your choice for 5 minutes."
+ },
+ {
+  "id": "broadleaf-shield-true",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Broadleaf Shield (True)",
+  "level": 17,
+  "traits": [
+   "magical",
+   "plant",
+   "wood"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "effectChoices",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Though it resembles an enormous leaf freshly plucked from a tree, a *broadleaf shield* is extremely durable. It also regrows rapidly, fully repairing itself when broken if it's left in sunlight for 10 consecutive minutes. At each dawn, the leaf transforms to an appearance appropriate for the season. While you're wielding the shield, you gain resistance 6 to a damage type depending on the shield's color. This resistance doubles while you have the shield raised. - **Pink** (void resistance) In spring, the leaf is a delicate blossom-like pink and exudes the energy of life. - **Green** (fire resistance) In summer, the leaf is a deep, rich green with a waxy coating. - **Orange** (poison resistance) In autumn, the leaf turns orange, red, or yellow and dehydrates slightly. - **Brown** (cold resistance) In winter, the leaf turns dead, dry, and brown. --- **Activate - Change Season** ⟨1⟩ (concentrate) **Frequency** once per day **Effect** The shield transforms as though living through seasons in a moment, becoming the color of your choice for 5 minutes."
+ },
+ {
+  "id": "burglars-rosebud",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Burglar's Rosebud",
+  "level": 3,
+  "traits": [
+   "consumable",
+   "emotion",
+   "mental",
+   "plant",
+   "wood"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Though originally intended to protect a green man's favorite agents against predation by pesky herbivores, thieves have adapted the design to help them disperse guard animals. The soft flower bud belies the horrible perfume contained within. Activated by cracking open the petals, the rosebud exudes a noxious cloud that has the olfactory trait for 10 minutes. If dropped, it fills a 10-foot-burst. If you carry it in one hand and periodically waft it as a free action, the rosebud instead gives you a . Creatures that enter or start their turn in the cloud must succeed at a save or become Sickened 1. Animals and beasts that critically fail are also fleeing for 1 round. A creature that successfully saves against the burglar's rosebud becomes temporarily immune to the effects for 24 hours."
+ }
+]

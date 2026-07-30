@@ -1,0 +1,1269 @@
+[
+ {
+  "id": "crafters-eyepiece",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Crafter's Eyepiece",
+  "level": 3,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This rugged metal eyepiece etched with square patterns is designed to be worn over a single eye. Twisting the lens reveals a faint three-dimensional outline of an item you plan to build or repair, with helpful labels on the component parts. You gain a +1 item bonus to Crafting checks. When you Repair an item, increase the Hit Points restored to 10 + 10 per proficiency rank on a success or 15 + 15 per proficiency rank on a critical success."
+ },
+ {
+  "id": "crafters-eyepiece-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Crafter's Eyepiece (Greater)",
+  "level": 11,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This rugged metal eyepiece etched with square patterns is designed to be worn over a single eye. Twisting the lens reveals a faint three-dimensional outline of an item you plan to build or repair, with helpful labels on the component parts. You gain a +2 item bonus to Crafting checks. When you Repair an item, increase the Hit Points restored to 10 + 10 per proficiency rank on a success or 15 + 15 per proficiency rank on a critical success. --- **Activate—Prototype** 1 minute (manipulate) **Frequency** once per day --- **Effect** You calibrate the eyepiece to have it cast a 5th-rank Creation spell over the course of 1 minute to construct a temporary item."
+ },
+ {
+  "id": "crane-stance",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Crane Stance",
+  "level": 1,
+  "traits": [
+   "monk",
+   "stance"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "core.stances"
+  ],
+  "text": "**Requirements** You are unarmored --- Your arms flutter like a crane's wings. You gain a +1 circumstance bonus to AC, but the only Strikes you can make are crane wing attacks. These deal 1d6 bludgeoning damage; are in the brawling group; and have the agile, finesse, nonlethal, and unarmed traits. While in Crane Stance, reduce the DC for High Jump and Long Jump by 5, and when you Leap, you can move an additional 5 feet horizontally or 2 feet vertically."
+ },
+ {
+  "id": "creature-of-myth",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Creature of Myth",
+  "level": 18,
+  "traits": [
+   "mythic"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "Your specialized united companion grows with unparalleled power and strength, becoming a creature of myth. It gains one of the following effects. - **Baleful Body** Your united companion's blood is boiling, its mechanical fluid is acidic, or its insides are otherwise destructive to the touch. Choose acid, fire, or poison. If your united companion would take damage from a melee attack, it deals half your level in damage of the chosen type to the creature that made the melee attack. By spending a Mythic Point when you Command your united companion, your united companion can spew its corrosive power as a 2-action activity to deal 14d6 damage of the chosen type in a 15-foot cone or 30-foot line (basic Reflex save against your class DC or spell DC, whichever is higher). - **Chimeric Heads** Your united companion sprouts an extra head which gives it extra eyes and allows it to make additional attacks with related unarmed attacks. Your united companion gains all-around vision. By spending a Mythic Point when you Command your united companion, your united companion can make two Strikes with its unarmed attacks as a single action, each using its current multiple attack penalty. Both Strikes must have the same target. If both attacks hit, combine their damage, and then add any other applicable effects. This counts as one attack when calculating your united companion's multiple attack penalty. Your united companion must have a head and at least one unarmed attack that uses its mouth or head (such as a beak, jaws, or mandible attack) to select this. - **Energy Aegis** Your united companion is protected from hazardous energy. Your united companion becomes immune to your choice of acid, cold, electricity, or fire. Your companion gains a +1 status bonus to AC and saves that originate from creatures with the listed trait and to effects and spells with the listed trait. By spending a Mythic Point when you Command your united companion, your united companion can take a single action with the concentrate trait to extend these same benefits to all creatures who are adjacent to it until the beginning of your next turn. - **Magnificent Flight** Your united companion grows wings or learns some other method of flight. Your united companion gains a Fly speed equal to its Speed and it gains the mount special ability. If your united companion already had the mount special ability or a Fly speed equal to its Speed, it instead increases its Speed by 10 feet. By spending a Mythic Point when you Command your united companion, your united companion can, as a two-action activity, Fly up to twice its speed and make a single unarmed melee attack at any point along the way. - **Protective Skin** Your united companion is hardened by the infused magic of otherworldly powers. Its maximum Hit Points increase by 30 but it gains a weakness of 10 to either cold iron or silver. By spending a Mythic Point when you Command your united companion, your united companion gains fast healing equal to your level for 1 minute."
+ },
+ {
+  "id": "cresset-of-grisly-interrogation",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Cresset of Grisly Interrogation",
+  "level": 9,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This iron cresset appears as a cage-like basket with a metal bowl fitted into its base-a bowl sized perfectly to hold the severed head of a Medium or Small humanoid. **Activate** ⟨3⟩ Interact **Frequency** once per day **Effect** You open the cresset by detaching the top and folding it back on a hinge so that a decapitated head can be placed inside the bowl. Once the cage lid is folded back over the head and latched in place, and as long as the decapitated head has been dead for no longer than 10 minutes before being placed inside the cresset, the head is no longer subject to decay, and bugs and pests (such as maggots) are prevented from consuming the remains. This doesn't prevent the rest of the corpse or its soul from becoming undead, nor does it prevent effects that restore life to the dead (but note that some spells, such as raise dead, can't be used to restore life to a decapitated corpse in the first place). If the head is later removed from within the cresset, the head's delayed decay immediately catches up with it in a few seconds, rendering it useless for further use inside of a *cresset of grisly interrogation*. --- **Activate** 1 minute (command, Interact) **Requirements** A severed head is within the *cresset of grisly interrogation* **Frequency** three times per day **Effect** You pose a question to the head contained within the cresset, and it animates briefly to reply with a short answer over the course of a minute. The cresset empowers the severed head with the ability to reply even without breath, granting the head a semblance of life, calling upon the physical remains' latent memories rather than summoning back the deceased's spirit. The head must be forcefully commanded to answer with a secret check- other attempts to query the head without attempting an Intimidation check for a result automatically fail. Once activated in this way, this activation of a *cresset of grisly interrogation* can't be performed again for 1 hour. The head answers the question based on the result of the secret Intimidation check against the Will DC the creature had when it was alive or DC 25, whichever is higher. **Critical Success** The head answers the question truthfully, to the best of its ability. **Success** The head answers the question truthfully, but the answer is brief, cryptic, or repetitive. **Failure** The head's answer provides false information, attempting to Lie to you with a +15 Deception modifier, or the creature's original Deception, whichever is higher. **Critical Failure** As failure, but the head gains a +4 circumstance bonus to its Deception check, and the next time you use this activation of the *cresset of grisly interrogation* during the next 24 hours, the result of your Intimidation check is one degree of success worse than the result you rolled."
+ },
+ {
+  "id": "crown-of-the-companion",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Crown of the Companion",
+  "level": 6,
+  "traits": [
+   "healing",
+   "invested",
+   "magical",
+   "vitality"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Stories tell of a forgotten king who once loved his subjects so much he was willing to give his own life energy for them, using an object like the *crown of the companion*. Whether true or not, this majestic wooden crown bears elaborate carvings depicting that tale with images of a regal figure giving more and more of themself to a throng of needy subjects. While wearing this crown, you gain a +1 item bonus to Diplomacy checks. --- **Activate** ⟨2⟩ (concentrate, manipulate) **Frequency** once per day **Effect** You bow to an ally within 30 feet, creating a magical bond between the two of you as if you cast Share Life targeting the ally. The link remains even if you move more than 30 feet away from them. At the end of the spell's duration, your ally recovers 4d8 Hit Points and you recover half of what they recover."
+ },
+ {
+  "id": "crown-of-witchcraft",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Crown of Witchcraft",
+  "level": 10,
+  "traits": [
+   "focused",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "An elegant accoutrement for a witch who has come into the higher echelons of power, a *crown of witchcraft* typically looks like a garland of flowering twigs, a jeweled circlet, or a tall hat of fine fabric. You gain a +1 item bonus to Intimidation checks, and if you're a witch, you gain a +2 item bonus to your patron skill. If you have a familiar, you can attach a small portion of the crown's material to your familiar, such as a strip of fabric from a hat tied around its tail or a sprig of natural material linked to its collar; the familiar doesn't need to invest the item itself. If you do this, your familiar gains the tough pet ability as long as the crown is invested by you. **Activate—Defiant Hex** ⟨4⟩ (concentrate) **Frequency** once per day --- **Effect** Gain 1 Focus Point, which you can spend only to cast a witch hex spell. If you don't spend this point by the end of this turn, it is lost. --- **Craft Requirements** You are a witch."
+ },
+ {
+  "id": "crown-of-witchcraft-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Crown of Witchcraft (Greater)",
+  "level": 18,
+  "traits": [
+   "focused",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "An elegant accoutrement for a witch who has come into the higher echelons of power, a *crown of witchcraft* typically looks like a garland of flowering twigs, a jeweled circlet, or a tall hat of fine fabric. You gain a +2 item bonus to Intimidation checks, and if you're a witch, you gain a +3 item bonus to your patron skill. If you have a familiar, you can attach a small portion of the crown's material to your familiar, such as a strip of fabric from a hat tied around its tail or a sprig of natural material linked to its collar; the familiar doesn't need to invest the item itself. If you do this, your familiar gains the tough pet ability as long as the crown is invested by you. **Activate—Defiant Hex** ⟨4⟩ (concentrate) **Frequency** once per day --- **Effect** Gain 1 Focus Point, which you can spend only to cast a witch hex spell. If you don't spend this point by the end of this turn, it is lost. --- **Craft Requirements** You are a witch."
+ },
+ {
+  "id": "crush-dissent",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Crush Dissent",
+  "level": 1,
+  "traits": [
+   "general",
+   "kingdom"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Crush Dissent Source Kingmaker Adventure Path pg. 531 Prerequisites Trained in Warfare Your rule brooks no dissent and stamps out traitors, making harsh examples of them. Once per Kingdom turn when you gain Unrest, you can attempt to crush the dissent by attempting a basic Warfare check. On a success, the Unrest increase is canceled, but on a critical failure, the Unrest increase is doubled. In addition, you gain a +1 status bonus to checks to resolve dangerous kingdom events that involve internal bickering, such as Feud."
+ },
+ {
+  "id": "cry-of-rebellion",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Cry of Rebellion",
+  "level": 16,
+  "traits": [
+   "auditory",
+   "mythic",
+   "sonic"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per hour --- You let loose a yell of unbridled passion, which fuels your allies, and pounds against your foes. Allies within 60 feet who can hear you gain a +2 status bonus to attack rolls, Perception checks, saving throws, and skill checks for 1 minute. Additionally, foes within 30 feet of you take damage ( save against your class DC or spell DC, whichever is higher). This sonic damage increases by 1d4 at 17th level and every level thereafter."
+ },
+ {
+  "id": "crystal-shards",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Crystal Shards",
+  "level": 4,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "earth",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Crystal Shards Source Player Core 2 pg. 284 Usage held in 1 hand Bulk L Activate Strike This flask holds a pressurized red-brown gas flecked with bits of sublimated crystal. You gain the listed item bonus to attack rolls. When the bomb explodes, it deals the listed piercing damage and piercing splash damage as the mixture suddenly turns into solid crystals flying at high speeds. On a hit, the target takes 1 persistent bleed damage from the crystals embedded in its flesh. As long as the bleed damage persists, the target also takes a –5-foot penalty to its speed. The target can spend an Interact action to remove the crystals, reducing the DC to stop the bleeding. Crystal Shards (Moderate) Source Player Core 2 pg. 284, Advanced Player's Guide pg. 252 Price 16 gp Bulk L The item bonus is +1. The bomb deals 2d4 piercing damage and 4 piercing splash damage. Crystal Shards (Greater) Source Player Core 2 pg. 284, Advanced Player's Guide pg. 252 Price 350 gp Bulk L The item bonus is +2. The bomb deals 3d4 piercing damage and 5 piercing splash damage. Crystal Shards (Major) Source Player Core 2 pg. 284, Advanced Player's Guide pg. 252 Price 4,000 gp Bulk L The item bonus is +3. The bomb deals 4d4 piercing damage and 6 piercing splash damage."
+ },
+ {
+  "id": "crystal-shards-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Crystal Shards (Greater)",
+  "level": 12,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "earth",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This flask holds a pressurized red-brown gas flecked with bits of sublimated crystal. You gain a +2 item bonus to attack rolls. When the bomb explodes, it deals 3d4 damage and 5 piercing splash damage as the mixture suddenly turns into solid crystals flying at high speeds. On a hit, the target takes 1 damage from the crystals embedded in its flesh. As long as the bleed damage persists, the target also takes a –5-foot penalty to its speed. The target can spend an Interact action to remove the crystals, reducing the DC to stop the bleeding."
+ },
+ {
+  "id": "crystal-shards-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Crystal Shards (Major)",
+  "level": 18,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "earth",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This flask holds a pressurized red-brown gas flecked with bits of sublimated crystal. You gain a +3 item bonus to attack rolls. When the bomb explodes, it deals 4d4 damage and 6 piercing splash damage as the mixture suddenly turns into solid crystals flying at high speeds. On a hit, the target takes 1 damage from the crystals embedded in its flesh. As long as the bleed damage persists, the target also takes a –5-foot penalty to its speed. The target can spend an Interact action to remove the crystals, reducing the DC to stop the bleeding."
+ },
+ {
+  "id": "crystal-shards-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Crystal Shards (Moderate)",
+  "level": 4,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "earth",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This flask holds a pressurized red-brown gas flecked with bits of sublimated crystal. You gain a +1 item bonus to attack rolls. When the bomb explodes, it deals 2d4 damage and 4 piercing splash damage as the mixture suddenly turns into solid crystals flying at high speeds. On a hit, the target takes 1 damage from the crystals embedded in its flesh. As long as the bleed damage persists, the target also takes a –5-foot penalty to its speed. The target can spend an Interact action to remove the crystals, reducing the DC to stop the bleeding."
+ },
+ {
+  "id": "cursebreaker",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Cursebreaker",
+  "level": 10,
+  "traits": [
+   "archetype",
+   "concentrate",
+   "healing",
+   "manipulate"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per day --- Using various implements and esoteric methods, you can attempt to remove a curse from an unfortunate victim. It takes 10 minutes to perform these rites on a willing creature, who must remain within your reach the entire time. Attempt to counteract one curse afflicting the creature; your counteract rank is half your level rounded up, and you use either your or modifier as your counteract modifier. If the afflicted creature or the individual who placed the curse on the afflicted creature is the target of your active investigation through Pursue a Lead, you gain a +1 circumstance bonus to this counteract check. If the curse comes from a cursed item or other external source, a success indicates that the target creature can rid itself of the cursed item, but it doesn't remove the curse from the item."
+ },
+ {
+  "id": "dangerous-sorcery",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Dangerous Sorcery",
+  "level": 1,
+  "traits": [
+   "sorcerer"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Dangerous Sorcery Source Core Rulebook pg. 198 Your legacy grants you great destructive power. When you Cast a Spell from your spell slots, if the spell deals damage and doesn’t have a duration, you gain a status bonus to that spell’s damage equal to the spell’s level."
+ },
+ {
+  "id": "death-knell-powder",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Death Knell Powder",
+  "level": 14,
+  "traits": [
+   "consumable",
+   "divine",
+   "injury",
+   "poison"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Death Knell Powder May contain spoilers from Agents of Edgewatch Source Pathfinder #160: Assault on Hunting Lodge Seven pg. 66 Price 625 gp Usage held in 2 hands Bulk L Activate Interact This poison is made from toxic spores of death knell mushrooms, which are reduced to a gray powder and suffused with necromantic energy. If you're reduced to 0 Hit Points while under the effect of death knell powder, you must succeed at a DC 34 Will save or die (this is a death effect). If you die, a random creature adjacent to you is bolstered by your departing life force and gains 20 temporary HP and a +1 status bonus to attack and damage rolls for 10 minutes. Saving Throw DC 34 Fortitude; Maximum Duration 6 rounds; Stage 1 7d6 poison damage (1 round); Stage 2 9d6 poison damage (1 round); Stage 3 12d6 poison damage (1 round) Craft Requirements Supply one casting of death knell."
+ },
+ {
+  "id": "defensive-coordination",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Defensive Coordination",
+  "level": 6,
+  "traits": [
+   "auditory",
+   "bard",
+   "concentrate",
+   "spellshape"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Like the storied heroes who persist in the face of overwhelming odds, you and your allies will hold the line. If your next action is to cast the Rallying Anthem composition cantrip, you can Raise a Shield, and one ally of your choice who gains a status bonus from the spell can immediately use their reaction to Raise a Shield."
+ },
+ {
+  "id": "defoliation-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Defoliation Bomb",
+  "level": 2,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "negative",
+   "splash",
+   "void"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Defoliation Bomb May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 77 Usage held in 1 hand Bulk L Activate Strike This brightly painted ceramic sphere contains chemicals that cause plants to wither and die. A defoliation bomb deals the listed void damage, persistent void damage, and splash damage to all plants in the area. Non-creature plants in the area immediately wither and die. Many types grant a bonus to attack rolls. Lesser Defoliation Bomb Source Pathfinder #202: Severed at the Root pg. 77 Price 7 gp The bomb deals 1d6 void damage, 1d4 persistent void damage, and 1 void splash damage. Moderate Defoliation Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 18 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d6 void damage, 2d4 persistent void damage, and 2 void splash damage. Greater Defoliation Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 35 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d6 void damage, 3d4 persistent void damage, and 3 void splash damage. Major Defoliation Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 3,600 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d6 void damage, 4d4 persistent void damage, and 4 void splash damage."
+ },
+ {
+  "id": "defoliation-bomb-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Defoliation Bomb (Greater)",
+  "level": 12,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash",
+   "void"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This brightly painted ceramic sphere contains chemicals that cause plants to wither and die. You gain a +2 item bonus to attack rolls. A defoliation bomb deals the 3d6 void damage, 3d4 persistent void damage, and 3 void splash damage to all plants in the area. Non-creature plants in the area immediately wither and die."
+ },
+ {
+  "id": "defoliation-bomb-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Defoliation Bomb (Major)",
+  "level": 18,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash",
+   "void"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This brightly painted ceramic sphere contains chemicals that cause plants to wither and die. You gain a +3 item bonus to attack rolls. A defoliation bomb deals the 4d6 void damage, 4d4 persistent void damage, and 4 void splash damage to all plants in the area. Non-creature plants in the area immediately wither and die."
+ },
+ {
+  "id": "defoliation-bomb-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Defoliation Bomb (Moderate)",
+  "level": 4,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash",
+   "void"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This brightly painted ceramic sphere contains chemicals that cause plants to wither and die. You gain a +1 item bonus to attack rolls. A defoliation bomb deals the 2d6 void damage, 2d4 persistent void damage, and 2 void splash damage to all plants in the area. Non-creature plants in the area immediately wither and die."
+ },
+ {
+  "id": "demon-hunting-companion",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Demon-Hunting Companion",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "You gain a young animal companion that has been specially trained to help you fight demons. You can choose any common animal companion, which gains scent as an imprecise sense with a range of 30 feet that can be used only to smell fiends. If the animal companion already has scent, it gains a +2 circumstance bonus to Perception when using scent against fiends."
+ },
+ {
+  "id": "demon-mask",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Demon Mask",
+  "level": 4,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This terrifying mask is crafted in the visage of a leering demon and grants a +1 item bonus to Intimidation checks. **Activate—Leering Mask** ⟨2⟩ (manipulate) **Frequency** once per day --- **Effect** The mask casts a Fear spell with a DC of 20."
+ },
+ {
+  "id": "demon-mask-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Demon Mask (Greater)",
+  "level": 10,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This terrifying mask is crafted in the visage of a leering demon and grants a +2 item bonus to Intimidation checks. **Activate—Leering Mask** ⟨2⟩ (manipulate) **Frequency** once per day --- **Effect** The mask casts a 3rd-rank Fear spell with a DC of 29."
+ },
+ {
+  "id": "demortification-oil",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Demortification Oil",
+  "level": 5,
+  "traits": [
+   "consumable",
+   "magical",
+   "oil"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ Interact --- This foul-smelling oil has the appearance and odor of the greasy, thick fluids that seep from a decaying body. When you spread this oil on an intact corpse that has been dead no longer than 1 week, its decay fades and the corpse is restored to the condition it was just after death. *Demortification oil* can't undo damage done to a corpse after death, such as consumption by scavengers. Applied to a non-incorporeal undead, a dose of *demortification oil* grants the undead creature a +1 item bonus to Armor Class for 1 hour."
+ },
+ {
+  "id": "devastating-shield-wallop",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Devastating Shield Wallop",
+  "level": 12,
+  "traits": [
+   "flourish",
+   "guardian"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The impact of your shield sends foes tumbling to the ground. When you use Shield Wallop, after its other effects, the target attempts a saving throw against your class DC. If your shield is a tower shield, fortress shield, or another shield that grants a higher circumstance bonus to AC when you Take Cover behind it, the target takes a –2 circumstance penalty to this saving throw. --- **Critical Success** The target takes no additional effect. **Success** The target is off-guard to you until the end of the current turn. **Failure** The target is knocked prone. **Critical Failure** The target is knocked prone and Stunned 1."
+ },
+ {
+  "id": "devoted-guardian",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Devoted Guardian",
+  "level": 2,
+  "traits": [
+   "champion",
+   "fighter"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** Your last action was to Raise a Shield. --- You adopt a wide stance, ready to defend both yourself and your chosen ward. Select one adjacent creature. As long as your shield is raised and the creature remains adjacent to you, the creature gains a +1 circumstance bonus to their AC, or a +2 circumstance bonus if the shield you raised was a tower shield."
+ },
+ {
+  "id": "devoted-vestments",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Devoted Vestments",
+  "level": 11,
+  "traits": [
+   "divine",
+   "focused",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "These vestments are made of panels showing various scenes from the legends of a particular deity. It serves as a religious symbol of that deity, and you gain a +2 item bonus to Religion checks. When you cast *harm* or *heal*, healing granted to followers of that deity is increased by the rank of the spell. **Activate—Domain Devotion** ⟨4⟩ (concentrate) **Frequency** once per day --- **Effect** Gain 1 Focus Point, which you can spend only to cast a cleric domain spell for a domain belonging to the deity the vestments are dedicated to. If you don't spend this point by the end of this turn, it is lost. --- **Craft Requirements** You are a cleric who worships the deity tied to the vestments."
+ },
+ {
+  "id": "devotion-phantom-eidolon",
+  "lane": "situational",
+  "collection": "classFeatures",
+  "name": "Devotion Phantom Eidolon",
+  "level": 1,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Your eidolon is a lost soul, unable to escape the mortal world due to a strong sense of duty, an undying devotion, or a need to complete an important task. Most phantom eidolons are humanoid with a spectral or ectoplasmic appearance, though some take far stranger forms. Your link with your eidolon prevents them from succumbing to corruption and undeath, and together, you will grow in strength and fulfill your phantom's devotion. **Tradition** occult **Traits** eidolon, ethereal, phantom **Home Plane** Ethereal Plane --- **Size** Medium or Small **Suggested Attacks** fist (bludgeoning), tendril (bludgeoning), unarmed attacks shaped like a weapon **Stalwart Guardian** Str 18, Dex 14, Con 16, Int 10, Wis 10, Cha 10; +2 AC (+3 Dex cap) **Swift Protector** Str 14, Dex 18, Con 16, Int 10, Wis 10, Cha 10; +1 AC (+4 Dex cap) **Skills** Medicine, Occultism **Senses** darkvision **Language** one common mortal language the eidolon spoke in life **Speed** 25 feet --- **Eidolon Abilities** *Initial* dutiful retaliation; *Symbiosis* steadfast devotion; *Transcendence* devotion aura ## Dutiful Retaliation Your eidolon deeply respects your assistance, and it extends its loyalty to you, attacking those who dare harm you. It gains the Dutiful Retaliation reaction. ## Steadfast Devotion 7th Your eidolon's dedication makes it extremely challenging for your foes to bend its mind. Your eidolon gains a +2 circumstance bonus to saving throws against mental effects, and if they roll a success against such an effect, they get a critical success instead. If you have the shared resolve class feature and your eidolon rolls a critical failure against a mental effect, they get a failure instead. ## Devotion Aura 17th After fighting at your side for so long, your eidolon has become as devoted to protecting you and your allies as it is to its original cause. It gains a 20-foot devotion aura, which has the abjuration, aura, and occult traits. Whenever one of your eidolon's allies within the aura takes damage, you can reduce the damage by your eidolon's Constitution modifier. You lose a number of Hit Points equal to half the amount by which the eidolon reduced the damage, rounded down. If the damage was lower than the Constitution modifier, base the damage you take on the actual amount of damage prevented."
+ },
+ {
+  "id": "disperse-into-petals",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Disperse into Petals",
+  "level": 10,
+  "traits": [
+   "deviant",
+   "magical",
+   "plant",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "core.stances"
+  ],
+  "text": "You merge with the blossoms sprouting from you and disperse, becoming a visible cloud of blossoms and petals. You're amorphous. You lose any item bonus to AC and all other effects and bonuses from armor, and you use your proficiency modifier for unarmored defense. You gain resistance to physical damage equal to half your level and are immune to precision damage. You can't cast spells, activate items, or use actions that have the attack or manipulate trait. You gain a fly Speed of 10 feet. You can remain in this form for up to 1 minute. You can Dismiss this effect. **Awakening** You can maintain your form for a longer time. You can remain in this form for up to 1 hour. **Awakening** You've learned to harm others, even while in your blossom state. You can occupy the same space as someone else. While occupying someone else's space, you can spend 1 action to spin around in a vortex of blossoms, dealing 1d4 slashing damage for every 5 levels you have to the creature, with a basic Reflex save."
+ },
+ {
+  "id": "divine-rebuttal",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Divine Rebuttal",
+  "level": 6,
+  "traits": [
+   "cleric",
+   "divine"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** Your ally is about to roll a saving throw against a magical ability of a creature you're adjacent to. **Requirements** You are wielding your deity's favored weapon. --- You strive against magical threats physically and spiritually. You can Strike the adjacent creature with your deity's favored weapon. If you are holy or unholy, the Strike gains that trait. If your Strike hits, all your allies gain a +2 circumstance bonus to the triggering saving throw (or a +3 circumstance bonus on a critical hit)."
+ },
+ {
+  "id": "doubling-rings",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Doubling Rings",
+  "level": 3,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This item consists of two magically linked rings: an intricate, gleaming golden ring with a square-cut ruby, and a thick, plain iron ring. When you wield a melee weapon in the hand wearing the golden ring, the weapon's fundamental runes are replicated onto any melee weapon you wield in the hand wearing the iron ring. (The fundamental runes are *weapon potency* and *striking*, which add an item bonus to attack rolls and extra weapon damage dice, respectively.) Any fundamental runes on the weapon in the hand wearing the iron ring are suppressed. The replication functions only if you wear both rings, and it ends as soon as you cease wielding a melee weapon in one of your hands. Consequently, the benefit doesn't apply to thrown attacks or if you're holding a weapon but not wielding it (such as holding in one hand a weapon that requires two hands to wield)."
+ },
+ {
+  "id": "doubling-rings-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Doubling Rings (Greater)",
+  "level": 11,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This item consists of two magically linked rings: an intricate, gleaming golden ring with a square-cut ruby, and a thick, plain iron ring. When you wield a melee weapon in the hand wearing the golden ring, the weapon's fundamental runes are replicated onto any melee weapon you wield in the hand wearing the iron ring. (The fundamental runes are *weapon potency* and *striking*, which add an item bonus to attack rolls and extra weapon damage dice, respectively.) Any fundamental runes on the weapon in the hand wearing the iron ring are suppressed. The replication functions only if you wear both rings, and it ends as soon as you cease wielding a melee weapon in one of your hands. Consequently, the benefit doesn't apply to thrown attacks or if you're holding a weapon but not wielding it (such as holding in one hand a weapon that requires two hands to wield). The rings also replicate property runes from the weapon in the gold-ringed hand, so long as the weapon in the iron-ringed hand meets all the prerequisites for a given rune and is not a specific weapon. The weapon in the iron-ringed hand gains the benefits of those runes. All its own runes are suppressed. When you invest the rings, you can elect for the rings to transfer only fundamental runes, in which case they function as standard *doubling rings*."
+ },
+ {
+  "id": "draconal-mask",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Draconal Mask",
+  "level": 19,
+  "traits": [
+   "apex",
+   "holy",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "senses",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This dragon-themed half-mask helps you to navigate through darkness and to notice things from afar—such as helping to find seats in a theater after a show begins, or to pick up details from a show even if you're seated in the back row! You gain a +3 item bonus to Perception checks and never take a penalty to Perception checks based on distance or weather. You gain darkvision, or greater darkvision if you have darkvision. When you invest in the mask you either increase your Wisdom score by 2 or increase it to 18, whichever would give you a higher score. If you are unholy, you become blinded as long as you wear the mask. **Activate—Dragons See the Truth** ⟨5⟩ (concentrate) **Frequency** once per hour **Trigger** You fail a saving throw against an illusion effect --- **Effect** The mask attempts to counteract the triggering illusion with a counteract rank of 9 and a counteract modifier of +31. You then gain the effects of truesight for 1 minute."
+ },
+ {
+  "id": "draddeths-edge",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Draddeth's Edge",
+  "level": 16,
+  "traits": [
+   "intelligent",
+   "occult",
+   "shove"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Perception +11; precise vision 30 feet, imprecise hearing 30 feet Communication telepathy (Common, Varisian) Skills Survival +28, Warfare Lore +35 Int +6, Wis +3, Cha +3 Will +28 --- It's uncertain how or why the intelligence occupying this *+2 greater striking shifting warhammer* came to be there, but over its many years of battlefield experience, it has proven itself to be a brilliant military tactician on par with some of history's greatest generals. Its earliest appearance was in the hands of its namesake, General Lord Draddeth, who attributed many of his successful campaigns to the counsel of a magical hammer he had commissioned during the Molthuni Cessation from Cheliax. Though the hammer disappeared upon the general's death, its legend has persisted, and the colloquialism \"the Draddeth Edge\"—referring to a natural talent for strategic planning and quick thinking—remains in common usage across Molthune. *Draddeth's Edge* possesses a deep and abiding sense of patriotism for the nation of Molthune that sometimes outweighs its loyalty to those wielding it. Wielders who consistently express disrespect for Molthune or admiration for its enemies, or who fail to show proper respect for the hammer's tactical prowess, inevitably find it missing at some crucial moment when it departs in search of a more suitable comrade in arms. Conversely, it's unwaveringly loyal to and difficult to separate from those it deems worthy of its devotion. As long as you draw breath, the hammer can't be knocked from your grasp or dropped unless you will it, even remaining in your hand if you're rendered unconscious. It also grants an item bonus equal to the bonus it gains from any currently affixed potency rune to recovery checks you make while dying."
+ },
+ {
+  "id": "dragon-pearl-draconic-codex",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Dragon Pearl (Draconic Codex)",
+  "level": 16,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "When an irritant is caught within a dragon's scales, the dragon's body protects itself by coating the object in layers of dragon scale. Over time, it can form an item called a *dragon pearl*. Such pearls, hard and iridescent, are infused with draconic magic and can be powerful tools in the right hands. They're usually placed in an ornate setting on a pin or necklace. Wearing the dragon pearl grants you a +2 item bonus to Intimidation checks. **Activate—Pearlescent Shell** ⟨1⟩ (concentrate) **Frequency** once per day --- **Effect** You call protective power from the pearl to form a defensive barrier around yourself. You're affected by an 8th-rank Containment spell, which takes on the appearance of shimmering translucent dragon scales. The field has resistance 15 to one damage type related to the dragon the pearl came from. When you activate the pearl, you choose the type from all types the dragon has immunity or resistance to plus a type based on their tradition: force for arcane, spirit for divine, mental for occult, or poison for primal."
+ },
+ {
+  "id": "dragonet-breath",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Dragonet Breath",
+  "level": 1,
+  "traits": [
+   "dragonet"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You have developed your magical breath. You expel the dragonet breath associated with your heritage. Dragonet Breath gains the traits listed in parentheses, and the DC is your class DC or spell DC, whichever is higher. After you use Dragonet Breath, you can't use it again for 1d4 rounds. - **Fey Dragonet** (arcane, poison) You breathe a of euphoric gas. Each creature in the area must succeed at a save or become Stupefied 1 for 1 round. - **Homing Drake** (acid) You expel a of caustic spittle that deals damage with a save. At 3rd level and every 2 levels thereafter, the damage increases by 1d4. - **House Drake** (arcane, mental) You breathe out a cloud of silver mist in a that deals damage with a save. It counts as silver for the purpose of weaknesses. At 3rd level and every 2 levels thereafter, the damage increases by 1d4. - **Pearl Dragonet** (arcane, curse) You breathe a of golden mist that alters the luck of creatures caught in it. Each time you use Dragonet Breath, decide if it gives good luck or bad luck. Any creature affected by your Dragonet Breath becomes temporarily immune to it for 1 hour. If your breath gives good luck, each creature in the area gains a +1 status bonus to its next attack roll or skill check before the start of your next turn. If your breath gives bad luck, each creature in the area must attempt a save. A creature that fails its save takes a –1 status penalty to its next attack roll or skill check before the start of your next turn. On a critical failure, the creature must instead roll twice and take the worse result on the check; this is a misfortune effect. - **Tidepool Dragonet** (fire) You breathe a of superheated gas that deals damage with a save. At 3rd level and every 2 levels thereafter, the damage increases by 1d4. You can use your breath underwater even though it has the fire trait. If you do, it gains the water trait and emerges as a of boiling water."
+ },
+ {
+  "id": "dragons-blood-pudding-lesser",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Dragon's Blood Pudding (Lesser)",
+  "level": 2,
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Dragon's Blood Pudding Source Grand Bazaar pg. 46 Usage held in 1 hand Bulk L Activate Interact While some unscrupulous chefs claim that this savory pudding is made with real dragon's blood, its crimson color and acrid smell actually come from bloody mandrake paste, ginger root, and distilled terrap sap. This potent combination singes the nostrils and throat, removing effects that make you sluggish. When you consume the pudding, it attempts a counteract check with the listed counteract modifier to remove the slowed condition from a single source, using the source of that condition to determine the counteract level and DC. Dragon's Blood Pudding (Lesser) Source Grand Bazaar pg. 46 Price 5 gp Bulk L The pudding has a +6 counteract modifier. Dragon's Blood Pudding (Moderate) Source Grand Bazaar pg. 46 Price 25 gp Bulk L The pudding has a +9 counteract modifier. You also become quickened for 1 round. While taking the additional action from being quickened, you scream, as a result of both the flavor and the mandrake paste's properties. You can use the additional action to Step, Stride, Strike, or Demoralize. If you choose to Demoralize, you gain a +2 item bonus to the Intimidation check. Dragon's Blood Pudding (Greater) Source Grand Bazaar pg. 46 Price 425 gp Bulk L The pudding has a +20 counteract modifier. You become quickened as per the 5th-level version, except you gain a +3 item bonus to the Intimidation check. Dragon's Blood Pudding (Major) Source Grand Bazaar pg. 46 Price 5,500 gp Bulk L The pudding has a +31 counteract modifier. You become quickened as per the 5th-level version, except the effect lasts for 2 rounds and you gain a +4 item bonus to the Intimidation check."
+ },
+ {
+  "id": "dragontooth-club",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Dragontooth Club",
+  "level": 13,
+  "traits": [
+   "fatal-d10",
+   "versatile-s"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Dragon teeth line the edges of this *+2 greater striking leiomano*. The leiomano also has a flaming, frost, shock, or corrosive rune, as appropriate for the dragon from which the teeth were taken, which also grants the weapon the associated energy trait (for instance, fire for a club made with teeth taken from a red dragon). **Activate** ⟨2⟩ Interact (evocation, magical) **Frequency** once per minute --- **Effect** You swing the leiomano, sending several of the dragon teeth shooting through the air on jets of energy. The dragon teeth deal 3d6 and 3d6 damage of the energy type corresponding to the weapon in a (). The teeth hunt down their targets, correcting their flight in midair, which reduces any circumstance bonus from cover by 2. --- **Craft Requirements** The initial raw materials must include teeth from a dragon with a breath weapon that deals acid, cold, electricity, fire, or poison damage."
+ },
+ {
+  "id": "dragontooth-leiomano",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Dragontooth Leiomano",
+  "level": 13,
+  "traits": [
+   "fatal-d10",
+   "versatile-s"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Dragon teeth line the edges of this +2 greater striking leiomano. The leiomano deals an additional damage of a type determined by the tradition of the dragon from which the teeth were taken: force for arcane, spirit for divine, mental for occult, or fire for primal. The weapon also gains the relevant trait (for instance, fire for a club made with teeth taken from an adamantine dragon). **Activate** ⟨2⟩ (magical, manipulate) **Frequency** once per minute --- **Effect** You swing the leiomano, sending several of the dragon teeth shooting through the air on jets of energy. The dragon teeth deal damage and damage of the damage type corresponding to the dragon's tradition in a ( save). The teeth hunt down their targets, correcting their flight in midair, which reduces any circumstance bonus from cover by 2. --- **Craft Requirements** The initial raw materials must include teeth from a dragon."
+ },
+ {
+  "id": "dread-ampoule",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Dread Ampoule",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "emotion",
+   "fear",
+   "mental",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Dread Ampoule Source Player Core 2 pg. 285, GM Core pg. 245 Usage held in 1 hand Bulk L Activate Strike This flask is filled with a murky purple gas that briefly interferes with normal brain activity. A dread ampoule deals the listed mental damage and mental splash damage. On a hit, the target becomes frightened 1, or frightened 2 on a critical hit. Many types also grant an item bonus to attack rolls. Dread Ampoule (Lesser) Source Player Core 2 pg. 285, GM Core pg. 245, Advanced Player's Guide pg. 253 Price 3 gp Bulk L The bomb deals 1d6 mental damage and 1 mental splash damage. Dread Ampoule (Moderate) Source Player Core 2 pg. 285, GM Core pg. 245, Advanced Player's Guide pg. 253 Price 10 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d6 mental damage and 2 mental splash damage. Dread Ampoule (Greater) Source Player Core 2 pg. 285, GM Core pg. 245, Advanced Player's Guide pg. 253 Price 300 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 3d6 mental damage and 3 mental splash damage. Dread Ampoule (Major) Source Player Core 2 pg. 285, GM Core pg. 245, Advanced Player's Guide pg. 253 Price 3,000 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 4d6 mental damage and 4 mental splash damage."
+ },
+ {
+  "id": "dread-ampoule-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Dread Ampoule (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "emotion",
+   "fear",
+   "mental",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This flask is filled with a murky purple gas that briefly interferes with normal brain activity. A dread ampoule deals 3d6 mental damage and 3 mental splash damage. On a hit, the target becomes Frightened 1, or Frightened 2 on a critical hit. Many types also grant an item bonus to attack rolls. You gain a +2 item bonus to attack rolls."
+ },
+ {
+  "id": "dread-ampoule-lesser",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Dread Ampoule (Lesser)",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "emotion",
+   "fear",
+   "mental",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This flask is filled with a murky purple gas that briefly interferes with normal brain activity. A dread ampoule deals 1d6 mental damage and 1 mental splash damage. On a hit, the target becomes Frightened 1, or Frightened 2 on a critical hit. Many types also grant an item bonus to attack rolls."
+ },
+ {
+  "id": "dread-ampoule-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Dread Ampoule (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "emotion",
+   "fear",
+   "mental",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This flask is filled with a murky purple gas that briefly interferes with normal brain activity. A dread ampoule deals 4d6 mental damage and 4 mental splash damage. On a hit, the target becomes Frightened 1, or Frightened 2 on a critical hit. Many types also grant an item bonus to attack rolls. You gain a +3 item bonus to attack rolls."
+ },
+ {
+  "id": "dread-ampoule-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Dread Ampoule (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "emotion",
+   "fear",
+   "mental",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This flask is filled with a murky purple gas that briefly interferes with normal brain activity. A dread ampoule deals 2d6 mental damage and 2 mental splash damage. On a hit, the target becomes Frightened 1, or Frightened 2 on a critical hit. Many types also grant an item bonus to attack rolls. You gain a +1 item bonus to attack rolls."
+ },
+ {
+  "id": "dread-blindfold",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Dread Blindfold",
+  "level": 17,
+  "traits": [
+   "emotion",
+   "fear",
+   "invested",
+   "magical",
+   "mental"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "senses",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "When tied over your eyes, this ragged strip of black linen gives you a +3 item bonus to Intimidation checks and darkvision. You can see through the blindfold, but only using darkvision. The first time a particular creature sees you in a day, it must succeed at a save or be Frightened 1. This is an emotion, fear, and mental effect, and your allies become immune to it after about a week. --- **Activate—Visions of Terror** ⟨4⟩ (concentrate) **Frequency** once per minute **Trigger** You damage a creature with a Strike --- **Effect** Your target is gripped by intense fear. This has the effect of a DC 37 *vision of death* spell. The creature is then temporarily immune for 24 hours."
+ },
+ {
+  "id": "druids-crown",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Druid's Crown",
+  "level": 6,
+  "traits": [
+   "invested",
+   "primal"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "effectChoices",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "Made of materials scavenged from wild places, a *druid's crown* can be rebuilt for a variety of benefits. The crown grants you a +1 item bonus to a skill, and can be activated to cast a spell, both depending on the material used to build the crown, as listed on the table below. If you invest and wear *living mantle* along with the crown, the crown's item bonus increases by 1 and its spell's DC rises to 27. You can invest this item only if you're a druid. When you do, as a 10-minute activity that has the manipulate trait, you can disassemble and rebuild the crown with different materials, changing its item bonus and spell accordingly. --- **Activate** ⟨2⟩ (concentrate) **Frequency** once per day **Effect** The crown casts its spell at 2nd rank (DC 20). --- **Craft Requirements** You are a druid. | Material | Item Bonus | Spell | | --- | --- | --- | | Antlers | Intimidation | Enlarge | | Flowers | Diplomacy | Animal Allies | | Leaves | Stealth | One with Plants |"
+ },
+ {
+  "id": "durian-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Durian Bomb",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "plant",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Durian Bomb May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 77 Usage held in 1 hand Bulk L Activate Strike Whereas a durian’s aroma ranges from pleasant to revolting depending on the person, a durian bomb is a fruit that’s been alchemically modified for maximum revulsion. Many types of this bomb grant an item bonus to attack rolls. On a successful Strike, a durian bomb deals the listed piercing damage to the target. Any creature hit by the bomb or in its splash area must attempt a Fortitude saving throw with a DC based on the bomb’s type. Creatures in the splash area treat the results of their saving throw as one step better. Creatures sickened by a durian bomb are unable to smell anything else while the sickened condition lasts, suppressing any scent special sense they might have. Once a creature is sickened by a durian bomb, they’re immune to the sickened condition caused by other durian bombs for 1 minute. Critical Success The target is unaffected. Success The creature is sickened 1. Failure The creature is dazzled for 1 round and sickened 1. Critical Failure The creature is dazzled for 1 round and sickened 2. Lesser Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 4 gp The bomb deals 1d4 piercing damage, and the DC is 15. Moderate Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 12 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d4 points of piercing damage, and the DC is 17. Greater Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 275 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d4 points of piercing damage, and the DC is 28. Major Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 2,750 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d4 points of piercing damage, and the DC is 37."
+ },
+ {
+  "id": "durian-bomb-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Durian Bomb (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "plant",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Whereas a durian's aroma ranges from pleasant to revolting depending on the person, a durian bomb is a fruit that's been alchemically modified for maximum revulsion. You gain a +2 item bonus to attack rolls. On a successful Strike, a durian bomb deals the 3d4 piercing damage to the target. Any creature hit by the bomb or in its splash area must attempt a saving throw. Creatures in the splash area treat the results of their saving throw as one step better. Creatures sickened by a durian bomb are unable to smell anything else while the sickened condition lasts, suppressing any scent special sense they might have. Once a creature is sickened by a durian bomb, they're immune to the sickened condition caused by other durian bombs for 1 minute. --- **Critical Success** The target is unaffected. **Success** The creature is Sickened 1. **Failure** The creature is dazzled for 1 round and sickened 1. **Critical Failure** The creature is dazzled for 1 round and Sickened 2."
+ },
+ {
+  "id": "durian-bomb-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Durian Bomb (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "plant",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Whereas a durian's aroma ranges from pleasant to revolting depending on the person, a durian bomb is a fruit that's been alchemically modified for maximum revulsion. You gain a +3 item bonus to attack rolls. On a successful Strike, a durian bomb deals the 4d4 piercing damage to the target. Any creature hit by the bomb or in its splash area must attempt a saving throw. Creatures in the splash area treat the results of their saving throw as one step better. Creatures sickened by a durian bomb are unable to smell anything else while the sickened condition lasts, suppressing any scent special sense they might have. Once a creature is sickened by a durian bomb, they're immune to the sickened condition caused by other durian bombs for 1 minute. --- **Critical Success** The target is unaffected. **Success** The creature is Sickened 1. **Failure** The creature is dazzled for 1 round and sickened 1. **Critical Failure** The creature is dazzled for 1 round and Sickened 2."
+ },
+ {
+  "id": "durian-bomb-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Durian Bomb (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "plant",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Whereas a durian's aroma ranges from pleasant to revolting depending on the person, a durian bomb is a fruit that's been alchemically modified for maximum revulsion. You gain a +1 item bonus to attack rolls. On a successful Strike, a durian bomb deals the 2d4 piercing damage to the target. Any creature hit by the bomb or in its splash area must attempt a saving throw. Creatures in the splash area treat the results of their saving throw as one step better. Creatures sickened by a durian bomb are unable to smell anything else while the sickened condition lasts, suppressing any scent special sense they might have. Once a creature is sickened by a durian bomb, they're immune to the sickened condition caused by other durian bombs for 1 minute. --- **Critical Success** The target is unaffected. **Success** The creature is Sickened 1. **Failure** The creature is dazzled for 1 round and sickened 1. **Critical Failure** The creature is dazzled for 1 round and Sickened 2."
+ },
+ {
+  "id": "dwarven-reinforcement",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Dwarven Reinforcement",
+  "level": 5,
+  "traits": [
+   "dwarf"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can use your knowledge of engineering and metalwork to temporarily strengthen thick objects and structures. By spending 1 hour working on an item, you can give it a +1 circumstance bonus to its Hardness for 24 hours. If you're a master in Crafting, the bonus is +2, and if you're legendary, the bonus is +3. You can reinforce a portion of a structure, though 1 hour usually reinforces only a door, a few windows, or another section that fits within a 10-foot cube."
+ },
+ {
+  "id": "eidolon",
+  "lane": "situational",
+  "collection": "classFeatures",
+  "name": "Eidolon",
+  "level": 1,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You have a connection with a powerful and usually otherworldly entity called an eidolon, and you can use your life force as a conduit to manifest this ephemeral entity into the mortal world. Magic also flows through this conduit from your eidolon into you, so your eidolon determines the type of spells you cast and the spell list you choose from. Choose a type of . When you choose your eidolon, you also determine its appearance and general form, within the parameters for that particular type of eidolon. Once you establish your eidolon's type and general appearance, these features can't be changed later, except by selecting special evolution feats that can cause your eidolon to develop new features. Your magical connection with your eidolon takes the form of a sigil on each of your bodies. As long as your eidolon is manifested, the sigil glows with light and can't be covered or disguised via any means; it will shine through clothing, appear over cloaks, and remain unaffected by obfuscating magic. This, combined with the way that the two of you clearly act in tandem, makes it readily apparent to an intelligent observer that the two of you are connected in some way, even if the person has never encountered a summoner before. You bring your eidolon into reality with the Manifest Eidolon action. Your eidolon is no mere minion. It doesn't have the minion or summoned trait, and the two of you work together and coordinate your actions. You and your eidolon share your actions and multiple attack penalty. Each round, you can use any of your actions (including reactions and free actions) for yourself or your eidolon. You coordinate your actions with your eidolon more efficiently when you Act Together. Your connection with your eidolon allows you to communicate with it telepathically at all times, even when it isn't manifested. You also gain the Share Senses action. Lastly, the connection between you and your eidolon means you both share a single pool of Hit Points. Damage taken by either you or the eidolon reduces your Hit Points, while healing either of you recovers your Hit Points. Like with your actions, if you and your eidolon are both subject to the same effect that affects your Hit Points, you apply those effects only once (applying the greater effect, if applicable). For instance, if you and your eidolon get caught in an area effect that would heal or damage you both, only the greater amount of healing or damage applies. ### Gear and your Eidolon Your eidolon can't wear or use magic items, except for items with the eidolon trait. An eidolon can have up to two items invested. Your eidolon's link to you means it can benefit from certain magic items invested by you. - Your eidolon gains item bonuses to Perception and skills from any magical items that you have invested. - Your eidolon increases its item bonus to AC based on your armor's armor potency rune or bracers of armor. It also gains an item bonus to its saves from the resilient rune on your armor or from your bracers of armor. Other permanent items that grant or increase item bonuses to AC and saves might convey a similar benefit, as determined by the GM. - Your eidolon's Strikes benefit from "
+ },
+ {
+  "id": "eidolon-cape",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Eidolon Cape",
+  "level": 11,
+  "traits": [
+   "focused",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "effectChoices",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Though it appears to be one elegant piece, an *eidolon cape* consists of a mantle for your shoulders and a detachable cape. The cape is designed to resemble your eidolon, either with a direct likeness or with features reminiscent of your eidolon. For instance, if your eidolon is a dragon, the cape might depict a stylized dragon, or it might have a pattern of colorful scales with gold trim. An eidolon cape features the sigil you share with your eidolon prominently in its design. You gain a +2 item bonus to the skill that matches your eidolon's tradition: Arcana for arcane, Religion for divine, Occultism for occult, or Nature for primal. When you Manifest your Eidolon, the cape transforms into the eidolon, and when the eidolon unmanifests, it turns back into the cape. If the cape is attached to the mantle, it comes free immediately, and the eidolon appears adjacent to you as normal. If not, the eidolon appears in a space adjacent to the cape. With the cape detached, the mantle is still light Bulk, and the whole cloak remains invested. If the cape is out of range (beyond 100 feet, typically) or there's not enough open space for the eidolon to manifest, your attempt to Manifest your Eidolon fails. --- **Activate** ⟨4⟩ (concentrate) **Frequency** once per day **Effect** You gain 1 Focus Point, which you can use only to cast a summoner link spell. If not used by the end of your turn, this Focus Point is lost. --- **Craft Requirements** You are a summoner."
+ },
+ {
+  "id": "elemental-eidolon",
+  "lane": "situational",
+  "collection": "classFeatures",
+  "name": "Elemental Eidolon",
+  "level": 1,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Your eidolon is a primal chunk of elemental matter infused with sapience, power, and identity, but unable to manifest a true form of their own without the life force you provide via your connection. Most elementals in their natural environment already have different sorts of forms, from vaguely humanoid, to animalistic, to simple masses of their component element. As your life force provides your eidolon the instincts necessary to adopt a physical form, their appearance varies based on the strength of their own self image and your prior exposure to elementals. Elemental eidolons tend to reach their unusual state—powerful but formless—as the result of large scale events or cataclysms, such as the war to seal the benevolent Elemental Lords or their recent unsealing. Whether elemental eidolons possess any memories of a previous life or are a new sapience formed from left-over essence of a mighty servant of the Elemental Lords brought low varies from eidolon to eidolon. Together, you might undertake a journey to understand your eidolon's mysterious past or leave the past behind and forge a new destiny of your own. **Tradition** primal **Traits** eidolon, elemental, and one more (see Elemental Core, below) **Home Plane**: elemental plane matching their Elemental Core --- **Size** Medium **Suggested Attacks** branch (bludgeoning), fist (bludgeoning), spike (piercing), tendril (bludgeoning), wave (bludgeoning) **Adaptable Elemental** Str +1, Dex +4, Con +3, Int +0, Wis +1, Cha +0; +1 AC (+4 Dex cap) **Primordial Elemental** Str +4, Dex +2, Con +3, Int –1, Wis +1, Cha +0; +2 AC (+3 Dex cap) **Skills** Nature, Survival **Senses** darkvision **Language** s Sussuran (air elemental), Petran (earth elemental), Pyric (fire elemental), Talican (metal elemental), Thalassic (water elemental), or Muan (wood elemental), **Speed** 25 feet --- **Eidolon Abilities** *Initial *elemental core*; Symbiosis *elemental burst*; Transcendence *elemental maelstrom ## Elemental Core Your elemental eidolon is an amalgam of elemental matter and mortal life force, which helps protect them from certain effects that are more harmful to mortals than elementals. They gain a +2 circumstance bonus to saving throws against poison and sleep effects, as well as effects causing the paralyzed condition. Additionally, their elemental essence bleeds less easily than flesh, so the DC of any flat check they make to remove persistent bleed damage is 10 (or 5 after receiving particularly effective aid). Choose for your eidolon to be an air, earth, fire, metal, wood, or water elemental. Your eidolon and all their unarmed attacks gain the trait of the chosen element, and the eidolon gains additional effects based on your choice. **Air:** Your eidolon is formed from elemental air and is light as a breeze. Your eidolon can Leap, High Jump, and Long Jump twice as far, and doesn't take falling damage. **Earth:** Your eidolon is formed from elemental earth, and is incredibly hard to move by force. Your eidolon gains a +2 circumstance bonus to their Fortitude or Reflex DCs against attempts to Shove or Trip them. This bonus also applies to saving throws against spells or effects that attempt to knock t"
+ },
+ {
+  "id": "emberheart",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Emberheart",
+  "level": 18,
+  "traits": [
+   "apex",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This small, heart-shaped amulet appears to be sculpted from stone with a single streak of dim light running through, like an ember just beneath ashes. When worn, the amulet gives off a gentle warmth, akin to being near a fireplace. You gain poison resistance 15 when wearing this amulet. When you invest the amulet, you either increase your Constitution score by 2 or increase it to 18, whichever would give you a higher score. --- **Activate** ⟨2⟩ Interact (healing, magical, necromancy, vitality) **Frequency** once per day You hold the amulet aloft as a ripple of warm orange light exudes outward. Each ally in a regains 30 Hit Points and gains a +3 status bonus to Fortitude saves until the end of their next turn."
+ },
+ {
+  "id": "empowered-onslaught",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Empowered Onslaught",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per round **Trigger** You critically hit and Sustain a battle aura. --- When your body and mind are perfectly in sync and pushed to the limit, it can produce even greater results. You channel your combat focus into the power of your battle auras. Choose one active battle aura you have; that battle aura's status bonus or penalty increases by 1, to a maximum of 4. This value remains for the rest of the aura's duration."
+ },
+ {
+  "id": "energy-robe-acid",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Energy Robe (Acid)",
+  "level": 9,
+  "traits": [
+   "invested",
+   "magical",
+   "transmutation"
+  ],
+  "engineFieldsPresent": [
+   "frequency",
+   "resistances",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Energy Robe Source Grand Bazaar pg. 50 Usage worn clothing Bulk L This brightly colored linen robe is covered in delicate embroidery depicting creatures and natural phenomena suiting its aligned energy, such as a living thunderclap, pools of acid, roaring flames, or dancing marids. Activate command, Interact; Frequency once per day; Effect You speak a command word, and the embroidered threads in the robe glow vividly. The benefit you receive from the energy robe depends on its type. Energy Robe (Fire) Source Grand Bazaar pg. 50 Price 320 gp Bulk L You gain resistance 5 to fire. When the robe is activated, you gain a +30-foot status bonus to Speed for 1 minute as flames shoot out behind you to speed you up. Energy Robe (Cold) Source Grand Bazaar pg. 50 Price 450 gp Bulk L You gain resistance 5 to cold. When the robe is activated, you gain the effects of water walk for 1 minute, as you momentarily flash freeze the surface of water as you walk across it. Energy Robe (Acid) Source Grand Bazaar pg. 50 Price 575 gp Bulk L You gain resistance 5 to acid. When the robe is activated, you gain a climb Speed equal to your Speed, as the acid on your hands grants you easier handholds. Energy Robe (Electricity) Source Grand Bazaar pg. 50 Price 900 gp Bulk L You gain resistance 5 to electricity. When the robe is activated, you gain a fly Speed equal to your Speed for 1 minute."
+ },
+ {
+  "id": "energy-robe-cold",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Energy Robe (Cold)",
+  "level": 8,
+  "traits": [
+   "invested",
+   "magical",
+   "transmutation"
+  ],
+  "engineFieldsPresent": [
+   "frequency",
+   "resistances",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Energy Robe Source Grand Bazaar pg. 50 Usage worn clothing Bulk L This brightly colored linen robe is covered in delicate embroidery depicting creatures and natural phenomena suiting its aligned energy, such as a living thunderclap, pools of acid, roaring flames, or dancing marids. Activate command, Interact; Frequency once per day; Effect You speak a command word, and the embroidered threads in the robe glow vividly. The benefit you receive from the energy robe depends on its type. Energy Robe (Fire) Source Grand Bazaar pg. 50 Price 320 gp Bulk L You gain resistance 5 to fire. When the robe is activated, you gain a +30-foot status bonus to Speed for 1 minute as flames shoot out behind you to speed you up. Energy Robe (Cold) Source Grand Bazaar pg. 50 Price 450 gp Bulk L You gain resistance 5 to cold. When the robe is activated, you gain the effects of water walk for 1 minute, as you momentarily flash freeze the surface of water as you walk across it. Energy Robe (Acid) Source Grand Bazaar pg. 50 Price 575 gp Bulk L You gain resistance 5 to acid. When the robe is activated, you gain a climb Speed equal to your Speed, as the acid on your hands grants you easier handholds. Energy Robe (Electricity) Source Grand Bazaar pg. 50 Price 900 gp Bulk L You gain resistance 5 to electricity. When the robe is activated, you gain a fly Speed equal to your Speed for 1 minute."
+ },
+ {
+  "id": "energy-robe-electricity",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Energy Robe (Electricity)",
+  "level": 10,
+  "traits": [
+   "invested",
+   "magical",
+   "transmutation"
+  ],
+  "engineFieldsPresent": [
+   "frequency",
+   "resistances",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Energy Robe Source Grand Bazaar pg. 50 Usage worn clothing Bulk L This brightly colored linen robe is covered in delicate embroidery depicting creatures and natural phenomena suiting its aligned energy, such as a living thunderclap, pools of acid, roaring flames, or dancing marids. Activate command, Interact; Frequency once per day; Effect You speak a command word, and the embroidered threads in the robe glow vividly. The benefit you receive from the energy robe depends on its type. Energy Robe (Fire) Source Grand Bazaar pg. 50 Price 320 gp Bulk L You gain resistance 5 to fire. When the robe is activated, you gain a +30-foot status bonus to Speed for 1 minute as flames shoot out behind you to speed you up. Energy Robe (Cold) Source Grand Bazaar pg. 50 Price 450 gp Bulk L You gain resistance 5 to cold. When the robe is activated, you gain the effects of water walk for 1 minute, as you momentarily flash freeze the surface of water as you walk across it. Energy Robe (Acid) Source Grand Bazaar pg. 50 Price 575 gp Bulk L You gain resistance 5 to acid. When the robe is activated, you gain a climb Speed equal to your Speed, as the acid on your hands grants you easier handholds. Energy Robe (Electricity) Source Grand Bazaar pg. 50 Price 900 gp Bulk L You gain resistance 5 to electricity. When the robe is activated, you gain a fly Speed equal to your Speed for 1 minute."
+ },
+ {
+  "id": "enjoy-the-show",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Enjoy the Show",
+  "level": 2,
+  "traits": [
+   "swashbuckler"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You address an ally or any onlookers to your combat, flaunting to your foes how little attention they require. When you Perform, you can choose single creature within 30 feet and use the following success, critical success, and critical failure effects instead of the normal results; if you do, Perform gains the bravado trait, as well as the auditory and linguistic trait as normal for oration. --- **Critical Success** The target takes a –2 circumstance penalty to attack rolls against creatures other than you until the end of its next turn. **Success** The target takes a –1 circumstance penalty to attack rolls against creatures other then you until the end of its next turn. **Critical Failure** The target gains a +1 circumstance bonus to attack rolls targeting you until the end of its next turn."
+ },
+ {
+  "id": "entertainers-cincture",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Entertainer's Cincture",
+  "level": 10,
+  "traits": [
+   "focused",
+   "invested",
+   "occult"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "effectChoices",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "The designs adorning these lush sashes often imitate the decor of famous opera houses, theaters, and museums. When you invest this item, choose Deception, Diplomacy, Intimidation, or Performance; you gain a +2 item bonus to that skill. --- **Activate—Encore!** ⟨4⟩ (concentrate) **Frequency** once per day **Effect** Gain 1 Focus Point, which you can spend only to cast a bard composition spell. If you don't spend this point by the end of this turn, it is lost. --- **Activate—Transcribe** ⟨1⟩ (manipulate) **Frequency** once per day **Effect** You tuck a small roll of paper into the cincture. For the next 10 minutes or until you Dismiss the activation, any performance you make is recorded on the paper, and the paper expands as necessary to accommodate it. Depending on the type of performance, this might take the form of sheet music, a transcript, or a diagram of dance moves. --- **Craft Requirements** You are a bard."
+ },
+ {
+  "id": "entertainers-cincture-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Entertainer's Cincture (Greater)",
+  "level": 17,
+  "traits": [
+   "focused",
+   "invested",
+   "occult"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "effectChoices",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "The designs adorning these lush sashes often imitate the decor of famous opera houses, theaters, and museums. When you invest this item, choose Deception, Diplomacy, Intimidation, or Performance; you gain a +3 item bonus to that skill. --- **Activate—Encore!** ⟨4⟩ (concentrate) **Frequency** once per day **Effect** Gain 1 Focus Point, which you can spend only to cast a bard composition spell. If you don't spend this point by the end of this turn, it is lost. --- **Activate—Transcribe** ⟨1⟩ (manipulate) **Frequency** once per day **Effect** You tuck a small roll of paper into the cincture. For the next hour or until you Dismiss the activation, any performance you make is recorded on the paper, and the paper expands as necessary to accommodate it. Depending on the type of performance, this might take the form of sheet music, a transcript, or a diagram of dance moves. --- **Craft Requirements** You are a bard."
+ },
+ {
+  "id": "essence-charm",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Essence Charm",
+  "level": 4,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "effectChoices",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Anyone can use an *essence forge* to craft an *essence charm* without needing to know the formula for an *essence charm*. No larger than a coin, an *essence charm* is normally worn around the neck or hung from a belt—its exact appearance is up to the crafter. When an *essence charm* is created, its crafter selects a skill in which they are at least trained. The *essence charm* grants a +1 item bonus to that skill when worn. --- **Activate—Lucky Charm** ⟨5⟩ (concentrate) **Frequency** once per day **Trigger** You fail or critically fail a check using the *essence charm*'s chosen skill **Effect** A failed check becomes a success, and a critical failure becomes a failure."
+ },
+ {
+  "id": "ever-vigilant-senses",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Ever-Vigilant Senses",
+  "level": 16,
+  "traits": [
+   "evolution",
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your eidolon has enhanced senses. It gains a +2 circumstance bonus to Perception, and can't be flanked except by creatures that are higher level than it. It can see invisible creatures and objects; they appear translucent and are concealed. When your eidolon moves within 30 feet of an illusion that can be disbelieved, the GM rolls a secret check to disbelieve it, even if your eidolon didn't spend an action to Interact."
+ },
+ {
+  "id": "exigent-aura",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Exigent Aura",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The power of your deity and your own convictions leave an impression on creatures even when they normally would be unable to comprehend your words or the feelings spurred on by your god. Your battle auras can affect mindless creatures, though they gain a +4 circumstance bonus on saving throws to resist the battle aura's effects."
+ },
+ {
+  "id": "expert-drill-sergeant",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Expert Drill Sergeant",
+  "level": 5,
+  "traits": [
+   "hobgoblin"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "While exploring, when you are leading and allies are Following the Expert, instead of granting a +2 circumstance bonus in the applicable skill, you grant a +3 circumstance bonus if you're an expert and a +4 circumstance bonus if you're a master."
+ },
+ {
+  "id": "explorers-clothing",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Explorer's Clothing",
+  "level": 0,
+  "traits": [
+   "comfort"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Adventurers who don't wear armor travel in durable clothing. Though it's not armor and uses your unarmored defense proficiency, it still has a Dex Cap and can grant an item bonus to AC if etched with potency runes."
+ },
+ {
+  "id": "fan-of-the-four-winds",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Fan of the Four Winds",
+  "level": 4,
+  "traits": [
+   "air",
+   "magical",
+   "relic"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Fan of the Four Winds Source Treasure Vault (Remastered) pg. 204 Usage held in 1 hand Bulk L The fan of the four winds once belonged to a sage of Gozreh and was passed down as a sacred relic for generations to those found worthy. Since that time, no one has unlocked the fan's full powers, though many devout priests have used it to aid them in their travels. A worthy member of this order might receive the fan as a reward, as could a suitable helper of the clergy. The fan might also have been lost, allowing for a new wielder to find it. The fan of the four winds has the following activation. Activate (concentrate, manipulate) Frequency once per day; Effect You fan in a direction, and the fan casts gust of wind. If this casting is directed toward the sail of a vessel, it instead fills it with swirling air. The vessel gains a +10-foot circumstance bonus to its Speed for 8 hours. Minor Gifts: feather steps, wind barrier Major Gifts: lightning storm, propelling winds Grand Gift: living storm"
+ },
+ {
+  "id": "fear-no-pain",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Fear No Pain!",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "auditory",
+   "fortune",
+   "linguistic"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per day **Trigger** An ally within 30 feet fails a save against a mental effect. --- You have learned to endure pain without complaint and are capable of steeling your allies with similar resolve. When you give them a shout of encouragement, the triggering ally can reroll their failed save with a +2 circumstance bonus."
+ },
+ {
+  "id": "feather-token-fan",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Feather Token (Fan)",
+  "level": 4,
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "Each feather token appears to be a simple feather from some exotic bird. The feather's shaft, dipped in gold, bears a single arcane rune. Activating a feather token causes it to transform into another object, which then can be used as normal for that object. Each feather can be activated only once, with most of them permanently becoming the item in their description. **Activate** ⟨1⟩ Interact Activating this feather requires you to fan it in a given direction. If this direction is toward the sail of a vessel, the feather flutters up toward the sail and fans continuously, filling the sail with air and granting the vessel a +10-foot circumstance bonus to its Speed for 8 hours. If fanned in any other direction, it instead produces a single casting of Gust of Wind (DC 20)."
+ },
+ {
+  "id": "feral-swing",
+  "lane": "situational",
+  "collection": "classFeatures",
+  "name": "Feral Swing",
+  "level": 1,
+  "traits": [
+   "spirit",
+   "transcendence"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You lash out with both arms, rending all before you. Each creature in a must succeed at a save against your class DC or take spirit damage equal to your normal Strike damage with your Hands of the Wildling. You can choose to swing with abandon, which imposes a –2 circumstance bonus to enemies' saving throws, but causes you to become off-guard until the start of your next turn."
+ },
+ {
+  "id": "fire-jump-ring",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Fire-Jump Ring",
+  "level": 10,
+  "traits": [
+   "fire",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This black, metal ring is inset with rubies that occasionally give off wisps of smoke. It grants you a +2 item bonus to Athletics checks. **Activate—Fire Jump** ⟨2⟩ (concentrate, manipulate, teleportation) **Frequency** once per day --- **Effect** You Stride (or Burrow or Fly, if you have the corresponding Speed) into any fire large enough to contain you, including magical fires. You vanish into the fire and take no damage from it. You can sense all sufficiently large fires within 100 feet of where you vanish, and you reemerge from any of those fires, either within the fire or adjacent to it. If you end your movement in the fire, it affects you as normal."
+ },
+ {
+  "id": "five-feather-wreath",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Five-Feather Wreath",
+  "level": 4,
+  "traits": [
+   "air",
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "Identical feathers radiate from the center of this spellheart, held in place by woven straw. The spell attack roll of any spell cast by Activating this item is +8, and the spell DC is 18. - **Armor** You gain a +1 item bonus to Acrobatics checks and resistance 2 to falling damage. - **Weapon** After you cast an air spell by Activating the *wreath*, you can Fly 5 feet as a single action, or you can Fly 10 feet as a free action if the spell you cast wasn't a cantrip. This must be your next action, and if you don't have a fly Speed, you must end the flight on solid ground or fall. --- **Activate** Cast a Spell **Effect** You cast Gale Blast."
+ }
+]

@@ -1,0 +1,1153 @@
+[
+ {
+  "id": "a-little-bird-told-me",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "A Little Bird Told Me...",
+  "level": 8,
+  "traits": [
+   "archetype",
+   "concentrate",
+   "manipulate",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "core.stances"
+  ],
+  "text": "You transform into a small bird, such as a finch or a sparrow, allowing you to eavesdrop on others and gain information you wouldn't otherwise be able to acquire. You become Tiny, gain the animal trait, and you can't make Strikes. You can Dismiss the effect to return to your normal shape, and you resume your normal shape automatically if you're reduced to 0 Hit Points. You gain the following statistics and abilities: AC = 20 + your level. Ignore your armor's check penalty and Speed reduction. Fly speed 25 feet. Weakness 5 to physical damage. Low-light vision and imprecise scent 30 feet. Acrobatics and Stealth modifiers of +10, unless your own is higher; Athletics modifier –4."
+ },
+ {
+  "id": "abysium-armor",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Abysium Armor",
+  "level": 12,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Abysium Armor Source Grand Bazaar pg. 96 Usage worn armor Bulk varies by armor Base Material Abysium Typically only creatures immune to abysium's effects would don abysium armor. You're sickened 2 while wearing standard-grade armor made from abysium, or sickened 3 while wearing high-grade armor made from abysium. You can't reduce your sickened condition while wearing abysium armor, or for 1 hour after removing it. Abysium armor is dangerous to nearby creatures, too. Creatures within 10 feet of abysium armor must succeed at a Fortitude save (DC 30 for standard grade or DC 40 for high grade) or become sickened 1 (sickened 2 on a critical failure). Afterwards, the creature is temporarily immune for 1 minute, but if they remain within the area for longer than 1 minute, they automatically critically fail the next save. Abysium Armor (Standard-Grade) Source Grand Bazaar pg. 96 Price 2,000 gp (+200 gp per Bulk) Craft Requirements The initial raw materials must include at least 250 gp of abysium + 25 gp per Bulk. Abysium Armor (High-Grade) Source Grand Bazaar pg. 96 Price 40,000 gp (+4,000 gp per Bulk) Craft Requirements The initial raw materials must include at least 20,000 gp of abysium + 2,000 gp per Bulk."
+ },
+ {
+  "id": "abysium-armor-high-grade",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Abysium Armor (High-Grade)",
+  "level": 19,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Abysium Armor Source Grand Bazaar pg. 96 Usage worn armor Bulk varies by armor Base Material Abysium Typically only creatures immune to abysium's effects would don abysium armor. You're sickened 2 while wearing standard-grade armor made from abysium, or sickened 3 while wearing high-grade armor made from abysium. You can't reduce your sickened condition while wearing abysium armor, or for 1 hour after removing it. Abysium armor is dangerous to nearby creatures, too. Creatures within 10 feet of abysium armor must succeed at a Fortitude save (DC 30 for standard grade or DC 40 for high grade) or become sickened 1 (sickened 2 on a critical failure). Afterwards, the creature is temporarily immune for 1 minute, but if they remain within the area for longer than 1 minute, they automatically critically fail the next save. Abysium Armor (Standard-Grade) Source Grand Bazaar pg. 96 Price 2,000 gp (+200 gp per Bulk) Craft Requirements The initial raw materials must include at least 250 gp of abysium + 25 gp per Bulk. Abysium Armor (High-Grade) Source Grand Bazaar pg. 96 Price 40,000 gp (+4,000 gp per Bulk) Craft Requirements The initial raw materials must include at least 20,000 gp of abysium + 2,000 gp per Bulk."
+ },
+ {
+  "id": "abysium-armor-standard-grade",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Abysium Armor (Standard-Grade)",
+  "level": 12,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Abysium Armor Source Grand Bazaar pg. 96 Usage worn armor Bulk varies by armor Base Material Abysium Typically only creatures immune to abysium's effects would don abysium armor. You're sickened 2 while wearing standard-grade armor made from abysium, or sickened 3 while wearing high-grade armor made from abysium. You can't reduce your sickened condition while wearing abysium armor, or for 1 hour after removing it. Abysium armor is dangerous to nearby creatures, too. Creatures within 10 feet of abysium armor must succeed at a Fortitude save (DC 30 for standard grade or DC 40 for high grade) or become sickened 1 (sickened 2 on a critical failure). Afterwards, the creature is temporarily immune for 1 minute, but if they remain within the area for longer than 1 minute, they automatically critically fail the next save. Abysium Armor (Standard-Grade) Source Grand Bazaar pg. 96 Price 2,000 gp (+200 gp per Bulk) Craft Requirements The initial raw materials must include at least 250 gp of abysium + 25 gp per Bulk. Abysium Armor (High-Grade) Source Grand Bazaar pg. 96 Price 40,000 gp (+4,000 gp per Bulk) Craft Requirements The initial raw materials must include at least 20,000 gp of abysium + 2,000 gp per Bulk."
+ },
+ {
+  "id": "acknowledge-fan",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Acknowledge Fan",
+  "level": 12,
+  "traits": [
+   "archetype",
+   "incapacitation",
+   "mental",
+   "visual"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your reputation as a Firebrand precedes you, and you need only make a simple gesture or give a look of recognition to amaze those around you. You're so famous and beloved that even your enemies are fans, and they're shocked to see you here. Choose one target creature who can see you to acknowledge. The target must attempt a save against your class DC or spell DC, whichever is higher. Regardless of the result, the target becomes temporarily immune to Acknowledge Fan for 1 minute. --- **Critical Success** The target is unaffected and becomes temporarily immune to Acknowledge Fan for 1 day. **Success** The target is Stunned 1 and becomes temporarily immune to Acknowledge Fan for 1 day. **Failure** The target is Stunned 2. **Critical Failure** The target is paralyzed until the end of your next turn. --- **Special** This feat has either the arcane or occult trait, matching the choice you made when you took Mesmerizing Gaze."
+ },
+ {
+  "id": "acupuncturist",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Acupuncturist",
+  "level": 1,
+  "traits": [
+   "downtime",
+   "manipulate"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Access** Tian Xia origin --- You've studied the routes by which qi flows through the body. The needles stored in your healer's tools can manipulate its flow and improve health when applied to specific meridian points. You spend a day studying an ally to attempt a Medicine check to improve their qi against a standard DC for your ally's level. The ally is then immune to all uses of Acupuncturist for 1 week. --- **Critical Success** You grant your ally the choice of a +2 circumstance bonus to one downtime activity skill check within the next week, or the ability to roll twice on their next saving throw within the next week against an affliction and take the higher result; this is a fortune effect. **Success** You grant your ally a +1 circumstance bonus to one downtime activity skill check within the next week. **Critical Failure** Your ally takes a –1 circumstance penalty to all downtime activity skill checks within the next week."
+ },
+ {
+  "id": "adept-benefit-amulet",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Adept Benefit (Amulet)",
+  "level": 7,
+  "traits": [
+   "thaumaturge"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your amulet offers continued protection. When you use Amulet's Abeyance, you or your ally chooses one type of damage dealt by the triggering attack and gains resistance 5 against that damage type until the start of your next turn. At 15th level, this lingering resistance increases from 5 to 10."
+ },
+ {
+  "id": "adept-benefit-mirror",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Adept Benefit (Mirror)",
+  "level": 7,
+  "traits": [
+   "thaumaturge"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your mirror self shatters into punishing shards when damaged. When an enemy adjacent to one of your spaces damages you while your Mirror's Reflection is in effect, you can, as a free action, cause that version of you to explode into mirror shards. This ends Mirror's Reflection (establishing the remaining version of you as the real one) and deals slashing damage to all creatures in a around where your mirror self was. The damage is equal to 2 + half your level or the damage of the triggering attack, whichever is lower. You're immune to this damage."
+ },
+ {
+  "id": "admirers-bouquet",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Admirer's Bouquet",
+  "level": 7,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "An admirer's bouquet appears to be a colorful silken handkerchief that exudes a pleasant floral scent until it's picked up, at which point a dozen vibrantly colored long- stemmed flowers appear in the carrier's hand, the stems wrapped in the silk. **Activate** ⟨1⟩ Interact **Frequency** once per minute --- **Effect** By taking a deep sniff of the pleasant-smelling flowers, you can speed your recovery from nausea and reduce your sickened value by 1. --- **Activate** ⟨5⟩ Interact **Frequency** once per hour **Trigger** an ally with a free hand ends their turn adjacent to you --- **Effect** You hand the admirer's bouquet to the triggering ally. If they accept the bouquet, they gain a +1 item bonus to saves against emotion and mental effects as long as they continue to carry the admirer's bouquet. If they're currently suffering from a debilitating emotion or mental effect as the result of a saving throw made during the previous turn, they can immediately attempt a new saving throw against that effect upon being given the bouquet; if they do so, they gain the admirer's bouquet's +1 item bonus to this saving throw. An admirer's bouquet can allow for a new saving throw in this way only once per day."
+ },
+ {
+  "id": "admonishing-band",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Admonishing Band",
+  "level": 4,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Usage** affixed to a firearm **Activate** ⟨1⟩ (concentrate) **Requirements** You're trained in Intimidation. --- This wide strip of treated lizard hide is wrapped around the grip or stock of the affixed weapon, augmenting the unease that your gunshot creates. When you activate it, you fire your gun into the air with the effects of Warning Shot. If you already have the Warning Shot feat, the target doesn't become temporarily immune to your Demoralize, potentially allowing you to Demoralize them again."
+ },
+ {
+  "id": "aeon-stone",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Aeon Stone",
+  "level": 1,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Aeon Stone Source GM Core pg. 284 Usage worn Over millennia, these mysterious, intricately cut gemstones have been hoarded by mystics and fanatics hoping to discover their secrets. Despite their myriad forms and functions, these stones are purportedly all fragments of crystal tools used by otherworldly entities to construct the universe in primeval times. When you invest one of these precisely shaped crystals, the stone orbits your head instead of being worn on your body. You can stow an aeon stone with an Interact action, and an orbiting stone can be snatched out of the air with a successful Disarm action against you. A stowed or removed stone remains invested, but its effects are suppressed until you return it to orbit your head again. There are various types of aeon stones, each with a different appearance and magical effect. Each aeon stone also gains a resonant power when slotted into a special magical item called a wayfinder Aeon Stone (Amplifying) Source GM Core pg. 284 Price 9,750 gp An amplifying aeon stone must be activated to provide a benefit. The resonant power grants you a +2 item bonus to Arcana, Nature, Occultism, or Religion checks—whichever corresponds to the tradition of the last spell you enhanced with this aeon stone. Activate—Amplify (concentrate, spellshape) Effect If your next action is to Cast a Spell, that spell's rank is 1 higher (maximum 10th rank) for the purposes of counteracting and being counteracted. Aeon Stone (Consumed) Source GM Core pg. 284 Price 9 gp A consumed aeon stone is a dull lump that has lost its magical properties. It still rotates your head like any other aeon stone and can thus serve as a stylish, hand-free option for various spells that target an object. This aeon stone has no resonant power. Aeon Stone (Delaying) Source GM Core pg. 284 Price 350 gp When you would die from the dying condition (typically at dying 4), this smooth pink stone automatically activates and reduces your dying value to 1 less than would normally kill you (typically to dying 3). The stone then permanently turns into a consumed aeon stone. You can benefit from this ability only once per day, even if you have multiple such stones. The resonant power allows you to cast 1st-rank heal as a divine innate spell once per day. Aeon Stone (Envisioning) Source GM Core pg. 284 Price 425 gp This clear cube allows you to communicate with a limited form of telepathy to a range of 100 feet. The messages are transmitted as a simple image each round. These images are the quality of a hasty or childish sketch but can be roughly understood by creatures regardless of language. This provides no special ability to respond to your images. The resonant power allows you to cast translate as an occult innate spell once per day. Aeon Stone (Peering) Source GM Core pg. 284 Price 9,500 gp This faintly colored prism catches and transforms light. If the aeon stone is in an area of bright light, shades of purple light provide dim light in a 30-foot radius. In that radius, magical items and effects are tinged with purple, the depth of the color revealing their counteract rank. The GM also secretly rolls a counteract check against any darkness or illusio"
+ },
+ {
+  "id": "aeon-stone-pearly-white-spindle",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Aeon Stone (Pearly White Spindle)",
+  "level": 3,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "When you invest this *aeon stone*, it slowly starts healing your wounds, restoring 1 HP every minute. The resonant power grants you resistance 1 to void damage."
+ },
+ {
+  "id": "aeon-stone-vital-amplification",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Aeon Stone (Vital amplification)",
+  "level": 7,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Aeon stones are magical, intricately cut gemstones that orbit the head of their owners and grant them a magical effect. The ancient Azlanti empire made many advances in aeon stone technology, creating countless new aeon stones and devising innovative methods to use aeon stones to their greatest effect. The first wayfinders—one of many devices in which aeon stones can be slotted to gain additional resonant powers—were created in Azlant. When you invest one of these precisely shaped crystals, the stone orbits your head instead of being worn on your body. You can stow an aeon stone with an Interact action, and an orbiting stone can be snatched out of the air with a successful Disarm action against you. A stowed or removed stone remains invested, but its effects are suppressed until you return it to orbit your head again. There are various types of aeon stones, each with a different appearance, magical effect, and resonant power. --- A vital amplification aeon stone improves the flow of vital energy through your body, speeding the healing process and safeguarding your body from life-draining effects. Whenever you regain Hit Points, you regain an additional 1 Hit Point for each 10 Hit Points regained (minimum 1 additional Hit Point). The resonant power grants you resistance 5 to void damage."
+ },
+ {
+  "id": "aetheric-irritant",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Aetheric Irritant",
+  "level": 1,
+  "traits": [
+   "consumable",
+   "gadget",
+   "sonic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Aetheric Irritant May contain spoilers from Convocation Source Rival Academies pg. 92 Usage held in 1 hand Bulk L Activate (manipulate) An aetheric irritant is a chime that can emit a subsonic frequency that otherworldly beings find unpleasant. When you Activate an aetheric irritant, you sound the chime and place it on the ground in a square within your reach. Creatures with the fey, spirit, or undead traits must attempt a Will save when they enter the affected area and at the beginning of every turn they are in the affected area. Those who fail the save treat the area as difficult terrain until the beginning of their next turn. A creature that critically succeeds at the save is immune to all aetheric irritants for 24 hours. An aetheric irritant continues to hum until it shakes itself to pieces after 10 minutes of being activated or it is moved, whichever comes first. Lesser Aetheric Irritant Source Rival Academies pg. 92 Price 4 gp The aetheric irritant affects an area in a 10-foot emanation and the Will DC is 15. Moderate Aetheric Irritant Source Rival Academies pg. 92 Price 11 gp The aetheric irritant affects an area in a 15-foot emanation and the Will DC is 18. Greater Aetheric Irritant Source Rival Academies pg. 92 Price 275 gp The aetheric irritant affects an area in a 20-foot emanation and the Will DC is 28. Major Aetheric Irritant Source Rival Academies pg. 92 Price 2,750 gp The aetheric irritant affects an area in a 30-foot emanation and the Will DC is 36."
+ },
+ {
+  "id": "aetheric-irritant-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Aetheric Irritant (Greater)",
+  "level": 11,
+  "traits": [
+   "consumable",
+   "gadget",
+   "sonic"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- An aetheric irritant is a chime that can emit a subsonic frequency that otherworldly beings find unpleasant. When you Activate an aetheric irritant, you sound the chime and place it on the ground in a square within your reach. The aetheric irritant affects an area in a . Creatures with the fey, spirit, or undead traits must attempt a save when they enter the affected area and at the beginning of every turn they are in the affected area. Those who fail the save treat the area as difficult terrain until the beginning of their next turn. A creature that critically succeeds at the save is immune to all aetheric irritants for 24 hours. An aetheric irritant continues to hum until it shakes itself to pieces after 10 minutes of being activated or it is moved, whichever comes first."
+ },
+ {
+  "id": "aetheric-irritant-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Aetheric Irritant (Lesser)",
+  "level": 1,
+  "traits": [
+   "consumable",
+   "gadget",
+   "sonic"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- An aetheric irritant is a chime that can emit a subsonic frequency that otherworldly beings find unpleasant. When you Activate an aetheric irritant, you sound the chime and place it on the ground in a square within your reach. The aetheric irritant affects an area in a . Creatures with the fey, spirit, or undead traits must attempt a save when they enter the affected area and at the beginning of every turn they are in the affected area. Those who fail the save treat the area as difficult terrain until the beginning of their next turn. A creature that critically succeeds at the save is immune to all aetheric irritants for 24 hours. An aetheric irritant continues to hum until it shakes itself to pieces after 10 minutes of being activated or it is moved, whichever comes first."
+ },
+ {
+  "id": "aetheric-irritant-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Aetheric Irritant (Major)",
+  "level": 17,
+  "traits": [
+   "consumable",
+   "gadget",
+   "sonic"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- An aetheric irritant is a chime that can emit a subsonic frequency that otherworldly beings find unpleasant. When you Activate an aetheric irritant, you sound the chime and place it on the ground in a square within your reach. The aetheric irritant affects an area in a . Creatures with the fey, spirit, or undead traits must attempt a save when they enter the affected area and at the beginning of every turn they are in the affected area. Those who fail the save treat the area as difficult terrain until the beginning of their next turn. A creature that critically succeeds at the save is immune to all aetheric irritants for 24 hours. An aetheric irritant continues to hum until it shakes itself to pieces after 10 minutes of being activated or it is moved, whichever comes first."
+ },
+ {
+  "id": "aetheric-irritant-moderate",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Aetheric Irritant (Moderate)",
+  "level": 3,
+  "traits": [
+   "consumable",
+   "gadget",
+   "sonic"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- An aetheric irritant is a chime that can emit a subsonic frequency that otherworldly beings find unpleasant. When you Activate an aetheric irritant, you sound the chime and place it on the ground in a square within your reach. The aetheric irritant affects an area in a . Creatures with the fey, spirit, or undead traits must attempt a save when they enter the affected area and at the beginning of every turn they are in the affected area. Those who fail the save treat the area as difficult terrain until the beginning of their next turn. A creature that critically succeeds at the save is immune to all aetheric irritants for 24 hours. An aetheric irritant continues to hum until it shakes itself to pieces after 10 minutes of being activated or it is moved, whichever comes first."
+ },
+ {
+  "id": "agathion-raiment",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Agathion Raiment",
+  "level": 0,
+  "traits": [
+   "holy",
+   "relic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Agathion Raiment Source Treasure Vault (Remastered) pg. 201 Aspects Beast and Celestial An agathion raiment aids its wearer in finding diplomatic solutions to conflicts when possible, fighting evil directly when it’s not, and guiding others along the path to redemption. An agathion created five agathion raiments and granted them to champions of great valor millennia ago. Since then, virtuous souls of various skill sets have assembled agathion raiments. This set functions only for holy creatures. Set Items: Flask of Fellowship (level 2), Aeon Stone (Envisioning) (level 8), Messenger's Ring (level 9), Holy Chain (level 13), Headwrap of Wisdom (level 17) Gifts: The set grants the following gifts. - 1: Word of Faith - 2: Feral Claws - 3: Righteous Call - 4: Form of Fury (usually canine or cat) - 5: Angelic Vessel Collective Features: The set grants the following features. Two Items: Word of faith restores 1d10 Hit Points per relic level and reduces the target's frightened value by 2. Three Items: The claws you gain from feral claws are magical and deal 1d4 spirit damage. Four Items: You and your allies affected by righteous call deal 1d4 additional spirit damage with successful Strikes, rather than none or 1. This 1d4 stacks with that from your feral claws and damage from the holy rune effect you gain from righteous call. Five Items: In your form of fury, you have darkvision and gain 20 additional temporary Hit Points, but you have weakness 5 to unholy. You don't need to change your size to gain the benefits, other than reach, of a higher-level battle form. Also, your unarmed attacks from this form have the holy weapon property rune."
+ },
+ {
+  "id": "aged-arbor-wine",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Aged Arbor Wine",
+  "level": 12,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Watering grape or berry bushes with certain alchemical liquids as they grow results in a ruby-red drink that's rich and heady. The vines develop a connection to their natural environment and impart it onto the wine's imbiber. For 1 minute after drinking a glass of arbor wine, you have tremorsense at a range of 30 feet. Arbor wine that has been aged for several years—or artificially aged with alchemy—develops both a greater complexity of flavor and a stronger connection to nature. When you drink aged arbor wine, vegetation in a around you begins to writhe, becoming difficult terrain until the start of your next turn."
+ },
+ {
+  "id": "alarming-disappearance",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Alarming Disappearance",
+  "level": 5,
+  "traits": [
+   "minotaur"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your ability to move unseen is startling for one your size, causing panic among your enemies. When you successfully Hide when previously observed, creatures you are hidden from become Frightened 1. They are then temporarily immune to Alarming Disappearance for 1 hour. Typically, creatures that have traveled with you for a significant time, such as your fellow party members, are immune to your Alarming Disappearance."
+ },
+ {
+  "id": "alchemical-revivification",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Alchemical Revivification",
+  "level": 20,
+  "traits": [
+   "alchemist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "If you die while under the effect of at least one elixir, the alchemical compounds in your bloodstream bring you back to life at the start of your next turn. You're affected by an Elixir of Rejuvenation, then a true elixir of life, then your choice of a major bestial mutagen, major juggernaut mutagen, or major quicksilver mutagen as though you just imbibed it. These automatic reactions don't get any special benefits you add when creating or using these items. Because you died, all other alchemical compounds in your bloodstream are inert. After being revived, you're temporarily immune to Alchemical Rejuvenation for 1d4 hours."
+ },
+ {
+  "id": "alghollthu-lash",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Alghollthu Lash",
+  "level": 7,
+  "traits": [
+   "disarm",
+   "finesse",
+   "nonlethal",
+   "reach",
+   "trip"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This fleshy *+1 striking whip* is obviously crafted from the tentacle of some fearsome beast, likely an alghollthu, and constantly drips slime. **Activate** ⟨1⟩ command **Frequency** once per day --- **Effect** The next creature you successfully Strike with this weapon is exposed to alghollthu slime. **Alghollthu Slime** (curse, occult) **Saving Throw** **Stage 1** no ill effect (1 round) **Stage 2** the victim's skin softens, making the creature Drained 1 (1 round) **Stage 3** the victim's skin transforms into a clear, slimy membrane, making it Drained 2 until the curse ends; every hour this membrane remains dry, the creature's drained condition increases by 1 (permanent). A remove disease spell can counteract this curse, but immunity to disease offers no protection against it. --- **Craft Requirements** The initial raw materials must include a tentacle from an alghollthu."
+ },
+ {
+  "id": "alkenstar-ice-wine",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Alkenstar Ice Wine",
+  "level": 5,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "drug",
+   "ingested",
+   "poison",
+   "vitality"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This bottle of delicately sweet ice wine has the properties of alcohol. Made exclusively from grapes frozen in the Mana Wastes' erratic surge storms, Alkenstar ice wine finds a ready market among Geb, though undead are still immune to the drug's listed effects. The listed price is for a mediocre vintage, but finer vintages are higher level and commensurately more expensive."
+ },
+ {
+  "id": "all-in-my-head",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "All in my Head",
+  "level": 18,
+  "traits": [
+   "bard",
+   "illusion",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** You would take damage from a Strike or spell that doesn't have the death trait or otherwise cause instant death (such as ). --- Using your occult connections and incredible powers of persuasion, you convince yourself that the triggering damage is a figment of your imagination. The damage changes from its usual damage type to mental damage, and the damaging effect gains the nonlethal trait. You can't use this reaction if you are immune to mental effects or mental damage."
+ },
+ {
+  "id": "alloy-flesh-and-steel",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Alloy Flesh and Steel",
+  "level": 14,
+  "traits": [
+   "impulse",
+   "kineticist",
+   "manipulate",
+   "metal",
+   "polymorph",
+   "primal"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "core.stances"
+  ],
+  "text": "Elemental energy replaces every cell of your body with raw metal. You gain the benefits of the Ferrous Form spell (except you can't cast *needle darts*) until the end of your next turn. You can Sustain the impulse up to 1 minute, and when you do, you can Raise a metal Shield if you're wielding one. Your metal Elemental Blasts deal an additional die of damage. If you suspend any conditions with Alloy Flesh and Steel, when it ends, you're temporarily immune to Alloy Flesh and Steel for 1 hour. --- **Level (16th)** The resistance is 15."
+ },
+ {
+  "id": "ambrosia-of-undying-hope",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Ambrosia of Undying Hope",
+  "level": 19,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This elixir is usually stored in a small metal flask or miniature stein. The dark liquid sparkles as if it were full of stars and is considered sacred to Cayden Cailean and to the cults of the Failed in Absalom. The next time you would die from damage within 8 hours after you drink the ambrosia, it prevents you from dying, you regain 20 Hit Points, the elixir's benefits end, and you become temporarily immune to the ambrosia of undying hope for 24 hours. The ambrosia can't protect you from death effects or disintegration, but it can protect against almost any other form of death via damage. You can only be under the effect of a single ambrosia of undying hope at a time."
+ },
+ {
+  "id": "anathema-fulu",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Anathema Fulu",
+  "level": 11,
+  "traits": [
+   "consumable",
+   "fulu",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Duration** 1 hour --- First used by celestial-touched nephilim of Tianjing to weaken qlippoth, an anathema fulu comes in four pieces, one placed in each cardinal direction. Choose one of the following traits when activating the fulus: celestial, elemental, fey, fiend, monitor, or undead. If a creature with that trait starts its turn in the area, it must succeed at a saving throw or become Sickened 2 until the start of its next turn. On a critical success, the creature becomes temporarily immune to any anathema fulus for 1 hour. Regardless of the save result, if you subsequently cast Banishment on such a creature in the area, the creature takes the –2 penalty described in that spell for adding a special cost of an object that's anathema to that creature. The fulu acts as that object; you don't need to add it. If a creature affected by this penalty rolls a saving throw against *banishment*, the caster can use a free action to force the result one step lower. Doing so burns the whole fulu out, ending the effect. If any of the fulu's pieces are moved or destroyed after activation, the effect ends."
+ },
+ {
+  "id": "angel-eidolon",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Angel Eidolon",
+  "level": 1,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Your eidolon is a celestial messenger, a member of the angelic host with a unique link to you, allowing them to carry a special message to the mortal world at your side. Most angel eidolons are roughly humanoid in form, with feathered wings, glowing eyes, halos, or similar angelic features. However, some take the form of smaller angelic servitors like the winged helmet cassisian angel instead. The two of you are destined for an important role in the plans of the celestial realms. Though a true angel, your angel eidolon's link to you as a mortal prevents them from casting the angelic messenger ritual, even if they somehow learn it. **Tradition** divine **Traits** angel, celestial, eidolon **Alignment** must be good, usually neutral good **Home Plane** Nirvana (if NG), Elysium (if CG), or Heaven (if LG) --- **Size** Medium or Small **Suggested Attacks** fist (bludgeoning), wing (bludgeoning), unarmed attacks shaped like a weapon **Angelic Avenger** Str 18, Dex 14, Con 16, Int 8, Wis 12, Cha 10; +2 AC (+3 Dex cap) **Angelic Emissary** Str 12, Dex 18, Con 12, Int 10, Wis 12, Cha 14; +1 AC (+4 Dex cap) **Skills** Diplomacy, Religion **Senses** darkvision **Language** Celestial **Speed** 25 feet --- **Eidolon Abilities** *Initial* hallowed strikes; *Symbiosis* traveler's aura; *Transcendence* angelic mercy ## Hallowed Strikes Your eidolon's attacks are hallowed by the celestial realms. Your eidolon's unarmed Strikes deal an extra 1 good damage; as usual, this extra damage harms only evil creatures or those with a weakness to good damage. Additionally, your eidolon can make nonlethal attacks with its unarmed attacks without taking the usual –2 circumstance penalty. ## Traveler's Aura 7th Your eidolon emanates a powerful aura—resembling that of an astral deva—that protects creatures as they travel. The aura has the abjuration, aura, and divine traits. Your eidolon and its allies within a 20-foot emanation are protected from severe heat and cold, and your eidolon is never off-guard to creatures inside the aura that are of a lower level than the eidolon. When you gain the transcendence class feature, this evolves to the full benefits of an astral deva; your eidolon and allies in the aura are protected from environmental damage from any plane, including severe and extreme heat and cold as well as more unusual dangers. ## Angelic Mercy 17th Your eidolon's angelic power allows them to assuage a variety of ailments, just like most other powerful angels. Your eidolon can cast *remove curse*, *remove disease*, *remove fear*, and *remove paralysis* once per day each as 9th-level divine innate spells."
+ },
+ {
+  "id": "angelic-opera-cloak",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Angelic Opera Cloak",
+  "level": 19,
+  "traits": [
+   "apex",
+   "holy",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This luxurious cloak embodies an angel's swiftness. You gain a +3 item bonus to Acrobatics checks and never take falling damage, as your cloak billows like a pair of wings to soften any fall you take. When you invest in the cloak, you either increase your Dexterity score by 2 or increase it to 18, whichever would give you a higher score. If you are unholy, you are Slowed 1 while wearing this cloak. **Activate—On Angel's Wings** ⟨2⟩ (concentrate) **Frequency** once per hour --- **Effect** The opera cloak transforms into two pairs of brilliant, feathered wings that grant you a fly Speed of 40 feet for 10 minutes. During this time, you gain immunity to paralysis effects and ignore effects that would give you a circumstance penalty to speed."
+ },
+ {
+  "id": "anger-phantom-eidolon",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Anger Phantom Eidolon",
+  "level": 1,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Your eidolon is a lost soul, bound to the mortal world by undying anger or a bitter grudge. Most phantom eidolons are humanoids with a spectral or ectoplasmic appearance, though some take far stranger forms. Your link with your eidolon prevents it from succumbing to corruption and undeath. Together, you will need to decide whether to work with your eidolon to control its anger, or channel its wrath into power. **Tradition** occult **Traits** eidolon, ethereal, phantom **Home Plane** Ethereal Plane --- **Size** Medium or Small **Suggested Attacks** fist (bludgeoning), tendril (bludgeoning), unarmed attacks shaped like a weapon **Wrathful Berserker** Str 18, Dex 14, Con 16, Int 8, Wis 10, Cha 12; +2 AC (+3 Dex cap) **Enraged Assassin** Str 14, Dex 18, Con 16, Int 10, Wis 8, Cha 12; +1 AC (+4 Dex cap) **Skills** Intimidation, Occultism **Senses** darkvision **Language** one common mortal language the eidolon spoke in life **Speed** 25 feet --- **Eidolon Abilities** *Initial* furious strike; *Symbiosis* seething frenzy; *Transcendence* anger aura ## Furious Strike Your eidolon can infuse an attack with unmitigated rage. It gains the Furious Strike activity. ## Seething Frenzy 7th Your eidolon can stoke itself into a frenzy. It gains the Seething Frenzy action. ## Anger Aura 17th Your eidolon exudes wrath in an aura around it, rousing the ire of nearby creatures and causing their defenses to crack as they seethe with rage. Your eidolon gains a 20-foot anger aura, which has the aura, emotion, enchantment, mental, and occult traits. The resistances of any creature in the aura, including you, your allies, your enemies, and your eidolon, are reduced by an amount equal to 3 + your eidolon's Constitution modifier. Your eidolon can hold in its rage by spending a single action, which has the concentrate trait. This reduces the aura's effect to affect only your eidolon. It can take this action again to reinstate the full effect of its aura. Creatures in a barbarian Rage, Seething Frenzy, or similar ability that allows them to channel their anger aren't affected by the anger aura."
+ },
+ {
+  "id": "anglerfish-lantern",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Anglerfish Lantern",
+  "level": 5,
+  "traits": [
+   "magical",
+   "water"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This bull's-eye lantern is either stylized after an anglerfish or made from the taxidermy of one. While it can be lit as usual, the *anglerfish lantern* automatically shines when submerged in water. --- **Activate—Mesmerizing Lights** ⟨2⟩ (concentrate, manipulate) **Frequency** once per hour **Effect** All creatures within the bright light of the *anglerfish lantern* must succeed at a save or be fascinated by the light for 1 round (1 minute on a critical failure). The fascination ends if the light is extinguished. Aquatic animals and creatures with the water trait take a –2 circumstance penalty to this check. Regardless of the result, the creature then becomes immune to this effect for the next 24 hours."
+ },
+ {
+  "id": "anglerfish-lantern-submersible",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Anglerfish Lantern (Submersible)",
+  "level": 8,
+  "traits": [
+   "magical",
+   "water"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This bull's-eye lantern is either stylized after an anglerfish or made from the taxidermy of one. While it can be lit as usual, the *submersible anglerfish lantern* automatically shines when submerged in water. --- **Activate—Mesmerizing Lights** ⟨2⟩ (concentrate, manipulate) **Frequency** once per hour **Effect** All creatures within the bright light of the *submersible anglerfish lantern* must succeed at a save or be fascinated by the light for 1 round (1 minute on a critical failure). The fascination ends if the light is extinguished. Aquatic animals and creatures with the water trait take a –2 circumstance penalty to this check. Regardless of the result, the creature then becomes immune to this effect for the next 24 hours. --- **Activate—Dive!** 1 minute (concentrate, manipulate) **Frequency** once per day **Effect** You lower the *submersible anglerfish lantern* into water at least 15 feet deep while issuing a command. The lantern transforms into a Bathysphere for 1 hour. This vehicle possesses a light that can be swiveled up to 90 degrees with an Interact action and has the activation listed above. When the effect ends, any occupants are ejected harmlessly. If the bathysphere becomes broken, the effect ends and the *submersible anglerfish lantern* is broken as well."
+ },
+ {
+  "id": "animal-nip",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Animal Nip",
+  "level": 4,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "olfactory",
+   "plant",
+   "wood"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Animal Nip Source Rage of Elements pg. 200 Usage held in 1 hand Activate (manipulate) Animal nip contains a mix of herbaceous, fragrant plants, ground into a coarse powder with a strong scent that attracts a broad spectrum of animals. You activate animal nip by sprinkling it on the ground or a target of your choice. For the next minute, all creatures within 30 feet that have the animal trait must attempt a Will save or become fascinated by the smell of the animal nip for 1 round. On a critical failure, they also fall prone and roll about on the ground. If the target is subject to a hostile act, the fascination ends immediately. Regardless of the result of the creature's save, it's then immune to animal nip for 1 hour. Animal Nip (Lesser) Source Rage of Elements pg. 200 Price 15 gp The DC is 18. Animal Nip (Moderate) Source Rage of Elements pg. 200 Price 75 gp The DC is 24. Animal Nip (Greater) Source Rage of Elements pg. 200 Price 350 gp The DC is 30."
+ },
+ {
+  "id": "animal-nip-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Animal Nip (Greater)",
+  "level": 12,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "olfactory",
+   "plant",
+   "wood"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Animal Nip Source Rage of Elements pg. 200 Usage held in 1 hand Activate (manipulate) Animal nip contains a mix of herbaceous, fragrant plants, ground into a coarse powder with a strong scent that attracts a broad spectrum of animals. You activate animal nip by sprinkling it on the ground or a target of your choice. For the next minute, all creatures within 30 feet that have the animal trait must attempt a Will save or become fascinated by the smell of the animal nip for 1 round. On a critical failure, they also fall prone and roll about on the ground. If the target is subject to a hostile act, the fascination ends immediately. Regardless of the result of the creature's save, it's then immune to animal nip for 1 hour. Animal Nip (Lesser) Source Rage of Elements pg. 200 Price 15 gp The DC is 18. Animal Nip (Moderate) Source Rage of Elements pg. 200 Price 75 gp The DC is 24. Animal Nip (Greater) Source Rage of Elements pg. 200 Price 350 gp The DC is 30."
+ },
+ {
+  "id": "animal-nip-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Animal Nip (Lesser)",
+  "level": 4,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "olfactory",
+   "plant",
+   "wood"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Animal nip contains a mix of herbaceous, fragrant plants, ground into a coarse powder with a strong scent that attracts a broad spectrum of animals. You activate animal nip by sprinkling it on the ground or a target of your choice. For the next minute, all creatures within 30 feet that have the animal trait must attempt a save or become fascinated by the smell of the animal nip for 1 round. On a critical failure, they also fall prone and roll about on the ground. If the target is subject to a hostile act, the fascination ends immediately. Regardless of the result of the creature's save, it's then immune to animal nip for 1 hour."
+ },
+ {
+  "id": "animal-nip-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Animal Nip (Major)",
+  "level": 12,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "olfactory",
+   "plant",
+   "wood"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Animal nip contains a mix of herbaceous, fragrant plants, ground into a coarse powder with a strong scent that attracts a broad spectrum of animals. You activate animal nip by sprinkling it on the ground or a target of your choice. For the next minute, all creatures within 30 feet that have the animal trait must attempt a save or become fascinated by the smell of the animal nip for 1 round. On a critical failure, they also fall prone and roll about on the ground. If the target is subject to a hostile act, the fascination ends immediately. Regardless of the result of the creature's save, it's then immune to animal nip for 1 hour."
+ },
+ {
+  "id": "animal-nip-moderate",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Animal Nip (Moderate)",
+  "level": 8,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "olfactory",
+   "plant",
+   "wood"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Animal nip contains a mix of herbaceous, fragrant plants, ground into a coarse powder with a strong scent that attracts a broad spectrum of animals. You activate animal nip by sprinkling it on the ground or a target of your choice. For the next minute, all creatures within 30 feet that have the animal trait must attempt a save or become fascinated by the smell of the animal nip for 1 round. On a critical failure, they also fall prone and roll about on the ground. If the target is subject to a hostile act, the fascination ends immediately. Regardless of the result of the creature's save, it's then immune to animal nip for 1 hour."
+ },
+ {
+  "id": "animal-pheromones",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Animal Pheromones",
+  "level": 5,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "olfactory"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Animal Pheromones Source Howl of the Wild pg. 108 Usage held in 1 hand Bulk L Activate 1 minute (manipulate) These chemicals convey myriad signals. Many varieties of these alchemical cocktails exist, each tailored for the unique chemistry of a specific type of animal. You can, for example, make wolf pheromones, but not pheromones that affect all animals. The pheromones don’t work on creatures that are similar to the specific kind of animal, but aren’t actually animals—for example, wolf pheromones don’t work on werewolves. When you learn the formula for animal pheromones, you learn the formulas for all common animals. If no animals of a kind are common, you must learn the formula for it separately, and the formula has the same rarity as the least-rare creature of that kind. You Activate animal pheromones by rubbing them on yourself or a creature within reach. The pheromones last for 24 hours or until scrubbed clean with 1 minute of work (consisting of multiple Interact actions). During this time, the pheromones exude a subtle aroma in a 15-foot radius that calms and influences the designated animals. A designated animal that ends its turn within the affected area must attempt a Will saving throw with the following effects. The animal is then temporarily immune to the pheromones for 24 hours. The effect lasts for the duration of the pheromones, even after the creature leaves the affected area. Critical Success The animal is unaffected. It doesn’t necessarily become aware of the pheromones, although intelligent animals might become suspicious if they observe others of their kind being affected. Success The animal’s attitude toward the affected creature improves by one step. If this improves its attitude to at least indifferent, it can’t take hostile actions against the affected creature, though the change in attitude ends as soon as the affected creature takes a hostile action against the animal or its allies. Failure As success, but the attitude increases by two steps. Critical Failure As success, but the attitude increases to helpful. Craft Requirements Provide fur or a similar tissue sample from the designated kind of animal. Animal Pheromones (Lesser) Source Howl of the Wild pg. 108 Price 30 gp The DC of the save is 19. Animal Pheromones (Moderate) Source Howl of the Wild pg. 108 Price 300 gp The DC of the save is 27. Animal Pheromones (Greater) Source Howl of the Wild pg. 108 Price 3,000 gp The DC of the save is 35."
+ },
+ {
+  "id": "animal-pheromones-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Animal Pheromones (Greater)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "olfactory"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** 1 minute (Interact) --- These chemicals convey myriad signals. Many varieties of these alchemical cocktails exist, each tailored for the unique chemistry of a specific type of animal. You can, for example, make wolf pheromones, but not pheromones that affect all animals. The pheromones don't work on creatures that are similar to the specific kind of animal, but aren't actually animals—for example, wolf pheromones don't work on werewolves. When you learn the formula for animal pheromones, you learn the formulas for all common animals. If no animals of a kind are common, you must learn the formula for it separately, and the formula has the same rarity as the least-rare creature of that kind. You Activate animal pheromones by rubbing them on yourself or a creature within reach. The pheromones last for 24 hours or until scrubbed clean with 1 minute of work (consisting of multiple Interact actions). During this time, the pheromones exude a subtle aroma in a 15-foot radius that calms and influences the designated animals. A designated animal that ends its turn within the affected area must attempt a saving throw with the following effects. The animal is then temporarily immune to the pheromones for 24 hours. The effect lasts for the duration of the pheromones, even after the creature leaves the affected area. --- **Critical Success** The animal is unaffected. It doesn't necessarily become aware of the pheromones, although intelligent animals might become suspicious if they observe others of their kind being affected. **Success** The animal's attitude toward the affected creature improves by one step. If this improves its attitude to at least indifferent, it can't take hostile actions against the affected creature, though the change in attitude ends as soon as the affected creature takes a hostile action against the animal or its allies. **Failure** As success, but the attitude increases by two steps. **Critical Failure** As success, but the attitude increases to helpful."
+ },
+ {
+  "id": "animal-pheromones-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Animal Pheromones (Lesser)",
+  "level": 5,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "olfactory"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** 1 minute (Interact) --- These chemicals convey myriad signals. Many varieties of these alchemical cocktails exist, each tailored for the unique chemistry of a specific type of animal. You can, for example, make wolf pheromones, but not pheromones that affect all animals. The pheromones don't work on creatures that are similar to the specific kind of animal, but aren't actually animals—for example, wolf pheromones don't work on werewolves. When you learn the formula for animal pheromones, you learn the formulas for all common animals. If no animals of a kind are common, you must learn the formula for it separately, and the formula has the same rarity as the least-rare creature of that kind. You Activate animal pheromones by rubbing them on yourself or a creature within reach. The pheromones last for 24 hours or until scrubbed clean with 1 minute of work (consisting of multiple Interact actions). During this time, the pheromones exude a subtle aroma in a 15-foot radius that calms and influences the designated animals. A designated animal that ends its turn within the affected area must attempt a saving throw with the following effects. The animal is then temporarily immune to the pheromones for 24 hours. The effect lasts for the duration of the pheromones, even after the creature leaves the affected area. --- **Critical Success** The animal is unaffected. It doesn't necessarily become aware of the pheromones, although intelligent animals might become suspicious if they observe others of their kind being affected. **Success** The animal's attitude toward the affected creature improves by one step. If this improves its attitude to at least indifferent, it can't take hostile actions against the affected creature, though the change in attitude ends as soon as the affected creature takes a hostile action against the animal or its allies. **Failure** As success, but the attitude increases by two steps. **Critical Failure** As success, but the attitude increases to helpful."
+ },
+ {
+  "id": "animal-pheromones-moderate",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Animal Pheromones (Moderate)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "olfactory"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** 1 minute (Interact) --- These chemicals convey myriad signals. Many varieties of these alchemical cocktails exist, each tailored for the unique chemistry of a specific type of animal. You can, for example, make wolf pheromones, but not pheromones that affect all animals. The pheromones don't work on creatures that are similar to the specific kind of animal, but aren't actually animals—for example, wolf pheromones don't work on werewolves. When you learn the formula for animal pheromones, you learn the formulas for all common animals. If no animals of a kind are common, you must learn the formula for it separately, and the formula has the same rarity as the least-rare creature of that kind. You Activate animal pheromones by rubbing them on yourself or a creature within reach. The pheromones last for 24 hours or until scrubbed clean with 1 minute of work (consisting of multiple Interact actions). During this time, the pheromones exude a subtle aroma in a 15-foot radius that calms and influences the designated animals. A designated animal that ends its turn within the affected area must attempt a saving throw with the following effects. The animal is then temporarily immune to the pheromones for 24 hours. The effect lasts for the duration of the pheromones, even after the creature leaves the affected area. --- **Critical Success** The animal is unaffected. It doesn't necessarily become aware of the pheromones, although intelligent animals might become suspicious if they observe others of their kind being affected. **Success** The animal's attitude toward the affected creature improves by one step. If this improves its attitude to at least indifferent, it can't take hostile actions against the affected creature, though the change in attitude ends as soon as the affected creature takes a hostile action against the animal or its allies. **Failure** As success, but the attitude increases by two steps. **Critical Failure** As success, but the attitude increases to helpful."
+ },
+ {
+  "id": "animal-senses",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Animal Senses",
+  "level": 1,
+  "traits": [
+   "beastkin"
+  ],
+  "engineFieldsPresent": [
+   "choice",
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You gain one of the following senses available to your inherent animal: darkvision, low-light vision, or scent (imprecise) 30 feet. You must have low-light vision before you can gain darkvision with this feat. If your inherent animal doesn't typically have a specific type of sense, you can't gain that sense with this feat. --- **Special** You can select this feat multiple times, choosing a different sense each time."
+ },
+ {
+  "id": "antimagic-oil",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Antimagic Oil",
+  "level": 20,
+  "traits": [
+   "consumable",
+   "magical",
+   "oil"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- This oil contains energy that repels nearly all types of magic. When you apply this oil to armor, the creature wearing the armor becomes immune to all spells, effects of magic items (the wearer's and those of others), and effects with the magical trait for 1 minute. The oil affects neither the magic of the armor nor the fundamental runes of weapons attacking the wearer. Magical effects from a source of 20th level or higher, such as a deity, still function on the armor's wearer."
+ },
+ {
+  "id": "aon-abysium-armor",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Abysium Armor",
+  "level": 12,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Typically only creatures immune to abysium's effects would don abysium armor. You're sickened 2 while wearing standard-grade armor made from abysium, or sickened 3 while wearing high-grade armor made from abysium. You can't reduce your sickened condition while wearing abysium armor, or for 1 hour after removing it. Abysium armor is dangerous to nearby creatures, too. Creatures within 10 feet of abysium armor must succeed at a Fortitude save (DC 30 for standard grade or DC 40 for high grade) or become sickened 1 (sickened 2 on a critical failure). Afterwards, the creature is temporarily immune for 1 minute, but if they remain within the area for longer than 1 minute, they automatically critically fail the next save."
+ },
+ {
+  "id": "aon-agathion-raiment",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Agathion Raiment",
+  "level": 0,
+  "traits": [
+   "holy",
+   "relic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Agathion Raiment Aspects Beast and Celestial An agathion raiment aids its wearer in finding diplomatic solutions to conflicts when possible, fighting evil directly when it’s not, and guiding others along the path to redemption. An agathion created five agathion raiments and granted them to champions of great valor millennia ago. Since then, virtuous souls of various skill sets have assembled agathion raiments . This set functions only for holy creatures. Set Items : Flask of Fellowship (level 2), Aeon Stone (Envisioning) (level 8), Messenger's Ring (level 9), Holy Chain (level 13), Headwrap of Wisdom (level 17) Gifts : The set grants the following gifts. - 1: Word of Faith - 2: Feral Claws - 3: Righteous Call - 4: Form of Fury (usually canine or cat) - 5: Angelic Vessel Collective Features : The set grants the following features. Two Items : Word of faith restores 1d10 Hit Points per relic level and reduces the target's frightened value by 2. Three Items : The claws you gain from feral claws are magical and deal 1d4 spirit damage. Four Items : You and your allies affected by righteous call deal 1d4 additional spirit damage with successful Strikes, rather than none or 1. This 1d4 stacks with that from your feral claws and damage from the holy rune effect you gain from righteous call. Five Items : In your form of fury, you have darkvision and gain 20 additional temporary Hit Points, but you have weakness 5 to unholy. You don't need to change your size to gain the benefits, other than reach, of a higher-level battle form. Also, your unarmed attacks from this form have the holy weapon property rune."
+ },
+ {
+  "id": "aon-beast-senses",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Beast Senses",
+  "level": 0,
+  "traits": [],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Beast Senses Aspect Beast Prerequisite The relic is a worn item. The relic grants you an animal's acute senses as long as you wear it. You gain low-light vision. If you already have low-light vision, you instead gain darkvision. At 10th level, the relic grants you imprecise scent with a range of 10 feet."
+ },
+ {
+  "id": "aon-borrow-time",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Borrow Time",
+  "level": 0,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Borrow Time Aspect Time Activate Two Actions (concentrate, manipulate) Effect You point the relic at a creature within 30 feet, imbuing it with urgency. The creature gains the quickened condition for 1 round. After the condition ends, the creature is slowed 1 for 1 round and temporarily immune to this gift until you next perform your daily preparations."
+ },
+ {
+  "id": "aon-celestial-mount",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Celestial Mount",
+  "level": 20,
+  "traits": [
+   "champion"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Your steed gains incredible celestial powers granted by your deity. It gains darkvision, its maximum Hit Points increase by 40, and it gains weakness 10 to unholy. Additionally, it grows wings appropriate to a servitor of your deity (such as metallic wings for an archon), granting it a fly Speed equal to its Speed. It gains the celestial trait and the trait appropriate to the type of servitor it has become (archon, angel, or azata, for example)."
+ },
+ {
+  "id": "aon-dad-joke",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Dad Joke",
+  "level": 1,
+  "traits": [
+   "auditory",
+   "general",
+   "mental",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Using the power of punnery, you deliver a lovingly tailored joke at a creature within 60 feet. Attempt a skill check using the skill that would be used to identify the creature (e.g. Religion for a fiend); you can instead attempt a Lore check with a +2 circumstance bonus if the target is trained in that Lore or could be identified by that Lore when Recalling Knowledge. If you target a creature that isn’t a family member, this ability gains the incapacitation trait. The target is then immune to your Dad Jokes for 1 hour. If you spend two actions to use this ability by setting up an especially elaborate punchline, your target also takes 1d4 mental damage, plus 1d4 additional damage at 3rd level and every 2 levels thereafter, with a basic Will save against the higher of your class DC or spell DC. **Critical Success** The joke is so blindingly perfect-yet-awful that the target dissociates from reality. The creature is dazzled and stupefied 1 until the end of your next turn. Double the mental damage dealt to the target. **Success** The target is stupefied 1 until the end of your next turn or until the creature targets you with a hostile effect, whichever happens first. The target takes full mental damage. **Failure** The target is unaffected. **Critical Failure** The target is unaffected. Your allies who hear the joke are so embarrassed by it that they can’t treat you as an ally for any effects until the end of your next turn."
+ },
+ {
+  "id": "aon-death-gaze",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Death Gaze",
+  "level": 0,
+  "traits": [
+   "void",
+   "negative"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Death Gaze Aspect Death Activate Two Actions (concentrate, manipulate) Effect Your stare causes a creature's flesh to rot and wither away. Target a creature you can see within 30 feet. Your stare deals 1d6 void damage to the creature for every 2 levels the relic has (minimum 1d6; basic Fortitude save). An undead creature or other creature with void healing targeted this way is instead healed 1d6 HP per level of the relic and is temporarily immune to this effect for 10 minutes."
+ },
+ {
+  "id": "aon-draconic-resistance",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Draconic Resistance",
+  "level": 0,
+  "traits": [
+   "abjuration"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Draconic Resistance Aspect Dragon You grow scales that guard against draconic attacks. You gain a +1 status bonus to AC against attacks from dragons and resistance to an energy type corresponding to the soul seed's draconic origin (such as fire resistance from a red dragon) equal to half the relic's level (minimum resistance 1)."
+ },
+ {
+  "id": "aon-dragonhide",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Dragonhide",
+  "level": 8,
+  "traits": [
+   "precious"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The hide and scales of a dragon can be used to Craft any item normally made of ordinary leather or hide. Dragonhide varies in color and texture, depending on the dragon it came from. Due to dragonhide's resiliency, it can also be used to Craft armor usually made out of metal plates (such as a breastplate, half plate, and full plate), allowing such armor to be made without metal. Dragonhide objects are immune to one damage type, depending on the tradition associated with the dragon. ## Dragonhide Items Hardness HP BT Thin Items Standard-grade 4 16 8 High-grade 8 32 16 Standard Items Standard-grade 7 28 14 High-grade 11 44 22 Material Uses Dragonhide Armor Dragonhide Shield"
+ },
+ {
+  "id": "aon-dragonhide-armor",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Dragonhide Armor",
+  "level": 12,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Dragonhide armor is immune to one damage type based on the type of dragon it's made from. Wearing armor made from dragonhide also grants you a +1 circumstance bonus to your AC and saving throws against attacks and spells that deal the corresponding damage type. ## Dragon Tradition Damage Arcane Force Divine Spirit Occult Mental Primal Poison"
+ },
+ {
+  "id": "aon-dragonhide-buckler-standard-grade",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Dragonhide Buckler (Standard-Grade)",
+  "level": 8,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Dragonhide shields are each immune to one damage type based on the tradition associated with the dragon. ## Dragon Tradition Damage Arcane Force Divine Spirit Occult Mental Primal Poison"
+ },
+ {
+  "id": "aon-dragonhide-object-standard-grade",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Dragonhide Object (Standard-Grade)",
+  "level": 8,
+  "traits": [
+   "precious"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The hide and scales of a dragon can be used to Craft any item normally made of ordinary leather or hide. Dragonhide varies in color and texture, depending on the dragon it came from. Due to dragonhide's resiliency, it can also be used to Craft armor usually made out of metal plates (such as a breastplate, half plate, and full plate), allowing such armor to be made without metal. Dragonhide objects are immune to one damage type, depending on the tradition associated with the dragon. ## Dragonhide Items Hardness HP BT Thin Items Standard-grade 4 16 8 High-grade 8 32 16 Standard Items Standard-grade 7 28 14 High-grade 11 44 22 Material Uses Dragonhide Armor Dragonhide Shield"
+ },
+ {
+  "id": "aon-dragonhide-shield",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Dragonhide Shield",
+  "level": 8,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Dragonhide shields are each immune to one damage type based on the tradition associated with the dragon. ## Dragon Tradition Damage Arcane Force Divine Spirit Occult Mental Primal Poison"
+ },
+ {
+  "id": "aon-emotion-conduit",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Emotion Conduit",
+  "level": 0,
+  "traits": [
+   "emotion",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Emotion Conduit Aspect Emotion Activate Two Actions (concentrate, manipulate) Effect You channel your relic's emotion at a target within 30 feet, overpowering an emotion effect on that creature. The relic attempts a counteract check. If the check succeeds, the target feels a sudden rush of the relic's emotion, and the counteracted effect ends on the target. The target is temporarily immune to your relic's emotion conduit until you make your next daily preparations."
+ },
+ {
+  "id": "aon-energy-robe",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Energy Robe",
+  "level": 7,
+  "traits": [
+   "invested",
+   "magical",
+   "transmutation"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This brightly colored linen robe is covered in delicate embroidery depicting creatures and natural phenomena suiting its aligned energy, such as a living thunderclap, pools of acid, roaring flames, or dancing marids. Activate Two Actions command, Interact; Frequency once per day; Effect You speak a command word, and the embroidered threads in the robe glow vividly. The benefit you receive from the energy robe depends on its type. You gain resistance 5 to fire. When the robe is activated, you gain a +30-foot status bonus to Speed for 1 minute as flames shoot out behind you to speed you up. You gain resistance 5 to cold. When the robe is activated, you gain the effects of water walk for 1 minute, as you momentarily flash freeze the surface of water as you walk across it. You gain resistance 5 to acid. When the robe is activated, you gain a climb Speed equal to your Speed, as the acid on your hands grants you easier handholds. You gain resistance 5 to electricity. When the robe is activated, you gain a fly Speed equal to your Speed for 1 minute."
+ },
+ {
+  "id": "aon-fascinating",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Fascinating",
+  "level": 0,
+  "traits": [
+   "mental"
+  ],
+  "engineFieldsPresent": [
+   "grantsFeats"
+  ],
+  "inRegistries": [],
+  "text": "Fascinating Aspect Artistry You gain the Fascinating Performance skill feat while wearing or wielding the relic, even if you don't meet its prerequisites. If you critically succeed against an observer, that target doesn't become temporarily immune to this effect."
+ },
+ {
+  "id": "aon-fiendish-mount",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Fiendish Mount",
+  "level": 20,
+  "traits": [
+   "champion"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Your steed ally manifests a suite of powerful and sinister gifts granted to it by your deity. It gains darkvision, its maximum Hit Points increase by 40, and it gains weakness 10 to holy. Additionally, it grows wings appropriate for a servitor of your deity (such as bat wings for a devil), granting it a fly Speed equal to its Speed. It gains the fiend trait and the trait appropriate to the type of servitor it has become (such as daemon, demon, or devil)."
+ },
+ {
+  "id": "aon-grim-specter",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Grim Specter",
+  "level": 0,
+  "traits": [
+   "polymorph",
+   "void",
+   "negative"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Grim Specter Aspect Death Activate Two Actions (concentrate, polymorph, void) Frequency once per day; Effect You can call upon the terrifying powers that fuel your relic to transform yourself into a specter of death. You become incorporeal, having no physical body. You are immune to effects that require a physical body, including precision damage as well as exposure to most diseases and poisons. You also have resistance to all damage equal to half the relic's level; force damage, ghost touch attacks, spirit damage, void damage, and vitality damage ignore this resistance, and the resistance doubles against non-magical damage. You can move through solid objects. When inside an object, you can't perceive, attack, or Interact with anything outside it, and you're always slowed 1 on turns you start in an object. Corporeal creatures can pass through you but can't end their movement in your space. You can't attempt Strength-based checks against corporeal creatures or objects, unless those objects have the ghost touch property rune. Likewise, corporeal creatures can't attempt Strength-based checks against you. You can Sustain the activation up to 1 minute."
+ },
+ {
+  "id": "aon-grisantian-hide-object-standard-grade",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Grisantian Hide Object (Standard-Grade)",
+  "level": 12,
+  "traits": [
+   "precious"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Highly desired for the prestige, the pelt of the grogrisant also has invaluable properties. Standard-grade items can be made from the pelt of a grisantian lion, but high-grade items require the pelt of the grogrisant itself. This supernaturally tough animal skin is gold and shines in sunlight. It can be used to make any item usually made of cloth, leather, or hide. This material is immune to fire, and its Hardness is doubled against piercing or slashing damage. Up to 4 Bulk of grisantian pelt can be harvested from a single creature (this is usually more than enough for 4 suits of standard grade armor or 2 suits of high-grade armor). ## Grisantian Pelt Items Thin Items Hardness HP BT Standard-grade 6 24 12 High-grade 8 32 16 Items Hardness HP BT Standard-grade 9 36 18 High-grade 11 44 22 Material Uses Grisantian Pelt Armor"
+ },
+ {
+  "id": "aon-grisantian-pelt",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Grisantian Pelt",
+  "level": 12,
+  "traits": [
+   "precious"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Highly desired for the prestige, the pelt of the grogrisant also has invaluable properties. Standard-grade items can be made from the pelt of a grisantian lion, but high-grade items require the pelt of the grogrisant itself. This supernaturally tough animal skin is gold and shines in sunlight. It can be used to make any item usually made of cloth, leather, or hide. This material is immune to fire, and its Hardness is doubled against piercing or slashing damage. Up to 4 Bulk of grisantian pelt can be harvested from a single creature (this is usually more than enough for 4 suits of standard grade armor or 2 suits of high-grade armor). ## Grisantian Pelt Items Thin Items Hardness HP BT Standard-grade 6 24 12 High-grade 8 32 16 Items Hardness HP BT Standard-grade 9 36 18 High-grade 11 44 22 Material Uses Grisantian Pelt Armor"
+ },
+ {
+  "id": "aon-grisantian-pelt-armor",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Grisantian Pelt Armor",
+  "level": 12,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Grisantian pelt armor is immune to fire damage, and its Hardness is doubled against piercing or slashing damage. Wearing armor made from grisantian pelt also grants you a +1 circumstance bonus to your AC and saving throws against attacks and spells that deal fire damage."
+ },
+ {
+  "id": "aon-inflamation-flask",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Inflamation Flask",
+  "level": 2,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "disease",
+   "splash"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This flask contains a caustic irritant that makes a target’s skin, scales, or carapace extremely sensitive to further nicks and burns. An inflammation flask deals the listed acid damage and acid splash damage. On a hit, the target also gains weakness to acid, fire, and slashing damage for 3 rounds. Many types of inflammation flask grant a bonus to attack rolls. The target can end the weakness effect by three means: being drenched with water (such as submersion or exposure to an area water effect), being Administered First Aid (whose DC in based on the bomb type), or regaining Hit Points from a single effect equal to twice the inflammation flask’s level. A creature that critically fails to Administer First Aid in this way deals untyped damage to the target equal to the inflammation flask’s initial acid damage. The bomb deals 1d6 acid damage and 1 acid splash damage. The target gains weakness 1 to acid, fire, and slashing damage, and theMedicine DC is 17. You gain a +1 item bonus to attack rolls. The bomb deals 2d6 acid damage and 2 acid splash damage. The target gains weakness 2 to acid, fire, and slashing damage, and the Medicine DC is 20. You gain a +2 item bonus to attack rolls. The bomb deals 3d6 acid damage and 3 acid splash damage. The target gains weakness 3 to acid, fire, and slashing damage, and the Medicine DC is 30. You gain a +3 item bonus to attack rolls. The bomb deals 4d6 acid damage and 4 acid splash damage. The target gains weakness 4 to acid, fire, and slashing damage, and the Medicine DC is 38."
+ },
+ {
+  "id": "aon-living-forge",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Living Forge",
+  "level": 0,
+  "traits": [
+   "polymorph",
+   "transmutation"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Living Forge Aspect Forge Activate Two Actions command, Interact; Frequency once per day; Effect The relic is absorbed into your body, and you transform into an elemental being of red-hot steel. You gain the effects of 7th-level elemental form and use the statistics for the forge battle form below. In this form, you can re-shape your limbs into different objects, such as a blade or hammer, by using an Interact action. Changing your limbs in this way allows you to choose between bludgeoning, physical, or slashing damage. Forge Speed 30 feet; fire resistance 10, weakness 5 to cold and water; Melee Single Action forgestrike, Damage 1d10 modular; 1d4 persistent fire."
+ },
+ {
+  "id": "aon-living-statue",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Living Statue",
+  "level": 0,
+  "traits": [
+   "earth"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Living Statue Aspect Earth Your relic's energies have given you control over the boundary between flesh and stone. You can cast 6th-rank petrify and sure footing (to remove petrification only) as innate spells, each once per day. As long as you are standing on the earth, your body reflexively petrifies at the moment you are struck, granting you resistance 5 to physical damage (except adamantine). This increases to 8 in caves or subterranean environments."
+ },
+ {
+  "id": "aon-lucky-coin",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Lucky Coin",
+  "level": 2,
+  "traits": [
+   "fortune",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "These coins—copper, silver, or gold depending on their potency—were not minted for circulation. Rather, friendly fey helped to create them as wards against the abilities of some gremlins, namely pugwampis. The coins are said to protect the bearer against misfortunes of all stripes, though, not merely those of gremlins and have come to be seen as good luck charms the world over. Each coin, regardless of the metal used to mint it, has a canine face on both sides; on one side, the face's mouth is open in a wide smile, while the other shows the face snarling. Activate—Guarded Fortune Free Action fortune, manipulate Trigger You fail a skill check due to a misfortune effect; Effect Flip the coin. If it lands on the smiling face, reroll the triggering check; since this activation has the fortune effect, any misfortune effect is canceled out for this check. You must use the new result, even if it's worse. If it lands on the snarling face, nothing happens. Either way, you're temporarily immune to Guarded Fortune for 1 hour. Craft Requirements Any checks made to craft this item while under a misfortune effect are automatic critical failures. You can use Guarded Fortune when you fail a skill check or a saving throw due to a misfortune effect. You can use Guarded Fortune when you fail a skill check, saving throw, or attack roll due to a misfortune effect."
+ },
+ {
+  "id": "aon-megaflora",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Megaflora",
+  "level": 0,
+  "traits": [
+   "plant"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Megaflora Aspect Plant Activate Two Actions (concentrate, manipulate) Frequency once per day; Effect With a pulse of natural energy, your relic grows massive plants in an instant. The megaflora is of one of the following types, chosen by the GM when the relic gains this gift. A megaflora appears in an unoccupied 10-foot space within 30 feet and has 50 Hit Points, weakness 5 to fire, AC 37, Reflex +20, and Fortitude +30. It persists for 1 minute or until reduced to 0 Hit Points. Corpseflower A single putrid-smelling flower grows at the target location. While the flower persists, each round at the end of your turn, all creatures in a 20-foot burst centered on the plant except you must succeed at a Fortitude save or be sickened 2 (also stunned 2 on a critical failure). This is a poison effect. Thorns A 10-foot-tall thorned plant or bamboo stalk grows at the target location. While the stalk persists, each round at the end of your turn, sharp stakes erupt from the ground, dealing 6d8 piercing damage to all creatures in a 20-foot burst centered on the plant except you (basic Reflex). Tree of Life A large tree bearing life-giving fruit grows at the target location. While the tree persists, living creatures within reach of the tree can use an Interact action to pick and eat one of the tree's fruits, regaining 2d8+5 Hit Points; picking a fruit without eating it causes the fruit to instantly vanish. This is a healing and wood effect, and a given creature can heal from the tree only once per round."
+ },
+ {
+  "id": "aon-obscure",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Obscure",
+  "level": 0,
+  "traits": [
+   "shadow"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Obscure Aspect Shadow Your relic absorbs light and wraps shadow around you, hiding you in darkness. As long as you are in dim light in an area of shadows, you can attempt a Stealth check to Hide, even if you aren't concealed against the creature, such as with a creature with darkvision."
+ },
+ {
+  "id": "aon-oppurtune-trickster",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Oppurtune Trickster",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You aren't above using underhanded tactics to gain an advantage, easily routing your opponents when they attack. Attempt a Deception check against the Perception DC of the creature that's the target of the triggering attack. Regardless of the result, the target is temporarily immune to your attempts to use Opportune Trickster for the next 10 minutes. **Special** If you have the Dirty Trick skill feat, you can attempt a Thievery check instead of a Deception check; if you do, this action loses the mental trait. **Critical Success** The target is off-guard (including against the triggering attack) until the end of your ally's turn. **Success** The target is off-guard against the triggering attack. **Critical Failure** You lose your balance in your attempt to assist your ally and fall prone."
+ },
+ {
+  "id": "aon-orator-s-fillibuster",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Orator's Fillibuster",
+  "level": 8,
+  "traits": [
+   "archetype",
+   "auditory",
+   "concentrate",
+   "linguistic",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "When you seek to convince others of the worth of your cause, you are capable of unleashing such an entrancing torrent of rhetoric and metaphor that it is all but impossible to look away from you. When you begin a conversation or similar attempt with the goal of Making an Impression, all creatures who are observing you become fascinated unless they succeed at a Will save against the higher of your class DC or spell DC. Creatures who are familiar with you and your verbal techniques, such as allies you've known for at least several days, are immune to this effect, though newer allies who have not heard one of your speeches before might still be affected. Affected creatures remain fascinated for as long as you continue your filibuster, though they can attempt a new save to end the effect at the end of each minute while your filibuster lasts. A creature who succeeds at a saving throw to end the fascinated condition from your filibuster is also unaffected by your attempt to Make an Impression. You can continue your filibuster indefinitely, but after every 10 minutes you must attempt a Fortitude saving throw against a hard DC for your level. Failing this save results in your filibuster ending and prevents you from attempting another filibuster for 1 hour."
+ },
+ {
+  "id": "aon-petal-dance",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Petal Dance",
+  "level": 0,
+  "traits": [
+   "plant"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Petal Dance Aspect Plant Activate Two Actions (concentrate) Frequency once per hour; Effect You discorporate into a cloud of petals and leaves. This grants you the swarm trait, immunity to falling damage, resistance 5 to bludgeoning and slashing damage, and weakness 5 to area and splash damage. You can fit into spaces only a few inches wide, moving your constituent petals through the gap. You don't gain the swarm mind ability, so you're still affected normally by mental effects. As a swarm, you can't speak, cast spells, use manipulate actions requiring your hands, activate your magic items, or make any of your Strikes with your normal body. You remain in this form for 1 minute or until you Dismiss the activation. At 13th level, the relic gains a reaction that triggers when you fall or take damage, applying this gift's resistances, weaknesses, and immunity to falling damage to the triggering effect."
+ },
+ {
+  "id": "aon-pierce-the-veil",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Pierce the Veil",
+  "level": 0,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Pierce the Veil Aspect Death Prerequisite living death gift The relic allows you to pierce the veil between life and death. While you are holding or wearing the relic, you have the void healing ability (as though you were undead; vitality energy harms you and void energy heals you). In addition, whenever you are healed by a void spell or effect, you gain resistance 5 to all damage (except force, ghost touch , spirit, and vitality) until the start of your next turn. Finally, you gain a +2 item bonus to all saves against death effects while you are the bearer of the relic; this increases to a +3 item bonus at 13th level."
+ }
+]

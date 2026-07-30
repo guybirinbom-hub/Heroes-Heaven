@@ -772,6 +772,8 @@ export default function App() {
               level: active.character.level,
               conMod: abilityMod(active.character.abilities.con),
               initialResources: active.character.classResources,
+              // Lets rest tell an ITEM mode (clears overnight) from one the player toggled themselves.
+              modeDefs: content?.modes,
             }),
           )
         }

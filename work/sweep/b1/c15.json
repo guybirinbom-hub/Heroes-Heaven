@@ -1,0 +1,1225 @@
+[
+ {
+  "id": "magic-weapon-2-striking",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Magic Weapon (+2 Striking)",
+  "level": 10,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Magic Weapon Source GM Core pg. 240 Usage held in 1 hand A magic weapon is a weapon etched with only fundamental runes. A weapon potency rune gives an item bonus to attack rolls with the weapon, and a striking rune increases the weapon's number of weapon damage dice. The Prices here are for all types of weapons. You don't need to adjust the Price from a club to a greataxe or the like. These weapons are made of standard materials, not precious materials such as cold iron. Magic Weapon (+1) Source GM Core pg. 241, Core Rulebook pg. 599 Price 35 gp Magic Weapon (+1 Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 100 gp Magic Weapon (+2 Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 1,000 gp Magic Weapon (+2 Greater Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 2,000 gp Magic Weapon (+3 Greater Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 10,000 gp Magic Weapon (+3 Major Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 40,000 gp"
+ },
+ {
+  "id": "magic-weapon-3-greater-striking",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Magic Weapon (+3 Greater Striking)",
+  "level": 16,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Magic Weapon Source GM Core pg. 240 Usage held in 1 hand A magic weapon is a weapon etched with only fundamental runes. A weapon potency rune gives an item bonus to attack rolls with the weapon, and a striking rune increases the weapon's number of weapon damage dice. The Prices here are for all types of weapons. You don't need to adjust the Price from a club to a greataxe or the like. These weapons are made of standard materials, not precious materials such as cold iron. Magic Weapon (+1) Source GM Core pg. 241, Core Rulebook pg. 599 Price 35 gp Magic Weapon (+1 Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 100 gp Magic Weapon (+2 Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 1,000 gp Magic Weapon (+2 Greater Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 2,000 gp Magic Weapon (+3 Greater Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 10,000 gp Magic Weapon (+3 Major Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 40,000 gp"
+ },
+ {
+  "id": "magic-weapon-3-major-striking",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Magic Weapon (+3 Major Striking)",
+  "level": 19,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Magic Weapon Source GM Core pg. 240 Usage held in 1 hand A magic weapon is a weapon etched with only fundamental runes. A weapon potency rune gives an item bonus to attack rolls with the weapon, and a striking rune increases the weapon's number of weapon damage dice. The Prices here are for all types of weapons. You don't need to adjust the Price from a club to a greataxe or the like. These weapons are made of standard materials, not precious materials such as cold iron. Magic Weapon (+1) Source GM Core pg. 241, Core Rulebook pg. 599 Price 35 gp Magic Weapon (+1 Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 100 gp Magic Weapon (+2 Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 1,000 gp Magic Weapon (+2 Greater Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 2,000 gp Magic Weapon (+3 Greater Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 10,000 gp Magic Weapon (+3 Major Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 40,000 gp"
+ },
+ {
+  "id": "magical-medals",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Magical Medals",
+  "level": 3,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Magical Medals Source Battlecry! pg. 151 Usage worn Military leaders or heads of state award these special medals to commend exemplary performance by their top soldiers. They’re typically worn on a special strip of fabric near the lapel, but soldiers from different countries sometimes wear them in other places. No matter how many magical medals you have, they collectively count as one invested item. Medal of Gorilla’s Might Source Battlecry! pg. 151 Price 25 gp This steel medal resembles the head and upper body of a gorilla. It’s typically given in recognition of physical prowess, and it grants you a +1 item bonus to Athletics checks to Climb, Force Open, High Jump, and Long Jump. Activate—Gorila's Second Leap (concentrate, fortune) Frequency once per day; Trigger You would fail but not critically fail an Athletics check to High Jump or Long Jump; Effect The gorilla on the medal beats its chest, giving you another chance. You reroll the failed check. Medal of Griffon’s Heart Source Battlecry! pg. 151 Price 80 gp This copper medal features a griffon’s face, wings, and talons in profile. It is given in recognition of remarkable bravery, and it grants you a +1 item bonus to saving throws against fear and mental effects. While wearing this pendant, you can also cast forbidding ward as an innate cantrip. Medal of the Wolf Pack Source Battlecry! pg. 151 Price 350 gp There are three wolf’s heads engraved on this pewter medal, typically awarded to squads who demonstrate exceptional teamwork. While wearing the medal of the wolf pack, you gain a +2 circumstance bonus to damage rolls against enemies you are flanking. Medal of Unicorn’s Purity Source Battlecry! pg. 151 Price 1,700 gp The profile of the unicorn on this silver medal has a horn that extends slightly beyond the circular border. This medal is awarded in recognition of true righteousness and exemplary service to a cause. Activate—Unicorn’s Grace (concentrate, healing, vitality) Frequency once per day; Trigger You would regain Hit Points from a magical effect; Effect You regain an additional 4d6 Hit Points. Medal of Phoenix’s Fire Source Battlecry! pg. 151 Price 9,000 gp The phoenix on this gold medal is proud and fierce, and the medal features a border shaped like a flame. This medal is considered the highest honor in many countries and is awarded to those soldiers who have truly exemplified the ethics of their country through unbelievable service. Activate—Phoenix’s Sacrifice (vitality) Frequency once per day; Trigger Your dying condition increases; Effect The phoenix bursts into flames. You lose the dying condition and regain 1 Hit Point. Your wounded value does not increase. You can use this action while unconscious."
+ },
+ {
+  "id": "major-cloak-of-social-graces",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Major Cloak of Social Graces",
+  "level": 19,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Cloak of Social Graces Source High Seas pg. 50 Usage worn cloak Bulk L Access You're from Hermea These cloaks are created from hand-dyed leather decorated with gemstones, appealing to the individual tastes of the owner. The beautiful decorations of these cloaks encourage their owner to wear them no matter the season, making it visibly part of their unique style. Wearing the cloak boosts self-confidence, granting a +1 item bonus to Diplomacy checks. Activate—Overcome Self-Doubt (concentrate, manipulate) Frequency once per day; Effect You readjust your cloak, straightening the collar and brushing out any wrinkles. You gain the effects of a heroism spell for 1 minute. Cloak of Social Graces Source High Seas pg. 50 Price 380 gp Greater Cloak of Social Graces Source High Seas pg. 50 Price 3,000 gp The item bonus is +2, and when you activate the cloak, you gain the benefits of a 6th-rank heroism spell for 1 minute. Major Cloak of Social Graces Source High Seas pg. 50 Price 40,000 gp The item bonus is +3, and when you activate the cloak, you gain the benefits of a 9th-rank heroism spell for 1 minute."
+ },
+ {
+  "id": "major-defoliation-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Major Defoliation Bomb",
+  "level": 18,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "negative",
+   "splash",
+   "void"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Defoliation Bomb May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 77 Usage held in 1 hand Bulk L Activate Strike This brightly painted ceramic sphere contains chemicals that cause plants to wither and die. A defoliation bomb deals the listed void damage, persistent void damage, and splash damage to all plants in the area. Non-creature plants in the area immediately wither and die. Many types grant a bonus to attack rolls. Lesser Defoliation Bomb Source Pathfinder #202: Severed at the Root pg. 77 Price 7 gp The bomb deals 1d6 void damage, 1d4 persistent void damage, and 1 void splash damage. Moderate Defoliation Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 18 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d6 void damage, 2d4 persistent void damage, and 2 void splash damage. Greater Defoliation Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 35 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d6 void damage, 3d4 persistent void damage, and 3 void splash damage. Major Defoliation Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 3,600 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d6 void damage, 4d4 persistent void damage, and 4 void splash damage."
+ },
+ {
+  "id": "major-durian-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Major Durian Bomb",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "plant",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Durian Bomb May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 77 Usage held in 1 hand Bulk L Activate Strike Whereas a durian’s aroma ranges from pleasant to revolting depending on the person, a durian bomb is a fruit that’s been alchemically modified for maximum revulsion. Many types of this bomb grant an item bonus to attack rolls. On a successful Strike, a durian bomb deals the listed piercing damage to the target. Any creature hit by the bomb or in its splash area must attempt a Fortitude saving throw with a DC based on the bomb’s type. Creatures in the splash area treat the results of their saving throw as one step better. Creatures sickened by a durian bomb are unable to smell anything else while the sickened condition lasts, suppressing any scent special sense they might have. Once a creature is sickened by a durian bomb, they’re immune to the sickened condition caused by other durian bombs for 1 minute. Critical Success The target is unaffected. Success The creature is sickened 1. Failure The creature is dazzled for 1 round and sickened 1. Critical Failure The creature is dazzled for 1 round and sickened 2. Lesser Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 4 gp The bomb deals 1d4 piercing damage, and the DC is 15. Moderate Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 12 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d4 points of piercing damage, and the DC is 17. Greater Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 275 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d4 points of piercing damage, and the DC is 28. Major Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 2,750 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d4 points of piercing damage, and the DC is 37."
+ },
+ {
+  "id": "major-inflammation-flask",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Major Inflammation Flask",
+  "level": 18,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "disease",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Inflamation Flask May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 75 Usage held in 1 hand Bulk L Activate Strike This flask contains a caustic irritant that makes a target’s skin, scales, or carapace extremely sensitive to further nicks and burns. An inflammation flask deals the listed acid damage and acid splash damage. On a hit, the target also gains weakness to acid, fire, and slashing damage for 3 rounds. Many types of inflammation flask grant a bonus to attack rolls. The target can end the weakness effect by three means: being drenched with water (such as submersion or exposure to an area water effect), being Administered First Aid (whose DC in based on the bomb type), or regaining Hit Points from a single effect equal to twice the inflammation flask’s level. A creature that critically fails to Administer First Aid in this way deals untyped damage to the target equal to the inflammation flask’s initial acid damage. Lesser Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 5 gp The bomb deals 1d6 acid damage and 1 acid splash damage. The target gains weakness 1 to acid, fire, and slashing damage, and theMedicine DC is 17. Moderate Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 15 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d6 acid damage and 2 acid splash damage. The target gains weakness 2 to acid, fire, and slashing damage, and the Medicine DC is 20. Greater Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 340 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d6 acid damage and 3 acid splash damage. The target gains weakness 3 to acid, fire, and slashing damage, and the Medicine DC is 30. Major Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 3,750 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d6 acid damage and 4 acid splash damage. The target gains weakness 4 to acid, fire, and slashing damage, and the Medicine DC is 38."
+ },
+ {
+  "id": "major-nail-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Major Nail Bomb",
+  "level": 18,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Nail Bomb May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 78 Usage held in 1 hand Bulk L Activate Strike This pressurized iron casing bursts open when struck, releasing cold iron shrapnel. The bomb deals the listed piercing damage and piercing splash damage from a cold iron source. Many types grant a bonus to attack rolls. Lesser Nail Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 8 gp The bomb deals 2d4 piercing damage and 1 piercing splash damage. Moderate Nail Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 16 gp You gain a +1 item bonus to attack rolls. The bomb deals 4d4 piercing damage and 2 piercing splash damage. Greater Nail Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 350 gp You gain a +2 item bonus to attack rolls. The bomb deals 6d4 piercing damage and 3 piercing splash damage. Major Nail Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 4,000 gp You gain a +3 item bonus to attack rolls. The bomb deals 8d4 piercing damage and 4 piercing splash damage."
+ },
+ {
+  "id": "major-sihedron-medallion",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Major Sihedron Medallion",
+  "level": 15,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Sihedron Medallion May contain spoilers from Revenge of the Runelords Source Pathfinder Adventure Path #219: Lord of the Trinity Star pg. 69 Usage worn These amulets once served as tokens of loyalty between the runelords and their favored agents. Though they vary in appearance, they all share a common design—a leather or metallic cord attached to a metal disc inscribed with the seven-pointed star known as the Sihedron. For original Sihedron medallions created before Earthfall, a runelord of old Thassilon (not a character with the runelord archetype) doesn’t reduce the DC of any scrying spell they cast against a creature that wears a Sihedron medallion even if they have never met the target or are unaware of the target’s identity. If such a runelord successfully scries on a creature wearing an original Sihedron medallion, they can use the wearer’s voice to issue messages to those in the vicinity. Sihedron medallions created in more modern times don’t possess this disadvantage. A dead body that wears a Sihedron medallion doesn’t decay, and bugs or other pests (such as maggots) are prevented from consuming the remains, but unlike the effects of peaceful rest, this doesn’t offer any protection against undeath, nor does it have an impact on spells that require the corpse to have died within a certain amount of time. Activate—Bolster Flesh (concentrate, manipulate) Frequency once per day; Effect Your flesh is augmented with magical vitality. You gain 10 temporary Hit Points for 8 hours. Sihedron Medallion Source Pathfinder Adventure Path #219: Lord of the Trinity Star pg. 69 Price 16 gp Usage worn Activate (concentrate, manipulate) Greater Sihedron Medallion Source Pathfinder Adventure Path #219: Lord of the Trinity Star pg. 69 Price 70 gp Usage worn Activate (concentrate, manipulate) The medallion grants a +1 item bonus to saving throws and grants 16 temporary Hit Points when activated. Major Sihedron Medallion Source Pathfinder Adventure Path #219: Lord of the Trinity Star pg. 69 Price 650 gp Usage worn Activate (concentrate, manipulate) The medallion grants a +2 item bonus to saving throws and grants 25 temporary Hit Points when activated."
+ },
+ {
+  "id": "major-silversoul-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Major Silversoul Bomb",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "mental",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Silversoul Bomb May contain spoilers from Season of Ghosts Source Season of Ghosts (Hardcover) pg. 295 Usage held in 1 hand Bulk L Activate Strike This rare alchemical bomb gathers and concentrates the emotions that linger in a burial ground where generations of beloved ancestors have been interred, infusing that powerful emotional energy into the alchemically prepared powdered silver stored within the bomb. This energy glows with a soft, silver radiance and, if stored in a clear container, allows a silversoul bomb to be used as a torch to illuminate an area. A silversoul bomb grants an item bonus to attack rolls and deals mental damage plus additional effects, according to the bomb’s type. Nindorus are particularly harmed by silversoul bombs and take the listed persistent mental damage, according to the bomb’s type. Against nindorus, the bomb’s item bonus also applies to its save DC to resist being dazzled or blinded. Creatures that have weakness to silver (including most nindorus) have an equal amount of weakness to the mental damage caused by a silversoul bomb, due to the silver infused into the energy within. Silversoul Bomb Source Season of Ghosts (Hardcover) pg. 296 Price 10 gp You gain a +1 item bonus to attack rolls, and the bomb deals 2d4 mental damage, 1d6 persistent mental damage to nindorus, and 2 mental splash damage. A creature that takes splash damage from the bomb and fails a DC 17 Fortitude save is dazzled for 1 round as glowing silver particles cling to its face. Greater Silversoul Bomb Source Season of Ghosts (Hardcover) pg. 296 Price 250 gp You gain a +2 item bonus to attack rolls, and the bomb deals 3d4 mental damage, 2d6 persistent mental damage to nindorus, and 3 mental splash damage. A creature that takes splash damage from the bomb and fails a DC 28 Fortitude save is blinded for 1 round and then dazzled for 1 round thereafter. Major Silversoul Bomb Source Season of Ghosts (Hardcover) pg. 296 Price 2,500 gp You gain a +3 item bonus to attack rolls, and the bomb deals 4d4 mental damage, 3d6 persistent mental damage to nindorus, and 4 mental splash damage. A creature that takes splash damage from the bomb is dazzled for 1 round unless it fails a DC 37 Fortitude save, in which case it’s permanently blinded."
+ },
+ {
+  "id": "major-spider-satchel",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Major Spider Satchel",
+  "level": 18,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Spider Satchel May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 75 Usage held in 1 hand Bulk L Activate Strike The Verduran Forest’s tiny tent-trap spider lays her eggs in a pyramidal web, and her young hatch only in response to intense vibration, such as the struggles of an ensnared insect or even songbird. Sadistic alchemists gather and augment these eggs, packing them in silken satchels that disgorge thousands of biting spider babies on impact. Many types of spider satchel grant a bonus to attack rolls. Until shaken off—or for the desperate target, incinerated—these spiders make it difficult to concentrate on anything other than escaping the swarm. The fascination effect ends automatically if a creature uses further hostile actions against the target, but hostile actions against the target’s allies don’t automatically end the effect. Lesser Spider Satchel Source Pathfinder #203 Shepherd of Decay pg. 75 Price 6 gp The bomb deals 1d6 persistent poison damage, 1 poison splash damage, and fascinates the target while the persistent damage lasts. Moderate Spider Satchel Source Pathfinder #203 Shepherd of Decay pg. 76 Price 16 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d6 persistent poison damage, 2 poison splash damage, and fascinates the target while the persistent damage lasts. Greater Spider Satchel Source Pathfinder #203 Shepherd of Decay pg. 76 Price 350 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d6 persistent poison damage, 3 poison splash damage, and fascinates the target while the persistent damage lasts. Major Spider Satchel Source Pathfinder #203 Shepherd of Decay pg. 76 Price 4,000 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d6 persistent poison damage, 4 poison splash damage, and fascinates the target while the persistent damage lasts."
+ },
+ {
+  "id": "major-tenderizer-grenade",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Major Tenderizer Grenade",
+  "level": 17,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "plant",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Tenderizer Grenade May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 77 Usage held in 1 hand Bulk L Activate Strike Made from the acidic flesh of an especially astringent fruit found on the Plane of Wood, this bomb’s contents soften, oxidize, and season whatever they touch. Many types of this bomb grant an item bonus to attack rolls. On a successful Strike, a tenderizer grenade deals the listed acid damage to the target and the listed acid splash damage. Any resistances the target has against bludgeoning, piercing, and slashing damage are reduced by an amount based on the bomb’s type. In addition, the target is showered with appetizing esters, oils, and salts, making them off-guard against jaws Strikes, fangs Strikes, or similar Strikes with a creature’s mouth. These additional effects last until the end of your next turn, or for 1 minute on a critical hit. Lesser Tenderizer Grenade Source Pathfinder #203 Shepherd of Decay pg. 77 Price 4 gp The bomb deals 1d6 acid damage. Moderate Tenderizer Grenade Source Pathfinder #203 Shepherd of Decay pg. 77 Price 12 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d6 points of acid damage. Greater Tenderizer Grenade Source Pathfinder #203 Shepherd of Decay pg. 77 Price 275 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d6 points of acid damage. Major Tenderizer Grenade Source Pathfinder #203 Shepherd of Decay pg. 77 Price 2,750 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d6 points of acid damage."
+ },
+ {
+  "id": "majordomo-torc",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Majordomo Torc",
+  "level": 6,
+  "traits": [
+   "intelligent",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "**Perception** +13; precise vision 30 feet, imprecise hearing 30 feet **Communication** speech (Common and 1 imparted language) **Skills** Diplomacy +13, Nobility Lore +13, Society +13 **Int** +3 **Wis** +3, **Cha** +3 **Will** +14 --- Forged in platinum, a majordomo torc is engraved with heraldic insignias along with one language's alphabet, much like a Choker of Elocution. You gain a +1 item bonus to Society checks and the ability to understand, speak, and write the torc's language. Your excellent elocution reduces the DC of the flat check to perform an auditory action while deafened from 5 to 3. Upon being invested, the torc appoints itself your majordomo and, given the chance, takes over coordinating your social calendar, engagements, and wardrobe. A majordomo torc has a prim, fussy disposition, and although it defers to you, it can grow sardonic if you frequently ignore its advice. The torc has the following activation. --- **Activate** ⟨2⟩ (concentrate) **Frequency** once per day **Effect** The majordomo torc casts Befitting Attire on you, usually to your specifications. However the torc can also choose the appearance of the illusion for you."
+ },
+ {
+  "id": "mala-beads-of-foresight",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Mala Beads of Foresight",
+  "level": 11,
+  "traits": [
+   "divine",
+   "focused",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "As you move your body, qi flows into *mala beads of foresight* you wear and have invested, making them one with your life force. In their usual form, beads are spheres of wood, but versions customized to different martial orders are common. You gain a +2 item bonus to Religion checks. --- **Activate** ⟨4⟩ (concentrate) **Frequency** once per day **Effect** You gain 1 Focus Point, which you can use only to cast a divine monk qi spell. If not used by the end of your turn, this Focus Point is lost. --- **Activate** ⟨4⟩ (concentrate) **Frequency** once per hour **Requirements** You have just Refocused by meditating **Effect** While meditating, you searched your feelings for a portent of the future. You're affected by an Augury spell. --- **Craft Requirements** You are a monk with divine qi spells."
+ },
+ {
+  "id": "mantis-plate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Mantis Plate",
+  "level": 13,
+  "traits": [
+   "bulwark",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The beautiful plates of this *+2 resilient Greater Ready full plate* armor are shaped from the carapace of a deadly mantis, providing excellent protection with added flexibility. When wearing a suit of mantis plate, you gain a +2 item bonus to your Athletics DC. --- **Activate—Mandible Vambraces** ⟨2⟩ (concentrate, manipulate) **Effect** Make a melee Strike. If you succeed, the target is caught by the spikes on the armor's forearms, taking an additional 6d6 damage ( save). --- **Craft Requirements** The initial raw materials must include the arms and carapace of a deadly mantis."
+ },
+ {
+  "id": "mantle-of-the-tikbalang",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Mantle of the Tikbalang",
+  "level": 8,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This long hide cloak is stitched with patches of the ebony hair of a tikbalang. While wearing this cloak, you take a –2 item penalty to saves against illusions but gain a +2 item bonus to Deception checks. --- **Activate—Illusory Thrash** ⟨2⟩ (concentrate, illusion, manipulate, mental) **Frequency** once per day **Effect** You wrap the mantle around your body, causing you to briefly appear much larger than you are. Make a melee Strike. This Strike deals an additional 4d6 mental damage. --- **Craft Requirements** The initial raw materials must include the hide of a tikbalang."
+ },
+ {
+  "id": "mariners-mien",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Mariner's Mien",
+  "level": 8,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Mariner's Mien Source High Seas pg. 78 PFS Note Pathfinder Society does not use vehicle rules Usage worn mask Bulk L Access You're from the Mordant Spire The swirls on this wooden mask—often worn by Mordant Censors—move and shift, reflecting the shape of the nearest currents. Wearing the mask grants you a +1 item bonus to Sailing Lore and Survival checks. In addition, it allows you to pilot a boat with simply a thought. When you pilot a vehicle, you can keep both hands free and Drive from any location on the vehicle. Activate—Set the Course (concentrate) Frequency once per day; Requirements You are aboard a vehicle; Effect You become quickened for 1 minute or until you leave the vehicle, whichever comes first, and can use the extra action to Take Control of the vehicle or, if you’re already piloting it, Drive or Stop the vehicle. Lesser Mariner's Mien Source High Seas pg. 78 Price 425 gp Moderate Mariner's Mien Source High Seas pg. 78 Price 5,300 gp The mask grants a +2 item bonus, and you can activate it once per hour."
+ },
+ {
+  "id": "martyrs-parry",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Martyr's Parry",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** A creature attacks your bonded partner. **Requirements** You are wielding a weapon that has the parry trait, and your bonded partner is within reach of one of your melee Strikes with that weapon. --- You intercede to absorb the triggering attack. Your bonded partner gains a +2 circumstance bonus to their AC. If the attack still hits, you take the triggering attack's damage instead of your bonded partner, though the attack still uses your bonded partner's defenses for the purposes of determining if it hit or critically hit."
+ },
+ {
+  "id": "marvelous-medicines",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Marvelous Medicines",
+  "level": 12,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This healer's toolkit contains a seemingly endless supply of bandages, herbs, and healing items of impeccable quality, granting you a +2 item bonus to Medicine checks. If you use the *marvelous medicines* when you Treat Poison or Treat Disease, before you roll your check, the medicines attempt to counteract the poison or disease you're treating, with a counteract rank of 5 and a counteract modifier of +21. This is a healing effect. The medicines can't be used to treat the same affliction for that patient again"
+ },
+ {
+  "id": "marvelous-medicines-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Marvelous Medicines (Greater)",
+  "level": 18,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This healer's toolkit contains a seemingly endless supply of bandages, herbs, and healing items of impeccable quality, granting you a +3 item bonus to Medicine checks. If you use the *marvelous medicines* when you Treat Poison or Treat Disease, before you roll your check, the medicines attempt to counteract the poison or disease you're treating, with a counteract rank of 8 and a counteract modifier of +30. This is a healing effect. The medicines can't be used to treat the same affliction for that patient again"
+ },
+ {
+  "id": "mask-familiar",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Mask Familiar",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Your mask takes on a personality of its own, allowing it to serve as your familiar. Though you can still wear it as a mask, you can detach it from your face to grant it a bodily form of colored light that allows it to move around; usually, this is a miniature form of the animal the mask represents. Detaching or reattaching the familiar to transform it is a two-action activity. Even in mask form, the familiar can move around on its master's face and speaks in a distinct voice (if it can talk). It is easily recognized as more than a simple mask unless the familiar succeeds at a Deception check to Impersonate a mask. Other than its appearance and the fact that it can be worn, it functions as other familiars. Your mask familiar has access to the mask freeze familiar ability **Mask Freeze** When in mask form, your familiar can hide its obvious supernatural qualities to pass as a simple, unassuming mask. It doesn't need to Impersonate to fool a passing glance, and it gains a +4 circumstance bonus to its Deception DC against an active observer Seeking or otherwise studying it."
+ },
+ {
+  "id": "mask-of-mercy",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Mask of Mercy",
+  "level": 4,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This porcelain or alabaster mask portrays an angelic visage of kindness and mercy. The mask grants a +1 item bonus to Medicine checks. **Activate** ⟨1⟩ (concentrate, fortune) **Frequency** once per day **Trigger** You are about to roll a variable number of Hit Points you restore from an action with the healing trait --- **Effect** Roll twice to determine the number of Hit Points you restore and take the higher result."
+ },
+ {
+  "id": "mask-of-uncanny-breath",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Mask of Uncanny Breath",
+  "level": 11,
+  "traits": [
+   "focused",
+   "invested",
+   "occult"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "A thin wooden mask carved in the shape of a skull, monstrous face, or eerily featureless visage, a *mask of uncanny breath* fully covers your face. While wearing it, each breath you take feels cool and pure, perfectly flowing to feed your qi. You gain resistance 10 to inhaled poisons and can breathe in an airless or toxic environment. When you breathe in, fragments of bizarre knowledge flow through you, granting you a +2 item bonus to Occultism checks. --- **Activate** ⟨4⟩ (concentrate) **Frequency** once per day **Effect** You gain 1 Focus Point, which you can use only to cast an occult monk qi spell. If not used by the end of your turn, this Focus Point is lost. --- **Activate** ⟨5⟩ (concentrate) **Frequency** once per day **Trigger** Your unarmed Strike damages a creature that breathes **Effect** The mask contorts and inhales, sucking breath from your target's lungs. The target falls unconscious but doesn't fall prone or drop what it's holding. It wakes up at the end of your turn if it hasn't been woken up already. --- **Craft Requirements** You are a monk with occult qi spells."
+ },
+ {
+  "id": "master-magus-ring",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Master Magus Ring",
+  "level": 11,
+  "traits": [
+   "arcane",
+   "focused",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Elegant jewelry such as the *master magus ring* adorns experienced magi. Each ring has a significant metal and symbol to represent a particular hybrid study, such as a heavy iron ring with an icon of a mountain for Inexorable Iron, or glittering silver with a shield-like emblem for Sparkling Targe. You gain a +2 item bonus to Arcana checks. --- **Activate** ⟨4⟩ (concentrate) **Frequency** once per day **Effect** You gain 1 Focus Point, which you can use only to cast a magus conflux spell. If not used by the end of your turn, this Focus Point is lost. --- **Activate** ⟨4⟩ (concentrate) **Frequency** once per day **Effect** The ring transports you and any items you're wearing and holding from your current space to an unoccupied space you can see within a range equal to your Speed. If this would bring another creature with you—even if you're carrying it in an extradimensional container—the activation fails and is used. --- **Craft Requirements** You are a magus."
+ },
+ {
+  "id": "mattock-of-the-titans",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Mattock of the Titans",
+  "level": 19,
+  "traits": [
+   "fatal-d12",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This 15-foot-long adamantine digging tool is far too big for even a Large creature to wield, though if you're a Small or larger creature, you can wield it while wearing a belt of giant strength, as though it were appropriately sized for you and had 2 Bulk. The GM might also allow you to wield the mattock if you have some other means of wielding oversized weapons, such as if you're a Large barbarian with the giant instinct or are a Huge creature. When it's used as a weapon, the mattock of the titans has the statistics of a +3 greater striking Keen adamantine greatpick. While you're wielding the mattock of the titans, you gain a +3 item bonus to Athletics checks. You can use it to loosen or push soft earth at a rate of 1 minute per 5-foot cube or smash through solid stone at the rate of 5 minutes per 5-foot-cube. **Activate** ⟨2⟩ Interact **Frequency** once per day --- **Effect** You dig furiously with the mattock to non-magically replicate the effects of an Earthquake spell. --- **Craft Requirements** You are a titan, and the initial raw materials must include 8,100 gp of adamantine."
+ },
+ {
+  "id": "medal-of-phoenixs-fire",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Medal of Phoenix’s Fire",
+  "level": 16,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Magical Medals Source Battlecry! pg. 151 Usage worn Military leaders or heads of state award these special medals to commend exemplary performance by their top soldiers. They’re typically worn on a special strip of fabric near the lapel, but soldiers from different countries sometimes wear them in other places. No matter how many magical medals you have, they collectively count as one invested item. Medal of Gorilla’s Might Source Battlecry! pg. 151 Price 25 gp This steel medal resembles the head and upper body of a gorilla. It’s typically given in recognition of physical prowess, and it grants you a +1 item bonus to Athletics checks to Climb, Force Open, High Jump, and Long Jump. Activate—Gorila's Second Leap (concentrate, fortune) Frequency once per day; Trigger You would fail but not critically fail an Athletics check to High Jump or Long Jump; Effect The gorilla on the medal beats its chest, giving you another chance. You reroll the failed check. Medal of Griffon’s Heart Source Battlecry! pg. 151 Price 80 gp This copper medal features a griffon’s face, wings, and talons in profile. It is given in recognition of remarkable bravery, and it grants you a +1 item bonus to saving throws against fear and mental effects. While wearing this pendant, you can also cast forbidding ward as an innate cantrip. Medal of the Wolf Pack Source Battlecry! pg. 151 Price 350 gp There are three wolf’s heads engraved on this pewter medal, typically awarded to squads who demonstrate exceptional teamwork. While wearing the medal of the wolf pack, you gain a +2 circumstance bonus to damage rolls against enemies you are flanking. Medal of Unicorn’s Purity Source Battlecry! pg. 151 Price 1,700 gp The profile of the unicorn on this silver medal has a horn that extends slightly beyond the circular border. This medal is awarded in recognition of true righteousness and exemplary service to a cause. Activate—Unicorn’s Grace (concentrate, healing, vitality) Frequency once per day; Trigger You would regain Hit Points from a magical effect; Effect You regain an additional 4d6 Hit Points. Medal of Phoenix’s Fire Source Battlecry! pg. 151 Price 9,000 gp The phoenix on this gold medal is proud and fierce, and the medal features a border shaped like a flame. This medal is considered the highest honor in many countries and is awarded to those soldiers who have truly exemplified the ethics of their country through unbelievable service. Activate—Phoenix’s Sacrifice (vitality) Frequency once per day; Trigger Your dying condition increases; Effect The phoenix bursts into flames. You lose the dying condition and regain 1 Hit Point. Your wounded value does not increase. You can use this action while unconscious."
+ },
+ {
+  "id": "medal-of-unicorns-purity",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Medal of Unicorn’s Purity",
+  "level": 12,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Magical Medals Source Battlecry! pg. 151 Usage worn Military leaders or heads of state award these special medals to commend exemplary performance by their top soldiers. They’re typically worn on a special strip of fabric near the lapel, but soldiers from different countries sometimes wear them in other places. No matter how many magical medals you have, they collectively count as one invested item. Medal of Gorilla’s Might Source Battlecry! pg. 151 Price 25 gp This steel medal resembles the head and upper body of a gorilla. It’s typically given in recognition of physical prowess, and it grants you a +1 item bonus to Athletics checks to Climb, Force Open, High Jump, and Long Jump. Activate—Gorila's Second Leap (concentrate, fortune) Frequency once per day; Trigger You would fail but not critically fail an Athletics check to High Jump or Long Jump; Effect The gorilla on the medal beats its chest, giving you another chance. You reroll the failed check. Medal of Griffon’s Heart Source Battlecry! pg. 151 Price 80 gp This copper medal features a griffon’s face, wings, and talons in profile. It is given in recognition of remarkable bravery, and it grants you a +1 item bonus to saving throws against fear and mental effects. While wearing this pendant, you can also cast forbidding ward as an innate cantrip. Medal of the Wolf Pack Source Battlecry! pg. 151 Price 350 gp There are three wolf’s heads engraved on this pewter medal, typically awarded to squads who demonstrate exceptional teamwork. While wearing the medal of the wolf pack, you gain a +2 circumstance bonus to damage rolls against enemies you are flanking. Medal of Unicorn’s Purity Source Battlecry! pg. 151 Price 1,700 gp The profile of the unicorn on this silver medal has a horn that extends slightly beyond the circular border. This medal is awarded in recognition of true righteousness and exemplary service to a cause. Activate—Unicorn’s Grace (concentrate, healing, vitality) Frequency once per day; Trigger You would regain Hit Points from a magical effect; Effect You regain an additional 4d6 Hit Points. Medal of Phoenix’s Fire Source Battlecry! pg. 151 Price 9,000 gp The phoenix on this gold medal is proud and fierce, and the medal features a border shaped like a flame. This medal is considered the highest honor in many countries and is awarded to those soldiers who have truly exemplified the ethics of their country through unbelievable service. Activate—Phoenix’s Sacrifice (vitality) Frequency once per day; Trigger Your dying condition increases; Effect The phoenix bursts into flames. You lose the dying condition and regain 1 Hit Point. Your wounded value does not increase. You can use this action while unconscious."
+ },
+ {
+  "id": "medics-shield",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Medic's Shield",
+  "level": 14,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This standard-grade dawnsilver shield (Hardness 5, HP 20, BT 10) is inscribed with the symbol of a deity dedicated to healing and medicine. The shield is designed for combat medics to aid combatants or adventurers in the midst of battle. Healer's tools can be stored on the backside of this shield. This shield grants a +2 item bonus to Medicine checks. **Activate—Adrenaline Boost** ⟨2⟩ (manipulate) **Frequency** once per day --- **Effect** You grant a medicinal boost to bring someone back into the fray. You Administer First Aid to stabilize an adjacent ally with the dying condition. On a success, they gain 6d6+20 Hit Points, can immediately Stand as a free action, and become quickened for 1 round. They can use this extra action only to Stride or Strike."
+ },
+ {
+  "id": "messengers-ring",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Messenger's Ring",
+  "level": 9,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells",
+   "innateSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This silver signet ring changes to match the insignia of a lord or organization you serve (or your own face, if you serve no one else). It grants you a +2 item bonus to Diplomacy checks and lets you cast Message as an arcane innate spell at will. --- **Activate—Dispatch Messenger** 1 minute (concentrate) **Frequency** once per day --- **Effect** The ring casts Animal Messenger to your specification. The animal is a magical creature that springs from the ring, and its appearance suits the iconography or heraldry of the lord or organization represented by the ring."
+ },
+ {
+  "id": "messengers-ring-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Messenger's Ring (Greater)",
+  "level": 17,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This silver signet ring changes to match the insignia of a lord or organization you serve (or your own face, if you serve no one else). It grants you a +3 item bonus to Diplomacy checks and lets you cast Message as an arcane innate spell at will. --- **Activate—Dispatch Messenger** 1 minute (concentrate) **Frequency** once per day --- **Effect** The ring casts Animal Messenger to your specification. The animal is a magical creature that springs from the ring, and its appearance suits the iconography or heraldry of the lord or organization represented by the ring. --- **Activate—Sending** ⟨3⟩ command **Frequency** once per hour --- **Effect** The ring casts Sending to your specifications."
+ },
+ {
+  "id": "methodical-debilitations",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Methodical Debilitations",
+  "level": 10,
+  "traits": [
+   "rogue"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You strategically craft your debilitations to lessen or negate an enemy's tactical advantages. Add the following debilitations to the list you can choose from when you use Debilitating Strike. - **Debilitation** The target can't flank or contribute to allies' flanking. - **Debilitation** The target doesn't gain a circumstance bonus to AC from Raising a Shield, lesser cover, or standard cover; it gains a +2 circumstance bonus to AC only from greater cover or Taking Cover."
+ },
+ {
+  "id": "mind-projectiles",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Mind Projectiles",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've learned to stretch your mind's influence further, releasing projectiles with a swing of your mind weapon. You can make ranged mind weapon Strikes; these are ranged Strikes with a maximum range of 30 feet that 1d6 damage of the same type as your mind weapon. Your ranged mind weapon Strike gains all the benefits of your mind weapon's runes as long as they still apply to a ranged weapon. For example, if your weapon had *+1*, *striking*, and Spell Reservoir runes, you would get a +1 item bonus to hit with your ranged mind weapon Strike, and it would deal the additional damage from the striking rune, but it wouldn't be able to unleash a spell from the *spell reservoir* rune, as that rune can be etched onto only melee weapons."
+ },
+ {
+  "id": "minds-light-circlet",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Mind's Light Circlet",
+  "level": 11,
+  "traits": [
+   "focused",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Gemstones of many colors adorn the silver of a *mind's light circlet*. When you're charged with mental power, the jewels scintillate with light, with different gems resonating based on your emotions. If you have at least 1 Focus Point, the gems cast dim light in a 10-foot radius. When you amp a spell, the light increases to bright light in a 20-foot radius (and dim light to the next 20 feet) until the start of your next turn. You gain a +2 item bonus to Occultism checks. You also gain the following amp, which you can apply to any of your psi cantrips that have a target or area, much like an amp gained from a feat. **Amp** You transfer some of the magical luminescence from the mind's light circlet to one of the creatures. Choose a creature targeted by the spell or in its area. Until the start of your next turn, that creature sheds bright light in a 20-foot radius (and dim light to the next 20 feet) and can't be concealed. If the creature is invisible, it's concealed while alight, rather than being undetected. --- **Activate** ⟨4⟩ (concentrate) **Frequency** once per day **Effect** You gain 1 Focus Point, which you can use only to use a psychic amp. If not used by the end of your turn, this Focus Point is lost. --- **Craft Requirements** You are a psychic."
+ },
+ {
+  "id": "miter-of-communion",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Miter of Communion",
+  "level": 10,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This ornate headgear comes in many different shapes and sizes, though most are elaborately decorated with motifs of the deity whose honor in which it was made. The miter brings you spiritually closer to your deity's servitors, granting you a +2 item bonus to Religion checks. **Activate** 1 minute (command) **Frequency** once per week --- **Effect** You chant for a minute about a task at hand for the coming week to cast a 4th-rank Read Omens spell that grants you cryptic but useful advice."
+ },
+ {
+  "id": "moderate-aether-marbles",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Moderate Aether Marbles",
+  "level": 12,
+  "traits": [
+   "bomb",
+   "consumable",
+   "force",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Aether Marbles May contain spoilers from Gatewalkers Source Gatewalkers (Hardcover) pg. 235 Usage held in 1 hand Bulk L Activate Strike Aether marbles create violent, lingering eddies of force that extend partially into unseen planes. When the bomb explodes, it deals the listed force damage and force splash damage. Many aether marbles grant an item bonus to attack rolls. Surfaces in the splash area are filled with twisting eddies of force, which are difficult terrain for incorporeal creatures but not for corporeal ones. The force eddies in a square disperse after an incorporeal creature enters the square. Lesser Aether Marbles Source Gatewalkers (Hardcover) pg. 235 Price 19 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d6 force damage and 2 force splash damage. Moderate Aether Marbles Source Gatewalkers (Hardcover) pg. 235 Price 360 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d6 force damage and 3 force splash damage. Greater Aether Marbles Source Gatewalkers (Hardcover) pg. 235 Price 3,400 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d6 force damage and 4 force splash damage."
+ },
+ {
+  "id": "moderate-defoliation-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Moderate Defoliation Bomb",
+  "level": 4,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "negative",
+   "splash",
+   "void"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Defoliation Bomb May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 77 Usage held in 1 hand Bulk L Activate Strike This brightly painted ceramic sphere contains chemicals that cause plants to wither and die. A defoliation bomb deals the listed void damage, persistent void damage, and splash damage to all plants in the area. Non-creature plants in the area immediately wither and die. Many types grant a bonus to attack rolls. Lesser Defoliation Bomb Source Pathfinder #202: Severed at the Root pg. 77 Price 7 gp The bomb deals 1d6 void damage, 1d4 persistent void damage, and 1 void splash damage. Moderate Defoliation Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 18 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d6 void damage, 2d4 persistent void damage, and 2 void splash damage. Greater Defoliation Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 35 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d6 void damage, 3d4 persistent void damage, and 3 void splash damage. Major Defoliation Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 3,600 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d6 void damage, 4d4 persistent void damage, and 4 void splash damage."
+ },
+ {
+  "id": "moderate-durian-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Moderate Durian Bomb",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "plant",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Durian Bomb May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 77 Usage held in 1 hand Bulk L Activate Strike Whereas a durian’s aroma ranges from pleasant to revolting depending on the person, a durian bomb is a fruit that’s been alchemically modified for maximum revulsion. Many types of this bomb grant an item bonus to attack rolls. On a successful Strike, a durian bomb deals the listed piercing damage to the target. Any creature hit by the bomb or in its splash area must attempt a Fortitude saving throw with a DC based on the bomb’s type. Creatures in the splash area treat the results of their saving throw as one step better. Creatures sickened by a durian bomb are unable to smell anything else while the sickened condition lasts, suppressing any scent special sense they might have. Once a creature is sickened by a durian bomb, they’re immune to the sickened condition caused by other durian bombs for 1 minute. Critical Success The target is unaffected. Success The creature is sickened 1. Failure The creature is dazzled for 1 round and sickened 1. Critical Failure The creature is dazzled for 1 round and sickened 2. Lesser Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 4 gp The bomb deals 1d4 piercing damage, and the DC is 15. Moderate Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 12 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d4 points of piercing damage, and the DC is 17. Greater Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 275 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d4 points of piercing damage, and the DC is 28. Major Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 2,750 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d4 points of piercing damage, and the DC is 37."
+ },
+ {
+  "id": "moderate-inflammation-flask",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Moderate Inflammation Flask",
+  "level": 4,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "disease",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Inflamation Flask May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 75 Usage held in 1 hand Bulk L Activate Strike This flask contains a caustic irritant that makes a target’s skin, scales, or carapace extremely sensitive to further nicks and burns. An inflammation flask deals the listed acid damage and acid splash damage. On a hit, the target also gains weakness to acid, fire, and slashing damage for 3 rounds. Many types of inflammation flask grant a bonus to attack rolls. The target can end the weakness effect by three means: being drenched with water (such as submersion or exposure to an area water effect), being Administered First Aid (whose DC in based on the bomb type), or regaining Hit Points from a single effect equal to twice the inflammation flask’s level. A creature that critically fails to Administer First Aid in this way deals untyped damage to the target equal to the inflammation flask’s initial acid damage. Lesser Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 5 gp The bomb deals 1d6 acid damage and 1 acid splash damage. The target gains weakness 1 to acid, fire, and slashing damage, and theMedicine DC is 17. Moderate Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 15 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d6 acid damage and 2 acid splash damage. The target gains weakness 2 to acid, fire, and slashing damage, and the Medicine DC is 20. Greater Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 340 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d6 acid damage and 3 acid splash damage. The target gains weakness 3 to acid, fire, and slashing damage, and the Medicine DC is 30. Major Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 3,750 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d6 acid damage and 4 acid splash damage. The target gains weakness 4 to acid, fire, and slashing damage, and the Medicine DC is 38."
+ },
+ {
+  "id": "moderate-mariners-mien",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Moderate Mariner's Mien",
+  "level": 15,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Mariner's Mien Source High Seas pg. 78 PFS Note Pathfinder Society does not use vehicle rules Usage worn mask Bulk L Access You're from the Mordant Spire The swirls on this wooden mask—often worn by Mordant Censors—move and shift, reflecting the shape of the nearest currents. Wearing the mask grants you a +1 item bonus to Sailing Lore and Survival checks. In addition, it allows you to pilot a boat with simply a thought. When you pilot a vehicle, you can keep both hands free and Drive from any location on the vehicle. Activate—Set the Course (concentrate) Frequency once per day; Requirements You are aboard a vehicle; Effect You become quickened for 1 minute or until you leave the vehicle, whichever comes first, and can use the extra action to Take Control of the vehicle or, if you’re already piloting it, Drive or Stop the vehicle. Lesser Mariner's Mien Source High Seas pg. 78 Price 425 gp Moderate Mariner's Mien Source High Seas pg. 78 Price 5,300 gp The mask grants a +2 item bonus, and you can activate it once per hour."
+ },
+ {
+  "id": "moderate-nail-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Moderate Nail Bomb",
+  "level": 4,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Nail Bomb May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 78 Usage held in 1 hand Bulk L Activate Strike This pressurized iron casing bursts open when struck, releasing cold iron shrapnel. The bomb deals the listed piercing damage and piercing splash damage from a cold iron source. Many types grant a bonus to attack rolls. Lesser Nail Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 8 gp The bomb deals 2d4 piercing damage and 1 piercing splash damage. Moderate Nail Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 16 gp You gain a +1 item bonus to attack rolls. The bomb deals 4d4 piercing damage and 2 piercing splash damage. Greater Nail Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 350 gp You gain a +2 item bonus to attack rolls. The bomb deals 6d4 piercing damage and 3 piercing splash damage. Major Nail Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 4,000 gp You gain a +3 item bonus to attack rolls. The bomb deals 8d4 piercing damage and 4 piercing splash damage."
+ },
+ {
+  "id": "moderate-spider-satchel",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Moderate Spider Satchel",
+  "level": 4,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Spider Satchel May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 75 Usage held in 1 hand Bulk L Activate Strike The Verduran Forest’s tiny tent-trap spider lays her eggs in a pyramidal web, and her young hatch only in response to intense vibration, such as the struggles of an ensnared insect or even songbird. Sadistic alchemists gather and augment these eggs, packing them in silken satchels that disgorge thousands of biting spider babies on impact. Many types of spider satchel grant a bonus to attack rolls. Until shaken off—or for the desperate target, incinerated—these spiders make it difficult to concentrate on anything other than escaping the swarm. The fascination effect ends automatically if a creature uses further hostile actions against the target, but hostile actions against the target’s allies don’t automatically end the effect. Lesser Spider Satchel Source Pathfinder #203 Shepherd of Decay pg. 75 Price 6 gp The bomb deals 1d6 persistent poison damage, 1 poison splash damage, and fascinates the target while the persistent damage lasts. Moderate Spider Satchel Source Pathfinder #203 Shepherd of Decay pg. 76 Price 16 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d6 persistent poison damage, 2 poison splash damage, and fascinates the target while the persistent damage lasts. Greater Spider Satchel Source Pathfinder #203 Shepherd of Decay pg. 76 Price 350 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d6 persistent poison damage, 3 poison splash damage, and fascinates the target while the persistent damage lasts. Major Spider Satchel Source Pathfinder #203 Shepherd of Decay pg. 76 Price 4,000 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d6 persistent poison damage, 4 poison splash damage, and fascinates the target while the persistent damage lasts."
+ },
+ {
+  "id": "moderate-tenderizer-grenade",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Moderate Tenderizer Grenade",
+  "level": 3,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "plant",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Tenderizer Grenade May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 77 Usage held in 1 hand Bulk L Activate Strike Made from the acidic flesh of an especially astringent fruit found on the Plane of Wood, this bomb’s contents soften, oxidize, and season whatever they touch. Many types of this bomb grant an item bonus to attack rolls. On a successful Strike, a tenderizer grenade deals the listed acid damage to the target and the listed acid splash damage. Any resistances the target has against bludgeoning, piercing, and slashing damage are reduced by an amount based on the bomb’s type. In addition, the target is showered with appetizing esters, oils, and salts, making them off-guard against jaws Strikes, fangs Strikes, or similar Strikes with a creature’s mouth. These additional effects last until the end of your next turn, or for 1 minute on a critical hit. Lesser Tenderizer Grenade Source Pathfinder #203 Shepherd of Decay pg. 77 Price 4 gp The bomb deals 1d6 acid damage. Moderate Tenderizer Grenade Source Pathfinder #203 Shepherd of Decay pg. 77 Price 12 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d6 points of acid damage. Greater Tenderizer Grenade Source Pathfinder #203 Shepherd of Decay pg. 77 Price 275 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d6 points of acid damage. Major Tenderizer Grenade Source Pathfinder #203 Shepherd of Decay pg. 77 Price 2,750 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d6 points of acid damage."
+ },
+ {
+  "id": "moonstone-diadem",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Moonstone Diadem",
+  "level": 8,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This delicate and elegant diadem is woven of intricate silver wires set with three tear-shaped pearlescent moonstones. You gain a +1 item bonus to Religion checks. **Activate** ⟨3⟩ focus **Frequency** once per hour **Requirements** You are within 10 feet of a *moonstone pool* --- **Effect** You peer into the *moonstone pool* and gain access to all the visual history recorded within the receptacle by concentrating on the specific subject you wish to see. Conversely, you can choose to deposit your own memories into the pool by concentrating for 1 hour on the information you wish to impart."
+ },
+ {
+  "id": "mounted-shield",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Mounted Shield",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've trained with your shield to defend both yourself and your mount. When you Raise a Shield while mounted, both you and your mount gain the shield's circumstance bonus to AC. If you have the Shield Block reaction, you can use it when your mount would take physical damage, as long as you're riding your mount. If you do, the shield prevents your mount from taking damage instead of preventing you from taking damage, following the normal rules for Shield Block."
+ },
+ {
+  "id": "mud-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Mud Bomb",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "earth",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Mud Bomb May contain spoilers from Quest for the Frozen Flame Source Pathfinder #176: Lost Mammoth Valley pg. 78 Usage held in 1 hand Bulk L Activate Strike This clay vessel launches gobs of clinging mud and grit. A mud bomb deals the listed bludgeoning damage and splash damage. On a critical hit, the target is dazzled until the start of your next turn. Many types grant an item bonus to attack rolls. Mud Bomb (Lesser) Source Pathfinder #176: Lost Mammoth Valley pg. 78 Price 3 gp Bulk L The bomb deals 1d6 bludgeoning damage and 1 bludgeoning splash damage. Mud Bomb (Moderate) Source Pathfinder #176: Lost Mammoth Valley pg. 78 Price 10 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d6 bludgeoning damage and 2 bludgeoning splash damage. Mud Bomb (Greater) Source Pathfinder #176: Lost Mammoth Valley pg. 78 Price 250 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 3d6 bludgeoning damage and 3 bludgeoning splash damage. Mud Bomb (Major) Source Pathfinder #176: Lost Mammoth Valley pg. 78 Price 2,500 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 4d6 bludgeoning damage and 4 bludgeoning splash damage."
+ },
+ {
+  "id": "mud-bomb-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Mud Bomb (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "earth",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This clay vessel launches gobs of clinging mud and grit. You gain a +2 item bonus to attack rolls. The bomb deals 3d6 damage and 3 bludgeoning splash damage. On a critical hit, the target is dazzled until the start of your next turn."
+ },
+ {
+  "id": "mud-bomb-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Mud Bomb (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "earth",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This clay vessel launches gobs of clinging mud and grit. You gain a +3 item bonus to attack rolls. The bomb deals 4d6 damage and 4 bludgeoning splash damage. On a critical hit, the target is dazzled until the start of your next turn."
+ },
+ {
+  "id": "mud-bomb-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Mud Bomb (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "earth",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This clay vessel launches gobs of clinging mud and grit. You gain a +1 item bonus to attack rolls. The bomb deals 2d6 damage and 2 bludgeoning splash damage. On a critical hit, the target is dazzled until the start of your next turn."
+ },
+ {
+  "id": "muse",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Muse",
+  "level": 0,
+  "traits": [],
+  "engineFieldsPresent": [
+   "choice",
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "Muse Source Treasure Vault (Remastered) pg. 198 Aspect Artistry Prerequisite The relic is 3rd level or higher. The relic guides you in your art like a muse, giving you inspirational ideas and providing an item bonus to Crafting or Performance checks. (Choose one. If your relic allows you to do so, you can take this gift again to choose the other.) If the relic is 3rd level or higher, you gain a +1 item bonus. Once the relic attains 9th level, the bonus increases to +2. The bonus increases to +3 when the relic is 17th level."
+ },
+ {
+  "id": "musical-instrument",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Musical Instrument",
+  "level": 0,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Musical Instrument Source Player Core pg. 290 Handheld instruments include bagpipes, a small set of chimes, small drums, fiddles and viols, flutes and recorders, small harps, lutes, trumpets, and similarly sized instruments. The GM might rule that an especially large handheld instrument (like a tuba) has greater Bulk. Heavy instruments such as large drums, a full set of chimes, and keyboard instruments are less portable and generally need to be stationary while being played. A virtuoso instrument is more finely made and gives a +1 item bonus to Performance checks using that instrument. Musical Instrument (Handheld) Source Player Core pg. 290, Core Rulebook pg. 290 Price 8 sp Hands 2 Bulk 1 Musical Instrument (Virtuoso Handheld) Source Player Core pg. 290, Core Rulebook pg. 290 Price 50 gp Hands 2 Bulk 1 Musical Instrument (Heavy) Source Player Core pg. 290, Core Rulebook pg. 290 Price 2 gp Hands 2 Bulk 16 Musical Instrument (Virtuoso Heavy) Source Player Core pg. 290, Core Rulebook pg. 290 Price 100 gp Hands 2 Bulk 16"
+ },
+ {
+  "id": "mystic-strikes",
+  "lane": "situational",
+  "collection": "classFeatures",
+  "name": "Mystic Strikes",
+  "level": 3,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Focusing your will into your physical attacks imbues them with mystical energy. Your unarmed attacks become magical, allowing them to get past resistances to non-magical attacks. However, you still need an item such as Handwraps of Mighty Blows (+1) to gain an item bonus to attack rolls or increase your attacks' weapon damage dice."
+ },
+ {
+  "id": "mythic-armor-potency",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Mythic Armor Potency",
+  "level": 20,
+  "traits": [
+   "magical",
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This armor is etched with a mythical ward providing unparalleled defense. Increase the armor's item bonus to AC by 4, and the armor can be etched with four property runes. --- **Activate—Survive Devastation** ⟨5⟩ (concentration) **Trigger** An enemy critically succeeds against you with a weapon or unarmed Strike **Effect** Spend a Mythic Point; if the triggering Strike was made by a mythic creature, it's a normal success instead. If it was made by a non-mythic creature, it's a failure. --- **Craft Requirements** *Mythic armor potency* runes can only be crafted, etched, or transferred by a mythic character capable of making a Crafting check at mythic proficiency (such as by having the Artisan's Calling)."
+ },
+ {
+  "id": "mythic-resilent",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Mythic Resilent",
+  "level": 20,
+  "traits": [
+   "magical",
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Mythic Resilent Source War of Immortals pg. 149 Price 70,000 gp Usage etched onto armor Mythic resilient runes imbue armor with unrivaled protection from a wide array of effects. The armor grants a +4 item bonus to saving throws to the wearer. Activate—Defy Obliteration (concentrate) Trigger You critically fail a saving throw; Effect Spend a Mythic Point; if the triggering save was made due to an effect created by a mythic monster, hazard, or other effect, it’s a normal failure instead. If the save was made due to an effect that wasn’t mythic, it becomes a success. Craft Requirements Mythic resilient runes can only be crafted, etched, or transferred by a mythic character capable of making a Crafting check at mythic proficiency (such as by having the Artisan’s Calling)."
+ },
+ {
+  "id": "mythic-resilient",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Mythic Resilient",
+  "level": 20,
+  "traits": [
+   "magical",
+   "mythic"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "*Mythic resilient* runes imbue armor with unrivaled protection from a wide array of effects. The armor grants a +4 item bonus to saving throws to the wearer. --- **Activate—Defy Obliteration** ⟨5⟩ (concentration) **Trigger** You critically fail a saving throw **Effect** Spend a Mythic Point; if the triggering save was made due to an effect created by a mythic monster, hazard, or other effect, it's a normal failure instead. If the save was made due to an effect that wasn't mythic, it becomes a success. --- **Craft Requirements** *Mythic resilient* runes can only be crafted, etched, or transferred by a mythic character capable of making a Crafting check at mythic proficiency (such as by having the Artisan's Calling)."
+ },
+ {
+  "id": "mythic-weapon-potency",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Mythic Weapon Potency",
+  "level": 20,
+  "traits": [
+   "magical",
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This weapon strikes with peerless accuracy to pierce the defenses of the mightiest monstrosities. Attack rolls with this weapon gain a +4 item bonus, and the weapon can be etched with four property runes. --- **Activate—Unerring Blow** ⟨5⟩ (concentration) **Trigger** You roll an attack roll to Strike with this weapon and receive a critical failure **Effect** Spend a Mythic Point and reroll your attack roll with mythic proficiency, taking the higher of the two results. --- **Craft Requirements** *Mythic weapon* potency runes can only be crafted, etched, or transferred by a mythic character capable of making a Crafting check at mythic proficiency (such as by having the Artisan's Calling)."
+ },
+ {
+  "id": "nail-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Nail Bomb",
+  "level": 2,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Nail Bomb May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 78 Usage held in 1 hand Bulk L Activate Strike This pressurized iron casing bursts open when struck, releasing cold iron shrapnel. The bomb deals the listed piercing damage and piercing splash damage from a cold iron source. Many types grant a bonus to attack rolls. Lesser Nail Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 8 gp The bomb deals 2d4 piercing damage and 1 piercing splash damage. Moderate Nail Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 16 gp You gain a +1 item bonus to attack rolls. The bomb deals 4d4 piercing damage and 2 piercing splash damage. Greater Nail Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 350 gp You gain a +2 item bonus to attack rolls. The bomb deals 6d4 piercing damage and 3 piercing splash damage. Major Nail Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 4,000 gp You gain a +3 item bonus to attack rolls. The bomb deals 8d4 piercing damage and 4 piercing splash damage."
+ },
+ {
+  "id": "nail-bomb-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Nail Bomb (Greater)",
+  "level": 12,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This pressurized iron casing bursts open when struck, releasing cold iron shrapnel. You gain a +2 item bonus to attack rolls. The bomb deals 6d4 piercing damage and 3 piercing splash damage from a cold iron source."
+ },
+ {
+  "id": "nail-bomb-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Nail Bomb (Major)",
+  "level": 18,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This pressurized iron casing bursts open when struck, releasing cold iron shrapnel. You gain a +3 item bonus to attack rolls. The bomb deals 8d4 piercing damage and 4 piercing splash damage from a cold iron source."
+ },
+ {
+  "id": "nail-bomb-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Nail Bomb (Moderate)",
+  "level": 4,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This pressurized iron casing bursts open when struck, releasing cold iron shrapnel. You gain a +1 item bonus to attack rolls. The bomb deals 4d4 piercing damage and 2 piercing splash damage from a cold iron source."
+ },
+ {
+  "id": "named-artillery",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Named Artillery",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "It is a tradition among artillerists to name the siege weapon most important to them and closest to their heart—much as a sailor on a ship, the weapon is their livelihood. You've gone a step further, and you always make sure that your named artillery has the best possible maintenance and upkeep. You can spend a full day adjusting and working on a single siege weapon to designate it as your named artillery. The siege weapon you designated as your named artillery gains a +2 circumstance bonus to AC, Fortitude saves, and Reflex saves as well as additional Hit Points equal to twice your level. During your daily preparations, you must spend at least one hour on maintenance to service your named artillery. If you fail to do so, or if you spend a full day designating a new piece of named artillery, the previous named artillery loses any benefits from this feat. Only one artillerist can designate a particular siege weapon as their named artillery, even if several artillerists are serving on the same siege weapon's crew (though it's typically more efficient for a group with several artillerists to divide them up, assigning one to each siege weapon)."
+ },
+ {
+  "id": "navaratna-of-the-solar-ruby",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Navaratna of the Solar Ruby",
+  "level": 13,
+  "traits": [
+   "artifact",
+   "divine"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "immunities"
+  ],
+  "inRegistries": [],
+  "text": "These nine flawless gems are set within a golden necklace, their centerpiece a holy ruby pulled from the center of a sun. So long as you are wearing the navaratna, you ignore all environmental effects due to temperature, do not take penalties due to wind, and ignore all damage and effects from droughts, floods, and earthquakes. You are also immune to damage from starvation. The navaratna does not otherwise grant you resistance against damage (such as fire or cold damage). **Activate—Sutra of the Flawless Servant** ⟨5⟩ (concentrate, divine, fortune) **Frequency** once per hour **Trigger** An ally within 30 feet fails a saving throw against an environmental effect or a spell with the air, earth, fire, or water trait --- **Effect** You offer a prayer for your divine protection to extend to your companion. The creature rerolls the triggering saving throw with a +2 item bonus. They must take the new result, even if it is worse. --- **Destruction** The navaratna must be swallowed by a fiendish divine lion; the lion must then by killed by drowning in a lake of naga venom and left to rot for a year. At the stroke of midnight on the final day, the artifact is destroyed."
+ },
+ {
+  "id": "necklace-of-allure",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Necklace of Allure",
+  "level": 17,
+  "traits": [
+   "apex",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Several sapphires are set along the length of this brilliant silver necklace. The necklace features an intricately carved pendant in the shape of a wolf's head. You gain a +2 item bonus to Deception and Diplomacy checks. When you invest the necklace, you either increase your Charisma modifier by 1 or increase it to +4, whichever would give you a higher value. **Activate—Win Them Over** ⟨2⟩ (concentrate) **Frequency** once per hour --- **Effect** You cast a 4th-rank Charm spell with a ."
+ },
+ {
+  "id": "necrotic-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Necrotic Bomb",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "negative",
+   "splash",
+   "void"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Necrotic Bomb Source Pathfinder #165: Eyes of Empty Death pg. 74 Hands 1 Usage held in 1 hand Bulk L Activate Strike Necrotic bombs combine reagents most people consider disgusting at best and unholy at worst, creating a life-sucking miasma upon contact with air. A necrotic bomb deals the listed negative damage and splash damage, and it sickens the primary target on a critical hit. This damage harms only living creatures. Many types grant an item bonus to attack rolls. Necrotic Bomb (Lesser) Source Pathfinder #165: Eyes of Empty Death pg. 74 Price 3 gp Bulk L The bomb deals 1d6 negative damage and 1 negative splash damage. On a critical hit, the target is sickened 1. Necrotic Bomb (Moderate) Source Pathfinder #165: Eyes of Empty Death pg. 74 Price 10 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d6 negative damage and 2 negative splash damage. On a critical hit, the target is sickened 2. Necrotic Bomb (Greater) Source Pathfinder #165: Eyes of Empty Death pg. 74 Price 250 gp Bulk L You gain a +2 bonus to attack rolls. The bomb deals 3d6 negative damage and 3 negative splash damage. On a critical hit, the target is sickened 3. Necrotic Bomb (Major) Source Pathfinder #165: Eyes of Empty Death pg. 74 Price 2,500 gp Bulk L You gain a +3 bonus to attack rolls. The bomb deals 4d6 negative damage and 4 negative splash damage. On a critical hit, the target is sickened 4."
+ },
+ {
+  "id": "necrotic-bomb-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Necrotic Bomb (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash",
+   "void"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Necrotic bombs combine reagents most people consider disgusting at best and unholy at worst, creating a life-sucking miasma upon contact with air. A necrotic bomb deals the listed void damage and splash damage, and it sickens the primary target on a critical hit. This damage harms only living creatures. --- You gain a +1 item bonus to attack rolls. The bomb deals 2d6 void damage and 2 void splash damage. On a critical hit, the target is Sickened 2."
+ },
+ {
+  "id": "net",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Net",
+  "level": 0,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can use a net either on its own or attached to a rope. When attached to a rope, you can use the net to Grapple a Medium or smaller creature up to 10 feet away (instead of only adjacent creatures). You can continue to Grapple to keep your hold on the target so long as the target remains within 10 feet and you continue to hold the net. The grabbed creature gains a +2 circumstance bonus to Escape unless you are adjacent to them, and it can attempt a DC 16 Athletics check to Force Open the net entirely. Once the target is no longer grabbed, the net is unwieldy until refolded with an Interact action with the concentrate trait that requires two hands; if used without being refolded, Grapple checks made with the net take a -2 penalty. When the net is unattached, you can attempt a ranged attack roll using your simple weapon proficiency against a Medium or smaller creature within 20 feet. On a hit, the target is off-guard and takes a -10- foot circumstance penalty to its Speeds until it Escapes, and on a critical hit, it's also immobilized until it Escapes. The Escape DC is 16 (escape dc=16). A creature adjacent to the target can Interact to remove the net."
+ },
+ {
+  "id": "nomads-shawl",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Nomad's Shawl",
+  "level": 7,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "The intricate beading of this shawl subtly guides you. While you wear the shawl, you always know which direction is north and gain a +1 item bonus to Survival checks. **Activate—Mind's Map** ⟨1⟩ (concentrate) You focus your mind's eye on a location you've been to previously. The beads on the shawl shift colors to create a map of the area based on your memories. You can dismiss this effect as a free action."
+ },
+ {
+  "id": "oathlamp-of-accord",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Oathlamp of Accord",
+  "level": 3,
+  "traits": [
+   "light",
+   "magical",
+   "mental"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This hooded lantern takes the form of a translucent prism. It functions as a normal Hooded Lantern, except that it isn't fueled by oil, but by oaths. While you're holding the lantern, you gain a +1 item bonus to Diplomacy checks. **Activate—Announce Oath** ⟨5⟩ (light, mental) **Trigger** You make a promise in good faith --- **Effect** The *oathlamp of accord* sheds light without consuming fuel until the promise you made is broken or fulfilled. The GM adjudicates whether a spoken promise is broken or fulfilled. This light and the shutters to conceal it work as normal for a hooded lantern. Any creature in the light of the oathlamp becomes aware of the contents of the oath, along with who made it and how long ago."
+ },
+ {
+  "id": "one-hundred-victories",
+  "lane": "situational",
+  "collection": "items",
+  "name": "One Hundred Victories",
+  "level": 3,
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "One hundred cuts, healed into diamond-shaped scars, represent the ability to withstand the attacks of your enemies. Orc warriors covet these scar patterns and cluster them around what they consider to be their strongest assets—a pattern around the heart signifies a warrior with great endurance, while one along the arms indicates great upper body strength. You gain a +1 item bonus to Intimidation checks. If you have Ferocity (such as from the Orc Ferocity feat or a similar ability), the first time each day you use it, instead of remaining at 1 Hit Point, your Hit Points are set to an amount equal to your ancestry Hit Points, even if this amount is more than you had before using Ferocity."
+ },
+ {
+  "id": "one-moment-till-glory",
+  "lane": "situational",
+  "collection": "classFeatures",
+  "name": "One Moment till Glory",
+  "level": 1,
+  "traits": [
+   "concentrate",
+   "emotion",
+   "mental",
+   "transcendence"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You rally your allies, carrying them from the brink of disaster to the verge of victory. Each ally in your aura can immediately attempt a new saving throw with a +2 status bonus against one ongoing negative effect or condition currently affecting it that required a save. Use the result of the new save to determine the outcome of the effect, unless the new save would have a worse result than the original save, in which case nothing happens. Each ally can gain this benefit against a given effect only once."
+ },
+ {
+  "id": "only-you-and-i",
+  "lane": "situational",
+  "collection": "classFeatures",
+  "name": "Only You and I",
+  "level": 1,
+  "traits": [
+   "concentrate",
+   "transcendence"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You draw your foe into a fated conflict—one you know you'll win. Choose an enemy within your reach. Until the end of your next turn, that enemy gains a +2 circumstance bonus to attack rolls it makes against you, but it must attempt a save against your class DC whenever it tries to move away from you, Strike a target other than you, or Cast a Spell that doesn't include you as a target. On a failure, the action or actions related to the failed attempt is disrupted. Whenever the enemy misses you with a Strike while this effect is active, you heal 1d8+5 Hit Points."
+ },
+ {
+  "id": "open-mind",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Open Mind",
+  "level": 1,
+  "traits": [
+   "kashrishi"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featCantripGrants"
+  ],
+  "text": "You have inherent psychic abilities that allow you to tap into the power of your mind. Choose one cantrip from the occult spell list. You can cast this spell as an occult innate spell at will. A cantrip is heightened to a spell rank equal to half your level rounded up."
+ },
+ {
+  "id": "oracular-crown",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Oracular Crown",
+  "level": 11,
+  "traits": [
+   "divine",
+   "focused",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Patterns themed to your curse cover your *oracular crown*. As your curse worsens, the appearance of the crown changes, introducing extreme angles, stronger colors, or other indications of the intensity of your curse. Similarly, it gets closer to its natural form when you reduce the effects of your curse. You gain a +2 item bonus to Religion checks. --- **Activate** ⟨4⟩ envision **Frequency** once per day **Effect** You gain 1 Focus Point, which you can use only to cast an oracle revelation spell. If not used by the end of your turn, this Focus Point is lost. --- **Activate** ⟨1⟩ (concentrate, healing, vitality) **Frequency** once per day **Requirements** Your cursebound value is 1 or higher **Effect** You regain 3d8 Hit Points. The amount of healing increases to 5d8 if you're cursebound 2, 7d8 if you're cursebound 3, or 9d8 if you're cursebound 4. If you have the void healing ability, this activation has the void trait instead of the healing and vitality traits. --- **Craft Requirements** You are an oracle."
+ },
+ {
+  "id": "oracular-warning",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Oracular Warning",
+  "level": 1,
+  "traits": [
+   "auditory",
+   "cursebound",
+   "divine",
+   "emotion",
+   "mental",
+   "oracle"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** You are about to roll initiative. --- You have a premonition about impending danger that you use to warn your allies. Each ally within 20 feet gains a +2 status bonus to their initiative roll and gains temporary Hit Points equal to half your level, which last for 1 minute. If you are Cursebound 2 when you use Oracular Warning, the bonus increases to +3, and if you are cursebound 3, the bonus increases to +4."
+ },
+ {
+  "id": "orb-of-dragonkind",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Orb of Dragonkind",
+  "level": 25,
+  "traits": [
+   "arcane",
+   "artifact"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Each of the legendary *orbs of dragonkind* contains the essence and personality of a powerful dragon, with each of the 10 most famous orbs preserving a different type of metallic or chromatic dragon's spirit. It is believed that orbs for other types of true dragons exist, though that theory is yet to be confirmed. While holding an *orb of dragonkind*, you are immune to the breath weapon of the dragon variety associated with the orb. An *orb of dragonkind* also grants a number of additional senses. You can communicate verbally and visually with the bearers of other orbs as if you were in the same room with them. You know if there are any dragons within 10 miles of you at all times; this extends to 100 miles for dragons of the type associated with the orb. If an associated dragon is within 1 mile, you know which direction the dragon is from you and the dragon's age, such as young, adult, or ancient. Each orb grants a 10th-rank arcane innate spell that you can cast at will, determined by the specific orb. The *Orb of Gold Dragonkind* can convey the innate spells of any of the other orbs, as well as their activated abilities, but it can grant each individual power only once per day. In addition, the bearer of the gold orb can use its 3-action activation to attempt to cast dominate on the bearer of another orb if they are within 1 mile, as if that bearer were a dragon of the associated type within 500 feet. The last reports of the *Orb of Gold Dragonkind* on Golarion indicate the orb has been destroyed, however. GMs running campaigns in settings other than the Age of Lost Omens might decide the gold orb is still intact for their campaigns. Bearing an *orb of dragonkind* earns you the enmity of all dragonkind forever because you profited from the enslavement of the dragon within the orb, even if you later lose the orb. **Spell Granted** (DC 40) black dragon (darkness), blue dragon (hallucinatory terrain), brass dragon (speak with animals), bronze dragon (control water), copper dragon (hideous laughter), green dragon (entangle), red dragon (wall of fire), silver dragon (detect alignment [spirit only]), white dragon (wall of ice) **Activate** ⟨3⟩ command **Frequency** once per round --- **Effect** You cast a 10th-rank *dominate* spell (DC 40) on a dragon of the type associated with the orb within 500 feet, except the effect lasts for 1 month rather than unlimited. The dragon does not receive its status bonus to saving throws against magic. The dragon is then temporarily immune to further domination via the orb for 24 hours. **Activate** ⟨2⟩ envision, Interact **Frequency** three times per day --- **Effect** You breathe an elemental blast that deals 25d6 damage ( save) in either a or a (your choice). The breath's damage type matches the Breath Weapon of the dragon type associated with the *orb of dragonkind* (acid for the black orb, electricity for the blue orb, and so on). **Destruction** An *orb of dragonkind* violently shatters and explodes when exposed to the Breath Weapon of a dragon who is a descendant of the dragon trapped within. The explosion deals damage as the 2-action activation above to all creatures within 90 feet."
+ }
+]

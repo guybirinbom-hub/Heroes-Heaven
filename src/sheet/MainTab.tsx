@@ -20,7 +20,7 @@ import { AlchemyPanel } from './AlchemyPanel';
 import { critSpec } from '../rules/critSpec';
 import { ACTIVITIES, type ActivityDef } from '../rules/actions';
 import { traitDesc } from '../rules/glossary';
-import { statHasSituational, type StatRef } from '../rules/explain';
+import { nameOfRecord, recordMarkersFor, statHasSituational, statMarkClass, type StatRef } from '../rules/explain';
 import { stanceRequirementIssue } from '../rules/derive';
 import { ActionGlyph, RankPill, SituationalStar } from './widgets';
 import { DescriptionModal } from './DescriptionModal';
@@ -403,6 +403,20 @@ export function MainTab({
     // star — those live in the popup. Tactics keep their prepared state visible via the trailing dot.
     // Gated on a class-resource state the character has but hasn't switched on (rage / panache).
     const gate = unmetGate(a);
+    // Ruling D: something of yours changes what this action DOES — Magic Hands makes Treat Wounds heal
+    // d10s instead of d8s. The changed value shows inline in parentheses with a `*` back to the
+    // source. Neither has a stat row to sit on: Magic Hands gives no bonus to the Medicine check at
+    // all, so starring the nearest roll would have claimed something the feat does not grant.
+    const marks = recordMarkersFor(character, content, 'action', actionId(a.name));
+    const markValue = marks.find((m) => m.value)?.value;
+    const markTitle = marks.map((m) => `${nameOfRecord(content, m.sourceId)}: ${m.note}`).join('\n');
+    const MarkTag = () =>
+      marks.length === 0 ? null : (
+        <span className="action-mark" title={markTitle}>
+          {markValue && <span className="action-mark-val">({markValue})</span>}
+          <SituationalStar />
+        </span>
+      );
     if (compactActions) {
       return (
         <button type="button" className={'action-chip' + (onPrepare && !prepared ? ' unprepared' : '') + (gate ? ' gated' : '')} title={gate ? `Needs ${gateLabel(gate)} — ${a.name}` : `Show ${a.name}`} onClick={openDetail}>
@@ -410,6 +424,7 @@ export function MainTab({
             {a.cost ? <ActionGlyph cost={a.cost} /> : <i className="ti ti-hourglass-low action-activity-icon" aria-hidden="true" />}
           </span>
           <span className="action-chip-name">{a.name}</span>
+          <MarkTag />
           {gate && <span className="needs-badge" title={`Requires ${gateLabel(gate)}`}><i className="ti ti-lock" aria-hidden="true" />{gateLabel(gate)}</span>}
           {a.skill && <span className="action-skill">{a.skill}</span>}
           {onPrepare && <i className={'ti chip-prep ' + (prepared ? 'ti-circle-check-filled' : 'ti-circle')} aria-hidden="true" />}
@@ -433,6 +448,7 @@ export function MainTab({
         <div className="action-body">
           <div className="action-name">
             {a.name}
+            <MarkTag />
             {gate && <span className="needs-badge" title={`Requires ${gateLabel(gate)}`}><i className="ti ti-lock" aria-hidden="true" />Needs {gateLabel(gate)}</span>}
             {a.skill && <span className="action-skill">{a.skill}</span>}
           </div>
@@ -593,7 +609,7 @@ export function MainTab({
             const note = penalized ? `${formatMod(acp.value)} armor check penalty (${acp.source})` : '';
             return (
               <div
-                className={'skill' + (onOpenStat ? ' rollable' : '') + (statHasSituational(character, { kind: 'skill', skill: key }, content) ? ' has-mode' : '')}
+                className={'skill' + (onOpenStat ? ' rollable' : '') + statMarkClass(character, { kind: 'skill', skill: key }, content)}
                 key={key}
                 onClick={onOpenStat ? () => onOpenStat({ kind: 'skill', skill: key }) : undefined}
                 title={[onOpenStat ? `${skillLabel(key)} — how is this calculated?` : '', note].filter(Boolean).join(' · ') || undefined}

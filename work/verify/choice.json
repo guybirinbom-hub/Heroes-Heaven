@@ -1,0 +1,421 @@
+[
+ {
+  "id": "abadars-avenger",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Abadar's Avenger",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "text": "Hao Jin really has some nerve for a supposed disciple of Abadar. First, she dares to start a collection of trinkets in hopes of emulating the great Abadar's unsurpassable First Vault. As if that weren't enough, she also sets up a contest to give away her most powerful treasures to anyone who can throw a punch! Abadar hasn't directly told you as much, per se, but surely this kind of hubris can't sit well with your beloved deity, regardless of Hao Jin's own supposed ties to the Master of the First Vault. At the very least, someone's got to check out this shoddy imitation of the First Vault and write a report for the church of Abadar - and you've decided that someone is you. With or without the blessing of an actual priest of Abadar, you've taken it upon yourself to investigate Hao Jin's \"wondrous\" vault by winning her Ruby Phoenix Tournament. You read a few flyers about the tournament's home city and joined the first team that could handle your righteous zealotry, but any more preparation would be a waste of time. You clearly have the divine will of Abadar on your side (but again, no actual proof of this), which is all you'll need to win this tournament and dispel any notions of Hao Jin's ties to your patron deity. Choose two attribute boosts. One must be to **Charisma** or **Wisdom**, and one is a free attribute boost. You're trained in Religion and the Goka Lore skill. You gain the Assurance skill feat with Religion. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Religion **Lore** Goka Lore"
+ },
+ {
+  "id": "animalistic-brutality",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Animalistic Brutality",
+  "level": 8,
+  "traits": [
+   "barbarian",
+   "concentrate",
+   "morph",
+   "primal",
+   "rage"
+  ],
+  "engineFieldsPresent": [],
+  "text": "You deepen the connection into your animal instincts. Your unarmed attack from bestial rage gains one of the following traits until you stop raging: backswing, forceful, parry, razing, or sweep. You can't use this ability again until the next time you Rage. You can choose a different trait each time you use Animalistic Brutality."
+ },
+ {
+  "id": "astral-tether",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Astral Tether",
+  "level": 4,
+  "traits": [
+   "occult",
+   "psychic"
+  ],
+  "engineFieldsPresent": [],
+  "text": "You spin out a thread of psychic energy that connects you to an ally, using it as a conduit for your abilities. Choose a willing creature within 60 feet and connect to it. Whenever you would gain a benefit from a psychic amp, you can have the amp affect the tethered creature instead. You can do so only if the amp grants a distinct benefit, not if it alters the amped spell. The tether can't be severed physically but breaks if the distance between you and the tethered ally ever exceeds 60 feet, if you become unconscious, or if you use Astral Tether again."
+ },
+ {
+  "id": "base-kinesis",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Base Kinesis",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "text": "You gain the Base Kinesis impulse. For the purposes of determining when the range and Bulk improvements of the action occur, your kineticist level is equal to half your level (for example, Base Kinesis for a 10th-level character with this feat would have a range of 45 feet and could affect 1 Bulk of their chosen element)."
+ },
+ {
+  "id": "blessing-of-the-five",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Blessing of the Five",
+  "level": 1,
+  "traits": [
+   "concentrate",
+   "divine",
+   "healing",
+   "manipulate",
+   "vitality"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "text": "**Frequency** once per day --- **Effect** You call out to The Godclaw to heal your allies. You cast the 3‐action version of Heal, heightened to a rank one lower than half your level rounded up. You can select up to five creatures in the area to remain unaffected by the spell. You can instead use this ability to bring a creature within 30 feet that has died within the last round back from the dead. If you do, the creature is restored to 1 Hit Point and is Doomed 1."
+ },
+ {
+  "id": "call-worm-spirit",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Call Worm Spirit",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "text": "**Frequency** once per day --- You call forth a ghostly manifestation of the worm spirit. Choose an intersection on the ground within 60 feet; the ghostly maw of a worm emerges from the ground, attacking all creatures in a . Each creature in the area must attempt a save. --- **Critical Success** The target is unaffected. **Success** The target takes damage as it is battered by the worm's body. **Failure** The target takes damage as it is bitten by the worm. The target is immobilized until the end of its next turn. **Critical Failure** As failure, but the damage increases to and the target is knocked prone. --- *Note: A DC was not provided for this ability by Paizo. The button above uses the better of your class or spell DC.*"
+ },
+ {
+  "id": "clown",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Clown",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "text": "Although you've spent time in greasepaint and colorful clothing to amuse crowds, your skills with buffoonery and physical comedy are exceptional whether or not you're in costume. In the employ of Mistress Dusklight's Celestial Menagerie, you spent too many routines distracting an audience from an ill-timed accident or evidence of abused animals or performers. You've had enough of that, and the Celestial Menagerie isn't your home any longer. Choose two attribute boosts. One must be to **Dexterity** or **Charisma**, and one is a free attribute boost. You're trained in the Performance skill and the Clown Lore skill. You gain the Virtuosic Performer (Comedy) skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Performance **Lore** Clown Lore"
+ },
+ {
+  "id": "crystal-healer",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Crystal Healer",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "text": "Mineral formations can be beautiful things, sparkling and arrayed in geometric configurations. To you, they are also potent natural healing aids. You may have taken up adventuring to prove yourself by healing the ailing or to find new crystals with unique properties to add to your growing collection. Choose two attribute boosts. One must be to **Wisdom** or **Charisma** and one is a free attribute boost. You're trained in the Nature skill and the Plane of Earth Lore skill. You gain the Natural Medicine skill feat. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Nature **Lore** Plane Of Earth Lore **Skill Feat** Natural Medicine"
+ },
+ {
+  "id": "diobel-pearl-diver",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Diobel Pearl Diver",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "text": "**Prerequisite** Region - Absalom and Starstone Isle --- You spent a portion of your youth diving and gathering precious pearls under the attentive eyes of Kortos Consortium merchants. Choose two attribute boosts. One must be to **Constitution** or **Dexterity**, and one is a free attribute boost. You're trained in the Athletics skill and the Ocean Lore skill. You gain the Underwater Marauder skill feat. --- ## Background details **Attribute Boosts** Constitution or Dexterity, one free **Trained Skill** Athletics **Lore** Ocean Lore **Skill Feat** Underwater Marauder"
+ },
+ {
+  "id": "eidolon",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "Eidolon",
+  "level": 1,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "text": "You have a connection with a powerful and usually otherworldly entity called an eidolon, and you can use your life force as a conduit to manifest this ephemeral entity into the mortal world. Magic also flows through this conduit from your eidolon into you, so your eidolon determines the type of spells you cast and the spell list you choose from. Choose a type of . When you choose your eidolon, you also determine its appearance and general form, within the parameters for that particular type of eidolon. Once you establish your eidolon's type and general appearance, these features can't be changed later, except by selecting special evolution feats that can cause your eidolon to develop new features. Your magical connection with your eidolon takes the form of a sigil on each of your bodies. As long as your eidolon is manifested, the sigil glows with light and can't be covered or disguised via any means; it will shine through clothing, appear over cloaks, and remain unaffected by obfuscating magic. This, combined with the way that the two of you clearly act in tandem, makes it readily apparent to an intelligent observer that the two of you are connected in some way, even if the person has never encountered a summoner before. You bring your eidolon into reality with the Manifest Eidolon action. Your eidolon is no mere minion. It doesn't have the minion or summoned trait, and the two of you work together and coordinate your actions. You and your eidolon share your actions and multiple attack penalty. Each round, you can use any of your actions (including reactions and free actions) for yourself or your eidolon. You coordinate your actions with your eidolon more efficiently when you Act Together. Your connection with your eidolon allows you to communicate with it telepathically at all times, even when it isn't manifested. You also gain the Share Senses action. Lastly, the connection between you and your eidolon means you both share a single pool of Hit Points. Damage taken by either you or the eidolon reduces your Hit Points, while healing either of you recovers your Hit Points. Like with your actions, if you and your eidolon are both subject to the same effect that affects your Hit Points, you apply those effects only once (applying the greater effect, if applicable). For instance, if you and your eidolon get caught in an area effect that would heal or damage you both, only the greater amount of healing or damage applies. ### Gear and your Eidolon Your eidolon can't wear or use magic items, except for items with the eidolon trait. An eidolon can have up to two items invested. Your eidolon's link to you means it can benefit from certain magic items invested by you. - Your eidolon gains item bonuses to Perception and skills from any magical items that you have invested. - Your eidolon increases its item bonus to AC based on your armor's armor potency rune or bracers of armor. It also gains an item bonus to its saves from the resilient rune on your armor "
+ },
+ {
+  "id": "expert-longevity",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Expert Longevity",
+  "level": 9,
+  "traits": [
+   "elf"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "text": "You've continued to refine the knowledge and skills you've gained through your life. When you choose a skill in which to become trained with Ancestral Longevity, you can also choose a skill in which you are already trained and become an expert in that skill. This lasts until your Ancestral Longevity expires. When the effects of Ancestral Longevity and Expert Longevity expire, you can retrain one of your skill increases. The skill increase you gain from this retraining must either make you trained in the skill you chose with Ancestral Longevity or make you an expert in the skill you chose with Expert Longevity."
+ },
+ {
+  "id": "fly-on-shadowed-wings",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Fly on Shadowed Wings",
+  "level": 10,
+  "traits": [
+   "animist",
+   "apparition"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "text": "**Frequency** once per hour --- Your apparition embraces you, feeding on your magic to become a pair of protective wings. Choose one of your attuned apparitions; for 10 minutes, you gain a fly Speed equal to your land Speed and resistance to precision damage equal to your level, but your chosen apparition is dispersed for the duration, automatically re-attuning to you after 10 minutes."
+ },
+ {
+  "id": "glory-hound",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Glory Hound",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkillChoice"
+  ],
+  "text": "Eventually, even the greatest hero-god must die. Yet many live eternally through song, poetry, shrines, and art. Even though Iblydos isn't producing new hero-gods, its people know how to appreciate and commemorate a real hero. You hope to seize that same immortality through exceptional deeds and a little luck. If everything goes to plan, you'll retire rich and famous, looking good all the while. If the fates turn against you, at the very least you know tales of your exploits will dazzle audiences for ages. Choose two attribute boosts. One must be to **Strength** or **Charisma**, and one is a free attribute boost. You're trained in either the Intimidation or Performance skill, as well as the Games Lore skill. If you choose Intimidation, you gain the Intimidating Glare skill feat. If you choose Performance, you gain the Impressive Performance skill feat. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Lore** Games Lore"
+ },
+ {
+  "id": "hookclaw-digger",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Hookclaw Digger",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "text": "**Prerequisites** Kobold ancestry You are a digger from the Hookclaw kobold tribe, born beneath the streets of Absalom, with muscles and mind hardened by years spent tunneling through rock and earth and a confidence built upon your pride in your draconic heritage. Choose two attribute boosts. One must be to **Strength** or **Charisma**, and one is a free attribute boost. You're trained in the Crafting skill, the Mining Lore skill, and the Engineering Lore skill. You gain the Improvise Tool skill feat. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Crafting **Lore** Mining Lore **Skill Feat** Improvise Tool"
+ },
+ {
+  "id": "iron-command",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "Iron Command",
+  "level": 1,
+  "traits": [
+   "champion",
+   "divine",
+   "emotion",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "text": "**Trigger** An enemy in your champion's aura damages you --- **Effect** You put an impertinent foe who dared harm you in their proper place. You command your enemy to kneel before you in obedience. If they dare to refuse, they must pay the price in pain and anguish. The enemy must choose one of the following options. - **Kneel** The enemy drops prone as a free action. - **Refuse** You deal damage to the enemy. This damage increases to 2d6 at 5th level, 3d6 at 9th level, 4d6 at 12th level, 5d6 at 16th level, and 6d6 at 19th level. Regardless of which option the enemy chose, your Strikes against it deal 1 extra spirit damage until the end of your next turn. This extra damage increases to 2 at 9th level and 3 at 16th level."
+ },
+ {
+  "id": "local-scion",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Local Scion",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "text": "You're from Breachill and have lived there most, if not all, of your life. You might be the son or daughter of a well-known local adventuring family, or a family with a storied tradition of military or other martial service. You likely also have some sort of skill with your hands, as the people of Breachill are very self-sufficient. The Call for Heroes is one of your hometown's most iconic traditions, and you want to attend so you can prove your own merits to the council-beyond simply those of your family's name. Choose two attribute boosts. One must be to **Constitution** or **Charisma**, and one is a free attribute boost. You're trained in the Crafting skill and the Breachill Lore skill. You gain the Specialty Crafting skill feat. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Crafting **Lore** Breachill Lore **Skill Feat** Specialty Crafting"
+ },
+ {
+  "id": "memory-of-skill",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Memory of Skill",
+  "level": 9,
+  "traits": [
+   "samsaran"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "text": "**Frequency** once per day --- Your years of training in a previous life didn't go to waste with your death, and you can call upon this training when you most need it. Choose one skill. You temporarily increase your proficiency rank with that skill by one step for 1 minute (from untrained to trained, trained to expert, and expert to master). This temporary increase adjusts your proficiency bonus and allows you to use skill actions based on this increased proficiency as normal. Memory of Skill can't increase a skill's proficiency rank beyond master."
+ },
+ {
+  "id": "nocturnal-navigator",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Nocturnal Navigator",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "trainedSkill"
+  ],
+  "text": "You have a great affinity for the night skies. You watch the stars, and you feel they speak secret messages specifically to you, which help you navigate your surroundings or perhaps determine your next course of action. Often, the stars have led you to places of great adventure, where you find new experiences and challenges. You might have come to make use of your talents as a guide for traveling groups, or maybe you preferred using your talents in pursuing a star-driven journey for personal enlightenment. Choose two attribute boosts. One must be to Dexterity or Wisdom, and one is a free attribute boost. You're trained in Survival. Whenever you can clearly identify the stars, if you roll a success on a check to Sense Direction or otherwise orienteer, you get a critical success instead; if you roll a critical failure at such a check, you get a failure instead. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Survival"
+ },
+ {
+  "id": "paradigm-cube",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Paradigm Cube",
+  "level": 14,
+  "traits": [
+   "illusion",
+   "invested",
+   "mythic"
+  ],
+  "engineFieldsPresent": [
+   "counters"
+  ],
+  "text": "A *paradigm cube* is a perfect 5-inch-square cube of stone. Each side is inlaid with precious crystals of a different color: red, orange, yellow, green, blue, and indigo. When one activates a *paradigm cube*, one of these sides is selected—it glows with the matching color and then darkens to a shade of violet once the activation ends, indicating that the magic from that particular side of the cube has been expended for the day. **Activate—Change Paradigm** ⟨1⟩ (manipulate) **Frequency** six times per day (but only once per day per color) --- **Effect** Select one of the six colors of the cube that hasn't been activated today, then roll the cube on the ground at your feet and attempt a . On a success, your chosen color activates as detailed below. On a failure, roll 1d6 to randomly determine which effect manifests; if the result of the roll is a color that's already been activated today, no effect occurs. The *paradigm cube* then immediately returns to your hand. If you spend 1 Mythic Point as part of this activation, your chosen color automatically activates without requiring a flat check, and the chosen effect's mythic enhancement unlocks. Once activated, the illusion created fills a from you and lasts for 1 minute. You can end the effect early by activating Change Paradigm again by tapping the currently active color. **1—Red** (emotion, mental, visual) Red is the color of anger and impatience. A crimson haze covers the area, setting everyone within the area on edge. Allies in the area gain a +2 item bonus to Intimidation checks to Coerce. **Mythic Enhancement:** Allies' saving throws against mental and incapacitation effects are attempted at mythic proficiency. **2—Orange** (light, visual) Orange is the color of glory and opulence. The area becomes bedecked in elegant images, glamorous decor, and spectacular displays, and becomes brightly lit. Allies in the area gain a +2 item bonus to Performance checks, and allies who Rage in the area gain an additional 3 temporary Hit Points above what they would normally gain. **Mythic Enhancement:** Allies' Perception checks and Diplomacy checks to Make an Impression or Request are attempted at mythic proficiency. **3—Yellow** (emotion, fear, light, mental, visual) Yellow is the color of terror and discord. The area's illumination, if any, takes on an unnerving, murky yellow tinge and becomes dim light. Allies in the area gain a +2 item bonus to Intimidation checks to Demoralize. **Mythic Enhancement:** Enemy creatures in the area who gain the frightened condition become Slowed 1 as long as they remain frightened, as the yellow light seems to cling to them and slow their movements to a nightmarish crawl. **4—Green** (revelation, visual) Green is the color of logic and clarity. Visible text in the area becomes softly illuminated when read. Allies in the area gain a +2 item bonus to Lore checks to Recall Knowledge. **Mythic Enhancement:** Attempts made by allies to counteract or disbelieve illusions or to sa"
+ },
+ {
+  "id": "propaganda-level-1",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Propaganda (Level 1)",
+  "level": 0,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "text": "Propaganda Source Firebrands pg. 94 Propaganda is strongly biased information presented in a way that may mislead those who are exposed to it. Most commonly, propaganda is used to drive a specific political agenda. While this is oftentimes a tool utilized by regimes to maintain a specific image among their oppressed people, the Firebrands use propaganda to bring shocking truths to light, drive wedges between enemy factions, and encourage uprisings against tyrannical regimes. Many groups of Firebrands specialize in the creation and dissemination of propaganda, though they are just as likely to utilize local resources to do the disseminating for them. When used at the correct time and place, propagandists can adjust the temperature of the political climate to tear down tyrants and shift the narrative in a way that evokes specific sentiments, like hope or anger, and thus inspires rebellious action. Spreading propaganda occurs over the course of days because it typically requires time for its widespread dissemination through physical flyers and word of mouth. Once you select a specific subject for your propaganda, it typically takes 1d4+2 days for a propagandist to compose and then disseminate their work. Twice as long is required if the propaganda is contradictory to existing rumors or to the opinions of those viewing or reading it, but only half as long is necessary if the propaganda supports existing rumors and public opinion. Propaganda typically influences an entire settlement or area, though the GM can determine that it only influences specific areas like a city district in a larger city or even a single neighborhood. In these cases, you should be able to pay for more propaganda services to influence additional areas. The level of the propagandist determines how effective they and their team are at influencing the mindset of the people. The GM rolls a secret check using the bonus of the propagandist against the DC required to Gather Information on the given subject of the propaganda. On a success, the propaganda takes hold, becoming the talk of the people for 1 week, or 1 month on a critical success. On a failure, the propaganda is unsuccessful but is otherwise ignored. On a critical failure, the propaganda backfires, and further attempts at propaganda related to that subject fail for 1 week. In addition, the people in the region are aware that someone was trying to spread rumors about the subject. Propaganda (Level 1) Source Firebrands pg. 94 Price 15 gp +6; trained Propaganda (Level 2) Source Firebrands pg. 94 Price 25 gp +7 Propaganda (Level 3) Source Firebrands pg. 94 Price 40 gp +9; Expert Propaganda (Level 4) Source Firebrands pg. 94 Price 60 gp +10 Propaganda (Level 5) Source Firebrands pg. 94 Price 100 gp +12 Propaganda (Level 6) Source Firebrands pg. 94 Price 150 gp +13 Propaganda (Level 7) Source Firebrands pg. 94 Price 300 gp +15; Master"
+ },
+ {
+  "id": "reapers-grasp",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Reaper's Grasp",
+  "level": 11,
+  "traits": [
+   "concussive",
+   "fatal-d12",
+   "kickback"
+  ],
+  "engineFieldsPresent": [],
+  "text": "This *+2 striking arquebus* has an ashwood stock plated with worked silver, featuring a mosaic of agonized skulls carved into the metal. The mere mention of Galt's infamous final blades is enough to make any mortal creature shudder. Used to execute political opponents in the nation's constant civil war, these guillotines hold the souls of those they execute, preventing them from reaching a natural afterlife. When one of the final blades was destroyed in 4710, some of the metal from its remains made its way to Alkenstar and was reforged into a deadly firearm that retained the guillotine's soul-stealing properties. Whenever the *reaper's grasp* kills a sapient living or undead creature, a portion of that creature's soul is drawn inexorably into the weapon, and another skull is added to the mosaic as if scrawled by an invisible hand, to a maximum of 10 souls. Creatures whose souls are protected by outside forces, such as a lich's soul cage, are immune to this effect, though the process, while painful, does not prevent the soul from going to the afterlife or being resurrected. Keep track of the level of each creature whose souls are stored in the reaper's grasp. --- **Activate—Soul Shot** ⟨1⟩ (concentrate) **Requirements** There's at least one soul stored in the reaper's grasp **Effect** You channel the necromantic energy of a soul stored in the weapon into your next attack, increasing the attack's destructive power. Choose a soul stored in the weapon. The next Strike you make with the reaper's grasp before the end of your turn deals an additional void damage equal to twice the level of the creature whose soul you chose. Using this ability releases the chosen soul, and a skull on the mosaic fades away. --- **Activate—Devour Captured Soul** ⟨1⟩ (concentrate) **Requirements** There's at least one soul stored in the reaper's grasp **Effect** You channel the necromantic energy of a soul stored in the weapon into a mantle around you, protecting you from harm. Choose a soul stored in the weapon. You gain temporary Hit Points equal to three times the level of the creature whose soul you chose, which last until the end of your next turn. Using this ability releases the chosen soul, and a skull on the mosaic fades away."
+ },
+ {
+  "id": "root-worker",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Root Worker",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "text": "Some ailments can't be cured by herbs alone. You learned ritual remedies as well, calling on nature spirits to soothe aches and ward off the evil eye. Taking up with adventurers has given you company on the road, as well as protection from those who would brand you a fake—or worse. Choose two attribute boosts. One must be to **Intelligence** or **Wisdom**, and one is a free attribute boost. You're trained in the Occultism skill and the Herbalism Lore skill. You gain the Root Magic skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Occultism **Lore** Herbalism Lore **Skill Feat** Root Magic"
+ },
+ {
+  "id": "scout",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Scout",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLoreChoice",
+   "trainedSkill"
+  ],
+  "text": "You called the wilderness home as you found trails and guided travelers. Your wanderlust could have called you to the adventuring life, or perhaps you served as a scout for soldiers and found you liked battle. Choose two attribute boosts. One must be to **Dexterity** or **Wisdom**, and one is a free attribute boost. You're trained in the Survival skill and a Lore skill related to one terrain you scouted in (such as Forest Lore or Cavern Lore). You gain the Forager skill feat. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Survival **Skill Feat** Forager"
+ },
+ {
+  "id": "shory-seeker",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Shory Seeker",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "text": "You've dedicated your life to unraveling the secrets of the ancient Shory Empire, either through meticulous research or by traveling into dangerous and distant ruins to track down long-lost artifacts. Choose two attribute boosts. One must be to **Dexterity** or **Intelligence**, and one is a free attribute boost. You're trained in the Crafting skill and the Shory Lore skill. You gain the Specialty Crafting skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Crafting **Lore** Shory Lore **Skill Feat** Specialty Crafting"
+ },
+ {
+  "id": "spear-of-the-destroyers-flame",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Spear of the Destroyer's Flame",
+  "level": 20,
+  "traits": [
+   "artifact",
+   "reach"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "text": "The tip of this *+3 major striking greater flaming returning speed longspear* is edged with several razor-sharp obsidian blades. The spear has the thrown 30 feet weapon trait, in addition to the normal weapon traits for a longspear. While the *Spear of the Destroyer's Flame* is in your possession, you gain fire resistance 20. When you critically hit a creature with the spear, the creature's blood begins to boil, unleashing blasts of heat from the wound. The creature takes 2d8 damage, in addition to the persistent fire damage from the greater flaming rune; all creatures adjacent to the creature when it takes the persistent fire damage take an equal amount of fire damage. Like the fire damage from the greater flaming rune, this fire damage ignores a creature's fire resistance, though it doesn't ignore fire immunity. In addition to its deadliness as a weapon, the *Spear of the Destroyer's Flame* gives its wielder full control over the Army of Fire, though the orders of the Commander of Flame supersede the orders of anyone wielding the spear, as noted on page 17. While the spear is in your possession, you're aware of the location of the Army of Fire and the army's distance from you. In addition, you can give orders to the Army of Fire, and the army's members will understand and obey you, regardless of what language you speak. If you're within 1 mile of the Army of Fire, the army and its members gain a +10 circumstance bonus to their Speeds. Any members of the Army of Fire within 100 feet of you become quickened and can use the additional action to Step, Stride, or Strike. The army remains quickened for 1 minute after moving further than 100 feet from you. The Army of Fire has unwavering loyalty to the Commander of Flame, an individual who has completed a special activation that ties their soul to the spear. As long as the Army of Fire can see and hear the Commander of Flame, the army will follow the Commander's orders. The Commander of Flame can sense the presence of the Army of Fire and issue orders, regardless of language, with the same effects as for someone in possession of the spear. The Commander of Flame still needs the spear in hand to muster the Army of Fire, however. If the Commander of Flame doesn't hold the *Spear of the Destroyer's Flame* for 1 week, it returns to Cuetzmonquali's gut, instantly teleporting to the creature's location. If Cuetzmonquali is dead at this time, the spear also resurrects the creature, using the effects of a critical success on a 10th-rank Resurrect ritual. **Activate** 1 minute (envision, Interact) **Frequency** once per day --- **Effect** You attempt to tie your soul to the spear. If the current Commander of Flame still lives, you must attempt either a Will save, Diplomacy check, Intimidation check, or Warfare Lore check. The DC of this check is equal to the current Commander's Will DC, Diplomacy DC, Intimidation DC, or Warfare Lore DC, whichever is highest. On a success, you become the Commander of Flame. On "
+ },
+ {
+  "id": "story-collector",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Story Collector",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "text": "The power stories exude over the world has long fascinated you. No matter if they're accurate historical accounts, distorted parables, or completely fictional constructions, the way tales can shape society is a kind of magic. In some cases, literal, occult magic! One tale that's come back to modern lips of late is an ancient one indeed, the story of the elven hero Iyalirrin, an Ekujae bard who helped to create a ritual known as the anima invocation in his people's pursuit against the devastations caused by Dahak in the aftermath of Earthfall. Other heroes rediscovered Iyalirrin's story and the ritual a few short years ago, but it was Iyalirrin's admiration of the art of storytelling that spoke more to you. Whether you came to this realization recently or if you've long known about the ancient elven hero's admiration of spoken tales, you've devoted much of your adult life to the gathering and crafting of stories of your own. The way in which occult magic can manipulate the power of story is a particular obsession of yours, especially with a handy little trick you've learned that allows you to access power locked away in magic items you'd otherwise struggle to use. Simply by adjusting your story, the item's story, or both... and then giving the tiniest little push of occult magic, you can unlock a wide range of magical tools. These same tricks, you've come to discover, also work well on demons—particularly when used to remind them of their sins and the shame their once-mortal souls may have held eons ago. Choose two attribute boosts. One must be to **Charisma** or **Intelligence**, and one is a free attribute boost. You're trained in the Occultism skill and the Demon Lore skill. You gain the Trick Magic Item skill feat, as well as the Opportunistic Accusation reaction. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Occultism **Lore** Demon Lore **Skill Feat** Trick Magic Item"
+ },
+ {
+  "id": "thaumaturges-demesne",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Thaumaturge's Demesne",
+  "level": 12,
+  "traits": [
+   "arcane",
+   "thaumaturge"
+  ],
+  "engineFieldsPresent": [],
+  "text": "You have claimed an area or location as your demesne, granting you the ability to ward and protect it. When you select this feat, choose a demesne, an area of no more than 2,000 square feet. You must legitimately own the area or, if its a public area, you must lay claim to the area without anyone contesting it. Once you've chosen your demesne, it's automatically protected by an arcane Peaceful Bubble spell with an unlimited duration, heightened to half your level rounded up and using your thaumaturge class DC in place of a spell DC, if necessary. Additionally, the demesne is attended by three unseen custodians, as a successful Unseen Custodians ritual, and one object in the area gains an elemental sentinel, as a successful Elemental Sentinel ritual."
+ },
+ {
+  "id": "touched-by-dahak",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Touched by Dahak",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "text": "**[Legacy - Age of Ashes]** As the manifestation of Dahak was destroyed, a shard of the dragon god's wrathful nature infused you, resulting in a violent temper, strange apocalyptic dreams, an obsession with dragon hunting, or some other touch of his influence. Choose two attribute boosts. One must be to **Strength** or **Charisma**, and one is a free attribute boost. You're trained in the Athletics skill and the Dragon Lore skill. You gain the Titan Wrestler skill feat. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Athletics **Lore** Dragon Lore **Skill Feat** Titan Wrestler"
+ },
+ {
+  "id": "unlimited-pluripotency",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Unlimited Pluripotency",
+  "level": 17,
+  "traits": [
+   "surki"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Within all surkis is the capacity to be whatever they need to be, and you can tap into that capacity even now. When you sleep, you can choose to enter a pupa state. You sleep so deeply in your pupa that you can't be woken up by loud noises around you, and you lose the benefits of one of your surki heritages overnight. When you emerge and make your daily preparations, you can select a different surki heritage to replace it. If you had one or more evolutions for that heritage, you can choose a different evolution for your new heritage."
+ },
+ {
+  "id": "warded-by-kami",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Warded by Kami",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "limitedUses",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "text": "You've lived among kami, gaining a wellspring of spiritual power found deep within the Forest of Spirits. You've heard many rumors of what lies beyond the safety of your home and, for better or worse, they intrigue you. Whatever your reasons for leaving, you're still bound to whatever entity serves as your ward. Whether you return to the place of your birth or find a new land to call home is up to you. Choose two attribute boosts. One must be to **Intelligence** or **Wisdom**, and one is a free attribute boost. You're trained in Occultism and Spirit Lore. You also gain a ward that binds you to a specific animal, plant, object, or location of your choice. Once per day, you can spend an Interact action to merge with your ward and heal Hit Points equal to your level. This action has the healing trait. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Occultism **Lore** Spirit Lore"
+ }
+]

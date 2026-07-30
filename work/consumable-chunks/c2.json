@@ -1,0 +1,146 @@
+[
+ {
+  "id": "crackling-bubble-gum-lesser",
+  "name": "Crackling Bubble Gum (Lesser)",
+  "level": 5,
+  "description": "**Activate**⟨1⟩ (manipulate) --- This tangy gum cracks and pops in your mouth as you chew it. While you're chewing crackling bubble gum, for up to 10 minutes, you have a +1 item bonus to saving throws against auditory and sonic effects. **Secondary Effect** ⟨2⟩ (sonic) --- **Effect** You blow a bubble with the gum until it pops, after which it becomes inert. The pop deals 4d4 to all creatures in a with a save. A creature that fails its save is also bound with sticky gum, taking a –10-foot item penalty to its Speed for 1 minute. The creature can remove the gum with a total of 3 Interact actions. These actions don't have to be consecutive, and other creatures can provide the actions as well."
+ },
+ {
+  "id": "crackling-bubble-gum-moderate",
+  "name": "Crackling Bubble Gum (Moderate)",
+  "level": 9,
+  "description": "**Activate**⟨1⟩ (manipulate) --- This tangy gum cracks and pops in your mouth as you chew it. While you're chewing crackling bubble gum, for up to 10 minutes, you have a +2 item bonus to saving throws against auditory and sonic effects. **Secondary Effect** ⟨2⟩ (sonic) --- **Effect** You blow a bubble with the gum until it pops, after which it becomes inert. The pop deals 6d4 to all creatures in a with a save. A creature that fails its save is also bound with sticky gum, taking a –10-foot item penalty to its Speed for 1 minute. The creature can remove the gum with a total of 3 Interact actions. These actions don't have to be consecutive, and other creatures can provide the actions as well."
+ },
+ {
+  "id": "crackling-bubble-gum-greater",
+  "name": "Crackling Bubble Gum (Greater)",
+  "level": 13,
+  "description": "**Activate**⟨1⟩ (manipulate) --- This tangy gum cracks and pops in your mouth as you chew it. While you're chewing crackling bubble gum, for up to 10 minutes, you have a +2 item bonus to saving throws against auditory and sonic effects. **Secondary Effect** ⟨2⟩ (sonic) --- **Effect** You blow a bubble with the gum until it pops, after which it becomes inert. The pop deals 8d4 to all creatures in a with a save. A creature that fails its save is also bound with sticky gum, taking a –10-foot item penalty to its Speed for 1 minute. The creature can remove the gum with a total of 3 Interact actions. These actions don't have to be consecutive, and other creatures can provide the actions as well."
+ },
+ {
+  "id": "crackling-bubble-gum-major",
+  "name": "Crackling Bubble Gum (Major)",
+  "level": 15,
+  "description": "**Activate**⟨1⟩ (manipulate) --- This tangy gum cracks and pops in your mouth as you chew it. While you're chewing crackling bubble gum, for up to 10 minutes, you have a +3 item bonus to saving throws against auditory and sonic effects. **Secondary Effect** ⟨2⟩ (sonic) --- **Effect** You blow a bubble with the gum until it pops, after which it becomes inert. The pop deals 9d4 to all creatures in a with a save. A creature that fails its save is also bound with sticky gum, taking a –10-foot item penalty to its Speed for 1 minute. The creature can remove the gum with a total of 3 Interact actions. These actions don't have to be consecutive, and other creatures can provide the actions as well."
+ },
+ {
+  "id": "delve-scale",
+  "name": "Delve Scale",
+  "level": 10,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- If fried, cast-off scales of a benthic worm render into crunchy snacks. Alchemists add reagents to the frying oil to enhance the scales' properties and flavor. For 1 minute after eating a delve scale, you gain a burrow Speed of 15 feet and a +2 item bonus to Athletics checks to High Jump or Long Jump."
+ },
+ {
+  "id": "diplomats-charcuterie",
+  "name": "Diplomat's Charcuterie",
+  "level": 3,
+  "description": "**Activate** 10 minutes (manipulate) --- A common sight at political gatherings, a diplomat's charcuterie has fine meats, cheeses, nuts, fruits, and other finger foods mixed with reagents to engender friendly feelings between those consuming them. Contents of the plate vary by chef and the intended palates, from the hearty sausages and hard cheese of charcuterie from the Lands of the Linnorm Kings to the hot-pepper cheese curds and smoked almonds of Thuvian platters. After Activating the charcuterie by eating it, you gain a +1 item bonus to Diplomacy checks to Make an Impression and Perception checks to Sense Motive. These bonuses last 24 hours or until you make your next daily preparations, whichever comes first."
+ },
+ {
+  "id": "egg-cream-fizz",
+  "name": "Egg Cream Fizz",
+  "level": 5,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Containing neither eggs nor cream, an egg cream fizz contains milk or nut milk, sparkling water, and flavored syrup, frothed and chilled. Upon drinking, you feel lighter and more buoyant, gaining a +5-foot item bonus to your Speed for 10 minutes. During this time, you also gain another effect determined by the drink's syrup, which is chosen when the drink is created. - **Chocolate** You gain a +1 item bonus to Acrobatics checks to Balance, Maneuver in Flight, and Squeeze. - **Strawberry** You gain a +1 item bonus to Athletics checks to Climb, Leap, and Swim. - **Vanilla** You can Step into difficult terrain."
+ },
+ {
+  "id": "ginger-chew",
+  "name": "Ginger Chew",
+  "level": 5,
+  "description": "This chewy ginger candy aids digestion and soothes unsettled stomachs. A ginger chew lasts for 1 hour and grants you a +1 item bonus to Fortitude saves against being sickened. --- **Secondary Effect** ⟨1⟩ **Effect** Reduce your sickened value by 1, if any. The chew becomes inert."
+ },
+ {
+  "id": "insight-coffee-lesser",
+  "name": "Insight Coffee (Lesser)",
+  "level": 6,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- A popular choice for investigators studying alchemy, insight coffee is infused with alchemical flavoring during percolation. For 1 hour after you drink an insight coffee, you use d8s instead of d6s for your extra damage from the strategic strike class feature, if you have it. You also gain a +2 item bonus to checks to Recall Knowledge with a skill determined by the blend chosen when the item is crafted. - **Double Coffee** Religion - **Hazelnut** Nature - **Mocha** Arcana - **Vanilla** Society - **Pumpkin Spice** Occultism - **Toffee** Medicine"
+ },
+ {
+  "id": "insight-coffee-moderate",
+  "name": "Insight Coffee (Moderate)",
+  "level": 12,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- A popular choice for investigators studying alchemy, insight coffee is infused with alchemical flavoring during percolation. For 1 hour after you drink an insight coffee, you use d8s instead of d6s for your extra damage from the strategic strike class feature, if you have it. You also gain a +3 item bonus to checks to Recall Knowledge with a skill determined by the blend chosen when the item is crafted. - **Double Coffee** Religion - **Hazelnut** Nature - **Mocha** Arcana - **Vanilla** Society - **Pumpkin Spice** Occultism - **Toffee** Medicine"
+ },
+ {
+  "id": "insight-coffee-greater",
+  "name": "Insight Coffee (Greater)",
+  "level": 19,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- A popular choice for investigators studying alchemy, insight coffee is infused with alchemical flavoring during percolation. For 1 hour after you drink an insight coffee, you use d8s instead of d6s for your extra damage from the strategic strike class feature, if you have it. You also gain a +4 item bonus to checks to Recall Knowledge with a skill determined by the blend chosen when the item is crafted. - **Double Coffee** Religion - **Hazelnut** Nature - **Mocha** Arcana - **Vanilla** Society - **Pumpkin Spice** Occultism - **Toffee** Medicine"
+ },
+ {
+  "id": "journeybread-power",
+  "name": "Journeybread (Power)",
+  "level": 4,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Journeybread contains a mix of fruits, nuts, and grains with an alchemical boost. Eating one journeybread provides all the food and water you need for a day. If you subsist on nothing else for a week, you become temporarily immune to journeybread until you eat real food and drink water normally for 24 hours. In addition to the benefits of journeybread, power journeybread grants you a +1 item bonus to Athletics checks to Climb, Force Open, and Swim, and to Fortitude saving throws against being sickened. The number of minutes you can Hustle changes to your Constitution modifier × 20. These benefits last for 4 hours."
+ },
+ {
+  "id": "menders-soup",
+  "name": "Mender's Soup",
+  "level": 2,
+  "description": "**Activate** 10 minutes (manipulate) --- This hot, broth-based soup typically contains tubers, leeks, zesty spices, reagents, and if desired, the meat of livestock. Civic authorities commission batches of mender's soup for workers if a tricky job is on the agenda. After you eat the soup, its effects last 24 hours or until you make your next daily preparations, whichever comes first. You gain a +1 item bonus to Crafting checks to Repair and restore an additional 5 Hit Points to items you successfully Repair during this time. If you eat mender's soup over the entire period required to attempt a Crafting check to Craft (typically a minimum of eating the soup each day for 4 days), the +1 bonus from the soup can be applied to that check, too."
+ },
+ {
+  "id": "poison-fizz-lesser",
+  "name": "Poison Fizz (Lesser)",
+  "level": 8,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Made from a special mixture of honey and alchemical reagents, poison fizz is a zesty, sweet rock candy that pops and crackles in your mouth. For 1 hour, you have a +2 item bonus to saving throws against poison and being petrified. **Secondary Effect** ⟨2⟩ (poison) **Effect** You bite the poison fizz to release its poisonous liquid center and spray green mist in a . This deals with a . A creature that critically fails is also blinded until the end of your next turn and is then temporarily immune to being blinded by poison fizz for 1 hour."
+ },
+ {
+  "id": "poison-fizz-moderate",
+  "name": "Poison Fizz (Moderate)",
+  "level": 12,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Made from a special mixture of honey and alchemical reagents, poison fizz is a zesty, sweet rock candy that pops and crackles in your mouth. For 1 hour, you have a +2 item bonus to saving throws against poison and being petrified. **Secondary Effect** ⟨2⟩ (poison) **Effect** You bite the poison fizz to release its poisonous liquid center and spray green mist in a . This deals with a . A creature that critically fails is also blinded until the end of your next turn and is then temporarily immune to being blinded by poison fizz for 1 hour."
+ },
+ {
+  "id": "poison-fizz-greater",
+  "name": "Poison Fizz (Greater)",
+  "level": 15,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Made from a special mixture of honey and alchemical reagents, poison fizz is a zesty, sweet rock candy that pops and crackles in your mouth. For 1 hour, you have a +3 item bonus to saving throws against poison and being petrified. **Secondary Effect** ⟨2⟩ (poison) **Effect** You bite the poison fizz to release its poisonous liquid center and spray green mist in a . This deals with a . A creature that critically fails is also blinded until the end of your next turn and is then temporarily immune to being blinded by poison fizz for 1 hour."
+ },
+ {
+  "id": "scholars-drop",
+  "name": "Scholar's Drop",
+  "level": 6,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Students in Katapesh first used scholar's drop to gain an academic edge, but this hard, sugar-soated candy has since spread across Golarion. Its lemon and green tea flavor adds to its refreshing qualities. For 1 hour, you gain a +1 item bonus to saving throws against effects that could render you fatigued. **Secondary Effect** ⟨1⟩ **Requirements** You're fatigued --- **Effect** Ignore the effects of the fatigued condition for 10 minutes. The drop's other effects end for you, and when the 10 minutes are up, you're temporarily immune to scholar's drops for 1 hour. If you use this effect three times in a single day, you become temporarily immune to scholar's drops entirely until you get a full night's rest."
+ },
+ {
+  "id": "silver-crescent-lesser",
+  "name": "Silver Crescent (Lesser)",
+  "level": 6,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- A piquant tamarind and chili-lime flavor infuses a silver crescent, which was first created to aid those battling the undead. For 1 hour, you shed cool, white light like a torch, and you gain a +1 item bonus to saving throws against olfactory effects. While shedding this light, you can't be concealed if you're visible, and if you're invisible, you're concealed instead rather than being undetected. --- **Secondary Effect** ⟨2⟩ **Effect** A ray of light descends on a 5-foot square of your choice within 120 feet. Any creature in that space takes with a and is dazzled until the end of its next turn on a failed save. This is treated as silver for the purposes of weaknesses, resistances, and the like. The silver crescent becomes inert."
+ },
+ {
+  "id": "silver-crescent-moderate",
+  "name": "Silver Crescent (Moderate)",
+  "level": 11,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- A piquant tamarind and chili-lime flavor infuses a silver crescent, which was first created to aid those battling the undead. For 1 hour, you shed cool, white light like a torch, and you gain a +2 item bonus to saving throws against olfactory effects. While shedding this light, you can't be concealed if you're visible, and if you're invisible, you're concealed instead rather than being undetected. --- **Secondary Effect** ⟨2⟩ **Effect** A ray of light descends on a 5-foot square of your choice within 120 feet. Any creature in that space takes with a and is dazzled until the end of its next turn on a failed save. This is treated as silver for the purposes of weaknesses, resistances, and the like. The silver crescent becomes inert."
+ },
+ {
+  "id": "silver-crescent-greater",
+  "name": "Silver Crescent (Greater)",
+  "level": 16,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- A piquant tamarind and chili-lime flavor infuses a silver crescent, which was first created to aid those battling the undead. For 1 hour, you shed cool, white light like a torch, and you gain a +3 item bonus to saving throws against olfactory effects. While shedding this light, you can't be concealed if you're visible, and if you're invisible, you're concealed instead rather than being undetected. --- **Secondary Effect** ⟨2⟩ **Effect** A ray of light descends on a 5-foot square of your choice within 120 feet. Any creature in that space takes with a and is dazzled until the end of its next turn on a failed save. This is treated as silver for the purposes of weaknesses, resistances, and the like. The silver crescent becomes inert."
+ },
+ {
+  "id": "soothing-toddy",
+  "name": "Soothing Toddy",
+  "level": 6,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Hot tea with a comforting, flowery aroma, a soothing toddy grants you a +1 item bonus to saving throws against emotion effects and against effects with a trait determined by the liquor mixed into the tea when it's created. These benefits last for 1 hour. - **Amaretto** Auditory - **Limoncello** Olfactory - **Whiskey** Visual"
+ },
+ {
+  "id": "sprite-apple-chartreuse",
+  "name": "Sprite Apple (Chartreuse)",
+  "level": 5,
+  "description": "**Activate** 1 minute (manipulate) --- A sparkling candy coating covers a sprite apple. For 10 minutes after consuming a sprite apple, you shed bright light in a (and dim light for the next 20 feet). While shedding this light, you can't be concealed if you're visible, and if you're invisible, you're concealed instead rather than being undetected. The light matches the vibrant color of the apple's candy coating. Creatures in the bright light are subject to another effect, depending on the type of apple. Creatures in the bright light feel more in tune with nature, gaining a +1 item bonus to Nature checks and to Diplomacy checks attempted against animals or plants (if they have the Animal Empathy feat, Plant Empathy feat, or some other ability to make such checks)."
+ },
+ {
+  "id": "sprite-apple-pink",
+  "name": "Sprite Apple (Pink)",
+  "level": 4,
+  "description": "**Activate** 1 minute (manipulate) --- A sparkling candy coating covers a sprite apple. For 10 minutes after consuming a sprite apple, you shed bright light in a (and dim light for the next 20 feet). While shedding this light, you can't be concealed if you're visible, and if you're invisible, you're concealed instead rather than being undetected. The light matches the vibrant color of the apple's candy coating. Creatures in the bright light are subject to another effect, depending on the type of apple. Creatures in the bright light feel a burst of creativity, gaining a +1 item bonus to Performance checks."
+ },
+ {
+  "id": "sprite-apple-teal",
+  "name": "Sprite Apple (Teal)",
+  "level": 6,
+  "description": "**Activate** 1 minute (manipulate) --- A sparkling candy coating covers a sprite apple. For 10 minutes after consuming a sprite apple, you shed bright light in a (and dim light for the next 20 feet). While shedding this light, you can't be concealed if you're visible, and if you're invisible, you're concealed instead rather than being undetected. The light matches the vibrant color of the apple's candy coating. Creatures in the bright light are subject to another effect, depending on the type of apple. Creatures in the bright light feel a sense of calm, gaining a +1 item bonus to saving throws against fear effects."
+ }
+]

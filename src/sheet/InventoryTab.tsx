@@ -8,6 +8,8 @@ import {
   addPlayCompanion,
   attachItem,
   buyCompanion,
+  buyCompanionItem,
+  addCompanionItem,
   buyItem,
   removeInventoryItem,
   removePlayCompanion,
@@ -23,7 +25,7 @@ import type { CompanionPick } from './AddItemsModal';
 import { chargesFor, itemCounters } from '../rules/itemUses';
 import { formatPrice, grp } from '../rules/wealth';
 import { ItemDetail } from './ItemDetail';
-import { confirmDialog } from './confirm';
+import { chooseDialog, confirmDialog } from './confirm';
 import { ActionGlyph, isActionCost } from './widgets';
 import { AddItemsModal } from './AddItemsModal';
 import { ItemEditorModal } from './ItemEditorModal';
@@ -529,6 +531,55 @@ export function InventoryTab({
   const bulk = deriveBulk(character, content);
   const coins = character.currency;
   const loads = containerLoads(character, content);
+
+  /**
+   * Adding an item that is a COMPANION's to wear.
+   *
+   * The owner's ruling: "about items that effect the familer they need to be in the inventory of it
+   * (i say familer i mean every companion) instead of your inventory unless an item says otherwise."
+   * Barding on the player's own sheet is not just untidy — it is where its bonuses would be read
+   * from, and they are the animal's.
+   *
+   * The `companion` trait is the signal, and 27 items carry it. With companions present the player is
+   * asked which one; with none, the item still goes to the pack (you can own barding before you own
+   * anything to put it on) with a note saying why.
+   */
+  const cap = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
+  const addMaybeToCompanion = async (itemId: string, buy: boolean) => {
+    if (!onPlay) return;
+    const item = content.items[itemId];
+    const isCompanionGear = (item?.traits ?? []).includes('companion');
+    const comps = character.companions ?? [];
+    const wearers = comps.filter((c) => c.kind !== 'vehicle' && c.kind !== 'siege');
+    if (!isCompanionGear || wearers.length === 0) {
+      onPlay((p) => (buy ? buyItem(p, itemId, item?.price) : addInventoryItem(p, itemId)));
+      if (isCompanionGear) {
+        void chooseDialog({
+          title: `${item?.name ?? 'This item'} is companion gear`,
+          message: 'It goes in your pack for now. Once you have a companion, move it to that companion’s inventory — its bonuses belong to the companion, not to you.',
+          buttons: [{ value: 'ok', label: 'Got it', primary: true }],
+        });
+      }
+      return;
+    }
+    const pick =
+      wearers.length === 1
+        ? wearers[0].id
+        : await chooseDialog({
+            title: `Who wears the ${item?.name ?? 'item'}?`,
+            message: 'This is companion gear, so its bonuses are read from whichever companion carries it.',
+            buttons: [
+              ...wearers.map((c) => ({ value: c.id, label: c.name || cap(c.kind) })),
+              { value: '', label: 'Keep it in my pack' },
+            ],
+          });
+    if (pick === null) return; // dismissed — add nothing
+    if (!pick) {
+      onPlay((p) => (buy ? buyItem(p, itemId, item?.price) : addInventoryItem(p, itemId)));
+      return;
+    }
+    onPlay((p) => (buy ? buyCompanionItem(p, pick, itemId, item?.price) : addCompanionItem(p, pick, itemId)));
+  };
 
   const resolve = (inv: InventoryItem) => content.items[inv.itemId];
   // Doubling Rings context: the rune-copy picker only appears while the rings are invested and the
@@ -1194,8 +1245,8 @@ export function InventoryTab({
           content={content}
           hideLegacy={character.hideLegacy}
           currency={coins}
-          onBuy={(id) => onPlay((p) => buyItem(p, id, content.items[id]?.price))}
-          onGive={(id) => onPlay((p) => addInventoryItem(p, id))}
+          onBuy={(id) => void addMaybeToCompanion(id, true)}
+          onGive={(id) => void addMaybeToCompanion(id, false)}
           onBuyCompanion={(pick) => {
             // A vehicle/siege pick routes to the COMPANION system (same path as the Companions-tab
             // Add picker): append a CompanionConfig to play.companions and deduct the coin price.

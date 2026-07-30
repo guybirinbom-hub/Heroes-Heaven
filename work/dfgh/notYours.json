@@ -1,0 +1,154 @@
+[
+ {
+  "id": "glittering-snare",
+  "collection": "items",
+  "name": "Glittering Snare",
+  "level": 4,
+  "text": "Small flecks of mica, sand, and ground glass are packed into a spring-loaded canister that can be rigged to a trip wire or hidden in a container. The first creature to enter the square or open the container must attempt a save as the area is showered with bright, glittering dust that sticks to skin, fur, and clothing. --- **Critical Success** The creature is unaffected. **Success** The creature takes a -1 status penalty to Stealth checks for 1 minute or until it uses an Interact action to remove the glitter. **Failure** The creature takes a -2 status penalty to Stealth checks for 2 minutes or until it spends a 2-action activity, which has the manipulate trait, to remove the glitter. If the creature was invisible, the glitter outlines it for 1 round, making it concealed rather than undetected to visual senses. **Critical Failure** As failure, but the penalty is -4. The glitter sticks for 5 minutes or until the creature spends a 3-action activity, which has the manipulate trait, to remove it. The glitter continues to fall around the creature until completely removed, leaving a trail behind it as it moves and revealing its rough location; the creature is hidden, rather than undetected, to any creature that can see the glitter whenever it would otherwise have been undetected.",
+  "whyNotYours": "This is a snare rigged to a trip wire or container. The Stealth penalty and the hidden-instead-of-undetected effect land on the first creature that triggers it, never on the character who set it."
+ },
+ {
+  "id": "necrobinding-serum",
+  "collection": "items",
+  "name": "Necrobinding Serum",
+  "level": 5,
+  "text": "**Activate** ⟨2⟩ Interact --- This potent necromantic serum is distilled from the body of an intelligent corporeal undead who seeks to establish absolute control over their undead minions. The raw materials of a *necrobinding serum* are composed of a slurry made from the creator's own flesh and blood mixed with pulped fungal toxins. The exact ingredients vary, but the act of brewing a necrobinding serum is typically viewed with distaste at best and, in many societies, is regarded as an evil act. While *necrobinding serum* isn't a poison, its method of delivery is identical to that of an injury poison-it's applied to a weapon that's then used to Strike an undead target (living creatures suffer no additional effect from exposure to a dose of *necrobinding serum*). When an undead creature is targeted by a dose of *necrobinding serum*, it must attempt a save. --- **Critical Success** The undead creature is unaffected. **Success** The undead creature is momentarily disoriented; it takes a -1 status penalty to all attack rolls made against you until the start of your next turn. **Failure** The undead creature becomes friendly toward you. If it was already friendly, it becomes helpful. It can't use hostile actions against you. This effect persists for 8 hours if the undead is mindless. Against other undead, the effect gains the mental trait and persists for 10 minutes. **Critical Failure** The undead creature becomes helpful toward you and can't use hostile actions against you. This effect persists for 24 hours if the undead is mindless. Against other undead, the effect gains the mental trait and persists for 1 hour. --- **Craft Requirements** You must be a corporeal undead, and the serum must include some of your flesh and blood.",
+  "whyNotYours": "The serum is applied to a weapon and delivered by a Strike; every effect — the attack penalty, becoming friendly or helpful, being unable to use hostile actions — lands on the struck undead creature, not on the character who applied it."
+ },
+ {
+  "id": "colorful-coating-blue",
+  "collection": "items",
+  "name": "Colorful Coating (Blue)",
+  "level": 3,
+  "text": "**Activate** ⟨3⟩ (manipulate) --- These coatings come in different colors, each with a different special effect. A bottle of colorful coating contains enough to slather over one 5-foot square within your reach or space and is made with a special dispenser that enables you to coat the surface using only one hand. It's possible to use the coating on any surface that can be painted (subject to the GM's discretion). Colorful coating dries instantly, and its effect in the square you coated lasts for 1 minute. After that time, the coating turns to fine, inert powder, returning the square to its original condition unless otherwise noted. Blue colorful coating contains bonding compounds that firm up a surface, making it more stable and more supportive of weight. When applied to material that's loose or unstable, the square can hold twice as much weight before giving way. The coating also slows any collapse, making it easier to avoid and granting a +1 circumstance bonus to Reflex saving throws in reaction to the coated surface's collapse. This coating can shore up a wall, ceiling, door, or similar opening, granting a +2 circumstance bonus to the DC for Athletics checks to Force Open the coated surface.",
+  "whyNotYours": "The coating is applied to a 5-foot square of terrain, not to a creature. Nothing attaches to you: the +1 circumstance bonus to Reflex belongs to whoever happens to be caught in that surface's collapse (friend or foe), and the +2 is added to the Athletics DC of the coated surface, which is an obstacle's DC, not a number on your sheet."
+ },
+ {
+  "id": "colorful-coating-yellow",
+  "collection": "items",
+  "name": "Colorful Coating (Yellow)",
+  "level": 3,
+  "text": "**Activate** ⟨3⟩ (manipulate) --- These coatings come in different colors, each with a different special effect. A bottle of colorful coating contains enough to slather over one 5-foot square within your reach or space and is made with a special dispenser that enables you to coat the surface using only one hand. It's possible to use the coating on any surface that can be painted (subject to the GM's discretion). Colorful coating dries instantly, and its effect in the square you coated lasts for 1 minute. After that time, the coating turns to fine, inert powder, returning the square to its original condition unless otherwise noted. Yellow colorful coating contains a variety of compounds that fill small gaps and harden into a flat surface that increases friction, making it much easier to move on the square's surface. On the affected surface, the coating reduces difficult terrain caused by slipperiness, such as from ice or grease; this eliminates difficult terrain, reduces greater difficult terrain to difficult terrain, and reduces uneven ground to greater difficult terrain. The coating can't affect difficult terrain caused by features or effects not part of the surface, such as crowds, underbrush, wind, magic, and so on. The GM determines if yellow colorful coating can affect a surface's terrain. The coating also makes a coated wall or ceiling easier to climb. It provides a +2 circumstance bonus to checks to Climb the coated surface. Yellow colorful coating and green colorful coating have opposite effects. If they're both applied to the same surface, they negate one another.",
+  "whyNotYours": "Like the blue coating, this modifies a 5-foot square rather than a creature. The +2 circumstance bonus to Climb is a property of the coated surface that applies to any climber, and the difficult-terrain reduction is a terrain change, so no number on your own sheet moves."
+ },
+ {
+  "id": "execution-powder",
+  "collection": "items",
+  "name": "Execution Powder",
+  "level": 14,
+  "text": "**Activate** ⟨2⟩ (manipulate) --- The spores of a certain mushrooms, if carefully collected and suspended in a properly mixed alchemical fluid, can kill those near death. If a creature is reduced to 0 Hit Points while under the effect of execution powder, it must succeed at a save or die (this is a death effect). If a creature dies from execution powder, the spores from their last breath alight on a random creature adjacent to the victim, granting that creature 20 temporary Hit Points and a +1 status bonus to attack and damage rolls for 10 minutes. **Saving Throw** **Maximum Duration** 6 rounds **Stage 1** 7d6 damage (1 round) **Stage 2** 9d6 damage (1 round) **Stage 3** 12d6 damage (1 round)",
+  "whyNotYours": "This is a poison used against a creature. Its only lasting benefit -- 20 temporary Hit Points and a +1 status bonus to attack and damage rolls for 10 minutes -- lands on a random creature adjacent to the victim, not on the user, so it isn't a mode for your own sheet."
+ },
+ {
+  "id": "heartening-missive",
+  "collection": "items",
+  "name": "Heartening Missive",
+  "level": 5,
+  "text": "Heartening Missive Source Treasure Vault (Remastered) pg. 85 Usage held in 1 hand Activate (concentrate, manipulate) You compose a heartening missive by creating a short message or image intended to grant the recipient moral support. You must dedicate the missive to an individual creature you know and address it to their location (typically the settlement where you think they are). Once you finish composing the missive, it folds itself into the shape of an animal and Flies at a speed of 45 feet (about 15 miles per hour) toward the location for up to 24 hours. It alights near the recipient or in their hand. After Activating the missive, the recipient gets its benefit and becomes temporarily immune to all heartening missives for 24 hours. If the missive fails to reach its recipient in 24 hours, it returns to its sender at the same pace, becoming non-magical when it arrives. After imparting or losing its magic, the missive remains as a normal document. Heartening Missive (Bull) Source Treasure Vault (Remastered) pg. 85 Price 50 gp Folded into a bull, this missive grants the recipient a sense of solidity. The recipient gains a +1 item bonus to Fortitude saves for the next 24 hours. Heartening Missive (Butterfly) Source Treasure Vault (Remastered) pg. 85 Price 25 gp Folded into a delicate butterfly, this missive grants the recipient a sense of grace and poise. Once during the next 24 hours, when the recipient fails a Diplomacy or Performance check, they can improve the result from a failure to a success or from a critical failure to a failure. This is a fortune effect. Heartening Missive (Rabbit) Source Treasure Vault (Remastered) pg. 85 Price 50 gp Folded into a rabbit sitting on its haunches, this missive grants the recipient a sense of mischief and agility. The recipient gains a +1 item bonus to Reflex saves for the next 24 hours. Heartening Missive (Turtle) Source Treasure Vault (Remastered) pg. 85 Price 50 gp Folded into a square-shelled turtle, this missive grants the recipient a firm sense of self and serenity. The recipient gains a +1 item bonus to Will saves for the next 24 hours.",
+  "whyNotYours": "The missive is composed and addressed to another creature you know and flies to their location; the bonus is gained by the recipient, not by the person who activates it."
+ },
+ {
+  "id": "heartening-missive-bull",
+  "collection": "items",
+  "name": "Heartening Missive (Bull)",
+  "level": 6,
+  "text": "**Activate** ⟨2⟩ (concentrate, manipulate) --- You compose a heartening missive by creating a short message or image intended to grant the recipient moral support. You must dedicate the missive to an individual creature you know and address it to their location (typically the settlement where you think they are). Once you finish composing the missive, it folds itself into the shape of an animal and Flies at a speed of 45 feet (about 15 miles per hour) toward the location for up to 24 hours. It alights near the recipient or in their hand. After Activating the missive, the recipient gets its benefit and becomes temporarily immune to all heartening missives for 24 hours If the missive fails to reach its recipient in 24 hours, it returns to its sender at the same pace, becoming non-magical when it arrives. After imparting or losing its magic, the missive remains as a normal document. Folded into a bull, this missive grants the recipient a sense of solidity. The recipient gains a +1 item bonus to Fortitude saves for the next 24 hours.",
+  "whyNotYours": "The +1 item bonus to Fortitude saves is gained by the recipient the missive is addressed to and delivered to, not by the character who composes and activates it."
+ },
+ {
+  "id": "heartening-missive-rabbit",
+  "collection": "items",
+  "name": "Heartening Missive (Rabbit)",
+  "level": 6,
+  "text": "**Activate** ⟨2⟩ (concentrate, manipulate) --- You compose a heartening missive by creating a short message or image intended to grant the recipient moral support. You must dedicate the missive to an individual creature you know and address it to their location (typically the settlement where you think they are). Once you finish composing the missive, it folds itself into the shape of an animal and Flies at a speed of 45 feet (about 15 miles per hour) toward the location for up to 24 hours. It alights near the recipient or in their hand. After Activating the missive, the recipient gets its benefit and becomes temporarily immune to all heartening missives for 24 hours If the missive fails to reach its recipient in 24 hours, it returns to its sender at the same pace, becoming non-magical when it arrives. After imparting or losing its magic, the missive remains as a normal document. Folded into a rabbit sitting on its haunches, this missive grants the recipient a sense of mischief and agility. The recipient gains a +1 item bonus to Reflex saves for the next 24 hours.",
+  "whyNotYours": "The +1 item bonus to Reflex saves goes to the missive's recipient, a different creature that it flies to, so it is never a mode on the activator's sheet."
+ },
+ {
+  "id": "heartening-missive-turtle",
+  "collection": "items",
+  "name": "Heartening Missive (Turtle)",
+  "level": 6,
+  "text": "**Activate** ⟨2⟩ (concentrate, manipulate) --- You compose a heartening missive by creating a short message or image intended to grant the recipient moral support. You must dedicate the missive to an individual creature you know and address it to their location (typically the settlement where you think they are). Once you finish composing the missive, it folds itself into the shape of an animal and Flies at a speed of 45 feet (about 15 miles per hour) toward the location for up to 24 hours. It alights near the recipient or in their hand. After Activating the missive, the recipient gets its benefit and becomes temporarily immune to all heartening missives for 24 hours If the missive fails to reach its recipient in 24 hours, it returns to its sender at the same pace, becoming non-magical when it arrives. After imparting or losing its magic, the missive remains as a normal document. Folded into a square-shelled turtle, this missive grants the recipient a firm sense of self and serenity. The recipient gains a +1 item bonus to Will saves for the next 24 hours.",
+  "whyNotYours": "The +1 item bonus to Will saves goes to the missive's recipient, a different creature that it flies to, so it is never a mode on the activator's sheet."
+ },
+ {
+  "id": "candle-of-inflamed-passions",
+  "collection": "items",
+  "name": "Candle of Inflamed Passions",
+  "level": 3,
+  "text": "**Activate** ⟨1⟩ (manipulate) This blood-red candle is made from wax derived from oil shale found in certain parts of the Plane of Fire. The wick burns with a flame that flickers and dances even if there's no draft to stir it. You activate the candle by lighting it, which causes creatures within 10 feet of the candle to find their emotions running high. Creatures in the area take a -1 status penalty to saving throws against emotion effects. Once lit, the candle burns for 10 minutes. If extinguished, it can't be relit.",
+  "whyNotYours": "Lighting the candle grants the activator nothing. The -1 status penalty is an emanation that lands on creatures within 10 feet of the candle, so it belongs on whoever is standing in the area, not on the user's sheet as a self-mode."
+ },
+ {
+  "id": "deadweight-snare",
+  "collection": "items",
+  "name": "Deadweight Snare",
+  "level": 2,
+  "text": "This snare is made of magnetized weights and heavy ropes rigged to a trip wire or pressure plate. When a creature enters the square, the magnets and ropes deploy, weighing down the creature's weapons and limbs. The creature must attempt a save. --- **Critical Success** The creature is unaffected. **Success** The creature takes a -1 status penalty to attack rolls for 1 round or until it Escapes. **Failure** The creature takes a -2 status penalty to attack rolls for 1 minute or until it Escapes (DC 18). **Critical Failure** As failure, but the creature drops any metallic items it's holding.",
+  "whyNotYours": "A snare you set; the timed attack-roll penalty lands on the creature that triggers it, never on your own sheet."
+ },
+ {
+  "id": "demortification-oil",
+  "collection": "items",
+  "name": "Demortification Oil",
+  "level": 5,
+  "text": "**Activate** ⟨1⟩ Interact --- This foul-smelling oil has the appearance and odor of the greasy, thick fluids that seep from a decaying body. When you spread this oil on an intact corpse that has been dead no longer than 1 week, its decay fades and the corpse is restored to the condition it was just after death. *Demortification oil* can't undo damage done to a corpse after death, such as consumption by scavengers. Applied to a non-incorporeal undead, a dose of *demortification oil* grants the undead creature a +1 item bonus to Armor Class for 1 hour.",
+  "whyNotYours": "The durational bonus only exists when the oil is applied to a non-incorporeal undead creature - the AC bonus lands on that undead, not on the person using the oil. Applied to a corpse it is instantaneous restoration with no ongoing effect."
+ },
+ {
+  "id": "psyche-salts",
+  "collection": "items",
+  "name": "Psyche Salts",
+  "level": 5,
+  "text": "Psyche Salts May contain spoilers from Shades of Blood Source Pathfinder #214: The Broken Palace pg. 81 Usage held in 1 hand Bulk L Activate (manipulate) A dose of psyche salts is kept in a small, corked vial. When you activate psyche salts, you uncork and pass the open end of the vial near the head of an adjacent creature. The salts within fizz and evaporate, creating a sour-smelling cloud that envelops the creature’s head before fading. As they do, the vapors attempt to clear harmful influences from the creature’s mind. The creature gains the effect of a clear mind spell and a +1 item bonus to saving throws against mental effects for 10 minutes. Psyche Salts (Lesser) Source Pathfinder #214: The Broken Palace pg. 81 Price 30 gp The psyche salts grants the effects of a 2nd-rank clear mind spell, with a +11 counteract check modifier. Psyche Salts (Moderate) Source Pathfinder #214: The Broken Palace pg. 81 Price 150 gp The psyche salts grants the effects of a 4th-rank clear mind spell, with a +17 counteract check modifier. The item bonus increases to +2. Psyche Salts (Greater) Source Pathfinder #214: The Broken Palace pg. 81 Price 3,000 gp The psyche salts grants the effects of an 8th-rank clear mind spell, with a +27 counteract check modifier. The item bonus increases to +3.",
+  "whyNotYours": "You uncork the vial near the head of an adjacent creature, and the text says 'the creature gains' the bonus - so the 10-minute save bonus and the clear mind effect land on that other creature, not on the person activating the salts."
+ },
+ {
+  "id": "psyche-salts-lesser",
+  "collection": "items",
+  "name": "Psyche Salts (Lesser)",
+  "level": 5,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- A dose of psyche salts is kept in a small, corked vial. When you activate psyche salts, you uncork and pass the open end of the vial near the head of an adjacent creature. The salts within fizz and evaporate, creating a sour-smelling cloud that envelops the creature's head before fading. As they do, the vapors attempt to clear harmful influences from the creature's mind. The creature gains the effect of a 2nd-rank Clear Mind spell with a +11 counteract check modifier and a +1 item bonus to saving throws against mental effects for 10 minutes.",
+  "whyNotYours": "The salts are passed near the head of an adjacent creature and the bonus is granted to 'the creature' - an adjacent creature is by definition someone other than you, so the effect belongs on their sheet."
+ },
+ {
+  "id": "psyche-salts-moderate",
+  "collection": "items",
+  "name": "Psyche Salts (Moderate)",
+  "level": 9,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- A dose of psyche salts is kept in a small, corked vial. When you activate psyche salts, you uncork and pass the open end of the vial near the head of an adjacent creature. The salts within fizz and evaporate, creating a sour-smelling cloud that envelops the creature's head before fading. As they do, the vapors attempt to clear harmful influences from the creature's mind. The creature gains the effect of a 4th-rank Clear Mind spell with a +17 counteract check modifier and a +2 item bonus to saving throws against mental effects for 10 minutes.",
+  "whyNotYours": "Same delivery as the other grades - you pass the vial near the head of an adjacent creature and 'the creature gains' the bonus, so the +2 item bonus is on the recipient rather than on you."
+ },
+ {
+  "id": "psyche-salts-greater",
+  "collection": "items",
+  "name": "Psyche Salts (Greater)",
+  "level": 17,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- A dose of psyche salts is kept in a small, corked vial. When you activate psyche salts, you uncork and pass the open end of the vial near the head of an adjacent creature. The salts within fizz and evaporate, creating a sour-smelling cloud that envelops the creature's head before fading. As they do, the vapors attempt to clear harmful influences from the creature's mind. The creature gains the effect of a 8th-rank Clear Mind spell with a +27 counteract check modifier and a +3 item bonus to saving throws against mental effects for 10 minutes.",
+  "whyNotYours": "The greater salts still target an adjacent creature and grant the bonus to 'the creature', so the +3 item bonus lands on someone else's sheet."
+ },
+ {
+  "id": "aon-peshspine-grenade",
+  "collection": "items",
+  "name": "Peshspine Grenade",
+  "level": 1,
+  "text": "Peshspine grenades are explosive bombs packed with alchemically treated needles from the pesh cactus. A peshspine grenade deals the listed piercing damage and splash damage. On a hit, the target gains the stupefied condition until the end of its next turn. Many types of peshpine grenade grant an item bonus to attack rolls. The bomb deals 1d6 piercing damage and 1 piercing splash damage, and the target is stupefied 1. You gain a +1 item bonus to attack rolls. The bomb deals 2d6 piercing damage and 2 piercing splash damage, and the target is stupefied 1. You gain a +2 item bonus to attack rolls. The bomb deals 3d6 piercing damage and 3 piercing splash damage, and the target is stupefied 2. You gain a +3 item bonus to attack rolls. The bomb deals 4d6 piercing damage and 4 piercing splash damage, and the target is stupefied 3.",
+  "whyNotYours": "A thrown bomb: the damage and the stupefied condition land on the target you hit, not on you. The listed item bonus to attack rolls is the bomb's own attack bonus while you throw it, not a lingering effect to toggle."
+ },
+ {
+  "id": "aon-death-knell-powder",
+  "collection": "items",
+  "name": "Death Knell Powder",
+  "level": 14,
+  "text": "This poison is made from toxic spores of death knell mushrooms, which are reduced to a gray powder and suffused with necromantic energy. If you're reduced to 0 Hit Points while under the effect of death knell powder , you must succeed at a DC 34 Will save or die (this is a death effect). If you die, a random creature adjacent to you is bolstered by your departing life force and gains 20 temporary HP and a +1 status bonus to attack and damage rolls for 10 minutes. Saving Throw DC 34 Fortitude; Maximum Duration 6 rounds; Stage 1 7d6 poison damage (1 round); Stage 2 9d6 poison damage (1 round); Stage 3 12d6 poison damage (1 round) Craft Requirements Supply one casting of death knell .",
+  "whyNotYours": "A poison applied to a foe; the lasting temporary HP and the +1 status bonus to attack and damage rolls go to a random adjacent creature, never to the item's user."
+ },
+ {
+  "id": "aon-inflamation-flask",
+  "collection": "items",
+  "name": "Inflamation Flask",
+  "level": 2,
+  "text": "This flask contains a caustic irritant that makes a target’s skin, scales, or carapace extremely sensitive to further nicks and burns. An inflammation flask deals the listed acid damage and acid splash damage. On a hit, the target also gains weakness to acid, fire, and slashing damage for 3 rounds. Many types of inflammation flask grant a bonus to attack rolls. The target can end the weakness effect by three means: being drenched with water (such as submersion or exposure to an area water effect), being Administered First Aid (whose DC in based on the bomb type), or regaining Hit Points from a single effect equal to twice the inflammation flask’s level. A creature that critically fails to Administer First Aid in this way deals untyped damage to the target equal to the inflammation flask’s initial acid damage. The bomb deals 1d6 acid damage and 1 acid splash damage. The target gains weakness 1 to acid, fire, and slashing damage, and theMedicine DC is 17. You gain a +1 item bonus to attack rolls. The bomb deals 2d6 acid damage and 2 acid splash damage. The target gains weakness 2 to acid, fire, and slashing damage, and the Medicine DC is 20. You gain a +2 item bonus to attack rolls. The bomb deals 3d6 acid damage and 3 acid splash damage. The target gains weakness 3 to acid, fire, and slashing damage, and the Medicine DC is 30. You gain a +3 item bonus to attack rolls. The bomb deals 4d6 acid damage and 4 acid splash damage. The target gains weakness 4 to acid, fire, and slashing damage, and the Medicine DC is 38.",
+  "whyNotYours": "A thrown bomb: the acid damage and the 3-round weakness apply to the target struck, not to you. The item bonus to attack rolls is inherent to throwing the bomb, not a toggleable duration effect."
+ }
+]

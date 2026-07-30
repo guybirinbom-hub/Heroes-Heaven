@@ -62,7 +62,7 @@ describe('feat situational bonuses', () => {
     expect(ch.feats.some((f) => f.featId === 'intimidating-prowess')).toBe(true);
 
     const b = explainStat(ch, c, { kind: 'skill', skill: 'intimidation' });
-    expect(b.situational?.some((s) => /Intimidating Prowess/.test(s) && /Coerce or Demoralize/.test(s))).toBe(true);
+    expect(b.situational?.some((s) => /Intimidating Prowess/.test(s.text) && /Coerce or Demoralize/.test(s.text))).toBe(true);
     expect(statHasSituational(ch, { kind: 'skill', skill: 'intimidation' })).toBe(true);
     // a skill the feat doesn't touch has no star
     expect(statHasSituational(ch, { kind: 'skill', skill: 'stealth' })).toBe(false);
@@ -72,6 +72,6 @@ describe('feat situational bonuses', () => {
     const ch = build('rogue', 4);
     expect(statHasSituational(ch, { kind: 'skill', skill: 'intimidation' })).toBe(false);
     const b = explainStat(ch, c, { kind: 'skill', skill: 'intimidation' });
-    expect(b.situational?.some((s) => /Intimidating Prowess/.test(s)) ?? false).toBe(false);
+    expect(b.situational?.some((s) => /Intimidating Prowess/.test(s.text)) ?? false).toBe(false);
   });
 });

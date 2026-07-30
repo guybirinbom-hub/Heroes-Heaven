@@ -1,0 +1,146 @@
+[
+ {
+  "id": "malleable-mixture-greater",
+  "name": "Malleable Mixture (Greater)",
+  "level": 14,
+  "description": "Your bones, muscles, and organs become vastly softer and more pliable. You can fit into and through small or narrow spaces as though you were 2 sizes smaller than your normal size (minimum tiny), and you gain a +3 item bonus to your Fortitude and Reflex DCs against attempts to Grapple, Shove, or Trip you for 10 minutes."
+ },
+ {
+  "id": "dragonfly-potion",
+  "name": "Dragonfly Potion",
+  "level": 12,
+  "description": "**Activate** ⟨1⟩ Interact --- Your eyes transform into those of a giant dragonfly, the thousands of separate facets wrapping around your head, and a pair of long, delicate, insectile wings grow from your upper back. You gain a fly Speed equal to your land Speed. Additionally, you gain low-light vision and a +2 item bonus to visual Perception checks, and you can't be flanked except by creatures higher level than you are (though lower-level creatures can still help their higher-level allies flank). These effects last for 1 minute."
+ },
+ {
+  "id": "glittering-snare",
+  "name": "Glittering Snare",
+  "level": 4,
+  "description": "Small flecks of mica, sand, and ground glass are packed into a spring-loaded canister that can be rigged to a trip wire or hidden in a container. The first creature to enter the square or open the container must attempt a save as the area is showered with bright, glittering dust that sticks to skin, fur, and clothing. --- **Critical Success** The creature is unaffected. **Success** The creature takes a -1 status penalty to Stealth checks for 1 minute or until it uses an Interact action to remove the glitter. **Failure** The creature takes a -2 status penalty to Stealth checks for 2 minutes or until it spends a 2-action activity, which has the manipulate trait, to remove the glitter. If the creature was invisible, the glitter outlines it for 1 round, making it concealed rather than undetected to visual senses. **Critical Failure** As failure, but the penalty is -4. The glitter sticks for 5 minutes or until the creature spends a 3-action activity, which has the manipulate trait, to remove it. The glitter continues to fall around the creature until completely removed, leaving a trail behind it as it moves and revealing its rough location; the creature is hidden, rather than undetected, to any creature that can see the glitter whenever it would otherwise have been undetected."
+ },
+ {
+  "id": "brewers-regret",
+  "name": "Brewer's Regret",
+  "level": 9,
+  "description": "**Activate** ⟨1⟩ Interact --- When a brewer makes a batch of something they'd rather not drink, they often boil it down; add myrrh, mugwort extract, and violet salt; and sell it to chefs looking for cheap sandwich fillings. The thick, salty sourness ruins the taste of most other food, but it also creates a strong desire to live to taste anything else. For 1 hour after consumption, you gain a +2 item bonus to saves against death and void effects. In addition, your doomed value decreases by 1 (minimum 0). You can reduce the doomed condition with brewer's regret only once per day, and after you do, you can't reduce the doomed condition from the Restoration spell that same day (or vice versa)."
+ },
+ {
+  "id": "brewers-regret-greater",
+  "name": "Brewer's Regret (Greater)",
+  "level": 14,
+  "description": "**Activate** ⟨1⟩ Interact --- When a brewer makes a batch of something they'd rather not drink, they often boil it down; add myrrh, mugwort extract, and violet salt; and sell it to chefs looking for cheap sandwich fillings. The thick, salty sourness ruins the taste of most other food, but it also creates a strong desire to live to taste anything else. For 1 hour after consumption, you gain a +3 item bonus to saves against death and void effects. In addition, your doomed value decreases by 1 (minimum 0). You can reduce the doomed condition with brewer's regret only once per day, and after you do, you can't reduce the doomed condition from the Restoration spell that same day (or vice versa)."
+ },
+ {
+  "id": "dragons-blood-pudding-moderate",
+  "name": "Dragon's Blood Pudding (Moderate)",
+  "level": 5,
+  "description": "**Activate** ⟨1⟩ Interact --- While some unscrupulous chefs claim that this savory pudding is made with real dragon's blood, its crimson color and acrid smell actually come from bloody mandrake paste, ginger root, and distilled terrap sap. This potent combination singes the nostrils and throat, removing effects that make you sluggish. When you consume the pudding, it attempts a counteract check with a +9 counteract modifier to remove the slowed condition from a single source, using the source of that condition to determine the counteract rank and DC. You also become quickened for 1 round. While taking the additional action from being quickened, you scream, as a result of both the flavor and the mandrake paste's properties. You can use the additional action to Step, Stride, Strike, or Demoralize. If you choose to Demoralize, you gain a +2 item bonus to the Intimidation check."
+ },
+ {
+  "id": "dragons-blood-pudding-greater",
+  "name": "Dragon's Blood Pudding (Greater)",
+  "level": 13,
+  "description": "**Activate** ⟨1⟩ Interact --- While some unscrupulous chefs claim that this savory pudding is made with real dragon's blood, its crimson color and acrid smell actually come from bloody mandrake paste, ginger root, and distilled terrap sap. This potent combination singes the nostrils and throat, removing effects that make you sluggish. When you consume the pudding, it attempts a counteract check with a +20 counteract modifier to remove the slowed condition from a single source, using the source of that condition to determine the counteract rank and DC. You also become quickened for 1 round. While taking the additional action from being quickened, you scream, as a result of both the flavor and the mandrake paste's properties. You can use the additional action to Step, Stride, Strike, or Demoralize. If you choose to Demoralize, you gain a +3 item bonus to the Intimidation check."
+ },
+ {
+  "id": "dragons-blood-pudding-major",
+  "name": "Dragon's Blood Pudding (Major)",
+  "level": 19,
+  "description": "**Activate** ⟨1⟩ Interact --- While some unscrupulous chefs claim that this savory pudding is made with real dragon's blood, its crimson color and acrid smell actually come from bloody mandrake paste, ginger root, and distilled terrap sap. This potent combination singes the nostrils and throat, removing effects that make you sluggish. When you consume the pudding, it attempts a counteract check with a +31 counteract modifier to remove the slowed condition from a single source, using the source of that condition to determine the counteract rank and DC. You also become quickened for 2 rounds. While taking the additional action from being quickened, you scream, as a result of both the flavor and the mandrake paste's properties. You can use the additional action to Step, Stride, Strike, or Demoralize. If you choose to Demoralize, you gain a +4 item bonus to the Intimidation check."
+ },
+ {
+  "id": "impossible-cake",
+  "name": "Impossible Cake",
+  "level": 3,
+  "description": "**Activate** ⟨1⟩ Interact --- This sleight-of-hand for the taste buds is flavored with absinthe and honey and always resembles something completely unlike a cake, from a pile of armor to a bowl of soup. Eating the cake gives you the confidence to make the impossible seem possible: for 10 minutes after the meal, you gain a +2 item bonus to your Deception checks to Impersonate, as well as to Lie to convince others that you possess knowledge about the type of item that the cake resembles."
+ },
+ {
+  "id": "impossible-cake-greater",
+  "name": "Impossible Cake (Greater)",
+  "level": 9,
+  "description": "**Activate** ⟨1⟩ Interact --- This sleight-of-hand for the taste buds is flavored with absinthe and honey and always resembles something completely unlike a cake, from a pile of armor to a bowl of soup. Eating the cake gives you the confidence to make the impossible seem possible: for 30 minutes after the meal, you gain a +3 item bonus to your Deception checks to Impersonate, as well as to Lie to convince others that you possess knowledge about the type of item that the cake resembles."
+ },
+ {
+  "id": "impossible-cake-major",
+  "name": "Impossible Cake (Major)",
+  "level": 17,
+  "description": "**Activate** ⟨1⟩ Interact --- This sleight-of-hand for the taste buds is flavored with absinthe and honey and always resembles something completely unlike a cake, from a pile of armor to a bowl of soup. Eating the cake gives you the confidence to make the impossible seem possible: for 1 hour after the meal, you gain a +4 item bonus to your Deception checks to Impersonate, as well as to Lie to convince others that you possess knowledge about the type of item that the cake resembles."
+ },
+ {
+  "id": "servers-stew",
+  "name": "Server's Stew",
+  "level": 7,
+  "description": "**Activate** ⟨1⟩ Interact --- The type of animal tongue used in this tomato-based stew shifts from region to region, but it's always cooked with spirit of wine and seasoned with Refined Pesh. Eating this restaurant-staff favorite empowers you to speak and understand a single language for 1 hour. This must be a language the stew's cook could speak and understand, chosen at the time of the stew's creation. It also helps your words land smoothly, granting you a +2 item bonus to Diplomacy checks made in that language for the same duration. It doesn't allow you to read the newly acquired language in its written form."
+ },
+ {
+  "id": "war-blood-mutagen-lesser",
+  "name": "War Blood Mutagen (Lesser)",
+  "level": 1,
+  "description": "Upon drinking this mutagen, you can feel your blood surge through your body and hear a low-pitched humming in your ears. These sensations subside as the flesh and muscles of your arm loosen and stretch, the fibers of your very being reaching out to combine with the base of one melee weapon you're holding. **Benefit** Choose one melee weapon you're holding in one or both hands. You gain a +1 item bonus to your attack rolls with this weapon and to Will saves against fear effects for 1 minute. Any attempt to Disarm or otherwise remove the weapon from your hands must exceed DC 25 or the attempt fails. **Drawback** You can't voluntarily remove the weapon unless you succeed at a , which ends the war blood mutagen's effects; this check takes a single action. If you perform an action with the concentrate trait, you must succeed at a or the action is lost."
+ },
+ {
+  "id": "war-blood-mutagen-moderate",
+  "name": "War Blood Mutagen (Moderate)",
+  "level": 3,
+  "description": "Upon drinking this mutagen, you can feel your blood surge through your body and hear a low-pitched humming in your ears. These sensations subside as the flesh and muscles of your arm loosen and stretch, the fibers of your very being reaching out to combine with the base of one melee weapon you're holding. **Benefit** Choose one melee weapon you're holding in one or both hands. You gain a +2 item bonus to your attack rolls with this weapon and to Will saves against fear effects for 10 minutes. Any attempt to Disarm or otherwise remove the weapon from your hands must exceed DC 30 or the attempt fails. **Drawback** You can't voluntarily remove the weapon unless you succeed at a , which ends the war blood mutagen's effects; this check takes a single action. If you perform an action with the concentrate trait, you must succeed at a or the action is lost."
+ },
+ {
+  "id": "war-blood-mutagen-greater",
+  "name": "War Blood Mutagen (Greater)",
+  "level": 11,
+  "description": "Upon drinking this mutagen, you can feel your blood surge through your body and hear a low-pitched humming in your ears. These sensations subside as the flesh and muscles of your arm loosen and stretch, the fibers of your very being reaching out to combine with the base of one melee weapon you're holding. **Benefit** Choose one melee weapon you're holding in one or both hands. You gain a +3 item bonus to your attack rolls with this weapon and to Will saves against fear effects for 1 hour. Any attempt to Disarm or otherwise remove the weapon from your hands must exceed DC 40 or the attempt fails. **Drawback** You can't voluntarily remove the weapon unless you succeed at a , which ends the war blood mutagen's effects; this check takes a single action. If you perform an action with the concentrate trait, you must succeed at a or the action is lost."
+ },
+ {
+  "id": "war-blood-mutagen-major",
+  "name": "War Blood Mutagen (Major)",
+  "level": 17,
+  "description": "Upon drinking this mutagen, you can feel your blood surge through your body and hear a low-pitched humming in your ears. These sensations subside as the flesh and muscles of your arm loosen and stretch, the fibers of your very being reaching out to combine with the base of one melee weapon you're holding. **Benefit** Choose one melee weapon you're holding in one or both hands. You gain a +4 item bonus to your attack rolls with this weapon and to Will saves against fear effects for 1 hour. Any attempt to Disarm or otherwise remove the weapon from your hands must exceed DC 50 or the attempt fails. **Drawback** You can't voluntarily remove the weapon unless you succeed at a , which ends the war blood mutagen's effects; this check takes a single action. If you perform an action with the concentrate trait, you must succeed at a or the action is lost."
+ },
+ {
+  "id": "necrobinding-serum",
+  "name": "Necrobinding Serum",
+  "level": 5,
+  "description": "**Activate** ⟨2⟩ Interact --- This potent necromantic serum is distilled from the body of an intelligent corporeal undead who seeks to establish absolute control over their undead minions. The raw materials of a *necrobinding serum* are composed of a slurry made from the creator's own flesh and blood mixed with pulped fungal toxins. The exact ingredients vary, but the act of brewing a necrobinding serum is typically viewed with distaste at best and, in many societies, is regarded as an evil act. While *necrobinding serum* isn't a poison, its method of delivery is identical to that of an injury poison-it's applied to a weapon that's then used to Strike an undead target (living creatures suffer no additional effect from exposure to a dose of *necrobinding serum*). When an undead creature is targeted by a dose of *necrobinding serum*, it must attempt a save. --- **Critical Success** The undead creature is unaffected. **Success** The undead creature is momentarily disoriented; it takes a -1 status penalty to all attack rolls made against you until the start of your next turn. **Failure** The undead creature becomes friendly toward you. If it was already friendly, it becomes helpful. It can't use hostile actions against you. This effect persists for 8 hours if the undead is mindless. Against other undead, the effect gains the mental trait and persists for 10 minutes. **Critical Failure** The undead creature becomes helpful toward you and can't use hostile actions against you. This"
+ },
+ {
+  "id": "feyfoul-lesser",
+  "name": "Feyfoul (Lesser)",
+  "level": 1,
+  "description": "**Activate** ⟨1⟩ Interact --- To creatures other than fey, the scent of feyfoul seems to be a faint but non-obnoxious odor of cinnamon, but fey find that the stuff interferes with their ability to manipulate a creature's mind. Jubilost invented feyfoul accidentally while he was attempting to create a cologne that would enhance its wearer's appearance to make them seem more otherworldly, but to anyone that asks, the gnome alchemist quickly claims that he'd always intended to create an alchemical tool that provided protection from fey magic. A single dose of feyfoul spritzed on a person in the manner of perfume grants the wearer a +1 item bonus to Will saving throws against mental effects generated by fey creatures for 1 minute."
+ },
+ {
+  "id": "feyfoul-moderate",
+  "name": "Feyfoul (Moderate)",
+  "level": 8,
+  "description": "**Activate** ⟨1⟩ Interact --- To creatures other than fey, the scent of feyfoul seems to be a faint but non-obnoxious odor of cinnamon, but fey find that the stuff interferes with their ability to manipulate a creature's mind. Jubilost invented feyfoul accidentally while he was attempting to create a cologne that would enhance its wearer's appearance to make them seem more otherworldly, but to anyone that asks, the gnome alchemist quickly claims that he'd always intended to create an alchemical tool that provided protection from fey magic. A single dose of feyfoul spritzed on a person in the manner of perfume grants the wearer a +2 item bonus to Will saving throws against mental effects generated by fey creatures for 1 hour."
+ },
+ {
+  "id": "feyfoul-greater",
+  "name": "Feyfoul (Greater)",
+  "level": 14,
+  "description": "**Activate** ⟨1⟩ Interact --- To creatures other than fey, the scent of feyfoul seems to be a faint but non-obnoxious odor of cinnamon, but fey find that the stuff interferes with their ability to manipulate a creature's mind. Jubilost invented feyfoul accidentally while he was attempting to create a cologne that would enhance its wearer's appearance to make them seem more otherworldly, but to anyone that asks, the gnome alchemist quickly claims that he'd always intended to create an alchemical tool that provided protection from fey magic. A single dose of feyfoul spritzed on a person in the manner of perfume grants the wearer a +3 item bonus to Will saving throws against mental effects generated by fey creatures for 8 hours."
+ },
+ {
+  "id": "oozepick",
+  "name": "Oozepick",
+  "level": 4,
+  "description": "**Activate** ⟨1⟩ Interact You can pour this silver ooze into a lock or similar mechanism to create a set of malleable lockpicks and tools that conform to internal mechanisms. The ooze is treated as a set of thieves' tools that last for 1 hour and provide a +2 item bonus to Thievery checks to Pick a Lock or Disable a Device against the mechanism into which they were first poured."
+ },
+ {
+  "id": "oozepick-greater",
+  "name": "Oozepick (Greater)",
+  "level": 10,
+  "description": "**Activate** ⟨1⟩ Interact You can pour this silver ooze into a lock or similar mechanism to create a set of malleable lockpicks and tools that conform to internal mechanisms. The ooze is treated as a set of thieves' tools that last for 8 hours and provide a +3 item bonus to Thievery checks to Pick a Lock or Disable a Device against the mechanism into which they were first poured."
+ },
+ {
+  "id": "auric-noodles",
+  "name": "Auric Noodles",
+  "level": 3,
+  "description": "**Activate** 10 minutes (manipulate) --- Auric noodles are boiled, then pan-fried and tossed with sliced vegetables and a sticky, savory sauce incorporating alchemical reagents. After you eat the noodles, they boost your ability to sense magic for 24 hours or until you make your next daily preparations, whichever comes first. You gain a +1 item bonus to checks to Identify Magic, and you can move at full speed while using the Detect Magic exploration activity."
+ },
+ {
+  "id": "cinnamon-seers",
+  "name": "Cinnamon Seers",
+  "level": 4,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Zippy, alchemically treated cinnamon suffuses cinnamon seers, a rock candy with a lively taste that provides a mental boost. A cinnamon seer remains in your mouth for 1 hour, its stimulating flavor granting you a +1 item bonus to checks to Recall Knowledge. **Secondary Effect** ⟨5⟩ (fortune) **Trigger** You gain no information from a Recall Knowledge check --- **Effect** Reroll the triggering check. If this was a secret check, the GM rerolls rather than you; the candy doesn't give you any insight into what the GM rolled, so in that case, you're rerolling based only on guesswork. The seer becomes inert. You become temporarily immune to cinnamon seers until the next time you make your daily preparations."
+ }
+]

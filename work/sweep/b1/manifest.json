@@ -1,0 +1,10 @@
+{
+ "batch": "b1",
+ "lanes": [
+  "choice",
+  "situational"
+ ],
+ "records": 1477,
+ "chunkSize": 75,
+ "chunks": 20
+}

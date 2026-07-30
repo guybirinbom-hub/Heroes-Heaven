@@ -1,0 +1,1210 @@
+[
+ {
+  "id": "dash-of-herbs",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Dash of Herbs",
+  "level": 6,
+  "traits": [
+   "healing",
+   "impulse",
+   "kineticist",
+   "plant",
+   "primal",
+   "vitality",
+   "wood"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "A small cloud of medicinal herbs heal a creature. The type of herbs depends on which malady you decide to treat: confused, disease, poison, sickened, or injuries. Target one living creature within 30 feet, who regains HP and can attempt a new save against one malady of the chosen kind. If you chose injuries, instead increase the healing dice to d10s. The creature becomes temporarily immune to Dash of Herbs for 10 minutes. Alternatively, you can add the herbs to a dish of food being prepared for up to six people. Creatures who partake in the meal gain the benefits. The herbs' healing effects wear off if not eaten within an hour, though their flavor remains. --- **Level (+2)** The healing increases by 1d8."
+ },
+ {
+  "id": "dawnlight-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Dawnlight (Greater)",
+  "level": 7,
+  "traits": [
+   "divine"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "This shining symbol of Sarenrae depicts the goddess with her arms held wide. In the center of the symbol is a crystal reliquary with a perfect feather floating inside, glowing bright as a candle with the light of the goddess. **Activate** Cast a Spell **Frequency** once per day for each spell --- **Effect** The *dawnlight* casts 3rd-rank Vitality Lash or Light. The *dawnlight*'s spell attack roll and counteract modifier are +13, and any spell with the light trait is treated as though its counteract rank were 1 higher for counteracting darkness. Whenever you successfully counteract magical darkness while holding this symbol, the clash of magic unleashes a momentary flash of light. Creatures with darkvision in the area of the light spell or targeted by it must succeed at a or be dazzled for 1 round. Those with light blindness are also exposed to bright light. --- **Craft Requirements** You have a spellcasting class feature with the divine tradition."
+ },
+ {
+  "id": "dawnlight-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Dawnlight (Major)",
+  "level": 11,
+  "traits": [
+   "divine"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "This shining symbol of Sarenrae depicts the goddess with her arms held wide. In the center of the symbol is a crystal reliquary with a perfect feather floating inside, glowing bright as a candle with the light of the goddess. **Activate** Cast a Spell **Frequency** once per day for each spell --- **Effect** The *dawnlight* casts 5th-rank Vitality Lash or Light, or 4th-rank Holy Light or Vital Beacon. The *dawnlight*'s spell attack roll and counteract modifier are +18, and any spell with the light trait is treated as though its counteract rank were 1 higher for counteracting darkness. Whenever you successfully counteract magical darkness while holding this symbol, the clash of magic unleashes a momentary flash of light. Creatures with darkvision in the area of the light spell or targeted by it must succeed at a or be dazzled for 1 round. Those with light blindness are also exposed to bright light. --- **Craft Requirements** You have a spellcasting class feature with the divine tradition."
+ },
+ {
+  "id": "dazzling-display",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Dazzling Display",
+  "level": 10,
+  "traits": [
+   "fighter",
+   "ranger",
+   "rogue",
+   "swashbuckler"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You perform a bewildering show of prowess, such as by whirling and flashing a weapon, that unnerves foes. Attempt Intimidation checks to Demoralize each enemy within 30 feet. If your last action was a critical hit against an enemy or reduced an enemy to 0 Hit Points, you gain a +1 circumstance bonus to your Intimidation checks. Regardless of the results of your checks, each creature is then temporarily immune to Dazzling Display for 1 minute."
+ },
+ {
+  "id": "deafening-music-box",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Deafening Music Box",
+  "level": 8,
+  "traits": [
+   "auditory",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Symbols of musical notes decorate this gold-framed wooden cube measuring just under 1 foot by 1 foot. A funnel-shaped trumpet protrudes from the box's top at an angle, though it feels surprisingly light. The box has a large button on its side, and it must be set down on a flat surface in order to activate it; while it's activated, the rumbling and churning gears inside the box make it impossible to carry without dropping it. --- **Activate** ⟨1⟩ Interact **Effect** You press the button on the side of the music box, causing it to erupt with a cacophonous and discordant melody for 1 minute while it plays its entire melody, and it can't be shut off prematurely. The music is so loud that any creature within 60 feet must succeed at a save or become deafened for as long as they remain within 60 feet of the music box, and for 1 minute thereafter. On a critical success, a creature need not make any more saves and is temporarily immune to the *deafening music box* for the next 24 hours; on a success, the creature must attempt a new save each round it remains within 60 feet of the music box."
+ },
+ {
+  "id": "death-from-above",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Death from Above",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are standing, climbing, or balancing on a surface at least 10 feet above your target. --- You leap down on your target, using their body to cushion your fall and your momentum to empower your attack. Attempt an Athletics check to Leap to a space adjacent to the target. If you land adjacent to the target, compare the check result against your target's Reflex DC. When you leap onto a creature in this way, you do not also deal damage for falling on a creature. Regardless of your result, the target is temporarily immune to your Death from Above for 1 minute. --- **Critical Success** The target falls and lands prone, reducing the falling damage you take by an amount equal to twice your level. You then can make a melee Strike against the target. The Strike gains the deadly d8 weapon property and deals an additional 1d6 bludgeoning damage. This additional damage increases to 2d6 if you are a master in Athletics, and to 3d6 if you are legendary in Athletics. **Success** The target is off-guard until the beginning of your next turn, reducing the falling damage you take by an amount equal to your level. You can then make a melee Strike against the target, adding the deadly d8 weapon property to the attack. **Failure** You can make a Strike against the target. **Critical Failure** You fall prone, whether you take falling damage or not."
+ },
+ {
+  "id": "death-gaze",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Death Gaze",
+  "level": 0,
+  "traits": [
+   "negative",
+   "void"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Death Gaze Source GM Core pg. 312 Aspect Death Activate (concentrate, manipulate) Effect Your stare causes a creature's flesh to rot and wither away. Target a creature you can see within 30 feet. Your stare deals 1d6 void damage to the creature for every 2 levels the relic has (minimum 1d6; basic Fortitude save). An undead creature or other creature with void healing targeted this way is instead healed 1d6 HP per level of the relic and is temporarily immune to this effect for 10 minutes."
+ },
+ {
+  "id": "deathblow",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Deathblow",
+  "level": 16,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your carefully prepared and placed shot brings instant death to your target. Attempt a Strike with a blowgun or sling using ammunition that you have poisoned with your simple injury poison. If the Strike is successful and you are hidden from the target, or unnoticed or undetected by them, the target must succeed at a save against your class DC or die; this is a death and incapacitation effect. A creature that survives is temporarily immune to the instant death effect of Deathblow for 1 day."
+ },
+ {
+  "id": "deathstalk-mushroom",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Deathstalk Mushroom",
+  "level": 16,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "ingested",
+   "poison",
+   "virulent"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Deathstalk mushrooms that have been alchemically treated into this poison cause those who succumb to suffer horrific hallucinations in which everyone around them distorts into demonic shapes shortly before their own bodies begin to break down and melt from within. Creatures with the fungus trait are immune to this poison and often find the flavor of a deathstalk mushroom to be rather pleasant. **Saving Throw** **Onset** 1 minute **Maximum Duration** 6 minutes **Stage 1** Stupefied 1 (1 minute) **Stage 2** confused and Stupefied 2 (1 minute) **Stage 3** 16d6 damage, confused, and Stupefied 3 (1 minute) **Stage 4** 17d6 damage, confused, and Stupefied 4 (1 minute)"
+ },
+ {
+  "id": "defensive-armaments",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Defensive Armaments",
+  "level": 2,
+  "traits": [
+   "gunslinger"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You use bulky firearms or crossbows to shield your body. Any two-handed firearms and two-handed crossbows you wield gain the parry trait. If an appropriate weapon already has the parry trait, increase the circumstance bonus to AC it grants when used to parry from +1 to +2. While parrying with your weapon, you are immune to splash damage."
+ },
+ {
+  "id": "demon-eidolon",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Demon Eidolon",
+  "level": 1,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Your eidolon is a demon, born of mortal sin congealed amid the chaos and evil of the Abyss, using its link to you to spread chaos at your side. Choose an associated sin for your demon. Demon eidolons have appearances as varied as the infinite Abyss. While demons are inherently untrustworthy, your demon eidolon has reached an accord with you and generally keeps it, though that doesn't mean your eidolon isn't actively working to bring your life deeper into its associated sin. Though a true demon, your demon eidolon's link to you as a mortal prevents them from casting the abyssal pact ritual, even if they somehow learn it. **Tradition** divine **Traits** demon, eidolon, fiend **Alignment** must be chaotic evil **Home Plane** The Abyss --- **Size** Medium or Small **Suggested Attacks** claw (slashing), jaws (piercing), horn (piercing), tail (bludgeoning), tentacle (bludgeoning), wing (bludgeoning) **Wrecker Demon** Str 18, Dex 14, Con 16, Int 10, Wis 8, Cha 12; +2 AC (+3 Dex cap) **Tempter Demon** Str 12, Dex 18, Con 12, Int 10, Wis 10, Cha 16; +1 AC (+4 Dex cap) **Skills** Intimidation, Religion **Senses** darkvision **Language** Abyssal **Speed** 25 feet --- **Eidolon Abilities** *Initial* demonic strikes; *Symbiosis* visions of sin; *Transcendence* blasphemous decree ## Demonic Strikes Your eidolon's attacks are corrupted by the Abyss and imbued with pure evil and shifting chaos. All your eidolon's unarmed Strikes deal an extra 1 evil damage; as usual, this extra damage harms only good creatures or those with a weakness to evil damage. Additionally, choose one of your eidolon's unarmed attacks that deals physical damage; it gains the versatile trait for a different type of physical damage you choose. ## Visions of Sin 7th Your demon is born of sin and can project the sin it is formed from into the minds of others. It gains the Visions of Sin activity. ## Blasphemous Decree 17th Your demon utters indescribable words writhing with its associated sin. It can cast an evil Divine Decree once per day as a 9th-level spell. You are unaffected by this decree, even if you aren't evil. At 19th level, this becomes a 10th-level divine decree instead."
+ },
+ {
+  "id": "demon-hunting-companion",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Demon-Hunting Companion",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "You gain a young animal companion that has been specially trained to help you fight demons. You can choose any common animal companion, which gains scent as an imprecise sense with a range of 30 feet that can be used only to smell fiends. If the animal companion already has scent, it gains a +2 circumstance bonus to Perception when using scent against fiends."
+ },
+ {
+  "id": "deployable-cover-ballistic-cover",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Deployable Cover (Ballistic Cover)",
+  "level": 2,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This thick mat of canvas, foliage, and wood is mounted on a tripod of flexible metal struts, folded into a baton-like shape, and clamped shut. You can rapidly deploy it on the ground with an Interact action to create cover. Deployable cover completely blocks one edge of the chosen square, allowing you (and others) to gain standard cover when you use the Take Cover action. Before it can be used again, deployable cover must be carefully folded and clamped shut, which takes 1 minute. Specially crafted to protect against bullet fire, a ballistic cover also works against other physical projectiles, such as arrows, bolts, and thrown weapons. While a creature has cover from Taking Cover behind a ballistic cover, it gains resistance 2 to piercing damage from ranged weapons and ranged unarmed attacks."
+ },
+ {
+  "id": "desperate-resuscitation",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Desperate Resuscitation",
+  "level": 14,
+  "traits": [
+   "commander",
+   "healing",
+   "manipulate"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are holding a Healer's Toolkit or are wearing one and have a free hand; the target's body is mostly intact; the target was not killed by a death effect. --- You can use your training in combat medicine to revive the recently deceased. Attempt a DC 40 Medicine check to revive a dead creature that has been dead for no more than 3 rounds. If you succeed, the target returns to life with the effects of Raise Dead, except it still has the wounded condition it had before dying, increased by 1 (or Wounded 1 if it wasn't wounded before dying). Whether you succeed or fail, the target is temporarily immune to Desperate Resuscitation for 1 day."
+ },
+ {
+  "id": "devils-breath-incense",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Devil's Breath Incense",
+  "level": 7,
+  "traits": [
+   "consumable",
+   "divine"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Interact --- This 6-inch-long stick of gray-green incense has an unsettling, oily look to it. When burned, a stick of *devil's breath incense* emits a brimstone-like stink and burns for 10 minutes. Varisian tales claim the stink of this incense closely matches the odor of the breath of the Sandpoint Devil, although it doesn't come close to the full stink of its flaming exhalations. A creature within 10 feet of a stick of burning *devil's breath incense* must succeed at a save or become Sickened 1 (Sickened 2 on a critical failure), after which they're temporarily immune to the incense for 1 hour. While a stick of *devil's breath incense* is burning, an adjacent creature can lean over the stick to inhale forcefully as an Interact action. Doing so consumes the entire stick immediately and automatically makes the creature Sickened 3, but when the creature exhales its next breath, the cloud of smoke they breathe out attempts to carry with it a single curse the creature is afflicted by. The incense has a counteract level of 4 and a +12 modifier for the roll. If used to remove the effects of the Sandpoint Devil's Accursed Breath (or similar effects, such as the Cursed Flames that the goblin witch Minargul can create), the *devil's breath incense* automatically succeeds at removing the curse, regardless of the level of the curse itself."
+ },
+ {
+  "id": "devilwing-badge",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Devilwing Badge",
+  "level": 4,
+  "traits": [
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "This small tearing of a devil's wing has been cleansed with holy water before being mounted onto a silver badge. The spell attack modifier of any spell cast by Activating this item is +8, and the spell DC is 18. - **Armor** You gain resistance 2 to fire and unholy. - **Weapon** After you cast a spell by Activating the *devilwing badge*, your Strikes with the weapon deal an additional 1d4 spirit damage until the end of your next turn. --- **Activate** Cast a Spell **Effect** You cast Divine Lance."
+ },
+ {
+  "id": "devilwing-badge-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Devilwing Badge (Greater)",
+  "level": 8,
+  "traits": [
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "This small tearing of a devil's wing has been cleansed with holy water before being mounted onto a silver badge. The spell attack modifier of any spell cast by Activating this item is +14, and the spell DC is 24. - **Armor** You gain resistance 5 to fire and unholy. - **Weapon** After you cast a spell by Activating the *devilwing badge*, your Strikes with the weapon deal an additional 1d6 spirit damage until the end of your next turn. --- **Activate** Cast a Spell **Effect** You cast Divine Lance. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast Crisis of Faith."
+ },
+ {
+  "id": "devotion-phantom-eidolon",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Devotion Phantom Eidolon",
+  "level": 1,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Your eidolon is a lost soul, unable to escape the mortal world due to a strong sense of duty, an undying devotion, or a need to complete an important task. Most phantom eidolons are humanoid with a spectral or ectoplasmic appearance, though some take far stranger forms. Your link with your eidolon prevents them from succumbing to corruption and undeath, and together, you will grow in strength and fulfill your phantom's devotion. **Tradition** occult **Traits** eidolon, ethereal, phantom **Home Plane** Ethereal Plane --- **Size** Medium or Small **Suggested Attacks** fist (bludgeoning), tendril (bludgeoning), unarmed attacks shaped like a weapon **Stalwart Guardian** Str 18, Dex 14, Con 16, Int 10, Wis 10, Cha 10; +2 AC (+3 Dex cap) **Swift Protector** Str 14, Dex 18, Con 16, Int 10, Wis 10, Cha 10; +1 AC (+4 Dex cap) **Skills** Medicine, Occultism **Senses** darkvision **Language** one common mortal language the eidolon spoke in life **Speed** 25 feet --- **Eidolon Abilities** *Initial* dutiful retaliation; *Symbiosis* steadfast devotion; *Transcendence* devotion aura ## Dutiful Retaliation Your eidolon deeply respects your assistance, and it extends its loyalty to you, attacking those who dare harm you. It gains the Dutiful Retaliation reaction. ## Steadfast Devotion 7th Your eidolon's dedication makes it extremely challenging for your foes to bend its mind. Your eidolon gains a +2 circumstance bonus to saving throws against mental effects, and if they roll a success against such an effect, they get a critical success instead. If you have the shared resolve class feature and your eidolon rolls a critical failure against a mental effect, they get a failure instead. ## Devotion Aura 17th After fighting at your side for so long, your eidolon has become as devoted to protecting you and your allies as it is to its original cause. It gains a 20-foot devotion aura, which has the abjuration, aura, and occult traits. Whenever one of your eidolon's allies within the aura takes damage, you can reduce the damage by your eidolon's Constitution modifier. You lose a number of Hit Points equal to half the amount by which the eidolon reduced the damage, rounded down. If the damage was lower than the Constitution modifier, base the damage you take on the actual amount of damage prevented."
+ },
+ {
+  "id": "diglys-oil-of-sympathy",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Digly's Oil of Sympathy",
+  "level": 1,
+  "traits": [
+   "consumable",
+   "healing",
+   "magical",
+   "oil"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Digly's Oil of Sympathy Source NPC Core pg. 65 Usage held in 1 hand Bulk L Activate (manipulate) This thick, red liquid has a pungent—but not unpleasant—smell. You pour the oil onto a weapon when activating it. If the weapon has damaged a creature within the last 10 minutes, the most recent creature damaged by the weapon regains the listed number of Hit Points. The creature is then temporarily immune to Digly's oil of sympathy for 10 minutes. The magic relies on the malice behind the attack, so the weapon must have been used against an enemy of the attacker. In other words, someone can't voluntarily take damage from a friend's weapon, then heal from it—a fact that made it very difficult for Sir Kenelm Digly to test the oil during its development. Digly's Oil of Sympathy (Minor) Source NPC Core pg. 65 Price 40 gp Bulk L The oil restores 1d10 Hit Points. Digly's Oil of Sympathy (Lesser) Source NPC Core pg. 65 Price 12 gp Bulk L The oil restores 2d10+5 Hit Points. Digly's Oil of Sympathy (Moderate) Source NPC Core pg. 65 Price 50 gp Bulk L The oil restores 3d10+10 Hit Points. Digly's Oil of Sympathy (Greater) Source NPC Core pg. 65 Price 400 gp Bulk L The oil restores 6d10+20 Hit Points. Digly's Oil of Sympathy (Major) Source NPC Core pg. 65 Price 5,000 gp Bulk L The oil restores 8d10+30 Hit Points."
+ },
+ {
+  "id": "diglys-oil-of-sympathy-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Digly's Oil of Sympathy (Greater)",
+  "level": 12,
+  "traits": [
+   "consumable",
+   "healing",
+   "magical",
+   "oil"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- This thick, red liquid has a pungent—but not unpleasant—smell. You pour the oil onto a weapon when activating it. If the weapon has damaged a creature within the last 10 minutes, the most recent creature damaged by the weapon regains 6d10+20 Hit Points. The creature is then temporarily immune to *Digly's oil of sympathy* for 10 minutes. The magic relies on the malice behind the attack, so the weapon must have been used against an enemy of the attacker. In other words, someone can't voluntarily take damage from a friend's weapon, then heal from it—a fact that made it very difficult for Sir Kenelm Digly to test the oil during its development."
+ },
+ {
+  "id": "diglys-oil-of-sympathy-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Digly's Oil of Sympathy (Lesser)",
+  "level": 3,
+  "traits": [
+   "consumable",
+   "healing",
+   "magical",
+   "oil"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- This thick, red liquid has a pungent—but not unpleasant—smell. You pour the oil onto a weapon when activating it. If the weapon has damaged a creature within the last 10 minutes, the most recent creature damaged by the weapon regains 2d10+5 Hit Points. The creature is then temporarily immune to *Digly's oil of sympathy* for 10 minutes. The magic relies on the malice behind the attack, so the weapon must have been used against an enemy of the attacker. In other words, someone can't voluntarily take damage from a friend's weapon, then heal from it—a fact that made it very difficult for Sir Kenelm Digly to test the oil during its development."
+ },
+ {
+  "id": "diglys-oil-of-sympathy-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Digly's Oil of Sympathy (Major)",
+  "level": 18,
+  "traits": [
+   "consumable",
+   "healing",
+   "magical",
+   "oil"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- This thick, red liquid has a pungent—but not unpleasant—smell. You pour the oil onto a weapon when activating it. If the weapon has damaged a creature within the last 10 minutes, the most recent creature damaged by the weapon regains 8d10+30 Hit Points. The creature is then temporarily immune to *Digly's oil of sympathy* for 10 minutes. The magic relies on the malice behind the attack, so the weapon must have been used against an enemy of the attacker. In other words, someone can't voluntarily take damage from a friend's weapon, then heal from it—a fact that made it very difficult for Sir Kenelm Digly to test the oil during its development."
+ },
+ {
+  "id": "diglys-oil-of-sympathy-minor",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Digly's Oil of Sympathy (Minor)",
+  "level": 1,
+  "traits": [
+   "consumable",
+   "healing",
+   "magical",
+   "oil"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- This thick, red liquid has a pungent—but not unpleasant—smell. You pour the oil onto a weapon when activating it. If the weapon has damaged a creature within the last 10 minutes, the most recent creature damaged by the weapon regains 1d10 Hit Points. The creature is then temporarily immune to *Digly's oil of sympathy* for 10 minutes. The magic relies on the malice behind the attack, so the weapon must have been used against an enemy of the attacker. In other words, someone can't voluntarily take damage from a friend's weapon, then heal from it—a fact that made it very difficult for Sir Kenelm Digly to test the oil during its development."
+ },
+ {
+  "id": "diglys-oil-of-sympathy-moderate",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Digly's Oil of Sympathy (Moderate)",
+  "level": 6,
+  "traits": [
+   "consumable",
+   "healing",
+   "magical",
+   "oil"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- This thick, red liquid has a pungent—but not unpleasant—smell. You pour the oil onto a weapon when activating it. If the weapon has damaged a creature within the last 10 minutes, the most recent creature damaged by the weapon regains 3d10+10 Hit Points. The creature is then temporarily immune to *Digly's oil of sympathy* for 10 minutes. The magic relies on the malice behind the attack, so the weapon must have been used against an enemy of the attacker. In other words, someone can't voluntarily take damage from a friend's weapon, then heal from it—a fact that made it very difficult for Sir Kenelm Digly to test the oil during its development."
+ },
+ {
+  "id": "disarming-smile",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Disarming Smile",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "concentrate",
+   "emotion",
+   "mental",
+   "visual"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** You are the target of a melee attack and the attacker has not rolled yet. **Requirements** You are aware of the attacker, the attacker is an intelligent humanoid creature, and you have not attempted to harm the attacker. --- With a wide and sincere smile, you give your attacker pause. You attempt a Diplomacy check against the triggering attacker's Will DC. After you use Disarming Smile, all creatures who witnessed you use it are temporarily immune to your Disarming Smile for the next 24 hours. --- **Critical Success** Your enemy ceases their attack, momentarily taken aback by your disarming smile. The attack fails and the triggering target can't attempt hostile actions against you until the beginning of its next turn or until you (or your allies) take hostile actions against the enemy (or its allies). You can begin talking to the creature on your next turn to attempt another Diplomacy check; on a success, you sustain the effect until the beginning of your next turn, to a maximum of 1 minute. Talking on subsequent rounds requires that you be able to communicate with the target creature and imparts the auditory and linguistic traits to the action. **Success** Your foe pauses momentarily. Their attack fails, but they can attempt further attacks against you. **Failure** The target's attack is unaffected."
+ },
+ {
+  "id": "discerning-strike",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Discerning Strike",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You have successfully identified the target with Recall Knowledge during this combat. --- Identifying a creature is the first step in finding its weaknesses. Attempt a Strike against the target; if successful, you deal an additional 1d6 precision damage. If you have succeeded on a Recall Knowledge check against the target during this combat and their creature type was previously recorded using Thorough Reports, you also deal 1 point of persistent bleed damage. The creature is then temporarily immune to Discerning Strike for 1 day."
+ },
+ {
+  "id": "disperse-into-petals",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Disperse into Petals",
+  "level": 10,
+  "traits": [
+   "deviant",
+   "magical",
+   "plant",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "core.stances"
+  ],
+  "text": "You merge with the blossoms sprouting from you and disperse, becoming a visible cloud of blossoms and petals. You're amorphous. You lose any item bonus to AC and all other effects and bonuses from armor, and you use your proficiency modifier for unarmored defense. You gain resistance to physical damage equal to half your level and are immune to precision damage. You can't cast spells, activate items, or use actions that have the attack or manipulate trait. You gain a fly Speed of 10 feet. You can remain in this form for up to 1 minute. You can Dismiss this effect. **Awakening** You can maintain your form for a longer time. You can remain in this form for up to 1 hour. **Awakening** You've learned to harm others, even while in your blossom state. You can occupy the same space as someone else. While occupying someone else's space, you can spend 1 action to spin around in a vortex of blossoms, dealing 1d4 slashing damage for every 5 levels you have to the creature, with a basic Reflex save."
+ },
+ {
+  "id": "dissolutions-sight",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Dissolution's Sight",
+  "level": 9,
+  "traits": [
+   "occult",
+   "wayang"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** Once per hour --- Accepting your inner darkness means that no outer darkness can obscure your sight. You gain greater darkvision for 1 minute."
+ },
+ {
+  "id": "distracting-flattery",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Distracting Flattery",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** You observe a target's attitude toward yourself or your allies decrease as a result of an ally's behavior. --- You know how to maintain a good impression and manage your image, even while keeping uncouth company. Make a Deception check against the target's Will DC. Regardless of your result, the target is temporarily immune to your Distracting Flattery for 10 minutes. --- **Success** The target's attitude doesn't decrease as a result of your ally's social blunder. **Failure** The target's attitude decreases, as normal. **Critical Failure** Your attempt makes matters worse, decreasing the target's attitude toward you by one step, in addition to any changes from the behavior that triggered this reaction."
+ },
+ {
+  "id": "do-you-know-who-i-am",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Do You Know Who I Am?",
+  "level": 12,
+  "traits": [
+   "archetype",
+   "auditory",
+   "concentrate",
+   "emotion",
+   "fear",
+   "linguistic",
+   "mental"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Frequency** once per hour --- Your reputation casts a long shadow, allowing you to throw your cultural weight around, especially in larger settlements. With a well-timed tirade or attention-getting shout, you can break a foe's mind and bring them low. Choose a foe within 30 feet, and attempt an Intimidation check against the target's Will DC. You gain a +1 circumstance bonus to this check if you're in a city or a +2 circumstance bonus to this check if you're in a metropolis. If you're specifically in Absalom, the bonus is instead +3. The target is then temporarily immune to your Do You Know Who I Am? for 24 hours. --- **Critical Success** The target takes 12d6 damage and becomes Frightened 3. It can't reduce its frightened condition below 1 if it ends its turn adjacent to you. **Success** The target takes 6d6 damage and becomes Frightened 2. **Failure** The target is unaffected. **Critical Failure** The target is unaffected, and the embarrassment causes you to take 6d6 damage."
+ },
+ {
+  "id": "dog-bone-knife",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Dog-Bone Knife",
+  "level": 5,
+  "traits": [
+   "agile",
+   "finesse",
+   "thrown-10",
+   "versatile-s"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The blade of this *+1 striking dagger* is made from the thigh bone of a canine that died in the act of protecting its master. A werecreature or other creature willingly under the effects of a non-permanent polymorph effect damaged by a *dog-bone knife* must succeed at a save or immediately revert to its natural form-this has no effect on a creature unwillingly polymorphed. On a successful save, the creature is temporarily immune to this effect for 1 minute. Kushtakas and other creatures vulnerable to canines take a -2 circumstance penalty to saves against this effect, and this weapon overcomes any resistance such creatures have to physical attacks."
+ },
+ {
+  "id": "dominating-gaze",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Dominating Gaze",
+  "level": 16,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "innateSpells"
+  ],
+  "inRegistries": [],
+  "text": "You stare into your target's eyes and enthrall them, shattering their free will. Once per day, you can cast 7th-rank Dominate as a divine innate spell, using your class DC or spell DC, whichever is higher. It gains the visual trait. At 18th level, the dominate is heightened to 8th level; at 20th level, it's heightened to 9th rank. A creature that succeeds at its save is temporarily immune to your domination for 24 hours, though in most cases, you can't Cast the Spell again within 24 hours. If you are destroyed, all your dominate spells from Dominating Gaze immediately end."
+ },
+ {
+  "id": "draconic-resistance",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Draconic Resistance",
+  "level": 1,
+  "traits": [
+   "dragonblood"
+  ],
+  "engineFieldsPresent": [
+   "choice",
+   "effectChoices"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Draconic magic safeguards you against harm. You gain resistance equal to half your level (minimum 1) to the damage type associated with your draconic exemplar. Double this resistance against damage of that type dealt to you by dragons. If your draconic exemplar is associated with bludgeoning, piercing, or slashing damage, instead of gaining resistance to that type you can choose acid, cold, fire, electricity, or sonic."
+ },
+ {
+  "id": "draft-of-stellar-radiance",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Draft of Stellar Radiance",
+  "level": 3,
+  "traits": [
+   "consumable",
+   "light",
+   "magical",
+   "potion"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- This potion's bottle glows softly with shimmering silver light. Upon drinking this potion, you're surrounded by a nimbus of blazing starlight that lasts for 1 minute. You emanate a field of bright light with a 20-foot radius (and dim light for another 20 feet, like a torch). You take a –20 penalty to Stealth checks. Any creature that targets you with an attack or an ability must succeed at a save or be dazzled for 1 round. A creature who succeeds at this save is immune to the effect for 24 hours."
+ },
+ {
+  "id": "dragon-eidolon",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Dragon Eidolon",
+  "level": 1,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Because dragons have a strong connection to magic, their minds can often leave an echo floating in the Astral Plane. Such an entity is extremely powerful but unable to interact with the outside world on its own. Dragon eidolons manifest in the powerful, scaled forms they had in life; most take the form of true dragons (albeit smaller), but some manifest as drakes or other draconic beings. You have forged a connection with such a dragon eidolon and together, you seek to grow as powerful as an ancient wyrm. **Tradition** arcane **Traits** astral, dragon, eidolon, and one more (see Breath Weapon below) **Home Plane** Astral Plane --- **Size** Medium **Suggested Attacks** claw (slashing), jaws (piercing), horn (piercing), tail (bludgeoning), wing (bludgeoning) **Marauding Dragon** Str 18, Dex 14, Con 16, Int 10, Wis 10, Cha 10; +2 AC (+3 Dex cap) **Cunning Dragon** Str 12, Dex 18, Con 12, Int 14, Wis 10, Cha 12; +1 AC (+4 Dex cap) **Skills** Arcana, Intimidation **Senses** darkvision **Language** Draconic **Speed** 25 feet --- **Eidolon Abilities** *Initial *breath weapon*; Symbiosis *draconic frenzy*; Transcendence *wyrm's breath ## Breath Weapon Your eidolon has a powerful breath weapon, which they are able to use regularly to wreak havoc upon your foes. They gain the Breath Weapon activity. Choose a damage type from among acid, cold, electricity, fire, negative, piercing, or poison, and choose whether the area is a 60-foot line or a 30-foot cone. Unless you chose piercing damage, both Breath Weapon and your eidolon gain the trait matching the damage type. ## Draconic Frenzy 7th Your eidolon can make a furious assault, potentially recovering the use of their Breath Weapon. They gain the Draconic Frenzy activity. ## Wyrm's Breath 17th Your eidolon can draw upon the power of wyrms to enhance the eidolon's Breath Weapon. Your eidolon gains the Wyrm's Breath free action."
+ },
+ {
+  "id": "dragon-scute",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Dragon Scute",
+  "level": 12,
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Dragon Scute Source Draconic Codex pg. 223 Usage held in 1 hand Bulk L The thick plates that form the strongest points in a dragon’s armor can be used as powerful defensive catalysts. Using one of these scales to cast mountain resilience causes the target’s skin to grow a thick layer of draconic scales. Instead of the spell’s normal effects, the target gains damage resistance based on the type and dragon’s tradition. Lesser Dragon Scute Source Draconic Codex pg. 223 Price 400 gp The scale can be used with mountain resilience of 6th rank or higher. Arcane resistance 5 against all damage from spells Divine resistance 10 to spirit, vitality, and void Occult resistance 10 to mental Primal resistance 7 to bludgeoning, piercing, slashing, and poison Moderate Dragon Scute Source Draconic Codex pg. 223 Price 2,000 gp The scale can be used with mountain resilience of 8th rank or higher. Arcane resistance 7 against all damage from spells Divine resistance 15 to spirit, vitality, and void Occult resistance 15 to mental Primal resistance 10 to bludgeoning, piercing, slashing, and poison Greater Dragon Scute Source Draconic Codex pg. 223 Price 14,000 gp The scale can be used with mountain resilience of 10th rank. Arcane resistance 10 against all damage from spells Divine resistance 20 to spirit, vitality, and void Occult resistance 20 to mental Primal resistance 15 to bludgeoning, piercing, slashing, and poison"
+ },
+ {
+  "id": "dragon-scute-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Dragon Scute (Lesser)",
+  "level": 12,
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "heldSpells",
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** Cast a Spell --- The thick plates that form the strongest points in a dragon's armor can be used as powerful defensive catalysts. Using one of these scales to cast Mountain Resilience causes the target's skin to grow a thick layer of draconic scales. Instead of the spell's normal effects, the target gains damage resistance based on the type and dragon's tradition. The scale can be used with *mountain resilience* of 6th rank or higher. **Arcane** resistance 5 against all damage from spells **Divine** resistance 10 to spirit, vitality, and void **Occult** resistance 10 to mental **Primal** resistance 7 to bludgeoning, piercing, slashing, and poison"
+ },
+ {
+  "id": "dragon-scute-moderate",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Dragon Scute (Moderate)",
+  "level": 16,
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "heldSpells",
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** Cast a Spell --- The thick plates that form the strongest points in a dragon's armor can be used as powerful defensive catalysts. Using one of these scales to cast Mountain Resilience causes the target's skin to grow a thick layer of draconic scales. Instead of the spell's normal effects, the target gains damage resistance based on the type and dragon's tradition. The scale can be used with *mountain resilience* of 8th rank or higher. **Arcane** resistance 7 against all damage from spells **Divine** resistance 15 to spirit, vitality, and void **Occult** resistance 15 to mental **Primal** resistance 10 to bludgeoning, piercing, slashing, and poison"
+ },
+ {
+  "id": "dragon-shape",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Dragon Shape",
+  "level": 12,
+  "traits": [
+   "druid"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can take on the shape of some of the world's most fearsome creatures. Add the shapes listed in Dragon Form to your Untamed Form list. Whenever you're polymorphed into another form using *untamed form*, you gain resistance 5 to your choice of bludgeoning or poison."
+ },
+ {
+  "id": "dragonclaw-scutcheon",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Dragonclaw Scutcheon",
+  "level": 16,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨4⟩ (concentrate) **Prerequisites** You have the affixed shield raised. **Trigger** You would take damage of a type depending on the talisman's dragon type. --- This decorative shield emblem contains the gilded claw of a dragon mounted in a setting of high-grade adamantine alloy. It protects against a damage type depending on the type of dragon the claw came from (see the sidebar). When you Activate the scutcheon, you and all of your carried, wielded, or worn items gain immunity to all damage of that type until the end of your next turn. If you have a dragonclaw scutcheon, dragonscale cameo, and dragontooth trophy attached to your items, and they all correspond to the same type of dragon, you gain an extra benefit. When you Activate any of these talismans, you gain the ability to cast an 8th-rank Dragon Breath focus spell () as an innate spell once before the end of your next turn. Use the dragon type that matches the talismans; you can Cast the Spell this way without spending a Focus Point. Because each talisman disintegrates when used, you can't get this benefit again until you've attached a replacement. --- **Craft Requirements** Supply one claw from an adult or older dragon."
+ },
+ {
+  "id": "dragonet-breath",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Dragonet Breath",
+  "level": 1,
+  "traits": [
+   "dragonet"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You have developed your magical breath. You expel the dragonet breath associated with your heritage. Dragonet Breath gains the traits listed in parentheses, and the DC is your class DC or spell DC, whichever is higher. After you use Dragonet Breath, you can't use it again for 1d4 rounds. - **Fey Dragonet** (arcane, poison) You breathe a of euphoric gas. Each creature in the area must succeed at a save or become Stupefied 1 for 1 round. - **Homing Drake** (acid) You expel a of caustic spittle that deals damage with a save. At 3rd level and every 2 levels thereafter, the damage increases by 1d4. - **House Drake** (arcane, mental) You breathe out a cloud of silver mist in a that deals damage with a save. It counts as silver for the purpose of weaknesses. At 3rd level and every 2 levels thereafter, the damage increases by 1d4. - **Pearl Dragonet** (arcane, curse) You breathe a of golden mist that alters the luck of creatures caught in it. Each time you use Dragonet Breath, decide if it gives good luck or bad luck. Any creature affected by your Dragonet Breath becomes temporarily immune to it for 1 hour. If your breath gives good luck, each creature in the area gains a +1 status bonus to its next attack roll or skill check before the start of your next turn. If your breath gives bad luck, each creature in the area must attempt a save. A creature that fails its save takes a –1 status penalty to its next attack roll or skill check before the start of your next turn. On a critical failure, the creature must instead roll twice and take the worse result on the check; this is a misfortune effect. - **Tidepool Dragonet** (fire) You breathe a of superheated gas that deals damage with a save. At 3rd level and every 2 levels thereafter, the damage increases by 1d4. You can use your breath underwater even though it has the fire trait. If you do, it gains the water trait and emerges as a of boiling water."
+ },
+ {
+  "id": "dragonfire-halfbow",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Dragonfire Halfbow",
+  "level": 12,
+  "traits": [
+   "deadly-d10",
+   "fire",
+   "magical",
+   "propulsive"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Crafted by layering bamboo with strips of sliced scales harvested from a fire-breathing dragon, this bow has a significant draw strength. This design is commonly seen in Hongal, as the shorter limb allows for easier maneuvering on horseback. While the wielder of this *+2 striking composite shortbow* is mounted, they apply the bow's item bonus to Nature checks to Command their mount. **Activate—Dragon's Arrow** ⟨2⟩ (concentrate, manipulate) **Frequency** once per day --- **Effect** You draw the bow back to its maximum draw length without nocking an arrow, and as you release the string, the dragonfire halfbow casts Fireball (heightened to 5th rank; save), targeted at a point of your choosing within the spell's range. You and your mount are immune to the effects of this *fireball*."
+ },
+ {
+  "id": "dragonfly-potion",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Dragonfly Potion",
+  "level": 12,
+  "traits": [
+   "consumable",
+   "magical",
+   "morph",
+   "potion"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ Interact --- Your eyes transform into those of a giant dragonfly, the thousands of separate facets wrapping around your head, and a pair of long, delicate, insectile wings grow from your upper back. You gain a fly Speed equal to your land Speed. Additionally, you gain low-light vision and a +2 item bonus to visual Perception checks, and you can't be flanked except by creatures higher level than you are (though lower-level creatures can still help their higher-level allies flank). These effects last for 1 minute."
+ },
+ {
+  "id": "dragonhide",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Dragonhide",
+  "level": 8,
+  "traits": [
+   "precious"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Dragonhide Source Player Core 2 pg. 276 Price 350 gp Bulk L The hide and scales of a dragon can be used to Craft any item normally made of ordinary leather or hide. Dragonhide varies in color and texture, depending on the dragon it came from. Due to dragonhide's resiliency, it can also be used to Craft armor usually made out of metal plates (such as a breastplate, half plate, and full plate), allowing such armor to be made without metal. Dragonhide objects are immune to one damage type, depending on the tradition associated with the dragon. ## Dragonhide Items Hardness HP BT Thin Items Standard-grade 4 16 8 High-grade 8 32 16 Standard Items Standard-grade 7 28 14 High-grade 11 44 22 Material Uses Dragonhide Armor Dragonhide Shield Dragonhide Object (Standard-Grade) Source Player Core 2 pg. 276, Core Rulebook pg. 579 Price 350 gp (per Bulk) Bulk L Craft Requirements The initial raw materials must include dragonhide worth at least 200 gp + 20 per Bulk Dragonhide Object (High-Grade) Source Player Core 2 pg. 276, Core Rulebook pg. 579 Price 6,000 gp (per Bulk) Bulk L"
+ },
+ {
+  "id": "dragonhide-armor",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Dragonhide Armor",
+  "level": 12,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Dragonhide Armor Source Player Core 2 pg. 276 Usage worn armor Bulk L varies by armor Base Material Dragonhide Dragonhide armor is immune to one damage type based on the type of dragon it's made from. Wearing armor made from dragonhide also grants you a +1 circumstance bonus to your AC and saving throws against attacks and spells that deal the corresponding damage type. ## Dragon Tradition Damage Arcane Force Divine Spirit Occult Mental Primal Poison Dragonhide Armor (Standard-Grade) Source Player Core 2 pg. 276, Core Rulebook pg. 555 Price 1,600 gp (+160 gp per Bulk) Bulk L Craft Requirements The initial raw materials must include dragonhide worth at least 200 gp + 20 per Bulk Dragonhide Armor (High-Grade) Source Player Core 2 pg. 276, Core Rulebook pg. 555 Price 32,000 gp (+3,200 gp per Bulk) Bulk L Craft Requirements The initial raw materials must include dragonhide worth at least 16,000 gp + 1,600 per Bulk"
+ },
+ {
+  "id": "dragonhide-armor-high-grade",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Dragonhide Armor (High-Grade)",
+  "level": 19,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Dragonhide Armor Source Player Core 2 pg. 276 Usage worn armor Bulk L varies by armor Base Material Dragonhide Dragonhide armor is immune to one damage type based on the type of dragon it's made from. Wearing armor made from dragonhide also grants you a +1 circumstance bonus to your AC and saving throws against attacks and spells that deal the corresponding damage type. ## Dragon Tradition Damage Arcane Force Divine Spirit Occult Mental Primal Poison Dragonhide Armor (Standard-Grade) Source Player Core 2 pg. 276, Core Rulebook pg. 555 Price 1,600 gp (+160 gp per Bulk) Bulk L Craft Requirements The initial raw materials must include dragonhide worth at least 200 gp + 20 per Bulk Dragonhide Armor (High-Grade) Source Player Core 2 pg. 276, Core Rulebook pg. 555 Price 32,000 gp (+3,200 gp per Bulk) Bulk L Craft Requirements The initial raw materials must include dragonhide worth at least 16,000 gp + 1,600 per Bulk"
+ },
+ {
+  "id": "dragonhide-armor-standard-grade",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Dragonhide Armor (Standard-Grade)",
+  "level": 12,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Dragonhide Armor Source Player Core 2 pg. 276 Usage worn armor Bulk L varies by armor Base Material Dragonhide Dragonhide armor is immune to one damage type based on the type of dragon it's made from. Wearing armor made from dragonhide also grants you a +1 circumstance bonus to your AC and saving throws against attacks and spells that deal the corresponding damage type. ## Dragon Tradition Damage Arcane Force Divine Spirit Occult Mental Primal Poison Dragonhide Armor (Standard-Grade) Source Player Core 2 pg. 276, Core Rulebook pg. 555 Price 1,600 gp (+160 gp per Bulk) Bulk L Craft Requirements The initial raw materials must include dragonhide worth at least 200 gp + 20 per Bulk Dragonhide Armor (High-Grade) Source Player Core 2 pg. 276, Core Rulebook pg. 555 Price 32,000 gp (+3,200 gp per Bulk) Bulk L Craft Requirements The initial raw materials must include dragonhide worth at least 16,000 gp + 1,600 per Bulk"
+ },
+ {
+  "id": "dragonhide-buckler-high-grade",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Dragonhide Buckler (High-Grade)",
+  "level": 16,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Dragonhide Shield Source Player Core 2 pg. 277 Usage varies by shield Bulk L Base Material Dragonhide Dragonhide shields are each immune to one damage type based on the tradition associated with the dragon. ## Dragon Tradition Damage Arcane Force Divine Spirit Occult Mental Primal Poison Dragonhide Buckler (Standard-Grade) Source Player Core 2 pg. 277, Core Rulebook pg. 586 Price 400 gp Bulk L Craft Requirements dragonhide worth at least 50 gp Dragonhide Shield (Standard-Grade) Source Player Core 2 pg. 277, Core Rulebook pg. 586 Price 440 gp Bulk 1 Craft Requirements dragonhide worth at least 55 gpdragonhide worth at least 55 gp Dragonhide Buckler (High-Grade) Source Player Core 2 pg. 277, Core Rulebook pg. 586 Price 8,000 gp Bulk L Craft Requirements dragonhide worth at least 4,000 gp Dragonhide Shield (High-Grade) Source Player Core 2 pg. 277, Core Rulebook pg. 586 Price 8,800 gp Bulk 1 Craft Requirements dragonhide worth at least 4,400 gp"
+ },
+ {
+  "id": "dragonhide-buckler-standard-grade",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Dragonhide Buckler (Standard-Grade)",
+  "level": 8,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Dragonhide Shield Source Player Core 2 pg. 277 Usage varies by shield Bulk L Base Material Dragonhide Dragonhide shields are each immune to one damage type based on the tradition associated with the dragon. ## Dragon Tradition Damage Arcane Force Divine Spirit Occult Mental Primal Poison Dragonhide Buckler (Standard-Grade) Source Player Core 2 pg. 277, Core Rulebook pg. 586 Price 400 gp Bulk L Craft Requirements dragonhide worth at least 50 gp Dragonhide Shield (Standard-Grade) Source Player Core 2 pg. 277, Core Rulebook pg. 586 Price 440 gp Bulk 1 Craft Requirements dragonhide worth at least 55 gpdragonhide worth at least 55 gp Dragonhide Buckler (High-Grade) Source Player Core 2 pg. 277, Core Rulebook pg. 586 Price 8,000 gp Bulk L Craft Requirements dragonhide worth at least 4,000 gp Dragonhide Shield (High-Grade) Source Player Core 2 pg. 277, Core Rulebook pg. 586 Price 8,800 gp Bulk 1 Craft Requirements dragonhide worth at least 4,400 gp"
+ },
+ {
+  "id": "dragonhide-object-high-grade",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Dragonhide Object (High-Grade)",
+  "level": 16,
+  "traits": [
+   "precious"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Dragonhide Source Player Core 2 pg. 276 Price 350 gp Bulk L The hide and scales of a dragon can be used to Craft any item normally made of ordinary leather or hide. Dragonhide varies in color and texture, depending on the dragon it came from. Due to dragonhide's resiliency, it can also be used to Craft armor usually made out of metal plates (such as a breastplate, half plate, and full plate), allowing such armor to be made without metal. Dragonhide objects are immune to one damage type, depending on the tradition associated with the dragon. ## Dragonhide Items Hardness HP BT Thin Items Standard-grade 4 16 8 High-grade 8 32 16 Standard Items Standard-grade 7 28 14 High-grade 11 44 22 Material Uses Dragonhide Armor Dragonhide Shield Dragonhide Object (Standard-Grade) Source Player Core 2 pg. 276, Core Rulebook pg. 579 Price 350 gp (per Bulk) Bulk L Craft Requirements The initial raw materials must include dragonhide worth at least 200 gp + 20 per Bulk Dragonhide Object (High-Grade) Source Player Core 2 pg. 276, Core Rulebook pg. 579 Price 6,000 gp (per Bulk) Bulk L"
+ },
+ {
+  "id": "dragonhide-object-standard-grade",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Dragonhide Object (Standard-Grade)",
+  "level": 8,
+  "traits": [
+   "precious"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Dragonhide Source Player Core 2 pg. 276 Price 350 gp Bulk L The hide and scales of a dragon can be used to Craft any item normally made of ordinary leather or hide. Dragonhide varies in color and texture, depending on the dragon it came from. Due to dragonhide's resiliency, it can also be used to Craft armor usually made out of metal plates (such as a breastplate, half plate, and full plate), allowing such armor to be made without metal. Dragonhide objects are immune to one damage type, depending on the tradition associated with the dragon. ## Dragonhide Items Hardness HP BT Thin Items Standard-grade 4 16 8 High-grade 8 32 16 Standard Items Standard-grade 7 28 14 High-grade 11 44 22 Material Uses Dragonhide Armor Dragonhide Shield Dragonhide Object (Standard-Grade) Source Player Core 2 pg. 276, Core Rulebook pg. 579 Price 350 gp (per Bulk) Bulk L Craft Requirements The initial raw materials must include dragonhide worth at least 200 gp + 20 per Bulk Dragonhide Object (High-Grade) Source Player Core 2 pg. 276, Core Rulebook pg. 579 Price 6,000 gp (per Bulk) Bulk L"
+ },
+ {
+  "id": "dragonhide-shield",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Dragonhide Shield",
+  "level": 8,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Dragonhide Shield Source Player Core 2 pg. 277 Usage varies by shield Bulk L Base Material Dragonhide Dragonhide shields are each immune to one damage type based on the tradition associated with the dragon. ## Dragon Tradition Damage Arcane Force Divine Spirit Occult Mental Primal Poison Dragonhide Buckler (Standard-Grade) Source Player Core 2 pg. 277, Core Rulebook pg. 586 Price 400 gp Bulk L Craft Requirements dragonhide worth at least 50 gp Dragonhide Shield (Standard-Grade) Source Player Core 2 pg. 277, Core Rulebook pg. 586 Price 440 gp Bulk 1 Craft Requirements dragonhide worth at least 55 gpdragonhide worth at least 55 gp Dragonhide Buckler (High-Grade) Source Player Core 2 pg. 277, Core Rulebook pg. 586 Price 8,000 gp Bulk L Craft Requirements dragonhide worth at least 4,000 gp Dragonhide Shield (High-Grade) Source Player Core 2 pg. 277, Core Rulebook pg. 586 Price 8,800 gp Bulk 1 Craft Requirements dragonhide worth at least 4,400 gp"
+ },
+ {
+  "id": "dragonhide-shield-high-grade",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Dragonhide Shield (High-Grade)",
+  "level": 16,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Dragonhide Shield Source Player Core 2 pg. 277 Usage varies by shield Bulk L Base Material Dragonhide Dragonhide shields are each immune to one damage type based on the tradition associated with the dragon. ## Dragon Tradition Damage Arcane Force Divine Spirit Occult Mental Primal Poison Dragonhide Buckler (Standard-Grade) Source Player Core 2 pg. 277, Core Rulebook pg. 586 Price 400 gp Bulk L Craft Requirements dragonhide worth at least 50 gp Dragonhide Shield (Standard-Grade) Source Player Core 2 pg. 277, Core Rulebook pg. 586 Price 440 gp Bulk 1 Craft Requirements dragonhide worth at least 55 gpdragonhide worth at least 55 gp Dragonhide Buckler (High-Grade) Source Player Core 2 pg. 277, Core Rulebook pg. 586 Price 8,000 gp Bulk L Craft Requirements dragonhide worth at least 4,000 gp Dragonhide Shield (High-Grade) Source Player Core 2 pg. 277, Core Rulebook pg. 586 Price 8,800 gp Bulk 1 Craft Requirements dragonhide worth at least 4,400 gp"
+ },
+ {
+  "id": "dragonhide-shield-standard-grade",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Dragonhide Shield (Standard-Grade)",
+  "level": 8,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Dragonhide Shield Source Player Core 2 pg. 277 Usage varies by shield Bulk L Base Material Dragonhide Dragonhide shields are each immune to one damage type based on the tradition associated with the dragon. ## Dragon Tradition Damage Arcane Force Divine Spirit Occult Mental Primal Poison Dragonhide Buckler (Standard-Grade) Source Player Core 2 pg. 277, Core Rulebook pg. 586 Price 400 gp Bulk L Craft Requirements dragonhide worth at least 50 gp Dragonhide Shield (Standard-Grade) Source Player Core 2 pg. 277, Core Rulebook pg. 586 Price 440 gp Bulk 1 Craft Requirements dragonhide worth at least 55 gpdragonhide worth at least 55 gp Dragonhide Buckler (High-Grade) Source Player Core 2 pg. 277, Core Rulebook pg. 586 Price 8,000 gp Bulk L Craft Requirements dragonhide worth at least 4,000 gp Dragonhide Shield (High-Grade) Source Player Core 2 pg. 277, Core Rulebook pg. 586 Price 8,800 gp Bulk 1 Craft Requirements dragonhide worth at least 4,400 gp"
+ },
+ {
+  "id": "dragons-eye-charm",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Dragon's Eye Charm",
+  "level": 7,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "This charm, a dragon-shaped pendant worn like a necklace or set into armor or clothing as a decoration, is warm and smooth to the touch. It must be held in one hand to be used (pressing the palm of one's hand to the charm also works, provided that your hand is otherwise empty). It has four distinct powers. --- **Activate** ⟨1⟩ Interact **Frequency** once per day --- **Effect** The *dragon's eye charm* manifests fire for you to wield against your foe. You cast a 5th-rank Ignition spell with a spell attack roll of +13. --- **Activate** ⟨1⟩ Interact **Frequency** once per day --- **Effect** The charm's pupil becomes plainly visible. You can look through the charm to gain Darkvision for as long as you Sustain the Activation, to a maximum of 10 minutes. --- **Activate** ⟨1⟩ Interact **Frequency** once per day --- **Effect** The *dragon's eye charm* shrouds you in a faintly glowing layer of golden energy. You gain fire resistance 5 for 10 minutes. --- **Activate** ⟨1⟩ Interact **Frequency** once per day --- **Effect** You can speak and understand Draconic as long as you Sustain the Activation, to a maximum of 10 minutes."
+ },
+ {
+  "id": "dragonscale-bo-staff",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Dragonscale Bo Staff",
+  "level": 6,
+  "traits": [
+   "monk",
+   "parry",
+   "reach",
+   "trip"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This *+1 striking bo staff* is covered in scales shed by or harvested from a dragon. When benefiting from the circumstance bonus to AC granted by the bo staff's parry trait, you also gain a +1 circumstance bonus to saving throws against magical effects of the tradition matching the dragon who provided the scales, plus resistance 5 to a damage type determined by that tradition: force for arcane, spirit for divine, mental for occult, or fire for primal. For instance, a *dragonscale bo staff* made with scales taken from an omen dragon would provide a +1 circumstance bonus to saves against occult effects and resistance 5 to mental damage. --- **Craft Requirements** The initial raw materials must include scales from one type of dragon."
+ },
+ {
+  "id": "dragonscale-staff",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Dragonscale Staff",
+  "level": 6,
+  "traits": [
+   "monk",
+   "parry",
+   "reach",
+   "trip"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This *+1 striking bo staff* is covered in scales shed by or harvested from a dragon. When benefiting from the circumstance bonus to AC granted by the bo staff's parry trait, you also gain resistance 5 to acid, cold, electricity, fire, or poison, according to the type of damage dealt by the breath weapon of the dragon that provided the scales; for instance, a staff made with scales taken from a white dragon would provide cold resistance. When this resistance prevents you from taking damage, the *dragonscale staff* deals an additional 1 damage of the type matching its resistance for 1 round. --- **Craft Requirements** The initial raw materials must include scales from a dragon with a breath weapon that deals acid, cold, electricity, fire, or poison damage."
+ },
+ {
+  "id": "drazmorgs-staff-of-all-sight",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Drazmorg's Staff of All-Sight",
+  "level": 10,
+  "traits": [
+   "magical",
+   "staff",
+   "two-hand-d8"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This long, gnarled staff looks like several bones fused together, then wrapped tightly with strips of desiccated, gray skin. At the top of the staff, a clump of sinew clasps a small stone orb resembling a large human eye. When the staff is activated, this eye twitches and glances around randomly. When wielding this staff, you gain a +1 item bonus to visual Perception checks. **Activate** Cast a Spell **Effect** You expend a number of charges from the staff to cast a spell from its list. - **Cantrip** Read Aura - **1st** Sure Strike - **2nd** Darkvision, Floating Flame (creates what appears to be a large eye made of fire), See the Unseen - **3rd** Organsight, Web of Eyes - **4th** , Countless Eyes, Detect Scrying --- **Craft Requirements** Supply one casting of all listed levels of all listed spells."
+ },
+ {
+  "id": "dream-pollen-snare",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Dream Pollen Snare",
+  "level": 3,
+  "traits": [
+   "consumable",
+   "incapacitation",
+   "mechanical",
+   "mental",
+   "snare",
+   "trap"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This simple trap is made of taut twigs that, when triggered, snap down on a pollen-filled sac of a peculiar flower. When inhaled, the pollen imparts a hazy state of profound agreeability. The first creature that enters the snare's space triggers the snare. The creature that triggered the trap must attempt a save. Undead creatures and creatures that don't breathe are immune to dream pollen. --- **Critical Success** The creature is unaffected. **Success** The creature is Stupefied 1 for 1 round. **Failure** The creature is stupefied 1 for 1 round. For 1 minute, the creature becomes friendly to all creatures to which it was indifferent, or helpful to all creatures to which it was friendly. If the creature was unfriendly or hostile to any creatures, it remains unfriendly or hostile to them. If the creature is an animal, any creature to which it's friendly or helpful can use Diplomacy to Make an Impression on it and to make very simple Requests of it. **Critical Failure** As failure, but the duration of the agreeability is 1 hour instead of 1 minute."
+ },
+ {
+  "id": "drowning-mist",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Drowning Mist",
+  "level": 12,
+  "traits": [
+   "impulse",
+   "kineticist",
+   "primal",
+   "stance",
+   "water"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [
+   "core.stances"
+  ],
+  "text": "Though not unique to Chelaxian kineticists, this sarglagoninspired technique floods enemies' lungs. Your elemental gate exudes a faint mist that feels as thick as standing water. The moisture doesn't just tug at limbs; it forcibly seeps into the nostrils and lungs of air-breathing creatures. While in this stance, your aura is difficult terrain for any creature that doesn't have a swim Speed. Creatures that can't breathe water must hold their breath while in the aura, and when such creatures take an action that reduces their remaining air by 1 or more rounds, they must also attempt a save against your class DC (maximum once per round). You're immune to the effects of your own Drowning Mist. --- **Critical Success** The creature is unaffected and becomes temporarily immune to the effects of this impulse for 24 hours. **Success** The creature is unaffected. **Failure** Moisture seeps into the creature's lungs, making the creature Sickened 1. **Critical Failure** As failure, but Sickened 2."
+ },
+ {
+  "id": "drowsy-sun-eye-drops",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Drowsy Sun Eye Drops",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** Seek --- These drops are made from luminescent mushrooms and refined into eye drops, which simulates a creature's natural night vision. When you attempt a Perception check to Seek, you can draw and apply a dose of drowsy sun to your eyes as part of the same action, which grants you darkvision to a range of 30 feet for 1 round. If you do, your Seek action gains the manipulate trait, due to drawing and applying the eye drops."
+ },
+ {
+  "id": "durian-bomb",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Durian Bomb",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "plant",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Durian Bomb May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 77 Usage held in 1 hand Bulk L Activate Strike Whereas a durian’s aroma ranges from pleasant to revolting depending on the person, a durian bomb is a fruit that’s been alchemically modified for maximum revulsion. Many types of this bomb grant an item bonus to attack rolls. On a successful Strike, a durian bomb deals the listed piercing damage to the target. Any creature hit by the bomb or in its splash area must attempt a Fortitude saving throw with a DC based on the bomb’s type. Creatures in the splash area treat the results of their saving throw as one step better. Creatures sickened by a durian bomb are unable to smell anything else while the sickened condition lasts, suppressing any scent special sense they might have. Once a creature is sickened by a durian bomb, they’re immune to the sickened condition caused by other durian bombs for 1 minute. Critical Success The target is unaffected. Success The creature is sickened 1. Failure The creature is dazzled for 1 round and sickened 1. Critical Failure The creature is dazzled for 1 round and sickened 2. Lesser Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 4 gp The bomb deals 1d4 piercing damage, and the DC is 15. Moderate Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 12 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d4 points of piercing damage, and the DC is 17. Greater Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 275 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d4 points of piercing damage, and the DC is 28. Major Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 2,750 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d4 points of piercing damage, and the DC is 37."
+ },
+ {
+  "id": "durian-bomb-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Durian Bomb (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "plant",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Whereas a durian's aroma ranges from pleasant to revolting depending on the person, a durian bomb is a fruit that's been alchemically modified for maximum revulsion. You gain a +2 item bonus to attack rolls. On a successful Strike, a durian bomb deals the 3d4 piercing damage to the target. Any creature hit by the bomb or in its splash area must attempt a saving throw. Creatures in the splash area treat the results of their saving throw as one step better. Creatures sickened by a durian bomb are unable to smell anything else while the sickened condition lasts, suppressing any scent special sense they might have. Once a creature is sickened by a durian bomb, they're immune to the sickened condition caused by other durian bombs for 1 minute. --- **Critical Success** The target is unaffected. **Success** The creature is Sickened 1. **Failure** The creature is dazzled for 1 round and sickened 1. **Critical Failure** The creature is dazzled for 1 round and Sickened 2."
+ },
+ {
+  "id": "durian-bomb-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Durian Bomb (Lesser)",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "plant",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Whereas a durian's aroma ranges from pleasant to revolting depending on the person, a durian bomb is a fruit that's been alchemically modified for maximum revulsion. On a successful Strike, a durian bomb deals the 1d4 piercing damage to the target. Any creature hit by the bomb or in its splash area must attempt a saving throw. Creatures in the splash area treat the results of their saving throw as one step better. Creatures sickened by a durian bomb are unable to smell anything else while the sickened condition lasts, suppressing any scent special sense they might have. Once a creature is sickened by a durian bomb, they're immune to the sickened condition caused by other durian bombs for 1 minute. --- **Critical Success** The target is unaffected. **Success** The creature is Sickened 1. **Failure** The creature is dazzled for 1 round and sickened 1. **Critical Failure** The creature is dazzled for 1 round and Sickened 2."
+ },
+ {
+  "id": "durian-bomb-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Durian Bomb (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "plant",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Whereas a durian's aroma ranges from pleasant to revolting depending on the person, a durian bomb is a fruit that's been alchemically modified for maximum revulsion. You gain a +3 item bonus to attack rolls. On a successful Strike, a durian bomb deals the 4d4 piercing damage to the target. Any creature hit by the bomb or in its splash area must attempt a saving throw. Creatures in the splash area treat the results of their saving throw as one step better. Creatures sickened by a durian bomb are unable to smell anything else while the sickened condition lasts, suppressing any scent special sense they might have. Once a creature is sickened by a durian bomb, they're immune to the sickened condition caused by other durian bombs for 1 minute. --- **Critical Success** The target is unaffected. **Success** The creature is Sickened 1. **Failure** The creature is dazzled for 1 round and sickened 1. **Critical Failure** The creature is dazzled for 1 round and Sickened 2."
+ },
+ {
+  "id": "durian-bomb-moderate",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Durian Bomb (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "plant",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Whereas a durian's aroma ranges from pleasant to revolting depending on the person, a durian bomb is a fruit that's been alchemically modified for maximum revulsion. You gain a +1 item bonus to attack rolls. On a successful Strike, a durian bomb deals the 2d4 piercing damage to the target. Any creature hit by the bomb or in its splash area must attempt a saving throw. Creatures in the splash area treat the results of their saving throw as one step better. Creatures sickened by a durian bomb are unable to smell anything else while the sickened condition lasts, suppressing any scent special sense they might have. Once a creature is sickened by a durian bomb, they're immune to the sickened condition caused by other durian bombs for 1 minute. --- **Critical Success** The target is unaffected. **Success** The creature is Sickened 1. **Failure** The creature is dazzled for 1 round and sickened 1. **Critical Failure** The creature is dazzled for 1 round and Sickened 2."
+ },
+ {
+  "id": "duty-of-the-oathsworn",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Duty of the Oathsworn",
+  "level": 9,
+  "traits": [
+   "contract",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "The oath that ties you to your bound dragon transcends the boundaries of life and death. When the pact is made, the dragon chooses one type of creature other than humanoid. (The GM selects the appropriate trait.) You gain resistance equal to half your level to physical and mental damage from these creatures. You also gain the Draconic Precision action. If you die from damage delivered by a creature of this type, you rise as an undead creature of the dragon's choice. This undead's level can be no higher than your level or your bound dragon's, whichever is lower. This undead creature has your mind; if it's normally mindless, it loses that trait and any immunity to mental. **Draconic Precision** ⟨1⟩ (concentrate) **Frequency** once per day --- **Effect** Your Strikes against the chosen type of enemy deal an additional 1d6 precision damage for 1 minute. This damage increases to 2d6 if you're 17th level or higher. --- **Oathbreaker's Calamity** Should either party break the oath, both you and the dragon are forever forsworn from comradery. Creatures can't treat either of you as an ally while in combat."
+ },
+ {
+  "id": "ears-of-the-forest",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Ears of the Forest",
+  "level": 8,
+  "traits": [
+   "bard"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Beyond relying on your own senses, you keep an ear open for nearby creatures for help in exploring your surroundings. When you Seek, if there are any willing animals in the selected area, you can borrow their senses. Doing so lets you Seek with scent and tremorsense as imprecise senses, along with any other senses appropriate to the animals in the area, at the GM's discretion."
+ },
+ {
+  "id": "echoes-in-stone",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Echoes in Stone",
+  "level": 9,
+  "traits": [
+   "concentrate",
+   "dwarf"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are standing on a stone or earthen surface. --- You pause a moment to attune your senses to the stone around you. Until the start of your next turn, you gain imprecise tremorsense with a range of 20 feet."
+ },
+ {
+  "id": "eclipse",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Eclipse",
+  "level": 8,
+  "traits": [
+   "agile",
+   "deadly-d6",
+   "finesse",
+   "light",
+   "magical",
+   "thrown-20",
+   "versatile-s"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This +1 Returning striking cold iron starknife has an ornate central grip that depicts a silver dragon, the neck, wings, and tail of which wrap over and around the handle in knots to support the weapon's four cold iron blades. While the handle is polished to a mirrorlike shine, the blades of Eclipse are a flat black and entirely unreflective. Eclipse is also the portal key required to activate Dreamgate at Alseta's Ring. Whenever you score a critical hit with Eclipse, the target creature's eyes are plunged into darkness; if that creature doesn't have darkvision, it is blinded for 1 round. --- **Activate** ⟨1⟩ command **Frequency** once per day --- **Effect** *Eclipse's* blades glow like starlit night sky, causing it to shed light as a torch until you deactivate it as a single action, which has the concentrate trait. --- **Activate** ⟨5⟩ envision **Frequency** three times per day **Trigger** You attempt a Stealth check to Hide or Sneak, but you haven't rolled yet --- **Effect** You absorb light, gaining a +2 status bonus to the Stealth check."
+ },
+ {
+  "id": "edict-of-mortality",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Edict of Mortality",
+  "level": 8,
+  "traits": [
+   "archetype",
+   "auditory",
+   "linguistic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You recite an excerpt of the Laws of Mortality, often the first law: \"Let no mortal be beholden to a god.\" Attempt an Intimidation check against all enemies within 60 feet that worship a deity, comparing your result against each target's Will DC. Targets are then temporarily immune to your use of this ability for 24 hours. --- **Critical Success** The target becomes Frightened 2. Until the start of your next turn, if the target attempts to Cast a Spell with the divine trait, it must succeed at a or the action is lost. **Success** As critical success, but Frightened 1, and the DC of the flat check is 5."
+ },
+ {
+  "id": "elder-seed",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Elder Seed",
+  "level": 11,
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "heldSpells",
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- An enormous, perfect, ripe seed from a tree important to a region's druids, an *elder seed* exudes vitality. Plant life grows quickly and abundantly around it. Anyone who touches the seed understands the nature of its power. Swallowing it whole imparts its effects, but succeeding at the save against the boon causes the swallower to regurgitate the seed. --- **Stage 1 (9 Days)** Your skin hardens, giving you a brownish-green tinge. You gain resistance to bludgeoning damage and piercing damage equal to your level, and you have tremorsense out to a range of 30 feet. Also, you can cast Enlarge, Speak with Animals, Speak with Plants, and Web each once per day as primal innate spells. The web is a dense mycelial net rather than spider silk. --- **Stage 2 (1 Month)** You gain low-light vision and fluency in Arboreal. However, your body feels stiffer, your mind slower to move to intense emotions, and you are prone to take your time making decisions. You become Clumsy 1, take a –1 status penalty to initiative rolls, and gain a weakness to fire damage equal to half your level, and you take the same amount of additional damage from axes. If you die at this stage or higher, your body sinks into the earth, forming rich soil. Over several days, a mature, full-sized tree of the seed's type grows where you fell. If plant growth is impossible, such as due to lack of sunlight, fungi grow there instead, extending mycelia through the earth until they reach a place the tree can grow. Then, the tree grows. An arboreal can tend this tree to cause it to regrow one elder seed after 3 years and 3 days. --- **Stage 3 (1 Month)** You become more treelike and ponderous in body and mind, and when you cast the enlarge innate spell from this boon, you can cast it at 4th rank. The clumsy value increases to 2 and the status penalty increases to –2. Whenever you roll initiative, you become Slowed 1 automatically, Slowed 2 if the d20 roll is 10 or lower, or Slowed 3 if the d20 shows a 1. Your weakness to fire and vulnerability to axes equals your level. --- **Stage 4** You die. --- **Purging** You must seek out an arboreal, druid, or nature-loving fey that is your level or higher whom you have never met, and pledge your allegiance to that being. Doing so places you under a Geas to accomplish at least one meaningful service, usually a quest, for your new liege. While under the geas, you can't advance to stage 4. Once you complete your service, you regurgitate the elder seed, and its effects on you end."
+ },
+ {
+  "id": "elemental-bulwark",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Elemental Bulwark",
+  "level": 5,
+  "traits": [
+   "suli"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** An enemy is about to damage you with cold, electricity, or fire, or with a spell that has the air, earth, fire, or water trait. --- You call upon the corresponding elements of your suli heritage to resist the effect. You gain resistance 5 against the triggering damage."
+ },
+ {
+  "id": "elemental-eidolon",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Elemental Eidolon",
+  "level": 1,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Your eidolon is a primal chunk of elemental matter infused with sapience, power, and identity, but unable to manifest a true form of their own without the life force you provide via your connection. Most elementals in their natural environment already have different sorts of forms, from vaguely humanoid, to animalistic, to simple masses of their component element. As your life force provides your eidolon the instincts necessary to adopt a physical form, their appearance varies based on the strength of their own self image and your prior exposure to elementals. Elemental eidolons tend to reach their unusual state—powerful but formless—as the result of large scale events or cataclysms, such as the war to seal the benevolent Elemental Lords or their recent unsealing. Whether elemental eidolons possess any memories of a previous life or are a new sapience formed from left-over essence of a mighty servant of the Elemental Lords brought low varies from eidolon to eidolon. Together, you might undertake a journey to understand your eidolon's mysterious past or leave the past behind and forge a new destiny of your own. **Tradition** primal **Traits** eidolon, elemental, and one more (see Elemental Core, below) **Home Plane**: elemental plane matching their Elemental Core --- **Size** Medium **Suggested Attacks** branch (bludgeoning), fist (bludgeoning), spike (piercing), tendril (bludgeoning), wave (bludgeoning) **Adaptable Elemental** Str +1, Dex +4, Con +3, Int +0, Wis +1, Cha +0; +1 AC (+4 Dex cap) **Primordial Elemental** Str +4, Dex +2, Con +3, Int –1, Wis +1, Cha +0; +2 AC (+3 Dex cap) **Skills** Nature, Survival **Senses** darkvision **Language** s Sussuran (air elemental), Petran (earth elemental), Pyric (fire elemental), Talican (metal elemental), Thalassic (water elemental), or Muan (wood elemental), **Speed** 25 feet --- **Eidolon Abilities** *Initial *elemental core*; Symbiosis *elemental burst*; Transcendence *elemental maelstrom ## Elemental Core Your elemental eidolon is an amalgam of elemental matter and mortal life force, which helps protect them from certain effects that are more harmful to mortals than elementals. They gain a +2 circumstance bonus to saving throws against poison and sleep effects, as well as effects causing the paralyzed condition. Additionally, their elemental essence bleeds less easily than flesh, so the DC of any flat check they make to remove persistent bleed damage is 10 (or 5 after receiving particularly effective aid). Choose for your eidolon to be an air, earth, fire, metal, wood, or water elemental. Your eidolon and all their unarmed attacks gain the trait of the chosen element, and the eidolon gains additional effects based on your choice. **Air:** Your eidolon is formed from elemental air and is light as a breeze. Your eidolon can Leap, High Jump, and Long Jump twice as far, and doesn't take falling damage. **Earth:** Your eidolon is formed from elemental earth, and is incredibly hard to move by force. Your eidolon gains a +2 circumstance bonus to their Fortitude or Reflex DCs against attempts to Shove or Trip them. This bonus also applies to saving throws against spells or effects that attempt to knock t"
+ },
+ {
+  "id": "elemental-shape",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Elemental Shape",
+  "level": 10,
+  "traits": [
+   "druid"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You understand the fundamental elements of nature such that you can imbue them into your body and manifest as a living embodiment of those elements. Add the shapes in Elemental Form to your Untamed Form list. Whenever you're polymorphed into another shape using *untamed form*, you gain resistance 5 to fire."
+ }
+]

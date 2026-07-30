@@ -1936,6 +1936,35 @@ body {
   border-color: var(--app-accent);
   color: var(--app-accent);
 }
+/* The name is a button so the mode's text is reachable by tap, not only by hover. */
+.mode-pill-name {
+  background: transparent;
+  border: none;
+  color: inherit;
+  font: inherit;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.mode-pill-name:hover { text-decoration: underline; }
+.mode-pill-dur {
+  opacity: 0.7;
+  font-size: 10px;
+}
+.mode-info-dur {
+  color: var(--app-muted);
+  font-size: 12px;
+  margin: 0 0 6px;
+}
+.mode-info-mods {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+.mode-info-when { color: var(--app-muted); }
 .cond-pill-step {
   display: inline-flex;
   align-items: center;
@@ -3722,6 +3751,67 @@ button.strike-name:hover {
   text-decoration: underline dotted var(--app-accent);
   text-underline-offset: 2px;
 }
+/* A live mode is MOVING this number right now — a solid accent underline, distinct from the dotted
+   "there's a footnote" one above, so you can look at the sheet and see what a mode is responsible
+   for. A stat can carry both marks at once (a mode with a conditional and an unconditional modifier). */
+.stat-row.mode-lit .stat-name,
+.skill.mode-lit .skill-name,
+.tile.mode-lit .tlab {
+  text-decoration: underline solid var(--app-accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+}
+/* Ruling G: a bonus that belongs to the SPELL, marked on the spell's own card. */
+.spell-mark {
+  display: inline-flex;
+  align-items: center;
+  cursor: help;
+  margin-left: 3px;
+}
+/* Ruling ★: a companion's own gear, on the companion's block and nowhere else. */
+.cmp-sit {
+  margin-top: 8px;
+}
+/* ---- ruling D: marks on an ACTION row and on a CONDITION pill ---- */
+/* The changed value shown inline on the action ("(d10)"), with the * that names its source. */
+.action-mark {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+  margin-left: 5px;
+  cursor: help;
+}
+.action-mark-val {
+  color: var(--app-accent);
+  font-weight: 600;
+  font-size: 0.9em;
+}
+.cond-mark {
+  background: transparent;
+  border: none;
+  padding: 0 0 0 2px;
+  cursor: pointer;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+}
+/* A situational note that moves the DC rather than the roll — set apart so it can't be misread as a
+   bonus to your own save. */
+.sd-situational .sd-sit-dc { color: var(--app-text-dim); }
+/* Ruling H: the note is capped at one line, and this opens the record's full printed text. */
+.sd-sit-more {
+  margin-left: 6px;
+  padding: 0 6px;
+  font-size: 10.5px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--app-accent);
+  background: transparent;
+  border: var(--app-bw) solid color-mix(in srgb, var(--app-accent) 40%, transparent);
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.sd-sit-more:hover { background: color-mix(in srgb, var(--app-accent) 15%, transparent); }
 .sit-star {
   color: var(--app-accent);
   font-weight: 700;
@@ -5063,6 +5153,23 @@ button.strike-name:hover {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+}
+/* "Use one" on a consumable — an action, so it reads as accent rather than a plain stepper. */
+.sd-use-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--app-accent);
+  background: color-mix(in srgb, var(--app-accent) 10%, transparent);
+  border: var(--app-bw) solid color-mix(in srgb, var(--app-accent) 45%, transparent);
+  border-radius: var(--app-radius-sm);
+}
+.sd-use-btn:hover {
+  background: color-mix(in srgb, var(--app-accent) 20%, transparent);
 }
 /* Rules an advancement grants that the engine can't model (barding, resistances, precision damage). */
 .cmp-note-warn {
@@ -7674,6 +7781,122 @@ button.strike-name:hover {
   flex-direction: column;
   gap: 10px;
 }
+/* ---- Advanced effects: player-authored conditional + always-on item bonuses ---- */
+.ie-adv-intro {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--app-text-dim);
+}
+.ie-adv-sec {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ie-adv-sec-h {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--app-text-dim);
+  border-top: var(--app-bw) solid var(--app-border);
+  padding-top: 10px;
+}
+.ie-adv-none {
+  margin: 0;
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: var(--app-muted);
+}
+.ie-adv-addbtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--app-accent);
+  background: color-mix(in srgb, var(--app-accent) 10%, transparent);
+  border: var(--app-bw) solid color-mix(in srgb, var(--app-accent) 40%, transparent);
+  border-radius: var(--app-radius-sm);
+}
+.ie-adv-addbtn:hover { background: color-mix(in srgb, var(--app-accent) 20%, transparent); }
+/* One authored effect. Boxed so several of them stay visually separable — each is a self-contained
+   "these stats, in this situation, get this". */
+.ie-adv-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface-2);
+}
+.ie-adv-targets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-items: center;
+  min-height: 22px;
+}
+.ie-adv-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  padding: 2px 5px 2px 9px;
+  border-radius: 999px;
+  border: var(--app-bw) solid var(--app-accent);
+  color: var(--app-accent);
+}
+.ie-adv-chip button,
+.ie-adv-skillrow button {
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 0;
+  font-size: 12px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+}
+.ie-adv-empty {
+  font-size: 11px;
+  color: var(--app-warn);
+}
+.ie-adv-add,
+.ie-adv-skillrow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.ie-adv-add select,
+.ie-adv-add input,
+.ie-adv-skillrow select,
+.ie-adv-skillrow input {
+  font-size: 12px;
+  padding: 4px 7px;
+}
+.ie-adv-skillrow input { width: 72px; }
+.ie-adv-del {
+  align-self: flex-start;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 11.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--app-muted);
+}
+.ie-adv-del:hover { color: var(--app-danger, #e5484d); }
+
 /* Standalone Reset action at the foot of the editor — left-aligned, set off from the sections above. */
 .ie-reset-row {
   display: flex;

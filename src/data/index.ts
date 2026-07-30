@@ -95,6 +95,87 @@ export function findDuplicateIds(db: ContentDatabase): Set<string> {
   return dupes;
 }
 
+/**
+ * Ids of item records that are an AoN SUMMARY of a family rather than a thing you can own.
+ *
+ * Archives of Nethys heads each graded family with a summary row — "Bestial Mutagen" above
+ * "(Lesser)", "(Moderate)", "(Greater)" — and the scrape imports it like any other item. The owner's
+ * ruling: "the summary of all of the items shouldn't be an option for the characters, it's not a
+ * real item so they shouldn't even see that, they should only see the options they can have."
+ *
+ * Three conditions, all required:
+ *   • NO PRICE. The summary carries none; every grade carries its own.
+ *   • TWO OR MORE KIN — ids that extend this one. A single twin can be a genuine base item plus one
+ *     upgrade; two or more is a family with a summary at its head.
+ *   • NO MECHANICAL FIELD. The guard that spares anything the app actually resolves. Energy Robe is
+ *     unpriced with four kin and would have been hidden, but it carries `effectChoices` — it IS the
+ *     ownable item and its kin are AoN's row per choice. `staff` and `sling` are spared by `damage`.
+ *
+ * Hidden, not deleted, exactly like the duplicate scrapes above: a character who added one while it
+ * was visible keeps resolving it.
+ */
+const UMBRELLA_MECHANICAL_FIELDS = [
+  'passiveEffects', 'effectChoices', 'situational', 'uses', 'spell', 'runes',
+  'damage', 'acBonus', 'capacity', 'value', 'heldSpells', 'dynamicSkillBonus', 'spellSlotBonus',
+] as const;
+
+/** Summary rows no rule can reach: no price and no kin either, so only the id identifies them. */
+const UMBRELLA_EXTRA_IDS = [
+  'aon-magical-medals', // AoN's category page for medals; the medals themselves are unrelated ids
+];
+
+/**
+ * Records the rule catches but must NOT hide, found by auditing all 438 candidates against the
+ * pristine AoN mirror. AoN titles a family head "Item N+" and a standalone "Item N"; 436 of the 438
+ * carry the `+`, and these four are where the price-and-kin rule and AoN's own marker disagree.
+ *
+ * The first three are unpriced in our import but priced on AoN, and the app's variants do NOT cover
+ * the base — hiding them would delete the base item from the game with nothing left to buy.
+ */
+const UMBRELLA_KEEP_IDS = new Set([
+  // AoN: Item 10, 975 gp. The app has only (Greater) and (Major), so this IS the base spellheart.
+  'judgement-thurible',
+  // AoN: Item 4, 100 gp, with its own spell list. The app has only (Greater) and (Major).
+  'spore-shepherds-staff',
+  // AoN: "Item 2" with no `+` — one complete record. Priceless because the Razmiran Priest archetype
+  // grants it, not because it is a summary; the Gold/Silver/Porcelain kin are the higher-level masks
+  // and there is no iron variant, so this record is the only iron mask there is.
+  'razmiri-mask',
+  // Not an item and not a summary: AoN relic-86, a Relic Minor Gift mis-imported into `items`. Its
+  // kin are *Inspiring Spotlight*, a pure name-prefix collision.
+  'inspiring',
+]);
+
+export function findUmbrellaIds(items: Record<string, unknown> | undefined): Set<string> {
+  const out = new Set<string>();
+  if (!items) return out;
+  const ids = Object.keys(items);
+  const rec = items as Record<string, Record<string, unknown>>;
+  const priced = (it: Record<string, unknown>) => {
+    const p = it.price as Record<string, number> | undefined;
+    return !!p && Object.values(p).some(Boolean);
+  };
+  const mechanical = (it: Record<string, unknown>) =>
+    UMBRELLA_MECHANICAL_FIELDS.some((k) => {
+      const v = it[k];
+      return v != null && (!Array.isArray(v) || v.length > 0);
+    });
+
+  // Sorted once so the kin scan is a bounded walk forward rather than a full pass per id — this runs
+  // over ~7,500 items at every content load.
+  const sorted = [...ids].sort();
+  for (let i = 0; i < sorted.length; i++) {
+    const id = sorted[i];
+    const it = rec[id];
+    if (!it || priced(it) || mechanical(it) || UMBRELLA_KEEP_IDS.has(id)) continue;
+    let kin = 0;
+    for (let j = i + 1; j < sorted.length && sorted[j].startsWith(id + '-'); j++) kin++;
+    if (kin >= 2) out.add(id);
+  }
+  for (const id of UMBRELLA_EXTRA_IDS) if (rec[id]) out.add(id);
+  return out;
+}
+
 /** True if `id` is a duplicate scrape that should be omitted from user-facing lists. */
 export function isDuplicateId(content: ContentDatabase, id: string): boolean {
   return !!content.duplicateIds?.has(id);
@@ -105,9 +186,12 @@ export function isDuplicateId(content: ContentDatabase, id: string): boolean {
  *  character that already references a duplicate still resolves it. */
 export function listValues<T>(content: ContentDatabase, map: Record<string, T>): T[] {
   const dupes = content.duplicateIds;
-  if (!dupes?.size) return Object.values(map);
+  // Umbrella summaries hide through the same chokepoint as duplicate scrapes — both are records the
+  // player should never be offered, and both stay resolvable by direct id lookup.
+  const umbrellas = map === (content.items as unknown as Record<string, T>) ? content.umbrellaIds : undefined;
+  if (!dupes?.size && !umbrellas?.size) return Object.values(map);
   const out: T[] = [];
-  for (const id in map) if (!dupes.has(id)) out.push(map[id]);
+  for (const id in map) if (!dupes?.has(id) && !umbrellas?.has(id)) out.push(map[id]);
   return out;
 }
 
@@ -147,8 +231,10 @@ function mergeWithSeed(core: Partial<ContentDatabase>): ContentDatabase {
     siegeWeapons: merge(seedContent.siegeWeapons ?? {}, c.siegeWeapons ?? {}),
     conditions: merge(seedContent.conditions, c.conditions ?? {}),
     actions: merge(merge(seedContent.actions, c.actions ?? {}), hb.actions),
-    // Built-in mode catalog, then the user's saved modes on top.
-    modes: merge(CATALOG_MODE_MAP, loadModes()),
+    // Built-in mode catalog, then core's item modes (one per consumable that changes you for a
+    // stated span of time — hidden from the Modes panel, reached only by Using the item), then the
+    // user's saved modes on top.
+    modes: merge(merge(CATALOG_MODE_MAP, c.modes ?? {}), loadModes()),
     stances: merge(seedContent.stances ?? {}, c.stances ?? {}),
     runes: c.runes ?? {},
   };
@@ -162,6 +248,7 @@ function mergeWithSeed(core: Partial<ContentDatabase>): ContentDatabase {
   // Computed last, so it sees seed + core + homebrew (homebrew never uses the `aon-` prefix, but a
   // homebrew entry CAN be the canonical twin that unmasks a duplicate).
   db.duplicateIds = findDuplicateIds(db);
+  db.umbrellaIds = findUmbrellaIds(db.items as unknown as Record<string, unknown>);
   return db;
 }
 

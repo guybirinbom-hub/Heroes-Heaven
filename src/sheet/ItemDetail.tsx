@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { ContentDatabase, InventoryItem, Item } from '../rules/types';
-import { removeInventoryItem, setItemCounter, setItemQuantity, updateInventoryItem, type PlayUpdater } from '../rules/play';
+import { removeInventoryItem, setItemCounter, setItemQuantity, updateInventoryItem, useConsumable, type PlayUpdater } from '../rules/play';
 import { containerOptionsFor } from '../rules/derive';
 import { formatPrice } from '../rules/wealth';
 import { useEscapeClose } from './useEscapeClose';
@@ -311,6 +311,20 @@ export function ItemDetail({
                 </span>
               ))}
               {counters.some((u) => u.resetsOnRest) && <span className="sd-uses-hint">Refills on daily preparations.</span>}
+            </div>
+          )}
+          {/* Consuming one: quantity -1, and the item goes away entirely when that was the last of
+              them. If the item carries a mode (an elixir that runs for a few minutes) this is what
+              switches it on — item modes are hidden from the Modes panel, so using it is the only way. */}
+          {onPlay && item.itemType === 'consumable' && (
+            <div className="sd-uses">
+              <span className="sd-uses-title">Use</span>
+              <span className="sd-uses-row">
+                <button className="sd-use-btn" onClick={() => onPlay((p) => useConsumable(p, id, content.modes), `use:${id}`)}>
+                  <i className="ti ti-flask" aria-hidden="true" /> Use one
+                </button>
+                {inv.quantity <= 1 && <span className="sd-uses-hint">This is your last one — using it removes the item.</span>}
+              </span>
             </div>
           )}
           {onPlay && (

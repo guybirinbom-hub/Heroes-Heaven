@@ -1,0 +1,1253 @@
+[
+ {
+  "id": "grisantian-pelt-armor",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Grisantian Pelt Armor",
+  "level": 12,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Grisantian Pelt Armor Source Monsters of Myth pg. 35 Usage worn armor Bulk varies by armor Base Material Grisantian Pelt Grisantian pelt armor is immune to fire damage, and its Hardness is doubled against piercing or slashing damage. Wearing armor made from grisantian pelt also grants you a +1 circumstance bonus to your AC and saving throws against attacks and spells that deal fire damage. Grisantian Pelt Armor (Standard-Grade) Source Monsters of Myth pg. 35 Price 1,800 gp (+180 gp per Bulk) Craft Requirements The initial raw materials must include grisantian pelt worth at least 900 gp + 90 gp per Bulk. Grisantian Pelt Armor (High-Grade) Source Monsters of Myth pg. 35 Price 33,000 gp (+3,300 gp per Bulk) Craft Requirements The initial raw materials must include grisantian pelt worth at least 16,500 gp + 1,650 gp per Bulk."
+ },
+ {
+  "id": "grisantian-pelt-armor-high-grade",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Grisantian Pelt Armor (High-Grade)",
+  "level": 19,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Grisantian Pelt Armor Source Monsters of Myth pg. 35 Usage worn armor Bulk varies by armor Base Material Grisantian Pelt Grisantian pelt armor is immune to fire damage, and its Hardness is doubled against piercing or slashing damage. Wearing armor made from grisantian pelt also grants you a +1 circumstance bonus to your AC and saving throws against attacks and spells that deal fire damage. Grisantian Pelt Armor (Standard-Grade) Source Monsters of Myth pg. 35 Price 1,800 gp (+180 gp per Bulk) Craft Requirements The initial raw materials must include grisantian pelt worth at least 900 gp + 90 gp per Bulk. Grisantian Pelt Armor (High-Grade) Source Monsters of Myth pg. 35 Price 33,000 gp (+3,300 gp per Bulk) Craft Requirements The initial raw materials must include grisantian pelt worth at least 16,500 gp + 1,650 gp per Bulk."
+ },
+ {
+  "id": "grisantian-pelt-armor-standard-grade",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Grisantian Pelt Armor (Standard-Grade)",
+  "level": 12,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Grisantian Pelt Armor Source Monsters of Myth pg. 35 Usage worn armor Bulk varies by armor Base Material Grisantian Pelt Grisantian pelt armor is immune to fire damage, and its Hardness is doubled against piercing or slashing damage. Wearing armor made from grisantian pelt also grants you a +1 circumstance bonus to your AC and saving throws against attacks and spells that deal fire damage. Grisantian Pelt Armor (Standard-Grade) Source Monsters of Myth pg. 35 Price 1,800 gp (+180 gp per Bulk) Craft Requirements The initial raw materials must include grisantian pelt worth at least 900 gp + 90 gp per Bulk. Grisantian Pelt Armor (High-Grade) Source Monsters of Myth pg. 35 Price 33,000 gp (+3,300 gp per Bulk) Craft Requirements The initial raw materials must include grisantian pelt worth at least 16,500 gp + 1,650 gp per Bulk."
+ },
+ {
+  "id": "grolna",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Grolna",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "drug",
+   "ingested",
+   "poison"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Activate** ⟨1⟩ Interact --- This caligni-made, murky-green drug supercharges a creature's olfactory senses at the expense of dulling their mind. Popular throughout the Darklands for its ability to transform normally dull scents and flavors into intense, euphoric experiences, grolna can also be a great aid to trackers who want to follow scent trails, turning ordinary humanoids into effective bloodhounds. Taking an additional dose of grolna while affected by the effects of stage 1 of a previous dose resets the duration of stage 1 and postpones the onset of stage 2 effects. --- **Saving Throw** **Onset** 1 minute **Maximum Duration** 8 hours **Stage 1** gain scent (imprecise) 30 feet, gain a +3 item bonus to Survival checks to follow tracks, and become Stupefied 1 (1 hour) **Stage 2** Stupefied 2 (6 hours)"
+ },
+ {
+  "id": "growing-eel-friend",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Growing Eel Friend",
+  "level": 5,
+  "traits": [
+   "athamaru"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your eel pet grows larger and stronger. Your eel pet's size changes to Small, and the eel gains the Scent and Tough pet abilities. However, it becomes too large to carry in a water-filled globe."
+ },
+ {
+  "id": "grudging-compliment",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Grudging Compliment",
+  "level": 7,
+  "traits": [
+   "archetype",
+   "linguistic",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** An enemy within 30 feet damages you or succeeds at a skill check. --- Every Firebrand can recognize the skill of others, but you've turned it into an art you can wield in combat. You compliment a foe's form or technique, and your unexpected praise distracts them from their surroundings. Attempt a Diplomacy check against that enemy's Will DC. Regardless of your result, they are temporarily immune to your Grudging Compliments for 10 minutes. --- **Critical Success** The target becomes off-guard for 1 round. **Success** The target becomes off-guard against your attacks for 1 round."
+ },
+ {
+  "id": "gruesome-strike",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Gruesome Strike",
+  "level": 12,
+  "traits": [
+   "champion"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** Your Strikes currently deal extra damage from your champion's reaction. --- Make a Strike against the creature that triggered your champion's reaction. If you hit, double the extra damage the target takes from your reaction, and the target must succeed at a save against your class DC or be Drained 1. Regardless of the result, the creature is temporarily immune to your Gruesome Strike for 24 hours."
+ },
+ {
+  "id": "guiding-star-orb-artifact",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Guiding Star Orb (Artifact)",
+  "level": 20,
+  "traits": [
+   "artifact",
+   "intelligent",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Guiding Star Orb (Artifact) May contain spoilers from Spore War Source Pathfinder #212: A Voice in the Blight pg. 73 Usage held in 1 hand Bulk L Perception +33; precise low-light vision and hearing within 30 feet Communication telepathy (partner only) Skills Arcana +35, Architecture Lore +35, Society +35 Int +7, Wis +5, Cha +6 Will +33 The stoic echo of Candlaron the Sculptor, architect of the aiudara network, infuses the Guiding Star Orb. As long as you have him invested, the Guiding Star Orb orbits your body instead of needing to be held in one hand. You can stow the Guiding Star Orb with an Interact action, and he can be snatched out of the air with a successful Disarm action against you. When stowed, the Guiding Star Orb remains invested, but if he’s removed from you via Disarm, your investment ends if you don’t reclaim him by the end of your next turn. The Guiding Star Orb’s voice is scholarly and precise, speaking telepathically with clearly enunciated but often complex words, and he assumes you’re educated enough to keep up with his academic dialogue. As long as you have the Guiding Star Orb invested, teleportation effects created by you or the Guiding Star Orb aren’t affected by the Witchbole’s meddling with teleportation effects, and they can’t be counteracted by the Witchbole. Activate—Blinding Spark (concentrate, incapacitation, light, visual) Effect The Guiding Star Orb creates a beam of bright light and fires it at a creature within 30 feet. That creature must attempt a DC 43 Fortitude save, after which that creature is temporarily immune to Blinding Spark for 24 hours. Critical Success The target is unaffected. Success The target is dazzled for 1 round. Failure The target is blinded for 1 round. Critical Failure The target is permanently blinded. Activate—Embed Location (concentrate) Effect By focusing, the Guiding Star Orb embeds your current location within. Thereafter, anyone who touches the Guiding Star Orb while casting a spell with the teleportation trait to travel to this location arrives precisely, without any inaccuracy at all. The Guiding Star Orb can have up to three locations embedded at a time; if this activity is used a fourth time, the new location replaces the oldest stored one. Activate—Momentary Aiudara (concentrate) Frequency once per day; Effect A shimmering magical archway appears next to you as the Guiding Star Orb casts a 9th-rank teleport to your specifications. If you’re teleporting to an aiudara you’ve visited before, you and the targets appear precisely at that location. If you’re teleporting to Lotusgate in Kyonin, this effect functions as interplanar teleport if you aren’t on the same plane as Kyonin. _Nethys Note: the non-artifact version of the item is here. This artifact's heroic legacy, and its subsequent skills and ability attribute, are presented here. _"
+ },
+ {
+  "id": "guiding-star-orb-heroic",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Guiding Star Orb (Heroic)",
+  "level": 20,
+  "traits": [
+   "apex",
+   "artifact",
+   "intelligent",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "**Perception** +33; precise low-light vision and hearing within 30 feet **Communication** telepathy (partner only) **Skills** Arcana +35, Architecture Lore +35, Society +35 **Int** +7, **Wis** +5, **Cha** +6 **Will** +33 --- The stoic echo of Candlaron the Sculptor, architect of the aiudara network, infuses the *Guiding Star Orb*. As long as you have him invested, the *Guiding Star Orb* orbits your body instead of needing to be held in one hand. You can stow the *Guiding Star Orb* with an Interact action, and he can be snatched out of the air with a successful Disarm action against you. When stowed, the *Guiding Star Orb* remains invested, but if he's removed from you via Disarm, your investment ends if you don't reclaim him by the end of your next turn. The *Guiding Star Orb's* voice is scholarly and precise, speaking telepathically with clearly enunciated but often complex words, and he assumes you're educated enough to keep up with his academic dialogue. As long as you have the *Guiding Star Orb* invested, teleportation effects created by you or the *Guiding Star Orb* aren't affected by the Witchbole's meddling with teleportation effects, and they can't be counteracted by the Witchbole. --- **Activate—Blinding Spark** ⟨2⟩ (concentrate, incapacitation, light, visual) **Effect** The *Guiding Star Orb* creates a beam of bright light and fires it at a creature within 30 feet. That creature must attempt a save, after which that creature is temporarily immune to Blinding Spark for 24 hours. **Critical Success** The target is unaffected. **Success** The target is dazzled for 1 round. **Failure** The target is blinded for 1 round. **Critical Failure** The target is permanently blinded. --- **Activate—Embed Location** ⟨2⟩ (concentrate) **Effect** By focusing, the *Guiding Star Orb* embeds your current location within. Thereafter, anyone who touches the *Guiding Star Orb* while casting a spell with the teleportation trait to travel to this location arrives precisely, without any inaccuracy at all. The *Guiding Star Orb* can have up to three locations embedded at a time; if this activity is used a fourth time, the new location replaces the oldest stored one. --- **Activate—Momentary Aiudara** 10 minutes (concentrate) **Frequency** once per day **Effect** A shimmering magical archway appears next to you as the *Guiding Star Orb* casts a 9th-rank Teleport to your specifications. If you're teleporting to an aiudara you've visited before, you and the targets appear precisely at that location. If you're teleporting to Lotusgate in Kyonin, this effect functions as Interplanar Teleport if you aren't on the same plane as Kyonin."
+ },
+ {
+  "id": "guiding-words",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Guiding Words",
+  "level": 18,
+  "traits": [
+   "archetype",
+   "auditory",
+   "concentrate",
+   "divine",
+   "fortune",
+   "linguistic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Frequency** once per 10 minutes --- Your words speak divine truth, guiding blades and arrows to their mark. Choose an ally within 30 feet and attempt a Diplomacy check. The DC is equal to the hard difficulty DC of the level of your ally. On a success, the first time the targeted ally makes an attack roll before the end of their next turn, they roll the attack twice and use the better result. Regardless of the result, the target becomes immune to Guiding Words for 10 minutes."
+ },
+ {
+  "id": "hamstringing-strike",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Hamstringing Strike",
+  "level": 8,
+  "traits": [
+   "ranger"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You slow your foes with a well-aimed attack. Make a Strike against your hunted prey with a –2 penalty. If you hit your prey, the creature takes a –5-foot status penalty to Speed. If you critically hit your prey, the creature takes a –10-foot status penalty to Speed. A creature immune to bleed damage does not take this penalty. The penalty can be removed using any method that removes persistent bleed damage or offers a flat check to do so, such as Administer First Aid."
+ },
+ {
+  "id": "hands-of-the-wildling",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Hands of the Wildling",
+  "level": 1,
+  "traits": [
+   "ikon"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Usage** a melee free-hand weapon or a melee unarmed Strike --- Tattooed fists, savage claws, or even powerful gauntlets—you swing each with the fury of an animal from the woods. **Immanence** Strikes with your hands of the wildling deal an additional 1 spirit splash damage per weapon damage die. You are immune to this splash damage. **Transcendence—**Feral Swing ⟨2⟩ (spirit, transcendence)"
+ },
+ {
+  "id": "harden-flesh",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Harden Flesh",
+  "level": 10,
+  "traits": [
+   "druid",
+   "earth"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're standing on earthen or stone ground. --- You fortify your skin with minerals drawn from earth and stone. You gain resistance 3 to physical damage, except adamantine, until the beginning of your next turn. At 12th level, and every 4 levels thereafter, the resistance increases by 1, to a maximum of resistance 6 at 20th level."
+ },
+ {
+  "id": "headshot",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Headshot",
+  "level": 14,
+  "traits": [
+   "concentrate",
+   "gunslinger"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're wielding a loaded firearm or crossbow. --- You attempt to finish your target with a final, well-placed shot. Make a crossbow or firearm Strike. If you've damaged the target within the last minute with the same weapon and you get a critical success on your attack roll, the target must succeed at a save against your class DC or die; this is a death and incapacitation effect. A creature that survives is temporarily immune for 1 day. Creatures with no head (such as dullahans or oozes) are immune to this ability, and creatures with redundant heads (such as ettins) might survive the destruction of a head."
+ },
+ {
+  "id": "healers-halo",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Healer's Halo",
+  "level": 5,
+  "traits": [
+   "nephilim"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** You or allies within 30 feet recover Hit Points while your Halo is active. --- Your halo can enhance positive energy. Creatures who have recovered Hit Points from a positive healing effect recover an additional 1d6 Hit Points. Creatures who benefit from this power become temporarily immune to its effect for the next 10 minutes."
+ },
+ {
+  "id": "heart-of-the-kaiju",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Heart of the Kaiju",
+  "level": 20,
+  "traits": [
+   "druid"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "Witnessing the might of the kaiju King Mogaru, Alru, and Toraloa up close awoke a new ferocity within you. When you transform using Monstrosity Shape, you can take on a kaiju form. When you take this feat, choose acid, cold, electricity, fire, or sonic damage; this is the damage your breath weapon deals. You can't change this later. The battle form is Gargantuan size with the following specific abilities; the damage values already include the extra die from being a 9th-rank spell. **Kaiju** Speed 40 feet; physical resistance 5; **Melee** ⟨1⟩ jaws (reach 20 feet), **Damage** 3d12+20 piercing; **Melee** ⟨1⟩ claws (agile, reach 20 feet), **Damage** 3d8+20 slashing; **Breath Weapon** ⟨2⟩ (evocation, primal) Each creature in a takes damage (of your chosen damage type), with a save against your spell DC. Once activated, your breath weapon can't be used again for 1d4 rounds."
+ },
+ {
+  "id": "heartblood-ring",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Heartblood Ring",
+  "level": 15,
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Sealed inside the hidden compartment of a gold ring, *heartblood* has an unmistakable coppery taste, along with a thick mouth feel. A whiff of the concoction is pleasantly stimulating. --- **Stage 1 (1 Week)** The first time you enter this stage from a particular dose of *heartblood*, you are affected as if by regenerate. Each round this effect functions, it attempts to counteract one disease or poison affecting you with a bonus equal to your class DC – 10. *Heartblood* also reduces physical signs of aging, altering your appearance to that of vigorous adulthood for your ancestry. (Non-adults who drink *heartblood* change only in apparent vigor, not age.) You have fast healing equal to half your level, as well as resistance to void damage and poison damage equal to half your level. Also, you gain a +1 circumstance bonus to saving throws (or any other defense) against death effects, disease, paralysis, poison, and sleep. Treat the outcome of any saving throw you roll against death, paralyze, or sleep effects as one step better. --- **Stage 2 (1 Month)** You gain low-light vision, or you gain darkvision if your ancestry already has low-light vision. Reduce your current and maximum Hit Points by 2 × your level; you are Doomed 1. You develop a pallor and a dislike of bright light, especially sunlight. If suddenly exposed to bright light, you are dazzled until the end of your next turn. While in an area of sunlight, you remain dazzled until 1 round after the exposure ends. Normal food is unsatisfying, and you have urges to consume blood; when confronted with the opportunity to do so, you must succeed at a Will save to avoid it. Doing so once after each time you roll initiative is enough. Your normal coloration returns for a few hours after you drink blood. If you die at this stage or higher, your body becomes a bloody mist that sinks 6 feet into the ground. The third night thereafter, you rise from the earth as a vampire. This typically makes you unholy. You are under the control of the *heartblood*'s creator unless your level is higher than that creature's. The controlling vampire senses you and guides you to them via psychic link. Significant destruction of your body and circumstances that prevent the formation of undead stop this effect. --- **Stage 3 (1 Month)** You gain darkvision and now have fast healing equal to your level. A death effect can't automatically kill you or increase your dying value. Reduce your current and maximum Hit Points by 4 × your level, rounded up, instead of 2 × your level; you are Doomed 2. Your hunger for blood increases, so if you fail to drink a cup or so each day, you are considered to have gone without food that day. You are also Slowed 1 while in sunlight, becoming Slowed 2 after 1 minute. Your shadow is wispy, and your reflection in mirrors ghostly, which are apparent signs of vampirism to those who know such facts. --- **Stage 4** You die. --- **Purging** *Heartblood* loses its potency if the vampire who created it is destroyed. However, a dose of *heartblood* imposes a –2 status penalty to your saving throws against the powers of the vampire who created it."
+ },
+ {
+  "id": "heartening-missive",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Heartening Missive",
+  "level": 5,
+  "traits": [
+   "consumable",
+   "magical",
+   "missive"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Heartening Missive Source Treasure Vault (Remastered) pg. 85 Usage held in 1 hand Activate (concentrate, manipulate) You compose a heartening missive by creating a short message or image intended to grant the recipient moral support. You must dedicate the missive to an individual creature you know and address it to their location (typically the settlement where you think they are). Once you finish composing the missive, it folds itself into the shape of an animal and Flies at a speed of 45 feet (about 15 miles per hour) toward the location for up to 24 hours. It alights near the recipient or in their hand. After Activating the missive, the recipient gets its benefit and becomes temporarily immune to all heartening missives for 24 hours. If the missive fails to reach its recipient in 24 hours, it returns to its sender at the same pace, becoming non-magical when it arrives. After imparting or losing its magic, the missive remains as a normal document. Heartening Missive (Bull) Source Treasure Vault (Remastered) pg. 85 Price 50 gp Folded into a bull, this missive grants the recipient a sense of solidity. The recipient gains a +1 item bonus to Fortitude saves for the next 24 hours. Heartening Missive (Butterfly) Source Treasure Vault (Remastered) pg. 85 Price 25 gp Folded into a delicate butterfly, this missive grants the recipient a sense of grace and poise. Once during the next 24 hours, when the recipient fails a Diplomacy or Performance check, they can improve the result from a failure to a success or from a critical failure to a failure. This is a fortune effect. Heartening Missive (Rabbit) Source Treasure Vault (Remastered) pg. 85 Price 50 gp Folded into a rabbit sitting on its haunches, this missive grants the recipient a sense of mischief and agility. The recipient gains a +1 item bonus to Reflex saves for the next 24 hours. Heartening Missive (Turtle) Source Treasure Vault (Remastered) pg. 85 Price 50 gp Folded into a square-shelled turtle, this missive grants the recipient a firm sense of self and serenity. The recipient gains a +1 item bonus to Will saves for the next 24 hours."
+ },
+ {
+  "id": "heartening-missive-bull",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Heartening Missive (Bull)",
+  "level": 6,
+  "traits": [
+   "consumable",
+   "magical",
+   "missive"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨2⟩ (concentrate, manipulate) --- You compose a heartening missive by creating a short message or image intended to grant the recipient moral support. You must dedicate the missive to an individual creature you know and address it to their location (typically the settlement where you think they are). Once you finish composing the missive, it folds itself into the shape of an animal and Flies at a speed of 45 feet (about 15 miles per hour) toward the location for up to 24 hours. It alights near the recipient or in their hand. After Activating the missive, the recipient gets its benefit and becomes temporarily immune to all heartening missives for 24 hours If the missive fails to reach its recipient in 24 hours, it returns to its sender at the same pace, becoming non-magical when it arrives. After imparting or losing its magic, the missive remains as a normal document. Folded into a bull, this missive grants the recipient a sense of solidity. The recipient gains a +1 item bonus to Fortitude saves for the next 24 hours."
+ },
+ {
+  "id": "heartening-missive-butterfly",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Heartening Missive (Butterfly)",
+  "level": 5,
+  "traits": [
+   "consumable",
+   "magical",
+   "missive"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨2⟩ (concentrate, manipulate) --- You compose a heartening missive by creating a short message or image intended to grant the recipient moral support. You must dedicate the missive to an individual creature you know and address it to their location (typically the settlement where you think they are). Once you finish composing the missive, it folds itself into the shape of an animal and Flies at a speed of 45 feet (about 15 miles per hour) toward the location for up to 24 hours. It alights near the recipient or in their hand. After Activating the missive, the recipient gets its benefit and becomes temporarily immune to all heartening missives for 24 hours If the missive fails to reach its recipient in 24 hours, it returns to its sender at the same pace, becoming non-magical when it arrives. After imparting or losing its magic, the missive remains as a normal document. Folded into a delicate butterfly, this missive grants the recipient a sense of grace and poise. Once during the next 24 hours, when the recipient fails a Diplomacy or Performance check, they can improve the result from a failure to a success or from a critical failure to a failure. This is a fortune effect."
+ },
+ {
+  "id": "heartening-missive-rabbit",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Heartening Missive (Rabbit)",
+  "level": 6,
+  "traits": [
+   "consumable",
+   "magical",
+   "missive"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨2⟩ (concentrate, manipulate) --- You compose a heartening missive by creating a short message or image intended to grant the recipient moral support. You must dedicate the missive to an individual creature you know and address it to their location (typically the settlement where you think they are). Once you finish composing the missive, it folds itself into the shape of an animal and Flies at a speed of 45 feet (about 15 miles per hour) toward the location for up to 24 hours. It alights near the recipient or in their hand. After Activating the missive, the recipient gets its benefit and becomes temporarily immune to all heartening missives for 24 hours If the missive fails to reach its recipient in 24 hours, it returns to its sender at the same pace, becoming non-magical when it arrives. After imparting or losing its magic, the missive remains as a normal document. Folded into a rabbit sitting on its haunches, this missive grants the recipient a sense of mischief and agility. The recipient gains a +1 item bonus to Reflex saves for the next 24 hours."
+ },
+ {
+  "id": "heartening-missive-turtle",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Heartening Missive (Turtle)",
+  "level": 6,
+  "traits": [
+   "consumable",
+   "magical",
+   "missive"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨2⟩ (concentrate, manipulate) --- You compose a heartening missive by creating a short message or image intended to grant the recipient moral support. You must dedicate the missive to an individual creature you know and address it to their location (typically the settlement where you think they are). Once you finish composing the missive, it folds itself into the shape of an animal and Flies at a speed of 45 feet (about 15 miles per hour) toward the location for up to 24 hours. It alights near the recipient or in their hand. After Activating the missive, the recipient gets its benefit and becomes temporarily immune to all heartening missives for 24 hours If the missive fails to reach its recipient in 24 hours, it returns to its sender at the same pace, becoming non-magical when it arrives. After imparting or losing its magic, the missive remains as a normal document. Folded into a square-shelled turtle, this missive grants the recipient a firm sense of self and serenity. The recipient gains a +1 item bonus to Will saves for the next 24 hours."
+ },
+ {
+  "id": "heartless-debilitations",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Heartless Debilitations",
+  "level": 10,
+  "traits": [
+   "rogue"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Heartless Debilitations Source High Seas pg. 65 Access member of the Red Mantis assassins You debilitate your enemies with ruthless and terrifying efficiency. Add the following debilitations to the list you can choose from when you use Debilitating Strike. Debilitation The target gains weakness 5 to bleed and poison damage. Debilitation The target becomes frightened 1."
+ },
+ {
+  "id": "heartmoss",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Heartmoss",
+  "level": 3,
+  "traits": [
+   "healing",
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This burgundy moss grows in heart-shaped clumps and releases a pleasant, calming scent. The spell DC of any spell cast by Activating this item is 17. - **Armor** You gain resistance 2 to mental damage and a +1 item bonus to saving throws against effects with the emotion trait. - **Weapon** After you cast a healing spell by activating the heartmoss, the weapon exudes a soothing scent. Your Strikes with the affixed weapon have the nonlethal trait for 1 minute. Until the end of your next turn, Strikes with the affixed weapon cause the target to be Stupefied 1 for 1 round if it hits (or for 3 rounds on a critical hit). **Activate** Cast a Spell --- **Effect** You cast Stabilize."
+ },
+ {
+  "id": "heartmoss-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Heartmoss (Greater)",
+  "level": 8,
+  "traits": [
+   "healing",
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This burgundy moss grows in heart-shaped clumps and releases a pleasant, calming scent. The spell DC of any spell cast by Activating this item is 24. - **Armor** You gain resistance 5 to mental damage and a +1 item bonus to saving throws against effects with the emotion trait. - **Weapon** After you cast a healing spell by activating the heartmoss, the weapon exudes a soothing scent. Your Strikes with the affixed weapon have the nonlethal trait for 1 minute. Until the end of your next turn, Strikes with the affixed weapon cause the target to be Stupefied 2 for 1 round if it hits (or for 3 rounds on a critical hit). --- **Activate** Cast a Spell **Effect** You cast Stabilize. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast 3rd-rank Heal."
+ },
+ {
+  "id": "heartmoss-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Heartmoss (Major)",
+  "level": 12,
+  "traits": [
+   "healing",
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This burgundy moss grows in heart-shaped clumps and releases a pleasant, calming scent. The spell DC of any spell cast by Activating this item is 29. - **Armor** You gain resistance 10 to mental damage and a +1 item bonus to saving throws against effects with the emotion trait. - **Weapon** After you cast a healing spell by activating the heartmoss, the weapon exudes a soothing scent. Your Strikes with the affixed weapon have the nonlethal trait for 1 minute. Until the end of your next turn, Strikes with the affixed weapon cause the target to be Stupefied 3 for 1 round if it hits (or for 3 rounds on a critical hit). --- **Activate** Cast a Spell **Effect** You cast Stabilize. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast 3rd-rank Heal. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast 4th-rank Sound Body. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast Healing Well."
+ },
+ {
+  "id": "heavens-step-offense",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Heaven's Step Offense",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** Your melee Strike reduces a creature to 0 Hit Points --- Your lessons from the stage find life in the storied mercy and fearlessness of Grand Prince Gennaris III. With a theatrical flourish, the Strike becomes nonlethal, and you can Stride up to half your Speed in a straight line toward another enemy. This attention-arresting movement does not provoke reactions from enemies unless they are immune to mental effects."
+ },
+ {
+  "id": "hell-staff",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Hell Staff",
+  "level": 17,
+  "traits": [
+   "magical",
+   "staff",
+   "two-hand-d8",
+   "unholy"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "A *hell staff* is a tall, pointed staff forged of red-tinted steel with Diabolic inscriptions that march neatly down its sides. At its top sits an inverted ruby pyramid divided into nine sections. Found mostly in Cheliax or other lands where diabolic influences hold sway, when used as a weapon the staff is a *+3 greater striking flaming unholy staff*. When you prepare this staff, if you're holy, you become Drained 1 until your next daily preparations. The staff's *summon lesser servitor spell* can be used only to summon animals with the fiend trait, devils, or hell hounds (at 4th rank). Its *summon fiend* spell can summon only devils or hell hounds. --- **Activate** Cast a Spell **Effect** You expend a number of charges from the staff to cast a spell from its list. - **Cantrip** Divine Lance - **1st** Protection, Summon Lesser Servitor - **2nd** Darkvision, Summon Lesser Servitor - **3rd** Chilling Darkness, Darkvision, Summon Lesser Servitor - **4th** Divine Wrath, Summon Lesser Servitor - **5th** Darkvision, Divine Immolation, Summon Fiend - **6th** Devil Form, Summon Fiend - **7th** Divine Decree, Summon Fiend --- **Craft Requirements** You're unholy. Supply one casting of all listed ranks of all listed spells."
+ },
+ {
+  "id": "hellhusk-shroud",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Hellhusk Shroud",
+  "level": 6,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This hooded cloak is popular among those who must evade or surveil fiendish authorities. The grisly secrets behind this garment belies its innocuous appearance; its fabrics include threads woven from the hair, blood, and scales of various devils. When invested, a hellhusk shroud doesn't appear to radiate a magic aura to Detect Magic or similar spells unless the spells are 4th rank or higher. As long as you're wearing the cloak, you can read and speak Diabolic. **Activate—Horned Husk** ⟨1⟩ (illusion, manipulate, olfactory, visual) **Frequency** once per day --- **Effect** The cloak wraps around you, becoming a second skin that suffuses you with Hell's corrosive brimstone. Your appearance becomes that of a nondescript low-level devil, and you gain a +1 status bonus to your Deception checks when you Lie to maintain your disguise. To creatures with scent, you also smell like a devil. **Activate—Hellish Senses** ⟨1⟩ (concentrate, manipulate) **Frequency** once per day --- **Effect** You pull your hood up, allowing the remnants of fallen devils to nestle closely and whisper Hell's secrets. You gain fiendsense as an imprecise sense within 60 feet, allowing you to sense creatures with the fiend trait as a vague sense. This effect lasts for 10 minutes or until you take this action again."
+ },
+ {
+  "id": "helts-spelldance",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Helt's Spelldance",
+  "level": 8,
+  "traits": [
+   "bard",
+   "sorcerer",
+   "witch",
+   "wizard"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Ranik Helt knows a special technique to hide his spells as part of a performance, and you've learned this technique. Ostentatiously performing, you move across the battlefield, taking foes aback and creating an opening for your spell. Attempt a Performance check against all observers' Perception DCs. Then, Stride once or twice. During this movement, you don't trigger reactions that are triggered by your movement from the creatures against which you succeeded on your Performance check. After your movement, you can Cast a Spell. If you used one Stride, you can cast either a 1-action or a 2-action spell; if you used two Strides, you can only cast a 1-action spell. If you critically succeed on your check against any creature, they take a –1 circumstance penalty to their saving throws against any spell you cast as part of your Helt's Spelldance due to your distracting performance. All creatures that observed you become temporarily immune to your Helt's Spelldance for 10 minutes."
+ },
+ {
+  "id": "hematocritical",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Hematocritical",
+  "level": 10,
+  "traits": [
+   "archetype",
+   "fortune",
+   "rage"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** Your last action was a Strike that critically hit a creature that isn't immune to bleed damage. --- You bathe in the arterial fluids of your enemy, drinking deep of their freed essence to empower your magic and increase your spellcasting efficacy. If your next action is to Cast a Spell that requires a spell attack roll, you roll the spell attack roll twice and use the better result; this is a fortune effect. Alternatively, if your next action is to cast a spell that requires the creature damaged by the triggering strike to attempt a save, they roll twice and take the lower result; this is a misfortune effect."
+ },
+ {
+  "id": "heralds-strike",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Herald's Strike",
+  "level": 20,
+  "traits": [
+   "archetype",
+   "sanctified",
+   "spirit"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The power of your blows can send your victim hurling through your deity's realm for a fragment of a second. You activate Herald's Weapon, ignoring the frequency, and make a Strike with your transformed weapon or unarmed attack against a creature. If you hit and deal damage, the target must attempt a save against the higher of your class DC or spell DC. If your Strike was a critical hit, the creature uses the outcome for one degree of success worse than the result of their saving throw. Regardless of the result, the target becomes immune to Herald's Strike for 10 minutes. --- **Critical Success** The target is unaffected. **Success** The target takes 3d10 damage and becomes dazzled for 1 round. **Failure** The target takes 6d10 damage and becomes dazzled for 1 round and Drained 1. **Critical Failure** The target takes 12d10 damage and becomes blinded for 1 round and Drained 2."
+ },
+ {
+  "id": "hexwise-banner",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Hexwise Banner",
+  "level": 10,
+  "traits": [
+   "aura",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Multicolored threads are woven through this magical banner, causing it to appear purple in some light and green in others. The shimmering light offers hope and safety in the face of powerful magic wielders. You and allies within the banner's aura gain resistance 5 to damage from spells; for spells that apply multiple instances of damage, such as Force Barrage, this applies only to the first instance of damage."
+ },
+ {
+  "id": "horn-of-rust",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Horn of Rust",
+  "level": 5,
+  "traits": [
+   "artifact",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This rusted, coiled iron horn is sizable, appearing similar in shape to a ram's horn but measuring nearly 2 feet in diameter. Flakes of rust constantly fall from this item, and it leaves hands with a rusty red stain that lingers. Some of the Horn of Rust's activated powers consume charges, similar to how a magic staff functions. When its charges are reduced to zero, its activations that require charges can still be used normally. It can be prepared with charges in the same method as a staff, and it counts as a staff for the limit of how many staves you can prepare in a day. --- **Activate** Cast a Spell **Effect** You expend a number of charges from the Horn of Rust to cast a spell from the following list. - Cantrip Divine Lance - 1st Noxious Vapors - 2nd Shatter - 3rd Stinking Cloud The following activations do not consume charges from the Horn of Rust, and they can be utilized even when the artifact has no charges available. --- **Activate** ⟨2⟩ envision, Interact **Frequency** once per hour **Effect** You blow on the horn to unleash a swirling aura of jagged, rusty metal shards that orbit you in a for 1 minute. The shards grant you a +1 item bonus to AC. Creatures and objects that begin their turn in this area take 6d6 damage from the shards ( save). A creature damaged by this aura is exposed to a potent form of tetanus that has a level equal to the Horn of Rust's level and has a DC 19 Fortitude save. Worshippers of Xar-Azmak are immune to this effect. **Tetanus** An infection introduced through open wounds, tetanus can produce stiffness, muscle spasms strong enough to break bones, and ultimately death. **Saving Throw** **Onset** 10 days **Stage 1** Clumsy 1 (1 week) **Stage 2** Clumsy 2 and can't speak (1 day) **Stage 3** paralyzed with spasms (1 day) **Stage 4** death --- **Activate** ⟨2⟩ envision, Interact **Frequency** once per day **Effect** You place the horn's bell against a diseased creature and then inhale into the mouthpiece rather than blow into it. The horn attempts to draw out the disease, casting a remove disease spell to your specification with a counteract modifier of +11. If the Horn of Rust succeeds at countering a disease, it gains a number of charges equal to half the disease's level (rounded down, minimum 1). If it critically fails, not only is the disease not countered, but you are exposed to the disease and must attempt a saving throw against it to resist contracting the affliction."
+ },
+ {
+  "id": "horned-lion-amulet",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Horned Lion Amulet",
+  "level": 9,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨4⟩ envision **Trigger** You take fire damage --- This small figurine of a horned lion sitting at attention is the size of a coin and carved from simple stone. The figurine can be fastened to a suit of armor as a charm or adornment. When you activate the amulet, the lion's eyes glow with flames, granting you fire resistance 10 against the triggering damage and a subsequent fire resistance 5 for 1 minute. If the triggering damage was due to persistent fire damage, you immediately attempt a to recover from the persistent damage. The DC remains at 10 until the persistent fire damage ends."
+ },
+ {
+  "id": "horrid-figurine",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Horrid Figurine",
+  "level": 8,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Carved in a putrid jade, the color of disease, this figurine is a bloated humanoid mass of writhing vermin and serpents, all rendered in disgusting detail. The creeping pattern is carved so they seem to move and contort the more one views the figurine. When activated, the effect is amplified to a disgusting or horrifying degree. The figurine can be activated twice per day. If you try to activate it a third time during a day, it dissolves into a puddle of non-magical, putrid glue, causing you to become Sickened 3. **Activate** ⟨2⟩ (concentrate, manipulate) --- **Effect** Holding the figurine over your head and speaking one command word causes a wave of nausea in a . Each creature in the emanation must succeed at a save or become Sickened 2. You're immune to this effect. **Activate** ⟨2⟩ (concentrate, manipulate) --- **Effect** Holding the figurine over your head and speaking a different command word causes those around to tremble in fear. Each creature in a must succeed at a save or become Frightened 3. You're immune to this effect."
+ },
+ {
+  "id": "idol-threat",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Idol Threat",
+  "level": 13,
+  "traits": [
+   "nephilim"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Requirements** You're holding something sacred or precious to a creature, such as a relic or personal depiction of their deity or a precious personal memento. --- You brandish the precious object you're holding menacingly, at once mocking it and threatening its safety. Attempt to Demoralize the creature whose precious item you threaten. You gain a +2 circumstance bonus to the Intimidation check to Demoralize, and on a success, the creature is off-guard for 1 round out of distraction for the object's safety and is Stupefied 1 for 1 minute (or stupefied 2 on a critical success). These conditions are both in addition to the normal effects of Demoralize. The creature is then temporarily immune to any Idol Threat using that specific object for 1 day."
+ },
+ {
+  "id": "illuminated-folio",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Illuminated Folio",
+  "level": 14,
+  "traits": [
+   "grimoire",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The pages of this part-spellbook, part-bestiary are illustrated with all manner of creatures, magical and mundane. The illustrations shift and move around the page when examined. **Activate** ⟨1⟩ (concentrate, spellshape) --- **Effect** If your next action is to cast a summon spell prepared from this grimoire, you summon creatures from the illuminated folio rather than their usual source. These summoned creatures appear as living illustrations, granting them resistance to physical damage equal to half their level and weakness 5 to fire and to any ability with the water trait. They can also fold themselves up to pass through spaces only an inch or so wide as part of their movement."
+ },
+ {
+  "id": "illusory-identity",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Illusory Identity",
+  "level": 12,
+  "traits": [
+   "archetype",
+   "illusion"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "There are times when skills or looks are not enough to convince someone of your identity, and you instead require adequate documentation. Replicating the methods of the Sapphire Butterfly, you've learned to use magic to forge a new identity as you need it. During your daily preparations, you can choose a blank piece of paper, journal, badge, or similar item normally used to display authority, to magically invest. You can use an Interact action to mentally outline the basic information that is displayed when that item is presented to another creature, such as a name, a title, connection to an existing group or agency, and other basic details. A more complex outline requires more time, at the GM's discretion. That creature must attempt a save against your Deception DC. This item only works while you are holding it and appears blank if anyone else attempts to use it, though you can include others within the details of your outline. --- **Critical Success** The target sees the item as being entirely blank, and becomes immune to this effect until your next daily preparations. **Success** The target sees only the basic information listed out in a simplistic manner, as described in the Interact action. Though not fully convinced, the target plays along, but this worsens the target's attitude toward you by one step. **Failure** The target sees the information presented by the item in the proper format relevant to your situation, with the appropriate language, names, dates, signatures, and other details. **Critical Failure** The target sees the information presented by the item as granting a higher level of authority than anticipated, and immediately treats you with the proper deference. As failure, and the target's attitude toward you immediately improves by one step."
+ },
+ {
+  "id": "immovable-object",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Immovable Object",
+  "level": 14,
+  "traits": [
+   "mythic",
+   "stance"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "core.stances"
+  ],
+  "text": "You plant your feet in a wide stance, resisting all movement not of your own volition. While in this stance and on the ground, you are immune to forced movement and if an effect would knock you prone, you aren't knocked prone and can Step as a free action."
+ },
+ {
+  "id": "impossible",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Impossible",
+  "level": 20,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This rune makes a weapon capable of impossible offense and defense. The etched weapon is immune to Dispel Magic and similar effects that could counteract its magic. If it's a ranged weapon or thrown weapon, its range increment is doubled. **Activate** ⟨2⟩ (concentrate, teleportation) **Frequency** once per hour --- **Effect** You and the weapon flash to a perfect attacking position, then return to where you started. Make a Strike with the etched weapon against one creature you can see, even if the target is beyond the weapon's reach or range. On this Strike, ignore any circumstance penalty, status penalty, and range increment penalty."
+ },
+ {
+  "id": "imprison-foe",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Imprison Foe",
+  "level": 18,
+  "traits": [
+   "mythic",
+   "teleportation"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** Your last action dealt damage to a creature. --- Rather than grant your foes the mercy of a swift death, you can consign them to suffer in an extradimensional prison with an appearance of your choosing. Spend 1 Mythic Point to force a creature that you dealt damage to with your last action to attempt a saving throw against your class DC or spell DC, whichever is higher. Regardless of the result, the target is temporarily immune to your Imprison Foe for 24 hours. --- **Critical Success** The target is unaffected. **Success** The target is Stunned 2. **Failure** The target is transported into a cell within your extradimensional dungeon for 1 minute. It is unable to leave or damage the cell in any way. Teleportation effects can't carry the target outside the cell unless they can also traverse the planes, such as interplanar teleport. At the end of each of its turns, it can attempt a new Will save to reduce the remaining duration it is imprisoned by 1 round or end it entirely on a critical success. When the duration ends, the target returns to the space it occupied when it was imprisoned, or to the nearest space if the original is now filled. **Critical Failure** As failure, but the target is stunned for the first round it is imprisoned."
+ },
+ {
+  "id": "improvise-strategy",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Improvise Strategy",
+  "level": 7,
+  "traits": [
+   "bravado",
+   "concentrate",
+   "general",
+   "mental",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You're a wild card on the battlefield, inventing unpredictable tactics and surprising foes. You employ one of these strategies, adding either your choice of the auditory or visual trait. Attempt a Warfare Lore check against the Perception DC of a creature within 30 feet, after which the target becomes temporarily immune to further uses of Improvise Strategy for 1 hour. --- **Critical Success** The target gains one of the following conditions of your choice until the end of your next turn: Clumsy 1, dazzled, off-guard, or Stupefied 1. The target can end the effect by using either a single action with the concentrate trait to regain their bearings (if your strategy had the auditory trait) or an Interact action to rub their eyes (if your strategy had the visual trait). In addition, the target isn't temporarily immune to further uses of Improvise Strategy. **Success** As critical success, but the target is temporarily immune to further uses of Improvise Strategy. **Failure** The target is unaffected. **Critical Failure** The target sees through the gambit, leaving you off-guard until the beginning of your next turn. --- **Special** Once per day, if you lead a troop that has a skirmish bond, you can Improvise Strategy to attempt a Warfare Lore check against a standard DC for your troop's level, rather than targeting a foe. If you succeed, your troop replaces its current skirmish bond with another of your choice until the end of your next turn."
+ },
+ {
+  "id": "in-lightning-life",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "In Lightning, Life",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "concentrate",
+   "electricity",
+   "healing",
+   "manipulate"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Frequency** once per 10 minutes **Requirements** You're wearing or holding a Healer's Toolkit. --- \"In lightning, there is life.\" This lesson is whispered throughout Lepidstadt, and you can put it to practical use. You have integrated a miniature Stasian coil into your healer's toolkit. You use the coil to gently shock a willing or unconscious ally within your reach, who gains 2d4 temporary Hit Points from the jolt. These temporary Hit Points last for 1 minute. These temporary Hit Points increase by 1d4 at 8th level and every 4 levels thereafter. A creature that has resistance or immunity to electricity is immune to this ability, and a creature that received temporary Hit Points from In Lightning, Life is temporarily immune to it for 24 hours."
+ },
+ {
+  "id": "inexorable",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Inexorable",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You imbue yourself with the resilience of the cave worm. When you gain the paralyzed, slowed, or stunned condition, roll a . On a success you ignore the condition. When using Worm Form you are immune to penalties to your Speed and the immobilized condition, you gain a +2 circumstance bonus to your Fortitude or Reflex DC against attempts to Shove or Trip you, and you ignore difficult terrain and greater difficult terrain."
+ },
+ {
+  "id": "infiltrate-dream",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Infiltrate Dream",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "mental",
+   "occult"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Entering a dream is as natural to you as stepping through a doorway. If you're adjacent to a sleeping creature, you can enter a lucid dreamlike state, a process taking 10 minutes, to mentally walk into their dreamscape. While in the target's dream, you witness its contents, plots, and emotional experiences as an observer, though nothing within the dream can perceive or interact with you. Your target becomes temporarily immune to Infiltrate Dream for 1 week. You can't enter the dreams of a creature that doesn't have a conscious mind or doesn't dream. While within the dream, you can attempt an Occultism check against the target's Will DC to interpret symbolism and learn information about a single topic. If the target has no knowledge of the topic, you learn they don't know about the topic unless your result is a critical failure. --- **Critical Success** You learn a piece of information directly relevant to the topic unless the target would want to hide it. If so, you learn something related to the topic but not a direct answer. **Success** You receive a hint or clue about the topic. This clue won't be inaccurate, but it's cryptic, vague, or might be understandable only with additional information. **Critical Failure** The dreams mislead you, and you learn an erroneous piece of information."
+ },
+ {
+  "id": "inflamation-flask",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Inflamation Flask",
+  "level": 2,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "disease",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Inflamation Flask May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 75 Usage held in 1 hand Bulk L Activate Strike This flask contains a caustic irritant that makes a target’s skin, scales, or carapace extremely sensitive to further nicks and burns. An inflammation flask deals the listed acid damage and acid splash damage. On a hit, the target also gains weakness to acid, fire, and slashing damage for 3 rounds. Many types of inflammation flask grant a bonus to attack rolls. The target can end the weakness effect by three means: being drenched with water (such as submersion or exposure to an area water effect), being Administered First Aid (whose DC in based on the bomb type), or regaining Hit Points from a single effect equal to twice the inflammation flask’s level. A creature that critically fails to Administer First Aid in this way deals untyped damage to the target equal to the inflammation flask’s initial acid damage. Lesser Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 5 gp The bomb deals 1d6 acid damage and 1 acid splash damage. The target gains weakness 1 to acid, fire, and slashing damage, and theMedicine DC is 17. Moderate Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 15 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d6 acid damage and 2 acid splash damage. The target gains weakness 2 to acid, fire, and slashing damage, and the Medicine DC is 20. Greater Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 340 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d6 acid damage and 3 acid splash damage. The target gains weakness 3 to acid, fire, and slashing damage, and the Medicine DC is 30. Major Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 3,750 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d6 acid damage and 4 acid splash damage. The target gains weakness 4 to acid, fire, and slashing damage, and the Medicine DC is 38."
+ },
+ {
+  "id": "inflammation-flask-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Inflammation Flask (Greater)",
+  "level": 12,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "disease",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Activate** ⟨1⟩ Strike --- This flask contains a caustic irritant that makes a target's skin, scales, or carapace extremely sensitive to further nicks and burns. An inflammation flask deals 3d6 acid damage and 3 acid splash damage. On a hit, the target also gains weakness 3 to acid, fire, and slashing damage for 3 rounds. You gain a +2 item bonus to attack rolls. The target can end the weakness effect by three means: being drenched with water (such as submersion or exposure to an area water effect), being Administered First Aid (DC 30), or regaining Hit Points from a single effect equal to twice the inflammation flask's level. A creature that critically fails to Administer First Aid in this way deals untyped damage to the target equal to the inflammation flask's initial acid damage. ---"
+ },
+ {
+  "id": "inflammation-flask-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Inflammation Flask (Lesser)",
+  "level": 2,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "disease",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This flask contains a caustic irritant that makes a target's skin, scales, or carapace extremely sensitive to further nicks and burns. An inflammation flask deals 1d6 acid damage and 1 acid splash damage. On a hit, the target also gains weakness 1 to acid, fire, and slashing damage for 3 rounds. The target can end the weakness effect by three means: being drenched with water (such as submersion or exposure to an area water effect), being Administered First Aid (DC 17), or regaining Hit Points from a single effect equal to twice the inflammation flask's level. A creature that critically fails to Administer First Aid in this way deals untyped damage to the target equal to the inflammation flask's initial acid damage. ---"
+ },
+ {
+  "id": "inflammation-flask-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Inflammation Flask (Major)",
+  "level": 18,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "disease",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Activate** ⟨1⟩ Strike --- This flask contains a caustic irritant that makes a target's skin, scales, or carapace extremely sensitive to further nicks and burns. An inflammation flask deals 4d6 acid damage and 4 acid splash damage. On a hit, the target also gains weakness 4 to acid, fire, and slashing damage for 3 rounds. You gain a +3 item bonus to attack rolls. The target can end the weakness effect by three means: being drenched with water (such as submersion or exposure to an area water effect), being Administered First Aid (DC 38), or regaining Hit Points from a single effect equal to twice the inflammation flask's level. A creature that critically fails to Administer First Aid in this way deals untyped damage to the target equal to the inflammation flask's initial acid damage. ---"
+ },
+ {
+  "id": "inflammation-flask-moderate",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Inflammation Flask (Moderate)",
+  "level": 4,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "disease",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Activate** ⟨1⟩ Strike --- This flask contains a caustic irritant that makes a target's skin, scales, or carapace extremely sensitive to further nicks and burns. An inflammation flask deals 2d6 acid damage and 2 acid splash damage. On a hit, the target also gains weakness 2 to acid, fire, and slashing damage for 3 rounds. You gain a +1 item bonus to attack rolls. The target can end the weakness effect by three means: being drenched with water (such as submersion or exposure to an area water effect), being Administered First Aid (DC 20), or regaining Hit Points from a single effect equal to twice the inflammation flask's level. A creature that critically fails to Administer First Aid in this way deals untyped damage to the target equal to the inflammation flask's initial acid damage. ---"
+ },
+ {
+  "id": "injigos-loving-embrace",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Injigo's Loving Embrace",
+  "level": 9,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This net was woven by the jorogumo Injigo, who presented it as a gift to her gnome sweetheart, Mara, to keep her safe in their mountain cottage whenever Injigo left home to go on hunting expeditions. *Injigo's Loving Embrace* functions as a typical net. You gain a +1 item bonus to Athletics checks to Grapple with the net. **Activate—Ensnare Ghost** ⟨2⟩ (concentrate, manipulate) **Frequency** once per day --- **Effect** You spin the net in the direction of an incorporeal creature within 30 feet that you can see. Lines of silken force whip out to lash around the incorporeal creature, who must succeed at a save or become immobilized until the end of your next turn. You can Sustain this activation for up to 1 minute, and the creature must succeed at a DC 25 check to Escape the net. **Activate—A Night of Melancholic Dreams** 10 minutes (concentrate, manipulate) **Frequency** once per week --- **Effect** You wrap the net around you like a blanket as you prepare to sleep. As long as you get 8 hours of sleep or analogous rest, you dream of writing love letters to someone you adore: this could be an actual paramour, someone you're interested in, or someone unknown whose identity you don't recall after waking. When you wake, you're filled with a sense of melancholia about those unsent letters, but these feelings distract you from other, more unpleasant thoughts, granting you mental resistance 5 and a +1 item bonus to saving throws against mental effects for the next 8 hours."
+ },
+ {
+  "id": "inspired-stratagem",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Inspired Stratagem",
+  "level": 8,
+  "traits": [
+   "rogue"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "During your daily preparations, you can review stratagems for the day's adventures with up to five allies. Later, you can quickly advise them on your schemes using the Inspired Stratagem reaction."
+ },
+ {
+  "id": "instinctive-strike",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Instinctive Strike",
+  "level": 8,
+  "traits": [
+   "barbarian"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You trust your instincts and your sense of smell, using all your senses to pinpoint your opponent's location. When you make a melee Strike against an opponent you're detecting using scent, ignore any flat check required due to the target being concealed or hidden."
+ },
+ {
+  "id": "invented-vulnerability",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Invented Vulnerability",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "auditory",
+   "concentrate",
+   "linguistic",
+   "mental"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per round --- You list off the potential fears and weaknesses of an enemy you can see or hear, speaking with such certainty that they become real. Attempt a Deception check against the enemy's Will DC. Select bludgeoning, piercing, or slashing damage. Regardless of your result, the target is temporarily immune to Invented Vulnerability for 10 minutes. --- **Critical Success** The target gains weakness to the selected type of damage equal to 3 + half your level for 1 round. **Success** The target gains weakness 5 to the selected type of damage for 1 round."
+ },
+ {
+  "id": "invigorating-elixir",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Invigorating Elixir",
+  "level": 4,
+  "traits": [
+   "additive",
+   "alchemist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can mix an aromatic salve into an elixir with the healing trait to soothe physical maladies. In addition to its normal effects, the elixir can be imbibed by a creature prevented from doing so (such as a sickened creature). In addition to its other effects, the elixir attempts to counteract an effect imposing one of the following conditions of the imbiber's choice: clumsy, enfeebled, sickened, or stupefied. Use half your level rounded up for the counteract rank and your class DC – 10 for the counteract modifier. The imbiber is then temporarily immune to the effects of this additive for 10 minutes. The additive can't counteract curses, diseases, or conditions that are part of the creature's normal state."
+ },
+ {
+  "id": "invincible-army",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Invincible Army",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "auditory",
+   "concentrate",
+   "linguistic",
+   "mental"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per round --- You enumerate the many virtues and victories of your chosen allies, creating a story of their invincibility so convincing that it is as good as the truth. Choose an ally you can see and attempt a or check against the hard DC for the target's level. On a success, the target gains resistance 5 to either bludgeoning, piercing, or slashing damage, chosen when you use this ability; the type of damage resisted is usually tied to the story you tell about the character, such as giving them piercing resistance after telling a story about the time they rushed through a rain of arrows to take on an enemy encampment. You can instead attempt your check against a very hard DC for the target's level to give them resistance to two damage types, adding acid, fire, cold, electricity, and sonic to the damage types you can grant resistance to."
+ },
+ {
+  "id": "iron-wine",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Iron Wine",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) **Access** Tian Xia origin --- This strong, clear liquor is made from fermented rice. When you drink a cup of iron wine, your sweat becomes highly combustive for the next 10 minutes, igniting with the slightest bit of friction. This causes your unarmed attacks to deal an additional 1d4 fire damage for the duration of the effect. Drinking more than one cup of iron wine in a single day gives you weakness 5 to fire until your next daily preparations."
+ },
+ {
+  "id": "ironblood-stance",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Ironblood Stance",
+  "level": 8,
+  "traits": [
+   "monk",
+   "stance"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "core.stances"
+  ],
+  "text": "**Requirements** You are unarmored --- You enter the stance of impenetrable iron, refusing to yield to any blow. You can make iron sweep unarmed attacks. These deal 1d8 bludgeoning damage; are in the brawling group; and have the nonlethal, parry, sweep, and unarmed traits. While in Ironblood Stance, you gain resistance 2 to all damage. The resistance increases to 3 at 12th level, to 4 at 16th level, and to 5 at 20th level."
+ },
+ {
+  "id": "irradiate",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Irradiate",
+  "level": 6,
+  "traits": [
+   "deviant",
+   "magical",
+   "poison"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You exude an aura of radiation, making everyone around you ill. All creatures in a must succeed at a save or become Sickened 1. On a critical failure, they're also fatigued for 1 minute. You're immune to your own radiation. The value of this sickened condition increases by 1 for every 5 levels you have beyond 6th. **Awakening** You become more efficient at exuding this aura of radiation. The radius of the emanation becomes 60 feet. **Awakening** Your radiation becomes more potent. Creatures in the area take an additional 1d4 poison damage for every 2 levels you have, with a save (roll this Fortitude save once and apply it to both the damage and the sickened condition)."
+ },
+ {
+  "id": "irritating-seedpod",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Irritating Seedpod",
+  "level": 7,
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "heldSpells",
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** Cast a Spell (add 1 action) --- When you crack open this soft, spongy seedpod, you can use it as a catalyst when casting a Mist spell. When you do, irritating pollen fills the area for the spell's duration. Creatures in the area must attempt a saving throw to avoid sneezing uncontrollably. On a failed save, the creature becomes Slowed 1 for 1 round. A creature that succeeds at this saving throw becomes temporarily immune to the irritating seedpod's pollen for 10 minutes."
+ },
+ {
+  "id": "irritating-seedpod-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Irritating Seedpod (Greater)",
+  "level": 10,
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "heldSpells",
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** Cast a Spell (add 1 action) --- When you crack open this soft, spongy seedpod, you can use it as a catalyst when casting a Mist spell. When you do, irritating pollen fills the area for the spell's duration. Creatures in the area must attempt a saving throw to avoid sneezing uncontrollably. On a failed save, the creature becomes Slowed 1 for 3 rounds. A creature that succeeds at this saving throw becomes temporarily immune to the irritating seedpod's pollen for 10 minutes."
+ },
+ {
+  "id": "irritating-seedpod-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Irritating Seedpod (Lesser)",
+  "level": 3,
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "heldSpells",
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** Cast a Spell (add 1 action) --- When you crack open this soft, spongy seedpod, you can use it as a catalyst when casting a Mist spell. When you do, irritating pollen fills the area for the spell's duration. Creatures in the area must attempt a saving throw to avoid sneezing uncontrollably. On a failed save, the creature becomes Slowed 1 for 1 round. Rather than last for the duration of the spell, the irritating pollen only remains in the area for 1 round. A creature that succeeds at this saving throw becomes temporarily immune to the irritating seedpod's pollen for 10 minutes."
+ },
+ {
+  "id": "irritating-seedpod-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Irritating Seedpod (Major)",
+  "level": 14,
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "heldSpells",
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** Cast a Spell (add 1 action) --- When you crack open this soft, spongy seedpod, you can use it as a catalyst when casting a Mist spell. When you do, irritating pollen fills the area for the spell's duration. Creatures in the area must attempt a saving throw to avoid sneezing uncontrollably. On a failed save, the creature becomes Slowed 2 for 1 round, then Slowed 1 for 3 rounds. A creature that succeeds at this saving throw becomes temporarily immune to the irritating seedpod's pollen for 10 minutes."
+ },
+ {
+  "id": "jaathooms-scarf",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Jaathoom's Scarf",
+  "level": 10,
+  "traits": [
+   "air",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This scarf is made of fine silk that's the same shade of blue as a clear, cloudless sky. The short ends are edged with a fine gold fringe that seems to sway even in still weather as though touched by invisible winds. The long edges have exquisite embroidery in threads that vary from a blue identical to the silk to the deep gray of storm clouds during winter. Wearing this scarf grants a +2 item bonus to Performance checks to dance and to Acrobatics checks to Escape. --- **Activate—Vanish** ⟨2⟩ (concentrate) **Frequency** once per day **Effect** The scarf casts 4th-rank on you. --- **Activate—Jaathoom's Rebuke** ⟨1⟩ (concentrate) **Frequency** once per hour **Effect** You let the winds around you catch the edges of the *jaathoom's scarf*, and a jaathoom shuyookh appears with a sudden updraft. The winds force your enemies back, granting you some breathing room in battle. Each enemy in a must succeed at a save or be pushed 10 feet. A creature that critically fails is also knocked prone after being moved. Creatures with the air trait are immune to all these effects."
+ },
+ {
+  "id": "jabalis-dice",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Jabali's Dice",
+  "level": 12,
+  "traits": [
+   "earth",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "*Jabali's dice* are two six-sided dice carved from evenly weighted stone to the specifications of a specific jabali shuyookh. The sides showing a 6 also have the name and title of the shuyookh inscribed in Petran. If you whisper the name and title during a dice game using *jabali's dice*, they bless you with a bit of luck, granting a +2 item bonus to your Games Lore check. You can do so frequently enough to apply this bonus while Earning Income using Games Lore, but only one user at a time can do so. **Activate—Jabali's Gamble** ⟨2⟩ (concentrate, manipulate) **Frequency** once per day --- **Effect** You call out the shuyookh's name and title, then roll the dice. The shuyookh appears briefly to provide for your defense. Roll 2d6 to determine the effect. Represented by the GM, the shuyookh chooses any effect's specifications, benefiting you according to the shuyookh's whims. | **2-5** | The shuyookh casts Mountain Resilience on you. | | --- | --- | | **6-9** | The shuyookh casts Grasping Earth but you and your allies are immune to it. | | **10-11** | The shuyookh casts Wall of Stone. The edges can pass through creatures, which are shunted to the side of the wall opposite that edge. | | **12** | The shuyookh casts a DC 31 Petrify spell on a creature hostile and in proximity to you. If no appealing target exists, you receive a 10-11 result instead. |"
+ },
+ {
+  "id": "jagged-berms",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Jagged Berms",
+  "level": 6,
+  "traits": [
+   "composite",
+   "earth",
+   "impulse",
+   "kineticist",
+   "overflow",
+   "primal",
+   "wood"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You conjure up to six cube-shaped mounds of packed earth. Each appears in an unoccupied square within 120 feet, fills its square, and provides cover. A mound has AC 10, Hardness 10, and 20 HP, and is immune to critical hits and precision damage. If destroyed, a mound becomes difficult terrain. The mounds last for an unlimited duration, but if you use the impulse again, any previous one ends. Sharpened wooden stakes protrude from each mound into adjacent squares. They can project from any of its sides; you choose which sides for each mound. For each square of wooden stakes a creature enters, that creature takes damage. Destroying a mound also destroys its stakes. --- **Level (+2)** The HP of each section of the wall increases by 10, and the piercing damage increases by 1d6."
+ },
+ {
+  "id": "janns-prism",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Jann's Prism",
+  "level": 9,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Light always seems to be refracting through this simple prism, creating a hazy multicolor aura that surrounds the glass. When exposed to direct sunlight, the prism radiates a beam of light that shifts in color. This beam spells out the name of the jann shuyookh for whom the prism was designed. While holding the prism to your eye, your vision becomes overwhelmed with colors that guide your eye, granting you a +2 item bonus to visual Perception checks. If you look through the prism while you Seek, you can scan or search an area twice as large as normal (a , , or ) as the varying colors help you distinguish between your surroundings. --- **Activate - Jann's Light** ⟨2⟩ (concentrate) **Frequency** once per day **Effect** You raise the prism above your head and call upon the jann shuyookh to come to your aid. The shuyookh's face becomes visible in a reflection in the prism and light shines out from the prism, surrounding you in a multitude of colors. For 1 minute, you shed bright light in a (and dim light for the next 20 feet). The light coruscates with two colors chosen by the jann, and you gain resistance 5 to two damage types based on the colors chosen: **red** fire, **orange** acid, **yellow** electricity, **green** poison, **blue** sonic, **indigo** mental, or **violet** force."
+ },
+ {
+  "id": "jolt-coil",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Jolt Coil",
+  "level": 3,
+  "traits": [
+   "electricity",
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "Contained within this small glass tube is a twisted wire filament crackling with electricity, sending static prickling through the hair of anyone holding it. The spell DC of any spell cast by activating this item is 17. - **Armor** You gain resistance 2 to electricity. - **Weapon** After you cast an electricity spell by activating the coil, your Strikes with the weapon deal an additional 1d4 electricity damage until the end of your next turn. --- **Activate** Cast a Spell **Effect** You cast Electric Arc."
+ },
+ {
+  "id": "jolt-coil-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Jolt Coil (Greater)",
+  "level": 8,
+  "traits": [
+   "electricity",
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "Contained within this small glass tube is a twisted wire filament crackling with electricity, sending static prickling through the hair of anyone holding it. The spell DC of any spell cast by activating this item is 24. - **Armor** You gain resistance 3 to electricity. - **Weapon** After you cast an electricity spell by activating the coil, your Strikes with the weapon deal an additional 1d6 electricity damage until the end of your next turn. --- **Activate** Cast a Spell **Effect** You cast Electric Arc. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast Lightning Bolt."
+ },
+ {
+  "id": "jolt-coil-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Jolt Coil (Major)",
+  "level": 12,
+  "traits": [
+   "electricity",
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "Contained within this small glass tube is a twisted wire filament crackling with electricity, sending static prickling through the hair of anyone holding it. The spell DC of any spell cast by activating this item is 29. - **Armor** You gain resistance 5 to electricity. - **Weapon** After you cast an electricity spell by activating the coil, your Strikes with the weapon deal an additional 1d8 electricity damage until the end of your next turn. --- **Activate** Cast a Spell **Effect** You cast Electric Arc. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast 4th-rank Lightning Bolt. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast Draw the Lightning."
+ },
+ {
+  "id": "journeybread",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Journeybread",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Journeybread contains a mix of fruits, nuts, and grains with an alchemical boost. Eating one journeybread provides all the food and water you need for a day. If you subsist on nothing else for a week, you become temporarily immune to journeybread until you eat real food and drink water normally for 24 hours."
+ },
+ {
+  "id": "journeybread-power",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Journeybread (Power)",
+  "level": 4,
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Journeybread contains a mix of fruits, nuts, and grains with an alchemical boost. Eating one journeybread provides all the food and water you need for a day. If you subsist on nothing else for a week, you become temporarily immune to journeybread until you eat real food and drink water normally for 24 hours. In addition to the benefits of journeybread, power journeybread grants you a +1 item bonus to Athletics checks to Climb, Force Open, and Swim, and to Fortitude saving throws against being sickened. The number of minutes you can Hustle changes to your Constitution modifier × 20. These benefits last for 4 hours."
+ },
+ {
+  "id": "just-one-more-thing",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Just One More Thing",
+  "level": 10,
+  "traits": [
+   "fortune",
+   "investigator"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** Your most recent action was to Feint, Request, or Demoralize, and you failed but didn't critically fail. --- After your attempt to influence someone goes poorly, you add another bit of information or ask a pointed question, possibly salvaging your previous attempt. Reroll the failed check and use the new result. If the target of the failed check is involved with one of your active investigations, double your investigation bonus from Pursue a Lead on the rerolled check. That creature is temporarily immune to Just One More Thing for 1 day. You can also use this action if you failed, but didn't critically fail, at a check to Lie, Gather Information, Make an Impression, or Coerce. In this case, rather than spending 1 action, adding Just One More Thing takes you half the amount of time you initially spent on the check, to a minimum of 1 more round."
+ },
+ {
+  "id": "kinetic-dampening",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Kinetic Dampening",
+  "level": 6,
+  "traits": [
+   "deviant",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You feed off energy in your immediate surroundings, allowing you to dampen the force imparted by incoming blows. Until the beginning of your next turn, you gain resistance 5 to physical damage. At 10th level, and every 4 levels thereafter, the resistance increases by 5. Any blows that strike you during this time make no sound as their energy is drained. **Awakening** You can extend your dampening field around you to create a safe haven for your allies. If you spend an additional action when using Kinetic Dampening, your field extends in a around you. You can choose which creatures within the emanation are affected. **Awakening** You dampen a greater variety of wavelengths. When you use this feat, you also gain resistance to your choice of fire, electricity, or sonic damage."
+ }
+]

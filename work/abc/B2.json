@@ -1,0 +1,141 @@
+[
+ {
+  "id": "conductors-instrument",
+  "collection": "items",
+  "name": "Conductor's Instrument",
+  "level": 3,
+  "traits": [
+   "magical"
+  ],
+  "text": "This item can be found in the form of any variety of handheld musical instruments. The instrument grants you a +1 item bonus to Performance checks while playing music with it. Once per day, you can use the following activity. --- **Activate—Command Performance** ⟨2⟩ (manipulate) You play a special tune on the instrument, causing it to cast a DC 17 Command bard spell.",
+  "currentFlat": {
+   "skills": {
+    "performance": 1
+   }
+  },
+  "openQuestion": "The app already folds this into the maths unconditionally (passiveEffects.skills.performance = 1), but the printed text limits it to Performances made by playing music with the instrument (it does not apply to singing, oratory, dance, or acting, and requires both hands). Should the passive be removed and replaced by a situational star, or kept as-is (and the star omitted to avoid double-reporting)? The same question applies to every 'while playing/wielding X' item bonus currently in passiveEffects."
+ },
+ {
+  "id": "benthic-drums",
+  "collection": "items",
+  "name": "Benthic Drums",
+  "level": 17,
+  "traits": [
+   "magical"
+  ],
+  "text": "This large bass drum is made of driftwood and whale hide, with swirling shapes that hint at more distinct and sinister forms carved on its surface. This drum grants you a +2 item bonus to Performance checks while playing music with the instrument. You can communicate basic ideas with whales and other large sea animals by playing music with this instrument. --- **Activate—Call from the Depths** ⟨3⟩ (concentrate, emotion, fear, manipulate, mental, sonic) **Frequency** once per week --- **Effect** You drum a song of an ancient creature, calling forth the cries of a great whale in the minds of your foes. All enemies in a take damage ( save). Creatures who fail are also Frightened 1.",
+  "currentFlat": {
+   "skills": {
+    "performance": 2
+   }
+  },
+  "openQuestion": "Same family question as Bellows Pipes: the record carries passiveEffects.skills.performance = 2 (unconditional) while the text says 'while playing music with the instrument'. Situational star, or leave it folded into the Performance total?"
+ },
+ {
+  "id": "blakenshipper",
+  "collection": "items",
+  "name": "Blakenshipper",
+  "level": 7,
+  "traits": [
+   "magical"
+  ],
+  "text": "This strange instrument is both played and worn, consisting of a set of pipes on a metal arm attached to a harness, a horn, a drum attached to a foot pedal, arm bellows, various keys, cymbals, and more esoteric elements. The blakenshipper grants you a +1 item bonus to Performance checks while playing music with the instrument. --- **Activate—Be the Band** ⟨3⟩ (auditory, concentrate, manipulate) **Frequency** once per day **Effect** You work double-time, playing an entire band's composition yourself, bolstering those around you by your mighty effort. You and all allies within a gain 15 temporary Hit Points that last for 1 round. For the next minute, you can Sustain to continue the music, granting you and all allies within a 5 temporary Hit Points that last for 1 round; this Sustain action gains the auditory and manipulate traits.",
+  "currentFlat": {
+   "skills": {
+    "performance": 1
+   }
+  },
+  "openQuestion": "Same family question: passiveEffects.skills.performance = 1 applies unconditionally, but the text limits the bonus to 'while playing music with the instrument'. Star it, or keep it in the maths?"
+ },
+ {
+  "id": "booming-bell",
+  "collection": "items",
+  "name": "Booming Bell",
+  "level": 6,
+  "traits": [
+   "magical"
+  ],
+  "text": "This large bronze bell has a fine ash handle, and the clapper is made of blackened iron. It grants you a +1 item bonus to Performance checks while playing music with the instrument. **Activate—Clarion Crescendo** ⟨2⟩ (manipulate, sonic) **Frequency** once per day --- **Effect** You ring a blasting note on the bell that sends shock waves through the air. The blast deals damage to each creature in a ( save). On a failure, the target is also deafened for 1 round.",
+  "currentFlat": {
+   "skills": {
+    "performance": 1
+   }
+  },
+  "openQuestion": "Same family question: passiveEffects.skills.performance = 1 is unconditional; the printed bonus is conditional on playing the bell. Situational star or folded maths?"
+ },
+ {
+  "id": "core-bugle",
+  "collection": "items",
+  "name": "Core Bugle",
+  "level": 12,
+  "traits": [
+   "magical"
+  ],
+  "text": "This brass horn is marked by age but remains in excellent condition. The rim of the mouth is ringed by finely carved runes. This bugle grants you a +2 item bonus to Performance checks while playing music with the instrument. --- **Activate—Reveille** ⟨1⟩ (auditory, manipulate) **Frequency** once per day **Effect** You blow a swift cadence of sharp notes that carries through the air. You and all allies within a can immediately Stand as a free action; this doesn't provoke reactions.",
+  "currentFlat": {
+   "skills": {
+    "performance": 2
+   }
+  },
+  "openQuestion": "Same family question: passiveEffects.skills.performance = 2 is applied unconditionally against a conditional printed bonus. Star it, or keep it in the maths?"
+ },
+ {
+  "id": "fife-of-the-faithful",
+  "collection": "items",
+  "name": "Fife of the Faithful",
+  "level": 4,
+  "traits": [
+   "magical"
+  ],
+  "text": "This small metal fife is of extraordinary fine quality, with gold filigree on the embouchure. A fife of the faithful grants you a +1 item bonus to Performance checks while playing music with the instrument. --- **Activate—Call to Arms** ⟨2⟩ (auditory, concentrate, manipulate) **Frequency** once per day **Effect** You play a rousing tune on the fife that carries across the battlefield. You and all allies in a gain a +1 status bonus to saving throws for 1 round.",
+  "currentFlat": {
+   "skills": {
+    "performance": 1
+   }
+  },
+  "openQuestion": "Two things in one record: (a) passiveEffects.skills.performance = 1 applies the conditional Performance bonus unconditionally — star or maths? and (b) should the 1-round Call to Arms save bonus be a permanent star on Fortitude/Reflex/Will, or a Mode/effect? This is exactly the 'Fort/Reflex says nothing' case the user reported, so it may be wanted despite being temporary."
+ },
+ {
+  "id": "guangu-of-the-steppe",
+  "collection": "items",
+  "name": "Guangu of the Steppe",
+  "level": 6,
+  "traits": [
+   "magical"
+  ],
+  "text": "This large drum is made of hardwood and horse hide, with white silhouettes of coursing stallions along its circumference. This drum grants you a +1 item bonus to Performance checks while playing music with the instrument. --- **Activate—The Hammer of Hooves** ⟨2⟩ (auditory, concentrate, manipulate) **Frequency** once per day **Effect** You hammer a thundering beat on the guangu. For 10 minutes, mounted allies within a gain a +10-foot status bonus to their mount's Speeds. They also gain a +1 status bonus to Nature checks to Command an Animal and automatically succeed when they Command an Animal they're mounted on to take a move action (such as Stride).",
+  "currentFlat": {
+   "skills": {
+    "performance": 1
+   }
+  },
+  "openQuestion": "Same family question: passiveEffects.skills.performance = 1 is unconditional against a conditional printed bonus. Star it, or keep it in the maths?"
+ },
+ {
+  "id": "horn-of-the-archon",
+  "collection": "items",
+  "name": "Horn of the Archon",
+  "level": 16,
+  "traits": [
+   "magical"
+  ],
+  "text": "Crafted by archons for mortal use, this trumpet is made of luminous gold and ivory, giving off a soft glow that warms the soul. This trumpet grants you a +2 item bonus to Performance checks while playing music with the instrument. --- **Activate—Archon's Note** ⟨1⟩ (auditory, incapacitation, manipulate) **Frequency** once per day **Effect** You blast a note on the horn so clear and pure that its grandeur stuns your enemies and inspires your allies. Allies in the area gain a +1 status bonus to attack rolls and saving throws for 1 round. Enemies within a must attempt a saving throw. They're then temporarily immune for 1 day. --- **Critical Success** The creature is unaffected. **Success** The creature is off-guard for 1 round. **Failure** The creature is Stunned 1 and off-guard for 1 round. **Critical Failure** The creature is Stunned 2 and off-guard for 1 round.",
+  "currentFlat": {
+   "skills": {
+    "performance": 2
+   }
+  },
+  "openQuestion": "Same family question: passiveEffects.skills.performance = 2 is unconditional against a conditional printed bonus. Star it, or keep it in the maths?"
+ },
+ {
+  "id": "born-of-celestial",
+  "collection": "heritages",
+  "name": "Born of Celestial",
+  "traits": [
+   "yaoguai"
+  ],
+  "text": "You were once a powerful celestial before an escape or great punishment left you trapped in a mortal shell, with only vague memories and limited power. Due to your residual divine power, the tradition of any spells or magical abilities you gain from a yaoguai heritage or ancestry feat is divine instead of its normal tradition (usually occult). - **Humanoid Form** Fragments of divine memory still litter your mind. You gain a +1 circumstance bonus to Religion checks. - **Yaoguai Form** Celestial power flows through you. Choose one cantrip from the divine spell list. You can cast this spell as an innate divine cantrip at will. A cantrip is heightened to a spell rank equal to half your level rounded up.",
+  "currentFlat": null,
+  "openQuestion": "Does Heroes Heaven model yaoguai Humanoid Form vs Yaoguai Form as a toggle? If not, should form-gated flat bonuses (this +1 Religion, and Born of Item's +1 Lore) be folded into the totals as unconditional instead of starred?"
+ }
+]

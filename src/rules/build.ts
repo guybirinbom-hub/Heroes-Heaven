@@ -2043,7 +2043,22 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   const takenFeats = new Set<string>();
   // Eagle Hunter and Returned each grant TWO feats; iterating is what stopped the second being lost.
   for (const bgFeatId of backgroundGrantedFeats(background, build.backgroundSkillChoice)) {
-    feats.push({ featId: bgFeatId, level: 1, category: 'skill' });
+    // The granted feat's OWN sub-choice travels with it. Without this the feat arrived and its subject
+    // did not: Abadar's Avenger grants "Assurance with Religion", and the sheet could only render a
+    // bare "Assurance" because nothing carried the skill. Read from grantedFeatChoices — the slot the
+    // builder's picker writes, and the one applyFeatFocus already reads for slot-picked grants.
+    const grantedChoice = content.feats[bgFeatId]?.choice;
+    const pick = build.grantedFeatChoices?.[bgFeatId];
+    // Same {value,label} shape a slot-picked grant stores, so every reader treats them alike.
+    const raw = grantedChoice?.options?.find((o) => o.value === pick)?.label;
+    feats.push({
+      featId: bgFeatId,
+      level: 1,
+      category: 'skill',
+      ...(grantedChoice && pick
+        ? { choice: { value: pick, label: grantedChoice.kind === 'domains' ? cap(pick) : raw ? featChoiceLabel(raw) : cap(pick) } }
+        : {}),
+    });
     takenFeats.add(bgFeatId);
   }
   // A feat-granting heritage (Versatile Human → a level-1 general feat) — injected like the

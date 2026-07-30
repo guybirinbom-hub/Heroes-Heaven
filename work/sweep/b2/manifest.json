@@ -1,0 +1,11 @@
+{
+ "batch": "b2",
+ "lanes": [
+  "defense",
+  "toggle",
+  "proficiency"
+ ],
+ "records": 1655,
+ "chunkSize": 75,
+ "chunks": 23
+}

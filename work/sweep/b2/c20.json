@@ -1,0 +1,1121 @@
+[
+ {
+  "id": "megafauna-veterinarian",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Megafauna Veterinarian",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "By heeding the wise advice of elders in your following- and aided by your own experience-you've learned how to provide medical care to the megafauna of the Mammoth Lord followings. You can attempt a Nature check instead of a Medicine check for any of Medicine's trained and untrained uses, provided the subject of your medical care is a megafauna. If you're attempting an action that requires a particular proficiency rank in Medicine (such as Treat Wounds), use your proficiency rank in Nature instead. If the subject of your care is your megafauna and you roll a success on your check, you get a critical success instead."
+ },
+ {
+  "id": "memory-of-skill",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Memory of Skill",
+  "level": 9,
+  "traits": [
+   "samsaran"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Frequency** once per day --- Your years of training in a previous life didn't go to waste with your death, and you can call upon this training when you most need it. Choose one skill. You temporarily increase your proficiency rank with that skill by one step for 1 minute (from untrained to trained, trained to expert, and expert to master). This temporary increase adjusts your proficiency bonus and allows you to use skill actions based on this increased proficiency as normal. Memory of Skill can't increase a skill's proficiency rank beyond master."
+ },
+ {
+  "id": "menacing-prowess",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Menacing Prowess",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Scaring off multiple people at once is your specialty. When you Demoralize, you can target up to 2 creatures within 30 feet of you at once. If you are a master of Intimidation, you can Demoralize up to 4 creatures at once; if you're legendary, you can Demoralize up to 8 creatures at once."
+ },
+ {
+  "id": "mending-lattice",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Mending Lattice",
+  "level": 13,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨4⟩ (concentrate) **Trigger** The affixed item would take damage **Requirements** You are trained in Crafting --- This lattice of reinforced iron is shaped into a perfect octagon. When you activate it, it negates the damage and instantly and completely repairs the affixed item."
+ },
+ {
+  "id": "merciful-charm",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Merciful Charm",
+  "level": 3,
+  "traits": [
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨4⟩ envision **Trigger** You Strike with the affixed weapon **Requirements** You're trained in the affixed weapon. --- This small limestone pendant is typically carved in the shape of clasped hands. When activated, the affixed weapon gains the nonlethal trait for the triggering attack and all other attacks for 1 minute."
+ },
+ {
+  "id": "mighty-rage",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Mighty Rage",
+  "level": 11,
+  "traits": [
+   "barbarian"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your rage intensifies and lets you hit harder at the start of a fight. Your proficiency rank for your barbarian class DC increases to expert. In addition, when you use Quick-Tempered, the first Strike you make during your first turn deals additional damage equal to your Rage damage."
+ },
+ {
+  "id": "minor-magic",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Minor Magic",
+  "level": 2,
+  "traits": [
+   "rogue"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You've dabbled in minor magical abilities. Choose arcane, divine, occult, or primal magic, and gain two cantrips from the common cantrips that are available in that tradition. You gain the Cast a Spell activity, your key spellcasting ability is Charisma, and you're trained in spell attack rolls and DCs for the tradition you chose."
+ },
+ {
+  "id": "multilingual",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Multilingual",
+  "level": 1,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You easily pick up new languages. You learn two new languages, chosen from common languages, uncommon languages, and any others you have access to. You learn an additional language if you are or become a master in Society and again if you are or become legendary. --- **Special** You can select this feat multiple times. Each time, you learn additional languages."
+ },
+ {
+  "id": "mycoweave-shield",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Mycoweave Shield",
+  "level": 2,
+  "traits": [
+   "fungus",
+   "poison"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Mycoweave Shield May contain spoilers from Sky King's Tomb Source Pathfinder #193: Mantle of Gold pg. 85 Usage held in 1 hand Bulk 1 This shield is grown entirely of specially treated fungi, giving it the appearance of a frilly disc. When left atop at least 1 bulk of organic matter, it gains fast healing 1; after 10 minutes 1 Bulk of the organic matter has been consumed by the shield. This shield doubles its hardness against bludgeoning, electricity, and sonic damage. Activate manipulate; Trigger The shield is broken; Effect The shield spews spores into one adjacent square, dealing persistent poison damage to all creatures in within it; a successful Fortitude save negates the damage. Craft Requirements You are trained in Nature, and can cast a fungus spell or are fungus. Mycoweave Shield (Lesser) Source Pathfinder #193: Mantle of Gold pg. 85 Price 40 gp Bulk 1 The shield has Hardness 2, HP 12, and BT 6. When the shield breaks, the reaction deals 1d6 persistent poison damage with a DC 16 Fortitude saving throw. Mycoweave Shield (Greater) Source Pathfinder #193: Mantle of Gold pg. 85 Price 40 gp Bulk 1 The shield has Hardness 4, HP 64, and BT 32. When the shield breaks, the reaction deals 2d6 persistent poison damage with a DC 24 Fortitude saving throw. Mycoweave Shield (Major) Source Pathfinder #193: Mantle of Gold pg. 85 Price 40 gp Bulk 1 The shield has Hardness 6, HP 110, and BT 55. When the shield breaks, the reaction deals 3d6 persistent poison damage with a DC 35 Fortitude saving throw."
+ },
+ {
+  "id": "mycoweave-shield-greater",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Mycoweave Shield (Greater)",
+  "level": 8,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This shield is grown entirely of specially treated fungi, giving it the appearance of a frilly disc. The shield has Hardness 4, HP 64, and BT 32. When left atop at least 1 bulk of organic matter, it gains fast healing 1; after 10 minutes 1 Bulk of the organic matter has been consumed by the shield. This shield doubles its hardness against bludgeoning, electricity, and sonic damage. **Activate** ⟨5⟩ manipulate **Trigger** The shield is broken --- **Effect** The shield spews spores into one adjacent square, dealing 2d6 damage to all creatures in within it; a successful save negates the damage. --- **Craft Requirements** You are trained in Nature, and can cast a fungus spell or are fungus."
+ },
+ {
+  "id": "mycoweave-shield-lesser",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Mycoweave Shield (Lesser)",
+  "level": 2,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This shield is grown entirely of specially treated fungi, giving it the appearance of a frilly disc. The shield has Hardness 2, HP 12, and BT 6. When left atop at least 1 bulk of organic matter, it gains fast healing 1; after 10 minutes 1 Bulk of the organic matter has been consumed by the shield. This shield doubles its hardness against bludgeoning, electricity, and sonic damage. **Activate** ⟨5⟩ manipulate **Trigger** The shield is broken --- **Effect** The shield spews spores into one adjacent square, dealing 1d6 damage to all creatures in within it; a successful save negates the damage. --- **Craft Requirements** You are trained in Nature, and can cast a fungus spell or are fungus."
+ },
+ {
+  "id": "mycoweave-shield-major",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Mycoweave Shield (Major)",
+  "level": 16,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This shield is grown entirely of specially treated fungi, giving it the appearance of a frilly disc. The shield has Hardness 6, HP 110, and BT 55. When left atop at least 1 bulk of organic matter, it gains fast healing 1; after 10 minutes 1 Bulk of the organic matter has been consumed by the shield. This shield doubles its hardness against bludgeoning, electricity, and sonic damage. **Activate** ⟨5⟩ manipulate **Trigger** The shield is broken --- **Effect** The shield spews spores into one adjacent square, dealing 3d6 damage to all creatures in within it; a successful save negates the damage. --- **Craft Requirements** You are trained in Nature, and can cast a fungus spell or are fungus."
+ },
+ {
+  "id": "navigators-feather",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Navigator's Feather",
+  "level": 2,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨4⟩ (concentrate, fortune) **Trigger** You would roll a Survival check to Sense Direction or Track but haven't rolled yet **Requirements** You're trained in Survival. --- This jaunty feather is affixed to headgear and can guide you in times of trouble, twisting to point in different directions. When you activate the talisman, you roll the triggering Survival check to Sense Direction or Track twice, and use the higher result. For 24 hours, you gain a +1 circumstance bonus to Survival checks to Sense Direction, so long as you're navigating toward the same destination as when you activated the talisman, and a +1 circumstance bonus to Survival checks to Track, so long as you continue to Track the same creature as when you activated the talisman. After 24 hours, the feather disintegrates, becoming mundane dust that blows away on the breeze."
+ },
+ {
+  "id": "nimble-crawl",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Nimble Crawl",
+  "level": 2,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can Crawl incredibly swiftly—up to half your Speed, rather than 5 feet. If you're a master in Acrobatics, you can Crawl at full Speed, and if you're legendary, you aren't off-guard while prone."
+ },
+ {
+  "id": "orc-weapon-expertise",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Orc Weapon Expertise",
+  "level": 13,
+  "traits": [
+   "orc"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Orc Weapon Expertise Source Core Rulebook pg. 59 Prerequisites Orc Weapon Familiarity Your orc affinity blends with your class training, granting you great skill with orc weapons. Whenever you gain a class feature that grants you expert or greater proficiency in a given weapon or weapons, you also gain that proficiency in the falchion, the greataxe, and all orc weapons in which you are trained."
+ },
+ {
+  "id": "pactmasters-grace",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Pactmaster's Grace",
+  "level": 14,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Granted by Katapesh's Pactmasters to influential merchants, exceptional Zephyr Guards, and favorite retainers, a pactmaster's grace is a crystal-studded blue platinum ring that sharpens the wearer's urban instincts. While invested, the ring grants a +2 item bonus to saving throws while you are in an urban setting, and this increases to a +3 item bonus if you have legendary proficiency in Guild Lore, Katapesh Lore, Mercantile Lore, or Society. You also gain a +3 item bonus to Mercantile Lore checks while wearing the ring, and you can attempt checks that require a proficiency rank of master in Society."
+ },
+ {
+  "id": "paragon-battle-medicine",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Paragon Battle Medicine",
+  "level": 7,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Access** You’re from Rahadoum. --- Kassi Aziril taught you her techniques that originated the modern use of Battle Medicine. When you successfully use Battle Medicine, you can also reduce the target's sickened, enfeebled, or clumsy condition by 1 (this has no effect if you are subject to an effect continually applying the clumsy condition, like enlarge). If you are legendary in Medicine, you can choose to reduce the target's frightened or stunned condition by 1 instead, and if you have the Godless Healing feat, you can choose to reduce the target's stupefied or drained condition by 1 instead. If you have the Mortal Healing feat, you can reduce all available conditions by 1 for a target who hasn't benefited from vitality or healing magic in the last 24 hours, and if you roll a critical success before applying the effects of the feat, you reduce all available conditions by 2 for that target instead."
+ },
+ {
+  "id": "paragon-benefit-regalia",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Paragon Benefit (Regalia)",
+  "level": 17,
+  "traits": [
+   "thaumaturge"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Your regalia grants you the true gravitas of rulership, tying together the hearts and minds of your allies and making it impossible for you to leave a bad impression. If you roll a critical failure on a check to Coerce, Make an Impression, or Request, you get a failure instead. When others use Follow the Expert to follow you, you grant them a +3 circumstance bonus if you are trained or +4 if you are an expert or above. Allies in your inspiring aura aren't off-guard from being flanked unless you too are flanked. If one of your allies in the aura is clumsy, enfeebled, frightened, sickened, or stupefied, the status penalty your ally takes from the condition is 1 lower than the condition's value as long as the ally remains in the aura, unless you too are affected by the same condition."
+ },
+ {
+  "id": "paragon-benefit-tome",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Paragon Benefit (Tome)",
+  "level": 17,
+  "traits": [
+   "thaumaturge"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "In addition to the other benefits, your tome's information alerts you to ambushes and attacks from your foes. While holding your tome, you can always roll a skill check for initiative against creatures or haunts using Esoteric Lore. If you do, you gain a +3 circumstance bonus to your initiative roll. The initiate benefit's circumstance bonus to Recall Knowledge from holding your tome increases from +1 to +2. When you succeed at the Recall Knowledge check granted by the tome's adept benefit, the bonus applies to all attack rolls you make before the start of your next turn, not just your next one. Lastly, when you gain temporary skill proficiencies, both are legendary."
+ },
+ {
+  "id": "patron-theme",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Patron Theme",
+  "level": 1,
+  "traits": [
+   "witch"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "When your patron first makes contact, they usually reveal little more of themself than glimpses or specific manifestations—you might see eyes from the shadows of the forest or hear a wordless voice echoing across the frozen tundra before your familiar makes itself known. Your patron's true identity might be a powerful hag, a fey lord, a deity or demigod, an archdevil, or a similarly powerful entity, or perhaps multiple such figures working in tandem, but that identity is for you to attempt to discover as you learn more of your patron's lessons. Some patrons are multifaceted, appearing in different guises, and granting different powers to different witches. In some cases, the witch may know of their patron's identity, but have some other aspect shrouded in uncertainty; they might know their patron's name but not motive, or perhaps even if they know the patron's identity, they have been cursed to never reveal it to others. Your patron's theme determines the following. **Spell List** You use this magical tradition and spell list. **Patron Skill** You become trained in the skill associated with your patron's magical tradition. **Initial Lesson** This is the first lesson your patron teaches you and is unique to your patron. **Familiar Ability** One of your familiar's two bonus abilities is always the one listed here, a mark of your patron's indelible influence. The benefit can occur only once per round when you Cast or Sustain a hex, and you can choose whether it occurs before or after the effects of Casting or Sustaining the hex."
+ },
+ {
+  "id": "pei-zing-adept",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Pei Zing Adept",
+  "level": 2,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Access** Tian Xia origin --- You're practiced at timing preparations to the point where you can treat multiple patients at once. During your daily preparations, you can administer up to two elemental medicines to different recipients. If you're a master in one of the prerequisite skills, you can administer to up to four recipients, and if you're legendary, you can administer to up to eight."
+ },
+ {
+  "id": "perfections-path",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Perfection's Path",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "Choose one saving throw (Fortitude, Reflex, or Will) in which you are an expert. Your proficiency rank in the chosen saving throw increases to master."
+ },
+ {
+  "id": "perpetual-scout",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Perpetual Scout",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You spot anything out of place in the areas you know best. While in your Favored Terrain, you always gain the benefits of the Scout exploration activity, even if you are performing another exploration activity. If you're legendary in Survival, you gain these benefits in any terrain."
+ },
+ {
+  "id": "phantom-piano",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Phantom Piano",
+  "level": 12,
+  "traits": [
+   "focused",
+   "intelligent",
+   "occult"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Perception** +22; precise vision 30 feet, imprecise hearing 30 feet **Communication** telepathy (any languages the possessing spirit knew in life) **Skills** Diplomacy +23, Music Lore +23, Performance +25, Society +21 **Int** +3, **Wis** +4, **Cha** +5 **Will** +22 --- When a skilled musician dies before reaching their full potential or accomplishing an important goal, their soul might refuse to move on to the Boneyard. Rather than becoming undead, the spirit possesses an instrument they played in life, turning it into an intelligent item and a virtuoso instrument. (Other *phantom instruments* exist, but most are heavy.) A *phantom piano* offers a bargain to any bard or other skilled musician who finds it: receive musical aid as you dedicate yourself to reaching the success the spirit felt they were denied in life. The piano refuses to play for those who reject this deal. If you accept, the piano asks only that you practice with it and perform for increasingly refined and august audiences, requiring a successful Performance check appropriate to your proficiency level. The piano sets no strict timeline, but at the GM's discretion, if you go too long without making progress, the piano can cease cooperating with you until it's satisfied with your dedication once again. While you keep up your end of the bargain, the piano grants you a +2 item bonus to Performance checks made with it. The piano also provides access to composition spells based on your Performance proficiency rank, as if you had the corresponding feat. The spells you can use comprise a cumulative list, but you can cast them only when using the piano. You must spend the actions and Focus Points required to cast these spells. **Trained:** Courageous Anthem, Uplifting Overture **Expert:** Hymn of Healing, Rallying Anthem **Master:** Symphony of the Unfettered Heart **Legendary:** Soothing Ballad A *phantom piano* has the following activations. --- **Activate** ⟨1⟩ (concentrate) **Effect** The piano shrinks down to a figurine of light Bulk compact enough to store in a pouch, or from figurine form back to instrument form. In figurine form, the piano doesn't function as an instrument or provide magic other than this activation. --- **Activate** ⟨4⟩ (concentrate) **Frequency** once per day **Effect** You gain 1 Focus Point, which you can spend only to Cast a Spell the piano provides you."
+ },
+ {
+  "id": "pilferers-gloves",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Pilferer's Gloves",
+  "level": 17,
+  "traits": [
+   "apex",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Made of soft and subtle black leather, these gloves fit tightly but aren't uncomfortable and don't impede your sense of touch. As long as you're trained in Thievery while wearing these gloves, you're always considered one skill rank higher than your actual rank. If you possess a Legendary skill rank in Thievery, you gain a +2 item bonus to Thievery checks instead. When you invest the gloves, you either increase your Dexterity modifier by 1 or increase it to +4, whichever would give you a higher value. **Activate** ⟨5⟩ (concentrate) **Frequency** once per day **Trigger** You fail or critically fail a Thievery skill check --- **Effect** If you failed the Thievery skill check, you succeed at that check instead. If you critically failed, you fail instead."
+ },
+ {
+  "id": "pistoleros-challenge",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Pistolero's Challenge",
+  "level": 6,
+  "traits": [
+   "auditory",
+   "flourish",
+   "gunslinger",
+   "linguistic",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "With a stern call, carefully chosen barb, or some other challenging declaration, you demand your foe's attention in a duel. Choose an opponent within 30 feet who you can perceive and can hear you, and make your choice of a or check against the target's Will DC. No matter the result of the check, the foe is temporarily immune to your Pistolero's Challenge until noon the next day. **Success** Both you and the opponent gain a +2 status bonus to damage rolls with Strikes made against each other. If you're a master in the skill you used for the check, the status bonus to damage rolls increases to +3, and if you're legendary, it increases to +4. You can have only one challenge in effect at a time; challenging a new opponent ends this effect on any current target. Otherwise, the effect lasts until one of you is defeated, flees, or the encounter ends. **Critical Failure** You become Frightened 1 and can't use this ability again for 1 minute."
+ },
+ {
+  "id": "prepare-papers",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Prepare Papers",
+  "level": 7,
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You're practiced at creating forgeries that establish your outlaw credentials or augment your legal authority. You can Create Forgery as an exploration activity. It takes you about 1 hour per page of the document that you're forging. This time is reduced to 10 minutes per page if you're legendary in Society."
+ },
+ {
+  "id": "psychic-weapon-expertise",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Psychic Weapon Expertise",
+  "level": 11,
+  "traits": [
+   "psychic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Training and magic have improved your weapon technique. Your proficiency rank for simple weapons and unarmed attacks increases to expert."
+ },
+ {
+  "id": "psychic-weapon-specialization",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Psychic Weapon Specialization",
+  "level": 13,
+  "traits": [
+   "psychic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "As you touch a weapon, you glimpse the hands that made and wielded it, teaching you how to inflict greater injuries. You deal 2 additional Damage with weapons and unarmed attacks in which you are an expert. This damage increases to 3 if you're a master, and 4 if you're legendary."
+ },
+ {
+  "id": "punishing-shove",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Punishing Shove",
+  "level": 1,
+  "traits": [
+   "guardian"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "When you push a foe away, you put the entire force of your armored form into it. When you successfully Shove a creature, that creature takes an amount of bludgeoning damage equal to your Strength modifier (or double that amount on a critical success). This damage increases by 2 when you become an expert in Athletics, 6 when you become a master, and 12 when you become legendary."
+ },
+ {
+  "id": "quick-change",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Quick Change",
+  "level": 7,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can shift between your identities with ease. Instead of spending 1 minute to change your identity, you can now do so as a 3-action activity. If you are legendary in Deception, you can perform this change as a single action."
+ },
+ {
+  "id": "quick-climb",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Quick Climb",
+  "level": 7,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "When Climbing, you move 5 more feet on a success and 10 more feet on a critical success, up to your Speed. If you're legendary in Athletics, you gain a climb Speed equal to your Speed."
+ },
+ {
+  "id": "quick-contacts",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Quick Contacts",
+  "level": 2,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You know where to go, who to talk to, and how to make new connections, fast. Upon entering a new settlement, spending 1 day of downtime allows you to build enough connections to make use of the Connections or Criminal Connections feats. If you're legendary in Society, you can form the required connections within 1 hour of entering a new settlement."
+ },
+ {
+  "id": "quick-disguise",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Quick Disguise",
+  "level": 2,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can set up a disguise in one-tenth the usual time (generally 1 minute). If you're a master in Deception, you can create a full disguise and Impersonate as a 3-action activity. If you're legendary, it takes a single action."
+ },
+ {
+  "id": "quick-identification",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Quick Identification",
+  "level": 1,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can Identify Magic swiftly. You take only 1 minute when using Identify Magic to determine the properties of an item, ongoing effect, or location, rather than 10 minutes. If you're a master, it takes a 3-action activity, and if you're legendary, it takes 1 action."
+ },
+ {
+  "id": "quick-repair",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Quick Repair",
+  "level": 1,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "For you, the Repair activity loses the exploration trait and takes 1 minute instead of 10 minutes. If you're a master in Crafting, it takes 3 actions. If you're legendary, it takes 1 action."
+ },
+ {
+  "id": "quick-squeeze",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Quick Squeeze",
+  "level": 1,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You Squeeze 5 feet per round (10 feet on a critical success). If you're legendary in Acrobatics, you Squeeze at full Speed."
+ },
+ {
+  "id": "quick-study",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Quick Study",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "During your daily preparations, you can study a particular subject to gain the trained proficiency rank in one Lore skill of your choice. You must have interacted with that subject in some way on the previous day, whether by reading about it, talking to someone knowledgeable on the topic, or experiencing it yourself. Alternatively, you can reference your notes to instead choose a Lore skill you've prepared before with Quick Study. This proficiency lasts until you prepare again. Since this proficiency is temporary, you can't use it as a prerequisite for a skill increase or a permanent character option like a feat."
+ },
+ {
+  "id": "quick-swim",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Quick Swim",
+  "level": 7,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You Swim 5 feet farther on a success and 10 feet farther on a critical success, to a maximum of your Speed. If you're legendary in Athletics, you gain a swim Speed equal to your Speed."
+ },
+ {
+  "id": "raging-stories",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Raging Stories",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "divine"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "When you Offer a Story about wild chances and fighting against all odds, you can wrap yourself in spectral flame in place of the normal benefits. The action then gains the fire trait. Your melee Strikes for the duration deal 2 additional fire damage. The creature you share a story with can choose this benefit even if you did not. The fire damage increases to 4 if you are a master of Religion and 6 if you are legendary."
+ },
+ {
+  "id": "ranger-expertise",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Ranger Expertise",
+  "level": 9,
+  "traits": [
+   "ranger"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've gained techniques that improve your cunning and skill. Your proficiency rank for your ranger DC increases to expert. If you have warden spells, your proficiency rank for spell attacks and spell DCs increases to expert."
+ },
+ {
+  "id": "rapid-affixture",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Rapid Affixture",
+  "level": 7,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You take only 1 minute to Affix a Talisman. If you're legendary in Crafting, you can Affix a Talisman as a 3-action activity."
+ },
+ {
+  "id": "rascal",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Rascal",
+  "level": 1,
+  "traits": [
+   "swashbuckler"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featFeatGrants"
+  ],
+  "text": "You aren't afraid to use underhanded tactics to get the edge over your opponents. You are trained in Thievery and gain the Dirty Trick general feat. When you use Dirty Trick, the action gains the bravado trait."
+ },
+ {
+  "id": "read-disaster",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Read Disaster",
+  "level": 8,
+  "traits": [
+   "exploration",
+   "oracle",
+   "prediction"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You spend 10 minutes and open yourself to the divine mysteries of the world, peering into the most sinister portents of the future. You gain the effects of Augury, except you learn only about the dangers ahead; any results of \"good\" are instead \"nothing,\" and results of \"mixed\" are instead \"bad.\" If you are legendary in Religion, you take only 1 minute to Read Disaster."
+ },
+ {
+  "id": "recognize-spell",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Recognize Spell",
+  "level": 1,
+  "traits": [
+   "general",
+   "secret",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Trigger** A creature within line of sight casts a spell that you don't have prepared or in your spell repertoire, or a trap or similar object casts such a spell. You must be aware of the casting. --- If you are trained in the appropriate skill for the spell's tradition and it's a common spell of 2nd rank or lower, you automatically identify it (you still roll to attempt to get a critical success, but can't get a worse result than success). The highest rank of spell you automatically identify increases to 4 if you're an expert, 6 if you're a master, and 10 if you're legendary. The GM rolls a secret Arcana, Nature, Occultism, or Religion check, whichever corresponds to the tradition of the spell being cast. If you're not trained in the skill, you can't get a result better than failure. --- **Critical Success** You correctly recognize the spell and gain a +1 circumstance bonus to your saving throw or your AC against it. **Success** You correctly recognize the spell. **Failure** You fail to recognize the spell. **Critical Failure** You misidentify the spell as another spell entirely, of the GM's choice."
+ },
+ {
+  "id": "repository-of-knowledge",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Repository of Knowledge",
+  "level": 0,
+  "traits": [
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Repository of Knowledge Source GM Core pg. 316 Aspect Mind Your relic is imbued with the psychic impressions of ages past. While the relic is on your person, you are trained in 3 additional Lore skills of the GM's choice that fit the relic's history, decided at the time of gaining this gift. If the relic is 9th level, you instead have expert proficiency in these Lore skills, and if the relic is 17th level, you have master proficiency in these Lore skills."
+ },
+ {
+  "id": "resourceful-ritualist",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Resourceful Ritualist",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can cast difficult rituals that might otherwise be just beyond your skill. You can attempt checks to cast a ritual that requires expert proficiency if you are trained, master proficiency if you are an expert, or legendary proficiency if you are a master."
+ },
+ {
+  "id": "respite-of-a-thousand-roofs",
+  "lane": "proficiency",
+  "collection": "heritages",
+  "name": "Respite of a Thousand Roofs",
+  "traits": [
+   "yaksha"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featFeatGrants"
+  ],
+  "text": "You swore a vow to shelter and feed the poor. Your vow grants you adroitness with carpentry, cook pot, and cloth; you become trained in Crafting and Cooking Lore, and you gain the Improvise Tool skill feat. --- **Additional Edict** help the impoverished to the extent you're able by repairing their abodes and clothing or by feeding them"
+ },
+ {
+  "id": "revolutionary-innovation",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Revolutionary Innovation",
+  "level": 15,
+  "traits": [
+   "inventor"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You are an unparalleled genius and have discovered a technique that will revolutionize your chosen field—or at least for the time being, your innovation! Choose a revolutionary modification to apply to your innovation. You can also choose an initial or breakthrough modification of the same type instead, if you prefer. ### Revolutionary Armor Modifications - **Automated Impediments:** Your armor uses electromagnetic fields, subharmonic distortions, or other techniques to make it difficult for those close to you to move unless you allow it. While wearing your armor, all spaces adjacent to you are difficult terrain for your enemies. - **Energy Barrier:** Your armor's defenses ablate any kind of energy coming your way. While wearing your armor, you gain resistance to all energy damage (acid, cold, electricity, fire, force, sonic, vitality, and void damage) equal to 2 + half your level. You must have the harmonic oscillator, metallic reactance, or phlogistonic regulator modification to select this modification. - **Incredible Resistance:** You've improved upon your breakthrough modification's ability to resist damage. Choose one of the following breakthrough modifications your innovation has: dense plating, layered mesh, or tensile absorption. Increase the resistance you gain from that modification to be equal to your level, instead of half your level. - **Multisensory Mask (subterfuge suit only):** You've built a multisensory mask over your armor that protects you by distorting your figure from all senses, leaving behind only a hazy image, muffled sounds, and so forth. While wearing the armor, you gain concealment against all creatures, even if they are using a nonvisual precise sense, such as a bat's echolocation. As normal for effects that leave your location obvious, you can't use this concealment to Hide or Sneak. If you use a hostile action, the concealment ends until you restore the mask as a single action, which has the manipulate trait. - **Perfect Fortification (power suit only):** You've outfitted your armor with such heavy fortifications that deadly attacks often lose their edge. Each time you're critically hit while wearing the armor, attempt a DC 13 flat check. On a success, it becomes a normal hit. This isn't cumulative with *fortification* runes or other abilities that reduce critical hits with a flat check. Additionally, you gain resistance 2 + half your level against precision damage. - **Physical Protections:** Your armor has so many adjustments and precautions that it can guard against all physical damage. While wearing your armor, you gain resistance to all physical damage (bludgeoning, piercing, and slashing damage, as well as persistent bleed damage) equal to half your level. You must have the dense plating, layered mesh, or tensile absorption breakthrough modification to select this modification. - **Rune Capacity:** Whether you've done some dabbling in orichalcum alloys or found another engineering solution, you've built your innovation in such a way that it can hold an additional property rune. Your innovation can have one more property rune than a normal item of its kind (to a maximum of four property runes with a +3 *po"
+ },
+ {
+  "id": "rivethun-adept",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Rivethun Adept",
+  "level": 16,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "innateSpells"
+  ],
+  "inRegistries": [],
+  "text": "Your ability to wield spirit magic has increased. You can cast Speak with Stones and Spiritual Guardian as a 5th-rank divine innate spells. You can cast each of these spells once per day. If you're legendary in Religion, *spiritual guardian* is heightened to 7th rank."
+ },
+ {
+  "id": "rivethun-devotion",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Rivethun Devotion",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "innateSpells"
+  ],
+  "inRegistries": [],
+  "text": "Through study, dedication, and introspection, you've learned to wield magic that affects the spirit. You gain See the Unseen and Spirit Link as 2nd-rank divine innate spells. You can cast each of these spells once per day. If you're a master in Religion, *spirit link* is heightened to 3rd rank. If you're legendary in Religion, *spirit link* is heightened to 4th rank."
+ },
+ {
+  "id": "rogue-expertise",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Rogue Expertise",
+  "level": 11,
+  "traits": [
+   "rogue"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your techniques are now harder to resist. Your proficiency rank for your rogue class DC increases to expert."
+ },
+ {
+  "id": "rolling-landing",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Rolling Landing",
+  "level": 2,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You land with quick rolls that help you keep your momentum. If you fall more than 5 feet and don't take damage (usually due to treating the fall as a shorter distance), you can use your reaction to immediately enter a short roll when you land and Step. If you are an expert in Acrobatics, you can use your reaction to Step or Stride up to half your Speed. If you're a master in Acrobatics, you can use your reaction to Step or Stride up to your full Speed. If you're legendary in Acrobatics, you don't trigger reactions triggered by movement when you Stride in this way."
+ },
+ {
+  "id": "root-magic",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Root Magic",
+  "level": 1,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your talismans ward against foul magic. During your daily preparations, you can assemble a small pouch with bits of herbs, hair, sacred oils, and other ritual ingredients, which you give to one ally; the ally cannot be yourself. The first time that day the ally attempts a saving throw against a spell or haunt, they gain a +1 circumstance bonus to the roll. This bonus increases to +2 if you're an expert in Occultism or +3 if you're legendary."
+ },
+ {
+  "id": "ruffian",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Ruffian",
+  "level": 1,
+  "traits": [
+   "rogue"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You prefer the direct approach: strong-arming or intimidation. You might be an enforcer for organized crime, a highway bandit, or a noble who bullies others with threats of your family's power. You use whatever tools you have to get the job done. You can deal sneak attack damage with any weapon, not just the weapons listed in the sneak attack class feature. This benefit doesn't apply to a simple weapon with a damage die greater than d8 or a martial or advanced weapon with a damage die greater than d6. (Apply any abilities that alter the damage die size first.) Critical hits you make with these weapons gain the weapon's critical specialization benefit if the target is off-guard to you. You're trained in Intimidation and medium armor. You can choose Strength as your key attribute. When you gain light armor expertise, you also gain expert proficiency in medium armor, and when you gain light armor mastery, you also gain master proficiency in medium armor."
+ },
+ {
+  "id": "runelord",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Runelord",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You draw untold power from runes, sometimes called sin magic. You associate with one of the seven sins, also known as the seven rewards of rule: envy, gluttony, greed, lust, pride, sloth, and wrath. If you choose this class archetype, you must select Runelord Dedication as your 2nd-level class feat. **Prerequisites:** You must be a wizard. **Runelord Adjustments:** You become trained in martial polearms and spears. When your proficiency for simple weapons increases, your proficiencies in these weapons increases as well. You learn the Thassilonian language. Instead of an arcane thesis, you gain a personal rune. Your personal rune also affects your arcane bond. You must select the School of Thassilonian Rune Magic as your arcane school, and you must choose one sin to specialize in. When you cast any curriculum spell or school spell from the School of Thassilonian Rune Magic, you do so simply by tracing runes of power in the air. This removes the need to speak incantations aloud. When you Refocus, you do so by contemplating or indulging in your sin. Each sin is opposed by two others. The incompatibility of these sins means that casting magic philosophically appropriate to those opposing sins, as represented by each school's anathema, interrupts your connection to your own sin and personal rune. If you violate your sin's anathema, you lose the benefits of your personal rune, and whenever you attempt to cast a curriculum spell or school spell, you must succeed at a or the spell is lost. This disruption lasts until you complete an Atone ritual; unlike a normal atone ritual, Arcana can be used for both the primary and secondary checks. Your curriculum spells (including spells of your own sin) never violate this anathema, sometimes providing alternatives to prohibited magic. You gain Advanced School Spell as a bonus feat at 8th level, gaining the advanced school spell for the School of Thassilonian Rune Magic; once you've begun your studies of sin magic, there is no turning back from its allure. ### School of Thassilonian Rune Magic ### **Arcane Bond and Personal Rune** Runelords hail from an era where even a scholar was expected to be able to defend themself with arms if necessary, leading to the practice of attaching a blade to the typical wizard's staff. You must choose a polearm or spear as your arcane bond. In place of an arcane thesis, you have a personal rune, which appears on your bonded weapon. The weapon functions as a staff only you can prepare and contains the sin spells from your sin up to the highest rank of spell you can cast (including your cantrips). Your personal rune isn't a property rune and doesn't count against the weapon's limit of such runes. When you prepare your bonded weapon as a staff, you can physically merge one other staff in your possession into it, adding the staff's spells to your bonded weapon until your next daily preparations. While merged, the weapons haft takes on aesthetic aspects of the staff."
+ },
+ {
+  "id": "safe-house",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Safe House",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You establish a safe house-a secure space in which to hide your secrets from the outside world. This safe house is roughly the size of two 10-foot cubes. It's in a location you have access to, and it can be part of a larger building or structure, like a hidden room or an underground cave. The safe house protects objects and people inside it from magical detection. This has the effects of Veil of Privacy, using your Deception modifier for the counteract DC and half your level rounded up for the counteract rank. Setting up or moving your safe house takes a week of downtime. The size of the safe house expands to four 10-foot cubes if you're an expert in Deception, eight cubes if you're a master, and 16 cubes if you're legendary."
+ },
+ {
+  "id": "sage-jotunborn",
+  "lane": "proficiency",
+  "collection": "heritages",
+  "name": "Sage Jotunborn",
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featFeatGrants"
+  ],
+  "text": "You were tasked with keeping oral and stitched histories for your family, your clan, or even an entire settlement. You are trained in Society. You also gain the Additional Lore general feat for a lore skill of your choice."
+ },
+ {
+  "id": "sages-bloom",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Sage's Bloom",
+  "level": 5,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨4⟩ (concentrate) **Trigger** You attempt a Nature check to Recall Knowledge but haven't rolled **Requirements** You're trained in Nature. --- This simple white flower is placed into a hat or worn braided into your hair. When activated, it releases a soothing scent, which helps you focus your mind. When you activate the talisman, you Recall Knowledge three times, rather than once. If you use Nature for any of these checks and get a critical failure, that check is instead a failure."
+ },
+ {
+  "id": "sakuras-sprig",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Sakura's Sprig",
+  "level": 5,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨4⟩ (concentrate) **Trigger** You strike an unholy target with the affixed weapon **Requirements** You're trained in the affixed weapon. --- This small glowing sprig of cherry tree flowers is only granted by Sakura, the kami of Silvertree. When activated, the affixed weapon gains the holy trait for the triggering attack and all other attacks for 1 minute."
+ },
+ {
+  "id": "sanctify-water",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Sanctify Water",
+  "level": 2,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You imbue water with your deity's blessing. Choose a container of water with light Bulk possessed by you or an ally within your reach. Until the end of your next turn, it becomes holy water or unholy water. You can choose holy water if your deity allows holy sanctification, unholy water if your deity allows unholy sanctification, or either if your deity allows both sanctifications. This is a temporary effect and doesn't impart monetary value or allow the water to be used for costs of rituals or the like. If you're a master in Religion, you can sanctify two containers when you take this action, and if you're legendary, you can sanctify three."
+ },
+ {
+  "id": "scorching-disarm",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Scorching Disarm",
+  "level": 9,
+  "traits": [
+   "fire",
+   "naari"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per day --- You make a weapon unbearable to hold. Attempt an Athletics check to Disarm a target creature. You don't need to have a hand free to make this Disarm attempt. If the Disarm attempt succeeds, the target takes 4d6 damage unless it drops the weapon, and on a critical success, it takes 4d6 damage and drops the weapon. If you're legendary in Athletics, this increases to 8d6 damage."
+ },
+ {
+  "id": "scoundrel",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Scoundrel",
+  "level": 1,
+  "traits": [
+   "rogue"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You use fast-talking, flattery, and a silver tongue to avoid danger and escape tricky situations. You might be a grifter or con artist, or you might use your skills in certain reputable professions, like a barrister or diplomat. When you successfully Feint, the target is off-guard against your melee attacks until the end of your next turn. On a critical success, the target is off-guard against all melee attacks until the end of your next turn, not just yours. If you Feint while wielding an agile or finesse melee weapon, you can step immediately after the Feint as a free action. You're trained in Deception and Diplomacy. You can choose Charisma as your key attribute."
+ },
+ {
+  "id": "second-doctrine-cloistered-cleric",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Second Doctrine (Cloistered Cleric)",
+  "level": 3,
+  "traits": [
+   "cleric"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your proficiency rank for Fortitude saves increases to expert."
+ },
+ {
+  "id": "second-doctrine-warpriest",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Second Doctrine (Warpriest)",
+  "level": 3,
+  "traits": [
+   "cleric"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You're trained in martial weapons."
+ },
+ {
+  "id": "shadow-magic",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Shadow Magic",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices",
+   "spellcastingGrant"
+  ],
+  "inRegistries": [],
+  "text": "You gain the ability to fuse and play with shadows by using focus spells specific to shadowdancers. You learn a shadowdancer focus spell of your choice: Dance of Darkness or Shadow Jump. If you don't already have one, you gain a focus pool of 1 Focus Point, which you can Refocus by meditating within an area of dim light or darkness. Shadowdancer focus spells are occult spells. You become trained in occult spell attack rolls and spell DCs, and your spellcasting ability for these spells is Charisma."
+ },
+ {
+  "id": "shadow-mark",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Shadow Mark",
+  "level": 2,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You have learned special tricks that help you follow individuals without them noticing you. When you attempt a Stealth check to Avoid Notice while following a specific target, the target takes a -2 circumstance penalty to their Perception DC. If you have master proficiency in Stealth, the penalty is -3 or -4 if you're legendary. If you start an encounter with the target while shadowing them, the target takes this penalty to their initiative roll and to their Perception DC to determine if they notice you, as normal for Sneak."
+ },
+ {
+  "id": "shall-not-falter-shall-not-rout",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Shall Not Falter, Shall Not Rout",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "focusSpells",
+   "spellcastingGrant"
+  ],
+  "inRegistries": [],
+  "text": "You gain the Shall not Falter, Shall not Rout focus spell. If you don't already have one, you gain a focus pool of 1 Focus Point, which you can regain using the Refocus activity to recite the Crimson Oath and meditate on its teachings. If you already have a focus pool, increase the number of Focus Points in your focus pool by 1. Your knight reclaimant focus spells are divine spells; when you gain this feat, you become trained in divine spell attacks and spell DCs and your spellcasting ability is Charisma."
+ },
+ {
+  "id": "shootists-edge",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Shootist's Edge",
+  "level": 17,
+  "traits": [
+   "gunslinger"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You make shots others find impossible. Your proficiency rank for your gunslinger class DC increases to master. When using a ranged weapon in which you have master or greater proficiency, you ignore the penalty for attacking within the weapon's second and third range increments."
+ },
+ {
+  "id": "silvertongue-mutagen",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Silvertongue Mutagen",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Silvertongue Mutagen Source Player Core 2 pg. 290 Usage held in 1 hand Bulk L Activate (manipulate) Your features become striking, and your voice becomes musical and commanding, though emotion clouds your reason. Benefit You gain an item bonus to Deception, Diplomacy, Intimidation, and Performance checks. Your critical failures with any of these skills become failures instead. Drawback You take a –2 penalty to Arcana, Crafting, Lore, Occultism, and Society checks. Choose one skill in which you're trained; for the duration, you become untrained in that skill. Silvertongue Mutagen (Lesser) Source Player Core 2 pg. 290, Core Rulebook pg. 550 Price 4 gp Bulk L The bonus is +1, and the duration is 1 minute. Silvertongue Mutagen (Moderate) Source Player Core 2 pg. 290, Core Rulebook pg. 550 Price 12 gp Bulk L The bonus is +2, and the duration is 10 minutes. Silvertongue Mutagen (Greater) Source Player Core 2 pg. 290, Core Rulebook pg. 550 Price 300 gp Bulk L The bonus is +3, and the duration is 1 hour. Silvertongue Mutagen (Major) Source Player Core 2 pg. 290, Core Rulebook pg. 550 Price 3,000 gp Bulk L The bonus is +4, and the duration is 1 hour."
+ },
+ {
+  "id": "silvertongue-mutagen-greater",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Silvertongue Mutagen (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Your features become striking, and your voice becomes musical and commanding, though emotion clouds your reason. **Benefit** You gain a +3 item bonus to Deception, Diplomacy, Intimidation and Performance checks. Your critical failures with any of these skills become failures instead. **Drawback** You take a -2 item penalty to Arcana, Crafting, Lore, Occultism, and Society checks. Choose one skill in which you are trained; for the duration, you become untrained in that skill. All your failures to Recall Knowledge become critical failures. **Duration** 1 hour."
+ },
+ {
+  "id": "silvertongue-mutagen-lesser",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Silvertongue Mutagen (Lesser)",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Your features become striking, and your voice becomes musical and commanding, though emotion clouds your reason. **Benefit** You gain a +1 item bonus to Deception, Diplomacy, Intimidation and Performance checks. Your critical failures with any of these skills become failures instead. **Drawback** You take a -2 item penalty to Arcana, Crafting, Lore, Occultism, and Society checks. Choose one skill in which you are trained; for the duration, you become untrained in that skill. All your failures to Recall Knowledge become critical failures. **Duration** 1 minute."
+ },
+ {
+  "id": "silvertongue-mutagen-major",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Silvertongue Mutagen (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Your features become striking, and your voice becomes musical and commanding, though emotion clouds your reason. **Benefit** You gain a +4 item bonus to Deception, Diplomacy, Intimidation and Performance checks. Your critical failures with any of these skills become failures instead. **Drawback** You take a -2 item penalty to Arcana, Crafting, Lore, Occultism, and Society checks. Choose one skill in which you are trained; for the duration, you become untrained in that skill. All your failures to Recall Knowledge become critical failures. **Duration** 1 hour."
+ },
+ {
+  "id": "silvertongue-mutagen-moderate",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Silvertongue Mutagen (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Your features become striking, and your voice becomes musical and commanding, though emotion clouds your reason. **Benefit** You gain a +2 item bonus to Deception, Diplomacy, Intimidation and Performance checks. Your critical failures with any of these skills become failures instead. **Drawback** You take a -2 item penalty to Arcana, Crafting, Lore, Occultism, and Society checks. Choose one skill in which you are trained; for the duration, you become untrained in that skill. All your failures to Recall Knowledge become critical failures. **Duration** 10 minutes."
+ },
+ {
+  "id": "skill-training-kingdom",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Skill Training (Kingdom)",
+  "level": 1,
+  "traits": [
+   "general",
+   "kingdom"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "Skill Training (Kingdom) Source Kingmaker Adventure Path pg. 532 Your kingdom receives the trained proficiency rank in a Kingdom skill of your choice. You can select this feat multiple times, choosing a new skill each time"
+ }
+]

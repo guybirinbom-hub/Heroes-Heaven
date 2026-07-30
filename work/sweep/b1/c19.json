@@ -1,0 +1,830 @@
+[
+ {
+  "id": "vexing-vapor-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Vexing Vapor (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "inhaled",
+   "mental",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This flask contains a fine red powder made from toxic berries. You gain a +3 item bonus to attack rolls. A major vexing vapor bomb deals 4d6 damage and 4 mental splash damage. On a hit, the target must succeed at a check before taking actions with the concentrate trait. This lasts until the end of its next turn (1 minute on a critical hit)."
+ },
+ {
+  "id": "vexing-vapor-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Vexing Vapor (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "inhaled",
+   "mental",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This flask contains a fine red powder made from toxic berries. You gain a +1 item bonus to attack rolls. A moderate vexing vapor bomb deals 2d6 damage and 2 mental splash damage. On a hit, the target must succeed at a check before taking actions with the concentrate trait. This lasts until the end of its next turn (1 minute on a critical hit)."
+ },
+ {
+  "id": "vicious-vengeance",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Vicious Vengeance",
+  "level": 1,
+  "traits": [
+   "champion"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "While your vengeance is painful for both you and your foe, none can doubt that your enemies suffer more. You gain a circumstance bonus to the damage you deal from Destructive Vengeance equal to the number of damage dice from the reaction. This only applies to the damage the enemy takes, not the damage to yourself or the extra damage you gain after using the reaction."
+ },
+ {
+  "id": "vine-whip",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Vine Whip",
+  "level": 8,
+  "traits": [
+   "disarm",
+   "finesse",
+   "nonlethal",
+   "reach",
+   "trip"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This *+1 striking whip* is crafted from the vine of a dangerous plant creature. It deals bludgeoning or slashing damage, according to the vine attack of the creature it was harvested from. For example, collecting a vine from an assassin vine would result bludgeoning damage, while one from a mandragora or viper vine would deal piercing damage. **Activate** ⟨3⟩ (concentrate, manipulate) **Requirements** You have soil or sand within your reach --- **Effect** You Release the weapon and plant it in the ground, where it takes root and fights on its own against the last enemy you attacked or the nearest enemy to it if your target has been defeated. The weapon has a space of 5 feet, acts on your initiative, and gains two actions. It doesn't block or impede enemies attempting to move through that space, nor does it benefit from or provide flanking. The weapon can't use reactions, and it acts on your turn. While Activated, a vine whip makes Strikes with an attack modifier of +22 plus its item bonus to attack rolls (normally +24 total). It uses the weapon's normal damage but has a +0 Strength modifier. The whip's abilities that automatically trigger on a hit or critical hit still function, but the weapon can't be Activated or benefit from any of your abilities while rooted. Each round, when the vine whip is finished using its actions, attempt a . On a failure, the Activation ends and the vine whip becomes inanimate. You can't Activate the item again for 10 minutes. Removing the vine whip from the ground takes an Interact action. While rooted, the vine whip gains fast healing 1. --- **Craft Requirements** The initial raw materials must include the vine from a plant creature with a vine attack."
+ },
+ {
+  "id": "vital-earth",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Vital Earth",
+  "level": 9,
+  "traits": [
+   "consumable",
+   "earth",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "core.modes(fromItemId)"
+  ],
+  "text": "Life-infused soil from the Plane of Earth, *vital earth* is glittering dust you inhale that causes you to not need air or water for 24 hours. Also, for this time, your wounds close easily, like molding clay, meaning someone attempting to Administer First Aid or Treat Wounds on you doesn't need a healer's toolkit and gains a +1 item bonus to the Medicine check."
+ },
+ {
+  "id": "wait-for-it",
+  "lane": "situational",
+  "collection": "classFeatures",
+  "name": "Wait For It...",
+  "level": 1,
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your team intuitively keeps their guard up even while waiting for the ideal moment to act. Signal up to two squadmates within the aura of your commander's banner; while these squadmates Delay or Ready an action, they gain a +1 circumstance bonus to AC and saving throws. A squadmate's bonus lasts until the end of your next turn, until they stop Delaying, or until the end of the current creature's turn when the squadmate uses the designated action they Readied, whichever happens first. In addition, you can grant one of the squadmates an extra reaction from your drilled reactions class feature, but it can be used only to perform a designated action they Readied."
+ },
+ {
+  "id": "wand",
+  "lane": "situational",
+  "collection": "classFeatures",
+  "name": "Wand",
+  "level": 1,
+  "traits": [
+   "thaumaturge"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Wand implements are short, lightweight batons, usually made of wood but often incorporating other materials. Due to their association with spellcasters, wand implements are connected to magic and its practice, as well as the direction and manipulation of energy. Wand implements are associated with the astrological signs of the thrush and the sky dragon. ### **Initiate Benefit** ### **Adept Benefit** ### **Intensify Vulnerability** Your empowered wand surges with ever-more-powerful magic. When you Fling Magic to damage the target of your Exploit Vulnerability, Fling Magic gains a status bonus to its damage roll equal to your level. ### **Paragon Benefit**"
+ },
+ {
+  "id": "wand-of-legerdemain",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Wand of Legerdemain",
+  "level": 4,
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Wand of Legerdemain Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L This wand of lacquered black wood has a handle wrapped in interwoven colorful ribbons. A silver bell caps the wand's tasseled pommel. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You Cast the Spell. Activate Interact (emotion, illusion, light, mental, visual) Requirements The last action you took this turn was to Cast a Spell from the wand; Effect You make yourself the center of attention. An illusory spotlight shines bright light upon your space as you pull inane objects from the wand's tip, such as confetti, silk flowers, streamers, or a long string of colorful kerchiefs knotted end to end. Each enemy within 30 feet must attempt a Will save against your spell DC, receiving a +4 circumstance bonus to the save if you or any of your allies recently threatened it or used hostile actions against it. On a failure, the creature becomes fascinated with you until the end of your next turn. The fascination ends if the target is subject to a hostile act, or if another creature succeeds at a Diplomacy or Intimidation check against it. The spotlight follows you wherever you move. You can't be concealed while in the spotlight. The effect ends if you become invisible, attempt a Stealth check, or Dismiss the activation. You can Sustain this Activation for up to 1 minute. Since you need to keep performing tricks, Sustain an Activation has the manipulate trait. Sustaining extends the spotlight, and keeps fascinated creatures fascinated, but doesn't cause creatures not already fascinated to become fascinated. Craft Requirements Supply a casting of a spell of the appropriate rank. Wand of Legerdemain (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 100 gp Bulk L Wand of Legerdemain (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 250 gp Bulk L Wand of Legerdemain (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 500 gp Bulk L Wand of Legerdemain (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,000 gp Bulk L Wand of Legerdemain (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 2,000 gp Bulk L Wand of Legerdemain (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 4,500 gp Bulk L Wand of Legerdemain (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 10,000 gp Bulk L Wand of Legerdemain (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 24,000 gp Bulk L Wand of Legerdemain (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 70,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-legerdemain-1st-rank",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Wand of Legerdemain (1st-rank)",
+  "level": 4,
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This wand of lacquered black wood has a handle wrapped in interwoven colorful ribbons. A silver bell caps the wand's tasseled pommel. --- **Activate** Cast a Spell **Frequency** once per day, plus overcharge **Effect** You Cast the Spell. --- **Activate** ⟨1⟩ (emotion, illusion, light, manipulate. mental, visual) **Requirements** The last action you took this turn was to Cast a Spell from the wand **Effect** You make yourself the center of attention. An illusory spotlight shines bright light upon your space as you pull inane objects from the wand's tip, such as confetti, silk flowers, streamers, or a long string of colorful kerchiefs knotted end to end. Each enemy within 30 feet must attempt a Will save against your spell DC, receiving a +4 circumstance bonus to the save if you or any of your allies recently threatened it or used hostile actions against it. On a failure, the creature becomes fascinated with you until the end of your next turn. The fascination ends if the target is subject to a hostile act, or if another creature succeeds at a Diplomacy or Intimidation check against it. The spotlight follows you wherever you move. You can't be concealed while in the spotlight. The effect ends if you become invisible, attempt a Stealth check, or Dismiss the activation. You can Sustain this Activation for up to 1 minute. Since you need to keep performing tricks, Sustain an Activation has the manipulate trait. Sustaining extends the spotlight, and keeps fascinated creatures fascinated, but doesn't cause creatures not already fascinated to become fascinated. --- **Craft Requirements** Supply a casting of a spell of the appropriate rank."
+ },
+ {
+  "id": "wand-of-legerdemain-1st-rank-spell",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Wand of Legerdemain (1st-Rank Spell)",
+  "level": 4,
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Wand of Legerdemain Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L This wand of lacquered black wood has a handle wrapped in interwoven colorful ribbons. A silver bell caps the wand's tasseled pommel. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You Cast the Spell. Activate Interact (emotion, illusion, light, mental, visual) Requirements The last action you took this turn was to Cast a Spell from the wand; Effect You make yourself the center of attention. An illusory spotlight shines bright light upon your space as you pull inane objects from the wand's tip, such as confetti, silk flowers, streamers, or a long string of colorful kerchiefs knotted end to end. Each enemy within 30 feet must attempt a Will save against your spell DC, receiving a +4 circumstance bonus to the save if you or any of your allies recently threatened it or used hostile actions against it. On a failure, the creature becomes fascinated with you until the end of your next turn. The fascination ends if the target is subject to a hostile act, or if another creature succeeds at a Diplomacy or Intimidation check against it. The spotlight follows you wherever you move. You can't be concealed while in the spotlight. The effect ends if you become invisible, attempt a Stealth check, or Dismiss the activation. You can Sustain this Activation for up to 1 minute. Since you need to keep performing tricks, Sustain an Activation has the manipulate trait. Sustaining extends the spotlight, and keeps fascinated creatures fascinated, but doesn't cause creatures not already fascinated to become fascinated. Craft Requirements Supply a casting of a spell of the appropriate rank. Wand of Legerdemain (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 100 gp Bulk L Wand of Legerdemain (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 250 gp Bulk L Wand of Legerdemain (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 500 gp Bulk L Wand of Legerdemain (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,000 gp Bulk L Wand of Legerdemain (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 2,000 gp Bulk L Wand of Legerdemain (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 4,500 gp Bulk L Wand of Legerdemain (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 10,000 gp Bulk L Wand of Legerdemain (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 24,000 gp Bulk L Wand of Legerdemain (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 70,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-legerdemain-2nd-rank",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Wand of Legerdemain (2nd-rank)",
+  "level": 6,
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This wand of lacquered black wood has a handle wrapped in interwoven colorful ribbons. A silver bell caps the wand's tasseled pommel. --- **Activate** Cast a Spell **Frequency** once per day, plus overcharge **Effect** You Cast the Spell. --- **Activate** ⟨1⟩ (emotion, illusion, light, manipulate. mental, visual) **Requirements** The last action you took this turn was to Cast a Spell from the wand **Effect** You make yourself the center of attention. An illusory spotlight shines bright light upon your space as you pull inane objects from the wand's tip, such as confetti, silk flowers, streamers, or a long string of colorful kerchiefs knotted end to end. Each enemy within 30 feet must attempt a Will save against your spell DC, receiving a +4 circumstance bonus to the save if you or any of your allies recently threatened it or used hostile actions against it. On a failure, the creature becomes fascinated with you until the end of your next turn. The fascination ends if the target is subject to a hostile act, or if another creature succeeds at a Diplomacy or Intimidation check against it. The spotlight follows you wherever you move. You can't be concealed while in the spotlight. The effect ends if you become invisible, attempt a Stealth check, or Dismiss the activation. You can Sustain this Activation for up to 1 minute. Since you need to keep performing tricks, Sustain an Activation has the manipulate trait. Sustaining extends the spotlight, and keeps fascinated creatures fascinated, but doesn't cause creatures not already fascinated to become fascinated. --- **Craft Requirements** Supply a casting of a spell of the appropriate rank."
+ },
+ {
+  "id": "wand-of-legerdemain-2nd-rank-spell",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Wand of Legerdemain (2nd-Rank Spell)",
+  "level": 6,
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Wand of Legerdemain Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L This wand of lacquered black wood has a handle wrapped in interwoven colorful ribbons. A silver bell caps the wand's tasseled pommel. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You Cast the Spell. Activate Interact (emotion, illusion, light, mental, visual) Requirements The last action you took this turn was to Cast a Spell from the wand; Effect You make yourself the center of attention. An illusory spotlight shines bright light upon your space as you pull inane objects from the wand's tip, such as confetti, silk flowers, streamers, or a long string of colorful kerchiefs knotted end to end. Each enemy within 30 feet must attempt a Will save against your spell DC, receiving a +4 circumstance bonus to the save if you or any of your allies recently threatened it or used hostile actions against it. On a failure, the creature becomes fascinated with you until the end of your next turn. The fascination ends if the target is subject to a hostile act, or if another creature succeeds at a Diplomacy or Intimidation check against it. The spotlight follows you wherever you move. You can't be concealed while in the spotlight. The effect ends if you become invisible, attempt a Stealth check, or Dismiss the activation. You can Sustain this Activation for up to 1 minute. Since you need to keep performing tricks, Sustain an Activation has the manipulate trait. Sustaining extends the spotlight, and keeps fascinated creatures fascinated, but doesn't cause creatures not already fascinated to become fascinated. Craft Requirements Supply a casting of a spell of the appropriate rank. Wand of Legerdemain (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 100 gp Bulk L Wand of Legerdemain (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 250 gp Bulk L Wand of Legerdemain (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 500 gp Bulk L Wand of Legerdemain (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,000 gp Bulk L Wand of Legerdemain (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 2,000 gp Bulk L Wand of Legerdemain (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 4,500 gp Bulk L Wand of Legerdemain (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 10,000 gp Bulk L Wand of Legerdemain (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 24,000 gp Bulk L Wand of Legerdemain (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 70,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-legerdemain-3rd-rank",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Wand of Legerdemain (3rd-rank)",
+  "level": 8,
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This wand of lacquered black wood has a handle wrapped in interwoven colorful ribbons. A silver bell caps the wand's tasseled pommel. --- **Activate** Cast a Spell **Frequency** once per day, plus overcharge **Effect** You Cast the Spell. --- **Activate** ⟨1⟩ (emotion, illusion, light, manipulate. mental, visual) **Requirements** The last action you took this turn was to Cast a Spell from the wand **Effect** You make yourself the center of attention. An illusory spotlight shines bright light upon your space as you pull inane objects from the wand's tip, such as confetti, silk flowers, streamers, or a long string of colorful kerchiefs knotted end to end. Each enemy within 30 feet must attempt a Will save against your spell DC, receiving a +4 circumstance bonus to the save if you or any of your allies recently threatened it or used hostile actions against it. On a failure, the creature becomes fascinated with you until the end of your next turn. The fascination ends if the target is subject to a hostile act, or if another creature succeeds at a Diplomacy or Intimidation check against it. The spotlight follows you wherever you move. You can't be concealed while in the spotlight. The effect ends if you become invisible, attempt a Stealth check, or Dismiss the activation. You can Sustain this Activation for up to 1 minute. Since you need to keep performing tricks, Sustain an Activation has the manipulate trait. Sustaining extends the spotlight, and keeps fascinated creatures fascinated, but doesn't cause creatures not already fascinated to become fascinated. --- **Craft Requirements** Supply a casting of a spell of the appropriate rank."
+ },
+ {
+  "id": "wand-of-legerdemain-3rd-rank-spell",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Wand of Legerdemain (3rd-Rank Spell)",
+  "level": 8,
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Wand of Legerdemain Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L This wand of lacquered black wood has a handle wrapped in interwoven colorful ribbons. A silver bell caps the wand's tasseled pommel. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You Cast the Spell. Activate Interact (emotion, illusion, light, mental, visual) Requirements The last action you took this turn was to Cast a Spell from the wand; Effect You make yourself the center of attention. An illusory spotlight shines bright light upon your space as you pull inane objects from the wand's tip, such as confetti, silk flowers, streamers, or a long string of colorful kerchiefs knotted end to end. Each enemy within 30 feet must attempt a Will save against your spell DC, receiving a +4 circumstance bonus to the save if you or any of your allies recently threatened it or used hostile actions against it. On a failure, the creature becomes fascinated with you until the end of your next turn. The fascination ends if the target is subject to a hostile act, or if another creature succeeds at a Diplomacy or Intimidation check against it. The spotlight follows you wherever you move. You can't be concealed while in the spotlight. The effect ends if you become invisible, attempt a Stealth check, or Dismiss the activation. You can Sustain this Activation for up to 1 minute. Since you need to keep performing tricks, Sustain an Activation has the manipulate trait. Sustaining extends the spotlight, and keeps fascinated creatures fascinated, but doesn't cause creatures not already fascinated to become fascinated. Craft Requirements Supply a casting of a spell of the appropriate rank. Wand of Legerdemain (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 100 gp Bulk L Wand of Legerdemain (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 250 gp Bulk L Wand of Legerdemain (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 500 gp Bulk L Wand of Legerdemain (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,000 gp Bulk L Wand of Legerdemain (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 2,000 gp Bulk L Wand of Legerdemain (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 4,500 gp Bulk L Wand of Legerdemain (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 10,000 gp Bulk L Wand of Legerdemain (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 24,000 gp Bulk L Wand of Legerdemain (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 70,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-legerdemain-4th-rank",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Wand of Legerdemain (4th-rank)",
+  "level": 10,
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This wand of lacquered black wood has a handle wrapped in interwoven colorful ribbons. A silver bell caps the wand's tasseled pommel. --- **Activate** Cast a Spell **Frequency** once per day, plus overcharge **Effect** You Cast the Spell. --- **Activate** ⟨1⟩ (emotion, illusion, light, manipulate. mental, visual) **Requirements** The last action you took this turn was to Cast a Spell from the wand **Effect** You make yourself the center of attention. An illusory spotlight shines bright light upon your space as you pull inane objects from the wand's tip, such as confetti, silk flowers, streamers, or a long string of colorful kerchiefs knotted end to end. Each enemy within 30 feet must attempt a Will save against your spell DC, receiving a +4 circumstance bonus to the save if you or any of your allies recently threatened it or used hostile actions against it. On a failure, the creature becomes fascinated with you until the end of your next turn. The fascination ends if the target is subject to a hostile act, or if another creature succeeds at a Diplomacy or Intimidation check against it. The spotlight follows you wherever you move. You can't be concealed while in the spotlight. The effect ends if you become invisible, attempt a Stealth check, or Dismiss the activation. You can Sustain this Activation for up to 1 minute. Since you need to keep performing tricks, Sustain an Activation has the manipulate trait. Sustaining extends the spotlight, and keeps fascinated creatures fascinated, but doesn't cause creatures not already fascinated to become fascinated. --- **Craft Requirements** Supply a casting of a spell of the appropriate rank."
+ },
+ {
+  "id": "wand-of-legerdemain-4th-rank-spell",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Wand of Legerdemain (4th-Rank Spell)",
+  "level": 10,
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Wand of Legerdemain Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L This wand of lacquered black wood has a handle wrapped in interwoven colorful ribbons. A silver bell caps the wand's tasseled pommel. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You Cast the Spell. Activate Interact (emotion, illusion, light, mental, visual) Requirements The last action you took this turn was to Cast a Spell from the wand; Effect You make yourself the center of attention. An illusory spotlight shines bright light upon your space as you pull inane objects from the wand's tip, such as confetti, silk flowers, streamers, or a long string of colorful kerchiefs knotted end to end. Each enemy within 30 feet must attempt a Will save against your spell DC, receiving a +4 circumstance bonus to the save if you or any of your allies recently threatened it or used hostile actions against it. On a failure, the creature becomes fascinated with you until the end of your next turn. The fascination ends if the target is subject to a hostile act, or if another creature succeeds at a Diplomacy or Intimidation check against it. The spotlight follows you wherever you move. You can't be concealed while in the spotlight. The effect ends if you become invisible, attempt a Stealth check, or Dismiss the activation. You can Sustain this Activation for up to 1 minute. Since you need to keep performing tricks, Sustain an Activation has the manipulate trait. Sustaining extends the spotlight, and keeps fascinated creatures fascinated, but doesn't cause creatures not already fascinated to become fascinated. Craft Requirements Supply a casting of a spell of the appropriate rank. Wand of Legerdemain (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 100 gp Bulk L Wand of Legerdemain (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 250 gp Bulk L Wand of Legerdemain (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 500 gp Bulk L Wand of Legerdemain (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,000 gp Bulk L Wand of Legerdemain (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 2,000 gp Bulk L Wand of Legerdemain (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 4,500 gp Bulk L Wand of Legerdemain (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 10,000 gp Bulk L Wand of Legerdemain (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 24,000 gp Bulk L Wand of Legerdemain (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 70,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-legerdemain-5th-rank",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Wand of Legerdemain (5th-rank)",
+  "level": 12,
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This wand of lacquered black wood has a handle wrapped in interwoven colorful ribbons. A silver bell caps the wand's tasseled pommel. --- **Activate** Cast a Spell **Frequency** once per day, plus overcharge **Effect** You Cast the Spell. --- **Activate** ⟨1⟩ (emotion, illusion, light, manipulate. mental, visual) **Requirements** The last action you took this turn was to Cast a Spell from the wand **Effect** You make yourself the center of attention. An illusory spotlight shines bright light upon your space as you pull inane objects from the wand's tip, such as confetti, silk flowers, streamers, or a long string of colorful kerchiefs knotted end to end. Each enemy within 30 feet must attempt a Will save against your spell DC, receiving a +4 circumstance bonus to the save if you or any of your allies recently threatened it or used hostile actions against it. On a failure, the creature becomes fascinated with you until the end of your next turn. The fascination ends if the target is subject to a hostile act, or if another creature succeeds at a Diplomacy or Intimidation check against it. The spotlight follows you wherever you move. You can't be concealed while in the spotlight. The effect ends if you become invisible, attempt a Stealth check, or Dismiss the activation. You can Sustain this Activation for up to 1 minute. Since you need to keep performing tricks, Sustain an Activation has the manipulate trait. Sustaining extends the spotlight, and keeps fascinated creatures fascinated, but doesn't cause creatures not already fascinated to become fascinated. --- **Craft Requirements** Supply a casting of a spell of the appropriate rank."
+ },
+ {
+  "id": "wand-of-legerdemain-5th-rank-spell",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Wand of Legerdemain (5th-Rank Spell)",
+  "level": 12,
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Wand of Legerdemain Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L This wand of lacquered black wood has a handle wrapped in interwoven colorful ribbons. A silver bell caps the wand's tasseled pommel. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You Cast the Spell. Activate Interact (emotion, illusion, light, mental, visual) Requirements The last action you took this turn was to Cast a Spell from the wand; Effect You make yourself the center of attention. An illusory spotlight shines bright light upon your space as you pull inane objects from the wand's tip, such as confetti, silk flowers, streamers, or a long string of colorful kerchiefs knotted end to end. Each enemy within 30 feet must attempt a Will save against your spell DC, receiving a +4 circumstance bonus to the save if you or any of your allies recently threatened it or used hostile actions against it. On a failure, the creature becomes fascinated with you until the end of your next turn. The fascination ends if the target is subject to a hostile act, or if another creature succeeds at a Diplomacy or Intimidation check against it. The spotlight follows you wherever you move. You can't be concealed while in the spotlight. The effect ends if you become invisible, attempt a Stealth check, or Dismiss the activation. You can Sustain this Activation for up to 1 minute. Since you need to keep performing tricks, Sustain an Activation has the manipulate trait. Sustaining extends the spotlight, and keeps fascinated creatures fascinated, but doesn't cause creatures not already fascinated to become fascinated. Craft Requirements Supply a casting of a spell of the appropriate rank. Wand of Legerdemain (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 100 gp Bulk L Wand of Legerdemain (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 250 gp Bulk L Wand of Legerdemain (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 500 gp Bulk L Wand of Legerdemain (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,000 gp Bulk L Wand of Legerdemain (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 2,000 gp Bulk L Wand of Legerdemain (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 4,500 gp Bulk L Wand of Legerdemain (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 10,000 gp Bulk L Wand of Legerdemain (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 24,000 gp Bulk L Wand of Legerdemain (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 70,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-legerdemain-6th-rank",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Wand of Legerdemain (6th-rank)",
+  "level": 14,
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This wand of lacquered black wood has a handle wrapped in interwoven colorful ribbons. A silver bell caps the wand's tasseled pommel. --- **Activate** Cast a Spell **Frequency** once per day, plus overcharge **Effect** You Cast the Spell. --- **Activate** ⟨1⟩ (emotion, illusion, light, manipulate. mental, visual) **Requirements** The last action you took this turn was to Cast a Spell from the wand **Effect** You make yourself the center of attention. An illusory spotlight shines bright light upon your space as you pull inane objects from the wand's tip, such as confetti, silk flowers, streamers, or a long string of colorful kerchiefs knotted end to end. Each enemy within 30 feet must attempt a Will save against your spell DC, receiving a +4 circumstance bonus to the save if you or any of your allies recently threatened it or used hostile actions against it. On a failure, the creature becomes fascinated with you until the end of your next turn. The fascination ends if the target is subject to a hostile act, or if another creature succeeds at a Diplomacy or Intimidation check against it. The spotlight follows you wherever you move. You can't be concealed while in the spotlight. The effect ends if you become invisible, attempt a Stealth check, or Dismiss the activation. You can Sustain this Activation for up to 1 minute. Since you need to keep performing tricks, Sustain an Activation has the manipulate trait. Sustaining extends the spotlight, and keeps fascinated creatures fascinated, but doesn't cause creatures not already fascinated to become fascinated. --- **Craft Requirements** Supply a casting of a spell of the appropriate rank."
+ },
+ {
+  "id": "wand-of-legerdemain-6th-rank-spell",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Wand of Legerdemain (6th-Rank Spell)",
+  "level": 14,
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Wand of Legerdemain Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L This wand of lacquered black wood has a handle wrapped in interwoven colorful ribbons. A silver bell caps the wand's tasseled pommel. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You Cast the Spell. Activate Interact (emotion, illusion, light, mental, visual) Requirements The last action you took this turn was to Cast a Spell from the wand; Effect You make yourself the center of attention. An illusory spotlight shines bright light upon your space as you pull inane objects from the wand's tip, such as confetti, silk flowers, streamers, or a long string of colorful kerchiefs knotted end to end. Each enemy within 30 feet must attempt a Will save against your spell DC, receiving a +4 circumstance bonus to the save if you or any of your allies recently threatened it or used hostile actions against it. On a failure, the creature becomes fascinated with you until the end of your next turn. The fascination ends if the target is subject to a hostile act, or if another creature succeeds at a Diplomacy or Intimidation check against it. The spotlight follows you wherever you move. You can't be concealed while in the spotlight. The effect ends if you become invisible, attempt a Stealth check, or Dismiss the activation. You can Sustain this Activation for up to 1 minute. Since you need to keep performing tricks, Sustain an Activation has the manipulate trait. Sustaining extends the spotlight, and keeps fascinated creatures fascinated, but doesn't cause creatures not already fascinated to become fascinated. Craft Requirements Supply a casting of a spell of the appropriate rank. Wand of Legerdemain (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 100 gp Bulk L Wand of Legerdemain (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 250 gp Bulk L Wand of Legerdemain (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 500 gp Bulk L Wand of Legerdemain (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,000 gp Bulk L Wand of Legerdemain (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 2,000 gp Bulk L Wand of Legerdemain (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 4,500 gp Bulk L Wand of Legerdemain (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 10,000 gp Bulk L Wand of Legerdemain (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 24,000 gp Bulk L Wand of Legerdemain (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 70,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-legerdemain-7th-rank",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Wand of Legerdemain (7th-rank)",
+  "level": 16,
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This wand of lacquered black wood has a handle wrapped in interwoven colorful ribbons. A silver bell caps the wand's tasseled pommel. --- **Activate** Cast a Spell **Frequency** once per day, plus overcharge **Effect** You Cast the Spell. --- **Activate** ⟨1⟩ (emotion, illusion, light, manipulate. mental, visual) **Requirements** The last action you took this turn was to Cast a Spell from the wand **Effect** You make yourself the center of attention. An illusory spotlight shines bright light upon your space as you pull inane objects from the wand's tip, such as confetti, silk flowers, streamers, or a long string of colorful kerchiefs knotted end to end. Each enemy within 30 feet must attempt a Will save against your spell DC, receiving a +4 circumstance bonus to the save if you or any of your allies recently threatened it or used hostile actions against it. On a failure, the creature becomes fascinated with you until the end of your next turn. The fascination ends if the target is subject to a hostile act, or if another creature succeeds at a Diplomacy or Intimidation check against it. The spotlight follows you wherever you move. You can't be concealed while in the spotlight. The effect ends if you become invisible, attempt a Stealth check, or Dismiss the activation. You can Sustain this Activation for up to 1 minute. Since you need to keep performing tricks, Sustain an Activation has the manipulate trait. Sustaining extends the spotlight, and keeps fascinated creatures fascinated, but doesn't cause creatures not already fascinated to become fascinated. --- **Craft Requirements** Supply a casting of a spell of the appropriate rank."
+ },
+ {
+  "id": "wand-of-legerdemain-7th-rank-spell",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Wand of Legerdemain (7th-Rank Spell)",
+  "level": 16,
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Wand of Legerdemain Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L This wand of lacquered black wood has a handle wrapped in interwoven colorful ribbons. A silver bell caps the wand's tasseled pommel. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You Cast the Spell. Activate Interact (emotion, illusion, light, mental, visual) Requirements The last action you took this turn was to Cast a Spell from the wand; Effect You make yourself the center of attention. An illusory spotlight shines bright light upon your space as you pull inane objects from the wand's tip, such as confetti, silk flowers, streamers, or a long string of colorful kerchiefs knotted end to end. Each enemy within 30 feet must attempt a Will save against your spell DC, receiving a +4 circumstance bonus to the save if you or any of your allies recently threatened it or used hostile actions against it. On a failure, the creature becomes fascinated with you until the end of your next turn. The fascination ends if the target is subject to a hostile act, or if another creature succeeds at a Diplomacy or Intimidation check against it. The spotlight follows you wherever you move. You can't be concealed while in the spotlight. The effect ends if you become invisible, attempt a Stealth check, or Dismiss the activation. You can Sustain this Activation for up to 1 minute. Since you need to keep performing tricks, Sustain an Activation has the manipulate trait. Sustaining extends the spotlight, and keeps fascinated creatures fascinated, but doesn't cause creatures not already fascinated to become fascinated. Craft Requirements Supply a casting of a spell of the appropriate rank. Wand of Legerdemain (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 100 gp Bulk L Wand of Legerdemain (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 250 gp Bulk L Wand of Legerdemain (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 500 gp Bulk L Wand of Legerdemain (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,000 gp Bulk L Wand of Legerdemain (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 2,000 gp Bulk L Wand of Legerdemain (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 4,500 gp Bulk L Wand of Legerdemain (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 10,000 gp Bulk L Wand of Legerdemain (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 24,000 gp Bulk L Wand of Legerdemain (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 70,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-legerdemain-8th-rank",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Wand of Legerdemain (8th-rank)",
+  "level": 18,
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This wand of lacquered black wood has a handle wrapped in interwoven colorful ribbons. A silver bell caps the wand's tasseled pommel. --- **Activate** Cast a Spell **Frequency** once per day, plus overcharge **Effect** You Cast the Spell. --- **Activate** ⟨1⟩ (emotion, illusion, light, manipulate. mental, visual) **Requirements** The last action you took this turn was to Cast a Spell from the wand **Effect** You make yourself the center of attention. An illusory spotlight shines bright light upon your space as you pull inane objects from the wand's tip, such as confetti, silk flowers, streamers, or a long string of colorful kerchiefs knotted end to end. Each enemy within 30 feet must attempt a Will save against your spell DC, receiving a +4 circumstance bonus to the save if you or any of your allies recently threatened it or used hostile actions against it. On a failure, the creature becomes fascinated with you until the end of your next turn. The fascination ends if the target is subject to a hostile act, or if another creature succeeds at a Diplomacy or Intimidation check against it. The spotlight follows you wherever you move. You can't be concealed while in the spotlight. The effect ends if you become invisible, attempt a Stealth check, or Dismiss the activation. You can Sustain this Activation for up to 1 minute. Since you need to keep performing tricks, Sustain an Activation has the manipulate trait. Sustaining extends the spotlight, and keeps fascinated creatures fascinated, but doesn't cause creatures not already fascinated to become fascinated. --- **Craft Requirements** Supply a casting of a spell of the appropriate rank."
+ },
+ {
+  "id": "wand-of-legerdemain-8th-rank-spell",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Wand of Legerdemain (8th-Rank Spell)",
+  "level": 18,
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Wand of Legerdemain Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L This wand of lacquered black wood has a handle wrapped in interwoven colorful ribbons. A silver bell caps the wand's tasseled pommel. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You Cast the Spell. Activate Interact (emotion, illusion, light, mental, visual) Requirements The last action you took this turn was to Cast a Spell from the wand; Effect You make yourself the center of attention. An illusory spotlight shines bright light upon your space as you pull inane objects from the wand's tip, such as confetti, silk flowers, streamers, or a long string of colorful kerchiefs knotted end to end. Each enemy within 30 feet must attempt a Will save against your spell DC, receiving a +4 circumstance bonus to the save if you or any of your allies recently threatened it or used hostile actions against it. On a failure, the creature becomes fascinated with you until the end of your next turn. The fascination ends if the target is subject to a hostile act, or if another creature succeeds at a Diplomacy or Intimidation check against it. The spotlight follows you wherever you move. You can't be concealed while in the spotlight. The effect ends if you become invisible, attempt a Stealth check, or Dismiss the activation. You can Sustain this Activation for up to 1 minute. Since you need to keep performing tricks, Sustain an Activation has the manipulate trait. Sustaining extends the spotlight, and keeps fascinated creatures fascinated, but doesn't cause creatures not already fascinated to become fascinated. Craft Requirements Supply a casting of a spell of the appropriate rank. Wand of Legerdemain (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 100 gp Bulk L Wand of Legerdemain (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 250 gp Bulk L Wand of Legerdemain (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 500 gp Bulk L Wand of Legerdemain (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,000 gp Bulk L Wand of Legerdemain (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 2,000 gp Bulk L Wand of Legerdemain (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 4,500 gp Bulk L Wand of Legerdemain (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 10,000 gp Bulk L Wand of Legerdemain (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 24,000 gp Bulk L Wand of Legerdemain (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 70,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-legerdemain-9th-rank",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Wand of Legerdemain (9th-rank)",
+  "level": 20,
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This wand of lacquered black wood has a handle wrapped in interwoven colorful ribbons. A silver bell caps the wand's tasseled pommel. --- **Activate** Cast a Spell **Frequency** once per day, plus overcharge **Effect** You Cast the Spell. --- **Activate** ⟨1⟩ (emotion, illusion, light, manipulate. mental, visual) **Requirements** The last action you took this turn was to Cast a Spell from the wand **Effect** You make yourself the center of attention. An illusory spotlight shines bright light upon your space as you pull inane objects from the wand's tip, such as confetti, silk flowers, streamers, or a long string of colorful kerchiefs knotted end to end. Each enemy within 30 feet must attempt a Will save against your spell DC, receiving a +4 circumstance bonus to the save if you or any of your allies recently threatened it or used hostile actions against it. On a failure, the creature becomes fascinated with you until the end of your next turn. The fascination ends if the target is subject to a hostile act, or if another creature succeeds at a Diplomacy or Intimidation check against it. The spotlight follows you wherever you move. You can't be concealed while in the spotlight. The effect ends if you become invisible, attempt a Stealth check, or Dismiss the activation. You can Sustain this Activation for up to 1 minute. Since you need to keep performing tricks, Sustain an Activation has the manipulate trait. Sustaining extends the spotlight, and keeps fascinated creatures fascinated, but doesn't cause creatures not already fascinated to become fascinated. --- **Craft Requirements** Supply a casting of a spell of the appropriate rank."
+ },
+ {
+  "id": "wand-of-legerdemain-9th-rank-spell",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Wand of Legerdemain (9th-Rank Spell)",
+  "level": 20,
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Wand of Legerdemain Source Treasure Vault (Remastered) pg. 140 Usage held in 1 hand Bulk L This wand of lacquered black wood has a handle wrapped in interwoven colorful ribbons. A silver bell caps the wand's tasseled pommel. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You Cast the Spell. Activate Interact (emotion, illusion, light, mental, visual) Requirements The last action you took this turn was to Cast a Spell from the wand; Effect You make yourself the center of attention. An illusory spotlight shines bright light upon your space as you pull inane objects from the wand's tip, such as confetti, silk flowers, streamers, or a long string of colorful kerchiefs knotted end to end. Each enemy within 30 feet must attempt a Will save against your spell DC, receiving a +4 circumstance bonus to the save if you or any of your allies recently threatened it or used hostile actions against it. On a failure, the creature becomes fascinated with you until the end of your next turn. The fascination ends if the target is subject to a hostile act, or if another creature succeeds at a Diplomacy or Intimidation check against it. The spotlight follows you wherever you move. You can't be concealed while in the spotlight. The effect ends if you become invisible, attempt a Stealth check, or Dismiss the activation. You can Sustain this Activation for up to 1 minute. Since you need to keep performing tricks, Sustain an Activation has the manipulate trait. Sustaining extends the spotlight, and keeps fascinated creatures fascinated, but doesn't cause creatures not already fascinated to become fascinated. Craft Requirements Supply a casting of a spell of the appropriate rank. Wand of Legerdemain (1st-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 100 gp Bulk L Wand of Legerdemain (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 250 gp Bulk L Wand of Legerdemain (3rd-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 500 gp Bulk L Wand of Legerdemain (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 1,000 gp Bulk L Wand of Legerdemain (5th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 2,000 gp Bulk L Wand of Legerdemain (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 4,500 gp Bulk L Wand of Legerdemain (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 10,000 gp Bulk L Wand of Legerdemain (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 24,000 gp Bulk L Wand of Legerdemain (9th-Rank Spell) Source Treasure Vault (Remastered) pg. 140 Price 70,000 gp Bulk L"
+ },
+ {
+  "id": "wardens-signet",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Warden's Signet",
+  "level": 11,
+  "traits": [
+   "focused",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This symbol shows your dedication to the magic practiced by some rangers. Most rangers wear it on an amulet, ring, or piercing. You gain a +2 item bonus to Nature checks. --- **Activate** ⟨4⟩ (concentrate) **Frequency** once per day **Effect** You gain 1 Focus Point, which you can use only to cast a ranger warden spell. When you use this Focus Point, the warden's signet also casts a 4th-rank Oaken Resilience spell on you. If not used by the end of your turn, this Focus Point is lost. --- **Craft Requirements** You are a ranger with at least one warden spell."
+ },
+ {
+  "id": "warding-statuette",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Warding Statuette",
+  "level": 7,
+  "traits": [
+   "force",
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This small figurine is carved from soapstone in the shape of a deity or guardian, facing both front and back to indicate unflagging vigilance. The spell attack modifier of any spell cast by activating this item is +13. - **Armor** You gain resistance 1 against ranged weapon attacks. - **Weapon** When you hit with a Strike using the affixed weapon, or when a spell effect you created by activating the statuette hits with a Strike, you can choose a creature adjacent to the creature that was hit. That creature gains a +1 status bonus to AC until the start of your next turn. No more than one creature can benefit from this each turn. --- **Activate** Cast a Spell **Effect** You cast Shield. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast Spiritual Armament."
+ },
+ {
+  "id": "warding-statuette-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Warding Statuette (Greater)",
+  "level": 13,
+  "traits": [
+   "force",
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This small figurine is carved from soapstone in the shape of a deity or guardian, facing both front and back to indicate unflagging vigilance. The spell attack modifier of any spell cast by activating this item is +20. - **Armor** You gain resistance 5 against ranged weapon attacks. - **Weapon** When you hit with a Strike using the affixed weapon, or when a spell effect you created by activating the statuette hits with a Strike, you can choose a creature adjacent to the creature that was hit. That creature gains a +1 status bonus to AC until the start of your next turn. No more than one creature can benefit from this each turn. --- **Activate** Cast a Spell **Effect** You cast Shield. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast 5th-rank Spiritual Weapon. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast Spiritual Guardian."
+ },
+ {
+  "id": "wardrobe-stone",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Wardrobe Stone",
+  "level": 3,
+  "traits": [
+   "illusion",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Wardrobe Stone Source Grand Bazaar pg. 51 Usage held in 1 hand Bulk L This large stone eye is the size of a fist and decorated with elaborate carvings of robes and other garments. Activate (1 minute) envision, Interact; Effect You enter a brief trance in which you envision yourself entering a large dressing room. You maneuver through the endless dressing-room mindscape and search for whatever articles of clothing, accessories, and other garments you desire. After the activation, you gain the effects of illusory disguise, except that it only causes you to appear to be wearing the exact outfit you selected within the mindscape. The illusion also disguises the wardrobe stone to match your outfit and not appear out of place, such as by appearing to be a glove or bracelet, though it continues to occupy your hand while you're under the effects of illusory disguise. You can actively Dismiss the Spell, but the effects are also dismissed immediately when you're no longer holding the wardrobe stone. Wardrobe Stone (Lesser) Source Grand Bazaar pg. 51 Price 50 gp Bulk L Wardrobe Stone (Moderate) Source Grand Bazaar pg. 51 Price 1,250 gp Bulk L You gain a +2 item bonus to a specific Lore skill associated with your outfit, such as Carpentry Lore when wearing a carpenter's outfit or Cooking Lore when wearing a chef's outfit. Activate (1 minute) envision, Interact; Frequency once per day; Effect You cast prying eye. Wardrobe Stone (Greater) Source Grand Bazaar pg. 51 Price 55,000 gp Bulk L You gain +3 item bonus to Perception checks involving sight and a +3 item bonus to a specific Lore skill associated with your outfit. Activate (1 minute) envision, Interact; Effect You cast prying eye. Activate (10 minutes) envision, Interact; Effect The wardrobe stone splits open and permanently transforms into a specific type of magical robe of your choosing. It can transform into any 20th-level or lower magical robe to which you have access, except for items that can't normally be Crafted, such as artifacts. This process is irreversible."
+ },
+ {
+  "id": "watch-your-back",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Watch Your Back",
+  "level": 6,
+  "traits": [
+   "emotion",
+   "fear",
+   "mental",
+   "rogue"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You menace the target, stoking their fears and drawing their attention. Attempt an check against the Will DC of a target within 30 feet. If you succeed, for 1 minute, that target gains a +2 status bonus to Perception checks against you, but it takes a –2 status penalty to Will saves against fear effects."
+ },
+ {
+  "id": "water-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Water Bomb",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "nonlethal",
+   "splash",
+   "water"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Water Bomb May contain spoilers from Quest for the Frozen Flame Source Pathfinder #176: Lost Mammoth Valley pg. 79 Usage held in 1 hand Bulk L Activate Strike This bladder of water explodes when put under pressure or upon being punctured, dealing minimal damage, neutralizing acids, and dousing flames. A water bomb deals the listed bludgeoning damage and bludgeoning splash damage. On a hit, if the target is suffering from persistent acid or persistent fire damage, it can attempt a flat check to end that persistent damage immediately. As this is particularly effective assistance, the DC of the flat check is reduced from 15 to 10 for this check. On a hit against an unattended, non-magical fire, the bomb extinguishes the fire, or extinguishes one square of fire for a larger fire. Many types grant an item bonus to attack rolls, and some types extinguish wider areas of fire. Water Bomb (Lesser) Source Pathfinder #176: Lost Mammoth Valley pg. 79 Price 3 gp Bulk L The bomb deals 1 nonlethal bludgeoning damage and 1 nonlethal bludgeoning splash damage. Water Bomb (Moderate) Source Pathfinder #176: Lost Mammoth Valley pg. 79 Price 10 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 1d4 nonlethal bludgeoning damage and 2 nonlethal bludgeoning splash damage. Water Bomb (Greater) Source Pathfinder #176: Lost Mammoth Valley pg. 79 Price 250 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 2d4 nonlethal bludgeoning damage and 3 nonlethal bludgeoning splash damage. Except on a critical failure, the bomb extinguishes non-magical fires within its splash area. Water Bomb (Major) Source Pathfinder #176: Lost Mammoth Valley pg. 79 Price 2,500 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 3d4 nonlethal bludgeoning damage and 4 nonlethal bludgeoning splash damage. Except on a critical failure, the bomb extinguishes nonmagical fires within its splash area."
+ },
+ {
+  "id": "water-bomb-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Water Bomb (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "nonlethal",
+   "splash",
+   "water"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This bladder of water explodes when put under pressure or upon being punctured, dealing minimal damage, neutralizing acids, and dousing flames. You gain a +2 item bonus to attack rolls. The bomb deals 2d4 nonlethal bludgeoning damage and 3 nonlethal bludgeoning splash damage. On a hit, if the target is suffering from Persistent Acid or Persistent Fire Damage, it can attempt a flat check to end that persistent damage immediately. As this is particularly effective assistance, the DC of the flat check is reduced from 15 to 10 for this check. Except on a critical failure, the bomb extinguishes non-magical fires within its splash area."
+ },
+ {
+  "id": "water-bomb-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Water Bomb (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "nonlethal",
+   "splash",
+   "water"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This bladder of water explodes when put under pressure or upon being punctured, dealing minimal damage, neutralizing acids, and dousing flames. You gain a +3 item bonus to attack rolls. The bomb deals 3d4 nonlethal bludgeoning damage and 4 nonlethal bludgeoning splash damage. On a hit, if the target is suffering from Persistent Acid or Persistent Fire Damage, it can attempt a flat check to end that persistent damage immediately. As this is particularly effective assistance, the DC of the flat check is reduced from 15 to 10 for this check. Except on a critical failure, the bomb extinguishes non-magical fires within its splash area."
+ },
+ {
+  "id": "water-bomb-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Water Bomb (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "nonlethal",
+   "splash",
+   "water"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This bladder of water explodes when put under pressure or upon being punctured, dealing minimal damage, neutralizing acids, and dousing flames. You gain a +1 item bonus to attack rolls. The bomb deals 1d4 nonlethal bludgeoning damage and 2 nonlethal bludgeoning splash damage. On a hit, if the target is suffering from Persistent Acid or Persistent Fire Damage, it can attempt a flat check to end that persistent damage immediately. As this is particularly effective assistance, the DC of the flat check is reduced from 15 to 10 for this check. On a hit against an unattended, non-magical fire, the bomb extinguishes the fire, or extinguishes one square of fire for a larger fire."
+ },
+ {
+  "id": "weapon-potency",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Weapon Potency",
+  "level": 2,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Weapon Potency Source GM Core pg. 236 Usage etched onto a weapon Magical enhancements make this weapon strike true. Attack rolls with this weapon gain a +1 item bonus, and the weapon can be etched with one property rune. You can upgrade the weapon potency rune already etched on a weapon to a stronger version, increasing the values of the existing rune to those of the new rune. The Price of the upgrade is the difference between the two runes' prices. Weapon Potency (+1) Source GM Core pg. 236, Core Rulebook pg. 581 Price 35 gp Craft Requirements You are an expert in Crafting. Weapon Potency (+2) Source GM Core pg. 236, Core Rulebook pg. 581 Price 935 gp The item bonus to attack rolls is +2, and the weapon can be etched with two property runes. Craft Requirements You are a master in Crafting. Weapon Potency (+3) Source GM Core pg. 236, Core Rulebook pg. 581 Price 8,935 gp The item bonus to attack rolls is +3, and the weapon can be etched with three property runes. Craft Requirements You are legendary in Crafting."
+ },
+ {
+  "id": "weapon-potency-1",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Weapon Potency (+1)",
+  "level": 2,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Magical enhancements make this weapon strike true. Attack rolls with this weapon gain a +1 item bonus, and the weapon can be etched with one property rune. You can upgrade the *weapon potency* rune already etched on a weapon to a stronger version, increasing the values of the existing rune to those of the new rune. You must have the formula of the stronger rune to do so, and the Price of the upgrade is the difference between the two runes' Prices. **Craft Requirements** You are an expert in Crafting."
+ },
+ {
+  "id": "weapon-potency-2",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Weapon Potency (+2)",
+  "level": 10,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Magical enhancements make this weapon strike true. Attack rolls with this weapon gain a +2 item bonus, and the weapon can be etched with two property rune. You can upgrade the *weapon potency* rune already etched on a weapon to a stronger version, increasing the values of the existing rune to those of the new rune. You must have the formula of the stronger rune to do so, and the Price of the upgrade is the difference between the two runes' Prices. **Craft Requirements** You are a master in Crafting."
+ },
+ {
+  "id": "weapon-potency-3",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Weapon Potency (+3)",
+  "level": 16,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Magical enhancements make this weapon strike true. Attack rolls with this weapon gain a +3 item bonus, and the weapon can be etched with three property rune. You can upgrade the *weapon potency* rune already etched on a weapon to a stronger version, increasing the values of the existing rune to those of the new rune. You must have the formula of the stronger rune to do so, and the Price of the upgrade is the difference between the two runes' Prices. **Craft Requirements** You are legendary in Crafting."
+ },
+ {
+  "id": "what-could-have-been",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "What Could Have Been",
+  "level": 8,
+  "traits": [
+   "archetype",
+   "concentrate",
+   "spellshape"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Rather than conjuring creatures from elsewhere in the world or the planes, you can temporarily pull a much different version of yourself from an alternate timeline—for instance, instead of summoning a generic or random troll with Summon Giant, you summon a troll version of yourself from a timeline where you're a troll. If your next action is to Cast a Spell that summons a creature, that creature is another version of you. This creature remains the type of creature you summoned and has largely the same abilities (plus the following adjustments), but it clearly resembles you, likely sharing some distinguishing features, such as mannerisms, speech patterns, tattoos, or clothing. The summoned creature gains a +1 status bonus to any skill check in which you're trained, a +2 status bonus if you're an expert, a +3 status bonus if you're a master, or a +4 status bonus if you're legendary. The creature also takes a –2 penalty to all skills in which you're untrained."
+ },
+ {
+  "id": "whip-tongue-sling",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Whip-Tongue Sling",
+  "level": 11,
+  "traits": [
+   "propulsive"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This is a *+2 striking sling* made from the neck, jaw, and tongue of a mobogo to resemble its mouth. The tongue curls around each bullet, which is thrown with the snap of your wrist. Each throw causes a small croak to echo from the sling. --- **Activate—Bolstering Croak** ⟨2⟩ (auditory, concentrate, emotion, manipulate, mental) **Frequency** once per day; **Effect** You raise your sling and work the handle to mimic a mobogo's croaking song. Allies within 25 feet gain a +1 status bonus to saves against fear effects for 1 round. You can Sustain this for up to 4 rounds. During this time, you can't use the sling to Strike or activate its Tongue Twister ability. After using Bolstering Croak, you can recharge it once per day by feeding the sling a number of gallons of water equal to double the number of rounds for which the Bolstering Croak was active. For example, if you activated but didn't sustain Bolstering Croak, you would require 2 gallons of water to recharge it. If you activated Bolstering Cloak and then Sustained for 1 round, you would require 4 gallons of water. --- **Activate—Tongue Twister** ⟨2⟩ (manipulate) **Requirements** The sling isn't loaded **Effect** You fully unfurl the sling's tongue to grab hold of a creature within 20 feet, and attempt to move them. Attempt an Athletics check against the creature's Fortitude DC. On a success, you can move the creature up to 15 feet into any space within 20 feet of you. If you target a willing ally with this ability, you automatically succeed at the Athletics check. --- **Craft Requirements** The initial raw materials must include the throat, tongue, and skin from a mobogo."
+ },
+ {
+  "id": "whirlwind-stance",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Whirlwind Stance",
+  "level": 10,
+  "traits": [
+   "archetype",
+   "flourish",
+   "stance"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "core.stances"
+  ],
+  "text": "**Requirements** You are wielding your staff, which must have the parry trait. --- You use your staff as a defensive implement as well as an offensive one. You gain a +2 circumstance bonus to AC as long as you remain in this stance."
+ },
+ {
+  "id": "whisper-of-the-first-lie",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Whisper of the First Lie",
+  "level": 20,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This delicate necklace contains bottled whispers distilled from a source on the Astral Plane rumored to be connected to the first lie ever told. While wearing the necklace, you gain a +3 item bonus to Deception checks, and you can attempt to counteract effects that would force you to tell the truth or determine whether you are lying. Success on this counteract attempt lets you ignore the effect, rather than removing the effect entirely. The counteract rank is 9, with a counteract modifier of 1d20+35. **Activate—Release the Lie** ⟨3⟩ (concentrate, manipulate) --- **Effect** You unstopper the vial and release the lie, creating the effect of a Fabricated Truth (DC 47). The vial is emptied and can never be activated again. --- **Craft Requirements** Supply a casting of *fabricated truth*."
+ },
+ {
+  "id": "willowshore-urchin",
+  "lane": "situational",
+  "collection": "backgrounds",
+  "name": "Willowshore Urchin",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "As with any settlement, not all of Willowshore's citizens are born into easy lives. You grew up on the town streets, either as an orphan or hardscrabble youth who was forced at a young age to help provide for your family. You might technically have had a home of your own, but for various reasons, you had, or preferred, to live most of your childhood outside of those walls. You might have run with a gang of kids (some of whom might even be fellow PCs), or you could've been a loner who managed to survive against all odds. Regardless, your childhood was one of forced ingenuity, desperation, and physicality. Hardly a week would've passed without you having to jury-rig a solution to some problem or to simply use your reflexes or brawn to solve a situation quickly before things escalated. While you might have left your old life behind you now that you're all grown up, the time you spent on Willowshore's streets have made you the person you are today. You might still be technically homeless, subsisting on the street and never sleeping in the same place twice in a row. You might keep a small shanty or hideout somewhere in town as well. It's also possible that, despite your childhood, you've been fortunate enough to find a family or home, in which case your home could be anywhere in Willowshore. During the Reenactment Festival, you likely enjoyed the revelry... perhaps a bit too much! Festivals were always times of excitement in your childhood, and this one is no exception. You were chosen to be an abductee during the Reenactment Festival simply by chance—maybe your name was selected by a blind draw, or perhaps someone dared you to take part, or you could simply have craved the attention. Choose two attribute boosts. One must be to **Dexterity** or **Strength**, and one is a free attribute boost. You're trained in the Athletics skill and the Engineering Lore skill. You gain the Charming Liar feat. Seasonal Boon (Willowshore Urchin) --- You can add one of the following two adjustments to any background to further modify your choice to match your vision for your PC. **Family:** You and one (or more) other PCs are close family members (siblings, parent/child, married, etc.) If you take this adjustment, the other PC(s) who are your family must also take this adjustment. Choose one of the following to replace the skill feat you otherwise would've gained from your background. (You and your sibling need not share the same choice—a sibling who wants to keep their background's skill feat can pick \"Typical\" from the list.) - **Bickering:** You have a long-standing feud with your sibling(s). Whenever your sibling(s) critically fail a significant skill check or attack roll and you witness their failure, you gain a +1 status bonus to your saving throws until the end of your next turn as you secretly (or perhaps not so secretly) delight in their failure. - **Close-Knit:** You and your sibling(s) work well together, and you go all-out to help them when they're badly hurt. When you provide Aid or Administer First Aid to your sibling(s), the DC is 5 lower than normal. - **Typical:** You have a standard relationship with your sibling(s); don't change your background's "
+ },
+ {
+  "id": "wind-catcher",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Wind-Catcher",
+  "level": 7,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This rune is invested by the captain or pilot of the vehicle. The vehicle gains a +5-foot item bonus to its Speed. If lack of wind prevents the vehicle from moving, it can still move at a Speed of 5 feet."
+ },
+ {
+  "id": "wind-catcher-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Wind-Catcher (Greater)",
+  "level": 14,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This rune is invested by the captain or pilot of the vehicle. The vehicle gains a +10-foot item bonus to its Speed. If lack of wind prevents the vehicle from moving, it can still move at a Speed of 10 feet."
+ },
+ {
+  "id": "witchs-broom",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Witch’s Broom",
+  "level": 12,
+  "traits": [
+   "witch"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "A broom is the only steed you need to fly through the night sky. During your daily preparations, you can anoint a single broom, staff, polearm, or similarly shaped object with a flying ointment made of special herbs and oils. Until the next time you make your daily preparations, it gains the magical trait, and you can ride on it while you're holding it with at least 1 hand. It moves at a fly Speed of 20 feet. The broom takes a –10-foot penalty to its Speed if laden with more than 20 Bulk, and crashes to the ground if it carries more than 30 Bulk. The broom can't be controlled by anyone but you. If you anoint a weapon or other held item, you can't ride the broom and wield it at the same time. You can Craft your broomstick into a Flying Broomstick as though you had the formula for that item. If you anoint an item that's already a flying broomstick, the broom gains a +10-foot status bonus to its Speed and you can choose whether it works for anyone or only you."
+ },
+ {
+  "id": "wondrous-figurine",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Wondrous Figurine",
+  "level": 2,
+  "traits": [
+   "conjuration",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Wondrous Figurine Source Core Rulebook pg. 576 Usage held in 1 hand Bulk L Each one of these statuettes is 1 inch in height, carved from a specific material and taking the shape of a particular animal or animals. Activate command, Interact; Effect You activate the statue by placing it on solid ground and then speaking its name, causing the statuette to transform into a living creature or creatures. In creature form, the figurine has the minion trait. It can understand your language and it obeys you to the best of its ability when you use an action to command it. The specifics of each creature, as well as the activation’s frequency (if any), appear in its entry below. If the figurine is slain while in animal form, it reverts to its statue shape and cannot be activated again until 1 week has passed. If the figurine is destroyed in statue form, it is shattered and its magic is lost. Wondrous Figurine (Golden Lions) Source Core Rulebook pg. 576 Price 900 gp This statuette depicts a pair of gold lions, and when activated, it becomes a pair of adult lions. The lions can be called on only once per day, and they remain in lion form for no more than 1 hour. If either of the lions is slain, that lion cannot be summoned again until 1 week has passed, but this doesn't prevent you from summoning the other. Wondrous Figurine (Jade Serpent) Source Core Rulebook pg. 576 Price 340 gp This tiny statue first appears to be a formless lump of jade until closer inspection reveals it to be a serpentine body curled into a snug knot. When activated, this figurine becomes a giant viper. The figurine can be used only once per day, and it can remain in serpent form for no more than 10 minutes. Wondrous Figurine (Marble Elephant) Source Core Rulebook pg. 576 Price 2,700 gp Finely carved from a solid piece of marble, this gleaming elephant statuette becomes a fully grown elephant when activated. The elephant can be called upon no more than four times per month. It remains for 24 hours as long as it is being used as a beast of burden or for transport. If it attempts an attack or otherwise engages in combat, it reverts to statuette form after 1d4 rounds. Wondrous Figurine (Obsidian Steed) Source Core Rulebook pg. 576 Price 6,000 gp This sinister-looking black statuette resembles a horse rearing up on its hind legs. When activated, this figurine becomes a nightmare. It can be called upon once per week for up to 24 hours, though it won't use plane shift or its other abilities on behalf of its rider. Although evil, it allows itself to be ridden by creatures of any alignment, although if a good creature mounts it, the rider must attempt a DC 3 flat check. On a failure, the nightmare uses plane shift to take the rider to a random location in the Abyss, where it promptly returns to statue form, stranding its rider in that nightmarish place. Wondrous Figurine (Onyx Dog) Source Core Rulebook pg. 576 Price 34 gp This simple onyx statue transforms into a guard dog. The dog has a +4 circumstance bonus to Survival checks to Track, and it has darkvision. When the dog senses a hidden creature with its scent, that creature is instead observed and concealed. The onyx dog can be activated o"
+ },
+ {
+  "id": "wondrous-figurine-onyx-dog",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Wondrous Figurine (Onyx Dog)",
+  "level": 2,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Each one of these statuettes is 1 inch in height, carved from a specific material and taking the shape of a particular animal or animals. **Activate** ⟨2⟩ command, Interact --- **Effect** You activate the statue by placing it on solid ground and then speaking its name, causing the statuette to transform into a living creature or creatures. In creature form, the figurine has the minion trait. It can understand your language and it obeys you to the best of its ability when you use an action to command it. The specifics of each creature, as well as the activation's frequency (if any), appear in its entry below. If the figurine is slain while in animal form, it reverts to its statue shape and cannot be activated again until 1 week has passed. If the figurine is destroyed in statue form, it is shattered and its magic is lost. --- This simple onyx statue transforms into a Guard Dog. The dog has a +4 circumstance bonus to Survival checks to Track, and it has darkvision. When the dog senses a hidden creature with its scent, that creature is instead observed and concealed. The onyx dog can be activated once per week and remains in its form for up to 6 hours."
+ },
+ {
+  "id": "you-cant-kill-an-idea",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "You Can't Kill an Idea",
+  "level": 20,
+  "traits": [
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Those who would destroy you instead transform you into a powerful yet formless entity. If you would be killed while you have an Ultimatum of Liberation active, you (along with your equipment) become an ideaform. As an ideaform, you are invisible and incorporeal. You have only 1 Hit Point and can't gain more, but you are immune to all damage; if your dying or doomed condition would increase to a high enough value to kill you, it does not increase, and you are immune to any effect that would instantly kill or destroy you. You are immune to the unconscious condition, yet can take only purely mental actions. You can communicate telepathically with your allies at unlimited range, and gain two extra reactions at the start of each of your turns. Additionally, you can Aid allies through nothing but telepathic advice, without having to spend an action to prepare first, and can spend a Mythic Point to do so at mythic proficiency. Any circumstance bonus you grant through Aiding is increased by 1. Before an hour passes while being an ideaform, you must choose a willing follower of your cause to fuse with and cease to be an ideaform. Use your level, their ancestry, heritage, and ancestry feats, and work with your GM to choose which combination of class, attribute modifiers, skills, and feats would make a good representation of this fusion. This new character has all your previous equipment. If you do not fuse with a follower after an hour of being an ideaform, you cease to be an ideaform and die; the equipment you had at the time of your original death also ceases to exist."
+ },
+ {
+  "id": "youre-an-embarrassment",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "You're an Embarrassment!",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "fortune"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** An ally within 30 feet fails a Will saving throw against an incapacitation effect. --- Some Firebrands can't stand it when their allies are ruining their moment, and you're no different. Your loud and forceful condemnation of an ally succumbing to an incapacitation effect gives them a second chance to impress you and shake off the effect. Your ally rerolls the triggering Will saving throw with a +1 circumstance bonus. Regardless of the result of the save, your ally is temporarily immune to You're an Embarrassment! for 10 minutes."
+ },
+ {
+  "id": "zombie-horde",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Zombie Horde",
+  "level": 20,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You built your reanimated construct companion of modular components from various corpses. Its unique makeup enables your companion to split into dozens or even hundreds of much smaller corpse constructs. Acting as one, this shambling swarm can overwhelm your enemies. You Command your reanimated construct companion. Instead of its normal actions, the companion splits into a horde of Small and Tiny construct companions within a from its original space. The horde makes a Strike against each foe within the emanation with a +2 circumstance bonus to its attack rolls. The multiple attack penalty doesn't increase until after the companion makes all the attacks. The miniature companions recombine into a single companion of their original size at any location within the emanation."
+ }
+]

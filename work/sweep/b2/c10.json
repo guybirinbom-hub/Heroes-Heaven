@@ -1,0 +1,1224 @@
+[
+ {
+  "id": "saurian-spike-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Saurian Spike (Major)",
+  "level": 15,
+  "traits": [
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "This jagged, bony growth narrows to a sharp, pointed tip. Deep groves from some former battle scar its surface. The bearer of a *saurian spike* often feels a sudden surge in power and confidence. The spell attack modifier of any spell cast by activating this item is +24. - **Armor** You gain precise scent with a range of 60 feet. - **Weapon** (auditory, emotion, fear, visual) When you cast a polymorph spell by activating the spike, your battle form is exceptionally fearsome. Each enemy in a must succeed at a saving throw or become Frightened 2 (Frightened 3 on a critical failure). **Activate** Cast a Spell --- **Effect** You cast Gouging Claw. **Activate** Cast a Spell **Frequency** once per day --- **Effect** You cast 7th-rank Dinosaur Form."
+ },
+ {
+  "id": "scalding-gauntlets",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Scalding Gauntlets",
+  "level": 11,
+  "traits": [
+   "agile",
+   "fire",
+   "free-hand",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Prized by naari geniekin who prefer to fight with their fists, *scalding gauntlets* are a pair of *+2 striking spiked gauntlets*. The intricate golden gauntlets are engraved with Pyric writing praising the glories of the Dominion of Flame and embellished with shimmering black and red gemstones. A creature you grab or restrain while wearing the gauntlets must succeed at a save or take 2d6 damage and be Sickened 1 from the pain; it's temporarily immune to being sickened by *scalding gauntlets* for 1 hour."
+ },
+ {
+  "id": "scalding-gauntlets-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Scalding Gauntlets (Greater)",
+  "level": 13,
+  "traits": [
+   "agile",
+   "fire",
+   "free-hand",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Prized by naari geniekin who prefer to fight with their fists, *greater scalding gauntlets* are a pair of *+2 greater striking flaming spiked gauntlets*. The intricate golden gauntlets are engraved with Pyric writing praising the glories of the Dominion of Flame and embellished with shimmering black and red gemstones. A creature you grab or restrain while wearing the gauntlets must succeed at a save or take 2d6 damage and be Sickened 1 from the pain; it's temporarily immune to being sickened by *scalding gauntlets* for 1 hour."
+ },
+ {
+  "id": "scalding-gauntlets-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Scalding Gauntlets (Major)",
+  "level": 15,
+  "traits": [
+   "agile",
+   "fire",
+   "free-hand",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Prized by naari geniekin who prefer to fight with their fists, *major scalding gauntlets* are a pair of *+2 greater striking flaming spiked gauntlets*. The intricate golden gauntlets are engraved with Pyric writing praising the glories of the Dominion of Flame and embellished with shimmering black and red gemstones. A creature you grab or restrain while wearing the gauntlets must succeed at a save or take 3d6 damage and be Sickened 1 from the pain; it's temporarily immune to being sickened by *scalding gauntlets* for 1 hour."
+ },
+ {
+  "id": "scalding-gauntlets-true",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Scalding Gauntlets (True)",
+  "level": 18,
+  "traits": [
+   "agile",
+   "fire",
+   "free-hand",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Prized by naari geniekin who prefer to fight with their fists, *true scalding gauntlets* are a pair of *+3 greater striking greater flaming spiked gauntlets*. The intricate golden gauntlets are engraved with Pyric writing praising the glories of the Dominion of Flame and embellished with shimmering black and red gemstones. A creature you grab or restrain while wearing the gauntlets must succeed at a save or take 4d6 damage and be Sickened 1 from the pain; it's temporarily immune to being sickened by *scalding gauntlets* for 1 hour."
+ },
+ {
+  "id": "scholars-drop",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Scholar's Drop",
+  "level": 6,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "lozenge"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Students in Katapesh first used scholar's drop to gain an academic edge, but this hard, sugar-soated candy has since spread across Golarion. Its lemon and green tea flavor adds to its refreshing qualities. For 1 hour, you gain a +1 item bonus to saving throws against effects that could render you fatigued. **Secondary Effect** ⟨1⟩ **Requirements** You're fatigued --- **Effect** Ignore the effects of the fatigued condition for 10 minutes. The drop's other effects end for you, and when the 10 minutes are up, you're temporarily immune to scholar's drops for 1 hour. If you use this effect three times in a single day, you become temporarily immune to scholar's drops entirely until you get a full night's rest."
+ },
+ {
+  "id": "school-of-thassilonian-rune-magic",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "School of Thassilonian Rune Magic",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "This curriculum, taught at a few select academies in New Thassilon, can be learned only by wizards with the runelord class archetype. You have begun to study one of the seven runes of sin, granting you great power but at the cost of anathematic magic. All runelords gain the below curriculum and school spells. In addition, you must choose one of the seven sins to specialize in. You add your sin's spells and initial school spells to your curriculum. The addictive nature of sin magic prevents you from using magic in ways aligned with other sins, represented by that sin's anathema. Casting a sin spell never invokes the anathema of its school of sin. Unlike other wizards, some of your curriculum spells may be spells that don't typically appear on the arcane spell list (marked with an asterisk). You still cast these spells as arcane spells, the unifying knowledge of sin bridging the gap between disparate magics. **Curriculum** - **cantrips:** Detect Magic, Sigil - **1st:** Mystic Armor, Runic Body, Runic Weapon, Sure Strike - **2nd:** Darkvision, See the Unseen - **3rd:** , Veil of Privacy - **4th:** , Fly - **5th:** Mind Probe, Sending - **6th:** Scrying, Truesight - **7th:** Contingency, Spell Riposte - **8th:** Unrelenting Observation, Hidden Mind - **9th:** Foresight **Advanced School Spell** Personal Runewell --- - **Envy** - **Gluttony** - **Greed** - **Lust** - **Pride** - **Sloth** - **Wrath**"
+ },
+ {
+  "id": "scouring-spark",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Scouring Spark",
+  "level": 18,
+  "traits": [
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "When you unleash your divine spark, you become a being of living light that scours away the darkness. While Channeling your Divine Spark, you become immune to the confused and frightened conditions. Any creature that touches you or damages you with an unarmed melee attack or a non-reach melee weapon takes 3d6 damage, your unarmed attacks deal 1d6 additional fire damage, and your fire spells deal one additional die of fire damage (of the same damage die the spell uses). This damage is doubled against creatures with the aberration, fiend, or undead trait."
+ },
+ {
+  "id": "scrap-barricade",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Scrap Barricade",
+  "level": 6,
+  "traits": [
+   "impulse",
+   "kineticist",
+   "manipulate",
+   "metal",
+   "overflow",
+   "primal"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Ragged pieces of metal weld together into a ramshackle structure. The barricade is up to 30 feet long, 15 feet high, and 1/2 inch thick. It must form in a straight line within 120 feet in an unbroken open space that doesn't pass through any creatures or objects, or the impulse fails. Each 10-foot-by-10-foot section of the wall has AC 10, Hardness 10, and 20 Hit Points, and it's immune to critical hits and precision damage. If any section is destroyed, the entire wall collapses, and each creature adjacent to the wall takes damage with a save against your class DC. The wall lasts until the end of your next turn, but you can Sustain it up to 1 minute. --- **Level (+2)** The maximum length of the wall increases by 10 feet, the HP of each section increases by 10, and the damage when it's destroyed increases by 1d8."
+ },
+ {
+  "id": "seasoned-command",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Seasoned Command",
+  "level": 7,
+  "traits": [
+   "auditory",
+   "concentrate",
+   "linguistic",
+   "mental"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Allies intuitively follow your orders. Choose an ally within 30 feet and then attempt a Diplomacy or Intimidation check against a hard DC for that ally's level. This counts as a preparatory action to Aid that ally. Regardless of your result, the ally is then temporarily immune to your further uses of Seasoned Command for 1 minute. --- **Critical Success** You immediately gain an additional reaction that can be used only to Aid the chosen ally, and you gain a +1 circumstance bonus to your skill check or attack roll to Aid. **Success** As critical success, but you don't gain the circumstance bonus. **Failure** You don't gain an additional reaction. --- **Special** Once per hour, you can Take the Lead of a troop as a free action (rather than 2 actions). Outside of combat, you can establish leadership of a troop and grant a skirmish bond in half the normal time (5 minutes and 4 hours, respectively)."
+ },
+ {
+  "id": "seers-array",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Seer's Array",
+  "level": 0,
+  "traits": [
+   "relic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Seer's Array Source Treasure Vault (Remastered) pg. 202 Aspects Mind and Time Diviners through the ages have employed a variety of tools to glimpse the future, but one who assembles five pieces of a seer's array gains strong second sight. Seer's arrays can be found across Golarion, from the caravans of Varisian harrowers to the scale diviners at the court of the Dragon King of Xa Hoi. A diviner who wears the array is bound to be sought after for counsel, and those who consult such farsighted individuals do well to heed any advice given. Set Items: Pendant of the Occult (level 3), Staff of the Unblinking Eye (level 6), Clarity Goggles (Lesser) (level 8), Crystal Ball (Clear Quartz) (level 14), Amulet of the Third Eye (level 17) Gifts: The set grants the following gifts. - 1: Recalculate - 2: Borrow Time - 3: Time Jump - 4: Precognition - 5: Time Reversal Collective Features: The set grants the following features. Two Items: The circumstance bonus from recalculate increases by 1. Three Items: Creatures become temporarily immune to the relic's borrow time gift for 1 hour. Four Items: You can use the relic's time jump once per hour. For each use after the first in a given day, you must attempt a flat check with a DC of 9 + the number of times you've used the gift that day. If you fail, you can still complete the time jump, but after that the gift is no longer available until you next complete your daily preparations. You can roll the flat check before using the gift and decide not to do so after seeing the roll. However, any failure applies to the next use of the gift that day, making your next use your last that day. Five Items: You can use the relic's precognition once per hour. Each use after the first requires a flat check like for time jump at four items, but this flat check affects your use of precognition."
+ },
+ {
+  "id": "sense-holiness",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Sense Holiness",
+  "level": 8,
+  "traits": [
+   "champion"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The presence of goodness sickens you with its saccharine self-righteousness. You can sense the presence of creatures with the holy trait within 120 feet. This functions as a vague sense, similar to humans' sense of smell. A holy creature using a disguise or otherwise trying to hide its presence attempts a check against your Perception DC to hide its sanctification from you. If the creature succeeds at its Deception check, it is then temporarily immune to your Sense Holiness for 1 day."
+ },
+ {
+  "id": "sense-unholiness",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Sense Unholiness",
+  "level": 8,
+  "traits": [
+   "champion"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You sense the truly wicked as a queasy or foreboding feeling. You can sense the presence of creatures with the unholy trait within 120 feet. This functions as a vague sense, similar to humans' sense of smell. An unholy creature using a disguise or otherwise trying to hide its presence attempts a check against your Perception DC to hide its sanctification from you. If the creature succeeds at its Deception check, it is then temporarily immune to your Sense Unholiness for 1 day."
+ },
+ {
+  "id": "senses-of-the-bear",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Senses of the Bear",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "While in ursine form, you gain low-light vision and scent (imprecise) 30 feet. If you already had low-light vision, you instead gain darkvision."
+ },
+ {
+  "id": "serene-smelling-salts",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Serene Smelling Salts",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- This package of smelling salts has such a pungent stench, it can snap any creature out of a panicked state. When used on yourself or a creature within your reach, that target reduces the value of its frightened condition by 1 and becomes temporarily immune to any serene smelling salts for 1 hour."
+ },
+ {
+  "id": "shadow-master",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Shadow Master",
+  "level": 18,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The shadows protect you better than any armor can, and they give you power to plunge others into darkness. Whenever you are in an area of dim light or darkness, you gain resistance 5 to all damage except force and damage from Strikes with the Ghost Touch property rune. When you attempt a Reflex saving throw in an area of dim light or darkness, you can roll twice and take the higher result; this is a fortune effect."
+ },
+ {
+  "id": "shadow-sight",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Shadow Sight",
+  "level": 9,
+  "traits": [
+   "fetchling",
+   "occult"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per hour --- You draw on your connection with the Shadow Plane to see through all but the deepest darkness. You gain greater darkvision for 1 minute."
+ },
+ {
+  "id": "shaman",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Shaman",
+  "level": 1,
+  "traits": [
+   "animist"
+  ],
+  "engineFieldsPresent": [
+   "grantsFeats"
+  ],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "You form close bonds with your apparitions that allow you to invest them with the rare ability to take on a material form and directly affect the physical world. **Invocation of Embodiment (1st):** You allow your apparition to inhabit a physical form. You gain the Spirit Familiar feat. At 2nd level, you gain the Enhanced Familiar feat. **Invocation of Growth (9th):** Your bond with the physical form of your chosen apparition grows stronger. You gain the Incredible Familiar feat. **Invocation of Otherworldliness (17th):** Your apparition familiar becomes ever more powerful, straddling the line between physical and spiritual. Your spirit familiar can take a single action that has the concentrate trait to become incorporeal for 1 minute. It gains the incorporeal trait, meaning it can move through physical creatures and such creatures can move through it. It can't attempt Strength-based checks (such as Grapple) against corporeal creatures, and corporeal creatures can't attempt such checks against it. It gains immunity to precision damage and resistance to physical damage (except damage from Strikes with the Ghost Touch property rune) equal to half your level (double against non-magical damage) but weakness to force damage equal to half your level. However, when incorporeal, your spirit familiar can travel no more than 60 feet from you and must maintain line of effect to you; this typically prevents it from moving through walls. Your spirit familiar can Dismiss this effect."
+ },
+ {
+  "id": "shell-of-easy-breathing",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Shell of Easy Breathing",
+  "level": 5,
+  "traits": [
+   "magical",
+   "water"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This large salt-encrusted seashell is more than 2 feet across, with images of deep sea creatures carved around its edge. --- **Activate—Fill the Shell** ⟨1⟩ (manipulate) **Effect** You place the shell on a level surface and sprinkle a few drops of water into its basin. The shell slowly fills with saltwater over the course of 1 minute. The shell's magic then becomes active, indicated by a steady stream of bubbles. Moving the shell disturbs its contents, causing the item to deactivate and the water inside to evaporate; otherwise, it remains activated for an unlimited duration. While the shell is activated, a creature can submerge its head and let water and bubbles fill its nose and mouth (or whatever body part it uses for breathing) as a 3-action activity. For the next hour, the creature can breathe underwater. The creature is then temporarily immune to *shells of easy breathing* until the next time it makes its daily preparations."
+ },
+ {
+  "id": "shell-of-easy-breathing-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Shell of Easy Breathing (Greater)",
+  "level": 9,
+  "traits": [
+   "magical",
+   "water"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This large salt-encrusted seashell is more than 2 feet across, with images of deep sea creatures carved around its edge. --- **Activate—Fill the Shell** ⟨1⟩ (manipulate) **Effect** You place the shell on a level surface and sprinkle a few drops of water into its basin. The shell slowly fills with saltwater over the course of 1 minute. The shell's magic then becomes active, indicated by a steady stream of bubbles. Moving the shell disturbs its contents, causing the item to deactivate and the water inside to evaporate; otherwise, it remains activated for an unlimited duration. While the shell is activated, a creature can submerge its head and let water and bubbles fill its nose and mouth (or whatever body part it uses for breathing) as a 3-action activity. For the next 8 hours, the creature can breathe underwater. The creature is then temporarily immune to *shells of easy breathing* until the next time it makes its daily preparations."
+ },
+ {
+  "id": "shining-runes",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Shining Runes",
+  "level": 14,
+  "traits": [
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Whenever you Cast a Spell that requires more than one action to cast, the signature Thassilonian runes you trace in the air flicker with light and command attention. They may blaze brightly, leave lingering fog, create discordant noise, or fill the air with an overwhelming scent, such that their presence obfuscates you from onlookers. You gain Concealment from enemy creatures until the beginning of your next turn. The DC to identify your spells as you cast them is 2 higher than normal."
+ },
+ {
+  "id": "shining-symbol-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Shining Symbol (Greater)",
+  "level": 9,
+  "traits": [
+   "divine",
+   "invested",
+   "light"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "If you worship a deity, this golden amulet transforms into your deity's religious symbol when you invest it. You gain a +2 item bonus to Religion. The symbol casts dim light in a . --- **Activate—Spiritual Light** ⟨2⟩ (concentrate, light, revelation) **Frequency** once per day **Effect** The light cast by the symbol becomes bright light for 10 minutes and shines through bodies to reveal hints of the spirits within. Creatures in the light receive a –2 status penalty to Deception and Stealth checks, and while it's active your enemies in the light gain weakness 5 to spirit damage. You can Dismiss this activation. --- **Craft Requirements** You must be holy or unholy."
+ },
+ {
+  "id": "shockwave",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Shockwave",
+  "level": 13,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "*Shockwave* weapons magically increase their density and momentum when swung, creating a thudding impact on those nearby. Strikes with this weapon deal bludgeoning splash damage equal to the number of weapon damage dice. You're immune to this splash damage."
+ },
+ {
+  "id": "siccatite-buckler-high-grade",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Siccatite Buckler (High-Grade)",
+  "level": 16,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Siccatite Shield Source Grand Bazaar pg. 101 Usage varies by shield Base Material Siccatite Siccatite shields radiate extreme temperatures that protect them from energy damage. A protective coating on the wielder's side of the shield protects them from siccatite's radiant heat or cold but makes the shields bulkier than average. Standard-grade siccatite shields have resistance 10 to the corresponding energy type: fire damage for a hot siccatite shield or cold damage for a cold siccatite shield, as it takes even more extreme temperatures to affect them. They also provide some resistance to opposing temperatures because of their own extreme temperature, which extends to you when you Raise the Shield. The shield has resistance 5 to the opposing damage type (cold damage for a hot siccatite shield or fire damage for a cold siccatite shield), and while you have a siccatite shield Raised, you gain that resistance to the opposing damage type as well. For a high-grade siccatite shield, the resistances increase from 10 to 20 for damage of the corresponding type, and from 5 to 10 for damage of the opposing type. Siccatite Buckler (Standard-Grade) Source Grand Bazaar pg. 101 Price 400 gp Bulk 1 The shield has Hardness 4, HP 16, BT 8. Resistance 10 to the corresponding damage type and 5 to the opposing type. Craft Requirements siccatite worth at least 50 gp Siccatite Shield (Standard-Grade) Source Grand Bazaar pg. 101 Price 440 gp Bulk 2 The shield has Hardness 6, HP 24, BT 12. Resistance 10 to the corresponding damage type and 5 to the opposing type. Craft Requirements siccatite worth at least 55 gp Siccatite Buckler (High-Grade) Source Grand Bazaar pg. 101 Price 8,000 gp Bulk 1 The shield has Hardness 7, HP 28, BT 14. Resistance 20 to the corresponding damage type and 10 to the opposing type. Craft Requirements siccatite worth at least 4,000 gp Siccatite Shield (High-Grade) Source Grand Bazaar pg. 101 Price 8,800 gp Bulk 2 The shield has Hardness 10, HP 40, BT 20. Resistance 20 to the corresponding damage type and 10 to the opposing type. Craft Requirements siccatite worth at least 4,400 gp"
+ },
+ {
+  "id": "siccatite-buckler-standard-grade",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Siccatite Buckler (Standard-Grade)",
+  "level": 8,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Siccatite Shield Source Grand Bazaar pg. 101 Usage varies by shield Base Material Siccatite Siccatite shields radiate extreme temperatures that protect them from energy damage. A protective coating on the wielder's side of the shield protects them from siccatite's radiant heat or cold but makes the shields bulkier than average. Standard-grade siccatite shields have resistance 10 to the corresponding energy type: fire damage for a hot siccatite shield or cold damage for a cold siccatite shield, as it takes even more extreme temperatures to affect them. They also provide some resistance to opposing temperatures because of their own extreme temperature, which extends to you when you Raise the Shield. The shield has resistance 5 to the opposing damage type (cold damage for a hot siccatite shield or fire damage for a cold siccatite shield), and while you have a siccatite shield Raised, you gain that resistance to the opposing damage type as well. For a high-grade siccatite shield, the resistances increase from 10 to 20 for damage of the corresponding type, and from 5 to 10 for damage of the opposing type. Siccatite Buckler (Standard-Grade) Source Grand Bazaar pg. 101 Price 400 gp Bulk 1 The shield has Hardness 4, HP 16, BT 8. Resistance 10 to the corresponding damage type and 5 to the opposing type. Craft Requirements siccatite worth at least 50 gp Siccatite Shield (Standard-Grade) Source Grand Bazaar pg. 101 Price 440 gp Bulk 2 The shield has Hardness 6, HP 24, BT 12. Resistance 10 to the corresponding damage type and 5 to the opposing type. Craft Requirements siccatite worth at least 55 gp Siccatite Buckler (High-Grade) Source Grand Bazaar pg. 101 Price 8,000 gp Bulk 1 The shield has Hardness 7, HP 28, BT 14. Resistance 20 to the corresponding damage type and 10 to the opposing type. Craft Requirements siccatite worth at least 4,000 gp Siccatite Shield (High-Grade) Source Grand Bazaar pg. 101 Price 8,800 gp Bulk 2 The shield has Hardness 10, HP 40, BT 20. Resistance 20 to the corresponding damage type and 10 to the opposing type. Craft Requirements siccatite worth at least 4,400 gp"
+ },
+ {
+  "id": "siccatite-shield",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Siccatite Shield",
+  "level": 8,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Siccatite Shield Source Grand Bazaar pg. 101 Usage varies by shield Base Material Siccatite Siccatite shields radiate extreme temperatures that protect them from energy damage. A protective coating on the wielder's side of the shield protects them from siccatite's radiant heat or cold but makes the shields bulkier than average. Standard-grade siccatite shields have resistance 10 to the corresponding energy type: fire damage for a hot siccatite shield or cold damage for a cold siccatite shield, as it takes even more extreme temperatures to affect them. They also provide some resistance to opposing temperatures because of their own extreme temperature, which extends to you when you Raise the Shield. The shield has resistance 5 to the opposing damage type (cold damage for a hot siccatite shield or fire damage for a cold siccatite shield), and while you have a siccatite shield Raised, you gain that resistance to the opposing damage type as well. For a high-grade siccatite shield, the resistances increase from 10 to 20 for damage of the corresponding type, and from 5 to 10 for damage of the opposing type. Siccatite Buckler (Standard-Grade) Source Grand Bazaar pg. 101 Price 400 gp Bulk 1 The shield has Hardness 4, HP 16, BT 8. Resistance 10 to the corresponding damage type and 5 to the opposing type. Craft Requirements siccatite worth at least 50 gp Siccatite Shield (Standard-Grade) Source Grand Bazaar pg. 101 Price 440 gp Bulk 2 The shield has Hardness 6, HP 24, BT 12. Resistance 10 to the corresponding damage type and 5 to the opposing type. Craft Requirements siccatite worth at least 55 gp Siccatite Buckler (High-Grade) Source Grand Bazaar pg. 101 Price 8,000 gp Bulk 1 The shield has Hardness 7, HP 28, BT 14. Resistance 20 to the corresponding damage type and 10 to the opposing type. Craft Requirements siccatite worth at least 4,000 gp Siccatite Shield (High-Grade) Source Grand Bazaar pg. 101 Price 8,800 gp Bulk 2 The shield has Hardness 10, HP 40, BT 20. Resistance 20 to the corresponding damage type and 10 to the opposing type. Craft Requirements siccatite worth at least 4,400 gp"
+ },
+ {
+  "id": "siccatite-shield-high-grade",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Siccatite Shield (High-Grade)",
+  "level": 16,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Siccatite Shield Source Grand Bazaar pg. 101 Usage varies by shield Base Material Siccatite Siccatite shields radiate extreme temperatures that protect them from energy damage. A protective coating on the wielder's side of the shield protects them from siccatite's radiant heat or cold but makes the shields bulkier than average. Standard-grade siccatite shields have resistance 10 to the corresponding energy type: fire damage for a hot siccatite shield or cold damage for a cold siccatite shield, as it takes even more extreme temperatures to affect them. They also provide some resistance to opposing temperatures because of their own extreme temperature, which extends to you when you Raise the Shield. The shield has resistance 5 to the opposing damage type (cold damage for a hot siccatite shield or fire damage for a cold siccatite shield), and while you have a siccatite shield Raised, you gain that resistance to the opposing damage type as well. For a high-grade siccatite shield, the resistances increase from 10 to 20 for damage of the corresponding type, and from 5 to 10 for damage of the opposing type. Siccatite Buckler (Standard-Grade) Source Grand Bazaar pg. 101 Price 400 gp Bulk 1 The shield has Hardness 4, HP 16, BT 8. Resistance 10 to the corresponding damage type and 5 to the opposing type. Craft Requirements siccatite worth at least 50 gp Siccatite Shield (Standard-Grade) Source Grand Bazaar pg. 101 Price 440 gp Bulk 2 The shield has Hardness 6, HP 24, BT 12. Resistance 10 to the corresponding damage type and 5 to the opposing type. Craft Requirements siccatite worth at least 55 gp Siccatite Buckler (High-Grade) Source Grand Bazaar pg. 101 Price 8,000 gp Bulk 1 The shield has Hardness 7, HP 28, BT 14. Resistance 20 to the corresponding damage type and 10 to the opposing type. Craft Requirements siccatite worth at least 4,000 gp Siccatite Shield (High-Grade) Source Grand Bazaar pg. 101 Price 8,800 gp Bulk 2 The shield has Hardness 10, HP 40, BT 20. Resistance 20 to the corresponding damage type and 10 to the opposing type. Craft Requirements siccatite worth at least 4,400 gp"
+ },
+ {
+  "id": "siccatite-shield-standard-grade",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Siccatite Shield (Standard-Grade)",
+  "level": 8,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Siccatite Shield Source Grand Bazaar pg. 101 Usage varies by shield Base Material Siccatite Siccatite shields radiate extreme temperatures that protect them from energy damage. A protective coating on the wielder's side of the shield protects them from siccatite's radiant heat or cold but makes the shields bulkier than average. Standard-grade siccatite shields have resistance 10 to the corresponding energy type: fire damage for a hot siccatite shield or cold damage for a cold siccatite shield, as it takes even more extreme temperatures to affect them. They also provide some resistance to opposing temperatures because of their own extreme temperature, which extends to you when you Raise the Shield. The shield has resistance 5 to the opposing damage type (cold damage for a hot siccatite shield or fire damage for a cold siccatite shield), and while you have a siccatite shield Raised, you gain that resistance to the opposing damage type as well. For a high-grade siccatite shield, the resistances increase from 10 to 20 for damage of the corresponding type, and from 5 to 10 for damage of the opposing type. Siccatite Buckler (Standard-Grade) Source Grand Bazaar pg. 101 Price 400 gp Bulk 1 The shield has Hardness 4, HP 16, BT 8. Resistance 10 to the corresponding damage type and 5 to the opposing type. Craft Requirements siccatite worth at least 50 gp Siccatite Shield (Standard-Grade) Source Grand Bazaar pg. 101 Price 440 gp Bulk 2 The shield has Hardness 6, HP 24, BT 12. Resistance 10 to the corresponding damage type and 5 to the opposing type. Craft Requirements siccatite worth at least 55 gp Siccatite Buckler (High-Grade) Source Grand Bazaar pg. 101 Price 8,000 gp Bulk 1 The shield has Hardness 7, HP 28, BT 14. Resistance 20 to the corresponding damage type and 10 to the opposing type. Craft Requirements siccatite worth at least 4,000 gp Siccatite Shield (High-Grade) Source Grand Bazaar pg. 101 Price 8,800 gp Bulk 2 The shield has Hardness 10, HP 40, BT 20. Resistance 20 to the corresponding damage type and 10 to the opposing type. Craft Requirements siccatite worth at least 4,400 gp"
+ },
+ {
+  "id": "siren-song",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Siren Song",
+  "level": 9,
+  "traits": [
+   "auditory",
+   "mental",
+   "merfolk",
+   "primal"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per day --- You can beguile and bewitch with your song. All creatures in a must attempt a save against your Performance DC. On subsequent rounds, you can Sustain the song, causing each creature in the area currently affected by your song to attempt another Will save. Typically, creatures that have traveled with you for a significant time, such as your fellow party members, are immune to your Siren Song. --- **Critical Success** The target is unaffected and becomes immune to your Siren Song for 24 hours. **Success** The target is fascinated with you until the end of your next turn. **Failure** As success, and the target is Stupefied 1 for as long as it's fascinated. **Critical Failure** As success, and the target is Stupefied 2 for as long as it's fascinated."
+ },
+ {
+  "id": "sisterstone-armor",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Sisterstone Armor",
+  "level": 5,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Sisterstone Armor May contain spoilers from Blood Lords Source Pathfinder #183: Field of Maidens pg. 80 Usage worn armor Bulk varies by armor Base Material Sisterstone Sisterstone armor incorporates stone plates. A creature wearing sisterstone armor gains the following activation to help defend an ally threatened by undead creatures. Activate command; Trigger The ally deals damage to an undead creature; Requirements A reciprocal field is active between this armor and an ally's sisterstone armor or sisterstone weapon; Effect You call on the energy in your armor to protect your companion from retaliation. The ally gains resistance 2 to all damage dealt by undead creatures for 1 round. The resistance is 3 if your sisterstone armor is standard grade, or resistance 4 if it's high grade. Sisterstone Armor (Low-Grade) Source Pathfinder #183: Field of Maidens pg. 80 Price 140 gp (plus 14 gp per Bulk) Sisterstone Armor (Standard-Grade) Source Pathfinder #183: Field of Maidens pg. 80 Price 1,000 gp (plus 100 gp per Bulk) Sisterstone Armor (High-Grade) Source Pathfinder #183: Field of Maidens pg. 80 Price 19,500 gp (plus 1,950 gp per Bulk)"
+ },
+ {
+  "id": "sisterstone-armor-high-grade",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Sisterstone Armor (High-Grade)",
+  "level": 18,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Sisterstone Armor May contain spoilers from Blood Lords Source Pathfinder #183: Field of Maidens pg. 80 Usage worn armor Bulk varies by armor Base Material Sisterstone Sisterstone armor incorporates stone plates. A creature wearing sisterstone armor gains the following activation to help defend an ally threatened by undead creatures. Activate command; Trigger The ally deals damage to an undead creature; Requirements A reciprocal field is active between this armor and an ally's sisterstone armor or sisterstone weapon; Effect You call on the energy in your armor to protect your companion from retaliation. The ally gains resistance 2 to all damage dealt by undead creatures for 1 round. The resistance is 3 if your sisterstone armor is standard grade, or resistance 4 if it's high grade. Sisterstone Armor (Low-Grade) Source Pathfinder #183: Field of Maidens pg. 80 Price 140 gp (plus 14 gp per Bulk) Sisterstone Armor (Standard-Grade) Source Pathfinder #183: Field of Maidens pg. 80 Price 1,000 gp (plus 100 gp per Bulk) Sisterstone Armor (High-Grade) Source Pathfinder #183: Field of Maidens pg. 80 Price 19,500 gp (plus 1,950 gp per Bulk)"
+ },
+ {
+  "id": "sisterstone-armor-low-grade",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Sisterstone Armor (Low-Grade)",
+  "level": 5,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Sisterstone Armor May contain spoilers from Blood Lords Source Pathfinder #183: Field of Maidens pg. 80 Usage worn armor Bulk varies by armor Base Material Sisterstone Sisterstone armor incorporates stone plates. A creature wearing sisterstone armor gains the following activation to help defend an ally threatened by undead creatures. Activate command; Trigger The ally deals damage to an undead creature; Requirements A reciprocal field is active between this armor and an ally's sisterstone armor or sisterstone weapon; Effect You call on the energy in your armor to protect your companion from retaliation. The ally gains resistance 2 to all damage dealt by undead creatures for 1 round. The resistance is 3 if your sisterstone armor is standard grade, or resistance 4 if it's high grade. Sisterstone Armor (Low-Grade) Source Pathfinder #183: Field of Maidens pg. 80 Price 140 gp (plus 14 gp per Bulk) Sisterstone Armor (Standard-Grade) Source Pathfinder #183: Field of Maidens pg. 80 Price 1,000 gp (plus 100 gp per Bulk) Sisterstone Armor (High-Grade) Source Pathfinder #183: Field of Maidens pg. 80 Price 19,500 gp (plus 1,950 gp per Bulk)"
+ },
+ {
+  "id": "sisterstone-armor-standard-grade",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Sisterstone Armor (Standard-Grade)",
+  "level": 10,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Sisterstone Armor May contain spoilers from Blood Lords Source Pathfinder #183: Field of Maidens pg. 80 Usage worn armor Bulk varies by armor Base Material Sisterstone Sisterstone armor incorporates stone plates. A creature wearing sisterstone armor gains the following activation to help defend an ally threatened by undead creatures. Activate command; Trigger The ally deals damage to an undead creature; Requirements A reciprocal field is active between this armor and an ally's sisterstone armor or sisterstone weapon; Effect You call on the energy in your armor to protect your companion from retaliation. The ally gains resistance 2 to all damage dealt by undead creatures for 1 round. The resistance is 3 if your sisterstone armor is standard grade, or resistance 4 if it's high grade. Sisterstone Armor (Low-Grade) Source Pathfinder #183: Field of Maidens pg. 80 Price 140 gp (plus 14 gp per Bulk) Sisterstone Armor (Standard-Grade) Source Pathfinder #183: Field of Maidens pg. 80 Price 1,000 gp (plus 100 gp per Bulk) Sisterstone Armor (High-Grade) Source Pathfinder #183: Field of Maidens pg. 80 Price 19,500 gp (plus 1,950 gp per Bulk)"
+ },
+ {
+  "id": "skirt-the-underworld",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Skirt the Underworld",
+  "level": 1,
+  "traits": [
+   "concentrate",
+   "illusion",
+   "incapacitation",
+   "transcendence"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You skirt into the world of the dead, becoming invisible for 1 round, then Fly up to your Speed. Each enemy adjacent to you at any point during this movement must succeed at a save against your class DC or become blinded for 1 minute (or permanently on a critical failure). For each creature blinded by this effect, the duration of the granted invisibility extends by 1 round. Undead and other creatures with strong ties to the world of the dead, such as psychopomps, are immune to this effect."
+ },
+ {
+  "id": "skunk-bomb",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Skunk Bomb",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Skunk Bomb Source Treasure Vault (Remastered) pg. 45 Usage held in 1 hand Bulk L Activate Strike Skunk bombs are made from the concentrated odors of xulgaths, hezrous, and other creatures with natural or supernatural stench. The bomb grants an item bonus to attack rolls and deals poison damage and poison splash damage. Any creature hit by the bomb or in its splash area must attempt a Fortitude saving throw with a DC based on the bomb's type. Creatures in the splash area treat the results of their saving throw as one step better. Critical Success The target is unaffected. Success The target is sickened 1. Failure The target is sickened 1 and slowed 1 while sickened. Critical Failure The target is blinded for 1 round, sickened 2, and slowed 1 while sickened. Creatures sickened by the bomb emit an odor that lasts 10 minutes after the sickened condition ends (or 1 hour if they were also blinded). The odor can be removed or neutralized by using prestidigitation or similar magic or by spending 10 minutes scrubbing with ample soap and water. While the odor lasts, creatures within 30 feet can smell the target, enabling even those with a weak sense of smell to detect its presence, and all creatures gain a +1 item bonus to Track the affected creature for as long as it has the odor. A creature that has imprecise or precise scent doubles the range at which it can detect the target using this scent. Skunk Bomb (Lesser) Source Treasure Vault (Remastered) pg. 45 Price 4 gp Bulk L The bomb deals 1d4 poison damage and 1 poison splash damage. The Fortitude DC is 15. Skunk Bomb (Moderate) Source Treasure Vault (Remastered) pg. 45 Price 12 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d4 poison damage and 2 poison splash damage. The Fortitude DC is 17. Skunk Bomb (Greater) Source Treasure Vault (Remastered) pg. 45 Price 240 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 3d4 poison damage and 3 poison splash damage. The Fortitude DC is 28. Skunk Bomb (Major) Source Treasure Vault (Remastered) pg. 45 Price 2,400 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 4d4 poison damage and 4 poison splash damage. The Fortitude DC is 37."
+ },
+ {
+  "id": "skunk-bomb-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Skunk Bomb (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Activate** ⟨1⟩ Strike --- Skunk bombs are made from the concentrated odors of xulgaths, hezrous, and other creatures with natural or supernatural stench. The bomb grants a +2 item bonus to attack rolls and deals 3d4 poison damage and 3 poison splash damage. Any creature hit by the bomb or in its splash area must attempt a saving throw. Creatures in the splash area treat the results of their saving throw as one step better. --- **Critical Success** The target is unaffected. **Success** The target is Sickened 1. **Failure** The target is sickened 1 and Slowed 1 while sickened. **Critical Failure** The target is blinded for 1 round, Sickened 2, and slowed 1 while sickened. Creatures sickened by the bomb emit an odor that lasts 10 minutes after the sickened condition ends (or 1 hour if they were also blinded). The odor can be removed or neutralized by using prestidigitation or similar magic or by spending 10 minutes scrubbing with ample soap and water. While the odor lasts, creatures within 30 feet can smell the target, enabling even those with a weak sense of smell to detect its presence, and all creatures gain a +1 item bonus to Track the affected creature for as long as it has the odor. A creature that has imprecise or precise scent doubles the range at which it can detect the target using this scent."
+ },
+ {
+  "id": "skunk-bomb-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Skunk Bomb (Lesser)",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Activate** ⟨1⟩ Strike --- Skunk bombs are made from the concentrated odors of xulgaths, hezrous, and other creatures with natural or supernatural stench. The bomb deals 1d4 poison damage and 1 poison splash damage. Any creature hit by the bomb or in its splash area must attempt a saving throw. Creatures in the splash area treat the results of their saving throw as one step better. --- **Critical Success** The target is unaffected. **Success** The target is Sickened 1. **Failure** The target is sickened 1 and Slowed 1 while sickened. **Critical Failure** The target is blinded for 1 round, Sickened 2, and slowed 1 while sickened. Creatures sickened by the bomb emit an odor that lasts 10 minutes after the sickened condition ends (or 1 hour if they were also blinded). The odor can be removed or neutralized by using prestidigitation or similar magic or by spending 10 minutes scrubbing with ample soap and water. While the odor lasts, creatures within 30 feet can smell the target, enabling even those with a weak sense of smell to detect its presence, and all creatures gain a +1 item bonus to Track the affected creature for as long as it has the odor. A creature that has imprecise or precise scent doubles the range at which it can detect the target using this scent."
+ },
+ {
+  "id": "skunk-bomb-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Skunk Bomb (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Activate** ⟨1⟩ Strike --- Skunk bombs are made from the concentrated odors of xulgaths, hezrous, and other creatures with natural or supernatural stench. The bomb grants a +3 item bonus to attack rolls and deals 4d4 poison damage and 4 poison splash damage. Any creature hit by the bomb or in its splash area must attempt a saving throw. Creatures in the splash area treat the results of their saving throw as one step better. --- **Critical Success** The target is unaffected. **Success** The target is Sickened 1. **Failure** The target is sickened 1 and Slowed 1 while sickened. **Critical Failure** The target is blinded for 1 round, Sickened 2, and slowed 1 while sickened. Creatures sickened by the bomb emit an odor that lasts 10 minutes after the sickened condition ends (or 1 hour if they were also blinded). The odor can be removed or neutralized by using prestidigitation or similar magic or by spending 10 minutes scrubbing with ample soap and water. While the odor lasts, creatures within 30 feet can smell the target, enabling even those with a weak sense of smell to detect its presence, and all creatures gain a +1 item bonus to Track the affected creature for as long as it has the odor. A creature that has imprecise or precise scent doubles the range at which it can detect the target using this scent."
+ },
+ {
+  "id": "skunk-bomb-moderate",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Skunk Bomb (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Skunk bombs are made from the concentrated odors of xulgaths, hezrous, and other creatures with natural or supernatural stench. The bomb grants a +1 item bonus to attack rolls and deals 2d4 poison damage and 2 poison splash damage. Any creature hit by the bomb or in its splash area must attempt a saving throw. Creatures in the splash area treat the results of their saving throw as one step better. --- **Critical Success** The target is unaffected. **Success** The target is Sickened 1. **Failure** The target is sickened 1 and Slowed 1 while sickened. **Critical Failure** The target is blinded for 1 round, Sickened 2, and slowed 1 while sickened. Creatures sickened by the bomb emit an odor that lasts 10 minutes after the sickened condition ends (or 1 hour if they were also blinded). The odor can be removed or neutralized by using prestidigitation or similar magic or by spending 10 minutes scrubbing with ample soap and water. While the odor lasts, creatures within 30 feet can smell the target, enabling even those with a weak sense of smell to detect its presence, and all creatures gain a +1 item bonus to Track the affected creature for as long as it has the odor. A creature that has imprecise or precise scent doubles the range at which it can detect the target using this scent."
+ },
+ {
+  "id": "sky-and-heaven-stance",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Sky and Heaven Stance",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "stance"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "core.stances"
+  ],
+  "text": "**Requirements** You're unarmored. --- Your jagged blows are like lightning. The only Strikes you can make are skyward slash unarmed attacks. These unarmed attacks deal 1d10 slashing damage; are in the brawling group; and have the nonlethal, unarmed, and versatile P traits. While in Sky and Heaven Stance, you gain resistance 2 to electricity and resistance 2 to sonic damage. These resistances increase to 5 at 12th level and to 8 at 18th level."
+ },
+ {
+  "id": "sky-hammer",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Sky Hammer",
+  "level": 20,
+  "traits": [
+   "magical",
+   "shove"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The sturdy head of this *+3 major striking Flaming Shock orichalcum warhammer* is shaped like a blazing comet. **Activate—Comet Fall** ⟨5⟩ (concentration) **Trigger** Your attack roll with the *sky hammer* is a critical success --- **Effect** A 6th-rank arcane Fireball spell explodes, centered on the *sky hammer*. The spell DC is 45. You are immune to the *fireball's* effect, though your allies are not. --- **Craft Requirements** Supply a casting of *fireball* (6th rank), and the initial raw materials must include 12,375 gp of orichalcum."
+ },
+ {
+  "id": "slay",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Slay",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** Your target is Doomed 2 or greater. --- You finish your target with a vicious attack. Make a Strike against the target. If you hit, the target takes 4d6 extra precision damage with a save against your class DC. If the target critically fails, they die. This is an incapacitation effect. The creature then becomes temporarily immune to your Slay for 1 day."
+ },
+ {
+  "id": "snap-out-of-it",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Snap Out of It!",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "auditory",
+   "emotion",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Snap Out of It! Source Player Core 2 pg. 205 Archetype Marshal Prerequisites Marshal Dedication You give a quick shout, hoping to shake the fog clouding your ally’s thoughts. Choose one target ally in your marshal’s aura who is affected by a mental effect that allowed a Will save and has a duration of no longer than 1 minute. That ally can immediately attempt a Will save with a +1 circumstance bonus against the effect’s DC, ending the effect on a success. This can’t end the effect for any creatures other than your target ally. Regardless of the result of the save, your ally is temporarily immune to Snap Out of It! for 10 minutes."
+ },
+ {
+  "id": "snap-out-of-it-marshal",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Snap Out of It! (Marshal)",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "auditory",
+   "emotion",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You give a quick shout, hoping to shake the fog clouding your ally's thoughts. Choose one target ally in your marshal's aura who is affected by a mental effect that allowed a Will save and has a duration of no longer than 1 minute. That ally can immediately attempt a Will save with a +1 circumstance bonus against the effect's DC, ending the effect on a success. This can't end the effect for any creatures other than your target ally. Regardless of the result of the save, your ally is temporarily immune to Snap Out of It! for 10 minutes."
+ },
+ {
+  "id": "solar-detonation",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Solar Detonation",
+  "level": 8,
+  "traits": [
+   "fire",
+   "impulse",
+   "incapacitation",
+   "kineticist",
+   "overflow",
+   "primal",
+   "vitality"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Blinding flames explode in a swirling sphere! The detonation fills a within 60 feet of you. Each creature in the area takes damage, and can become dazzled or blinded depending on the result of its save. The light from Solar Detonation is sunlight for creatures with a particular vulnerability to sunlight. Each creature that attempts a save becomes temporarily immune to being dazzled or blinded by Solar Detonation for 10 minutes, but not the impulse's other effects. --- **Critical Success** The creature is unaffected. **Success** The creature takes half damage and is dazzled until the start of your next turn. **Failure** The creature takes full damage and is blinded until the start of your next turn. **Critical Failure** The creature takes double damage and is blinded for 1 minute. --- **Level (+2)** Increase the fire damage by 1d6 and the vitality damage by 1d6."
+ },
+ {
+  "id": "sorshens-sinuous-guisarme",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Sorshen's Sinuous Guisarme",
+  "level": 23,
+  "traits": [
+   "artifact",
+   "intelligent",
+   "magical",
+   "mythic",
+   "reach",
+   "trip"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "**Perception** +37; precise vision 300 feet, imprecise hearing 300 feet, darkvision **Communication** telepathy (Aklo, Azlanti, Chthonian, and Thassilonian) **Skills** Arcana +43, Occultism +38, Society +36 **Int** +6, **Wis** +6, **Cha** +8 **Will** +37 --- *Sorshen's Sinuous Guisarme* is a *+4 mythic striking keen quickstrike shifting spell reservoir high-grade dawnsilver guisarme*. The weapon's unique double-bladed design combined with her magical nature grants her the twin weapon trait. Her spell reservoir rune typically contains blindness. Her power and intelligence are derived from a magical gemstone containing 13 of Sorshen's dreams, all so outlandish or salacious that most would consider them to be nightmares—although these dreams have been transforming into less horrific visions as Sorshen's changing philosophies continue to influence her weapon. The guisarme can use 3 actions per turn, acting on her wielder's turn. These actions don't count against her wielder's. --- **Activate—Arcane Shift** ⟨4⟩ (concentrate) **Frequency** once per day **Trigger** You activate the guisarme's shifting rune to Shift Weapon **Effect** The guisarme transforms into a Staff of Control (Major) with 10 charges. If you spend 1 Mythic Point when you Cast a Spell from this staff and expend 10 charges, the spell is heightened to 10th rank, and its save DC and attack rolls are calculated at mythic proficiency. While in major staff of control form, none of the guisarme's weapon runes are active, nor can she Impose Will, but she remains a high-grade dawnsilver item and retains her intelligence—she can use her actions to Cast a Spell from the staff but can't spend Mythic Points to heighten spells to 10th rank. She automatically reverts to guisarme form once all her charges are expended or if you command the staff to revert to guisarme form by using Shift Weapon again. --- **Activate—Impose Will** ⟨2⟩ Cast a Spell **Frequency** once per day per spell **Effect** *Sorshen's Sinuous Guisarme* casts one of the following spells, heightened to 10th rank, to your specifications: Charm (DC 45), Flicker, or Subconscious Suggestion (DC 45). The guisarme can use this activation. If you use this activation and spend 1 Mythic Point, the save DC for the spell increases to DC 50. --- **Destruction** *Sorshen's Sinuous Guisarme* can be destroyed if it's hurled under the crushing feet of the Oliphaunt of Jandelay, but only if there's no current runelord of lust living in the world. Note that when Sorshen took on the mantle of ruler of New Thassilon, she abandoned her role as runelord of lust, so at this time, half of this destruction requirement is already fulfilled. Of course, a PC who decides to toss this weapon under the Oliphaunt's feet during the course of this adventure will likely disappoint—or perhaps even enrage—Queen Sorshen, who might seek retaliation in the future."
+ },
+ {
+  "id": "soulcutter-artifact",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Soulcutter (Artifact)",
+  "level": 20,
+  "traits": [
+   "artifact",
+   "intelligent",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Soulcutter (Artifact) May contain spoilers from Spore War Source Pathfinder #212: A Voice in the Blight pg. 73 Usage held in 1 hand Bulk 2 Perception +34; precise low-light vision and hearing within 30 feet Communication telepathy (partner only) Skills Nature +34, Religion +34, Survival +34 Int +7, Wis +6, Cha +5 Will +34 The echo of the Calistrian witch Silisifex imbues her legendary blade with a shimmering pale-green glow equivalent to that of candlelight; Soulcutter can activate or deactivate this radiance as a free action once per round on her partner’s turn. Soulcutter’s telepathic voice is a sultry whisper that often infuses her observations with a flirtatious edge or a biting sense of dark humor. Soulcutter is a +3 major striking greater astral holy elven curve blade. As long as you carry Soulcutter, you gain her potency bonus as an item bonus to all saving throws against mental effects. This bonus increases by 2 to +5 against possession effects. Activate—Soothe Souls (concentrate, healing, manipulate, vitality) Frequency once per hour; Effect Soulcutter creates a pulse of restorative energy, rejuvenating those within a 30-foot emanation around you while castigating those in that area who have no place in nature. Soulcutter can Sustain this activation for up to 1 minute. Living creatures that start their turn in the area regain 2d8 Hit Points, and any fiend or undead creature that starts their turn in the area takes 2d8 spirit damage (DC 38 basic Will save). Activate—Soulcutting Storm (concentrate, manipulate, spirit) Frequency once per hour; Effect Soulcutter casts a 9th-rank weapon storm to your specification, but all damage caused by the spell is spirit damage. If used to damage a creature that’s possessing another creature, this spell does no damage to the possessed creature. Activate—Shame Demon (concentrate) Effect Soulcutter targets a demon she can see or hear within 30 feet, causing the blade’s green light to well up around the demon for a moment. The demon suffers the effects of its sin vulnerability, if it has any, and is then temporarily immune to Shame Demon for 24 hours. If Soulcutter’s partner wasn’t aware of the normal effects that trigger that demon’s sin vulnerability, they learn it at this time. _Nethys Note: the non-artifact version of the item is here. This artifact's heroic legacy, and its subsequent skills and ability attribute, are presented here. _"
+ },
+ {
+  "id": "soulcutter-heroic",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Soulcutter (Heroic)",
+  "level": 20,
+  "traits": [
+   "apex",
+   "artifact",
+   "elf",
+   "finesse",
+   "forceful",
+   "intelligent",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Perception** +34; precise low-light vision and hearing within 30 feet **Communication** telepathy (partner only) **Skills** Nature +34, Religion +34, Survival +34 **Int** +7, **Wis** +6, **Cha** +5 **Will** +34 --- The echo of the Calistrian witch Silisifex imbues her legendary blade with a shimmering pale-green glow equivalent to that of candlelight; *Soulcutter* can activate or deactivate this radiance as a free action once per round on her partner's turn. *Soulcutter's* telepathic voice is a sultry whisper that often infuses her observations with a flirtatious edge or a biting sense of dark humor. *Soulcutter* is a *+3 major striking greater astral holy elven curve blade*. As long as you carry *Soulcutter*, you gain her potency bonus as an item bonus to all saving throws against mental effects. This bonus increases by 2 to +5 against possession effects. --- **Activate—Soothe Souls** ⟨2⟩ (concentrate, healing, manipulate, vitality) **Frequency** once per hour **Effect** *Soulcutter* creates a pulse of restorative energy, rejuvenating those within a around you while castigating those in that area who have no place in nature. *Soulcutter* can Sustain this activation for up to 1 minute. Living creatures that start their turn in the area regain 2d8 Hit Points, and any fiend or undead creature that starts their turn in the area takes 2d8 damage ( save). --- **Activate—Soulcutting Storm** ⟨2⟩ (concentrate, manipulate, spirit) **Frequency** once per hour **Effect** *Soulcutter* casts a 9th-rank Weapon Storm to your specification, but all damage caused by the spell is spirit damage. If used to damage a creature that's possessing another creature, this spell does no damage to the possessed creature. --- **Activate—Shame Demon** ⟨2⟩ (concentrate) **Effect** *Soulcutter* targets a demon she can see or hear within 30 feet, causing the blade's green light to well up around the demon for a moment. The demon suffers the effects of its sin vulnerability, if it has any, and is then temporarily immune to Shame Demon for 24 hours. If *Soulcutter's* partner wasn't aware of the normal effects that trigger that demon's sin vulnerability, they learn it at this time."
+ },
+ {
+  "id": "soulforger-dedication",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Soulforger Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You can manifest the power of your spirit in combat to realize your motivations. You manifest an armor, shield, or weapon as a soulforged armament. Choose one essence power for the armament. Changing an essence power requires 1 week of retraining, and you can't retrain it while you have *soulforged corruption*. You can Manifest Soulforged Armament to summon your armaments in combat. --- ### ESSENCE POWERS Your soulforged armament has an essence power you choose when you first bind it. It gains the power temporarily when you manifest its essence form. Each power has a corruption flaw that affects you if you have *soulforged corruption*. Essence powers that only apply to some types of armament indicate which. **Adaptable Persona** (transmutation) Armor only. When you manifest the essence form, gain your choice of a climb Speed or swim Speed equal to your land Speed. If you're 8th level or higher, you can choose a fly Speed instead. *Corruption Flaw* You take a –10-foot penalty to all your Speeds. **Bounding Spirit** Melee weapon only. The weapon gains the thrown 30 feet trait and has the returning rune (even if it already has its maximum number of property runes). *Corruption Flaw* When you make a Strike with a thrown or ranged weapon and miss, reroll the Strike, targeting your ally nearest to the target. This Strike uses the same multiple attack penalty as the missed Strike and doesn't count toward your multiple attack penalty. **Deep-Seeded Fear** You gain a +2 status bonus to your Intimidation checks and don't take any penalties for not sharing a language when Demoralizing foes who can perceive your armament's essence form. When you manifest the essence form, you can attempt to Demoralize an enemy who can perceive the manifestation. *Corruption Flaw* If you attempt to Demoralize an enemy, your Demoralize also targets the ally closest to you. **Determined Toughness** Any status penalties you take from the following conditions are 1 less than their condition's value: clumsy, drained, enfeebled, frightened, sickened, stupefied. This doesn't change the actual condition value, or any other effects of the condition (such as stupefied's disruption and its DC). *Corruption Flaw* Whenever you take a status penalty from the listed conditions, you also take a -1 penalty to the same statistics. **Harmful Malice** (void) Your Strikes deal an additional 1d4 void damage. Once while the armament is manifested, you can cast harm as an innate spell, with a level equal to half your level rounded up. *Corruption Flaw* Reduce any damage you would deal by half your level. **Heroic Heart** (enchantment, mental) You gain a +1 status bonus to attack rolls, Perception checks, skill checks, and saves. *Corruption Flaw* You take a -1 penalty to attack rolls. **Healing Grace** (healing, vitality) You gain fast healing equal to half your level. You can cast Heal once as an innate spell with a level equal to half your level rounded up. *Corruption Flaw* Reduce all healing you would receive or grant with a spell by half your level. **Magical Resilience** (abjuration) Armor or shield only. You gain a +2 status bonus to saving throws and AC against spells. If you're 5th leve"
+ },
+ {
+  "id": "sparkwarden",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Sparkwarden",
+  "level": 5,
+  "traits": [
+   "invested",
+   "magical",
+   "relic",
+   "shadow",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "The geometric designs of this *Warding Tattoo* extend the length of your arm, resembling an armored sleeve. The crimson ink sometimes glows softly like warm coals when you're excited or building something new. --- **Activate** ⟨5⟩ envision **Frequency** once per day **Trigger** An enemy, hazard, or the environment makes an attack against your AC, requires you to attempt a saving throw, or causes you to take damage automatically --- **Effect** Until the end of the current turn, against the triggering effect, you gain a +1 status bonus to AC and saving throws and gain resistance 2 to damage."
+ },
+ {
+  "id": "spell-survivor",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Spell Survivor",
+  "level": 5,
+  "traits": [
+   "orc"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Once you've resisted an opponent's magic, anything else they throw your way becomes less effective. When you attempt a saving throw against a spell using Orc Superstition or Pervasive Superstition and critically succeed, you gain resistance 1 to all damage dealt by that triggering spell's caster until the end of their next turn. At 9th level and every 4 levels thereafter, the resistance increases by 1."
+ },
+ {
+  "id": "spellmasters-resilience",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Spellmaster's Resilience",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "choice",
+   "effectChoices"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Your experience with a specific type of harmful magic makes you more resistant to it. Choose a magical tradition (arcane, divine, occult, or primal). You gain a +1 circumstance bonus to saving throws against spells and effects with that tradition's trait and resistance 5 to all damage from spells and effects with that tradition's trait. The effect must have actually been cast or created with that tradition, rather than simply being on that tradition's spell list."
+ },
+ {
+  "id": "spellstrike",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Spellstrike",
+  "level": 1,
+  "traits": [
+   "magus"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've learned the fundamental magus technique that lets you combine magical and physical attacks together. You gain the Spellstrike activity. ### Spellstrike Specifics Though the base Spellstrike rules cover most spells, various modifications apply to more complicated spells when loaded into your fist, blade, or other attack. **One Target** The spell targets only the target of your Strike, even if it normally allows more targets. This includes area spells, which only the target attempts a saving throw against. Any ongoing effects of the area, such as the difficult terrain from scatter scree, affect only the target's space. Some feats let you affect more creatures. **Reach:** The coupled spell affects the target using the reach of the weapon or unarmed attack you make your Spellstrike with. For instance, gouging claw would affect a creature beyond the reach of your hand if you used a weapon with reach, and frostbite would affect only a creature in your weapon's reach, even though the spell's range is longer. **Ancillary Effects** Your spell still has any non-targeted effects that might affect creatures other than the target, as well as any ongoing effects starting from the moment you hit with the Strike. For example, scatter scree would still create difficult terrain in the target's space (as mentioned above) and tangle vine's circumstance penalty would last for its normal duration. The spell takes effect after the Strike deals damage; if the Strike has other special effects, the GM determines whether they happen before or after the spell. **Multiple Defenses** Any additional rolls after the initial spell attack still happen normally, such as the Fortitude save attempted by the target of a disintegrate spell. Similarly, a spell that allows you to attack with it again on subsequent rounds would only combine a Strike with its initial attack roll, not with any later ones. Invalid or Immune Target: If the target you hit wouldn't be a valid target for the spell, the spell is still expended but doesn't affect the target. If the target is immune to your attack but not the spell, it can still be affected by the spell. **Variable Actions** Some spells have different effects based on the number of actions you spend to cast them. You choose whether to use the effects of the 1- or 2-action version of the spell when you use Spellstrike. A spell has to take exactly 1 or 2 actions; you can't use Spellstrike with a spell that takes a free action, reaction, or 3 or more actions. **Spellshape** You typically can't use spellshape with Spellstrike because spellshape actions require the next action you take to be Cast a Spell, and Spellstrike is a combined activity that doesn't qualify."
+ },
+ {
+  "id": "spiced-demonade",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Spiced Demonade",
+  "level": 2,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- There are some who claim that the original version of this tart red drink contained the ground skin of actual demons, but in truth, spiced demonade was created by a first-year academy student desperate to look awake and alert after a night of carousing. After consuming spiced demonade, you ignore all effects and penalties from the consumption of alcohol and lack of sleep for 1 hour. These effects resume when the spiced demonade wears off, and you become temporarily immune to spiced demonade for 24 hours."
+ },
+ {
+  "id": "spike-skin",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Spike Skin",
+  "level": 8,
+  "traits": [
+   "earth",
+   "impulse",
+   "kineticist",
+   "primal"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You touch a willing creature, causing its skin to harden and form spiky protrusions. The target gains resistance 4 to all physical damage (except adamantine). Whenever a creature damages the target with an unarmed attack or non-reach melee weapon, the attacking creature takes damage. This impulse lasts for 10 minutes, but each time the target takes physical damage, the duration decreases by 1 minute. The target is temporarily immune to this impulse for 1 hour. If you use Spike Skin again, any previous one ends. --- **Level (+2)** The resistance and damage each increase by 2."
+ },
+ {
+  "id": "spinning-release",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Spinning Release",
+  "level": 14,
+  "traits": [
+   "archetype",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You have a creature grabbed or restrained with your lash. --- You wind your lash around your opponent, then spin them rapidly to discombobulate them. You release your opponent, sending them wobbling 10 feet in a direction of your choice; this is forced movement. Your opponent must succeed at a save against your class DC, with the following effects. **Failure** The target is confused until the end of their next turn. They are then temporarily immune to being confused or sickened by Spinning Release for 10 minutes, though the ability can still be used to move them. **Critical Failure** As failure, but the target is also Sickened 1 from being spun around."
+ },
+ {
+  "id": "spiny-lodestone",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Spiny Lodestone",
+  "level": 4,
+  "traits": [
+   "magical",
+   "metal",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "This perfectly octahedral magnetite crystal is covered in a hair-like layer of iron sand that always finds its way back to shape if wiped away. The spell attack modifier of any spell cast by Activating this item is +8, and the spell DC is 18. - **Armor** You gain a +1 item bonus to Athletics checks and resistance 2 to nonlethal damage. - **Weapon** After you cast a spell by Activating the *spiny lodestone*, your Strikes with the weapon deal an additional 1d4 piercing damage until the end of your next turn. --- **Activate** Cast a Spell **Effect** You cast Needle Darts"
+ },
+ {
+  "id": "spiny-lodestone-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Spiny Lodestone (Greater)",
+  "level": 8,
+  "traits": [
+   "magical",
+   "metal",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "This perfectly octahedral magnetite crystal is covered in a hair-like layer of iron sand that always finds its way back to shape if wiped away. The spell attack modifier of any spell cast by Activating this item is +14, and the spell DC is 24. - **Armor** You gain a +1 item bonus to Athletics checks and resistance 5 to nonlethal damage. - **Weapon** After you cast a spell by Activating the *spiny lodestone*, your Strikes with the weapon deal an additional 1d6 piercing damage until the end of your next turn. --- **Activate** Cast a Spell **Effect** You cast Needle Darts --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast Magnetic Acceleration"
+ },
+ {
+  "id": "spirit-guide-form",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Spirit Guide Form",
+  "level": 14,
+  "traits": [
+   "archetype",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [
+   "core.stances"
+  ],
+  "text": "**Frequency** once per day --- You fuse with your spirit guide, becoming a hybrid being with enhanced physical and spiritual power. This effect lasts 1 minute; you can end it early as a free action. During this time, you can't use any other actions granted by this archetype. You gain the following statistics and abilities, regardless of your type of spirit guide. - You become incorporeal. - You gain resistance 10 to all damage (except force, ghost touch, or spirit; double resistance vs. non-magical). - Darkvision. - An unarmed melee attack of the same type as your spirit guide (either claws or jaws), which is the only attack you can Strike with. You're trained with this attack. Your attack modifier is +29 or your normal unarmed attack modifier, whichever is higher. You use the listed statistics for the unarmed attack type: **Claws** (agile, backstabber, finesse) 1 , **Damage** 3d6+5 slashing plus 1d6 force; - **Jaws** (forceful) 1 **Damage** 3d10+5 piercing plus 1d6 force."
+ },
+ {
+  "id": "spiritsight-crossbow",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Spiritsight Crossbow",
+  "level": 8,
+  "traits": [
+   "magical",
+   "teleportation"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This *+1 striking ghost touch crossbow* has an array of crystalline lenses and silver fittings along the stock and feels strangely light. **Activate—Ethereal Vision** ⟨1⟩ (concentrate) **Frequency** once per minute --- **Effect** You aim through the crossbow's crystalline lenses, gaining imprecise vision onto the Ethereal Plane with a range of 60 feet in addition to your normal senses until the end of your turn. You can sense through objects in the Universe this way, and the sense is precise for detecting creatures. Because this sense detects spiritual energy, a creature that's immune to spirit can't be detected in this way. **Activate—Ethereal Shot** ⟨1⟩ **Requirements** Ethereal Vision is active --- **Effect** You Strike with the *spiritsight crossbow*. This shot travels through the Ethereal Plane, allowing it to pass through and ignore cover from physical objects within the range of your Ethereal Vision."
+ },
+ {
+  "id": "spore-cloud",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Spore Cloud",
+  "level": 9,
+  "traits": [
+   "leshy"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per hour --- You unleash a cloud of pollen or similar spores. All creatures in a around you must attempt a save using your class DC or spell DC (whichever is higher) with the following results. Plants and fungi are immune to this effect. --- **Critical Success** No effect. **Success** The creature is dazzled for 1 round. **Failure** The creature is dazzled and can see only 10 feet away for 1 round. **Critical Failure** The creature is blinded for 1 round."
+ },
+ {
+  "id": "sportlebore-choke",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Sportlebore Choke",
+  "level": 8,
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** Your swarm is outside your body. --- Like nefarious sportlebores, a species of insect that plague adventurers by hiding in their rations as counterfeit food, your swarm can crawl down throats. The sportlebores attempt to force their way into the mouth of each creature in your swarm's space. Each creature takes damage depending on its save against the higher of your class DC or spell DC. The damage increases by 1d4 at 10th level and every 2 levels thereafter. Regardless of the result of its save, the creature is temporarily immune to sportlebore choke for 1 hour. --- **Critical Success** The creature is unaffected. **Success** The creature takes half damage and is Sickened 1 as it spits out most of the offending sportlebores. **Failure** The sportlebores crawl down the creature's throat. The creature takes full damage and is sickened 1. **Critical Failure** As failure, but the creature takes double damage and is Sickened 2."
+ },
+ {
+  "id": "spun-cloud",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Spun Cloud",
+  "level": 2,
+  "traits": [
+   "air",
+   "bottled breath",
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Spun Cloud Source Rage of Elements pg. 76 Usage held in 1 hand Bulk L Activate (manipulate) On the Elemental Plane of Air, small clouds of differing colors can sometimes float separately from other cloud formations. Clever people can spin these clouds into small handfuls, creating a magical bundle of elemental power. Unlike most bottled breath, spun clouds don't have any effect on you while you hold them in your lungs, but you can exhale the cloud as a single action. When exhaled, the cloud flows out and expands into a 20-foot burst within 60 feet of you. The cloud dissipates after 1 minute. Spun Cloud (Black) Source Rage of Elements pg. 76 Price 70 gp Bulk L A dark storm cloud conceals creatures within it. Creatures outside the cloud are concealed to creatures within it. Spun Cloud (Blue) Source Rage of Elements pg. 76 Price 50 gp Bulk L A blue cloud protects against lightning. Creatures gain resistance 5 to electricity while in the cloud. Spun Cloud (Green) Source Rage of Elements pg. 76 Price 125 gp Bulk L A green cloud smells terrible, making those inside ill. Any creature that ends its turn in the cloud must succeed at a DC 25 Fortitude save or be sickened 1 (or sickened 2 on a critical failure). Regardless of the result of its save, the creature becomes temporarily immune for 24 hours. This is an olfactory poison effect. Spun Cloud (Red) Source Rage of Elements pg. 76 Price 100 gp Bulk L A red cloud terrifies those it surrounds. Any creature in the cloud, or that later enters the cloud, must succeed at a DC 24 Will save or become frightened 2 (or frightened 3 on a critical failure). Regardless of the result of its save, the creature becomes temporarily immune for 24 hours. This is an emotion, fear, and mental effect. Spun Cloud (White) Source Rage of Elements pg. 76 Price 7 gp Bulk L A white cloud swirls with winds that speed up travel. A creature that starts its turn in the cloud gains a +10-foot item bonus to its land Speed and fly Speed (if it has one) until the end of its turn."
+ },
+ {
+  "id": "spun-cloud-blue",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Spun Cloud (Blue)",
+  "level": 6,
+  "traits": [
+   "air",
+   "bottled-breath",
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- On the Elemental Plane of Air, small clouds of differing colors can sometimes float separately from other cloud formations. Clever people can spin these clouds into small handfuls, creating a magical bundle of elemental power. Unlike most bottled breath, *spun clouds* don't have any effect on you while you hold them in your lungs, but you can exhale the cloud as a single action. When exhaled, the cloud flows out and expands into a within 60 feet of you. The cloud dissipates after 1 minute. A blue cloud protects against lightning. Creatures gain resistance 5 to electricity while in the cloud."
+ },
+ {
+  "id": "staff-of-the-black-desert",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Staff of the Black Desert",
+  "level": 12,
+  "traits": [
+   "magical",
+   "staff",
+   "two-hand-d8"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This rough metal staff is pitted and sandblasted, with thousands of nigh-imperceptible sand crystals embedded in its surface. While carrying the staff, you gain a +2 circumstance bonus to Occultism checks to identify aberrations and oozes native to the Darklands. --- **Activate** Cast a Spell **Effect** You expend a number of charges from the staff to cast a spell from its list. - **Cantrip** Know the Way - **1st** Create Water Cleanse Cuisine Phantasmal Minion - **2nd** Darkvision Environmental Endurance - **3rd** Earthbind Cleanse Affliction Wanderer's Guide - **4th** Air Walk Mirage Rope Trick - **5th** Pillars of Sand Illusory Disguise --- **Craft Requirements** Supply one casting of all listed levels of all listed spells."
+ },
+ {
+  "id": "staff-of-the-black-desert-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Staff of the Black Desert (Greater)",
+  "level": 16,
+  "traits": [
+   "magical",
+   "staff",
+   "two-hand-d8"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This rough metal staff is pitted and sandblasted, with thousands of nigh-imperceptible sand crystals embedded in its surface. While carrying the staff, you gain a +2 circumstance bonus to Occultism checks to identify aberrations and oozes native to the Darklands. --- **Activate** Cast a Spell **Effect** You expend a number of charges from the staff to cast a spell from its list. - **Cantrip** Know the Way - **1st** Create Water Cleanse Cuisine Phantasmal Minion - **2nd** Darkvision Environmental Endurance - **3rd** Earthbind Cleanse Affliction Wanderer's Guide - **4th** Air Walk Mirage Rope Trick - **5th** Pillars of Sand Illusory Disguise - **6th** Purple Worm Sting Summon Entity - **7th** Blightburn Blast Control Sand Unfettered Pack --- **Craft Requirements** Supply one casting of all listed levels of all listed spells."
+ },
+ {
+  "id": "staff-of-the-unblinking-eye",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Staff of the Unblinking Eye",
+  "level": 6,
+  "traits": [
+   "magical",
+   "staff",
+   "two-hand-d8"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "The stone head piece of this smooth wooden staff is carved to look like a lidless eye. While wielding it, you gain a +1 status bonus to Perception checks made for initiative. **Activate** Cast a Spell --- **Effect** You expend a number of charges from the staff to cast a spell from its list. - **Cantrip** Detect Magic - **1st** Sure Strike - **2nd** Darkvision, See the Unseen, Translate **Craft Requirements** Supply one casting of all listed ranks of all listed spells."
+ },
+ {
+  "id": "staff-of-the-unblinking-eye-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Staff of the Unblinking Eye (Greater)",
+  "level": 10,
+  "traits": [
+   "magical",
+   "staff",
+   "two-hand-d8"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "The stone head piece of this smooth wooden staff is carved to look like a lidless eye. While wielding it, you gain a +1 status bonus to Perception checks made for initiative. **Activate** Cast a Spell --- **Effect** You expend a number of charges from the staff to cast a spell from its list. - **Cantrip** Detect Magic - **1st** Sure Strike - **2nd** Darkvision, See the Unseen, Translate - **3rd** Darkvision, Mind Reading - **4th** , Detect Scrying, Telepathy **Craft Requirements** Supply one casting of all listed ranks of all listed spells."
+ },
+ {
+  "id": "staff-of-the-unblinking-eye-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Staff of the Unblinking Eye (Major)",
+  "level": 14,
+  "traits": [
+   "magical",
+   "staff",
+   "two-hand-d8"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "The stone head piece of this smooth wooden staff is carved to look like a lidless eye. While wielding it, you gain a +1 status bonus to Perception checks made for initiative. **Activate** Cast a Spell --- **Effect** You expend a number of charges from the staff to cast a spell from its list. - **Cantrip** Detect Magic - **1st** Sure Strike - **2nd** Darkvision, See the Unseen, Translate - **3rd** Darkvision, Mind Reading - **4th** , Detect Scrying, Telepathy - **5th** Mind Probe, Scouting Eye - **6th** Telepathy, Truesight **Craft Requirements** Supply one casting of all listed ranks of all listed spells."
+ },
+ {
+  "id": "staff-of-water",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Staff of Water",
+  "level": 3,
+  "traits": [
+   "magical",
+   "staff",
+   "two-hand-d8"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "heldSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "A *staff of water* is most often made of driftwood, sometimes lacquered blue. Carved versions often have a wave pattern. The staff smells of rain or brine. While wielding a *staff of water*, you have resistance 2 to fire. --- **Activate** Cast a Spell --- **Effect** You expend a number of charges from the staff to cast a spell from its list. - **Cantrip** Spout - **1st** Create Water, Hydraulic Push --- **Craft Requirements** Supply one casting of all listed ranks of all listed spells."
+ },
+ {
+  "id": "staff-of-water-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Staff of Water (Greater)",
+  "level": 8,
+  "traits": [
+   "magical",
+   "staff",
+   "two-hand-d8"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "heldSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "A *staff of water* is most often made of driftwood, sometimes lacquered blue. Carved versions often have a wave pattern. The staff smells of rain or brine. While wielding a *staff of water*, you have resistance 5 to fire. --- **Activate** Cast a Spell --- **Effect** You expend a number of charges from the staff to cast a spell from its list. - **Cantrip** Spout - **1st** Create Water, Hydraulic Push - **2nd** Mist, Water Walk - **3rd** Aqueous Orb, Wall of Water --- **Craft Requirements** Supply one casting of all listed ranks of all listed spells."
+ },
+ {
+  "id": "stalk-goggles-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Stalk Goggles (Major)",
+  "level": 8,
+  "traits": [
+   "invested",
+   "magical",
+   "morph"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "These black leather goggle frames have no lenses. Instead, when a character puts them on and invests them, the wearer's eyes transform and lengthen into snail-like eyestalks. The wobbly eyestalks stretch out through the lens holes and up over the wearer's head on lengthened optic nerves. **Activate—Looksee** ⟨1⟩ (concentrate) **Frequency** once per day --- **Effect** By focusing hard, you can watch for enemies in all directions. You gain all-around vision, low-light vision, and a +2 item bonus to Perception checks involving sight for 1 minute; during this time, you can't be flanked."
+ },
+ {
+  "id": "stand-firm",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Stand Firm",
+  "level": 16,
+  "traits": [
+   "auditory",
+   "linguistic",
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your words help your ally shake off unease and terror. You shout a bolstering comment at an ally within 30 feet of you who has the fleeing or frightened condition and can hear you. That ally reduces the value of their frightened condition by 2 (to a minimum of 0). If they are fleeing, they can immediately attempt a new saving throw against the effect that caused the condition. If that save is a failure, but not a critical failure, the ally needs to spend one fewer action on their turn to escape the source of the fleeing condition. This allows that ally to Strike or Cast a one-action Spell that doesn't necessarily get them further away from the source, but the ally still has the fleeing condition and can't Delay or Ready as usual. If the ally is under an effect that reduces the number of actions they have on their turn, they don't gain this benefit on a failed saving throw. Once you use Stand Firm on an ally, that ally is immune to it until the beginning of your next turn."
+ },
+ {
+  "id": "standard-of-the-true-ally",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Standard of the True Ally",
+  "level": 10,
+  "traits": [
+   "aura",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This magical banner reminds those who view it of the strong bond they have with their comrades on the battlefield. Whenever you or an ally within the banner's aura uses an action on your turn to prepare to help with Aid, they can Step or Stride towards an ally as part of that action. They then become immune to this effect for 10 minutes."
+ },
+ {
+  "id": "stargazers-eyes",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Stargazer's Eyes",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Long hours in darkened observatories have sharpened your senses. If you don't have low-light vision or darkvision, you gain low-light vision, or if you already have low-light vision, you gain darkvision. **Special** You can take this feat a second time, upgrading your low-light vision to darkvision."
+ }
+]

@@ -1,0 +1,146 @@
+[
+ {
+  "id": "pallesthetic-mutagen",
+  "name": "Pallesthetic Mutagen",
+  "level": 9,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- You gain unparalleled sensitivity to the tiniest of vibrations through solid surfaces and even the very air around you, but your eyes become useless. **Benefit** For 1 minute, you gain precise echolocation out to 40 feet, imprecise tremorsense out to 60 feet, and a +2 item bonus to Perception checks using either of these senses. **Drawback** You are blinded for 1 minute."
+ },
+ {
+  "id": "antidote-lesser",
+  "name": "Antidote (Lesser)",
+  "level": 1,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- An antidote protects you against toxins. Upon drinking an antidote, you gain a +2 item bonus to Fortitude saving throws against poisons for 6 hours."
+ },
+ {
+  "id": "antidote-moderate",
+  "name": "Antidote (Moderate)",
+  "level": 6,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- An antidote protects you against toxins. Upon drinking an antidote, you gain a +3 item bonus to Fortitude saving throws against poisons for 6 hours."
+ },
+ {
+  "id": "antidote-greater",
+  "name": "Antidote (Greater)",
+  "level": 10,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- An antidote protects you against toxins. Upon drinking an antidote, you gain a +4 item bonus to Fortitude saving throws against poisons for 6 hours."
+ },
+ {
+  "id": "antidote-major",
+  "name": "Antidote (Major)",
+  "level": 14,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- An antidote protects you against toxins. Upon drinking an antidote, you gain a +4 item bonus to Fortitude saving throws against poisons for 6 hours, and when you drink the antidote, you can immediately attempt a saving throw against one poison of 14th level or lower affecting you. If you succeed, the poison is neutralized."
+ },
+ {
+  "id": "antiplague-lesser",
+  "name": "Antiplague (Lesser)",
+  "level": 1,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Antiplague can fortify the body's defenses against diseases. Upon drinking an antiplague, you gain a +2 item bonus to Fortitude saving throws against diseases for 24 hours; this applies to your daily save against a disease's progression."
+ },
+ {
+  "id": "antiplague-moderate",
+  "name": "Antiplague (Moderate)",
+  "level": 6,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Antiplague can fortify the body's defenses against diseases. Upon drinking an antiplague, you gain a +3 item bonus to Fortitude saving throws against diseases for 24 hours; this applies to your daily save against a disease's progression."
+ },
+ {
+  "id": "antiplague-greater",
+  "name": "Antiplague (Greater)",
+  "level": 10,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Antiplague can fortify the body's defenses against diseases. Upon drinking an antiplague, you gain a +4 item bonus to Fortitude saving throws against diseases for 24 hours; this applies to your daily save against a disease's progression."
+ },
+ {
+  "id": "antiplague-major",
+  "name": "Antiplague (Major)",
+  "level": 14,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Antiplague can fortify the body's defenses against diseases. Upon drinking an antiplague, you gain a +4 item bonus to Fortitude saving throws against diseases for 24 hours; this applies to your daily save against a disease's progression. When you drink the antiplague, you can immediately attempt a saving throw against one disease of 14th level or lower affecting you. If you succeed, you are cured of the disease."
+ },
+ {
+  "id": "elixir-of-life-minor",
+  "name": "Elixir of Life (Minor)",
+  "level": 1,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Elixirs of life accelerate a living creature's natural healing processes and immune system. Upon drinking this elixir, you regain 1d6 Hit Points and gain +1 item bonus to saving throws against diseases and poisons for 10 minutes."
+ },
+ {
+  "id": "elixir-of-life-lesser",
+  "name": "Elixir of Life (Lesser)",
+  "level": 5,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Elixirs of life accelerate a living creature's natural healing processes and immune system. Upon drinking this elixir, you regain 3d6+6 Hit Points and gain +1 item bonus to saving throws against diseases and poisons for 10 minutes."
+ },
+ {
+  "id": "elixir-of-life-moderate",
+  "name": "Elixir of Life (Moderate)",
+  "level": 9,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Elixirs of life accelerate a living creature's natural healing processes and immune system. Upon drinking this elixir, you regain 5d6+12 Hit Points and gain +2 item bonus to saving throws against diseases and poisons for 10 minutes."
+ },
+ {
+  "id": "elixir-of-life-greater",
+  "name": "Elixir of Life (Greater)",
+  "level": 13,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Elixirs of life accelerate a living creature's natural healing processes and immune system. Upon drinking this elixir, you regain 7d6+18 Hit Points and gain +2 item bonus to saving throws against diseases and poisons for 10 minutes."
+ },
+ {
+  "id": "elixir-of-life-major",
+  "name": "Elixir of Life (Major)",
+  "level": 15,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Elixirs of life accelerate a living creature's natural healing processes and immune system. Upon drinking this elixir, you regain 8d6+21 Hit Points and gain +3 item bonus to saving throws against diseases and poisons for 10 minutes."
+ },
+ {
+  "id": "elixir-of-life-true",
+  "name": "Elixir of Life (True)",
+  "level": 19,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Elixirs of life accelerate a living creature's natural healing processes and immune system. Upon drinking this elixir, you regain 10d6+27 Hit Points and gain +4 item bonus to saving throws against diseases and poisons for 10 minutes."
+ },
+ {
+  "id": "drakeheart-mutagen-lesser",
+  "name": "Drakeheart Mutagen (Lesser)",
+  "level": 1,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Your skin grows scales like a drake, and your eyesight become sharp and your pupils slitted, but your mind and reflexes slow. **Benefit** You gain +4 item bonus to AC, a Dexterity cap of +2 (as usual, use your lowest Dexterity cap if you have more than one), and a +1 item bonus to Perception checks. If you're wearing armor, you still calculate your proficiency bonus to AC based on your proficiency in the armor you're wearing, even if the drakeheart mutagen has a higher item bonus. You also gain the Final Surge action. **Drawback** You take a -1 penalty to Will saves, Reflex saves, and all skill checks to Recall Knowledge. **Duration** 1 minute or until you use Final Surge, whichever comes first."
+ },
+ {
+  "id": "drakeheart-mutagen-moderate",
+  "name": "Drakeheart Mutagen (Moderate)",
+  "level": 3,
+  "description": "**Activate** ⟨1⟩ Interact --- Your skin grows tough scales like a drake, your eyesight become sharp and your pupils slitted, and your limbs grow wiry and quick, but your mind and reflexes become slow. **Benefit** You gain +5 item bonus to AC, a Dexterity cap of +2 (as usual, use your lowest Dexterity cap if you have more than one), and a +2 item bonus to Perception checks. If you're wearing armor, you still calculate your proficiency bonus to AC based on your proficiency in the armor you're wearing, even if the drakeheart mutagen has a higher item bonus. You also gain the Final Surge action. **Drawback** You take a -1 penalty to Will saves, Reflex saves, and all skill checks to Recall Knowledge. **Duration** 10 minutes or until you use Final Surge, whichever comes first."
+ },
+ {
+  "id": "drakeheart-mutagen-greater",
+  "name": "Drakeheart Mutagen (Greater)",
+  "level": 11,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Your skin grows scales like a drake, and your eyesight become sharp and your pupils slitted, but your mind and reflexes slow. **Benefit** You gain +6 item bonus to AC, a Dexterity cap of +2 (as usual, use your lowest Dexterity cap if you have more than one), and a +3 item bonus to Perception checks. If you're wearing armor, you still calculate your proficiency bonus to AC based on your proficiency in the armor you're wearing, even if the drakeheart mutagen has a higher item bonus. You also gain the Final Surge action. **Drawback** You take a -1 penalty to Will saves, Reflex saves, and all skill checks to Recall Knowledge. **Duration** 1 hour or until you use Final Surge, whichever comes first."
+ },
+ {
+  "id": "drakeheart-mutagen-major",
+  "name": "Drakeheart Mutagen (Major)",
+  "level": 17,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Your skin grows scales like a drake, and your eyesight become sharp and your pupils slitted, but your mind and reflexes slow. **Benefit** You gain +7 item bonus to AC, a Dexterity cap of +2 (as usual, use your lowest Dexterity cap if you have more than one), and a +4 item bonus to Perception checks. If you're wearing armor, you still calculate your proficiency bonus to AC based on your proficiency in the armor you're wearing, even if the drakeheart mutagen has a higher item bonus. You also gain the Final Surge action. **Drawback** You take a -1 penalty to Will saves, Reflex saves, and all skill checks to Recall Knowledge. **Duration** 1 hour or until you use Final Surge, whichever comes first."
+ },
+ {
+  "id": "silvertongue-mutagen-lesser",
+  "name": "Silvertongue Mutagen (Lesser)",
+  "level": 1,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Your features become striking, and your voice becomes musical and commanding, though emotion clouds your reason. **Benefit** You gain a +1 item bonus to Deception, Diplomacy, Intimidation and Performance checks. Your critical failures with any of these skills become failures instead. **Drawback** You take a -2 item penalty to Arcana, Crafting, Lore, Occultism, and Society checks. Choose one skill in which you are trained; for the duration, you become untrained in that skill. All your failures to Recall Knowledge become critical failures. **Duration** 1 minute."
+ },
+ {
+  "id": "silvertongue-mutagen-moderate",
+  "name": "Silvertongue Mutagen (Moderate)",
+  "level": 3,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Your features become striking, and your voice becomes musical and commanding, though emotion clouds your reason. **Benefit** You gain a +2 item bonus to Deception, Diplomacy, Intimidation and Performance checks. Your critical failures with any of these skills become failures instead. **Drawback** You take a -2 item penalty to Arcana, Crafting, Lore, Occultism, and Society checks. Choose one skill in which you are trained; for the duration, you become untrained in that skill. All your failures to Recall Knowledge become critical failures. **Duration** 10 minutes."
+ },
+ {
+  "id": "silvertongue-mutagen-greater",
+  "name": "Silvertongue Mutagen (Greater)",
+  "level": 11,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Your features become striking, and your voice becomes musical and commanding, though emotion clouds your reason. **Benefit** You gain a +3 item bonus to Deception, Diplomacy, Intimidation and Performance checks. Your critical failures with any of these skills become failures instead. **Drawback** You take a -2 item penalty to Arcana, Crafting, Lore, Occultism, and Society checks. Choose one skill in which you are trained; for the duration, you become untrained in that skill. All your failures to Recall Knowledge become critical failures. **Duration** 1 hour."
+ },
+ {
+  "id": "silvertongue-mutagen-major",
+  "name": "Silvertongue Mutagen (Major)",
+  "level": 17,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Your features become striking, and your voice becomes musical and commanding, though emotion clouds your reason. **Benefit** You gain a +4 item bonus to Deception, Diplomacy, Intimidation and Performance checks. Your critical failures with any of these skills become failures instead. **Drawback** You take a -2 item penalty to Arcana, Crafting, Lore, Occultism, and Society checks. Choose one skill in which you are trained; for the duration, you become untrained in that skill. All your failures to Recall Knowledge become critical failures. **Duration** 1 hour."
+ },
+ {
+  "id": "deadweight-snare",
+  "name": "Deadweight Snare",
+  "level": 2,
+  "description": "This snare is made of magnetized weights and heavy ropes rigged to a trip wire or pressure plate. When a creature enters the square, the magnets and ropes deploy, weighing down the creature's weapons and limbs. The creature must attempt a save. --- **Critical Success** The creature is unaffected. **Success** The creature takes a -1 status penalty to attack rolls for 1 round or until it Escapes. **Failure** The creature takes a -2 status penalty to attack rolls for 1 minute or until it Escapes (DC 18). **Critical Failure** As failure, but the creature drops any metallic items it's holding."
+ }
+]

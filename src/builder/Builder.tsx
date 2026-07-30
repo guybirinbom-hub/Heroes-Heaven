@@ -353,6 +353,41 @@ export function Builder({
                               );
   };
 
+  /**
+   * The sub-choice belonging to a feat the character was GIVEN rather than picked.
+   *
+   * The control existed but only one path reached it: Builder walked `FEAT_FEAT_GRANTS[picked]`, so a
+   * feat granted by another feat got its picker and a feat granted by a BACKGROUND or a CLASS FEATURE
+   * did not — those never become `picked`. Abadar's Avenger grants "Assurance with Religion" and the
+   * sheet could only show a bare "Assurance", unable to name the skill. 52 records were in that state.
+   *
+   * Storage is `build.grantedFeatChoices[featId]`, keyed by the GRANTED feat, which is what
+   * build.ts already reads — so wiring the picker in is all that was missing.
+   */
+  const grantedChoicePicker = (grantedId: string) => {
+    const def = content.feats[grantedId]?.choice;
+    if (!def) return null;
+    const opts =
+      def.kind === 'domains'
+        ? ((build.deityId ? content.deities[build.deityId]?.domains : undefined) ?? []).map((d) => ({ value: d, label: cap(d) }))
+        : def.kind === 'skills'
+          ? SKILLS.map((s) => ({ value: s, label: cap(s) }))
+          : (def.options ?? []);
+    if (!opts.length) return null;
+    const label = `${content.feats[grantedId]!.name}: ${featChoicePrompt(def.prompt)}`;
+    return (
+      <SubCard key={`gfc-${grantedId}`} icon="ti-adjustments" label={label}>
+        <PopupSelect
+          title={featChoicePrompt(def.prompt)}
+          placeholder={`${featChoicePrompt(def.prompt)}…`}
+          value={build.grantedFeatChoices?.[grantedId] ?? ''}
+          onChange={(v) => actions.patch({ grantedFeatChoices: { ...(build.grantedFeatChoices ?? {}), [grantedId]: v } })}
+          options={opts.map((o) => ({ value: o.value, label: featChoiceLabel(o.label) }))}
+        />
+      </SubCard>
+    );
+  };
+
   // Divine font (cleric): the deity's allowed heal/harm options + the resolved slot count.
   const hasFontFeature = !!casterCls?.features?.some((f) => f.featureId === 'divine-font');
   const fontOptions = ((build.deityId ? content.deities[build.deityId]?.divineFont : undefined) ?? []) as (
@@ -1124,6 +1159,12 @@ export function Builder({
                                   <span className="lvl-gain-tag">skill feat · granted</span>
                                 </div>
                                 <ChoiceDetails name={nm} flavor={ft?.description} descRefs={ft?.descRefs} />
+                                {/* The granted feat's OWN sub-choice. Abadar's Avenger grants "Assurance
+                                    with Religion" — the feat arrived, its subject never did, so the sheet
+                                    showed a bare "Assurance" that could not say which skill. This is the
+                                    same grantedFeatChoices control a slot-picked feat already gets; it was
+                                    simply never reached from a background, which never becomes `picked`. */}
+                                {grantedChoicePicker(gid)}
                               </div>
                             );
                           })}
@@ -1370,28 +1411,11 @@ export function Builder({
                               );
                             })()}
                           {/* A GRANTED feat's own sub-choice (Seeker of Truths grants Domain Initiate →
-                              pick its domain here; the granted feat has no slot of its own). */}
-                          {picked &&
-                            (FEAT_FEAT_GRANTS[picked] ?? [])
-                              .filter((gid) => content.feats[gid]?.choice)
-                              .map((gid) => {
-                                const gdef = content.feats[gid]!.choice!;
-                                const gopts =
-                                  gdef.kind === 'domains'
-                                    ? ((build.deityId ? content.deities[build.deityId]?.domains : undefined) ?? []).map((d) => ({ value: d, label: cap(d) }))
-                                    : gdef.options ?? [];
-                                return (
-                                  <SubCard key={`gfc-${gid}`} icon="ti-adjustments" label={`${content.feats[gid]!.name}: ${featChoicePrompt(gdef.prompt)}`}>
-                                    <PopupSelect
-                                      title={featChoicePrompt(gdef.prompt)}
-                                      placeholder={`${featChoicePrompt(gdef.prompt)}…`}
-                                      value={build.grantedFeatChoices?.[gid] ?? ''}
-                                      onChange={(v) => actions.patch({ grantedFeatChoices: { ...(build.grantedFeatChoices ?? {}), [gid]: v } })}
-                                      options={gopts.map((o) => ({ value: o.value, label: featChoiceLabel(o.label) }))}
-                                    />
-                                  </SubCard>
-                                );
-                              })}
+                              pick its domain here; the granted feat has no slot of its own). Routed
+                              through grantedChoicePicker so this path and the background path cannot
+                              drift — the inline copy that used to live here handled `domains` but not
+                              `skills`, which is why an Assurance grant had no options even when reached. */}
+                          {picked && (FEAT_FEAT_GRANTS[picked] ?? []).map((gid) => grantedChoicePicker(gid))}
                           {/* Effect choices ("choose one of N" — a dragon tattoo's resistance type, an
                               energy heart's element): each picked option confers a concrete effect. */}
                           {picked &&

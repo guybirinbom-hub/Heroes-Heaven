@@ -1,0 +1,146 @@
+[
+ {
+  "id": "trackers-stew",
+  "name": "Tracker's Stew",
+  "level": 3,
+  "description": "**Activate** 10 minutes (manipulate) --- Alchemical reagents add punch to tracker's stew: a rich, fiery mixture of tomatoes, ground nuts, onions, and tubers, often with poultry added. It's usually served with or over rice or noodles. Once you've eaten the stew, it improves your ability to sense and follow tracks for 24 hours or until you make your next daily preparations, whichever comes first. You gain a +1 item bonus to Survival checks to Cover Tracks and Track. You can do either while moving at full speed or both while moving at half speed."
+ },
+ {
+  "id": "warding-element-draught",
+  "name": "Warding Element Draught",
+  "level": 7,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Using ingredients collected from pure elemental sources, a warding element draught instills enough of the essence of the element in the imbiber to partially protect them against it. Each draught includes one of the following ingredients, chosen when the elixir is distilled, and grants a +1 item bonus to AC and saving throws against alchemical effects, spells, and magic effects with the listed elemental trait for 10 minutes. - **Blood** Metal - **Effervescent Gas** Air - **Grains** Earth - **Hot Peppers** Fire - **Spring Water** Water - **Wormwood** Wood"
+ },
+ {
+  "id": "colorful-coating-blue",
+  "name": "Colorful Coating (Blue)",
+  "level": 3,
+  "description": "**Activate** ⟨3⟩ (manipulate) --- These coatings come in different colors, each with a different special effect. A bottle of colorful coating contains enough to slather over one 5-foot square within your reach or space and is made with a special dispenser that enables you to coat the surface using only one hand. It's possible to use the coating on any surface that can be painted (subject to the GM's discretion). Colorful coating dries instantly, and its effect in the square you coated lasts for 1 minute. After that time, the coating turns to fine, inert powder, returning the square to its original condition unless otherwise noted. Blue colorful coating contains bonding compounds that firm up a surface, making it more stable and more supportive of weight. When applied to material that's loose or unstable, the square can hold twice as much weight before giving way. The coating also slows any collapse, making it easier to avoid and granting a +1 circumstance bonus to Reflex saving throws in reaction to the coated surface's collapse. This coating can shore up a wall, ceiling, door, or similar opening, granting a +2 circumstance bonus to the DC for Athletics checks to Force Open the coated surface."
+ },
+ {
+  "id": "colorful-coating-yellow",
+  "name": "Colorful Coating (Yellow)",
+  "level": 3,
+  "description": "**Activate** ⟨3⟩ (manipulate) --- These coatings come in different colors, each with a different special effect. A bottle of colorful coating contains enough to slather over one 5-foot square within your reach or space and is made with a special dispenser that enables you to coat the surface using only one hand. It's possible to use the coating on any surface that can be painted (subject to the GM's discretion). Colorful coating dries instantly, and its effect in the square you coated lasts for 1 minute. After that time, the coating turns to fine, inert powder, returning the square to its original condition unless otherwise noted. Yellow colorful coating contains a variety of compounds that fill small gaps and harden into a flat surface that increases friction, making it much easier to move on the square's surface. On the affected surface, the coating reduces difficult terrain caused by slipperiness, such as from ice or grease; this eliminates difficult terrain, reduces greater difficult terrain to difficult terrain, and reduces uneven ground to greater difficult terrain. The coating can't affect difficult terrain caused by features or effects not part of the surface, such as crowds, underbrush, wind, magic, and so on. The GM determines if yellow colorful coating can affect a surface's terrain. The coating also makes a coated wall or ceiling easier to climb. It provides a +2 circumstance bonus to checks to Climb the coated surface. Yellow colorful coating and green colorful c"
+ },
+ {
+  "id": "emetic-paste-lesser",
+  "name": "Emetic Paste (Lesser)",
+  "level": 2,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- sickened creatures have difficulty swallowing, so you can Activate emetic paste by applying it to your skin or that of a sickened creature within reach, typically on the throat. The paste makes it easy for the sickened creature to purge, granting it an immediate Fortitude save to reduce its sickened condition. The paste grants the target a +2 item bonus to that save and to all saving throws to reduce the sickened condition for 1 hour."
+ },
+ {
+  "id": "emetic-paste-moderate",
+  "name": "Emetic Paste (Moderate)",
+  "level": 9,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- sickened creatures have difficulty swallowing, so you can Activate emetic paste by applying it to your skin or that of a sickened creature within reach, typically on the throat. The paste makes it easy for the sickened creature to purge, granting it an immediate Fortitude save to reduce its sickened condition. The paste grants the target a +3 item bonus to that save and to all saving throws to reduce the sickened condition for 1 hour."
+ },
+ {
+  "id": "emetic-paste-greater",
+  "name": "Emetic Paste (Greater)",
+  "level": 14,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- sickened creatures have difficulty swallowing, so you can Activate emetic paste by applying it to your skin or that of a sickened creature within reach, typically on the throat. The paste makes it easy for the sickened creature to purge, granting it an immediate Fortitude save to reduce its sickened condition. The paste grants the target a +4 item bonus to that save and to all saving throws to reduce the sickened condition for 1 hour."
+ },
+ {
+  "id": "healing-vapor-lesser",
+  "name": "Healing Vapor (Lesser)",
+  "level": 4,
+  "description": "**Activate** ⟨3⟩ (manipulate) --- Healing vapor is a substance that accelerates natural recovery processes by dispersing a mist infused with a variety of reagents typically used for healing and recovery. When deployed from a sealed container, the vapors fill a , last for 10 minutes, and can affect up to four living creatures at one time. Any creatures beyond the first four gain no benefit, though if a creature leaves before the duration is over, a new creature that enters can benefit from the mist. A creature benefiting from the vapors regains 1 Hit Point every 2 minutes. While affected, a creature also gains a +1 item bonus to saving throws against diseases and poisons. If the areas of more than one healing vapor overlap, only the strongest applies to creatures inside overlapping areas. Strong wind disperses the mist, rendering it ineffective while the wind blows."
+ },
+ {
+  "id": "healing-vapor-moderate",
+  "name": "Healing Vapor (Moderate)",
+  "level": 8,
+  "description": "**Activate** ⟨3⟩ (manipulate) --- Healing vapor is a substance that accelerates natural recovery processes by dispersing a mist infused with a variety of reagents typically used for healing and recovery. When deployed from a sealed container, the vapors fill a , last for 10 minutes, and can affect up to four living creatures at one time. Any creatures beyond the first four gain no benefit, though if a creature leaves before the duration is over, a new creature that enters can benefit from the mist. A creature benefiting from the vapors regains 1 Hit Point every minute. While affected, a creature also gains a +1 item bonus to saving throws against diseases and poisons. If the areas of more than one healing vapor overlap, only the strongest applies to creatures inside overlapping areas. Strong wind disperses the mist, rendering it ineffective while the wind blows."
+ },
+ {
+  "id": "healing-vapor-greater",
+  "name": "Healing Vapor (Greater)",
+  "level": 12,
+  "description": "**Activate** ⟨3⟩ (manipulate) --- Healing vapor is a substance that accelerates natural recovery processes by dispersing a mist infused with a variety of reagents typically used for healing and recovery. When deployed from a sealed container, the vapors fill a , last for 10 minutes, and can affect up to four living creatures at one time. Any creatures beyond the first four gain no benefit, though if a creature leaves before the duration is over, a new creature that enters can benefit from the mist. A creature benefiting from the vapors regains 2 Hit Points every minute. While affected, a creature also gains a +2 item bonus to saving throws against diseases and poisons. If the areas of more than one healing vapor overlap, only the strongest applies to creatures inside overlapping areas. Strong wind disperses the mist, rendering it ineffective while the wind blows."
+ },
+ {
+  "id": "healing-vapor-major",
+  "name": "Healing Vapor (Major)",
+  "level": 17,
+  "description": "**Activate** ⟨3⟩ (manipulate) --- Healing vapor is a substance that accelerates natural recovery processes by dispersing a mist infused with a variety of reagents typically used for healing and recovery. When deployed from a sealed container, the vapors fill a , last for 10 minutes, and can affect up to four living creatures at one time. Any creatures beyond the first four gain no benefit, though if a creature leaves before the duration is over, a new creature that enters can benefit from the mist. A creature benefiting from the vapors regains 3 Hit Point every minute. While affected, a creature also gains a +3 item bonus to saving throws against diseases and poisons. If the areas of more than one healing vapor overlap, only the strongest applies to creatures inside overlapping areas. Strong wind disperses the mist, rendering it ineffective while the wind blows."
+ },
+ {
+  "id": "sense-dulling-hood-lesser",
+  "name": "Sense-Dulling Hood (Lesser)",
+  "level": 6,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Sometimes, an enemy's dangerous special ability makes relatively standard sensory capabilities a liability. From an ofalth emitting its stench to a banshee wailing, plenty of creatures use their prey's senses against them. A sense-dulling hood is a wide, single-use mask designed to be pulled from an airtight package and slipped over the head. The mask grants you a +2 item bonus to saving throws against auditory, olfactory, and visual effects for 10 minutes. Since it dulls your senses without depriving you of them, the mask also imposes a –1 penalty to rolls and checks using Perception for the same duration."
+ },
+ {
+  "id": "sense-dulling-hood-greater",
+  "name": "Sense-Dulling Hood (Greater)",
+  "level": 12,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Sometimes, an enemy's dangerous special ability makes relatively standard sensory capabilities a liability. From an ofalth emitting its stench to a banshee wailing, plenty of creatures use their prey's senses against them. A sense-dulling hood is a wide, single-use mask designed to be pulled from an airtight package and slipped over the head. The mask grants you a +4 item bonus to saving throws against auditory, olfactory, and visual effects for 1 hour. Since it dulls your senses without depriving you of them, the mask also imposes a –1 penalty to rolls and checks using Perception for the same duration."
+ },
+ {
+  "id": "affliction-suppressant-lesser",
+  "name": "Affliction Suppressant (Lesser)",
+  "level": 1,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- First created using the same principles as the antiplague and antivenom elixirs, an affliction suppressant is a broadly useful medicine, but sacrifices potency. It applies to a wide variety of afflictions, but lasts a much shorter time. Upon drinking an affliction suppressant, you gain a +1 item bonus to all saves against afflictions for 10 minutes. Unlike with an antiplague, this suppressant isn't long-lasting enough to apply to a daily save against the progression of a disease, curse, or other long-lasting affliction. It can still help protect you from catching such an affliction when you're initially exposed to it, as well as on saves that occur after stages that last 10 minutes or less."
+ },
+ {
+  "id": "affliction-suppressant-moderate",
+  "name": "Affliction Suppressant (Moderate)",
+  "level": 6,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- First created using the same principles as the antiplague and antivenom elixirs, an affliction suppressant is a broadly useful medicine, but sacrifices potency. It applies to a wide variety of afflictions, but lasts a much shorter time. Upon drinking an affliction suppressant, you gain a +2 item bonus to all saves against afflictions for 10 minutes. Unlike with an antiplague, this suppressant isn't long-lasting enough to apply to a daily save against the progression of a disease, curse, or other long-lasting affliction. It can still help protect you from catching such an affliction when you're initially exposed to it, as well as on saves that occur after stages that last 10 minutes or less."
+ },
+ {
+  "id": "affliction-suppressant-greater",
+  "name": "Affliction Suppressant (Greater)",
+  "level": 10,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- First created using the same principles as the antiplague and antivenom elixirs, an affliction suppressant is a broadly useful medicine, but sacrifices potency. It applies to a wide variety of afflictions, but lasts a much shorter time. Upon drinking an affliction suppressant, you gain a +3 item bonus to all saves against afflictions for 10 minutes. Unlike with an antiplague, this suppressant isn't long-lasting enough to apply to a daily save against the progression of a disease, curse, or other long-lasting affliction. It can still help protect you from catching such an affliction when you're initially exposed to it, as well as on saves that occur after stages that last 10 minutes or less."
+ },
+ {
+  "id": "affliction-suppressant-major",
+  "name": "Affliction Suppressant (Major)",
+  "level": 14,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- First created using the same principles as the antiplague and antivenom elixirs, an affliction suppressant is a broadly useful medicine, but sacrifices potency. It applies to a wide variety of afflictions, but lasts a much shorter time. Upon drinking an affliction suppressant, you gain a +4 item bonus to all saves against afflictions for 10 minutes. Unlike with an antiplague, this suppressant isn't long-lasting enough to apply to a daily save against the progression of a disease, curse, or other long-lasting affliction. It can still help protect you from catching such an affliction when you're initially exposed to it, as well as on saves that occur after stages that last 10 minutes or less. When you drink the affliction suppressant, you can attempt a save against one affliction of 14th level or lower affecting you. If you succeed, the affliction is suppressed for 10 minutes. The affliction's duration doesn't elapse during this time, but its symptoms are suppressed."
+ },
+ {
+  "id": "bendy-arm-mutagen-lesser",
+  "name": "Bendy-Arm Mutagen (Lesser)",
+  "level": 1,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- For 1 minute your limbs become extremely limber, letting you stretch and twist to extreme degrees at the cost of fine motor skills. **Benefit** You gain a +1 item bonus to Acrobatics checks to Escape, Squeeze, and Tumble Through, and you increase your reach by 5 feet. **Drawback** You take a –1 penalty to Athletics checks, Stealth checks, Thievery checks, and attack rolls, and a –1 penalty per damage die to all weapon and unarmed attack damage."
+ },
+ {
+  "id": "bendy-arm-mutagen-moderate",
+  "name": "Bendy-Arm Mutagen (Moderate)",
+  "level": 3,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- For 10 minutes your limbs become extremely limber, letting you stretch and twist to extreme degrees at the cost of fine motor skills. **Benefit** You gain a +2 item bonus to Acrobatics checks to Escape, Squeeze, and Tumble Through, and you increase your reach by 5 feet. **Drawback** You take a –1 penalty to Athletics checks, Stealth checks, Thievery checks, and attack rolls, and a –1 penalty per damage die to all weapon and unarmed attack damage."
+ },
+ {
+  "id": "bendy-arm-mutagen-greater",
+  "name": "Bendy-Arm Mutagen (Greater)",
+  "level": 11,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- For 1 hour your limbs become extremely limber, letting you stretch and twist to extreme degrees at the cost of fine motor skills. **Benefit** You gain a +3 item bonus to Acrobatics checks to Escape, Squeeze, and Tumble Through, and you increase your reach by 10 feet. **Drawback** You take a –1 penalty to Athletics checks, Stealth checks, Thievery checks, and attack rolls, and a –1 penalty per damage die to all weapon and unarmed attack damage."
+ },
+ {
+  "id": "bendy-arm-mutagen-major",
+  "name": "Bendy-Arm Mutagen (Major)",
+  "level": 17,
+  "description": "**Activate** ⟨1⟩ Interact For 1 hour your limbs become extremely limber, letting you stretch and twist to extreme degrees at the cost of fine motor skills. **Benefit** You gain a +4 item bonus to Acrobatics checks to Escape, Squeeze, and Tumble Through, and you increase your reach by 15 feet. **Drawback** You take a –1 penalty to Athletics checks, Stealth checks, Thievery checks, and attack rolls, and a –1 penalty per damage die to all weapon and unarmed attack damage."
+ },
+ {
+  "id": "deadweight-mutagen-lesser",
+  "name": "Deadweight Mutagen (Lesser)",
+  "level": 1,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- For 1 minute your joints loosen and bones thicken, making your body incredibly weighty and difficult to maneuver around. **Benefit** You gain a +1 item bonus to Athletics checks to Shove and Trip, to your Fortitude and Reflex DCs against attempts to Shove or Trip you, and to saving throws against effects that attempt to force you to move or knock you prone. **Drawback** You gain the encumbered condition and can't remove it while under the effects of the mutagen."
+ },
+ {
+  "id": "deadweight-mutagen-moderate",
+  "name": "Deadweight Mutagen (Moderate)",
+  "level": 3,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- For 10 minutes your joints loosen and bones thicken, making your body incredibly weighty and difficult to maneuver around. **Benefit** You gain a +2 item bonus to Athletics checks to Shove and Trip, to your Fortitude and Reflex DCs against attempts to Shove or Trip you, and to saving throws against effects that attempt to force you to move or knock you prone. **Drawback** You gain the encumbered condition and can't remove it while under the effects of the mutagen."
+ },
+ {
+  "id": "deadweight-mutagen-greater",
+  "name": "Deadweight Mutagen (Greater)",
+  "level": 11,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- For 1 hour your joints loosen and bones thicken, making your body incredibly weighty and difficult to maneuver around. **Benefit** You gain a +3 item bonus to Athletics checks to Shove and Trip, to your Fortitude and Reflex DCs against attempts to Shove or Trip you, and to saving throws against effects that attempt to force you to move or knock you prone. You can attempt to Shove or Trip creatures up to two sizes larger than you. **Drawback** You gain the encumbered condition and can't remove it while under the effects of the mutagen."
+ }
+]

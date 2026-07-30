@@ -1,0 +1,4724 @@
+[
+ {
+  "id": "comprehension-elixir",
+  "name": "Comprehension Elixir",
+  "itemType": "equipment",
+  "level": 2,
+  "kin": [
+   {
+    "id": "comprehension-elixir-lesser",
+    "name": "Comprehension Elixir (Lesser)",
+    "level": 2,
+    "price": {
+     "gp": 7
+    }
+   },
+   {
+    "id": "comprehension-elixir-greater",
+    "name": "Comprehension Elixir (Greater)",
+    "level": 7,
+    "price": {
+     "gp": 54
+    }
+   }
+  ],
+  "text": "Comprehension Elixir Source Player Core 2 pg. 287 Usage held in 1 hand Bulk L Activate (manipulate) This bitter draft opens your mind to the potential of the written word. For the listed duration after drinking this elixir, you can understand any words you read, as long as they're written in a common language. This elixir doesn't automatically allow you to understand codes or extremely esoteric passages—you still need to attempt a skill check to Decipher Writing. Comprehension Elixir (Lesser) Source Player Core 2 pg. 287, Core Rulebook pg. 547 Price 7 gp Bulk L The duration is 1 minute. Comprehension Elixir (Greater) Source Player Core 2 pg. 287, Core Rulebook pg. 547 Price 54 gp Bulk L The duration is 10 minutes."
+ },
+ {
+  "id": "conduit-shot",
+  "name": "Conduit Shot",
+  "itemType": "consumable",
+  "level": 6,
+  "kin": [
+   {
+    "id": "conduit-shot-lesser",
+    "name": "Conduit Shot (Lesser)",
+    "level": 6,
+    "price": {
+     "gp": 50
+    }
+   },
+   {
+    "id": "conduit-shot-moderate",
+    "name": "Conduit Shot (Moderate)",
+    "level": 10,
+    "price": {
+     "gp": 200
+    }
+   },
+   {
+    "id": "conduit-shot-greater",
+    "name": "Conduit Shot (Greater)",
+    "level": 14,
+    "price": {
+     "gp": 600
+    }
+   }
+  ],
+  "text": "Conduit Shot Source Treasure Vault (Remastered) pg. 80 Ammunition any Activate (concentrate) Fine lines of djezet sparkle in conduit shot. When you Activate it, you name up to four creatures, in addition to you, that the ammunition's magic works for. When a conduit shot hits a target, which can be a square, it remains intact. It moves with a creature it struck, unless the GM determines otherwise, until that creature regains any Hit Points. If it doesn't stick to the target, the active ammunition instead falls into the target's space, remaining active. If you or one of the four selected creatures include the ammunition in the area of a spell that is 3rd level or lower; has an area of a burst, cone, or line; and does not have a duration, the djezet in the ammunition flares in striations of red light, increasing the area of that spell. Add 5 feet to the radius of a burst that has a radius o"
+ },
+ {
+  "id": "conrasu-coin",
+  "name": "Conrasu Coin",
+  "itemType": "consumable",
+  "level": 3,
+  "kin": [
+   {
+    "id": "conrasu-coin-arbiter",
+    "name": "Conrasu Coin (Arbiter)",
+    "level": 3,
+    "price": {
+     "gp": 7
+    }
+   },
+   {
+    "id": "conrasu-coin-bythos",
+    "name": "Conrasu Coin (Bythos)",
+    "level": 10,
+    "price": {
+     "gp": 200
+    }
+   }
+  ],
+  "text": "Conrasu Coin Source Dark Archives (Remastered) pg. 155 Usage affixed to armor Activate (concentrate) These wooden discs sometimes form spontaneously at the Wood Pile, a secret conrasu location suffused with extraplanar energy. A conrasu coin can be activated to call upon the power of a specific type of aeon. Conrasu Coin (Arbiter) Source Dark Archives (Remastered) pg. 155 Price 7 gp Trigger You attempt a Diplomacy check to Make an Impression. This coin has small wings like an arbiter, the messenger and diplomat aeon. When you activate the coin, you gain a +2 circumstance bonus on the Diplomacy check, which increases to a +3 circumstance bonus to Make an Impression on a creature with the aeon trait. Conrasu Coin (Bythos) Source Dark Archives (Remastered) pg. 155 Price 200 gp Trigger You're targeted with an attack but the opponent hasn't rolled yet. This cog-like coin bears an hourglass on"
+ },
+ {
+  "id": "contagion-metabolizer",
+  "name": "Contagion Metabolizer",
+  "itemType": "equipment",
+  "level": 5,
+  "kin": [
+   {
+    "id": "contagion-metabolizer-lesser",
+    "name": "Contagion Metabolizer (Lesser)",
+    "level": 5,
+    "price": {
+     "gp": 30
+    }
+   },
+   {
+    "id": "contagion-metabolizer-moderate",
+    "name": "Contagion Metabolizer (Moderate)",
+    "level": 11,
+    "price": {
+     "gp": 300
+    }
+   },
+   {
+    "id": "contagion-metabolizer-greater",
+    "name": "Contagion Metabolizer (Greater)",
+    "level": 19,
+    "price": {
+     "gp": 8000
+    }
+   }
+  ],
+  "text": "Contagion Metabolizer Source Treasure Vault (Remastered) pg. 59 Usage held in 1 hand Bulk L Activate (manipulate) Contagion metabolizers seek out toxins in the bloodstream and attempt to purify them into humors the body processes naturally. When you drink this elixir, it attempts a counteract check with the listed counteract modifier to remove the highest-level poison or disease afflicting you. This takes longer for a disease—the counteract check doesn't happen until 10 minutes after you drink the elixir. After drinking, you become temporarily immune to contagion metabolizers for 1 hour. If you're a chirurgeon alchemist and have powerful alchemy, you can substitute your statistics when you create a contagion metabolizer using Quick Alchemy, if your stats are higher. This replaces the counteract rank with half your level rounded up and the counteract modifier with your class DC – 10. Cont"
+ },
+ {
+  "id": "cooling-elixir",
+  "name": "Cooling Elixir",
+  "itemType": "equipment",
+  "level": 4,
+  "kin": [
+   {
+    "id": "cooling-elixir-lesser",
+    "name": "Cooling Elixir (Lesser)",
+    "level": 4,
+    "price": {
+     "gp": 15
+    }
+   },
+   {
+    "id": "cooling-elixir-moderate",
+    "name": "Cooling Elixir (Moderate)",
+    "level": 12,
+    "price": {
+     "gp": 320
+    }
+   },
+   {
+    "id": "cooling-elixir-greater",
+    "name": "Cooling Elixir (Greater)",
+    "level": 16,
+    "price": {
+     "gp": 1400
+    }
+   }
+  ],
+  "text": "Cooling Elixir Source Player Core 2 pg. 287 Usage held in 1 hand Bulk L Activate (manipulate) This elixir is made to help you withstand extreme environments. For 24 hours, you're protected from the effects of severe heat. Cooling Elixir (Lesser) Source Player Core 2 pg. 287 Price 15 gp Bulk L Cooling Elixir (Moderate) Source Player Core 2 pg. 287 Price 320 gp Bulk L You’re also protected from extreme heat. Cooling Elixir (Greater) Source Player Core 2 pg. 287 Price 1,400 gp Bulk L You’re also protected from extreme and incredible heat."
+ },
+ {
+  "id": "cotton",
+  "name": "Cotton",
+  "itemType": "equipment",
+  "level": 0,
+  "kin": [
+   {
+    "id": "cotton-1-bulk",
+    "name": "Cotton (1 Bulk)",
+    "level": 0,
+    "price": {
+     "gp": 2
+    }
+   },
+   {
+    "id": "cotton-bale",
+    "name": "Cotton (Bale)",
+    "level": 0,
+    "price": {
+     "gp": 100
+    }
+   }
+  ],
+  "text": "Cotton Source Travel Guide pg. 36 Cotton (1 Bulk) Source Travel Guide pg. 36 Price 2 gp Cotton (Bale) Source Travel Guide pg. 36 Price 100 gp"
+ },
+ {
+  "id": "counterfeit-item",
+  "name": "Counterfeit Item",
+  "itemType": "equipment",
+  "level": 0,
+  "kin": [
+   {
+    "id": "counterfeit-item-low-grade",
+    "name": "Counterfeit Item (Low-Grade)",
+    "level": 0,
+    "price": null
+   },
+   {
+    "id": "counterfeit-item-medium-grade",
+    "name": "Counterfeit Item (Medium-Grade)",
+    "level": 0,
+    "price": null
+   },
+   {
+    "id": "counterfeit-item-high-grade",
+    "name": "Counterfeit Item (High-Grade)",
+    "level": 0,
+    "price": null
+   }
+  ],
+  "text": "Counterfeit Item Source Dark Archives (Remastered) pg. 84 Many secret societies dabble in ancient lore and rare antiquities. If one were to ask what their greatest challenge is, instead of evading police attention or dealing with the occasional mystic curse, most members would say it's separating counterfeit goods from real ones. Almost anything can be counterfeited, and counterfeiting is a major criminal enterprise with its own tricks, techniques, and intricacies. Some counterfeiters specialize in the production of adulterated coinage, while others produce beautiful legal documents with forged signatures and stolen stamps. Another class of forger produces artwork in the style of some great master, while ancient relics can be churned out by the dozen in subterranean workshops. You can hire a counterfeiter to create low-grade, medium-grade, or high-grade counterfeit goods. In all cases, t"
+ },
+ {
+  "id": "crackling-bubble-gum",
+  "name": "Crackling Bubble Gum",
+  "itemType": "equipment",
+  "level": 5,
+  "kin": [
+   {
+    "id": "crackling-bubble-gum-lesser",
+    "name": "Crackling Bubble Gum (Lesser)",
+    "level": 5,
+    "price": {
+     "gp": 30
+    }
+   },
+   {
+    "id": "crackling-bubble-gum-moderate",
+    "name": "Crackling Bubble Gum (Moderate)",
+    "level": 9,
+    "price": {
+     "gp": 150
+    }
+   },
+   {
+    "id": "crackling-bubble-gum-greater",
+    "name": "Crackling Bubble Gum (Greater)",
+    "level": 13,
+    "price": {
+     "gp": 450
+    }
+   },
+   {
+    "id": "crackling-bubble-gum-major",
+    "name": "Crackling Bubble Gum (Major)",
+    "level": 15,
+    "price": {
+     "gp": 1000
+    }
+   }
+  ],
+  "text": "Crackling Bubble Gum Source Treasure Vault (Remastered) pg. 47 Usage held in 1 hand This tangy gum cracks and pops in your mouth as you chew it. While you're chewing crackling bubble gum, for up to 10 minutes, you have an item bonus to saving throws against auditory and sonic effects. Secondary Effect (sonic) Effect You blow a bubble with the gum until it pops, after which it becomes inert. The pop deals sonic damage to all creatures in a 15-foot cone with a basic Fortitude save. A creature that fails its save is also bound with sticky gum, taking a –10-foot item penalty to its Speed for 1 minute. The creature can remove the gum with a total of 3 Interact actions. These actions don't have to be consecutive, and other creatures can provide the actions as well. Crackling Bubble Gum (Lesser) Source Treasure Vault (Remastered) pg. 47 Price 30 gp The item bonus is +1, the damage is 4d4, and t"
+ },
+ {
+  "id": "crimson-godsblood-serum",
+  "name": "Crimson Godsblood Serum",
+  "itemType": "consumable",
+  "level": 6,
+  "kin": [
+   {
+    "id": "crimson-godsblood-serum-greater",
+    "name": "Crimson Godsblood Serum (Greater)",
+    "level": 18,
+    "price": {
+     "gp": 5000
+    }
+   },
+   {
+    "id": "crimson-godsblood-serum-lesser",
+    "name": "Crimson Godsblood Serum (Lesser)",
+    "level": 6,
+    "price": {
+     "gp": 50
+    }
+   },
+   {
+    "id": "crimson-godsblood-serum-moderate",
+    "name": "Crimson Godsblood Serum (Moderate)",
+    "level": 12,
+    "price": {
+     "gp": 400
+    }
+   }
+  ],
+  "text": "Crimson Godsblood Serum Source Shining Kingdoms pg. 52 Usage held in 1 hand Bulk L Activate (manipulate) Though it contains but a tiny drop of Gorum’s blood, drinking this thick, swirling potion fills the user with divine wrath and resilience. While under the effect of the potion, you gain a status bonus to physical damage rolls for 1 minute. The first time during that minute you’re reduced to 0 Hit Points but not immediately killed, you avoid being knocked out, regain the listed amount of Hit Points, and become confused for 1 round, and your wounded condition increases by 1. Lesser Crimson Godsblood Serum Source Shining Kingdoms pg. 52 Price 50 gp The potion grants a +2 status bonus and restores 2d8+5 Hit Points. Moderate Crimson Godsblood Serum Source Shining Kingdoms pg. 52 Price 400 gp The potion grants a +3 status bonus and restores 3d8+10 Hit Points. Greater Crimson Godsblood Serum"
+ },
+ {
+  "id": "cryomister",
+  "name": "Cryomister",
+  "itemType": "consumable",
+  "level": 1,
+  "kin": [
+   {
+    "id": "cryomister-lesser",
+    "name": "Cryomister (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 3
+    }
+   },
+   {
+    "id": "cryomister-moderate",
+    "name": "Cryomister (Moderate)",
+    "level": 5,
+    "price": {
+     "gp": 25
+    }
+   },
+   {
+    "id": "cryomister-greater",
+    "name": "Cryomister (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 250
+    }
+   },
+   {
+    "id": "cryomister-major",
+    "name": "Cryomister (Major)",
+    "level": 17,
+    "price": {
+     "gp": 2500
+    }
+   }
+  ],
+  "text": "Cryomister Source Guns & Gears (Remastered) pg. 68 PFS Note All Pathfinder Society agents have access to all uncommon clockwork items and gadgets from Chapters 1 and 2 of this book Usage held in 1 hand Bulk L Access Due to the use of technology, all gadgets are uncommon or rare, though inventors and regions with access to inventors have access to uncommon gadgets. Activate Interact When you Activate a cryomister, you can either place it in an adjacent square or toss it up to 20 feet away. Once you've done so, the metallic device instantly disperses a heavy mist, settling quickly on nearby flat surfaces and forming a sheet of ice. The cryomister creates a burst with a radius depending on the type, making the affected area difficult terrain for 1 minute; at the GM's discretion, however, this duration might be reduced in unusually hot conditions or increased in unusually cold ones. If an af"
+ },
+ {
+  "id": "crystal-ball",
+  "name": "Crystal Ball",
+  "itemType": "equipment",
+  "level": 14,
+  "kin": [
+   {
+    "id": "crystal-ball-clear-quartz",
+    "name": "Crystal Ball (Clear Quartz)",
+    "level": 14,
+    "price": {
+     "gp": 3800
+    }
+   },
+   {
+    "id": "crystal-ball-selenite",
+    "name": "Crystal Ball (Selenite)",
+    "level": 15,
+    "price": {
+     "gp": 7000
+    }
+   },
+   {
+    "id": "crystal-ball-moonstone",
+    "name": "Crystal Ball (Moonstone)",
+    "level": 16,
+    "price": {
+     "gp": 7500
+    }
+   },
+   {
+    "id": "crystal-ball-peridot",
+    "name": "Crystal Ball (Peridot)",
+    "level": 17,
+    "price": {
+     "gp": 12500
+    }
+   },
+   {
+    "id": "crystal-ball-obsidian",
+    "name": "Crystal Ball (Obsidian)",
+    "level": 19,
+    "price": {
+     "gp": 32000
+    }
+   }
+  ],
+  "text": "Crystal Ball Source GM Core pg. 273 Usage held in 1 hand Bulk L This polished crystal sphere enhances scrying magic. Any visual information received through a spell with the scrying trait that was cast by the crystal ball appears within the sphere, and any auditory information sounds out from the surface of the sphere. When you cast a spell with the scrying trait by any other means while holding the sphere, you can relay any information you receive in the same way, allowing others to see or hear the target. The base version of a crystal ball is a sphere of clear quartz, but other versions are made of different stones. Activate—Clairvoyance 1 minute (concentrate, manipulate) Frequency once per hour; Effect The crystal ball casts clairvoyance to your specifications. Activate—Scrying 10 minutes (concentrate, manipulate) Frequency twice per day; Effect The crystal ball casts a DC 33 scrying "
+ },
+ {
+  "id": "crystal-shards",
+  "name": "Crystal Shards",
+  "itemType": "equipment",
+  "level": 4,
+  "kin": [
+   {
+    "id": "crystal-shards-moderate",
+    "name": "Crystal Shards (Moderate)",
+    "level": 4,
+    "price": {
+     "gp": 16
+    }
+   },
+   {
+    "id": "crystal-shards-greater",
+    "name": "Crystal Shards (Greater)",
+    "level": 12,
+    "price": {
+     "gp": 350
+    }
+   },
+   {
+    "id": "crystal-shards-major",
+    "name": "Crystal Shards (Major)",
+    "level": 18,
+    "price": {
+     "gp": 4000
+    }
+   }
+  ],
+  "text": "Crystal Shards Source Player Core 2 pg. 284 Usage held in 1 hand Bulk L Activate Strike This flask holds a pressurized red-brown gas flecked with bits of sublimated crystal. You gain the listed item bonus to attack rolls. When the bomb explodes, it deals the listed piercing damage and piercing splash damage as the mixture suddenly turns into solid crystals flying at high speeds. On a hit, the target takes 1 persistent bleed damage from the crystals embedded in its flesh. As long as the bleed damage persists, the target also takes a –5-foot penalty to its speed. The target can spend an Interact action to remove the crystals, reducing the DC to stop the bleeding. Crystal Shards (Moderate) Source Player Core 2 pg. 284, Advanced Player's Guide pg. 252 Price 16 gp Bulk L The item bonus is +1. The bomb deals 2d4 piercing damage and 4 piercing splash damage. Crystal Shards (Greater) Source Play"
+ },
+ {
+  "id": "cyrusian-wand",
+  "name": "Cyrusian Wand",
+  "itemType": "equipment",
+  "level": 4,
+  "kin": [
+   {
+    "id": "cyrusian-wand-1st-rank-spell",
+    "name": "Cyrusian Wand (1st-rank Spell)",
+    "level": 4,
+    "price": {
+     "gp": 100
+    }
+   },
+   {
+    "id": "cyrusian-wand-2nd-rank-spell",
+    "name": "Cyrusian Wand (2nd-rank Spell)",
+    "level": 6,
+    "price": {
+     "gp": 250
+    }
+   },
+   {
+    "id": "cyrusian-wand-3rd-rank-spell",
+    "name": "Cyrusian Wand (3rd-rank Spell)",
+    "level": 8,
+    "price": {
+     "gp": 500
+    }
+   },
+   {
+    "id": "cyrusian-wand-4th-rank-spell",
+    "name": "Cyrusian Wand (4th-rank Spell)",
+    "level": 10,
+    "price": {
+     "gp": 1000
+    }
+   },
+   {
+    "id": "cyrusian-wand-5th-rank-spell",
+    "name": "Cyrusian Wand (5th-rank Spell)",
+    "level": 12,
+    "price": {
+     "gp": 2000
+    }
+   },
+   {
+    "id": "cyrusian-wand-6th-rank-spell",
+    "name": "Cyrusian Wand (6th-rank Spell)",
+    "level": 14,
+    "price": {
+     "gp": 4500
+    }
+   },
+   {
+    "id": "cyrusian-wand-7th-rank-spell",
+    "name": "Cyrusian Wand (7th-rank Spell)",
+    "level": 16,
+    "price": {
+     "gp": 10000
+    }
+   },
+   {
+    "id": "cyrusian-wand-8th-rank-spell",
+    "name": "Cyrusian Wand (8th-rank Spell)",
+    "level": 18,
+    "price": {
+     "gp": 24000
+    }
+   },
+   {
+    "id": "cyrusian-wand-9th-rank-spell",
+    "name": "Cyrusian Wand (9th-rank Spell)",
+    "level": 20,
+    "price": {
+     "gp": 70000
+    }
+   }
+  ],
+  "text": "Cyrusian Wand May contain spoilers from Revenge of the Runelords Source Pathfinder Adventure Path #219: Lord of the Trinity Star pg. 70 Usage held in 1 hand Bulk L Runelord Xanderghul often crafted Cyrusian wands to bolster his access to his favorite illusion spells. All Cyrusian wands look different but equally audacious in their coloration, shape, and glittering gemstone adornments. A Cyrusian wand only ever contains an arcane spell with the illusion trait. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You Cast the Spell at the indicated rank. If you spend 1 Mythic Point as part of this activation, resolve the spell’s effects at mythic proficiency. Activate—Presume Success ; Frequency once per day; Trigger You fail the DC 10 flat check when you overcharge the wand; Effect You disbelieve your failure, willing the check to success. Spend 1 Mythic Point and reroll"
+ },
+ {
+  "id": "darkvision-elixir",
+  "name": "Darkvision Elixir",
+  "itemType": "equipment",
+  "level": 2,
+  "kin": [
+   {
+    "id": "darkvision-elixir-lesser",
+    "name": "Darkvision Elixir (Lesser)",
+    "level": 2,
+    "price": {
+     "gp": 6
+    }
+   },
+   {
+    "id": "darkvision-elixir-moderate",
+    "name": "Darkvision Elixir (Moderate)",
+    "level": 4,
+    "price": {
+     "gp": 11
+    }
+   },
+   {
+    "id": "darkvision-elixir-greater",
+    "name": "Darkvision Elixir (Greater)",
+    "level": 8,
+    "price": {
+     "gp": 90
+    }
+   }
+  ],
+  "text": "Darkvision Elixir Source Player Core 2 pg. 287, GM Core pg. 246 Usage held in 1 hand Bulk L Activate (manipulate) After you drink this elixir, your sight becomes sharper in darkness. You gain darkvision for the listed duration. Darkvision Elixir (Lesser) Source Player Core 2 pg. 287, GM Core pg. 246, Core Rulebook pg. 547 Price 6 gp Bulk L The duration is 10 minutes. Darkvision Elixir (Moderate) Source Player Core 2 pg. 287, GM Core pg. 246, Core Rulebook pg. 547 Price 11 gp Bulk L The duration is 1 hour. Darkvision Elixir (Greater) Source Player Core 2 pg. 287, GM Core pg. 246, Core Rulebook pg. 547 Price 90 gp Bulk L The duration is 24 hours."
+ },
+ {
+  "id": "dawnsilver",
+  "name": "Dawnsilver",
+  "itemType": "equipment",
+  "level": 8,
+  "kin": [
+   {
+    "id": "dawnsilver-armor",
+    "name": "Dawnsilver Armor",
+    "level": 12,
+    "price": null
+   },
+   {
+    "id": "dawnsilver-armor-standard-grade",
+    "name": "Dawnsilver Armor (Standard-Grade)",
+    "level": 12,
+    "price": {
+     "gp": 1600
+    }
+   },
+   {
+    "id": "dawnsilver-armor-high-grade",
+    "name": "Dawnsilver Armor (High-Grade)",
+    "level": 19,
+    "price": {
+     "gp": 32000
+    }
+   },
+   {
+    "id": "dawnsilver-shield",
+    "name": "Dawnsilver Shield",
+    "level": 8,
+    "price": null
+   },
+   {
+    "id": "dawnsilver-buckler-standard-grade",
+    "name": "Dawnsilver Buckler (Standard-Grade)",
+    "level": 8,
+    "price": {
+     "gp": 400
+    }
+   },
+   {
+    "id": "dawnsilver-shield-standard-grade",
+    "name": "Dawnsilver Shield (Standard-Grade)",
+    "level": 8,
+    "price": {
+     "gp": 440
+    }
+   },
+   {
+    "id": "dawnsilver-buckler-high-grade",
+    "name": "Dawnsilver Buckler (High-Grade)",
+    "level": 16,
+    "price": {
+     "gp": 8000
+    }
+   },
+   {
+    "id": "dawnsilver-shield-high-grade",
+    "name": "Dawnsilver Shield (High-Grade)",
+    "level": 16,
+    "price": {
+     "gp": 8800
+    }
+   },
+   {
+    "id": "dawnsilver-weapon",
+    "name": "Dawnsilver Weapon",
+    "level": 11,
+    "price": null
+   },
+   {
+    "id": "dawnsilver-weapon-standard-grade",
+    "name": "Dawnsilver Weapon (Standard-Grade)",
+    "level": 11,
+    "price": {
+     "gp": 1400
+    }
+   },
+   {
+    "id": "dawnsilver-weapon-high-grade",
+    "name": "Dawnsilver Weapon (High-Grade)",
+    "level": 17,
+    "price": {
+     "gp": 13500
+    }
+   },
+   {
+    "id": "dawnsilver-chunk",
+    "name": "Dawnsilver Chunk",
+    "level": 8,
+    "price": {
+     "gp": 500
+    }
+   },
+   {
+    "id": "dawnsilver-ingot",
+    "name": "Dawnsilver Ingot",
+    "level": 8,
+    "price": {
+     "gp": 5000
+    }
+   },
+   {
+    "id": "dawnsilver-object-standard-grade",
+    "name": "Dawnsilver Object (Standard-Grade)",
+    "level": 8,
+    "price": {
+     "gp": 350
+    }
+   },
+   {
+    "id": "dawnsilver-object-high-grade",
+    "name": "Dawnsilver Object (High-Grade)",
+    "level": 16,
+    "price": {
+     "gp": 6000
+    }
+   },
+   {
+    "id": "dawnsilver-tree",
+    "name": "Dawnsilver Tree",
+    "level": 0,
+    "price": {
+     "gp": 7
+    }
+   }
+  ],
+  "text": "Dawnsilver Source GM Core pg. 253 Dawnsilver is renowned for its lightness, durability, and effectiveness against a range of creatures including devils and werecreatures. It has the same sheen as silver but a slightly lighter hue. Dawnsilver weapons and armor are treated as if they were silver for the purpose of damaging creatures with weakness to silver. A metal item made of dawnsilver is lighter than one made of iron or steel: the item's Bulk is reduced by 1 (reduced to light Bulk if its normal Bulk is 1, with no effect on an item that normally has light Bulk). The Price of an item made of this material is based on the item's normal Bulk, not its reduced Bulk for being made of dawnsilver, but reduce the Bulk before making any further Bulk adjustments for the size of the item. Dawnsilver Dawnsilver Items Hardness HP BT Thin Items Standard-grade 5 20 10 High-grade 8 32 16 Items Standard-"
+ },
+ {
+  "id": "dawnsilver-armor",
+  "name": "Dawnsilver Armor",
+  "itemType": "equipment",
+  "level": 12,
+  "kin": [
+   {
+    "id": "dawnsilver-armor-standard-grade",
+    "name": "Dawnsilver Armor (Standard-Grade)",
+    "level": 12,
+    "price": {
+     "gp": 1600
+    }
+   },
+   {
+    "id": "dawnsilver-armor-high-grade",
+    "name": "Dawnsilver Armor (High-Grade)",
+    "level": 19,
+    "price": {
+     "gp": 32000
+    }
+   }
+  ],
+  "text": "Dawnsilver Armor Source GM Core pg. 228 Usage worn armor Bulk varies by armor Base Material Dawnsilver Dawnsilver armor is 1 Bulk lighter than normal (or light Bulk if its normal Bulk is 1, with no effect on armor that normally has light Bulk). It’s easier to wear than normal metal armor, reducing the Strength modifier necessary to ignore its check penalty by 1 and reducing its Speed penalty by 5 feet. Dawnsilver Armor (Standard-Grade) Source GM Core pg. 228 Price 1,600 gp (+160 gp per Bulk) The initial raw materials must include dawnsilver worth at least 200 gp + 20 gp per Bulk. Dawnsilver Armor (High-Grade) Source GM Core pg. 228 Price 32,000 gp (+3,200 gp per Bulk) The initial raw materials must include dawnsilver worth at least 16,000 gp + 1,600 gp per Bulk."
+ },
+ {
+  "id": "dawnsilver-shield",
+  "name": "Dawnsilver Shield",
+  "itemType": "equipment",
+  "level": 8,
+  "kin": [
+   {
+    "id": "dawnsilver-shield-standard-grade",
+    "name": "Dawnsilver Shield (Standard-Grade)",
+    "level": 8,
+    "price": {
+     "gp": 440
+    }
+   },
+   {
+    "id": "dawnsilver-shield-high-grade",
+    "name": "Dawnsilver Shield (High-Grade)",
+    "level": 16,
+    "price": {
+     "gp": 8800
+    }
+   }
+  ],
+  "text": "Dawnsilver Shield Source GM Core pg. 233 Usage varies by shield Base Material Dawnsilver Dawnsilver shields are 1 Bulk lighter than normal (or light Bulk if their normal Bulk is 1, with no effect on a shield that normally has light Bulk). When used for a shield bash, they're treated as silver weapons. Dawnsilver Buckler (Standard-Grade) Source GM Core pg. 233 Price 400 gp Bulk L The shield has Hardness 3, HP 12, and BT 6. Craft Requirements dawn silver worth at least 50 gp Dawnsilver Shield (Standard-Grade) Source GM Core pg. 233 Price 440 gp Bulk L The shield has Hardness 5, HP 20, and BT 10. Craft Requirements dawnsilver worth at least 55 gp Dawnsilver Buckler (High-Grade) Source GM Core pg. 233 Price 8,000 gp Bulk L The shield has Hardness 6, HP 24, and BT 12. Craft Requirements dawnsilver worth at least 4,000 gp Dawnsilver Shield (High-Grade) Source GM Core pg. 233 Price 8,800 gp Bul"
+ },
+ {
+  "id": "dawnsilver-weapon",
+  "name": "Dawnsilver Weapon",
+  "itemType": "equipment",
+  "level": 11,
+  "kin": [
+   {
+    "id": "dawnsilver-weapon-standard-grade",
+    "name": "Dawnsilver Weapon (Standard-Grade)",
+    "level": 11,
+    "price": {
+     "gp": 1400
+    }
+   },
+   {
+    "id": "dawnsilver-weapon-high-grade",
+    "name": "Dawnsilver Weapon (High-Grade)",
+    "level": 17,
+    "price": {
+     "gp": 13500
+    }
+   }
+  ],
+  "text": "Dawnsilver Weapon Source GM Core pg. 240 Usage varies by weapon Bulk varies by weapon Base Material Dawnsilver Dawnsilver weapons are slightly lighter than silver. A dawnsilver weapon is 1 Bulk lighter than normal (or light Bulk if its normal Bulk is 1, with no effect on a weapon that normally has light Bulk). Dawnsilver Weapon (Standard-Grade) Source GM Core pg. 240 Price 1,400 gp (+140 gp per Bulk) Craft Requirements at least 175 gp of dawnsilver + 17.5 gp per Bulk Dawnsilver Weapon (High-Grade) Source GM Core pg. 240 Price 13,500 gp (+1350 gp per Bulk) Craft Requirements at least 6,750 gp of dawnsilver + 675 gp per Bulk"
+ },
+ {
+  "id": "deadweight-mutagen",
+  "name": "Deadweight Mutagen",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "deadweight-mutagen-lesser",
+    "name": "Deadweight Mutagen (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 3
+    }
+   },
+   {
+    "id": "deadweight-mutagen-moderate",
+    "name": "Deadweight Mutagen (Moderate)",
+    "level": 3,
+    "price": {
+     "gp": 12
+    }
+   },
+   {
+    "id": "deadweight-mutagen-greater",
+    "name": "Deadweight Mutagen (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 300
+    }
+   },
+   {
+    "id": "deadweight-mutagen-major",
+    "name": "Deadweight Mutagen (Major)",
+    "level": 17,
+    "price": {
+     "gp": 3000
+    }
+   }
+  ],
+  "text": "Deadweight Mutagen Source Treasure Vault (Remastered) pg. 59 Usage held in 1 hand Bulk L Activate (manipulate) Your joints loosen and bones thicken, making your body incredibly weighty and difficult to maneuver around. Benefit You gain an item bonus to Athletics checks to Shove and Trip, to your Fortitude and Reflex DCs against attempts to Shove or Trip you, and to saving throws against effects that attempt to force you to move or knock you prone. Drawback You gain the encumbered condition and can't remove it while under the effects of the mutagen. Deadweight Mutagen (Lesser) Source Treasure Vault (Remastered) pg. 59 Price 3 gp Bulk L The bonus is +1, and the duration is 1 minute. Deadweight Mutagen (Moderate) Source Treasure Vault (Remastered) pg. 59 Price 12 gp Bulk L The bonus is +2, and the duration is 10 minutes. Deadweight Mutagen (Greater) Source Treasure Vault (Remastered) pg. 59"
+ },
+ {
+  "id": "defoliation-bomb",
+  "name": "Defoliation Bomb",
+  "itemType": "equipment",
+  "level": 2,
+  "kin": [
+   {
+    "id": "defoliation-bomb-greater",
+    "name": "Defoliation Bomb (Greater)",
+    "level": 12,
+    "price": {
+     "gp": 350
+    }
+   },
+   {
+    "id": "defoliation-bomb-lesser",
+    "name": "Defoliation Bomb (Lesser)",
+    "level": 2,
+    "price": {
+     "gp": 7
+    }
+   },
+   {
+    "id": "defoliation-bomb-major",
+    "name": "Defoliation Bomb (Major)",
+    "level": 18,
+    "price": {
+     "gp": 3600
+    }
+   },
+   {
+    "id": "defoliation-bomb-moderate",
+    "name": "Defoliation Bomb (Moderate)",
+    "level": 4,
+    "price": {
+     "gp": 18
+    }
+   }
+  ],
+  "text": "Defoliation Bomb May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 77 Usage held in 1 hand Bulk L Activate Strike This brightly painted ceramic sphere contains chemicals that cause plants to wither and die. A defoliation bomb deals the listed void damage, persistent void damage, and splash damage to all plants in the area. Non-creature plants in the area immediately wither and die. Many types grant a bonus to attack rolls. Lesser Defoliation Bomb Source Pathfinder #202: Severed at the Root pg. 77 Price 7 gp The bomb deals 1d6 void damage, 1d4 persistent void damage, and 1 void splash damage. Moderate Defoliation Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 18 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d6 void damage, 2d4 persistent void damage, and 2 void splash damage. Greater Defoliation Bomb Source Pathfind"
+ },
+ {
+  "id": "demolition-fulu",
+  "name": "Demolition Fulu",
+  "itemType": "consumable",
+  "level": 3,
+  "kin": [
+   {
+    "id": "demolition-fulu-lesser",
+    "name": "Demolition Fulu (Lesser)",
+    "level": 3,
+    "price": {
+     "gp": 12
+    }
+   },
+   {
+    "id": "demolition-fulu-moderate",
+    "name": "Demolition Fulu (Moderate)",
+    "level": 11,
+    "price": {
+     "gp": 275
+    }
+   },
+   {
+    "id": "demolition-fulu-greater",
+    "name": "Demolition Fulu (Greater)",
+    "level": 17,
+    "price": {
+     "gp": 2750
+    }
+   }
+  ],
+  "text": "Demolition Fulu Source Treasure Vault (Remastered) pg. 76 Usage affixed to an object or structure A demolition fulu allows a saboteur or excavator to be far away from the scene when demolition happens. The fulu crumbles to ash over 5 minutes to 8 hours, as you determine when you place the fulu. Once the duration ends, the fulu lowers the Hardness of the object it's affixed to by an amount equal to the fulu's level and then deals the listed damage to the object. A demolition fulu serves as a hazard with a Stealth DC to detect it and Thievery DC to disable it according to its type. Demolition Fulu (Lesser) Source Treasure Vault (Remastered) pg. 76 Price 12 gp Sometimes called the moth fulu, good for destroying softer objects; 3d6 bludgeoning damage, DC 17. Demolition Fulu (Moderate) Source Treasure Vault (Remastered) pg. 76 Price 275 gp Sometimes called the termite fulu, good for destroyin"
+ },
+ {
+  "id": "demon-bone-tiles",
+  "name": "Demon Bone Tiles",
+  "itemType": "consumable",
+  "level": 2,
+  "kin": [
+   {
+    "id": "demon-bone-tiles-brimorak",
+    "name": "Demon Bone Tiles (Brimorak)",
+    "level": 5,
+    "price": {
+     "gp": 28
+    }
+   },
+   {
+    "id": "demon-bone-tiles-pusk",
+    "name": "Demon Bone Tiles (Pusk)",
+    "level": 2,
+    "price": {
+     "gp": 7
+    }
+   },
+   {
+    "id": "demon-bone-tiles-seraptis",
+    "name": "Demon Bone Tiles (Seraptis)",
+    "level": 15,
+    "price": {
+     "gp": 1200
+    }
+   }
+  ],
+  "text": "Demon Bone Tiles May contain spoilers from Convocation Source Rival Academies pg. 111 Usage held in 1 hand Bulk L Activate Cast a Spell (add 1 action) These bones from different types of demons can be used to form temporary barriers. When you crush the bone fragments and blow the resulting dust around yourself as you cast shield, the shield appears as a bone bulwark shaped like the demon’s face. When use Shield Block with the spell, the barrier explodes into many bone fragments. The shards cause persistent bleed damage to each creature adjacent to you that fails a Reflex save at the listed DC. This persistent bleed damage is unholy and can be stopped with an Interact action to remove the shards. Pusk Bone Tiles Source Rival Academies pg. 111 Price 7 gp The persistent bleed damage is 1d4, and the save DC is 16. Brimorak Bone Tiles Source Rival Academies pg. 111 Price 28 gp The persistent "
+ },
+ {
+  "id": "depth-charge",
+  "name": "Depth Charge",
+  "itemType": "consumable",
+  "level": 5,
+  "kin": [
+   {
+    "id": "depth-charge-i",
+    "name": "Depth Charge (I)",
+    "level": 5,
+    "price": {
+     "gp": 25
+    }
+   },
+   {
+    "id": "depth-charge-ii",
+    "name": "Depth Charge (II)",
+    "level": 7,
+    "price": {
+     "gp": 55
+    }
+   },
+   {
+    "id": "depth-charge-iii",
+    "name": "Depth Charge (III)",
+    "level": 10,
+    "price": {
+     "gp": 165
+    }
+   },
+   {
+    "id": "depth-charge-iv",
+    "name": "Depth Charge (IV)",
+    "level": 12,
+    "price": {
+     "gp": 330
+    }
+   },
+   {
+    "id": "depth-charge-v",
+    "name": "Depth Charge (V)",
+    "level": 14,
+    "price": {
+     "gp": 660
+    }
+   },
+   {
+    "id": "depth-charge-vi",
+    "name": "Depth Charge (VI)",
+    "level": 16,
+    "price": {
+     "gp": 1500
+    }
+   },
+   {
+    "id": "depth-charge-vii",
+    "name": "Depth Charge (VII)",
+    "level": 18,
+    "price": {
+     "gp": 3200
+    }
+   }
+  ],
+  "text": "Depth Charge Source Treasure Vault (Remastered) pg. 81 Ammunition any Carved with stylized images of water or aquatic life, depth charges that are fired underwater or at a submerged target function with their normal range increments and can hit no matter their normal damage type. This ammunition explodes if it hits a target underwater, dealing bludgeoning damage in a 20-foot burst (basic Fortitude save) according to its type. This burst doesn't extend out of the water. Depth Charge (I) Source Treasure Vault (Remastered) pg. 81 Price 25 gp This ammunition deals 3d6 bludgeoning damage with a DC of 20. Depth Charge (II) Source Treasure Vault (Remastered) pg. 81 Price 55 gp This ammunition deals 5d6 bludgeoning damage with a DC of 24. Depth Charge (III) Source Treasure Vault (Remastered) pg. 81 Price 165 gp This ammunition deals 7d6 bludgeoning damage with a DC of 28. Depth Charge (IV) Sourc"
+ },
+ {
+  "id": "diglys-oil-of-sympathy",
+  "name": "Digly's Oil of Sympathy",
+  "itemType": "consumable",
+  "level": 1,
+  "kin": [
+   {
+    "id": "diglys-oil-of-sympathy-minor",
+    "name": "Digly's Oil of Sympathy (Minor)",
+    "level": 1,
+    "price": {
+     "gp": 4
+    }
+   },
+   {
+    "id": "diglys-oil-of-sympathy-lesser",
+    "name": "Digly's Oil of Sympathy (Lesser)",
+    "level": 3,
+    "price": {
+     "gp": 12
+    }
+   },
+   {
+    "id": "diglys-oil-of-sympathy-moderate",
+    "name": "Digly's Oil of Sympathy (Moderate)",
+    "level": 6,
+    "price": {
+     "gp": 50
+    }
+   },
+   {
+    "id": "diglys-oil-of-sympathy-greater",
+    "name": "Digly's Oil of Sympathy (Greater)",
+    "level": 12,
+    "price": {
+     "gp": 400
+    }
+   },
+   {
+    "id": "diglys-oil-of-sympathy-major",
+    "name": "Digly's Oil of Sympathy (Major)",
+    "level": 18,
+    "price": {
+     "gp": 5000
+    }
+   }
+  ],
+  "text": "Digly's Oil of Sympathy Source NPC Core pg. 65 Usage held in 1 hand Bulk L Activate (manipulate) This thick, red liquid has a pungent—but not unpleasant—smell. You pour the oil onto a weapon when activating it. If the weapon has damaged a creature within the last 10 minutes, the most recent creature damaged by the weapon regains the listed number of Hit Points. The creature is then temporarily immune to Digly's oil of sympathy for 10 minutes. The magic relies on the malice behind the attack, so the weapon must have been used against an enemy of the attacker. In other words, someone can't voluntarily take damage from a friend's weapon, then heal from it—a fact that made it very difficult for Sir Kenelm Digly to test the oil during its development. Digly's Oil of Sympathy (Minor) Source NPC Core pg. 65 Price 40 gp Bulk L The oil restores 1d10 Hit Points. Digly's Oil of Sympathy (Lesser) So"
+ },
+ {
+  "id": "divers-gloves",
+  "name": "Diver's Gloves",
+  "itemType": "equipment",
+  "level": 4,
+  "kin": [
+   {
+    "id": "divers-gloves-lesser",
+    "name": "Diver's Gloves (Lesser)",
+    "level": 4,
+    "price": {
+     "gp": 85
+    }
+   },
+   {
+    "id": "divers-gloves-moderate",
+    "name": "Diver's Gloves (Moderate)",
+    "level": 9,
+    "price": {
+     "gp": 650
+    }
+   },
+   {
+    "id": "divers-gloves-greater",
+    "name": "Diver's Gloves (Greater)",
+    "level": 15,
+    "price": {
+     "gp": 6000
+    }
+   }
+  ],
+  "text": "Diver's Gloves Source Firebrands pg. 85 Usage worn gloves Bulk L Access Second-mark members of the Firebrands have access to this item. These black leather gloves fit snuggly, running up the length of your arm to your elbow. Each glove has an angular fin running along the outside edge of your arms, which forms a narrow triangle when your hands meet in a diving position. While wearing the gloves, you gain a +1 item bonus to Athletics checks to Swim. Activate envision; Trigger You would take damage from falling into water; Effect The gloves create a hydrodynamic barrier around you, dispersing the damage that would be done to you during a high dive. You take damage as if the fall were half the distance, to a minimum fall of 5 feet. You then Swim with the effects of a critical success for the check. Diver's Gloves (Lesser) Source Firebrands pg. 85 Price 85 gp Bulk L Diver's Gloves (Moderate)"
+ },
+ {
+  "id": "djezet",
+  "name": "Djezet",
+  "itemType": "equipment",
+  "level": 0,
+  "kin": [
+   {
+    "id": "djezet-mass",
+    "name": "Djezet Mass",
+    "level": 0,
+    "price": {
+     "gp": 600
+    }
+   },
+   {
+    "id": "djezet-alloy-ingot",
+    "name": "Djezet Alloy Ingot",
+    "level": 0,
+    "price": {
+     "gp": 6000
+    }
+   },
+   {
+    "id": "djezet-alloy-object-standard-grade",
+    "name": "Djezet Alloy Object (Standard-Grade)",
+    "level": 8,
+    "price": {
+     "gp": 400
+    }
+   },
+   {
+    "id": "djezet-alloy-object-high-grade",
+    "name": "Djezet Alloy Object (High-Grade)",
+    "level": 16,
+    "price": {
+     "gp": 7000
+    }
+   },
+   {
+    "id": "djezet-armor",
+    "name": "Djezet Armor",
+    "level": 12,
+    "price": null
+   },
+   {
+    "id": "djezet-armor-standard-grade",
+    "name": "Djezet Armor (Standard-Grade)",
+    "level": 12,
+    "price": {
+     "gp": 1800
+    }
+   },
+   {
+    "id": "djezet-armor-high-grade",
+    "name": "Djezet Armor (High-Grade)",
+    "level": 19,
+    "price": {
+     "gp": 35000
+    }
+   },
+   {
+    "id": "djezet-dose",
+    "name": "Djezet Dose",
+    "level": 13,
+    "price": {
+     "gp": 600
+    }
+   },
+   {
+    "id": "djezet-shield",
+    "name": "Djezet Shield",
+    "level": 9,
+    "price": null
+   },
+   {
+    "id": "djezet-buckler-standard-grade",
+    "name": "Djezet Buckler (Standard-Grade)",
+    "level": 9,
+    "price": {
+     "gp": 600
+    }
+   },
+   {
+    "id": "djezet-shield-standard-grade",
+    "name": "Djezet Shield (Standard-Grade)",
+    "level": 9,
+    "price": {
+     "gp": 660
+    }
+   },
+   {
+    "id": "djezet-buckler-high-grade",
+    "name": "Djezet Buckler (High-Grade)",
+    "level": 16,
+    "price": {
+     "gp": 8000
+    }
+   },
+   {
+    "id": "djezet-shield-high-grade",
+    "name": "Djezet Shield (High-Grade)",
+    "level": 16,
+    "price": {
+     "gp": 8800
+    }
+   },
+   {
+    "id": "djezet-weapon",
+    "name": "Djezet Weapon",
+    "level": 12,
+    "price": null
+   },
+   {
+    "id": "djezet-weapon-standard-grade",
+    "name": "Djezet Weapon (Standard-Grade)",
+    "level": 12,
+    "price": {
+     "gp": 1800
+    }
+   },
+   {
+    "id": "djezet-weapon-high-grade",
+    "name": "Djezet Weapon (High-Grade)",
+    "level": 18,
+    "price": {
+     "gp": 22000
+    }
+   }
+  ],
+  "text": "Djezet Source Grand Bazaar pg. 97 This rust red metal is liquid at room temperature, making it challenging for all but the most skilled metallurgists to craft with and earning it the name “quickiron” in some places. Djezet is also extremely reactive to magic, even in its solid, workable alloyed form. It glows when targeted by magic, and objects crafted with djezet alloys glow with scarlet striations, which lead some smiths to nickname it “tiger iron.” When targeted by spells, objects crafted from djezet alloys exhibit these glowing red markings that last for 1 round or the duration of the spell, whichever is longer. A djezet mass contains enough djezet to refine into up to two djezet doses. Djezet Alloy Djezet Alloy Items Hardness HP BT Thin Items Standard-grade 5 20 10 High-grade 8 32 16 Items Standard-grade 9 36 18 High-grade 12 48 24 Structures Standard-grade 18 72 36 High-grade 24 96"
+ },
+ {
+  "id": "djezet-armor",
+  "name": "Djezet Armor",
+  "itemType": "equipment",
+  "level": 12,
+  "kin": [
+   {
+    "id": "djezet-armor-standard-grade",
+    "name": "Djezet Armor (Standard-Grade)",
+    "level": 12,
+    "price": {
+     "gp": 1800
+    }
+   },
+   {
+    "id": "djezet-armor-high-grade",
+    "name": "Djezet Armor (High-Grade)",
+    "level": 19,
+    "price": {
+     "gp": 35000
+    }
+   }
+  ],
+  "text": "Djezet Armor Source Grand Bazaar pg. 98 Usage worn armor Bulk varies by armor Base Material Djezet Armor made of djezet alloy is easy to enchant. Transferring runes onto djezet armor from other armor waives the usual 1/10 cost to etch the rune. This benefit has no effect on the cost of the rune itself or on the cost to transfer a rune off djezet armor onto a non-djezet armor. High-grade djezet armor can be etched with an additional property rune (to a maximum of four instead of three for +3 armor). Djezet Armor (Standard-Grade) Source Grand Bazaar pg. 98 Price 1,800 gp (+180 gp per Bulk) Craft Requirements The initial raw materials must include at least 225 gp of djezet + 22.5 gp per Bulk. Djezet Armor (High-Grade) Source Grand Bazaar pg. 98 Price 35,000 gp (+3,500 gp per Bulk) Craft Requirements The initial raw materials must include at least 17,500 gp of djezet + 1,750 gp per Bulk."
+ },
+ {
+  "id": "djezet-shield",
+  "name": "Djezet Shield",
+  "itemType": "equipment",
+  "level": 9,
+  "kin": [
+   {
+    "id": "djezet-shield-standard-grade",
+    "name": "Djezet Shield (Standard-Grade)",
+    "level": 9,
+    "price": {
+     "gp": 660
+    }
+   },
+   {
+    "id": "djezet-shield-high-grade",
+    "name": "Djezet Shield (High-Grade)",
+    "level": 16,
+    "price": {
+     "gp": 8800
+    }
+   }
+  ],
+  "text": "Djezet Shield Source Grand Bazaar pg. 98 Usage varies by shield Base Material Djezet The burnished red faces of djezet-alloy shields attract effects made of pure magic. While you have a djezet shield Raised, you can use the Shield Block reaction when you would take energy damage in addition to the reaction's usual trigger. When taking energy damage from a spell, the shield's listed Hardness doubles. Djezet Buckler (Standard-Grade) Source Grand Bazaar pg. 98 Price 600 gp Bulk L The shield has Hardness 3, HP 12, and BT 6. Craft Requirements djezet worth at least 75 gp Djezet Shield (Standard-Grade) Source Grand Bazaar pg. 98 Price 660 gp Bulk 1 The shield has Hardness 5, HP 20, and BT 10. Craft Requirements djezet worth at least 82.5 gp Djezet Buckler (High-Grade) Source Grand Bazaar pg. 98 Price 8,000 gp Bulk L The shield has Hardness 6, HP 24, and BT 12. Craft Requirements djezet worth a"
+ },
+ {
+  "id": "djezet-weapon",
+  "name": "Djezet Weapon",
+  "itemType": "equipment",
+  "level": 12,
+  "kin": [
+   {
+    "id": "djezet-weapon-standard-grade",
+    "name": "Djezet Weapon (Standard-Grade)",
+    "level": 12,
+    "price": {
+     "gp": 1800
+    }
+   },
+   {
+    "id": "djezet-weapon-high-grade",
+    "name": "Djezet Weapon (High-Grade)",
+    "level": 18,
+    "price": {
+     "gp": 22000
+    }
+   }
+  ],
+  "text": "Djezet Weapon Source Grand Bazaar pg. 98 Usage varies by weapon Bulk varies by weapon Base Material Djezet The djezet in weapons absorbs magical power. Critical hits made with a djezet weapon against a prepared or spontaneous spellcaster cause the target to lose one prepared spell or one spontaneous spell slot unless the target succeeds at a Will save (DC 30 for standard-grade or DC 40 for high-grade). The spell is randomly selected from among the caster's highest three spell levels (and then from among the spells prepared in that level, for a prepared spellcaster). Djezet Weapon (Standard-Grade) Source Grand Bazaar pg. 98 Price 1,800 gp (+180 gp per Bulk) Craft Requirements at least 225 gp of djezet + 22.5 gp per Bulk Djezet Weapon (High-Grade) Source Grand Bazaar pg. 98 Price 22,000 gp (+2,200 gp per Bulk) Craft Requirements at least 11,000 gp of djezet + 1,100 gp per Bulk"
+ },
+ {
+  "id": "dr-ushernachts-astonishing-ink",
+  "name": "Dr. Ushernacht's Astonishing Ink",
+  "itemType": "equipment",
+  "level": 3,
+  "kin": [
+   {
+    "id": "dr-ushernachts-astonishing-ink-major",
+    "name": "Dr. Ushernacht's Astonishing Ink (Major)",
+    "level": 17,
+    "price": {
+     "gp": 2250
+    }
+   },
+   {
+    "id": "dr-ushernachts-astonishing-ink-minor",
+    "name": "Dr. Ushernacht's Astonishing Ink (Minor)",
+    "level": 3,
+    "price": {
+     "gp": 10
+    }
+   },
+   {
+    "id": "dr-ushernachts-astonishing-ink-moderate",
+    "name": "Dr. Ushernacht's Astonishing Ink (Moderate)",
+    "level": 10,
+    "price": {
+     "gp": 160
+    }
+   }
+  ],
+  "text": "Dr. Ushernacht's Astonishing Ink May contain spoilers from Convocation Source Rival Academies pg. 89 Usage held in 1 hand Bulk L Activate 10 minutes (manipulate) This syrupy ink smells organic and faintly spoiled. It’s tied to one of Ushernacht’s engines, created with a sample of the fluid from inside the engine. If the associated engine stops functioning, all ink linked with it can no longer be activated, including freshly created ink. When you write a question on a sheet of paper using the astonishing ink, handwriting scrawls over the paper after 10 minutes, answering with the knowledge it can draw from its engine. The astonishing ink has all Lore skills and attempts a Recall Knowledge check to answer the question using the listed bonus. At the GM’s discretion, the astonishing ink takes a –4 circumstance penalty to the check if the question relates to advice, emotions, opinions, or oth"
+ },
+ {
+  "id": "dragon-scute",
+  "name": "Dragon Scute",
+  "itemType": "consumable",
+  "level": 12,
+  "kin": [
+   {
+    "id": "dragon-scute-greater",
+    "name": "Dragon Scute (Greater)",
+    "level": 20,
+    "price": {
+     "gp": 14000
+    }
+   },
+   {
+    "id": "dragon-scute-lesser",
+    "name": "Dragon Scute (Lesser)",
+    "level": 12,
+    "price": {
+     "gp": 400
+    }
+   },
+   {
+    "id": "dragon-scute-moderate",
+    "name": "Dragon Scute (Moderate)",
+    "level": 16,
+    "price": {
+     "gp": 2000
+    }
+   }
+  ],
+  "text": "Dragon Scute Source Draconic Codex pg. 223 Usage held in 1 hand Bulk L The thick plates that form the strongest points in a dragon’s armor can be used as powerful defensive catalysts. Using one of these scales to cast mountain resilience causes the target’s skin to grow a thick layer of draconic scales. Instead of the spell’s normal effects, the target gains damage resistance based on the type and dragon’s tradition. Lesser Dragon Scute Source Draconic Codex pg. 223 Price 400 gp The scale can be used with mountain resilience of 6th rank or higher. Arcane resistance 5 against all damage from spells Divine resistance 10 to spirit, vitality, and void Occult resistance 10 to mental Primal resistance 7 to bludgeoning, piercing, slashing, and poison Moderate Dragon Scute Source Draconic Codex pg. 223 Price 2,000 gp The scale can be used with mountain resilience of 8th rank or higher. Arcane re"
+ },
+ {
+  "id": "dragonhide-armor",
+  "name": "Dragonhide Armor",
+  "itemType": "equipment",
+  "level": 12,
+  "kin": [
+   {
+    "id": "dragonhide-armor-standard-grade",
+    "name": "Dragonhide Armor (Standard-Grade)",
+    "level": 12,
+    "price": {
+     "gp": 1600
+    }
+   },
+   {
+    "id": "dragonhide-armor-high-grade",
+    "name": "Dragonhide Armor (High-Grade)",
+    "level": 19,
+    "price": {
+     "gp": 32000
+    }
+   }
+  ],
+  "text": "Dragonhide Armor Source Player Core 2 pg. 276 Usage worn armor Bulk L varies by armor Base Material Dragonhide Dragonhide armor is immune to one damage type based on the type of dragon it's made from. Wearing armor made from dragonhide also grants you a +1 circumstance bonus to your AC and saving throws against attacks and spells that deal the corresponding damage type. ## Dragon Tradition Damage Arcane Force Divine Spirit Occult Mental Primal Poison Dragonhide Armor (Standard-Grade) Source Player Core 2 pg. 276, Core Rulebook pg. 555 Price 1,600 gp (+160 gp per Bulk) Bulk L Craft Requirements The initial raw materials must include dragonhide worth at least 200 gp + 20 per Bulk Dragonhide Armor (High-Grade) Source Player Core 2 pg. 276, Core Rulebook pg. 555 Price 32,000 gp (+3,200 gp per Bulk) Bulk L Craft Requirements The initial raw materials must include dragonhide worth at least 16,"
+ },
+ {
+  "id": "dragonhide-shield",
+  "name": "Dragonhide Shield",
+  "itemType": "equipment",
+  "level": 8,
+  "kin": [
+   {
+    "id": "dragonhide-shield-standard-grade",
+    "name": "Dragonhide Shield (Standard-Grade)",
+    "level": 8,
+    "price": {
+     "gp": 440
+    }
+   },
+   {
+    "id": "dragonhide-shield-high-grade",
+    "name": "Dragonhide Shield (High-Grade)",
+    "level": 16,
+    "price": {
+     "gp": 8800
+    }
+   }
+  ],
+  "text": "Dragonhide Shield Source Player Core 2 pg. 277 Usage varies by shield Bulk L Base Material Dragonhide Dragonhide shields are each immune to one damage type based on the tradition associated with the dragon. ## Dragon Tradition Damage Arcane Force Divine Spirit Occult Mental Primal Poison Dragonhide Buckler (Standard-Grade) Source Player Core 2 pg. 277, Core Rulebook pg. 586 Price 400 gp Bulk L Craft Requirements dragonhide worth at least 50 gp Dragonhide Shield (Standard-Grade) Source Player Core 2 pg. 277, Core Rulebook pg. 586 Price 440 gp Bulk 1 Craft Requirements dragonhide worth at least 55 gpdragonhide worth at least 55 gp Dragonhide Buckler (High-Grade) Source Player Core 2 pg. 277, Core Rulebook pg. 586 Price 8,000 gp Bulk L Craft Requirements dragonhide worth at least 4,000 gp Dragonhide Shield (High-Grade) Source Player Core 2 pg. 277, Core Rulebook pg. 586 Price 8,800 gp Bulk "
+ },
+ {
+  "id": "dragons-breath",
+  "name": "Dragon's Breath",
+  "itemType": "equipment",
+  "level": 4,
+  "kin": [
+   {
+    "id": "dragons-breath-1st-level-spell",
+    "name": "Dragon's Breath (1st-Level Spell)",
+    "level": 4,
+    "price": {
+     "gp": 100
+    }
+   },
+   {
+    "id": "dragons-breath-2nd-level-spell",
+    "name": "Dragon's Breath (2nd-Level Spell)",
+    "level": 6,
+    "price": {
+     "gp": 250
+    }
+   },
+   {
+    "id": "dragons-breath-3rd-level-spell",
+    "name": "Dragon's Breath (3rd-Level Spell)",
+    "level": 8,
+    "price": {
+     "gp": 500
+    }
+   },
+   {
+    "id": "dragons-breath-4th-level-spell",
+    "name": "Dragon's Breath (4th-Level Spell)",
+    "level": 10,
+    "price": {
+     "gp": 1000
+    }
+   },
+   {
+    "id": "dragons-breath-5th-level-spell",
+    "name": "Dragon's Breath (5th-Level Spell)",
+    "level": 12,
+    "price": {
+     "gp": 2000
+    }
+   },
+   {
+    "id": "dragons-breath-6th-level-spell",
+    "name": "Dragon's Breath (6th-Level Spell)",
+    "level": 14,
+    "price": {
+     "gp": 4500
+    }
+   },
+   {
+    "id": "dragons-breath-7th-level-spell",
+    "name": "Dragon's Breath (7th-Level Spell)",
+    "level": 16,
+    "price": {
+     "gp": 10000
+    }
+   },
+   {
+    "id": "dragons-breath-8th-level-spell",
+    "name": "Dragon's Breath (8th-Level Spell)",
+    "level": 18,
+    "price": {
+     "gp": 24000
+    }
+   },
+   {
+    "id": "dragons-breath-9th-level-spell",
+    "name": "Dragon's Breath (9th-Level Spell)",
+    "level": 20,
+    "price": {
+     "gp": 70000
+    }
+   }
+  ],
+  "text": "Dragon's Breath Source Grand Bazaar pg. 88 Usage applied to dueling cape or shield This rune depicts a specific type of dragon, resizing after application to fit the surface of the item. Activate envision (metamagic) Requirements You're receiving a bonus to AC from your dragon's breath cape or shield; Effect If your next action is to Cast a Spell with an area of effect that deals the same type of damage as the depicted dragon's breath weapon, the spell gains the effects of the Widen Spell feat. The rune can only affect spells of a specific level or lower, determined by the type of rune. Dragon's Breath (1st-Level Spell) Source Grand Bazaar pg. 88 Price 100 gp Dragon's Breath (2nd-Level Spell) Source Grand Bazaar pg. 88 Price 250 gp Dragon's Breath (3rd-Level Spell) Source Grand Bazaar pg. 88 Price 500 gp Dragon's Breath (4th-Level Spell) Source Grand Bazaar pg. 88 Price 1,000 gp Dragon's"
+ },
+ {
+  "id": "drakeheart-mutagen",
+  "name": "Drakeheart Mutagen",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "drakeheart-mutagen-lesser",
+    "name": "Drakeheart Mutagen (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 4
+    }
+   },
+   {
+    "id": "drakeheart-mutagen-moderate",
+    "name": "Drakeheart Mutagen (Moderate)",
+    "level": 3,
+    "price": {
+     "gp": 12
+    }
+   },
+   {
+    "id": "drakeheart-mutagen-greater",
+    "name": "Drakeheart Mutagen (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 300
+    }
+   },
+   {
+    "id": "drakeheart-mutagen-major",
+    "name": "Drakeheart Mutagen (Major)",
+    "level": 17,
+    "price": {
+     "gp": 3000
+    }
+   }
+  ],
+  "text": "Drakeheart Mutagen Source Player Core 2 pg. 289 Usage held in 1 hand Bulk L Activate (manipulate) Your skin grows scales like a drake, and your eyesight become sharp and your pupils slitted, but your mind and reflexes slow. Benefit You gain the listed bonus to AC, a Dexterity cap of +2 (as usual, use your lowest Dexterity cap if you have more than one), and an item bonus to Perception checks. If you're wearing armor, you still calculate your proficiency bonus to AC based on your proficiency in the armor you're wearing, even if the drakeheart mutagen has a higher item bonus. You also gain the Final Surge action. Activate—Final Surge ; Effect You Stride twice. The drakeheart mutagen's duration ends. Drawback You take a –1 penalty to Will saves, Reflex saves, and all skill checks to Recall Knowledge. Drakeheart Mutagen (Lesser) Source Player Core 2 pg. 289, Advanced Player's Guide pg. 253 P"
+ },
+ {
+  "id": "dread",
+  "name": "Dread",
+  "itemType": "equipment",
+  "level": 6,
+  "kin": [
+   {
+    "id": "dread-lesser",
+    "name": "Dread (Lesser)",
+    "level": 6,
+    "price": {
+     "gp": 225
+    }
+   },
+   {
+    "id": "dread-moderate",
+    "name": "Dread (Moderate)",
+    "level": 12,
+    "price": {
+     "gp": 1800
+    }
+   },
+   {
+    "id": "dread-greater",
+    "name": "Dread (Greater)",
+    "level": 18,
+    "price": {
+     "gp": 21000
+    }
+   },
+   {
+    "id": "dread-helm",
+    "name": "Dread Helm",
+    "level": 4,
+    "price": {
+     "gp": 100
+    }
+   },
+   {
+    "id": "dread-ampoule",
+    "name": "Dread Ampoule",
+    "level": 1,
+    "price": null
+   },
+   {
+    "id": "dread-blindfold",
+    "name": "Dread Blindfold",
+    "level": 17,
+    "price": {
+     "gp": 15000
+    }
+   },
+   {
+    "id": "dread-ampoule-lesser",
+    "name": "Dread Ampoule (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 3
+    }
+   },
+   {
+    "id": "dread-ampoule-moderate",
+    "name": "Dread Ampoule (Moderate)",
+    "level": 3,
+    "price": {
+     "gp": 10
+    }
+   },
+   {
+    "id": "dread-ampoule-greater",
+    "name": "Dread Ampoule (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 300
+    }
+   },
+   {
+    "id": "dread-ampoule-major",
+    "name": "Dread Ampoule (Major)",
+    "level": 17,
+    "price": {
+     "gp": 3000
+    }
+   }
+  ],
+  "text": "Dread Source Grand Bazaar pg. 14 Usage etched onto armor Eerie symbols cover your armor, inspiring terror in your foes. Frightened enemies within 30 feet that can see you must attempt a DC 20 Will save at the end of their turn; on a failure, the value of their frightened condition doesn't decrease below 1 that turn. Dread (Lesser) Source Grand Bazaar pg. 14 Price 225 gp Dread (Moderate) Source Grand Bazaar pg. 14 Price 1,800 gp The DC is 29, and the value of affected enemies' frightened condition doesn't decrease below 2. Dread (Greater) Source Grand Bazaar pg. 14 Price 21,000 gp The DC is 38, and the value of affected enemies' frightened condition doesn't decrease, no matter the value."
+ },
+ {
+  "id": "dread-ampoule",
+  "name": "Dread Ampoule",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "dread-ampoule-lesser",
+    "name": "Dread Ampoule (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 3
+    }
+   },
+   {
+    "id": "dread-ampoule-moderate",
+    "name": "Dread Ampoule (Moderate)",
+    "level": 3,
+    "price": {
+     "gp": 10
+    }
+   },
+   {
+    "id": "dread-ampoule-greater",
+    "name": "Dread Ampoule (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 300
+    }
+   },
+   {
+    "id": "dread-ampoule-major",
+    "name": "Dread Ampoule (Major)",
+    "level": 17,
+    "price": {
+     "gp": 3000
+    }
+   }
+  ],
+  "text": "Dread Ampoule Source Player Core 2 pg. 285, GM Core pg. 245 Usage held in 1 hand Bulk L Activate Strike This flask is filled with a murky purple gas that briefly interferes with normal brain activity. A dread ampoule deals the listed mental damage and mental splash damage. On a hit, the target becomes frightened 1, or frightened 2 on a critical hit. Many types also grant an item bonus to attack rolls. Dread Ampoule (Lesser) Source Player Core 2 pg. 285, GM Core pg. 245, Advanced Player's Guide pg. 253 Price 3 gp Bulk L The bomb deals 1d6 mental damage and 1 mental splash damage. Dread Ampoule (Moderate) Source Player Core 2 pg. 285, GM Core pg. 245, Advanced Player's Guide pg. 253 Price 10 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d6 mental damage and 2 mental splash damage. Dread Ampoule (Greater) Source Player Core 2 pg. 285, GM Core pg. 245, Advanced Player's"
+ },
+ {
+  "id": "dreamweb",
+  "name": "Dreamweb",
+  "itemType": "equipment",
+  "level": 0,
+  "kin": [
+   {
+    "id": "dreamweb-bolt",
+    "name": "Dreamweb Bolt",
+    "level": 0,
+    "price": {
+     "gp": 50
+    }
+   },
+   {
+    "id": "dreamweb-object-standard-grade",
+    "name": "Dreamweb Object (Standard-Grade)",
+    "level": 5,
+    "price": {
+     "gp": 150
+    }
+   },
+   {
+    "id": "dreamweb-object-high-grade",
+    "name": "Dreamweb Object (High-Grade)",
+    "level": 14,
+    "price": {
+     "gp": 3000
+    }
+   }
+  ],
+  "text": "Dreamweb Source War of Immortals pg. 215 Made from the webs spun from the thorax of the Weaver of Webs herself, dreamweb offers a number of mystic benefits. Cloth items and rope made from dream web have Hardness 4 with 12 HP per inch and a break DC of 16. Light armor made from dream web is lighter than normal cloth or leather: the armor's Bulk is reduced by 1 (reduced to light Bulk if the armor's normal Bulk is 1, with no effect on an item that normally has light Bulk). Light armor made from dream web grants the wearer poison resistance equal to 3 plus the value of its armor potency rune. Dreamweb Dreamweb Items Hardness HP BT Thin Items Standard-grade 4 16 8 High-grade 7 28 14 Items Standard-grade 6 32 16 High-grade 9 44 22 Dreamweb Bolt Source War of Immortals pg. 215 Price 50 gp Dreamweb Object (Standard-Grade) Source War of Immortals pg. 215 Price 150 gp (per Bulk) Dreamweb Object (H"
+ },
+ {
+  "id": "durian-bomb",
+  "name": "Durian Bomb",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "durian-bomb-greater",
+    "name": "Durian Bomb (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 275
+    }
+   },
+   {
+    "id": "durian-bomb-lesser",
+    "name": "Durian Bomb (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 4
+    }
+   },
+   {
+    "id": "durian-bomb-major",
+    "name": "Durian Bomb (Major)",
+    "level": 17,
+    "price": {
+     "gp": 2750
+    }
+   },
+   {
+    "id": "durian-bomb-moderate",
+    "name": "Durian Bomb (Moderate)",
+    "level": 3,
+    "price": {
+     "gp": 12
+    }
+   }
+  ],
+  "text": "Durian Bomb May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 77 Usage held in 1 hand Bulk L Activate Strike Whereas a durian’s aroma ranges from pleasant to revolting depending on the person, a durian bomb is a fruit that’s been alchemically modified for maximum revulsion. Many types of this bomb grant an item bonus to attack rolls. On a successful Strike, a durian bomb deals the listed piercing damage to the target. Any creature hit by the bomb or in its splash area must attempt a Fortitude saving throw with a DC based on the bomb’s type. Creatures in the splash area treat the results of their saving throw as one step better. Creatures sickened by a durian bomb are unable to smell anything else while the sickened condition lasts, suppressing any scent special sense they might have. Once a creature is sickened by a durian bomb, they’re immune to "
+ },
+ {
+  "id": "duskwood",
+  "name": "Duskwood",
+  "itemType": "equipment",
+  "level": 8,
+  "kin": [
+   {
+    "id": "duskwood-armor",
+    "name": "Duskwood Armor",
+    "level": 12,
+    "price": null
+   },
+   {
+    "id": "duskwood-armor-standard-grade",
+    "name": "Duskwood Armor (Standard-Grade)",
+    "level": 12,
+    "price": {
+     "gp": 1600
+    }
+   },
+   {
+    "id": "duskwood-armor-high-grade",
+    "name": "Duskwood Armor (High-Grade)",
+    "level": 19,
+    "price": {
+     "gp": 32000
+    }
+   },
+   {
+    "id": "duskwood-shield",
+    "name": "Duskwood Shield",
+    "level": 8,
+    "price": null
+   },
+   {
+    "id": "duskwood-buckler-standard-grade",
+    "name": "Duskwood Buckler (Standard-Grade)",
+    "level": 8,
+    "price": {
+     "gp": 400
+    }
+   },
+   {
+    "id": "duskwood-shield-standard-grade",
+    "name": "Duskwood Shield (Standard-Grade)",
+    "level": 8,
+    "price": {
+     "gp": 440
+    }
+   },
+   {
+    "id": "duskwood-tower-shield-standard-grade",
+    "name": "Duskwood Tower Shield (Standard-Grade)",
+    "level": 8,
+    "price": {
+     "gp": 560
+    }
+   },
+   {
+    "id": "duskwood-buckler-high-grade",
+    "name": "Duskwood Buckler (High-Grade)",
+    "level": 16,
+    "price": {
+     "gp": 8000
+    }
+   },
+   {
+    "id": "duskwood-shield-high-grade",
+    "name": "Duskwood Shield (High-Grade)",
+    "level": 16,
+    "price": {
+     "gp": 8800
+    }
+   },
+   {
+    "id": "duskwood-tower-shield-high-grade",
+    "name": "Duskwood Tower Shield (High-Grade)",
+    "level": 16,
+    "price": {
+     "gp": 11200
+    }
+   },
+   {
+    "id": "duskwood-weapon",
+    "name": "Duskwood Weapon",
+    "level": 11,
+    "price": null
+   },
+   {
+    "id": "duskwood-weapon-standard-grade",
+    "name": "Duskwood Weapon (Standard-Grade)",
+    "level": 11,
+    "price": {
+     "gp": 1400
+    }
+   },
+   {
+    "id": "duskwood-weapon-high-grade",
+    "name": "Duskwood Weapon (High-Grade)",
+    "level": 17,
+    "price": {
+     "gp": 13500
+    }
+   },
+   {
+    "id": "duskwood-branch",
+    "name": "Duskwood Branch",
+    "level": 8,
+    "price": {
+     "gp": 500
+    }
+   },
+   {
+    "id": "duskwood-lumber",
+    "name": "Duskwood Lumber",
+    "level": 8,
+    "price": {
+     "gp": 5000
+    }
+   },
+   {
+    "id": "duskwood-object-standard-grade",
+    "name": "Duskwood Object (Standard-Grade)",
+    "level": 8,
+    "price": {
+     "gp": 350
+    }
+   },
+   {
+    "id": "duskwood-object-high-grade",
+    "name": "Duskwood Object (High-Grade)",
+    "level": 16,
+    "price": {
+     "gp": 6000
+    }
+   },
+   {
+    "id": "duskwood-violin-by-a-legend",
+    "name": "Duskwood violin by a legend",
+    "level": 0,
+    "price": {
+     "gp": 1000
+    }
+   }
+  ],
+  "text": "Duskwood Source GM Core pg. 254 Duskwood is a very lightweight wood found primarily in old-growth forests in south-central Avistan; it is dark as ebony but has a slight purple tint. A duskwood item's Bulk is reduced by 1 (or to light Bulk if its normal Bulk is 1, with no effect on an item that normally has light Bulk). The Price of an item made of duskwood is based on the item's normal Bulk, not its reduced Bulk for being made of duskwood, but reduce the Bulk before making any further Bulk adjustments for the size of the item. Duskwood Duskwood Items Hardness HP BT Thin Items Standard-grade 5 20 10 High-grade 8 32 16 Items Standard-grade 7 28 14 High-grade 10 40 20 Structure Standard-grade 14 56 28 High-grade 20 80 40 Material Uses Duskwood Armor Duskwood Shield Duskwood Weapon Duskwood Branch Source GM Core pg. 254 Price 500 gp Duskwood Lumber Source GM Core pg. 254 Price 5,000 gp Duskw"
+ },
+ {
+  "id": "duskwood-armor",
+  "name": "Duskwood Armor",
+  "itemType": "equipment",
+  "level": 12,
+  "kin": [
+   {
+    "id": "duskwood-armor-standard-grade",
+    "name": "Duskwood Armor (Standard-Grade)",
+    "level": 12,
+    "price": {
+     "gp": 1600
+    }
+   },
+   {
+    "id": "duskwood-armor-high-grade",
+    "name": "Duskwood Armor (High-Grade)",
+    "level": 19,
+    "price": {
+     "gp": 32000
+    }
+   }
+  ],
+  "text": "Duskwood Armor Source GM Core pg. 228 Usage worn armor Bulk varies by armor Base Material Duskwood Duskwood armor is 1 Bulk lighter than normal (or light Bulk if its normal Bulk is 1, with no effect on armor that normally has light Bulk). It’s easier to wear than normal wood armor, reducing the Strength modifier necessary to ignore its check penalty by 1 and reducing its Speed penalty by 5 feet. (There are no types of wood armor in this book.) Duskwood Armor (Standard-Grade) Source GM Core pg. 228 Price 1,600 gp (+160 gp per Bulk) The initial raw materials must include duskwood worth at least 200 gp + 20 gp per Bulk. Duskwood Armor (High-Grade) Source GM Core pg. 228 Price 32,000 gp (+3,200 gp per Bulk) The initial raw materials must include duskwood worth at least 16,000 gp + 1,600 gp per Bulk."
+ },
+ {
+  "id": "duskwood-shield",
+  "name": "Duskwood Shield",
+  "itemType": "equipment",
+  "level": 8,
+  "kin": [
+   {
+    "id": "duskwood-shield-standard-grade",
+    "name": "Duskwood Shield (Standard-Grade)",
+    "level": 8,
+    "price": {
+     "gp": 440
+    }
+   },
+   {
+    "id": "duskwood-shield-high-grade",
+    "name": "Duskwood Shield (High-Grade)",
+    "level": 16,
+    "price": {
+     "gp": 8800
+    }
+   }
+  ],
+  "text": "Duskwood Shield Source GM Core pg. 233 Usage varies by shield Base Material Duskwood Duskwood shields are 1 Bulk lighter than normal (or light Bulk if their normal Bulk is 1, with no effect on a shield that normally has light Bulk). Duskwood Buckler (Standard-Grade) Source GM Core pg. 233 Price 400 gp Bulk L The shield has Hardness 3, HP 12, and BT 6. Craft Requirements duskwood worth at least 50 gp Duskwood Shield (Standard-Grade) Source GM Core pg. 233 Price 440 gp Bulk L The shield has Hardness 5, HP 20, and BT 10. Craft Requirements duskwood worth at least 55 gp Duskwood Tower Shield (Standard-Grade) Source GM Core pg. 233 Price 560 gp Bulk 3 The shield has Hardness 5, HP 20, and BT 10. Craft Requirements duskwood worth at least 70 gp Duskwood Buckler (High-Grade) Source GM Core pg. 233 Price 8,000 gp Bulk L The shield has Hardness 6, HP 24, and BT 12. Craft Requirements duskwood wor"
+ },
+ {
+  "id": "duskwood-weapon",
+  "name": "Duskwood Weapon",
+  "itemType": "equipment",
+  "level": 11,
+  "kin": [
+   {
+    "id": "duskwood-weapon-standard-grade",
+    "name": "Duskwood Weapon (Standard-Grade)",
+    "level": 11,
+    "price": {
+     "gp": 1400
+    }
+   },
+   {
+    "id": "duskwood-weapon-high-grade",
+    "name": "Duskwood Weapon (High-Grade)",
+    "level": 17,
+    "price": {
+     "gp": 13500
+    }
+   }
+  ],
+  "text": "Duskwood Weapon Source GM Core pg. 240 Usage varies by weapon Bulk varies by weapon Base Material Duskwood Duskwood weapons are as dark as ebony, with a slight purple tint. A duskwood weapon's Bulk is reduced by 1 (or to light Bulk if its normal Bulk is 1, with no effect on a weapon that normally has light Bulk). Duskwood Weapon (Standard-Grade) Source GM Core pg. 240 Price 1,400 gp (+140 gp per Bulk) Craft Requirements at least 175 gp of duskwood + 17.5 gp per Bulk Duskwood Weapon (High-Grade) Source GM Core pg. 240 Price 13,500 gp (+1350 gp per Bulk) Craft Requirements at least 6,750 gp of duskwood + 675 gp per Bulk"
+ },
+ {
+  "id": "dwarven-daisy",
+  "name": "Dwarven Daisy",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "dwarven-daisy-lesser",
+    "name": "Dwarven Daisy (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 6
+    }
+   },
+   {
+    "id": "dwarven-daisy-moderate",
+    "name": "Dwarven Daisy (Moderate)",
+    "level": 3,
+    "price": {
+     "gp": 18
+    }
+   }
+  ],
+  "text": "Dwarven Daisy Source PFS Quest #5: The Dragon Who Stole Evoking Day pg. 14 Usage held in 1 hand Bulk L Activate Strike A dwarven daisy is a string of dozens of firecrackers that create tiny, loud explosions. The string ends with a short, wrapped fuse. Pulling off the wrapping in a quick motion lights the fuse and is done as part of the action to Strike. A dwarven daisy deals the listed fire damage and splash damage. A dwarven daisy also has a chance to dazzle its target. A creature struck by a dwarven daisy must succeed at a Fortitude save or become dazzled for 1 round. Dwarven Daisy (Lesser) Source PFS Quest #5: The Dragon Who Stole Evoking Day pg. 14 Price 6 gp The firework deals 1d6 fire damage and 1 fire splash damage. The DC is 16. Dwarven Daisy (Moderate) Source PFS Quest #5: The Dragon Who Stole Evoking Day pg. 14 Price 18 gp The firework deals 2d6 fire damage and 2 fire splash da"
+ },
+ {
+  "id": "eagle-eye-elixir",
+  "name": "Eagle-Eye Elixir",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "eagle-eye-elixir-lesser",
+    "name": "Eagle-Eye Elixir (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 4
+    }
+   },
+   {
+    "id": "eagle-eye-elixir-moderate",
+    "name": "Eagle-Eye Elixir (Moderate)",
+    "level": 5,
+    "price": {
+     "gp": 27
+    }
+   },
+   {
+    "id": "eagle-eye-elixir-greater",
+    "name": "Eagle-Eye Elixir (Greater)",
+    "level": 10,
+    "price": {
+     "gp": 200
+    }
+   },
+   {
+    "id": "eagle-eye-elixir-major",
+    "name": "Eagle-Eye Elixir (Major)",
+    "level": 16,
+    "price": {
+     "gp": 2000
+    }
+   }
+  ],
+  "text": "Eagle-Eye Elixir Source Player Core 2 pg. 287, GM Core pg. 247 Usage held in 1 hand Bulk L Activate (manipulate) After you drink this elixir, you notice subtle visual details. For the next hour, you gain an item bonus to Perception checks that's greater when attempting to find secret doors and traps. Eagle-Eye Elixir (Lesser) Source Player Core 2 pg. 287, GM Core pg. 247, Core Rulebook pg. 548 Price 4 gp Bulk L The bonus is +1, or +2 to find secret doors and traps. Eagle-Eye Elixir (Moderate) Source Player Core 2 pg. 287, GM Core pg. 247, Core Rulebook pg. 548 Price 27 gp Bulk L The bonus is +2, or +3 to find secret doors and traps. Eagle-Eye Elixir (Greater) Source Player Core 2 pg. 287, GM Core pg. 247, Core Rulebook pg. 548 Price 200 gp Bulk L The bonus is +3, or +4 to find secret doors and traps. Eagle-Eye Elixir (Major) Source Player Core 2 pg. 287, GM Core pg. 247, Core Rulebook pg"
+ },
+ {
+  "id": "elemental-ammunition",
+  "name": "Elemental Ammunition",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "elemental-ammunition-lesser",
+    "name": "Elemental Ammunition (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 3
+    }
+   },
+   {
+    "id": "elemental-ammunition-moderate",
+    "name": "Elemental Ammunition (Moderate)",
+    "level": 5,
+    "price": {
+     "gp": 21
+    }
+   },
+   {
+    "id": "elemental-ammunition-greater",
+    "name": "Elemental Ammunition (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 210
+    }
+   },
+   {
+    "id": "elemental-ammunition-greater-acid",
+    "name": "Elemental Ammunition (Greater, Acid)",
+    "level": 11,
+    "price": {
+     "gp": 210
+    }
+   },
+   {
+    "id": "elemental-ammunition-greater-cold",
+    "name": "Elemental Ammunition (Greater, Cold)",
+    "level": 11,
+    "price": {
+     "gp": 210
+    }
+   },
+   {
+    "id": "elemental-ammunition-greater-electricity",
+    "name": "Elemental Ammunition (Greater, Electricity)",
+    "level": 11,
+    "price": {
+     "gp": 210
+    }
+   },
+   {
+    "id": "elemental-ammunition-greater-fire",
+    "name": "Elemental Ammunition (Greater, Fire)",
+    "level": 11,
+    "price": {
+     "gp": 210
+    }
+   },
+   {
+    "id": "elemental-ammunition-greater-poison",
+    "name": "Elemental Ammunition (Greater, Poison)",
+    "level": 11,
+    "price": {
+     "gp": 210
+    }
+   },
+   {
+    "id": "elemental-ammunition-lesser-acid",
+    "name": "Elemental Ammunition (Lesser, Acid)",
+    "level": 1,
+    "price": {
+     "gp": 3
+    }
+   },
+   {
+    "id": "elemental-ammunition-lesser-cold",
+    "name": "Elemental Ammunition (Lesser, Cold)",
+    "level": 1,
+    "price": {
+     "gp": 3
+    }
+   },
+   {
+    "id": "elemental-ammunition-lesser-electricity",
+    "name": "Elemental Ammunition (Lesser, Electricity)",
+    "level": 1,
+    "price": {
+     "gp": 3
+    }
+   },
+   {
+    "id": "elemental-ammunition-lesser-fire",
+    "name": "Elemental Ammunition (Lesser, Fire)",
+    "level": 1,
+    "price": {
+     "gp": 3
+    }
+   },
+   {
+    "id": "elemental-ammunition-lesser-poison",
+    "name": "Elemental Ammunition (Lesser, Poison)",
+    "level": 1,
+    "price": {
+     "gp": 3
+    }
+   },
+   {
+    "id": "elemental-ammunition-moderate-acid",
+    "name": "Elemental Ammunition (Moderate, Acid)",
+    "level": 5,
+    "price": {
+     "gp": 21
+    }
+   },
+   {
+    "id": "elemental-ammunition-moderate-cold",
+    "name": "Elemental Ammunition (Moderate, Cold)",
+    "level": 5,
+    "price": {
+     "gp": 21
+    }
+   },
+   {
+    "id": "elemental-ammunition-moderate-electricity",
+    "name": "Elemental Ammunition (Moderate, Electricity)",
+    "level": 5,
+    "price": {
+     "gp": 21
+    }
+   },
+   {
+    "id": "elemental-ammunition-moderate-fire",
+    "name": "Elemental Ammunition (Moderate, Fire)",
+    "level": 5,
+    "price": {
+     "gp": 21
+    }
+   },
+   {
+    "id": "elemental-ammunition-moderate-poison",
+    "name": "Elemental Ammunition (Moderate, Poison)",
+    "level": 5,
+    "price": {
+     "gp": 21
+    }
+   }
+  ],
+  "text": "Elemental Ammunition Source Treasure Vault (Remastered) pg. 42 Ammunition any Activate (manipulate) When activated, the reservoir of alchemical reagents in elemental ammunition atomizes on impact, dealing persistent acid, cold, electricity, fire, or poison damage to the target and splash damage in addition to the damage the attack normally deals. Each damage type requires a different formula, and the ammunition gains a trait matching the damage type. Elemental Ammunition (Lesser) Source Treasure Vault (Remastered) pg. 42 Price 3 gp The ammunition deals 1 persistent damage and 1 splash damage. Elemental Ammunition (Moderate) Source Treasure Vault (Remastered) pg. 42 Price 21 gp The ammunition deals 2d4 persistent damage and 2 splash damage. Elemental Ammunition (Greater) Source Treasure Vault (Remastered) pg. 42 Price 210 gp The ammunition deals 3d4 persistent damage and 3 splash damage."
+ },
+ {
+  "id": "elixir-of-gender-transformation",
+  "name": "Elixir of Gender Transformation",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "elixir-of-gender-transformation-lesser",
+    "name": "Elixir of Gender Transformation (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 1
+    }
+   },
+   {
+    "id": "elixir-of-gender-transformation-moderate",
+    "name": "Elixir of Gender Transformation (Moderate)",
+    "level": 3,
+    "price": {
+     "gp": 8
+    }
+   },
+   {
+    "id": "elixir-of-gender-transformation-greater",
+    "name": "Elixir of Gender Transformation (Greater)",
+    "level": 6,
+    "price": {
+     "gp": 35
+    }
+   }
+  ],
+  "text": "Elixir of Gender Transformation Source Player Core 2 pg. 287 Usage held in 1 hand Bulk L Activate (manipulate) This clear, bitter liquid can be ingested to change certain secondary sex characteristics. Different formulations create different changes—for example, one variety might cause the voice to deepen and promote body and facial hair growth, while another might cause fat redistribution around the hips and the growth of breasts. These changes tend to be accompanied by shifting of the fat in the face, sometimes dramatically or sometimes more subtly changing the user's appearance. Changes from this elixir take place gradually over the course of months or years, depending on the type. Elixir of Gender Transformation (Lesser) Source Player Core 2 pg. 287 Price 1 gp Bulk L The elixir must be taken every week, and changes occur over the course of a year or more. Elixir of Gender Transformat"
+ },
+ {
+  "id": "elixir-of-life",
+  "name": "Elixir of Life",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "elixir-of-life-minor",
+    "name": "Elixir of Life (Minor)",
+    "level": 1,
+    "price": {
+     "gp": 3
+    }
+   },
+   {
+    "id": "elixir-of-life-lesser",
+    "name": "Elixir of Life (Lesser)",
+    "level": 5,
+    "price": {
+     "gp": 30
+    }
+   },
+   {
+    "id": "elixir-of-life-moderate",
+    "name": "Elixir of Life (Moderate)",
+    "level": 9,
+    "price": {
+     "gp": 150
+    }
+   },
+   {
+    "id": "elixir-of-life-greater",
+    "name": "Elixir of Life (Greater)",
+    "level": 13,
+    "price": {
+     "gp": 600
+    }
+   },
+   {
+    "id": "elixir-of-life-major",
+    "name": "Elixir of Life (Major)",
+    "level": 15,
+    "price": {
+     "gp": 1300
+    }
+   },
+   {
+    "id": "elixir-of-life-true",
+    "name": "Elixir of Life (True)",
+    "level": 19,
+    "price": {
+     "gp": 8000
+    }
+   }
+  ],
+  "text": "Elixir of Life Source Player Core 2 pg. 288, GM Core pg. 247 Usage held in 1 hand Bulk L Activate (manipulate) Elixirs of life accelerate a living creature's natural healing processes and immune system. Upon drinking this elixir, you regain the listed number of Hit Points and gain an item bonus to saving throws against diseases and poisons for 10 minutes. Elixir of Life (Minor) Source Player Core 2 pg. 288, GM Core pg. 247, Core Rulebook pg. 548 Price 3 gp Bulk L The elixir restores 1d6 Hit Points, and the bonus is +1. Elixir of Life (Lesser) Source Player Core 2 pg. 288, GM Core pg. 247, Core Rulebook pg. 548 Price 30 gp Bulk L The elixir restores 3d6+6 Hit Points, and the bonus is +1. Elixir of Life (Moderate) Source Player Core 2 pg. 288, GM Core pg. 247, Core Rulebook pg. 548 Price 150 gp Bulk L The elixir restores 5d6+12 Hit Points, and the bonus is +2. Elixir of Life (Greater) Sour"
+ },
+ {
+  "id": "elixir-of-the-peaks",
+  "name": "Elixir of the Peaks",
+  "itemType": "equipment",
+  "level": 4,
+  "kin": [
+   {
+    "id": "elixir-of-the-peaks-greater",
+    "name": "Elixir of the Peaks (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 250
+    }
+   },
+   {
+    "id": "elixir-of-the-peaks-lesser",
+    "name": "Elixir of the Peaks (Lesser)",
+    "level": 4,
+    "price": {
+     "cp": 0,
+     "gp": 15,
+     "pp": 0,
+     "sp": 0
+    }
+   },
+   {
+    "id": "elixir-of-the-peaks-major",
+    "name": "Elixir of the Peaks (Major)",
+    "level": 15,
+    "price": {
+     "gp": 1200
+    }
+   },
+   {
+    "id": "elixir-of-the-peaks-moderate",
+    "name": "Elixir of the Peaks (Moderate)",
+    "level": 7,
+    "price": {
+     "gp": 60
+    }
+   }
+  ],
+  "text": "Elixir of the Peaks May contain spoilers from Revenge of the Runelords Source Pathfinder Adventure Path #219: Lord of the Trinity Star pg. 69 Usage held in 1 hand Bulk L With much of New Thassilon located among the rugged heights of the Kodar Mountains, these elixirs have grown in popularity among those frequently travel the region. Activate (manipulate) Effect For the listed duration, drinking this elixir while in mountainous terrain protects you from the effects of severe cold and grants you an item bonus to Athletics checks made to Climb, High Jump, or Long Jump, as well as to saving throws against the effects of high altitude. Lesser Elixir of the Peaks Source Pathfinder Adventure Path #219: Lord of the Trinity Star pg. 69 Price 1 gp, 5 sp Usage held in 1 hand Bulk L Activate (manipulate) The bonus is +1, and the elixir lasts for 1 hour. Moderate Elixir of the Peaks Source Pathfinder"
+ },
+ {
+  "id": "elven-chain",
+  "name": "Elven Chain",
+  "itemType": "equipment",
+  "level": 13,
+  "kin": [
+   {
+    "id": "elven-chain-standard-grade",
+    "name": "Elven Chain (Standard-Grade)",
+    "level": 13,
+    "price": {
+     "gp": 740
+    }
+   },
+   {
+    "id": "elven-chain-high-grade",
+    "name": "Elven Chain (High-Grade)",
+    "level": 20,
+    "price": {
+     "gp": 16800
+    }
+   }
+  ],
+  "text": "Elven Chain Source GM Core pg. 228 Usage worn armor Bulk varies by armor Elven chain is a chain shirt made of dawnsilver that glitters in even the faintest light. Because it’s constructed with small, supple rings, it has no check penalty. Created by elven artisans employing ancient crafting techniques, elven chain is exceptionally quiet. Unlike other chain shirts—even other dawnsilver chain shirts—elven chain doesn’t have the noisy trait. This suit of armor can be etched with runes like any other dawnsilver chain shirt. Elven Chain (Standard-Grade) Source GM Core pg. 228, Core Rulebook pg. 555 Price 2,500 gp The initial raw materials must include dawnsilver worth at least 3,125 sp. Elven Chain (High-Grade) Source GM Core pg. 228, Core Rulebook pg. 555 Price 52,000 gp The initial raw materials must include dawnsilver worth at least 26,000 gp."
+ },
+ {
+  "id": "emetic-paste",
+  "name": "Emetic Paste",
+  "itemType": "equipment",
+  "level": 2,
+  "kin": [
+   {
+    "id": "emetic-paste-lesser",
+    "name": "Emetic Paste (Lesser)",
+    "level": 2,
+    "price": {
+     "gp": 5
+    }
+   },
+   {
+    "id": "emetic-paste-moderate",
+    "name": "Emetic Paste (Moderate)",
+    "level": 9,
+    "price": {
+     "gp": 120
+    }
+   },
+   {
+    "id": "emetic-paste-greater",
+    "name": "Emetic Paste (Greater)",
+    "level": 14,
+    "price": {
+     "gp": 700
+    }
+   }
+  ],
+  "text": "Emetic Paste Source Treasure Vault (Remastered) pg. 53 Usage held in 1 hand Bulk L Activate (manipulate) Sickened creatures have difficulty swallowing, so you can Activate emetic paste by applying it to your skin or that of a sickened creature within reach, typically on the throat. The paste makes it easy for the sickened creature to purge, granting it an immediate Fortitude save to reduce its sickened condition. The paste grants the target an item bonus to that save and to all saving throws to reduce the sickened condition for 1 hour. Emetic Paste (Lesser) Source Treasure Vault (Remastered) pg. 53 Price 5 gp Bulk L The bonus is +2. Emetic Paste (Moderate) Source Treasure Vault (Remastered) pg. 53 Price 120 gp Bulk L The bonus is +3. Emetic Paste (Greater) Source Treasure Vault (Remastered) pg. 53 Price 700 gp Bulk L The bonus is +4."
+ },
+ {
+  "id": "energized-shield",
+  "name": "Energized Shield",
+  "itemType": "equipment",
+  "level": 7,
+  "kin": [
+   {
+    "id": "energized-shield-greater",
+    "name": "Energized Shield (Greater)",
+    "level": 15,
+    "price": {
+     "gp": 6000
+    }
+   },
+   {
+    "id": "energized-shield-lesser",
+    "name": "Energized Shield (Lesser)",
+    "level": 7,
+    "price": {
+     "gp": 350
+    }
+   },
+   {
+    "id": "energized-shield-major",
+    "name": "Energized Shield (Major)",
+    "level": 19,
+    "price": {
+     "gp": 35000
+    }
+   },
+   {
+    "id": "energized-shield-moderate",
+    "name": "Energized Shield (Moderate)",
+    "level": 11,
+    "price": {
+     "gp": 1300
+    }
+   }
+  ],
+  "text": "Energized Shield Source Battlecry! pg. 124 Usage held in 1 hand Bulk 1 Base Shield Steel Shield This minor reinforcing steel shield (Hardness 8, HP 64, BT 32) is lined with pale silver that glows when struck. Whenever you use the Shield Block reaction, this shield becomes energized for 1 round. Activate—Energized Blast (force, manipulate) Frequency once per 10 minutes; Requirements The shield is energized; Effect You direct the stored energy into a short blast, targeting a creature within 15 feet. The target takes 2d10 force damage (DC 23 basic Reflex save). Lesser Energized Shield Source Battlecry! pg. 124 Price 350 gp Moderate Energized Shield Source Battlecry! pg. 124 Price 1,300 gp The damage increases to 3d10 and the DC increases to 28. Greater Energized Shield Source Battlecry! pg. 124 Price 6,000 gp The damage increases to 4d10 and the DC increases to 34. Major Energized Shield So"
+ },
+ {
+  "id": "energy-breath-potion",
+  "name": "Energy Breath Potion",
+  "itemType": "consumable",
+  "level": 7,
+  "kin": [
+   {
+    "id": "energy-breath-potion-lesser",
+    "name": "Energy Breath Potion (Lesser)",
+    "level": 7,
+    "price": {
+     "gp": 70
+    }
+   },
+   {
+    "id": "energy-breath-potion-moderate",
+    "name": "Energy Breath Potion (Moderate)",
+    "level": 12,
+    "price": {
+     "gp": 400
+    }
+   },
+   {
+    "id": "energy-breath-potion-greater",
+    "name": "Energy Breath Potion (Greater)",
+    "level": 17,
+    "price": {
+     "gp": 3000
+    }
+   },
+   {
+    "id": "energy-breath-potion-acid-greater",
+    "name": "Energy Breath Potion (Acid, Greater)",
+    "level": 17,
+    "price": {
+     "gp": 3000
+    }
+   },
+   {
+    "id": "energy-breath-potion-acid-lesser",
+    "name": "Energy Breath Potion (Acid, Lesser)",
+    "level": 7,
+    "price": {
+     "gp": 70
+    }
+   },
+   {
+    "id": "energy-breath-potion-acid-moderate",
+    "name": "Energy Breath Potion (Acid, Moderate)",
+    "level": 12,
+    "price": {
+     "gp": 400
+    }
+   },
+   {
+    "id": "energy-breath-potion-cold-greater",
+    "name": "Energy Breath Potion (Cold, Greater)",
+    "level": 17,
+    "price": {
+     "gp": 3000
+    }
+   },
+   {
+    "id": "energy-breath-potion-cold-lesser",
+    "name": "Energy Breath Potion (Cold, Lesser)",
+    "level": 7,
+    "price": {
+     "gp": 70
+    }
+   },
+   {
+    "id": "energy-breath-potion-cold-moderate",
+    "name": "Energy Breath Potion (Cold, Moderate)",
+    "level": 12,
+    "price": {
+     "gp": 400
+    }
+   },
+   {
+    "id": "energy-breath-potion-electricity-greater",
+    "name": "Energy Breath Potion (Electricity, Greater)",
+    "level": 17,
+    "price": {
+     "gp": 3000
+    }
+   },
+   {
+    "id": "energy-breath-potion-electricity-lesser",
+    "name": "Energy Breath Potion (Electricity, Lesser)",
+    "level": 7,
+    "price": {
+     "gp": 70
+    }
+   },
+   {
+    "id": "energy-breath-potion-electricity-moderate",
+    "name": "Energy Breath Potion (Electricity, Moderate)",
+    "level": 12,
+    "price": {
+     "gp": 400
+    }
+   },
+   {
+    "id": "energy-breath-potion-fire-greater",
+    "name": "Energy Breath Potion (Fire, Greater)",
+    "level": 17,
+    "price": {
+     "gp": 3000
+    }
+   },
+   {
+    "id": "energy-breath-potion-fire-lesser",
+    "name": "Energy Breath Potion (Fire, Lesser)",
+    "level": 7,
+    "price": {
+     "gp": 70
+    }
+   },
+   {
+    "id": "energy-breath-potion-fire-moderate",
+    "name": "Energy Breath Potion (Fire, Moderate)",
+    "level": 12,
+    "price": {
+     "gp": 400
+    }
+   },
+   {
+    "id": "energy-breath-potion-sonic-greater",
+    "name": "Energy Breath Potion (Sonic, Greater)",
+    "level": 17,
+    "price": {
+     "gp": 3000
+    }
+   },
+   {
+    "id": "energy-breath-potion-sonic-lesser",
+    "name": "Energy Breath Potion (Sonic, Lesser)",
+    "level": 7,
+    "price": {
+     "gp": 70
+    }
+   },
+   {
+    "id": "energy-breath-potion-sonic-moderate",
+    "name": "Energy Breath Potion (Sonic, Moderate)",
+    "level": 12,
+    "price": {
+     "gp": 400
+    }
+   }
+  ],
+  "text": "Energy Breath Potion Source GM Core pg. 259 Usage held in 1 hand Bulk L Activate (manipulate) Distilled from the energy of dangerous spells, an energy breath potion grants you the Energy Breath action for 1 hour after you imbibe the concoction. The potency of the breath depends on the potion's type, based on how long the distilled ingredients were aged. This potion has the trait matching the damage type. Energy Breath Each creature in an area takes damage depending on its basic saving throw. The damage amount and save DC depend on the potion's energy type. The damage type is the same as the potion's energy type. The area and save depend on the energy type, as seen in the table below. After you use Energy Breath, you can't do so again for 1d4 rounds. ## Energy Type Area (Save) Acid 30-foot line (Reflex) Cold 15-foot cone (Reflex) Electricity 30-foot line (Reflex) Fire 15-foot cone (Reflex"
+ },
+ {
+  "id": "energy-mutagen",
+  "name": "Energy Mutagen",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "energy-mutagen-lesser",
+    "name": "Energy Mutagen (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 4
+    }
+   },
+   {
+    "id": "energy-mutagen-moderate",
+    "name": "Energy Mutagen (Moderate)",
+    "level": 3,
+    "price": {
+     "gp": 12
+    }
+   },
+   {
+    "id": "energy-mutagen-greater",
+    "name": "Energy Mutagen (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 300
+    }
+   },
+   {
+    "id": "energy-mutagen-major",
+    "name": "Energy Mutagen (Major)",
+    "level": 17,
+    "price": {
+     "gp": 3000
+    }
+   }
+  ],
+  "text": "Energy Mutagen Source Treasure Vault (Remastered) pg. 60, The Fall of Plaguestone pg. 56 Usage held in 1 hand Bulk L Activate (manipulate) When created, this mutagen is attuned to your choice of one of four energy types: acid, cold, electricity, or fire. When consumed, the mutagen suffuses your body with energy that spills out of you whenever you attack. At higher levels, it can even grant you the ability to unleash the energy in controlled bursts. Benefit You gain resistance to the attuned energy type. Whenever you score a hit with a melee weapon, add the listed amount of damage of the attuned energy type. Drawback You gain weakness 5 to the other three energy types. Energy Mutagen (Lesser) Source Treasure Vault (Remastered) pg. 60, The Fall of Plaguestone pg. 56 Price 4 gp Bulk L You gain resistance 5, add 1 damage on a hit with a melee weapon, and the duration is 1 minute. Energy Muta"
+ },
+ {
+  "id": "essence-forge",
+  "name": "Essence Forge",
+  "itemType": "equipment",
+  "level": 6,
+  "kin": [
+   {
+    "id": "essence-forge-lesser",
+    "name": "Essence Forge (Lesser)",
+    "level": 6,
+    "price": {
+     "gp": 250
+    }
+   },
+   {
+    "id": "essence-forge-moderate",
+    "name": "Essence Forge (Moderate)",
+    "level": 12,
+    "price": {
+     "gp": 2000
+    }
+   },
+   {
+    "id": "essence-forge-greater",
+    "name": "Essence Forge (Greater)",
+    "level": 18,
+    "price": {
+     "gp": 24000
+    }
+   }
+  ],
+  "text": "Essence Forge May contain spoilers from Shades of Blood Source Pathfinder #214: The Broken Palace pg. 79 Bulk 20 An essence forge consists of a large stone workbench with a receptacle for fuel built into the left side. Sparkling crystals are embedded across the forge’s structure, with additional flourishes made from a different material, as appropriate to the type of forge. Life forges are adorned with fossilized bones and petrified wood. They’re used to craft items associated with the divine and primal magic traditions. One must attempt a Nature or Religion check to prime a life forge. Matter forges are decorated with strips of precious metal. They can be used to craft items associated with the arcane and primal magic traditions. One must attempt an Arcana or Nature check to prime a matter forge. Mind forges are accentuated with glittering gemstones. They can be used to craft items asso"
+ },
+ {
+  "id": "etheric-essence-disruptor",
+  "name": "Etheric Essence Disruptor",
+  "itemType": "consumable",
+  "level": 3,
+  "kin": [
+   {
+    "id": "etheric-essence-disruptor-lesser",
+    "name": "Etheric Essence Disruptor (Lesser)",
+    "level": 3,
+    "price": {
+     "gp": 12
+    }
+   },
+   {
+    "id": "etheric-essence-disruptor-moderate",
+    "name": "Etheric Essence Disruptor (Moderate)",
+    "level": 7,
+    "price": {
+     "gp": 70
+    }
+   },
+   {
+    "id": "etheric-essence-disruptor-greater",
+    "name": "Etheric Essence Disruptor (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 300
+    }
+   },
+   {
+    "id": "etheric-essence-disruptor-major",
+    "name": "Etheric Essence Disruptor (Major)",
+    "level": 15,
+    "price": {
+     "gp": 1300
+    }
+   }
+  ],
+  "text": "Etheric Essence Disruptor Source Guns & Gears (Remastered) pg. 68 PFS Note All Pathfinder Society agents have access to all uncommon clockwork items and gadgets from Chapters 1 and 2 of this book Usage held in 1 hand Bulk 1 Access Due to the use of technology, all gadgets are uncommon or rare, though inventors and regions with access to inventors have access to uncommon gadgets. Activate Interact An etheric essence disruptor emits bursts of discordant ethereal energy through a process based upon Stasian etheric-spirit singers, though without the need for a Stasian coil. Etheric essence disruptors attempt to break down the workings of a spell that manipulates spiritual essence. Upon activation, attempt to counteract an active divine or occult spell within the listed range, with the listed counteract modifier and counteract level. Etheric Essence Disruptor (Lesser) Source Guns & Gears (Rem"
+ },
+ {
+  "id": "everair-mask",
+  "name": "Everair Mask",
+  "itemType": "equipment",
+  "level": 2,
+  "kin": [
+   {
+    "id": "everair-mask-lesser",
+    "name": "Everair Mask (Lesser)",
+    "level": 2,
+    "price": {
+     "gp": 5
+    }
+   },
+   {
+    "id": "everair-mask-moderate",
+    "name": "Everair Mask (Moderate)",
+    "level": 6,
+    "price": {
+     "gp": 35
+    }
+   },
+   {
+    "id": "everair-mask-greater",
+    "name": "Everair Mask (Greater)",
+    "level": 10,
+    "price": {
+     "gp": 160
+    }
+   },
+   {
+    "id": "everair-mask-major",
+    "name": "Everair Mask (Major)",
+    "level": 14,
+    "price": {
+     "gp": 625
+    }
+   }
+  ],
+  "text": "Everair Mask Source Highhelm pg. 112 Usage worn mask Bulk L This simple, mass-produced gaiter mask is standard issue for miners working in deep, dangerous mines. While wearing the mask, you gain a +1 item bonus to Fortitude saving throws against inhaled poisons. An everair mask makes use of magical runes related to the Plane of Air to create breathable air. Activate envision, Interact; Frequency once per day; Effect You activate the mask's rune, and the air surrounding air, as well as the air you exhale, becomes enriched with oxygen. This allows the everair mask to recycle air into breathable air for 1 hour. The rune's magic is unable to provide breathable air while underwater, in a vacuum, or in any other situation where air is normally unavailable. Everair Mask (Lesser) Source Highhelm pg. 112 Price 5 gp Bulk L Everair Mask (Moderate) Source Highhelm pg. 112 Price 35 gp Bulk L The rune"
+ },
+ {
+  "id": "exploration-lens",
+  "name": "Exploration Lens",
+  "itemType": "equipment",
+  "level": 10,
+  "kin": [
+   {
+    "id": "exploration-lens-detecting",
+    "name": "Exploration Lens (Detecting)",
+    "level": 10,
+    "price": {
+     "gp": 1000
+    }
+   },
+   {
+    "id": "exploration-lens-investigating",
+    "name": "Exploration Lens (Investigating)",
+    "level": 12,
+    "price": {
+     "gp": 1750
+    }
+   },
+   {
+    "id": "exploration-lens-searching",
+    "name": "Exploration Lens (Searching)",
+    "level": 14,
+    "price": {
+     "gp": 4000
+    }
+   }
+  ],
+  "text": "Exploration Lens May contain spoilers from Strength of Thousands Source Pathfinder #171: Hurricane's Howl pg. 76 Usage held in 1 hand Activate Interact An exploration lens is a magical glass lens designed for a bull's-eye lantern. When light from the lantern passes through the lens, it alters the light to make it easier to perform a common exploration activity with the lantern. You can find more information about exploration activities related to these lenses on page 496 of the Core Rulebook. Alternatively, an exploration lens can be installed in a wayfinder like an aeon stone. In this case, light (such as that from a lantern, torch, or light spell) must still pass through the lens and you must hold the wayfinder in your hand for it to function. There are several different types of exploration lens, each granting benefits with a different type of exploration activity. Each type of lens i"
+ },
+ {
+  "id": "explosive-mine",
+  "name": "Explosive Mine",
+  "itemType": "consumable",
+  "level": 1,
+  "kin": [
+   {
+    "id": "explosive-mine-lesser",
+    "name": "Explosive Mine (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 4
+    }
+   },
+   {
+    "id": "explosive-mine-moderate",
+    "name": "Explosive Mine (Moderate)",
+    "level": 6,
+    "price": {
+     "gp": 40
+    }
+   },
+   {
+    "id": "explosive-mine-greater",
+    "name": "Explosive Mine (Greater)",
+    "level": 12,
+    "price": {
+     "gp": 400
+    }
+   },
+   {
+    "id": "explosive-mine-major",
+    "name": "Explosive Mine (Major)",
+    "level": 18,
+    "price": {
+     "gp": 4000
+    }
+   }
+  ],
+  "text": "Explosive Mine Source Guns & Gears (Remastered) pg. 69 PFS Note All Pathfinder Society agents have access to all uncommon clockwork items and gadgets from Chapters 1 and 2 of this book Usage held in 2 hands Bulk L Access Due to the use of technology, all gadgets are uncommon or rare, though inventors and regions with access to inventors have access to uncommon gadgets. Activate Interact When you Activate an explosive mine, you place it on the ground in a square within your reach, priming it to explode when a creature steps on that square. If you have time in advance to prepare, you can place the mine on the ground before activating it, and you or an ally can try to use Stealth to Conceal an Object before you Activate the mine. If you don't Conceal the mine, its position is obvious at a glance. Once activated, the mine is primed to explode when enough pressure is placed on the square wher"
+ },
+ {
+  "id": "false-witness",
+  "name": "False Witness",
+  "itemType": "equipment",
+  "level": 0,
+  "kin": [
+   {
+    "id": "false-witness-disreputable",
+    "name": "False Witness (Disreputable)",
+    "level": 0,
+    "price": {
+     "gp": 9
+    }
+   },
+   {
+    "id": "false-witness-ordinary",
+    "name": "False Witness (Ordinary)",
+    "level": 5,
+    "price": {
+     "gp": 75
+    }
+   },
+   {
+    "id": "false-witness-respectable",
+    "name": "False Witness (Respectable)",
+    "level": 9,
+    "price": {
+     "gp": 450
+    }
+   },
+   {
+    "id": "false-witness-honorable",
+    "name": "False Witness (Honorable)",
+    "level": 13,
+    "price": {
+     "gp": 1500
+    }
+   },
+   {
+    "id": "false-witness-unimpeachable",
+    "name": "False Witness (Unimpeachable)",
+    "level": 17,
+    "price": {
+     "gp": 7500
+    }
+   }
+  ],
+  "text": "False Witness Source Dark Archives (Remastered) pg. 84 There comes a time in every thief's life when they need a friend, an ally, a boon companion who will look a judge straight in the eye and swear over a stack of holy books that the two of them were out drinking—yes, your honor, all night, never left my sight for more than a minute, you have my solemn oath. Lucky thieves have a friend who is willing to be an alibi; for everyone else, there's the false witness, a professional in the art of fraudulent testimony. Some false witnesses are truly freelance, willing to claim to have seen someone for the price of a round of drinks. More respectable witnesses, however, tend to be associated with thieves' guilds, secret societies, and other conspiracies. Such organizations can match a person in need of an alibi with a witness with no apparent connection to them, and they often have large enough "
+ },
+ {
+  "id": "feed",
+  "name": "Feed",
+  "itemType": "equipment",
+  "level": 0,
+  "kin": [
+   {
+    "id": "feed-standard",
+    "name": "Feed (Standard)",
+    "level": 0,
+    "price": {
+     "cp": 1
+    }
+   },
+   {
+    "id": "feed-unique",
+    "name": "Feed (Unique)",
+    "level": 0,
+    "price": {
+     "sp": 1
+    }
+   }
+  ],
+  "text": "Feed Source Travel Guide pg. 103 Feed (Standard) Source Travel Guide pg. 101 Price 1 cp (1 week) Feed (Unique) Source Travel Guide pg. 101 Price 1 sp (1 week)"
+ },
+ {
+  "id": "ferrofluid-urchin",
+  "name": "Ferrofluid Urchin",
+  "itemType": "consumable",
+  "level": 7,
+  "kin": [
+   {
+    "id": "ferrofluid-urchin-lesser",
+    "name": "Ferrofluid Urchin (Lesser)",
+    "level": 7,
+    "price": {
+     "gp": 55
+    }
+   },
+   {
+    "id": "ferrofluid-urchin-moderate",
+    "name": "Ferrofluid Urchin (Moderate)",
+    "level": 11,
+    "price": {
+     "gp": 225
+    }
+   },
+   {
+    "id": "ferrofluid-urchin-greater",
+    "name": "Ferrofluid Urchin (Greater)",
+    "level": 15,
+    "price": {
+     "gp": 925
+    }
+   }
+  ],
+  "text": "Ferrofluid Urchin Source Rage of Elements pg. 146 Usage affixed to a medium metal armor or heavy metal armor Activate (concentrate) Trigger You take physical damage This spiky glob of magnetic liquid attaches directly onto the metal of your armor. When you activate the globule, it reshapes to deflect the incoming harm. You gain resistance to the triggering damage. Ferrofluid Urchin (Lesser) Source Rage of Elements pg. 146 Price 55 gp You gain resistance 3. Ferrofluid Urchin (Moderate) Source Rage of Elements pg. 146 Price 225 gp You gain resistance 6. Ferrofluid Urchin (Greater) Source Rage of Elements pg. 146 Price 925 gp You gain resistance 10."
+ },
+ {
+  "id": "fetters",
+  "name": "Fetters",
+  "itemType": "equipment",
+  "level": 2,
+  "kin": [
+   {
+    "id": "fetters-simple",
+    "name": "Fetters (Simple)",
+    "level": 2,
+    "price": {
+     "gp": 5
+    }
+   },
+   {
+    "id": "fetters-average",
+    "name": "Fetters (Average)",
+    "level": 4,
+    "price": {
+     "gp": 30
+    }
+   },
+   {
+    "id": "fetters-good",
+    "name": "Fetters (Good)",
+    "level": 10,
+    "price": {
+     "gp": 330
+    }
+   },
+   {
+    "id": "fetters-superior",
+    "name": "Fetters (Superior)",
+    "level": 18,
+    "price": {
+     "gp": 7500
+    }
+   }
+  ],
+  "text": "Fetters Source NPC Core pg. 123 Bulk L This long bar has two cuffs that enclose a prisoner's ankles or wrists. Fetters apply a –20-foot circumstance penalty to Speed and disrupt any manipulate action the bound creature attempts unless it succeeds at a DC 11 flat check. Freeing a creature from simple fetters requires 2 successful DC 23 Thievery checks. Average fetters require 3 successful DC 28 Thievery checks, good fetters require 4 successful DC 33 Thievery checks, and superior fetters require 5 successful DC 43 Thievery checks. Fetters (Simple) Source NPC Core pg. 123 Price 5 gp Bulk L Fetters (Average) Source NPC Core pg. 123 Price 30 gp Bulk L Fetters (Good) Source NPC Core pg. 123 Price 330 gp Bulk L Fetters (Superior) Source NPC Core pg. 123 Price 7,500 gp Bulk L"
+ },
+ {
+  "id": "feyfoul",
+  "name": "Feyfoul",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "feyfoul-lesser",
+    "name": "Feyfoul (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 4
+    }
+   },
+   {
+    "id": "feyfoul-moderate",
+    "name": "Feyfoul (Moderate)",
+    "level": 8,
+    "price": {
+     "gp": 90
+    }
+   },
+   {
+    "id": "feyfoul-greater",
+    "name": "Feyfoul (Greater)",
+    "level": 14,
+    "price": {
+     "gp": 750
+    }
+   }
+  ],
+  "text": "Feyfoul May contain spoilers from Kingmaker Source Kingmaker Companion Guide pg. 35 Usage held in 1 hand Bulk L Activate Interact To creatures other than fey, the scent of feyfoul seems to be a faint but non-obnoxious odor of cinnamon, but fey find that the stuff interferes with their ability to manipulate a creature's mind. Jubilost invented feyfoul accidentally while he was attempting to create a cologne that would enhance its wearer's appearance to make them seem more otherworldly, but to anyone that asks, the gnome alchemist quickly claims that he'd always intended to create an alchemical tool that provided protection from fey magic. A single dose of feyfoul spritzed on a person in the manner of perfume grants the wearer an item bonus to Will saving throws against mental effects generated by fey creatures. Feyfoul (Lesser) Source Kingmaker Companion Guide pg. 35 Price 4 gp Bulk L You"
+ },
+ {
+  "id": "fixer",
+  "name": "Fixer",
+  "itemType": "equipment",
+  "level": 0,
+  "kin": [
+   {
+    "id": "fixer-basic-informant",
+    "name": "Fixer (Basic Informant)",
+    "level": 0,
+    "price": {
+     "sp": 5
+    }
+   },
+   {
+    "id": "fixer-expert-informant",
+    "name": "Fixer (Expert Informant)",
+    "level": 0,
+    "price": {
+     "gp": 1
+    }
+   },
+   {
+    "id": "fixer-basic-councelor",
+    "name": "Fixer (Basic Councelor)",
+    "level": 0,
+    "price": {
+     "gp": 1
+    }
+   },
+   {
+    "id": "fixer-expert-councelor",
+    "name": "Fixer (Expert Councelor)",
+    "level": 0,
+    "price": {
+     "gp": 2
+    }
+   }
+  ],
+  "text": "Fixer Source PFS Guide pg. 116 A fixer is a guide who knows the inner workings of life in a given location. The right fixer can help you navigate the complicated alleyways of a new city or the tangled social expectations of the local populace. Every fixer has knowledge about a specific location, such as a settlement like Katapesh, a geographical region like the Verduran Forest, or a notable establishment like the Grand Lodge. If you plan to hire a fixer, you must do so for the specific location for which you need a guide, though the GM can decide that a given fixer may be able to provide assistance with a closely related location, such as a fixer for the Isle of Kortos being able to provide some guidance for the town of Diobel. There are two varieties of fixers: informants and counselors. Informants help provide basic information on a location, such as how to navigate a city, the type of"
+ },
+ {
+  "id": "flare-beacon",
+  "name": "Flare Beacon",
+  "itemType": "consumable",
+  "level": 1,
+  "kin": [
+   {
+    "id": "flare-beacon-lesser",
+    "name": "Flare Beacon (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 4
+    }
+   },
+   {
+    "id": "flare-beacon-moderate",
+    "name": "Flare Beacon (Moderate)",
+    "level": 6,
+    "price": {
+     "gp": 35
+    }
+   },
+   {
+    "id": "flare-beacon-greater",
+    "name": "Flare Beacon (Greater)",
+    "level": 10,
+    "price": {
+     "gp": 180
+    }
+   },
+   {
+    "id": "flare-beacon-major",
+    "name": "Flare Beacon (Major)",
+    "level": 16,
+    "price": {
+     "gp": 1500
+    }
+   }
+  ],
+  "text": "Flare Beacon Source Guns & Gears (Remastered) pg. 69 PFS Note All Pathfinder Society agents have access to all uncommon clockwork items and gadgets from Chapters 1 and 2 of this book Usage held in 1 hand Bulk L Access Due to the use of technology, all gadgets are uncommon or rare, though inventors and regions with access to inventors have access to uncommon gadgets. Activate Interact Flare beacons create an incredibly bright light for a brief period of time. They are often used to signal others to the beacon's location, to coordinate assaults, to request rescue, or for other similar reasons. Higher-level beacons have a radius so large that they can be seen from miles away at night. When you Activate a flare beacon, you can either place it on the ground in a space within your reach or toss it up to 60 feet straight up. The beacon then sparks into being, casting bright light in a 20-foot r"
+ },
+ {
+  "id": "fleshgem",
+  "name": "Fleshgem",
+  "itemType": "equipment",
+  "level": 5,
+  "kin": [
+   {
+    "id": "fleshgem-combat",
+    "name": "Fleshgem (Combat)",
+    "level": 5,
+    "price": {
+     "gp": 160
+    }
+   },
+   {
+    "id": "fleshgem-earthspeaker",
+    "name": "Fleshgem (Earthspeaker)",
+    "level": 8,
+    "price": {
+     "gp": 450
+    }
+   }
+  ],
+  "text": "Fleshgem Source Grand Bazaar pg. 110 Usage envision Base Weapon Fist Originally developed as a body modification by oreads, fleshgems are crystals that can be implanted in the skin of a creature of any ancestry. While a fleshgem can be applied anywhere on the body for cosmetic purposes, the most common usage among adventurers is to implant them at the base of the fingers, to be used like brass knuckles. Fleshgem (Combat) Source Grand Bazaar pg. 110 Price 160 gp These pointed crystal shards embedded in your fingers grant you a fist Strike that deals 1d6 piercing damage, is in the brawling group, and has the magical and unarmed traits. Combat fleshgems can be enhanced with the effects of handwraps of mighty blows, as normal for an unarmed attack. Fleshgem (Earthspeaker) Source Grand Bazaar pg. 110 Price 450 gp You siphon your fleshgem's power, and the earth around you erupts in crystal sta"
+ },
+ {
+  "id": "floating-tent",
+  "name": "Floating Tent",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "floating-tent-pup",
+    "name": "Floating Tent (Pup)",
+    "level": 1,
+    "price": {
+     "gp": 10
+    }
+   },
+   {
+    "id": "floating-tent-four-person",
+    "name": "Floating Tent (Four-Person)",
+    "level": 2,
+    "price": {
+     "gp": 25
+    }
+   }
+  ],
+  "text": "Floating Tent Source Rage of Elements pg. 75 Bulk 1 This diamond-shaped tent is designed for sleeping in planar environments without gravity, such as the Plane of Air. Weights are attached at each of its six points, carefully balanced against each other to prevent the tent from leaning too far in any one direction. The tent has an anchor, which can be used to moor the tent and prevent it from floating away from the object or location it is anchored to. Floating Tent (Pup) Source Rage of Elements pg. 75 Price 10 gp Bulk 1 A floating pup tent is large enough for one person and their supplies. It contains one hammock suspended in the center of the tent, large enough for a Medium or smaller creature to comfortably sleep, in addition to a net beneath the hammock where gear can be stored. Floating Tent (Four-Person) Source Rage of Elements pg. 75 Price 25 gp Bulk 2 A standard floating tent is "
+ },
+ {
+  "id": "flowing-water",
+  "name": "Flowing Water",
+  "itemType": "equipment",
+  "level": 3,
+  "kin": [
+   {
+    "id": "flowing-water-greater",
+    "name": "Flowing Water (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 1200
+    }
+   },
+   {
+    "id": "flowing-water-lesser",
+    "name": "Flowing Water (Lesser)",
+    "level": 3,
+    "price": {
+     "gp": 55
+    }
+   },
+   {
+    "id": "flowing-water-moderate",
+    "name": "Flowing Water (Moderate)",
+    "level": 7,
+    "price": {
+     "gp": 320
+    }
+   }
+  ],
+  "text": "Flowing Water May contain spoilers from Triumph of the Tusk Source Pathfinder #207: Resurrection Flood pg. 80 Usage tattooed on the body The Flood Truce is a season of relative peace, and this tattoo of a river can soothe your temper when you might otherwise lash out. You gain a +1 item bonus to Diplomacy checks made against orcs who honor the Flood Truce. Activate—Embody the Truce (concentrate) Frequency once per day; Trigger A mental effect would compel you to harm an ally or bystander; Effect Attempt a counteract check with a counteract rank of 2 to end the effect. Lesser Flowing Water Source Pathfinder #207: Resurrection Flood pg. 80 Price 55 gp Moderate Flowing Water Source Pathfinder #207: Resurrection Flood pg. 80 Price 320 gp The counteract rank is 4. Greater Flowing Water Source Pathfinder #207: Resurrection Flood pg. 80 Price 1,200 gp The counteract rank is 6."
+ },
+ {
+  "id": "fossil-fragment",
+  "name": "Fossil Fragment",
+  "itemType": "equipment",
+  "level": 7,
+  "kin": [
+   {
+    "id": "fossil-fragment-amber-mosquito",
+    "name": "Fossil Fragment (Amber Mosquito)",
+    "level": 13,
+    "price": {
+     "gp": 2500
+    }
+   },
+   {
+    "id": "fossil-fragment-brontosaurus-phalange",
+    "name": "Fossil Fragment (Brontosaurus Phalange)",
+    "level": 18,
+    "price": {
+     "gp": 21000
+    }
+   },
+   {
+    "id": "fossil-fragment-deinonychus-claw",
+    "name": "Fossil Fragment (Deinonychus Claw)",
+    "level": 7,
+    "price": {
+     "gp": 360
+    }
+   },
+   {
+    "id": "fossil-fragment-eurypterid-paddle",
+    "name": "Fossil Fragment (Eurypterid Paddle)",
+    "level": 12,
+    "price": {
+     "gp": 1700
+    }
+   },
+   {
+    "id": "fossil-fragment-petrified-wood",
+    "name": "Fossil Fragment (Petrified Wood)",
+    "level": 14,
+    "price": {
+     "gp": 4200
+    }
+   },
+   {
+    "id": "fossil-fragment-triceratops-frill",
+    "name": "Fossil Fragment (Triceratops Frill)",
+    "level": 15,
+    "price": {
+     "gp": 6000
+    }
+   },
+   {
+    "id": "fossil-fragment-tyrannosaur-tooth",
+    "name": "Fossil Fragment (Tyrannosaur Tooth)",
+    "level": 17,
+    "price": {
+     "gp": 14000
+    }
+   }
+  ],
+  "text": "Fossil Fragment Source Rage of Elements pg. 98 Usage held in 1 hand Bulk L A fossil fragment is a piece of a fossil creature, typically a smaller bone from a larger specimen. Activate—Fossile Metamorphosis (concentrate, manipulate) Effect You activate the fragment by placing it on solid ground and then speaking its name, causing the fragment to form the full fossilized skeleton of a creature. In creature form, the fragment has the minion trait. Because it's an animated fossil instead of a living creature, it has the construct and earth traits and lacks its normal creature type trait (typically animal). It's also immune to bleed, death effects, disease, doomed, drained, fatigued, healing, nonlethal attacks, paralyzed, poison, sickened, vitality, void, and unconscious. It can understand your language, and it obeys you to the best of its ability when you use an action to command it. The spe"
+ },
+ {
+  "id": "frost-vial",
+  "name": "Frost Vial",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "frost-vial-lesser",
+    "name": "Frost Vial (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 3
+    }
+   },
+   {
+    "id": "frost-vial-moderate",
+    "name": "Frost Vial (Moderate)",
+    "level": 3,
+    "price": {
+     "gp": 10
+    }
+   },
+   {
+    "id": "frost-vial-greater",
+    "name": "Frost Vial (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 250
+    }
+   },
+   {
+    "id": "frost-vial-major",
+    "name": "Frost Vial (Major)",
+    "level": 17,
+    "price": {
+     "gp": 2500
+    }
+   }
+  ],
+  "text": "Frost Vial Source Player Core 2 pg. 285 Usage held in 1 hand Bulk L Activate Strike The bright blue liquid reagents in this vial rapidly absorb heat when exposed to air. A frost vial deals the listed cold damage and cold splash damage. On a hit, the target takes a status penalty to its Speeds until the end of its next turn. Many types of frost vial also grant an item bonus to attack rolls. Frost Vial (Lesser) Source Player Core 2 pg. 285, Core Rulebook pg. 545 Price 3 gp Bulk L The bomb deals 1d6 cold damage and 1 cold splash damage, and the target takes a –5-foot penalty. Frost Vial (Moderate) Source Player Core 2 pg. 285, Core Rulebook pg. 545 Price 10 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d6 cold damage and 2 cold splash damage, and the target takes a –10-foot penalty. Frost Vial (Greater) Source Player Core 2 pg. 285, Core Rulebook pg. 545 Price 250 gp B"
+ },
+ {
+  "id": "fury-cocktail",
+  "name": "Fury Cocktail",
+  "itemType": "equipment",
+  "level": 4,
+  "kin": [
+   {
+    "id": "fury-cocktail-lesser",
+    "name": "Fury Cocktail (Lesser)",
+    "level": 4,
+    "price": {
+     "gp": 15
+    }
+   },
+   {
+    "id": "fury-cocktail-moderate",
+    "name": "Fury Cocktail (Moderate)",
+    "level": 12,
+    "price": {
+     "gp": 360
+    }
+   },
+   {
+    "id": "fury-cocktail-greater",
+    "name": "Fury Cocktail (Greater)",
+    "level": 18,
+    "price": {
+     "gp": 4000
+    }
+   }
+  ],
+  "text": "Fury Cocktail Source Treasure Vault (Remastered) pg. 48 Usage held in 1 hand Bulk L Activate (manipulate) A fury cocktail is a fortifying ginger beer spiked with rum and a mixer. It's rumored to have originated from a barbarian-themed festival in a popular mead hall specializing in alchemical beverages. Benefit You gain an item bonus to melee attack rolls and an additional effect depending on the additive chosen when the brew is created. Animalistic Lemon juice and powdered claws or talons are added to the cocktail. You gain an unarmed attack in the brawling group of your choice between a jaws attack that deals 1d6 piercing damage or a claw attack that has the agile trait and deals 1d4 slashing damage. Double This cocktail is just stronger, with more ginger and more rum. You gain resistance 1 to physical damage. The resistance increases to 2 for a moderate fury cocktail or 5 for a greate"
+ },
+ {
+  "id": "gearbinder-oil",
+  "name": "Gearbinder Oil",
+  "itemType": "equipment",
+  "level": 6,
+  "kin": [
+   {
+    "id": "gearbinder-oil-lesser",
+    "name": "Gearbinder Oil (Lesser)",
+    "level": 6,
+    "price": {
+     "gp": 45
+    }
+   },
+   {
+    "id": "gearbinder-oil-moderate",
+    "name": "Gearbinder Oil (Moderate)",
+    "level": 12,
+    "price": {
+     "gp": 390
+    }
+   },
+   {
+    "id": "gearbinder-oil-greater",
+    "name": "Gearbinder Oil (Greater)",
+    "level": 18,
+    "price": {
+     "gp": 4500
+    }
+   }
+  ],
+  "text": "Gearbinder Oil Source Treasure Vault (Remastered) pg. 54 Usage held in 1 hand Bulk L Activate (manipulate) Gearbinder oil comes in a sealed pump that can squirt the oil a short distance. The oil is designed to flow through complex mechanisms and, agitated through mechanical action, foam up and form a paste that binds the works. The oil is effective against articulated constructs and machinery, including many constructs, clockworks, and mechanical hazards. You apply the oil to the target you want to bind, which must be within 10 feet of you. After the oil is applied, at the end of any round during which the target took an action with the attack, manipulate, or move trait, it must attempt a Fortitude save against a DC determined by the oil's type. A mechanism that's slowed 2 or more by gearbinder oil also can't use reactions. Gearbinder oil functions for up to 6 rounds before becoming an i"
+ },
+ {
+  "id": "ghost-charge",
+  "name": "Ghost Charge",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "ghost-charge-lesser",
+    "name": "Ghost Charge (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 3
+    }
+   },
+   {
+    "id": "ghost-charge-moderate",
+    "name": "Ghost Charge (Moderate)",
+    "level": 3,
+    "price": {
+     "gp": 10
+    }
+   },
+   {
+    "id": "ghost-charge-greater",
+    "name": "Ghost Charge (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 250
+    }
+   },
+   {
+    "id": "ghost-charge-major",
+    "name": "Ghost Charge (Major)",
+    "level": 17,
+    "price": {
+     "gp": 2500
+    }
+   }
+  ],
+  "text": "Ghost Charge Source Player Core 2 pg. 285 Usage held in 1 hand Bulk L Activate Strike These spring-loaded metal canisters contain a mixture of chemicals and salts that drain and disintegrate nearby undead creatures. A ghost charge deals the listed vitality damage and splash damage, though as usual for vitality damage, this damage harms only undead and creatures with void healing. Ghost charges are designed to explode even on contact with a spiritual substance, making them ideal for damaging incorporeal undead. A primary target that takes damage from a ghost charge becomes enfeebled until the start of your next turn. Many types grant an item bonus to attack rolls. Ghost Charge (Lesser) Source Player Core 2 pg. 285, Advanced Player's Guide pg. 253 Price 3 gp Bulk L The bomb deals 1d8 vitality damage and 1 vitality splash damage, and the target is enfeebled 1 until the start of your next tu"
+ },
+ {
+  "id": "gliding-membranes",
+  "name": "Gliding Membranes",
+  "itemType": "equipment",
+  "level": 3,
+  "kin": [
+   {
+    "id": "gliding-membranes-lesser",
+    "name": "Gliding Membranes (Lesser)",
+    "level": 3,
+    "price": {
+     "gp": 50
+    }
+   },
+   {
+    "id": "gliding-membranes-greater",
+    "name": "Gliding Membranes (Greater)",
+    "level": 7,
+    "price": {
+     "gp": 340
+    }
+   }
+  ],
+  "text": "Gliding Membranes Source Howl of the Wild pg. 98 Usage implanted Membranes that stretch between your arms and torso help you convert a fall into a glide. Treat falls as 25 feet shorter. Even if you take fall damage, you can land on your feet by succeeding at a DC 15 Acrobatics check. Gliding Membranes (Lesser) Source Howl of the Wild pg. 98 Price 50 gp Gliding Membranes (Greater) Source Howl of the Wild pg. 98 Price 340 gp Treat falls as 50 feet shorter instead."
+ },
+ {
+  "id": "glue-bomb",
+  "name": "Glue Bomb",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "glue-bomb-lesser",
+    "name": "Glue Bomb (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 3
+    }
+   },
+   {
+    "id": "glue-bomb-moderate",
+    "name": "Glue Bomb (Moderate)",
+    "level": 3,
+    "price": {
+     "gp": 10
+    }
+   },
+   {
+    "id": "glue-bomb-greater",
+    "name": "Glue Bomb (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 250
+    }
+   },
+   {
+    "id": "glue-bomb-major",
+    "name": "Glue Bomb (Major)",
+    "level": 17,
+    "price": {
+     "gp": 2500
+    }
+   }
+  ],
+  "text": "Glue Bomb Source Player Core 2 pg. 285, GM Core pg. 245 Usage held in 1 hand Bulk L Activate Strike A glue bomb is a harmless explosive mechanism bursting with sticky substances. When you hit a creature with a glue bomb, that creature takes a status penalty to its Speeds for 1 minute. Many types of glue bomb also grant an item bonus to attack rolls. On a critical hit, a creature in contact with a solid surface becomes stuck to the surface and immobilized for 1 round, and a creature flying via wings has its wings tangled, causing it to fall safely to the ground and become unable to Fly again for 1 round. Glue bombs aren't effective when used on a creature that's in water. The target can end any effects by Escaping or spending a total of 3 manipulate actions to carefully remove the sticky substances. These manipulate actions don't have to be consecutive, and other creatures can provide the"
+ },
+ {
+  "id": "golden-cased-bullet",
+  "name": "Golden-Cased Bullet",
+  "itemType": "consumable",
+  "level": 4,
+  "kin": [
+   {
+    "id": "golden-cased-bullet-standard",
+    "name": "Golden-Cased Bullet (Standard)",
+    "level": 4,
+    "price": {
+     "gp": 20
+    }
+   },
+   {
+    "id": "golden-cased-bullet-greater",
+    "name": "Golden-Cased Bullet (Greater)",
+    "level": 10,
+    "price": {
+     "gp": 200
+    }
+   },
+   {
+    "id": "golden-cased-bullet-major",
+    "name": "Golden-Cased Bullet (Major)",
+    "level": 16,
+    "price": {
+     "gp": 2000
+    }
+   }
+  ],
+  "text": "Golden-Cased Bullet May contain spoilers from Outlaws of Alkenstar Source Pathfinder #179: Cradle of Quartz pg. 76 Ammunition round Activate envision The magic-infused metal of this bullet's golden casing allows it to curve just a bit in flight once the bullet has been fired, allowing you to ignore the bonus to AC granted to a target in lesser cover. Golden-Cased Bullet (Standard) Source Pathfinder #179: Cradle of Quartz pg. 76 Price 20 gp Golden-Cased Bullet (Greater) Source Pathfinder #179: Cradle of Quartz pg. 76 Price 200 gp You ignore the bonus to AC granted to a target in standard or lesser cover. Golden-Cased Bullet (Major) Source Pathfinder #179: Cradle of Quartz pg. 76 Price 2,000 gp You ignore the bonus to AC granted to a target in greater, standard, or lesser cover."
+ },
+ {
+  "id": "golden-silencer",
+  "name": "Golden Silencer",
+  "itemType": "consumable",
+  "level": 6,
+  "kin": [
+   {
+    "id": "golden-silencer-standard",
+    "name": "Golden Silencer (Standard)",
+    "level": 6,
+    "price": {
+     "gp": 50
+    }
+   },
+   {
+    "id": "golden-silencer-greater",
+    "name": "Golden Silencer (Greater)",
+    "level": 10,
+    "price": {
+     "gp": 200
+    }
+   }
+  ],
+  "text": "Golden Silencer May contain spoilers from Outlaws of Alkenstar Source Pathfinder #179: Cradle of Quartz pg. 76 Usage affixed to a firearm Bulk L Activate Interact Requirement You're an expert in Stealth. The Golden Gunners are dreaded for their use of their golden silencers, which they put to good use in clandestine raids. They silence both the loud gunshot and the screams of creatures wounded by its shot. A weapon with a golden silencer attached emits no light and makes no noise when fired. A target hit by a ranged Strike from the affixed weapon must succeed at a DC 20 Fortitude save or be silenced as well until the start of its next turn. A silenced creature can't call for help or use sonic abilities, nor can it use abilities with the auditory trait. This prevents it from casting spells that include verbal components. Golden Silencer (Standard) Source Pathfinder #179: Cradle of Quartz "
+ },
+ {
+  "id": "goo-grenade",
+  "name": "Goo Grenade",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "goo-grenade-lesser",
+    "name": "Goo Grenade (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 3
+    }
+   },
+   {
+    "id": "goo-grenade-moderate",
+    "name": "Goo Grenade (Moderate)",
+    "level": 3,
+    "price": {
+     "gp": 10
+    }
+   },
+   {
+    "id": "goo-grenade-greater",
+    "name": "Goo Grenade (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 250
+    }
+   },
+   {
+    "id": "goo-grenade-major",
+    "name": "Goo Grenade (Major)",
+    "level": 17,
+    "price": {
+     "gp": 2500
+    }
+   }
+  ],
+  "text": "Goo Grenade Source Impossible Lands pg. 306 Usage held in 1 hand Bulk L Access Characters from Nex have access to this item. Activate Strike A goo grenade is a flask filled with a fast-growing, short-lived alchemical ooze. When you hit a creature with a goo grenade, that creature takes persistent acid damage and a circumstance penalty to its Speeds from the clinging goo. The target can end any penalties, conditions, and persistent damage caused by the bomb by Escaping or spending a total of 3 Interact actions to pry themselves free of the ooze. These Interact actions don't have to be consecutive, and other creatures can provide the actions as well. Goo Grenade (Lesser) Source Impossible Lands pg. 306 Price 3 gp Bulk L The target takes 1d4 acid damage, 1 persistent acid damage, and 1 acid splash damage. They take a –5-foot circumstance penalty to their Speeds. The Escape DC is 15. Goo Gre"
+ },
+ {
+  "id": "grisantian-pelt",
+  "name": "Grisantian Pelt",
+  "itemType": "equipment",
+  "level": 12,
+  "kin": [
+   {
+    "id": "grisantian-pelt-armor",
+    "name": "Grisantian Pelt Armor",
+    "level": 12,
+    "price": null
+   },
+   {
+    "id": "grisantian-pelt-armor-standard-grade",
+    "name": "Grisantian Pelt Armor (Standard-Grade)",
+    "level": 12,
+    "price": {
+     "gp": 1800
+    }
+   },
+   {
+    "id": "grisantian-pelt-armor-high-grade",
+    "name": "Grisantian Pelt Armor (High-Grade)",
+    "level": 19,
+    "price": {
+     "gp": 33000
+    }
+   }
+  ],
+  "text": "Grisantian Pelt Source Monsters of Myth pg. 35 Highly desired for the prestige, the pelt of the grogrisant also has invaluable properties. Standard-grade items can be made from the pelt of a grisantian lion, but high-grade items require the pelt of the grogrisant itself. This supernaturally tough animal skin is gold and shines in sunlight. It can be used to make any item usually made of cloth, leather, or hide. This material is immune to fire, and its Hardness is doubled against piercing or slashing damage. Up to 4 Bulk of grisantian pelt can be harvested from a single creature (this is usually more than enough for 4 suits of standard grade armor or 2 suits of high-grade armor). Grisantian Pelt Items Thin Items Hardness HP BT Standard-grade 6 24 12 High-grade 8 32 16 Items Hardness HP BT Standard-grade 9 36 18 High-grade 11 44 22 Material Uses Grisantian Pelt Armor Grisantian Hide Object"
+ },
+ {
+  "id": "grisantian-pelt-armor",
+  "name": "Grisantian Pelt Armor",
+  "itemType": "equipment",
+  "level": 12,
+  "kin": [
+   {
+    "id": "grisantian-pelt-armor-standard-grade",
+    "name": "Grisantian Pelt Armor (Standard-Grade)",
+    "level": 12,
+    "price": {
+     "gp": 1800
+    }
+   },
+   {
+    "id": "grisantian-pelt-armor-high-grade",
+    "name": "Grisantian Pelt Armor (High-Grade)",
+    "level": 19,
+    "price": {
+     "gp": 33000
+    }
+   }
+  ],
+  "text": "Grisantian Pelt Armor Source Monsters of Myth pg. 35 Usage worn armor Bulk varies by armor Base Material Grisantian Pelt Grisantian pelt armor is immune to fire damage, and its Hardness is doubled against piercing or slashing damage. Wearing armor made from grisantian pelt also grants you a +1 circumstance bonus to your AC and saving throws against attacks and spells that deal fire damage. Grisantian Pelt Armor (Standard-Grade) Source Monsters of Myth pg. 35 Price 1,800 gp (+180 gp per Bulk) Craft Requirements The initial raw materials must include grisantian pelt worth at least 900 gp + 90 gp per Bulk. Grisantian Pelt Armor (High-Grade) Source Monsters of Myth pg. 35 Price 33,000 gp (+3,300 gp per Bulk) Craft Requirements The initial raw materials must include grisantian pelt worth at least 16,500 gp + 1,650 gp per Bulk."
+ },
+ {
+  "id": "guide",
+  "name": "Guide",
+  "itemType": "equipment",
+  "level": 0,
+  "kin": [
+   {
+    "id": "guide-harness",
+    "name": "Guide Harness",
+    "level": 1,
+    "price": {
+     "gp": 5
+    }
+   },
+   {
+    "id": "guide-expedient-wilderness-guide",
+    "name": "Guide (Expedient Wilderness Guide)",
+    "level": 0,
+    "price": {
+     "gp": 6
+    }
+   },
+   {
+    "id": "guide-safe-wilderness-guide",
+    "name": "Guide (Safe Wilderness Guide)",
+    "level": 0,
+    "price": {
+     "gp": 4
+    }
+   },
+   {
+    "id": "guide-survival-guide-level-1-trained",
+    "name": "Guide (Survival Guide Level 1; Trained)",
+    "level": 0,
+    "price": {
+     "gp": 4
+    }
+   },
+   {
+    "id": "guide-survival-guide-level-2",
+    "name": "Guide (Survival Guide Level 2)",
+    "level": 0,
+    "price": {
+     "gp": 10
+    }
+   },
+   {
+    "id": "guide-survival-guide-level-3-expert",
+    "name": "Guide (Survival Guide Level 3; Expert)",
+    "level": 0,
+    "price": {
+     "gp": 20
+    }
+   },
+   {
+    "id": "guide-survival-guide-level-4",
+    "name": "Guide (Survival Guide Level 4)",
+    "level": 0,
+    "price": {
+     "gp": 50
+    }
+   }
+  ],
+  "text": "Guide Source Firebrands pg. 93 Venturing away from home or into the wilderness can be dangerous, especially when the terrain and local creatures are unfamiliar. Guide services reduce the risk of danger during an expedition as guides know the safest or the quickest routes to take through various areas. They also can arrange transportation, food, lodging, and other resources needed for a journey. Guides can assist with locating specific flora or fauna, which is particularly helpful for those in search of ingredients for alchemy or a ritual. Guide services typically focus on either wilderness or survival. Wilderness guides are familiar with the terrain and the habits of the creatures who dwell in the region. They can guide you through unfamiliar or hazardous locations using an expedient route, which is the standard route that covers the distance in the shortest amount of time regardless of "
+ },
+ {
+  "id": "handcuffs",
+  "name": "Handcuffs",
+  "itemType": "equipment",
+  "level": 3,
+  "kin": [
+   {
+    "id": "handcuffs-average",
+    "name": "Handcuffs (Average)",
+    "level": 3,
+    "price": {
+     "gp": 30
+    }
+   },
+   {
+    "id": "handcuffs-good",
+    "name": "Handcuffs (Good)",
+    "level": 9,
+    "price": {
+     "gp": 350
+    }
+   },
+   {
+    "id": "handcuffs-superior",
+    "name": "Handcuffs (Superior)",
+    "level": 17,
+    "price": {
+     "gp": 6000
+    }
+   }
+  ],
+  "text": "Handcuffs May contain spoilers from Agents of Edgewatch Source Pathfinder #157: Devil at the Dreaming Palace pg. 77 Hands 1 Usage held in 1 hand Bulk L Developed in Absalom and rarely used except by police forces in major cities due to their significant cost, handcuffs possess a ratcheting lock system in each cuff that allows them to be quickly cinched down on a captive's limbs, even if they're actively resisting. To apply handcuffs, you must first grab or restrain your opponent, then attempt an Athletics check against the opponent's Fortitude DC. On a success, you lock one of the cuffs around your opponent's wrist. You can lock the other cuff to yourself or a stationary object within reach as an Interact action; to lock it to another creature (either the same opponent you just cuffed or a separate creature altogether), you must first grab or restrain that creature, as before, and then m"
+ },
+ {
+  "id": "harrow-deck",
+  "name": "Harrow Deck",
+  "itemType": "equipment",
+  "level": 0,
+  "kin": [
+   {
+    "id": "harrow-deck-common",
+    "name": "Harrow Deck (Common)",
+    "level": 0,
+    "price": {
+     "gp": 10
+    }
+   },
+   {
+    "id": "harrow-deck-fine",
+    "name": "Harrow Deck (Fine)",
+    "level": 0,
+    "price": {
+     "gp": 11
+    }
+   },
+   {
+    "id": "harrow-deck-simple",
+    "name": "Harrow Deck (Simple)",
+    "level": 0,
+    "price": {
+     "gp": 1
+    }
+   }
+  ],
+  "text": "Harrow Deck Source Pathfinder #160: Assault on Hunting Lodge Seven pg. 66 Hands 2 Bulk L Used by gamblers and seers alike, this deck of cards comes in several varieties. Simple harrow decks are made from low-quality paper and typically have only an icon and a number to signify the suit and alignment. These simple decks are mostly used for games of chance, as the actual image and significance of the cards are irrelevant for such games. Common harrow decks are made from higher-quality paper and feature illustrations—harrow readers typically use these decks. Fine harrow decks are made from a variety of materials, such as high-quality paper, woods, bone, ivory, or metal. Harrow Deck (Common) Source Pathfinder #160: Assault on Hunting Lodge Seven pg. 66 Price 10 gp Hands 2 Bulk L Harrow Deck (Fine) Source Pathfinder #160: Assault on Hunting Lodge Seven pg. 66 Price 11 gp (+) Hands 2 Bulk L Ha"
+ },
+ {
+  "id": "healers-gel",
+  "name": "Healer's Gel",
+  "itemType": "consumable",
+  "level": 5,
+  "kin": [
+   {
+    "id": "healers-gel-lesser",
+    "name": "Healer's Gel (Lesser)",
+    "level": 5,
+    "price": {
+     "gp": 25
+    }
+   },
+   {
+    "id": "healers-gel-moderate",
+    "name": "Healer's Gel (Moderate)",
+    "level": 9,
+    "price": {
+     "gp": 125
+    }
+   },
+   {
+    "id": "healers-gel-greater",
+    "name": "Healer's Gel (Greater)",
+    "level": 13,
+    "price": {
+     "gp": 500
+    }
+   }
+  ],
+  "text": "Healer's Gel Source Secrets of Magic pg. 168 Usage held in 1 hand Bulk L Activate Cast a Spell An astringent aroma from rare succulent plants wafts off these soothing cloth patches. Adding this material component to a heal spell bestows additional temporary Hit Points to one target healed by the spell. These temporary Hit Points last for 1 minute. Healer's Gel (Lesser) Source Secrets of Magic pg. 168 Price 25 gp Bulk L The spell grants 5 temporary Hit Points. Healer's Gel (Moderate) Source Secrets of Magic pg. 168 Price 125 gp Bulk L The spell grants 10 temporary Hit Points. Healer's Gel (Greater) Source Secrets of Magic pg. 168 Price 500 gp Bulk L The spell grants 15 temporary Hit Points."
+ },
+ {
+  "id": "healing-potion",
+  "name": "Healing Potion",
+  "itemType": "consumable",
+  "level": 1,
+  "kin": [
+   {
+    "id": "healing-potion-minor",
+    "name": "Healing Potion (Minor)",
+    "level": 1,
+    "price": {
+     "gp": 4
+    }
+   },
+   {
+    "id": "healing-potion-lesser",
+    "name": "Healing Potion (Lesser)",
+    "level": 3,
+    "price": {
+     "gp": 12
+    }
+   },
+   {
+    "id": "healing-potion-moderate",
+    "name": "Healing Potion (Moderate)",
+    "level": 6,
+    "price": {
+     "gp": 50
+    }
+   },
+   {
+    "id": "healing-potion-greater",
+    "name": "Healing Potion (Greater)",
+    "level": 12,
+    "price": {
+     "gp": 400
+    }
+   },
+   {
+    "id": "healing-potion-major",
+    "name": "Healing Potion (Major)",
+    "level": 18,
+    "price": {
+     "gp": 5000
+    }
+   }
+  ],
+  "text": "Healing Potion Source GM Core pg. 259 Usage held in 1 hand Bulk L Activate (manipulate) A healing potion is a vial of a ruby-red liquid that imparts a tingling sensation as the drinker's wounds heal rapidly. When you drink a healing potion, you regain the listed number of Hit Points. Healing Potion (Minor) Source GM Core pg. 259, Core Rulebook pg. 563 Price 4 gp The potion restores 1d8 Hit Points. Healing Potion (Lesser) Source GM Core pg. 259, Core Rulebook pg. 563 Price 12 gp The potion restores 2d8+5 Hit Points. Healing Potion (Moderate) Source GM Core pg. 259, Core Rulebook pg. 563 Price 50 gp The potion restores 3d8+10 Hit Points. Healing Potion (Greater) Source GM Core pg. 259, Core Rulebook pg. 563 Price 400 gp The potion restores 6d8+20 Hit Points. Healing Potion (Major) Source GM Core pg. 259, Core Rulebook pg. 563 Price 5,000 gp The potion restores 8d8+30 Hit Points."
+ },
+ {
+  "id": "healing-vapor",
+  "name": "Healing Vapor",
+  "itemType": "equipment",
+  "level": 4,
+  "kin": [
+   {
+    "id": "healing-vapor-lesser",
+    "name": "Healing Vapor (Lesser)",
+    "level": 4,
+    "price": {
+     "gp": 20
+    }
+   },
+   {
+    "id": "healing-vapor-moderate",
+    "name": "Healing Vapor (Moderate)",
+    "level": 8,
+    "price": {
+     "gp": 100
+    }
+   },
+   {
+    "id": "healing-vapor-greater",
+    "name": "Healing Vapor (Greater)",
+    "level": 12,
+    "price": {
+     "gp": 400
+    }
+   },
+   {
+    "id": "healing-vapor-major",
+    "name": "Healing Vapor (Major)",
+    "level": 17,
+    "price": {
+     "gp": 3000
+    }
+   }
+  ],
+  "text": "Healing Vapor Source Treasure Vault (Remastered) pg. 54 Usage held in 2 hands Bulk L Activate (manipulate) Healing vapor is a substance that accelerates natural recovery processes by dispersing a mist infused with a variety of reagents typically used for healing and recovery. When deployed from a sealed container, the vapors fill a 5-foot burst, last for 10 minutes, and can affect up to four living creatures at one time. Any creatures beyond the first four gain no benefit, though if a creature leaves before the duration is over, a new creature that enters can benefit from the mist. A creature benefiting from the vapors regains a number of Hit Points based on the vapor's type. While affected, a creature also gains an item bonus to saving throws against diseases and poisons. If the areas of more than one healing vapor overlap, only the strongest applies to creatures inside overlapping area"
+ },
+ {
+  "id": "heartening-missive",
+  "name": "Heartening Missive",
+  "itemType": "consumable",
+  "level": 5,
+  "kin": [
+   {
+    "id": "heartening-missive-bull",
+    "name": "Heartening Missive (Bull)",
+    "level": 6,
+    "price": {
+     "gp": 50
+    }
+   },
+   {
+    "id": "heartening-missive-butterfly",
+    "name": "Heartening Missive (Butterfly)",
+    "level": 5,
+    "price": {
+     "gp": 25
+    }
+   },
+   {
+    "id": "heartening-missive-rabbit",
+    "name": "Heartening Missive (Rabbit)",
+    "level": 6,
+    "price": {
+     "gp": 50
+    }
+   },
+   {
+    "id": "heartening-missive-turtle",
+    "name": "Heartening Missive (Turtle)",
+    "level": 6,
+    "price": {
+     "gp": 50
+    }
+   }
+  ],
+  "text": "Heartening Missive Source Treasure Vault (Remastered) pg. 85 Usage held in 1 hand Activate (concentrate, manipulate) You compose a heartening missive by creating a short message or image intended to grant the recipient moral support. You must dedicate the missive to an individual creature you know and address it to their location (typically the settlement where you think they are). Once you finish composing the missive, it folds itself into the shape of an animal and Flies at a speed of 45 feet (about 15 miles per hour) toward the location for up to 24 hours. It alights near the recipient or in their hand. After Activating the missive, the recipient gets its benefit and becomes temporarily immune to all heartening missives for 24 hours. If the missive fails to reach its recipient in 24 hours, it returns to its sender at the same pace, becoming non-magical when it arrives. After imparting"
+ },
+ {
+  "id": "highhelm-drill",
+  "name": "Highhelm Drill",
+  "itemType": "equipment",
+  "level": 4,
+  "kin": [
+   {
+    "id": "highhelm-drill-mark-i",
+    "name": "Highhelm Drill (Mark I)",
+    "level": 4,
+    "price": {
+     "gp": 85
+    }
+   },
+   {
+    "id": "highhelm-drill-mark-ii",
+    "name": "Highhelm Drill (Mark II)",
+    "level": 12,
+    "price": {
+     "gp": 1800
+    }
+   },
+   {
+    "id": "highhelm-drill-mark-iii",
+    "name": "Highhelm Drill (Mark III)",
+    "level": 16,
+    "price": {
+     "gp": 8750
+    }
+   }
+  ],
+  "text": "Highhelm Drill Source Highhelm pg. 112 Usage held in 2 hands Bulk 3 Not to be outdone by their cousins in Dongun Hold, the artificers of Highhelm have developed a handheld magical equivalent to their clockwork drilling constructs and vehicles. The device is still in the testing phases, but early versions have been released to fund more development. Appearing as an unassuming yellow box with two handles normally, when the command word is spoken, a spiraling drill made of force emerges from its top. An active Highhelm drill can be used as an improvised weapon, dealing damage on a Strike as though it had been used on a surface for one round with no additional damage from other sources. Activate Interact; Frequency once per day; Effect The force drill appears and begins turning, dealing 5 force damage per round to any material against which you hold the drill. The drill ignores the first 4 H"
+ },
+ {
+  "id": "highhelm-war-shield",
+  "name": "Highhelm War Shield",
+  "itemType": "equipment",
+  "level": 9,
+  "kin": [
+   {
+    "id": "highhelm-war-shield-lesser",
+    "name": "Highhelm War Shield (Lesser)",
+    "level": 9,
+    "price": {
+     "gp": 700
+    }
+   },
+   {
+    "id": "highhelm-war-shield-moderate",
+    "name": "Highhelm War Shield (Moderate)",
+    "level": 14,
+    "price": {
+     "gp": 4000
+    }
+   },
+   {
+    "id": "highhelm-war-shield-greater",
+    "name": "Highhelm War Shield (Greater)",
+    "level": 20,
+    "price": {
+     "gp": 55000
+    }
+   }
+  ],
+  "text": "Highhelm War Shield Source Highhelm pg. 112 Usage held in 1 hand Bulk 1 Base Shield Razor Disc This specialized razor disc (Hardness 11, HP 84, BT 42) was originally designed by the members of Clan Molgrade for use by Highhelm's soldiers. The integrated blades are etched with runes, making them a +1 striking weapon. Activate envision; Frequency once per day; Trigger You critically hit with the shield's integrated blades; Effect The shield's blades grow and dig themselves into your foe. The creature becomes grabbed as it becomes impaled on the shield spikes. While you have a creature grabbed in this way, you can't Raise the Shield, but the creature takes persistent bleed damage every round equal to the number of damage dice. This persistent bleed can't end as long as the creature is impaled on the shield. You can Release the shield to leave it embedded in the creature. This ends the grab "
+ },
+ {
+  "id": "hireling",
+  "name": "Hireling",
+  "itemType": "equipment",
+  "level": 0,
+  "kin": [
+   {
+    "id": "hireling-unskilled",
+    "name": "Hireling (Unskilled)",
+    "level": 0,
+    "price": {
+     "sp": 1
+    }
+   },
+   {
+    "id": "hireling-skilled",
+    "name": "Hireling (Skilled)",
+    "level": 0,
+    "price": {
+     "sp": 5
+    }
+   }
+  ],
+  "text": "Hireling Source Core Rulebook pg. 294 PFS Note Pathfinder Society characters may not pay for hirelings as listed in the Core Rulebook. More capable hirelings are available via the Achievement Points system. Paid laborers can provide services for you. Unskilled hirelings can perform simple manual labor and are untrained at most skills. Skilled hirelings have expert proficiency in a particular skill. Hirelings are level 0. If a skill check is needed, an untrained hireling has a +0 modifier, while a skilled hireling has a +4 modifier in their area of expertise and +0 for other skill checks. Hirelings’ rates double if they’re going adventuring with you. Hireling (Unskilled) Source Core Rulebook pg. 294 Price 1 sp (per day) Hireling (Skilled) Source Core Rulebook pg. 294 Price 5 sp (per day)"
+ },
+ {
+  "id": "impact-foam-chassis",
+  "name": "Impact Foam Chassis",
+  "itemType": "consumable",
+  "level": 1,
+  "kin": [
+   {
+    "id": "impact-foam-chassis-lesser",
+    "name": "Impact Foam Chassis (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 3
+    }
+   },
+   {
+    "id": "impact-foam-chassis-moderate",
+    "name": "Impact Foam Chassis (Moderate)",
+    "level": 4,
+    "price": {
+     "gp": 15
+    }
+   },
+   {
+    "id": "impact-foam-chassis-greater",
+    "name": "Impact Foam Chassis (Greater)",
+    "level": 9,
+    "price": {
+     "gp": 150
+    }
+   },
+   {
+    "id": "impact-foam-chassis-major",
+    "name": "Impact Foam Chassis (Major)",
+    "level": 14,
+    "price": {
+     "gp": 650
+    }
+   }
+  ],
+  "text": "Impact Foam Chassis Source Guns & Gears (Remastered) pg. 70 PFS Note All Pathfinder Society agents have access to all uncommon clockwork items and gadgets from Chapters 1 and 2 of this book Usage worn over armor and clothes Bulk L Access Due to the use of technology, all gadgets are uncommon or rare, though inventors and regions with access to inventors have access to uncommon gadgets. Activate see below While you're wearing an impact foam chassis wrapped around your body, it Activates automatically whenever you fall at least 10 feet, causing a layer of soft, flexible impact foam to expand beneath and around you to cushion the fall. The impact foam decreases the falling damage by up to the listed amount, taking damage equal to the amount of falling damage the foam reduced. If this is enough to destroy the foam, it disperses immediately. However, if the foam has any Hit Points remaining, "
+ },
+ {
+  "id": "implosion-dust",
+  "name": "Implosion Dust",
+  "itemType": "equipment",
+  "level": 6,
+  "kin": [
+   {
+    "id": "implosion-dust-lesser",
+    "name": "Implosion Dust (Lesser)",
+    "level": 6,
+    "price": {
+     "gp": 40
+    }
+   },
+   {
+    "id": "implosion-dust-moderate",
+    "name": "Implosion Dust (Moderate)",
+    "level": 12,
+    "price": {
+     "gp": 370
+    }
+   },
+   {
+    "id": "implosion-dust-greater",
+    "name": "Implosion Dust (Greater)",
+    "level": 18,
+    "price": {
+     "gp": 4100
+    }
+   }
+  ],
+  "text": "Implosion Dust Source Treasure Vault (Remastered) pg. 54 Usage held in 1 hand Bulk L Activate (manipulate) Sealed in a packet so it can be released in a pressurized puff, implosion dust causes amorphous creatures to compress and shrink by hardening and even evaporating the liquid components of their physical forms. It's effective at weakening water elementals, air elementals, ooze, and other creatures the GM determines are similarly amorphous, which can even include particularly gelatinous aberrations. You release the dust toward one creature within 5 feet of you, which must attempt a Fortitude saving throw. The target must repeat the saving throw at the end of each of its turns. Implosion dust functions for up to 6 rounds. It then becomes inert, and the creature returns to its normal size. Critical Success The dust becomes inert, and the creature returns to its normal size. Success The "
+ },
+ {
+  "id": "insight-coffee",
+  "name": "Insight Coffee",
+  "itemType": "equipment",
+  "level": 6,
+  "kin": [
+   {
+    "id": "insight-coffee-lesser",
+    "name": "Insight Coffee (Lesser)",
+    "level": 6,
+    "price": {
+     "gp": 40
+    }
+   },
+   {
+    "id": "insight-coffee-moderate",
+    "name": "Insight Coffee (Moderate)",
+    "level": 12,
+    "price": {
+     "gp": 375
+    }
+   },
+   {
+    "id": "insight-coffee-greater",
+    "name": "Insight Coffee (Greater)",
+    "level": 19,
+    "price": {
+     "gp": 7500
+    }
+   }
+  ],
+  "text": "Insight Coffee Source Treasure Vault (Remastered) pg. 49 Usage held in 1 hand Bulk L Activate (manipulate) A popular choice for investigators studying alchemy, insight coffee is infused with alchemical flavoring during percolation. For 1 hour after you drink an insight coffee, you use d8s instead of d6s for your extra damage from the strategic strike class feature, if you have it. You also gain an item bonus to checks to Recall Knowledge with a skill determined by the blend chosen when the item is crafted. Double Coffee Religion Hazelnut Nature Mocha Arcana Vanilla Society Pumpkin Spice Occultism Toffee Medicine Insight Coffee (Lesser) Source Treasure Vault (Remastered) pg. 49 Price 40 gp Bulk L The item bonus is +2. Insight Coffee (Moderate) Source Treasure Vault (Remastered) pg. 49 Price 375 gp Bulk L The item bonus is +3. Insight Coffee (Greater) Source Treasure Vault (Remastered) pg."
+ },
+ {
+  "id": "inspiring",
+  "name": "Inspiring",
+  "itemType": "equipment",
+  "level": 0,
+  "kin": [
+   {
+    "id": "inspiring-spotlight",
+    "name": "Inspiring Spotlight",
+    "level": 9,
+    "price": {
+     "gp": 650
+    }
+   },
+   {
+    "id": "inspiring-spotlight-mounted",
+    "name": "Inspiring Spotlight (Mounted)",
+    "level": 15,
+    "price": {
+     "gp": 650
+    }
+   },
+   {
+    "id": "inspiring-spotlight-portable",
+    "name": "Inspiring Spotlight (Portable)",
+    "level": 9,
+    "price": {
+     "gp": 650
+    }
+   }
+  ],
+  "text": "Inspiring Source Treasure Vault (Remastered) pg. 198 Aspect Artistry Activate (concentrate) Effect You create a vision of a token you could have crafted or make a short performance to inspire an ally within 60 feet. This otherwise works as the uplifting overture cantrip."
+ },
+ {
+  "id": "inubrix",
+  "name": "Inubrix",
+  "itemType": "equipment",
+  "level": 0,
+  "kin": [
+   {
+    "id": "inubrix-chunk",
+    "name": "Inubrix Chunk",
+    "level": 0,
+    "price": {
+     "gp": 550
+    }
+   },
+   {
+    "id": "inubrix-ingot",
+    "name": "Inubrix Ingot",
+    "level": 0,
+    "price": {
+     "gp": 5500
+    }
+   },
+   {
+    "id": "inubrix-object-standard-grade",
+    "name": "Inubrix Object (Standard-Grade)",
+    "level": 8,
+    "price": {
+     "gp": 400
+    }
+   },
+   {
+    "id": "inubrix-object-high-grade",
+    "name": "Inubrix Object (High-Grade)",
+    "level": 16,
+    "price": {
+     "gp": 6500
+    }
+   },
+   {
+    "id": "inubrix-armor",
+    "name": "Inubrix Armor",
+    "level": 11,
+    "price": null
+   },
+   {
+    "id": "inubrix-armor-standard-grade",
+    "name": "Inubrix Armor (Standard-Grade)",
+    "level": 11,
+    "price": {
+     "gp": 1200
+    }
+   },
+   {
+    "id": "inubrix-armor-high-grade",
+    "name": "Inubrix Armor (High-Grade)",
+    "level": 18,
+    "price": {
+     "gp": 18000
+    }
+   },
+   {
+    "id": "inubrix-shield",
+    "name": "Inubrix Shield",
+    "level": 7,
+    "price": null
+   },
+   {
+    "id": "inubrix-buckler-standard-grade",
+    "name": "Inubrix Buckler (Standard-Grade)",
+    "level": 7,
+    "price": {
+     "gp": 320
+    }
+   },
+   {
+    "id": "inubrix-shield-standard-grade",
+    "name": "Inubrix Shield (Standard-Grade)",
+    "level": 7,
+    "price": {
+     "gp": 352
+    }
+   },
+   {
+    "id": "inubrix-buckler-high-grade",
+    "name": "Inubrix Buckler (High-Grade)",
+    "level": 15,
+    "price": {
+     "gp": 5000
+    }
+   },
+   {
+    "id": "inubrix-shield-high-grade",
+    "name": "Inubrix Shield (High-Grade)",
+    "level": 15,
+    "price": {
+     "gp": 5500
+    }
+   },
+   {
+    "id": "inubrix-weapon",
+    "name": "Inubrix Weapon",
+    "level": 11,
+    "price": null
+   },
+   {
+    "id": "inubrix-weapon-standard-grade",
+    "name": "Inubrix Weapon (Standard-Grade)",
+    "level": 11,
+    "price": {
+     "gp": 1400
+    }
+   },
+   {
+    "id": "inubrix-weapon-high-grade",
+    "name": "Inubrix Weapon (High-Grade)",
+    "level": 17,
+    "price": {
+     "gp": 13500
+    }
+   }
+  ],
+  "text": "Inubrix Source Grand Bazaar pg. 98 This pale, malleable metal's unusual molecular structure allows it to partially pass through iron and steel without touching them. While this property is useful for making weapons that bypass metal armor, inubrix is barely sturdier than lead. Even in an alloyed state, this skymetal is so fragile that it's difficult to use in crafting reliable shields and less than ideal for crafting armor. Inubrix Inubrix Items Hardness HP BT Thin Items Standard-grade 4 16 8 High-grade 7 28 14 Items Standard-grade 8 32 16 High-grade 11 44 22 Structures Standard-grade 17 68 34 High-grade 23 92 46 Material Uses Inubrix Armor Inubrix Shield Inubrix Weapon Inubrix Chunk Source Grand Bazaar pg. 98 Price 550 gp Inubrix Ingot Source Grand Bazaar pg. 98 Price 5,500 gp Inubrix Object (Standard-Grade) Source Grand Bazaar pg. 98 Price 400 gp (per Bulk) Inubrix Object (High-Grade) "
+ },
+ {
+  "id": "inubrix-armor",
+  "name": "Inubrix Armor",
+  "itemType": "equipment",
+  "level": 11,
+  "kin": [
+   {
+    "id": "inubrix-armor-standard-grade",
+    "name": "Inubrix Armor (Standard-Grade)",
+    "level": 11,
+    "price": {
+     "gp": 1200
+    }
+   },
+   {
+    "id": "inubrix-armor-high-grade",
+    "name": "Inubrix Armor (High-Grade)",
+    "level": 18,
+    "price": {
+     "gp": 18000
+    }
+   }
+  ],
+  "text": "Inubrix Armor Source Grand Bazaar pg. 98 Usage worn armor Bulk varies by armor Base Material Inubrix Inubrix's malleable nature means armor crafted from it is less rigid than usual, though this slightly increased mobility comes at the cost of protection. Metal armor crafted from inubrix gains the flexible armor trait; its item bonus to AC decreases by 1 but its maximum Dexterity bonus increases by 1. Inubrix Armor (Standard-Grade) Source Grand Bazaar pg. 98 Price 1,200 gp (+120 gp per Bulk) Craft Requirements The initial raw materials must include at least 150 gp of inubrix + 15 gp per Bulk. Inubrix Armor (High-Grade) Source Grand Bazaar pg. 98 Price 18,000 gp (+1,800 gp per Bulk) Craft Requirements The initial raw materials must include at least 9,000 gp of inubrix + 900 gp per Bulk."
+ },
+ {
+  "id": "inubrix-shield",
+  "name": "Inubrix Shield",
+  "itemType": "equipment",
+  "level": 7,
+  "kin": [
+   {
+    "id": "inubrix-shield-standard-grade",
+    "name": "Inubrix Shield (Standard-Grade)",
+    "level": 7,
+    "price": {
+     "gp": 352
+    }
+   },
+   {
+    "id": "inubrix-shield-high-grade",
+    "name": "Inubrix Shield (High-Grade)",
+    "level": 15,
+    "price": {
+     "gp": 5500
+    }
+   }
+  ],
+  "text": "Inubrix Shield Source Grand Bazaar pg. 99 Usage varies by shield Base Material Inubrix Inubrix is much softer than steel, and it's atypical for it to be used to make shields. An item made by an unskilled smith will dent from a single blow and prove worthless on the battlefield. However, its yielding surface can entrap metal weapons. You can use an inubrix shield (or shield boss or shield spikes on an inubrix shield) to Disarm a metal item with the Athletics skill even if you don't have a free hand; doing so uses the weapon's reach (if different from your own) and adds the weapon's item bonus to attack rolls (if any) as an item bonus to the Athletics check. If you critically fail a check to Disarm a metal item using the weapon, you can drop the weapon to take the effects of a failure instead of a critical failure. On a critical success, you still need a free hand if you want to take the i"
+ },
+ {
+  "id": "inubrix-weapon",
+  "name": "Inubrix Weapon",
+  "itemType": "equipment",
+  "level": 11,
+  "kin": [
+   {
+    "id": "inubrix-weapon-standard-grade",
+    "name": "Inubrix Weapon (Standard-Grade)",
+    "level": 11,
+    "price": {
+     "gp": 1400
+    }
+   },
+   {
+    "id": "inubrix-weapon-high-grade",
+    "name": "Inubrix Weapon (High-Grade)",
+    "level": 17,
+    "price": {
+     "gp": 13500
+    }
+   }
+  ],
+  "text": "Inubrix Weapon Source Grand Bazaar pg. 99 Usage varies by weapon Bulk varies by weapon Base Material Inubrix While inubrix weapons don't pack the same punch as more durable weapons, they have the unique ability to bypass some of the protections offered by metal armors and shields. A weapon crafted from inubrix reduces the weapon's damage die by 1 size. However, they ignore the resistance to damage from metal armor's armor specialization effects and the circumstance bonus to AC from metal shields. Strikes with inubrix weapons don't trigger the Shield Block reaction from a metal shield. Weapons that normally deal 1d4 damage can't be crafted from inubrix. Inubrix Weapon (Standard-Grade) Source Grand Bazaar pg. 99 Price 1,400 gp (+140 gp per Bulk) Craft Requirements at least 175 gp of inubrix + 17.5 gp per Bulk Inubrix Weapon (High-Grade) Source Grand Bazaar pg. 99 Price 13,500 gp (+1,350 gp"
+ },
+ {
+  "id": "item-cache",
+  "name": "Item Cache",
+  "itemType": "equipment",
+  "level": 0,
+  "kin": [
+   {
+    "id": "item-cache-common-cache-level-1",
+    "name": "Item Cache (Common Cache Level 1)",
+    "level": 0,
+    "price": {
+     "gp": 2
+    }
+   },
+   {
+    "id": "item-cache-common-cache-level-2",
+    "name": "Item Cache (Common Cache Level 2)",
+    "level": 0,
+    "price": {
+     "gp": 5
+    }
+   },
+   {
+    "id": "item-cache-common-cache-level-3",
+    "name": "Item Cache (Common Cache Level 3)",
+    "level": 0,
+    "price": {
+     "gp": 10
+    }
+   },
+   {
+    "id": "item-cache-common-cache-level-4",
+    "name": "Item Cache (Common Cache Level 4)",
+    "level": 0,
+    "price": {
+     "gp": 50
+    }
+   },
+   {
+    "id": "item-cache-uncommon-cache-level-1",
+    "name": "Item Cache (Uncommon Cache Level 1)",
+    "level": 0,
+    "price": {
+     "gp": 10
+    }
+   },
+   {
+    "id": "item-cache-uncommon-cache-level-2",
+    "name": "Item Cache (Uncommon Cache Level 2)",
+    "level": 0,
+    "price": {
+     "gp": 50
+    }
+   },
+   {
+    "id": "item-cache-uncommon-cache-level-3",
+    "name": "Item Cache (Uncommon Cache Level 3)",
+    "level": 0,
+    "price": {
+     "gp": 100
+    }
+   },
+   {
+    "id": "item-cache-uncommon-cache-level-4",
+    "name": "Item Cache (Uncommon Cache Level 4)",
+    "level": 0,
+    "price": {
+     "gp": 250
+    }
+   }
+  ],
+  "text": "Item Cache Source Firebrands pg. 93 Item caches serve as places where you can pick up supplies, and suppliers are the people or organizations who provide the items and locations for these caches. This service is useful for scheduling a quick resupply of food along a specified route during a long journey, or for setting up specific items that need to be accessed at an appointed time and place, such as having a cache of weapons accessible to an infiltration party behind enemy lines. On popular travel routes, Firebrands and other adventuring groups have regular access points where they can easily set up a resource drop, thanks to suppliers who are typically supportive locals and who make a small income off running supplies to drop locations. Cached items carry an automatic 10% markup in addition to a flat fee determined by the rarity and Bulk of the items in total. The price of the cache in"
+ },
+ {
+  "id": "judgement-thurible",
+  "name": "Judgement Thurible",
+  "itemType": "equipment",
+  "level": 10,
+  "kin": [
+   {
+    "id": "judgement-thurible-greater",
+    "name": "Judgement Thurible (Greater)",
+    "level": 17,
+    "price": {
+     "gp": 14000
+    }
+   },
+   {
+    "id": "judgement-thurible-major",
+    "name": "Judgement Thurible (Major)",
+    "level": 20,
+    "price": {
+     "gp": 65000
+    }
+   }
+  ],
+  "text": "Judgement Thurible Source Treasure Vault (Remastered) pg. 126 Usage affixed to armor or a weapon The golden religious symbol on the top of this spherical incense holder shifts its form to match the faith of its bearer. You gain no benefit from a judgment thurible if you don’t worship a deity. The spell DC of any spell cast by activating this item is 27. Armor After you cast a spell by activating the thurible, the thurible casts 3rd-rank protection on you, with a duration of 1 round. Weapon After you cast a spell by activating the thurible, the weapon gains a rune that lasts until the end of your next turn. It gains the holy rune if your deity allows holy sanctification or the unholy rune if your deity allows unholy sanctification. If your deity allows both, you can choose which rune the weapon gains. If your deity allows neither, your weapon doesn’t gain a rune. Activate Cast a Spell; Ef"
+ },
+ {
+  "id": "juggernaut-mutagen",
+  "name": "Juggernaut Mutagen",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "juggernaut-mutagen-lesser",
+    "name": "Juggernaut Mutagen (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 4
+    }
+   },
+   {
+    "id": "juggernaut-mutagen-moderate",
+    "name": "Juggernaut Mutagen (Moderate)",
+    "level": 3,
+    "price": {
+     "gp": 12
+    }
+   },
+   {
+    "id": "juggernaut-mutagen-greater",
+    "name": "Juggernaut Mutagen (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 300
+    }
+   },
+   {
+    "id": "juggernaut-mutagen-major",
+    "name": "Juggernaut Mutagen (Major)",
+    "level": 17,
+    "price": {
+     "gp": 3000
+    }
+   }
+  ],
+  "text": "Juggernaut Mutagen Source Player Core 2 pg. 289 Usage held in 1 hand Bulk L Activate (manipulate) Your body becomes sturdy and ponderous. Benefit You gain an item bonus to Fortitude saves and the listed number of temporary Hit Points. Whenever you're at maximum Hit Points for at least 1 minute, you regain the temporary Hit Points. Drawback You take a –2 penalty to Will saves, Perception checks, and initiative rolls. Juggernaut Mutagen (Lesser) Source Player Core 2 pg. 289, Core Rulebook pg. 548 Price 4 gp Bulk L The bonus is +1, you gain 5 temporary Hit Points, and the duration is 1 minute. Juggernaut Mutagen (Moderate) Source Player Core 2 pg. 289, Core Rulebook pg. 548 Price 12 gp Bulk L The bonus is +2, you gain 10 temporary Hit Points, and the duration is 10 minutes. Juggernaut Mutagen (Greater) Source Player Core 2 pg. 289, Core Rulebook pg. 548 Price 300 gp Bulk L The bonus is +3, "
+ },
+ {
+  "id": "junk-bomb",
+  "name": "Junk Bomb",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "junk-bomb-lesser",
+    "name": "Junk Bomb (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 4
+    }
+   },
+   {
+    "id": "junk-bomb-moderate",
+    "name": "Junk Bomb (Moderate)",
+    "level": 3,
+    "price": {
+     "gp": 12
+    }
+   },
+   {
+    "id": "junk-bomb-greater",
+    "name": "Junk Bomb (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 275
+    }
+   },
+   {
+    "id": "junk-bomb-major",
+    "name": "Junk Bomb (Major)",
+    "level": 17,
+    "price": {
+     "gp": 2750
+    }
+   }
+  ],
+  "text": "Junk Bomb Source Pathfinder Special: Fumbus Usage held in 1 hand Bulk L Activate Strike This volatile-looking bomb is cobbled together from jagged metal scrap, broken glass, and other bits of razor-sharp fragments, lashed around a core of explosive alchemical slag. A junk bomb deals the listed slashing damage, persistent bleed damage, and piercing splash damage. Many types grant an item bonus to attack rolls. Junk Bomb (Lesser) Source Pathfinder Special: Fumbus Price 4 gp Bulk L The bomb deals 1d8 slashing damage, 1 persistent bleed damage, and 1 slashing splash damage. Junk Bomb (Moderate) Source Pathfinder Special: Fumbus Price 12 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d8 slashing damage, 2 persistent bleed damage, and 2 slashing splash damage. Junk Bomb (Greater) Source Pathfinder Special: Fumbus Price 275 gp Bulk L You gain a +2 item bonus to attack rolls"
+ },
+ {
+  "id": "keep-stone",
+  "name": "Keep Stone",
+  "itemType": "equipment",
+  "level": 17,
+  "kin": [
+   {
+    "id": "keep-stone-chunk",
+    "name": "Keep Stone Chunk",
+    "level": 17,
+    "price": {
+     "gp": 750
+    }
+   },
+   {
+    "id": "keep-stone-ingot",
+    "name": "Keep Stone Ingot",
+    "level": 17,
+    "price": {
+     "gp": 7500
+    }
+   },
+   {
+    "id": "keep-stone-object-high-grade",
+    "name": "Keep Stone Object (High-Grade)",
+    "level": 17,
+    "price": {
+     "gp": 9000
+    }
+   },
+   {
+    "id": "keep-stone-armor",
+    "name": "Keep Stone Armor",
+    "level": 20,
+    "price": null
+   },
+   {
+    "id": "keep-stone-armor-high-grade",
+    "name": "Keep Stone Armor (High-Grade)",
+    "level": 20,
+    "price": {
+     "gp": 56000
+    }
+   },
+   {
+    "id": "keep-stone-shield",
+    "name": "Keep Stone Shield",
+    "level": 17,
+    "price": null
+   },
+   {
+    "id": "keep-stone-shield-high-grade",
+    "name": "Keep Stone Shield (High-Grade)",
+    "level": 17,
+    "price": {
+     "gp": 13200
+    }
+   },
+   {
+    "id": "keep-stone-weapon",
+    "name": "Keep Stone Weapon",
+    "level": 18,
+    "price": null
+   },
+   {
+    "id": "keep-stone-weapon-high-grade",
+    "name": "Keep Stone Weapon (High-Grade)",
+    "level": 18,
+    "price": {
+     "gp": 22500
+    }
+   },
+   {
+    "id": "keep-stone-amulet",
+    "name": "Keep Stone Amulet",
+    "level": 19,
+    "price": {
+     "gp": 38000
+    }
+   }
+  ],
+  "text": "Keep Stone Source Highhelm pg. 113 The crowning achievement of Highhelm's millennia of metallurgical advancements and engineering is the beautiful alloy called keep stone. Despite its name, no stone is used in the production of keep stone. Through the use of a highly guarded process that smelts together adamantine and lead, Highhelm's greatest crafters were able to develop a material with an appearance that more closely resembles marble than metal. Keep stone is only slightly weaker than adamantine alone, but with the incredible ability to disrupt magic. Any spell or magical effect targeting raw keep stone must succeed at a DC 5 flat check or the effect is lost. Keep stone's use in the construction of Torag's Shield is not only to stretch Highhelm's adamantine reserves further and protect the walls from magical assault, but also because of its protective effects on divination magic on bo"
+ },
+ {
+  "id": "lantern",
+  "name": "Lantern",
+  "itemType": "equipment",
+  "level": 0,
+  "kin": [
+   {
+    "id": "lantern-of-empty-light",
+    "name": "Lantern of Empty Light",
+    "level": 6,
+    "price": {
+     "gp": 240
+    }
+   },
+   {
+    "id": "lantern-bulls-eye",
+    "name": "Lantern (Bull's-Eye)",
+    "level": 0,
+    "price": {
+     "gp": 1
+    }
+   },
+   {
+    "id": "lantern-hooded",
+    "name": "Lantern (Hooded)",
+    "level": 0,
+    "price": {
+     "sp": 7
+    }
+   },
+   {
+    "id": "lantern-implement",
+    "name": "Lantern Implement",
+    "level": 0,
+    "price": {}
+   }
+  ],
+  "text": "Lantern Source Player Core pg. 288 A lantern sheds bright light and requires 1 pint of oil to function for 6 hours. Lantern (Bull's-Eye) Source Player Core pg. 288, Core Rulebook pg. 290 Price 1 gp Hands 1 Bulk 1 A bull's-eye lantern emits its light in a 60-foot cone (and dim light in the next 60 feet). Lantern (Hooded) Source Player Core pg. 288, Core Rulebook pg. 290 Price 7 sp Hands 1 Bulk L A hooded lantern sheds light in a 30-foot radius (and dim light in the next 30 feet) and is equipped with shutters, which you can close to block the light. Closing or opening the shutters takes an Interact action."
+ },
+ {
+  "id": "leapers-elixir",
+  "name": "Leaper's Elixir",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "leapers-elixir-lesser",
+    "name": "Leaper's Elixir (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 3
+    }
+   },
+   {
+    "id": "leapers-elixir-greater",
+    "name": "Leaper's Elixir (Greater)",
+    "level": 7,
+    "price": {
+     "gp": 55
+    }
+   }
+  ],
+  "text": "Leaper's Elixir Source Core Rulebook pg. 549 Usage held in 1 hand Bulk L Activate Interact This tingly solution increases the elasticity and contraction of your leg muscles. For 1 minute after drinking this elixir, you can High Jump or Long Jump as a single action instead of 2 actions. If you do, you don’t perform the initial Stride (nor do you fail if you don’t Stride 10 feet). Leaper's Elixir (Lesser) Source Core Rulebook pg. 549 Price 3 gp Leaper's Elixir (Greater) Source Core Rulebook pg. 549 Price 55 gp The maximum vertical distance you can jump with a High Jump is the same as you can jump horizontally with a Long Jump."
+ },
+ {
+  "id": "life-boosting-oil",
+  "name": "Life-Boosting Oil",
+  "itemType": "consumable",
+  "level": 3,
+  "kin": [
+   {
+    "id": "life-boosting-oil-lesser",
+    "name": "Life-Boosting Oil (Lesser)",
+    "level": 3,
+    "price": {
+     "gp": 12
+    }
+   },
+   {
+    "id": "life-boosting-oil-moderate",
+    "name": "Life-Boosting Oil (Moderate)",
+    "level": 7,
+    "price": {
+     "gp": 70
+    }
+   },
+   {
+    "id": "life-boosting-oil-greater",
+    "name": "Life-Boosting Oil (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 300
+    }
+   },
+   {
+    "id": "life-boosting-oil-major",
+    "name": "Life-Boosting Oil (Major)",
+    "level": 15,
+    "price": {
+     "gp": 1300
+    }
+   }
+  ],
+  "text": "Life-Boosting Oil Source Treasure Vault (Remastered) pg. 86 Usage held in 2 hands Bulk L Activate (manipulate) When you apply sticky, stinging life-boosting oil, you gain fast healing according to the oil's type that starts the first time you take damage while the oil lasts. Once the fast healing starts, the oil remains effective for 4 rounds. However, the oil lasts only 8 hours, whether it provides fast healing or not. Life-Boosting Oil (Lesser) Source Treasure Vault (Remastered) pg. 86 Price 12 gp Bulk L The oil grants fast healing 3. Life-Boosting Oil (Moderate) Source Treasure Vault (Remastered) pg. 86 Price 70 gp Bulk L The oil grants fast healing 6. Life-Boosting Oil (Greater) Source Treasure Vault (Remastered) pg. 86 Price 300 gp Bulk L The oil grants fast healing 10. Life-Boosting Oil (Major) Source Treasure Vault (Remastered) pg. 86 Price 1,300 gp Bulk L The oil grants fast heal"
+ },
+ {
+  "id": "life-shot",
+  "name": "Life Shot",
+  "itemType": "equipment",
+  "level": 2,
+  "kin": [
+   {
+    "id": "life-shot-minor",
+    "name": "Life Shot (Minor)",
+    "level": 2,
+    "price": {
+     "gp": 5
+    }
+   },
+   {
+    "id": "life-shot-lesser",
+    "name": "Life Shot (Lesser)",
+    "level": 6,
+    "price": {
+     "gp": 50
+    }
+   },
+   {
+    "id": "life-shot-moderate",
+    "name": "Life Shot (Moderate)",
+    "level": 10,
+    "price": {
+     "gp": 200
+    }
+   },
+   {
+    "id": "life-shot-greater",
+    "name": "Life Shot (Greater)",
+    "level": 14,
+    "price": {
+     "gp": 750
+    }
+   },
+   {
+    "id": "life-shot-major",
+    "name": "Life Shot (Major)",
+    "level": 16,
+    "price": {
+     "gp": 1500
+    }
+   },
+   {
+    "id": "life-shot-true",
+    "name": "Life Shot (True)",
+    "level": 20,
+    "price": {
+     "gp": 9000
+    }
+   }
+  ],
+  "text": "Life Shot Source Treasure Vault (Remastered) pg. 43 Ammunition round Activate (manipulate) Life shot is a special cartridge that carries a small dose of elixir of life. A creature hit by activated life shot takes no damage from the successful attack, instead receiving healing and gaining an item bonus to saving throws against diseases and poisons for 1 minute. On a critical hit, roll the healing received twice and take the better result (this is a fortune effect). A target willing to be hit by this attack is off-guard against it. Life Shot (Minor) Source Treasure Vault (Remastered) pg. 43 Price 5 gp The ammunition restores 1d4 Hit Points, and the bonus is +1. Life Shot (Lesser) Source Treasure Vault (Remastered) pg. 43 Price 50 gp The ammunition restores 3d4+3 Hit Points, and the bonus is +1. Life Shot (Moderate) Source Treasure Vault (Remastered) pg. 43 Price 200 gp The ammunition resto"
+ },
+ {
+  "id": "lions-pelt",
+  "name": "Lion's Pelt",
+  "itemType": "equipment",
+  "level": 6,
+  "kin": [
+   {
+    "id": "lions-pelt-leather",
+    "name": "Lion’s Pelt (Leather)",
+    "level": 6,
+    "price": {
+     "gp": 250
+    }
+   },
+   {
+    "id": "lions-pelt-chain",
+    "name": "Lion’s Pelt (Chain)",
+    "level": 6,
+    "price": {
+     "cp": 0,
+     "gp": 250,
+     "pp": 0,
+     "sp": 0
+    }
+   }
+  ],
+  "text": "Lion's Pelt Source Shining Kingdoms pg. 173 Usage worn armor Bulk 1 Base Armor Leather Armor, Chain Shirt Access You’re a member of the Lion Blades . Laurisa Tromaine ordered these as prototype uniforms. The fur-lined pauldrons bear the insignia of a lion with a blade in its mouth. The type of blade indicates which bard school one graduated from. When you disguise the armor via its raiment rune, you can choose whether to conceal this symbol or not. You can also use the rune’s activation to quickly display or hide the insignia. Activate—Contact Ally (arcane, concentrate) Frequency once per hour; Effect You cast message at 1st rank to a target that you know is also wearing a lion’s pelt uniform. If you and the target share an insignia, the spell is heightened to 3rd rank. Lion’s Pelt (Leather) Source Shining Kingdoms pg. 173 Price 250 gp Bulk 1 The armor is a +1 raiment leather armor. Lion"
+ },
+ {
+  "id": "lock",
+  "name": "Lock",
+  "itemType": "equipment",
+  "level": 0,
+  "kin": [
+   {
+    "id": "lock-poor",
+    "name": "Lock (Poor)",
+    "level": 0,
+    "price": {
+     "sp": 2
+    }
+   },
+   {
+    "id": "lock-simple",
+    "name": "Lock (Simple)",
+    "level": 1,
+    "price": {
+     "gp": 2
+    }
+   },
+   {
+    "id": "lock-average",
+    "name": "Lock (Average)",
+    "level": 3,
+    "price": {
+     "gp": 15
+    }
+   },
+   {
+    "id": "lock-good",
+    "name": "Lock (Good)",
+    "level": 9,
+    "price": {
+     "gp": 200
+    }
+   },
+   {
+    "id": "lock-superior",
+    "name": "Lock (Superior)",
+    "level": 17,
+    "price": {
+     "gp": 4500
+    }
+   }
+  ],
+  "text": "Lock Source Player Core pg. 288 Picking a poor lock requires two successful DC 15 Thievery checks, a simple lock requires three successful DC 20 Thievery checks, an average lock requires four successes at DC 25, a good lock requires five successes at DC 30, and a superior lock six successes at DC 40. Lock (Poor) Source Player Core pg. 288, Core Rulebook pg. 290 Price 2 sp Hands 2 Lock (Simple) Source Player Core pg. 288, Core Rulebook pg. 290 Price 2 gp Hands 2 Lock (Average) Source Player Core pg. 288, Core Rulebook pg. 290 Price 15 gp Hands 2 Lock (Good) Source Player Core pg. 288, Core Rulebook pg. 290 Price 200 gp Hands 2 Lock (Superior) Source Player Core pg. 288, Core Rulebook pg. 290 Price 4,500 gp Hands 2"
+ }
+]

@@ -44,7 +44,8 @@ import { featGrantedCompanions, FEAT_COMPANION_GRANTS } from '../rules/companion
 import { ActionGlyph } from './widgets';
 import { InfoTerm } from './InfoTerm';
 import { ConditionsModal } from './ConditionsModal';
-import { CATALOG_MODES, CATALOG_MODE_MAP } from '../rules/modes';
+import { CATALOG_MODES, playerModeLibrary } from '../rules/modes';
+import { FEAT_SITUATIONAL } from '../rules/situationalBonuses';
 import { AddItemsModal } from './AddItemsModal';
 import { PickerRow, descNodeOf } from './FilterableSelect';
 import { DescriptionModal } from './DescriptionModal';
@@ -411,6 +412,87 @@ function CompanionConditions({ compId, conditions, modes, content, onPlay, onOpe
         </button>
       )}
     </div>
+  );
+}
+
+/**
+ * "Fortitude and Reflex saves", not "save: fortitude, save: reflex".
+ *
+ * The registry stores targets as {kind, detail} pairs, which is right for matching and wrong to read.
+ * Saves and skills collapse into one phrase so a two-target entry doesn't repeat its own kind.
+ */
+function targetPhrase(targets: readonly { kind: string; detail?: string }[]): string {
+  const cap1 = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+  const list = (xs: string[]) => (xs.length <= 1 ? xs[0] ?? '' : `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}`);
+  const KIND: Record<string, string> = {
+    ac: 'AC', perception: 'Perception', speed: 'Speed', hp: 'Hit Points',
+    strikeAttack: 'attack rolls', attack: 'attack rolls', strikeDamage: 'damage',
+    classDc: 'Class DC', spellDamage: 'spell damage',
+  };
+  const saves = targets.filter((t) => t.kind === 'save');
+  const skills = targets.filter((t) => t.kind === 'skill');
+  const rest = targets.filter((t) => t.kind !== 'save' && t.kind !== 'skill');
+  const parts: string[] = [];
+  if (saves.length) {
+    const names = saves.map((t) => (!t.detail || t.detail === 'all' ? 'all' : cap1(t.detail)));
+    parts.push(names.includes('all') ? 'saving throws' : `${list(names)} saves`);
+  }
+  if (skills.length) {
+    const names = skills.map((t) => (!t.detail || t.detail === 'all' ? 'all' : cap1(t.detail.replace(/^lore:/, '') + (t.detail.startsWith('lore:') ? ' Lore' : ''))));
+    parts.push(names.includes('all') ? 'skill checks' : list(names));
+  }
+  for (const t of rest) parts.push(KIND[t.kind] ?? t.kind);
+  return list(parts);
+}
+
+/**
+ * Conditional bonuses from the COMPANION's own gear, on the companion's block.
+ *
+ * The owner's ruling: "stats for companions … about items that effect the familer they need to be in
+ * the inventory of it (i say familer i mean every companion) instead of your inventory unless an item
+ * says otherwise." So a companion item's `*` belongs here and nowhere else — anti-dragon barding is
+ * the animal's armour, and marking the PC's saves with it would be simply wrong.
+ *
+ * This retires the older "companion situational bonuses never display" finding, which was closed as
+ * not-a-bug on the grounds that those records were the companion's. That was right about the PC; the
+ * answer was that the companion should show them.
+ */
+function CompanionSituational({ cfg, content }: { cfg: CompanionConfig; content: ContentDatabase }) {
+  const lines: { source: string; when: string; bonus: string; targets: string }[] = [];
+  for (const inv of cfg.inventory ?? []) {
+    // Same gate as the PC's: gear in the companion's pack is not gear it is using.
+    if (!(inv.equipped || inv.worn || inv.invested)) continue;
+    const item = content.items[inv.itemId];
+    if (!item) continue;
+    for (const b of [...(FEAT_SITUATIONAL[inv.itemId] ?? []), ...(item.situational ?? [])]) {
+      lines.push({
+        source: item.name,
+        when: b.when,
+        bonus: b.bonus,
+        targets: targetPhrase(b.targets),
+      });
+    }
+  }
+  if (!lines.length) return null;
+  return (
+    <section className="statblock cmp-sit">
+      <div className="sb-bar" />
+      <div className="sb-body">
+        <div className="sb-title">
+          <span className="sb-name">
+            <i className="ti ti-asterisk" aria-hidden="true" /> Situational
+          </span>
+          <span className="sb-level">from its own gear</span>
+        </div>
+        <div className="sb-line sb-muted">Applies only when it fits — nothing here is in the numbers above.</div>
+        {lines.map((l, i) => (
+          <div className="sb-line" key={i}>
+            <b>{l.bonus}</b> to {l.targets} from {l.source}
+            {l.when ? ` — ${l.when}` : ''}
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -1325,7 +1407,7 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
           onSetValue={(id, value) => onPlay((p) => setCompanionConditionValue(p, condFor, id, value), `ccond:${condFor}:${id}`)}
           onClose={() => setCondFor(null)}
           modesEnabled
-          library={Object.values(content.modes).filter((m) => !CATALOG_MODE_MAP[m.id] && (!m.charId || m.charId === charKey))}
+          library={playerModeLibrary(Object.values(content.modes), charKey)}
           predefined={CATALOG_MODES}
           catalog={CATALOG_MODES}
           classId={character.classId}
@@ -1461,6 +1543,7 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
             </div>
           )}
           {(!canEdit || mode === 'stats') && block.node}
+          {(!canEdit || mode === 'stats') && <CompanionSituational cfg={current} content={content} />}
           {canEdit && mode === 'edit' && onPlay && (
             <EditChoices cfg={current} content={content} onPlay={onPlay} onAbilities={() => setAbilityFor(current.id)} onSpecialization={() => setSpecFor(current.id)} />
           )}

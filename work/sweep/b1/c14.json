@@ -1,0 +1,1140 @@
+[
+ {
+  "id": "hero-gods-bond",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Hero-God's Bond",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "At times, the myth of a hero-god includes a favored partner or a bonded ally, such as the hero-gods of promises and shield-bearers, Upion and Warrick. When you gain this feat, select an ally. They are your bonded partner. While you and your bonded partner are on the same plane, you and your bonded partner always have the same doomed value (defaulting to the highest value), so when your bonded partner's doomed condition would increase or be set to a specific amount, your doomed value also increases to match (if it is lower than your current doomed value). When either of you are dying, the other knows this immediately, as well as the distance and direction to the dying partner's location. When either of you attempts a recovery check, as long as the other is on the same plane, you gain a +2 circumstance bonus to the check. You can communicate telepathically with your bonded partner as long as you are within 60 feet of each other. You can change your bonded partner by spending 1 week of downtime bonding with another ally."
+ },
+ {
+  "id": "high-alert",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "High Alert",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You're constantly on guard, keeping watch over your allies against fiendish forces—no one can get the jump on your group while you're around. Choose an ally you can see within 30 feet. They gain a +1 circumstance bonus to their AC and Reflex saving throws against devils and creatures allied with the Chelaxian government (as determined by the GM) until the beginning of your next turn. This action gains the visual trait, the auditory trait, or both, depending on how you alert your ally."
+ },
+ {
+  "id": "hippogriff-feather",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Hippogriff Feather",
+  "level": 3,
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "heldSpells",
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** Cast a Spell --- Tawny-colored hippogriff feathers can be up to 2 feet long. Used as a catalyst with a Ghostly Carrier spell, a single *hippogriff feather* grants the hand semicorporeal wings that increase the hand's maneuverability. The hand has a range of only 60 feet, but its increased agility grants it a +1 status bonus to its AC and Reflex saves."
+ },
+ {
+  "id": "hippopotamus-klar",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Hippopotamus Klar",
+  "level": 10,
+  "traits": [
+   "integrated-1d6-s-versatile-p",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This *+1 striking klar* is fashioned from the skull of a hippopotamus, with one of its canines acting as the blade. While wielding a *hippopotamus klar*, you gain a +1 item bonus to Intimidation checks. --- **Activate—Engulfing Jaws** ⟨1⟩ (manipulate) **Frequency** once per day **Effect** The hippo jaws of the shield open impossibly wide. Make a melee Strike with the klar blade targeting two creatures adjacent to each other. Roll the attack and damage once and apply it to each creature separately. This counts as two attacks for your multiple attack penalty. --- **Craft Requirements** The initial raw materials must include the entire skull of a hippopotamus."
+ },
+ {
+  "id": "hireling-manager",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Hireling Manager",
+  "level": 3,
+  "traits": [
+   "general"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You are able to find and secure better labor than most. When securing a hireling for a service, that hireling gains a +2 circumstance bonus to all skill checks. This circumstance bonus applies to both trained and untrained hirelings and has no effect on the cost of the service or labor provided."
+ },
+ {
+  "id": "horn-of-the-aoyin",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Horn of the Aoyin",
+  "level": 13,
+  "traits": [
+   "cursed",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This musical instrument is crafted from the horn of an aoyin—a large, cannibalistic beast whose form resembles an ox with a white body, four horns, and hair as coarse as straw—and carved with fell symbols. If the horn of the aoyin's owner doesn't use the instrument's activation on sapient creatures at least once a day, the horn of the aoyin activates at some point of its own choosing on the owner, and the owner critically fails with no saving throw. **Activate—Cannibal Call** ⟨2⟩ (auditory, emotion, incapacitation, magical, manipulate, mental) **Frequency** once per hour **Requirements** You're trained in Performance --- **Effect** You blow the horn, creating a low growling sound. Creatures other than you in a must attempt a save. Those who fail become overwhelmed with an animalistic rage and the urge to consume flesh for 1 round, or 1 minute on a critical failure. They indiscriminately attack the nearest target unaffected by the magic of the horn unless there are no such targets, at which point they set on each other. While affected, they gain a jaws unarmed attack that deals 1d8 piercing damage, deal an additional 2 damage with unarmed attacks, and lose the ability to use any weaponry. They also gain a +2 status bonus to saving throws against mental effects, can detect bleeding creatures and open wounds as an imprecise sense with a range of 30 feet, and gain a +10-foot status bonus to their Speed. Lastly, they take a –1 penalty to AC and are unable to use concentrate actions other than Seeking. Creatures who critically succeed are temporarily immune for 24 hours. --- **Craft Requirements** A horn of the aoyin can be crafted only from a single aoyin horn. Crafting this object must be undertaken using tools soaked in the wielder's blood."
+ },
+ {
+  "id": "hydras-bond",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Hydra's Bond",
+  "level": 4,
+  "traits": [
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "When the hero-gods built Pol-Sylirica and its seven armies, they feared betrayal from within. They took inspiration from the multi-headed hydra, and bound the seven armies together with supernatural ties to make them behave as if they shared one body. Following these tactics, during daily preparations, you can select a number of willing creatures equal to half your level to be part of your hydra's bond. Members of the same hydra's bond always know if another member is telling the truth. When a member of the hydra's bond saves against an effect that would have them act against their allies (such as the confused condition, a Dominate spell, or other mental effects that would give an ally the controlled condition), you can spend a Mythic Point to allow that character to attempt the save at mythic proficiency. If a member of the hydra's bond fails a save against such an effect, other members automatically know that the target is controlled or under the influence of a mental effect. In addition, all members of the hydra's bond gain a +2 circumstance bonus to any roll made to counteract that effect."
+ },
+ {
+  "id": "impervious-vehicle",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Impervious Vehicle",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "From armor plating and flexible components, to reinforced materials and backup redundant functionality, you have built safeguards to protect your vehicle from the rigors of combat. Your signature vehicle gains a +1 circumstance bonus to AC and Fortitude saves, and increases its Hit Points by an amount equal to twice your level."
+ },
+ {
+  "id": "incredible-luck-swashbuckler",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Incredible Luck (Swashbuckler)",
+  "level": 18,
+  "traits": [
+   "fortune",
+   "swashbuckler"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You always seem to bounce back from the worst. When you use Charmed Life, roll the save twice (including the +2 circumstance bonus from Charmed Life) and use the better result."
+ },
+ {
+  "id": "indomitable-shot",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Indomitable Shot",
+  "level": 16,
+  "traits": [
+   "attack",
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are wielding a ranged warshard weapon. --- You can fire a single shot that penetrates multiple foes. Spend 1 Mythic Point, then fire a single shot from your ranged warshard weapon. You inflict your weapon's damage on all creatures in a line, to a maximum distance equal to your weapon's maximum range or until the line hits a solid object that's either thicker than 5 feet or has a Hardness in excess of 20, whichever comes first. Each creature in the area attempts a save against your class DC or spell DC, whichever is higher, calculated at mythic proficiency. For each range increment beyond the first, a creature gains a cumulative +2 circumstance bonus to their Reflex save. This ability counts as two attacks when calculating your multiple attack penalty."
+ },
+ {
+  "id": "inexorable",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Inexorable",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You imbue yourself with the resilience of the cave worm. When you gain the paralyzed, slowed, or stunned condition, roll a . On a success you ignore the condition. When using Worm Form you are immune to penalties to your Speed and the immobilized condition, you gain a +2 circumstance bonus to your Fortitude or Reflex DC against attempts to Shove or Trip you, and you ignore difficult terrain and greater difficult terrain."
+ },
+ {
+  "id": "inflamation-flask",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Inflamation Flask",
+  "level": 2,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "disease",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Inflamation Flask May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 75 Usage held in 1 hand Bulk L Activate Strike This flask contains a caustic irritant that makes a target’s skin, scales, or carapace extremely sensitive to further nicks and burns. An inflammation flask deals the listed acid damage and acid splash damage. On a hit, the target also gains weakness to acid, fire, and slashing damage for 3 rounds. Many types of inflammation flask grant a bonus to attack rolls. The target can end the weakness effect by three means: being drenched with water (such as submersion or exposure to an area water effect), being Administered First Aid (whose DC in based on the bomb type), or regaining Hit Points from a single effect equal to twice the inflammation flask’s level. A creature that critically fails to Administer First Aid in this way deals untyped damage to the target equal to the inflammation flask’s initial acid damage. Lesser Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 5 gp The bomb deals 1d6 acid damage and 1 acid splash damage. The target gains weakness 1 to acid, fire, and slashing damage, and theMedicine DC is 17. Moderate Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 15 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d6 acid damage and 2 acid splash damage. The target gains weakness 2 to acid, fire, and slashing damage, and the Medicine DC is 20. Greater Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 340 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d6 acid damage and 3 acid splash damage. The target gains weakness 3 to acid, fire, and slashing damage, and the Medicine DC is 30. Major Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 3,750 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d6 acid damage and 4 acid splash damage. The target gains weakness 4 to acid, fire, and slashing damage, and the Medicine DC is 38."
+ },
+ {
+  "id": "inflammation-flask-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Inflammation Flask (Greater)",
+  "level": 12,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "disease",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This flask contains a caustic irritant that makes a target's skin, scales, or carapace extremely sensitive to further nicks and burns. An inflammation flask deals 3d6 acid damage and 3 acid splash damage. On a hit, the target also gains weakness 3 to acid, fire, and slashing damage for 3 rounds. You gain a +2 item bonus to attack rolls. The target can end the weakness effect by three means: being drenched with water (such as submersion or exposure to an area water effect), being Administered First Aid (DC 30), or regaining Hit Points from a single effect equal to twice the inflammation flask's level. A creature that critically fails to Administer First Aid in this way deals untyped damage to the target equal to the inflammation flask's initial acid damage. ---"
+ },
+ {
+  "id": "inflammation-flask-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Inflammation Flask (Major)",
+  "level": 18,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "disease",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This flask contains a caustic irritant that makes a target's skin, scales, or carapace extremely sensitive to further nicks and burns. An inflammation flask deals 4d6 acid damage and 4 acid splash damage. On a hit, the target also gains weakness 4 to acid, fire, and slashing damage for 3 rounds. You gain a +3 item bonus to attack rolls. The target can end the weakness effect by three means: being drenched with water (such as submersion or exposure to an area water effect), being Administered First Aid (DC 38), or regaining Hit Points from a single effect equal to twice the inflammation flask's level. A creature that critically fails to Administer First Aid in this way deals untyped damage to the target equal to the inflammation flask's initial acid damage. ---"
+ },
+ {
+  "id": "inflammation-flask-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Inflammation Flask (Moderate)",
+  "level": 4,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "disease",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This flask contains a caustic irritant that makes a target's skin, scales, or carapace extremely sensitive to further nicks and burns. An inflammation flask deals 2d6 acid damage and 2 acid splash damage. On a hit, the target also gains weakness 2 to acid, fire, and slashing damage for 3 rounds. You gain a +1 item bonus to attack rolls. The target can end the weakness effect by three means: being drenched with water (such as submersion or exposure to an area water effect), being Administered First Aid (DC 20), or regaining Hit Points from a single effect equal to twice the inflammation flask's level. A creature that critically fails to Administer First Aid in this way deals untyped damage to the target equal to the inflammation flask's initial acid damage. ---"
+ },
+ {
+  "id": "insider-trading",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Insider Trading",
+  "level": 1,
+  "traits": [
+   "general",
+   "kingdom"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Insider Trading Source Kingmaker Adventure Path pg. 531 Prerequisites Trained in Industry Your leading citizens share valuable business information with one another and with associates in other lands, and they hire one another's workers to supply the labor they need to fuel their production. You gain a +1 status bonus to Establish Work Site, Establish Trade Agreement, and Trade Commodities activities. In addition, gain 1 bonus Resource Die at the start of each Kingdom turn."
+ },
+ {
+  "id": "inspiring-entertainment",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Inspiring Entertainment",
+  "level": 3,
+  "traits": [
+   "general",
+   "kingdom"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Inspiring Entertainment Source Kingmaker Adventure Path pg. 532 Prerequisites Culture 14 Your kingdom's artists and entertainers are talented and prolific, and there's never a shortage of new plays, operas, novels, music, sculptures, paintings, or other forms of distraction to entertain the citizens, even during times of upheaval. When you check for Unrest during the Upkeep phase of a Kingdom turn, you may roll a Culture-based check rather than a Loyalty-based check to determine the outcome. Your kingdom also gains a +2 status bonus to all Culture-based skill checks whenever your kingdom has at least 1 Unrest."
+ },
+ {
+  "id": "inspiring-resilience",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Inspiring Resilience",
+  "level": 4,
+  "traits": [
+   "bard",
+   "champion",
+   "emotion",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** You and at least one other creature become the target of a spell or effect with the emotion, fear, or mental trait that allows a saving throw, and you haven't rolled the save yet. --- You show defiance in times of hardship and inspire your companions to persevere. Allies within 30 feet of you gain a +1 circumstance bonus to their Will save against the triggering effect, or a +2 circumstance bonus if the effect originated from an undead."
+ },
+ {
+  "id": "inspiring-spotlight",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Inspiring Spotlight",
+  "level": 9,
+  "traits": [
+   "light",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "An *inspiring spotlight* is a bulky contraption consisting of a drum-shaped metal housing around several reflective metal plates. Two handles on either side, each with a small button, allow you to aim the spotlight outward from your body. **Activate** ⟨1⟩ Interact **Frequency** Once per hour --- **Effect** When you push the left-hand button, the *inspiring spotlight* emits a beam of bright magical light in a that hangs in the air and remains in place even if you move the spotlight. If the line passes through an area of magical darkness or targets a creature affected by magical darkness, the *inspiring spotlight* attempts to counteract the darkness. Creatures within the line gain a +1 item bonus to saving throws and Charisma-based skill checks. In addition, creatures in the line who are frightened reduce the value of their frightened condition by 1 at the beginning of each turn they start in the area of the line. The beam remains in place for 1 minute or until you push the right-hand button with another Interact action to extinguish the light."
+ },
+ {
+  "id": "instrument-of-death",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Instrument of Death",
+  "level": 16,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your splinter of finality has reached the apex of its death-dealing potential. Whenever you critically succeed at an attack roll against an enemy and use Lethal Edge, add the following effects to the list you can choose from. - The target is cursed and can't benefit from circumstance or status bonuses. This is a curse effect. - The target gains weakness 10 to spirit damage."
+ },
+ {
+  "id": "inubrix-armor",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Inubrix Armor",
+  "level": 11,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Inubrix Armor Source Grand Bazaar pg. 98 Usage worn armor Bulk varies by armor Base Material Inubrix Inubrix's malleable nature means armor crafted from it is less rigid than usual, though this slightly increased mobility comes at the cost of protection. Metal armor crafted from inubrix gains the flexible armor trait; its item bonus to AC decreases by 1 but its maximum Dexterity bonus increases by 1. Inubrix Armor (Standard-Grade) Source Grand Bazaar pg. 98 Price 1,200 gp (+120 gp per Bulk) Craft Requirements The initial raw materials must include at least 150 gp of inubrix + 15 gp per Bulk. Inubrix Armor (High-Grade) Source Grand Bazaar pg. 98 Price 18,000 gp (+1,800 gp per Bulk) Craft Requirements The initial raw materials must include at least 9,000 gp of inubrix + 900 gp per Bulk."
+ },
+ {
+  "id": "inubrix-armor-high-grade",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Inubrix Armor (High-Grade)",
+  "level": 18,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Inubrix Armor Source Grand Bazaar pg. 98 Usage worn armor Bulk varies by armor Base Material Inubrix Inubrix's malleable nature means armor crafted from it is less rigid than usual, though this slightly increased mobility comes at the cost of protection. Metal armor crafted from inubrix gains the flexible armor trait; its item bonus to AC decreases by 1 but its maximum Dexterity bonus increases by 1. Inubrix Armor (Standard-Grade) Source Grand Bazaar pg. 98 Price 1,200 gp (+120 gp per Bulk) Craft Requirements The initial raw materials must include at least 150 gp of inubrix + 15 gp per Bulk. Inubrix Armor (High-Grade) Source Grand Bazaar pg. 98 Price 18,000 gp (+1,800 gp per Bulk) Craft Requirements The initial raw materials must include at least 9,000 gp of inubrix + 900 gp per Bulk."
+ },
+ {
+  "id": "inubrix-armor-standard-grade",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Inubrix Armor (Standard-Grade)",
+  "level": 11,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Inubrix Armor Source Grand Bazaar pg. 98 Usage worn armor Bulk varies by armor Base Material Inubrix Inubrix's malleable nature means armor crafted from it is less rigid than usual, though this slightly increased mobility comes at the cost of protection. Metal armor crafted from inubrix gains the flexible armor trait; its item bonus to AC decreases by 1 but its maximum Dexterity bonus increases by 1. Inubrix Armor (Standard-Grade) Source Grand Bazaar pg. 98 Price 1,200 gp (+120 gp per Bulk) Craft Requirements The initial raw materials must include at least 150 gp of inubrix + 15 gp per Bulk. Inubrix Armor (High-Grade) Source Grand Bazaar pg. 98 Price 18,000 gp (+1,800 gp per Bulk) Craft Requirements The initial raw materials must include at least 9,000 gp of inubrix + 900 gp per Bulk."
+ },
+ {
+  "id": "inubrix-weapon",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Inubrix Weapon",
+  "level": 11,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Inubrix Weapon Source Grand Bazaar pg. 99 Usage varies by weapon Bulk varies by weapon Base Material Inubrix While inubrix weapons don't pack the same punch as more durable weapons, they have the unique ability to bypass some of the protections offered by metal armors and shields. A weapon crafted from inubrix reduces the weapon's damage die by 1 size. However, they ignore the resistance to damage from metal armor's armor specialization effects and the circumstance bonus to AC from metal shields. Strikes with inubrix weapons don't trigger the Shield Block reaction from a metal shield. Weapons that normally deal 1d4 damage can't be crafted from inubrix. Inubrix Weapon (Standard-Grade) Source Grand Bazaar pg. 99 Price 1,400 gp (+140 gp per Bulk) Craft Requirements at least 175 gp of inubrix + 17.5 gp per Bulk Inubrix Weapon (High-Grade) Source Grand Bazaar pg. 99 Price 13,500 gp (+1,350 gp per Bulk) Craft Requirements at least 6,750 gp of inubrix + 675 gp per Bulk"
+ },
+ {
+  "id": "inubrix-weapon-high-grade",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Inubrix Weapon (High-Grade)",
+  "level": 17,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Inubrix Weapon Source Grand Bazaar pg. 99 Usage varies by weapon Bulk varies by weapon Base Material Inubrix While inubrix weapons don't pack the same punch as more durable weapons, they have the unique ability to bypass some of the protections offered by metal armors and shields. A weapon crafted from inubrix reduces the weapon's damage die by 1 size. However, they ignore the resistance to damage from metal armor's armor specialization effects and the circumstance bonus to AC from metal shields. Strikes with inubrix weapons don't trigger the Shield Block reaction from a metal shield. Weapons that normally deal 1d4 damage can't be crafted from inubrix. Inubrix Weapon (Standard-Grade) Source Grand Bazaar pg. 99 Price 1,400 gp (+140 gp per Bulk) Craft Requirements at least 175 gp of inubrix + 17.5 gp per Bulk Inubrix Weapon (High-Grade) Source Grand Bazaar pg. 99 Price 13,500 gp (+1,350 gp per Bulk) Craft Requirements at least 6,750 gp of inubrix + 675 gp per Bulk"
+ },
+ {
+  "id": "inubrix-weapon-standard-grade",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Inubrix Weapon (Standard-Grade)",
+  "level": 11,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Inubrix Weapon Source Grand Bazaar pg. 99 Usage varies by weapon Bulk varies by weapon Base Material Inubrix While inubrix weapons don't pack the same punch as more durable weapons, they have the unique ability to bypass some of the protections offered by metal armors and shields. A weapon crafted from inubrix reduces the weapon's damage die by 1 size. However, they ignore the resistance to damage from metal armor's armor specialization effects and the circumstance bonus to AC from metal shields. Strikes with inubrix weapons don't trigger the Shield Block reaction from a metal shield. Weapons that normally deal 1d4 damage can't be crafted from inubrix. Inubrix Weapon (Standard-Grade) Source Grand Bazaar pg. 99 Price 1,400 gp (+140 gp per Bulk) Craft Requirements at least 175 gp of inubrix + 17.5 gp per Bulk Inubrix Weapon (High-Grade) Source Grand Bazaar pg. 99 Price 13,500 gp (+1,350 gp per Bulk) Craft Requirements at least 6,750 gp of inubrix + 675 gp per Bulk"
+ },
+ {
+  "id": "irresistible-magic",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Irresistible Magic",
+  "level": 6,
+  "traits": [
+   "wizard"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've studied ways of overcoming the innate defenses against magic that dragons, otherworldly beings, and certain other powerful creatures have. Any creature that has a status bonus to saving throws against magic reduces that bonus by 1 against your spells."
+ },
+ {
+  "id": "ivory-baton",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Ivory Baton",
+  "level": 13,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This white, slender rod bears intricately carved reliefs of magnificent animals that bow and dance to some unseen commander. The baton enables you to command constructs. --- **Activate** ⟨2⟩ command, Interact (enchantment, incapacitation) **Frequency** once per day --- **Effect** You take control of a construct. This has the effects of Dominate with a DC of 30, but it affects only constructs. It lacks the mental trait and functions on mindless constructs. It also ignores any golem antimagic the target might have. The effect's duration endsif the baton is destroyed or leaves your possession for at least 1 minute, and you can issue commands to the target only while holding the baton. --- **Activate** ⟨1⟩ Interact **Frequency** once per round --- **Effect** You closely direct the actions of one construct you control and can see within 60 feet. That construct gains a +1 status bonus to attack rolls, damage rolls, and saving throws (except saving throws against the ivory baton)."
+ },
+ {
+  "id": "ivory-baton-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Ivory Baton (Greater)",
+  "level": 19,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This white, slender rod bears intricately carved reliefs of magnificent animals that bow and dance to some unseen commander. The baton enables you to command constructs. --- **Activate** ⟨2⟩ command, Interact (enchantment, incapacitation) **Frequency** once per day --- **Effect** You take control of a construct. This has the effects of 9th-rank Dominate with a DC of 39, but it affects only constructs. It lacks the mental trait and functions on mindless constructs. It also ignores any golem antimagic the target might have. The effect's duration endsif the baton is destroyed or leaves your possession for at least 1 minute, and you can issue commands to the target only while holding the baton. --- **Activate** ⟨1⟩ Interact **Frequency** once per round --- **Effect** You closely direct the actions of one construct you control and can see within 60 feet. That construct gains a +1 status bonus to attack rolls, damage rolls, and saving throws (except saving throws against the ivory baton)."
+ },
+ {
+  "id": "jerkin-of-liberation",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Jerkin of Liberation",
+  "level": 17,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This +2 greater resilient studded leather is traditionally inscribed with a symbol of either Norgorber or Cayden Cailean. Its leather is light as silk, and its buttons and studs are gleaming crystal. While you wear it, you get a +15-foot item bonus to your Speed, and effects that attempt to impose penalties on your Speed must first counteract the jerkin of liberation or they have no effect on you. In addition, you are hard to incapacitate. You use the jerkin's item level or your own level, whichever is higher, to determine effects of the incapacitation trait."
+ },
+ {
+  "id": "junk-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Junk Bomb",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Junk Bomb Source Pathfinder Special: Fumbus Usage held in 1 hand Bulk L Activate Strike This volatile-looking bomb is cobbled together from jagged metal scrap, broken glass, and other bits of razor-sharp fragments, lashed around a core of explosive alchemical slag. A junk bomb deals the listed slashing damage, persistent bleed damage, and piercing splash damage. Many types grant an item bonus to attack rolls. Junk Bomb (Lesser) Source Pathfinder Special: Fumbus Price 4 gp Bulk L The bomb deals 1d8 slashing damage, 1 persistent bleed damage, and 1 slashing splash damage. Junk Bomb (Moderate) Source Pathfinder Special: Fumbus Price 12 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d8 slashing damage, 2 persistent bleed damage, and 2 slashing splash damage. Junk Bomb (Greater) Source Pathfinder Special: Fumbus Price 275 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 3d8 slashing damage, 3 persistent bleed damage, and 3 slashing splash damage. Junk Bomb (Major) Source Pathfinder Special: Fumbus Price 2,750 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 4d8 slashing damage, 4 persistent bleed damage, and 4 slashing splash damage."
+ },
+ {
+  "id": "junk-bomb-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Junk Bomb (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This volatile-looking bomb is cobbled together from jagged metal scrap, broken glass, and other bits of razor-sharp fragments, lashed around a core of explosive alchemical slag. A junk bomb deals 3d8 damage, 3 damage, and 3 slashing splash damage. You gain a +2 item bonus to attack rolls."
+ },
+ {
+  "id": "junk-bomb-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Junk Bomb (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This volatile-looking bomb is cobbled together from jagged metal scrap, broken glass, and other bits of razor-sharp fragments, lashed around a core of explosive alchemical slag. A junk bomb deals 4d8 damage, 4 damage, and 4 slashing splash damage. You gain a +3 item bonus to attack rolls."
+ },
+ {
+  "id": "junk-bomb-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Junk Bomb (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This volatile-looking bomb is cobbled together from jagged metal scrap, broken glass, and other bits of razor-sharp fragments, lashed around a core of explosive alchemical slag. A junk bomb deals 2d8 damage, 2 damage, and 2 slashing splash damage. You gain a +1 item bonus to attack rolls."
+ },
+ {
+  "id": "keep-stone-weapon",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Keep Stone Weapon",
+  "level": 18,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Keep Stone Weapon Source Highhelm pg. 113 Usage varies by weapon Bulk varies by weapon Base Material Keep Stone As a material with defensive properties, keep stone isn't particularly prized for weapons, but it does offer a particular niche. When used with abilities that allow you to use a Strike to counteract spells or magical effects, such as the Sunder Spell feat, the counteract check gains a +2 circumstance bonus. If the counteract check is tied to the Strike's result, add the bonus when calculating your counteract result, but not to the attack roll. Keep stone is treated as adamantine for the purpose of overcoming resistances. Keep Stone Weapon (High-Grade) Source Highhelm pg. 113 Price 22,500 gp (+ 2,250 gp per Bulk) Craft Requirements The initial raw materials must include at least 11,250 gp of keep stone + 1,125 gp per bulk."
+ },
+ {
+  "id": "keep-stone-weapon-high-grade",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Keep Stone Weapon (High-Grade)",
+  "level": 18,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Keep Stone Weapon Source Highhelm pg. 113 Usage varies by weapon Bulk varies by weapon Base Material Keep Stone As a material with defensive properties, keep stone isn't particularly prized for weapons, but it does offer a particular niche. When used with abilities that allow you to use a Strike to counteract spells or magical effects, such as the Sunder Spell feat, the counteract check gains a +2 circumstance bonus. If the counteract check is tied to the Strike's result, add the bonus when calculating your counteract result, but not to the attack roll. Keep stone is treated as adamantine for the purpose of overcoming resistances. Keep Stone Weapon (High-Grade) Source Highhelm pg. 113 Price 22,500 gp (+ 2,250 gp per Bulk) Craft Requirements The initial raw materials must include at least 11,250 gp of keep stone + 1,125 gp per bulk."
+ },
+ {
+  "id": "killers-belt",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Killer's Belt",
+  "level": 4,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Small blood-red rubies decorate this black leather belt, which is a fashion accessory for only the most bloodthirsty soldiers. When you wear this belt, you gain a +1 item bonus to Intimidation checks. **Activate—Bleeding Rubies** ⟨1⟩ (manipulate) **Frequency** once per day **Requirements** You have a free hand and your last action was to deal damage to an enemy with a Strike or spell attack roll --- **Effect** You pull a ruby off your belt and crush it into dust. As this dust reaches the enemy you just harmed, it embeds into the skin, causing them to bleed. The target takes 1d6 damage. The ruby reappears on the belt after 24 hours."
+ },
+ {
+  "id": "killers-belt-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Killer's Belt (Greater)",
+  "level": 9,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Small blood-red rubies decorate this black leather belt, which is a fashion accessory for only the most bloodthirsty soldiers. When you wear this belt, you gain a +2 item bonus to Intimidation checks. **Activate—Bleeding Rubies** ⟨1⟩ (manipulate) **Frequency** once per day **Requirements** You have a free hand and your last action was to deal damage to an enemy with a Strike or spell attack roll --- **Effect** You pull a ruby off your belt and crush it into dust. As this dust reaches the enemy you just harmed, it embeds into the skin, causing them to bleed. The target takes 2d6 damage. The ruby reappears on the belt after 24 hours."
+ },
+ {
+  "id": "kin-warding",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Kin-Warding",
+  "level": 3,
+  "traits": [
+   "dwarf",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "A *kin-warding* clan dagger can deflect attacks aimed at your allies. When you use the weapon's parry trait, you can point the clan dagger at an adjacent ally instead of defending yourself, creating a shield of runes around them. The runic barrier grants your ally the weapon's circumstance bonus to AC, but you do not gain the bonus yourself."
+ },
+ {
+  "id": "kinetic-club",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Kinetic Club",
+  "level": 7,
+  "traits": [
+   "backswing",
+   "earth",
+   "magical",
+   "shove"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Embedded along the length of this *+1 striking greatclub* are the teeth and scales of a zetogeki, a giant lizard that can absorb and then release bursts of kinetic energy. The more momentum a wielder builds up while swinging the weapon, the more forceful the impact when it finally makes contact. **Activate—Store Kinetic Energy** ⟨4⟩ (concentrate) **Frequency** once per hour **Trigger** You add a circumstance bonus to your attack with the *kinetic club's* backswing trait and successfully Strike your target --- **Effect** You channel the club's stored energy into the Strike, dealing 1d6 additional damage. If the club has a *greater striking* rune, increase the additional damage to 2d6. If the club has a *major striking* rune, increase the additional damage to 3d6."
+ },
+ {
+  "id": "kinetic-gate",
+  "lane": "situational",
+  "collection": "classFeatures",
+  "name": "Kinetic Gate",
+  "level": 1,
+  "traits": [
+   "kineticist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "As a kineticist, you've awakened or opened a kinetic gate, a supernatural conduit within your body that can channel elemental forces straight from the elemental planes. You can choose either a single gate (one element) or dual gate (two elements) at 1st level. When selecting an element for your kinetic gate, you can pick from six elements - air, earth, fire metal, water, and wood. Elements you can channel are referred to as your kinetic elements. Your kinetic elements function even in environments where they normally wouldn't. For example, you could use fire actions underwater even though that's normally not possible, and you could create air in a vacuum. Your kinetic gate gives you impulse feats, magical actions that let you shape and control your elements in awesome ways. You can select more impulse feats using your kineticist class feats, as described under Impulses. At higher levels, the gate's threshold class feature gives you more impulse feats and lets you choose whether to improve with one element or access new kinetic elements. ### **Single Gate** Your kinetic gate links to a single elemental plane, starting you with a single element but giving you greater power with it. Choose one element to be your kinetic element, and select two 1st-level impulse feats that have that element's trait. In addition, you gain an impulse junction, a benefit that occurs when you use an impulse of the chosen element that takes 2 actions or more. This happens before the other effects of the impulse, unless noted otherwise. You can gain only one impulse junction per round; they are described in full below. **Air** Before or after the other effects of the impulse, you can either Stride up to half your Speed or Step. If you have a fly Speed, you can Fly up to half your fly Speed instead. **Earth** Fragments of stone float around you, granting you a +1 circumstance bonus to AC until the start of your next turn. **Fire** Increase the damage die size of fire damage dealt by the impulse by one step. **Metal** Choose acid, electricity, or piercing. Until the start of your next turn, each time a creature touches you or damages you with an unarmed melee attack or nonreach melee weapon, it takes damage of the chosen type equal to half your level (minimum 1 damage). **Water** After the impulse's other effects, you can move one creature targeted by the impulse or in its area 5 feet in any direction, or 10 feet if it's in a body of water. This can't move the creature into the air. You can choose only a creature that's willing to be moved, that failed its save against the impulse, or that you succeeded at an impulse attack roll against. **Wood** You gain temporary Hit Points equal to your level that last until the start of your next turn. ### **Dual Gate** Your kinetic gate is a harmonious conduit between two planes, allowing you to combine their elements to give you a versatile set of abilities. Select two elements to be your kinetic elements. Then, select two 1st-level impulse feats, one with the trait of the first element and one with the trait of the other."
+ },
+ {
+  "id": "knight-captains-lance",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Knight Captain's Lance",
+  "level": 13,
+  "traits": [
+   "deadly-d8",
+   "divine",
+   "jousting-d6",
+   "reach"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The appearance of this beautifully crafted *+2 disrupting greater striking lance* changes to match the armor of its wielder. It has a cloth flag attached behind the lance point that displays whatever heraldry the wielder wishes. If a cavalier with the Cavalier's Banner feat takes the *knight captain's lance*, it instead automatically displays the banner of their pledge. --- **Activate** ⟨5⟩ Interact **Trigger** Your attack roll with the knight captain's lance is a critical success --- **Effect** You raise the lance, inspiring those around you. Allies within 30 feet that can see you receive a +1 status bonus to their attack rolls and damage rolls for 1 round."
+ },
+ {
+  "id": "lavasoul",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Lavasoul",
+  "level": 1,
+  "traits": [
+   "lineage",
+   "naari"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your elemental lineage manifests as magma and molten rock, and you can focus the magma into your hand to attack your foes. You gain a magma spike unarmed attack, which requires a free hand to use. This is an agile, finesse, unarmed attack in the brawling weapon group that deals 1d4 piercing damage, as well as 1 fire damage. Instead of the normal critical specialization effect, the target takes 1d6 persistent fire damage; you gain a bonus on this persistent damage equal to your item bonus to attack rolls on unarmed attacks."
+ },
+ {
+  "id": "lead-by-example",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Lead by Example",
+  "level": 8,
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You telegraph your next attack to let your allies in on your strategy. Make a melee or ranged Strike with a –2 circumstance penalty. On a hit, the next ally to target the same creature with a Strike gains a +2 circumstance bonus to their attack roll. On a critical hit, the bonus applies to any allies who act before the start of your next turn."
+ },
+ {
+  "id": "lead-investigator",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Lead Investigator",
+  "level": 18,
+  "traits": [
+   "exploration",
+   "investigator"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You spend 1 minute briefing up to four allies about one of your open investigations. Those allies gain the same circumstance bonus you do from Pursue a Lead to checks to investigate the question at the heart of that investigation. This bonus lasts until you cease Pursing that Lead or for 1 day, whichever comes first. This doesn't confer any other benefits of pursuing a lead, such as adding the circumstance bonus to your saves with Detective's Readiness."
+ },
+ {
+  "id": "lesser-aether-marbles",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Lesser Aether Marbles",
+  "level": 4,
+  "traits": [
+   "bomb",
+   "consumable",
+   "force",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Aether Marbles May contain spoilers from Gatewalkers Source Gatewalkers (Hardcover) pg. 235 Usage held in 1 hand Bulk L Activate Strike Aether marbles create violent, lingering eddies of force that extend partially into unseen planes. When the bomb explodes, it deals the listed force damage and force splash damage. Many aether marbles grant an item bonus to attack rolls. Surfaces in the splash area are filled with twisting eddies of force, which are difficult terrain for incorporeal creatures but not for corporeal ones. The force eddies in a square disperse after an incorporeal creature enters the square. Lesser Aether Marbles Source Gatewalkers (Hardcover) pg. 235 Price 19 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d6 force damage and 2 force splash damage. Moderate Aether Marbles Source Gatewalkers (Hardcover) pg. 235 Price 360 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d6 force damage and 3 force splash damage. Greater Aether Marbles Source Gatewalkers (Hardcover) pg. 235 Price 3,400 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d6 force damage and 4 force splash damage."
+ },
+ {
+  "id": "lesser-defoliation-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Lesser Defoliation Bomb",
+  "level": 2,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "negative",
+   "splash",
+   "void"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Defoliation Bomb May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 77 Usage held in 1 hand Bulk L Activate Strike This brightly painted ceramic sphere contains chemicals that cause plants to wither and die. A defoliation bomb deals the listed void damage, persistent void damage, and splash damage to all plants in the area. Non-creature plants in the area immediately wither and die. Many types grant a bonus to attack rolls. Lesser Defoliation Bomb Source Pathfinder #202: Severed at the Root pg. 77 Price 7 gp The bomb deals 1d6 void damage, 1d4 persistent void damage, and 1 void splash damage. Moderate Defoliation Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 18 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d6 void damage, 2d4 persistent void damage, and 2 void splash damage. Greater Defoliation Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 35 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d6 void damage, 3d4 persistent void damage, and 3 void splash damage. Major Defoliation Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 3,600 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d6 void damage, 4d4 persistent void damage, and 4 void splash damage."
+ },
+ {
+  "id": "lesser-durian-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Lesser Durian Bomb",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "plant",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Durian Bomb May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 77 Usage held in 1 hand Bulk L Activate Strike Whereas a durian’s aroma ranges from pleasant to revolting depending on the person, a durian bomb is a fruit that’s been alchemically modified for maximum revulsion. Many types of this bomb grant an item bonus to attack rolls. On a successful Strike, a durian bomb deals the listed piercing damage to the target. Any creature hit by the bomb or in its splash area must attempt a Fortitude saving throw with a DC based on the bomb’s type. Creatures in the splash area treat the results of their saving throw as one step better. Creatures sickened by a durian bomb are unable to smell anything else while the sickened condition lasts, suppressing any scent special sense they might have. Once a creature is sickened by a durian bomb, they’re immune to the sickened condition caused by other durian bombs for 1 minute. Critical Success The target is unaffected. Success The creature is sickened 1. Failure The creature is dazzled for 1 round and sickened 1. Critical Failure The creature is dazzled for 1 round and sickened 2. Lesser Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 4 gp The bomb deals 1d4 piercing damage, and the DC is 15. Moderate Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 12 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d4 points of piercing damage, and the DC is 17. Greater Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 275 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d4 points of piercing damage, and the DC is 28. Major Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 2,750 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d4 points of piercing damage, and the DC is 37."
+ },
+ {
+  "id": "lesser-inflammation-flask",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Lesser Inflammation Flask",
+  "level": 2,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "disease",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Inflamation Flask May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 75 Usage held in 1 hand Bulk L Activate Strike This flask contains a caustic irritant that makes a target’s skin, scales, or carapace extremely sensitive to further nicks and burns. An inflammation flask deals the listed acid damage and acid splash damage. On a hit, the target also gains weakness to acid, fire, and slashing damage for 3 rounds. Many types of inflammation flask grant a bonus to attack rolls. The target can end the weakness effect by three means: being drenched with water (such as submersion or exposure to an area water effect), being Administered First Aid (whose DC in based on the bomb type), or regaining Hit Points from a single effect equal to twice the inflammation flask’s level. A creature that critically fails to Administer First Aid in this way deals untyped damage to the target equal to the inflammation flask’s initial acid damage. Lesser Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 5 gp The bomb deals 1d6 acid damage and 1 acid splash damage. The target gains weakness 1 to acid, fire, and slashing damage, and theMedicine DC is 17. Moderate Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 15 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d6 acid damage and 2 acid splash damage. The target gains weakness 2 to acid, fire, and slashing damage, and the Medicine DC is 20. Greater Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 340 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d6 acid damage and 3 acid splash damage. The target gains weakness 3 to acid, fire, and slashing damage, and the Medicine DC is 30. Major Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 3,750 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d6 acid damage and 4 acid splash damage. The target gains weakness 4 to acid, fire, and slashing damage, and the Medicine DC is 38."
+ },
+ {
+  "id": "lesser-mariners-mien",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Lesser Mariner's Mien",
+  "level": 8,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Mariner's Mien Source High Seas pg. 78 PFS Note Pathfinder Society does not use vehicle rules Usage worn mask Bulk L Access You're from the Mordant Spire The swirls on this wooden mask—often worn by Mordant Censors—move and shift, reflecting the shape of the nearest currents. Wearing the mask grants you a +1 item bonus to Sailing Lore and Survival checks. In addition, it allows you to pilot a boat with simply a thought. When you pilot a vehicle, you can keep both hands free and Drive from any location on the vehicle. Activate—Set the Course (concentrate) Frequency once per day; Requirements You are aboard a vehicle; Effect You become quickened for 1 minute or until you leave the vehicle, whichever comes first, and can use the extra action to Take Control of the vehicle or, if you’re already piloting it, Drive or Stop the vehicle. Lesser Mariner's Mien Source High Seas pg. 78 Price 425 gp Moderate Mariner's Mien Source High Seas pg. 78 Price 5,300 gp The mask grants a +2 item bonus, and you can activate it once per hour."
+ },
+ {
+  "id": "lesser-nail-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Lesser Nail Bomb",
+  "level": 2,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Nail Bomb May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 78 Usage held in 1 hand Bulk L Activate Strike This pressurized iron casing bursts open when struck, releasing cold iron shrapnel. The bomb deals the listed piercing damage and piercing splash damage from a cold iron source. Many types grant a bonus to attack rolls. Lesser Nail Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 8 gp The bomb deals 2d4 piercing damage and 1 piercing splash damage. Moderate Nail Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 16 gp You gain a +1 item bonus to attack rolls. The bomb deals 4d4 piercing damage and 2 piercing splash damage. Greater Nail Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 350 gp You gain a +2 item bonus to attack rolls. The bomb deals 6d4 piercing damage and 3 piercing splash damage. Major Nail Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 4,000 gp You gain a +3 item bonus to attack rolls. The bomb deals 8d4 piercing damage and 4 piercing splash damage."
+ },
+ {
+  "id": "lesser-spider-satchel",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Lesser Spider Satchel",
+  "level": 2,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Spider Satchel May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 75 Usage held in 1 hand Bulk L Activate Strike The Verduran Forest’s tiny tent-trap spider lays her eggs in a pyramidal web, and her young hatch only in response to intense vibration, such as the struggles of an ensnared insect or even songbird. Sadistic alchemists gather and augment these eggs, packing them in silken satchels that disgorge thousands of biting spider babies on impact. Many types of spider satchel grant a bonus to attack rolls. Until shaken off—or for the desperate target, incinerated—these spiders make it difficult to concentrate on anything other than escaping the swarm. The fascination effect ends automatically if a creature uses further hostile actions against the target, but hostile actions against the target’s allies don’t automatically end the effect. Lesser Spider Satchel Source Pathfinder #203 Shepherd of Decay pg. 75 Price 6 gp The bomb deals 1d6 persistent poison damage, 1 poison splash damage, and fascinates the target while the persistent damage lasts. Moderate Spider Satchel Source Pathfinder #203 Shepherd of Decay pg. 76 Price 16 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d6 persistent poison damage, 2 poison splash damage, and fascinates the target while the persistent damage lasts. Greater Spider Satchel Source Pathfinder #203 Shepherd of Decay pg. 76 Price 350 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d6 persistent poison damage, 3 poison splash damage, and fascinates the target while the persistent damage lasts. Major Spider Satchel Source Pathfinder #203 Shepherd of Decay pg. 76 Price 4,000 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d6 persistent poison damage, 4 poison splash damage, and fascinates the target while the persistent damage lasts."
+ },
+ {
+  "id": "lesser-tenderizer-grenade",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Lesser Tenderizer Grenade",
+  "level": 1,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "plant",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Tenderizer Grenade May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 77 Usage held in 1 hand Bulk L Activate Strike Made from the acidic flesh of an especially astringent fruit found on the Plane of Wood, this bomb’s contents soften, oxidize, and season whatever they touch. Many types of this bomb grant an item bonus to attack rolls. On a successful Strike, a tenderizer grenade deals the listed acid damage to the target and the listed acid splash damage. Any resistances the target has against bludgeoning, piercing, and slashing damage are reduced by an amount based on the bomb’s type. In addition, the target is showered with appetizing esters, oils, and salts, making them off-guard against jaws Strikes, fangs Strikes, or similar Strikes with a creature’s mouth. These additional effects last until the end of your next turn, or for 1 minute on a critical hit. Lesser Tenderizer Grenade Source Pathfinder #203 Shepherd of Decay pg. 77 Price 4 gp The bomb deals 1d6 acid damage. Moderate Tenderizer Grenade Source Pathfinder #203 Shepherd of Decay pg. 77 Price 12 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d6 points of acid damage. Greater Tenderizer Grenade Source Pathfinder #203 Shepherd of Decay pg. 77 Price 275 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d6 points of acid damage. Major Tenderizer Grenade Source Pathfinder #203 Shepherd of Decay pg. 77 Price 2,750 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d6 points of acid damage."
+ },
+ {
+  "id": "lesson-of-the-broken-wing",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Lesson of the Broken Wing",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "concentrate",
+   "flourish"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You make yourself appear to be a tempting target to draw an enemy in, distracting them from your student's attacks. Choose an enemy creature within 60 feet that you are aware of. You take a –1 penalty to your AC against that creature's Strikes until the beginning of your next turn, and your student gains a +1 circumstance bonus to their Strikes against the target creature during that time."
+ },
+ {
+  "id": "lifting-belt",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Lifting Belt",
+  "level": 4,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This wide leather belt grants you a +1 item bonus to Athletics checks and increases the amount you can easily carry. You can carry Bulk equal to 6 + your Strength modifier before becoming encumbered, and you can hold and carry a total Bulk up to 11 + your Strength modifier. --- **Activate—Assisted Lift** ⟨2⟩ (manipulate) --- **Effect** You lift an object of up to 8 Bulk as though it were weightless. This requires two hands, and if the object is locked or otherwise held in place, you can attempt to Force it Open using Athletics as part of this activation. The object still has its full weight and Bulk for all other purposes-you just ignore that weight. The effect lasts until the end of your next turn."
+ },
+ {
+  "id": "lions-armor",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Lion's Armor",
+  "level": 12,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Various parts of this +2 *resilient half plate* are forged into the shape of a lion's head. The golden lion heads grant you a commanding presence and seem to actively growl at your enemies, granting you a +2 item bonus to Intimidation. The lions on the armor work in tandem with the lion on a *lion's shield*. If you critically hit with the *lion's shield* using Lion Bite, the lions on the armor roar in support of the shield, causing the target of the shield's Strike to become Frightened 1. **Activate—Roar of the Pride** ⟨2⟩ (concentrate) **Frequency** once per day --- **Effect** The lions on your armor roar, attempting to cow your enemies. Attempt a check to Demoralize each enemy within 30 feet of you. On a critical success, the target is also fleeing for 1 round."
+ },
+ {
+  "id": "lions-armor-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Lion's Armor (Greater)",
+  "level": 19,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Various parts of this +3 *greater resilient half plate* are forged into the shape of a lion's head. The golden lion heads grant you a commanding presence and seem to actively growl at your enemies, granting you a +3 item bonus to Intimidation. The lions on the armor work in tandem with the lion on a *lion's shield*. If you critically hit with the *lion's shield* using Lion Bite, the lions on the armor roar in support of the shield, causing the target of the shield's Strike to become Frightened 1. **Activate—Roar of the Pride** ⟨2⟩ (concentrate) **Frequency** once per hour --- **Effect** The lions on your armor roar, attempting to cow your enemies. Attempt a check to Demoralize each enemy within 30 feet of you. On a critical success, the target is also fleeing for 1 round."
+ },
+ {
+  "id": "living-mantle",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Living Mantle",
+  "level": 10,
+  "traits": [
+   "focused",
+   "invested",
+   "plant",
+   "primal"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "The base of this cloak is a thick layer of moss, but it slowly picks up native plants from each area it spends time in. You gain a +2 item bonus to Nature checks. You also suffer no effects from severe cold and severe heat. **Activate—Druidic Secrets** ⟨4⟩ (concentrate) **Frequency** once per day --- **Effect** You gain 1 Focus Point, which you can spend only to cast an order spell. If you don't spend this Focus Point by the end of this turn, it is lost. --- **Craft Requirements** You are a druid."
+ },
+ {
+  "id": "living-mantle-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Living Mantle (Greater)",
+  "level": 18,
+  "traits": [
+   "focused",
+   "invested",
+   "plant",
+   "primal"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "The base of this cloak is a thick layer of moss, but it slowly picks up native plants from each area it spends time in. You gain a +3 item bonus to Nature checks. You also suffer no effects from extreme cold and severe heat. **Activate—Druidic Secrets** ⟨4⟩ (concentrate) **Frequency** once per day --- **Effect** You gain 1 Focus Point, which you can spend only to cast an order spell. If you don't spend this Focus Point by the end of this turn, it is lost. --- **Craft Requirements** You are a druid."
+ },
+ {
+  "id": "lodestone-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Lodestone Bomb",
+  "level": 12,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "force",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Lodestone bombs hold reactive ionized minerals preserved in a dormant state until broken. The bomb grants a +2 item bonus to attack rolls and deals 3d4 force damage and 2 force splash damage. In addition, a target made of metal, wearing metal armor, or using metal weapons takes 2d4 and is Clumsy 1 and Enfeebled 1 while taking the persistent damage. The persistent damage can last up to 1 minute."
+ },
+ {
+  "id": "lodestone-bomb-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Lodestone Bomb (Greater)",
+  "level": 18,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "force",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Lodestone bombs hold reactive ionized minerals preserved in a dormant state until broken. The bomb grants a +3 item bonus to attack rolls and deals 4d4 force damage and 3 force splash damage. In addition, a target made of metal, wearing metal armor, or using metal weapons takes 3d4 and is Clumsy 1 and Enfeebled 1 while taking the persistent damage. The persistent damage can last up to 1 minute."
+ },
+ {
+  "id": "madcap-top",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Madcap Top",
+  "level": 8,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This top has 20 divisions, painted in a chaotic mess of clashing colors. When spun, the top quickly settles on a side and generates a strange magical effect based on the side that lands face-up. **Activate—Spin the Top** ⟨2⟩ (concentrate, manipulate) --- **Effect** Choose a creature within 60 feet to target and roll a d20 on the table below to determine the top's effect. You make any decisions for a spell cast by the top unless otherwise indicated, except that it must target the creature you chose, or the creature you chose must be the center of the spell's area, if it has an area but no targets. If the spell's range is less than 60 feet, increase the range to 60 feet. Any spell DC required is DC 27, and any spell attack roll required is +17. If the top casts a spell on you, you don't get a saving throw or other defense against it. The top can't be activated again for 1d4 hours --- Madcap Top Effect | d20 | Madcap Top Effect | | --- | --- | | 1 | You spin just like the top. You are stunned for 1 round and then confused for 1 round. | | 2 | Slow affects the target. | | 3 | Shrink affects you for 1 day. | | 4 | A 3rd-rank Illusory Disguise makes you look like the target. | | 5 | A statue of the target, made of chocolate or candy, appears adjacent to you. | | 6 | Gravity reverses, sending you and the target 30 feet in the air, immobilized. You both fall at the start of your next turn. | | 7 | Mind Reading affects the target, and the top loudly recites what it discovers. | | 8 | Laughing Fit affects the target. | | 9 | A fountain erupts from the top, spraying wine for 10 minutes. | | 10 | Translocate affects you, but you teleport through Hell. | | 11 | affects you. | | 12 | Four singing skeletons appear to serenade you and your allies for 1 minute, granting a +1 status bonus to attack rolls, Perception checks, saving throws, and skill checks. | | 13 | The top flings 1 cp at you. | | 14 | Confusion affects the target. | | 15 | You and the target change places; this is a teleportation effect. | | 16 | Banishment affects the target, or paralyze if the target's on its home plane. | | 17 | Rainbow dye explodes and covers you for 24 hours. | | 18 | The top creates a Toxic Cloud centered on the target. | | 19 | A random unattended object within 60 feet of you sprouts animal legs and follows you, reverting when the top's activation recharges. | | 20 | Spin again, and the target also spins as though it had activated the top. |"
+ },
+ {
+  "id": "mages-hat",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Mage's Hat",
+  "level": 3,
+  "traits": [
+   "arcane",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "innateSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This hat comes in many forms, such as a colorful turban or a pointy hat with a brim, and is adorned with symbols or runes. It grants you a +1 item bonus to Arcana checks and allows you to cast the cantrip as an arcane innate cantrip."
+ },
+ {
+  "id": "mages-hat-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Mage's Hat (Greater)",
+  "level": 9,
+  "traits": [
+   "arcane",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells",
+   "innateSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This hat comes in many forms, such as a colorful turban or a pointy hat with a brim, and is adorned with symbols or runes. It grants you a +2 item bonus to Arcana checks and allows you to cast the cantrip as an arcane innate cantrip. This larger, fancier hat can be activated. Each *greater mage's hat* has a specific 4th-rank summon spell from the arcane list woven into its fabric, typically Summon Animal or Summon Elemental. If you prepare arcane spells, you can change the spell to a different 4th-rank arcane summon spell you know when you invest it. --- **Activate—Hat Spell** Cast a Spell **Frequency** once per day **Effect** You doff the hat, causing magical energy to pour from it. You cast the spell stored in the hat."
+ },
+ {
+  "id": "magic-armor",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Magic Armor",
+  "level": 5,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Magic Armor Source GM Core pg. 229 Usage worn armor Bulk varies by armor A suit of magic armor is simply a suit of armor or explorer’s clothing etched with fundamental runes. An armor potency rune increases the armor’s item bonus to AC, and a resilient rune adds an item bonus to saving throws. The Prices here are for all types of armor. You don’t need to adjust the Price from leather armor to full plate or the like. These armors are made of standard materials, not precious materials such as dawnsilver. Magic Armor (+1) Source GM Core pg. 229, Core Rulebook pg. 556 Price 160 gp This armor has a +1 armor potency rune (increase the item bonus to AC by 1). Magic Armor (+1 Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 500 gp This armor has a +1 armor potency rune (increase the item bonus to AC by 1) and a resilient rune (+1 item bonus to saves). Magic Armor (+2 Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 1,400 gp This armor has a +2 armor potency rune (increase the item bonus to AC by 2) and a resilient rune (+1 item bonus to saves). Magic Armor (+2 Greater Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 4,500 gp This armor has a +2 armor potency rune (increase the item bonus to AC by 2) and a greater resilient rune (+2 item bonus to saves). Magic Armor (+3 Greater Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 24,000 gp This armor has a +3 armor potency rune (increase the item bonus to AC by 3) and a greater resilient rune (+2 item bonus to saves). Magic Armor (+3 Major Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 70,000 gp This armor has a +3 armor potency rune (increase the item bonus to AC by 3) and a major resilient rune (+3 item bonus to saves)."
+ },
+ {
+  "id": "magic-armor-1",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Magic Armor (+1)",
+  "level": 5,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Magic Armor Source GM Core pg. 229 Usage worn armor Bulk varies by armor A suit of magic armor is simply a suit of armor or explorer’s clothing etched with fundamental runes. An armor potency rune increases the armor’s item bonus to AC, and a resilient rune adds an item bonus to saving throws. The Prices here are for all types of armor. You don’t need to adjust the Price from leather armor to full plate or the like. These armors are made of standard materials, not precious materials such as dawnsilver. Magic Armor (+1) Source GM Core pg. 229, Core Rulebook pg. 556 Price 160 gp This armor has a +1 armor potency rune (increase the item bonus to AC by 1). Magic Armor (+1 Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 500 gp This armor has a +1 armor potency rune (increase the item bonus to AC by 1) and a resilient rune (+1 item bonus to saves). Magic Armor (+2 Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 1,400 gp This armor has a +2 armor potency rune (increase the item bonus to AC by 2) and a resilient rune (+1 item bonus to saves). Magic Armor (+2 Greater Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 4,500 gp This armor has a +2 armor potency rune (increase the item bonus to AC by 2) and a greater resilient rune (+2 item bonus to saves). Magic Armor (+3 Greater Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 24,000 gp This armor has a +3 armor potency rune (increase the item bonus to AC by 3) and a greater resilient rune (+2 item bonus to saves). Magic Armor (+3 Major Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 70,000 gp This armor has a +3 armor potency rune (increase the item bonus to AC by 3) and a major resilient rune (+3 item bonus to saves)."
+ },
+ {
+  "id": "magic-armor-1-resilient",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Magic Armor (+1 Resilient)",
+  "level": 8,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Magic Armor Source GM Core pg. 229 Usage worn armor Bulk varies by armor A suit of magic armor is simply a suit of armor or explorer’s clothing etched with fundamental runes. An armor potency rune increases the armor’s item bonus to AC, and a resilient rune adds an item bonus to saving throws. The Prices here are for all types of armor. You don’t need to adjust the Price from leather armor to full plate or the like. These armors are made of standard materials, not precious materials such as dawnsilver. Magic Armor (+1) Source GM Core pg. 229, Core Rulebook pg. 556 Price 160 gp This armor has a +1 armor potency rune (increase the item bonus to AC by 1). Magic Armor (+1 Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 500 gp This armor has a +1 armor potency rune (increase the item bonus to AC by 1) and a resilient rune (+1 item bonus to saves). Magic Armor (+2 Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 1,400 gp This armor has a +2 armor potency rune (increase the item bonus to AC by 2) and a resilient rune (+1 item bonus to saves). Magic Armor (+2 Greater Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 4,500 gp This armor has a +2 armor potency rune (increase the item bonus to AC by 2) and a greater resilient rune (+2 item bonus to saves). Magic Armor (+3 Greater Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 24,000 gp This armor has a +3 armor potency rune (increase the item bonus to AC by 3) and a greater resilient rune (+2 item bonus to saves). Magic Armor (+3 Major Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 70,000 gp This armor has a +3 armor potency rune (increase the item bonus to AC by 3) and a major resilient rune (+3 item bonus to saves)."
+ },
+ {
+  "id": "magic-armor-2-greater-resilient",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Magic Armor (+2 Greater Resilient)",
+  "level": 14,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Magic Armor Source GM Core pg. 229 Usage worn armor Bulk varies by armor A suit of magic armor is simply a suit of armor or explorer’s clothing etched with fundamental runes. An armor potency rune increases the armor’s item bonus to AC, and a resilient rune adds an item bonus to saving throws. The Prices here are for all types of armor. You don’t need to adjust the Price from leather armor to full plate or the like. These armors are made of standard materials, not precious materials such as dawnsilver. Magic Armor (+1) Source GM Core pg. 229, Core Rulebook pg. 556 Price 160 gp This armor has a +1 armor potency rune (increase the item bonus to AC by 1). Magic Armor (+1 Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 500 gp This armor has a +1 armor potency rune (increase the item bonus to AC by 1) and a resilient rune (+1 item bonus to saves). Magic Armor (+2 Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 1,400 gp This armor has a +2 armor potency rune (increase the item bonus to AC by 2) and a resilient rune (+1 item bonus to saves). Magic Armor (+2 Greater Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 4,500 gp This armor has a +2 armor potency rune (increase the item bonus to AC by 2) and a greater resilient rune (+2 item bonus to saves). Magic Armor (+3 Greater Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 24,000 gp This armor has a +3 armor potency rune (increase the item bonus to AC by 3) and a greater resilient rune (+2 item bonus to saves). Magic Armor (+3 Major Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 70,000 gp This armor has a +3 armor potency rune (increase the item bonus to AC by 3) and a major resilient rune (+3 item bonus to saves)."
+ },
+ {
+  "id": "magic-armor-2-resilient",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Magic Armor (+2 Resilient)",
+  "level": 11,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Magic Armor Source GM Core pg. 229 Usage worn armor Bulk varies by armor A suit of magic armor is simply a suit of armor or explorer’s clothing etched with fundamental runes. An armor potency rune increases the armor’s item bonus to AC, and a resilient rune adds an item bonus to saving throws. The Prices here are for all types of armor. You don’t need to adjust the Price from leather armor to full plate or the like. These armors are made of standard materials, not precious materials such as dawnsilver. Magic Armor (+1) Source GM Core pg. 229, Core Rulebook pg. 556 Price 160 gp This armor has a +1 armor potency rune (increase the item bonus to AC by 1). Magic Armor (+1 Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 500 gp This armor has a +1 armor potency rune (increase the item bonus to AC by 1) and a resilient rune (+1 item bonus to saves). Magic Armor (+2 Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 1,400 gp This armor has a +2 armor potency rune (increase the item bonus to AC by 2) and a resilient rune (+1 item bonus to saves). Magic Armor (+2 Greater Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 4,500 gp This armor has a +2 armor potency rune (increase the item bonus to AC by 2) and a greater resilient rune (+2 item bonus to saves). Magic Armor (+3 Greater Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 24,000 gp This armor has a +3 armor potency rune (increase the item bonus to AC by 3) and a greater resilient rune (+2 item bonus to saves). Magic Armor (+3 Major Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 70,000 gp This armor has a +3 armor potency rune (increase the item bonus to AC by 3) and a major resilient rune (+3 item bonus to saves)."
+ },
+ {
+  "id": "magic-armor-3-greater-resilient",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Magic Armor (+3 Greater Resilient)",
+  "level": 18,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Magic Armor Source GM Core pg. 229 Usage worn armor Bulk varies by armor A suit of magic armor is simply a suit of armor or explorer’s clothing etched with fundamental runes. An armor potency rune increases the armor’s item bonus to AC, and a resilient rune adds an item bonus to saving throws. The Prices here are for all types of armor. You don’t need to adjust the Price from leather armor to full plate or the like. These armors are made of standard materials, not precious materials such as dawnsilver. Magic Armor (+1) Source GM Core pg. 229, Core Rulebook pg. 556 Price 160 gp This armor has a +1 armor potency rune (increase the item bonus to AC by 1). Magic Armor (+1 Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 500 gp This armor has a +1 armor potency rune (increase the item bonus to AC by 1) and a resilient rune (+1 item bonus to saves). Magic Armor (+2 Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 1,400 gp This armor has a +2 armor potency rune (increase the item bonus to AC by 2) and a resilient rune (+1 item bonus to saves). Magic Armor (+2 Greater Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 4,500 gp This armor has a +2 armor potency rune (increase the item bonus to AC by 2) and a greater resilient rune (+2 item bonus to saves). Magic Armor (+3 Greater Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 24,000 gp This armor has a +3 armor potency rune (increase the item bonus to AC by 3) and a greater resilient rune (+2 item bonus to saves). Magic Armor (+3 Major Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 70,000 gp This armor has a +3 armor potency rune (increase the item bonus to AC by 3) and a major resilient rune (+3 item bonus to saves)."
+ },
+ {
+  "id": "magic-armor-3-major-resilient",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Magic Armor (+3 Major Resilient)",
+  "level": 20,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Magic Armor Source GM Core pg. 229 Usage worn armor Bulk varies by armor A suit of magic armor is simply a suit of armor or explorer’s clothing etched with fundamental runes. An armor potency rune increases the armor’s item bonus to AC, and a resilient rune adds an item bonus to saving throws. The Prices here are for all types of armor. You don’t need to adjust the Price from leather armor to full plate or the like. These armors are made of standard materials, not precious materials such as dawnsilver. Magic Armor (+1) Source GM Core pg. 229, Core Rulebook pg. 556 Price 160 gp This armor has a +1 armor potency rune (increase the item bonus to AC by 1). Magic Armor (+1 Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 500 gp This armor has a +1 armor potency rune (increase the item bonus to AC by 1) and a resilient rune (+1 item bonus to saves). Magic Armor (+2 Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 1,400 gp This armor has a +2 armor potency rune (increase the item bonus to AC by 2) and a resilient rune (+1 item bonus to saves). Magic Armor (+2 Greater Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 4,500 gp This armor has a +2 armor potency rune (increase the item bonus to AC by 2) and a greater resilient rune (+2 item bonus to saves). Magic Armor (+3 Greater Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 24,000 gp This armor has a +3 armor potency rune (increase the item bonus to AC by 3) and a greater resilient rune (+2 item bonus to saves). Magic Armor (+3 Major Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 70,000 gp This armor has a +3 armor potency rune (increase the item bonus to AC by 3) and a major resilient rune (+3 item bonus to saves)."
+ },
+ {
+  "id": "magic-weapon",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Magic Weapon",
+  "level": 2,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Magic Weapon Source GM Core pg. 240 Usage held in 1 hand A magic weapon is a weapon etched with only fundamental runes. A weapon potency rune gives an item bonus to attack rolls with the weapon, and a striking rune increases the weapon's number of weapon damage dice. The Prices here are for all types of weapons. You don't need to adjust the Price from a club to a greataxe or the like. These weapons are made of standard materials, not precious materials such as cold iron. Magic Weapon (+1) Source GM Core pg. 241, Core Rulebook pg. 599 Price 35 gp Magic Weapon (+1 Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 100 gp Magic Weapon (+2 Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 1,000 gp Magic Weapon (+2 Greater Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 2,000 gp Magic Weapon (+3 Greater Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 10,000 gp Magic Weapon (+3 Major Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 40,000 gp"
+ },
+ {
+  "id": "magic-weapon-1",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Magic Weapon (+1)",
+  "level": 2,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Magic Weapon Source GM Core pg. 240 Usage held in 1 hand A magic weapon is a weapon etched with only fundamental runes. A weapon potency rune gives an item bonus to attack rolls with the weapon, and a striking rune increases the weapon's number of weapon damage dice. The Prices here are for all types of weapons. You don't need to adjust the Price from a club to a greataxe or the like. These weapons are made of standard materials, not precious materials such as cold iron. Magic Weapon (+1) Source GM Core pg. 241, Core Rulebook pg. 599 Price 35 gp Magic Weapon (+1 Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 100 gp Magic Weapon (+2 Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 1,000 gp Magic Weapon (+2 Greater Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 2,000 gp Magic Weapon (+3 Greater Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 10,000 gp Magic Weapon (+3 Major Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 40,000 gp"
+ },
+ {
+  "id": "magic-weapon-1-striking",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Magic Weapon (+1 Striking)",
+  "level": 4,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Magic Weapon Source GM Core pg. 240 Usage held in 1 hand A magic weapon is a weapon etched with only fundamental runes. A weapon potency rune gives an item bonus to attack rolls with the weapon, and a striking rune increases the weapon's number of weapon damage dice. The Prices here are for all types of weapons. You don't need to adjust the Price from a club to a greataxe or the like. These weapons are made of standard materials, not precious materials such as cold iron. Magic Weapon (+1) Source GM Core pg. 241, Core Rulebook pg. 599 Price 35 gp Magic Weapon (+1 Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 100 gp Magic Weapon (+2 Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 1,000 gp Magic Weapon (+2 Greater Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 2,000 gp Magic Weapon (+3 Greater Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 10,000 gp Magic Weapon (+3 Major Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 40,000 gp"
+ },
+ {
+  "id": "magic-weapon-2-greater-striking",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Magic Weapon (+2 Greater Striking)",
+  "level": 12,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Magic Weapon Source GM Core pg. 240 Usage held in 1 hand A magic weapon is a weapon etched with only fundamental runes. A weapon potency rune gives an item bonus to attack rolls with the weapon, and a striking rune increases the weapon's number of weapon damage dice. The Prices here are for all types of weapons. You don't need to adjust the Price from a club to a greataxe or the like. These weapons are made of standard materials, not precious materials such as cold iron. Magic Weapon (+1) Source GM Core pg. 241, Core Rulebook pg. 599 Price 35 gp Magic Weapon (+1 Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 100 gp Magic Weapon (+2 Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 1,000 gp Magic Weapon (+2 Greater Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 2,000 gp Magic Weapon (+3 Greater Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 10,000 gp Magic Weapon (+3 Major Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 40,000 gp"
+ }
+]

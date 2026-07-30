@@ -1,0 +1,1267 @@
+[
+ {
+  "id": "moon-radish-soup",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Moon Radish Soup",
+  "level": 2,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "healing",
+   "mental"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ 1 minute (Interact) In addition to its slightly spicy-sweet flavor, Svetlana Leveton's creamy moon radish soup is amazingly comforting, clearing the mind of anyone who has a bowl of it. After you eat the soup, it attempts to counteract (counteract +6) stupefied conditions affecting you; if successful, it reduces the value of your stupefied condition by 1 (or by 2 on a critical success). After eating a serving of moon radish soup, you gain temporary immunity to its effects for 24 hours."
+ },
+ {
+  "id": "moonlit-chain",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Moonlit Chain",
+  "level": 7,
+  "traits": [
+   "flexible",
+   "invested",
+   "magical",
+   "noisy"
+  ],
+  "engineFieldsPresent": [
+   "counters"
+  ],
+  "inRegistries": [],
+  "text": "This *+1 silver chain shirt* has a collar adorned with stitched images of the phases of the moon. You can see in moonlight as though you had low-light vision. --- **Activate—Dim Sight** ⟨1⟩ (manipulate) **Frequency** one per day **Effect** You touch the stitched image of the new moon on the armor's collar and suppress the dazzled condition for 1 minute. --- **Craft Requirements** The initial raw materials must include 33 gp of silver."
+ },
+ {
+  "id": "mummys-despair",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Mummy's Despair",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "aura",
+   "divine",
+   "emotion",
+   "fear",
+   "mental"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per hour --- You force your mental anguish outward, projecting it upon those around you. You gain an aura of despair in a lasting 5 rounds. A creature that enters or begins its turn in the aura must succeed at a save against the higher of your class DC or spell DC or be Frightened 1 (Frightened 2 on a critical failure). A creature that succeeds at the save is temporarily immune to Mummy's Despair for 10 minutes."
+ },
+ {
+  "id": "mutable-familiar",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Mutable Familiar",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your familiar's supernatural spirit has outgrown its corporeal body. You can conduct a special 10-minute activity to reselect certain familiar abilities, switching one or more of the following abilities for other abilities on this list: amphibious, burrower, climber, darkvision, fast movement, manual dexterity, resistance, and scent. You can reselect only familiar abilities you would normally be able to reselect each day, not required familiar abilities for your familiar. You can't remove an ability that is required for another ability your familiar has (for instance, you can't remove manual dexterity if the familiar has lab assistant)."
+ },
+ {
+  "id": "mutagenic-renovator",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Mutagenic Renovator",
+  "level": 10,
+  "traits": [
+   "consumable",
+   "magical",
+   "potion"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Interact --- This sludgy concoction is said to be derived from liquefied mutant scales. For 1 hour after you imbibe the potion, your skin warps and mutates to grant you resistance 5 to one type of energy damage. When you first drink the potion, choose either acid, cold, electricity, fire, or sonic damage. The potion starts by granting you resistance against this type of damage. Each time you take damage from one of these listed energy types other than the one you currently resist, your skin mutates, causing you to lose the energy resistance previously granted by this potion and gain resistance to the type of energy by which you were most recently damaged, and the potion's duration decreases by 10 minutes. The resistance shifts only after you take the damage, so it doesn't apply to the first instance of damage"
+ },
+ {
+  "id": "natural-senses",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Natural Senses",
+  "level": 1,
+  "traits": [
+   "awakened-animal"
+  ],
+  "engineFieldsPresent": [
+   "choice",
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You have retained your sharp animal senses even after awakening. Choose one of the following senses appropriate to your kind of animal: darkvision, echolocation 10 feet, low-light vision, scent (imprecise) 30 feet, or tremorsense (imprecise) 30 feet. (Echolocation allows you to use hearing as a precise sense at the listed range.) If your animal kind doesn't typically have a specific type of sense, you can't gain that sense with this feat. --- **Special** You can take this feat multiple times, choosing a different sense each time."
+ },
+ {
+  "id": "necrologist-dedication",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Necrologist Dedication",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your studies of the lists of the dead allow you to call forth a horde of undead with a brief incantation. You can summon your horde with the Raise the Horde activity, and you can use the Mobbing Assault action while your horde is raised to command it to attack. The eerie connection you have with your horde precludes you from also having an animal companion or any other companion (such as a follower; page 76), though if an ability allows you to have more than one follower (such as with the Additional Follower feat of the captain archetype), you can count your horde as one. You have enough control over your horde that it doesn't attack you or your allies. When raised, your horde is Huge and has a speed of 20 feet. It has the mindless and undead traits. It can be attacked. Though it's made of several undead creatures, it can't share the same space as other creatures (unless you have certain feats). Due to your eldritch connection with your horde, it uses your AC, saves, and other defensive statistics like skill DCs, but is immune to the grabbed, prone, and restrained conditions. The horde has resistance equal to your level to physical damage, but weakness equal to your level to area and splash damage. You share an animating force, so any damage that would be dealt to the horde is dealt to you instead, though you take damage only once from any ability that includes both you and the horde in the area of effect (though you take the greater amount of damage)."
+ },
+ {
+  "id": "necromancers-visage",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Necromancer's Visage",
+  "level": 12,
+  "traits": [
+   "cleric",
+   "oracle",
+   "wizard"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Necromantic energy demonstrates your power over undead, creating a demeanor that commands their fear and respect. Undead creatures can immediately sense your Necromancer's Visage and tend to act accordingly. If you take a hostile action against an undead creature, it becomes permanently immune to your Necromancer's Visage, and your Necromancer's Visage ends. You can spend 10 minutes to restore your Necromancer's Visage, though any creatures that became permanently immune remain so. Each time an undead creature 2 or more levels lower than you attacks you, it must attempt a Will save against your spell DC. If you're also affected by sanctuary or a similar effect, only one affects the attacker (you choose which). --- **Critical Success** The creature is permanently immune to your Necromancer's Visage. **Success** The creature can attempt its attack and any other attacks against you this turn. **Failure** The creature can't attack you and wastes the action. It can't attempt further attacks against you this turn. **Critical Failure** The creature wastes the action and can't attempt to attack you as long as your Necromancer's Visage persists. **Special** This feat has the trait matching your spellcasting tradition."
+ },
+ {
+  "id": "nephilim-resistance",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Nephilim Resistance",
+  "level": 5,
+  "traits": [
+   "nephilim"
+  ],
+  "engineFieldsPresent": [
+   "choice",
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You resist energy like your extraplanar predecessors. Choose one of the following energy damage types: acid, cold, electricity, fire, or sonic. You gain resistance 5 to that damage type. The damage type typically matches an extraplanar entity associated with your bloodline. For instance, an Angelkin might choose resistance to cold, while a Hellspawn might choose resistance to fire."
+ },
+ {
+  "id": "netherwalk-incense",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Netherwalk Incense",
+  "level": 11,
+  "traits": [
+   "consumable",
+   "magical",
+   "shadow",
+   "teleportation"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** 1 minute (concentrate, manipulate) --- This stick of dark-gray incense carries a faint, strange odor that's different for any creature that smells it—mimicking a scent that evokes feelings of nostalgia or homesickness. You begin the activation of a stick of netherwalk incense by lighting it on fire as a single Interact action, at which point you designate up to 10 willing creatures within 20 feet of you. After spending a minute concentrating on the smoke and its scent, you and the affected creatures move into the Netherworld and can use its warped nature to speed travel. Each hour, your travel covers a distance of 50 miles, during which landmarks appear as vague and symbolic images rather than concrete visuals. You arrive within a mile of your intended destination when you Dismiss the effect or after 8 hours have passed."
+ },
+ {
+  "id": "nevercold",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Nevercold",
+  "level": 10,
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "heldSpells",
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** Cast a Spell --- Nevercold, sometimes mistakenly referred to as nevercoal, is the charcoal left after wildfires in the First World. True to its name, nevercold remains warm to the touch. If you use nevercold to cast Fire Shield, the spell's duration increases to 5 minutes, the cold resistance you gain from it lasts 1 hour, and you're immune to minor and severe cold for 8 hours. The catalyst affects 4th-rank *fire shield*."
+ },
+ {
+  "id": "nevercold-compressed",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Nevercold (Compressed)",
+  "level": 14,
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "heldSpells",
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** Cast a Spell --- Nevercold, sometimes mistakenly referred to as nevercoal, is the charcoal left after wildfires in the First World. True to its name, nevercold remains warm to the touch. If you use nevercold to cast Fire Shield, the spell's duration increases to 5 minutes, the cold resistance you gain from it lasts 1 hour, and you're immune to minor and severe cold for 8 hours. The catalyst affects 6th-rank or lower *fire shield*, and the immunity from minor and severe cold lasts 24 hours."
+ },
+ {
+  "id": "nevercold-refined",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Nevercold (Refined)",
+  "level": 18,
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "heldSpells",
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** Cast a Spell --- Nevercold, sometimes mistakenly referred to as nevercoal, is the charcoal left after wildfires in the First World. True to its name, nevercold remains warm to the touch. If you use nevercold to cast Fire Shield, the spell's duration increases to 5 minutes, the cold resistance you gain from it lasts 1 hour, and you're immune to minor and severe cold for 8 hours. The catalyst affects 8th-rank or lower *fire shield*, and the immunity from minor and severe cold lasts 24 hours."
+ },
+ {
+  "id": "nightmares-lament",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Nightmare's Lament",
+  "level": 6,
+  "traits": [
+   "combination",
+   "concussive",
+   "fatal-d8",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Ritually constructed from the bones of a nightmare, a *nightmare's lament* is a *+1 striking rapier pistol*. Thin wisps of dark smoke continually surround the red-flecked blade. --- **Activate—Fuming Cloak** ⟨2⟩ (manipulate) **Frequency** once per day **Effect** For 1 minute, the *nightmare's lament* continually vents thick, black smoke that creates concealment in a 15-foot aura around the gun's wielder. The wielder of the *nightmare's lament* can see through this smoke. A creature that begins its turn in the area becomes Sickened 2 ( negates) and is then temporarily immune to the sickness from the smoke for 1 minute. The wielder of the *nightmare's lament*, any creature currently holding its breath (or that does not need to breathe), and any creature immune to poison are immune to the aura's sickened effect but not the concealment. --- **Craft Requirements** The initial raw materials must include the rib bones and inner fire of a nightmare."
+ },
+ {
+  "id": "nimbus-breath",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Nimbus Breath",
+  "level": 8,
+  "traits": [
+   "air",
+   "bottled-breath",
+   "consumable",
+   "electricity"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- The dwarves of Cloudspire Citadel in Golarion's Mwangi Expanse create bottles of *nimbus breath* by capturing and bottling the fluffiest nimbus clouds from the lairs of cloud dragons. After harvesting the cloud, the bottle must sit at the peak of the tallest mountain for 10 days and 10 nights, pelted by all forms of weather. *Nimbus breaths* can also be created by capturing clouds on other planes, such as those found on the Plane of Air or in the highest peaks of Celestia. After you inhale the *nimbus breath*, you gain resistance 5 to electricity and are affected by Fly as long as you hold your breath. You can exhale the breath as a single action to create a Gust of Wind (DC 24) from your mouth. If you're airborne when the cloud expires, you float gently to the ground at 60 feet per round and don't take damage from this fall."
+ },
+ {
+  "id": "nivi-rhombodazzle",
+  "lane": "defense",
+  "collection": "deities",
+  "name": "Nivi Rhombodazzle",
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Goddess of gems, stealth, and gambling, Nivi Rhombodazzle is the ultimate high roller, said to have won her divinity from the dwarven god Torag in exchange for a particular gemstone. Nivi's love of gambling was born not from the rush of victory, but from the excitement of the bet itself, an attitude that ultimately brought her into a situation where her debts outweighed her charms. Keeping one step ahead of her creditors, Nivi fled beneath the earth and into the Darklands. Most of her adventures in the lightless lands are lost to time and history, but she ultimately emerged reborn as a goddess, hailed as the first of the deep gnomes—uncanny underground gnomes with unique magical abilities and immunity to the dread Bleaching, a wasting curse which claims the lives of gnomes who succumb to boredom and ennui. **Title** The Gray Polychrome **Areas of Concern** gambling, gems, gnomes, and stealth **Edicts** learn the rules and strategies of games of chance played wherever you travel, take risks and savor the consequences whether good or ill, use stealth and guile over violence when dealing with the fallout from your risk-taking **Anathema** break the established rules or terms of a wager, use violence to avoid the consequences of a wager **Religious Symbol** seven-pipped gem die **Sacred Animal** mole **Sacred Colors** gray, red --- ## Divine details **Divine Font** Harm or Heal **Divine Skill** Stealth **Favored Weapon** Light Hammer **Domains** Family, Luck, Trickery, Wealth (Alternate: Confidence, Earth) **Cleric Spells** 1st: Illusory Disguise, 2nd: Invisibility, 4th: Liminal Doorway"
+ },
+ {
+  "id": "nocturnal-senses",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Nocturnal Senses",
+  "level": 6,
+  "traits": [
+   "barbarian",
+   "rage"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your senses gain even greater clarity. While raging, if you have low-light vision you gain darkvision, and if you have scent the range of your imprecise scent increases to 60 feet."
+ },
+ {
+  "id": "noxious-jerkin",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Noxious Jerkin",
+  "level": 13,
+  "traits": [
+   "comfort",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This +2 resilient padded armor is woven from many strands of gut cord strung with dried organs and preserved xulgath scent glands. When worn, it infuses your body with a ghastly and nauseating flavor. **Activate** ⟨4⟩ envision **Trigger** You are grabbed or are hit by an unarmed attack --- **Effect** Your attacker must attempt a saving throw. Creatures with a stench aura, such as otyughs and xulgaths, are immune to this effect. **Success** The creature is unaffected and is immune to the effects of the noxious jerkin for 1 minute. **Failure** The creature is Sickened 1. **Critical Failure** The creature is sickened 1 and is Slowed 1 for 1 round."
+ },
+ {
+  "id": "nudging-whisper",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Nudging Whisper",
+  "level": 1,
+  "traits": [
+   "curse",
+   "divine",
+   "emotion",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You lace your words with echoes of your ancestors' magic. If your next action is to Request, you gain the effects of the Shameless Request feat, and if your next action is to Lie, you gain the effects of the feat. If you critically fail at either check, the target and anyone who witnessed you fail becomes immune to your Nudging Whisper for one day, though this doesn't necessarily let them know that you attempted to charm them."
+ },
+ {
+  "id": "nyctessas-staff",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Nyctessa's Staff",
+  "level": 4,
+  "traits": [
+   "magical",
+   "monk",
+   "staff",
+   "two-hand-d8"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "This macabre staff is crafted from gleaming white bone, a spinal column spiraling out of its base with a skull swinging from the spine's tip. It was handcrafted for Nyctessa by her father, a powerful Blood Lord, from her mortal mother's bones. When you damage a creature with Nyctessa's staff, that creature gains weakness 2 to void damage until the end of your next turn. **Activate** Cast a Spell --- **Effect** You expend a number of charges from the staff to cast a spell from its list. - **Cantrip** Void Warp - **1st** Summon Undead, Fear"
+ },
+ {
+  "id": "oath-of-the-defender",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Oath of The Defender",
+  "level": 2,
+  "traits": [
+   "champion",
+   "oath"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "During your daily preparations, you can swear an oath to defend against a certain kind of enemy during your deeds that day. Choose aberrations, celestials, dragons, fiends, or undead. You can't choose celestials if you're holy, nor can you choose fiends if you're unholy. You gain an edict to defend against creatures of that kind. Allies in your champion's aura, not including you, get resistance 2 to damage dealt by creatures with the chosen trait. If such a creature deals more than one damage type at once, apply this resistance only to the highest amount of damage. The resistance increases to 3 at 7th level, 4 at 12th level, and 5 at 17th level. If a creature with the chosen trait triggers your champion's reaction and your champion's reaction grants resistance against the triggering damage, the resistance increases by 5."
+ },
+ {
+  "id": "obfuscation-oil",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Obfuscation Oil",
+  "level": 15,
+  "traits": [
+   "consumable",
+   "magical",
+   "oil"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- You can spread this blue-gray gel on a single item with a Bulk of 3 or less to ward it against magical detection. It becomes immune to divination magic of 8th rank or lower (such as Locate). This oil is permanent, but it can be removed with acid. Removing the oil in this way usually takes 1 minute for objects with Bulk of 1 or less, or a number of minutes equal to the item's Bulk."
+ },
+ {
+  "id": "obscure",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Obscure",
+  "level": 0,
+  "traits": [
+   "shadow"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Obscure Source GM Core pg. 317 Aspect Shadow Your relic absorbs light and wraps shadow around you, hiding you in darkness. As long as you are in dim light in an area of shadows, you can attempt a Stealth check to Hide, even if you aren't concealed against the creature, such as with a creature with darkvision."
+ },
+ {
+  "id": "obsidian-goggles",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Obsidian Goggles",
+  "level": 5,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "The sleek, black lenses of these goggles somehow make everything seem more brightly lit. While wearing the goggles, you gain a +1 item bonus to Perception checks involving sight. --- **Activate—Darkvision** ⟨1⟩ (manipulate) **Frequency** once per day **Effect** Adjusting your goggles, you gain darkvision for 1 hour."
+ },
+ {
+  "id": "obsidian-goggles-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Obsidian Goggles (Greater)",
+  "level": 11,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "The sleek, black lenses of these goggles somehow make everything seem more brightly lit. While wearing the goggles, you gain a +2 item bonus to Perception checks involving sight. --- **Activate—Darkvision** ⟨1⟩ (manipulate) **Frequency** any number of times per day **Effect** Adjusting your goggles, you gain darkvision until you deactivate it as an Interact action or the item is no longer invested by you, whichever comes first."
+ },
+ {
+  "id": "obsidian-goggles-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Obsidian Goggles (Major)",
+  "level": 18,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "The sleek, black lenses of these goggles somehow make everything seem more brightly lit. While wearing the goggles, you gain a +3 item bonus to Perception checks involving sight. --- **Activate—Darkvision** ⟨1⟩ (manipulate) **Frequency** any number of times per day **Effect** Adjusting your goggles, you gain *greater darkvision* until you deactivate it as an Interact action or the item is no longer invested by you, whichever comes first."
+ },
+ {
+  "id": "oceans-balm",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Ocean's Balm",
+  "level": 1,
+  "traits": [
+   "healing",
+   "impulse",
+   "kineticist",
+   "manipulate",
+   "primal",
+   "vitality",
+   "water"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "A blessing of the living sea salves wounds and douses flames. Touch a willing living creature. It regains HP and gains resistance 2 to fire for 1 minute. If it has persistent fire damage, it can attempt a flat check to remove it with especially appropriate help. The target is temporarily immune to healing from Ocean's Balm for 10 minutes. --- **Level (+2)** The healing increases by 1d8, and the resistance increases by 1."
+ },
+ {
+  "id": "olfactory-obfuscator",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Olfactory Obfuscator",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Olfactory Obfuscator Source Advanced Player's Guide pg. 254 Usage held in 1 hand Bulk L Activate Interact This frothing fluid causes the drinker's body to exude trace odor-absorbing oils. For the listed duration after drinking this elixir, your scent is nearly unnoticeable. Creatures with imprecise scent don't detect you with that sense unless they Seek for you, and you are concealed from creatures that perceive you with precise scent. You gain a +4 item bonus against attempts to Seek you by creatures using only scent-based senses; if they use any other senses as well, the bonus doesn't apply. Olfactory Obfuscator Source Advanced Player's Guide pg. 254 Price 9 gp Bulk L The duration is 10 minutes. Olfactory Obfuscator (Greater) Source Advanced Player's Guide pg. 254 Price 225 gp Bulk L The duration is 8 hours."
+ },
+ {
+  "id": "olfactory-obfuscator-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Olfactory Obfuscator (Greater)",
+  "level": 10,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ Interact --- This frothing fluid causes the drinker's body to exude trace odor absorbing oils. For 8 hours after drinking this elixir, your scent is nearly unnoticeable. Creatures with imprecise scent don't detect you with that sense unless they Seek for you, and you are concealed from creatures that perceive you with precise scent. You gain a +4 item bonus against attempts to Seek you by creatures using only scent-based senses; if they use any other senses as well, the bonus doesn't apply."
+ },
+ {
+  "id": "olfactory-obfuscator-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Olfactory Obfuscator (Lesser)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ Interact --- This frothing fluid causes the drinker's body to exude trace odor absorbing oils. For 10 minutes after drinking this elixir, your scent is nearly unnoticeable. Creatures with imprecise scent don't detect you with that sense unless they Seek for you, and you are concealed from creatures that perceive you with precise scent. You gain a +4 item bonus against attempts to Seek you by creatures using only scent-based senses; if they use any other senses as well, the bonus doesn't apply."
+ },
+ {
+  "id": "olfactory-stimulators",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Olfactory Stimulators",
+  "level": 1,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This cluster of sensitive wire whiskers fits over the nose or snout to provide sensory information as it reacts to nearby odors and other scents. A creature wearing olfactory stimulators gains a sense of smell, which is as precise as an average member of its species, as well as the scent special ability if members of its species typically have that ability. Olfactory stimulators can be fitted to animal companions as well as sapient creatures; stimulators produced for companion use have the companion trait."
+ },
+ {
+  "id": "olfactory-stimulators-bloodhound",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Olfactory Stimulators (Bloodhound)",
+  "level": 5,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Olfactory Stimulators Source Treasure Vault (Remastered) pg. 105 Usage worn This cluster of sensitive wire whiskers fits over the nose or snout to provide sensory information as it reacts to nearby odors and other scents. A creature wearing olfactory stimulators gains a sense of smell, which is as precise as an average member of its species, as well as the scent special ability if members of its species typically have that ability. Olfactory stimulators can be fitted to animal companions as well as sapient creatures; stimulators produced for companion use have the companion trait. Olfactory Stimulators Source Treasure Vault (Remastered) pg. 105 Price 5 gp Olfactory Stimulators (Bloodhound) Source Treasure Vault (Remastered) pg. 105 Price 136 gp Bulk L These olfactory stimulators can be enhanced to better localize scents. Activate (concentrate) Frequency once per day; Effect Your olfactory stimulators twitch as they gather even more information. You gain imprecise scent with a range of 30 feet for 1 minute."
+ },
+ {
+  "id": "ommatophoric-mutagen",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Ommatophoric Mutagen",
+  "level": 7,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Your eyes bulge from their sockets and extend upwards from your head on long, prehensile stalks, greatly enhancing your eyesight and field of view but leaving you unable to close your eyes, increasing your vulnerability to harmful visual effects. **Benefit** You gain all-around vision, a +2 item bonus to visual Perception checks, and low-light vision if you don't already have it. These effects last for 1 minute. **Drawback** For 1 minute, you take a –2 penalty to saving throws against effects that have the visual trait."
+ },
+ {
+  "id": "one-hour-flower",
+  "lane": "defense",
+  "collection": "items",
+  "name": "One-Hour Flower",
+  "level": 1,
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Popular with lovers, decorators, and sports fans, the seeds of these ephemeral plants grow and bloom immediately into flowers when placed in any warm environment, including a cup of dirt, a bowl of warm water, and a tightly clenched hand. The color of these flowers varies, but each has an internal glow that sheds bright light in a 30-foot radius. The radius of this light shrinks by 10 feet every 20 minutes. At the end of an hour, the plant disintegrates, leaving only a vaguely pleasant scent in the air."
+ },
+ {
+  "id": "opportune-trickster",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Opportune Trickster",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** An adjacent ally makes a melee Strike against a creature. **Requirements** You're adjacent to both your ally and the creature. --- You aren't above using underhanded tactics to gain an advantage, easily routing your opponents when they attack. Attempt a Deception check against the Perception DC of the creature that's the target of the triggering attack. Regardless of the result, the target is temporarily immune to your attempts to use Opportune Trickster for the next 10 minutes. --- **Critical Success** The target is off-guard (including against the triggering attack) until the end of your ally's turn. **Success** The target is off-guard against the triggering attack. **Critical Failure** You lose your balance in your attempt to assist your ally and fall prone. --- **Special** If you have the Dirty Trick skill feat, you can attempt a Thievery check instead of a Deception check; if you do, this action loses the mental trait"
+ },
+ {
+  "id": "oppurtune-trickster",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Oppurtune Trickster",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Oppurtune Trickster Source Pathfinder #222: Hellbreakers pg. 217, Hellbreakers Players Guide pg. 9 Archetype Hellbreaker Prerequisites Hellbreaker Dedication; Trained in Deception Trigger An adjacent ally makes a melee Strike against a creature. Requirements You’re adjacent to both your ally and the creature. You aren't above using underhanded tactics to gain an advantage, easily routing your opponents when they attack. Attempt a Deception check against the Perception DC of the creature that's the target of the triggering attack. Regardless of the result, the target is temporarily immune to your attempts to use Opportune Trickster for the next 10 minutes. Special If you have the Dirty Trick skill feat, you can attempt a Thievery check instead of a Deception check; if you do, this action loses the mental trait. Critical Success The target is off-guard (including against the triggering attack) until the end of your ally's turn. Success The target is off-guard against the triggering attack. Critical Failure You lose your balance in your attempt to assist your ally and fall prone."
+ },
+ {
+  "id": "orators-filibuster",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Orator's Filibuster",
+  "level": 8,
+  "traits": [
+   "archetype",
+   "auditory",
+   "concentrate",
+   "linguistic",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "When you seek to convince others of the worth of your cause, you are capable of unleashing such an entrancing torrent of rhetoric and metaphor that it is all but impossible to look away from you. When you begin a conversation or similar attempt with the goal of Making an Impression, all creatures who are observing you become fascinated unless they succeed at a save against the higher of your class DC or spell DC. Creatures who are familiar with you and your verbal techniques, such as allies you've known for at least several days, are immune to this effect, though newer allies who have not heard one of your speeches before might still be affected. Affected creatures remain fascinated for as long as you continue your filibuster, though they can attempt a new save to end the effect at the end of each minute while your filibuster lasts. A creature who succeeds at a saving throw to end the fascinated condition from your filibuster is also unaffected by your attempt to Make an Impression. You can continue your filibuster indefinitely, but after every 10 minutes you must attempt a saving throw against a hard DC for your level. Failing this save results in your filibuster ending and prevents you from attempting another filibuster for 1 hour."
+ },
+ {
+  "id": "orators-fillibuster",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Orator's Fillibuster",
+  "level": 8,
+  "traits": [
+   "archetype",
+   "auditory",
+   "concentrate",
+   "linguistic",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Orator's Fillibuster Source Battlecry! pg. 58 Archetype Field Propagandist Prerequisites Field Propagandist Dedication When you seek to convince others of the worth of your cause, you are capable of unleashing such an entrancing torrent of rhetoric and metaphor that it is all but impossible to look away from you. When you begin a conversation or similar attempt with the goal of Making an Impression, all creatures who are observing you become fascinated unless they succeed at a Will save against the higher of your class DC or spell DC. Creatures who are familiar with you and your verbal techniques, such as allies you've known for at least several days, are immune to this effect, though newer allies who have not heard one of your speeches before might still be affected. Affected creatures remain fascinated for as long as you continue your filibuster, though they can attempt a new save to end the effect at the end of each minute while your filibuster lasts. A creature who succeeds at a saving throw to end the fascinated condition from your filibuster is also unaffected by your attempt to Make an Impression. You can continue your filibuster indefinitely, but after every 10 minutes you must attempt a Fortitude saving throw against a hard DC for your level. Failing this save results in your filibuster ending and prevents you from attempting another filibuster for 1 hour."
+ },
+ {
+  "id": "orb-of-dragonkind",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Orb of Dragonkind",
+  "level": 25,
+  "traits": [
+   "arcane",
+   "artifact"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "effectChoices",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Each of the legendary *orbs of dragonkind* contains the essence and personality of a powerful dragon, with each of the 10 most famous orbs preserving a different type of metallic or chromatic dragon's spirit. It is believed that orbs for other types of true dragons exist, though that theory is yet to be confirmed. While holding an *orb of dragonkind*, you are immune to the breath weapon of the dragon variety associated with the orb. An *orb of dragonkind* also grants a number of additional senses. You can communicate verbally and visually with the bearers of other orbs as if you were in the same room with them. You know if there are any dragons within 10 miles of you at all times; this extends to 100 miles for dragons of the type associated with the orb. If an associated dragon is within 1 mile, you know which direction the dragon is from you and the dragon's age, such as young, adult, or ancient. Each orb grants a 10th-rank arcane innate spell that you can cast at will, determined by the specific orb. The *Orb of Gold Dragonkind* can convey the innate spells of any of the other orbs, as well as their activated abilities, but it can grant each individual power only once per day. In addition, the bearer of the gold orb can use its 3-action activation to attempt to cast dominate on the bearer of another orb if they are within 1 mile, as if that bearer were a dragon of the associated type within 500 feet. The last reports of the *Orb of Gold Dragonkind* on Golarion indicate the orb has been destroyed, however. GMs running campaigns in settings other than the Age of Lost Omens might decide the gold orb is still intact for their campaigns. Bearing an *orb of dragonkind* earns you the enmity of all dragonkind forever because you profited from the enslavement of the dragon within the orb, even if you later lose the orb. **Spell Granted** (DC 40) black dragon (darkness), blue dragon (hallucinatory terrain), brass dragon (speak with animals), bronze dragon (control water), copper dragon (hideous laughter), green dragon (entangle), red dragon (wall of fire), silver dragon (detect alignment [spirit only]), white dragon (wall of ice) **Activate** ⟨3⟩ command **Frequency** once per round --- **Effect** You cast a 10th-rank *dominate* spell (DC 40) on a dragon of the type associated with the orb within 500 feet, except the effect lasts for 1 month rather than unlimited. The dragon does not receive its status bonus to saving throws against magic. The dragon is then temporarily immune to further domination via the orb for 24 hours. **Activate** ⟨2⟩ envision, Interact **Frequency** three times per day --- **Effect** You breathe an elemental blast that deals 25d6 damage ( save) in either a or a (your choice). The breath's damage type matches the Breath Weapon of the dragon type associated with the *orb of dragonkind* (acid for the black orb, electricity for the blue orb, and so on). **Destruction** An *orb of dragonkind* violently shatters and explodes when exposed to the Breath Weapon of a dragon who is a descendant of the dragon trapped within. The explosion deals damage as the 2-action activation above to all creatures within 90 feet."
+ },
+ {
+  "id": "orchards-endurance",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Orchard's Endurance",
+  "level": 14,
+  "traits": [
+   "impulse",
+   "kineticist",
+   "plant",
+   "primal",
+   "stance",
+   "wood"
+  ],
+  "engineFieldsPresent": [
+   "resistances"
+  ],
+  "inRegistries": [
+   "core.stances"
+  ],
+  "text": "Patches of bark appear on the skin of you and your nearby allies. You and your allies in your kinetic aura gain resistance 5 to bludgeoning and piercing damage. In addition, you and your affected allies roll flat checks to recover from persistent damage twice and take the higher result; this is a fortune effect. --- **Level (+4)** The resistance increases by 2."
+ },
+ {
+  "id": "ouroboros-buckles",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Ouroboros Buckles",
+  "level": 19,
+  "traits": [
+   "adjusted",
+   "comfort"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This ominous-looking *+3 greater resilient greater acid-resistant buckle armor* is deep red in color, favored by assassins who worship Norgorber or Asmodeus, and if unfastened, the many belts and buckles writhe like living snakes. Its form and abilities were inspired by ouroboros, embodiments of eternity that continually consume and regenerate their bodies and appear to be formed from masses of snakes. *Ouroboros buckles* have the comfort trait. However, while wearing *ouroboros buckles*, the unfathomable concept of infinity pulls at your mind, and each time you awaken, you'd swear the armor hissed into your ear while you were asleep. The hissing suggested secret wisdom to you in Aklo, though you only ever remember it vaguely, like a fading dream. --- **Activate** ⟨2⟩ (concentrate, manipulate) **Frequency** once per day **Effect** You call forth the cursed regenerative blood of an ouroboros to recover from your wounds. You gain regeneration 15 for 1 minute; fire damage deactivates this regeneration. Each time you regain Hit Points from this regeneration, if you're in your normal form, you collapse into a Large swarm of Tiny snakes. This is a polymorph effect that changes you into a battle form. When you're a swarm of snakes, you gain low-light vision, imprecise scent (30 feet), a Speed of 20 feet, a climb Speed of 20 feet, and a swim Speed of 20 feet. You have an AC of 16 + your level and ignore your armor's check penalty and Speed reduction. Also, you gain resistance 5 to physical damage and weakness 5 to area damage and splash damage. You can use none of your normal Strikes. Instead, you can use Swarming Bites, a single action that deals damage to creatures in your space with a save. If you're in this battle form and are already at full HP when your regeneration occurs, the snakes instantaneously slither together, and you transform into your original form. --- **Activate** ⟨5⟩ (concentrate) **Frequency** once per minute **Trigger** A foe within 15 feet hits you with a Strike that deals slashing or piercing damage **Effect** Your *ouroboros buckles* spray acidic blood in a toward the foe, dealing damage with a save."
+ },
+ {
+  "id": "overclock-senses",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Overclock Senses",
+  "level": 2,
+  "traits": [
+   "deviant",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Your senses speed up to the point that time seems to stand still, allowing you to catch details and incoming attacks. You Seek. After you Seek, you gain a +2 circumstance bonus to your AC against ranged attacks and to Reflex saving throws until the beginning of your next turn. **Awakening** When you use Overclock Senses, you can focus even more on the present moment, allowing you more apparent time to observe and plot at the expense of defense. When you use Overclock Senses, you do so with the benefits of darkvision, or if you are at least 14th level, with the benefits of truesight. You can attempt a Recall Knowledge check as a free action after Seeking. Your senses spent, you then do not gain the normal bonuses to AC and Reflex saving throws. **Awakening** You hone your senses even further, letting you react to attacks almost before they happen. While you have the bonuses from Overclock Senses, if you would be hit by a ranged attack, you can spend a reaction to have the attacker roll the attack again (this is a misfortune effect), and if you would fail a Reflex save, you can spend a reaction to roll the save again (this is a fortune effect). You must take the second result, even if it is worse."
+ },
+ {
+  "id": "owl-screech-egg",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Owl Screech Egg",
+  "level": 7,
+  "traits": [
+   "alchemical",
+   "auditory",
+   "consumable",
+   "emotion",
+   "fear",
+   "mental"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨2⟩ (manipulate) --- Not only are the eggs of giant owls delicious when boiled, but when infused with a mix of alchemical reagents, they also make you emit a long and terrifying screech. All creatures in a must attempt a save. Regardless of the result, creatures in the area are temporarily immune to this screech for 1 minute. --- **Critical Success** The creature is unaffected. **Success** The creature is Frightened 1. **Failure** The creature is Frightened 2. **Critical Failure** The creature is Frightened 3 and fleeing for 1 round."
+ },
+ {
+  "id": "pack-of-the-beast-lord",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Pack Of The Beast Lord",
+  "level": 18,
+  "traits": [
+   "auditory",
+   "concentrate",
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You and your united companion call upon the service of others of its kind, creating figment duplicates of your companion to form a massive swarm of formidable power. Spend a Mythic Point. Your united companion becomes Gargantuan for 1 minute. It gains immunity to precision damage, resistance to physical damage equal to half your level, and a weakness to area damage equal to half your level. While in this form, your united companion gains the Amassed Assault action, which you immediately Command them to use as the final step of this activation."
+ },
+ {
+  "id": "pact-bound-pistol",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Pact-Bound Pistol",
+  "level": 10,
+  "traits": [
+   "concealable",
+   "concussive",
+   "cursed",
+   "fatal-d10",
+   "fire",
+   "magical",
+   "unholy"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Wielded in over a hundred duels by the famed Ustalavic noblewoman Countess Tasya Iserav, this *+1 striking fearsome dueling pistol* is a work of master craftsmanship, almost eerie in the precise geometric perfection present in each dimension and detail of its composition. Commissioned at great expense and artfully designed by a team of the finest gunsmiths, this exquisite mahogany pistol has adamantine detailing. The ruby-eyed, leering devil's face that surrounds the barrel was intended to strike fear into the Countess's opponents—of which there were many. Countess Tasya credited this weapon with her exceptional success in dueling circles and refused to name the weapon's creators for fear their works would fall into an opponent's hands. In the past decade, seven replicas of the Countess's famed pistol have arisen, each said to be crafted by the Countess's anonymous gunsmiths. That each of these weapon's wielders have quickly risen to become exceptional duelists in their own right has lent credence to their claims. Despite public pressure, wielders of these replicas have refused to square off against the Countess. Despite the weapon's beauty and utility, a *pact-bound* *pistol* is a cursed weapon and a physical manifestation of an infernal contract sworn between the bearer of the weapon and the Archdevil Mephistopheles. Each *pact-bound pistol* was crafted not by a team of master artisans, but by Countess Tasya Iserav herself, a secret diabolist and devoted priestess of The Crimson Son. The very act of firing the weapon is an acceptance of the contract's terms and causes the weapon to fuse to you. Thereafter, the weapon reappears in your possessions within 1 minute of you discarding it, and can't be destroyed or thrown away permanently, until the curse is removed. Whenever you attack a living creature with the *pact-bound* *pistol*, text from the infernal contract is seared into your flesh, causing you to lose 1 Hit Point, or 2 Hit Points if the attack was a critical success. The text appears one sentence at a time, from the beginning to the end and is written in Diabolic. When the contract is fully scribed (see below), you no longer lose Hit Points when you attack a living creature. These burned phrases heal over as scars which can't be removed while you are fused to the weapon, although they can be covered and disguised. Each time a creature dies within 1 hour of being damaged by a *pact-bound pistol*, that creature must attempt a saving throw. On a failure, their soul is consigned to the Archdevil Mephistopheles; their soul immediately goes to Hell and they can't be returned to life through any means short of divine intervention, a heist, or a successful appeal in the courts of Hell; even powerful magic such as the wish ritual is insufficient. After you have consigned 9 souls to Mephistopheles in this way, the contract is fully scribed upon your flesh. You become immune to fire damage and the *pact-bound pistol* becomes a +2 striking greater fearsome dueling pistol. Your soul belongs to Mephistopheles and immediately goes to Hell when you die. You can't be returned to life through any means, even through the divine intervention of a deity. "
+ },
+ {
+  "id": "pale-fade",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Pale Fade",
+  "level": 19,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "injury",
+   "poison"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨2⟩ (manipulate) --- Pale fade is a white ointment with a sharp, earthy scent. The poison rapidly desiccates flesh, which then crumbles and forms a cloud of pallid dust. If the victim is concealed by this poison, then the dust cloud also conceals other creatures from the victim. **Saving Throw** **Maximum Duration** 6 rounds **Stage 1** 10d6 damage and Drained 1 (1 round) **Stage 2** 12d6 damage, drained 1, and concealed (1 round) **Stage 3** 15d6 damage, drained 1, and concealed (1 round)"
+ },
+ {
+  "id": "pallesthetic-mutagen",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Pallesthetic Mutagen",
+  "level": 9,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- You gain unparalleled sensitivity to the tiniest of vibrations through solid surfaces and even the very air around you, but your eyes become useless. **Benefit** For 1 minute, you gain precise echolocation out to 40 feet, imprecise tremorsense out to 60 feet, and a +2 item bonus to Perception checks using either of these senses. **Drawback** You are blinded for 1 minute."
+ },
+ {
+  "id": "pallid-crystal",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Pallid Crystal",
+  "level": 7,
+  "traits": [
+   "divine",
+   "invested"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're a follower of Urgathoa. --- This finger-shaped crystal on a thin strip of leather bridges the worlds of life and undeath, shifting from a pale opaque pink when worn by a living creature to a deep translucent purple when worn by an undead creature. While wearing the necklace, rotten food and drink taste as if they were fresh and can be eaten with no ill effects. If you're healed by healing vitality effects, you gain void resistance 5, but if you're healed by void effects, you instead gain vitality resistance 5."
+ },
+ {
+  "id": "panic-the-dead",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Panic the Dead",
+  "level": 2,
+  "traits": [
+   "cleric",
+   "emotion",
+   "fear",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Vitality strikes terror in the undead. When you use a Heal spell to damage undead, any undead that fails its saving throw is also Frightened 1. If it critically failed, the creature also gains the fleeing condition until the start of your next turn. Mindless undead are not immune to this effect due to being mindless."
+ },
+ {
+  "id": "paralyzing-slash",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Paralyzing Slash",
+  "level": 8,
+  "traits": [
+   "archetype",
+   "incapacitation",
+   "occult"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your enzymes can paralyze your foes rather than merely making it harder for them to heal their wounds. Strike with your claw or jaws. If you hit a living non-elf creature, it becomes paralyzed unless it succeeds at a save against your class DC or spell DC, whichever is higher. Regardless of the result of the save, the creature is temporarily immune to Paralyzing Slash for 24 hours. A creature that becomes paralyzed can attempt a new save to end the paralysis at the end of each of its turns, and the DC cumulatively decreases by 1 on each such save."
+ },
+ {
+  "id": "patronize-the-arts",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Patronize the Arts",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** An ally within 30 feet of you critically succeeds at an attack roll or skill check. --- A true aristocrat knows how to encourage their best hirelings, ensuring loyalty and future excellence. You praise the triggering ally, granting them one of the following benefits. The ally is then immune to this ability for 1 day. **Eagerness:** Invigorated by praise, the ally can feint, Interact with a nearby object, leap, Reload, or Step as a reaction. **Persistence:** For 1 minute, the ally gains temporary Hit Points equal to half your level plus your Charisma modifier. **Validation:** If the ally has the panache class feature, they gain panache."
+ },
+ {
+  "id": "peerless-under-heaven",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Peerless under Heaven",
+  "level": 7,
+  "traits": [
+   "exemplar"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "For as long as there have been gods, they have made war, and you aim to stand atop the pile when the fighting's over. When you critically succeed on a Strike, divine skill at arms guides your weapon, granting you the critical specialization effect for the weapon group. If you already had access to the critical specialization effect for this weapon, your weapon gains the additional critical specialization effect of the Grievous rune. After you Spark Transcendence, your impeccable battle form strikes fear. An enemy of your choice within 30 feet must succeed at a save against your class DC or be Frightened 1. That creature is then temporarily immune to this effect for 10 minutes. This is an emotion, fear, mental, and visual effect."
+ },
+ {
+  "id": "peonys-flourish",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Peony's Flourish",
+  "level": 14,
+  "traits": [
+   "archetype",
+   "incapacitation",
+   "visual"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're wielding two fans, one in each hand. --- As you spin around and create wide arching circles with your fans, you manifest a mosaic of peonies that confuses your enemies. Stride twice and then attempt a Performance check against the Will DC of each creature you passed adjacent to. --- **Critical Success** The creature is Stunned 3 and dazzled for as long as they're stunned. **Success** The creature is Stunned 1 and dazzled for 1 round. **Failure** The creature is dazzled for 1 round. **Critical Failure** The creature is unaffected and temporarily immune to further uses of Peony's Flourish for 24 hours."
+ },
+ {
+  "id": "perfect-droplet",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Perfect Droplet",
+  "level": 3,
+  "traits": [
+   "magical",
+   "spellheart",
+   "water"
+  ],
+  "engineFieldsPresent": [
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "Intense blue water magically holds its shape-a perfect sphere. The spell DC of any spell cast by Activating this item is 17. - **Armor** You gain resistance 2 to water effects and attacks by water creatures. - **Weapon** After you cast a water spell by Activating the *droplet*, your body becomes mistlike. Until the end of the turn, you can move through enemies' spaces, treating each square in their spaces as difficult terrain. You can't move through creatures that have the water trait in this way. --- **Activate** Cast a Spell **Effect** You cast Spout."
+ },
+ {
+  "id": "perfect-droplet-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Perfect Droplet (Greater)",
+  "level": 8,
+  "traits": [
+   "magical",
+   "spellheart",
+   "water"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "Intense blue water magically holds its shape-a perfect sphere. The spell DC of any spell cast by Activating this item is 24. - **Armor** You gain resistance 5 to water effects and attacks by water creatures. - **Weapon** After you cast a water spell by Activating the *droplet*, your body becomes mistlike. Until the end of the turn, you can move through enemies' spaces. You can't move through creatures that have the water trait in this way. --- **Activate** Cast a Spell **Effect** You cast Spout. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast Aqueous Orb or Feet to Fins."
+ },
+ {
+  "id": "perfect-fortification",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Perfect Fortification",
+  "level": 15,
+  "traits": [
+   "inventor"
+  ],
+  "engineFieldsPresent": [
+   "resistances"
+  ],
+  "inRegistries": [],
+  "text": "**Power Suit only** --- You've outfitted your armor with such heavy fortifications that deadly attacks often lose their edge. Each time you're critically hit while wearing the armor, attempt a . On a success, it becomes a normal hit. This isn't cumulative with *fortification* runes or other abilities that reduce critical hits with a flat check. Additionally, you gain resistance 2 + half your level against precision damage."
+ },
+ {
+  "id": "perfections-first-step",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Perfection's First Step",
+  "level": 5,
+  "traits": [
+   "consumable",
+   "mental",
+   "occult",
+   "water"
+  ],
+  "engineFieldsPresent": [
+   "heldSpells",
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (concentrate) --- This palm-leaf manuscript contains an incomplete philosophical treatise about perfection, which you must complete and provide written commentaries upon before you can activate it. This activity takes 10 minutes, but can occur at any time before you activate the treatise. When you activate *perfection's first step*, you cast Unbreaking Wave Advance with a save DC of 19. You are then temporarily immune to benefiting from further copies of *perfection's first step* until your next daily preparations."
+ },
+ {
+  "id": "perfume-cloud",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Perfume Cloud",
+  "level": 9,
+  "traits": [
+   "disease",
+   "ghoran"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per hour --- You issue a cloud of your fragrance like a full-body sneeze—but one that might save your life as the powerful perfume makes your attackers' eyes sting and water. Plants and fungi are immune to this effect, but all other creatures in a must attempt a save against your class DC or spell DC (whichever is higher) with the following results. --- **Critical Success** No effect. **Success** The creature is dazzled for 1 round. **Failure** The creature is dazzled and can see only 10 feet away for 1 round. **Critical Failure** The creature is blinded for 1 round."
+ },
+ {
+  "id": "perpetual-infusions-chirurgeon",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Perpetual Infusions (Chirurgeon)",
+  "level": 7,
+  "traits": [
+   "alchemist"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "You have learned how to create perpetual alchemical infusions that can provide a near-infinite supply of certain simple items. You gain the ability to create two 1st-level alchemical items using Quick Alchemy without spending a batch of infused reagents. The items you can select depend on your research field and must be in your formula book. Each time you gain a level, you can swap any number of your perpetual infusions with other eligible infusions. --- Choose two 1st-level elixirs with the healing trait. If a creature heals Hit Points from a perpetual infusion, that creature is temporarily immune to healing Hit Points from subsequent perpetual infusions for 10 minutes (but not immune to any other effects of those infusions)."
+ },
+ {
+  "id": "perplex",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Perplex",
+  "level": 14,
+  "traits": [
+   "archetype",
+   "auditory",
+   "emotion",
+   "linguistic",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You weave a confusing web of half-truths, conspiracy theories, and plausible motives to goad an enemy into lashing out wildly. Choose a target within 30 feet that can hear you, and attempt a Diplomacy check against its Will DC. The creature is then immune to Perplex for 24 hours. --- **Critical Success** The target is Stupefied 3 and confused for 1 round. **Success** The target is Stupefied 1 for 1 round. **Failure** The target is unaffected."
+ },
+ {
+  "id": "pet",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Pet",
+  "level": 1,
+  "traits": [
+   "general"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "You have a pet—a Tiny animal of a type you choose, such as a cat, bird, or rodent. It has the minion trait, meaning it gains 2 actions during your turn if you use the Command an Animal action to command it; this replaces the usual effects of Command an Animal, and you don't need to attempt a Nature check. A pet can't take attack actions except to Escape or Force Open. **Level** Your pet's level is equal to yours. **Modifiers and AC** Your pet's save modifiers and AC are equal to yours before applying circumstance or status bonuses or penalties. It uses 3 + your level as its modifier for Perception, Acrobatics, and Stealth, and just your level as its modifier for other skill checks. It doesn't have or use its own attribute modifiers and can never benefit from item bonuses. **Hit Points** Your pet has 5 Hit Points per level. **Senses** Your pet has low-light vision and can gain additional senses from pet abilities. **Speed** Your pet has a Speed of 25 feet. You can choose to instead have an aquatic pet, which breathes in water instead of air and has the aquatic trait, no land Speed, and a swim Speed of 25 feet. **Pet Abilities** When you gain your pet, choose two of the following abilities. If your pet is an animal that naturally has one of these abilities (for instance, an owl has a fly Speed), you must select that ability. Your pet can't be an animal that naturally has more pet abilities than the maximum. In some cases, the GM might add some familiar abilities to the pet abilities you can choose. - **Amphibious** It gains the amphibious trait, allowing it to breathe in both air and water, and has both a land Speed and a swim Speed, each equal to its highest land Speed or swim Speed. - **Burrower** It gains a burrow Speed of 5 feet, allowing it to dig Tiny holes. - **Climber** It gains a climb Speed of 25 feet. - **Darkvision** It gains darkvision. - **Echolocation** Your pet can use hearing as a precise sense within 20 feet. - **Fast** Movement Increase one of the pet's Speeds from 25 feet to 40 feet. - **Flier** It gains a fly Speed of 25 feet. - **Manual Dexterity** It can use up to two of its limbs as if they were hands to perform manipulate actions. - **Scent** Your pet can use scent as an imprecise sense within 30 feet - **Tough** Your pet's max HP increase by 2 per level. --- **Special** You can gain a new pet by retraining this feat, releasing any previous pet you have. If you later gain a familiar or other companion that uses the Pet feat, you can immediately retrain this feat."
+ },
+ {
+  "id": "petal-dance",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Petal Dance",
+  "level": 0,
+  "traits": [
+   "plant"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Petal Dance Source GM Core pg. 317 Aspect Plant Activate (concentrate) Frequency once per hour; Effect You discorporate into a cloud of petals and leaves. This grants you the swarm trait, immunity to falling damage, resistance 5 to bludgeoning and slashing damage, and weakness 5 to area and splash damage. You can fit into spaces only a few inches wide, moving your constituent petals through the gap. You don't gain the swarm mind ability, so you're still affected normally by mental effects. As a swarm, you can't speak, cast spells, use manipulate actions requiring your hands, activate your magic items, or make any of your Strikes with your normal body. You remain in this form for 1 minute or until you Dismiss the activation. At 13th level, the relic gains a reaction that triggers when you fall or take damage, applying this gift's resistances, weaknesses, and immunity to falling damage to the triggering effect."
+ },
+ {
+  "id": "petrifying-gaze-mimicry",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Petrifying Gaze Mimicry",
+  "level": 10,
+  "traits": [
+   "archetype",
+   "concentrate",
+   "incapacitation",
+   "primal",
+   "visual"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Either by witnessing or surviving the petrifying stare of a medusa or similar creature, you have learned to petrify those you lock eyes with. You stare at a creature you can see within 30 feet. The creature attempts a save against the higher of your class DC or spell DC. You must wait 1d4 rounds before using this ability again. --- **Critical Success** The creature is unaffected and temporarily immune to your Petrifying Gaze Mimicry for 24 hours. **Success** The creature is Slowed 1 for 1 round. **Failure** The creature is slowed 1 for 1 round and immobilized for 1 round or until it Escapes. **Critical Failure** The creature is Slowed 2 for 1 round and immobilized until it Escapes."
+ },
+ {
+  "id": "phantasmal-doorknob-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Phantasmal Doorknob (Greater)",
+  "level": 10,
+  "traits": [
+   "emotion",
+   "magical",
+   "mental",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This ornate doorknob can open doors both material and metaphysical, revealing dreams and nightmares. The spell DC of any spell cast by activating this item is 27. - **Armor** You gain a +2 item bonus to Thievery checks to Pick a Lock. - **Weapon** If you critically succeed at a Strike with the weapon, the target is blinded until the end of its next turn. The creature is then temporarily immune to being blinded in this way for 24 hours. --- **Activate** Cast a Spell **Effect** You cast Figment. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast Vision of Death."
+ },
+ {
+  "id": "phantasmal-doorknob-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Phantasmal Doorknob (Major)",
+  "level": 15,
+  "traits": [
+   "emotion",
+   "magical",
+   "mental",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This ornate doorknob can open doors both material and metaphysical, revealing dreams and nightmares. The spell DC of any spell cast by activating this item is 34. - **Armor** You gain a +2 item bonus to Thievery checks to Pick a Lock. - **Weapon** If you critically succeed at a Strike with the weapon, the target is blinded until the end of its next turn. The creature is then temporarily immune to being blinded in this way for 24 hours. --- **Activate** Cast a Spell **Effect** You cast Figment. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast 6th-rank Vision of Death. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast Phantasmal Calamity"
+ },
+ {
+  "id": "pharasmin-visor",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Pharasmin Visor",
+  "level": 13,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Popular in Ustalav and other lands where undead are numerous, a *Pharasmin visor* is a valuable part of any fashionable noble's armory when attending events in places like Caliphas. This item consists of a metal skullcap helm with a pair of blue crystal lenses extending from each side on metal armatures that can be moved independently in front of or away from the eyes. The helm can appear as either gleaming silver or dull black, and the wearer can alter its appearance whenever they invest the visor. --- **Activate—Pharasma's Disdain** ⟨2⟩ (manipulate, mental) **Frequency** once per day **Effect** You adjust the visors so that both are lowered. Your vision becomes obscured, causing you to become dazzled. At the same time, a tiny fraction of Pharasma's notice seeps out of the visor to fill the area around you in a . All undead creatures in this area take 12d6 damage ( save). At the end of your turn, both visors automatically rise back up, but you remain dazzled until the start of your next turn. --- **Activate—Pierce the Night** ⟨1⟩ (manipulate) **Effect** You adjust the helm so that only the left visor is lowered. You gain darkvision until you adjust the visors again or until the item is no longer invested by you, whichever comes first. --- **Activate—Reveal the Unseen** ⟨1⟩ (manipulate) **Frequency** once per day **Effect** You adjust the helm so that only the right visor is lowered. You can see invisible creatures as though they weren't invisible, although their features are blurred, making them concealed and difficult to identify. You can also see incorporeal creatures like ghosts when they have phased through an object if you are within 10 feet of an object's surface; they look like blurry shapes seen through those objects. This effect lasts until 8 hours pass, until you adjust the visors again, or until the item is no longer invested by you, whichever comes first. --- **Activate—See Through Death** ⟨1⟩ (manipulate) You adjust the visors so that both are raised. The *Pharasmin visor* grants a +2 item bonus on all saving throws against effects with the death trait."
+ },
+ {
+  "id": "philosophers-extractor",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Philosopher's Extractor",
+  "level": 25,
+  "traits": [
+   "artifact",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This bizarre machine is a complex arrangement of flasks, tubes, and other alchemical equipment. The *philosopher's extractor* is designed to create the ultimate alchemical concoctions. The extractor functions as an exceptional set of alchemist's tools, granting a +4 item bonus to Crafting checks related to alchemy. When using the extractor to Craft an alchemical item or with infused reagents as part of your daily preparations, you can create impeccable alchemical items. An impeccable alchemical item always uses the maximum numerical value possible for any rolls it requires, such as dealing maximum damage with alchemist's fire or restoring the maximum number of Hit Points with an elixir of life. If the impeccable item has a duration, it lasts twice as long as normal. Finally, an impeccable alchemical item never has a drawback. **Activate—Accelerated Synthesis** ⟨3⟩ (manipulate) **Frequency** once per minute --- **Effect** You use the extractor to produce an alchemical item of your level or lower whose formula you know. The extractor can create 56 levels' worth of items per day in this way. For example, the extractor could create two true elixirs of life (19th level) and two moderate elixirs of life (9th level), or eight comprehension elixirs (7th level), and so on. **Activate—Essence Transmogrification** 1 hour (manipulate) --- **Effect** You take a sizable portion of a creature (at least two-thirds of its original mass) and filter it through the mechanisms of the extractor. After the end of the process, the *philosopher's extractor* creates a transmogrifying mutagen that imparts the essence of the creature to the drinker. The extractor can make several transmogrifying mutagens simultaneously using the same activation if enough mass is provided at once, up to a maximum of 10 concurrent mutagens. Drinking a transmogrifying mutagen imparts you with one of the creature's unique abilities for 1 hour. This could grant one of several abilities such as a dragon's breath, darkvision, flight, frightful presence, or immunity to sleep. The ability functions as it did for the original creature, except it uses your class DC or your spell DC (whichever is higher) instead of the creature's DC. The mutagen grants only abilities based on a creature's physiology and never grants magic-related abilities such as innate spells or spellcasting ability. The GM ultimately decides what ability a transmogrifying mutagen grants. Unlike normal for mutagens and polymorph effects, you can drink multiple transmogrifying mutagens and gain benefits from each. When you drink transmogrifying mutagens made from different creatures, you receive abilities from each creature. When you drink multiple transmogrifying mutagens made from the same type of creature, such as multiple mutagens made from trolls, you gain an additional ability for each transmogrifying mutagen you drink, and the duration of the abilities from that creature type increases by 1 hour for each additional concoction you drink. However, these additional benefits come with a risk; if you drink a transmogrifying mutagen while at least one other is active, after drinking it, you must succeed at a flat check with a DC "
+ },
+ {
+  "id": "phoenix-cinder",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Phoenix Cinder",
+  "level": 16,
+  "traits": [
+   "consumable",
+   "fire",
+   "primal"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- An incandescent, multipronged crystal the color of dying fire, a phoenix cinder gives off pleasant warmth and a sense of peace. A low, soft chirruping around the crystal invokes the idea of using fire to cleanse and protect. The crystal offers this power to anyone who touches it. A partaker must be willing to gain the boon's effects. --- **Stage 1 (1 Week)** The first time you enter this stage from a particular phoenix cinder, you are affected as if by Regenerate. For 3 days after taking in the cinder, you are immune to fire. While in this stage or higher, you have fast healing equal to half your level, as well as resistance to fire damage equal to half your level. You gain a +1 circumstance bonus to saving throws (or any other defense) against fire. Treat the outcome of any saving throw you roll against fire effects as one step better. You can cast Ignition as an innate spell, and you have access to the following activation. **Activate** ⟨1⟩ (concentrate, fire) **Frequency** once per day **Effect** You wreathe yourself in flame for 1 minute. Adjacent creatures that hit you with a melee attack, as well as creatures that touch you or hit you with an unarmed attack, take 2d6. You can Dismiss the activation. --- **Stage 2 (1 Month)** You can use the activation once per hour. Always feverish and flushed, you feel as if temperatures lower than sweltering are cold. Reduce your current and maximum Hit Points by 2 × your level, and you have a weakness to cold damage equal to half your level. You have urges to burn and use fire when you can. When confronted with the opportunity to do so, you must succeed at a Will save to avoid it. Doing so once after each time you roll initiative is enough. If you die at this stage or higher, your body burns from the inside out over 1d4 rounds, reducing you to fine ash. Anything flammable on you is destroyed. A phoenix emerges from your remains, but doesn't have the holy trait and is interested more in selfish pursuits and spreading fire than kindness. You also attempt a ; on a failure, the phoenix gains the unholy trait, and also thirsts for vengeance against the little beings like the one who dared to use its power for a time. --- **Stage 3 (1 Month)** You now have fast healing equal to your level but reduce your current and maximum Hit Points by 4 × your level, rounded up, instead of 2 × your level. Also, you have a weakness to cold damage equal to your level and a weakness to holy equal to half your level. You can use the activation you previously gained once per minute, but you can no longer Dismiss it. Whenever you drop to 0 Hit Points, a flame strike erupts from a randomly chosen point on the edge of your space. --- **Stage 4** You die. --- **Purging** You must collect the remains of a phoenix of your level or higher who has been unable to self-resurrect, compressing the remains with powdered diamonds, opals, and rubies worth 75 gp × your level into an egg. You can then use Divine Immolation as if you dropped to 0 Hit Points during this boon's stage 3. If you do so, the phoenix whose remains you collected is reborn as if it used its Self-Resurrection, and the phoenix cinder's "
+ },
+ {
+  "id": "pickled-demon-tongue-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Pickled Demon Tongue (Greater)",
+  "level": 8,
+  "traits": [
+   "acid",
+   "divine",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "This small crystal vial contains the forked end of a demon's tongue, preserved in brine. The spell attack roll of any spell cast by Activating this item is +14, and the spell DC is 24. - **Armor** You gain resistance 5 to acid and attacks by demons. - **Weapon** After you cast an acid spell by Activating the *pickled demon tongue*, your Strikes with the weapon deal an additional 1d6 damage until end of your next turn. --- **Activate** Cast a Spell **Effect** You cast Caustic Blast. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast 3rd-rank Acidic Burst ()."
+ },
+ {
+  "id": "pierce-the-veil",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Pierce the Veil",
+  "level": 0,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Pierce the Veil Source GM Core pg. 312 Aspect Death Prerequisite living death gift The relic allows you to pierce the veil between life and death. While you are holding or wearing the relic, you have the void healing ability (as though you were undead; vitality energy harms you and void energy heals you). In addition, whenever you are healed by a void spell or effect, you gain resistance 5 to all damage (except force, ghost touch, spirit, and vitality) until the start of your next turn. Finally, you gain a +2 item bonus to all saves against death effects while you are the bearer of the relic; this increases to a +3 item bonus at 13th level."
+ },
+ {
+  "id": "pistoleros-challenge",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Pistolero's Challenge",
+  "level": 6,
+  "traits": [
+   "auditory",
+   "flourish",
+   "gunslinger",
+   "linguistic",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "With a stern call, carefully chosen barb, or some other challenging declaration, you demand your foe's attention in a duel. Choose an opponent within 30 feet who you can perceive and can hear you, and make your choice of a or check against the target's Will DC. No matter the result of the check, the foe is temporarily immune to your Pistolero's Challenge until noon the next day. **Success** Both you and the opponent gain a +2 status bonus to damage rolls with Strikes made against each other. If you're a master in the skill you used for the check, the status bonus to damage rolls increases to +3, and if you're legendary, it increases to +4. You can have only one challenge in effect at a time; challenging a new opponent ends this effect on any current target. Otherwise, the effect lasts until one of you is defeated, flees, or the encounter ends. **Critical Failure** You become Frightened 1 and can't use this ability again for 1 minute."
+ },
+ {
+  "id": "plague-sniffer",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Plague Sniffer",
+  "level": 5,
+  "traits": [
+   "ratfolk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can sniff out the pungent tang of disease. When you detect a creature by scent, you can also detect if that creature is suffering from a disease at a non-carrier state. If the disease is particularly subtle, you might need to attempt a Perception check against the disease's DC (subject to the GM's discretion)."
+ },
+ {
+  "id": "plant-eidolon",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Plant Eidolon",
+  "level": 1,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Your eidolon is an intelligent plant, formed from the same disembodied fragments of nature's life energy that become leshys. Plant eidolons tend to be curious and adaptable, with temperaments based on the parts of mortal culture they feel affinity toward. Despite coming from the same source, plant eidolons don't always look like leshys. Plant eidolons have forms that vary greatly and can look like almost any kind of plant creature in existence. Some even resemble plant creatures so strange they are impossible to identify. **Tradition** primal **Traits** eidolon, plant **Home Plane** Material Plane --- **Size** Medium **Suggested Attacks** vine (bludgeoning), branch (bludgeoning), root (bludgeoning) **Guardian Plant** Str 18, Dex 14, Con 16, Int 8, Wis 12, Cha 10; +2 AC (+3 Dex cap) **Creeping Plant** Str 12, Dex 18, Con 16, Int 8, Wis 14, Cha 10; +1 AC (+4 Dex cap) **Skills** Nature, Survival **Senses** low-light vision **Language** Sylvan **Speed** 25 feet --- **Eidolon Abilities** *Initial *tendril strike*; Symbiosis *growing vines*; Transcendence *field of roots ## Tendril Strike Your eidolon can stretch out vines and roots, attacking foes outside its reach. It gains the Tendril Strike action. ## Growing Vines 7th Your eidolon's vines and branches lengthen even more. All your eidolon's melee unarmed attacks gain the reach trait. ## Field of Roots 17th Your eidolon learns how to send its roots underground to hinder foes. It gains the Field of Roots activity."
+ },
+ {
+  "id": "plant-shape",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Plant Shape",
+  "level": 10,
+  "traits": [
+   "druid"
+  ],
+  "engineFieldsPresent": [
+   "innateSpells"
+  ],
+  "inRegistries": [],
+  "text": "You can take the shape of a plant creature. If you don't have untamed form, you can cast Plant Form once per day, heightened to the same rank as your highest-rank druid spell slot. If you do have Untamed Form, add the shapes listed in Plant Form to your Untamed Form list, and whenever you're polymorphed into another shape using untamed form, you gain resistance 5 to poison."
+ },
+ {
+  "id": "poison-fizz",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Poison Fizz",
+  "level": 8,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "lozenge"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Poison Fizz Source Treasure Vault (Remastered) pg. 50 Usage held in 1 hand Activate (manipulate) Made from a special mixture of honey and alchemical reagents, poison fizz is a zesty, sweet rock candy that pops and crackles in your mouth. For 1 hour, you have an item bonus to saving throws against poison and being petrified. Secondary Effect (poison) Effect You bite the poison fizz to release its poisonous liquid center and spray green mist in a 15-foot cone. This deals poison damage with a basic Reflex save. A creature that critically fails is also blinded until the end of your next turn and is then temporarily immune to being blinded by poison fizz for 1 hour. Poison Fizz (Lesser) Source Treasure Vault (Remastered) pg. 50 Price 80 gp The item bonus is +2, the damage is 3d6, and the DC is 24. Poison Fizz (Moderate) Source Treasure Vault (Remastered) pg. 50 Price 350 gp The item bonus is +2, the damage is 4d6, and the DC is 29. Poison Fizz (Greater) Source Treasure Vault (Remastered) pg. 50 Price 1,000 gp The item bonus is +3, the damage is 5d6, and the DC is 34."
+ }
+]

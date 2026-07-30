@@ -13,11 +13,12 @@ import type {
   SaveId,
   SpeedGrants,
   SpellcastingEntry,
+  ArmorRunes,
 } from './types';
 import type { BuildState } from './build';
 import { CLASS_ADVANCEMENT } from './advancement';
 import { conditionPenalty } from './conditions';
-import { modeModifiersFor, hasConditionalMode, type ModeTarget } from './modes';
+import { modeModifiersFor, hasConditionalMode, activeModesTouch, type ModeTarget } from './modes';
 import { abpOn, abpSave, abpPerception, abpDefense, abpSkillBonus } from './abp';
 import {
   RANK_VALUE,
@@ -39,9 +40,23 @@ import {
   profBonus,
   pwl,
   ownedFeatureIds,
+  passiveItemBonusDetail,
+  dynamicItemSkillBonus,
+  mpActive,
   shieldSwappedModes,
 } from './derive';
-import { featSituationalFor, hasFeatSituational } from './situationalBonuses';
+import { mpArmorRefine } from './monsterParts';
+import {
+  featSituationalFor,
+  hasFeatSituational,
+  markersFor,
+  poolSituationalLines,
+  spellMarkersFor,
+  supersededIds,
+  type ExtraSituational,
+  type SituationalBonus,
+  type SituationalLine,
+} from './situationalBonuses';
 
 export type StatRef =
   | { kind: 'skill'; skill: ProficiencyKey }
@@ -84,7 +99,7 @@ export interface StatBreakdown {
   skill?: string;
   /** Conditional mode modifiers ("+1 status from Inspire Courage — when …") not folded
    *  into the number; shown so the player can apply them situationally. */
-  situational?: string[];
+  situational?: SituationalNote[];
 }
 
 const ABIL_LABEL: Record<AbilityId, string> = {
@@ -144,6 +159,18 @@ export function statHasConditionalMode(c: Character, ref: StatRef): boolean {
 }
 
 /**
+ * True if ANY active mode touches this stat, conditional or not.
+ *
+ * Only conditional modifiers used to mark anything: an unconditional one moved the total and left no
+ * trace, so a player running Inspire Courage could see their attack was +1 higher but not what had
+ * done it. This drives the highlight on every stat a live mode is responsible for.
+ */
+export function statHasActiveMode(c: Character, ref: StatRef): boolean {
+  const t = refToModeTarget(ref);
+  return t ? activeModesTouch(c.activeModes, t) : false;
+}
+
+/**
  * Every record id whose situational bonuses apply to this character right now.
  *
  * This used to be feats only, which is why the sheet so rarely marked anything: of the 2,355 records
@@ -172,19 +199,125 @@ function characterSituationalIds(c: Character, db?: ContentDatabase): string[] {
     // working — listed while it sat unused in your pack, silent once it was on the weapon.
     for (const rune of inv.runes?.property ?? []) ids.push(rune);
   }
-  return ids;
+  // Ruling G: a completed relic set's entry REPLACES the piece's, so the player reads one line rather
+  // than two that look like they add up. Dropped only when the character has both.
+  const gone = supersededIds(ids);
+  return gone.size ? ids.filter((id) => !gone.has(id)) : ids;
+}
+
+/**
+ * Conditional entries the player AUTHORED, keyed by the id that grants them — so they reach the
+ * sheet by the same route as a shipped one, with no second display path to keep in sync.
+ *
+ * Only items carry these today (the item editor's Advanced section is what writes them), and only
+ * while the item is actually in use, matching `characterSituationalIds` above.
+ */
+function authoredSituational(c: Character, db?: ContentDatabase): ExtraSituational | undefined {
+  if (!db) return undefined;
+  let out: Record<string, SituationalBonus[]> | undefined;
+  for (const inv of c.inventory ?? []) {
+    if (!(inv.equipped || inv.worn || inv.invested)) continue;
+    const authored = db.items[inv.itemId]?.situational;
+    if (!authored?.length) continue;
+    (out ??= {})[inv.itemId] = authored;
+  }
+  return out;
 }
 
 /** True if something the character has grants a SITUATIONAL bonus to this stat, or an active
  *  conditional mode does — either way the sheet flags the stat with a `*` so the player checks its
  *  detail. Pass `db` to include class features. */
 export function statHasSituational(c: Character, ref: StatRef, db?: ContentDatabase): boolean {
-  return statHasConditionalMode(c, ref) || hasFeatSituational(characterSituationalIds(c, db), ref);
+  if (statHasConditionalMode(c, ref)) return true;
+  const ids = characterSituationalIds(c, db);
+  const extra = authoredSituational(c, db);
+  if (ref.kind !== 'save') return hasFeatSituational(ids, ref, extra);
+  // A DC-only entry must NOT star the save's NAME: it gives your own save nothing, and a `*` there
+  // would promise a bonus to a roll that never gets one. It stars the DC instead — see
+  // `saveDcHasSituational` — and still shows up in the popup so it can be read.
+  return featSituationalFor(ids, ref, extra).some((s) => !s.dcOnly);
 }
 
-/** Formatted situational-bonus lines for a stat (for the detail panel). Names resolve across every
- *  collection a bonus can come from, so an item's bonus reads with the item's name. */
-function featSituationalStrings(c: Character, db: ContentDatabase, ref: StatRef): string[] {
+/**
+ * True if something raises the SAVE DC others roll against — the `*` that sits beside the DC when
+ * "Show save DCs" is on (ruling D: "if they need a situational bonus to the dc have a * next to the
+ * dc displayed").
+ */
+export function saveDcHasSituational(c: Character, save: SaveId, db?: ContentDatabase): boolean {
+  return featSituationalFor(
+    characterSituationalIds(c, db),
+    { kind: 'save', save },
+    authoredSituational(c, db),
+  ).some((s) => s.dcOnly);
+}
+
+/**
+ * Marks this character's records put on an ACTION row or a CONDITION — ruling D's answer to the
+ * effects that change no stat: the mark goes on the thing it modifies, with the changed value shown
+ * inline and a `*` back to the source.
+ */
+export function recordMarkersFor(
+  c: Character,
+  db: ContentDatabase,
+  on: 'action' | 'condition',
+  id: string,
+): { sourceId: string; value?: string; note: string }[] {
+  return markersFor(characterSituationalIds(c, db), on, id);
+}
+
+/**
+ * Conditional bonuses to show on a SPELL's row — ruling G: "Distant Grasp: on the spell, since that's
+ * what you're looking at when you cast it." Only for a character who has the record granting it.
+ */
+export function spellSituationalFor(
+  c: Character,
+  db: ContentDatabase,
+  spellId: string,
+): { source: string; when: string; bonus: string }[] {
+  return spellMarkersFor(spellId, characterSituationalIds(c, db)).map((m) => ({
+    source: nameOfRecord(db, m.source),
+    when: m.when,
+    bonus: m.bonus,
+  }));
+}
+
+/**
+ * Marker classes for a stat: `has-mode` (dotted underline, pairs with the `*`) when something
+ * situational applies, `mode-lit` (solid accent underline) when a live mode is moving the number
+ * right now. They are separate on purpose — a `*` promises a note worth reading, which an
+ * unconditional mode has none of, while an unconditional mode still has to be visibly attributable.
+ */
+export function statMarkClass(c: Character, ref: StatRef, db?: ContentDatabase): string {
+  let out = '';
+  if (statHasSituational(c, ref, db)) out += ' has-mode';
+  if (statHasActiveMode(c, ref)) out += ' mode-lit';
+  return out;
+}
+
+/** Situational lines for a stat from the registry. Names resolve across every collection a bonus can
+ *  come from, so an item's bonus reads with the item's name. */
+const SITUATIONAL_COLLECTIONS = ['feats', 'items', 'heritages', 'backgrounds', 'ancestries', 'classFeatures'] as const;
+
+/** The display name of a record id, whichever collection it lives in. */
+export function nameOfRecord(db: ContentDatabase, id: string): string {
+  for (const k of SITUATIONAL_COLLECTIONS) {
+    const name = (db[k] as Record<string, { name?: string } | undefined> | undefined)?.[id]?.name;
+    if (name) return name;
+  }
+  return id;
+}
+
+/** Which collection holds this id, so a note can open the record it came from (ruling H). */
+function sourceCollectionOf(db: ContentDatabase, id: string): SituationalLine['sourceCollection'] {
+  for (const k of SITUATIONAL_COLLECTIONS) {
+    if ((db[k] as Record<string, unknown> | undefined)?.[id]) return k;
+  }
+  return undefined;
+}
+
+/** Situational lines for a stat from the registry. Names resolve across every collection a bonus can
+ *  come from, so an item's bonus reads with the item's name. */
+function featSituationalLines(c: Character, db: ContentDatabase, ref: StatRef): SituationalLine[] {
   const nameOf = (id: string) =>
     db.feats[id]?.name ??
     db.items[id]?.name ??
@@ -193,7 +326,47 @@ function featSituationalStrings(c: Character, db: ContentDatabase, ref: StatRef)
     db.ancestries[id]?.name ??
     db.classFeatures[id]?.name ??
     id;
-  return featSituationalFor(characterSituationalIds(c, db), ref).map((s) => `${s.bonus} from ${nameOf(s.id)} — ${s.when}`);
+  return featSituationalFor(characterSituationalIds(c, db), ref, authoredSituational(c, db)).map((s) => ({
+    source: nameOf(s.id),
+    when: s.when,
+    bonus: s.bonus,
+    sourceId: s.id,
+    sourceCollection: sourceCollectionOf(db, s.id),
+    ...(s.dcOnly ? { dcOnly: true as const } : {}),
+  }));
+}
+
+/** One line of a stat's star list, ready to render. */
+export interface SituationalNote {
+  /** "+2 item from Gaze of the Mantis — on visual Perception checks". */
+  text: string;
+  /** The record behind it, so the note can be clicked open — ruling H's "a place to click to open
+   *  the full". Absent for a mode, which is not a record. */
+  sourceId?: string;
+  sourceCollection?: SituationalLine['sourceCollection'];
+  /** Moves the DC others roll against, not a check you roll. */
+  dcOnly?: boolean;
+}
+
+/**
+ * The star list for one stat: the active modes' conditional modifiers and the registry's entries,
+ * pooled together and then worded.
+ *
+ * Pooled as ONE list on purpose. The two lanes are the same thing to a player — something that
+ * applies sometimes — so a mode and an item that both grant "+1 status while frightened" have to
+ * collapse to one line, which they could not while each lane formatted its own strings.
+ */
+function situationalList(modeLines: SituationalLine[], registryLines: SituationalLine[]): SituationalNote[] {
+  return poolSituationalLines([...modeLines, ...registryLines]).map((l) => ({
+    // A DC-only bonus is spelled out in the line itself. Without it the entry reads as a bonus to the
+    // save you roll, which is the opposite of what it does.
+    text:
+      `${l.bonus} from ${l.source}${l.when ? ` — ${l.when}` : ''}` +
+      (l.dcOnly ? ' (raises the DC others roll against, not your own save)' : ''),
+    sourceId: l.sourceId,
+    sourceCollection: l.sourceCollection,
+    ...(l.dcOnly ? { dcOnly: true as const } : {}),
+  }));
 }
 
 const DESC: Record<string, string> = {
@@ -240,13 +413,13 @@ function conditionPart(c: Character, ability: AbilityId, slot: Parameters<typeof
   return v ? { label: 'Condition penalty', value: v } : null;
 }
 /** Push UNCONDITIONAL active-mode modifiers for a target into `parts` (they're folded into
- *  the number) and return the CONDITIONAL ones as "situational" note strings. */
-function modeAdjust(c: Character, target: ModeTarget, parts: CalcPart[]): string[] {
-  const situational: string[] = [];
+ *  the number) and return the CONDITIONAL ones for the star list. */
+function modeAdjust(c: Character, target: ModeTarget, parts: CalcPart[]): SituationalLine[] {
+  const situational: SituationalLine[] = [];
   const uncond: { mode: string; type: string; value: number }[] = [];
   for (const { mode, mod } of modeModifiersFor(c.activeModes, target)) {
     const typed = mod.type === 'untyped' ? 'untyped' : mod.type;
-    if (mod.appliesWhen) situational.push(`${formatMod(mod.value)} ${typed} from ${mode} — ${mod.appliesWhen}`);
+    if (mod.appliesWhen) situational.push({ source: mode, when: mod.appliesWhen, bonus: `${formatMod(mod.value)} ${typed}` });
     else uncond.push({ mode, type: typed, value: mod.value });
   }
   // Same-type bonuses/penalties don't stack — only the best bonus and worst penalty of each typed
@@ -313,15 +486,26 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       // don't stack; deriveSkill takes the max). List whichever wins so the parts reconcile with the total.
       const abpSp = abpOn(c) ? abpSkillBonus(c, ref.skill) : 0;
       const mpSp = mpSenseSkillItemBonus(c, 'skill', ref.skill);
-      const skillItem = Math.max(abpSp, mpSp);
-      if (skillItem) parts.push({ label: mpSp > abpSp ? 'Monster Parts (refined)' : 'ABP skill potency', note: 'item bonus', value: skillItem });
+      // A worn/invested magic item's passive bonus competes for the same item slot. It was missing
+      // here entirely, so a Ring of Sure Grip raised the total and the parts silently stopped adding up.
+      const passive = passiveItemBonusDetail(c, db, 'skill', ref.skill);
+      const dynamic = dynamicItemSkillBonus(c, db, ref.skill);
+      const skillItem = Math.max(abpSp, mpSp, passive?.value ?? 0, dynamic);
+      if (skillItem) {
+        const label =
+          passive && passive.value === skillItem ? passive.name
+          : dynamic === skillItem ? 'Item bonus'
+          : mpSp > abpSp ? 'Monster Parts (refined)'
+          : 'ABP skill potency';
+        parts.push({ label, note: 'item bonus', value: skillItem });
+      }
       if (ability === 'str' || ability === 'dex') {
         const acp = deriveArmorCheckPenalty(c, db);
         if (acp.value) parts.push({ label: 'Armor check penalty', note: acp.source ?? undefined, value: acp.value });
       }
       const cond = conditionPart(c, ability, 'skill');
       if (cond) parts.push(cond);
-      const situational = [...modeAdjust(c, { kind: 'skill', detail: ref.skill }, parts), ...featSituationalStrings(c, db, ref)];
+      const situational = situationalList(modeAdjust(c, { kind: 'skill', detail: ref.skill }, parts), featSituationalLines(c, db, ref));
       // timeline: trained at L1 + each skill increase for this skill
       const timeline: TimelineEntry[] = [];
       if (d.rank !== 'untrained') {
@@ -359,16 +543,24 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       const ability = SAVE_ABILITY[ref.save];
       const cls = c.classId ? db.classes[c.classId] : undefined;
       const parts: CalcPart[] = [profPart(d.rank, lvl, pwl(c)), abilityPart(c, ability)];
-      if (abpOn(c)) {
-        const v = abpSave(lvl);
-        if (v) parts.push({ label: 'ABP save potency', note: 'item bonus (replaces resilient)', value: v });
-      } else {
-        const resilient = resilientSaveBonus(c, db);
-        if (resilient) parts.push({ label: 'Resilient rune', note: 'item bonus', value: resilient });
+      // One item bonus to saves: the best of ABP / a resilient rune / a worn item's passive bonus.
+      // deriveSave takes the max, so listing only the first two left the parts short of the total
+      // whenever a passive item (a Cloak of Elvenkind) was the winner.
+      const passiveSave = passiveItemBonusDetail(c, db, 'saves');
+      const runeSave = abpOn(c) ? abpSave(lvl) : resilientSaveBonus(c, db);
+      const saveItem = Math.max(runeSave, passiveSave?.value ?? 0);
+      if (saveItem) {
+        parts.push(
+          passiveSave && passiveSave.value === saveItem
+            ? { label: passiveSave.name, note: 'item bonus', value: saveItem }
+            : abpOn(c)
+              ? { label: 'ABP save potency', note: 'item bonus (replaces resilient)', value: saveItem }
+              : { label: 'Resilient rune', note: 'item bonus', value: saveItem },
+        );
       }
       const cond = conditionPart(c, ability, 'save');
       if (cond) parts.push(cond);
-      const situational = [...modeAdjust(c, { kind: 'save', detail: ref.save }, parts), ...featSituationalStrings(c, db, ref)];
+      const situational = situationalList(modeAdjust(c, { kind: 'save', detail: ref.save }, parts), featSituationalLines(c, db, ref));
       return {
         title: cap(ref.save),
         subtitle: 'Saving throw',
@@ -389,11 +581,19 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       // item (they don't stack; derivePerception takes the max). List whichever wins so the parts reconcile.
       const abpPerc = abpOn(c) ? abpPerception(lvl) : 0;
       const mpPerc = mpSenseSkillItemBonus(c, 'perception');
-      const percItem = Math.max(abpPerc, mpPerc);
-      if (percItem) parts.push({ label: mpPerc > abpPerc ? 'Monster Parts (refined)' : 'ABP Perception potency', note: 'item bonus', value: percItem });
+      // …and a worn item's passive Perception bonus, which competes for the same slot and was missing.
+      const passivePerc = passiveItemBonusDetail(c, db, 'perception');
+      const percItem = Math.max(abpPerc, mpPerc, passivePerc?.value ?? 0);
+      if (percItem) {
+        const label =
+          passivePerc && passivePerc.value === percItem ? passivePerc.name
+          : mpPerc > abpPerc ? 'Monster Parts (refined)'
+          : 'ABP Perception potency';
+        parts.push({ label, note: 'item bonus', value: percItem });
+      }
       const cond = conditionPart(c, 'wis', 'perception');
       if (cond) parts.push(cond);
-      const situational = [...modeAdjust(c, { kind: 'perception' }, parts), ...featSituationalStrings(c, db, ref)];
+      const situational = situationalList(modeAdjust(c, { kind: 'perception' }, parts), featSituationalLines(c, db, ref));
       return {
         title: 'Perception',
         subtitle: 'Wisdom',
@@ -425,15 +625,26 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
         { label: 'Dexterity modifier', note: ac.dexCap != null && dex > ac.dexCap ? `capped at +${ac.dexCap}${capBy ? ' ' + capBy : ''}` : `Dexterity ${c.abilities.dex}`, value: dexContribution },
         profPart(ac.rank, lvl, pwl(c)),
       ];
+      // deriveAc pools ONE item bonus to AC: the best of the armor's own (potency rune or a
+      // Monster-Parts refine), ABP defense potency, and a worn item's passive AC bonus. Mirrored here
+      // exactly — the passive lane had no row at all, so Bracers of Armor raised the number and the
+      // listed parts came up short with nothing to blame it on.
+      const passiveAc = passiveItemBonusDetail(c, db, 'ac');
+      const refAc = worn && mpActive(c, worn.i) ? mpArmorRefine(worn.i.monsterPart, lvl).ac : 0;
+      const armorItem = abpOn(c) ? 0 : Math.max((worn?.i.runes as ArmorRunes | undefined)?.potency ?? 0, refAc);
+      const acItem = Math.max(armorItem, abpOn(c) ? abpDefense(lvl) : 0, passiveAc?.value ?? 0);
       if (armor) {
-        // ABP defense potency replaces the armor potency rune's numeric bonus (shown separately below).
-        const runePotency = (worn!.i.runes as { potency?: number } | undefined)?.potency ?? 0;
-        const potency = abpOn(c) ? 0 : runePotency;
-        parts.push({ label: `${armor.name}`, note: potency ? `+${armor.acBonus} armor + ${potency} potency` : 'armor item bonus', value: armor.acBonus + potency });
+        // The armor's own AC is untyped and always applies; only its potency half competes for the slot.
+        const potency = acItem === armorItem ? armorItem : 0;
+        const note = potency ? (refAc === potency ? `+${armor.acBonus} armor + ${potency} refined` : `+${armor.acBonus} armor + ${potency} potency`) : 'armor item bonus';
+        parts.push({ label: armor.name, note, value: armor.acBonus + potency });
       }
-      if (abpOn(c)) {
-        const v = abpDefense(lvl);
-        if (v) parts.push({ label: 'ABP defense potency', note: 'item bonus', value: v });
+      if (acItem && acItem !== armorItem) {
+        parts.push(
+          passiveAc && passiveAc.value === acItem
+            ? { label: passiveAc.name, note: 'item bonus', value: acItem }
+            : { label: 'ABP defense potency', note: 'item bonus', value: acItem },
+        );
       }
       const cond = conditionPart(c, 'dex', 'ac');
       if (cond) parts.push(cond);
@@ -443,7 +654,7 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       if (stanceAc) parts.push({ label: stance!.name ?? 'Stance', note: `${stance!.acBonus!.type} bonus`, value: stanceAc });
       // Use the shield-swapped modes so the "Raise a Shield" line shows the real shield bonus (buckler
       // +1, fortress +3) and the parts reconcile with the AC total (which deriveAc computes the same way).
-      const situational = [...modeAdjust({ ...c, activeModes: shieldSwappedModes(c, db) }, { kind: 'ac' }, parts), ...featSituationalStrings(c, db, ref)];
+      const situational = situationalList(modeAdjust({ ...c, activeModes: shieldSwappedModes(c, db) }, { kind: 'ac' }, parts), featSituationalLines(c, db, ref));
       return {
         title: 'Armor class',
         subtitle: armor ? `${cap(category)} armor` : 'Unarmored',
@@ -466,7 +677,7 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       ];
       const cond = conditionPart(c, key, 'class-dc');
       if (cond) parts.push(cond);
-      const situational = [...modeAdjust(c, { kind: 'class-dc' }, parts), ...featSituationalStrings(c, db, ref)];
+      const situational = situationalList(modeAdjust(c, { kind: 'class-dc' }, parts), featSituationalLines(c, db, ref));
       return {
         title: 'Class DC',
         subtitle: `${ABIL_LABEL[key]} key attribute`,
@@ -488,10 +699,7 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       parts.push(profPart(entry.proficiency, lvl, pwl(c)), abilityPart(c, entry.keyAbility));
       const cond = conditionPart(c, entry.keyAbility, isDc ? 'spell-dc' : 'spell-attack');
       if (cond) parts.push(cond);
-      const situational = [
-        ...modeAdjust(c, { kind: isDc ? 'spell-dc' : 'spell-attack' }, parts),
-        ...featSituationalStrings(c, db, ref),
-      ];
+      const situational = situationalList(modeAdjust(c, { kind: isDc ? 'spell-dc' : 'spell-attack' }, parts), featSituationalLines(c, db, ref));
       return {
         title: isDc ? 'Spell DC' : 'Spell attack',
         subtitle: `${cap(entry.tradition)} · ${ABIL_LABEL[entry.keyAbility]}`,
@@ -517,7 +725,7 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
         timeline: [],
         description:
           'Damage dealt by your spells is rolled per spell. These effects add to (or subtract from) that roll when their condition is met.',
-        situational: featSituationalStrings(c, db, ref),
+        situational: situationalList([], featSituationalLines(c, db, ref)),
       };
     }
     case 'ability': {
@@ -546,7 +754,7 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
         parts,
         timeline,
         description: `Your ${ABIL_LABEL[ref.ability]} score is ${score}, giving a ${formatMod(mod)} modifier that feeds attacks, DCs, skills, and saves keyed to ${ABIL_LABEL[ref.ability]}.`,
-        situational: featSituationalStrings(c, db, ref),
+        situational: situationalList([], featSituationalLines(c, db, ref)),
       };
     }
     case 'hp': {
@@ -562,7 +770,7 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
           parts: [{ label: 'Manual maximum (override)', value: max }],
           timeline: [],
           description: DESC.hp,
-          situational: featSituationalStrings(c, db, ref),
+          situational: situationalList([], featSituationalLines(c, db, ref)),
         };
       }
       const conMod = abilityMod(c.abilities.con);
@@ -586,7 +794,7 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
         ],
         timeline: [],
         description: DESC.hp,
-        situational: featSituationalStrings(c, db, ref),
+        situational: situationalList([], featSituationalLines(c, db, ref)),
       };
     }
     case 'speed': {
@@ -647,7 +855,7 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
         description: hasTemp
           ? `Your land Speed is temporarily set to ${effectiveLand} ft (normally ${naturalLand} ft). Reset it to return to your default Speed.`
           : 'Your Speed is how far you Stride, in feet. Land Speed comes from your ancestry and is reduced by heavy armor you lack the Strength for; other movement types come from your ancestry, heritage, or feats.',
-        situational: featSituationalStrings(c, db, ref),
+        situational: situationalList([], featSituationalLines(c, db, ref)),
       };
     }
     case 'strikeAttack': {
@@ -662,7 +870,7 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
         });
       const cond = conditionPart(c, strike.atkAbility, 'attack');
       if (cond) parts.push(cond);
-      const situational = [...modeAdjust(c, { kind: 'attack' }, parts), ...featSituationalStrings(c, db, ref)];
+      const situational = situationalList(modeAdjust(c, { kind: 'attack' }, parts), featSituationalLines(c, db, ref));
       return {
         title: strike.name,
         subtitle: 'Attack roll',
@@ -703,10 +911,10 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       // Feat/item damage bonuses are listed for every Strike, exactly as `strikeAttack` lists attack
       // bonuses: a target carries no weapon narrowing, so the alternative is to show nothing at all.
       // The `when` clause on each line is what tells the player whether it applies to this weapon.
-      const situational = [...modeAdjust(c, { kind: 'damage' }, parts), ...featSituationalStrings(c, db, ref)];
+      const situational = situationalList(modeAdjust(c, { kind: 'damage' }, parts), featSituationalLines(c, db, ref));
       // Surface conditional precision/sneak riders (they aren't in the flat total) alongside the
       // situational mode notes so the breakdown matches the annotated strike row.
-      for (const r of strike.conditionalDamage ?? []) situational.push(`+${r.text} — ${r.note}`);
+      for (const r of strike.conditionalDamage ?? []) situational.push({ text: `+${r.text} — ${r.note}` });
       return {
         title: strike.name,
         subtitle: `Damage · ${strike.damage}`,

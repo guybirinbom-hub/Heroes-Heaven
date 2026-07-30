@@ -1,0 +1,423 @@
+[
+ {
+  "id": "accolade-robe-greater",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Accolade Robe (Greater)",
+  "level": 17,
+  "traits": [
+   "arcane",
+   "focused",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "text": "Although not all wizards have gone through formal training, it's become tradition to enchant robes representing the arduous training required and festoon them with honors one has earned. Typically, an *accolade robe* is styled after a single wizard school, with appropriate colors and symbols. Wearing these robes grants a +3 item bonus to Arcana checks. The pockets of the robe tie to an extradimensional space that can hold 1 Bulk of items, none of which can have greater than light Bulk. The items must be related to spellcasting and academics—spellbooks, scrolls, wands, scholarly journals, and other academic supplies the GM allows. These items do not count against your Bulk limit. You can Interact to retrieve or stow items normally. --- **Activate—Review** ⟨1⟩ (concentrate, manipulate) **Effect** You retrieve an item of your choice from the robe's storage, then Recall Knowledge. You can activate the robe's Review once per minute as a free action. --- **Activate—Extra Credit** ⟨4⟩ (concentrate) **Frequency** once per day **Effect** You gain 1 Focus Point, which you can spend only to cast a school spell. If you don't spend this Focus Point by the end of this turn, it is lost. --- **Craft Requirements** You are a wizard of the associated school."
+ },
+ {
+  "id": "aon-elements-of-creation",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Elements of Creation",
+  "level": 0,
+  "traits": [
+   "air",
+   "conjuration",
+   "earth",
+   "water"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Elements of Creation Aspect Forge Prerequisite creative spark gift When you activate creative spark, you can choose to summon an air wisp, a water wisp, and an earth wisp in unoccupied squares next to you, in addition to the fire wisp. Unlike a typical earth wisp, the summoned earth wisp takes the form of a small iron creature resembling an anvil crossed with a horned beetle. Like the fire wisp, these additional wisps don't act in combat but can assist you while you Craft items. While all four wisps are assisting you, the bonus you gain from creative spark is doubled, and your outcome for Crafting checks related to blacksmithing is one degree of success better than your roll. In addition, being assisted by all four wisps replaces the need for any equipment other than blacksmithing tools when crafting metal items. The wisps last for up to 10 minutes or until you Dismiss them all together as an action. If you extend the duration of the fire wisp, it also extends the duration for the other wisps."
+ },
+ {
+  "id": "attunement-to-stone",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Attunement to Stone",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "text": "You become attuned to the stone around you. When in contact with a stone surface, you gain tremorsense (imprecise) 5 feet along that surface, and you can activate your *ka stone* to cast One with Stone."
+ },
+ {
+  "id": "blade-phantoms-guide",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Blade Phantom's Guide",
+  "level": 11,
+  "traits": [
+   "consumable",
+   "magical",
+   "whetstone"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- A blade phantom's guide is a metal rectangle, often on a chain, etched with an image of a warrior in a fighting stance. When you apply a *blade phantom's guide* to a weapon, it summons a spiritual fragment of a warrior who was adept with that weapon. For 1 minute, you treat your proficiency with that weapon as equal to your highest weapon proficiency. This effect cannot affect a weapon whose level is higher than the *blade phantom's guide* (11th)."
+ },
+ {
+  "id": "bullet-dancer-reload",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Bullet Dancer Reload",
+  "level": 10,
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "engineFieldsPresent": [],
+  "text": "**Requirements** You're in Bullet Dancer Stance. --- You've learned to reload your firearms with uncanny grace, the ammunition simply falling into place as though part of a well-practiced kata. You Strike with a simple firearm, and then Interact to reload that same firearm. You don't need a free hand to reload your weapon in this way."
+ },
+ {
+  "id": "claw-snag",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Claw Snag",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "text": "**Trigger** A creature attempts to Escape while you have them grabbed or restrained. --- You hook into the target, pulling yourself forward and rending flesh. Shift into claw stance if you aren't in it already, then make a frenzied claw Strike against the triggering creature."
+ },
+ {
+  "id": "convergent-tides",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Convergent Tides",
+  "level": 2,
+  "traits": [
+   "magus",
+   "water"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Your footwork is like the convergence of tides, granting your body supernatural power and fluidity. While you're in Arcane Cascade stance, you ignore difficult terrain caused by water, such as walking along a flooded path or swimming in rough water."
+ },
+ {
+  "id": "cruel-piercing",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Cruel Piercing",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "text": "You learn to impale your targets. When you're in Golden Erinys Stance, you gain the Puncture Flesh action."
+ },
+ {
+  "id": "devoted-guardian",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Devoted Guardian",
+  "level": 2,
+  "traits": [
+   "champion",
+   "fighter"
+  ],
+  "engineFieldsPresent": [],
+  "text": "**Requirements** Your last action was to Raise a Shield. --- You adopt a wide stance, ready to defend both yourself and your chosen ward. Select one adjacent creature. As long as your shield is raised and the creature remains adjacent to you, the creature gains a +1 circumstance bonus to their AC, or a +2 circumstance bonus if the shield you raised was a tower shield."
+ },
+ {
+  "id": "effortless-impulse",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Effortless Impulse",
+  "level": 12,
+  "traits": [
+   "kineticist"
+  ],
+  "engineFieldsPresent": [],
+  "text": "**Trigger** Your turn begins. --- A steady ripple from your kinetic gate maintains one of your impulses. You immediately Sustain one of your active impulses that can be sustained."
+ },
+ {
+  "id": "explosive-death-drop",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Explosive Death Drop",
+  "level": 14,
+  "traits": [
+   "fire",
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "text": "**Requirements** You are in Rain of Embers Stance and have a target grabbed or restrained. --- You lift your enemy into the air before bringing them crashing down with a fiery detonation. Roll an Athletics check against your target's Fortitude DC. You take a -1 circumstance penalty to your check if the target is one size larger than you and a -3 circumstance penalty if it's larger than that. You gain a +1 circumstance bonus to your check if the target is one size smaller than you and a +3 circumstance bonus if it's smaller than that. --- **Critical Success** The target takes 12d6 damage and falls prone in an unoccupied adjacent square of your choice. The target is no longer grabbed. The target and any creature adjacent to it also each take 1d6 damage. **Success** As critical success, but the target takes 6d6 damage instead of 12d6, and creatures don't take persistent fire damage. **Failure** The target is no longer grabbed. **Critical Failure** As failure, but you fall prone."
+ },
+ {
+  "id": "flame-jump",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Flame Jump",
+  "level": 13,
+  "traits": [
+   "concentrate",
+   "divine",
+   "exploration",
+   "fire",
+   "manipulate",
+   "nephilim",
+   "teleportation"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "text": "**Frequency** once per day --- Your peri lineage has opened your mind to fire's raw, purging essence. You can spend 1 minute in focused preparation, then enter a fire your size or larger to instantly teleport to any fire that is your size or larger up to 5 miles away. You take no damage from entering or exiting fires when using this ability. Once you enter the fire, you instantly know the rough locations of other large fires within range and can exit from the original fire, if you prefer. You can't carry extradimensional spaces with you when you teleport; if you attempt to do so, the activity fails."
+ },
+ {
+  "id": "gorilla-pound",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Gorilla Pound",
+  "level": 6,
+  "traits": [
+   "emotion",
+   "flourish",
+   "mental",
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "text": "**Requirements** You are in Gorilla Stance. --- You pound your chest before slamming into your foes. Attempt an Intimidation check to Demoralize, then make one gorilla slam Strike against the same target. If your Strike hits, you gain a circumstance bonus to the damage roll equal to triple the value of the target's frightened condition. --- **Special** If you have this feat, while you are in Gorilla Stance, you gain a Climb Speed of 15 feet."
+ },
+ {
+  "id": "hummingbird-wayfinder",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Hummingbird Wayfinder",
+  "level": 12,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "text": "Hummingbird wayfinders blend a few Arcadian secrets into the original wayfinder design, allowing the wayfinder to gain mobility for a time and act as a spy. In addition to the effects of a Wayfinder, a hummingbird wayfinder has the following activation. --- **Activate** ⟨2⟩ command, Interact **Frequency** once per hour --- **Effect** You cause the wayfinder to transform into a Tiny bee hummingbird, only 2 inches long. Other than the wayfinder being a visible bird, this has the effects of Scouting Eye. In addition to Seeking through the hummingbird, you can activate any aeon stone within the wayfinder as if the wayfinder were still on your person. When the effect ends, the wayfinder transforms back to normal in its current position. Damaging the bird ends the effect but does not destroy the wayfinder."
+ },
+ {
+  "id": "inner-fire-som",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Inner Fire (SoM)",
+  "level": 6,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Inner Fire (SoM) Source Secrets of Magic pg. 202 Prerequisites Stoked Flame Stance While you're in Stoked Flame Stance, you have cold and fire resistance equal to half your level, and any creature that hits you with an unarmed attack, tries to Grab or Grapple you, or otherwise touches you takes fire damage equal to your Wisdom modifier (minimum 1). A creature can take this damage no more than once per turn."
+ },
+ {
+  "id": "klingegeist",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Klingegeist",
+  "level": 10,
+  "traits": [
+   "archetype",
+   "concentrate",
+   "possession"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Your imprisonment inside a Final Blade used to perform countless executions has instilled in you an aptitude for entering and possessing similar sharp implements of murder. You project your mind and incorporeal body into an unattended weapon of 2 Bulk or less that deals slashing damage. While possessing a blade, you have a space of 5 feet, but you don't block or impede enemies attempting to move through your space, nor do you benefit from or provide flanking. You're trained in the use of the weapon, unless your proficiency was already better, and you can make Strike actions with the weapon as if you were wielding it. You gain a Fly speed of 30 feet and can only take Strike and Fly actions, which don't trigger reactions. You have an AC of 18 + your level and the Hardness and Hit Points of the weapon you're possessing, which for most one-handed slashing weapons is Hardness 5 and HP 20. You can't be Disarmed, nor can your true body be directly injured except by spirit damage, which bypasses both the weapon's Hardness and Hit Points to damage you directly. If you're reduced to 0 Hit Points or the weapon you're inhabiting is broken or destroyed, you're immediately ejected from it and paralyzed for 1 round. Otherwise, the effect lasts for 10 minutes or until you Dismiss it."
+ },
+ {
+  "id": "majestic-presence",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Majestic Presence",
+  "level": 13,
+  "traits": [
+   "dragonblood",
+   "emotion",
+   "fear",
+   "mental",
+   "visual"
+  ],
+  "engineFieldsPresent": [],
+  "text": "By taking an impressive stance, the full force of your personality cows lesser beings. Each creature in a must attempt a save against the higher of your class DC or spell DC. Regardless of the result of the saving throw, the creature is temporarily immune to your Majestic Presence for 24 hours. --- **Critical Success** The creature is unaffected. **Success** The creature is Frightened 1. **Failure** The creature is Frightened 2. **Critical Failure** The creature is Frightened 4."
+ },
+ {
+  "id": "minor-soldiers-syrup",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Minor Soldier's Syrup",
+  "level": 1,
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Soldier's Syrup May contain spoilers from Myth-Speaker Source Pathfinder #218: Titanbane pg. 80 Usage held in 1 hand This thick syrup sweetens potions and creates a distinctive, metallic flavor associated with the festival days in Dhuraxilis. Partygoers are fond of mixing soldier’s syrup with potions to extend their release. Activating a dose of soldier’s syrup requires you to combine it with another consumable potion that takes 1 action to activate. After swirling the mixture for a few moments, you must either imbibe the augmented potion within 1 minute, or the potion reverts to its unaugmented state. The potion’s level cannot exceed that of the soldier’s syrup it is mixed with, otherwise the syrup is wasted. When consumed, a soldier’s syrup–augmented potion does not immediately grant its benefits to you. Instead, you can activate the potion within the next hour as a single action, which has the concentrate trait. You can have only one soldier’s syrup–augmented potion consumed at a time; consuming a second one renders the first one inert. If you do not activate the potion within 1 hour, the potion spoils inside you, and you become enfeebled 1 for 24 hours. Minor Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 4 gp Lesser Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 12 gp Moderate Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 50 gp Greater Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 400 gp Major Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 5,000 gp"
+ },
+ {
+  "id": "oculus-of-abaddon",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Oculus of Abaddon",
+  "level": 15,
+  "traits": [
+   "artifact",
+   "evil",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells",
+   "senses",
+   "passiveEffects"
+  ],
+  "text": "An *oculus of Abaddon* is a potent artifact rumored to have been created by one of the Four Horsemen of the Apocalypse as a way to reward those who work as their agents on the Material Plane. More likely, these items were crafted by a powerful pre-Earthfall death cult that has long since moved on, leaving behind these dangerous artifacts to tempt mortals into serving the needs of the Horsemen. An *oculus of Abaddon* appears as a sphere of clear crystal that contains a pinpoint of flickering red light at its center. When held, the oculus feels warm to the touch and fills you with a sudden desire to pluck out an eye and place the oculus within the socket-this causes 4d6 damage. Once placed in an eye socket, the oculus can be removed only by ripping it free (causing the same amount of persistent bleed damage as the initial plucking). When you place the oculus in your empty eye socket, you immediately heal all damage caused by plucking the previous eye out. Once placed, an oculus grants you constant Darkvision. It can also be activated to perform a number of other magical effects, as detailed below, but if you aren't evil, each time you activate an *oculus of Abaddon*, you must succeed at a save or become affected by a subconscious suggestion (heightened to 8th level) to perform an evil act the next time an opportunity to do so arises, as determined by the GM. --- **Activate** 10 minutes (envision) **Frequency** three times per day **Effect** You gain the effects of Scrying, heightened to 7th level. --- **Activate** Cast a Spell **Frequency** once per week **Effect** You use the *oculus of Abaddon* to cast a Binding Circle ritual, heightened to 7th level. You can only conjure neutral evil creatures with this casting of planar binding. If you already know the planar binding ritual, you gain a +3 item bonus on the primary check when casting planar binding. --- **Activate** ⟨3⟩ envision; **Requirement** you have a familiar or animal companion **Effect** You can see and hear through your familiar or animal companion's eyes and ears, provided you are on the same plane. This effect can be sustained, but as long as you do so you can take no other actions. --- **Activate** 1 hour (envision; evil) **Frequency** once per year **Effect** You manipulate the minds of a huge number of targets, provided that the end goal of the manipulation is a tragic or otherwise horrific fate for those being manipulated. This functions as Suggestion, but with a range of 1 mile. All creatures within this area are affected, with the same suggestion implanted in their minds. Creatures hear the telepathic suggestion in their native language, and creatures that are 7th level or higher can attempt a save to resist the effect. This power was used by Vordakai to cause the vanishing of Varnhold, suggesting to its inhabitants to leave their homes and travel south to his tomb. If this effect is counteracted or removed on one victim, it ends for all victims. --- **Destruction** A foul and h"
+ },
+ {
+  "id": "petal-dance",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Petal Dance",
+  "level": 0,
+  "traits": [
+   "plant"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "text": "Petal Dance Source GM Core pg. 317 Aspect Plant Activate (concentrate) Frequency once per hour; Effect You discorporate into a cloud of petals and leaves. This grants you the swarm trait, immunity to falling damage, resistance 5 to bludgeoning and slashing damage, and weakness 5 to area and splash damage. You can fit into spaces only a few inches wide, moving your constituent petals through the gap. You don't gain the swarm mind ability, so you're still affected normally by mental effects. As a swarm, you can't speak, cast spells, use manipulate actions requiring your hands, activate your magic items, or make any of your Strikes with your normal body. You remain in this form for 1 minute or until you Dismiss the activation. At 13th level, the relic gains a reaction that triggers when you fall or take damage, applying this gift's resistances, weaknesses, and immunity to falling damage to the triggering effect."
+ },
+ {
+  "id": "quick-shape",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Quick Shape",
+  "level": 1,
+  "traits": [
+   "beastkin"
+  ],
+  "engineFieldsPresent": [],
+  "text": "**Trigger** You roll initiative. --- Your instincts kick in and you take on an aggressive stance. You use Change Shape to enter your hybrid form or a new form granted by a beastkin feat."
+ },
+ {
+  "id": "riptide-undersea-privateer",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Riptide (Undersea Privateer)",
+  "level": 8,
+  "traits": [
+   "archetype",
+   "attack",
+   "manipulate"
+  ],
+  "engineFieldsPresent": [],
+  "text": "**Requirements** You're in Anchor Stance, and your target is within 5 feet of the edge of a water vehicle or already in the water. --- You swirl water around you to make a current that pulls creatures closer. Attempt an Athletics check against the Fortitude DC of a creature within 20 feet. If the creature is willing, you increase your degree of success by one (turning a failure into a success and a success into a critical success). --- **Critical Success** The target is pulled 10 feet toward you. **Success** The target is pulled 5 feet toward you. **Critical Failure** Your movements cause you to be off-guard until the beginning of your next turn."
+ },
+ {
+  "id": "shifting-terrain",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Shifting Terrain",
+  "level": 14,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "text": "**Requirements** Your terrain attunement matches the terrain you're in and you're in Rough Terrain Stance. --- You slam your fist into the ground or twirl your arms about to cause the terrain around you to shift and ripple, potentially throwing others off balance. Each creature within your area of difficult terrain from Rough Terrain Stance must attempt a saving throw against your spell DC with the following effects. After you use this action, you can't use it again for 1d4 rounds. --- **Critical Success** The creature is unaffected. **Success** The creature is Clumsy 1 for 1 round. **Failure** The creature is Clumsy 2 for 1 round. **Critical Failure** The creature is clumsy 2 for 1 round and falls prone."
+ },
+ {
+  "id": "soaring-wings-major",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Soaring Wings (Major)",
+  "level": 19,
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Wings, normally tattooed on the upper back, enable you to fly when activated. The visual manifestation is typically a slight glow or ripple in the ink, but some artists make it so the tattoo creates a glowing aura or lines of light in the shape of wings. --- **Activate** ⟨2⟩ (concentrate) **Effect** You gain a fly Speed equal to either your land Speed or 20 feet, whichever is greater. You can activate the tattoo any number of times, and the effect lasts until you Dismiss the activation."
+ },
+ {
+  "id": "stalwart-defender-dedication",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Stalwart Defender Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [],
+  "text": "**Access** You are a dwarf or have undergone defender training in a dwarven settlement such as Highhelm. --- You have completed your initial training in the ways of a stalwart defender. You gain the Tenacious Stance action."
+ },
+ {
+  "id": "student-of-the-dueling-arts",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Student of the Dueling Arts",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Dueling is your art, and your weapon is your instrument. You have studied and evaluated a great many combat techniques, which you can review each day without fail to ensure you are prepared for any and every situation that may occur. During your daily preparations, you can swap out any number of your duelist archetype feats for other duelist archetype feats of the appropriate level for which you are qualified. You can't swap out Duelist Dedication or Student of the Dueling Arts in this way. In addition, you can enter a stance from a duelist archetype feat you don't have (such as one listed under Additional Feats) by increasing the number of actions it takes to enter the stance by 1 (typically to 2 actions). You must still meet the stance feat's prerequisites."
+ },
+ {
+  "id": "the-thousand-lashes-of-the-weeping-willow",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "The Thousand Lashes of the Weeping Willow",
+  "level": 18,
+  "traits": [
+   "impulse",
+   "kineticist",
+   "overflow",
+   "plant",
+   "primal",
+   "wood"
+  ],
+  "engineFieldsPresent": [],
+  "text": "You conjure a massive willow tree, which lashes your foes with a thousand branches. The trunk of the weeping willow tree is 10-feet in diameter and appears in an unoccupied space within 500 feet. The tree whips its branches at all your enemies within a 30-foot-radius emanation centered on the willow's trunk, dealing damage with a save against your class DC. A creature that fails its save is also overcome with sorrow, becoming Slowed 1 for as long as the willow remains, as it weeps uncontrollably. The willow doesn't target you or your allies. The willow tree remains until the end of your next turn, but you can Sustain it up to 1 minute. The first time you Sustain the impulse each round, the weeping willow attacks again, dealing damage to all enemies in the area with a basic reflex save. If you use this impulse again, the previous one ends. --- **Level (20th)** The initial damage is 14d8, and the Sustained damage is 5d8."
+ },
+ {
+  "id": "trample-centaur",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Trample (Centaur)",
+  "level": 13,
+  "traits": [
+   "centaur"
+  ],
+  "engineFieldsPresent": [],
+  "text": "You've trained to stampede right over smaller foes without causing yourself any harm. Stride up to double your Speed; you can move through the spaces of creatures at least one size smaller, Trampling each creature whose space you enter. You can attempt to Trample the same creature only once in a single Trample. You deal bludgeoning damage equal to your hoof attack (or your unarmed strike if you lack a hoof attack) against these creatures, who can attempt a save against your class DC."
+ },
+ {
+  "id": "unstoppable-force",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Unstoppable Force",
+  "level": 18,
+  "traits": [
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "text": "While you are in the stance provided by Immovable Object, you ignore difficult terrain and greater difficult terrain. Once per 10 minutes, if you Dismiss your Immovable Object stance, you can Stride as a free action. At the end of that Stride, your final footfall causes an explosion of energy. Each creature within a takes damage ( save against your class DC). Creatures that fail the save are also knocked prone."
+ },
+ {
+  "id": "wardrobe-stone",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Wardrobe Stone",
+  "level": 3,
+  "traits": [
+   "illusion",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Wardrobe Stone Source Grand Bazaar pg. 51 Usage held in 1 hand Bulk L This large stone eye is the size of a fist and decorated with elaborate carvings of robes and other garments. Activate (1 minute) envision, Interact; Effect You enter a brief trance in which you envision yourself entering a large dressing room. You maneuver through the endless dressing-room mindscape and search for whatever articles of clothing, accessories, and other garments you desire. After the activation, you gain the effects of illusory disguise, except that it only causes you to appear to be wearing the exact outfit you selected within the mindscape. The illusion also disguises the wardrobe stone to match your outfit and not appear out of place, such as by appearing to be a glove or bracelet, though it continues to occupy your hand while you're under the effects of illusory disguise. You can actively Dismiss the Spell, but the effects are also dismissed immediately when you're no longer holding the wardrobe stone. Wardrobe Stone (Lesser) Source Grand Bazaar pg. 51 Price 50 gp Bulk L Wardrobe Stone (Moderate) Source Grand Bazaar pg. 51 Price 1,250 gp Bulk L You gain a +2 item bonus to a specific Lore skill associated with your outfit, such as Carpentry Lore when wearing a carpenter's outfit or Cooking Lore when wearing a chef's outfit. Activate (1 minute) envision, Interact; Frequency once per day; Effect You cast prying eye. Wardrobe Stone (Greater) Source Grand Bazaar pg. 51 Price 55,000 gp Bulk L You gain +3 item bonus to Perception checks involving sight and a +3 item bonus to a specific Lore skill associated with your outfit. Activate (1 minute) envision, Interact; Effect You cast prying eye. Activate (10 minutes) envision, Interact; Effect The wardrobe stone splits open and permanently transforms into a specific type of magical robe of your choosing. It can transform into any 20th-level or lower magical robe to which you have access, except for items that can't normally be Crafted, such as artifacts. This process is irreversible."
+ }
+]

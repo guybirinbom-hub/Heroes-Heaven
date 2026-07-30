@@ -1,0 +1,165 @@
+[
+ {
+  "id": "specialists-ring-abjuration",
+  "collection": "items",
+  "name": "Specialist's Ring (Abjuration)",
+  "level": 10,
+  "traits": [
+   "focused",
+   "invested",
+   "magical"
+  ],
+  "text": "This *specialist's ring* is dedicated to the abjuration school of magic, and the ring is covered in symbols and glyphs related to the abjuration school according to the creator's arcane studies. You gain a +2 item bonus to Arcana checks, and a +1 circumstance bonus to recognize magical effects and items of the abjuration school of magic. --- **Activate** ⟨4⟩ envision **Frequency** once per day --- **Effect** You gain 1 Focus Point, which you can use only to cast a wizard school spell of the abjuration school. If not used by the end of your turn, this Focus Point is lost.",
+  "currentFlat": {
+   "skills": {
+    "arcana": 2
+   }
+  },
+  "openQuestion": "Does the +1 circumstance bonus 'to recognize magical effects and items of the abjuration school' apply only to Arcana, or to whichever skill is actually rolled to Identify Magic / Recall Knowledge about that effect (Nature, Occultism, Religion)? Mapped to Arcana here."
+ },
+ {
+  "id": "specialists-ring-conjuration",
+  "collection": "items",
+  "name": "Specialist's Ring (Conjuration)",
+  "level": 10,
+  "traits": [
+   "focused",
+   "invested",
+   "magical"
+  ],
+  "text": "This *specialist's ring* is dedicated to the conjuration school of magic, and the ring is covered in symbols and glyphs related to the conjuration school according to the creator's arcane studies. You gain a +2 item bonus to Arcana checks, and a +1 circumstance bonus to recognize magical effects and items of the conjuration school of magic. --- **Activate** ⟨4⟩ envision **Frequency** once per day --- **Effect** You gain 1 Focus Point, which you can use only to cast a wizard school spell of the conjuration school. If not used by the end of your turn, this Focus Point is lost.",
+  "currentFlat": {
+   "skills": {
+    "arcana": 2
+   }
+  },
+  "openQuestion": "Does the +1 circumstance bonus 'to recognize magical effects and items of the conjuration school' apply only to Arcana, or to whichever skill is rolled to Identify Magic / Recall Knowledge (Nature, Occultism, Religion)? Mapped to Arcana here."
+ },
+ {
+  "id": "specialists-ring-divination",
+  "collection": "items",
+  "name": "Specialist's Ring (Divination)",
+  "level": 10,
+  "traits": [
+   "focused",
+   "invested",
+   "magical"
+  ],
+  "text": "This *specialist's ring* is dedicated to the divination school of magic, and the ring is covered in symbols and glyphs related to the divination school according to the creator's arcane studies. You gain a +2 item bonus to Arcana checks, and a +1 circumstance bonus to recognize magical effects and items of the divination school of magic. --- **Activate** ⟨4⟩ envision **Frequency** once per day --- **Effect** You gain 1 Focus Point, which you can use only to cast a wizard school spell of the divination school. If not used by the end of your turn, this Focus Point is lost.",
+  "currentFlat": {
+   "skills": {
+    "arcana": 2
+   }
+  },
+  "openQuestion": "Does the +1 circumstance bonus 'to recognize magical effects and items of the divination school' apply only to Arcana, or to whichever skill is rolled to Identify Magic / Recall Knowledge (Nature, Occultism, Religion)? Mapped to Arcana here."
+ },
+ {
+  "id": "specialists-ring-enchantment",
+  "collection": "items",
+  "name": "Specialist's Ring (Enchantment)",
+  "level": 10,
+  "traits": [
+   "focused",
+   "invested",
+   "magical"
+  ],
+  "text": "This *specialist's ring* is dedicated to the enchantment school of magic, and the ring is covered in symbols and glyphs related to the enchantment school according to the creator's arcane studies. You gain a +2 item bonus to Arcana checks, and a +1 circumstance bonus to recognize magical effects and items of the enchantment school of magic. --- **Activate** ⟨4⟩ envision **Frequency** once per day --- **Effect** You gain 1 Focus Point, which you can use only to cast a wizard school spell of the enchantment school. If not used by the end of your turn, this Focus Point is lost.",
+  "currentFlat": {
+   "skills": {
+    "arcana": 2
+   }
+  },
+  "openQuestion": "Does the +1 circumstance bonus 'to recognize magical effects and items of the enchantment school' apply only to Arcana, or to whichever skill is rolled to Identify Magic / Recall Knowledge (Nature, Occultism, Religion)? Mapped to Arcana here."
+ },
+ {
+  "id": "specialists-ring-evocation",
+  "collection": "items",
+  "name": "Specialist's Ring (Evocation)",
+  "level": 10,
+  "traits": [
+   "focused",
+   "invested",
+   "magical"
+  ],
+  "text": "This *specialist's ring* is dedicated to the evocation school of magic, and the ring is covered in symbols and glyphs related to the evocation school according to the creator's arcane studies. You gain a +2 item bonus to Arcana checks, and a +1 circumstance bonus to recognize magical effects and items of the evocation school of magic. --- **Activate** ⟨4⟩ envision **Frequency** once per day --- **Effect** You gain 1 Focus Point, which you can use only to cast a wizard school spell of the evocation school. If not used by the end of your turn, this Focus Point is lost.",
+  "currentFlat": {
+   "skills": {
+    "arcana": 2
+   }
+  },
+  "openQuestion": "Does the +1 circumstance bonus 'to recognize magical effects and items of the evocation school' apply only to Arcana, or to whichever skill is rolled to Identify Magic / Recall Knowledge (Nature, Occultism, Religion)? Mapped to Arcana here."
+ },
+ {
+  "id": "specialists-ring-illusion",
+  "collection": "items",
+  "name": "Specialist's Ring (Illusion)",
+  "level": 10,
+  "traits": [
+   "focused",
+   "illusion",
+   "invested",
+   "magical"
+  ],
+  "text": "This *specialist's ring* is dedicated to the illusion school of magic, and the ring is covered in symbols and glyphs related to the illusion school according to the creator's arcane studies. You gain a +2 item bonus to Arcana checks, and a +1 circumstance bonus to recognize magical effects and items of the illusion school of magic. --- **Activate** ⟨4⟩ envision **Frequency** once per day --- **Effect** You gain 1 Focus Point, which you can use only to cast a wizard school spell of the illusion school. If not used by the end of your turn, this Focus Point is lost.",
+  "currentFlat": {
+   "skills": {
+    "arcana": 2
+   }
+  },
+  "openQuestion": "Does the +1 circumstance bonus 'to recognize magical effects and items of the illusion school' apply only to Arcana, or to whichever skill is rolled to Identify Magic / Recall Knowledge (Nature, Occultism, Religion)? Mapped to Arcana here."
+ },
+ {
+  "id": "specialists-ring-necromancy",
+  "collection": "items",
+  "name": "Specialist's Ring (Necromancy)",
+  "level": 10,
+  "traits": [
+   "focused",
+   "invested",
+   "magical"
+  ],
+  "text": "This *specialist's ring* is dedicated to the necromancy school of magic, and the ring is covered in symbols and glyphs related to the necromancy school according to the creator's arcane studies. You gain a +2 item bonus to Arcana checks, and a +1 circumstance bonus to recognize magical effects and items of the necromancy school of magic. --- **Activate** ⟨4⟩ envision **Frequency** once per day --- **Effect** You gain 1 Focus Point, which you can use only to cast a wizard school spell of the necromancy school. If not used by the end of your turn, this Focus Point is lost.",
+  "currentFlat": {
+   "skills": {
+    "arcana": 2
+   }
+  },
+  "openQuestion": "Does the +1 circumstance bonus 'to recognize magical effects and items of the necromancy school' apply only to Arcana, or to whichever skill is rolled to Identify Magic / Recall Knowledge (Nature, Occultism, Religion)? Mapped to Arcana here."
+ },
+ {
+  "id": "specialists-ring-transmutation",
+  "collection": "items",
+  "name": "Specialist's Ring (Transmutation)",
+  "level": 10,
+  "traits": [
+   "focused",
+   "invested",
+   "magical"
+  ],
+  "text": "This *specialist's ring* is dedicated to the transmutation school of magic, and the ring is covered in symbols and glyphs related to the transmutation school according to the creator's arcane studies. You gain a +2 item bonus to Arcana checks, and a +1 circumstance bonus to recognize magical effects and items of the transmutation school of magic. --- **Activate** ⟨4⟩ envision **Frequency** once per day --- **Effect** You gain 1 Focus Point, which you can use only to cast a wizard school spell of the transmutation school. If not used by the end of your turn, this Focus Point is lost.",
+  "currentFlat": {
+   "skills": {
+    "arcana": 2
+   }
+  },
+  "openQuestion": "Does the +1 circumstance bonus 'to recognize magical effects and items of the transmutation school' apply only to Arcana, or to whichever skill is rolled to Identify Magic / Recall Knowledge (Nature, Occultism, Religion)? Mapped to Arcana here."
+ },
+ {
+  "id": "specialists-ring",
+  "collection": "items",
+  "name": "Specialist's Ring",
+  "level": 10,
+  "traits": [
+   "focused",
+   "invested",
+   "magical"
+  ],
+  "text": "Each *specialist's ring* is dedicated to a single school of magic, and the ring is covered in symbols and glyphs related to that school according to the creator's arcane studies. A specialist's ring has the trait corresponding to its school of magic. You gain a +2 item bonus to Arcana checks, and a +1 circumstance bonus to recognize magical effects and items of the specific school of magic. --- **Activate** ⟨4⟩ envision **Frequency** once per day --- **Effect** You gain 1 Focus Point, which you can use only to cast a wizard school spell of the corresponding school. If not used by the end of your turn, this Focus Point is lost.",
+  "currentFlat": {
+   "skills": {
+    "arcana": 2
+   }
+  },
+  "openQuestion": "Two questions: (a) does the +1 circumstance bonus apply only to Arcana or to whichever skill is rolled to Identify Magic / Recall Knowledge (Nature, Occultism, Religion)? (b) should this generic 'specialists-ring' record carry an entry at all, or only the eight school-specific variants, to avoid a duplicate star if a character somehow holds both?"
+ }
+]

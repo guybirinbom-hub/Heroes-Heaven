@@ -1,0 +1,1234 @@
+[
+ {
+  "id": "forcible-energy",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Forcible Energy",
+  "level": 12,
+  "traits": [
+   "manipulate",
+   "spellshape",
+   "wizard"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You perform complex manipulations to make the energy from your spells so powerful that your enemies remain vulnerable to it afterward. If your next action is to Cast a Spell that deals acid, cold, electricity, fire, or sonic damage, you can select one target that was damaged to gain weakness 5 to that damage type until the end of your next turn. If a spell deals multiple types of energy damage, choose one that the target gains weakness to. This has no effect on creatures with resistance or immunity to the energy type you choose."
+ },
+ {
+  "id": "foretell-harm",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Foretell Harm",
+  "level": 1,
+  "traits": [
+   "cursebound",
+   "divine",
+   "oracle"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per round **Requirements** Your previous action was to Cast a non-cantrip Spell that dealt damage. --- Your magic echoes ominously as you glimpse injury in the target's future. At the beginning of your target's next turn, it takes damage equal to twice the triggering spell's rank as a seemingly random and minor misfortune finds it. The damage and type of misfortune is of a type matching the spell; for instance, if you dealt fire damage, a flame might spontaneous ignite on them or they might burn a hand on their torch. The target is then temporarily immune to Foretell Harm for 24 hours."
+ },
+ {
+  "id": "forge-warden",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Forge Warden",
+  "level": 10,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The religious symbol of Torag, the forge god-an ornate hammer of dwarven construction-adorns the face of this *lesser reinforcing steel shield* (Hardness 8, HP 72, BT 36). The shield is a religious symbol of Torag. You and any adjacent allies have fire resistance 5 while you have the shield raised. When used for a Shield Block, the *forge warden* rings out like the hammer strike of a blacksmith, and the symbol glows as if lit by the fires of a furnace. --- **Activate—Forge Fires** ⟨4⟩ (concentrate, fire) **Trigger** You use the *forge warden* to Shield Block an adjacent creature's attack and the shield takes damage **Effect** The attacking creature takes 2d6 damage."
+ },
+ {
+  "id": "form-a-flock",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Form a Flock",
+  "level": 13,
+  "traits": [
+   "aura",
+   "dragonet"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You call nearby wild dragonets to swarm to your side. The flock grants you 25 temporary Hit Points that last up to 1 minute. The flock disperses and the effect ends when the temporary Hit Points are gone, the minute elapses, or you Dismiss Form a Flock. As long as you're surrounded by your flock, you gain weakness 5 to area and splash damage and have a flock aura in a . Enemies in this aura are dazzled. When you use Form a Flock and while it lasts, you can take the Acrid Barrage action."
+ },
+ {
+  "id": "fortunes-coin",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Fortune's Coin",
+  "level": 8,
+  "traits": [
+   "fortune",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This coin is struck with the image of a beatific seraph in gold on one side and a fearsome fiend with seven eyes enameled in black on the other. While it may seem nothing more than a curiosity, it's a powerful agent of fortune when activated. **Activate** ⟨5⟩ (manipulate) **Trigger** You fail a check or attack --- **Effect** Flip the coin. If it lands on the seraph side, you get a 12 on the die instead of what you rolled. If it lands on the fiend side, one of the eyes on the fiend closes. Either way, you're temporarily immune to fortune's coin for 1 hour. When all seven eyes are closed, the coin vanishes into a puff of smoke, disappearing forever. This activation is a fortune effect, regardless of how the coin flip lands."
+ },
+ {
+  "id": "fortunes-coin-platinum",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Fortune's Coin (Platinum)",
+  "level": 14,
+  "traits": [
+   "fortune",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This coin is struck with the image of a beatific seraph in platinum on one side and a fearsome fiend with seven eyes enameled in black on the other. While it may seem nothing more than a curiosity, it's a powerful agent of fortune when activated. **Activate** ⟨5⟩ (manipulate) **Trigger** You fail a check or attack --- **Effect** Flip the coin. If it lands on the seraph side, you get a 14 on the die instead of what you rolled. If it lands on the fiend side, one of the eyes on the fiend closes. Either way, you're temporarily immune to fortune's coin for 1 hour. When all seven eyes are closed, the coin vanishes into a puff of smoke, disappearing forever. This activation is a fortune effect, regardless of how the coin flip lands."
+ },
+ {
+  "id": "fossil-fragment",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Fossil Fragment",
+  "level": 7,
+  "traits": [
+   "earth",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Fossil Fragment Source Rage of Elements pg. 98 Usage held in 1 hand Bulk L A fossil fragment is a piece of a fossil creature, typically a smaller bone from a larger specimen. Activate—Fossile Metamorphosis (concentrate, manipulate) Effect You activate the fragment by placing it on solid ground and then speaking its name, causing the fragment to form the full fossilized skeleton of a creature. In creature form, the fragment has the minion trait. Because it's an animated fossil instead of a living creature, it has the construct and earth traits and lacks its normal creature type trait (typically animal). It's also immune to bleed, death effects, disease, doomed, drained, fatigued, healing, nonlethal attacks, paralyzed, poison, sickened, vitality, void, and unconscious. It can understand your language, and it obeys you to the best of its ability when you use an action to command it. The specifics of each creature, as well as the activation's frequency, if any, appear in its entry below. If the fragment is slain while in creature form, it reverts to its fragment shape and can't be activated again for 1 week. If the fragment is destroyed, its magic is lost. Fossil Fragment (Amber Mosquito) Source Rage of Elements pg. 98 Price 2,500 gp Bulk L A minuscule insect preserved in fossilized tree sap, this fragment becomes a giant mosquito when activated. It can be called upon once per day for up to 10 minutes. The fossil mosquito can't afflict anyone with septic malaria. If the mosquito uses Blood Drain, it doesn't gain temporary Hit Points, but instead collects blood from the victim. The blood stays within the mosquito indefinitely and stays fresh while it does. If the mosquito uses Blood Drain again, any blood from before that use is lost. Fossil Fragment (Brontosaurus Phalange) Source Rage of Elements pg. 98 Price 21,000 gp Bulk L This massive toe bone becomes a brontosaurus when activated. It can be called upon no more than four times per month. The skeleton remains for 24 hours if used as a beast of burden or for transport. If it attempts an attack or otherwise engage in combat, it reverts to its fragment form after 1d4 rounds. The skeleton is so massive and sturdy that it can serve as the base of a structure (from an item or spell effect with the structure trait), provided the structure is no larger than 20 feet in width or height. When the brontosaurus reverts to its fragment form, the structure reverts with it. Fossil Fragment (Deinonychus Claw) Source Rage of Elements pg. 98 Price 360 gp Bulk L This curved claw becomes a deinonychus when activated. It can be called upon once per day and can remain in deinonychus form for no more than 10 minutes. The skeleton can serve as a mount for a creature one size smaller than it or smaller. Fossil Fragment (Eurypterid Paddle) Source Rage of Elements pg. 98 Price 1,700 gp Bulk L The tip of an oar-like limb specialized for swimming becomes a spiny eurypterid when activated. It can be called upon once a week for up to 24 hours. The eurypterid can serve as a mount for a creature one size smaller than it or smaller, and when it does, it confers the ability to breathe both air and water upon its rider. Fossil Fr"
+ },
+ {
+  "id": "fossil-fragment-amber-mosquito",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Fossil Fragment (Amber Mosquito)",
+  "level": 13,
+  "traits": [
+   "earth",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "A fossil fragment is a piece of a fossil creature, typically a smaller bone from a larger specimen. **Activate—Fossil Metamorphosis** ⟨2⟩ (concentrate, manipulate) --- **Effect** You activate the fragment by placing it on solid ground and then speaking its name, causing the fragment to form the full fossilized skeleton of a creature. In creature form, the fragment has the minion trait. Because it's an animated fossil instead of a living creature, it has the construct and earth traits and lacks its normal creature type trait (typically animal). It's also immune to bleed, death effects, disease, doomed, drained, fatigued, healing, nonlethal attacks, paralyzed, poison, sickened, vitality, void, and unconscious. It can understand your language, and it obeys you to the best of its ability when you use an action to command it. The specifics of each creature, as well as the activation's frequency, if any, appear in its entry below. --- A minuscule insect preserved in fossilized tree sap, this fragment becomes a Giant Mosquito when activated. It can be called upon once per day for up to 10 minutes. The fossil mosquito can't afflict anyone with septic malaria. If the mosquito uses Blood Drain, it doesn't gain temporary Hit Points, but instead collects blood from the victim. The blood stays within the mosquito indefinitely and stays fresh while it does. If the mosquito uses Blood Drain again, any blood from before that use is lost."
+ },
+ {
+  "id": "fossil-fragment-brontosaurus-phalange",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Fossil Fragment (Brontosaurus Phalange)",
+  "level": 18,
+  "traits": [
+   "earth",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "A fossil fragment is a piece of a fossil creature, typically a smaller bone from a larger specimen. **Activate—Fossil Metamorphosis** ⟨2⟩ (concentrate, manipulate) --- **Effect** You activate the fragment by placing it on solid ground and then speaking its name, causing the fragment to form the full fossilized skeleton of a creature. In creature form, the fragment has the minion trait. Because it's an animated fossil instead of a living creature, it has the construct and earth traits and lacks its normal creature type trait (typically animal). It's also immune to bleed, death effects, disease, doomed, drained, fatigued, healing, nonlethal attacks, paralyzed, poison, sickened, vitality, void, and unconscious. It can understand your language, and it obeys you to the best of its ability when you use an action to command it. The specifics of each creature, as well as the activation's frequency, if any, appear in its entry below. --- This massive toe bone becomes a when activated. It can be called upon no more than four times per month. The skeleton remains for 24 hours if used as a beast of burden or for transport. If it attempts an attack or otherwise engage in combat, it reverts to its fragment form after 1d4 rounds. The skeleton is so massive and sturdy that it can serve as the base of a structure (from an item or spell effect with the structure trait), provided the structure is no larger than 20 feet in width or height. When the brontosaurus reverts to its fragment form, the structure reverts with it."
+ },
+ {
+  "id": "fossil-fragment-deinonychus-claw",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Fossil Fragment (Deinonychus Claw)",
+  "level": 7,
+  "traits": [
+   "earth",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "A fossil fragment is a piece of a fossil creature, typically a smaller bone from a larger specimen. **Activate—Fossil Metamorphosis** ⟨2⟩ (concentrate, manipulate) --- **Effect** You activate the fragment by placing it on solid ground and then speaking its name, causing the fragment to form the full fossilized skeleton of a creature. In creature form, the fragment has the minion trait. Because it's an animated fossil instead of a living creature, it has the construct and earth traits and lacks its normal creature type trait (typically animal). It's also immune to bleed, death effects, disease, doomed, drained, fatigued, healing, nonlethal attacks, paralyzed, poison, sickened, vitality, void, and unconscious. It can understand your language, and it obeys you to the best of its ability when you use an action to command it. The specifics of each creature, as well as the activation's frequency, if any, appear in its entry below. --- This curved claw becomes a Deinonychus when activated. It can be called upon once per day and can remain in deinonychus form for no more than 10 minutes. The skeleton can serve as a mount for a creature one size smaller than it or smaller."
+ },
+ {
+  "id": "fossil-fragment-eurypterid-paddle",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Fossil Fragment (Eurypterid Paddle)",
+  "level": 12,
+  "traits": [
+   "earth",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "A fossil fragment is a piece of a fossil creature, typically a smaller bone from a larger specimen. **Activate—Fossil Metamorphosis** ⟨2⟩ (concentrate, manipulate) --- **Effect** You activate the fragment by placing it on solid ground and then speaking its name, causing the fragment to form the full fossilized skeleton of a creature. In creature form, the fragment has the minion trait. Because it's an animated fossil instead of a living creature, it has the construct and earth traits and lacks its normal creature type trait (typically animal). It's also immune to bleed, death effects, disease, doomed, drained, fatigued, healing, nonlethal attacks, paralyzed, poison, sickened, vitality, void, and unconscious. It can understand your language, and it obeys you to the best of its ability when you use an action to command it. The specifics of each creature, as well as the activation's frequency, if any, appear in its entry below. --- The tip of an oar-like limb specialized for swimming becomes a Spiny Eurypterid when activated. It can be called upon once a week for up to 24 hours. The eurypterid can serve as a mount for a creature one size smaller than it or smaller, and when it does, it confers the ability to breathe both air and water upon its rider."
+ },
+ {
+  "id": "fossil-fragment-petrified-wood",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Fossil Fragment (Petrified Wood)",
+  "level": 14,
+  "traits": [
+   "earth",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "A fossil fragment is a piece of a fossil creature, typically a smaller bone from a larger specimen. **Activate—Fossil Metamorphosis** ⟨2⟩ (concentrate, manipulate) --- **Effect** You activate the fragment by placing it on solid ground and then speaking its name, causing the fragment to form the full fossilized skeleton of a creature. In creature form, the fragment has the minion trait. Because it's an animated fossil instead of a living creature, it has the construct and earth traits and lacks its normal creature type trait (typically animal). It's also immune to bleed, death effects, disease, doomed, drained, fatigued, healing, nonlethal attacks, paralyzed, poison, sickened, vitality, void, and unconscious. It can understand your language, and it obeys you to the best of its ability when you use an action to command it. The specifics of each creature, as well as the activation's frequency, if any, appear in its entry below. --- This colorful sliver of petrified wood becomes an awakened tree when activated. It doesn't have the normal weaknesses of an awakened tree, but it's rooted in place, immobilized. As a single action, it can throw a petrified seed, such as a stone pine cone or acorn, up to 60 feet. A copy of the tree appears there, provided there's an unoccupied space large enough for it. While two trees exist, if either tree throws another seed, one of the existing trees disappears, replaced by the new tree. The tree can be called upon once per day for up to 1 minute. This duration starts when you activate the item, and all trees disappear when it ends."
+ },
+ {
+  "id": "fossil-fragment-triceratops-frill",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Fossil Fragment (Triceratops Frill)",
+  "level": 15,
+  "traits": [
+   "earth",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "A fossil fragment is a piece of a fossil creature, typically a smaller bone from a larger specimen. **Activate—Fossil Metamorphosis** ⟨2⟩ (concentrate, manipulate) --- **Effect** You activate the fragment by placing it on solid ground and then speaking its name, causing the fragment to form the full fossilized skeleton of a creature. In creature form, the fragment has the minion trait. Because it's an animated fossil instead of a living creature, it has the construct and earth traits and lacks its normal creature type trait (typically animal). It's also immune to bleed, death effects, disease, doomed, drained, fatigued, healing, nonlethal attacks, paralyzed, poison, sickened, vitality, void, and unconscious. It can understand your language, and it obeys you to the best of its ability when you use an action to command it. The specifics of each creature, as well as the activation's frequency, if any, appear in its entry below. --- This small piece of triceratops frill turns into a Triceratops when activated. It can be called upon once per day and can remain in triceratops form for no more than 10 minutes. The skeleton can serve as a mount for a creature one size smaller than it or smaller."
+ },
+ {
+  "id": "fossil-fragment-tyrannosaur-tooth",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Fossil Fragment (Tyrannosaur Tooth)",
+  "level": 17,
+  "traits": [
+   "earth",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "A fossil fragment is a piece of a fossil creature, typically a smaller bone from a larger specimen. **Activate—Fossil Metamorphosis** ⟨2⟩ (concentrate, manipulate) --- **Effect** You activate the fragment by placing it on solid ground and then speaking its name, causing the fragment to form the full fossilized skeleton of a creature. In creature form, the fragment has the minion trait. Because it's an animated fossil instead of a living creature, it has the construct and earth traits and lacks its normal creature type trait (typically animal). It's also immune to bleed, death effects, disease, doomed, drained, fatigued, healing, nonlethal attacks, paralyzed, poison, sickened, vitality, void, and unconscious. It can understand your language, and it obeys you to the best of its ability when you use an action to command it. The specifics of each creature, as well as the activation's frequency, if any, appear in its entry below. --- This dagger-shaped tooth turns into a when activated. It can be called upon once per day and can remain in tyrannosaurus form for no more than 10 minutes. The skeleton can serve as a mount for a creature one size smaller than it or smaller."
+ },
+ {
+  "id": "fox-trick",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Fox Trick",
+  "level": 9,
+  "traits": [
+   "kitsune"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per hour --- You always have time for a joke or prank. You Create a Diversion, Conceal an Object, or Hide. All creatures who witnessed your Fox Trick then wise up to it, becoming temporarily immune to your Fox Trick for 24 hours."
+ },
+ {
+  "id": "foxglove-token",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Foxglove Token",
+  "level": 3,
+  "traits": [
+   "magical",
+   "poison",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "This small piece of wood is finely carved to depict a foxglove. The spell DC of any spell cast by Activating this item is 17. - **Armor** You gain resistance 2 to poison damage. - **Weapon** After you cast a plant spell by activating the foxglove token, your Strikes with the weapon it's attached to deal an additional 1d4 poison damage until the end of your next turn. **Activate** Cast a Spell --- **Effect** You cast Puff of Poison."
+ },
+ {
+  "id": "foxglove-token-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Foxglove Token (Greater)",
+  "level": 8,
+  "traits": [
+   "magical",
+   "poison",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "This small piece of wood is finely carved to depict a foxglove. The spell DC of any spell cast by Activating this item is 24. - **Armor** You gain resistance 5 to poison damage. - **Weapon** After you cast a plant spell by activating the foxglove token, your Strikes with the weapon it's attached to deal an additional 1d6 poison damage until the end of your next turn. --- **Activate** Cast a Spell **Effect** You cast Puff of Poison. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast 3rd-rank Noxious Vapors."
+ },
+ {
+  "id": "fresh-produce",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Fresh Produce",
+  "level": 1,
+  "traits": [
+   "healing",
+   "impulse",
+   "kineticist",
+   "plant",
+   "primal",
+   "vitality",
+   "wood"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You grow a nourishing nut, vegetable, seed, or fruit. Choose a creature in your kinetic aura. The produce grows in their open hand, or at their feet if they have no open hands. The produce has light Bulk. A creature can eat it with an Interact action to regain HP; this is a healing vitality effect. The creature feels full for 10 minutes, during which it has resistance 2 to void damage and can't eat another piece of produce. Produce not consumed by the start of your next turn withers away. --- **Level (+2)** The healing increases by 1d4+5, and the resistance increases by 2."
+ },
+ {
+  "id": "friend-of-the-sea",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Friend of the Sea",
+  "level": 1,
+  "traits": [
+   "elf"
+  ],
+  "engineFieldsPresent": [
+   "grantsFeats"
+  ],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Friend of the Sea Source High Seas pg. 19 You have established a companionship with a sea creature, often carrying them in a small, waterfilled globe when you are on land. You gain the Pet general feat. Your pet must be aquatic, and it gains the darkvision and tough abilities in addition to the two abilities you normally choose for a pet."
+ },
+ {
+  "id": "frightening-indignation",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Frightening Indignation",
+  "level": 16,
+  "traits": [
+   "archetype",
+   "aura",
+   "divine",
+   "emotion",
+   "fear",
+   "mental"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per day --- Your anger at the world's many injustices boil out from you in a wave of palpable energy. An enemy that ends its turn within a around you must attempt a save against your class DC or spell DC, whichever is higher. This aura lasts for 1 minute. --- **Critical Success** The creature is unaffected and becomes temporarily immune to your Frightening Indignation for 1 minute. **Success** The creature is Frightened 1. **Failure** The creature is Frightened 2 and can't reduce its frightened condition below 1 while it's in your aura. **Critical Failure** As failure, but Frightened 3."
+ },
+ {
+  "id": "frightening-power",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Frightening Power",
+  "level": 12,
+  "traits": [
+   "archetype",
+   "aura",
+   "emotion",
+   "fear",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are holding or wearing your *draconic gift*. --- Draconic essence coruscates around you, sapping the resilience of your foes. Each enemy in a must attempt a Will saving throw against the higher of your class DC or spell DC. If you are Channeling Draconic Essence, your spectral dragon can be the origin of this emanation. Regardless of the result of its saving throw, a creature that attempts a save is temporarily immune to your Frightening Power for 24 hours. --- **Critical Success** The creature is unaffected. **Success** The creature is Frightened 1. **Failure** The creature is Frightened 2. **Critical Failure** The creature is Frightened 4."
+ },
+ {
+  "id": "frightful-attrition",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Frightful Attrition",
+  "level": 12,
+  "traits": [
+   "archetype",
+   "emotion",
+   "fear",
+   "incapacitation",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your diminishment of your foes' ranks damages their morale. Whenever you reduce a creature to 0 HP with a Strike or spell, all enemies within 30 feet of the downed creature who witnessed the attack must attempt a saving throw against your class DC. A creature that didn't see you directly (such as if you're invisible or remained hidden after the attack) takes a –2 circumstance penalty to this save. Regardless of the result, each creature is temporarily immune to your Frightful Attrition for 10 minutes. --- **Critical Success** The creature is unaffected. **Success** The creature is Frightened 1. **Failure** The creature is Frightened 2. **Critical Failure** The creature is Frightened 3 and fleeing for 1 round."
+ },
+ {
+  "id": "frightful-aura",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Frightful Aura",
+  "level": 18,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You're surrounded by a palpable sense of menace and power that's terrifying to behold. The aura is a . An enemy that enters or ends its turn in the aura must attempt a save against the higher of your spell DC or class DC. **Success** The creature is unaffected and temporarily immune to your Frightful Aura for 1 minute. **Failure** The creature is Frightened 1. **Critical Failure** The creature is Frightened 2."
+ },
+ {
+  "id": "frightful-moan",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Frightful Moan",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "auditory",
+   "divine",
+   "emotion",
+   "fear",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Frequency** once per 10 minutes --- You lament your fate, forcing each living creature in a to attempt a save against your class DC or spell DC, whichever is higher. **Success** The creature is unaffected and temporarily immune to Frightful Moans for 1 minute. **Failure** The creature is Frightened 1. **Critical Failure** The creature is Frightened 2."
+ },
+ {
+  "id": "frost-breath",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Frost Breath",
+  "level": 7,
+  "traits": [
+   "air",
+   "bottled-breath",
+   "cold",
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This bottle of frozen vapors is captured in the frozen peaks of the crown of the world. After inhaling frost breath, you gain resistance 5 to cold. You can exhale the frost breath as a single action to release a spray of frigid air in a . Each creature in the area takes damage with a save. For 10 minutes, surfaces in the area are covered in ice, becoming difficult terrain and uneven ground ()."
+ },
+ {
+  "id": "frost-fair-yanyuedao",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Frost Fair Yanyuedao",
+  "level": 14,
+  "traits": [
+   "artifact",
+   "cold",
+   "deadly-d8",
+   "forceful",
+   "reach"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The *Frost Fair Yanyuedao* is a *+2 greater striking yanyuedao* (use statistics for glaive) once wielded by a legendary military general from Goka. This weapon was constructed from pieces harvested from a dragon's body. When in an area of severe cold or colder, the *Frost Fair Yanyuedao* becomes a *+3 major striking yanyuedao* with a glowing blue cutting edge and the following ability. --- **Activate—Dragon Chill** ⟨1⟩ (manipulate) **Effect** Until the end of your turn, the *Frost Fair Yanyuedao* gains the effects of a *Greater Frost* rune. While under this effect, if you critically succeed at a Strike using this weapon against a creature who has resistance or immunity to cold, that creature must attempt a save or be Slowed 1 for 1 minute."
+ },
+ {
+  "id": "fulmination-fang",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Fulmination Fang",
+  "level": 4,
+  "traits": [
+   "combination",
+   "concussive",
+   "kickback",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The stock and barrel of this *+1 striking gun sword* are lined with scales from a storm snake. Their insulating properties grant their wielder some protection against electricity. --- **Activate—Lightning Rod** ⟨5⟩ **Trigger** You take electricity damage **Effect** You gain resistance 5 to the triggering damage, and the *fulmination fang* crackles with the absorbed energy. You can Interact to change between the gun sword's current usage (melee to ranged, or ranged to melee). The next melee Strike you make with the *fulmination fang* within the next minute deals an additional 1d6 electricity damage. After a minute, the absorbed energy dissipates. --- **Craft Requirements** The initial raw materials must include the scales of a storm snake."
+ },
+ {
+  "id": "fury-cocktail",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Fury Cocktail",
+  "level": 4,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Fury Cocktail Source Treasure Vault (Remastered) pg. 48 Usage held in 1 hand Bulk L Activate (manipulate) A fury cocktail is a fortifying ginger beer spiked with rum and a mixer. It's rumored to have originated from a barbarian-themed festival in a popular mead hall specializing in alchemical beverages. Benefit You gain an item bonus to melee attack rolls and an additional effect depending on the additive chosen when the brew is created. Animalistic Lemon juice and powdered claws or talons are added to the cocktail. You gain an unarmed attack in the brawling group of your choice between a jaws attack that deals 1d6 piercing damage or a claw attack that has the agile trait and deals 1d4 slashing damage. Double This cocktail is just stronger, with more ginger and more rum. You gain resistance 1 to physical damage. The resistance increases to 2 for a moderate fury cocktail or 5 for a greater fury cocktail. Mournful A few flower petals add a powerful aroma to the drink. You gain resistance 1 to void damage, or resistance 1 to vitality damage if you have the void healing ability. The resistance increases to 5 for a moderate fury cocktail or 10 for a greater fury cocktail. Skeptical A splash of bitters gives the drink a more complex flavor. You gain a +1 item bonus to saves against magic. This bonus is +2 for a moderate fury cocktail or +3 for a greater fury cocktail. Titanic Yuzu juice and powdered giant hair are added to this cocktail. If you're Medium or smaller, you gain the following effects: you become Large, are clumsy 1, and increase your reach by 5 feet (or by 10 feet if you started out Tiny). Wyrmhide Pomegranate juice and elemental reagents are added to the cocktail. You gain resistance 1 to acid, cold, electricity, fire, and poison damage. The resistance increases to 5 for a moderate fury cocktail or 10 for a greater fury cocktail. Drawback You take a –1 penalty to AC and a –2 penalty to Reflex saves. Fury Cocktail (Lesser) Source Treasure Vault (Remastered) pg. 48 Price 15 gp Bulk L You gain a +2 item bonus to melee attack rolls, and the duration is 10 minutes. Fury Cocktail (Moderate) Source Treasure Vault (Remastered) pg. 48 Price 360 gp Bulk L You gain a +3 item bonus to melee attack rolls, and the duration is 1 hour. Fury Cocktail (Greater) Source Treasure Vault (Remastered) pg. 48 Price 4,000 gp Bulk L You gain a +4 item bonus to melee attack rolls, and the duration is 1 hour."
+ },
+ {
+  "id": "fury-cocktail-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Fury Cocktail (Greater)",
+  "level": 18,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- A fury cocktail is a fortifying ginger beer spiked with rum and a mixer. It's rumored to have originated from a barbarian-themed festival in a popular mead hall specializing in alchemical beverages. **Benefit** You gain a +4 item bonus to melee attack rolls and an additional effect depending on the additive chosen when the brew is created. The effects last 1 hour. - **Animalistic** Lemon juice and powdered claws or talons are added to the cocktail. You gain an unarmed attack in the brawling group of your choice between a jaws attack that deals 1d6 piercing damage or a claw attack that has the agile trait and deals 1d4 slashing damage. - **Double** This cocktail is just stronger, with more ginger and more rum. You gain resistance 5 to physical damage. - **Mournful** A few flower petals add a powerful aroma to the drink. You gain resistance 10 to void damage, or resistance 10 to vitality damage if you have the void healing ability. - **Skeptical** A splash of bitters gives the drink a more complex flavor. You gain a +3 item bonus to saves against magic. - **Titanic** Yuzu juice and powdered giant hair are added to this cocktail. If you're Medium or smaller, you gain the following effects: you become Large, are Clumsy 1, and increase your reach by 5 feet (or by 10 feet if you started out Tiny). - **Wyrmhide** Pomegranate juice and elemental reagents are added to the cocktail. You gain resistance 10 to acid, cold, electricity, fire, and poison damage. **Drawback** You take a –1 penalty to AC and a –2 penalty to Reflex saves."
+ },
+ {
+  "id": "fury-cocktail-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Fury Cocktail (Lesser)",
+  "level": 4,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- A fury cocktail is a fortifying ginger beer spiked with rum and a mixer. It's rumored to have originated from a barbarian-themed festival in a popular mead hall specializing in alchemical beverages. **Benefit** You gain a +2 item bonus to melee attack rolls and an additional effect depending on the additive chosen when the brew is created. The effects lasts 10 minutes. - **Animalistic** Lemon juice and powdered claws or talons are added to the cocktail. You gain an unarmed attack in the brawling group of your choice between a jaws attack that deals 1d6 piercing damage or a claw attack that has the agile trait and deals 1d4 slashing damage. - **Double** This cocktail is just stronger, with more ginger and more rum. You gain resistance 1 to physical damage. - **Mournful** A few flower petals add a powerful aroma to the drink. You gain resistance 1 to void damage, or resistance 1 to vitality damage if you have the void healing ability. - **Skeptical** A splash of bitters gives the drink a more complex flavor. You gain a +1 item bonus to saves against magic. - **Titanic** Yuzu juice and powdered giant hair are added to this cocktail. If you're Medium or smaller, you gain the following effects: you become Large, are Clumsy 1, and increase your reach by 5 feet (or by 10 feet if you started out Tiny). - **Wyrmhide** Pomegranate juice and elemental reagents are added to the cocktail. You gain resistance 1 to acid, cold, electricity, fire, and poison damage. **Drawback** You take a –1 penalty to AC and a –2 penalty to Reflex saves."
+ },
+ {
+  "id": "fury-cocktail-moderate",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Fury Cocktail (Moderate)",
+  "level": 12,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- A fury cocktail is a fortifying ginger beer spiked with rum and a mixer. It's rumored to have originated from a barbarian-themed festival in a popular mead hall specializing in alchemical beverages. **Benefit** You gain a +3 item bonus to melee attack rolls and an additional effect depending on the additive chosen when the brew is created. The effects last 1 hour. - **Animalistic** Lemon juice and powdered claws or talons are added to the cocktail. You gain an unarmed attack in the brawling group of your choice between a jaws attack that deals 1d6 piercing damage or a claw attack that has the agile trait and deals 1d4 slashing damage. - **Double** This cocktail is just stronger, with more ginger and more rum. You gain resistance 2 to physical damage. - **Mournful** A few flower petals add a powerful aroma to the drink. You gain resistance 5 to void damage, or resistance 5 to vitality damage if you have the void healing ability. - **Skeptical** A splash of bitters gives the drink a more complex flavor. You gain a +2 item bonus to saves against magic. - **Titanic** Yuzu juice and powdered giant hair are added to this cocktail. If you're Medium or smaller, you gain the following effects: you become Large, are Clumsy 1, and increase your reach by 5 feet (or by 10 feet if you started out Tiny). - **Wyrmhide** Pomegranate juice and elemental reagents are added to the cocktail. You gain resistance 5 to acid, cold, electricity, fire, and poison damage. **Drawback** You take a –1 penalty to AC and a –2 penalty to Reflex saves."
+ },
+ {
+  "id": "galvanic-chew",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Galvanic Chew",
+  "level": 8,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "lozenge"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- A galvanic chew is a processed ball of dried electric eel, roasted until chewy and coated in spicy, reagent-infused powder that tingles with electricity as you chew. For up to 1 hour, you have resistance 5 to electricity. --- **Secondary Effect** ⟨5⟩ (electricity) **Trigger** You're hit by a melee attack or touched by a creature **Effect** You channel electricity into the triggering creature, which must succeed at a save or be Stunned 1 (or Stunned 2 on a critical failure). The chew becomes inert. You're then temporarily immune to galvanic chews for 24 hours or until the next time you make your daily preparations."
+ },
+ {
+  "id": "game-hunter-dedication",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Game Hunter Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You are skilled at tracking big game animals and similar creatures. You gain the Hunt Prey action, but you can designate only animals, beasts, and dragons as prey. In addition to the other benefits of Hunt Prey, you gain a +2 circumstance bonus to Stealth checks against your hunted prey. When you succeed at a Strike against your hunted prey while it's off-guard, it must attempt a Fortitude save against your class DC. On a failure, the prey's Speeds are each reduced by 10 feet for 1 round; on a critical failure, the duration of this effect is 1 minute. The prey is then temporarily immune to this effect for 10 minutes. If you already have Hunt Prey, you become an expert in Survival. You apply the Stealth bonus and the Speed reduction only when your prey is an animal, beast, or dragon. ---"
+ },
+ {
+  "id": "garland-spell",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Garland Spell",
+  "level": 12,
+  "traits": [
+   "druid",
+   "manipulate",
+   "spellshape"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "If your next action is to Cast a Spell with the fungus or plant trait, a garland of plants grows in a in the spell's range. The plants are difficult terrain and hazardous terrain, covered in your choice of thorns or poisonous vines. Any creature that moves into one of these squares or ends its turn in one takes 2d6 damage ( damage for thorns or for vines). A creature can take this damage only once per turn. You and your familiar are immune to this damage. The plants last for 1 minute or until you cast another Garland Spell, whichever comes first. The damage increases to 3d6 at 16th level and 4d6 at 20th level."
+ },
+ {
+  "id": "gas-mask-of-clean-air",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Gas Mask of Clean Air",
+  "level": 4,
+  "traits": [
+   "air",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This black canvas mask covers your mouth and nose, with thick tubes coming from the sides. While wearing this mask, you gain a +1 item bonus to saves against inhaled poisons, inhaled diseases, and olfactory effects. **Activate—Breathe Clean** ⟨1⟩ (manipulate) **Frequency** once per day --- **Effect** Your mask springs to life, pumping clean air into your nose and mouth. For 1 round, you are immune to inhaled poisons, inhaled diseases, and olfactory effects. If you have ongoing effects due to such an effect from before activating the mask, those effects continue as normal. If the air around you is unbreathable, you are underwater, or you are in a vacuum, you can breathe normally."
+ },
+ {
+  "id": "gate-junction",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Gate Junction",
+  "level": 5,
+  "traits": [
+   "kineticist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "### **Gate Junctions** When you gain a gate junction, you develop a specialized kinetic technique. Choose one benefit from the gate junction table for one of your kinetic elements. - A **critical blast** junction happens when you get a critical success with an Elemental Blast of the kinetic element. - An **elemental resistance** grants you resistance to damage while your kinetic aura is active. This resistance is equal to your level, and it applies to damage of any listed type or that comes from a creature or effect that has any of the listed traits. At 17th level, you gain immunity to effects with any of the listed traits. This doesn't make you immune to creatures with such a trait. You can voluntarily forgo this resistance, immunity, or both if you want an effect to work on you. - You can choose an **impulse junction** instead of one of the listed junctions. Impulse junctions are listed under Single Gate. - An **aura junction** adds an effect to your kinetic aura when you Channel Elements. - A **skill junction** makes you trained in the listed skill and grants you the listed skill feat. If you were already trained in the listed skill, you instead become trained in a skill of your choice. While your kinetic aura is active, you gain a +1 status bonus to the listed skill; the bonus increases to +2 at 10th level and +3 at 17th level. You can select each gate junction only once, unless noted otherwise, but you can have the same type of junction for multiple elements. You can always choose not to use a gate junction when it would normally occur. If you have multiple junctions that would apply at the same time - such as kinetic aura junctions for different elements - you can apply any number of them. (Though note that you can use only one impulse junction per round.)"
+ },
+ {
+  "id": "geobukseon-retaliation",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Geobukseon Retaliation",
+  "level": 10,
+  "traits": [
+   "fire",
+   "inventor",
+   "modification",
+   "unstable"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Access** Tian Xia origin **Trigger** You would take damage. --- Your armor has a retractable spike-covered shell reminiscent of Hwanggot's heavily armored geobukseon, or \"turtle ships.\" The shell unfolds across your body, giving you a +4 circumstance bonus to AC and resistance 2 to bludgeoning, piercing, and slashing damage until the end of your next turn. Spiked chains propelled by small bursts of black powder also erupt from the shell, dealing damage ( save against your class DC) to all creatures in a ."
+ },
+ {
+  "id": "geologic-attunement",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Geologic Attunement",
+  "level": 1,
+  "traits": [
+   "earth",
+   "impulse",
+   "kineticist",
+   "primal",
+   "stance"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [
+   "core.stances"
+  ],
+  "text": "You tune to the earth and stone around you, extending your senses through it in rippling waves. You gain tremorsense (imprecise) in your kinetic aura. Once per round, you can Point Out a creature you can sense with tremorsense as a free action. --- **Level (13th)** The tremorsense becomes precise."
+ },
+ {
+  "id": "geomancer-dedication",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Geomancer Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You feel a deep connection to the world no matter where you are, a phenomenon known as \"terrain attunement.\" When you expend a spell slot to cast a spell with a trait that corresponds to the type of terrain you are currently in (as listed below), you gain the terrain attunement effect for that type of terrain. The GM might determine an attunement applies as long as it's prevalent enough around you. For instance, you might be in aquatic terrain on a riverbank or on a boat. Similarly, one place might count as multiple types of terrain, such as a mountain in the far north being both arctic and mountain. In this case, you choose only one terrain attunement effect, even if the spell has traits that would apply to each terrain type. Certain terrain attunements affect your enemies instead of you. If they do, when you cast the spell you apply the listed effect to all enemies who are either adjacent to you, in the area of the spell, or targeted by the spell. These enemies receive the listed saving throw against your spell DC to attempt to avoid the effect. - **Aquatic** (water) You ride the currents of water. If you're in the water, you gain a swim Speed equal to your land Speed. If you're on a surface, temporary waves of water follow your movements, allowing you to use your swim Speed-if you have one-as your land Speed. This effect lasts one round. - **Arctic** (cold) Arctic rime covers your foes' bodies. Enemies must attempt a Fortitude save. They take a –5-foot status penalty to their Speeds for 2 rounds (-10-foot on a critical failure). - **Desert** (fire) The scorching heat of the desert dehydrates your foes. Enemies must attempt a Fortitude save. On a failure, they're fatigued until they drink water or another potable liquid. - **Forest** (plant) Branches and vines reach out to get in your foes' way. Enemies must attempt a Reflex save. On a failure, they become Clumsy 1 for 1 round (Clumsy 2 on a critical failure). - **Mountain** (earth) The rugged endurance of the mountain protects you from harm. You gain resistance to physical damage (except adamantine) equal to the spell rank for 1 round. - **Plains** (plant) The growing fields and pulsing vitality of the plains provide you vigor. You gain temporary Hit Points equal to the spell rank for 1 round. - **Sky** (air) A gust of wind carries you aloft. You can Fly up to 10 feet. If you're in the air at the end of the turn and don't have a fly Speed, you fall. - **Swamp** (plant) Your magic draws in noxious swamp gas to fumigate your foes. Affected foes take Persistent Poison Damage equal to half the spell's rank (minimum 1 damage) with a basic Fortitude save. - **Underground** (earth) The endless darkness of the cavern depths opens up its secrets to your senses. For 1 round, you gain darkvision as well as imprecise tremorsense out to 15 feet."
+ },
+ {
+  "id": "ghost-fowl-porridge",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Ghost Fowl Porridge",
+  "level": 9,
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) **Access** Tian Xia origin --- This robust porridge—made from a cockatrice distilled into a broth, hot peppers from a demonic source, and various toppings—causes diners to utter a ghostly wail from the intense heat. Consuming the porridge grants you a +2 item bonus to saving throws against being petrified for 1 hour. You also gain resistance 3 against physical damage for the duration."
+ },
+ {
+  "id": "ghostcallers-planchette",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Ghostcaller's Planchette",
+  "level": 12,
+  "traits": [
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "This miniature wooden planchette is engraved with symbols designed to attract spirits. When affixed, the symbols begin to glow, and the planchette turns slightly insubstantial. The spell DC of any spell cast by activating this item is 29. - **Armor** After you cast a spell by activating the planchette, you gain resistance 5 to all physical damage (except Ghost Touch) until the start of your next turn. Attacks by incorporeal creatures (such as a ghost's ghostly hand) count as *ghost touch*. - **Weapon** After you cast a spell by activating the planchette, the affixed weapon gains the effects of the *ghost touch* property rune until the end of your next turn. --- **Activate** Cast a Spell **Effect** You cast Void Warp. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast Invoke Spirits"
+ },
+ {
+  "id": "ghostsong",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Ghostsong",
+  "level": 10,
+  "traits": [
+   "archetype",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You have come to understand the pain and fury of spirits and can raise them to do your ghastly work. When you Raise your Horde, you can choose spirits instead of skeletons or zombies. When you do so, your horde gains the incorporeal trait and immunity to disease, poison, and precision damage, and your horde's Mobbing Assault deals void damage."
+ },
+ {
+  "id": "ghoul-stiletto",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Ghoul Stiletto",
+  "level": 3,
+  "traits": [
+   "agile",
+   "finesse",
+   "thrown-10",
+   "versatile-s"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "A *ghoul stiletto* is a *+1 dagger* wrapped in the still-undead skin of a ghoul. While you wield the dagger, you gain a +1 status bonus to all saves against curses and olfactory effects. --- **Activate** ⟨1⟩ (concentrate, divine, manipulate, olfactory) **Frequency** once per hour **Effect** The ghoul stiletto afflicts the next living target struck by the dagger with a terrible wound that emits the foul stench of the grave. The creature emits a stench aura in a for 1 minute. During that time, the affected creature, as well as any creature that starts or ends its turn in the aura, must succeed at a save or become Sickened 1 (plus Slowed 1 as long as it's sickened on a critical failure). A creature that succeeds at its save is temporarily immune to all stench auras for 1 minute. --- **Craft Requirements** The initial raw materials must include skin from a ghoul."
+ },
+ {
+  "id": "gift-of-olives",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Gift of Olives",
+  "level": 3,
+  "traits": [
+   "magical",
+   "plant"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This expertly trimmed olive branch remains lush and vibrant, even months after being ritually harvested. With a little soil and patience, it can quickly grow into a sheltering tree that later bestows the user with a new *gift of olives*. **Activate—Sew the Cutting** ⟨2⟩ (healing, manipulate, plant) **Requirements** You are outside and standing atop an unoccupied 5-foot square with some soil **Frequency** once per day --- **Effect** You drive one end of the cutting into the soil. The cutting immediately grows into an olive tree whose boughs shelter a 15-foot-diameter area. Creatures in the sheltered area gain resistance 3 to any environmental damage, gain a +1 status bonus to saving throws against environmental hazards, and gain a +1 status bonus to Survival checks to Subsist. After 10 minutes, the tree sprouts 8 olives, each of which can be eaten as an action to restore 1 Hit Point and nourish the eater as if they had consumed a full meal. After 8 hours, the olives lose their potency, and the *gift of olives* cutting detaches from the tree and falls harmlessly to the ground. The olive tree loses its protective abilities and becomes a normal, non-magical olive tree that survives so long as it's growing in a suitable location."
+ },
+ {
+  "id": "glacial-prison",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Glacial Prison",
+  "level": 12,
+  "traits": [
+   "cold",
+   "impulse",
+   "incapacitation",
+   "kineticist",
+   "overflow",
+   "primal",
+   "water"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Intense cold swirls around your foe, covering it in frost that slows it down and turns its body to ice. Target a creature you can observe within 120 feet. It must attempt a save against your class DC. The creature is then temporarily immune for 24 hours. --- **Critical Success** The target is unaffected. **Success** The target is Slowed 1 until the end of its next turn. **Failure** The target is frozen solid. It can't act, its AC is 9, it has Hardness 5, and it's immune to other cold effects, critical hits, and precision damage. This lasts until the end of your next turn, but if the target is affected by a hostile action, this effect ends immediately after that action. **Critical Failure** As failure, but after becoming unfrozen, the creature is slowed 1 until the end of its next turn."
+ },
+ {
+  "id": "glimpse-vulnerability",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Glimpse Vulnerability",
+  "level": 1,
+  "traits": [
+   "esoterica",
+   "manipulate"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per round **Requirements** You are holding your implement --- **Effect** You glimpse a hidden vulnerability and then strengthen it to aid you. Select a creature you can see. Until you Glimpse Vulnerability again, that target gains weakness 2 against your unarmed and weapon Strikes."
+ },
+ {
+  "id": "glory-on-high",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Glory on High",
+  "level": 18,
+  "traits": [
+   "archetype",
+   "mental",
+   "visual"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You take to the skies to unveil the full magnificence of your deity's power. Fly straight upward up to your fly Speed and Interact to draw a weapon or to gesture with your hand or a worn holy symbol. Each enemy within a must attempt a save against the higher of your class DC or spell DC. Regardless of the result, the target becomes immune to Glory on High for 1 hour. --- **Critical Success** The creature is unaffected. **Success** The creature is dazzled for 1 minute. **Failure** The creature is blinded for 1 round, dazzled for 1 minute, and takes damage. **Critical Failure** The creature is blinded for 1 minute, dazzled for 1 hour, and takes damage."
+ },
+ {
+  "id": "glowing-lantern-fruit",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Glowing Lantern Fruit",
+  "level": 1,
+  "traits": [
+   "consumable",
+   "magical",
+   "wood"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "The flesh of this fruit pod resembles a stylized paper lantern, with a woody, geometric structure and thin layers of flesh, complete with a glow coming from the interior. --- **Activate - Lantern Light** ⟨1⟩ (manipulate) **Effect** The *glowing lantern fruit* sheds bright light in a 60-foot radius (and dim light for the next 60 feet) for 8 hours. While the light is shining, you can Interact with the *glowing lantern fruit* to open or close some of its reflective leaves, making the light directional like a bull's-eye lantern or a hooded lantern. --- **Activate - Fire Fruit** 10 minutes (manipulate) **Effect** You plant the *glowing lantern fruit* in the ground upside down. The petals of the lantern peel away, while the fruit inside glows hotter. For the next 8 hours, the *glowing lantern fruit* emits as much light and heat as a bonfire, giving all creatures within 15 feet immunity to the effects of mild and severe cold temperatures for as long as they're within the area."
+ },
+ {
+  "id": "goblin-song",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Goblin Song",
+  "level": 1,
+  "traits": [
+   "goblin"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You sing annoying goblin songs, distracting your foes with silly and repetitive lyrics. Attempt a Performance check against the Will DC of a single enemy within 30 feet. This has all the usual traits and restrictions of a Performance check to sing. You can affect up to two targets within range if you have expert proficiency in Performance, four if you have master proficiency, and eight if you have legendary proficiency. --- **Critical Success** The target takes a –1 status penalty to Perception checks and Will saves for 1 minute. **Success** The target takes a –1 status penalty to Perception checks and Will saves for 1 round. **Critical Failure** The target is temporarily immune to Goblin Song for 1 hour."
+ },
+ {
+  "id": "godless-healing",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Godless Healing",
+  "level": 2,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You recover an additional 5 Hit Points from a successful attempt to Treat your Wounds or use Battle Medicine on you. After you or an ally use Battle Medicine on you, you become temporarily immune to that Battle Medicine for only 1 hour, instead of 1 day."
+ },
+ {
+  "id": "golden-rod-memento",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Golden Rod Memento",
+  "level": 20,
+  "traits": [
+   "cursed",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This coin-sized golden pin depicts a bundle of five trimmed tree branches. Once you've stolen the pin, accepted it from Krampus willingly, or carried it for at least 1 minute, its curse activates. After that happens, the pin fastens itself to your clothing, providing you an insistent empathic admonition not to be naughty and constantly informing Krampus of your location, as Status. The pin reappears and reattaches itself within moments if discarded or destroyed. The pin constantly monitors your actions, judging you against a good-aligned champion's code of conduct, plus the following third tenet: - You must never knowingly steal or inflict harm with the goal of stealing the victim's wealth. This tenet doesn't prevent you from looting those you harm primarily in the defense of yourself and others. Whenever you violate this code of conduct, one of the golden branches tarnishes (and utterly egregious violations might tarnish multiple branches). During the winter following the curse activating, the pin transforms based on the number of golden branches remaining. **5 Branches:** The pin either transforms into a pile of golden trinkets whose gold piece value equals your level × 25, or it grants you absolution for your misdeeds as a critically successful Atone ritual for any good-aligned faith. You don't need to perform a special quest; your exemplary behavior over the past year qualifies. **3-4 Branches:** The pin either becomes a non-magical golden pin worth 10 gp, or it grants you absolution for your misdeeds as a successful *atone* ritual for any good-aligned faith. **1-2 Branches:** The pin transforms into a leering Krampus face. As long as you wear it, it grants you weakness 5 to bludgeoning damage, and you still can't remove it. **0 Branches:** The pin transforms into Krampus, who appears in an adjacent space and knows of your misdeeds while wearing the pin."
+ },
+ {
+  "id": "goz-mask-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Goz Mask (Major)",
+  "level": 12,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Originally designed by a fanatical sect of Gozren priests, *goz masks* were designed to help navigate the area around the Eye of Abendego. The masks couldn't contend with the might of the storm, but people all around the Mwangi Expanse still use them. These masks are typically made of wood and sport round, exaggerated features. --- **Activate** ⟨1⟩ Interact **Frequency** once per day **Effect** The mask gives you darkvision and allows you to ignore all Concealment from any environmental effects for 1 hour."
+ },
+ {
+  "id": "grave-sense",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Grave Sense",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your time spent hunting the undead allows you to sense them. You sense undead as a vague sense similar to a human's sense of smell, an uncomfortable sensation akin to smelling something cloying and rotting. When in proximity to the undead, you eventually sense their presence, though you might not do so instantly, and you can't pinpoint their location. An undead using a disguise or otherwise trying to hide its presence must attempt a Deception check against your Perception DC to hide its presence from you. If the creature succeeds at its Deception check, it is then temporarily immune to your Grave Sense for 1 day."
+ },
+ {
+  "id": "gravity-inverter",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Gravity Inverter",
+  "level": 11,
+  "traits": [
+   "consumable",
+   "gadget"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- When you Activate a gravity inverter, you can either place it in an adjacent space or toss it up to 30 feet away. Once you've done so, this metallic device implodes, creating a 10-foot-radius, 40-foot-tall cylinder of unstable gravity that lasts for 4 rounds. All creatures and objects in the area when a gravity inverter is activated, who enter the area, or who begin their turn in the area float upward 10 feet, stopping harmlessly if they collide with a solid object or reach the top of the cylinder. While floating, a creature is off-guard and can't move unless they Push Off a surface or Fly. Pushing Off is a single action that has the move trait, allowing the creature to move half its Speed in a straight line through the area (if the creature remains in the area, this momentum will be disrupted by the gravity inverter at the beginning of the creature's next turn, as noted above). At the end of the duration, this gravity well fades—all creatures floating fall to the ground, taking falling damage as appropriate. Creatures who can fly are immune to this fall damage."
+ },
+ {
+  "id": "greater-aetheric-irritant",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Greater Aetheric Irritant",
+  "level": 11,
+  "traits": [
+   "consumable",
+   "gadget",
+   "sonic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Aetheric Irritant May contain spoilers from Convocation Source Rival Academies pg. 92 Usage held in 1 hand Bulk L Activate (manipulate) An aetheric irritant is a chime that can emit a subsonic frequency that otherworldly beings find unpleasant. When you Activate an aetheric irritant, you sound the chime and place it on the ground in a square within your reach. Creatures with the fey, spirit, or undead traits must attempt a Will save when they enter the affected area and at the beginning of every turn they are in the affected area. Those who fail the save treat the area as difficult terrain until the beginning of their next turn. A creature that critically succeeds at the save is immune to all aetheric irritants for 24 hours. An aetheric irritant continues to hum until it shakes itself to pieces after 10 minutes of being activated or it is moved, whichever comes first. Lesser Aetheric Irritant Source Rival Academies pg. 92 Price 4 gp The aetheric irritant affects an area in a 10-foot emanation and the Will DC is 15. Moderate Aetheric Irritant Source Rival Academies pg. 92 Price 11 gp The aetheric irritant affects an area in a 15-foot emanation and the Will DC is 18. Greater Aetheric Irritant Source Rival Academies pg. 92 Price 275 gp The aetheric irritant affects an area in a 20-foot emanation and the Will DC is 28. Major Aetheric Irritant Source Rival Academies pg. 92 Price 2,750 gp The aetheric irritant affects an area in a 30-foot emanation and the Will DC is 36."
+ },
+ {
+  "id": "greater-animal-senses",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Greater Animal Senses",
+  "level": 5,
+  "traits": [
+   "beastkin"
+  ],
+  "engineFieldsPresent": [
+   "choice",
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "Your senses advance to match those of your animal aspect. You gain one of the following senses available to your inherent animal: echolocation (imprecise) 30 feet or tremorsense (imprecise) 30 feet. If your inherent animal doesn't typically have a specific type of sense, you can't gain the sense with this feat. --- **Special** You can select this feat multiple times, either choosing a different sense or improving an imprecise sense granted by this feat to a precise sense."
+ },
+ {
+  "id": "greater-arcane-standard",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Greater Arcane Standard",
+  "level": 20,
+  "traits": [
+   "aura",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Arcane Standard Source Battlecry! pg. 138 PFS Note If a PC uses an arcane standard’s Magical Weakness ability against a creature which has taken more than one type of energy damage, the player chooses which energy type the creature gains weakness to. Usage affixed or held in 1 hand Bulk L This magical banner has glittery, arcane threads crosswoven into the fabric, causing it to reflect light in little sparkles. While holding an arcane standard, you can use the following ability. Activate—Magical Weakness (concentrate) Frequency once per turn; Effect The magic of the banner causes energy to linger, tearing away at its target, leaving them vulnerable to more. One creature within the banner’s aura that has taken acid, cold, electricity, fire, or sonic damage this turn gains weakness 5 to that damage type for 1 round. Arcane Standard Source Battlecry! pg. 138 Price 960 gp Greater Arcane Standard Source Battlecry! pg. 138 Price 69,000 gp The weakness inflicted by Magical Weakness increases to 10."
+ },
+ {
+  "id": "greater-burglars-rosebud",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Greater Burglar's Rosebud",
+  "level": 8,
+  "traits": [
+   "consumable",
+   "emotion",
+   "mental",
+   "plant",
+   "wood"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Burglar's Rosebud May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 76 Usage held in 1 hand Activate (manipulate) Though originally intended to protect a green man’s favorite agents against predation by pesky herbivores, thieves have adapted the design to help them disperse guard animals. The soft flower bud belies the horrible perfume contained within. Activated by cracking open the petals, the rosebud exudes a noxious cloud that has the olfactory trait for 10 minutes. If dropped, it fills a 10-foot-burst. If you carry it in one hand and periodically waft it as a free action, the rosebud instead gives you a 10-foot emanation. Creatures that enter or start their turn in the cloud must succeed at a Fortitude save against the listed DC or become sickened 1. Animals and beasts that critically fail are also fleeing for 1 round. A creature that successfully saves against the burglar’s rosebud becomes temporarily immune to the effects for 24 hours. Burglar's Rosebud Source Pathfinder #203 Shepherd of Decay pg. 76 Price 10 gp The DC is 18. Greater Burglar's Rosebud Source Pathfinder #203 Shepherd of Decay pg. 76 Price 100 gp The DC is 24."
+ },
+ {
+  "id": "greater-clay-sphere",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Greater Clay Sphere",
+  "level": 6,
+  "traits": [
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Clay Sphere May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 80 Usage affixed to armor or a weapon This dry clay ball becomes malleable when activated, shifting into a variety of forms. The spell attack roll of any spell cast by Activating this item is +7 and the spell DC 17. Armor You gain resistance 2 to precision damage and a +1 item bonus to saving throws against effects with the morph or polymorph traits. Weapon After you cast a morph or polymorph spell by activating the clay sphere, the weapon becomes malleable, shifting its form to your whims. Your Strikes with the affixed weapon have the versatile bludgeoning, versatile piercing, and versatile slashing trait for 1 minute. Until the end of your next turn, Strikes with the affixed weapon have their damage dice increase by one step. Activate Cast a Spell; Effect You cast gouging claw. Clay Sphere Source Pathfinder #202: Severed at the Root pg. 80 Price 55 gp Greater Clay Sphere Source Pathfinder #202: Severed at the Root pg. 80 Price 225 gp Resistance when affixed to armor is 5, item bonus when affixed to armor is +2, the spell attack roll is +10, and the spell DC is 20. Activate Cast a Spell; Frequency once per day; Effect You cast enlarge. Major Clay Sphere Source Pathfinder #202: Severed at the Root pg. 80 Price 4,200 gp Resistance when affixed to armor is 10, item bonus when affixed to armor is +3, the spell attack roll is +21, and the spell DC is 31. Activate Cast a Spell; Frequency once per day; Effect You cast cursed metamorphosis. Activate Cast a Spell; Frequency once per day; Effect You cast plant form."
+ },
+ {
+  "id": "greater-dragon-scute",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Greater Dragon Scute",
+  "level": 20,
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Dragon Scute Source Draconic Codex pg. 223 Usage held in 1 hand Bulk L The thick plates that form the strongest points in a dragon’s armor can be used as powerful defensive catalysts. Using one of these scales to cast mountain resilience causes the target’s skin to grow a thick layer of draconic scales. Instead of the spell’s normal effects, the target gains damage resistance based on the type and dragon’s tradition. Lesser Dragon Scute Source Draconic Codex pg. 223 Price 400 gp The scale can be used with mountain resilience of 6th rank or higher. Arcane resistance 5 against all damage from spells Divine resistance 10 to spirit, vitality, and void Occult resistance 10 to mental Primal resistance 7 to bludgeoning, piercing, slashing, and poison Moderate Dragon Scute Source Draconic Codex pg. 223 Price 2,000 gp The scale can be used with mountain resilience of 8th rank or higher. Arcane resistance 7 against all damage from spells Divine resistance 15 to spirit, vitality, and void Occult resistance 15 to mental Primal resistance 10 to bludgeoning, piercing, slashing, and poison Greater Dragon Scute Source Draconic Codex pg. 223 Price 14,000 gp The scale can be used with mountain resilience of 10th rank. Arcane resistance 10 against all damage from spells Divine resistance 20 to spirit, vitality, and void Occult resistance 20 to mental Primal resistance 15 to bludgeoning, piercing, slashing, and poison"
+ },
+ {
+  "id": "greater-durian-bomb",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Greater Durian Bomb",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "plant",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Durian Bomb May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 77 Usage held in 1 hand Bulk L Activate Strike Whereas a durian’s aroma ranges from pleasant to revolting depending on the person, a durian bomb is a fruit that’s been alchemically modified for maximum revulsion. Many types of this bomb grant an item bonus to attack rolls. On a successful Strike, a durian bomb deals the listed piercing damage to the target. Any creature hit by the bomb or in its splash area must attempt a Fortitude saving throw with a DC based on the bomb’s type. Creatures in the splash area treat the results of their saving throw as one step better. Creatures sickened by a durian bomb are unable to smell anything else while the sickened condition lasts, suppressing any scent special sense they might have. Once a creature is sickened by a durian bomb, they’re immune to the sickened condition caused by other durian bombs for 1 minute. Critical Success The target is unaffected. Success The creature is sickened 1. Failure The creature is dazzled for 1 round and sickened 1. Critical Failure The creature is dazzled for 1 round and sickened 2. Lesser Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 4 gp The bomb deals 1d4 piercing damage, and the DC is 15. Moderate Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 12 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d4 points of piercing damage, and the DC is 17. Greater Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 275 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d4 points of piercing damage, and the DC is 28. Major Durian Bomb Source Pathfinder #203 Shepherd of Decay pg. 77 Price 2,750 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d4 points of piercing damage, and the DC is 37."
+ },
+ {
+  "id": "greater-foxglove-token",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Greater Foxglove Token",
+  "level": 8,
+  "traits": [
+   "magical",
+   "poison",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Foxglove Token May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 78 Usage affixed to armor or a weapon Bulk L This small piece of wood is finely carved to depict a foxglove. The spell DC of any spell cast by Activating this item is 17. Armor You gain resistance 2 to poison damage. Weapon After you cast a plant spell by activating the foxglove token, your Strikes with the weapon it's attached to deal an additional 1d4 poison damage until the end of your next turn. Activate Cast a Spell; Effect You cast puff of poison. Foxglove Token Source Pathfinder #202: Severed at the Root pg. 78 Price 55 gp Greater Foxglove Token Source Pathfinder #202: Severed at the Root pg. 78 Price 425 gp Resistance when affixed to armor is 5, extra damage when affixed to a weapon is 1d6, and the spell DC is 24. Activate Cast a Spell; Frequency once per day; Effect You cast 3rd-rank noxious vapors. Major Foxglove Token Source Pathfinder #202: Severed at the Root pg. 78 Price 1,750 gp Resistance when affixed to armor is 10, extra damage when affixed to a weapon is 1d8, and the spell DC is 29. Activate Cast a Spell; Frequency once per day; Effect You cast petal storm. Activate Cast a Spell; Frequency once per day; Effect You cast 4th-rank wall of thorns."
+ },
+ {
+  "id": "greater-heartmoss",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Greater Heartmoss",
+  "level": 8,
+  "traits": [
+   "healing",
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Heartmoss May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 79 Usage affixed to armor or a weapon Bulk L This burgundy moss grows in heart-shaped clumps and releases a pleasant, calming scent. The spell DC of any spell cast by Activating this item is 17. Armor You gain resistance 2 to mental damage and a +1 item bonus to saving throws against effects with the emotion trait. Weapon After you cast a healing spell by activating the heartmoss, the weapon exudes a soothing scent. Your Strikes with the affixed weapon have the nonlethal trait for 1 minute. Until the end of your next turn, Strikes with the affixed weapon cause the target to be stupefied 1 for 1 round if it hits (or for 3 rounds on a critical hit). Activate Cast a Spell; Effect You cast stabilize. Heartmoss Source Pathfinder #202: Severed at the Root pg. 79 Price 55 gp Greater Heartmoss Source Pathfinder #202: Severed at the Root pg. 79 Price 450 gp Resistance when affixed to armor is 5, stupefied value when affixed to a weapon is 2, and the spell DC is 24. Activate Cast a Spell; Frequency once per day; Effect You cast 3rd-rank heal. Major Heartmoss Source Pathfinder #202: Severed at the Root pg. 79 Price 1,750 gp Resistance when affixed to armor is 10, stupefied value when affixed to a weapon is 3, and the spell DC is 29. Activate Cast a Spell; Frequency once per day; Effect You cast 4th-rank sound body. Activate Cast a Spell; Frequency once per day; Effect You cast healing well."
+ },
+ {
+  "id": "greater-inflammation-flask",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Greater Inflammation Flask",
+  "level": 12,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "disease",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Inflamation Flask May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 75 Usage held in 1 hand Bulk L Activate Strike This flask contains a caustic irritant that makes a target’s skin, scales, or carapace extremely sensitive to further nicks and burns. An inflammation flask deals the listed acid damage and acid splash damage. On a hit, the target also gains weakness to acid, fire, and slashing damage for 3 rounds. Many types of inflammation flask grant a bonus to attack rolls. The target can end the weakness effect by three means: being drenched with water (such as submersion or exposure to an area water effect), being Administered First Aid (whose DC in based on the bomb type), or regaining Hit Points from a single effect equal to twice the inflammation flask’s level. A creature that critically fails to Administer First Aid in this way deals untyped damage to the target equal to the inflammation flask’s initial acid damage. Lesser Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 5 gp The bomb deals 1d6 acid damage and 1 acid splash damage. The target gains weakness 1 to acid, fire, and slashing damage, and theMedicine DC is 17. Moderate Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 15 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d6 acid damage and 2 acid splash damage. The target gains weakness 2 to acid, fire, and slashing damage, and the Medicine DC is 20. Greater Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 340 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d6 acid damage and 3 acid splash damage. The target gains weakness 3 to acid, fire, and slashing damage, and the Medicine DC is 30. Major Inflammation Flask Source Pathfinder #203 Shepherd of Decay pg. 75 Price 3,750 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d6 acid damage and 4 acid splash damage. The target gains weakness 4 to acid, fire, and slashing damage, and the Medicine DC is 38."
+ },
+ {
+  "id": "greater-irritating-seedpod",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Greater Irritating Seedpod",
+  "level": 10,
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Irritating Seedpod May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 77 Usage held in 1 hand Bulk L Activate Cast a Spell (add 1 action) When you crack open this soft, spongy seedpod, you can use it as a catalyst when casting a mist spell. When you do, irritating pollen fills the area for the spell’s duration. Creatures in the area must attempt a Fortitude saving throw at the listed DC to avoid sneezing uncontrollably. On a failed save, the creature gains the listed condition for the listed time. A creature that succeeds at this saving throw becomes temporarily immune to the irritating seedpod’s pollen for 10 minutes. Lesser Irritating Seedpod Source Pathfinder #203 Shepherd of Decay pg. 77 Price 11 gp The DC is 15. On a failed save, the creature becomes slowed 1 for 1 round. Rather than last for the duration of the spell, the irritating pollen only remains in the area for 1 round. Irritating Seedpod Source Pathfinder #203 Shepherd of Decay pg. 77 Price 55 gp The DC is 21. On a failed save, the creature becomes slowed 1 for 1 round. Greater Irritating Seedpod Source Pathfinder #203 Shepherd of Decay pg. 77 Price 190 gp The DC is 24. On a failed save, the creature becomes slowed 1 for 3 rounds. Major Irritating Seedpod Source Pathfinder #203 Shepherd of Decay pg. 77 Price 800 gp The DC is 29. On a failed save, the creature becomes slowed 2 for 1 round, then slowed 1 for 3 rounds."
+ },
+ {
+  "id": "greater-stalk-goggles",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Greater Stalk Goggles",
+  "level": 3,
+  "traits": [
+   "invested",
+   "magical",
+   "morph"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Stalk Goggles May contain spoilers from Gatewalkers Source Gatewalkers (Hardcover) pg. 230 Usage worn eyepiece These black leather goggle frames have no lenses. Instead, when a character puts them on and invests them, the wearer’s eyes transform and lengthen into snail-like eyestalks. The wobbly eyestalks stretch out through the lens holes and up over the wearer’s head on lengthened optic nerves. Activate—Looksee (concentrate) Frequency once per day; Effect By focusing hard, you can watch for enemies in all directions. You gain all-around vision for 1 minute; during this time, you can’t be flanked. Stalk Goggles Source Gatewalkers (Hardcover) pg. 231 Price 20 gp Greater Stalk Goggles Source Gatewalkers (Hardcover) pg. 231 Price 60 gp When you activate the goggles, you also gain a +1 item bonus to Perception checks involving sight for the duration of the effect. Major Stalk Goggles Source Gatewalkers (Hardcover) pg. 231 Price 450 gp When you activate the goggles, you also gain a +2 item bonus to Perception checks involving sight and low-light vision for the duration of the effect"
+ },
+ {
+  "id": "greater-stormshard",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Greater Stormshard",
+  "level": 12,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Stormshard May contain spoilers from Triumph of the Tusk Source Pathfinder #208: Hoof, Cinder, and Storm pg. 78 Usage held in 1 hand Bulk L These shards of coalesced necromantic essence are sometimes found in the wake of an ancestor storm. Howling spirits are faintly visible, trapped inside the jagged, dark-green glass. You can use the shard to cow the undead or briefly release the tormented souls from inside the glass. While you hold the stormshard, you gain a +1 item bonus to Intimidation checks to influence the undead. In addition, you can Demoralize undead creatures, even if those creatures are mindless or otherwise immune to emotion, fear, or mental effects. Activate—Free the Spirits (concentrate, manipulate) Frequency once per day; Effect You briefly release the spirits from the stormshard before drawing them back into the glass. Each creature in a 10-foot emanation takes 4d8 void damage (DC 20 basic Fortitude save). You treat the result of your saving throw as one degree of success better than its outcome. Greater Stormshard Source Pathfinder #208: Hoof, Cinder, and Storm pg. 79 Price 1,800 gp The item bonus increases to +2. When activating the stormshard to release the spirits, the damage increases to 8d8 (DC 29). In addition, you can choose to increase the radius of the emanation by up to 10 feet. Major Stormshard Source Pathfinder #208: Hoof, Cinder, and Storm pg. 79 Price 19,000 gp The item bonus increases to +3. When activating the stormshard, the damage increases to 13d8 (DC 38), and you can increase the radius of the emanation by up to 20 feet. Stormshard Source Pathfinder #208: Hoof, Cinder, and Storm pg. 79 Price 230 gp"
+ },
+ {
+  "id": "greater-testudo-shield",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Greater Testudo Shield",
+  "level": 13,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Testudo Shield Source Battlecry! pg. 124 Usage held in 1 hand Bulk 4 Base Shield Tower Shield This tower shield (Hardness 5, HP 20, BT 10) sports a bright red front with a gold inlay of an eagle. While it looks unassuming, this shield can protect not only yourself but also those behind you. Activate—Tortoise Form (concentrate, force, manipulate) Frequency once per day; Effect Your shield creates a magical barrier, consisting of translucent copies of the shield. The wall is 1 inch thick, 15 feet long, and 10 feet high. The barrier is conjured adjacent to you in a straight line on the border between squares and lasts for 1 minute. The barrier is created with the Hardness and Hit Points equal to those of the testudo shield and is immune to critical hits and precision damage. Testudo Shield Source Battlecry! pg. 124 Price 150 gp Greater Testudo Shield Source Battlecry! pg. 124 Price 2,800 gp The barrier created is 25 feet long."
+ },
+ {
+  "id": "grim-sandglass",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Grim Sandglass",
+  "level": 3,
+  "traits": [
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "One bulb of this tiny hourglass contains black sand, the other white. After even a few grains pass from one side to the other, it reverses its flow to keep the two sides in equilibrium. The spell DC of any spell cast by Activating this item is 17. - **Armor** You gain resistance 2 to void. - **Weapon** After you Cast a Spell by Activating the *sandglass*, your Strikes with the weapon deal an additional 1d4 void damage until the end of your next turn. --- **Activate** Cast a Spell **Effect** You cast Void Warp."
+ },
+ {
+  "id": "grim-sandglass-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Grim Sandglass (Greater)",
+  "level": 8,
+  "traits": [
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "One bulb of this tiny hourglass contains black sand, the other white. After even a few grains pass from one side to the other, it reverses its flow to keep the two sides in equilibrium. The spell DC of any spell cast by Activating this item is 24. - **Armor** You gain resistance 5 to void. - **Weapon** After you Cast a Spell by Activating the *sandglass*, your Strikes with the weapon deal an additional 1d6 void damage until the end of your next turn. --- **Activate** Cast a Spell **Effect** You cast Void Warp. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast 2nd-rank Harm or Heal."
+ },
+ {
+  "id": "grim-specter",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Grim Specter",
+  "level": 0,
+  "traits": [
+   "negative",
+   "polymorph",
+   "void"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Grim Specter Source GM Core pg. 312 Aspect Death Activate (concentrate, polymorph, void) Frequency once per day; Effect You can call upon the terrifying powers that fuel your relic to transform yourself into a specter of death. You become incorporeal, having no physical body. You are immune to effects that require a physical body, including precision damage as well as exposure to most diseases and poisons. You also have resistance to all damage equal to half the relic's level; force damage, ghost touch attacks, spirit damage, void damage, and vitality damage ignore this resistance, and the resistance doubles against non-magical damage. You can move through solid objects. When inside an object, you can't perceive, attack, or Interact with anything outside it, and you're always slowed 1 on turns you start in an object. Corporeal creatures can pass through you but can't end their movement in your space. You can't attempt Strength-based checks against corporeal creatures or objects, unless those objects have the ghost touch property rune. Likewise, corporeal creatures can't attempt Strength-based checks against you. You can Sustain the activation up to 1 minute."
+ },
+ {
+  "id": "grim-swagger",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Grim Swagger",
+  "level": 1,
+  "traits": [
+   "auditory",
+   "emotion",
+   "fear",
+   "gunslinger",
+   "linguistic",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You have a one-handed firearm or one-handed crossbow visibly worn or wielded. --- You attempt to clear the room by promising a grim fate to anyone who doesn't do what you say, and quickly. Attempt a or check against the Will DCs of each creature within 30 feet, except for your allies. Regardless of whether you succeed or fail, each subject is temporarily immune to your Grim Swagger for 10 minutes. For example, if you attempt a Deception check, you lie and boast about your prowess or the large group of friends on their way to back you up. If you attempt an Intimidation check, you promise everyone in the room that you're going to be the last thing they see. --- **Critical Success** The creature becomes Frightened 3. If it's lower level than you, it's also fleeing for 1 round. **Success** The creature becomes Frightened 2."
+ },
+ {
+  "id": "grisantian-hide-object-high-grade",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Grisantian Hide Object (High-Grade)",
+  "level": 18,
+  "traits": [
+   "precious"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Grisantian Pelt Source Monsters of Myth pg. 35 Highly desired for the prestige, the pelt of the grogrisant also has invaluable properties. Standard-grade items can be made from the pelt of a grisantian lion, but high-grade items require the pelt of the grogrisant itself. This supernaturally tough animal skin is gold and shines in sunlight. It can be used to make any item usually made of cloth, leather, or hide. This material is immune to fire, and its Hardness is doubled against piercing or slashing damage. Up to 4 Bulk of grisantian pelt can be harvested from a single creature (this is usually more than enough for 4 suits of standard grade armor or 2 suits of high-grade armor). Grisantian Pelt Items Thin Items Hardness HP BT Standard-grade 6 24 12 High-grade 8 32 16 Items Hardness HP BT Standard-grade 9 36 18 High-grade 11 44 22 Material Uses Grisantian Pelt Armor Grisantian Hide Object (Standard-Grade) Source Monsters of Myth pg. 35 Price 1,200 gp (per Bulk) Grisantian Hide Object (High-Grade) Source Monsters of Myth pg. 35 Price 12,000 gp (per Bulk)"
+ },
+ {
+  "id": "grisantian-hide-object-standard-grade",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Grisantian Hide Object (Standard-Grade)",
+  "level": 12,
+  "traits": [
+   "precious"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Grisantian Pelt Source Monsters of Myth pg. 35 Highly desired for the prestige, the pelt of the grogrisant also has invaluable properties. Standard-grade items can be made from the pelt of a grisantian lion, but high-grade items require the pelt of the grogrisant itself. This supernaturally tough animal skin is gold and shines in sunlight. It can be used to make any item usually made of cloth, leather, or hide. This material is immune to fire, and its Hardness is doubled against piercing or slashing damage. Up to 4 Bulk of grisantian pelt can be harvested from a single creature (this is usually more than enough for 4 suits of standard grade armor or 2 suits of high-grade armor). Grisantian Pelt Items Thin Items Hardness HP BT Standard-grade 6 24 12 High-grade 8 32 16 Items Hardness HP BT Standard-grade 9 36 18 High-grade 11 44 22 Material Uses Grisantian Pelt Armor Grisantian Hide Object (Standard-Grade) Source Monsters of Myth pg. 35 Price 1,200 gp (per Bulk) Grisantian Hide Object (High-Grade) Source Monsters of Myth pg. 35 Price 12,000 gp (per Bulk)"
+ },
+ {
+  "id": "grisantian-pelt",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Grisantian Pelt",
+  "level": 12,
+  "traits": [
+   "precious"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Grisantian Pelt Source Monsters of Myth pg. 35 Highly desired for the prestige, the pelt of the grogrisant also has invaluable properties. Standard-grade items can be made from the pelt of a grisantian lion, but high-grade items require the pelt of the grogrisant itself. This supernaturally tough animal skin is gold and shines in sunlight. It can be used to make any item usually made of cloth, leather, or hide. This material is immune to fire, and its Hardness is doubled against piercing or slashing damage. Up to 4 Bulk of grisantian pelt can be harvested from a single creature (this is usually more than enough for 4 suits of standard grade armor or 2 suits of high-grade armor). Grisantian Pelt Items Thin Items Hardness HP BT Standard-grade 6 24 12 High-grade 8 32 16 Items Hardness HP BT Standard-grade 9 36 18 High-grade 11 44 22 Material Uses Grisantian Pelt Armor Grisantian Hide Object (Standard-Grade) Source Monsters of Myth pg. 35 Price 1,200 gp (per Bulk) Grisantian Hide Object (High-Grade) Source Monsters of Myth pg. 35 Price 12,000 gp (per Bulk)"
+ }
+]

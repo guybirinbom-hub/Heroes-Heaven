@@ -1,0 +1,435 @@
+[
+ {
+  "id": "a-little-bird-told-me",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "A Little Bird Told Me...",
+  "level": 8,
+  "traits": [
+   "archetype",
+   "concentrate",
+   "manipulate",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [],
+  "text": "You transform into a small bird, such as a finch or a sparrow, allowing you to eavesdrop on others and gain information you wouldn't otherwise be able to acquire. You become Tiny, gain the animal trait, and you can't make Strikes. You can Dismiss the effect to return to your normal shape, and you resume your normal shape automatically if you're reduced to 0 Hit Points. You gain the following statistics and abilities: AC = 20 + your level. Ignore your armor's check penalty and Speed reduction. Fly speed 25 feet. Weakness 5 to physical damage. Low-light vision and imprecise scent 30 feet. Acrobatics and Stealth modifiers of +10, unless your own is higher; Athletics modifier –4."
+ },
+ {
+  "id": "anglerfish-lantern-submersible",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Anglerfish Lantern (Submersible)",
+  "level": 8,
+  "traits": [
+   "magical",
+   "water"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "text": "This bull's-eye lantern is either stylized after an anglerfish or made from the taxidermy of one. While it can be lit as usual, the *submersible anglerfish lantern* automatically shines when submerged in water. --- **Activate—Mesmerizing Lights** ⟨2⟩ (concentrate, manipulate) **Frequency** once per hour **Effect** All creatures within the bright light of the *submersible anglerfish lantern* must succeed at a save or be fascinated by the light for 1 round (1 minute on a critical failure). The fascination ends if the light is extinguished. Aquatic animals and creatures with the water trait take a –2 circumstance penalty to this check. Regardless of the result, the creature then becomes immune to this effect for the next 24 hours. --- **Activate—Dive!** 1 minute (concentrate, manipulate) **Frequency** once per day **Effect** You lower the *submersible anglerfish lantern* into water at least 15 feet deep while issuing a command. The lantern transforms into a Bathysphere for 1 hour. This vehicle possesses a light that can be swiveled up to 90 degrees with an Interact action and has the activation listed above. When the effect ends, any occupants are ejected harmlessly. If the bathysphere becomes broken, the effect ends and the *submersible anglerfish lantern* is broken as well."
+ },
+ {
+  "id": "aon-grisantian-pelt-armor",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Grisantian Pelt Armor",
+  "level": 12,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "text": "Grisantian pelt armor is immune to fire damage, and its Hardness is doubled against piercing or slashing damage. Wearing armor made from grisantian pelt also grants you a +1 circumstance bonus to your AC and saving throws against attacks and spells that deal fire damage."
+ },
+ {
+  "id": "aurochs-jerky",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Aurochs Jerky",
+  "level": 9,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "processed"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "text": "**Activate** ⟨2⟩ Interact --- Aurochs meat already makes for tough jerky, but with the right alchemical treatment, it becomes legendarily resilient and imparts that durability to those who eat it. Eating the jerky causes a pair of inch-long horns to grow from your forehead (or causes your existing horns to grow noticeably) for 1 hour. During this time, you gain a +1 item bonus to Fortitude saves. You can end the effect prematurely, causing the horns to retract or revert to their normal size, with a free action that has the concentrate trait. --- **Aurochs' Endurance** ⟨4⟩ (concentrate) **Trigger** You begin your turn and are fatigued **Effect** You suppress the fatigued condition for 10 minutes. During this time, you are not immune to fatigue and can become fatigued by subsequent effects, but you gain a +2 item bonus to saving throws against effects that would fatigue you."
+ },
+ {
+  "id": "bloodline-mutation",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Bloodline Mutation",
+  "level": 20,
+  "traits": [
+   "sorcerer"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "text": "You permanently mutate to become more like the creatures of your bloodline. You gain the appropriate trait or traits for those types of creatures (aberration for aberrant, angel and celestial for angelic, demon and fiend for demonic, and so on). You gain low-light vision or darkvision, if one is appropriate for creatures with those traits. Choose one of the following. - If the creatures associated with your bloodline have the ability to fly, you gain a fly Speed equal to your land Speed. - If the creatures associated with your bloodline are aquatic or amphibious, you become amphibious, able to breathe water and air equally well, and you gain a swim Speed equal to your land Speed. - If creatures associated with your bloodline have a resistance or immunity to acid, cold, electricity, fire, void, or sonic, choose an energy type your bloodline is immune or resistant to and gain resistance 20 against that energy type."
+ },
+ {
+  "id": "channel-protection-amulet",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Channel Protection Amulet",
+  "level": 3,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "text": "This nugget of polished tektite is trapped in a cage of braided wire and hangs from a silken cord. When wearing this amulet, you gain resistance 5 against damage from Harm spells if you're living, or against Heal spells if you're undead."
+ },
+ {
+  "id": "contagion-metabolizer-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Contagion Metabolizer (Greater)",
+  "level": 19,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "healing"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Contagion metabolizers seek out toxins in the bloodstream and attempt to purify them into humors the body processes naturally. When you drink this elixir, it attempts a counteract check with a +30 modifier to remove the highest-level poison or disease afflicting you. The elixir has a counteract rank of 10. This takes longer for a disease—the counteract check doesn't happen until 10 minutes after you drink the elixir. After drinking, you become temporarily immune to contagion metabolizers for 1 hour. If you're a chirurgeon alchemist and have powerful alchemy, you can substitute your statistics when you create a contagion metabolizer using Quick Alchemy, if your stats are higher. This replaces the counteract rank with half your level rounded up and the counteract modifier with your class DC – 10."
+ },
+ {
+  "id": "darkvision-scope-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Darkvision Scope (Greater)",
+  "level": 15,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "text": "These scopes, popular with snipers and other sneaky sharpshooters who ply their trade in the dead of night, incorporate clouded crystals with magical properties into their design. While relatively useless under normal lighting conditions, these crystals can help bring things into focus when used in dim light. The scope is then given an enchantment to enhance these properties for use in darkness. The scope grants you a +2 item bonus to Perception checks involving sight in areas of dim light visible through the scope (as well as in areas of darkness, if the scope has been activated). **Activate—See Through Night** ⟨1⟩ (manipulate) --- **Effect** You gain greater darkvision until the beginning of your next turn, as long as you continue to look through the scope."
+ },
+ {
+  "id": "dominating-gaze",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Dominating Gaze",
+  "level": 16,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "innateSpells"
+  ],
+  "text": "You stare into your target's eyes and enthrall them, shattering their free will. Once per day, you can cast 7th-rank Dominate as a divine innate spell, using your class DC or spell DC, whichever is higher. It gains the visual trait. At 18th level, the dominate is heightened to 8th level; at 20th level, it's heightened to 9th rank. A creature that succeeds at its save is temporarily immune to your domination for 24 hours, though in most cases, you can't Cast the Spell again within 24 hours. If you are destroyed, all your dominate spells from Dominating Gaze immediately end."
+ },
+ {
+  "id": "durian-bomb-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Durian Bomb (Lesser)",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "plant",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Whereas a durian's aroma ranges from pleasant to revolting depending on the person, a durian bomb is a fruit that's been alchemically modified for maximum revulsion. On a successful Strike, a durian bomb deals the 1d4 piercing damage to the target. Any creature hit by the bomb or in its splash area must attempt a saving throw. Creatures in the splash area treat the results of their saving throw as one step better. Creatures sickened by a durian bomb are unable to smell anything else while the sickened condition lasts, suppressing any scent special sense they might have. Once a creature is sickened by a durian bomb, they're immune to the sickened condition caused by other durian bombs for 1 minute. --- **Critical Success** The target is unaffected. **Success** The creature is Sickened 1. **Failure** The creature is dazzled for 1 round and sickened 1. **Critical Failure** The creature is dazzled for 1 round and Sickened 2."
+ },
+ {
+  "id": "eternal-guide",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Eternal Guide",
+  "level": 20,
+  "traits": [
+   "animist",
+   "apparition"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "text": "**Frequency** once per week --- Your attuned apparitions recognize that you still have essential work to do and refuse to allow you to pass on, gathering up your essence to carry your soul back to the community you call home. Choose a single settlement with a population of at least 100 people. Whenever you die and are not returned to life within 24 hours by other means, as long as the settlement still exists and there are no other claims on your soul (such as a contract with a devil) and nothing trapping your soul (such as being slain by a critical hit from a vilderavn), your attuned apparition magically transports your soul, remains, and all of the items you had worn or carried at the time of your death (so long as they have not been otherwise recovered) back to the chosen settlement, where you are reborn. The nature of this rebirth varies between animists; some magically reconstitute and reinvigorate their physical forms to return to life in their original bodies, while others pass their knowledge and power on to a new inheritor who effectively takes their place in the grand story of existence. When returned to your original physical form in this manner, you are brought back in your physical prime, restored to youthful health and vigor. This effectively makes you immune to dying of old age so long as you are not killed by violence less than a week before you would have died of old age. Regardless of the exact nature of your rebirth, you or your inheritor are fully restored with your level, experience, and equipment intact one week after your death. If you choose an inheritor and their ancestry is different than yours, your attribute scores do not change but you can freely retrain your ancestry feats and any other feats that relied on them as prerequisites as part of your rebirth. There is no limit to the number of times you can be reborn, but if you die before a week has passed since your last rebirth, neither you nor your attuned apparitions have recovered enough energy to complete the process again, and your soul passes to whatever final reward it has earned."
+ },
+ {
+  "id": "fey-eidolon",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Fey Eidolon",
+  "level": 1,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Your eidolon is a fey, a capricious being of the mysterious First World. Many fey appear similar to mortal humanoids with unusual features such as pointed ears, wings, or bodies composed of natural elements, but the full variety of fey is endless, and many others appear completely inhuman. Fey from the First World never truly die, instead forming a new creature. Fey eidolons usually come about when a summoner helps stabilize a difficult reformation. This means your fey eidolon likely lived a different life just before meeting you and might remember fragments of its old memories. Together, you might have to unravel a memory from your eidolon's past life among the fey. **Tradition** primal (but see Fey Gift Spells below) **Traits** eidolon, fey **Home Plane** First World --- **Size** Small or Medium **Suggested Attacks** fist (bludgeoning), wing (bludgeoning), attacks shaped like a weapon **Skirmisher Fey** Str 14, Dex 18, Con 14, Int 10, Wis 10, Cha 12; +1 AC (+4 Dex cap) **Trickster Fey** Str 12, Dex 18, Con 12, Int 12, Wis 8, Cha 16; +1 AC (+4 Dex cap) **Skills** Deception, Nature **Senses** low-light vision **Language** Sylvan **Speed** 25 feet --- **Eidolon Abilities** *Initial *fey gift spells*; Symbiosis *fey mischief*; Transcendence *fey chicanery ## Fey Gift Spells Your eidolon expands your primal magic with enchantment and illusion magic, allowing both of you to wield the power of fey charm and glamour. When you add spells to your repertoire, you can choose from the primal list as well as from enchantment and illusion spells that appear on the arcane spell list. As usual for when you add spells of a different tradition to your spell list, you're still a primal spellcaster, so all of your spells are primal spells. Your eidolon gains the Magical Understudy summoner feat, despite not meeting the prerequisite level, and it can choose fey gift cantrips in addition to primal cantrips. As usual for a feat you are granted by name, you can't retrain Magical Understudy into another feat. ## Fey Mischief 7th Your eidolon's fey magic becomes more powerful and mischievous. Your eidolon gains the Magical Adept feat, despite not meeting the prerequisite level, and can choose from fey gift spells in addition to primal spells. ## Fey Chicanery 17th Ever full of tricks, your fey eidolon twists magical protections into your shared life force, granting it a contingency in its back pocket for desperate situations. During your daily preparations, your eidolon can cast a contingency spell. The 4th-rank spell it chooses must come from the primal or fey gift list, and must either be common or be another spell you have access to."
+ },
+ {
+  "id": "fossil-fragment-brontosaurus-phalange",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Fossil Fragment (Brontosaurus Phalange)",
+  "level": 18,
+  "traits": [
+   "earth",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "text": "A fossil fragment is a piece of a fossil creature, typically a smaller bone from a larger specimen. **Activate—Fossil Metamorphosis** ⟨2⟩ (concentrate, manipulate) --- **Effect** You activate the fragment by placing it on solid ground and then speaking its name, causing the fragment to form the full fossilized skeleton of a creature. In creature form, the fragment has the minion trait. Because it's an animated fossil instead of a living creature, it has the construct and earth traits and lacks its normal creature type trait (typically animal). It's also immune to bleed, death effects, disease, doomed, drained, fatigued, healing, nonlethal attacks, paralyzed, poison, sickened, vitality, void, and unconscious. It can understand your language, and it obeys you to the best of its ability when you use an action to command it. The specifics of each creature, as well as the activation's frequency, if any, appear in its entry below. --- This massive toe bone becomes a when activated. It can be called upon no more than four times per month. The skeleton remains for 24 hours if used as a beast of burden or for transport. If it attempts an attack or otherwise engage in combat, it reverts to its fragment form after 1d4 rounds. The skeleton is so massive and sturdy that it can serve as the base of a structure (from an item or spell effect with the structure trait), provided the structure is no larger than 20 feet in width or height. When the brontosaurus reverts to its fragment form, the structure reverts with it."
+ },
+ {
+  "id": "ghostcallers-planchette",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Ghostcaller's Planchette",
+  "level": 12,
+  "traits": [
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "text": "This miniature wooden planchette is engraved with symbols designed to attract spirits. When affixed, the symbols begin to glow, and the planchette turns slightly insubstantial. The spell DC of any spell cast by activating this item is 29. - **Armor** After you cast a spell by activating the planchette, you gain resistance 5 to all physical damage (except Ghost Touch) until the start of your next turn. Attacks by incorporeal creatures (such as a ghost's ghostly hand) count as *ghost touch*. - **Weapon** After you cast a spell by activating the planchette, the affixed weapon gains the effects of the *ghost touch* property rune until the end of your next turn. --- **Activate** Cast a Spell **Effect** You cast Void Warp. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast Invoke Spirits"
+ },
+ {
+  "id": "grisantian-hide-object-high-grade",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Grisantian Hide Object (High-Grade)",
+  "level": 18,
+  "traits": [
+   "precious"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Grisantian Pelt Source Monsters of Myth pg. 35 Highly desired for the prestige, the pelt of the grogrisant also has invaluable properties. Standard-grade items can be made from the pelt of a grisantian lion, but high-grade items require the pelt of the grogrisant itself. This supernaturally tough animal skin is gold and shines in sunlight. It can be used to make any item usually made of cloth, leather, or hide. This material is immune to fire, and its Hardness is doubled against piercing or slashing damage. Up to 4 Bulk of grisantian pelt can be harvested from a single creature (this is usually more than enough for 4 suits of standard grade armor or 2 suits of high-grade armor). Grisantian Pelt Items Thin Items Hardness HP BT Standard-grade 6 24 12 High-grade 8 32 16 Items Hardness HP BT Standard-grade 9 36 18 High-grade 11 44 22 Material Uses Grisantian Pelt Armor Grisantian Hide Object (Standard-Grade) Source Monsters of Myth pg. 35 Price 1,200 gp (per Bulk) Grisantian Hide Object (High-Grade) Source Monsters of Myth pg. 35 Price 12,000 gp (per Bulk)"
+ },
+ {
+  "id": "helts-spelldance",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Helt's Spelldance",
+  "level": 8,
+  "traits": [
+   "bard",
+   "sorcerer",
+   "witch",
+   "wizard"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Ranik Helt knows a special technique to hide his spells as part of a performance, and you've learned this technique. Ostentatiously performing, you move across the battlefield, taking foes aback and creating an opening for your spell. Attempt a Performance check against all observers' Perception DCs. Then, Stride once or twice. During this movement, you don't trigger reactions that are triggered by your movement from the creatures against which you succeeded on your Performance check. After your movement, you can Cast a Spell. If you used one Stride, you can cast either a 1-action or a 2-action spell; if you used two Strides, you can only cast a 1-action spell. If you critically succeed on your check against any creature, they take a –1 circumstance penalty to their saving throws against any spell you cast as part of your Helt's Spelldance due to your distracting performance. All creatures that observed you become temporarily immune to your Helt's Spelldance for 10 minutes."
+ },
+ {
+  "id": "irritating-seedpod-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Irritating Seedpod (Greater)",
+  "level": 10,
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "heldSpells",
+   "uses"
+  ],
+  "text": "**Activate** Cast a Spell (add 1 action) --- When you crack open this soft, spongy seedpod, you can use it as a catalyst when casting a Mist spell. When you do, irritating pollen fills the area for the spell's duration. Creatures in the area must attempt a saving throw to avoid sneezing uncontrollably. On a failed save, the creature becomes Slowed 1 for 3 rounds. A creature that succeeds at this saving throw becomes temporarily immune to the irritating seedpod's pollen for 10 minutes."
+ },
+ {
+  "id": "living-statue",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Living Statue",
+  "level": 0,
+  "traits": [
+   "earth"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Living Statue Source GM Core pg. 313 Aspect Earth Your relic's energies have given you control over the boundary between flesh and stone. You can cast 6th-rank petrify and sure footing (to remove petrification only) as innate spells, each once per day. As long as you are standing on the earth, your body reflexively petrifies at the moment you are struck, granting you resistance 5 to physical damage (except adamantine). This increases to 8 in caves or subterranean environments."
+ },
+ {
+  "id": "major-stormshard",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Major Stormshard",
+  "level": 18,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "text": "Stormshard May contain spoilers from Triumph of the Tusk Source Pathfinder #208: Hoof, Cinder, and Storm pg. 78 Usage held in 1 hand Bulk L These shards of coalesced necromantic essence are sometimes found in the wake of an ancestor storm. Howling spirits are faintly visible, trapped inside the jagged, dark-green glass. You can use the shard to cow the undead or briefly release the tormented souls from inside the glass. While you hold the stormshard, you gain a +1 item bonus to Intimidation checks to influence the undead. In addition, you can Demoralize undead creatures, even if those creatures are mindless or otherwise immune to emotion, fear, or mental effects. Activate—Free the Spirits (concentrate, manipulate) Frequency once per day; Effect You briefly release the spirits from the stormshard before drawing them back into the glass. Each creature in a 10-foot emanation takes 4d8 void damage (DC 20 basic Fortitude save). You treat the result of your saving throw as one degree of success better than its outcome. Greater Stormshard Source Pathfinder #208: Hoof, Cinder, and Storm pg. 79 Price 1,800 gp The item bonus increases to +2. When activating the stormshard to release the spirits, the damage increases to 8d8 (DC 29). In addition, you can choose to increase the radius of the emanation by up to 10 feet. Major Stormshard Source Pathfinder #208: Hoof, Cinder, and Storm pg. 79 Price 19,000 gp The item bonus increases to +3. When activating the stormshard, the damage increases to 13d8 (DC 38), and you can increase the radius of the emanation by up to 20 feet. Stormshard Source Pathfinder #208: Hoof, Cinder, and Storm pg. 79 Price 230 gp"
+ },
+ {
+  "id": "necromancers-visage",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Necromancer's Visage",
+  "level": 12,
+  "traits": [
+   "cleric",
+   "oracle",
+   "wizard"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Necromantic energy demonstrates your power over undead, creating a demeanor that commands their fear and respect. Undead creatures can immediately sense your Necromancer's Visage and tend to act accordingly. If you take a hostile action against an undead creature, it becomes permanently immune to your Necromancer's Visage, and your Necromancer's Visage ends. You can spend 10 minutes to restore your Necromancer's Visage, though any creatures that became permanently immune remain so. Each time an undead creature 2 or more levels lower than you attacks you, it must attempt a Will save against your spell DC. If you're also affected by sanctuary or a similar effect, only one affects the attacker (you choose which). --- **Critical Success** The creature is permanently immune to your Necromancer's Visage. **Success** The creature can attempt its attack and any other attacks against you this turn. **Failure** The creature can't attack you and wastes the action. It can't attempt further attacks against you this turn. **Critical Failure** The creature wastes the action and can't attempt to attack you as long as your Necromancer's Visage persists. **Special** This feat has the trait matching your spellcasting tradition."
+ },
+ {
+  "id": "orchards-endurance",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Orchard's Endurance",
+  "level": 14,
+  "traits": [
+   "impulse",
+   "kineticist",
+   "plant",
+   "primal",
+   "stance",
+   "wood"
+  ],
+  "engineFieldsPresent": [
+   "resistances"
+  ],
+  "text": "Patches of bark appear on the skin of you and your nearby allies. You and your allies in your kinetic aura gain resistance 5 to bludgeoning and piercing damage. In addition, you and your affected allies roll flat checks to recover from persistent damage twice and take the higher result; this is a fortune effect. --- **Level (+4)** The resistance increases by 2."
+ },
+ {
+  "id": "plague-sniffer",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Plague Sniffer",
+  "level": 5,
+  "traits": [
+   "ratfolk"
+  ],
+  "engineFieldsPresent": [],
+  "text": "You can sniff out the pungent tang of disease. When you detect a creature by scent, you can also detect if that creature is suffering from a disease at a non-carrier state. If the disease is particularly subtle, you might need to attempt a Perception check against the disease's DC (subject to the GM's discretion)."
+ },
+ {
+  "id": "radiant-spark",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Radiant Spark",
+  "level": 25,
+  "traits": [
+   "artifact",
+   "occult"
+  ],
+  "engineFieldsPresent": [],
+  "text": "This shining prism is bound within a golden frame. The bright glow within the artifact is the gleaming essence of celestials bound within it in ancient times. Each activation consumes a bit of this celestial energy, projecting the screams of the celestials into your mind. While holding the Radiant Spark, you gain a +2 item bonus to saving throws against divine spells and effects and you are aware of its powers. If you are good, while holding the Radiant Spark, you are Sickened 3 and can't recover from this condition. --- **Activate** ⟨2⟩ envision, Interact --- **Effect** The Radiant Spark casts a 10th-rank Dominate spell () on a creature that isn't from the Material Plane. Celestials get an outcome one degree of success worse than the result of their save. --- **Activate** ⟨4⟩ envision **Trigger** You begin casting a Binding Circle ritual --- **Effect** The Radiant Spark reduces the casting time of the ritual to 1 hour, and you don't need secondary casters for this ritual. --- **Activate** ⟨5⟩ envision, Interact **Trigger** The target critically fails their save against the Radiant Spark's dominate spell or you critically succeed at binding the target with the planar binding ritual using the artifact --- **Effect** The target must attempt a save and is immune to further attempts for 24 hours. --- **Critical Success** The target is unaffected. **Success** The target is Drained 2. **Failure** The target dies and its essence is trapped within the Radiant Spark. It can be brought back to life only with powerful magic such as Wish or Miracle. **Critical Failure** As failure, and the target can't be brought back to life until the Radiant Spark is destroyed. --- **Destruction** An archfiend or evil demigod must willingly swap their essence with that of a celestial dominated or bound by the artifact, then critically fail the saving throw against having their essence consumed. This permanently destroys both the artifact and the fiend or demigod."
+ },
+ {
+  "id": "rune-of-sin-greed",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Rune of Sin (Greed)",
+  "level": 12,
+  "traits": [
+   "arcane",
+   "invested",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [],
+  "text": "This jagged glyph, the greed Thassilonian rune of sin, reacts to transmutation magic. When you Cast a transmutation Spell, you gain resistance 5 to damage from spells until the start of your next turn. This resistance is increased to 7 against transmutation spells."
+ },
+ {
+  "id": "shadow-sight",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Shadow Sight",
+  "level": 9,
+  "traits": [
+   "fetchling",
+   "occult"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "text": "**Frequency** once per hour --- You draw on your connection with the Shadow Plane to see through all but the deepest darkness. You gain greater darkvision for 1 minute."
+ },
+ {
+  "id": "soulforger-dedication",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Soulforger Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "text": "You can manifest the power of your spirit in combat to realize your motivations. You manifest an armor, shield, or weapon as a soulforged armament. Choose one essence power for the armament. Changing an essence power requires 1 week of retraining, and you can't retrain it while you have *soulforged corruption*. You can Manifest Soulforged Armament to summon your armaments in combat. --- ### ESSENCE POWERS Your soulforged armament has an essence power you choose when you first bind it. It gains the power temporarily when you manifest its essence form. Each power has a corruption flaw that affects you if you have *soulforged corruption*. Essence powers that only apply to some types of armament indicate which. **Adaptable Persona** (transmutation) Armor only. When you manifest the essence form, gain your choice of a climb Speed or swim Speed equal to your land Speed. If you're 8th level or higher, you can choose a fly Speed instead. *Corruption Flaw* You take a –10-foot penalty to all your Speeds. **Bounding Spirit** Melee weapon only. The weapon gains the thrown 30 feet trait and has the returning rune (even if it already has its maximum number of property runes). *Corruption Flaw* When you make a Strike with a thrown or ranged weapon and miss, reroll the Strike, targeting your ally nearest to the target. This Strike uses the same multiple attack penalty as the missed Strike and doesn't count toward your multiple attack penalty. **Deep-Seeded Fear** You gain a +2 status bonus to your Intimidation checks and don't take any penalties for not sharing a language when Demoralizing foes who can perceive your armament's essence form. When you manifest the essence form, you can attempt to Demoralize an enemy who can perceive the manifestation. *Corruption Flaw* If you attempt to Demoralize an enemy, your Demoralize also targets the ally closest to you. **Determined Toughness** Any status penalties you take from the following conditions are 1 less than their condition's value: clumsy, drained, enfeebled, frightened, sickened, stupefied. This doesn't change the actual condition value, or any other effects of the condition (such as stupefied's disruption and its DC). *Corruption Flaw* Whenever you take a status penalty from the listed conditions, you also take a -1 penalty to the same statistics. **Harmful Malice** (void) Your Strikes deal an additional 1d4 void damage. Once while the armament is manifested, you can cast harm as an innate spell, with a level equal to half your level rounded up. *Corruption Flaw* Reduce any damage you would deal by half your level. **Heroic Heart** (enchantment, mental) You gain a +1 status bonus to attack rolls, Perception checks, skill checks, and saves. *Corruption Flaw* You take a -1 penalty to attack rolls. **Healing Grace** (healing, vitality) You gain fast healing equal to half your level. You can cast Heal once as an innate spell with a level equal to half your level rounded up. *Corruption Flaw* Reduce all healing you"
+ },
+ {
+  "id": "stone-body-mutagen-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Stone Body Mutagen (Lesser)",
+  "level": 5,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- This mutagen calcifies your body making it as hard as stone. **Benefit** You gain resistance 5 to physical damage (except bludgeoning). **Drawback** Your speeds are reduced by 10 feet (minimum 5 feet) and you take a -2 penalty to Reflex saves. **Duration** 10 minute."
+ },
+ {
+  "id": "tattletale-orb",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Tattletale Orb",
+  "level": 14,
+  "traits": [
+   "cursed",
+   "magical",
+   "scrying"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Tattletale Orb Source Treasure Vault (Remastered) pg. 193 Usage held in 1 hand Bulk 1 A tattletale orb is a polished crystal sphere that appears to function as a crystal ball. If those whom you use the orb to scry on roll better than a critical failure on their saving throw, they receive a telepathic message alerting them to the scrying. A success or better at the save allows the target to choose to allow you to scry anyway, knowing they can use an aspect of the orb against you, according to the orb's type. A creature that rolls a critical success on the saving throw also learns your name and location. Once you Activate a tattletale orb or use it to cast one of your scrying spells, it fuses to you. You must succeed at a Will save, using the scrying Will DC of a crystal ball of the orb's type, to use another such device. Tattletale orbs come in the same types as crystal balls, with the same activations and powers. However, your target must roll a critical failure on the saving throw for the orb to function as normal for that type of crystal ball. Tattletale Orb (Clear Quartz) Source Treasure Vault (Remastered) pg. 193 Bulk 1 Tattletale Orb (Selenite) Source Treasure Vault (Remastered) pg. 193 Bulk 1 The target is temporarily immune to the orb’s see the unseen for 24 hours and can choose to be invisible to the orb’s scrying during that time. Tattletale Orb (Moonstone) Source Treasure Vault (Remastered) pg. 193 Bulk 1 The target is temporarily immune to the orb's mind reading for 24 hours and can use mind reading against you instead, as if the target used the orb. Tattletale Orb (Peridot) Source Treasure Vault (Remastered) pg. 193 Bulk 1 The target can send you one telepathic demand. Tattletale Orb (Obsidian) Source Treasure Vault (Remastered) pg. 193 Bulk 1 The target is temporarily immune to the orb’s truesight for 24 hours. During that time, you see a false vision of the target’s choice if you scry on the target. Despite being higher rank than the spell, you can’t disbelieve this illusion if scrying through the orb."
+ },
+ {
+  "id": "titans-breaker",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Titan's Breaker",
+  "level": 1,
+  "traits": [
+   "ikon"
+  ],
+  "engineFieldsPresent": [],
+  "text": "**Usage** any melee weapon in the club, hammer, or axe group, or any your melee unarmed Strikes that deals bludgeoning damage --- You wield a weapon whose blows shatter mountains with ease. **Immanence** The titan's breaker deals 2 additional spirit damage per weapon damage die to creatures it Strikes. Constructs and objects are not immune to this spirit damage, and this spirit damage automatically bypasses an amount of their Hardness equal to your level. **Transcendence—**Fracture Mountains ⟨2⟩ (spirit, transcendence)"
+ },
+ {
+  "id": "void-mirror",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Void Mirror",
+  "level": 20,
+  "traits": [
+   "artifact",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "text": "**Usage** Mounted in frame --- The *Void Mirror* was created on a distant planet by a now-extinct alien cult to aid in unlocking the secrets of the Dark Tapestry. It appears as a 5-foot-tall, 2-foot-wide mirror of dark glass. As long as it's unmounted in a frame, the *Void Mirror* functions only as a mirror, save that it always reflects the sky as if it were night, regardless of the time of day. When the *Void Mirror* is mounted in a frame, it instead serves as a window into space, displaying a star field in its glass rather than a reflection. This frame can be of any quality, but stouter frames help to prevent the frame's destruction and thus help to keep the *Void Mirror* functional. The view presented by the *Void Mirror* is any view of the night sky possible from its current physical location, regardless of time of day. Observations of the sky in this way add a +3 item bonus to Astronomy Lore or Perception checks made while using the mirror. The point of view can be shifted through hand gestures, causing the scene within the mirror to reorient in any direction desired. A character who peers into the starscape within the *Void Mirror* must attempt a save. On a **failure**, the character feels something looking back at them from the dark places between the stars. On a **critical failure**, this sensation causes the character to become Frightened 1. The character is then temporarily immune to this effect for 24 hours. By placing the *Void Mirror* in a specially-constructed frame, it can halt the ongoing transformation of a creature that has performed the apotheosis activation. Building such a frame is beyond the skill of low-level characters, as it requires an artisan with legendary proficiency in Crafting. The *Void Mirror* can be utilized in other ways, but before a character can activate these effects the occult methods to access these ritual-like effects must be Researched separately. Since the specific methods for these activations vary slightly from person to person, these methods can't be taught; each person who seeks to activate the *Void Mirror* in one of the following ways must complete their own research to unlock the artifact's secrets. Each requires a separate number of Occultism checks to Research, as detailed below for each activation. --- **Activate** 1 hour (Interact) **Research** Accumulate 12 RP by making (expert) checks when Researching (1 week per attempt) **Frequency** once per month --- **Effect** The first activation ritual is known as \"Speak to the Void\" and allows the user to contact an intelligence in a distant part of the universe, provided the mirror shows that location (regardless of distance). This alien intelligence infuses the user's mind with answers, allowing the user to Recall Knowledge using Nature or Occultism as if they were legendary proficiency with the skill (including the +8 proficiency bonus). If this check fails, the character takes 10d6 damage (100 mental damage on a critical failure) as the imparted"
+ }
+]

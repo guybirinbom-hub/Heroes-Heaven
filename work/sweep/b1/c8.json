@@ -1,0 +1,1170 @@
+[
+ {
+  "id": "street-urchin",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Street Urchin",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLoreChoice",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You eked out a living by picking pockets on the streets of a major city, never knowing where you'd find your next meal. While some adventure for the glory, you do so to survive. Choose two attribute boosts. One must be to **Dexterity** or **Constitution**, and one is a free attribute boost. You're trained in the Thievery skill and a Lore skill for the city you lived in as a street urchin (such as Absalom Lore or Magnimar Lore). You gain the Pickpocket skill feat. --- ## Background details **Attribute Boosts** Constitution or Dexterity, one free **Trained Skill** Thievery **Skill Feat** Pickpocket"
+ },
+ {
+  "id": "student-of-apotheosis",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Student of Apotheosis",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "trainedLore",
+   "trainedSkillChoice"
+  ],
+  "inRegistries": [],
+  "text": "From subjects of worship to forces of nature that literally reshaped the region, hero-gods are central to Iblydan identity. While every child learns at least a little about their city-state's divinities from the past and present, you have devoured these legends. Do you long to have witnessed their miracles firsthand? Have you studied this topic as an academic, archivist, or priest? Perhaps you just love a good story. Whatever the case, these legends speak to you on an ineffable level. Are the fates hinting at some secret destiny: perhaps you're becoming a hero-god of old? Choose two attribute boosts. One must be to **Intelligence** or **Charisma**, and one is a free attribute boost. You're trained in either the Occultism or Religion skill, as well as the Hero-God Lore skill. You gain the My Legend Must Be Told action. Replace this with the Mythic Echo action when you gain a mythic calling. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Lore** Hero God Lore"
+ },
+ {
+  "id": "subconscious-mind",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "Subconscious Mind",
+  "level": 1,
+  "traits": [
+   "psychic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "A psychic's power is born in the depths of their psyche, far from the surface. Your subconscious mind might represent the way your power comes to you naturally, or it may be a framework you use to safely access the infinite potential of your mind. Either way, your subconscious mind fundamentally shapes how you access and wield psychic magic. Choose a subconscious mind from the options below. This choice will determine your key attribute, thoughtforms you use while casting, and an action you can take while you have Unleashed your Psyche. The following options are presented in this book. - **Emotional Acceptance** (Cha): Throwing yourself headlong into your emotions is what lets you access your power. - **Gathered Lore** (Int): Tutors taught you specific axioms and lessons to help you harness your mind. - **Precise Discipline** (Int): Meticulously aligning your thoughts brings your mental power into reality. - **Wandering Reverie** (Cha): Your imagination fuels your magic through instinct and free association."
+ },
+ {
+  "id": "summon-ensemble",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Summon Ensemble",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "When you cast Summon Instrument, you can modify its duration to be sustained, up to 1 minute. When you do, you summon a number of instruments equal to your spellcasting ability modifier that hover around you and play of their own accord. Once per turn when you Sustain the Spell, choose an opponent within 30 feet who can hear your performance. The target must attempt a save against the spell's DC; on a failure, it becomes distracted by your performance and becomes off-guard for 1 round. The target is then temporarily immune for 24 hours."
+ },
+ {
+  "id": "sun-dancer",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Sun Dancer",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedSkill"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You've been taught the Burning Mother's blessings could be invited through dances done under its presence, such as in welcoming the first rays of warmth in the spring. You could have been the apprentice of some primal caster who wished to harness the sun's power for their incantations or lived in a community who reveres the Daughter of the Cosmic Caravan through displays of veneration for the sun. Whatever the case, you developed a supernatural connection to the sun. Choose two attribute boosts. One must be to Charisma or Dexterity, and one is a free attribute boost. You're trained in Performance. You gain the Fascinating Performance skill feat. If you use this feat outdoors in direct sunlight, you gain a +1 circumstance bonus to the skill check. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Performance **Skill Feat** Fascinating Performance"
+ },
+ {
+  "id": "supportive-sponsor",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Supportive Sponsor",
+  "traits": [
+   "persona-guardian"
+  ],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You were responsible for caring for someone's needs, be it a sibling or other familial relation, a friend fallen on hard times, or someone who just needed a helping hand at a time when you were there to offer assistance. The satisfaction you get from protecting another, from helping them course-correct from a self-destructive habit, or from assisting them in their recovery from a disaster is more than enough for you, and the idea of being paid for such a service is unsettling and unsavory. When presented with a problem that's beyond your immediate ability to address or resolve, you'll spend days researching methods to provide what help the person needs, either educating yourself on how to provide the aid yourself or by arranging for others to step in to support the person in question. Choose two attribute boosts. One must be to **Constitution** or **Wisdom**, and one is a free attribute boost. You're trained in the Medicine skill and the Herbalism Lore skill. You gain the Battle Medicine skill feat. If you have the Guardian persona trait, you also become trained in the Library Lore skill. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Medicine **Lore** Herbalism Lore **Skill Feat** Battle Medicine"
+ },
+ {
+  "id": "supreme-invigorating-elixir",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Supreme Invigorating Elixir",
+  "level": 12,
+  "traits": [
+   "alchemist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "For the purposes of counteracting effects with invigorating elixirs, treat your level as though it were 2 higher. Add the listed conditions to those you can choose for an invigorating elixir you create to counteract: petrified, stunned. You can also choose a disease regardless of what, if any, conditions it imposes."
+ },
+ {
+  "id": "swashbucklers-style",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "Swashbuckler’s Style",
+  "level": 1,
+  "traits": [
+   "swashbuckler"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your own distinctive style lets you gracefully handle any situation. Choose a swashbuckler's style. This style determines the additional actions you use to gain panache and makes you trained in the skill related to that action."
+ },
+ {
+  "id": "sword-scion",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Sword Scion",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "trainedLore"
+  ],
+  "inRegistries": [],
+  "text": "You have lived all your life in and around the city of Restov, growing up on tales of Baron Sirian Aldori and the exploits of your home's heroic and legendary swordlords. Joining an expedition into the Stolen Lands seems like a perfect way to improve your skills and begin crafting a legend worthy of Baron Aldori. Choose two attribute boosts. One must be to **Dexterity** or **Charisma**, and one is a free attribute boost. You're trained in the Warfare Lore skill. You gain access to Aldori dueling swords and can purchase one as part of your starting equipment. You treat Aldori dueling swords as martial weapons rather than advanced weapons for the purpose of proficiency. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Lore** Warfare Lore"
+ },
+ {
+  "id": "sympathetic-portrayal",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Sympathetic Portrayal",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You portrayed Grand Prince Stavian III in Fall of the Troubled King, a production dedicated to the life and times of the paranoid Taldan ruler whose violent resistance to new policies on succession kicked off the War for the Crown. Your acting won rave reviews for recasting Stavian's paranoia and political machinations in a sympathetic light, and you've learned to apply these subtle techniques outside of the stage to win others over. Whenever you succeed at a Deception or Performance check to portray a famous figure, you can select one creature within 60 feet who observed your performance. As long as this creature isn't hostile, its attitude toward you automatically improves by two steps (three steps if your check was a critical success). If it's hostile, it's Stupefied 2 for 1 minute as it tries to reconcile its desire to harm you with its newfound sympathy for you."
+ },
+ {
+  "id": "tacticians-helm",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Tactician's Helm",
+  "level": 5,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Repurposing and enchanting a helmet worn by a battlefield commander can create a *tactician's helm*, imparting knowledge of battlefield tactics that feeds off your minor victories. The helm grants you a +1 item bonus to Warfare Lore checks. Also, a jewel adorns the brow of the helmet. This jewel becomes charged each time you hit a creature with a Reactive Strike. A *tactician's helm* can hold up to 2 charges, and its charges reset to 0 when you invest it. --- **Activate** ⟨1⟩ (concentrate) **Requirements** The helm's jewel is charged **Frequency** once per hour **Effect** One charge in the helm's jewel expires, and you choose one of the following effects. - **Charge!** Stride twice. - **Move It!** You gain a +2 status bonus to Acrobatics and Athletics checks until the end of this turn. - **Protect!** If you're wielding a shield, Stride to a space adjacent to an ally, then Raise your Shield. - **Re-Arm!** Interact up to three times. Each of these actions must be used to do something listed under Interact."
+ },
+ {
+  "id": "taldan-schemer",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Taldan Schemer",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Shining Kingdoms --- Whether willing or unwilling, you have been involved in the many cutthroat political intrigues within Taldor. You might have been born into it as a member of the aristocracy, or you might have taken an active role in the recent events of the War for the Crown. Choose two attribute boosts. One must be to **Charisma** or **Constitution**, and one is a free attribute boost. You're trained in the Diplomacy skill and the Politics Lore skill. You gain the Hobnobber skill feat. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Diplomacy **Lore** Politics Lore **Skill Feat** Hobnobber"
+ },
+ {
+  "id": "tall-tale",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Tall Tale",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You've ridden a tornado, lassoed a river, mooned a dragon under a full moon, and shot six zombies with one bullet. That's what the stories say, anyway, and even if people don't strictly believe them, they are curious about you. Certainly, the stories keep spreading, and it would appear that you either have a unique destiny or are trying to convince the world that you do. Choose two attribute boosts. One must be to **Constitution** or **Charisma**, and one is a free attribute boost. You're trained in Performance. You gain the Impressive Performance skill feat. You can gain the Leverage Connections skill feat later without being expert in Society or having Courtly Graces-this represents less traditional social connections and more the way that your legend has spread, and you've learned to leverage your legend, with people wanting to meet you and see you for themselves. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Performance **Skill Feat** Impressive Performance"
+ },
+ {
+  "id": "tame-animal",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Tame Animal",
+  "level": 1,
+  "traits": [
+   "exploration",
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Animals born and raised far from humanoid settlements rarely get along with two-legged beings, whom they assume to be dangerous predators. In spite of this, you know how to approach and entreat a wild animal so that it's more receptive to your presence and requests. To use this feat, choose a wild animal that isn't actively hostile to you and which isn't confined to an area smaller than its Speed in diameter (animals held in place or trapped are typically too scared to be tamed). Attempt a Nature check against a DC determined by the GM; this is usually the animal's Will DC, but circumstances might adjust the precise DC. This attempt usually takes an hour, but you can perform it in 10 minutes if you have expert proficiency in Nature, 1 minute if you have master proficiency, or as a three-action activity if you have legendary proficiency. --- **Critical Success** You form a friendly bond with the animal. As long as it isn't starving, the animal won't attack you or creatures obviously allied with you, even if they're creatures the animal would normally prey upon. This effect is permanent. **Success** As critical success, but the effect lasts for 1 month. If you or an ally teach the animal a basic action during that time with the Train Animal skill feat, the effect is permanent. **Failure** You fail to make any kind of meaningful impression on the animal. **Critical Failure** The animal does its best to attack you and is immune to Tame Animal for 1 month."
+ },
+ {
+  "id": "taper-of-sanctification",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Taper of Sanctification",
+  "level": 13,
+  "traits": [
+   "consumable",
+   "divine"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- This thin golden candle bears the symbol of a specific deity emblazoned on its surface, surrounded by the iconography of that deity's faith. A *taper of sanctification* must be dedicated to a deity who can be sanctified to holy or unholy, and has the corresponding trait. If the deity's sanctification lists both options, the crafter must choose one when the candle is made. Once lit, this candle burns for 1 hour, and it can't be extinguished. When a willing creature spends the full hour within 10 feet of the lit candle engaging in prayer to the deity, that creature's Strikes gain the holy or unholy trait (as appropriate for the candle) until the next time that creature makes their daily preparations. During this time, the creature is bound by the deity's anathema. If they violate anathema, they lose the benefit of the *taper of sanctification*. A holy creature can't benefit from an unholy *taper of sanctification*, nor can an unholy creature benefit from a holy one."
+ },
+ {
+  "id": "targeting-finisher",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Targeting Finisher",
+  "level": 10,
+  "traits": [
+   "finisher",
+   "swashbuckler"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your attack harms and hinders your foe. Choose a particular part of your foe from the list below and Strike. If you hit and damage the target, apply the effect corresponding to the chosen part. This hindrance lasts until the end of your next turn. On a critical hit, you also apply a lesser effect lasting for 1 minute. - **Arm (or another limb used for attacks, such as a tentacle)** The target is Enfeebled 2. On a critical hit, it is also Enfeebled 1 for 1 minute. - **Head** The target is Stupefied 2. On a critical hit, it is also Stupefied 1 for 1 minute. - **Legs** The target takes a –10-foot status penalty to its Speeds. On a critical hit, it also takes a –5-foot status penalty to its Speeds for 1 minute."
+ },
+ {
+  "id": "teacher",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Teacher",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkillChoice"
+  ],
+  "inRegistries": [],
+  "text": "You are incredibly knowledgeable, skilled, and perhaps even trained to teach children and adults about the world and its wonders. From books to classes, you're committed to imparting knowledge to all. Not everything can be taught or learned from a book, though, so you've become an adventurer to learn subjects more directly and bring that wisdom back to your students. Choose two attribute boosts. One must be to **Intelligence** or **Wisdom**, and one is a free attribute boost. You're trained in your choice of either the Performance or Society skill, as well as the Academia Lore skill. You gain the Experienced Professional skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Lore** Academia Lore **Skill Feat** Experienced Professional"
+ },
+ {
+  "id": "teamster",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Teamster",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You left your home a few months back for a life on the road, working for one caravan company and then another, always on the lookout for a new job and a better life. Last week, you were hired by the Bort Bargith's company in Elidir. You don't know anyone from the company just yet, but most of its members seem to be honest merchants and traders. Choose two attribute boosts. One must be to **Strength** or **Wisdom**, and one is a free attribute boost. You're trained in the Nature skill and the Mercantile Lore skill. You gain the Train Animal skill feat. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Nature **Lore** Mercantile Lore **Skill Feat** Train Animal"
+ },
+ {
+  "id": "tech-reliant",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Tech-Reliant",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedSkill"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Some event, be it an accident, attack, or disaster, has left you horribly scarred by magic. Your body no longer tolerates magical healing, and you can't use magic, forcing you to rely on gadgets and ingenuity where others trust in spells and magical items. You might have been well-versed in magic before, or barely familiar with its use. This event may have injured your body in visible ways, but no matter the extent of your injuries, your body no longer interacts with healing magic in any capacity. Choose two attribute boosts. One must be to **Constitution** or **Intelligence**, and one is a free attribute boost. You're trained in the Crafting skill and the Medicine skill. You gain the Battle Medicine skill feat, and a +1 circumstance bonus to saving throws against spells. Healing spells, healing magic items, and magical effects with the healing trait have no effect on you. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Crafting **Skill Feat** Battle Medicine"
+ },
+ {
+  "id": "terra-dragonblood",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Terra Dragonblood",
+  "level": 1,
+  "traits": [
+   "dragonblood",
+   "lineage"
+  ],
+  "engineFieldsPresent": [
+   "senses"
+  ],
+  "inRegistries": [],
+  "text": "Each step upon the earth makes your blood resonate. You gain tremorsense as an imprecise sense to a range of 30 feet; if you already have tremorsense, increase its range by 5 feet. If you choose a draconic exemplar, you must choose a dragon with a burrow Speed."
+ },
+ {
+  "id": "tetraelemental-assault",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Tetraelemental Assault",
+  "level": 9,
+  "traits": [
+   "suli"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your Elemental Assault cycles through all four elements. When you use Elemental Assault, instead of choosing a single element, you can choose an element from the list when using the action, and then choose a different element at the beginning of each of your next 3 turns without spending an action; once you have chosen an element, you can't choose it again during this Elemental Assault, meaning you must select all four elements over the course of 4 turns. Each time you choose an element, until the beginning of your next turn, your Strikes deal an additional 1d6 damage of the indicated type and have the trait corresponding to that element."
+ },
+ {
+  "id": "thassilonian-delver",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Thassilonian Delver",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "As archaeologists uncovered and explored ever-larger numbers of Thassilonian ruins, you were among the eager explorers who sought out the Runelords' ancient secrets. You may have been the apprentice to another Pathfinder who perished on an expedition, leaving you their discoveries and notes. Or perhaps you explored several of these sites yourself, quickly learning to parse the arcane secrets before lest the eldritch magic extinguish your life. Choose two attribute boosts. One must be to **Constitution** or **Intelligence**, and one is a free attribute boost. You're trained in the Arcana skill and the Thassilonian History Lore skill. You gain the Arcane Sense skill feat. Add **Thassilonian** to the list of additional languages you can learn for having a high Intelligence modifier. --- **Special** You can select this background only if you have earned credit for at least 5 First Edition scenarios from Season 4 of the Pathfinder Society organized play campaign. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Arcana **Lore** Thassilonian History Lore **Skill Feat** Arcane Sense"
+ },
+ {
+  "id": "thassilonian-traveler",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Thassilonian Traveler",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Saga Lands --- You come from ancient Thassilon, one of the citizens that appeared out of time alongside the city of Xin-Edasseril. You know many things that have been long forgotten... along with many things that are no longer correct. Choose two attribute boosts. One must be to **Constitution** or **Intelligence**, and one is a free attribute boost. You're trained in the Arcana skill and the Thassilon Lore skill. You gain the Dubious Knowledge skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Arcana **Lore** Thassilon Lore **Skill Feat** Dubious Knowledge"
+ },
+ {
+  "id": "thaumaturges-demesne",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Thaumaturge's Demesne",
+  "level": 12,
+  "traits": [
+   "arcane",
+   "thaumaturge"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You have claimed an area or location as your demesne, granting you the ability to ward and protect it. When you select this feat, choose a demesne, an area of no more than 2,000 square feet. You must legitimately own the area or, if its a public area, you must lay claim to the area without anyone contesting it. Once you've chosen your demesne, it's automatically protected by an arcane Peaceful Bubble spell with an unlimited duration, heightened to half your level rounded up and using your thaumaturge class DC in place of a spell DC, if necessary. Additionally, the demesne is attended by three unseen custodians, as a successful Unseen Custodians ritual, and one object in the area gains an elemental sentinel, as a successful Elemental Sentinel ritual."
+ },
+ {
+  "id": "the-avalanche",
+  "lane": "choice",
+  "collection": "items",
+  "name": "The Avalanche",
+  "level": 20,
+  "traits": [
+   "artifact",
+   "harrow-court",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Suit** Keys (Dex) **Alignment** lawful evil --- *The Avalanche* represents unmitigated disasters, destruction that overruns all in its path. As long as *The Avalanche* is invested, you gain a +1 item bonus to damage rolls with Strikes that inflict bludgeoning damage. This increases to a +2 item bonus if you're at least 14th level, and a +3 item bonus if you're at least 18th level. **Activate** ⟨4⟩ envision, Interact **Frequency** once per day --- **Effect** You wave the card in the air and hurl staggering volumes of ice, snow, and rocks out into the world. This magical avalanche buries your foes. Choose up to 4 creatures within 60 feet, each of whom must attempt a save against your class DC or spell DC. Regardless of their saving throw, the creature's space becomes greater difficult terrain from the mounds of ice, snow, and rubble. --- **Critical Success** The creature is unaffected. **Success** The creature takes 5d8 damage and is pushed into an adjacent space of its choice. **Failure** The creature takes 10d8 damage, is knocked prone, and is restrained. **Critical Failure** The creature takes 20d8 damage, is knocked prone, and is immobilized."
+ },
+ {
+  "id": "the-fool",
+  "lane": "choice",
+  "collection": "items",
+  "name": "The Fool",
+  "level": 20,
+  "traits": [
+   "artifact",
+   "harrow-court",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Suit** Books (Int) **Alignment** neutral evil --- *The Fool* represents grave foolishness, grand naivete, and exceptional greed. As long as you have *The Fool* invested, anytime you gain the stupefied condition, reduce its value by 1. You also gain a +2 item bonus to all saving throws against effects that cause the stupefied condition. This bonus increases to +3 if you're at least 17th level. **Activate** ⟨2⟩ envision, Interact (mental) **Frequency** once per day --- **Effect** You display The Fool to your foes in a clumsy, awkward, and embarrassing way. Choose up to four creatures within 60 feet. These four creatures must attempt a save against your class DC or spell DC. --- **Critical Success** The creature is unaffected. **Success** The creature is distracted by your antics and is Stupefied 1 until the start of your next turn. **Failure** The creature is Stupefied 2. **Critical Failure** The creature is Stupefied 3. In addition, for 1 minute, the creature is confused."
+ },
+ {
+  "id": "the-infinite-eye",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "The Infinite Eye",
+  "level": 1,
+  "traits": [
+   "psychic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "The true strength of the mind lies in the knowledge it contains, with each new observation contributing to the totality of its experiences. To grow your experiences—and with them, your power—you devote yourself to observing as much as possible, casting your senses through space and time with clairvoyance and precognition. **Granted Spells** - 1st: Sure Strike - 2nd: Augury - 3rd: Locate - 4th: - 5th: Scouting Eye - 6th: Truesight - 7th: True Target - 8th: Unrelenting Observation - 9th: Foresight **Standard Psi Cantrips** Detect Magic You have the kind of fine control over your magical senses that other spellcasters can only dream of. When you cast detect magic, you're aware of any creature in the emanation affected by a spell or carrying a magic item, and you determine the main location of magic within any magical hazard in the emanation (with the normal restrictions on detecting illusions). This typically manifests as an alteration to your vision, such as seeing a soft aura around the creature or hazard. Sensing these phenomena doesn't make it clear which spell is on a creature, nor which of its items are magical. Your detect magic also gains the following amp. **Amp** Your pulse of detection magic helps you gain a sense of nearby magic's strengths or weaknesses. When you detect the presence of magic on an enemy or hazard, you gain a +1 status bonus to saves against magic originating from that enemy or hazard for 3 rounds. If you find magic from multiple sources with a single casting of detect magic, you get the bonus against all of them. **Amp Heightened (7th)** The status bonus to saves against magic increases to +2. Guidance Your clairvoyant gaze extends further than most, allowing you to guide your allies from a greater distance. The range of guidance increases to 120 feet. It also gains the following amp. **Amp** You can project a flash of insight to your ally in the nick of time to save them from failure. Amped guidance doesn't cause a creature to become temporarily immune to guidance, and a creature can be targeted by amped guidance even if it is temporarily immune to guidance. You can cast an amped guidance spell as a reaction triggered when your ally fails or critically fails an attack roll, Perception check, saving throw, or skill check, and the bonus from guidance would change the failure to a success or the critical failure to a normal failure. The bonus from guidance applies retroactively to their check. **Amp Heightened (6th)** The bonus from the spell increases to +2. **Unique Psi Cantrips** surface: Glimpse Weakness **Amp** The additional precision damage is 1d4+1. **Amp Heightened (+2)** The additional precision damage increases by 1d4+1. deeper: Omnidirectional Scan **Amp** Your scans are so minute that you can project your foe's likely strengths and weaknesses. You learn which of the target enemy's saving throws is highest and which is lowest, and you and all allies within 30 feet gain a +1 circumstance bonus to attacks and damage against the creature. If you take the Aid reaction you prepared for and succeed at your roll, these bonuses increase to +2 on the attack you're Aiding. On a critical success, they increase to +3,"
+ },
+ {
+  "id": "the-locksmith",
+  "lane": "choice",
+  "collection": "items",
+  "name": "The Locksmith",
+  "level": 20,
+  "traits": [
+   "artifact",
+   "harrow-court",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Suit** Key (Dex) **Alignment** lawful neutral --- *The Locksmith* represents opening locks, including metaphorical locks such as unlocking fate. As long as you have *The Locksmith* invested, it grants you a +2 item bonus to Thievery checks to Pick a Lock. This increases to a +3 item bonus if you are at least 17th level. **Activate** ⟨5⟩ envision, Interact **Trigger** You would be afflicted by a curse or a disease **Frequency** once per day --- **Effect** You mimic the turning of a key in a lock and free yourself from your unpleasant fate. You attempt to counteract the triggering affliction, using half your level (rounded up) as the counteract rank and a counteract check modifier equal to your class DC – 10."
+ },
+ {
+  "id": "the-marriage",
+  "lane": "choice",
+  "collection": "items",
+  "name": "The Marriage",
+  "level": 20,
+  "traits": [
+   "artifact",
+   "harrow-court",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Suit** Crowns (Cha) **Alignment** lawful neutral --- *The Marriage* symbolizes a union of body, mind, spirit, or any of the three. When *The Marriage* is invested, you gain a +2 item bonus to attempts made to Request. This increases to a +3 item bonus at 17th level. **Activate** ⟨2⟩ envision, Interact **Frequency** once per day --- **Effect** Choose one adjacent willing creature. By brushing *The Marriage* against their body, you form a magical bond with that creature that persists until you activate *The Marriage* again to form a bond with a different creature. While the bond persists, you and the other creature can communicate via telepathy to a distance of 120 feet. As long as you and the target are on the same plane of existence and are both alive, you each remain aware of the other's state—you know the other's direction from you, distance from you, and any conditions affecting them. If your bonded target becomes blinded, confused, controlled, fascinated, frightened, slowed, or stunned, you can use a reaction to attempt to counter the condition affecting the target, which also ends the bond between you and the target. The modifier on this counter check is equal to your class DC – 10. If you fail to counter the condition, that condition also afflicts you, and the bond with the other still ends."
+ },
+ {
+  "id": "the-rakshasa",
+  "lane": "choice",
+  "collection": "items",
+  "name": "The Rakshasa",
+  "level": 20,
+  "traits": [
+   "artifact",
+   "harrow-court",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Suit** Book (Int) **Alignment** lawful evil --- *The Rakshasa* represents domination of others to support your own schemes. When you invest *The Rakshasa*, identify a single willing creature within 30 feet as your pledged follower. If you're at least 15th level, you can have up to two pledged followers at once. At 18th level, you can have up to three pledged followers. If you have the maximum pledged followers active and select a new one, a previous pledged follower of your choice is no longer your pledged follower. You gain an item bonus equal to your current number of pledged followers to all Coerce attempts. **Activate** ⟨4⟩ **Frequency** once per minute --- **Effect** You regain Hit Points equal to twice your level, and a pledged follower of your choice loses Hit Points equal to your level (no effects apply that would decrease this Hit Point loss). If this loss kills your pledged follower, you also gain temporary Hit Points equal to your level. The pledged follower is temporarily immune to this activation for 24 hours."
+ },
+ {
+  "id": "the-teamster",
+  "lane": "choice",
+  "collection": "items",
+  "name": "The Teamster",
+  "level": 20,
+  "traits": [
+   "artifact",
+   "harrow-court",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "**Suit** Shield (Con) **Alignment** neutral --- *The Teamster* represents the driving force to push on, no matter the circumstance. As long as you have *The Teamster* invested, all single-target effects that target you and require a saving throw gain the incapacitation trait. If the effect originates from a creature or effect of a level higher than yours, it doesn't gain the incapacitation trait in this way. **Activate** ⟨4⟩ envision **Trigger** you are affected by an ongoing condition **Frequency** once per day --- **Effect** You push through your largest hindrance. Select one of the following conditions currently affecting you: blinded, clumsy, confused, controlled, dazzled, deafened, doomed, drained, dying, enfeebled, fascinated, fatigued, frightened, grabbed, immobilized, paralyzed, persistent damage, petrified, restrained, sickened, slowed, stunned, stupefied, unconscious, or wounded. If the source of the condition is more than 4 levels lower than your current level, The Teamster automatically counters the condition. Otherwise, The Teamster attempts to counter the condition, with a counteract modifier of +31."
+ },
+ {
+  "id": "the-trader",
+  "lane": "choice",
+  "collection": "items",
+  "name": "The Trader",
+  "level": 20,
+  "traits": [
+   "artifact",
+   "harrow-court",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Suit** Books (Int) **Alignment** neutral --- *The Trader* represents trades and exchanges of information. As long as you have *The Trader* invested, you gain a +2 item bonus to Diplomacy checks made to Gather Information. This increases to a +3 item bonus if you are at least 17th level. **Activate** ⟨2⟩ envision, Interact **Frequency** once per day --- **Effect** The Trader allows you to make an exchange with yourself. Press the card to your brow, and then select two skills. Your proficiency rank with those two skills swaps for 1 hour. For example, if you were a master in Athletics and untrained in Crafting, you would become untrained in Athletics and a master in Crafting. If making this swap would break prerequisites to feats, you lose access to those feats until your skill proficiencies change back in an hour."
+ },
+ {
+  "id": "thiefs-calling",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "Thief's Calling",
+  "level": 1,
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Whether guildmaster or cutpurse, you covet something, or many things, that don't belong to you, and you're driven to ever greater heights of larceny. When you attempt to Pick a Lock or Steal an item, you can spend a Mythic Point to attempt the check at mythic proficiency. The first time each day that you critically succeed on a check to Pick a Lock or Steal from a hostile creature, you regain a Mythic Point. --- **Edicts** seek opportunities to overcome evermore dangerous and complex locks and mechanical defenses, steal things from dangerous creatures or places **Anathema** leave unattended treasure where you found it, pass up opportunities for profit that challenge your skills"
+ },
+ {
+  "id": "third-apparition",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "Third Apparition",
+  "level": 7,
+  "traits": [
+   "animist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've learned to shelter more spirits, gaining access to more magic. When you attune to apparitions during your daily preparations, you choose three apparitions to attune to, with one of them being your primary apparition. The number of Focus Points in your focus pool increases by 1 (maximum 3)."
+ },
+ {
+  "id": "third-path-to-perfection",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "Third Path to Perfection",
+  "level": 15,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You have made great progress in your personal studies of enlightenment. Choose one of the saving throws you selected for path to perfection or second path to perfection. Your proficiency rank for the chosen type of save increases to legendary. When you roll a critical failure on the chosen type of save, you get a failure instead. When you roll a failure on the chosen type of save against an effect that deals damage, you take half damage."
+ },
+ {
+  "id": "thrill-seeker",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Thrill-Seeker",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You once survived a life-or-death situation and found it surprisingly exhilarating, so now you chase that feeling of invincibility you only get when dancing with death. Your desire for exhilaration has you scaling buildings, leaping off rooftops, jumping chasms, and performing other deathdefying stunts. Choose two attribute boosts. One must be to **Strength** or **Constitution**, and one is a free attribute boost. You are trained in the Athletics skill and the Engineering Lore skill. You gain the Combat Climber skill feat. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Trained Skill** Athletics **Lore** Engineering Lore **Skill Feat** Combat Climber"
+ },
+ {
+  "id": "thrune-loyalist",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Thrune Loyalist",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Old Cheliax --- Despite the setbacks Cheliax has suffered recently, your loyalties lie with the devil-backed House Thrune. You consider the current queen to be the rightful ruler of your homeland, and you are willing to act against her enemies. Choose two attribute boosts. One must be to **Intelligence** or **Charisma**, and one is a free attribute boost. You're trained in the Religion skill and the Hell Lore skill You gain the Student of the Canon skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Religion **Lore** Hell Lore **Skill Feat** Student of the Canon"
+ },
+ {
+  "id": "thuvian-unifier",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Thuvian Unifier",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Golden Road --- You believe the city-states of Thuvia should be united into one nation under the rule of your home city (most commonly Aspenthar), and you're willing to do whatever it takes to make it happen. Choose two attribute boosts. One must be to **Strength** or **Charisma**, and one is a free attribute boost. You're trained in the Intimidation skill and the Politics Lore skill. You gain the Quick Coercion skill feat. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Intimidation **Lore** Politics Lore **Skill Feat** Quick Coercion"
+ },
+ {
+  "id": "tide-watcher",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Tide Watcher",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Where you hail from, the ocean is the lifeblood of your community; knowing how it changes according to the moon was integral to everyday life. You've studied the moon's phases to predict the rise and fall of the ocean waters. Eventually, you gained a supernatural ability to foretell to some degree of accuracy the coming of more severe changes, such as tidal waves or encroaching storms. At times, it fell on you to warn settlements of such oncoming natural disasters. Choose two attribute boosts. One must be to Charisma or Intelligence, and one is a free attribute boost. You're trained in Nature and Ocean Lore. During the night when you can see the moon, you gain a +1 circumstance bonus to Survival checks to discern weather patterns and predict upcoming weather conditions-this bonus increases to +2 if you're in the vicinity of the ocean. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Nature **Lore** Ocean Lore"
+ },
+ {
+  "id": "tiffin-box-deliverer",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Tiffin Box Deliverer",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Access** Tian Xia origin --- Known to some as a dabbawala, you work for a delivery service, delivering and returning sturdy tiffins with hardy lunches for those who can't afford to bring lunch with them on their morning commute. Maybe you saw something you shouldn't have while out on your deliveries. Maybe you want more than just a mundane life. Either way, you know to prepare a lunch or two for your future adventures. Choose two attribute boosts. One must be to **Dexterity** or **Intelligence**, and one is a free attribute boost. You're trained in Society and Labor Lore. You gain the Streetwise skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Society **Lore** Labor Lore **Skill Feat** Streetwise"
+ },
+ {
+  "id": "time-mage-dedication",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Time Mage Dedication",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [
+   "focusSpells"
+  ],
+  "inRegistries": [],
+  "text": "You might be a novice in the temporal arts now, but in the future, you'll hold time in the palm of your hand. As some of your future knowledge leaks back to your present self, you gain the Delay Consequence domain spell. You can Refocus by revisiting moments from your past and contemplating futures yet to come. If you already knew *delay consequence* from a feat or ability that allows you to gain your choice of domain spell, such as the Domain Initiate feat, then when you take Time Mage Dedication, you can retrain that option to select a different domain spell instead as your personal timeline rearranges itself. You also gain Time Sense as an innate cantrip usable at will. This innate spell and your focus spells from the time mage archetype are of the same tradition as the spells you used to meet the archetype's prerequisites."
+ },
+ {
+  "id": "to-battle",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "To Battle!",
+  "level": 8,
+  "traits": [
+   "archetype",
+   "auditory",
+   "flourish"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "With a resounding cry, you rally your ally to take the offensive. Choose one ally in your marshal's aura who has a reaction available. If you spend 1 action, that ally can use their reaction to immediately Stride. If you spend 2 actions, that ally can use their reaction to immediately Strike."
+ },
+ {
+  "id": "tomb-born",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Tomb Born",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "trainedLore"
+  ],
+  "inRegistries": [],
+  "text": "Your parents conceived you for a fell purpose at a site tainted by death, like a wight's barrow, mass grave, or ossuary. Their reasons could be a mystery, or you might know of their grand design and seek to escape-or fulfill-their plans. Either way, you're at your most dangerous when near death. Choose two attribute boosts. One must be to **Dexterity** or **Constitution**, and one is a free attribute boost. You're trained in the Undead Lore skill. You gain the Final Spite reaction. --- ## Background details **Attribute Boosts** Constitution or Dexterity, one free **Lore** Undead Lore"
+ },
+ {
+  "id": "tome-of-restorative-cleansing",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Tome of Restorative Cleansing",
+  "level": 5,
+  "traits": [
+   "grimoire",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Tome of Restorative Cleansing Source Treasure Vault (Remastered) pg. 113 Bulk L This book is dark blue on the night of the new moon, gradually shifting to bright red as the moon waxes. Activate (concentrate, healing, vitality) Frequency once per day; Requirements Your last action was to cast a spell prepared from this grimoire, and the spell removed a harmful condition or affliction from yourself or an ally; Effect Choose one creature whose condition was removed by the required spell. Depending on the version, that creature gains a number of temporary Hit Points that last for 1 hour. Tome of Restorative Cleansing (Lesser) Source Treasure Vault (Remastered) pg. 113 Price 130 gp Bulk L The creature gains 1d8 temporary Hit Points. Tome of Restorative Cleansing (Moderate) Source Treasure Vault (Remastered) pg. 113 Price 600 gp Bulk L The creature gains 2d8 temporary Hit Points. Tome of Restorative Cleansing (Greater) Source Treasure Vault (Remastered) pg. 113 Price 3,750 gp Bulk L The creature gains 3d8 temporary Hit Points."
+ },
+ {
+  "id": "tome-of-restorative-cleansing-greater",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Tome of Restorative Cleansing (Greater)",
+  "level": 14,
+  "traits": [
+   "grimoire",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This book is dark blue on the night of the new moon, gradually shifting to bright red as the moon waxes. **Activate** ⟨4⟩ (concentrate, healing, vitality) **Frequency** once per day **Requirements** Your last action was to cast a spell prepared from this grimoire, and the spell removed a harmful condition or affliction from yourself or an ally --- **Effect** Choose one creature whose condition was removed by the required spell. Depending on the version, that creature gains 3d8 temporary Hit Points that last for 1 hour."
+ },
+ {
+  "id": "tome-of-restorative-cleansing-lesser",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Tome of Restorative Cleansing (Lesser)",
+  "level": 5,
+  "traits": [
+   "grimoire",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This book is dark blue on the night of the new moon, gradually shifting to bright red as the moon waxes. **Activate** ⟨4⟩ (concentrate, healing, vitality) **Frequency** once per day **Requirements** Your last action was to cast a spell prepared from this grimoire, and the spell removed a harmful condition or affliction from yourself or an ally --- **Effect** Choose one creature whose condition was removed by the required spell. Depending on the version, that creature gains 1d8 temporary Hit Points that last for 1 hour."
+ },
+ {
+  "id": "tome-of-restorative-cleansing-moderate",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Tome of Restorative Cleansing (Moderate)",
+  "level": 9,
+  "traits": [
+   "grimoire",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This book is dark blue on the night of the new moon, gradually shifting to bright red as the moon waxes. **Activate** ⟨4⟩ (concentrate, healing, vitality) **Frequency** once per day **Requirements** Your last action was to cast a spell prepared from this grimoire, and the spell removed a harmful condition or affliction from yourself or an ally --- **Effect** Choose one creature whose condition was removed by the required spell. Depending on the version, that creature gains 2d8 temporary Hit Points that last for 1 hour."
+ },
+ {
+  "id": "touched-by-dahak",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Touched by Dahak",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**[Legacy - Age of Ashes]** As the manifestation of Dahak was destroyed, a shard of the dragon god's wrathful nature infused you, resulting in a violent temper, strange apocalyptic dreams, an obsession with dragon hunting, or some other touch of his influence. Choose two attribute boosts. One must be to **Strength** or **Charisma**, and one is a free attribute boost. You're trained in the Athletics skill and the Dragon Lore skill. You gain the Titan Wrestler skill feat. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Athletics **Lore** Dragon Lore **Skill Feat** Titan Wrestler"
+ },
+ {
+  "id": "town-troublemaker",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Town Troublemaker",
+  "traits": [
+   "persona-scoundrel"
+  ],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Every town has at least one of them: the person that everyone \"knows\" is a bad apple, a rascal, a mixer, or a fly in the ointment—the troublemaker. Your hometown was no exception, because you were that town's troublemaker, or at least one of its more notorious ones! This reputation may not have been warranted—perhaps you took the rap to protect a friend or family member caught in a scandal, or maybe you were tricked or cajoled into a tricky situation by so-called \"friends.\" Or the reputation could be spot-on. Being a town troublemaker doesn't mean you had malice in your heart, of course, especially if the town in question was one ruled by villains or governed by cruelty. One society's troublemaker is, after all, another society's freedom fighter! Regardless of the truth that lies at the heart of your personal situation, your legacy as the town troublemaker has given you great insights into society's seamy underbelly. Choose two attribute boosts. One must be to **Strength** or **Dexterity**, and one is a free attribute boost. You're trained in the Thievery skill and the Underworld Lore skill. You gain the Dirty Trick skill feat. If you have the Scoundrel persona trait, you also become trained in the Norgorber Lore skill. --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Trained Skill** Thievery **Lore** Underworld Lore **Skill Feat** Dirty Trick"
+ },
+ {
+  "id": "trade-consortium-underling",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Trade Consortium Underling",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Absalom and Starstone Isle --- Your experience as a ledger-keeper for one of Absalom's trade guilds has made you a canny investor and shrewd entrepreneur. Choose two attribute boosts. One must be to **Intelligence** or **Wisdom**, and one is a free attribute boost. You're trained in the Society skill and the Business Lore skill. You gain the Experienced Professional skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Society **Lore** Business Lore **Skill Feat** Experienced Professional"
+ },
+ {
+  "id": "trade-representative",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Trade Representative",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You belong to a merchant guild, a vendor group, or some other trade organization where you're protected and ensured a fair deal so long as you do what's best for the group's interests. You might be an agent of the Aspis Consortium looking for new opportunities to gain wealth, or you might be a rising merchant eager to prove yourself to your superiors. Choose two attribute boosts. One must be to **Dexterity** or **Intelligence**, and one is a free attribute boost. You're trained in the Crafting skill and the Mercantile Lore skill. You gain the Quick Repair skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Crafting **Lore** Mercantile Lore **Skill Feat** Quick Repair"
+ },
+ {
+  "id": "train-animal",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Train Animal",
+  "level": 1,
+  "traits": [
+   "downtime",
+   "general",
+   "manipulate",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You spend time teaching an animal to do a certain action. You can either select a basic action the animal already knows how to do (typically those listed in the Command an Animal action) or attempt to teach the animal a new basic action. The GM determines the DC of any check required and the amount of time the training takes (usually at least a week). It's usually impossible to teach an animal a trick that uses critical thinking. If you're expert, master, or legendary in Nature, you might be able to train more unusual creatures, at the GM's discretion. --- **Success** The animal learns the action. If it was an action the animal already knew, you can Command the Animal to take that action without attempting a Nature check. If it was a new basic action, add that action to the actions the animal can take when Commanded, but you must still roll. **Failure** The animal doesn't learn the trick."
+ },
+ {
+  "id": "translator",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Translator",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "In your youth, you learned to transcribe books and translate scrolls to preserve knowledge or perhaps to aid wealthy merchants and politicians. Whether you set out to make your own fortune or are drawn to decipher the strangest codes, your linguistic training will guide your discoveries. Choose two attribute boosts. One must be to **Intelligence** or **Charisma**, and one is a free attribute boost. You're trained in the Society skill and the Scribing Lore skill. You gain the skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Society **Lore** Scribing Lore **Skill Feat** Multilingual"
+ },
+ {
+  "id": "transmute-weapon",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Transmute Weapon",
+  "level": 14,
+  "traits": [
+   "mythic"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "When you choose a warshard weapon during daily preparations, you can transform the material it's composed of so that the weapon is made of a precious material (like adamantine, dawnsilver, or cold iron). The material and quality of the material you select must be of a level equal to or less than your character level. You can transmute the weapon into a standard-grade item of that material only if the weapon is at least level 9. You can transmute the weapon into high-grade item of that material only if the weapon is at least level 15."
+ },
+ {
+  "id": "traveling-gourmand",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Traveling Gourmand",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Access** Tian Xia origin --- With plenty of time to hone your culinary skill, you can make the most out of any dish you create. You have much experience with using the most difficult and hardiest of ingredients, as Zi Ha is known for housing many carnivorous plants, toxic fungi, and hardy, woolly animals. There are many reasons why a seasoned chef like you would seek adventure, whether to expand your palette or to explore other countries' cuisines. Choose two attribute boosts. One must be to **Dexterity** or **Intelligence**, and one is a free attribute boost. You're trained in Survival and Cooking Lore. You gain the Forager skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Survival **Lore** Cooking Lore **Skill Feat** Forager"
+ },
+ {
+  "id": "treat-condition",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Treat Condition",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "healing",
+   "manipulate",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are holding healer's tools, or you are wearing them and have a hand free. --- You treat an adjacent creature in an attempt to reduce the clumsy, enfeebled, or sickened condition. If a creature has multiple conditions from this list, choose one. Attempt a counteract check against the condition using your Medicine modifier as your counteract modifier and the condition's source to determine the DC. You can't treat a condition that came from an artifact or effect above 20th level unless you have Legendary Medic; even if you do, the counteract DC increases by 10. Treating a Condition that is continually applied under certain circumstances (for instance, the enfeebled condition a holy character gains from carrying a weapon with the unholy rune) has no effect as long as the circumstances continue. **Critical Success** Reduce the condition value by 2. **Success** Reduce the condition value by 1. **Critical Failure** Increase the condition value by 1."
+ },
+ {
+  "id": "tree-friend",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Tree Friend",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You aren't a mere visitor or settler living on a woodland's outskirts; you're an avid inhabitant of the Verduran Forest or another verdant wilderness. Intelligent plants like arboreals and leshies have accepted you as their neighbor, and you're adept at communicating with such creatures to avoid misunderstandings and violence. Even if you aren't part of the Wildwood Lodge, you have such a deeply ingrained connection to nature that the druids welcome you to their event. Choose two attribute boosts. One must be to **Intelligence** or **Charisma**, and one is a free attribute boost. You're trained in the Diplomacy skill and the Forest Lore skill. You gain the No Cause for Alarm skill feat, and you can choose Arboreal as one of your known languages. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Diplomacy **Lore** Forest Lore **Skill Feat** No Cause For Alarm"
+ },
+ {
+  "id": "tricksters-ace",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Trickster's Ace",
+  "level": 18,
+  "traits": [
+   "concentrate",
+   "investigator",
+   "rogue"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** You specify the trigger when you make your daily preparations (see Requirements below). **Requirements** When you make your daily preparations, you must specify a trigger for this reaction using the same restrictions as the triggers for the Ready action. You also choose a single spell from the arcane, divine, occult, or primal list of 4th level or lower. The spell can't have a cost, nor can its casting time be more than 10 minutes. The spell must be able to target a single creature, and you must be a valid target for it. --- Whether from jury-rigged magic items, deduction from the study of magical interactions, or other means, you have a contingency in your back pocket for desperate situations. When the trigger occurs, you cause the spell to come into effect. The spell targets only you, no matter how many creatures it would affect normally. If you define particularly complicated conditions, as determined by the GM, the trigger might fail. Once the contingency is triggered, the spell is expended until your next daily preparations."
+ },
+ {
+  "id": "truth-seeker",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Truth Seeker",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Whether you are a local or from out of town, you've heard rumors that Breachill's past contains a hidden secret. Perhaps you've heard strange rumors that the town's founder, Lamond Breachton, was not the hero everyone touts, or maybe your grandmother heard stories from her own grandmother that contradict the town's accepted narrative of its establishment. In the pursuit of the truth, you've learned to navigate the tangles of politics, and to never take anyone's word at face value. You plan to join the Call for Heroes so that you can make yourself known to the council, or perhaps even ingratiating yourself to them, so you can seek the truth and eventually uncover Breachill's secrets! Choose two attribute boosts. One must be to **Strength** or **Wisdom**, and one is a free attribute boost. You're trained in the Deception skill and the Politics Lore skill. You gain the Lie to Me skill feat. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Deception **Lore** Politics Lore **Skill Feat** Lie To Me"
+ },
+ {
+  "id": "two-element-infusion",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Two-Element Infusion",
+  "level": 6,
+  "traits": [
+   "infusion",
+   "kineticist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Slamming one element into another, you combine their strengths. If the next action you use is an Elemental Blast, choose two of your kinetic elements instead of one. The blast gains the traits of both elements and uses the highest range and damage die among the two elements. Half the blast's damage is the damage type of one element, and the other half is the damage type of the other element. If the total damage is an odd number, you choose which element deals the higher damage. Determine the damage amounts before altering the amount due to halving, doubling, resistances, weaknesses, and other calculations. If either element can deal more than one type of damage, you can still choose which damage type to use. You gain any added effects of both elements, such as their critical blast junction effects."
+ },
+ {
+  "id": "tyrant-witness",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Tyrant Witness",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "innateSpells",
+   "trainedLore"
+  ],
+  "inRegistries": [],
+  "text": "When Tar-Baphon broke free of Gallowspire, you saw him emerge. When the god-slaying lich obliterated Vigil and Roslar's Coffer, you scrambled to safety. And when necrotic rainfall swept through the lands and the Gallowgarden grew, you weathered the storms. Others talk of what the Whispering Tyrant's return did to Lastwall, but you were there. And it changed you. Choose two attribute boosts. One must be to **Dexterity** or **Wisdom**, and one is a free attribute boost. You're trained in the Undead Lore skill. You can cast Vitality Lash as a divine innate cantrip. As normal, the cantrip heightens to half your level rounded up. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Lore** Undead Lore"
+ },
+ {
+  "id": "tyrants-writ",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Tyrant's Writ",
+  "level": 8,
+  "traits": [
+   "grimoire",
+   "magical",
+   "necromancy"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Tyrant's Writ Source Impossible Lands pg. 178 Price 500 gp Bulk L Access Characters from Geb have access to this item. A spirited debate persists among scholars on whether the eponymous tyrant of this grimoire actually refers to Tar-Baphon, the necromancer Geb, or even the goddess Urgathoa herself. This grimoire appears at first to be a series of writs that makes arrogant demands of the reader, those around them, and the universe. Anyone who gives these writings more than a cursory look realizes the writs hold spells much like any other grimoire, with the animate dead spell being particularly prominent. Tyrant's writs grants you the ability to demand more from the undead you animate. Activate envision (metamagic) Frequency once per day; Effect If your next action is to Cast a Spell to cast an animate dead spell prepared with tyrant's writs, you can choose one of the following additional benefits to grant the summoned undead. Bloody The undead gains fast healing equal to its level. Explosive When it reaches 0 Hit Points, the undead explodes, dealing 4d6 fire damage to adjacent creatures, with a basic Reflex save using the animate dead spell's DC. As normal, since the final sacrifice spell doesn't reduce the target to 0 Hit Points, it doesn't cause this explosion. Necrotic Speed The undead gains a +10-foot status bonus to all its Speeds. Rotten Any living creature who starts its turn adjacent to the undead who isn't at full Hit Points takes 1d6 poison damage."
+ },
+ {
+  "id": "tyrants-writs",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Tyrant's Writs",
+  "level": 8,
+  "traits": [
+   "grimoire",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "A spirited debate persists among scholars on whether the eponymous tyrant of this grimoire actually refers to Tar-Baphon, the necromancer Geb, or even the goddess Urgathoa herself. This grimoire appears at first to be a series of writs that makes arrogant demands of the reader, those around them, and the universe. Anyone who gives these writings more than a cursory look realizes the writs hold spells much like any other grimoire, with the animate dead spell being particularly prominent. Tyrant's writs grants you the ability to demand more from the undead you animate. **Activate** ⟨4⟩ envision (spellshape) **Frequency** once per day --- **Effect** If your next action is to Cast a Spell to cast an animate dead spell prepared with tyrant's writs, you can choose one of the following additional benefits to grant the summoned undead. - **Bloody** The undead gains fast healing equal to its level. - **Explosive** When it reaches 0 Hit Points, the undead explodes, dealing 4d6 damage to adjacent creatures, with a basic Reflex save using the animate dead spell's DC. As normal, since the final sacrifice spell doesn't reduce the target to 0 Hit Points, it doesn't cause this explosion. - **Necrotic Speed** The undead gains a +10-foot status bonus to all its Speeds. - **Rotten** Any living creature who starts its turn adjacent to the undead who isn't at full Hit Points takes 1d6 damage"
+ },
+ {
+  "id": "ubiquitous-overdrive",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Ubiquitous Overdrive",
+  "level": 20,
+  "traits": [
+   "inventor"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You prepare a variety of incredible gizmos on each of your allies, linking them together through careful modification to enable you to power them up all at once. During your daily preparations, select up to six willing allies. Whenever you Overdrive, you grant the benefits of your overdrive to any of these allies you choose who are within 30 feet of you. The allies don't gain the increased damage from expert, master, or legendary overdrive."
+ },
+ {
+  "id": "ulfen-raider",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Ulfen Raider",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Saga Lands --- You are an Ulfen warrior, feared among Avistan for the merciless and devastating raids your people once conducted along the shores. Though the days of these Ulfen raids are largely past, you have been trained to strike terror into the hearts of those who face you. Choose two attribute boosts. One must be to **Strength** or **Charisma**, and one is a free attribute boost. You're trained in the Intimidation skill and the Sailing Lore skill. You gain the Intimidating Glare skill feat. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Intimidation **Lore** Sailing Lore **Skill Feat** Intimidating Glare"
+ },
+ {
+  "id": "unbalancing-sweep",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Unbalancing Sweep",
+  "level": 12,
+  "traits": [
+   "barbarian",
+   "flourish"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You make a great sweep with your weapon or fists about yourself, knocking creatures off their feet and away from you. Choose up to three enemies within your reach and choose whether to Shove or Trip all three of them. Whichever of the two options you choose, roll a separate Athletics check against each enemy, performing the same action against each enemy. Each attempt counts toward your multiple attack penalty, but don't increase your penalty until you have made all the attempts."
+ },
+ {
+  "id": "undercover-contender",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Undercover Contender",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Gangsters and cheats seem as drawn to the Ruby Phoenix Tournament as piranhas to a bloody hippo, and you're dead set on making sure this tournament is as scandal-free as possible. Your reasons are your own - maybe a high-ranking official in Goka has tasked you with the case, or maybe foul play led to losing someone dear to you in the last tournament. Maybe you just hate to see fair fighters get knocked out by crooked contenders. Whatever your motives, you've promised to be in the ring in case anyone tries to derail the contest. The Golden League crime syndicate is the most obvious suspect, what with their meddling in the Ruby Phoenix Tournament a decade ago, but maybe there will be others - unscrupulous contenders trying to pull one over on Hao Jin, perhaps, or an entirely new devious conspiracy hoping to hijack the event for their own evil purposes. In any case, you'll be around to deliver the hammer of justice. You've told a small squad of your closest confidants about your mission, and you've managed to secure a spot in the tournament's prequalifier along with them. You and your team have to win fights to stay in the competition long enough to make sure things go smoothly. If that means you end up being the Ruby Phoenix Champions, all the better. Choose two attribute boosts. One must be to **Charisma** or **Dexterity**, and one is a free attribute boost. You're trained in Deception and the Underworld Lore skill. You gain the Lengthy Diversion skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Deception **Lore** Underworld Lore **Skill Feat** Lengthy Diversion"
+ },
+ {
+  "id": "undercover-lotus-guard",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Undercover Lotus Guard",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "It's a well-known secret that for every playhouse in the Ivy District, there's an underground criminal element lurking somewhere in the shadows. To get intel on the occultists, assassins, and thieves' guilds that pull the strings of power in the Ivy District, the Lotus Guard trains some of the best undercover agents and operatives in all of Absalom. You're one such agent, and you've put your life on the line more times than you can count by getting close to the Ivy's most dangerous criminals. Your risky missions and thrill-seeking derring-do have earned you many accolades-but also no shortage of enemies. You transferred to the Edgewatch after your cover was unexpectedly blown and you needed a safe place to lie low away from the Ivy District. With your mastery of disguise and your ability to confidently converse with criminal masterminds, it won't be long before you've made yourself an indispensable undercover operator in this precinct as well. Choose two attribute boosts. One must be to **Intelligence** or **Charisma**, and one is a free attribute boost. You're trained in the Deception skill, Art Lore, **and** Underworld Lore. You gain a +1 circumstance bonus to Deception, Diplomacy, and Intimidation checks to Interact with Lotus Guards and high-ranking criminals like guild masters, gang leaders, and mob bosses. You gain the Charming Liar skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Deception **Lore** Art Lore And Underworld **Skill Feat** Charming Liar"
+ },
+ {
+  "id": "undersea-enthusiast",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Undersea Enthusiast",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - High Seas --- You love diving and exploring the world beneath the waves, and long periods of swimming have trained you to move easily through the water. You're also fascinated by undersea creatures and cultures-and may even have a trace of one of them in your own lineage. Choose two attribute boosts. One must be to **Strength** or **Constitution**, and one is a free attribute boost. You're trained in the Athletics skill and the Ocean Lore skill. You gain the Underwater Marauder skill feat. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Trained Skill** Athletics **Lore** Ocean Lore **Skill Feat** Underwater Marauder"
+ },
+ {
+  "id": "underworld-investigator",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Underworld Investigator",
+  "level": 1,
+  "traits": [
+   "investigator"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featGrantsAuto"
+  ],
+  "text": "Your work as an investigator makes you familiar with the criminal element. You might be a criminal yourself, or you might have gained an understanding of how they operate from the outside. You become trained in Underworld Lore, and you gain your Pursue a Lead investigation bonus to Thievery checks to investigate a case (such as checks to Steal a clue from a suspect or Pick a Lock to open a safe with damning documents)."
+ },
+ {
+  "id": "union-representative",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Union Representative",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You might have fought for fairer ore distribution for the Metalmaker's Union, higher chef's pay in the Provisioners' Union, or better mercenary contracts for the Union of Axe and Coin. Whatever the case, you have experience in the high-stakes world of the negotiating table, experience that translates surprisingly well to adventuring. Choose two attribute boosts. One must be to **Intelligence** or **Charisma**, the other is a free boost. You're trained in the Diplomacy skill and the Legal Lore skill. You gain the Contract Negotiator skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Diplomacy **Lore** Legal Lore **Skill Feat** Contract Negotiator"
+ },
+ {
+  "id": "unlimited-pluripotency",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Unlimited Pluripotency",
+  "level": 17,
+  "traits": [
+   "surki"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Within all surkis is the capacity to be whatever they need to be, and you can tap into that capacity even now. When you sleep, you can choose to enter a pupa state. You sleep so deeply in your pupa that you can't be woken up by loud noises around you, and you lose the benefits of one of your surki heritages overnight. When you emerge and make your daily preparations, you can select a different surki heritage to replace it. If you had one or more evolutions for that heritage, you can choose a different evolution for your new heritage."
+ },
+ {
+  "id": "unremarkable",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Unremarkable",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Your face is particularly unremarkable, even if your presence or actions may not be. You know how to use this to your advantage, making it difficult for people to identify and collect information about you. Choose two attribute boosts. One must be to **Wisdom** or **Charisma**, and one is a free attribute boost. You are trained in the Deception skill and the Acting Lore skill. You gain the Lengthy Diversion skill feat. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Deception **Lore** Acting Lore **Skill Feat** Lengthy Diversion"
+ },
+ {
+  "id": "unstable-patronage",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Unstable Patronage",
+  "level": 14,
+  "traits": [
+   "archetype",
+   "spellshape"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "You can act as a magical patron for your charges. When you finish your daily preparations, choose a spell your familiar knows and one of your charges. Once before your next daily preparations, that creature can Cast the Spell as an innate spell; this spell can be of no higher a rank than the highest rank of spells you can cast –2."
+ },
+ {
+  "id": "usurp-the-lunar-reins",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Usurp the Lunar Reins",
+  "level": 18,
+  "traits": [
+   "impulse",
+   "kineticist",
+   "overflow",
+   "primal",
+   "water"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The moon has always been connected to the tides, and now you can grasp that connection. You can create massive amounts of water and control these tides, subverting even the moon's sovereignty over the oceans and seas. Choose an area 50 feet long by 50 feet wide within 500 feet, and choose two different effects from the options provided below. The effects take place in the listed order. - **Flood** You create a pool of pure, clean water in the area, which coalesces from ambient moisture. This water must be created on a surface-not in air-and flows normally. - **Control** You tug on the moon to raise or lower the level of bodies of water in the area by 10 feet. If you control a portion of a larger body of water, the water then equalizes normally. - **Modulate** With a wave of your hand, you create or smooth ripples, making all bodies of water in the area either calm or turbulent. Making it calm turns difficult terrain or greater difficult terrain to calm water, and making it turbulent turns calm water into difficult terrain. - **Slow** By exercising your rightful control over all water, each creature with the water trait in the area must succeed at a save against your class DC or be Slowed 1 (or Slowed 2 on a critical failure). Flood and control are permanent and non-magical. Modulate and slow last until the end of your next turn, but you can Sustain the impulse to continue them."
+ }
+]

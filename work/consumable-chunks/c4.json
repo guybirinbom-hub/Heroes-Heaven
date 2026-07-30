@@ -1,0 +1,146 @@
+[
+ {
+  "id": "deadweight-mutagen-major",
+  "name": "Deadweight Mutagen (Major)",
+  "level": 17,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- For 1 hour your joints loosen and bones thicken, making your body incredibly weighty and difficult to maneuver around. **Benefit** You gain a +4 item bonus to Athletics checks to Shove and Trip, to your Fortitude and Reflex DCs against attempts to Shove or Trip you, and to saving throws against effects that attempt to force you to move or knock you prone. You can attempt to Shove or Trip creatures up to three sizes larger than you. **Drawback** You gain the encumbered condition and can't remove it while under the effects of the mutagen."
+ },
+ {
+  "id": "sanguine-mutagen-lesser",
+  "name": "Sanguine Mutagen (Lesser)",
+  "level": 1,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- For 1 minute you gain greatly increased blood production, filtering out contagions and boosting your endurance but causing your body to bloat with blood. **Benefit** You gain a +1 item bonus to Fortitude and Reflex saves. This bonus improves to +2 when you attempt a save against an effect that has the disease trait, poison trait, or would give you the fatigued condition. **Drawback** Whenever you take piercing or slashing damage, you take 1d6."
+ },
+ {
+  "id": "sanguine-mutagen-moderate",
+  "name": "Sanguine Mutagen (Moderate)",
+  "level": 3,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- For 10 minutes you gain greatly increased blood production, filtering out contagions and boosting your endurance but causing your body to bloat with blood. **Benefit** You gain a +2 item bonus to Fortitude and Reflex saves. This bonus improves to +3 when you attempt a save against an effect that has the disease trait, poison trait, or would give you the fatigued condition. **Drawback** Whenever you take piercing or slashing damage, you take 1d6."
+ },
+ {
+  "id": "sanguine-mutagen-greater",
+  "name": "Sanguine Mutagen (Greater)",
+  "level": 11,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- For 1 hour you gain greatly increased blood production, filtering out contagions and boosting your endurance but causing your body to bloat with blood. **Benefit** You gain a +3 item bonus to Fortitude and Reflex saves. This bonus improves to +4 when you attempt a save against an effect that has the disease trait, poison trait, or would give you the fatigued condition. When you roll a success on a save against a disease, poison, or effect that would give you the Fatigued condition, you get a critical success instead. **Drawback** Whenever you take piercing or slashing damage, you take 1d6."
+ },
+ {
+  "id": "sanguine-mutagen-major",
+  "name": "Sanguine Mutagen (Major)",
+  "level": 17,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- For 1 hour you gain greatly increased blood production, filtering out contagions and boosting your endurance but causing your body to bloat with blood. **Benefit** You gain a +4 item bonus to Fortitude and Reflex saves. When you roll a success on a save against a disease, poison, or effect that would give you the fatigued condition, you get a critical success instead and your critical failures on such saves become failures instead. **Drawback** Whenever you take piercing or slashing damage, you take 1d6."
+ },
+ {
+  "id": "spiderfoot-brew-lesser",
+  "name": "Spiderfoot Brew (Lesser)",
+  "level": 3,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- This gelatinous, sticky fluid is made from the silk glands of giant spiders. When you drink a spiderfoot brew, tiny clinging hairs grow on your hands and feet, granting you a climb Speed of 15 feet and a +1 item bonus to athletics checks made to climb for 1 minute."
+ },
+ {
+  "id": "spiderfoot-brew-moderate",
+  "name": "Spiderfoot Brew (Moderate)",
+  "level": 9,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- This gelatinous, sticky fluid is made from the silk glands of giant spiders. When you drink a spiderfoot brew, tiny clinging hairs grow on your hands and feet, granting you a climb Speed of 20 feet and a +2 item bonus to athletics checks made to climb for 10 minutes."
+ },
+ {
+  "id": "spiderfoot-brew-greater",
+  "name": "Spiderfoot Brew (Greater)",
+  "level": 17,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- This gelatinous, sticky fluid is made from the silk glands of giant spiders. When you drink a spiderfoot brew, tiny clinging hairs grow on your hands and feet, granting you a climb Speed of 25 feet and a +3 item bonus to athletics checks made to climb for 1 hour."
+ },
+ {
+  "id": "theatrical-mutagen-lesser",
+  "name": "Theatrical Mutagen (Lesser)",
+  "level": 1,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Developed and widely used by students at the Kitharodian Academy in Oppara, the theatrical mutagen stimulates the creative centers of your brain. This causes your movements to become exaggerated and your voice to become clear. However, the erratic surges of inspiration overload your senses, making it difficult to focus on mundane tasks. This lasts for 1 minute. **Benefit** You gain a +1 item bonus to Acrobatics checks, Crafting checks, and Performance checks. If you're untrained in any of these skills, your proficiency bonus is equal to your level instead of +0. You also gain a +5 feet status bonus to your Speed. **Drawback** You take a –1 penalty to Perception checks and Will saves. After any round where you don't spend at least 1 action to Interact with an object, Perform, Step, or Stride, you're off-guard until the start of your next turn."
+ },
+ {
+  "id": "theatrical-mutagen-moderate",
+  "name": "Theatrical Mutagen (Moderate)",
+  "level": 3,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Developed and widely used by students at the Kitharodian Academy in Oppara, the theatrical mutagen stimulates the creative centers of your brain. This causes your movements to become exaggerated and your voice to become clear. However, the erratic surges of inspiration overload your senses, making it difficult to focus on mundane tasks. This lasts for 1 minute. **Benefit** You gain a +2 item bonus to Acrobatics checks, Crafting checks, and Performance checks. If you're untrained in any of these skills, your proficiency bonus is equal to your level instead of +0. You also gain a +5 feet status bonus to your Speed. **Drawback** You take a –1 penalty to Perception checks and Will saves. After any round where you don't spend at least 1 action to Interact with an object, Perform, Step, or Stride, you're off-guard until the start of your next turn."
+ },
+ {
+  "id": "theatrical-mutagen-greater",
+  "name": "Theatrical Mutagen (Greater)",
+  "level": 11,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Developed and widely used by students at the Kitharodian Academy in Oppara, the theatrical mutagen stimulates the creative centers of your brain. This causes your movements to become exaggerated and your voice to become clear. However, the erratic surges of inspiration overload your senses, making it difficult to focus on mundane tasks. This lasts for 10 minutes. **Benefit** You gain a +3 item bonus to Acrobatics checks, Crafting checks, and Performance checks. If you're untrained in any of these skills, your proficiency bonus is equal to your level instead of +0. You also gain a +10 feet status bonus to your Speed. **Drawback** You take a –1 penalty to Perception checks and Will saves. After any round where you don't spend at least 1 action to Interact with an object, Perform, Step, or Stride, you're off-guard until the start of your next turn."
+ },
+ {
+  "id": "theatrical-mutagen-major",
+  "name": "Theatrical Mutagen (Major)",
+  "level": 17,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Developed and widely used by students at the Kitharodian Academy in Oppara, the theatrical mutagen stimulates the creative centers of your brain. This causes your movements to become exaggerated and your voice to become clear. However, the erratic surges of inspiration overload your senses, making it difficult to focus on mundane tasks. This lasts for 1 hour. **Benefit** You gain a +4 item bonus to Acrobatics checks, Crafting checks, and Performance checks. If you're untrained in any of these skills, your proficiency bonus is equal to your level instead of +0. You also gain a +10 feet status bonus to your Speed. **Drawback** You take a –1 penalty to Perception checks and Will saves. After any round where you don't spend at least 1 action to Interact with an object, Perform, Step, or Stride, you're off-guard until the start of your next turn."
+ },
+ {
+  "id": "execution-powder",
+  "name": "Execution Powder",
+  "level": 14,
+  "description": "**Activate** ⟨2⟩ (manipulate) --- The spores of a certain mushrooms, if carefully collected and suspended in a properly mixed alchemical fluid, can kill those near death. If a creature is reduced to 0 Hit Points while under the effect of execution powder, it must succeed at a save or die (this is a death effect). If a creature dies from execution powder, the spores from their last breath alight on a random creature adjacent to the victim, granting that creature 20 temporary Hit Points and a +1 status bonus to attack and damage rolls for 10 minutes. **Saving Throw** **Maximum Duration** 6 rounds **Stage 1** 7d6 damage (1 round) **Stage 2** 9d6 damage (1 round) **Stage 3** 12d6 damage (1 round)"
+ },
+ {
+  "id": "dragonfly-fulu",
+  "name": "Dragonfly Fulu",
+  "level": 7,
+  "description": "**Activate** ⟨4⟩ (concentrate) **Trigger** You take the Leap action. --- Tradition says the dragonfly fulu should be affixed to the upper back, like the wings of an insect. When you Activate this fulu, you gain a +2 status bonus to Athletics checks to High Jump or Long Jump for 1 minute. During this time, you can attempt an Athletics check to High Jump or Long Jump as a single action without the Stride requirement. You can also High Jump or Long Jump from a nonsolid substance, such as air or water, but if you use this power of the fulu, its effects ends after you jump."
+ },
+ {
+  "id": "escape-fulu",
+  "name": "Escape Fulu",
+  "level": 7,
+  "description": "**Activate** ⟨4⟩ (concentrate) **Trigger** You attempt to Escape. --- The *escape fulu* is a charm common among wealthy people, who wear the talisman in case of kidnapping. When you Activate this fulu, for 1 minute, you gain a +2 status bonus to your attempts to Escape as well as to Stealth checks to Hide and Sneak."
+ },
+ {
+  "id": "heartening-missive",
+  "name": "Heartening Missive",
+  "level": 5,
+  "description": "Heartening Missive Source Treasure Vault (Remastered) pg. 85 Usage held in 1 hand Activate (concentrate, manipulate) You compose a heartening missive by creating a short message or image intended to grant the recipient moral support. You must dedicate the missive to an individual creature you know and address it to their location (typically the settlement where you think they are). Once you finish composing the missive, it folds itself into the shape of an animal and Flies at a speed of 45 feet (about 15 miles per hour) toward the location for up to 24 hours. It alights near the recipient or in their hand. After Activating the missive, the recipient gets its benefit and becomes temporarily immune to all heartening missives for 24 hours. If the missive fails to reach its recipient in 24 hours, it returns to its sender at the same pace, becoming non-magical when it arrives. After imparting or losing its magic, the missive remains as a normal document. Heartening Missive (Bull) Source Treasure Vault (Remastered) pg. 85 Price 50 gp Folded into a bull, this missive grants the recipient a sense of solidity. The recipient gains a +1 item bonus to Fortitude saves for the next 24 hours. Heartening Missive (Butterfly) Source Treasure Vault (Remastered) pg. 85 Price 25 gp Folded into a delicate butterfly, this missive grants the recipient a sense of grace and poise. Once during the next 24 hours, when the recipient fails a Diplomacy or Performance check, they can improve the result from"
+ },
+ {
+  "id": "heartening-missive-bull",
+  "name": "Heartening Missive (Bull)",
+  "level": 6,
+  "description": "**Activate** ⟨2⟩ (concentrate, manipulate) --- You compose a heartening missive by creating a short message or image intended to grant the recipient moral support. You must dedicate the missive to an individual creature you know and address it to their location (typically the settlement where you think they are). Once you finish composing the missive, it folds itself into the shape of an animal and Flies at a speed of 45 feet (about 15 miles per hour) toward the location for up to 24 hours. It alights near the recipient or in their hand. After Activating the missive, the recipient gets its benefit and becomes temporarily immune to all heartening missives for 24 hours If the missive fails to reach its recipient in 24 hours, it returns to its sender at the same pace, becoming non-magical when it arrives. After imparting or losing its magic, the missive remains as a normal document. Folded into a bull, this missive grants the recipient a sense of solidity. The recipient gains a +1 item bonus to Fortitude saves for the next 24 hours."
+ },
+ {
+  "id": "heartening-missive-rabbit",
+  "name": "Heartening Missive (Rabbit)",
+  "level": 6,
+  "description": "**Activate** ⟨2⟩ (concentrate, manipulate) --- You compose a heartening missive by creating a short message or image intended to grant the recipient moral support. You must dedicate the missive to an individual creature you know and address it to their location (typically the settlement where you think they are). Once you finish composing the missive, it folds itself into the shape of an animal and Flies at a speed of 45 feet (about 15 miles per hour) toward the location for up to 24 hours. It alights near the recipient or in their hand. After Activating the missive, the recipient gets its benefit and becomes temporarily immune to all heartening missives for 24 hours If the missive fails to reach its recipient in 24 hours, it returns to its sender at the same pace, becoming non-magical when it arrives. After imparting or losing its magic, the missive remains as a normal document. Folded into a rabbit sitting on its haunches, this missive grants the recipient a sense of mischief and agility. The recipient gains a +1 item bonus to Reflex saves for the next 24 hours."
+ },
+ {
+  "id": "heartening-missive-turtle",
+  "name": "Heartening Missive (Turtle)",
+  "level": 6,
+  "description": "**Activate** ⟨2⟩ (concentrate, manipulate) --- You compose a heartening missive by creating a short message or image intended to grant the recipient moral support. You must dedicate the missive to an individual creature you know and address it to their location (typically the settlement where you think they are). Once you finish composing the missive, it folds itself into the shape of an animal and Flies at a speed of 45 feet (about 15 miles per hour) toward the location for up to 24 hours. It alights near the recipient or in their hand. After Activating the missive, the recipient gets its benefit and becomes temporarily immune to all heartening missives for 24 hours If the missive fails to reach its recipient in 24 hours, it returns to its sender at the same pace, becoming non-magical when it arrives. After imparting or losing its magic, the missive remains as a normal document. Folded into a square-shelled turtle, this missive grants the recipient a firm sense of self and serenity. The recipient gains a +1 item bonus to Will saves for the next 24 hours."
+ },
+ {
+  "id": "caydens-brew",
+  "name": "Cayden's Brew",
+  "level": 8,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Cayden's brew is like rich beer or ale, with a golden-brown color and foamy head. For 1 hour after you drink it, you have a +1 item bonus to saving throws against fear effects. Also, you can use a single action to breathe out a of intoxicating vapor with a burp that can be heard for 100 feet. Any creature in the vapor must attempt a saving throw. After you unleash this magical burp, you can't do so again for 1d4 rounds. --- **Critical Success** The creature is unaffected. **Success** The creature is Clumsy 1 and Stupefied 1 for 1 round. **Failure** The creature is clumsy 1 and stupefied 1 for 1d4 rounds. **Critical Failure** The creature becomes Clumsy 2, Stupefied 2, and Sickened 1. The clumsy and stupefied conditions last until 1d4 rounds after the sickened condition ends."
+ },
+ {
+  "id": "caydens-brew-double",
+  "name": "Cayden's Brew (Double)",
+  "level": 13,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Cayden's brew is like rich beer or ale, with a golden-brown color and foamy head. For 1 hour after you drink it, you have a +1 item bonus to saving throws against fear effects. Also, you can use a single action to breathe out a of intoxicating vapor with a burp that can be heard for 100 feet. Any creature in the vapor must attempt a saving throw. After you use this breath weapon, you can't do so again for 1d4 rounds. --- **Critical Success** The creature is unaffected. **Success** The creature is Clumsy 1 and Stupefied 1 for 1 round. **Failure** The creature is clumsy 1 and stupefied 1 for 1d4 rounds. **Critical Failure** The creature becomes Clumsy 2, Stupefied 2, and Sickened 1. The clumsy and stupefied conditions last until 1d4 rounds after the sickened condition ends."
+ },
+ {
+  "id": "caydens-brew-triple",
+  "name": "Cayden's Brew (Triple)",
+  "level": 18,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Cayden's brew is like rich beer or ale, with a golden-brown color and foamy head. For 1 hour after you drink it, you have a +1 item bonus to saving throws against fear effects. Also, you can use a single action to breathe out a of intoxicating vapor with a burp that can be heard for 100 feet. Any creature in the vapor must attempt a saving throw. After you use this breath weapon, you can't do so again for 1d4 rounds. --- **Critical Success** The creature is unaffected. **Success** The creature is Clumsy 1 and Stupefied 1 for 1 round. **Failure** The creature is clumsy 1 and stupefied 1 for 1d4 rounds. **Critical Failure** The creature becomes Clumsy 2, Stupefied 2, and Sickened 1. The clumsy and stupefied conditions last until 1d4 rounds after the sickened condition ends."
+ },
+ {
+  "id": "eidetic-potion",
+  "name": "Eidetic Potion",
+  "level": 6,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Bright pink, pale lavender, and vibrant orange colors swirl through this purplish liquid, making the eidetic potion resemble an unforgettable sunset. When you drink this potion, for 1 round, anything you observe becomes locked into your memory. You can recall the memory perfectly and gain a +2 status bonus to create representations of that memory, whether using Crafting to create an artistic rendition or Society to create a Forgery. The memory remains locked for 1 week or until you benefit from the bonus it imparts for the first time, whichever comes first; afterward, it becomes a normal, fallible memory. You can only have a single memory locked in your mind at a time. Using this potion while you have a locked memory from a previous use makes the previously locked memory fallible but allows you to lock a new memory."
+ },
+ {
+  "id": "elysian-dew",
+  "name": "Elysian Dew",
+  "level": 12,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- When you drink sweet, sky-blue *Elysian dew*, for 1 minute, you gain a 10-foot aura that evokes the vitality of Elysium, causing nearby objects to seem more colorful and plants to stand taller. You and any ally that starts its turn in the emanation gain 5 temporary Hit Points, a +1 item bonus to saving throws, and a +1 item bonus to Acrobatics and Athletics checks until the start of your or the ally's next turn. If you're unholy and drink this potion, it fails to work, and you must succeed at a save or the potion renders you Drained 2."
+ }
+]

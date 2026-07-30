@@ -1,0 +1,1187 @@
+[
+ {
+  "id": "orc-warmask",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Orc Warmask",
+  "level": 1,
+  "traits": [
+   "orc"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [
+   "featGrantsAuto",
+   "featFeatGrants"
+  ],
+  "text": "You paint your face to create a *Warmask*, an invested magic item of negligible Bulk with an item level equal to your level and a usage of worn (mask). It has the divination trait and a magical tradition trait depending on its type. Donning or removing your *warmask* requires 1 minute of work, though you don't need to Invest the mask each time. The *warmask* is unique to you and might signify your hold, your accomplishments, or your faith. While creating your mask, you must choose the source of your *warmask*'s power from the options below. This source determines the mask's associated skill as well as magical tradition. Once you select this source, it can't be changed. You become trained in the associated skill, and you gain the Dubious Knowledge skill feat as a bonus feat. You can spend 1 hour performing a ceremony that costs 50 gp to attune yourself more deeply with your *warmask*. If you do, you gain a +1 item bonus to the associated skill whenever you wear the *warmask*. --- - **The Gods** Religion, divine tradition - **The Land** Nature, primal tradition - **Magic** Arcana, arcane tradition - **The Unknown** Occultism, occult tradition"
+ },
+ {
+  "id": "pact-of-the-agonized-destroyer",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Pact of the Agonized Destroyer",
+  "level": 18,
+  "traits": [
+   "contract",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Your very quintessence has been hijacked by the agony of Dahak that lingered within your bound dragon. The wracked god's whispers burn your soul and ride your body to work in dire concordance with his whims. You are the very face of horror, an heir of the Dragon Plague's rancor, the Endless Destruction made manifest in an overwhelmed mortal form. You gain the Scream of Unending Destruction activity. In exchange, the dragon who bound you to this pact is now free from the influences of Dahak, losing any boons or abilities that might have been granted if they were a follower of Dahak and gaining a +2 item bonus on saving throws against any spells or abilities cast by followers of Dahak. **Scream of Unending Destruction** ⟨2⟩ (auditory, concentrate, emotion, fear, incapacitation, mental, unholy) **Frequency** once per day --- **Effect** Attempt an Intimidation check against the Will DC of each creature in a that you observe and that observes you. --- **Critical Success** The target must attempt a Fortitude save against your Intimidation DC. On a critical failure, it dies in an explosion of hellfire that deals damage to each creature in a . On any other result, the creature becomes Frightened 3 and is fleeing for 1 round. The critical failure effect has the death trait. **Success** The target becomes frightened 3 and takes damage. **Failure** The target becomes Frightened 2. **Failure** The target is unaffected. --- **Oathbreaker's Calamity** The souls of both parties begin to become consumed by the agony of Dahak. At the end of each day, you and your dragon become Doomed 1 (or increase your doomed values by 1 if you're already doomed) unless both of you acted in service to Dahak that day. If you or your bound dragon die while under this effect, both of you explode in a catastrophe of hellfire and pitch, dealing damage to all creatures in a ; this effect has the divine and unholy traits. If the creature who didn't die also survives this blast, the pact of the agonized destroyer ends."
+ },
+ {
+  "id": "paragon-benefit-shield",
+  "lane": "situational",
+  "collection": "classFeatures",
+  "name": "Paragon Benefit (Shield)",
+  "level": 17,
+  "traits": [
+   "thaumaturge"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "When you have your shield implement raised, the circumstance bonuses from your shield (both to AC and to saves against spells and other magic effects) also apply to all your allies within 15 feet. You can use your Shield Block reaction in defense of yourself or any of your allies within 15 feet."
+ },
+ {
+  "id": "parry-and-riposte",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Parry and Riposte",
+  "level": 18,
+  "traits": [
+   "swashbuckler"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your parries and finishers allow you to riposte with the slightest provocation. You can use Opportune Riposte against an enemy who fails at a Strike against you (not just critically fails), provided you have both damaged that creature with a finisher on your last turn and currently have a circumstance bonus to AC from the parry weapon trait or Extravagant Parry."
+ },
+ {
+  "id": "pass-vengeful-judgement",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Pass Vengeful Judgement",
+  "level": 18,
+  "traits": [
+   "mythic",
+   "sanctified"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Pass Vengeful Judgement Source War of Immortals pg. 132 Archetype Godling Frequency once per day Prerequisites Godling Dedication Requirements Your hierophant invoked your judgment on their previous turn To prevent yourself from frivolously calling down the terrible power of divine wrath, you have vowed to do so only with the assent of your mortal hierophant. If your hierophant successfully Strikes a target, they can spend a single action to invoke your wrath. On your turn, you can then Pass Vengeful Judgment on the target, calling down a scouring pillar of divine energy that deals 20d10 spirit damage with a basic Fortitude save. You do not need to have line of effect to the target and it functions at any range. If one of your current domain spells can deal a type of damage other than spirit, you can choose to match this damage type (for instance, calling down a flaming pillar that deals fire damage if you have the fire domain). If you spend a Mythic Point as part of Passing your Vengeful Judgment, the blast extends into the heavens, scattering the clouds in a detonation visible to all creatures within a 10-mile radius as a show of wrath and a warning to those who would dare harm your followers or question your commandments. For the next month, you and your hierophant gain a +2 status bonus to Intimidation checks against creatures in the area. Special If you have Font of Life or Death , you can choose for the damage type to be vitality (if you chose heal) or void (if you chose harm) when you use this ability."
+ },
+ {
+  "id": "peerless-form",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Peerless Form",
+  "level": 14,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your mastery over your body is perfect enough to hold back the ravages of time. You cease aging, though you still die when your time is up. In addition, you gain a +2 status bonus to Fortitude and Will saving throws."
+ },
+ {
+  "id": "pendant-of-the-occult",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Pendant of the Occult",
+  "level": 3,
+  "traits": [
+   "invested",
+   "occult"
+  ],
+  "engineFieldsPresent": [
+   "innateSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This amulet is hollow and shaped in the form of an unblinking eye. Its cavity typically holds some fragment of occult text. While wearing the pendant, you gain a +1 item bonus to Occultism checks, and you can cast the Guidance cantrip as an occult innate spell."
+ },
+ {
+  "id": "pendant-of-the-occult-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Pendant of the Occult (Greater)",
+  "level": 9,
+  "traits": [
+   "invested",
+   "occult"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This amulet is hollow and shaped in the form of an unblinking eye. Its cavity typically holds some fragment of occult text. While wearing the pendant, you gain a +2 item bonus to Occultism checks, and you can cast the Guidance cantrip as an occult innate spell. The pendant can be activated. **Activate—Dream Message** 10 minutes (concentrate, manipulate) **Frequency** once per day --- **Effect** You cast a 4th-rank Dream Message spell."
+ },
+ {
+  "id": "pernicious-spore-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Pernicious Spore Bomb",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Pernicious Spore Bomb May contain spoilers from Quest for the Frozen Flame Source Pathfinder #176: Lost Mammoth Valley pg. 78 Usage held in 1 hand Bulk L Activate Strike This flask contains fast-growing mold spores, which quickly take root but just as quickly rot away. A pernicious spore bomb deals the listed poison damage, persistent piercing damage, and splash damage. Many types grant an item bonus to attack rolls. Pernicious Spore Bomb (Lesser) Source Pathfinder #176: Lost Mammoth Valley pg. 78 Price 3 gp Bulk L The bomb deals 1 poison damage, 1d4 persistent piercing damage, and 1 poison splash damage. Except on a critical failure, one square of the target creature's space is coated in vegetation, becoming difficult terrain for 1 round. Pernicious Spore Bomb (Moderate) Source Pathfinder #176: Lost Mammoth Valley pg. 78 Price 10 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2 poison damage, 2d4 persistent piercing damage, and 2 poison splash damage. Except on a critical failure, the bomb's splash area is coated in vegetation, becoming difficult terrain for 1 round. Pernicious Spore Bomb (Greater) Source Pathfinder #176: Lost Mammoth Valley pg. 78 Price 250 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 3 poison damage, 3d4 persistent piercing damage, and 3 poison splash damage. Except on a critical failure, the bomb's splash area is coated in vegetation, becoming difficult terrain for 1 round. Pernicious Spore Bomb (Major) Source Pathfinder #176: Lost Mammoth Valley pg. 78 Price 2,500 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 4 poison damage, 4d4 persistent piercing damage, and 4 poison splash damage. Except on a critical failure, the bomb's splash area is coated in vegetation, becoming difficult terrain for 1 minute."
+ },
+ {
+  "id": "pernicious-spore-bomb-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Pernicious Spore Bomb (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This flask contains fast-growing mold spores, which quickly take root but just as quickly rot away. You gain a +2 item bonus to attack rolls. The bomb deals 3 poison damage, 3d4 persistent piercing damage, and 3 poison splash damage. Except on a critical failure, the bomb's splash area is coated in vegetation, becoming difficult terrain for 1 round."
+ },
+ {
+  "id": "pernicious-spore-bomb-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Pernicious Spore Bomb (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This flask contains fast-growing mold spores, which quickly take root but just as quickly rot away. You gain a +3 item bonus to attack rolls. The bomb deals 4 poison damage, 4d4 persistent piercing damage, and 4 poison splash damage. Except on a critical failure, the bomb's splash area is coated in vegetation, becoming difficult terrain for 1 minute."
+ },
+ {
+  "id": "pernicious-spore-bomb-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Pernicious Spore Bomb (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This flask contains fast-growing mold spores, which quickly take root but just as quickly rot away. You gain a +1 item bonus to attack rolls. The bomb deals 2 poison damage, 2d4 persistent piercing damage, and 2 poison splash damage. Except on a critical failure, the bomb's splash area is coated in vegetation, becoming difficult terrain for 1 round."
+ },
+ {
+  "id": "personalized-poisoning",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Personalized Poisoning",
+  "level": 2,
+  "traits": [
+   "investigator"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Personalized Poisoning Source High Seas pg. 65 PFS Note Requires cross-scenario tracking. Prerequisites alchemical sciences methodology Access member of the Red Mantis assassins You developed techniques for discovering a target’s weaknesses to poisons using your forensic knowledge. When you study a location that a creature spends a lot of time in, such as a bedroom or office, you learn medical conditions, reactions, or sensitivities that make them susceptible to poisons. Subsequently, whenever you craft an alchemical poison, you can tailor it to a creature you have studied in this way, giving that creature a –2 circumstance penalty to Fortitude saves against the poison and giving other creatures a +2 circumstance bonus to Fortitude saves against it."
+ },
+ {
+  "id": "peshpine-grenade-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Peshpine Grenade (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Peshspine grenades are explosive bombs packed with alchemically treated needles from the pesh cactus. A peshspine grenade deals the listed piercing damage and splash damage. On a hit, the target gains the stupefied condition until the end of its next turn. Many types of peshpine grenade grant an item bonus to attack rolls. You gain a +2 item bonus to attack rolls. The bomb deals 3d6 piercing damage and 3 piercing splash damage, and the target is Stupefied 2."
+ },
+ {
+  "id": "peshpine-grenade-lesser",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Peshpine Grenade (Lesser)",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Peshspine grenades are explosive bombs packed with alchemically treated needles from the pesh cactus. A peshspine grenade deals the listed piercing damage and splash damage. On a hit, the target gains the stupefied condition until the end of its next turn. Many types of peshpine grenade grant an item bonus to attack rolls. The bomb deals 1d6 piercing damage and 1 piercing splash damage, and the target is Stupefied 1."
+ },
+ {
+  "id": "peshpine-grenade-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Peshpine Grenade (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Peshspine grenades are explosive bombs packed with alchemically treated needles from the pesh cactus. A peshspine grenade deals the listed piercing damage and splash damage. On a hit, the target gains the stupefied condition until the end of its next turn. Many types of peshpine grenade grant an item bonus to attack rolls. You gain a +3 item bonus to attack rolls. The bomb deals 4d6 piercing damage and 4 piercing splash damage, and the target is Stupefied 3."
+ },
+ {
+  "id": "peshpine-grenade-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Peshpine Grenade (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Peshspine grenades are explosive bombs packed with alchemically treated needles from the pesh cactus. A peshspine grenade deals the listed piercing damage and splash damage. On a hit, the target gains the stupefied condition until the end of its next turn. Many types of peshpine grenade grant an item bonus to attack rolls. You gain a +1 item bonus to attack rolls. The bomb deals 2d6 piercing damage and 2 piercing splash damage, and the target is Stupefied 1."
+ },
+ {
+  "id": "peshspine-grenade",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Peshspine Grenade",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Peshspine Grenade May contain spoilers from Age of Ashes Source Pathfinder #149: Against the Scarlet Triad pg. 77 Usage held in 1 hand Bulk L Activate Strike Peshspine grenades are explosive bombs packed with alchemically treated needles from the pesh cactus. A peshspine grenade deals the listed piercing damage and splash damage. On a hit, the target gains the stupefied condition until the end of its next turn. Many types of peshpine grenade grant an item bonus to attack rolls. Peshspine Grenade (Lesser) Source Pathfinder #149: Against the Scarlet Triad pg. 77 Price 3 gp Bulk L The bomb deals 1d6 piercing damage and 1 piercing splash damage, and the target is stupefied 1. Peshspine Grenade (Moderate) Source Pathfinder #149: Against the Scarlet Triad pg. 77 Price 10 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d6 piercing damage and 2 piercing splash damage, and the target is stupefied 1. Peshspine Grenade (Greater) Source Pathfinder #149: Against the Scarlet Triad pg. 77 Price 250 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 3d6 piercing damage and 3 piercing splash damage, and the target is stupefied 2. Peshspine Grenade (Major) Source Pathfinder #149: Against the Scarlet Triad pg. 77 Price 2,500 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 4d6 piercing damage and 4 piercing splash damage, and the target is stupefied 3."
+ },
+ {
+  "id": "peshspine-grenade-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Peshspine Grenade (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Peshspine Grenade May contain spoilers from Age of Ashes Source Pathfinder #149: Against the Scarlet Triad pg. 77 Usage held in 1 hand Bulk L Activate Strike Peshspine grenades are explosive bombs packed with alchemically treated needles from the pesh cactus. A peshspine grenade deals the listed piercing damage and splash damage. On a hit, the target gains the stupefied condition until the end of its next turn. Many types of peshpine grenade grant an item bonus to attack rolls. Peshspine Grenade (Lesser) Source Pathfinder #149: Against the Scarlet Triad pg. 77 Price 3 gp Bulk L The bomb deals 1d6 piercing damage and 1 piercing splash damage, and the target is stupefied 1. Peshspine Grenade (Moderate) Source Pathfinder #149: Against the Scarlet Triad pg. 77 Price 10 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d6 piercing damage and 2 piercing splash damage, and the target is stupefied 1. Peshspine Grenade (Greater) Source Pathfinder #149: Against the Scarlet Triad pg. 77 Price 250 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 3d6 piercing damage and 3 piercing splash damage, and the target is stupefied 2. Peshspine Grenade (Major) Source Pathfinder #149: Against the Scarlet Triad pg. 77 Price 2,500 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 4d6 piercing damage and 4 piercing splash damage, and the target is stupefied 3."
+ },
+ {
+  "id": "peshspine-grenade-lesser",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Peshspine Grenade (Lesser)",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Peshspine Grenade May contain spoilers from Age of Ashes Source Pathfinder #149: Against the Scarlet Triad pg. 77 Usage held in 1 hand Bulk L Activate Strike Peshspine grenades are explosive bombs packed with alchemically treated needles from the pesh cactus. A peshspine grenade deals the listed piercing damage and splash damage. On a hit, the target gains the stupefied condition until the end of its next turn. Many types of peshpine grenade grant an item bonus to attack rolls. Peshspine Grenade (Lesser) Source Pathfinder #149: Against the Scarlet Triad pg. 77 Price 3 gp Bulk L The bomb deals 1d6 piercing damage and 1 piercing splash damage, and the target is stupefied 1. Peshspine Grenade (Moderate) Source Pathfinder #149: Against the Scarlet Triad pg. 77 Price 10 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d6 piercing damage and 2 piercing splash damage, and the target is stupefied 1. Peshspine Grenade (Greater) Source Pathfinder #149: Against the Scarlet Triad pg. 77 Price 250 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 3d6 piercing damage and 3 piercing splash damage, and the target is stupefied 2. Peshspine Grenade (Major) Source Pathfinder #149: Against the Scarlet Triad pg. 77 Price 2,500 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 4d6 piercing damage and 4 piercing splash damage, and the target is stupefied 3."
+ },
+ {
+  "id": "peshspine-grenade-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Peshspine Grenade (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Peshspine Grenade May contain spoilers from Age of Ashes Source Pathfinder #149: Against the Scarlet Triad pg. 77 Usage held in 1 hand Bulk L Activate Strike Peshspine grenades are explosive bombs packed with alchemically treated needles from the pesh cactus. A peshspine grenade deals the listed piercing damage and splash damage. On a hit, the target gains the stupefied condition until the end of its next turn. Many types of peshpine grenade grant an item bonus to attack rolls. Peshspine Grenade (Lesser) Source Pathfinder #149: Against the Scarlet Triad pg. 77 Price 3 gp Bulk L The bomb deals 1d6 piercing damage and 1 piercing splash damage, and the target is stupefied 1. Peshspine Grenade (Moderate) Source Pathfinder #149: Against the Scarlet Triad pg. 77 Price 10 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d6 piercing damage and 2 piercing splash damage, and the target is stupefied 1. Peshspine Grenade (Greater) Source Pathfinder #149: Against the Scarlet Triad pg. 77 Price 250 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 3d6 piercing damage and 3 piercing splash damage, and the target is stupefied 2. Peshspine Grenade (Major) Source Pathfinder #149: Against the Scarlet Triad pg. 77 Price 2,500 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 4d6 piercing damage and 4 piercing splash damage, and the target is stupefied 3."
+ },
+ {
+  "id": "peshspine-grenade-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Peshspine Grenade (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Peshspine Grenade May contain spoilers from Age of Ashes Source Pathfinder #149: Against the Scarlet Triad pg. 77 Usage held in 1 hand Bulk L Activate Strike Peshspine grenades are explosive bombs packed with alchemically treated needles from the pesh cactus. A peshspine grenade deals the listed piercing damage and splash damage. On a hit, the target gains the stupefied condition until the end of its next turn. Many types of peshpine grenade grant an item bonus to attack rolls. Peshspine Grenade (Lesser) Source Pathfinder #149: Against the Scarlet Triad pg. 77 Price 3 gp Bulk L The bomb deals 1d6 piercing damage and 1 piercing splash damage, and the target is stupefied 1. Peshspine Grenade (Moderate) Source Pathfinder #149: Against the Scarlet Triad pg. 77 Price 10 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d6 piercing damage and 2 piercing splash damage, and the target is stupefied 1. Peshspine Grenade (Greater) Source Pathfinder #149: Against the Scarlet Triad pg. 77 Price 250 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 3d6 piercing damage and 3 piercing splash damage, and the target is stupefied 2. Peshspine Grenade (Major) Source Pathfinder #149: Against the Scarlet Triad pg. 77 Price 2,500 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 4d6 piercing damage and 4 piercing splash damage, and the target is stupefied 3."
+ },
+ {
+  "id": "pet",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Pet",
+  "level": 1,
+  "traits": [
+   "general"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "You have a pet—a Tiny animal of a type you choose, such as a cat, bird, or rodent. It has the minion trait, meaning it gains 2 actions during your turn if you use the Command an Animal action to command it; this replaces the usual effects of Command an Animal, and you don't need to attempt a Nature check. A pet can't take attack actions except to Escape or Force Open. **Level** Your pet's level is equal to yours. **Modifiers and AC** Your pet's save modifiers and AC are equal to yours before applying circumstance or status bonuses or penalties. It uses 3 + your level as its modifier for Perception, Acrobatics, and Stealth, and just your level as its modifier for other skill checks. It doesn't have or use its own attribute modifiers and can never benefit from item bonuses. **Hit Points** Your pet has 5 Hit Points per level. **Senses** Your pet has low-light vision and can gain additional senses from pet abilities. **Speed** Your pet has a Speed of 25 feet. You can choose to instead have an aquatic pet, which breathes in water instead of air and has the aquatic trait, no land Speed, and a swim Speed of 25 feet. **Pet Abilities** When you gain your pet, choose two of the following abilities. If your pet is an animal that naturally has one of these abilities (for instance, an owl has a fly Speed), you must select that ability. Your pet can't be an animal that naturally has more pet abilities than the maximum. In some cases, the GM might add some familiar abilities to the pet abilities you can choose. - **Amphibious** It gains the amphibious trait, allowing it to breathe in both air and water, and has both a land Speed and a swim Speed, each equal to its highest land Speed or swim Speed. - **Burrower** It gains a burrow Speed of 5 feet, allowing it to dig Tiny holes. - **Climber** It gains a climb Speed of 25 feet. - **Darkvision** It gains darkvision. - **Echolocation** Your pet can use hearing as a precise sense within 20 feet. - **Fast** Movement Increase one of the pet's Speeds from 25 feet to 40 feet. - **Flier** It gains a fly Speed of 25 feet. - **Manual Dexterity** It can use up to two of its limbs as if they were hands to perform manipulate actions. - **Scent** Your pet can use scent as an imprecise sense within 30 feet - **Tough** Your pet's max HP increase by 2 per level. --- **Special** You can gain a new pet by retraining this feat, releasing any previous pet you have. If you later gain a familiar or other companion that uses the Pet feat, you can immediately retrain this feat."
+ },
+ {
+  "id": "phantom-shroud",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Phantom Shroud",
+  "level": 17,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This pale blue cloak is wispy, thin, and cold to the touch. When worn, the cloak turns your hands pale and translucent, imbuing you with the dangerous touch of a ghost. This effect doesn't impede the normal use of your hands. You also gain an unarmed attack that deals 3d6 void damage with the agile, finesse, and magical traits. You gain the benefits of a +2 weapon potency rune with these unarmed attacks (granting a +2 item bonus to your attack rolls). **Activate** ⟨2⟩ Interact **Frequency** once per day --- **Effect** You fold the cloak around yourself, and it casts Ethereal Jaunt on you. You can Sustain the activation for up to 10 minutes. When the activation ends, you return to material form."
+ },
+ {
+  "id": "phasing-trine",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Phasing Trine",
+  "level": 16,
+  "traits": [
+   "consumable",
+   "magical",
+   "whetstone"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- A *phasing trine* is a metallic triangle embedded with a clear crystal designed in the shape of a bow and nocked arrow. Strikes made with a ranged weapon under the effect of a *phasing trine* against a target who is observed by or hidden to you (but not undetected) pass through any non-magical barriers or walls in their way, though magical barriers stop the ammunition. These Strikes ignore all cover and circumstance bonuses to AC from shields. The Strike's damage can't be reduced with a Shield Block reaction using a non-magical shield."
+ },
+ {
+  "id": "phylactery-of-faithfulness",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Phylactery of Faithfulness",
+  "level": 9,
+  "traits": [
+   "divine",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This tiny box holds a fragment of religious scripture sacred to a particular deity. The box is worn by affixing it to a leather cord and tying it around your head just above your brow. You don't gain any benefit from the phylactery if you don't worship the affiliated deity. The phylactery grants you religious wisdom, which manifests as a +2 item bonus to Religion checks. Just before you perform an action that would be anathema to the phylactery's deity, the phylactery warns you of the potential transgression in time for you to change your mind. **Activate** ⟨1⟩ envision **Frequency** once per day --- **Effect** You ask for guidance about a particular course of action, gaining the effects of an Augury spell."
+ },
+ {
+  "id": "phylactery-of-faithfulness-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Phylactery of Faithfulness (Greater)",
+  "level": 17,
+  "traits": [
+   "divine",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This tiny box holds a fragment of religious scripture sacred to a particular deity. The box is worn by affixing it to a leather cord and tying it around your head just above your brow. You don't gain any benefit from the phylactery if you don't worship the affiliated deity. The phylactery grants you religious wisdom, which manifests as a +3 item bonus to Religion checks. Just before you perform an action that would be anathema to the phylactery's deity, the phylactery warns you of the potential transgression in time for you to change your mind. **Activate** ⟨1⟩ envision **Frequency** once every 30 minutes --- **Effect** You ask for guidance about a particular course of action, gaining the effects of an Augury spell."
+ },
+ {
+  "id": "pilferers-gloves",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Pilferer's Gloves",
+  "level": 17,
+  "traits": [
+   "apex",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Made of soft and subtle black leather, these gloves fit tightly but aren't uncomfortable and don't impede your sense of touch. As long as you're trained in Thievery while wearing these gloves, you're always considered one skill rank higher than your actual rank. If you possess a Legendary skill rank in Thievery, you gain a +2 item bonus to Thievery checks instead. When you invest the gloves, you either increase your Dexterity modifier by 1 or increase it to +4, whichever would give you a higher value. **Activate** ⟨5⟩ (concentrate) **Frequency** once per day **Trigger** You fail or critically fail a Thievery skill check --- **Effect** If you failed the Thievery skill check, you succeed at that check instead. If you critically failed, you fail instead."
+ },
+ {
+  "id": "plated-duster",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Plated Duster",
+  "level": 0,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "These loose-fitting long coats of canvas or leather are lined with metal plates, offering wearers respite from Alkenstar's dust storms and smog stains as well as modest protection against bullets and knives. While these dusters can't turn away gunfire entirely, their utility, affordability, and comfort ensure their popularity, especially among the city's shieldmarshals, who have adopted them as a sort of unofficial uniform. A plated duster can be donned with 2 Interact actions or as part of donning light armor. When worn with light armor from the cloth, leather, or chain groups, a plated duster increases the armor's item bonus to AC by 1, worsens the armor's check penalty by 1, reduces the armor's Dex cap by 1, increases the Strength score required to ignore the armor check penalty and Speed penalty by 2, adds the noisy trait, and changes the armor's group to composite. This also makes the armor one step heavier (from light to medium), and you use the proficiency bonus appropriate to this adjusted armor type. You can't use a plated duster alongside an armored skirt or any other item that adjusts an armor's statistics."
+ },
+ {
+  "id": "poison-concentrator",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Poison Concentrator",
+  "level": 5,
+  "traits": [
+   "alchemical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Poison Concentrator Source Treasure Vault (Remastered) pg. 64 Usage held in 2 hands Bulk L This compression apparatus can reduce two poisons into a more concentrated dose. As a 10-minute activity that has the manipulate trait, you can use a poison concentrator to combine two doses of the same infused alchemical poison, creating a single concentrated poison. The concentrated potion has a +1 item bonus to its DC, and its level is increased by 1. Poison Concentrator (Lesser) Source Treasure Vault (Remastered) pg. 64 Price 160 gp Bulk L The concentrator combines poisons of level 4 or lower. Poison Concentrator (Moderate) Source Treasure Vault (Remastered) pg. 64 Price 960 gp Bulk L The concentrator combines poisons of level 9 or lower. Poison Concentrator (Greater) Source Treasure Vault (Remastered) pg. 64 Price 5,900 gp Bulk L The concentrator combines poisons of level 14 or lower. Poison Concentrator (Major) Source Treasure Vault (Remastered) pg. 64 Price 31,000 gp Bulk L The concentrator combines poisons of level 18 or lower."
+ },
+ {
+  "id": "poison-concentrator-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Poison Concentrator (Greater)",
+  "level": 15,
+  "traits": [
+   "alchemical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This compression apparatus can reduce two poisons into a more concentrated dose. As a 10-minute activity that has the manipulate trait, you can use a poison concentrator to combine two doses of the same infused alchemical poison of level 14 or lower. The concentrated poison has a +1 item bonus to its DC, and its level is increased by 1."
+ },
+ {
+  "id": "poison-concentrator-lesser",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Poison Concentrator (Lesser)",
+  "level": 5,
+  "traits": [
+   "alchemical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This compression apparatus can reduce two poisons into a more concentrated dose. As a 10-minute activity that has the manipulate trait, you can use a poison concentrator to combine two doses of the same infused alchemical poison of level 4 or lower. The concentrated poison has a +1 item bonus to its DC, and its level is increased by 1."
+ },
+ {
+  "id": "poison-concentrator-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Poison Concentrator (Major)",
+  "level": 19,
+  "traits": [
+   "additive1",
+   "alchemical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This compression apparatus can reduce two poisons into a more concentrated dose. As a 10-minute activity that has the manipulate trait, you can use a poison concentrator to combine two doses of the same infused alchemical poison of level 18 or lower. The concentrated poison has a +1 item bonus to its DC, and its level is increased by 1."
+ },
+ {
+  "id": "poison-concentrator-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Poison Concentrator (Moderate)",
+  "level": 10,
+  "traits": [
+   "alchemical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This compression apparatus can reduce two poisons into a more concentrated dose. As a 10-minute activity that has the manipulate trait, you can use a poison concentrator to combine two doses of the same infused alchemical poison of level 9 or lower. The concentrated poison has a +1 item bonus to its DC, and its level is increased by 1."
+ },
+ {
+  "id": "ponygait-centaur",
+  "lane": "situational",
+  "collection": "heritages",
+  "name": "Ponygait Centaur",
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You are smaller than most other centaurs, though no less fleet of foot. Instead of Large, your size is Medium. You gain a +1 circumstance bonus to Reflex saving throws."
+ },
+ {
+  "id": "practical-magic",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Practical Magic",
+  "level": 1,
+  "traits": [
+   "general",
+   "kingdom"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Practical Magic Source Kingmaker Adventure Path pg. 532 Prerequisites Trained in Magic Magic has an honored place in your society, and your people incorporate it into their everyday work to make life easier. You gain a +1 status bonus to Magic checks, and you can use Magic checks in place of Engineering checks. In addition, as magic-wielding NPCs find your nation a comfortable place to live and work, you reduce the cost of using the Hire Adventurers activity to 1 RP."
+ },
+ {
+  "id": "pressure-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Pressure Bomb",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "force",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Pressure Bomb Source Pathfinder Special: Fumbus Usage held in 1 hand Bulk L Activate Strike This tightly sealed metal container is filled with highly pressurized gas that can explode to release a powerful shockwave. A pressure bomb deals the listed bludgeoning damage and splash damage. On a critical hit, the target is knocked prone. Many types grant an item bonus to attack rolls, and more powerful pressure bombs can knock creatures back. Pressure Bomb (Lesser) Source Pathfinder Special: Fumbus Price 4 gp Bulk L The bomb deals 1d4 bludgeoning damage and 1 bludgeoning splash damage. Tiny or smaller targets are pushed 5 feet away from you. Pressure Bomb (Moderate) Source Pathfinder Special: Fumbus Price 12 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d4 bludgeoning damage and 2 bludgeoning splash damage. Small or smaller targets are pushed 5 feet away from you. Pressure Bomb (Greater) Source Pathfinder Special: Fumbus Price 275 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 3d4 bludgeoning damage and 3 bludgeoning splash damage. Medium or smaller targets are pushed 5 feet away from you. Pressure Bomb (Major) Source Pathfinder Special: Fumbus Price 2,750 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 4d4 bludgeoning damage and 4 bludgeoning splash damage. Medium or smaller creatures who take splash damage are pushed 5 feet away from the target, and then, if the target is Large or smaller, it is pushed 5 feet away from you."
+ },
+ {
+  "id": "pressure-bomb-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Pressure Bomb (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "force",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This tightly sealed metal container is filled with highly pressurized gas that can explode to release a powerful shockwave. A pressure bomb deals 3d4 damage and 3 bludgeoning splash damage. On a critical hit, the target is knocked prone. Medium or smaller targets are pushed 5 feet away from you. You gain a +2 item bonus to attack rolls."
+ },
+ {
+  "id": "pressure-bomb-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Pressure Bomb (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "force",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This tightly sealed metal container is filled with highly pressurized gas that can explode to release a powerful shockwave. A pressure bomb deals 4d4 damage and 4 bludgeoning splash damage. On a critical hit, the target is knocked prone. Medium or smaller creatures who take splash damage are pushed 5 feet away from the target, and then, if the target is Large or smaller, it is pushed 5 feet away from you. You gain a +3 item bonus to attack rolls."
+ },
+ {
+  "id": "pressure-bomb-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Pressure Bomb (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "force",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This tightly sealed metal container is filled with highly pressurized gas that can explode to release a powerful shockwave. A pressure bomb deals 2d4 damage and 2 bludgeoning splash damage. On a critical hit, the target is knocked prone. Small or smaller targets are pushed 5 feet away from you. You gain a +1 item bonus to attack rolls."
+ },
+ {
+  "id": "primeval-mistletoe",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Primeval Mistletoe",
+  "level": 6,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This sprig of berry-festooned holly and mistletoe doesn't wilt or rot. It can be used as a primal locus, and it grants a +1 item bonus to Nature checks while you wear it. --- **Activate—Anoint** ⟨2⟩ (manipulate) **Frequency** once per 10 minutes **Effect** You squeeze juice from one of the berries and smear it onto a weapon made primarily of wood to cast Runic Weapon on it, or onto a creature to cast Runic Body on it. --- **Activate—Bind** ⟨2⟩ (manipulate) **Frequency** once per day **Effect** You touch the sprig, then a tree to cast One with Plants upon yourself, turning into a vine on the touched tree."
+ },
+ {
+  "id": "primeval-mistletoe-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Primeval Mistletoe (Greater)",
+  "level": 14,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This sprig of berry-festooned holly and mistletoe doesn't wilt or rot. It can be used as a primal locus, and it grants a +2 item bonus to Nature checks while you wear it. --- **Activate—Anoint** ⟨2⟩ (manipulate) **Frequency** once per 10 minutes **Effect** You squeeze juice from one of the berries and smear it onto a weapon made primarily of wood to cast a 6th-rank Runic Weapon on it, or onto a creature to cast a 6th-rank Runic Body on it. --- **Activate—Bind** ⟨2⟩ (manipulate) **Frequency** once per day **Effect** You touch the sprig, then a tree to cast One with Plants upon yourself, turning into a vine on the touched tree. --- **Activate—Cultivate** ⟨2⟩ (manipulate) **Frequency** once per day **Effect** You plant the *greater primeval mistletoe* into an area of natural earth or stone. Once planted, the plant immediately sprouts into an area of holly bushes that don't impede movement and that pulse with vitality energy, replicating the effects of a Field of Life spell. You can Sustain the activation up to 1 minute. When this magic ends, the holly bushes revert back into the original *greater primeval mistletoe*."
+ },
+ {
+  "id": "pristine-epaulets",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Pristine Epaulets",
+  "level": 5,
+  "traits": [
+   "fortune",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Gaudy and sparkling, these intricately decorated epaulets have clearly never seen a battlefield. Worn by officers with more schooling or connections than actual fighting experience, these epaulets grant you a +1 item bonus to Society and Warfare Lore checks. **Activate—I Meant to Say** ⟨5⟩ (concentrate, fortune) **Frequency** once per day **Trigger** You critically fail a Diplomacy check --- **Effect** The pristine epaulets are often worn to both tense military negotiations and social events and can help you recover from a misstep. You can reroll the check, but you must take the new result."
+ },
+ {
+  "id": "prognostic-veil",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Prognostic Veil",
+  "level": 10,
+  "traits": [
+   "focused",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This gauzy purple veil is embroidered with symbols of divinatory significance. As your curse worsens, the veil ripples in an ever-increasing unseen wind. You gain a +2 item bonus to Religion checks. **Activate—Remember the Future** ⟨4⟩ (concentrate) **Frequency** once per day --- **Effect** You gain 1 Focus Point, which you can spend only to cast a revelation spell. If you don't spend this Focus Point by the end of this turn, it's lost. --- **Activate—Twist the Skeins of Fate** ⟨5⟩ (concentrate) **Frequency** once per day **Trigger** An ally within 30 feet is about to attempt a saving throw **Requirements** You have the cursebound condition --- **Effect** The ally gains a status bonus to the saving throw equal to the value of your cursebound condition. --- **Craft Requirements** You're an oracle."
+ },
+ {
+  "id": "prognostic-veil-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Prognostic Veil (Greater)",
+  "level": 18,
+  "traits": [
+   "focused",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This gauzy purple veil is embroidered with symbols of divinatory significance. As your curse worsens, the veil ripples in an ever-increasing unseen wind. You gain a +3 item bonus to Religion checks. **Activate—Remember the Future** ⟨4⟩ (concentrate) **Frequency** once per day --- **Effect** You gain 1 Focus Point, which you can spend only to cast a revelation spell. If you don't spend this Focus Point by the end of this turn, it's lost. --- **Activate—Twist the Skeins of Fate** ⟨5⟩ (concentrate) **Frequency** once per day **Trigger** An ally within 30 feet is about to attempt a saving throw or an attack roll **Requirements** You have the cursebound condition --- **Effect** The ally gains a status bonus to the saving throw or attack roll equal to the value of your cursebound condition. --- **Craft Requirements** You're an oracle."
+ },
+ {
+  "id": "propulsive-boots",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Propulsive Boots",
+  "level": 13,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "These sleek red boots make your legs feel like they're bursting with energy. You gain a +5-foot item bonus to your land Speed and to any climb or swim Speeds you have. **Activate—Quickening Stomp** ⟨1⟩ (manipulate) **Frequency** once per day --- **Effect** You stomp three times and gain the quickened condition for 1 minute. You can use the extra action to Stride, Climb, or Swim. (You must still attempt an Athletics check for the Climb and Swim actions unless you have the appropriate movement type.)"
+ },
+ {
+  "id": "protective-spirit-mask",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Protective Spirit Mask",
+  "level": 20,
+  "traits": [
+   "archetype",
+   "druid",
+   "wizard"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your mask carries the protective instincts of White Bull, the Horn Forger, and no one will hurt your allies while you have anything to say about it. Immediately after you Cast a non-cantrip Spell that targets only one ally, you can choose to have the spell also give that creature a +1 circumstance bonus to AC until the start of your next turn. You also gain the Protector's Interdiction reaction."
+ },
+ {
+  "id": "push-back-the-dead",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Push Back the Dead!",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "auditory",
+   "emotion",
+   "stance"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "core.stances"
+  ],
+  "text": "You call to your ally and strengthen their resolve and abilities to defend against the horrific tricks undead bring to bear. The ally gains a +2 circumstance bonus to saves against effects originating from undead. It also gains resistance to damage from Strikes made by undead creatures equal to half your Charisma modifier."
+ },
+ {
+  "id": "quick-recovery-kingdom",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Quick Recovery (Kingdom)",
+  "level": 3,
+  "traits": [
+   "general",
+   "kingdom"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Quick Recovery (Kingdom) Source Kingmaker Adventure Path pg. 532 Prerequisites Stability 14 Your kingdom recovers more quickly from danger and disaster. Whenever you attempt a skill check to end an ongoing harmful kingdom event, you gain a +4 status bonus to the check."
+ },
+ {
+  "id": "rain-of-embers-stance",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Rain of Embers Stance",
+  "level": 1,
+  "traits": [
+   "fire",
+   "monk",
+   "stance"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "core.stances"
+  ],
+  "text": "**Requirements** You are unarmored. --- You enter the stance of an enraged phoenix, holding your fingers as rigid as deadly talons while moving with quick, flickering gestures that flicker with dancing flames. The only Strikes you can make are fire talon Strikes. These deal 1d4 fire damage; are in the brawling group; and have the agile, finesse, fire, nonlethal, and unarmed traits. While in Rain of Embers Stance, you gain a +1 status bonus to AC and fire resistance equal to half your level (minimum 1)."
+ },
+ {
+  "id": "reanimator-dedication",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Reanimator Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You have dedicated your studies to the art of raising and commanding undead. If you're a spontaneous spellcaster with Summon Undead in your repertoire, it becomes a signature spell in addition to your usual signature spells. If you're a prepared spellcaster with animate dead in your spells known, spellbook, or the like, you can spend 10 minutes contemplating undeath to replace one of the spells you've prepared in your spell slots with an animate dead spell of the same rank. In addition, if you're able to target the mostly intact remains of an appropriate type of dead creature when casting animate dead, the undead you animate gains a +1 status bonus to attack rolls, AC, saving throws, and skill checks for the duration of animate dead."
+ },
+ {
+  "id": "redpitch-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Redpitch Bomb",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "fire",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Redpitch Bomb Source Redpitch Alchemy Usage held in 1 hand Bulk L Activate Strike Sap from redpitch pines, if properly distilled into a gummy, incendiary mass, ignites when exposed to the air. A redpitch bomb deals the listed fire damage, persistent fire damage, and splash damage. Many types grant an item bonus to attack rolls. Redpitch Bomb (Lesser) Source Redpitch Alchemy Price 3 gp The bomb deals 1 fire damage, 1d4 persistent fire damage, and 1 fire splash damage. On a critical hit, the target is clumsy 1 until the start of your next turn. Redpitch Bomb (Moderate) Source Redpitch Alchemy Price 10 gp You gain a +1 item bonus to attack rolls. The bomb deals 2 fire damage, 2d4 persistent fire damage, and 2 fire splash damage. On a critical hit, the target is clumsy 1 until the start of your next turn. Redpitch Bomb (Greater) Source Redpitch Alchemy Price 250 gp You gain a +2 bonus on attack rolls. The bomb deals 3 fire damage, 3d4 persistent fire damage, and 3 fire splash damage. On a critical hit, the target is clumsy 2 until the start of your next turn. Redpitch Bomb (Major) Source Redpitch Alchemy Price 2,500 gp You gain a +3 bonus on attack rolls. The bomb deals 4 fire damage, 4d4 persistent fire damage, and 4 fire splash damage. On a critical hit, the target is clumsy 3 until the start of your next turn."
+ },
+ {
+  "id": "redpitch-bomb-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Redpitch Bomb (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "fire",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Sap from redpitch pines, if properly distilled into a gummy, incendiary mass, ignites when exposed to the air. A redpitch bomb deals the listed fire damage, persistent fire damage, and splash damage. Many types grant an item bonus to attack rolls. You gain a +2 bonus on attack rolls. The bomb deals 3 fire damage, 3d4 persistent fire damage, and 3 fire splash damage. On a critical hit, the target is Clumsy 2 until the start of your next turn."
+ },
+ {
+  "id": "redpitch-bomb-lesser",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Redpitch Bomb (Lesser)",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "fire",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Sap from redpitch pines, if properly distilled into a gummy, incendiary mass, ignites when exposed to the air. A redpitch bomb deals the listed fire damage, persistent fire damage, and splash damage. Many types grant an item bonus to attack rolls. The bomb deals 1 fire damage, 1d4 persistent fire damage, and 1 fire splash damage. On a critical hit, the target is Clumsy 1 until the start of your next turn."
+ },
+ {
+  "id": "redpitch-bomb-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Redpitch Bomb (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "fire",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Sap from redpitch pines, if properly distilled into a gummy, incendiary mass, ignites when exposed to the air. A redpitch bomb deals the listed fire damage, persistent fire damage, and splash damage. Many types grant an item bonus to attack rolls. You gain a +3 bonus on attack rolls. The bomb deals 4 fire damage, 4d4 persistent fire damage, and 4 fire splash damage. On a critical hit, the target is Clumsy 3 until the start of your next turn."
+ },
+ {
+  "id": "redpitch-bomb-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Redpitch Bomb (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "fire",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike Sap from redpitch pines, if properly distilled into a gummy, incendiary mass, ignites when exposed to the air. A redpitch bomb deals the listed fire damage, persistent fire damage, and splash damage. Many types grant an item bonus to attack rolls. You gain a +1 item bonus to attack rolls. The bomb deals 2 fire damage, 2d4 persistent fire damage, and 2 fire splash damage. On a critical hit, the target is Clumsy 1 until the start of your next turn."
+ },
+ {
+  "id": "regalia",
+  "lane": "situational",
+  "collection": "classFeatures",
+  "name": "Regalia",
+  "level": 1,
+  "traits": [
+   "thaumaturge"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Regalia implements represent rulership, leadership, and social connections. While they differ in shape depending on regional customs and markers used to signify authority, common regalia implements are scepters, jeweled orbs, and heraldic banners. Regalia implements are associated with the harrow suit of crowns and the astrological signs of the patriarch and the sovereign dragon. ### **Initiate Benefit** ### **Adept Benefit** ### **Intensify Vulnerability** Your regalia implement makes you seem more confident and inspiring with each success. Whenever you successfully Strike the target of your Exploit Vulnerability, choose an ally that you can see. That ally gains a +1 circumstance bonus to its attack rolls against the creature until the beginning of your next turn. If the attack roll was a critical hit, the circumstance bonus increases to +2. ### **Paragon Benefit**"
+ },
+ {
+  "id": "reinforced-chassis",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Reinforced Chassis",
+  "level": 1,
+  "traits": [
+   "automaton"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your body is designed to be particularly resilient. Your chassis is made from reinforced armor plating that grants a +3 item bonus to AC with a Dexterity cap of +1. If you are at least 5th level, the item bonus increases to +4 and at 10th level it increases to +5. You can never wear other armor or remove your chassis; however, you still don't become fatigued from sleeping. You can etch armor runes onto your chassis. Your chassis is medium armor in the plate group for abilities and for etching runes. **Enhancement** Your chassis becomes difficult to overcome. You gain the Chassis Deflection reaction."
+ },
+ {
+  "id": "resilient",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Resilient",
+  "level": 8,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "*Resilient* runes imbue armor with additional protective magic. This grants the wearer a +1 item bonus to saving throws. You can upgrade the *resilient* rune already etched on a suit of armor using the normal process for upgrading items and runes."
+ },
+ {
+  "id": "resilient-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Resilient (Greater)",
+  "level": 14,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "*Resilient* runes imbue armor with additional protective magic. This grants the wearer a +2 item bonus to saving throws. You can upgrade the *resilient* rune already etched on a suit of armor using the normal process for upgrading items and runes."
+ },
+ {
+  "id": "resilient-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Resilient (Major)",
+  "level": 20,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "*Resilient* runes imbue armor with additional protective magic. This grants the wearer a +3 item bonus to saving throws. You can upgrade the *resilient* rune already etched on a suit of armor using the normal process for upgrading items and runes."
+ },
+ {
+  "id": "restore-the-mind",
+  "lane": "situational",
+  "collection": "classFeatures",
+  "name": "Restore the Mind",
+  "level": 1,
+  "traits": [
+   "emotion",
+   "healing",
+   "mental",
+   "psyche",
+   "psychic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your unleashed psyche gives you closer connections to the emotions of your allies, letting you project reassurance and strength that replenishes their mind and body. Choose one of the two benefits to grant one ally within 30 feet that you can see. That ally is then temporarily immune for 10 minutes. - The ally gains a +1 status bonus to saving throws against mental effects until your psyche ends. - The ally regains Hit Points equal to 2 + double your level."
+ },
+ {
+  "id": "ring-of-bestial-friendship",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Ring of Bestial Friendship",
+  "level": 9,
+  "traits": [
+   "cursed",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "The ring is made from a lock of green hair woven around several small gemstones. --- **Activate** ⟨2⟩ Interact **Frequency** once per day **Effect** You cast Charm (heightened to 4th level) on an animal or beast within 30 feet. If the spell succeeds, it forms a mental bond between you and the target for the duration of the charm, which allows you to remain aware of the creature's present state, its direction from you, its distance from you, and any conditions affecting it, as long as you are both on the same plane of existence and are both alive. If you fail to affect the creature with this *charm*, or once the *charm* ends (such as if it is counteracted, or its duration expires), the creature becomes enraged and is immune to the ring's *charm* from that point on. The creature's rage drives it to attack you and grants it a +1 item bonus on all checks and DCs to do so for 1 hour."
+ },
+ {
+  "id": "ring-of-lies",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Ring of Lies",
+  "level": 10,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This plain silver ring has an almost oily sheen. While wearing the ring, you gain a +2 item bonus to Deception checks. **Activate—Sweeten Lies** ⟨2⟩ (manipulate) **Frequency** once per day --- **Effect** Snapping your fingers on the hand that wears the ring causes the ring to cast Honeyed Words on you with no visual manifestations of a spell being cast."
+ },
+ {
+  "id": "ring-of-wizardry",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Ring of Wizardry",
+  "level": 7,
+  "traits": [
+   "arcane",
+   "divination",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Ring of Wizardry Source Core Rulebook pg. 615 Usage worn This ring is made from the purest platinum and is covered in esoteric arcane symbols. It does nothing unless you have a spellcasting class feature with the arcane tradition. While wearing the ring of wizardry, you gain a +1 item bonus to Arcana checks and have two additional 1st-level arcane spell slots each day. You prepare spells in these slots or cast from them spontaneously, just as you normally cast your spells. If you take off the ring for any reason, you lose the additional spell slots. You can’t gain spell slots from more than one ring of wizardry per day, nor can a single ring of wizardry grant spell slots more than once per day. If you can cast arcane spells in a variety of different ways (such as if you are a draconic bloodline sorcerer with the wizard multiclass archetype), you can divide the spell slots as you wish among your various sources of arcane spells. Craft Requirements You have a spellcasting class feature with the arcane tradition. Ring of Wizardry (Type I) Source Core Rulebook pg. 615 Price 360 gp Ring of Wizardry (Type II) Source Core Rulebook pg. 615 Price 1,000 gp The bonus is +2, and the ring grants two 2nd-level spell slots and one 1st-level spell slot. Ring of Wizardry (Type III) Source Core Rulebook pg. 615 Price 2,000 gp The bonus is +2, and the ring grants two 3rd-level spell slots and one 2nd-level spell slot. Ring of Wizardry (Type IV) Source Core Rulebook pg. 615 Price 4,500 gp The bonus is +2, and the ring grants two 4th-level spell slots and one 3rd-level spell slot."
+ },
+ {
+  "id": "ring-of-wizardry-type-i",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Ring of Wizardry (Type I)",
+  "level": 7,
+  "traits": [
+   "arcane",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This ring is made from the purest platinum and is covered in esoteric arcane symbols. It does nothing unless you have a spellcasting class feature with the arcane tradition. While wearing the ring of wizardry, you gain a +1 item bonus to Arcana checks and have two additional 1st-rank arcane spell slots each day. You prepare spells in these slots or cast from them spontaneously, just as you normally cast your spells. If you take off the ring for any reason, you lose the additional spell slots. You can't gain spell slots from more than one ring of wizardry per day, nor can a single ring of wizardry grant spell slots more than once per day. If you can cast arcane spells in a variety of different ways (such as if you are a draconic bloodline sorcerer with the wizard multiclass archetype), you can divide the spell slots as you wish among your various sources of arcane spells. **Craft Requirements** You have a spellcasting class feature with the arcane tradition."
+ },
+ {
+  "id": "ring-of-wizardry-type-ii",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Ring of Wizardry (Type II)",
+  "level": 10,
+  "traits": [
+   "arcane",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This ring is made from the purest platinum and is covered in esoteric arcane symbols. It does nothing unless you have a spellcasting class feature with the arcane tradition. While wearing the ring of wizardry, you gain a +2 item bonus to Arcana checks and have two additional 2nd-rank and one additional 1st-rank arcane spell slot each day. You prepare spells in these slots or cast from them spontaneously, just as you normally cast your spells. If you take off the ring for any reason, you lose the additional spell slots. You can't gain spell slots from more than one ring of wizardry per day, nor can a single ring of wizardry grant spell slots more than once per day. If you can cast arcane spells in a variety of different ways (such as if you are a draconic bloodline sorcerer with the wizard multiclass archetype), you can divide the spell slots as you wish among your various sources of arcane spells. **Craft Requirements** You have a spellcasting class feature with the arcane tradition."
+ },
+ {
+  "id": "ring-of-wizardry-type-iii",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Ring of Wizardry (Type III)",
+  "level": 12,
+  "traits": [
+   "arcane",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This ring is made from the purest platinum and is covered in esoteric arcane symbols. It does nothing unless you have a spellcasting class feature with the arcane tradition. While wearing the ring of wizardry, you gain a +2 item bonus to Arcana checks and have two additional 3rd-rank and one additional 2nd-rank arcane spell slot each day. You prepare spells in these slots or cast from them spontaneously, just as you normally cast your spells. If you take off the ring for any reason, you lose the additional spell slots. You can't gain spell slots from more than one ring of wizardry per day, nor can a single ring of wizardry grant spell slots more than once per day. If you can cast arcane spells in a variety of different ways (such as if you are a draconic bloodline sorcerer with the wizard multiclass archetype), you can divide the spell slots as you wish among your various sources of arcane spells. **Craft Requirements** You have a spellcasting class feature with the arcane tradition."
+ },
+ {
+  "id": "ring-of-wizardry-type-iv",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Ring of Wizardry (Type IV)",
+  "level": 14,
+  "traits": [
+   "arcane",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This ring is made from the purest platinum and is covered in esoteric arcane symbols. It does nothing unless you have a spellcasting class feature with the arcane tradition. While wearing the ring of wizardry, you gain a +2 item bonus to Arcana checks and have two additional 4th-rank and one additional 3rd-rank arcane spell slot each day. You prepare spells in these slots or cast from them spontaneously, just as you normally cast your spells. If you take off the ring for any reason, you lose the additional spell slots. You can't gain spell slots from more than one ring of wizardry per day, nor can a single ring of wizardry grant spell slots more than once per day. If you can cast arcane spells in a variety of different ways (such as if you are a draconic bloodline sorcerer with the wizard multiclass archetype), you can divide the spell slots as you wish among your various sources of arcane spells. **Craft Requirements** You have a spellcasting class feature with the arcane tradition."
+ },
+ {
+  "id": "rise-my-creature",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Rise, My Creature!",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "You have created life! You have usurped the power of the gods themselves! You gain a prototype construct companion pieced together from corpses and animated by chemicals or Stasian technology. You use Medicine in place of Crafting to Repair your construct or rebuild it if it's been destroyed. Your creation has an affinity for the lightning that brought it to life. When your construct companion takes electricity damage, it gains a +1 circumstance bonus to its Athletics skill checks until the end of its next turn. Although the coils or alchemical residue make it obvious to you and those with similar training that your creation is not undead, others must generally succeed at a , , or check to verify those claims with Recall Knowledge."
+ },
+ {
+  "id": "rite-of-reinforcement",
+  "lane": "situational",
+  "collection": "heritages",
+  "name": "Rite of Reinforcement",
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your woven exoskeleton rivals the hardest armors that can be found. Your exoskeleton is medium armor in the plate armor group that grants a +4 item bonus to AC, a Dex cap of +1, a check penalty of -2, a speed penalty of -5 feet, and a Strength value of +3, and has the comfort trait. You can never wear other armor or remove your exoskeleton. You can etch armor runes onto your exoskeleton as normal. Rite of Reinforcement Exoskeleton"
+ },
+ {
+  "id": "rite-of-reinforcement-exoskeleton",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Rite of Reinforcement Exoskeleton",
+  "level": 1,
+  "traits": [
+   "comfort"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Note** Conrasu Rite of Reinforcement Heritage Only --- Your woven exoskeleton rivals the hardest armors that can be found. Your exoskeleton is medium armor in the plate armor group that grants a +4 item bonus to AC, a Dex cap of +1, a check penalty of -2, a speed penalty of -5 feet, and a Strength value of +3, and has the comfort trait. You can never wear other armor or remove your exoskeleton. You can etch armor runes onto your exoskeleton as normal."
+ },
+ {
+  "id": "robe-of-eyes",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Robe of Eyes",
+  "level": 17,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This garment appears to be an ordinary robe until donned, at which point numerous strange and alien eyes of varied shapes and colors open and blink across its fabric. While wearing the robe, you gain a +3 item bonus to Perception checks, and you constantly benefit from the effects of a 2nd-rank See the Unseen spell. You can also see powerful magic auras. The highest-level magic aura within 30 feet of you glows in a color that reveals its school to you and allows you to determine where the effect originates. This can narrow down the origin point of the effect to a 5-foot-cube, but not more precisely than that. The *robe of eyes* is not without its dangers. If any spell with the light trait is cast on you or your square while you are wearing the robe, you are blinded for a number of rounds equal to the spell's rank unless you succeed at a Fortitude save against the spell's DC. **Activate** ⟨1⟩ Interact --- **Effect** You pluck an eye from the robe and toss it into the air, where it turns invisible and floats to a destination you choose, with the same effect as a 5th-rank Scouting Eye spell. You can Sustain the Activation just as you would be able to Sustain the Spell."
+ },
+ {
+  "id": "root-magic",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Root Magic",
+  "level": 1,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your talismans ward against foul magic. During your daily preparations, you can assemble a small pouch with bits of herbs, hair, sacred oils, and other ritual ingredients, which you give to one ally; the ally cannot be yourself. The first time that day the ally attempts a saving throw against a spell or haunt, they gain a +1 circumstance bonus to the roll. This bonus increases to +2 if you're an expert in Occultism or +3 if you're legendary."
+ },
+ {
+  "id": "runic-skullcap",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Runic Skullcap",
+  "level": 15,
+  "traits": [
+   "divine",
+   "focused",
+   "invested",
+   "mythic"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This silver skullcap is etched with snake patterns and a single Sihedron rune. The skullcap grants a +2 item bonus to Arcana and Religion checks. If a check is attempted to Recall Knowledge about rune magic or Lissala, the wearer treats the results of a failure or critical failure as one degree of success better. **Activate—Rewards of Service** ⟨4⟩ (concentrate) **Frequency** once per day --- **Effect** Gain 1 Focus Point, which you can spend only to cast a cleric domain spell for a domain belonging to Lissala. Lissala's domains are ambition, duty, fate, and knowledge. If you don't spend this point by the end of this turn, it is lost. **Activate—Rewards of Rule** 1 minute (concentrate) **Requirements** You have master or legendary proficiency in Arcana --- **Effect** Spend 1 Mythic Point when you invest the runic skullcap. Until the next time you invest the skullcap, you can also use the Focus Point granted by Rewards of Service to cast a focus spell from the runelord wizard school. - **Envy:** Cutting Eye - **Greed:** Precious Gleam - **Sloth:** Reclined Apport - **Gluttony:** All-Encompassing Hunger - **Lust:** Heart's Hook - **Pride:** Crescent Scepter - **Wrath:** Vengeful Glare"
+ }
+]

@@ -21,7 +21,7 @@ import { TrackerSettingsSection } from '../integration/TrackerSettingsSection';
 import { WindowControls } from './WindowControls';
 import { HeroesHeavenLogo } from './Logo';
 import type { Customization, ModeDef } from '../rules/types';
-import { CATALOG_MODES, CATALOG_MODE_MAP } from '../rules/modes';
+import { CATALOG_MODES, playerModeLibrary } from '../rules/modes';
 import { ModeEditor, summarizeMod } from './ModesPanel';
 import { useIsMobile } from './useIsMobile';
 import { useBackHandler } from './useEscapeClose';
@@ -480,7 +480,9 @@ function ModesSection({
   onDeleteMode?: (id: string) => void;
 }) {
   const [editing, setEditing] = useState<ModeDef | null>(null);
-  const custom = Object.values(modes).filter((m) => !CATALOG_MODE_MAP[m.id]);
+  // `fromItemId` excluded: an item mode is not a custom mode the player wrote, it belongs to a
+  // consumable. Listing it here would offer Edit and Delete on something regenerated from core data.
+  const custom = playerModeLibrary(Object.values(modes));
   const scopeOptions = [{ id: null as string | null, name: 'All characters' }, ...characters.map((c) => ({ id: c.id, name: c.name }))];
 
   if (editing) {

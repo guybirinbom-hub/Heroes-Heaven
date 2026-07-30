@@ -1,0 +1,146 @@
+[
+ {
+  "id": "marking-snare",
+  "name": "Marking Snare",
+  "level": 1,
+  "description": "This snare is often used to mark intruders for later tracking or identification. When you create this snare, you must decide whether to make it a dye or a scent marker. Either type of marking grants a +2 circumstance bonus to Track the creature for up to 24 hours or until the dye or scent is washed off (requiring at least a gallon of water and 10 minutes of scrubbing). A creature that enters a square of the snare must attempt a save. --- **Success** The creature is unaffected. **Failure** The snare marks the creature. **Critical Failure** The snare marks the creature, and the creature is blinded until the end of its next turn."
+ },
+ {
+  "id": "shielding-salve",
+  "name": "Shielding Salve",
+  "level": 1,
+  "description": "**Activate** ⟨1⟩ Interact This shimmering paste has many properties of a Shield spell. When you slather it onto a creature or object, the target gains a +1 circumstance bonus to AC for 1 round. The first time a physical attack or a force barrage hits the target during that round, the oil prevents 5 damage from that attack or spell, and then the oil's effect ends."
+ },
+ {
+  "id": "tricky-liniment",
+  "name": "Tricky Liniment",
+  "level": 5,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- This greenish, persistent grease can be applied to armor to make it extremely slippery for 8 hours, granting the wearer a +2 item bonus to Acrobatics checks to Escape or to Squeeze."
+ },
+ {
+  "id": "demortification-oil",
+  "name": "Demortification Oil",
+  "level": 5,
+  "description": "**Activate** ⟨1⟩ Interact --- This foul-smelling oil has the appearance and odor of the greasy, thick fluids that seep from a decaying body. When you spread this oil on an intact corpse that has been dead no longer than 1 week, its decay fades and the corpse is restored to the condition it was just after death. *Demortification oil* can't undo damage done to a corpse after death, such as consumption by scavengers. Applied to a non-incorporeal undead, a dose of *demortification oil* grants the undead creature a +1 item bonus to Armor Class for 1 hour."
+ },
+ {
+  "id": "philter-of-empty-dreams",
+  "name": "Philter of Empty Dreams",
+  "level": 6,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- A *philter of empty dreams* is a dose of glowing blue liquid that prevents dreams. When you drink a *philter of empty dreams*, you have no dreams for the next 8 hours and gain a +1 item bonus to saving throws against dream- or nightmare-themed effects (including saving throws against the effects of midnight milk). If you're suffering from an addiction to midnight milk when you drink a *philter of empty dreams*, the potion attempts to counteract the addiction with a counteract rank of 4 and a +15 modifier for the roll. If an intellect devourer who's controlling a stolen body uses the body to drink a *philter of empty dreams*, the intellect devourer must succeed at a save or be forced to Exit the Body immediately."
+ },
+ {
+  "id": "preserved-moonflower",
+  "name": "Preserved Moonflower",
+  "level": 7,
+  "description": "**Activate** ⟨1⟩ (manipulate) **Access** Tian Xia origin --- Though these preserved vegetables aren't actual moonflowers, they're made using a moonflower-distilled vinegar. When consumed, tendrils sprout from your veins and curl around you, granting you a +2 status bonus to saves against void effects for 10 minutes and reducing your wounded condition by up to 2. Eating more than one preserved moonflower dish in a day doesn't grant further benefits and makes you Drained 1."
+ },
+ {
+  "id": "chilled-fire-noodles",
+  "name": "Chilled Fire Noodles",
+  "level": 1,
+  "description": "**Activate** ⟨3⟩ (manipulate) **Access** Tian Xia origin --- These cool noodles are served with dark fermented sauces and vinegars before finally being tossed with spicy chili oil. When you consume the noodles, you temporarily ignore the -1 status penalty to AC and saving throws caused by the fatigued condition for 1 hour."
+ },
+ {
+  "id": "chilled-fire-noodles-greater",
+  "name": "Chilled Fire Noodles (Greater)",
+  "level": 4,
+  "description": "**Activate** ⟨3⟩ (manipulate) **Access** Tian Xia origin --- These cool noodles are served with dark fermented sauces and vinegars before finally being tossed with spicy chili oil. When you consume the noodles, you temporarily ignore the -1 status penalty to AC and saving throws caused by the fatigued condition for 4 hours."
+ },
+ {
+  "id": "cloud-buns-greater",
+  "name": "Cloud Buns (Greater)",
+  "level": 9,
+  "description": "**Activate** ⟨1⟩ (manipulate) **Access** Tian Xia origin --- White, pillowy dough surrounds an interior containing minced meats, spices, and herbs. The dough is steamed with elemental magic to make it light and airy while keeping the meaty center moist. When you consume a bun, a set of small clouds form around your feet that grant you a fly Speed of 30 feet or your speed, whichever is lower, for 1 minute. You also have a +2 item bonus to Acrobatics checks to Maneuver in Flight."
+ },
+ {
+  "id": "ghost-fowl-porridge",
+  "name": "Ghost Fowl Porridge",
+  "level": 9,
+  "description": "**Activate** ⟨1⟩ (manipulate) **Access** Tian Xia origin --- This robust porridge—made from a cockatrice distilled into a broth, hot peppers from a demonic source, and various toppings—causes diners to utter a ghostly wail from the intense heat. Consuming the porridge grants you a +2 item bonus to saving throws against being petrified for 1 hour. You also gain resistance 3 against physical damage for the duration."
+ },
+ {
+  "id": "fake-blood-pack",
+  "name": "Fake Blood Pack",
+  "level": 0,
+  "description": "Adventurers have found a number of uses for these animal blood–filled bladders, which were originally used in theatrical productions. Whenever you take slashing or piercing damage with the fake blood pack under your clothes or armor, roll a . On a success, the blood pack is punctured. You or an ally can puncture the hidden pack intentionally with an Interact action. When faking an injury, a punctured blood pack grants a +2 item bonus to relevant Deception checks, such as to Lie about being injured, for 4 hours after the pack has been punctured or until the blood is washed off, whichever comes first. Abilities that trigger when a creature deals bleed damage, that determine if a creature is bleeding, or are otherwise based on bleed damage don't trigger or apply for blood from a fake blood pack, which might mean creatures with such abilities automatically realize the ruse."
+ },
+ {
+  "id": "seed-pod-of-rooted-wisdom",
+  "name": "Seed Pod of Rooted Wisdom",
+  "level": 2,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- This tiny magic item looks like a ripe brown fruit from a kapok tree. Inside the fruit are three seeds. Each magical seed releases an effect when swallowed. The first grants you a +1 status bonus on Will saves against fear effects for 10 minutes. The second makes your next 10 words comprehensible to any creature that understands any language. The third lets you recall precisely how to get from where you are to any other place you've stayed for more than an hour within the past day. Once the seeds are removed, the fruit is edible, if chewed slowly, and quite tasty, being much sweeter than the non-magical version."
+ },
+ {
+  "id": "static-muscular-relay",
+  "name": "Static-Muscular Relay",
+  "level": 10,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- This glass orb has a Stasian coil in the center, allowing visible electricity to be safely seen within the glass. The electricity that dances within this orb can be transferred to the user of this gadget, allowing their muscles to react and respond much quicker. When activated, you gain a +2 circumstance bonus to Reflex saves and AC for 1 minute, or until you are hit by an attack or fail a Reflex saving throw, whichever happens first."
+ },
+ {
+  "id": "navigators-feather",
+  "name": "Navigator's Feather",
+  "level": 2,
+  "description": "**Activate** ⟨4⟩ (concentrate, fortune) **Trigger** You would roll a Survival check to Sense Direction or Track but haven't rolled yet **Requirements** You're trained in Survival. --- This jaunty feather is affixed to headgear and can guide you in times of trouble, twisting to point in different directions. When you activate the talisman, you roll the triggering Survival check to Sense Direction or Track twice, and use the higher result. For 24 hours, you gain a +1 circumstance bonus to Survival checks to Sense Direction, so long as you're navigating toward the same destination as when you activated the talisman, and a +1 circumstance bonus to Survival checks to Track, so long as you continue to Track the same creature as when you activated the talisman. After 24 hours, the feather disintegrates, becoming mundane dust that blows away on the breeze."
+ },
+ {
+  "id": "ashes-of-the-war-god",
+  "name": "Ashes of the War God",
+  "level": 20,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- *Ashes of the war god* may be applied to armor, a weapon, or mixed into an elixir or potion. **Armor** The armor becomes *+3 major resilient armor* for 1 day. It retains any property runes. **Elixir or Potion** In addition to the normal effects drinking the elixir or potion grant you, you gain a +3 item bonus to Athletics checks and Fortitude saves for 1 hour. **Weapon** The weapon becomes a *+3 major striking weapon* for 1 day. It retains any property runes."
+ },
+ {
+  "id": "aurochs-jerky",
+  "name": "Aurochs Jerky",
+  "level": 9,
+  "description": "**Activate** ⟨2⟩ Interact --- Aurochs meat already makes for tough jerky, but with the right alchemical treatment, it becomes legendarily resilient and imparts that durability to those who eat it. Eating the jerky causes a pair of inch-long horns to grow from your forehead (or causes your existing horns to grow noticeably) for 1 hour. During this time, you gain a +1 item bonus to Fortitude saves. You can end the effect prematurely, causing the horns to retract or revert to their normal size, with a free action that has the concentrate trait. --- **Aurochs' Endurance** ⟨4⟩ (concentrate) **Trigger** You begin your turn and are fatigued **Effect** You suppress the fatigued condition for 10 minutes. During this time, you are not immune to fatigue and can become fatigued by subsequent effects, but you gain a +2 item bonus to saving throws against effects that would fatigue you."
+ },
+ {
+  "id": "crimson-godsblood-serum",
+  "name": "Crimson Godsblood Serum",
+  "level": 6,
+  "description": "Crimson Godsblood Serum Source Shining Kingdoms pg. 52 Usage held in 1 hand Bulk L Activate (manipulate) Though it contains but a tiny drop of Gorum’s blood, drinking this thick, swirling potion fills the user with divine wrath and resilience. While under the effect of the potion, you gain a status bonus to physical damage rolls for 1 minute. The first time during that minute you’re reduced to 0 Hit Points but not immediately killed, you avoid being knocked out, regain the listed amount of Hit Points, and become confused for 1 round, and your wounded condition increases by 1. Lesser Crimson Godsblood Serum Source Shining Kingdoms pg. 52 Price 50 gp The potion grants a +2 status bonus and restores 2d8+5 Hit Points. Moderate Crimson Godsblood Serum Source Shining Kingdoms pg. 52 Price 400 gp The potion grants a +3 status bonus and restores 3d8+10 Hit Points. Greater Crimson Godsblood Serum Source Shining Kingdoms pg. 52 Price 5,000 gp The potion grants a +4 status bonus and restores 6d8+20 Hit Points."
+ },
+ {
+  "id": "lesser-crimson-godsblood-serum",
+  "name": "Lesser Crimson Godsblood Serum",
+  "level": 6,
+  "description": "Crimson Godsblood Serum Source Shining Kingdoms pg. 52 Usage held in 1 hand Bulk L Activate (manipulate) Though it contains but a tiny drop of Gorum’s blood, drinking this thick, swirling potion fills the user with divine wrath and resilience. While under the effect of the potion, you gain a status bonus to physical damage rolls for 1 minute. The first time during that minute you’re reduced to 0 Hit Points but not immediately killed, you avoid being knocked out, regain the listed amount of Hit Points, and become confused for 1 round, and your wounded condition increases by 1. Lesser Crimson Godsblood Serum Source Shining Kingdoms pg. 52 Price 50 gp The potion grants a +2 status bonus and restores 2d8+5 Hit Points. Moderate Crimson Godsblood Serum Source Shining Kingdoms pg. 52 Price 400 gp The potion grants a +3 status bonus and restores 3d8+10 Hit Points. Greater Crimson Godsblood Serum Source Shining Kingdoms pg. 52 Price 5,000 gp The potion grants a +4 status bonus and restores 6d8+20 Hit Points."
+ },
+ {
+  "id": "moderate-crimson-godsblood-serum",
+  "name": "Moderate Crimson Godsblood Serum",
+  "level": 12,
+  "description": "Crimson Godsblood Serum Source Shining Kingdoms pg. 52 Usage held in 1 hand Bulk L Activate (manipulate) Though it contains but a tiny drop of Gorum’s blood, drinking this thick, swirling potion fills the user with divine wrath and resilience. While under the effect of the potion, you gain a status bonus to physical damage rolls for 1 minute. The first time during that minute you’re reduced to 0 Hit Points but not immediately killed, you avoid being knocked out, regain the listed amount of Hit Points, and become confused for 1 round, and your wounded condition increases by 1. Lesser Crimson Godsblood Serum Source Shining Kingdoms pg. 52 Price 50 gp The potion grants a +2 status bonus and restores 2d8+5 Hit Points. Moderate Crimson Godsblood Serum Source Shining Kingdoms pg. 52 Price 400 gp The potion grants a +3 status bonus and restores 3d8+10 Hit Points. Greater Crimson Godsblood Serum Source Shining Kingdoms pg. 52 Price 5,000 gp The potion grants a +4 status bonus and restores 6d8+20 Hit Points."
+ },
+ {
+  "id": "greater-crimson-godsblood-serum",
+  "name": "Greater Crimson Godsblood Serum",
+  "level": 18,
+  "description": "Crimson Godsblood Serum Source Shining Kingdoms pg. 52 Usage held in 1 hand Bulk L Activate (manipulate) Though it contains but a tiny drop of Gorum’s blood, drinking this thick, swirling potion fills the user with divine wrath and resilience. While under the effect of the potion, you gain a status bonus to physical damage rolls for 1 minute. The first time during that minute you’re reduced to 0 Hit Points but not immediately killed, you avoid being knocked out, regain the listed amount of Hit Points, and become confused for 1 round, and your wounded condition increases by 1. Lesser Crimson Godsblood Serum Source Shining Kingdoms pg. 52 Price 50 gp The potion grants a +2 status bonus and restores 2d8+5 Hit Points. Moderate Crimson Godsblood Serum Source Shining Kingdoms pg. 52 Price 400 gp The potion grants a +3 status bonus and restores 3d8+10 Hit Points. Greater Crimson Godsblood Serum Source Shining Kingdoms pg. 52 Price 5,000 gp The potion grants a +4 status bonus and restores 6d8+20 Hit Points."
+ },
+ {
+  "id": "psyche-salts",
+  "name": "Psyche Salts",
+  "level": 5,
+  "description": "Psyche Salts May contain spoilers from Shades of Blood Source Pathfinder #214: The Broken Palace pg. 81 Usage held in 1 hand Bulk L Activate (manipulate) A dose of psyche salts is kept in a small, corked vial. When you activate psyche salts, you uncork and pass the open end of the vial near the head of an adjacent creature. The salts within fizz and evaporate, creating a sour-smelling cloud that envelops the creature’s head before fading. As they do, the vapors attempt to clear harmful influences from the creature’s mind. The creature gains the effect of a clear mind spell and a +1 item bonus to saving throws against mental effects for 10 minutes. Psyche Salts (Lesser) Source Pathfinder #214: The Broken Palace pg. 81 Price 30 gp The psyche salts grants the effects of a 2nd-rank clear mind spell, with a +11 counteract check modifier. Psyche Salts (Moderate) Source Pathfinder #214: The Broken Palace pg. 81 Price 150 gp The psyche salts grants the effects of a 4th-rank clear mind spell, with a +17 counteract check modifier. The item bonus increases to +2. Psyche Salts (Greater) Source Pathfinder #214: The Broken Palace pg. 81 Price 3,000 gp The psyche salts grants the effects of an 8th-rank clear mind spell, with a +27 counteract check modifier. The item bonus increases to +3."
+ },
+ {
+  "id": "psyche-salts-lesser",
+  "name": "Psyche Salts (Lesser)",
+  "level": 5,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- A dose of psyche salts is kept in a small, corked vial. When you activate psyche salts, you uncork and pass the open end of the vial near the head of an adjacent creature. The salts within fizz and evaporate, creating a sour-smelling cloud that envelops the creature's head before fading. As they do, the vapors attempt to clear harmful influences from the creature's mind. The creature gains the effect of a 2nd-rank Clear Mind spell with a +11 counteract check modifier and a +1 item bonus to saving throws against mental effects for 10 minutes."
+ },
+ {
+  "id": "psyche-salts-moderate",
+  "name": "Psyche Salts (Moderate)",
+  "level": 9,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- A dose of psyche salts is kept in a small, corked vial. When you activate psyche salts, you uncork and pass the open end of the vial near the head of an adjacent creature. The salts within fizz and evaporate, creating a sour-smelling cloud that envelops the creature's head before fading. As they do, the vapors attempt to clear harmful influences from the creature's mind. The creature gains the effect of a 4th-rank Clear Mind spell with a +17 counteract check modifier and a +2 item bonus to saving throws against mental effects for 10 minutes."
+ },
+ {
+  "id": "psyche-salts-greater",
+  "name": "Psyche Salts (Greater)",
+  "level": 17,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- A dose of psyche salts is kept in a small, corked vial. When you activate psyche salts, you uncork and pass the open end of the vial near the head of an adjacent creature. The salts within fizz and evaporate, creating a sour-smelling cloud that envelops the creature's head before fading. As they do, the vapors attempt to clear harmful influences from the creature's mind. The creature gains the effect of a 8th-rank Clear Mind spell with a +27 counteract check modifier and a +3 item bonus to saving throws against mental effects for 10 minutes."
+ }
+]

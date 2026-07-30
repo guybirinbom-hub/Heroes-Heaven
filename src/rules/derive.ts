@@ -225,6 +225,36 @@ export function passiveItemBonus(
   return best;
 }
 
+/**
+ * The same best-of-the-worn item bonus as `passiveItemBonus`, plus WHICH item supplied it.
+ *
+ * The number alone was all the sheet had, so a passive magic item raised your AC or your Will save
+ * and the breakdown listed nothing — the parts stopped adding up to the total, and there was no way
+ * to tell what had done it. The breakdowns use this to name the source.
+ */
+export function passiveItemBonusDetail(
+  c: Character,
+  db: ContentDatabase | undefined,
+  kind: 'perception' | 'skill' | 'saves' | 'ac' | 'attack',
+  skillKey?: ProficiencyKey,
+): { value: number; name: string } | null {
+  if (!db) return null;
+  let best: { value: number; name: string } | null = null;
+  const read = (pe: ItemPassiveEffects | undefined, name: string) => {
+    if (!pe) return;
+    let v = kind === 'skill' ? (skillKey ? pe.skills?.[skillKey] ?? 0 : 0) : pe[kind] ?? 0;
+    if (kind === 'skill' && skillKey?.startsWith('lore:') && pe.loreBonus) v = Math.max(v, pe.loreBonus);
+    if (v && (!best || v > best.value)) best = { value: v, name };
+  };
+  for (const inv of c.inventory) {
+    if (!(inv.worn || inv.invested || inv.equipped)) continue;
+    const name = db.items[inv.itemId]?.name ?? inv.itemId;
+    read(db.items[inv.itemId]?.passiveEffects, name);
+    read(c.resolvedItemPassives?.[inv.itemId], name);
+  }
+  return best;
+}
+
 /** An item bonus to a DYNAMIC skill set — the character's sorcerer bloodline skills (Sanguine Pendant)
  *  or their deity's skill (Helm of Zeal) — from invested items. Item bonuses don't stack (highest). */
 export function dynamicItemSkillBonus(c: Character, db: ContentDatabase | undefined, skillKey: ProficiencyKey): number {

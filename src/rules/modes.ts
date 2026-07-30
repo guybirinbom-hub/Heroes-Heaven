@@ -208,6 +208,59 @@ export const CATALOG_MODES: ModeDef[] = RAW_MODES.map((d) => ({ predefined: true
 /** Catalog keyed by id (for content merge). */
 export const CATALOG_MODE_MAP: Record<string, ModeDef> = Object.fromEntries(CATALOG_MODES.map((d) => [d.id, d]));
 
+/**
+ * Does any ACTIVE mode touch this stat?
+ *
+ * The sheet already flagged CONDITIONAL mode modifiers — the ones that don't change the number.
+ * An unconditional one silently moved the total and marked nothing, so a player with Inspire
+ * Courage running could not see which of their numbers it was responsible for. This covers both,
+ * so a live mode highlights everything it affects.
+ */
+export function activeModesTouch(modes: ModeDef[] | undefined, target: ModeTarget): boolean {
+  // Reuses modeMatches so the highlight lands on exactly the stats the maths moved — including
+  // `all-checks` modes, which would be missed by a naive kind comparison.
+  return (modes ?? []).some((m) => m.modifiers.some((mod) => modeMatches(mod, target)));
+}
+
+/** Human label for a mode modifier's target, for the mode detail popup ("Reflex", "Stealth", "AC"). */
+export function modeTargetLabel(mod: ModeModifier): string {
+  if (mod.detail) {
+    const d = mod.detail.startsWith('lore:') ? `${mod.detail.slice(5)} Lore` : mod.detail;
+    return d.charAt(0).toUpperCase() + d.slice(1);
+  }
+  const LABEL: Record<string, string> = {
+    ac: 'AC',
+    perception: 'Perception',
+    attack: 'attack rolls',
+    damage: 'damage',
+    speed: 'Speed',
+    'class-dc': 'Class DC',
+    'spell-dc': 'Spell DC',
+    'spell-attack': 'spell attack rolls',
+    save: 'saves',
+    skill: 'skills',
+  };
+  return LABEL[mod.target] ?? mod.target;
+}
+
+/**
+ * The player's OWN modes — the ones they wrote and can edit, pin or delete.
+ *
+ * `content.modes` is everything: the hand-authored catalog, the player's saved modes, and one mode
+ * per consumable. The last of those look exactly like saved modes (no `predefined` flag, no gates),
+ * so every screen that listed "your modes" by excluding the catalog picked up 211 item modes and
+ * offered Edit and Delete on data regenerated from core.json. Excluding `fromItemId` here, once,
+ * keeps that out of every such list — including the search and "show all" paths, which deliberately
+ * bypass `modeRelevant`.
+ *
+ * `charKey` narrows to modes scoped to that character plus the universal ones; omit it for all.
+ */
+export function playerModeLibrary(modes: Iterable<ModeDef>, charKey?: string): ModeDef[] {
+  return [...modes].filter(
+    (m) => !CATALOG_MODE_MAP[m.id] && !m.fromItemId && (charKey === undefined || !m.charId || m.charId === charKey),
+  );
+}
+
 /** Whether a predefined mode is relevant to a character — it must match at least one of its gates
  *  (class / ancestry / feat). A mode with NO gate is general and always relevant. A mode gated only
  *  by feats (e.g. an archetype trance) is relevant only to a character who has that dedication. */
@@ -217,6 +270,9 @@ export function modeRelevant(
   ancestryId?: string | null,
   featIds?: ReadonlySet<string>,
 ): boolean {
+  // An item mode belongs to its consumable, not to the player's own list: it appears by USING the
+  // item and nowhere else, so it is never offered in the Modes panel or its search.
+  if (mode.fromItemId) return false;
   const gates: boolean[] = [];
   if (mode.classes) gates.push(classId != null && mode.classes.includes(classId));
   if (mode.ancestries) gates.push(ancestryId != null && mode.ancestries.includes(ancestryId));

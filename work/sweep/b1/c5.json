@@ -1,0 +1,1177 @@
+[
+ {
+  "id": "market-runner",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Market Runner",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Keeleno Lathenar, the proprietor of Otari Market, is a grim and bitter man. A werewolf named Jaul Mezmin mauled his wife, Ayla, to death 30 years ago. Keeleno has never forgotten nor forgiven this attack, and he believes against all odds that Jaul has evaded justice and is alive and well. Running errands for Keeleno around town, you've gotten to know him almost as well as you know Otari. Keeleno's suspicions have rubbed off on you a bit, so you keep a wary eye on other people—particularly around the full moon. Choose two attribute boosts. One must be to **Constitution** or **Charisma**, and one is a free attribute boost. You're trained in the Diplomacy skill and the Otari Lore skill. You gain the Hobnobber skill feat. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Diplomacy **Lore** Otari Lore **Skill Feat** Hobnobber"
+ },
+ {
+  "id": "martial-disciple",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Martial Disciple",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "trainedLore",
+   "trainedSkillChoice"
+  ],
+  "inRegistries": [],
+  "text": "You dedicated yourself to intense training and rigorous study to become a great warrior. The school you attended might have been a traditionalist monastery, an elite military academy, or the local branch of a prestigious mercenary organization. Choose two attribute boosts. One must be to **Strength** or **Dexterity**, and one is a free attribute boost. You're trained in your choice of the Acrobatics or Athletics skill. You gain a skill feat: Cat Fall if you chose Acrobatics or Quick Jump if you chose Athletics. You're also trained in the Warfare Lore skill. --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Lore** Warfare Lore"
+ },
+ {
+  "id": "martial-musician",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Martial Musician",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Before you were old enough to join the actual fighting forces, you found your way onto the battlefield playing bagpipes, bugles, or drums. With these instruments of war, you helped direct troops in speed and direction, providing a pulsing cadence to push troops forward and keep them motivated. Choose two attribute boosts. One must be to **Dexterity** or **Charisma**, and one is a free attribute boost. You're trained in the Performance skill and the Warfare Lore skill. You gain the Impressive Performance skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Performance **Lore** Warfare Lore **Skill Feat** Impressive Performance"
+ },
+ {
+  "id": "masquerade-of-seasons-stance",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Masquerade of Seasons Stance",
+  "level": 4,
+  "traits": [
+   "bard",
+   "rogue",
+   "stance",
+   "swashbuckler"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [
+   "core.stances"
+  ],
+  "text": "You have mastered the opening steps to the Masquerade of Seasons, a dance that channels the power of spring, summer, winter, and autumn. Choose one of the following traits: water, fire, void, or cold. You gain resistance 5 to damage dealt by effects with the chosen trait. You can use an action to reenter this stance at any time, changing the granted resistance to another of the available options. If you are at least 12th level, the granted resistance increases to be equal to half your level."
+ },
+ {
+  "id": "mechanic",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Mechanic",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "The intricate inner workings of machines are no stranger to you. Whether they are mundane devices or complex clockworks, you know what makes them tick and how to maintain them. An adventuring group might keep you around to repair their equipment, or you might travel around to offer your rare services to those in need—for a price, of course! Choose two attribute boosts. One must be to **Strength** or **Intelligence**, and one is a free attribute boost. You're trained in the Crafting skill and the Engineering Lore skill. You gain the Quick Repair skill feat. --- ## Background details **Attribute Boosts** Intelligence or Strength, one free **Trained Skill** Crafting **Lore** Engineering Lore **Skill Feat** Quick Repair"
+ },
+ {
+  "id": "medicinal-clocksmith",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Medicinal Clocksmith",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "While others might have looked to clockwork as a mechanical innovation, you see the potential in the technology to improve the health of patients. You might be an experienced field medic who reached for a scrapped construct to help a wounded soldier, or a vanguard surgeon who's found replacing organs with clockwork more effective than repairing them. Perhaps you've also worked to \"optimize\" organic bodies with fine machinery, with or without the permission of your patients. Choose two attribute boosts. One must be to **Intelligence** or **Wisdom**, and one is a free attribute boost. You're trained in the Medicine skill and the Engineering Lore skill. You gain the Risky Surgery skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Medicine **Lore** Engineering Lore **Skill Feat** Risky Surgery"
+ },
+ {
+  "id": "megafauna-hunter",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Megafauna Hunter",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Life is only as meaningful as its risks, and the risks you're willing to take are big indeed. Like Wipa's half-sister Panuaku, Mammoth Lord Merthig, and Eiwa's great-grandnephew Pakano, you revel in the thrill of the hunt, especially when it involves mortal combat with megafauna, dinosaurs, and other oversized beasts. Though you're still early in your hunting career, your talent shows great promise, and you have a natural knack for tracking and taking down big game such as moose, saber-toothed tigers, and even wild mammoths. Choose two attribute boosts. One must be to **Strength** or **Dexterity**, and one is a free attribute boost. You're trained in the Athletics skill and the Hunting Lore skill. You gain the Titan Wrestler skill feat. --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Trained Skill** Athletics **Lore** Hunting Lore **Skill Feat** Titan Wrestler"
+ },
+ {
+  "id": "megavolt",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Megavolt",
+  "level": 6,
+  "traits": [
+   "electricity",
+   "inventor",
+   "manipulate"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You bleed off some electric power from your innovation in the shape of a damaging bolt. Creatures in a from your innovation take damage, with a against your class DC. The electricity damage increases by 1d4 at 8th level and every 2 levels thereafter. **Unstable Function** You overload and supercharge the voltage even higher. Add the unstable trait to Megavolt. The area increases to a and the damage increases from d4s to d12s. If you have the breakthrough innovation class feature, you can choose a 60-foot or for the area when you use an unstable Megavolt; if you also have the revolutionary innovation class feature, you can choose a 60-foot, 90-foot, or . --- **Special** If your innovation is a minion, it can take this action rather than you."
+ },
+ {
+  "id": "memory-of-skill",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Memory of Skill",
+  "level": 9,
+  "traits": [
+   "samsaran"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per day --- Your years of training in a previous life didn't go to waste with your death, and you can call upon this training when you most need it. Choose one skill. You temporarily increase your proficiency rank with that skill by one step for 1 minute (from untrained to trained, trained to expert, and expert to master). This temporary increase adjusts your proficiency bonus and allows you to use skill actions based on this increased proficiency as normal. Memory of Skill can't increase a skill's proficiency rank beyond master."
+ },
+ {
+  "id": "menagerie-dung-sweeper",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Menagerie Dung Sweeper",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Absalom and Starstone Isle --- Whether you washed warrior beasts below the Irorium's arena floor or tended to the mutated animals of a Puddle sideshow, you are experienced with all manner of weird wildlife. Choose two attribute boosts. One must be to **Constitution** or **Wisdom**, and one is a free attribute boost. You're trained in the Nature skill and the Animal Lore skill. You gain the Train Animal skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Nature **Lore** Animal Lore **Skill Feat** Train Animal"
+ },
+ {
+  "id": "merabite-prodigy",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Merabite Prodigy",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Golden Road --- Even in a city renowned for its alchemy, you were able to rise above the competition. Choose two attribute boosts. One must be to **Dexterity** or **Intelligence**, and one is a free attribute boost. You're trained in the Crafting skill and the Alchemical Lore skill. You gain the Specialty Crafting skill feat with alchemy --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Crafting **Lore** Alchemical Lore"
+ },
+ {
+  "id": "merchant",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Merchant",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "In a dusty shop, market stall, or merchant caravan, you bartered wares for coin and trade goods. The skills you picked up still apply in the adventuring life, in which a good deal on a suit of armor could prevent your death. Choose two attribute boosts. One must be to **Intelligence** or **Charisma**, and one is a free attribute boost. You're trained in the Diplomacy skill and the Mercantile Lore skill. You gain the Bargain Hunter skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Diplomacy **Lore** Mercantile Lore **Skill Feat** Bargain Hunter"
+ },
+ {
+  "id": "methodology",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "Methodology",
+  "level": 1,
+  "traits": [
+   "investigator"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your studies have made you savvy in many areas, but one in particular drew your intense interest. Choose a methodology. The methodologies are as follows: - Alchemical Sciences Methodology - Empiricism Methodology - Forensic Medicine Methodology - Interrogation Methodology"
+ },
+ {
+  "id": "militia-member",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Militia Member",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Although the official number of Sandpoint's town guards is only about a dozen, another two dozen people help to support the town garrison and the guards themselves. This is more than enough for most days in town, where the most dangerous things one might face on a typical day are a tavern scuffle, a pet stuck on a roof, or a minor public disturbance arising from a trivial altercation between neighbors. But if townsfolk have learned anything from the past two decades, it's that the town's relative peace can be shattered at any moment by goblins, giants, dragons, disasters, murderers, or more! Sandpoint's come to rely on two additional forms of defense as a result, and the first of those is one you've belonged to since you could properly wield a weapon—the Sandpoint Militia. You grew up on Sandpoint's waterfront, perhaps the child of a fisher, sailor, or shipwright, and whether or not your parents approved of your choice to turn away from the sea to join the militia, you know it was the right choice. As a militia member, your duties were to help patrol the city, report suspicious activities, and help to deal with minor events or petty crimes before they have a chance to escalate. Your knack at tricking suspects into revealing their falsehoods, your knowledge about sailing and boats, and your connections on the town's waterfront quickly made you a valued member of the militia whenever help was needed down along the docks—even if this earned you a disparaging nickname or two from petty criminals associated with the Bunyip Club! Whether or not you were involved in a major event over the past several years of your life or if your time as a militia member was relatively unremarkable, you've more recently joined the second line of the town's defense as an adventurer. When things get out of control and exceed the capacity of the town guard to deal with, local adventurers have stepped in to save Sandpoint time and time again and, by joining your group, you stand ready to serve in that capacity the next time ghouls, giants, or worse come to town! As with most militia members, you likely are a lifelong resident of Sandpoint. Whether you still live with your family or have your own place, your home is modest but comfortable—yet you're not against camping out under the stars or spending a night watching from the wall or a rooftop when times require. Choose two attribute boosts. One must be to **Strength** or **Wisdom**, and one is a free attribute boost. You're trained in the Athletics skill and the Sailing Lore skill. You gain the Lie to Me skill feat. Increase the party's reputation with the Town Watch by 1 and reduce the party's reputation with the Bunyip Club by 1. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Athletics **Lore** Sailing Lore **Skill Feat** Lie to Me"
+ },
+ {
+  "id": "mindlock-shot",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Mindlock Shot",
+  "level": 11,
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Ammunition** any **Activate** ⟨2⟩ (concentrate) --- *Mindlock shot* is made of luminous ectoplasm in a crystalline form. When you command this ammunition, you pick a Stride or Strike. If you hit a creature with the ammunition, it falls under a mental effect that makes it use its first action on its next turn to take the action you picked. It chooses exactly how to use that action, and if you choose Stride, the target can Step if doing so is beneficial for it. On a critical hit, the target must use its next 2 actions to do as you chose, within the same parameters."
+ },
+ {
+  "id": "miner",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Miner",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You earned a living wrenching precious minerals from the lightless depths of the earth. Adventuring might have seemed lucrative or glamorous compared to this backbreaking labor—and if you have to head back underground, this time you plan to do so armed with a real weapon instead of a miner's pick. Choose two attribute boosts. One must be to **Strength** or **Wisdom**, and one is a free attribute boost. You're trained in the Survival skill and the Mining Lore skill. You gain the Terrain Expertise skill feat with underground terrain. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Survival **Lore** Mining Lore **Skill Feat** Terrain Expertise"
+ },
+ {
+  "id": "minor-deific-power",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Minor Deific Power",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "Your mental, physical, and spiritual training have granted you access to divine magic that doesn't rely on any other deity or patron. Choose a common divine cantrip and one common 1st-rank divine spell. You can cast the cantrip as a divine innate spell at will and the 1st-rank spell as a divine innate spell once per day."
+ },
+ {
+  "id": "mirror-robe",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Mirror Robe",
+  "level": 3,
+  "traits": [
+   "illusion",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Thousands of small, reflective, mirrored glass shards have been carefully stitched down this long silk duster. --- **Activate** ⟨1⟩ Interact **Requirements** The mirror robe was last activated to draw attention toward you, or you haven't used the mirror robe today --- **Effect** The mirror robe Creates a Diversion for you with a +9 Deception modifier. --- **Activate** ⟨1⟩ Interact (visual) **Requirements** The mirror robe was last activated to divert attention away from you and you are hidden or undetected by at least one foe --- **Effect** You draw attention toward yourself. Choose one foe to which you were hidden or undetected. You reveal yourself to all, becoming observed. The foe you chose diverts its attention to you, becoming off-guard to your allies until the beginning of your next turn. If you are invisible or otherwise can't become observed, you can't use this activation."
+ },
+ {
+  "id": "missionary",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Missionary",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You received training from clergy in a faraway temple, who sent you out into the world to spread the faith. Although you are relatively new at this, you are always on the lookout for new places in need of your deity's teachings and guidance. When play begins, you are riding along in a caravan making your way through sparsely populated regions of Isger, spreading the news of your faith to those who will listen. Choose two attribute boosts. One must be to **Constitution** or **Wisdom**, and one is a free attribute boost. You're trained in the Diplomacy skill and the Scribing Lore skill. You gain the Group Impression skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Diplomacy **Lore** Scribing Lore **Skill Feat** Group Impression"
+ },
+ {
+  "id": "molthuni-mercenary",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Molthuni Mercenary",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Eye of Dread --- Whether you sought citizenship or simply needed a steady paycheck, you spent some of your time as a paid mercenary in the armed forces of Molthune, where you fought against Molthune's enemies such as Nirmathas or the Ironfang Legion. Alternatively, you might have worked at sea, protecting Molthune's military and trading ships against pirates on Lake Encarthan. Choose two attribute boosts. One must be to **Strength** or **Constitution**, and one is a free attribute boost. You're trained in the Athletics skill and the Mercenary Lore skill. You gain the Experienced Professional skill feat. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Trained Skill** Athletics **Lore** Mercenary Lore **Skill Feat** Experienced Professional"
+ },
+ {
+  "id": "moot-guard",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Moot Guard",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You are a respected guardian of the Verduran Forest, and the Wildwood Lodge has called upon you to manage security at their upcoming Greenwood Gala. What deeds earned you such trust and esteem? Perhaps you have skirmished with Taldan poachers, subdued riotous fey festivities, or spent years systematically sabotaging illegal Andoren woodcutting ventures. Maybe you are officially part of the Wildwood Lodge, serving as a part-time bodyguard and negotiator to help maintain order—otherwise Taldan nobles might send in their own army to keep the peace. Whatever the case, you know that tensions are building between factions who support and oppose the lodge's current leader, Valenar the Green, and you might have to step in to keep the Greenwood Gala fun and welcoming. Choose two attribute boosts. One must be to **Strength** or **Constitution**, and one is a free attribute boost. You're trained in the Intimidation skill and the Warfare Lore skill. You gain the Intimidating Glare skill feat. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Trained Skill** Intimidation **Lore** Warfare Lore **Skill Feat** Intimidating Glare"
+ },
+ {
+  "id": "mortuarium-survivor",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Mortuarium Survivor",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You studied the necromantic arts in the clawed tower of the Mortuarium, the most prestigious university of necromancy in Yled. Although your training was grueling, you graduated—or fled—with your body and mind intact; many of your peers weren't so lucky. You might continue studying necromancy on your own, or your experience might have soured you on the field, but the Mortuarium instilled in you a thorough knowledge of necromantic principles and inured you to the energies that animate the dead. Choose two attribute boosts. One must be to **Constitution** or **Intelligence**, and one is a free attribute boost. You're trained in Arcana and Necromancy Lore. You gain the Inured to Death reaction. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Arcana **Lore** Necromancy Lore"
+ },
+ {
+  "id": "mountebanks-passage",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Mountebank's Passage",
+  "level": 15,
+  "traits": [
+   "concussive",
+   "fatal-d8"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This *+2 greater striking flintlock pistol* has the odd construction of possessing two triggers, one of soapstone and one of onyx, clearly separated with individual trigger guards. Originally created by a student at Blythir College in Alkenstar, the mountebank's passage has the ability to create temporary linked portals on existing surfaces. The weapon disappeared shortly after its invention, but rumors have circulated that it now belongs to a group of thieves who use it to commit impossible robberies. --- **Activate—Doorway to Onyx** ⟨1⟩ (manipulate) **Requirements** the *mountebank's passage* isn't loaded **Effect** You pull the soapstone trigger. Choose a vertical surface within 120 feet. A beam of white energy crackles to the vertical surface and creates a white portal on that surface. Any creature who moves through the white portal comes out through the mountebank's passage's black portal, if one exists on the same plane. Using this activation causes any previous white portal to disappear, even if you don't create a new portal; otherwise, the portal lasts until your next daily preparations. --- **Activate—Doorway to Pearl** ⟨1⟩ (manipulate) **Requirements** the *mountebank's passage* isn't loaded **Effect** You pull the onyx trigger. Choose a vertical surface within 120 feet. A beam of black energy leaps to the surface and creates an onyx portal. Any creature who moves through the black portal comes out through the mountebank's passage's white portal, if one exists on the same plane. Using this activation causes any previous black portal to disappear; even if you don't create a new portal; otherwise, the portal lasts until your next daily preparations."
+ },
+ {
+  "id": "muses",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "Muses",
+  "level": 1,
+  "traits": [
+   "bard"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "As a bard, you select one muse at 1st level. This muse leads you to great things and might be someone you know, a supernatural creature, location, deity, philosophy, or captivating mystery. Depending on the type of inspiration you receive, your 1st-level muse grants you a specific 1st-level bard feat and adds a spell to your repertoire. In addition to this, each muse opens the door to many later bard feats. If one type of inspiration is not enough to represent your muse, consider the Multifarious Muse feat. - Enigma - Maestro - Polymath - Warrior - Zoophonia"
+ },
+ {
+  "id": "musical-prodigy",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Musical Prodigy",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Ever since you were young, you've been almost supernaturally skilled in a particular type of music. The people around you were sure you'd grow up to perform at royal courts or to become a world-famous composer, but you've chosen a life of adventure instead. You might have given up on those dreams to find your own meaning, or you might find that adventuring allows you to experience unfiltered emotions and exploits that you can translate into a wondrous symphony some day. Choose two attribute boosts. One must be to **Dexterity** or **Charisma**, and one is a free attribute boost. You're trained in Performance and Music Lore. You gain the Virtuosic Performer skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Performance **Lore** Music Lore **Skill Feat** Virtuosic Performer"
+ },
+ {
+  "id": "mutagenic-flashback",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "Mutagenic Flashback",
+  "level": 1,
+  "traits": [
+   "alchemist",
+   "manipulate"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per day --- You experience a brief resurgence of a mutagen. Choose one mutagen you've consumed since your last daily preparations. You gain the effects of that mutagen for 1 minute."
+ },
+ {
+  "id": "mutate-weapon",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Mutate Weapon",
+  "level": 5,
+  "traits": [
+   "fleshwarp"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Select one unarmed attack you gained with Living Weapon. The damage die for that attack increases by one step until the end of your turn. In addition, choose to either have the attack gain a reach of 10 feet until the end of your turn or for you to gain a +1 status bonus to attack rolls with the chosen unarmed attack until the end of your turn."
+ },
+ {
+  "id": "mystic-seer",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Mystic Seer",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You delight crowds by reading minds, telling futures, and contacting spirits. Although much of your work is misdirection and showmanship, your cons have inadvertently awakened a genuine awareness of magic in your mind. This new sense is both thrilling and frightening, and you hope that you can hone it further in the Circus of Wayward Wonders. Choose two attribute boosts. One must be to **Intelligence** or **Wisdom**, and one is a free attribute boost. You're trained in the Arcana skill and the Scam Lore skill. You gain the Arcane Sense skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Arcana **Lore** Scam Lore **Skill Feat** Arcane Sense"
+ },
+ {
+  "id": "necromancers-apprentice",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Necromancer's Apprentice",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You apprenticed under a necromancer-a hard education in a field where a cadaver you were dissecting could suddenly animate and every magical artifact seemed deadly. Now on your own, you're grateful you learned to identify magical threats quickly and thoroughly. Choose two attribute boosts. One must be to **Constitution** or **Intelligence**, and one is a free attribute boost. You're trained in the Arcana skill and the Necromancy Lore skill. You gain the Quick Identification skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Arcana **Lore** Necromancy Lore **Skill Feat** Quick Identification"
+ },
+ {
+  "id": "newcomer",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Newcomer",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You've only been in Sandpoint a short time, although what constitutes a \"short time\" depends on who you talk to. It could be that you've only just arrived in town in the past few weeks, or you might have moved here months or even years ago but have continually struggled to find a place to fit in with the locals. It doesn't help that you've been targeted often by allies of the Scarnetti family with offers of employment, support, or perhaps even friendship. Whether you've accepted these offers, or you've realized that the local aristocrats focus on new arrivals due to their increasingly sour reputation among most of the townsfolk, people have noticed. You haven't done anything yet to annoy the Scarnettis (that they've realized, at least), but many of the locals don't trust you and might even think of you as a Scarnetti snitch or patsy. While your reasons for coming to Sandpoint are up to you, they should have something to do with your curiosity about the town, the Lost Coast, ancient Thassilon, the history of the Varisian lifestyle, or anything that might draw you to the region. You don't yet own your own home in town and aren't sure you ever will, since once you've completed your research you might not intend to stay in Sandpoint. You might have accepted an offer from a Scarnetti ally who had a room to let in their home (or nearby shed), could be paying for a room at one of the town's inns, or might be relying on one of your few non-Scarnetti friends in town for a place to stay. This could be one of your fellow PCs, or it might be someone in town whose place has a small library, such as Veznutt Parooh of The Way North, Brodert Quink (Sandpoint's oldest sage), Jabyl Sorn of the House of Blue Stones, or even Ilsoari Gandethus of Turandarok Academy. Joining this adventuring group may have been a calculated move, a spur-of-the-moment choice, or because someone in the group is an old friend, but it's given you a bit more security and peace of mind. You suspect the decision could sour your reputation with the Scarnettis—but you might not mind! Choose two attribute boosts. One must be to **Constitution** or **Intelligence**, and one is a free attribute boost. You're trained in the Diplomacy skill and the Library Lore skill. You gain the Additional Lore skill feat—the lore you choose represents the interest and focus of study that drew you to the region. Increase the party's reputation with Scarnetti Consortium by 1 and reduce the party's reputation with Townsfolk by 1. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Diplomacy **Lore** Library Lore **Skill Feat** Additional Lore"
+ },
+ {
+  "id": "newcomer-in-need",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Newcomer in Need",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You're a Gokan native in a bad spot, and you're going to need a miracle to get you out of your current fix. Miracles are in short supply, but the title of Ruby Phoenix Champion might just do the trick. Maybe you need the prize money to pay for a relative's expensive operation or to free your family from debt to Golden League gangsters. Or maybe there's a particular prize in Hao Jin's vault that could literally save your life - an amulet you can use to flee to the farthest corners of the multiverse or even an artifact that could resurrect you if you die, just like the Ruby Phoenix. The tough circumstances of your upbringing in one of Goka's more downtrodden neighborhoods - such as industrial Oldtown, the slums of the Scales district, or even the crime-ridden undercity taught you lessons of self-reliance and how to quickly make friends in unlikely circumstances. You've scraped together an entry into the Ruby Phoenix Tournament's prequalifier with a team you can trust. Now all that's left is to pull off the impossible and win this thing once and for all. Choose two attribute boosts. One must be to **Constitution** or **Dexterity**, and one is a free attribute boost. You're trained in Society and the Goka Lore skill. You gain the Streetwise skill feat. --- ## Background details **Attribute Boosts** Constitution or Dexterity, one free **Trained Skill** Society **Lore** Goka Lore **Skill Feat** Streetwise"
+ },
+ {
+  "id": "nirmathi-guerrilla",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Nirmathi Guerrilla",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Eye of Dread --- Woodcraft comes naturally to you, and you have learned how to use the forest to your tactical advantage against superior forces in skirmishes against the Molthuni army or the Ironfang Legion. Choose two attribute boosts. One must be to **Dexterity** or **Wisdom**, and one is a free attribute boost. You're trained in the Stealth skill and the Forest Lore skill. You gain the Terrain Stalker (underbrush) skill feat. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Stealth **Lore** Forest Lore **Skill Feat** Terrain Stalker"
+ },
+ {
+  "id": "nocturnal-navigator",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Nocturnal Navigator",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You have a great affinity for the night skies. You watch the stars, and you feel they speak secret messages specifically to you, which help you navigate your surroundings or perhaps determine your next course of action. Often, the stars have led you to places of great adventure, where you find new experiences and challenges. You might have come to make use of your talents as a guide for traveling groups, or maybe you preferred using your talents in pursuing a star-driven journey for personal enlightenment. Choose two attribute boosts. One must be to Dexterity or Wisdom, and one is a free attribute boost. You're trained in Survival. Whenever you can clearly identify the stars, if you roll a success on a check to Sense Direction or otherwise orienteer, you get a critical success instead; if you roll a critical failure at such a check, you get a failure instead. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Survival"
+ },
+ {
+  "id": "nomad",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Nomad",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLoreChoice",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Traveling far and wide, you picked up basic tactics for surviving on the road and in unknown lands, getting by with few supplies and even fewer comforts. As an adventurer, you travel still, often into even more dangerous places. Choose two attribute boosts. One must be to **Constitution** or **Wisdom**, and one is a free attribute boost. You're trained in the Survival skill and a Lore skill related to one terrain you traveled in (such as Desert Lore or Swamp Lore). You gain the Assurance skill feat with Survival. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Survival"
+ },
+ {
+  "id": "north-winds-night-verse",
+  "lane": "choice",
+  "collection": "items",
+  "name": "North Wind's Night Verse",
+  "level": 10,
+  "traits": [
+   "cold",
+   "deadly-d8",
+   "magical",
+   "two-hand-d10",
+   "versatile-p"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This *+1 striking frost katana* is always cool to the touch, nearly uncomfortably so. Unadorned and with no tsuba, its honed blade is carved from a single tusk of dragon-turtle ivory and wrapped in strips of winter wolf hide. Strikes with the katana gain a +2 status bonus to damage rolls against creatures that have a status penalty to their Speed or are slowed. The status bonus increases to +3 if the weapon has a greater striking rune and +4 for major striking. --- **Activate** ⟨4⟩ command (cold, evocation, magical) **Frequency** once per 1 minute **Trigger** Your spell deals cold damage to a creature --- **Effect** Choose one creature dealt cold damage by the spell. It takes a –5-foot status penalty to its Speeds for 1 round."
+ },
+ {
+  "id": "northland-forager",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Northland Forager",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "The vast tundra and looming mountains of the Realm of the Mammoth Lords may seem featureless and barren to the untrained eye, but you know better. You see what others don't: nutritious roots buried beneath muddy reeds, succulent bird eggs cradled in craggy rocks, restorative berries nestled among thorny thickets, and more. In the south, farmers toil in dusty fields to eat the same vegetables every day, but your diet is varied and you're rarely hungry-the entire Realm is your garden. Choose two attribute boosts. One must be to **Constitution** or **Wisdom**, and one is a free attribute boost. You're trained in the Survival skill and the Herbalism Lore skill. You gain the Forager skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Survival **Lore** Herbalism Lore **Skill Feat** Forager"
+ },
+ {
+  "id": "oath-of-the-devoted",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Oath of the Devoted",
+  "level": 9,
+  "traits": [
+   "contract",
+   "divine",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "resistances",
+   "passiveEffects"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You gain fire and mental resistance 5. When you die, you rise as an undead creature with the zombie trait on the next round; if you are a PC, you become an NPC under Walkena's control. Your stats remain the same, except that your alignment changes to evil. If you reach 0 Hit Points as a zombie, you are destroyed and do not rise again. --- **Activate** ⟨1⟩ command **Frequency** once per day --- **Effect** You gain a +1 status bonus to Will saves. Choose a weapon or an unarmed Strike; your chosen attack deals an extra 1d6 damage for the next 1 minute. --- **Special** If you are a zombie at a time when Mzali is entirely purged of foreigners, your duty is fulfilled and you are immediately destroyed."
+ },
+ {
+  "id": "occult-librarian",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Occult Librarian",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Hours spent reading numerous compendiums dedicated to various occult topics honed your knowledge of these more obscure magical arts. You might have taken to adventuring to finance your acquisition of rare tomes, to explore occult mysteries that can't be found in the pages of a book, or perhaps to put your skills to the test. Choose two attribute boosts. One must be to **Intelligence** or **Wisdom**, and one is a free attribute boost. You're trained in the Occultism skill and the Academia Lore skill. You gain the Schooled in Secrets skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Occultism **Lore** Academia Lore **Skill Feat** Schooled In Secrets"
+ },
+ {
+  "id": "ocean-diver",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Ocean Diver",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Access** Tian Xia origin --- You're one of the sea people, the divers who inhabit the rough shorelines. Diving into foreign depths with neither magic nor air reserves, it's your job to haul up seafood to feed your communities. Tourists come to watch you, listening to your whistles and songs as they crane their necks to catch sight of the pearls you sometimes bring to the surface. They might call you mermaids, but you know better. You've seen the true folk of the sea as you've gathered shellfish in your nets. You know to wear white to ward off sharks and worse. When adventure or treasure is found in the waves, you're one of the few who could possibly deal with it. Choose two attribute boosts. One must be to **Constitution** or **Wisdom**, and one is a free attribute boost. You're trained in Athletics and Ocean Lore. You gain the Underwater Marauder skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Athletics **Lore** Ocean Lore **Skill Feat** Underwater Marauder"
+ },
+ {
+  "id": "oenopion-ooze-tender",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Oenopion Ooze-Tender",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Impossible Lands --- Your apprenticeship in one of Oenopion's unorthodox arcane and alchemical academies instilled in you a deep reservoir of mostly reliable esoteric knowledge, not to mention a deep resentment born of countless hours spent mucking ooze pens and feeding helpless creatures to ravenous, belching jellies and gelatinous puddings. Choose two attribute boosts. One must be to **Constitution** or **Intelligence**, and one is a free attribute boost. You're trained in the Crafting skill and the Ooze Lore skill. You gain the Dubious Knowledge skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Crafting **Lore** Ooze Lore **Skill Feat** Dubious Knowledge"
+ },
+ {
+  "id": "olethross-decree",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Olethros's Decree",
+  "level": 17,
+  "traits": [
+   "death",
+   "divine",
+   "duskwalker"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per day --- You have a connection to olethroses, the enigmatic psychopomps who successfully swayed the yamaraj to permit the creation of the first duskwalkers. You place a finger on fate's scales by wrapping silk around your bow. The first time this turn that you hit a creature with a Strike using a weapon in the bow group you've modified in this way, that creature takes an additional 60 damage ( save using your class or spell DC, whichever is higher) as the arrow works to cut short their very destiny. This additional damage is of the same type as the initial attack dealt. If you hit more than one creature at the same time, choose one to suffer the effect of your decree."
+ },
+ {
+  "id": "once-bitten",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Once Bitten",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "After an altercation with an undead creature, you feared you might be infected. Either through medical intervention, luck, or misunderstanding how undeath spreads, your fears abated. However, your brush with living death taught you the value of life. You do whatever you can to avoid the end you thought you'd been fated. Choose two attribute boosts. One must be to **Dexterity** or **Wisdom**, and one is a free attribute boost. You're trained in the Medicine skill and the Undead Lore skill. You gain the Battle Medicine skill feat. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Medicine **Lore** Undead Lore **Skill Feat** Battle Medicine"
+ },
+ {
+  "id": "oozepick",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Oozepick",
+  "level": 4,
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ Interact You can pour this silver ooze into a lock or similar mechanism to create a set of malleable lockpicks and tools that conform to internal mechanisms. The ooze is treated as a set of thieves' tools that last for 1 hour and provide a +2 item bonus to Thievery checks to Pick a Lock or Disable a Device against the mechanism into which they were first poured."
+ },
+ {
+  "id": "oozepick-greater",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Oozepick (Greater)",
+  "level": 10,
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ Interact You can pour this silver ooze into a lock or similar mechanism to create a set of malleable lockpicks and tools that conform to internal mechanisms. The ooze is treated as a set of thieves' tools that last for 8 hours and provide a +3 item bonus to Thievery checks to Pick a Lock or Disable a Device against the mechanism into which they were first poured."
+ },
+ {
+  "id": "osirionologist",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Osirionologist",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Golden Road --- Whether you're a fascinated outsider or a local proud of your nation's storied past, you're a devoted student of Osirion's history. You might be a traveling professor, a member of a society like the Pathfinders or the Esoteric Order of the Palatine Eye, or even a simple tomb robber cashing in on the glories of the past. Choose two attribute boosts. One must be to **Constitution** or **Intelligence**, and one is a free attribute boost. You're trained in the Occultism skill and the Ancient Osirion Lore skill. You gain the Oddity Identification skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Occultism **Lore** Ancient Osirion Lore **Skill Feat** Oddity Identification"
+ },
+ {
+  "id": "osprey-barnraiser",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Osprey Barnraiser",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "A person cannot live on fish alone, which is why you work with Elder Bo'Mel on her farm. Elder Ordwi asked you to accompany her to Iron Harbor because she values your input in evaluating how the village might be making use of their natural resources. Choose two attribute boosts. One must be to **Strength** or **Constitution**, and one is a free attribute boost. You're trained in the Nature skill and the Architecture Lore skill. You gain the Natural Medicine skill feat. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Trained Skill** Nature **Lore** Architecture Lore **Skill Feat** Natural Medicine"
+ },
+ {
+  "id": "osprey-fisher",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Osprey Fisher",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Fishing is Osprey Cove's number one profession, and you've apprenticed under the best of them: Elder Anlorgog. You're also a keen study of boats and ships, so Elder Ordwi wants you along on her trip to Iron Harbor to help her evaluate the strength and purpose of the village's fleet—particularly if they're building ships meant for war. Choose two attribute boosts. One must be to **Strength** or **Dexterity**, and one is a free attribute boost. You're trained in the Crafting skill and the Sailing Lore skill. You gain the Quick Repair skill feat. --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Trained Skill** Crafting **Lore** Sailing Lore **Skill Feat** Quick Repair"
+ },
+ {
+  "id": "osprey-scion",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Osprey Scion",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You are the birth or adopted child of one of the five elders of Osprey Cove, and your parent or guardian volunteers you to accompany Elder Ordwi on her trip to Iron Harbor, hoping to get an unbiased account of events. If your parent or guardian is Ordwi, then she values your companionship and insight and wants you along on this important mission. Choose two attribute boosts. One must be to **Constitution** or **Charisma**, and one is a free attribute boost. You're trained in the Diplomacy skill and the Xin-Edasseril Lore skill. You gain the Hobnobber skill feat. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Diplomacy **Lore** Xin Edasseril Lore **Skill Feat** Hobnobber"
+ },
+ {
+  "id": "osprey-scout",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Osprey Scout",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Though Osprey Cove is a quiet village, you've scouted the wilderness inland, watching for any dangerous wildlife or creatures in order to keep it that way. Elder Ordwi wants you along on this trip because she knows your knowledge about the Kindred Coast will help ensure the safety of the group on the day-long trip. Choose two attribute boosts. One must be to **Dexterity** or **Wisdom**, and one is a free attribute boost. You're trained in the Survival skill and the Scouting Lore skill. You gain the Experienced Tracker skill feat. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Survival **Lore** Scouting Lore **Skill Feat** Experienced Tracker"
+ },
+ {
+  "id": "osprey-scribe",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Osprey Scribe",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Either as a punishment or because of political ambition, you work for Elder Vandous. On her trip to Iron Harbor, Elder Ordwi needs someone at her side who is a skilled observer and adept at keeping journals; she hopes to provide the other elders with accurate information about their sibling village upon her return. Choose two attribute boosts. One must be to **Intelligence** or **Charisma**, and one is a free attribute boost. You're trained in the Society skill and the Demon Lore skill. You gain the Streetwise skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Society **Lore** Demon Lore **Skill Feat** Streetwise"
+ },
+ {
+  "id": "osprey-spellcaster",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Osprey Spellcaster",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedSkillChoice"
+  ],
+  "inRegistries": [],
+  "text": "Whether by instinct or study, magic is one of your most notable talents. Your understanding of the traditions of ancient Thassilon has helped you learn languages associated with that nation. Elder Ordwi fears there may be some form of magical affliction spreading in Iron Harbor, and she needs your knowledge to help her determine the threat. Choose two attribute boosts. One must be to **Intelligence** or **Wisdom**, and one is a free attribute boost. You're trained in your choice of the Arcana, Nature, Occultism, or Religion skill, and gain Thassilonian as a bonus language. You also gain the Quick Identification skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Skill Feat** Quick Identification"
+ },
+ {
+  "id": "osprey-warrior",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Osprey Warrior",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You'd always been the most athletic child of your play group, leading the other children in games of skill and strategy. As an adult, there are few opportunities for you to employ these skills in the village. Osprey Cove is a quiet community, with hardly any dangers or foes to fight. You occasionally break up pub brawls, or perhaps start them out of boredom. Elder Ordwi asks you to come with her simply because of your endurance and athleticism—the Old Coast Road is poorly maintained, and the physical aid you'll bring on the trip will likely be invaluable. Choose two attribute boosts. One must be to **Strength** or **Constitution**, and one is a free attribute boost. You're trained in the Athletics skill and the Gorum Lore skill. You gain the Hefty Hauler skill feat. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Trained Skill** Athletics **Lore** Gorum Lore **Skill Feat** Hefty Hauler"
+ },
+ {
+  "id": "otherworldly-mission",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Otherworldly Mission",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You're called to serve a specific purpose-your deity told you so, and so it must be true. Maybe you grew up knowing all along, or maybe it came to you one day in a vision, clear as a bell and twice as loud. You have some task that only you can accomplish. You mission might be as dangerous as killing a deadly tyrant or as simple as opening a particular door on a particular day. You should work with your GM on how to handle the truth of your character's backstory or leave it to the GM to decide in secret. Is this call to action a message from the character's own mind, are they being manipulated by some manner of supernatural entity, or are they actually getting marching orders from one of the deities of the setting? Choose two attribute boosts. One must be to **Wisdom** or **Charisma**, and one is a free attribute boost. You're trained in Religion. Once per adventure, you can ask the voice you believe to be a deity for orders and get some kind of instruction-you never get any kind of explanation, simply a command to go somewhere or do something. Following those commands isn't always safe, but it's usually interesting. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Religion"
+ },
+ {
+  "id": "outrider",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Outrider",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "In your youth, you galloped on horseback over vast prairies, serving as a vanguard for your settlement, an army, or another group. Seeing so many different lands built a thirst in you to adventure and explore the world instead of just racing past it. Choose two attribute boosts. One must be to **Constitution** or **Wisdom**, and one is a free attribute boost. You're trained in the Nature skill and the Plains Lore skill. You gain the Express Rider skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Nature **Lore** Plains Lore **Skill Feat** Express Rider"
+ },
+ {
+  "id": "outskirt-dweller",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Outskirt Dweller",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "While Willowshore is a lovely small town, even a population of 200 is a bit much for you. Whether you grew up in the town's outskirts, or you grew frustrated and overwhelmed with town life and decided to move to the fringes, you're only really at home when you're surrounded by nature. You don't look down on those who live in town, and you might be among the hunters, trappers, fishers, or herbalists who provide important support to those who lack such forestry skills. Your home is on the outskirts of Willowshore and might not even be represented by an actual building on the map. With the GM's permission, you might even dwell in a small building further out in the Willowshore hinterlands, but no further than a couple of miles from town. During the Reenactment Festival, you likely showed up late and weren't intending to stay for long, but your friends and allies (the other PCs) convinced you to stick around. You were chosen to be an abductee during the Reenactment Festival at the last minute when someone else had to back out (perhaps as a result of overindulging during the feast), and your friends (the other PCs) convinced you to join them on what would be a fun, shared experience. And since it involves sleeping out under the stars in the woods, well, that's a pretty lovely way to end an evening! Choose two attribute boosts. One must be to **Dexterity** or **Wisdom**, and one is a free attribute boost. You're trained in the Nature skill and the Hunting Lore skill. You gain the Terrain Expertise (forest) skill feat. Seasonal Boon (Outskirt Dweller) --- You can add one of the following two adjustments to any background to further modify your choice to match your vision for your PC. **Family:** You and one (or more) other PCs are close family members (siblings, parent/child, married, etc.) If you take this adjustment, the other PC(s) who are your family must also take this adjustment. Choose one of the following to replace the skill feat you otherwise would've gained from your background. (You and your sibling need not share the same choice—a sibling who wants to keep their background's skill feat can pick \"Typical\" from the list.) - **Bickering:** You have a long-standing feud with your sibling(s). Whenever your sibling(s) critically fail a significant skill check or attack roll and you witness their failure, you gain a +1 status bonus to your saving throws until the end of your next turn as you secretly (or perhaps not so secretly) delight in their failure. - **Close-Knit:** You and your sibling(s) work well together, and you go all-out to help them when they're badly hurt. When you provide Aid or Administer First Aid to your sibling(s), the DC is 5 lower than normal. - **Typical:** You have a standard relationship with your sibling(s); don't change your background's skill feat. **Foundling:** You aren't a native to Willowshore, but you did grow up in the town. You might have adoptive parents, or you could've grown up on the streets. Choose one of the following to replace the bonus feat you otherwise would've gained from your background. - **Bitter:** You appreciate the town of Willowshore but still resent the conditions that resulted in you bein"
+ },
+ {
+  "id": "ozem-experience",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Ozem Experience",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You or someone close to you worked with the Knights of Ozem before Lastwall fell. In addition to knowledge of the organization's tenets and goals, you have germane understanding of the order's history. You believe there are valuable lessons in the Knights of Ozem's exploits. Choose two attribute boosts. One must be to **Strength** or **Intelligence**, and one is a free attribute boost. You're trained in the Society skill and the Warfare Lore skill. You gain the Courtly Graces skill feat. --- ## Background details **Attribute Boosts** Intelligence or Strength, one free **Trained Skill** Society **Lore** Warfare Lore **Skill Feat** Courtly Graces"
+ },
+ {
+  "id": "paradigm-cube",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Paradigm Cube",
+  "level": 14,
+  "traits": [
+   "illusion",
+   "invested",
+   "mythic"
+  ],
+  "engineFieldsPresent": [
+   "counters"
+  ],
+  "inRegistries": [
+   "core.modes(fromItemId)"
+  ],
+  "text": "A *paradigm cube* is a perfect 5-inch-square cube of stone. Each side is inlaid with precious crystals of a different color: red, orange, yellow, green, blue, and indigo. When one activates a *paradigm cube*, one of these sides is selected—it glows with the matching color and then darkens to a shade of violet once the activation ends, indicating that the magic from that particular side of the cube has been expended for the day. **Activate—Change Paradigm** ⟨1⟩ (manipulate) **Frequency** six times per day (but only once per day per color) --- **Effect** Select one of the six colors of the cube that hasn't been activated today, then roll the cube on the ground at your feet and attempt a . On a success, your chosen color activates as detailed below. On a failure, roll 1d6 to randomly determine which effect manifests; if the result of the roll is a color that's already been activated today, no effect occurs. The *paradigm cube* then immediately returns to your hand. If you spend 1 Mythic Point as part of this activation, your chosen color automatically activates without requiring a flat check, and the chosen effect's mythic enhancement unlocks. Once activated, the illusion created fills a from you and lasts for 1 minute. You can end the effect early by activating Change Paradigm again by tapping the currently active color. **1—Red** (emotion, mental, visual) Red is the color of anger and impatience. A crimson haze covers the area, setting everyone within the area on edge. Allies in the area gain a +2 item bonus to Intimidation checks to Coerce. **Mythic Enhancement:** Allies' saving throws against mental and incapacitation effects are attempted at mythic proficiency. **2—Orange** (light, visual) Orange is the color of glory and opulence. The area becomes bedecked in elegant images, glamorous decor, and spectacular displays, and becomes brightly lit. Allies in the area gain a +2 item bonus to Performance checks, and allies who Rage in the area gain an additional 3 temporary Hit Points above what they would normally gain. **Mythic Enhancement:** Allies' Perception checks and Diplomacy checks to Make an Impression or Request are attempted at mythic proficiency. **3—Yellow** (emotion, fear, light, mental, visual) Yellow is the color of terror and discord. The area's illumination, if any, takes on an unnerving, murky yellow tinge and becomes dim light. Allies in the area gain a +2 item bonus to Intimidation checks to Demoralize. **Mythic Enhancement:** Enemy creatures in the area who gain the frightened condition become Slowed 1 as long as they remain frightened, as the yellow light seems to cling to them and slow their movements to a nightmarish crawl. **4—Green** (revelation, visual) Green is the color of logic and clarity. Visible text in the area becomes softly illuminated when read. Allies in the area gain a +2 item bonus to Lore checks to Recall Knowledge. **Mythic Enhancement:** Attempts made by allies to counteract or disbelieve illusions or to save against confusion effects are attempted at mythic proficiency. **5—Blue** (emotion, light, mental, visual) Blue is the color of debilitating sadness and fractures in one's emotional facade. Somber "
+ },
+ {
+  "id": "paradoxical-mystery",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Paradoxical Mystery",
+  "level": 20,
+  "traits": [
+   "oracle"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "The truest depths of your divine mystery are fathomless and contradictory, granting you changing powers that even you can barely begin to fathom. Each day during your daily preparations, choose one basic or advanced domain spell from any domain from *Player Core*, one of the domains granted by your mystery, another domain to which you have access, or any initial or advanced revelation spell from another mystery. You gain that spell as a revelation spell until your next daily preparations."
+ },
+ {
+  "id": "pathfinder-hopeful",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Pathfinder Hopeful",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Absalom and Starstone Isle --- You've long wanted to join the adventurous Pathfinder Society. You have taken up the dangerous life of an adventurer in hopes of earning a spot among the Pathfinders. Choose two attribute boosts. One must be to **Constitution** or **Intelligence**, and one is a free attribute boost. You're trained in the Society skill and the Pathfinder Society Lore skill. You gain the Additional Lore skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Society **Lore** Pathfinder Society Lore **Skill Feat** Additional Lore"
+ },
+ {
+  "id": "penetrating-fire",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Penetrating Fire",
+  "level": 10,
+  "traits": [
+   "gunslinger"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're wielding a loaded firearm or crossbow. --- You blast a bullet through one foe and into another. Choose two targets, one of which would give the other lesser cover against your ranged attacks. Make a single ranged Strike with the required weapon against both targets. This attack ignores any lesser cover the nearer target provides the other. Roll damage only once and apply it to each creature you hit. Penetrating Fire counts as two attacks for your multiple attack penalty."
+ },
+ {
+  "id": "perfection-seeker",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Perfection Seeker",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Impossible Lands --- You aspire to perfect your body and mind in the tradition of Jalmeray's Houses of Perfection, honing your acrobatic skills and mental faculties in preparation for a lifetime pushing the edge of what most consider possible. Choose two attribute boosts. One must be to **Dexterity** or **Wisdom**, and one is a free attribute boost. You're trained in the Acrobatics skill as well as the Warfare Lore skill. You gain the Cat Fall skill feat. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Acrobatics **Lore** Warfare Lore **Skill Feat** Cat Fall"
+ },
+ {
+  "id": "phantasmal-doorknob",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Phantasmal Doorknob",
+  "level": 6,
+  "traits": [
+   "emotion",
+   "magical",
+   "mental",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This ornate doorknob can open doors both material and metaphysical, revealing dreams and nightmares. The spell DC of any spell cast by activating this item is 20. - **Armor** You gain a +1 item bonus to Thievery checks to Pick a Lock. - **Weapon** If you critically succeed at a Strike with the weapon, the target is dazzled until the end of its next turn. --- **Activate** Cast a Spell **Effect** You cast Figment. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast Phantasmal Treasure."
+ },
+ {
+  "id": "phantasmal-doorknob-greater",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Phantasmal Doorknob (Greater)",
+  "level": 10,
+  "traits": [
+   "emotion",
+   "magical",
+   "mental",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This ornate doorknob can open doors both material and metaphysical, revealing dreams and nightmares. The spell DC of any spell cast by activating this item is 27. - **Armor** You gain a +2 item bonus to Thievery checks to Pick a Lock. - **Weapon** If you critically succeed at a Strike with the weapon, the target is blinded until the end of its next turn. The creature is then temporarily immune to being blinded in this way for 24 hours. --- **Activate** Cast a Spell **Effect** You cast Figment. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast Vision of Death."
+ },
+ {
+  "id": "phantasmal-doorknob-major",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Phantasmal Doorknob (Major)",
+  "level": 15,
+  "traits": [
+   "emotion",
+   "magical",
+   "mental",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This ornate doorknob can open doors both material and metaphysical, revealing dreams and nightmares. The spell DC of any spell cast by activating this item is 34. - **Armor** You gain a +2 item bonus to Thievery checks to Pick a Lock. - **Weapon** If you critically succeed at a Strike with the weapon, the target is blinded until the end of its next turn. The creature is then temporarily immune to being blinded in this way for 24 hours. --- **Activate** Cast a Spell **Effect** You cast Figment. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast 6th-rank Vision of Death. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast Phantasmal Calamity"
+ },
+ {
+  "id": "pilgrim",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Pilgrim",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLoreChoice",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "In your youth, you made several pilgrimages to important shrines and sacred sites. You might have been a mendicant friar, a seller of religious relics (real or fraudulent), or just a simple farmer following the dictates of your faith. Whatever the aims of your wanderings now, your faith still protects you on the road. Choose two attribute boosts. One must be to **Wisdom** or **Charisma**, and one is a free attribute boost. You're trained in the Religion skill and the Lore skill for your patron deity. You gain the Pilgrim's Token skill feat. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Religion **Skill Feat** Pilgrim's Token"
+ },
+ {
+  "id": "pistoleros-challenge",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Pistolero's Challenge",
+  "level": 6,
+  "traits": [
+   "auditory",
+   "flourish",
+   "gunslinger",
+   "linguistic",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "With a stern call, carefully chosen barb, or some other challenging declaration, you demand your foe's attention in a duel. Choose an opponent within 30 feet who you can perceive and can hear you, and make your choice of a or check against the target's Will DC. No matter the result of the check, the foe is temporarily immune to your Pistolero's Challenge until noon the next day. **Success** Both you and the opponent gain a +2 status bonus to damage rolls with Strikes made against each other. If you're a master in the skill you used for the check, the status bonus to damage rolls increases to +3, and if you're legendary, it increases to +4. You can have only one challenge in effect at a time; challenging a new opponent ends this effect on any current target. Otherwise, the effect lasts until one of you is defeated, flees, or the encounter ends. **Critical Failure** You become Frightened 1 and can't use this ability again for 1 minute."
+ },
+ {
+  "id": "plague-doctor",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Plague Doctor",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Plagues often spring from mass deaths and the vermin that multiply after such tragedies. Cities under siege can grow ill without proper nutrition and clean water. Your expertise with medicine allows you to help those afflicted by disease, and your view of the world is likely colored by seeing so much misfortune. Choose two attribute boosts. One must be in **Constitution** or **Wisdom**, and one is a free attribute boost. You're trained in the Medicine skill and the Herbalism Lore skill. You gain the Inoculation skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Medicine **Lore** Herbalism Lore **Skill Feat** Inoculation"
+ },
+ {
+  "id": "plant-whisperer",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Plant Whisperer",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You've always had a green thumb, allowing you to care for plants that others found too difficult to grow and tend with a skill that borders on the magical. As you travel, you encounter all sorts of new plants and plant creatures, allowing you to expand your horizons and deepen your understanding of flora. Choose two attribute boosts. One must be to **Wisdom** or **Charisma**, and one is a free attribute boost. You're trained in Nature and Plant Lore. You gain the Natural Medicine skill feat. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Nature **Lore** Plant Lore **Skill Feat** Natural Medicine"
+ },
+ {
+  "id": "play-to-the-crowd",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Play to the Crowd",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "concentrate"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Trigger** You reduce an enemy to 0 Hit Points during a non-trivial combat encounter with spectators. --- You show off for the crowd. Attempt a check; the DC is determined by the GM but is typically the standard DC for your level or the DC to Make an Impression on the spectators, whichever is higher. On a success, choose one of the following benefits; on a critical success, choose two benefits: - A number of temporary Hit Points equal to your character level; these last for 1 minute. - A +1 circumstance bonus to AC until the end of your next turn. - A +1 circumstance bonus to your next attack roll before the end of your next turn."
+ },
+ {
+  "id": "plot-the-future",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Plot the Future",
+  "level": 14,
+  "traits": [
+   "concentrate",
+   "investigator",
+   "prediction"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You spend 10 minutes in contemplation to uncannily predict how events will play out. Choose a particular goal or activity you plan to engage in within 1 week, or an event you expect might happen within 1 week. You analyze whether it's likely to come to pass, learning whether it's highly likely, somewhat likely, somewhat unlikely, or highly unlikely. You also gain a piece of advice suggesting a course of action you or your allies could take that might make the chosen event more or less likely, whichever you prefer. The GM determines the likeliness of the event and the piece of advice you learn."
+ },
+ {
+  "id": "political-scion",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Political Scion",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Like your parents and your parents before them, you initially followed the long path toward politics from an early age. Your close association with Absalom's upper echelons put you in touch with the city's various military or special operations units-the First Guard, the Wave Riders, the Varlokkur-though you avoided any actual duty with these groups. Thanks to your strict upbringing and the connections of your family, you soon became a lauded and highly respected member of Absalom's political elite. But you couldn't stifle a certain feeling that you were destined for more than simply filling the pointed shoes of your forebears. Despite your easily earned accolades and a relatively cushy life as a young lawyer or councilmember, you sought to do more with your diplomatic training and not live out the exact same life as your ancestors. Your decision to transfer to the Edgewatch has rubbed your traditionalist family the wrong way, and they've cut off the financial aid they've provided you your whole life. But you don't care-you know you're doing the right thing by taking on the rough jobs of a low-ranking guard, and you're ready to shine based on your own merits, not those of your lofty kin. Choose two attribute boosts. One must be to **Constitution** or **Intelligence**, and one is a free attribute boost. You're trained in the Diplomacy skill and Legal Lore. You gain a +1 circumstance bonus to Deception, Diplomacy, and Intimidation checks to Interact with members of Absalom's political establishment. You gain the Hobnobber skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Diplomacy **Lore** Legal Lore **Skill Feat** Hobnobber"
+ },
+ {
+  "id": "portal-scholar",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Portal Scholar",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Candlaron's legacy is one of the strongest elven legacies on Golarion and beyond, for it was he who first created the aiudara—the network of magical portals that link Kyonin to Castrovel and so many other locations across Golarion. Most of these portals are located in the Inner Sea region, where Candlaron spent the majority of his time. Now that he's long gone, the particulars of how to create new aiudara has eluded discovery, causing some elven scholars to believe that there was something unique to Candlaron's mind or soul that allowed for his ability to craft and enchant so many portals throughout different regions and worlds. Even Treerazer himself hasn't cracked that magical code, although not for lack of trying. At least one aiudara, the remote archway known now as Tanglegate, lies deep in his territory. As one of countless scholars of these portals, you've spent much of your time studying Candlaron's techniques, as well as the complex fundamentals of a wide range of teleportation magics and effects. Whether you seek to find a way to build portals of your own, hope to bolster the aiudara network from further tampering from Treerazer, or are simply enthralled by the supernatural rush of vanishing from reality only to reappear in the same instant somewhere else, portals have long fascinated you. Choose two attribute boosts. One must be to **Dexterity** or **Intelligence**, and one is a free attribute boost. You're trained in the Arcana skill and the Architecture Lore skill. You gain the Arcane Sense skill feat, and also gain the Restorative Teleportation reaction. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Arcana **Lore** Architecture Lore **Skill Feat** Arcane Sense"
+ },
+ {
+  "id": "predispose-settlement",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Predispose Settlement",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "downtime",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You spend 7 days of downtime seeding propaganda through a settlement with a population of 2,500 or fewer. At 10th level, this increases to a settlement with a population of 10,000 or fewer, and at 16th level, you can affect settlements of any size. Select a faction or organization (such as the Pathfinder Society, the Hellknights, or the Firebrands) that this propaganda targets and whether you are improving or decreasing the settlement's attitude toward that faction. After this period, attempt a or check against the hard DC of the level of the settlement. These changes last for 1 week before the people return to their original attitudes. --- **Critical Success** You adjust the starting attitude of the settlement's inhabitants toward the targeted faction by two steps. In addition, you gain a +1 circumstance bonus on initiative rolls made in encounters that include members of your targeted faction while in the settlement for 1 week. **Success** As critical success, but the inhabitants' attitude is adjusted by one step. **Critical Failure** The propaganda attempt backfires. The attitude of the settlement's inhabitants toward you decreases by one step."
+ },
+ {
+  "id": "press-ganged-g-g",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Press-Ganged (G&G)",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Was that five shots or six? Maybe it doesn't really matter in the end, because after those nice folks paid for all your drinks, you woke up to find yourself on the lowest rung of the ladder. Whether you're now a crewmate on a ship, a conscript in an army, or something worse, you've nowhere to go but up. This background generally requires buy-in from the entire group to tell a story allowing you to play a character starting their adventuring due to circumstances outside their own control. However, you can also play a character who was once press-ganged and has since escaped that life. If you do, press-ganged doesn't have the uncommon trait, and it has the same mechanical effects either way. Choose two attribute boosts. One must be to **Strength** or **Constitution**, and one is a free attribute boost. You're trained in the Athletics skill and the Labor Lore skill. You gain the Armor Assist skill feat. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Trained Skill** Athletics **Lore** Labor Lore **Skill Feat** Armor Assist"
+ },
+ {
+  "id": "press-ganged-lowg",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Press-Ganged (LOWG)",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - High Seas --- You were forced into service as a sailor against your will. Perhaps you were punished for a crime, were drafted into military service, are repaying a debt, or simply were abducted. Though you were initially trained as a simple deckhand, you may have subsequently studied a trade under one of the vessel's specialists. Choose two attribute boosts. One must be to **Strength** or **Wisdom**, and one is a free attribute boost. You're trained in the Society skill and the Sailing Lore skill. You gain the Experienced Professional skill feat. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Society **Lore** Sailing Lore **Skill Feat** Experienced Professional"
+ }
+]

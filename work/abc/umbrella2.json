@@ -1,0 +1,4776 @@
+[
+ {
+  "id": "lodging",
+  "name": "Lodging",
+  "itemType": "equipment",
+  "level": 0,
+  "kin": [
+   {
+    "id": "lodging-floor-space",
+    "name": "Lodging (Floor Space)",
+    "level": 0,
+    "price": {
+     "cp": 3
+    }
+   },
+   {
+    "id": "lodging-bed-for-1",
+    "name": "Lodging (Bed, for 1)",
+    "level": 0,
+    "price": {
+     "sp": 1
+    }
+   },
+   {
+    "id": "lodging-private-room-for-2",
+    "name": "Lodging (Private Room, for 2)",
+    "level": 0,
+    "price": {
+     "sp": 8
+    }
+   },
+   {
+    "id": "lodging-extravagant-suite-for-6",
+    "name": "Lodging (Extravagant Suite, for 6)",
+    "level": 0,
+    "price": {
+     "gp": 10
+    }
+   }
+  ],
+  "text": "Lodging Source Player Core pg. 294 Lodging (Floor Space) Source Player Core pg. 294, Core Rulebook pg. 294 Price 3 cp (per day) Lodging (Bed, for 1) Source Player Core pg. 294, Core Rulebook pg. 294 Price 1 sp (per day) Lodging (Private Room, for 2) Source Player Core pg. 294, Core Rulebook pg. 294 Price 8 sp (per day) Lodging (Extravagant Suite, for 6) Source Player Core pg. 294, Core Rulebook pg. 294 Price 10 gp (per day)"
+ },
+ {
+  "id": "lucky-coin",
+  "name": "Lucky Coin",
+  "itemType": "equipment",
+  "level": 2,
+  "kin": [
+   {
+    "id": "lucky-coin-lucky-copper",
+    "name": "Lucky Coin (Lucky Copper)",
+    "level": 2,
+    "price": {
+     "gp": 30
+    }
+   },
+   {
+    "id": "lucky-coin-lucky-silver",
+    "name": "Lucky Coin (Lucky Silver)",
+    "level": 5,
+    "price": {
+     "gp": 140
+    }
+   },
+   {
+    "id": "lucky-coin-lucky-gold",
+    "name": "Lucky Coin (Lucky Gold)",
+    "level": 8,
+    "price": {
+     "gp": 450
+    }
+   }
+  ],
+  "text": "Lucky Coin May contain spoilers from Troubles in Grayce Source Troubles in Grayce pg. 118 Usage held in 1 hand These coins—copper, silver, or gold depending on their potency—were not minted for circulation. Rather, friendly fey helped to create them as wards against the abilities of some gremlins, namely pugwampis. The coins are said to protect the bearer against misfortunes of all stripes, though, not merely those of gremlins and have come to be seen as good luck charms the world over. Each coin, regardless of the metal used to mint it, has a canine face on both sides; on one side, the face's mouth is open in a wide smile, while the other shows the face snarling. Activate—Guarded Fortune fortune, manipulate Trigger You fail a skill check due to a misfortune effect; Effect Flip the coin. If it lands on the smiling face, reroll the triggering check; since this activation has the fortune e"
+ },
+ {
+  "id": "maelstromic-destabilizer",
+  "name": "Maelstromic Destabilizer",
+  "itemType": "consumable",
+  "level": 2,
+  "kin": [
+   {
+    "id": "maelstromic-destabilizer-lesser",
+    "name": "Maelstromic Destabilizer (Lesser)",
+    "level": 2,
+    "price": {
+     "gp": 6
+    }
+   },
+   {
+    "id": "maelstromic-destabilizer-major",
+    "name": "Maelstromic Destabilizer (Major)",
+    "level": 17,
+    "price": {
+     "gp": 2750
+    }
+   },
+   {
+    "id": "maelstromic-destabilizer-moderate",
+    "name": "Maelstromic Destabilizer (Moderate)",
+    "level": 7,
+    "price": {
+     "gp": 65
+    }
+   }
+  ],
+  "text": "Maelstromic Destabilizer May contain spoilers from Convocation Source Rival Academies pg. 92 Usage held in 1 hand Bulk L Activate (manipulate) A maelstromic destabilizer is a whirling gyroscope of burnished bronze and glass. It strengthens the bonds that hold a creature to this world by weakening those same bonds to every other nearby creature. When activated, the destabilizer emits a constant pleasant chime as it spins. For the next minute, the creature holding the gadget gains the listed resistance to spirit damage, while all creatures not immune to spirit damage in a 10-foot emanation gain the listed weakness to spirit damage. Lesser Maelstromic Destabilizer Source Rival Academies pg. 92 Price 6 gp The value for the spirit resistance and weakness is 2. Moderate Maelstromic Destabilizer Source Rival Academies pg. 92 Price 65 gp The value for the spirit resistance and weakness is 5. Maj"
+ },
+ {
+  "id": "magic-armor",
+  "name": "Magic Armor",
+  "itemType": "equipment",
+  "level": 5,
+  "kin": [
+   {
+    "id": "magic-armor-1",
+    "name": "Magic Armor (+1)",
+    "level": 5,
+    "price": {
+     "gp": 160
+    }
+   },
+   {
+    "id": "magic-armor-1-resilient",
+    "name": "Magic Armor (+1 Resilient)",
+    "level": 8,
+    "price": {
+     "gp": 500
+    }
+   },
+   {
+    "id": "magic-armor-2-resilient",
+    "name": "Magic Armor (+2 Resilient)",
+    "level": 11,
+    "price": {
+     "gp": 1400
+    }
+   },
+   {
+    "id": "magic-armor-2-greater-resilient",
+    "name": "Magic Armor (+2 Greater Resilient)",
+    "level": 14,
+    "price": {
+     "gp": 4500
+    }
+   },
+   {
+    "id": "magic-armor-3-greater-resilient",
+    "name": "Magic Armor (+3 Greater Resilient)",
+    "level": 18,
+    "price": {
+     "gp": 24000
+    }
+   },
+   {
+    "id": "magic-armor-3-major-resilient",
+    "name": "Magic Armor (+3 Major Resilient)",
+    "level": 20,
+    "price": {
+     "gp": 70000
+    }
+   }
+  ],
+  "text": "Magic Armor Source GM Core pg. 229 Usage worn armor Bulk varies by armor A suit of magic armor is simply a suit of armor or explorer’s clothing etched with fundamental runes. An armor potency rune increases the armor’s item bonus to AC, and a resilient rune adds an item bonus to saving throws. The Prices here are for all types of armor. You don’t need to adjust the Price from leather armor to full plate or the like. These armors are made of standard materials, not precious materials such as dawnsilver. Magic Armor (+1) Source GM Core pg. 229, Core Rulebook pg. 556 Price 160 gp This armor has a +1 armor potency rune (increase the item bonus to AC by 1). Magic Armor (+1 Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 500 gp This armor has a +1 armor potency rune (increase the item bonus to AC by 1) and a resilient rune (+1 item bonus to saves). Magic Armor (+2 Resilient) Sou"
+ },
+ {
+  "id": "magic-wand",
+  "name": "Magic Wand",
+  "itemType": "equipment",
+  "level": 3,
+  "kin": [
+   {
+    "id": "magic-wand-1st-rank-spell",
+    "name": "Magic Wand (1st-rank Spell)",
+    "level": 3,
+    "price": {
+     "gp": 60
+    }
+   },
+   {
+    "id": "magic-wand-2nd-rank-spell",
+    "name": "Magic Wand (2nd-rank Spell)",
+    "level": 5,
+    "price": {
+     "gp": 160
+    }
+   },
+   {
+    "id": "magic-wand-3rd-rank-spell",
+    "name": "Magic Wand (3rd-rank Spell)",
+    "level": 7,
+    "price": {
+     "gp": 360
+    }
+   },
+   {
+    "id": "magic-wand-4th-rank-spell",
+    "name": "Magic Wand (4th-rank Spell)",
+    "level": 9,
+    "price": {
+     "gp": 700
+    }
+   },
+   {
+    "id": "magic-wand-5th-rank-spell",
+    "name": "Magic Wand (5th-rank Spell)",
+    "level": 11,
+    "price": {
+     "gp": 1400
+    }
+   },
+   {
+    "id": "magic-wand-6th-rank-spell",
+    "name": "Magic Wand (6th-rank Spell)",
+    "level": 13,
+    "price": {
+     "gp": 3000
+    }
+   },
+   {
+    "id": "magic-wand-7th-rank-spell",
+    "name": "Magic Wand (7th-rank Spell)",
+    "level": 15,
+    "price": {
+     "gp": 6500
+    }
+   },
+   {
+    "id": "magic-wand-8th-rank-spell",
+    "name": "Magic Wand (8th-rank Spell)",
+    "level": 17,
+    "price": {
+     "gp": 15000
+    }
+   },
+   {
+    "id": "magic-wand-9th-rank-spell",
+    "name": "Magic Wand (9th-rank Spell)",
+    "level": 19,
+    "price": {
+     "gp": 40000
+    }
+   }
+  ],
+  "text": "Magic Wand Source GM Core pg. 282 Usage held in 1 hand Bulk L This baton is about a foot long and contains a single spell. The appearance typically relates to the spell within. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You Cast the Spell at the indicated level. Craft Requirements Supply a casting of the spell at the listed rank. Magic Wand (1st-rank Spell) Source GM Core pg. 282 Price 60 gp Magic Wand (2nd-rank Spell) Source GM Core pg. 282 Price 160 gp Magic Wand (3rd-rank Spell) Source GM Core pg. 282 Price 360 gp Magic Wand (4th-rank Spell) Source GM Core pg. 282 Price 700 gp Magic Wand (5th-rank Spell) Source GM Core pg. 282 Price 1,400 gp Magic Wand (6th-rank Spell) Source GM Core pg. 282 Price 3,000 gp Magic Wand (7th-rank Spell) Source GM Core pg. 282 Price 6,500 gp Magic Wand (8th-rank Spell) Source GM Core pg. 282 Price 15,000 gp Magic Wand (9th-rank"
+ },
+ {
+  "id": "magic-weapon",
+  "name": "Magic Weapon",
+  "itemType": "equipment",
+  "level": 2,
+  "kin": [
+   {
+    "id": "magic-weapon-1",
+    "name": "Magic Weapon (+1)",
+    "level": 2,
+    "price": {
+     "gp": 35
+    }
+   },
+   {
+    "id": "magic-weapon-1-striking",
+    "name": "Magic Weapon (+1 Striking)",
+    "level": 4,
+    "price": {
+     "gp": 100
+    }
+   },
+   {
+    "id": "magic-weapon-2-striking",
+    "name": "Magic Weapon (+2 Striking)",
+    "level": 10,
+    "price": {
+     "gp": 1000
+    }
+   },
+   {
+    "id": "magic-weapon-2-greater-striking",
+    "name": "Magic Weapon (+2 Greater Striking)",
+    "level": 12,
+    "price": {
+     "gp": 2000
+    }
+   },
+   {
+    "id": "magic-weapon-3-greater-striking",
+    "name": "Magic Weapon (+3 Greater Striking)",
+    "level": 16,
+    "price": {
+     "gp": 10000
+    }
+   },
+   {
+    "id": "magic-weapon-3-major-striking",
+    "name": "Magic Weapon (+3 Major Striking)",
+    "level": 19,
+    "price": {
+     "gp": 40000
+    }
+   }
+  ],
+  "text": "Magic Weapon Source GM Core pg. 240 Usage held in 1 hand A magic weapon is a weapon etched with only fundamental runes. A weapon potency rune gives an item bonus to attack rolls with the weapon, and a striking rune increases the weapon's number of weapon damage dice. The Prices here are for all types of weapons. You don't need to adjust the Price from a club to a greataxe or the like. These weapons are made of standard materials, not precious materials such as cold iron. Magic Weapon (+1) Source GM Core pg. 241, Core Rulebook pg. 599 Price 35 gp Magic Weapon (+1 Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 100 gp Magic Weapon (+2 Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 1,000 gp Magic Weapon (+2 Greater Striking) Source GM Core pg. 241, Core Rulebook pg. 599 Price 2,000 gp Magic Weapon (+3 Greater Striking) Source GM Core pg. 241, Core Rulebook pg. 5"
+ },
+ {
+  "id": "magnetic-shot",
+  "name": "Magnetic Shot",
+  "itemType": "consumable",
+  "level": 7,
+  "kin": [
+   {
+    "id": "magnetic-shot-lesser",
+    "name": "Magnetic Shot (Lesser)",
+    "level": 7,
+    "price": {
+     "gp": 60
+    }
+   },
+   {
+    "id": "magnetic-shot-moderate",
+    "name": "Magnetic Shot (Moderate)",
+    "level": 12,
+    "price": {
+     "gp": 360
+    }
+   },
+   {
+    "id": "magnetic-shot-greater",
+    "name": "Magnetic Shot (Greater)",
+    "level": 17,
+    "price": {
+     "gp": 2200
+    }
+   }
+  ],
+  "text": "Magnetic Shot Source Treasure Vault (Remastered) pg. 82 Ammunition any Activate (concentrate) Shiny gray metal that slightly thrums when touched makes up the metal parts of a magnetic shot. When activated, the shot is more effective against a target wearing metal armor or made of metal. The activated ammunition grants a circumstance bonus to attack rolls against such targets, according to its type. Due to magnetic acceleration, the ammunition deals more damage and has deadlier critical hits, also according to its type. Magnetic Shot (Lesser) Source Treasure Vault (Remastered) pg. 82 Price 60 gp The ammunition grants a +1 circumstance bonus to the attack roll, deals two additional weapon damage dice, and is deadly d8. Magnetic Shot (Moderate) Source Treasure Vault (Remastered) pg. 82 Price 360 gp The ammo grants a +1 circumstance bonus to the attack roll, deals three additional weapon dam"
+ },
+ {
+  "id": "malleable-mixture",
+  "name": "Malleable Mixture",
+  "itemType": "equipment",
+  "level": 8,
+  "kin": [
+   {
+    "id": "malleable-mixture-lesser",
+    "name": "Malleable Mixture (Lesser)",
+    "level": 8,
+    "price": {
+     "gp": 75
+    }
+   },
+   {
+    "id": "malleable-mixture-greater",
+    "name": "Malleable Mixture (Greater)",
+    "level": 14,
+    "price": {
+     "gp": 750
+    }
+   }
+  ],
+  "text": "Malleable Mixture Source Grand Bazaar pg. 19 Usage held in 1 hand Bulk L Activate Interact Your bones, muscles, and organs become vastly softer and more pliable. You can fit into and through small or narrow spaces as though you were smaller than your normal size, and you gain an item bonus to your Fortitude and Reflex DCs against attempts to Grapple, Shove, or Trip you. Malleable Mixture (Lesser) Source Grand Bazaar pg. 19 Price 75 gp Bulk L You can fit into and through small or narrow spaces as though you were 1 size smaller than your normal size (minimum Small). The bonus to your DCs is +2, and the duration is 1 minute. Malleable Mixture (Greater) Source Grand Bazaar pg. 19 Price 750 gp Bulk L You can fit into and through small or narrow spaces as though you were 2 sizes smaller than your normal size (minimum Tiny). The bonus to your DCs is +3, and the duration is 10 minutes."
+ },
+ {
+  "id": "manacles",
+  "name": "Manacles",
+  "itemType": "equipment",
+  "level": 0,
+  "kin": [
+   {
+    "id": "manacles-of-persuasion",
+    "name": "Manacles of Persuasion",
+    "level": 3,
+    "price": {
+     "gp": 45
+    }
+   },
+   {
+    "id": "manacles-poor",
+    "name": "Manacles (Poor)",
+    "level": 0,
+    "price": {
+     "sp": 3
+    }
+   },
+   {
+    "id": "manacles-simple",
+    "name": "Manacles (Simple)",
+    "level": 1,
+    "price": {
+     "gp": 3
+    }
+   },
+   {
+    "id": "manacles-average",
+    "name": "Manacles (Average)",
+    "level": 3,
+    "price": {
+     "gp": 20
+    }
+   },
+   {
+    "id": "manacles-good",
+    "name": "Manacles (Good)",
+    "level": 9,
+    "price": {
+     "gp": 250
+    }
+   },
+   {
+    "id": "manacles-superior",
+    "name": "Manacles (Superior)",
+    "level": 17,
+    "price": {
+     "gp": 5000
+    }
+   }
+  ],
+  "text": "Manacles Source Player Core pg. 288 You can manacle someone who is willing or otherwise at your mercy as an exploration activity taking 10–30 seconds depending on the creature's size and how many manacles you apply. A two-legged creature with its legs bound takes a –15-foot circumstance penalty to its Speeds, and a two-handed creature with its wrists bound has to succeed at a DC 5 flat check any time it uses a manipulate action or else that action fails. This DC may be higher depending on how tightly the manacles constrain the hands. A creature bound to a stationary object is immobilized. For creatures with more or fewer limbs, the GM determines what effect manacles have, if any. Freeing a creature from poor manacles requires two successful DC 17 Thievery checks, simple manacles requires three successes at DC 22, average manacles require four successes at DC 27, good manacles require fiv"
+ },
+ {
+  "id": "map",
+  "name": "Map",
+  "itemType": "equipment",
+  "level": 0,
+  "kin": [
+   {
+    "id": "map-geographical-map",
+    "name": "Map (Geographical Map)",
+    "level": 0,
+    "price": {
+     "gp": 20
+    }
+   },
+   {
+    "id": "map-geologic-map",
+    "name": "Map (Geologic Map)",
+    "level": 0,
+    "price": {
+     "gp": 25
+    }
+   },
+   {
+    "id": "map-local-map",
+    "name": "Map (Local Map)",
+    "level": 0,
+    "price": {
+     "gp": 10
+    }
+   },
+   {
+    "id": "map-nautical-chart",
+    "name": "Map (Nautical Chart)",
+    "level": 0,
+    "price": {
+     "gp": 25
+    }
+   },
+   {
+    "id": "map-pictorial-map",
+    "name": "Map (Pictorial Map)",
+    "level": 0,
+    "price": {
+     "gp": 50
+    }
+   },
+   {
+    "id": "map-political-map",
+    "name": "Map (Political Map)",
+    "level": 0,
+    "price": {
+     "gp": 20
+    }
+   },
+   {
+    "id": "map-treasure-map",
+    "name": "Map (Treasure Map)",
+    "level": 0,
+    "price": {
+     "gp": 200
+    }
+   },
+   {
+    "id": "map-weather-map",
+    "name": "Map (Weather Map)",
+    "level": 0,
+    "price": {
+     "gp": 50
+    }
+   }
+  ],
+  "text": "Map Source NPC Core pg. 59 These are various types of maps used by explorers Map (Geographical Map) Source NPC Core pg. 59 Price 20 gp A map of geographical features of an area. Map (Geologic Map) Source NPC Core pg. 59 Price 25 gp A map of a selection of geological features. Map (Local Map) Source NPC Core pg. 59 Price 10 gp A map of a local township or city. Map (Nautical Chart) Source NPC Core pg. 59 Price 25 gp A map of an ocean or sea. Map (Pictorial Map) Source NPC Core pg. 59 Price 50 gp An artistic territory map. Map (Political Map) Source NPC Core pg. 59 Price 20 gp A map of the political borders of a nation. Map (Treasure Map) Source NPC Core pg. 59 Price 200 gp A map leading to a specific treasure. Map (Weather Map) Source NPC Core pg. 59 Price 50 gp A map tracking weather patterns."
+ },
+ {
+  "id": "marvelous-miniature",
+  "name": "Marvelous Miniature",
+  "itemType": "consumable",
+  "level": 1,
+  "kin": [
+   {
+    "id": "marvelous-miniature-boat",
+    "name": "Marvelous Miniature (Boat)",
+    "level": 8,
+    "price": {
+     "gp": 76
+    }
+   },
+   {
+    "id": "marvelous-miniature-campfire",
+    "name": "Marvelous Miniature (Campfire)",
+    "level": 1,
+    "price": {
+     "gp": 1
+    }
+   },
+   {
+    "id": "marvelous-miniature-chest",
+    "name": "Marvelous Miniature (Chest)",
+    "level": 3,
+    "price": {
+     "gp": 10
+    }
+   },
+   {
+    "id": "marvelous-miniature-horse",
+    "name": "Marvelous Miniature (Horse)",
+    "level": 4,
+    "price": {
+     "gp": 13
+    }
+   },
+   {
+    "id": "marvelous-miniature-ladder",
+    "name": "Marvelous Miniature (Ladder)",
+    "level": 1,
+    "price": {
+     "gp": 3
+    }
+   },
+   {
+    "id": "marvelous-miniature-swift-sparrow",
+    "name": "Marvelous Miniature (Swift Sparrow)",
+    "level": 2,
+    "price": {
+     "gp": 6
+    }
+   }
+  ],
+  "text": "Marvelous Miniature Source GM Core pg. 268 Usage held in 1 hand Activate (manipulate) Every marvelous miniature is an exceptionally small replica of a real creature or object. The miniature is made from wood, pewter, or other simple materials, and features a rune etched into the underside of the replica's base. Marvelous miniatures sometimes come packaged together; for example, the camping set features the boat, campfire, and horse miniatures. Activating a _marvelous miniatur_e causes it to transform into another creature or object, which then can be used as normal for that object. Each miniature can be activated only once, with most of them permanently becoming the item in their description. Marvelous Miniature (Boat) Source GM Core pg. 268 Price 76 gp This miniature can be activated only when tossed into a large body of water, such as a lake or broad river. It transforms into a cutter."
+ },
+ {
+  "id": "mask",
+  "name": "Mask",
+  "itemType": "equipment",
+  "level": 0,
+  "kin": [
+   {
+    "id": "mask-of-the-cursed-eye",
+    "name": "Mask of the Cursed Eye",
+    "level": 8,
+    "price": {
+     "gp": 475
+    }
+   },
+   {
+    "id": "mask-of-mercy",
+    "name": "Mask of Mercy",
+    "level": 4,
+    "price": {
+     "gp": 100
+    }
+   },
+   {
+    "id": "mask-of-allure",
+    "name": "Mask of Allure",
+    "level": 18,
+    "price": {
+     "gp": 24000
+    }
+   },
+   {
+    "id": "mask-ordinary",
+    "name": "Mask (Ordinary)",
+    "level": 0,
+    "price": {
+     "cp": 5
+    }
+   },
+   {
+    "id": "mask-fine",
+    "name": "Mask (Fine)",
+    "level": 0,
+    "price": {
+     "gp": 2
+    }
+   },
+   {
+    "id": "mask-plague",
+    "name": "Mask (Plague)",
+    "level": 1,
+    "price": {
+     "gp": 10
+    }
+   },
+   {
+    "id": "mask-rubber",
+    "name": "Mask (Rubber)",
+    "level": 1,
+    "price": {
+     "gp": 5
+    }
+   },
+   {
+    "id": "mask-of-uncanny-breath",
+    "name": "Mask of Uncanny Breath",
+    "level": 11,
+    "price": {
+     "gp": 1200
+    }
+   },
+   {
+    "id": "mask-of-the-mantis",
+    "name": "Mask of the Mantis",
+    "level": 5,
+    "price": {
+     "gp": 150
+    }
+   },
+   {
+    "id": "mask-of-the-mantis-greater",
+    "name": "Mask of the Mantis (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 1350
+    }
+   },
+   {
+    "id": "mask-of-the-mantis-major",
+    "name": "Mask of the Mantis (Major)",
+    "level": 18,
+    "price": {
+     "gp": 19000
+    }
+   },
+   {
+    "id": "mask-of-shifting-monstrosity",
+    "name": "Mask of Shifting Monstrosity",
+    "level": 7,
+    "price": {
+     "gp": 360
+    }
+   }
+  ],
+  "text": "Mask Source Grand Bazaar pg. 92 Usage worn mask A mask helps you use the Impersonate action to pass yourself off as someone you aren't. Mask (Ordinary) Source Grand Bazaar pg. 92 Price 5 cp This ordinary mask is made out of cheap material, such as paper-mâché or simple cloth. This can be specially fitted over another mask. Mask (Fine) Source Grand Bazaar pg. 92 Price 2 gp This well-crafted mask, suitable for a noble at a masquerade, is made with impeccable craftsmanship and expensive material, such as porcelain and gold filigree. Mask (Plague) Source Grand Bazaar pg. 92 Price 10 gp This stylized bird mask is equipped with a basic filter. The plague mask attempts to counteract any inhaled poisons or airborne diseases each round you breathe. The same replacement filters used in water purifiers can be used with a plague mask, granting you the counteract modifier and effects of the filter fo"
+ },
+ {
+  "id": "material-essence-disruptor",
+  "name": "Material Essence Disruptor",
+  "itemType": "consumable",
+  "level": 3,
+  "kin": [
+   {
+    "id": "material-essence-disruptor-lesser",
+    "name": "Material Essence Disruptor (Lesser)",
+    "level": 3,
+    "price": {
+     "gp": 12
+    }
+   },
+   {
+    "id": "material-essence-disruptor-moderate",
+    "name": "Material Essence Disruptor (Moderate)",
+    "level": 7,
+    "price": {
+     "gp": 70
+    }
+   },
+   {
+    "id": "material-essence-disruptor-greater",
+    "name": "Material Essence Disruptor (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 300
+    }
+   },
+   {
+    "id": "material-essence-disruptor-major",
+    "name": "Material Essence Disruptor (Major)",
+    "level": 15,
+    "price": {
+     "gp": 1300
+    }
+   }
+  ],
+  "text": "Material Essence Disruptor Source Guns & Gears (Remastered) pg. 71 PFS Note All Pathfinder Society agents have access to all uncommon clockwork items and gadgets from Chapters 1 and 2 of this book Usage held in 1 hand Bulk 1 Access Due to the use of technology, all gadgets are uncommon or rare, though inventors and regions with access to inventors have access to uncommon gadgets. Activate Interact A material essence disruptor emits bursts of disordered energy to break down the structure of a spell that manipulates material essence. Attempt to counteract an active arcane or primal spell within the listed range, with the listed counteract modifier and counteract level. Material Essence Disruptor (Lesser) Source Guns & Gears (Remastered) pg. 71 Price 12 gp Bulk 1 The range is 30 feet, the counteract modifier is +7, and the counteract level is 2. Material Essence Disruptor (Moderate) Source "
+ },
+ {
+  "id": "metalmist-sphere",
+  "name": "Metalmist Sphere",
+  "itemType": "equipment",
+  "level": 3,
+  "kin": [
+   {
+    "id": "metalmist-sphere-lesser",
+    "name": "Metalmist Sphere (Lesser)",
+    "level": 3,
+    "price": {
+     "gp": 11
+    }
+   },
+   {
+    "id": "metalmist-sphere-moderate",
+    "name": "Metalmist Sphere (Moderate)",
+    "level": 8,
+    "price": {
+     "gp": 90
+    }
+   },
+   {
+    "id": "metalmist-sphere-greater",
+    "name": "Metalmist Sphere (Greater)",
+    "level": 13,
+    "price": {
+     "gp": 500
+    }
+   }
+  ],
+  "text": "Metalmist Sphere Source PFS Guide pg. 38 PFS Note Players can gain access to faction-specific gear by taking the corresponding Faction Gear Access Game Reward, available when they reach 20 reputation with the respective faction. All versions of metalmist spheres from this source contain either cold iron or silver. Usage held in 2 hands Bulk L Access Member of the Pathfinder Society. Activate Interact This sphere contains small fragments of thunderstones within a colloidal suspension of a precious metal. When you twist the sphere, it creates an opaque mist in a burst centered on one corner of your space. Creatures within that area are concealed, and all other creatures are concealed to them. Any creature with a weakness to the precious metal that starts its turn in the mist takes damage equal to its weakness. The mist lasts for 1 minute or until dispersed by a strong wind. Most metalmist "
+ },
+ {
+  "id": "midday-lantern",
+  "name": "Midday Lantern",
+  "itemType": "equipment",
+  "level": 6,
+  "kin": [
+   {
+    "id": "midday-lantern-lesser",
+    "name": "Midday Lantern (Lesser)",
+    "level": 6,
+    "price": {
+     "gp": 235
+    }
+   },
+   {
+    "id": "midday-lantern-moderate",
+    "name": "Midday Lantern (Moderate)",
+    "level": 10,
+    "price": {
+     "gp": 850
+    }
+   },
+   {
+    "id": "midday-lantern-greater",
+    "name": "Midday Lantern (Greater)",
+    "level": 14,
+    "price": {
+     "gp": 3700
+    }
+   },
+   {
+    "id": "midday-lantern-major",
+    "name": "Midday Lantern (Major)",
+    "level": 18,
+    "price": {
+     "gp": 18750
+    }
+   }
+  ],
+  "text": "Midday Lantern May contain spoilers from Strength of Thousands Source Pathfinder #172: Secrets of the Temple City pg. 76 Usage held in 1 hand Bulk L This hooded lantern is made from brilliant, reinforced gold engraved with the image of the sun high in the sky. The lantern uses oil, as a standard lantern, except that any light the lantern emits is magical and similar to sunlight. The lantern doesn't emit dim light, instead only emitting bright light to its normal radius (20 feet for typical lights when using oil). This bright light is close enough to sunlight to open temple doors that require sunlight or similar light, but it doesn't shine direct sunlight, so it doesn't trigger effects such as a vampire's sunlight weakness. Activate envision, Interact; Frequency once per day; Effect You raise the lantern and unleash a blast of powerful sunlight. The blast has the effects of 2nd-level scor"
+ },
+ {
+  "id": "midnight-milk",
+  "name": "Midnight Milk",
+  "itemType": "equipment",
+  "level": 5,
+  "kin": [
+   {
+    "id": "midnight-milk-experimental",
+    "name": "Midnight Milk (Experimental)",
+    "level": 5,
+    "price": {
+     "gp": 30
+    }
+   },
+   {
+    "id": "midnight-milk-refined",
+    "name": "Midnight Milk (Refined)",
+    "level": 12,
+    "price": {
+     "gp": 400
+    }
+   },
+   {
+    "id": "midnight-milk-pure",
+    "name": "Midnight Milk (Pure)",
+    "level": 20,
+    "price": {
+     "gp": 14000
+    }
+   }
+  ],
+  "text": "Midnight Milk May contain spoilers from Seven Dooms for Sandpoint Source Pathfinder #200: Seven Dooms for Sandpoint pg. 184 Usage held in 1 hand Bulk L Activate Interact Midnight milk is a strange and powerful drug, originally invented by the intellect devourers of the alien city of Ilvarandin to remotely steal the bodies of distant dreaming victims through the use of an artifact called the Dream Lens. Pure midnight milk is incredibly rare—almost all of that found beyond the vault of Ilvarandin is instead cut to reduce costs and expenses. Crafting a dose of this dangerous drug requires a wide range of reagents; the most difficult to acquire of these reagents are vials of refined “sweat” harvested via a mithral blade from the fleshy fronds of a rare form of cavetongue fungus known as authul, which grows wild only in remote corners of the Vaults of Orv. When an alchemist mixes midnight mil"
+ },
+ {
+  "id": "mistform-elixir",
+  "name": "Mistform Elixir",
+  "itemType": "equipment",
+  "level": 4,
+  "kin": [
+   {
+    "id": "mistform-elixir-lesser",
+    "name": "Mistform Elixir (Lesser)",
+    "level": 4,
+    "price": {
+     "gp": 18
+    }
+   },
+   {
+    "id": "mistform-elixir-moderate",
+    "name": "Mistform Elixir (Moderate)",
+    "level": 6,
+    "price": {
+     "gp": 56
+    }
+   },
+   {
+    "id": "mistform-elixir-greater",
+    "name": "Mistform Elixir (Greater)",
+    "level": 10,
+    "price": {
+     "gp": 180
+    }
+   }
+  ],
+  "text": "Mistform Elixir Source Player Core 2 pg. 288, GM Core pg. 247 Usage held in 1 hand Bulk L Activate (manipulate) A faint mist emanates from your skin, making you concealed for the listed duration. As usual, if you become concealed when your position is still obvious, you can't use this concealment to Hide or Sneak. Mistform Elixir (Lesser) Source Player Core 2 pg. 288, GM Core pg. 247, Core Rulebook pg. 549 Price 18 gp Bulk L The duration is 3 rounds. Mistform Elixir (Moderate) Source Player Core 2 pg. 288, GM Core pg. 247, Core Rulebook pg. 549 Price 56 gp Bulk L The duration is 1 minute. Mistform Elixir (Greater) Source Player Core 2 pg. 288, GM Core pg. 247, Core Rulebook pg. 549 Price 180 gp Bulk L The duration is 5 minutes."
+ },
+ {
+  "id": "moonlit-spellgun",
+  "name": "Moonlit Spellgun",
+  "itemType": "consumable",
+  "level": 2,
+  "kin": [
+   {
+    "id": "moonlit-spellgun-minor",
+    "name": "Moonlit Spellgun (Minor)",
+    "level": 2,
+    "price": {
+     "gp": 7
+    }
+   },
+   {
+    "id": "moonlit-spellgun-lesser",
+    "name": "Moonlit Spellgun (Lesser)",
+    "level": 5,
+    "price": {
+     "gp": 30
+    }
+   },
+   {
+    "id": "moonlit-spellgun-moderate",
+    "name": "Moonlit Spellgun (Moderate)",
+    "level": 9,
+    "price": {
+     "gp": 150
+    }
+   },
+   {
+    "id": "moonlit-spellgun-greater",
+    "name": "Moonlit Spellgun (Greater)",
+    "level": 13,
+    "price": {
+     "gp": 600
+    }
+   },
+   {
+    "id": "moonlit-spellgun-major",
+    "name": "Moonlit Spellgun (Major)",
+    "level": 17,
+    "price": {
+     "gp": 3000
+    }
+   }
+  ],
+  "text": "Moonlit Spellgun Source Treasure Vault (Remastered) pg. 97 Usage held in 1 hand Bulk L Activate Strike Elegant silver filigree contains the body of this ephemeral item, which is made of solid light. Its shape resembles a pistol, and it’s often carried by hunters of werecreatures and vampires. You Activate the spellgun by aiming it at one creature and making your choice of a spell attack roll or a firearm attack roll against the target’s AC. This spellgun has a range increment of 30 feet. The spellgun emits a silvery ray of pure moonlight that deals fire damage depending on its type. The spellgun’s damage is treated as silver for the purposes of weaknesses, resistances, and the like. Critical Success The target takes double damage and is dazzled until the start of your next turn. If it has a weakness to silver or a resistance that can be bypassed by silver, it's also enfeebled 1 for 1 min"
+ },
+ {
+  "id": "mud-bomb",
+  "name": "Mud Bomb",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "mud-bomb-lesser",
+    "name": "Mud Bomb (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 3
+    }
+   },
+   {
+    "id": "mud-bomb-moderate",
+    "name": "Mud Bomb (Moderate)",
+    "level": 3,
+    "price": {
+     "gp": 10
+    }
+   },
+   {
+    "id": "mud-bomb-greater",
+    "name": "Mud Bomb (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 250
+    }
+   },
+   {
+    "id": "mud-bomb-major",
+    "name": "Mud Bomb (Major)",
+    "level": 17,
+    "price": {
+     "gp": 2500
+    }
+   }
+  ],
+  "text": "Mud Bomb May contain spoilers from Quest for the Frozen Flame Source Pathfinder #176: Lost Mammoth Valley pg. 78 Usage held in 1 hand Bulk L Activate Strike This clay vessel launches gobs of clinging mud and grit. A mud bomb deals the listed bludgeoning damage and splash damage. On a critical hit, the target is dazzled until the start of your next turn. Many types grant an item bonus to attack rolls. Mud Bomb (Lesser) Source Pathfinder #176: Lost Mammoth Valley pg. 78 Price 3 gp Bulk L The bomb deals 1d6 bludgeoning damage and 1 bludgeoning splash damage. Mud Bomb (Moderate) Source Pathfinder #176: Lost Mammoth Valley pg. 78 Price 10 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d6 bludgeoning damage and 2 bludgeoning splash damage. Mud Bomb (Greater) Source Pathfinder #176: Lost Mammoth Valley pg. 78 Price 250 gp Bulk L You gain a +2 item bonus to attack rolls. The"
+ },
+ {
+  "id": "musical-instrument",
+  "name": "Musical Instrument",
+  "itemType": "equipment",
+  "level": 0,
+  "kin": [
+   {
+    "id": "musical-instrument-handheld",
+    "name": "Musical Instrument (Handheld)",
+    "level": 0,
+    "price": {
+     "sp": 8
+    }
+   },
+   {
+    "id": "musical-instrument-virtuoso-handheld",
+    "name": "Musical Instrument (Virtuoso Handheld)",
+    "level": 3,
+    "price": {
+     "gp": 50
+    }
+   },
+   {
+    "id": "musical-instrument-heavy",
+    "name": "Musical Instrument (Heavy)",
+    "level": 0,
+    "price": {
+     "gp": 2
+    }
+   },
+   {
+    "id": "musical-instrument-virtuoso-heavy",
+    "name": "Musical Instrument (Virtuoso Heavy)",
+    "level": 3,
+    "price": {
+     "gp": 100
+    }
+   }
+  ],
+  "text": "Musical Instrument Source Player Core pg. 290 Handheld instruments include bagpipes, a small set of chimes, small drums, fiddles and viols, flutes and recorders, small harps, lutes, trumpets, and similarly sized instruments. The GM might rule that an especially large handheld instrument (like a tuba) has greater Bulk. Heavy instruments such as large drums, a full set of chimes, and keyboard instruments are less portable and generally need to be stationary while being played. A virtuoso instrument is more finely made and gives a +1 item bonus to Performance checks using that instrument. Musical Instrument (Handheld) Source Player Core pg. 290, Core Rulebook pg. 290 Price 8 sp Hands 2 Bulk 1 Musical Instrument (Virtuoso Handheld) Source Player Core pg. 290, Core Rulebook pg. 290 Price 50 gp Hands 2 Bulk 1 Musical Instrument (Heavy) Source Player Core pg. 290, Core Rulebook pg. 290 Price 2 "
+ },
+ {
+  "id": "mycoweave-shield",
+  "name": "Mycoweave Shield",
+  "itemType": "equipment",
+  "level": 2,
+  "kin": [
+   {
+    "id": "mycoweave-shield-lesser",
+    "name": "Mycoweave Shield (Lesser)",
+    "level": 2,
+    "price": {
+     "gp": 40
+    }
+   },
+   {
+    "id": "mycoweave-shield-greater",
+    "name": "Mycoweave Shield (Greater)",
+    "level": 8,
+    "price": {
+     "gp": 40
+    }
+   },
+   {
+    "id": "mycoweave-shield-major",
+    "name": "Mycoweave Shield (Major)",
+    "level": 16,
+    "price": {
+     "gp": 40
+    }
+   }
+  ],
+  "text": "Mycoweave Shield May contain spoilers from Sky King's Tomb Source Pathfinder #193: Mantle of Gold pg. 85 Usage held in 1 hand Bulk 1 This shield is grown entirely of specially treated fungi, giving it the appearance of a frilly disc. When left atop at least 1 bulk of organic matter, it gains fast healing 1; after 10 minutes 1 Bulk of the organic matter has been consumed by the shield. This shield doubles its hardness against bludgeoning, electricity, and sonic damage. Activate manipulate; Trigger The shield is broken; Effect The shield spews spores into one adjacent square, dealing persistent poison damage to all creatures in within it; a successful Fortitude save negates the damage. Craft Requirements You are trained in Nature, and can cast a fungus spell or are fungus. Mycoweave Shield (Lesser) Source Pathfinder #193: Mantle of Gold pg. 85 Price 40 gp Bulk 1 The shield has Hardness 2, "
+ },
+ {
+  "id": "nail-bomb",
+  "name": "Nail Bomb",
+  "itemType": "equipment",
+  "level": 2,
+  "kin": [
+   {
+    "id": "nail-bomb-greater",
+    "name": "Nail Bomb (Greater)",
+    "level": 12,
+    "price": {
+     "gp": 350
+    }
+   },
+   {
+    "id": "nail-bomb-lesser",
+    "name": "Nail Bomb (Lesser)",
+    "level": 2,
+    "price": {
+     "gp": 8
+    }
+   },
+   {
+    "id": "nail-bomb-major",
+    "name": "Nail Bomb (Major)",
+    "level": 18,
+    "price": {
+     "gp": 4000
+    }
+   },
+   {
+    "id": "nail-bomb-moderate",
+    "name": "Nail Bomb (Moderate)",
+    "level": 4,
+    "price": {
+     "gp": 16
+    }
+   }
+  ],
+  "text": "Nail Bomb May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 78 Usage held in 1 hand Bulk L Activate Strike This pressurized iron casing bursts open when struck, releasing cold iron shrapnel. The bomb deals the listed piercing damage and piercing splash damage from a cold iron source. Many types grant a bonus to attack rolls. Lesser Nail Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 8 gp The bomb deals 2d4 piercing damage and 1 piercing splash damage. Moderate Nail Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 16 gp You gain a +1 item bonus to attack rolls. The bomb deals 4d4 piercing damage and 2 piercing splash damage. Greater Nail Bomb Source Pathfinder #202: Severed at the Root pg. 78 Price 350 gp You gain a +2 item bonus to attack rolls. The bomb deals 6d4 piercing damage and 3 piercing splash damage. Major N"
+ },
+ {
+  "id": "necrotic-bomb",
+  "name": "Necrotic Bomb",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "necrotic-bomb-lesser",
+    "name": "Necrotic Bomb (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 3
+    }
+   },
+   {
+    "id": "necrotic-bomb-moderate",
+    "name": "Necrotic Bomb (Moderate)",
+    "level": 3,
+    "price": {
+     "gp": 10
+    }
+   },
+   {
+    "id": "necrotic-bomb-greater",
+    "name": "Necrotic Bomb (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 250
+    }
+   },
+   {
+    "id": "necrotic-bomb-major",
+    "name": "Necrotic Bomb (Major)",
+    "level": 17,
+    "price": {
+     "gp": 2500
+    }
+   }
+  ],
+  "text": "Necrotic Bomb Source Pathfinder #165: Eyes of Empty Death pg. 74 Hands 1 Usage held in 1 hand Bulk L Activate Strike Necrotic bombs combine reagents most people consider disgusting at best and unholy at worst, creating a life-sucking miasma upon contact with air. A necrotic bomb deals the listed negative damage and splash damage, and it sickens the primary target on a critical hit. This damage harms only living creatures. Many types grant an item bonus to attack rolls. Necrotic Bomb (Lesser) Source Pathfinder #165: Eyes of Empty Death pg. 74 Price 3 gp Bulk L The bomb deals 1d6 negative damage and 1 negative splash damage. On a critical hit, the target is sickened 1. Necrotic Bomb (Moderate) Source Pathfinder #165: Eyes of Empty Death pg. 74 Price 10 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d6 negative damage and 2 negative splash damage. On a critical hit, the"
+ },
+ {
+  "id": "necrotic-cap",
+  "name": "Necrotic Cap",
+  "itemType": "consumable",
+  "level": 4,
+  "kin": [
+   {
+    "id": "necrotic-cap-greater",
+    "name": "Necrotic Cap (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 350
+    }
+   },
+   {
+    "id": "necrotic-cap-lesser",
+    "name": "Necrotic Cap (Lesser)",
+    "level": 4,
+    "price": {
+     "gp": 18
+    }
+   },
+   {
+    "id": "necrotic-cap-major",
+    "name": "Necrotic Cap (Major)",
+    "level": 15,
+    "price": {
+     "gp": 1200
+    }
+   },
+   {
+    "id": "necrotic-cap-moderate",
+    "name": "Necrotic Cap (Moderate)",
+    "level": 8,
+    "price": {
+     "gp": 80
+    }
+   }
+  ],
+  "text": "Necrotic Cap May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 81 Usage held in 1 hand Bulk L You can use this slimy, rotting mushroom as a spell catalyst when you cast an acid grip spell by tapping it against the target, causing the mushroom to release a cloud of necrotic spores. When you do, acid grip loses the acid trait, gains the fungus trait, and all acid damage the spell deals becomes void damage. On a hit, the target additionally gains the enfeebled and sickened conditions, with the listed values, as the spores consume their flesh. As long as the target is taking persistent void damage, they can’t reduce the value of their sickened condition below 1. Lesser Necrotic Cap Source Pathfinder #202: Severed at the Root pg. 81 Price 18 gp The value of the enfeebled and sickened conditions is 1. Moderate Necrotic Cap Source Pathfinder #202: Sev"
+ },
+ {
+  "id": "noqual",
+  "name": "Noqual",
+  "itemType": "equipment",
+  "level": 0,
+  "kin": [
+   {
+    "id": "noqual-chunk",
+    "name": "Noqual Chunk",
+    "level": 0,
+    "price": {
+     "gp": 600
+    }
+   },
+   {
+    "id": "noqual-ingot",
+    "name": "Noqual Ingot",
+    "level": 0,
+    "price": {
+     "gp": 6000
+    }
+   },
+   {
+    "id": "noqual-object-standard-grade",
+    "name": "Noqual Object (Standard-Grade)",
+    "level": 8,
+    "price": {
+     "gp": 400
+    }
+   },
+   {
+    "id": "noqual-object-high-grade",
+    "name": "Noqual Object (High-Grade)",
+    "level": 16,
+    "price": {
+     "gp": 7000
+    }
+   },
+   {
+    "id": "noqual-armor",
+    "name": "Noqual Armor",
+    "level": 12,
+    "price": null
+   },
+   {
+    "id": "noqual-armor-standard-grade",
+    "name": "Noqual Armor (Standard-Grade)",
+    "level": 12,
+    "price": {
+     "gp": 1600
+    }
+   },
+   {
+    "id": "noqual-armor-high-grade",
+    "name": "Noqual Armor (High-Grade)",
+    "level": 19,
+    "price": {
+     "gp": 32000
+    }
+   },
+   {
+    "id": "noqual-shield",
+    "name": "Noqual Shield",
+    "level": 17,
+    "price": null
+   },
+   {
+    "id": "noqual-buckler-high-grade",
+    "name": "Noqual Buckler (High-Grade)",
+    "level": 17,
+    "price": {
+     "gp": 14000
+    }
+   },
+   {
+    "id": "noqual-shield-high-grade",
+    "name": "Noqual Shield (High-Grade)",
+    "level": 17,
+    "price": {
+     "gp": 15400
+    }
+   },
+   {
+    "id": "noqual-weapon",
+    "name": "Noqual Weapon",
+    "level": 12,
+    "price": null
+   },
+   {
+    "id": "noqual-weapon-standard-grade",
+    "name": "Noqual Weapon (Standard-Grade)",
+    "level": 12,
+    "price": {
+     "gp": 1600
+    }
+   },
+   {
+    "id": "noqual-weapon-high-grade",
+    "name": "Noqual Weapon (High-Grade)",
+    "level": 18,
+    "price": {
+     "gp": 24000
+    }
+   }
+  ],
+  "text": "Noqual Source Grand Bazaar pg. 99 Light and strong, noqual also demonstrates a powerful resistance to magic. A side effect of this resistance is that making magical weapons out of noqual requires complex and expensive alchemical treatments. Kevoth-Kul, the Black Sovereign of Numeria, has developed an alloy of noqual and cold iron known as sovereign steel to help mitigate this property. The metal's crystalline appearance might suggest that it's fragile, but the pale-green material can be worked similarly to iron. Objects made of noqual have a +4 circumstance bonus on saves against magic that the item attempts and grant their bonus to saves the owner makes specifically to protect the item from magic (such as against the rusting grasp spell). Noqual Noqual Items Hardness HP BT Thin Items Standard-grade 6 24 12 High-grade 10 40 20 Items Standard-grade 10 40 20 High-grade 13 52 26 Structures "
+ },
+ {
+  "id": "noqual-armor",
+  "name": "Noqual Armor",
+  "itemType": "equipment",
+  "level": 12,
+  "kin": [
+   {
+    "id": "noqual-armor-standard-grade",
+    "name": "Noqual Armor (Standard-Grade)",
+    "level": 12,
+    "price": {
+     "gp": 1600
+    }
+   },
+   {
+    "id": "noqual-armor-high-grade",
+    "name": "Noqual Armor (High-Grade)",
+    "level": 19,
+    "price": {
+     "gp": 32000
+    }
+   }
+  ],
+  "text": "Noqual Armor Source Grand Bazaar pg. 100 Usage worn armor Bulk varies by armor Base Material Noqual The mere sight of a suit of noqual armor is enough to make some opposing spellcasters withdraw from the battlefield. While wearing noqual armor, you gain a +1 circumstance bonus to AC against spell attack rolls. If you Cast a Spell while wearing noqual armor, you must succeed at a DC 5 flat check or the spell fails. Noqual Armor (Standard-Grade) Source Grand Bazaar pg. 100 Price 1,600 gp (+160 gp per Bulk) Craft Requirements The initial raw materials must include at least 200 gp of noqual + 20 gp per Bulk. Noqual Armor (High-Grade) Source Grand Bazaar pg. 100 Price 32,000 gp (+3,200 gp per Bulk) Craft Requirements The initial raw materials must include at least 16,000 gp of noqual + 1,600 gp per Bulk."
+ },
+ {
+  "id": "noqual-weapon",
+  "name": "Noqual Weapon",
+  "itemType": "equipment",
+  "level": 12,
+  "kin": [
+   {
+    "id": "noqual-weapon-standard-grade",
+    "name": "Noqual Weapon (Standard-Grade)",
+    "level": 12,
+    "price": {
+     "gp": 1600
+    }
+   },
+   {
+    "id": "noqual-weapon-high-grade",
+    "name": "Noqual Weapon (High-Grade)",
+    "level": 18,
+    "price": {
+     "gp": 24000
+    }
+   }
+  ],
+  "text": "Noqual Weapon Source Grand Bazaar pg. 100 Usage varies by weapon Bulk varies by weapon Base Material Noqual Noqual weapons are inimical to summoned creatures and spell effects that can be damaged by conventional attacks. Against such targets, a Strike with a noqual weapon gains a circumstance bonus to damage equal to twice the number of weapon damage dice. In addition, noqual weapons disrupt spellcasters' concentration, causing them to become stupefied 1 for 1 round on a critical hit. Noqual Weapon (Standard-Grade) Source Grand Bazaar pg. 100 Price 1,600 gp (+160 gp per Bulk) Craft Requirements at least 200 gp of noqual + 20 gp per Bulk Noqual Weapon (High-Grade) Source Grand Bazaar pg. 100 Price 24,000 gp (+2,400 gp per Bulk) Craft Requirements at least 12,000 gp of noqual + 1,200 gp per Bulk"
+ },
+ {
+  "id": "numbing-tonic",
+  "name": "Numbing Tonic",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "numbing-tonic-minor",
+    "name": "Numbing Tonic (Minor)",
+    "level": 1,
+    "price": {
+     "gp": 4
+    }
+   },
+   {
+    "id": "numbing-tonic-lesser",
+    "name": "Numbing Tonic (Lesser)",
+    "level": 5,
+    "price": {
+     "gp": 30
+    }
+   },
+   {
+    "id": "numbing-tonic-moderate",
+    "name": "Numbing Tonic (Moderate)",
+    "level": 9,
+    "price": {
+     "gp": 150
+    }
+   },
+   {
+    "id": "numbing-tonic-greater",
+    "name": "Numbing Tonic (Greater)",
+    "level": 13,
+    "price": {
+     "gp": 600
+    }
+   },
+   {
+    "id": "numbing-tonic-major",
+    "name": "Numbing Tonic (Major)",
+    "level": 16,
+    "price": {
+     "gp": 1400
+    }
+   },
+   {
+    "id": "numbing-tonic-true",
+    "name": "Numbing Tonic (True)",
+    "level": 19,
+    "price": {
+     "gp": 8000
+    }
+   }
+  ],
+  "text": "Numbing Tonic Source Treasure Vault (Remastered) pg. 60 Usage held in 1 hand Bulk L Activate (manipulate) Numbing tonic makes it easier to push through the pain of battle and shrug off otherwise debilitating blows. You gain the listed temporary Hit Points when you drink the elixir, and again at the start of each of your turns for 1 minute. Numbing Tonic (Minor) Source Treasure Vault (Remastered) pg. 60 Price 4 gp Bulk L You gain 2 temporary Hit Points. Numbing Tonic (Lesser) Source Treasure Vault (Remastered) pg. 60 Price 30 gp Bulk L You gain 5 temporary Hit Points. Numbing Tonic (Moderate) Source Treasure Vault (Remastered) pg. 60 Price 150 gp Bulk L You gain 10 temporary Hit Points. Numbing Tonic (Greater) Source Treasure Vault (Remastered) pg. 60 Price 600 gp Bulk L You gain 15 temporary Hit Points. Numbing Tonic (Major) Source Treasure Vault (Remastered) pg. 60 Price 1,400 gp Bulk L"
+ },
+ {
+  "id": "octopus-potion",
+  "name": "Octopus Potion",
+  "itemType": "consumable",
+  "level": 6,
+  "kin": [
+   {
+    "id": "octopus-potion-lesser",
+    "name": "Octopus Potion (Lesser)",
+    "level": 6,
+    "price": {
+     "gp": 50
+    }
+   },
+   {
+    "id": "octopus-potion-moderate",
+    "name": "Octopus Potion (Moderate)",
+    "level": 9,
+    "price": {
+     "gp": 130
+    }
+   },
+   {
+    "id": "octopus-potion-greater",
+    "name": "Octopus Potion (Greater)",
+    "level": 13,
+    "price": {
+     "gp": 500
+    }
+   }
+  ],
+  "text": "Octopus Potion Source Rage of Elements pg. 178 Usage held in 1 hand Bulk L Activate (manipulate) Eight flailing octopus arms covered in suckers pop out from the sides of your body when you imbibe this potion. The arms share your multiple attack penalty and attempt to Grapple a random enemy within 15 feet of you. On a success, roll 1d4 to determine an additional effect of the arms, which lasts as long as the target remains grabbed or restrained by the arms. On subsequent turns, you can use a single action, which has the attack trait, to have the arms either Grapple a creature currently grappled or restrained (with no added effect) or release any creature they currently hold and repeat their initial effect. After 1 minute, the arms disappear and the potion's effects end. 1d4 Added Effect 1 The arms cover the eyes; the target is also blinded. 2 The arms cover the mouth; the target can't spe"
+ },
+ {
+  "id": "oil-of-ownership",
+  "name": "Oil of Ownership",
+  "itemType": "consumable",
+  "level": 3,
+  "kin": [
+   {
+    "id": "oil-of-ownership-lesser",
+    "name": "Oil of Ownership (Lesser)",
+    "level": 3,
+    "price": {
+     "gp": 8
+    }
+   },
+   {
+    "id": "oil-of-ownership-moderate",
+    "name": "Oil of Ownership (Moderate)",
+    "level": 7,
+    "price": {
+     "gp": 55
+    }
+   },
+   {
+    "id": "oil-of-ownership-greater",
+    "name": "Oil of Ownership (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 210
+    }
+   }
+  ],
+  "text": "Oil of Ownership Source Treasure Vault (Remastered) pg. 86 Usage held in 2 hands Bulk L Activate (manipulate) You can coat objects of 6 Bulk or less with oil of ownership, or “red-handed oil” as some call it. Once applied, this clear oil remains active for 24 hours. Anyone who touches an object coated with this oil comes away with a red stain that won't wash off for a length of time that depends on the oil's type. Oil of Ownership (Lesser) Source Treasure Vault (Remastered) pg. 86 Price 8 gp Bulk L The stain lasts 24 hours. Oil of Ownership (Moderate) Source Treasure Vault (Remastered) pg. 86 Price 55 gp Bulk L The stain lasts 1 week. Oil of Ownership (Greater) Source Treasure Vault (Remastered) pg. 86 Price 210 gp Bulk L The stain lasts 1 month."
+ },
+ {
+  "id": "oil-of-unlife",
+  "name": "Oil of Unlife",
+  "itemType": "consumable",
+  "level": 1,
+  "kin": [
+   {
+    "id": "oil-of-unlife-minor",
+    "name": "Oil of Unlife (Minor)",
+    "level": 1,
+    "price": {
+     "gp": 4
+    }
+   },
+   {
+    "id": "oil-of-unlife-lesser",
+    "name": "Oil of Unlife (Lesser)",
+    "level": 3,
+    "price": {
+     "gp": 12
+    }
+   },
+   {
+    "id": "oil-of-unlife-moderate",
+    "name": "Oil of Unlife (Moderate)",
+    "level": 6,
+    "price": {
+     "gp": 50
+    }
+   },
+   {
+    "id": "oil-of-unlife-greater",
+    "name": "Oil of Unlife (Greater)",
+    "level": 12,
+    "price": {
+     "gp": 400
+    }
+   },
+   {
+    "id": "oil-of-unlife-major",
+    "name": "Oil of Unlife (Major)",
+    "level": 18,
+    "price": {
+     "gp": 5000
+    }
+   }
+  ],
+  "text": "Oil of Unlife Source GM Core pg. 258 Usage held in 1 hand Bulk L Activate (manipulate) This thin, black liquid imparts a bone-deep chill while rapidly repairing an undead creature's physical or spiritual form. When you dash oil of unlife onto an undead creature, or another creature with the void healing ability, the oil absorbs quickly into its body, and the creature regains the listed number of Hit Points. You can pour oil of unlife on an incorporeal undead; in this case, the creature absorbs the oil into itself. Oil of Unlife (Minor) Source GM Core pg. 258, Advanced Player's Guide pg. 258 Price 4 gp The oil restores 1d8 Hit Points. Oil of Unlife (Lesser) Source GM Core pg. 258, Advanced Player's Guide pg. 258 Price 12 gp The oil restores 2d8+5 Hit Points. Oil of Unlife (Moderate) Source GM Core pg. 258, Advanced Player's Guide pg. 258 Price 50 gp The oil restores 3d8+10 Hit Points. Oil"
+ },
+ {
+  "id": "olfactory-obfuscator",
+  "name": "Olfactory Obfuscator",
+  "itemType": "equipment",
+  "level": 3,
+  "kin": [
+   {
+    "id": "olfactory-obfuscator-greater",
+    "name": "Olfactory Obfuscator (Greater)",
+    "level": 10,
+    "price": {
+     "gp": 225
+    }
+   },
+   {
+    "id": "olfactory-obfuscator-lesser",
+    "name": "Olfactory Obfuscator (Lesser)",
+    "level": 3,
+    "price": {
+     "gp": 9
+    }
+   }
+  ],
+  "text": "Olfactory Obfuscator Source Advanced Player's Guide pg. 254 Usage held in 1 hand Bulk L Activate Interact This frothing fluid causes the drinker's body to exude trace odor-absorbing oils. For the listed duration after drinking this elixir, your scent is nearly unnoticeable. Creatures with imprecise scent don't detect you with that sense unless they Seek for you, and you are concealed from creatures that perceive you with precise scent. You gain a +4 item bonus against attempts to Seek you by creatures using only scent-based senses; if they use any other senses as well, the bonus doesn't apply. Olfactory Obfuscator Source Advanced Player's Guide pg. 254 Price 9 gp Bulk L The duration is 10 minutes. Olfactory Obfuscator (Greater) Source Advanced Player's Guide pg. 254 Price 225 gp Bulk L The duration is 8 hours."
+ },
+ {
+  "id": "ooze-ammunition",
+  "name": "Ooze Ammunition",
+  "itemType": "equipment",
+  "level": 2,
+  "kin": [
+   {
+    "id": "ooze-ammunition-lesser",
+    "name": "Ooze Ammunition (Lesser)",
+    "level": 2,
+    "price": {
+     "gp": 7
+    }
+   },
+   {
+    "id": "ooze-ammunition-moderate",
+    "name": "Ooze Ammunition (Moderate)",
+    "level": 6,
+    "price": {
+     "gp": 42
+    }
+   },
+   {
+    "id": "ooze-ammunition-greater",
+    "name": "Ooze Ammunition (Greater)",
+    "level": 12,
+    "price": {
+     "gp": 350
+    }
+   },
+   {
+    "id": "ooze-ammunition-major",
+    "name": "Ooze Ammunition (Major)",
+    "level": 18,
+    "price": {
+     "gp": 3250
+    }
+   }
+  ],
+  "text": "Ooze Ammunition Source Treasure Vault (Remastered) pg. 43 Ammunition any Activate (manipulate) Ooze ammunition is a capsule containing a sticky substance. If you hit a creature with activated ooze ammunition, it deals acid damage instead of its normal damage type, and the creature then takes the listed penalty to Speed and persistent acid damage until it ends the effects. On a critical hit, the creature is immobilized for 1 round in addition to the other effects. The target can end the effects by Escaping the sticky foam. Other creatures can provide the actions, although doing so deals half the ammunition's persistent acid damage to the assisting creature. A creature that ends the effect still takes the persistent damage that turn. Ooze Ammunition (Lesser) Source Treasure Vault (Remastered) pg. 43 Price 7 gp The ammunition deals 1d4 persistent acid damage and imposes a –5-foot penalty to"
+ },
+ {
+  "id": "orichalcum",
+  "name": "Orichalcum",
+  "itemType": "equipment",
+  "level": 17,
+  "kin": [
+   {
+    "id": "orichalcum-armor",
+    "name": "Orichalcum Armor",
+    "level": 20,
+    "price": null
+   },
+   {
+    "id": "orichalcum-armor-high-grade",
+    "name": "Orichalcum Armor (High-Grade)",
+    "level": 20,
+    "price": {
+     "gp": 55000
+    }
+   },
+   {
+    "id": "orichalcum-shield",
+    "name": "Orichalcum Shield",
+    "level": 17,
+    "price": null
+   },
+   {
+    "id": "orichalcum-buckler-high-grade",
+    "name": "Orichalcum Buckler (High-Grade)",
+    "level": 17,
+    "price": {
+     "gp": 12000
+    }
+   },
+   {
+    "id": "orichalcum-shield-high-grade",
+    "name": "Orichalcum Shield (High-Grade)",
+    "level": 17,
+    "price": {
+     "gp": 13200
+    }
+   },
+   {
+    "id": "orichalcum-weapon",
+    "name": "Orichalcum Weapon",
+    "level": 18,
+    "price": null
+   },
+   {
+    "id": "orichalcum-weapon-high-grade",
+    "name": "Orichalcum Weapon (High-Grade)",
+    "level": 18,
+    "price": {
+     "gp": 22500
+    }
+   },
+   {
+    "id": "orichalcum-chunk",
+    "name": "Orichalcum Chunk",
+    "level": 17,
+    "price": {
+     "gp": 1000
+    }
+   },
+   {
+    "id": "orichalcum-ingot",
+    "name": "Orichalcum Ingot",
+    "level": 17,
+    "price": {
+     "gp": 10000
+    }
+   },
+   {
+    "id": "orichalcum-object-high-grade",
+    "name": "Orichalcum Object (High-Grade)",
+    "level": 17,
+    "price": {
+     "gp": 10000
+    }
+   }
+  ],
+  "text": "Orichalcum Source GM Core pg. 254 The most rare and valuable skymetal, orichalcum is coveted for its incredible time-related magical properties. This dull, coppery metal isn't as physically sturdy as adamantine, but orichalcum's time-bending properties protect it, granting it greater Hardness and Hit Points. If an orichalcum item takes damage but isn't destroyed, it repairs itself completely 24 hours later. Orichalcum Items Orichalcum Items Hardness HP BT Thin Items High-grade 16 64 32 Items High-grade 18 72 36 Structure High-grade 35 140 70 Material Uses Orichalcum Armor Orichalcum Shield Orichalcum Weapon Orichalcum Chunk Source GM Core pg. 254, Core Rulebook pg. 579 Price 1,000 gp Bulk L Orichalcum Ingot Source GM Core pg. 254, Core Rulebook pg. 579 Price 10,000 gp Orichalcum Object (High-Grade) Source GM Core pg. 254, Core Rulebook pg. 579 Price 10,000 gp (per Bulk)"
+ },
+ {
+  "id": "pernicious-spore-bomb",
+  "name": "Pernicious Spore Bomb",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "pernicious-spore-bomb-lesser",
+    "name": "Pernicious Spore Bomb (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 3
+    }
+   },
+   {
+    "id": "pernicious-spore-bomb-moderate",
+    "name": "Pernicious Spore Bomb (Moderate)",
+    "level": 3,
+    "price": {
+     "gp": 10
+    }
+   },
+   {
+    "id": "pernicious-spore-bomb-greater",
+    "name": "Pernicious Spore Bomb (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 250
+    }
+   },
+   {
+    "id": "pernicious-spore-bomb-major",
+    "name": "Pernicious Spore Bomb (Major)",
+    "level": 17,
+    "price": {
+     "gp": 2500
+    }
+   }
+  ],
+  "text": "Pernicious Spore Bomb May contain spoilers from Quest for the Frozen Flame Source Pathfinder #176: Lost Mammoth Valley pg. 78 Usage held in 1 hand Bulk L Activate Strike This flask contains fast-growing mold spores, which quickly take root but just as quickly rot away. A pernicious spore bomb deals the listed poison damage, persistent piercing damage, and splash damage. Many types grant an item bonus to attack rolls. Pernicious Spore Bomb (Lesser) Source Pathfinder #176: Lost Mammoth Valley pg. 78 Price 3 gp Bulk L The bomb deals 1 poison damage, 1d4 persistent piercing damage, and 1 poison splash damage. Except on a critical failure, one square of the target creature's space is coated in vegetation, becoming difficult terrain for 1 round. Pernicious Spore Bomb (Moderate) Source Pathfinder #176: Lost Mammoth Valley pg. 78 Price 10 gp Bulk L You gain a +1 item bonus to attack rolls. The b"
+ },
+ {
+  "id": "peshspine-grenade",
+  "name": "Peshspine Grenade",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "peshspine-grenade-lesser",
+    "name": "Peshspine Grenade (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 3
+    }
+   },
+   {
+    "id": "peshspine-grenade-moderate",
+    "name": "Peshspine Grenade (Moderate)",
+    "level": 3,
+    "price": {
+     "gp": 10
+    }
+   },
+   {
+    "id": "peshspine-grenade-greater",
+    "name": "Peshspine Grenade (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 250
+    }
+   },
+   {
+    "id": "peshspine-grenade-major",
+    "name": "Peshspine Grenade (Major)",
+    "level": 17,
+    "price": {
+     "gp": 2500
+    }
+   }
+  ],
+  "text": "Peshspine Grenade May contain spoilers from Age of Ashes Source Pathfinder #149: Against the Scarlet Triad pg. 77 Usage held in 1 hand Bulk L Activate Strike Peshspine grenades are explosive bombs packed with alchemically treated needles from the pesh cactus. A peshspine grenade deals the listed piercing damage and splash damage. On a hit, the target gains the stupefied condition until the end of its next turn. Many types of peshpine grenade grant an item bonus to attack rolls. Peshspine Grenade (Lesser) Source Pathfinder #149: Against the Scarlet Triad pg. 77 Price 3 gp Bulk L The bomb deals 1d6 piercing damage and 1 piercing splash damage, and the target is stupefied 1. Peshspine Grenade (Moderate) Source Pathfinder #149: Against the Scarlet Triad pg. 77 Price 10 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d6 piercing damage and 2 piercing splash damage, and the"
+ },
+ {
+  "id": "pheromone-flare",
+  "name": "Pheromone Flare",
+  "itemType": "equipment",
+  "level": 5,
+  "kin": [
+   {
+    "id": "pheromone-flare-lesser",
+    "name": "Pheromone Flare (Lesser)",
+    "level": 5,
+    "price": {
+     "gp": 30
+    }
+   },
+   {
+    "id": "pheromone-flare-moderate",
+    "name": "Pheromone Flare (Moderate)",
+    "level": 11,
+    "price": {
+     "gp": 300
+    }
+   },
+   {
+    "id": "pheromone-flare-greater",
+    "name": "Pheromone Flare (Greater)",
+    "level": 17,
+    "price": {
+     "gp": 3000
+    }
+   }
+  ],
+  "text": "Pheromone Flare Source Howl of the Wild pg. 109 Usage held in 2 hands Bulk 1 Activate (manipulate) This alchemical candle is attached to a tall pole and grounding stake. When the flare is lit, it sprays a concentrated cloud of pheromones to attract the attention of a specific kind of animal (see alchemical pheromones). Similar to animal pheromones, when you learn the formula for a pheromone flare, you learn the formulas for all common animals. A pheromone flare has a built-in delayed activation timer of up to 1 hour. When it's activated, the flare releases a cloud of pheromones in a 60-foot emanation that lasts for 1 hour. A strong wind reduces the emanation to 15 feet for as long as the wind lasts. Moving the flare after it has been activated ends the effect. A designated animal that enters the area must attempt a Will save with the following effects. Animals with an Intelligence modifi"
+ },
+ {
+  "id": "poison-concentrator",
+  "name": "Poison Concentrator",
+  "itemType": "equipment",
+  "level": 5,
+  "kin": [
+   {
+    "id": "poison-concentrator-lesser",
+    "name": "Poison Concentrator (Lesser)",
+    "level": 5,
+    "price": {
+     "gp": 160
+    }
+   },
+   {
+    "id": "poison-concentrator-moderate",
+    "name": "Poison Concentrator (Moderate)",
+    "level": 10,
+    "price": {
+     "gp": 960
+    }
+   },
+   {
+    "id": "poison-concentrator-greater",
+    "name": "Poison Concentrator (Greater)",
+    "level": 15,
+    "price": {
+     "gp": 5900
+    }
+   },
+   {
+    "id": "poison-concentrator-major",
+    "name": "Poison Concentrator (Major)",
+    "level": 19,
+    "price": {
+     "gp": 31000
+    }
+   }
+  ],
+  "text": "Poison Concentrator Source Treasure Vault (Remastered) pg. 64 Usage held in 2 hands Bulk L This compression apparatus can reduce two poisons into a more concentrated dose. As a 10-minute activity that has the manipulate trait, you can use a poison concentrator to combine two doses of the same infused alchemical poison, creating a single concentrated poison. The concentrated potion has a +1 item bonus to its DC, and its level is increased by 1. Poison Concentrator (Lesser) Source Treasure Vault (Remastered) pg. 64 Price 160 gp Bulk L The concentrator combines poisons of level 4 or lower. Poison Concentrator (Moderate) Source Treasure Vault (Remastered) pg. 64 Price 960 gp Bulk L The concentrator combines poisons of level 9 or lower. Poison Concentrator (Greater) Source Treasure Vault (Remastered) pg. 64 Price 5,900 gp Bulk L The concentrator combines poisons of level 14 or lower. Poison C"
+ },
+ {
+  "id": "poison-fizz",
+  "name": "Poison Fizz",
+  "itemType": "equipment",
+  "level": 8,
+  "kin": [
+   {
+    "id": "poison-fizz-lesser",
+    "name": "Poison Fizz (Lesser)",
+    "level": 8,
+    "price": {
+     "gp": 80
+    }
+   },
+   {
+    "id": "poison-fizz-moderate",
+    "name": "Poison Fizz (Moderate)",
+    "level": 12,
+    "price": {
+     "gp": 350
+    }
+   },
+   {
+    "id": "poison-fizz-greater",
+    "name": "Poison Fizz (Greater)",
+    "level": 15,
+    "price": {
+     "gp": 1000
+    }
+   }
+  ],
+  "text": "Poison Fizz Source Treasure Vault (Remastered) pg. 50 Usage held in 1 hand Activate (manipulate) Made from a special mixture of honey and alchemical reagents, poison fizz is a zesty, sweet rock candy that pops and crackles in your mouth. For 1 hour, you have an item bonus to saving throws against poison and being petrified. Secondary Effect (poison) Effect You bite the poison fizz to release its poisonous liquid center and spray green mist in a 15-foot cone. This deals poison damage with a basic Reflex save. A creature that critically fails is also blinded until the end of your next turn and is then temporarily immune to being blinded by poison fizz for 1 hour. Poison Fizz (Lesser) Source Treasure Vault (Remastered) pg. 50 Price 80 gp The item bonus is +2, the damage is 3d6, and the DC is 24. Poison Fizz (Moderate) Source Treasure Vault (Remastered) pg. 50 Price 350 gp The item bonus is "
+ },
+ {
+  "id": "poisonous-cloak",
+  "name": "Poisonous Cloak",
+  "itemType": "equipment",
+  "level": 6,
+  "kin": [
+   {
+    "id": "poisonous-cloak-type-i",
+    "name": "Poisonous Cloak Type I",
+    "level": 6,
+    "price": {}
+   },
+   {
+    "id": "poisonous-cloak-type-ii",
+    "name": "Poisonous Cloak Type II",
+    "level": 10,
+    "price": {}
+   },
+   {
+    "id": "poisonous-cloak-type-iii",
+    "name": "Poisonous Cloak Type III",
+    "level": 13,
+    "price": {}
+   },
+   {
+    "id": "poisonous-cloak-type-iv",
+    "name": "Poisonous Cloak Type IV",
+    "level": 17,
+    "price": {}
+   }
+  ],
+  "text": "Poisonous Cloak Source Gamemastery Guide pg. 91 Usage worn cloak Bulk L This innocuous-looking cloak is associated with a type of poison, set at the cloak’s creation. It often appears as a clandestine cloak or a cloak of the bat to the unaware. When you invest this cloak, you lose any resistance to poison damage, and anytime you take piercing or slashing damage in combat, you are exposed to the type of poison associated with the poisonous cloak with no onset, even if it’s not an injury poison. Once the curse has activated for the first time, the cloak fuses to you. Poisonous Cloak Type I Source Gamemastery Guide pg. 91 Poison giant scorpion venom Poisonous Cloak Type II Source Gamemastery Guide pg. 91 Poison wolfsbane Poisonous Cloak Type III Source Gamemastery Guide pg. 91 Poison purple worm venom Poisonous Cloak Type IV Source Gamemastery Guide pg. 91 Poison hemlock"
+ },
+ {
+  "id": "political-favor",
+  "name": "Political Favor",
+  "itemType": "equipment",
+  "level": 0,
+  "kin": [
+   {
+    "id": "political-favor-minor",
+    "name": "Political Favor (Minor)",
+    "level": 0,
+    "price": {
+     "gp": 50
+    }
+   },
+   {
+    "id": "political-favor-moderate",
+    "name": "Political Favor (Moderate)",
+    "level": 0,
+    "price": {
+     "gp": 1000
+    }
+   },
+   {
+    "id": "political-favor-major",
+    "name": "Political Favor (Major)",
+    "level": 0,
+    "price": {
+     "gp": 10000
+    }
+   }
+  ],
+  "text": "Political Favor Source Dark Archives (Remastered) pg. 84 For many, the allure of being in a secret society is the chance to place their hands on the levers of power in government. Members can rub elbows with the great and good, introduce themselves to politicians and power brokers, and (Counterfeit) form bonds through shared allegiances unavailable to the common rabble. They can lean on those connections for a favor, some little trifle that might matter a great deal to them. Purchasing political favors typically requires membership in a secret society that has significant political sway in the region (such as the Esoteric Order of the Palatine Eye in Ustalav). At the GM's discretion, characters with similarly deep connections (perhaps by virtue of having the royalty background) might also be able to purchase political favors. While the options below assume the favors are being purchased "
+ },
+ {
+  "id": "portable-seal",
+  "name": "Portable Seal",
+  "itemType": "consumable",
+  "level": 6,
+  "kin": [
+   {
+    "id": "portable-seal-lesser",
+    "name": "Portable Seal (Lesser)",
+    "level": 6,
+    "price": {
+     "gp": 45
+    }
+   },
+   {
+    "id": "portable-seal-major",
+    "name": "Portable Seal (Major)",
+    "level": 18,
+    "price": {
+     "gp": 5000
+    }
+   },
+   {
+    "id": "portable-seal-moderate",
+    "name": "Portable Seal (Moderate)",
+    "level": 12,
+    "price": {
+     "gp": 400
+    }
+   }
+  ],
+  "text": "Portable Seal May contain spoilers from Convocation Source Rival Academies pg. 93 Usage held in 2 hands Bulk L Activate (manipulate) A portable seal is a stiff framework of copper wires and strategically placed hinges, so that when the device is snapped open it forms an instant geometric design. A tiny Stasian coil is attached, which when activated runs a mixture of occult energy and high-voltage electricity through the wire. The design covers a 5-foot burst when unfolded and must be unfolded into an area free of major obstructions such as rocks or hostile creatures. When a creature with the summoned trait attempts to enter the seal’s area or make a melee Strike against a creature in that area, the summoned creature must attempt a Will save. Success The action occurs normally, and the creature is immune to the effects of this portable seal this round. Failure The movement or Strike is di"
+ },
+ {
+  "id": "portable-weapon-mount",
+  "name": "Portable Weapon Mount",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "portable-weapon-mount-monopod",
+    "name": "Portable Weapon Mount (Monopod)",
+    "level": 1,
+    "price": {
+     "sp": 2
+    }
+   },
+   {
+    "id": "portable-weapon-mount-tripod-shielded",
+    "name": "Portable Weapon Mount (Tripod, Shielded)",
+    "level": 3,
+    "price": {
+     "gp": 50
+    }
+   },
+   {
+    "id": "portable-weapon-mount-shielded-tripod",
+    "name": "Portable Weapon Mount (Shielded Tripod)",
+    "level": 5,
+    "price": {
+     "gp": 50
+    }
+   }
+  ],
+  "text": "Portable Weapon Mount Source Guns & Gears (Remastered) pg. 182 PFS Note Characters with access to firearms gain access to accessories that can be used with those weapons. Bulk 1 Powerful firearms like the arquebus were originally used to defend fortifications or ships, mounted on casements or pintles to steady their aim and offset their recoil. More mobile means of stabilizing weapons with kickback were developed as firearms began to spread across the Inner Sea. The standard tripod takes an Interact action to deploy using one hand. Portable Weapon Mount (Monopod) Source Guns & Gears (Remastered) pg. 182 Price 2 sp Bulk 1 Monopods are lighter and can be deployed with a single hand using the same action as drawing the firearm. They still require an Interact action to retrieve. Monopods are less stable than a tripod, and firing a kickback weapon from a monopod without the necessary Strength"
+ },
+ {
+  "id": "potion-of-annulment",
+  "name": "Potion of Annulment",
+  "itemType": "consumable",
+  "level": 10,
+  "kin": [
+   {
+    "id": "potion-of-annulment-lesser",
+    "name": "Potion of Annulment (Lesser)",
+    "level": 10,
+    "price": {
+     "gp": 200
+    }
+   },
+   {
+    "id": "potion-of-annulment-moderate",
+    "name": "Potion of Annulment (Moderate)",
+    "level": 15,
+    "price": {
+     "gp": 1300
+    }
+   },
+   {
+    "id": "potion-of-annulment-greater",
+    "name": "Potion of Annulment (Greater)",
+    "level": 20,
+    "price": {
+     "gp": 13000
+    }
+   }
+  ],
+  "text": "Potion of Annulment May contain spoilers from Blood Lords Source Pathfinder #182: Graveclaw pg. 77 Usage held in 1 hand Bulk L Activate Interact A potion of annulment magically breaks a supernatural deal you have made, such as an infernal contract (Bestiary 90), a sea hag's bargain, or the geas ritual. Upon drinking the potion, attempt a counteract check against the highest-level such effect, with a counteract modifier determined by the potion's type. If the check is successful, the deal ends for all parties. You're not penalized for breaking the contract, but you also enjoy none of its benefits or rewards. Individuals with whom you shared the contract are aware it has been annulled and may seek vengeance. This potion can't rewind time or negate effects that have already occurred; for example, if you have killed someone to fulfill an infernal contract, drinking this potion and canceling "
+ },
+ {
+  "id": "potion-of-disguise",
+  "name": "Potion of Disguise",
+  "itemType": "consumable",
+  "level": 5,
+  "kin": [
+   {
+    "id": "potion-of-disguise-lesser",
+    "name": "Potion of Disguise (Lesser)",
+    "level": 5,
+    "price": {
+     "gp": 30
+    }
+   },
+   {
+    "id": "potion-of-disguise-moderate",
+    "name": "Potion of Disguise (Moderate)",
+    "level": 8,
+    "price": {
+     "gp": 100
+    }
+   },
+   {
+    "id": "potion-of-disguise-greater",
+    "name": "Potion of Disguise (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 300
+    }
+   }
+  ],
+  "text": "Potion of Disguise Source Player Core 2 pg. 304 Usage held in 1 hand Bulk L Activate (manipulate) Upon imbibing this potion, you take on the appearance of a specific type of creature for 2d12 hours. The type of creature is determined when the potion is created. For example, you might have a potion of elf disguise or potion of frog disguise. Drinking the potion doesn't impart the knowledge of how long the effect lasts; the GM rolls the duration in secret. The disguise doesn't change your traits or statistics, nor does it give you any of the special abilities of the creature you're imitating. It might affect what items you can hold or wear (for example, your new form might lack opposable thumbs). The potion shrinks you down to a minimum of size Small or maintains your size if the creature is your size or larger. For example, if you are Medium and drink a potion of fire giant disguise, you'"
+ },
+ {
+  "id": "potion-of-flying",
+  "name": "Potion of Flying",
+  "itemType": "consumable",
+  "level": 8,
+  "kin": [
+   {
+    "id": "potion-of-flying-greater",
+    "name": "Potion of Flying (Greater)",
+    "level": 15,
+    "price": {
+     "gp": 1000
+    }
+   },
+   {
+    "id": "potion-of-flying-standard",
+    "name": "Potion of Flying (Standard)",
+    "level": 8,
+    "price": {
+     "gp": 100
+    }
+   }
+  ],
+  "text": "Potion of Flying Source GM Core pg. 259 Usage held in 1 hand Bulk L Activate (manipulate) Upon drinking this effervescent concoction, you gain a fly Speed of 40 feet for 1 minute. Potion of Flying Source GM Core pg. 259, Core Rulebook pg. 563 Price 100 gp Potion of Flying (Greater) Source GM Core pg. 259, Core Rulebook pg. 563 Price 1,000 gp The fly Speed lasts for 1 hour."
+ },
+ {
+  "id": "potion-of-resistance",
+  "name": "Potion of Resistance",
+  "itemType": "consumable",
+  "level": 6,
+  "kin": [
+   {
+    "id": "potion-of-resistance-lesser",
+    "name": "Potion of Resistance (Lesser)",
+    "level": 6,
+    "price": {
+     "gp": 45
+    }
+   },
+   {
+    "id": "potion-of-resistance-moderate",
+    "name": "Potion of Resistance (Moderate)",
+    "level": 10,
+    "price": {
+     "gp": 180
+    }
+   },
+   {
+    "id": "potion-of-resistance-greater",
+    "name": "Potion of Resistance (Greater)",
+    "level": 14,
+    "price": {
+     "gp": 850
+    }
+   }
+  ],
+  "text": "Potion of Resistance Source GM Core pg. 260 Usage held in 1 hand Bulk L Activate (manipulate) Drinking this thick, fortifying potion grants resistance against a single damage type for 1 hour. Each potion of resistance is created to defend against acid, cold, electricity, fire, or sonic damage (and is called a lesser potion of fire resistance or the like). Potion of Resistance (Lesser) Source GM Core pg. 260, Core Rulebook pg. 563 Price 45 gp You gain resistance 5 to the appropriate energy type Potion of Resistance (Moderate) Source GM Core pg. 260, Core Rulebook pg. 563 Price 180 gp You gain resistance 10 to the appropriate energy type. Potion of Resistance (Greater) Source GM Core pg. 260, Core Rulebook pg. 563 Price 850 gp You gain resistance 15 to the appropriate energy type."
+ },
+ {
+  "id": "potion-of-retaliation",
+  "name": "Potion of Retaliation",
+  "itemType": "consumable",
+  "level": 1,
+  "kin": [
+   {
+    "id": "potion-of-retaliation-minor",
+    "name": "Potion of Retaliation (Minor)",
+    "level": 1,
+    "price": {
+     "gp": 4
+    }
+   },
+   {
+    "id": "potion-of-retaliation-lesser",
+    "name": "Potion of Retaliation (Lesser)",
+    "level": 3,
+    "price": {
+     "gp": 12
+    }
+   },
+   {
+    "id": "potion-of-retaliation-moderate",
+    "name": "Potion of Retaliation (Moderate)",
+    "level": 6,
+    "price": {
+     "gp": 50
+    }
+   },
+   {
+    "id": "potion-of-retaliation-greater",
+    "name": "Potion of Retaliation (Greater)",
+    "level": 12,
+    "price": {
+     "gp": 400
+    }
+   },
+   {
+    "id": "potion-of-retaliation-major",
+    "name": "Potion of Retaliation (Major)",
+    "level": 18,
+    "price": {
+     "gp": 5000
+    }
+   }
+  ],
+  "text": "Potion of Retaliation Source Player Core 2 pg. 304 Usage held in 1 hand Bulk L Activate (manipulate) A potion of retaliation is available in four varieties—acid, cold, electricity, and fire—each with a faint shimmer of the energy it contains. For 1 minute after drinking a potion of retaliation, you glow with a faint aura of that energy, and a creature that touches you (such as by making an unarmed attack or using a spell with a range of touch against you) takes damage of that type. The moderate, greater, and major versions also damage an adjacent creature that hits you with a melee weapon Strike. Potion of Retaliation (Minor) Source Player Core 2 pg. 304, Advanced Player's Guide pg. 259 Price 4 gp Bulk L The aura deals 1 damage. Potion of Retaliation (Lesser) Source Player Core 2 pg. 304, Advanced Player's Guide pg. 259 Price 12 gp Bulk L The aura deals 1d4 damage. Potion of Retaliation "
+ },
+ {
+  "id": "potion-patch",
+  "name": "Potion Patch",
+  "itemType": "consumable",
+  "level": 4,
+  "kin": [
+   {
+    "id": "potion-patch-lesser",
+    "name": "Potion Patch (Lesser)",
+    "level": 4,
+    "price": {
+     "gp": 20
+    }
+   },
+   {
+    "id": "potion-patch-moderate",
+    "name": "Potion Patch (Moderate)",
+    "level": 8,
+    "price": {
+     "gp": 100
+    }
+   },
+   {
+    "id": "potion-patch-greater",
+    "name": "Potion Patch (Greater)",
+    "level": 13,
+    "price": {
+     "gp": 600
+    }
+   }
+  ],
+  "text": "Potion Patch Source Treasure Vault (Remastered) pg. 97 Usage worn Activate (concentrate) Requirement You must have the potion patch affixed to your skin. A potion patch is a sticky, bandage-like pad that can be filled with one potion and affixed to the skin. Filling the patch and affixing it is a 1-minute activity that takes two hands and has the manipulate trait. A patch has a maximum level of potion it can absorb, depending on the patch's type. When you Activate the patch, the potion affects you without you needing to have the potion in your hand. The patch's magic is negated after it's used, the next time you make your daily preparations, or when another potion patch is affixed to you, whichever comes first. Potion Patch (Lesser) Source Treasure Vault (Remastered) pg. 97 Price 20 gp The potion must be 10th level or lower. Potion Patch (Moderate) Source Treasure Vault (Remastered) pg. "
+ },
+ {
+  "id": "pressure-bomb",
+  "name": "Pressure Bomb",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "pressure-bomb-lesser",
+    "name": "Pressure Bomb (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 4
+    }
+   },
+   {
+    "id": "pressure-bomb-moderate",
+    "name": "Pressure Bomb (Moderate)",
+    "level": 3,
+    "price": {
+     "gp": 12
+    }
+   },
+   {
+    "id": "pressure-bomb-greater",
+    "name": "Pressure Bomb (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 275
+    }
+   },
+   {
+    "id": "pressure-bomb-major",
+    "name": "Pressure Bomb (Major)",
+    "level": 17,
+    "price": {
+     "gp": 2750
+    }
+   }
+  ],
+  "text": "Pressure Bomb Source Pathfinder Special: Fumbus Usage held in 1 hand Bulk L Activate Strike This tightly sealed metal container is filled with highly pressurized gas that can explode to release a powerful shockwave. A pressure bomb deals the listed bludgeoning damage and splash damage. On a critical hit, the target is knocked prone. Many types grant an item bonus to attack rolls, and more powerful pressure bombs can knock creatures back. Pressure Bomb (Lesser) Source Pathfinder Special: Fumbus Price 4 gp Bulk L The bomb deals 1d4 bludgeoning damage and 1 bludgeoning splash damage. Tiny or smaller targets are pushed 5 feet away from you. Pressure Bomb (Moderate) Source Pathfinder Special: Fumbus Price 12 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d4 bludgeoning damage and 2 bludgeoning splash damage. Small or smaller targets are pushed 5 feet away from you. Pressu"
+ },
+ {
+  "id": "prey-mutagen",
+  "name": "Prey Mutagen",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "prey-mutagen-lesser",
+    "name": "Prey Mutagen (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 4
+    }
+   },
+   {
+    "id": "prey-mutagen-moderate",
+    "name": "Prey Mutagen (Moderate)",
+    "level": 3,
+    "price": {
+     "gp": 12
+    }
+   },
+   {
+    "id": "prey-mutagen-greater",
+    "name": "Prey Mutagen (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 300
+    }
+   },
+   {
+    "id": "prey-mutagen-major",
+    "name": "Prey Mutagen (Major)",
+    "level": 17,
+    "price": {
+     "gp": 3000
+    }
+   }
+  ],
+  "text": "Prey Mutagen May contain spoilers from Sky King's Tomb Source Pathfinder #194: Cult of the Cave Worm pg. 79 Usage held in 1 hand Bulk L Activate Interact A mixture of fey blood and rare ingredients give you incredible speed but also cause you to become particularly attractive to predators. Benefit You gain a status bonus to your speed and are able to use the following reaction: Timely Dodge Trigger You are targeted by a Strike; Effect You dart aside, gaining a circumstance bonus to AC, then Step after the Strike resolves. Drawback The range at which creatures can detect you with scent or tremorsense doubles. Animals and beasts gain a +2 circumstance bonus to attack rolls against you. Prey Mutagen (Lesser) Source Pathfinder #194: Cult of the Cave Worm pg. 79 Price 4 gp Bulk L You gain a +10 status bonus to your Speed and gain a +1 circumstance bonus to AC when using Timely Dodge. The dura"
+ },
+ {
+  "id": "privacy-ward-fulu",
+  "name": "Privacy Ward Fulu",
+  "itemType": "consumable",
+  "level": 1,
+  "kin": [
+   {
+    "id": "privacy-ward-fulu-hallway",
+    "name": "Privacy Ward Fulu (Hallway)",
+    "level": 1,
+    "price": {
+     "gp": 4
+    }
+   },
+   {
+    "id": "privacy-ward-fulu-room",
+    "name": "Privacy Ward Fulu (Room)",
+    "level": 5,
+    "price": {
+     "gp": 25
+    }
+   },
+   {
+    "id": "privacy-ward-fulu-chamber",
+    "name": "Privacy Ward Fulu (Chamber)",
+    "level": 9,
+    "price": {
+     "gp": 120
+    }
+   }
+  ],
+  "text": "Privacy Ward Fulu May contain spoilers from Season of Ghosts Source Season of Ghosts (Hardcover) pg. 301 Usage affixed to wall Bulk L This fulu seeks to keep thieves, spies, and unwanted attention away from a room. A depiction of a lock appears in the center of this fulu, which is in turn surrounded by circles of broken keys. When applied to a wall inside a room, all creatures within the room gain an item bonus to Stealth checks against creatures outside the room. Privacy Ward Fulu (Hallway) Source Season of Ghosts (Hardcover) pg. 301 Price 4 gp The privacy ward fulu can shield a room of up to 10 square feet, grants a +1 item bonus, and has a duration of 1 hour. Privacy Ward Fulu (Room) Source Season of Ghosts (Hardcover) pg. 301 Price 25 gp The fulu can shield a room of up to 30 square feet, grants a +1 item bonus, and has a duration of 8 hours. If you become hidden within the room, you"
+ },
+ {
+  "id": "propaganda",
+  "name": "Propaganda",
+  "itemType": "equipment",
+  "level": 0,
+  "kin": [
+   {
+    "id": "propaganda-level-1",
+    "name": "Propaganda (Level 1)",
+    "level": 0,
+    "price": {
+     "gp": 15
+    }
+   },
+   {
+    "id": "propaganda-level-2",
+    "name": "Propaganda (Level 2)",
+    "level": 0,
+    "price": {
+     "gp": 25
+    }
+   },
+   {
+    "id": "propaganda-level-3",
+    "name": "Propaganda (Level 3)",
+    "level": 0,
+    "price": {
+     "gp": 40
+    }
+   },
+   {
+    "id": "propaganda-level-4",
+    "name": "Propaganda (Level 4)",
+    "level": 0,
+    "price": {
+     "gp": 60
+    }
+   },
+   {
+    "id": "propaganda-level-5",
+    "name": "Propaganda (Level 5)",
+    "level": 0,
+    "price": {
+     "gp": 100
+    }
+   },
+   {
+    "id": "propaganda-level-6",
+    "name": "Propaganda (Level 6)",
+    "level": 0,
+    "price": {
+     "gp": 150
+    }
+   },
+   {
+    "id": "propaganda-level-7",
+    "name": "Propaganda (Level 7)",
+    "level": 0,
+    "price": {
+     "gp": 300
+    }
+   }
+  ],
+  "text": "Propaganda Source Firebrands pg. 94 Propaganda is strongly biased information presented in a way that may mislead those who are exposed to it. Most commonly, propaganda is used to drive a specific political agenda. While this is oftentimes a tool utilized by regimes to maintain a specific image among their oppressed people, the Firebrands use propaganda to bring shocking truths to light, drive wedges between enemy factions, and encourage uprisings against tyrannical regimes. Many groups of Firebrands specialize in the creation and dissemination of propaganda, though they are just as likely to utilize local resources to do the disseminating for them. When used at the correct time and place, propagandists can adjust the temperature of the political climate to tear down tyrants and shift the narrative in a way that evokes specific sentiments, like hope or anger, and thus inspires rebellious"
+ },
+ {
+  "id": "psyche-salts",
+  "name": "Psyche Salts",
+  "itemType": "consumable",
+  "level": 5,
+  "kin": [
+   {
+    "id": "psyche-salts-lesser",
+    "name": "Psyche Salts (Lesser)",
+    "level": 5,
+    "price": {
+     "gp": 30
+    }
+   },
+   {
+    "id": "psyche-salts-moderate",
+    "name": "Psyche Salts (Moderate)",
+    "level": 9,
+    "price": {
+     "gp": 150
+    }
+   },
+   {
+    "id": "psyche-salts-greater",
+    "name": "Psyche Salts (Greater)",
+    "level": 17,
+    "price": {
+     "gp": 3000
+    }
+   }
+  ],
+  "text": "Psyche Salts May contain spoilers from Shades of Blood Source Pathfinder #214: The Broken Palace pg. 81 Usage held in 1 hand Bulk L Activate (manipulate) A dose of psyche salts is kept in a small, corked vial. When you activate psyche salts, you uncork and pass the open end of the vial near the head of an adjacent creature. The salts within fizz and evaporate, creating a sour-smelling cloud that envelops the creature’s head before fading. As they do, the vapors attempt to clear harmful influences from the creature’s mind. The creature gains the effect of a clear mind spell and a +1 item bonus to saving throws against mental effects for 10 minutes. Psyche Salts (Lesser) Source Pathfinder #214: The Broken Palace pg. 81 Price 30 gp The psyche salts grants the effects of a 2nd-rank clear mind spell, with a +11 counteract check modifier. Psyche Salts (Moderate) Source Pathfinder #214: The Bro"
+ },
+ {
+  "id": "purifying-spoon",
+  "name": "Purifying Spoon",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "purifying-spoon-teaspoon",
+    "name": "Purifying Spoon (Teaspoon)",
+    "level": 1,
+    "price": {
+     "gp": 10
+    }
+   },
+   {
+    "id": "purifying-spoon-tablespoon",
+    "name": "Purifying Spoon (Tablespoon)",
+    "level": 1,
+    "price": {
+     "gp": 20
+    }
+   },
+   {
+    "id": "purifying-spoon-ladle",
+    "name": "Purifying Spoon (Ladle)",
+    "level": 2,
+    "price": {
+     "gp": 32
+    }
+   }
+  ],
+  "text": "Purifying Spoon Source Rage of Elements pg. 202 Usage held in 1 hand A phrase of luck is carved into the handle of this wooden teaspoon. While a variety of other cutlery with similar properties exists, a spoon is often the most convenient and inconspicuous to carry. Activate—Purify (manipulate) Frequency once per day; Effect You stir the spoon in food or drink, casting cleanse cuisine on the substance as you stir. This small spoon can purify up to 1 gallon of food or drink. Purifying Spoon (Teaspoon) Source Rage of Elements pg. 202 Price 10 gp Purifying Spoon (Tablespoon) Source Rage of Elements pg. 202 Price 20 gp This larger spoon can purify up to 8 gallons of food or drink. Purifying Spoon (Ladle) Source Rage of Elements pg. 202 Price 32 gp This spoon is perfect for pouring heartwarming meals into bowls. It can purify up to 16 gallons of food or drink."
+ },
+ {
+  "id": "puzzle-box",
+  "name": "Puzzle Box",
+  "itemType": "equipment",
+  "level": 0,
+  "kin": [
+   {
+    "id": "puzzle-box-simple",
+    "name": "Puzzle Box (Simple)",
+    "level": 0,
+    "price": {
+     "sp": 2
+    }
+   },
+   {
+    "id": "puzzle-box-complex",
+    "name": "Puzzle Box (Complex)",
+    "level": 1,
+    "price": {
+     "gp": 2
+    }
+   },
+   {
+    "id": "puzzle-box-challenging",
+    "name": "Puzzle Box (Challenging)",
+    "level": 3,
+    "price": {
+     "gp": 10
+    }
+   },
+   {
+    "id": "puzzle-box-hollow",
+    "name": "Puzzle Box (Hollow)",
+    "level": 0,
+    "price": null
+   },
+   {
+    "id": "puzzle-box-challenging-hollow",
+    "name": "Puzzle Box (Challenging) (Hollow)",
+    "level": 3,
+    "price": {
+     "gp": 20
+    }
+   },
+   {
+    "id": "puzzle-box-complex-hollow",
+    "name": "Puzzle Box (Complex) (Hollow)",
+    "level": 1,
+    "price": {
+     "gp": 4
+    }
+   },
+   {
+    "id": "puzzle-box-simple-hollow",
+    "name": "Puzzle Box (Simple) (Hollow)",
+    "level": 0,
+    "price": {
+     "sp": 4
+    }
+   }
+  ],
+  "text": "Puzzle Box Source Grand Bazaar pg. 59 Hands 1 Usage held in 1 hand Bulk L A puzzle box features moving parts, locking mechanisms, and other components designed to confound the user. Solving a puzzle box typically requires three successful Games Lore or Thievery checks to Open a Lock, though puzzle boxes come in countless configurations and themes, and the GM can determine which skills are appropriate. Puzzle Box (Simple) Source Grand Bazaar pg. 59 Price 2 sp Bulk L The DC to solve this puzzle box is 15. Puzzle Box (Complex) Source Grand Bazaar pg. 59 Price 2 gp Bulk L The DC to solve this puzzle box is 20. Puzzle Box (Challenging) Source Grand Bazaar pg. 59 Price 10 gp Bulk L The DC to solve this puzzle box is 25. Puzzle Box (Hollow) Source Grand Bazaar pg. 59 Bulk L A hollow puzzle box is designed to have an empty compartment in its center, allowing you to hide an object inside of the b"
+ },
+ {
+  "id": "quartz-coil-rail-transport",
+  "name": "Quartz-Coil Rail Transport",
+  "itemType": "consumable",
+  "level": 4,
+  "kin": [
+   {
+    "id": "quartz-coil-rail-transport-greater",
+    "name": "Quartz-Coil Rail Transport (Greater)",
+    "level": 14,
+    "price": {
+     "gp": 650
+    }
+   },
+   {
+    "id": "quartz-coil-rail-transport-lesser",
+    "name": "Quartz-Coil Rail Transport (Lesser)",
+    "level": 4,
+    "price": {
+     "gp": 20
+    }
+   },
+   {
+    "id": "quartz-coil-rail-transport-major",
+    "name": "Quartz-Coil Rail Transport (Major)",
+    "level": 19,
+    "price": {
+     "gp": 8000
+    }
+   },
+   {
+    "id": "quartz-coil-rail-transport-moderate",
+    "name": "Quartz-Coil Rail Transport (Moderate)",
+    "level": 9,
+    "price": {
+     "gp": 150
+    }
+   }
+  ],
+  "text": "Quartz-Coil Rail Transport May contain spoilers from Convocation Source Rival Academies pg. 93 Usage held in 1 hand Bulk L Activate (manipulate) This odd metal rod is often misinterpreted as a mechanical wand of some kind. Any gadgeteer or mage will be able to elaborate on the fact that magic wands do not need to be throughly covered in a copper wire coil and that the pointed quartz crystal at its tip thrums with electricity, not magic. When activated, electricity courses through you, allowing you to move through the voltage that arcs through the air. You instantly transport yourself and any items you’re wearing and holding from your current space to an unoccupied space up to 20 feet away that you can see. If this would bring another creature with you— even if you’re carrying it in an extradimensional container— the teleportation fails. You and all creatures in a line between your origin"
+ },
+ {
+  "id": "queasy-lantern",
+  "name": "Queasy Lantern",
+  "itemType": "equipment",
+  "level": 7,
+  "kin": [
+   {
+    "id": "queasy-lantern-lesser",
+    "name": "Queasy Lantern (Lesser)",
+    "level": 7,
+    "price": {
+     "gp": 325
+    }
+   },
+   {
+    "id": "queasy-lantern-moderate",
+    "name": "Queasy Lantern (Moderate)",
+    "level": 12,
+    "price": {
+     "gp": 1700
+    }
+   },
+   {
+    "id": "queasy-lantern-greater",
+    "name": "Queasy Lantern (Greater)",
+    "level": 17,
+    "price": {
+     "gp": 13500
+    }
+   }
+  ],
+  "text": "Queasy Lantern Source Grand Bazaar pg. 38 Usage held in 1 hand Bulk 1 This bull's-eye lantern is wrapped in decrepit leather skin. It constantly emits light in a 60-foot cone (and dim light in the next 60 feet). You can close or open internal shutters with an Interact action to block or reveal the light. Activate Interact; Frequency once per day; Effect You slide in a magical lens that causes the lantern to emit a pale green light and then aim the lantern. All creatures in the lantern's 60-foot cone of bright light (but not those in the dim light), must attempt a DC 23 Fortitude save. On a failure, a creature becomes sickened 1 (sickened 2 on a critical failure). The light then reverts to normal as the lens slides out of place. Queasy Lantern (Lesser) Source Grand Bazaar pg. 38 Price 325 gp Bulk 1 Queasy Lantern (Moderate) Source Grand Bazaar pg. 38 Price 1,700 gp Bulk 1 The DC is 29. Cr"
+ },
+ {
+  "id": "quickmelt-slick",
+  "name": "Quickmelt Slick",
+  "itemType": "equipment",
+  "level": 2,
+  "kin": [
+   {
+    "id": "quickmelt-slick-lesser",
+    "name": "Quickmelt Slick (Lesser)",
+    "level": 2,
+    "price": {
+     "gp": 5
+    }
+   },
+   {
+    "id": "quickmelt-slick-moderate",
+    "name": "Quickmelt Slick (Moderate)",
+    "level": 4,
+    "price": {
+     "gp": 13
+    }
+   },
+   {
+    "id": "quickmelt-slick-greater",
+    "name": "Quickmelt Slick (Greater)",
+    "level": 12,
+    "price": {
+     "gp": 310
+    }
+   }
+  ],
+  "text": "Quickmelt Slick May contain spoilers from Quest for the Frozen Flame Source Pathfinder #176: Lost Mammoth Valley pg. 78 Usage held in 2 hands Bulk L This clay jar is filled with a warm fluid composed primarily of lagofir oil and natural fire retardants. You can pour the fluid in an empty area adjacent to you, or over an adjacent frozen object, with an Interact action. The fluid instantly melts non-magical ice and snow in the area and harmlessly vaporizes the resulting meltwater. When used to melt magical ice and snow, quickmelt slick attempts a counteract check with the listed counteract modifier to melt the ice and snow, using the source of that ice and snow to determine the counteract level and DC. Quickmelt Slick (Lesser) Source Pathfinder #176: Lost Mammoth Valley pg. 78 Price 5 gp Bulk L Lesser quickmelt slick melts ice and snow up to 1 foot in depth in one 5-foot square, or melts t"
+ },
+ {
+  "id": "quicksilver-mutagen",
+  "name": "Quicksilver Mutagen",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "quicksilver-mutagen-lesser",
+    "name": "Quicksilver Mutagen (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 4
+    }
+   },
+   {
+    "id": "quicksilver-mutagen-moderate",
+    "name": "Quicksilver Mutagen (Moderate)",
+    "level": 3,
+    "price": {
+     "gp": 12
+    }
+   },
+   {
+    "id": "quicksilver-mutagen-greater",
+    "name": "Quicksilver Mutagen (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 300
+    }
+   },
+   {
+    "id": "quicksilver-mutagen-major",
+    "name": "Quicksilver Mutagen (Major)",
+    "level": 17,
+    "price": {
+     "gp": 3000
+    }
+   }
+  ],
+  "text": "Quicksilver Mutagen Source Player Core 2 pg. 290 Usage held in 1 hand Bulk L Activate (manipulate) You become swifter and nimbler but also fragile. Benefit You gain an item bonus to Acrobatics checks, Stealth checks, Thievery checks, Reflex saves, and Dexterity-based attack rolls, and you gain the listed status bonus to your Speed. Drawback You take damage equal to twice your level; you can't recover Hit Points lost in this way by any means while the mutagen lasts. You take a –2 penalty to Fortitude saves. Quicksilver Mutagen (Lesser) Source Player Core 2 pg. 290, Core Rulebook pg. 549 Price 4 gp Bulk L The bonus to rolls is +1, the bonus to Speed is +5 feet, and the duration is 1 minute. Quicksilver Mutagen (Moderate) Source Player Core 2 pg. 290, Core Rulebook pg. 549 Price 12 gp Bulk L The bonus to rolls is +2, the bonus to Speed is +10 feet, and the duration is 10 minutes. Quicksilve"
+ },
+ {
+  "id": "rainbow-vinegar",
+  "name": "Rainbow Vinegar",
+  "itemType": "equipment",
+  "level": 4,
+  "kin": [
+   {
+    "id": "rainbow-vinegar-greater",
+    "name": "Rainbow Vinegar (Greater)",
+    "level": 12,
+    "price": {
+     "gp": 110
+    }
+   },
+   {
+    "id": "rainbow-vinegar-moderate",
+    "name": "Rainbow Vinegar (Moderate)",
+    "level": 4,
+    "price": {
+     "gp": 15
+    }
+   }
+  ],
+  "text": "Rainbow Vinegar Source Tian Xia Character Guide pg. 105 Usage held in 1 hand Bulk L Access Tian Xia Origin Activate (manipulate) Black swill with multicolored ribbons makes this vinegar look like an oil spill. Ingesting a dose of rainbow vinegar makes your sweat acidic and nonconductive for 10 minutes. During this time, your unarmed attacks deal an additional 1d4 acid damage, and you have resistance 10 to electricity. Vampires find this vinegar particularly harmful and take an additional 2d4 acid damage instead. Taking more than one dose of rainbow vinegar in a single day gives you weakness 5 to acid until your next daily preparations. Rainbow Vinegar Source Tian Xia Character Guide pg. 105 Price 15 gp Rainbow Vinegar (Greater) Source Tian Xia Character Guide pg. 105 Price 110 gp The resistance increases to 15. You deal an additional 1d8 acid damage with your unarmed attacks, or 2d8 acid"
+ },
+ {
+  "id": "razmiri-mask",
+  "name": "Razmiri Mask",
+  "itemType": "equipment",
+  "level": 2,
+  "kin": [
+   {
+    "id": "razmiri-mask-gold",
+    "name": "Razmiri Mask (Gold)",
+    "level": 14,
+    "price": {}
+   },
+   {
+    "id": "razmiri-mask-porcelain",
+    "name": "Razmiri Mask (Porcelain)",
+    "level": 18,
+    "price": {}
+   },
+   {
+    "id": "razmiri-mask-silver",
+    "name": "Razmiri Mask (Silver)",
+    "level": 10,
+    "price": {}
+   }
+  ],
+  "text": "This mask is made of iron, though more potent versions crafted by powerful Razmiran priests can be made of silver, gold, or even porcelain. The wearer of this mask gains a +1 item bonus to Deception checks to Lie or Feint. --- **Activate—Call Upon Razmir's Benevolence** ⟨2⟩ (concentrate, manipulate, occult) **Frequency** once per minute --- **Effect** You bend \"divine\" power to your will using the techniques taught you by the Razmiri priesthood. You grant a single target you touch a number of temporary Hit Points equal to twice your level that last for 24 hours. If the target was unconscious, it regains consciousness and doesn't lose consciousness again due to Hit Point loss as long as it has temporary Hit Points from this effect remaining."
+ },
+ {
+  "id": "recording-rod",
+  "name": "Recording Rod",
+  "itemType": "consumable",
+  "level": 3,
+  "kin": [
+   {
+    "id": "recording-rod-basic",
+    "name": "Recording Rod (Basic)",
+    "level": 3,
+    "price": {
+     "gp": 20
+    }
+   },
+   {
+    "id": "recording-rod-reusable",
+    "name": "Recording Rod (Reusable)",
+    "level": 5,
+    "price": {
+     "gp": 60
+    }
+   }
+  ],
+  "text": "Recording Rod May contain spoilers from Agents of Edgewatch Source Pathfinder #157: Devil at the Dreaming Palace pg. 80 Usage varies Bulk 1 This smooth metal bar is short enough to fit in one hand. It has several inset gemstone buttons on one end and a small lens on the other. Popular with law enforcement and blackmailers alike, recording rods allow users to capture and replay incriminating scenes and are often concealed and triggered covertly to avoid raising the subject's suspicion. Activate Interact; Effect When activated, the rod records anything it sees and hears for 1 minute. Its lens acts as both eye and ear with precise vision and imprecise hearing. This recorded sequence can then be played back as many times as desired, the sights and sounds communicated telepathically to the rod's holder. The rod's recording sequence can be triggered manually by a person holding it, or it can b"
+ },
+ {
+  "id": "red-rib-gill-mask",
+  "name": "Red-Rib Gill Mask",
+  "itemType": "equipment",
+  "level": 2,
+  "kin": [
+   {
+    "id": "red-rib-gill-mask-lesser",
+    "name": "Red-Rib Gill Mask (Lesser)",
+    "level": 2,
+    "price": {
+     "gp": 7
+    }
+   },
+   {
+    "id": "red-rib-gill-mask-moderate",
+    "name": "Red-Rib Gill Mask (Moderate)",
+    "level": 7,
+    "price": {
+     "gp": 100
+    }
+   },
+   {
+    "id": "red-rib-gill-mask-greater",
+    "name": "Red-Rib Gill Mask (Greater)",
+    "level": 14,
+    "price": {
+     "gp": 700
+    }
+   }
+  ],
+  "text": "Red-Rib Gill Mask May contain spoilers from Strength of Thousands Source Pathfinder #171: Hurricane's Howl pg. 76 Usage worn mask Bulk L Activate Interact This mask is made from the gills of the red-rib salamander, an amphibious creature unique to Terwa Lake. Once activated, the mask intensifies the odors of gaseous toxins, allowing you to automatically detect toxic fumes within 30 feet and their approximate source (making the source undetected instead of unnoticed). You can't wear other masks while you're wearing a red-rib gill mask. After Activating the mask, you also gain the listed item bonus to Fortitude saves against inhaled effects; this bonus is increased against the deadly volcanic gas known around Terwa Lake as Dead Man's Breath, and possibly against other similar volcanic gases at the GM's discretion. Red-Rib Gill Mask (Lesser) Source Pathfinder #171: Hurricane's Howl pg. 76 P"
+ },
+ {
+  "id": "redpitch-bomb",
+  "name": "Redpitch Bomb",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "redpitch-bomb-lesser",
+    "name": "Redpitch Bomb (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 3
+    }
+   },
+   {
+    "id": "redpitch-bomb-moderate",
+    "name": "Redpitch Bomb (Moderate)",
+    "level": 3,
+    "price": {
+     "gp": 10
+    }
+   },
+   {
+    "id": "redpitch-bomb-greater",
+    "name": "Redpitch Bomb (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 250
+    }
+   },
+   {
+    "id": "redpitch-bomb-major",
+    "name": "Redpitch Bomb (Major)",
+    "level": 17,
+    "price": {
+     "gp": 2500
+    }
+   }
+  ],
+  "text": "Redpitch Bomb Source Redpitch Alchemy Usage held in 1 hand Bulk L Activate Strike Sap from redpitch pines, if properly distilled into a gummy, incendiary mass, ignites when exposed to the air. A redpitch bomb deals the listed fire damage, persistent fire damage, and splash damage. Many types grant an item bonus to attack rolls. Redpitch Bomb (Lesser) Source Redpitch Alchemy Price 3 gp The bomb deals 1 fire damage, 1d4 persistent fire damage, and 1 fire splash damage. On a critical hit, the target is clumsy 1 until the start of your next turn. Redpitch Bomb (Moderate) Source Redpitch Alchemy Price 10 gp You gain a +1 item bonus to attack rolls. The bomb deals 2 fire damage, 2d4 persistent fire damage, and 2 fire splash damage. On a critical hit, the target is clumsy 1 until the start of your next turn. Redpitch Bomb (Greater) Source Redpitch Alchemy Price 250 gp You gain a +2 bonus on att"
+ },
+ {
+  "id": "reinforcing-rune",
+  "name": "Reinforcing Rune",
+  "itemType": "equipment",
+  "level": 4,
+  "kin": [
+   {
+    "id": "reinforcing-rune-minor",
+    "name": "Reinforcing Rune (Minor)",
+    "level": 4,
+    "price": {
+     "gp": 75
+    }
+   },
+   {
+    "id": "reinforcing-rune-lesser",
+    "name": "Reinforcing Rune (Lesser)",
+    "level": 7,
+    "price": {
+     "gp": 300
+    }
+   },
+   {
+    "id": "reinforcing-rune-moderate",
+    "name": "Reinforcing Rune (Moderate)",
+    "level": 10,
+    "price": {
+     "gp": 900
+    }
+   },
+   {
+    "id": "reinforcing-rune-greater",
+    "name": "Reinforcing Rune (Greater)",
+    "level": 13,
+    "price": {
+     "gp": 2500
+    }
+   },
+   {
+    "id": "reinforcing-rune-major",
+    "name": "Reinforcing Rune (Major)",
+    "level": 16,
+    "price": {
+     "gp": 8000
+    }
+   },
+   {
+    "id": "reinforcing-rune-supreme",
+    "name": "Reinforcing Rune (Supreme)",
+    "level": 19,
+    "price": {
+     "gp": 32000
+    }
+   }
+  ],
+  "text": "Reinforcing Rune Source GM Core pg. 232 Usage etched onto a shield Reinforcing runes make a shield significantly more durable, allowing it to effectively block more powerful attacks. Reinforcing Rune (Minor) Source GM Core pg. 232 Price 75 gp The shield’s Hardness increases by 3, it gains an additional 44 Hit Points, and its BT increases by 22 (maximum 8 Hardness, 64 HP, and 32 BT). Reinforcing Rune (Lesser) Source GM Core pg. 232 Price 300 gp The shield’s Hardness increases by 3, it gains an additional 52 Hit Points, and its BT increases by 26 (maximum 10 Hardness, 80 HP, and 40 BT). Reinforcing Rune (Moderate) Source GM Core pg. 232 Price 900 gp The shield’s Hardness increases by 3, it gains an additional 64 Hit Points, and its BT increases by 32 (maximum 13 Hardness, 104 HP, and 52 BT). Reinforcing Rune (Greater) Source GM Core pg. 232 Price 2,500 gp The shield’s Hardness increases by"
+ },
+ {
+  "id": "religious-symbol",
+  "name": "Religious Symbol",
+  "itemType": "equipment",
+  "level": 0,
+  "kin": [
+   {
+    "id": "religious-symbol-wooden",
+    "name": "Religious Symbol (Wooden)",
+    "level": 0,
+    "price": {
+     "sp": 1
+    }
+   },
+   {
+    "id": "religious-symbol-silver",
+    "name": "Religious Symbol (Silver)",
+    "level": 0,
+    "price": {
+     "gp": 2
+    }
+   }
+  ],
+  "text": "Religious Symbol Source Player Core pg. 290 This piece of wood or silver is emblazoned with an image representing a deity. Some divine spellcasters, such as clerics, can use a religious symbol to use certain abilities. A religious symbol can be worn on the body on a chain or pin, or can be held. Religious Symbol (Wooden) Source Player Core pg. 290, Core Rulebook pg. 291 Price 1 sp Hands 1 Bulk L Religious Symbol (Silver) Source Player Core pg. 290, Core Rulebook pg. 291 Price 2 gp Hands 1 Bulk L"
+ },
+ {
+  "id": "rending-gauntlets",
+  "name": "Rending Gauntlets",
+  "itemType": "equipment",
+  "level": 5,
+  "kin": [
+   {
+    "id": "rending-gauntlets-greater",
+    "name": "Rending Gauntlets (Greater)",
+    "level": 19,
+    "price": {
+     "gp": 32000
+    }
+   },
+   {
+    "id": "rending-gauntlets-lesser",
+    "name": "Rending Gauntlets (Lesser)",
+    "level": 5,
+    "price": {
+     "gp": 130
+    }
+   },
+   {
+    "id": "rending-gauntlets-moderate",
+    "name": "Rending Gauntlets (Moderate)",
+    "level": 12,
+    "price": {
+     "gp": 1700
+    }
+   }
+  ],
+  "text": "Rending Gauntlets May contain spoilers from Triumph of the Tusk Source Pathfinder #208: Hoof, Cinder, and Storm pg. 78 Usage worn bracers Bulk L These heavy gloves are reinforced with thick animal hide and sharpened bone. Activate—Shredding Finisher (manipulate) Frequency once per hour; Requirements You hit the same creature with two unarmed Strikes in the same round; Effect The gauntlets’ spikes dig into the creature just before you tear them free, dealing the listed piercing damage. Lesser Rending Gauntlets Source Pathfinder #208: Hoof, Cinder, and Storm pg. 78 Price 130 gp The gauntlets deal 2d6 piercing damage. Moderate Rending Gauntlets Source Pathfinder #208: Hoof, Cinder, and Storm pg. 78 Price 1,700 gp The gauntlets deal 4d6 piercing damage. Greater Rending Gauntlets Source Pathfinder #208: Hoof, Cinder, and Storm pg. 78 Price 32,000 gp The gauntlets deal 6d6 piercing damage."
+ },
+ {
+  "id": "researcher",
+  "name": "Researcher",
+  "itemType": "equipment",
+  "level": 0,
+  "kin": [
+   {
+    "id": "researcher-level-1-trained",
+    "name": "Researcher (Level 1; trained)",
+    "level": 0,
+    "price": {
+     "gp": 4
+    }
+   },
+   {
+    "id": "researcher-level-2",
+    "name": "Researcher (Level 2)",
+    "level": 0,
+    "price": {
+     "gp": 6
+    }
+   },
+   {
+    "id": "researcher-level-3-expert",
+    "name": "Researcher (Level 3; expert)",
+    "level": 0,
+    "price": {
+     "gp": 10
+    }
+   },
+   {
+    "id": "researcher-level-4",
+    "name": "Researcher (Level 4)",
+    "level": 0,
+    "price": {
+     "gp": 14
+    }
+   },
+   {
+    "id": "researcher-level-5",
+    "name": "Researcher (Level 5)",
+    "level": 0,
+    "price": {
+     "gp": 20
+    }
+   },
+   {
+    "id": "researcher-level-6",
+    "name": "Researcher (Level 6)",
+    "level": 0,
+    "price": {
+     "gp": 40
+    }
+   },
+   {
+    "id": "researcher-level-7-master",
+    "name": "Researcher (Level 7; master)",
+    "level": 0,
+    "price": {
+     "gp": 50
+    }
+   }
+  ],
+  "text": "Researcher Source PFS Guide pg. 116 In cities all around the world you can find temples, city archives, and organizations like the Pathfinder Society where scholars and librarians can be hired to do research for you or aid you in your own research. Each researcher specializes in a particular subject such as flora native to the Mwangi Expanse, leaders of the First Mendevian Crusade, or Absalom shipping routes. If you plan to hire a researcher, you must hire one for the appropriate subject. The GM can decide that an appropriate researcher is unavailable in a given location, requiring you to look elsewhere for a researcher. A researcher can be hired to do independent research or as a research assistant. Regardless of what they're hired for, you must specify the level of researcher you're hiring, which is typically not higher than the level of the settlement in which they are hired. When con"
+ },
+ {
+  "id": "retaliation",
+  "name": "Retaliation",
+  "itemType": "equipment",
+  "level": 6,
+  "kin": [
+   {
+    "id": "retaliation-lesser",
+    "name": "Retaliation (Lesser)",
+    "level": 6,
+    "price": {
+     "gp": 250
+    }
+   },
+   {
+    "id": "retaliation-moderate",
+    "name": "Retaliation (Moderate)",
+    "level": 10,
+    "price": {
+     "gp": 1000
+    }
+   },
+   {
+    "id": "retaliation-greater",
+    "name": "Retaliation (Greater)",
+    "level": 14,
+    "price": {
+     "gp": 4500
+    }
+   },
+   {
+    "id": "retaliation-major",
+    "name": "Retaliation (Major)",
+    "level": 19,
+    "price": {
+     "gp": 40000
+    }
+   }
+  ],
+  "text": "Retaliation Source Treasure Vault pg. 144 Usage applied to shield _Nethys Note: This rune was not reprinted in the remastered Treasure Vault book. _ Shields with a retaliation rune use the impact of weapons to generate blasts of explosive force that counterattack foes. Activate (concentrate) Frequency once per hour; Trigger You Shield Block a melee Strike; Effect You unleash force damage against the creature that made the triggering attack. This attack deals 4d4 force damage (DC 20 basic Reflex save). Retaliation (Lesser) Source Treasure Vault pg. 144 Price 250 gp Retaliation (Moderate) Source Treasure Vault pg. 144 Price 1,000 gp The damage is 8d4 force damage and the save DC is 27. Retaliation (Greater) Source Treasure Vault pg. 144 Price 4,500 gp The damage is 12d4 force damage and the save DC is 31. Retaliation (Major) Source Treasure Vault pg. 144 Price 40,000 gp The damage is 16d4 "
+ },
+ {
+  "id": "revealing-mist",
+  "name": "Revealing Mist",
+  "itemType": "equipment",
+  "level": 3,
+  "kin": [
+   {
+    "id": "revealing-mist-lesser",
+    "name": "Revealing Mist (Lesser)",
+    "level": 3,
+    "price": {
+     "gp": 9
+    }
+   },
+   {
+    "id": "revealing-mist-greater",
+    "name": "Revealing Mist (Greater)",
+    "level": 7,
+    "price": {
+     "gp": 60
+    }
+   }
+  ],
+  "text": "Revealing Mist Source Treasure Vault (Remastered) pg. 54 Usage held in 1 hand Bulk L Activate (manipulate) Kept in an airtight spray bottle, revealing mist is an alchemical concoction that creates a sticky and clinging mist of chemicals in a 15-foot cone when sprayed. It doesn't affect visibility but causes invisible creatures in the area to be concealed rather than undetected. Revealing mist is ineffective in water or in areas with other factors affecting the spread of the mist, as determined by the GM. It remains in the area for 1 minute or until any significant wind disperses it, whichever comes first. Revealing Mist (Lesser) Source Treasure Vault (Remastered) pg. 54 Price 9 gp Bulk L Revealing Mist (Greater) Source Treasure Vault (Remastered) pg. 54 Price 60 gp Bulk L The mist spreads in a 30-foot cone instead of a 15-foot cone."
+ },
+ {
+  "id": "ring-of-observation",
+  "name": "Ring of Observation",
+  "itemType": "equipment",
+  "level": 3,
+  "kin": [
+   {
+    "id": "ring-of-observation-lesser",
+    "name": "Ring of Observation (Lesser)",
+    "level": 3,
+    "price": {
+     "gp": 125
+    }
+   },
+   {
+    "id": "ring-of-observation-moderate",
+    "name": "Ring of Observation (Moderate)",
+    "level": 7,
+    "price": {
+     "gp": 300
+    }
+   },
+   {
+    "id": "ring-of-observation-greater",
+    "name": "Ring of Observation (Greater)",
+    "level": 10,
+    "price": {
+     "gp": 1160
+    }
+   }
+  ],
+  "text": "Ring of Observation Source Firebrands pg. 87 Usage worn Access Second-mark members of the Firebrands have access to this item. This simple gold ring is engraved with eyes and is inlaid with a single amber-colored cat-eye gemstone. While the gemstone itself isn't magical, it gives off the eerie impression that it's watching you. A Firebrand makes use of this ring to determine if they've drawn the attention of locals and guards without the owner giving away the fact that they know others are watching. More powerful versions of the ring help Firebrands escape the sight of others when necessary. Activate envision; Frequency once per day; Effect The watchful eye of the cat-eye gemstone remains unmoving but feels as if it's surveying your surroundings. The eye continues this uncanny surveying for 1 minute. During this time, you can use a single action, which has the concentrate trait, to focus"
+ },
+ {
+  "id": "roaring-potion",
+  "name": "Roaring Potion",
+  "itemType": "consumable",
+  "level": 8,
+  "kin": [
+   {
+    "id": "roaring-potion-lesser",
+    "name": "Roaring Potion (Lesser)",
+    "level": 8,
+    "price": {
+     "gp": 90
+    }
+   },
+   {
+    "id": "roaring-potion-moderate",
+    "name": "Roaring Potion (Moderate)",
+    "level": 13,
+    "price": {
+     "gp": 550
+    }
+   },
+   {
+    "id": "roaring-potion-greater",
+    "name": "Roaring Potion (Greater)",
+    "level": 18,
+    "price": {
+     "gp": 3600
+    }
+   }
+  ],
+  "text": "Roaring Potion Source Treasure Vault (Remastered) pg. 90 Usage held in 1 hand Bulk L Activate (manipulate) Ripples move constantly through a roaring potion, a cloudy liquid that growls when you open its container. Drinking it gives you access to two other activations for 1 hour. Activate (concentrate) Effect You gain the effects of a bullhorn spell. You can Dismiss the activation. Activate (concentrate) Frequency once every 1d4 rounds; Effect You emit a scream in a 15-foot cone that deals 4d4 sonic damage. Each creature in the area can attempt a DC 24 Fortitude saving throw. Critical Success The creature is unaffected. Success The creature takes half damage. Failure The creature takes full damage and is frightened 1. Critical Failure The creature takes double damage and is frightened 2. Roaring Potion (Lesser) Source Treasure Vault (Remastered) pg. 90 Price 90 gp Bulk L Roaring Potion (M"
+ },
+ {
+  "id": "roc-shaft-arrow",
+  "name": "Roc-Shaft Arrow",
+  "itemType": "consumable",
+  "level": 5,
+  "kin": [
+   {
+    "id": "roc-shaft-arrow-greater",
+    "name": "Roc-Shaft Arrow (Greater)",
+    "level": 15,
+    "price": {
+     "gp": 1000
+    }
+   },
+   {
+    "id": "roc-shaft-arrow-lesser",
+    "name": "Roc-Shaft Arrow (Lesser)",
+    "level": 5,
+    "price": {
+     "gp": 24
+    }
+   },
+   {
+    "id": "roc-shaft-arrow-moderate",
+    "name": "Roc-Shaft Arrow (Moderate)",
+    "level": 10,
+    "price": {
+     "gp": 160
+    }
+   }
+  ],
+  "text": "Roc-Shaft Arrow May contain spoilers from Triumph of the Tusk Source Pathfinder #208: Hoof, Cinder, and Storm pg. 81 Ammunition arrow Activate Interact Each of these arrows is made from an immense roc’s flight feather, most of whose vanes have been trimmed to expose the arrow’s shaft. When an activated roc-shaft arrow hits a target, the arrow briefly grows a pair of avian wings and attempts to carry off the target. The target must succeed at a Fortitude save or be moved to a space you choose within an area determined by the arrow’s type; if the target critically fails, the arrow can move them an additional 10 feet. If this would move the target into a hazardous space, this effect gains the incapacitation trait. Lesser Roc-Shaft Arrow Source Pathfinder #208: Hoof, Cinder, and Storm pg. 81 Price 24 gp The arrow can move the target 10 feet (20 feet on a critical failure), and the Fortitude "
+ },
+ {
+  "id": "rope-of-climbing",
+  "name": "Rope of Climbing",
+  "itemType": "equipment",
+  "level": 3,
+  "kin": [
+   {
+    "id": "rope-of-climbing-lesser",
+    "name": "Rope of Climbing (Lesser)",
+    "level": 3,
+    "price": {
+     "gp": 45
+    }
+   },
+   {
+    "id": "rope-of-climbing-moderate",
+    "name": "Rope of Climbing (Moderate)",
+    "level": 5,
+    "price": {
+     "gp": 125
+    }
+   },
+   {
+    "id": "rope-of-climbing-greater",
+    "name": "Rope of Climbing (Greater)",
+    "level": 7,
+    "price": {
+     "gp": 300
+    }
+   }
+  ],
+  "text": "Rope of Climbing Source Advanced Player's Guide pg. 262 Usage held in 1 hand Bulk L This silk rope measures 50 feet long and is capable of holding up to 3,000 pounds. If the rope is ever cut, only the longest remaining portion retains its magic. Activate Interact; Frequency once per day; Effect You hold one end of the rope and point to a destination. The rope animates for 1 minute, moving 10 feet per round until it reaches the destination or runs out of length. The rope can move across any non-damaging horizontal or vertical surface, but it can't extend upward without a surface to support it. At any point while the rope is animated, you can use an Interact action to wiggle the rope, giving it one of the following commands: stop in place, fasten securely to the nearest available object, detach from an object, or knot or unknot itself. Rope of Climbing (Lesser) Source Advanced Player's Gui"
+ },
+ {
+  "id": "rusting-ammunition",
+  "name": "Rusting Ammunition",
+  "itemType": "equipment",
+  "level": 13,
+  "kin": [
+   {
+    "id": "rusting-ammunition-moderate",
+    "name": "Rusting Ammunition (Moderate)",
+    "level": 13,
+    "price": {
+     "gp": 600
+    }
+   },
+   {
+    "id": "rusting-ammunition-greater",
+    "name": "Rusting Ammunition (Greater)",
+    "level": 18,
+    "price": {
+     "gp": 600
+    }
+   }
+  ],
+  "text": "Rusting Ammunition Source Treasure Vault (Remastered) pg. 43 Ammunition any Activate (manipulate) Rusting ammunition is made using a ore louse's saliva and, when activated, deals damage to objects or creatures primarily made of metal. The target takes persistent damage for a duration determined by the type of ammunition used. A creature that drops to 0 Hit Points while taking this persistent damage crumbles into fine powder; its gear remains. The ammunition's type determines the maximum amount of an object that's destroyed. Craft Requirements Supply the saliva of an ore louse. Rusting Ammunition (Moderate) Source Treasure Vault (Remastered) pg. 43 Price 600 gp The ammunition deals 3d8 persistent damage for up to 5 rounds. For an object, the ammunition destroys a 5-foot cube. Rusting Ammunition (Greater) Source Treasure Vault (Remastered) pg. 43 Price 3,600 gp The ammunition deals 4d8 per"
+ },
+ {
+  "id": "safe-house",
+  "name": "Safe House",
+  "itemType": "equipment",
+  "level": 0,
+  "kin": [
+   {
+    "id": "safe-house-level-1",
+    "name": "Safe House (Level 1)",
+    "level": 0,
+    "price": {
+     "gp": 10
+    }
+   },
+   {
+    "id": "safe-house-level-2",
+    "name": "Safe House (Level 2)",
+    "level": 0,
+    "price": {
+     "gp": 100
+    }
+   },
+   {
+    "id": "safe-house-level-3",
+    "name": "Safe House (Level 3)",
+    "level": 0,
+    "price": {
+     "gp": 1000
+    }
+   }
+  ],
+  "text": "Safe House Source Firebrands pg. 94 Safe houses are locations that are difficult to find and provide sanctuary for groups or individuals in need of a suitable hiding place to lie low. These locations may be utilized by spies seeking refuge from enemies, accused criminals running from unjust or corrupt law enforcement, or any number of others sheltering from a hostile, unsafe, or oppressive situation. Many Firebrands make use of a safe house or set one up themselves in the course of their journeys to keep their presence hidden from spies or to find refuge while fleeing from dangerous locations. The costs associated with each level is the amount of money required to commission and establish a safe house of that level. This includes renting, purchasing, or constructing the location, bribing any informants for their discretion, and securing routes to and from the safe house in case of emerge"
+ },
+ {
+  "id": "sanguine-mutagen",
+  "name": "Sanguine Mutagen",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "sanguine-mutagen-lesser",
+    "name": "Sanguine Mutagen (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 3
+    }
+   },
+   {
+    "id": "sanguine-mutagen-moderate",
+    "name": "Sanguine Mutagen (Moderate)",
+    "level": 3,
+    "price": {
+     "gp": 12
+    }
+   },
+   {
+    "id": "sanguine-mutagen-greater",
+    "name": "Sanguine Mutagen (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 300
+    }
+   },
+   {
+    "id": "sanguine-mutagen-major",
+    "name": "Sanguine Mutagen (Major)",
+    "level": 17,
+    "price": {
+     "gp": 3000
+    }
+   }
+  ],
+  "text": "Sanguine Mutagen Source Treasure Vault (Remastered) pg. 60 Usage held in 1 hand Bulk L Activate (manipulate) You gain greatly increased blood production, filtering out contagions and boosting your endurance but causing your body to bloat with blood. Benefit You gain an item bonus to Fortitude and Reflex saves. This bonus improves when you attempt a save against an effect that has the disease trait, poison trait, or would give you the fatigued condition. Drawback Whenever you take piercing or slashing damage, you take 1d6 persistent bleed damage. Sanguine Mutagen (Lesser) Source Treasure Vault (Remastered) pg. 60 Price 3 gp Bulk L The bonus is +1 (or +2 against disease, poison, or fatigued), and the duration is 1 minute. Sanguine Mutagen (Moderate) Source Treasure Vault (Remastered) pg. 60 Price 12 gp Bulk L The bonus is +2 (or +3 against disease, poison, or fatigued), and the duration is"
+ },
+ {
+  "id": "sapling-shield",
+  "name": "Sapling Shield",
+  "itemType": "equipment",
+  "level": 3,
+  "kin": [
+   {
+    "id": "sapling-shield-minor",
+    "name": "Sapling Shield (Minor)",
+    "level": 3,
+    "price": {
+     "gp": 57
+    }
+   },
+   {
+    "id": "sapling-shield-lesser",
+    "name": "Sapling Shield (Lesser)",
+    "level": 6,
+    "price": {
+     "gp": 240
+    }
+   },
+   {
+    "id": "sapling-shield-moderate",
+    "name": "Sapling Shield (Moderate)",
+    "level": 9,
+    "price": {
+     "gp": 680
+    }
+   },
+   {
+    "id": "sapling-shield-greater",
+    "name": "Sapling Shield (Greater)",
+    "level": 12,
+    "price": {
+     "gp": 1820
+    }
+   },
+   {
+    "id": "sapling-shield-major",
+    "name": "Sapling Shield (Major)",
+    "level": 15,
+    "price": {
+     "gp": 5860
+    }
+   },
+   {
+    "id": "sapling-shield-true",
+    "name": "Sapling Shield (True)",
+    "level": 18,
+    "price": {
+     "gp": 20220
+    }
+   }
+  ],
+  "text": "Sapling Shield Source Treasure Vault (Remastered) pg. 22 Usage held in 1 hand Bulk 2 Base Shield Buckler, Tower Shield This surprisingly weighty, though well-balanced, wooden buckler is emblazoned with the image of a sapling. The sapling withers as the shield takes damage. Activate (concentrate) Effect The buckler expands, with the sapling image growing into a mighty oak tree. The buckler becomes a tower shield, gaining the corresponding AC bonus, Speed penalty, and ability to Take Cover. It keeps the same Hit Points and Broken Threshold, but its Hardness and Bulk increase by 2 in this form. The shield remains in this form until you Activate it again to revert it to a buckler. Sapling Shield (Minor) Source Treasure Vault (Remastered) pg. 22 Price 57 gp Bulk 2 The buckler has Hardness 3, HP 24, and BT 12. Sapling Shield (Lesser) Source Treasure Vault (Remastered) pg. 22 Price 240 gp Bulk "
+ },
+ {
+  "id": "sea-touch-elixir",
+  "name": "Sea Touch Elixir",
+  "itemType": "equipment",
+  "level": 5,
+  "kin": [
+   {
+    "id": "sea-touch-elixir-lesser",
+    "name": "Sea Touch Elixir (Lesser)",
+    "level": 5,
+    "price": {
+     "gp": 22
+    }
+   },
+   {
+    "id": "sea-touch-elixir-moderate",
+    "name": "Sea Touch Elixir (Moderate)",
+    "level": 12,
+    "price": {
+     "gp": 300
+    }
+   },
+   {
+    "id": "sea-touch-elixir-greater",
+    "name": "Sea Touch Elixir (Greater)",
+    "level": 15,
+    "price": {
+     "gp": 920
+    }
+   }
+  ],
+  "text": "Sea Touch Elixir Source Player Core 2 pg. 288, GM Core pg. 247 Usage held in 1 hand Bulk L Activate (manipulate) This briny concoction alters the skin on your hands and feet. The spaces between your fingers and toes become webbed, granting you a swim Speed of 20 feet for the listed duration. Sea Touch Elixir (Lesser) Source Player Core 2 pg. 288, GM Core pg. 247, Core Rulebook pg. 549 Price 22 gp Bulk L The duration is 10 minutes. Sea Touch Elixir (Moderate) Source Player Core 2 pg. 288, GM Core pg. 247, Core Rulebook pg. 549 Price 300 gp Bulk L The duration is 1 hour, and you can breathe underwater. Sea Touch Elixir (Greater) Source Player Core 2 pg. 288, GM Core pg. 247, Core Rulebook pg. 549 Price 920 gp Bulk L The duration is 24 hours, and you can breathe underwater."
+ },
+ {
+  "id": "sealing-chest",
+  "name": "Sealing Chest",
+  "itemType": "equipment",
+  "level": 4,
+  "kin": [
+   {
+    "id": "sealing-chest-lesser",
+    "name": "Sealing Chest (Lesser)",
+    "level": 4,
+    "price": {
+     "gp": 75
+    }
+   },
+   {
+    "id": "sealing-chest-moderate",
+    "name": "Sealing Chest (Moderate)",
+    "level": 7,
+    "price": {
+     "gp": 300
+    }
+   },
+   {
+    "id": "sealing-chest-greater",
+    "name": "Sealing Chest (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 1250
+    }
+   },
+   {
+    "id": "sealing-chest-major",
+    "name": "Sealing Chest (Major)",
+    "level": 14,
+    "price": {
+     "gp": 3750
+    }
+   }
+  ],
+  "text": "Sealing Chest Source PFS Guide pg. 37 PFS Note Players can gain access to faction-specific gear by taking the corresponding Faction Gear Access Game Reward, available when they reach 20 reputation with the respective faction. Usage held in 2 hands Bulk L Access Member of the Pathfinder Society. Vigilant Seal members use these containers when transporting samples and relics. The containers are soundproof, airtight, and studded with lead sheets, mistletoe, and other materials that block magical auras. Up to 1 Bulk of objects can be placed inside a sealing chest; the magic auras and curses of any objects placed within the chest cannot extend beyond the box unless they are of a greater level than the chest. Artifacts and similarly powerful items are unaffected regardless of level. Many cursed items prevent their bearer from removing them, but a successful remove curse gives enough time to st"
+ },
+ {
+  "id": "searing-suture",
+  "name": "Searing Suture",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "searing-suture-lesser",
+    "name": "Searing Suture (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 3
+    }
+   },
+   {
+    "id": "searing-suture-greater",
+    "name": "Searing Suture (greater)",
+    "level": 9,
+    "price": {
+     "gp": 120
+    }
+   }
+  ],
+  "text": "Searing Suture May contain spoilers from Outlaws of Alkenstar Source Pathfinder #178: Punks in a Powderkeg pg. 77 Usage held in 1 hand Bulk L Activate Interact Activating this black powder–infused alchemical bandage cauterizes wounds. You can apply a searing suture to yourself or an adjacent willing creature as you activate it. The target creature takes 1d6 fire damage and can immediately attempt a flat check to remove the persistent bleed damage—the DC of this flat check depends on the type of searing suture applied. When applied against a bleed effect that is lower level than the searing suture, the flat check is automatically successful. Searing Suture (Lesser) Source Pathfinder #178: Punks in a Powderkeg pg. 77 Price 3 gp Bulk L The flat check DC is 15. Searing Suture (greater) Source Pathfinder #178: Punks in a Powderkeg pg. 77 Price 120 gp Bulk L The flat check DC is 5."
+ },
+ {
+  "id": "secret-keepers-mask",
+  "name": "Secret-Keeper's Mask",
+  "itemType": "equipment",
+  "level": 3,
+  "kin": [
+   {
+    "id": "secret-keepers-mask-blackfingers",
+    "name": "Secret-Keeper's Mask (Blackfingers)",
+    "level": 3,
+    "price": {
+     "gp": 60
+    }
+   },
+   {
+    "id": "secret-keepers-mask-gray-master",
+    "name": "Secret-Keeper's Mask (Gray Master)",
+    "level": 5,
+    "price": {
+     "gp": 150
+    }
+   },
+   {
+    "id": "secret-keepers-mask-father-skinsaw",
+    "name": "Secret-Keeper's Mask (Father Skinsaw)",
+    "level": 6,
+    "price": {
+     "gp": 250
+    }
+   },
+   {
+    "id": "secret-keepers-mask-reaper-of-reputation",
+    "name": "Secret-Keeper's Mask (Reaper of Reputation)",
+    "level": 3,
+    "price": {
+     "gp": 60
+    }
+   }
+  ],
+  "text": "Secret-Keeper's Mask Source GM's Toolkit: Secret Keeper's Mask Usage worn Each of these full-face masks is made of stitched materials—often including humanoid skin—and has a single, bulbous eye. While wearing the mask, you gain a +1 item bonus to Deception checks to Lie and the mask doesn't impair your vision. The mask can also be activated, with an ability based on its type. Secret-Keeper's Mask (Blackfingers) Source GM's Toolkit: Secret Keeper's Mask Price 60 gp This featureless mask is made of thin, papery skin. Its single eye is a fragile bubble of venom-filled glass. Activate Interact; Frequency once per day; Effect You twist the mask's eye and peer at an object. You know whether the object is poison or has been poisoned, but you don't learn the number or type of poisons present in the object. Secret-Keeper's Mask (Gray Master) Source GM's Toolkit: Secret Keeper's Mask Price 150 gp "
+ },
+ {
+  "id": "sense-dulling-hood",
+  "name": "Sense-Dulling Hood",
+  "itemType": "equipment",
+  "level": 6,
+  "kin": [
+   {
+    "id": "sense-dulling-hood-lesser",
+    "name": "Sense-Dulling Hood (Lesser)",
+    "level": 6,
+    "price": {
+     "gp": 40
+    }
+   },
+   {
+    "id": "sense-dulling-hood-greater",
+    "name": "Sense-Dulling Hood (Greater)",
+    "level": 12,
+    "price": {
+     "gp": 350
+    }
+   }
+  ],
+  "text": "Sense-Dulling Hood Source Treasure Vault (Remastered) pg. 54 Usage held in 2 hands Bulk L Activate (manipulate) Sometimes, an enemy’s dangerous special ability makes relatively standard sensory capabilities a liability. From an ofalth emitting its stench to a banshee wailing, plenty of creatures use their prey’s senses against them. A sensedulling hood is a wide, single-use mask designed to be pulled from an airtight package and slipped over the head. The mask grants you an item bonus to saving throws against auditory, olfactory, and visual effects for a time, according to the mask’s type. Since it dulls your senses without depriving you of them, the mask also imposes a –1 penalty to rolls and checks using Perception for the same duration. Sense-Dulling Hood (Lesser) Source Treasure Vault (Remastered) pg. 54 Price 40 gp Bulk L The bonus is +2, and the duration is 10 minutes. Sense-Dullin"
+ },
+ {
+  "id": "serene-mutagen",
+  "name": "Serene Mutagen",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "serene-mutagen-lesser",
+    "name": "Serene Mutagen (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 4
+    }
+   },
+   {
+    "id": "serene-mutagen-moderate",
+    "name": "Serene Mutagen (Moderate)",
+    "level": 3,
+    "price": {
+     "gp": 12
+    }
+   },
+   {
+    "id": "serene-mutagen-greater",
+    "name": "Serene Mutagen (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 300
+    }
+   },
+   {
+    "id": "serene-mutagen-major",
+    "name": "Serene Mutagen (Major)",
+    "level": 17,
+    "price": {
+     "gp": 3000
+    }
+   }
+  ],
+  "text": "Serene Mutagen Source Player Core 2 pg. 290 Usage held in 1 hand Bulk L Activate (manipulate) You gain inner serenity, but you find violence off-putting. Benefit You gain an item bonus to Will saves and Perception, Medicine, Nature, Religion, and Survival checks. This bonus improves when you attempt Will saves against mental effects. Drawback You take a –1 penalty to attack rolls and save DCs of offensive spells, and a –1 penalty per damage die to all weapon, unarmed attack, and spell damage. Serene Mutagen (Lesser) Source Player Core 2 pg. 290, Core Rulebook pg. 549 Price 4 gp Bulk L The bonus is +1, or +2 vs. mental, and the duration is 1 minute. Serene Mutagen (Moderate) Source Player Core 2 pg. 290, Core Rulebook pg. 549 Price 12 gp Bulk L The bonus is +2, or +3 vs. mental, and the duration is 10 minutes. Serene Mutagen (Greater) Source Player Core 2 pg. 290, Core Rulebook pg. 549 Pr"
+ },
+ {
+  "id": "serpent-oil",
+  "name": "Serpent Oil",
+  "itemType": "consumable",
+  "level": 3,
+  "kin": [
+   {
+    "id": "serpent-oil-lesser",
+    "name": "Serpent Oil (Lesser)",
+    "level": 3,
+    "price": {
+     "gp": 8
+    }
+   },
+   {
+    "id": "serpent-oil-moderate",
+    "name": "Serpent Oil (Moderate)",
+    "level": 5,
+    "price": {
+     "gp": 24
+    }
+   },
+   {
+    "id": "serpent-oil-greater",
+    "name": "Serpent Oil (Greater)",
+    "level": 7,
+    "price": {
+     "gp": 56
+    }
+   },
+   {
+    "id": "serpent-oil-major",
+    "name": "Serpent Oil (Major)",
+    "level": 11,
+    "price": {
+     "gp": 225
+    }
+   },
+   {
+    "id": "serpent-oil-true",
+    "name": "Serpent Oil (True)",
+    "level": 15,
+    "price": {
+     "gp": 1100
+    }
+   }
+  ],
+  "text": "Serpent Oil Source Treasure Vault (Remastered) pg. 87 Usage held in 2 hands Bulk L Activate (manipulate) This glistening oil has a green hue and tiny snake scales floating within. If you slather serpent oil on a Tiny object that is snakelike in shape, from a stick to a scarf, the object transforms into a viper, keeping some of the same colors and patterns of the original item. If placed on other objects, the oil fails and is wasted. This false snake has the minion trait. It remains in snake form for 1 minute before returning to its object state. If slain, the item returns to its original form, unharmed. Serpent Oil (Lesser) Source Treasure Vault (Remastered) pg. 87 Price 8 gp Bulk L Serpent Oil (Moderate) Source Treasure Vault (Remastered) pg. 87 Price 24 gp Bulk L The oil can be applied to a Small object, producing a sea snake, or a Medium object, producing a python. Serpent Oil (Greate"
+ },
+ {
+  "id": "seventh-prism",
+  "name": "Seventh Prism",
+  "itemType": "consumable",
+  "level": 3,
+  "kin": [
+   {
+    "id": "seventh-prism-triangular",
+    "name": "Seventh Prism (Triangular)",
+    "level": 3,
+    "price": {
+     "gp": 10
+    }
+   },
+   {
+    "id": "seventh-prism-pentagonal",
+    "name": "Seventh Prism (Pentagonal)",
+    "level": 7,
+    "price": {
+     "gp": 52
+    }
+   }
+  ],
+  "text": "Seventh Prism Source Treasure Vault (Remastered) pg. 75 Usage held in 1 hand Bulk L Activate Cast a Spell Beloved by the church of the Seventh Veil, a seventh prism is a crystal that disperses its internal light, casting an aurora of color. If you use a seventh prism to cast dizzying colors, targets are dazzled for twice as long as their saving throw indicates. On a critical failure, the target is dazzled for 1 minute after its blinded condition ends. Motes of shifting rainbow hues cloud the eyes, making it difficult to see details. Seventh Prism (Triangular) Source Treasure Vault (Remastered) pg. 75 Price 10 gp Bulk L Seventh Prism (Pentagonal) Source Treasure Vault (Remastered) pg. 75 Price 52 gp Bulk L The area increases to a 20-foot cone, and the DC for the flat check against the target being concealed increases to 7."
+ },
+ {
+  "id": "siccatite",
+  "name": "Siccatite",
+  "itemType": "equipment",
+  "level": 0,
+  "kin": [
+   {
+    "id": "siccatite-chunk",
+    "name": "Siccatite Chunk",
+    "level": 0,
+    "price": {
+     "gp": 500
+    }
+   },
+   {
+    "id": "siccatite-ingot",
+    "name": "Siccatite Ingot",
+    "level": 0,
+    "price": {
+     "gp": 5000
+    }
+   },
+   {
+    "id": "siccatite-object-standard-grade",
+    "name": "Siccatite Object (Standard-Grade)",
+    "level": 8,
+    "price": {
+     "gp": 350
+    }
+   },
+   {
+    "id": "siccatite-object-high-grade",
+    "name": "Siccatite Object (High-Grade)",
+    "level": 16,
+    "price": {
+     "gp": 6000
+    }
+   },
+   {
+    "id": "siccatite-armor",
+    "name": "Siccatite Armor",
+    "level": 12,
+    "price": null
+   },
+   {
+    "id": "siccatite-armor-standard-grade",
+    "name": "Siccatite Armor (Standard-Grade)",
+    "level": 12,
+    "price": {
+     "gp": 1600
+    }
+   },
+   {
+    "id": "siccatite-armor-high-grade",
+    "name": "Siccatite Armor (High-Grade)",
+    "level": 19,
+    "price": {
+     "gp": 32000
+    }
+   },
+   {
+    "id": "siccatite-shield",
+    "name": "Siccatite Shield",
+    "level": 8,
+    "price": null
+   },
+   {
+    "id": "siccatite-buckler-standard-grade",
+    "name": "Siccatite Buckler (Standard-Grade)",
+    "level": 8,
+    "price": {
+     "gp": 400
+    }
+   },
+   {
+    "id": "siccatite-shield-standard-grade",
+    "name": "Siccatite Shield (Standard-Grade)",
+    "level": 8,
+    "price": {
+     "gp": 440
+    }
+   },
+   {
+    "id": "siccatite-buckler-high-grade",
+    "name": "Siccatite Buckler (High-Grade)",
+    "level": 16,
+    "price": {
+     "gp": 8000
+    }
+   },
+   {
+    "id": "siccatite-shield-high-grade",
+    "name": "Siccatite Shield (High-Grade)",
+    "level": 16,
+    "price": {
+     "gp": 8800
+    }
+   },
+   {
+    "id": "siccatite-weapon",
+    "name": "Siccatite Weapon",
+    "level": 11,
+    "price": null
+   },
+   {
+    "id": "siccatite-weapon-standard-grade",
+    "name": "Siccatite Weapon (Standard-Grade)",
+    "level": 11,
+    "price": {
+     "gp": 1400
+    }
+   },
+   {
+    "id": "siccatite-weapon-high-grade",
+    "name": "Siccatite Weapon (High-Grade)",
+    "level": 17,
+    "price": {
+     "gp": 15000
+    }
+   }
+  ],
+  "text": "Siccatite Source Grand Bazaar pg. 100 In its raw state, this silvery ore is either scalding hot or freezing cold. Metallurgists disagree over whether siccatite is two related substances or one substance that determines its temperature output via some unknown process. Whatever the reason, the extreme temperature of the material means it must be handled carefully. Hot siccatite can easily ignite flammables such as paper and dry brush, and cold siccatite left in moist areas quickly surrounds itself with a thick layer of ice. A creature that comes into physical contact with a significant amount of siccatite takes 1 energy damage for each round of continued contact (either fire or cold damage, for hot and cold siccatite respectively). Siccatite Siccatite Items Hardness HP BT Thin Items Standard-grade 6 24 12 High-grade 10 40 20 Items Standard-grade 10 40 20 High-grade 13 52 26 Structures Stan"
+ },
+ {
+  "id": "siccatite-armor",
+  "name": "Siccatite Armor",
+  "itemType": "equipment",
+  "level": 12,
+  "kin": [
+   {
+    "id": "siccatite-armor-standard-grade",
+    "name": "Siccatite Armor (Standard-Grade)",
+    "level": 12,
+    "price": {
+     "gp": 1600
+    }
+   },
+   {
+    "id": "siccatite-armor-high-grade",
+    "name": "Siccatite Armor (High-Grade)",
+    "level": 19,
+    "price": {
+     "gp": 32000
+    }
+   }
+  ],
+  "text": "Siccatite Armor Source Grand Bazaar pg. 100 Usage worn armor Bulk varies by armor Base Material Siccatite Siccatite armor must be fitted with protective undercoats for it to be safely donned, making it heavier than other types of armor; add 1 Bulk to the armor's typical weight. When wearing cold siccatite armor, you're protected from severe and extreme environmental heat, and when wearing hot siccatite armor, you're protected from severe and extreme environmental cold. An opponent that has you grabbed or restrained with its body while you're wearing standard-grade siccatite armor takes 4 energy damage at the end of its turn (either fire or cold, for hot and cold siccatite armor respectively), or 6 damage for a high-grade siccatite armor. Siccatite Armor (Standard-Grade) Source Grand Bazaar pg. 100 Price 1,600 gp (+160 gp per Bulk) Craft Requirements The initial raw materials must include"
+ },
+ {
+  "id": "siccatite-shield",
+  "name": "Siccatite Shield",
+  "itemType": "equipment",
+  "level": 8,
+  "kin": [
+   {
+    "id": "siccatite-shield-standard-grade",
+    "name": "Siccatite Shield (Standard-Grade)",
+    "level": 8,
+    "price": {
+     "gp": 440
+    }
+   },
+   {
+    "id": "siccatite-shield-high-grade",
+    "name": "Siccatite Shield (High-Grade)",
+    "level": 16,
+    "price": {
+     "gp": 8800
+    }
+   }
+  ],
+  "text": "Siccatite Shield Source Grand Bazaar pg. 101 Usage varies by shield Base Material Siccatite Siccatite shields radiate extreme temperatures that protect them from energy damage. A protective coating on the wielder's side of the shield protects them from siccatite's radiant heat or cold but makes the shields bulkier than average. Standard-grade siccatite shields have resistance 10 to the corresponding energy type: fire damage for a hot siccatite shield or cold damage for a cold siccatite shield, as it takes even more extreme temperatures to affect them. They also provide some resistance to opposing temperatures because of their own extreme temperature, which extends to you when you Raise the Shield. The shield has resistance 5 to the opposing damage type (cold damage for a hot siccatite shield or fire damage for a cold siccatite shield), and while you have a siccatite shield Raised, you ga"
+ },
+ {
+  "id": "siccatite-weapon",
+  "name": "Siccatite Weapon",
+  "itemType": "equipment",
+  "level": 11,
+  "kin": [
+   {
+    "id": "siccatite-weapon-standard-grade",
+    "name": "Siccatite Weapon (Standard-Grade)",
+    "level": 11,
+    "price": {
+     "gp": 1400
+    }
+   },
+   {
+    "id": "siccatite-weapon-high-grade",
+    "name": "Siccatite Weapon (High-Grade)",
+    "level": 17,
+    "price": {
+     "gp": 15000
+    }
+   }
+  ],
+  "text": "Siccatite Weapon Source Grand Bazaar pg. 101 Usage varies by weapon Bulk varies by weapon Base Material Siccatite Crafting weapons from siccatite is often enough to drive smiths to despair, as the extreme temperature of the metal can cause it to shatter while being worked. Siccatite weapons have substantial grip wrappings to protect their wielders from the metal's extreme temperatures. They're constantly surrounded by a heat haze or a halo of rime, depending on the siccatite's type. Siccatite weapons automatically gain either a flaming or frost property rune, for hot and cold siccatite respectively, even if they aren't otherwise enchanted; this rune can't be removed, and it deals 1d8 damage instead of 1d6 damage. This uses one of the weapon's property rune slots as normal. High-grade siccatite gains a greater flaming (hot siccatite) or greater frost (cold siccatite) property instead. Sic"
+ },
+ {
+  "id": "silver",
+  "name": "Silver",
+  "itemType": "equipment",
+  "level": 2,
+  "kin": [
+   {
+    "id": "silver-tripod",
+    "name": "Silver Tripod",
+    "level": 1,
+    "price": {
+     "gp": 3
+    }
+   },
+   {
+    "id": "silver-ingot",
+    "name": "Silver Ingot",
+    "level": 2,
+    "price": {
+     "gp": 100
+    }
+   },
+   {
+    "id": "silver-crescent",
+    "name": "Silver Crescent",
+    "level": 6,
+    "price": null
+   },
+   {
+    "id": "silver-crescent-lesser",
+    "name": "Silver Crescent (Lesser)",
+    "level": 6,
+    "price": {
+     "gp": 35
+    }
+   },
+   {
+    "id": "silver-crescent-moderate",
+    "name": "Silver Crescent (Moderate)",
+    "level": 11,
+    "price": {
+     "gp": 235
+    }
+   },
+   {
+    "id": "silver-crescent-greater",
+    "name": "Silver Crescent (Greater)",
+    "level": 16,
+    "price": {
+     "gp": 1400
+    }
+   },
+   {
+    "id": "silver-orb",
+    "name": "Silver Orb",
+    "level": 5,
+    "price": null
+   },
+   {
+    "id": "silver-orb-lesser",
+    "name": "Silver Orb (Lesser)",
+    "level": 5,
+    "price": {
+     "gp": 30
+    }
+   },
+   {
+    "id": "silver-powder-orb",
+    "name": "Silver Powder Orb",
+    "level": 12,
+    "price": {
+     "gp": 400
+    }
+   },
+   {
+    "id": "silver-orb-greater",
+    "name": "Silver Orb (Greater)",
+    "level": 18,
+    "price": {
+     "gp": 5000
+    }
+   },
+   {
+    "id": "silver-snake-cane",
+    "name": "Silver Snake Cane",
+    "level": 6,
+    "price": {
+     "gp": 230
+    }
+   },
+   {
+    "id": "silver-armor",
+    "name": "Silver Armor",
+    "level": 5,
+    "price": null
+   },
+   {
+    "id": "silver-armor-low-grade",
+    "name": "Silver Armor (Low-Grade)",
+    "level": 5,
+    "price": {
+     "gp": 140
+    }
+   },
+   {
+    "id": "silver-armor-standard-grade",
+    "name": "Silver Armor (Standard-Grade)",
+    "level": 11,
+    "price": {
+     "gp": 1200
+    }
+   },
+   {
+    "id": "silver-armor-high-grade",
+    "name": "Silver Armor (High-Grade)",
+    "level": 18,
+    "price": {
+     "gp": 20000
+    }
+   },
+   {
+    "id": "silver-shield",
+    "name": "Silver Shield",
+    "level": 2,
+    "price": null
+   },
+   {
+    "id": "silver-buckler-low-grade",
+    "name": "Silver Buckler (Low-Grade)",
+    "level": 2,
+    "price": {
+     "gp": 30
+    }
+   },
+   {
+    "id": "silver-shield-low-grade",
+    "name": "Silver Shield (Low-Grade)",
+    "level": 2,
+    "price": {
+     "gp": 34
+    }
+   },
+   {
+    "id": "silver-buckler-standard-grade",
+    "name": "Silver Buckler (Standard-Grade)",
+    "level": 7,
+    "price": {
+     "gp": 300
+    }
+   },
+   {
+    "id": "silver-shield-standard-grade",
+    "name": "Silver Shield (Standard-Grade)",
+    "level": 7,
+    "price": {
+     "gp": 340
+    }
+   },
+   {
+    "id": "silver-buckler-high-grade",
+    "name": "Silver Buckler (High-Grade)",
+    "level": 15,
+    "price": {
+     "gp": 5000
+    }
+   },
+   {
+    "id": "silver-shield-high-grade",
+    "name": "Silver Shield (High-Grade)",
+    "level": 15,
+    "price": {
+     "gp": 5500
+    }
+   },
+   {
+    "id": "silver-weapon",
+    "name": "Silver Weapon",
+    "level": 2,
+    "price": null
+   },
+   {
+    "id": "silver-weapon-low-grade",
+    "name": "Silver Weapon (Low-Grade)",
+    "level": 2,
+    "price": {
+     "gp": 40
+    }
+   },
+   {
+    "id": "silver-weapon-standard-grade",
+    "name": "Silver Weapon (Standard-Grade)",
+    "level": 10,
+    "price": {
+     "gp": 880
+    }
+   },
+   {
+    "id": "silver-weapon-high-grade",
+    "name": "Silver Weapon (High-Grade)",
+    "level": 16,
+    "price": {
+     "gp": 9000
+    }
+   },
+   {
+    "id": "silver-salve",
+    "name": "Silver Salve",
+    "level": 2,
+    "price": {
+     "gp": 6
+    }
+   },
+   {
+    "id": "silver-chunk",
+    "name": "Silver Chunk",
+    "level": 2,
+    "price": {
+     "gp": 10
+    }
+   },
+   {
+    "id": "silver-object-low-grade",
+    "name": "Silver Object (Low-Grade)",
+    "level": 2,
+    "price": {
+     "gp": 20
+    }
+   },
+   {
+    "id": "silver-object-standard-grade",
+    "name": "Silver Object (Standard-Grade)",
+    "level": 7,
+    "price": {
+     "gp": 250
+    }
+   },
+   {
+    "id": "silver-object-high-grade",
+    "name": "Silver Object (High-Grade)",
+    "level": 15,
+    "price": {
+     "gp": 4500
+    }
+   },
+   {
+    "id": "silver-transmuting-ingot",
+    "name": "Silver Transmuting Ingot",
+    "level": 1,
+    "price": {
+     "gp": 3
+    }
+   },
+   {
+    "id": "silver-and-jade-censer",
+    "name": "Silver and jade censer",
+    "level": 0,
+    "price": {
+     "gp": 25
+    }
+   },
+   {
+    "id": "silver-coronet-with-peridots",
+    "name": "Silver coronet with peridots",
+    "level": 0,
+    "price": {
+     "gp": 25
+    }
+   },
+   {
+    "id": "silver-dragons-breath-potion-adult",
+    "name": "Silver Dragon's Breath Potion (Adult)",
+    "level": 12,
+    "price": {
+     "gp": 400
+    }
+   },
+   {
+    "id": "silver-dragons-breath-potion-wyrm",
+    "name": "Silver Dragon's Breath Potion (Wyrm)",
+    "level": 17,
+    "price": {
+     "gp": 3000
+    }
+   },
+   {
+    "id": "silver-dragons-breath-potion-young",
+    "name": "Silver Dragon's Breath Potion (Young)",
+    "level": 7,
+    "price": {
+     "gp": 70
+    }
+   },
+   {
+    "id": "silver-flagon-inscribed-with-fields",
+    "name": "Silver flagon inscribed with fields",
+    "level": 0,
+    "price": {
+     "gp": 25
+    }
+   },
+   {
+    "id": "silver-mirror-with-gilded-frame",
+    "name": "Silver mirror with gilded frame",
+    "level": 0,
+    "price": {
+     "gp": 25
+    }
+   },
+   {
+    "id": "silver-orb-powder",
+    "name": "Silver Orb (Powder)",
+    "level": 12,
+    "price": {
+     "gp": 400
+    }
+   },
+   {
+    "id": "silver-pieces",
+    "name": "Silver Pieces",
+    "level": 0,
+    "price": {
+     "sp": 1
+    }
+   },
+   {
+    "id": "silver-statuette-of-a-raven",
+    "name": "Silver statuette of a raven",
+    "level": 0,
+    "price": {
+     "gp": 25
+    }
+   }
+  ],
+  "text": "Silver Source GM Core pg. 254 Silver weapons are a bane to creatures ranging from devils to werewolves. Silver items are less durable than steel items, and low-grade silver items are usually merely silver-plated. Silver Items Silver Items Hardness HP BT Thin Items Low-grade 3 12 6 Standard-grade 5 20 10 High-grade 8 32 16 Items Low-grade 5 20 10 Standard-grade 7 28 14 High-grade 10 40 20 Structure Low-grade 10 40 20 Standard-grade 14 56 28 High-grade 20 80 40 Material Uses Silver Armor Silver Shield Silver Weapon Silver Chunk Source GM Core pg. 254, Core Rulebook pg. 579 Price 10 gp Bulk L Silver Ingot Source GM Core pg. 254, Core Rulebook pg. 579 Price 100 gp Silver Object (Low-Grade) Source GM Core pg. 254, Core Rulebook pg. 579 Price 20 gp (per Bulk) Silver Object (Standard-Grade) Source GM Core pg. 254, Core Rulebook pg. 579 Price 250 gp (per Bulk) Silver Object (High-Grade) Source G"
+ },
+ {
+  "id": "silver-armor",
+  "name": "Silver Armor",
+  "itemType": "equipment",
+  "level": 5,
+  "kin": [
+   {
+    "id": "silver-armor-low-grade",
+    "name": "Silver Armor (Low-Grade)",
+    "level": 5,
+    "price": {
+     "gp": 140
+    }
+   },
+   {
+    "id": "silver-armor-standard-grade",
+    "name": "Silver Armor (Standard-Grade)",
+    "level": 11,
+    "price": {
+     "gp": 1200
+    }
+   },
+   {
+    "id": "silver-armor-high-grade",
+    "name": "Silver Armor (High-Grade)",
+    "level": 18,
+    "price": {
+     "gp": 20000
+    }
+   }
+  ],
+  "text": "Silver Armor Source GM Core pg. 229 Usage worn armor Bulk varies by armor Base Material Silver Silver armor sickens certain creatures that touch it. A creature with weakness to silver that critically fails an unarmed attack against a creature in silver armor becomes sickened 1. A creature with weakness to silver is sickened 1 as long as it wears silver armor. Silver Armor (Low-Grade) Source GM Core pg. 229, Core Rulebook pg. 556 Price 140 gp (+14 gp per Bulk) silver worth at least 70 sp + 7 sp per Bulk Silver Armor (Standard-Grade) Source GM Core pg. 229, Core Rulebook pg. 556 Price 1,200 gp (+120 gp per Bulk) The initial raw materials must include silver worth at least 150 gp + 15 gp per Bulk. Silver Armor (High-Grade) Source GM Core pg. 229, Core Rulebook pg. 556 Price 20,000 gp (+2,000 gp per Bulk) The initial raw materials must include silver worth at least 10,000 gp + 1,000 gp per B"
+ },
+ {
+  "id": "silver-crescent",
+  "name": "Silver Crescent",
+  "itemType": "equipment",
+  "level": 6,
+  "kin": [
+   {
+    "id": "silver-crescent-lesser",
+    "name": "Silver Crescent (Lesser)",
+    "level": 6,
+    "price": {
+     "gp": 35
+    }
+   },
+   {
+    "id": "silver-crescent-moderate",
+    "name": "Silver Crescent (Moderate)",
+    "level": 11,
+    "price": {
+     "gp": 235
+    }
+   },
+   {
+    "id": "silver-crescent-greater",
+    "name": "Silver Crescent (Greater)",
+    "level": 16,
+    "price": {
+     "gp": 1400
+    }
+   }
+  ],
+  "text": "Silver Crescent Source Treasure Vault (Remastered) pg. 50 Usage held in 1 hand A piquant tamarind and chili-lime flavor infuses a silver crescent, which was first created to aid those battling the undead. For 1 hour, you shed cool, white light like a torch, and you gain an item bonus to saving throws against olfactory effects according to the crescent's type. While shedding this light, you can't be concealed if you're visible, and if you're invisible, you're concealed instead rather than being undetected. Secondary Effect Effect A ray of light descends on a 5-foot square of your choice within 120 feet. Any creature in that space takes positive damage with a basic Reflex save and is dazzled until the end of its next turn on a failed save. This is treated as silver for the purposes of weaknesses, resistances, and the like. The silver crescent becomes inert. Silver Crescent (Lesser) Source "
+ },
+ {
+  "id": "silver-orb",
+  "name": "Silver Orb",
+  "itemType": "equipment",
+  "level": 5,
+  "kin": [
+   {
+    "id": "silver-orb-lesser",
+    "name": "Silver Orb (Lesser)",
+    "level": 5,
+    "price": {
+     "gp": 30
+    }
+   },
+   {
+    "id": "silver-orb-greater",
+    "name": "Silver Orb (Greater)",
+    "level": 18,
+    "price": {
+     "gp": 5000
+    }
+   },
+   {
+    "id": "silver-orb-powder",
+    "name": "Silver Orb (Powder)",
+    "level": 12,
+    "price": {
+     "gp": 400
+    }
+   }
+  ],
+  "text": "Silver Orb Source Wake the Dead #1 pg. 27 Usage held in 1 hand Bulk L Activate Strike Filled with sharp silver flings and alchemical reagents, this glass sphere leaves behind a cloud of dangerous shards. A creature hit with the orb takes 1 slashing damage and is covered with silver filings, making weapons and unnarmed attacks damaging them be treated as silver until they spend an Interact action to clean off. Except on a critical miss, the filings linger airborne in a 5-foot burst around the target. The cloud lasts for 1 minute or until dispersed by a strong wind. Creatures inside the cloud are concealed to those outside. Each breathing creature who ends its turn in the cloud takes the listed slashing damage from a silver source, with a basic Fortitude save. Silver Orb (Lesser) Source Wake the Dead #1 pg. 27 Price 30 gp Bulk L The cloud deals 1d6 slashing damage and the save DC is 19. Si"
+ },
+ {
+  "id": "silver-shield",
+  "name": "Silver Shield",
+  "itemType": "equipment",
+  "level": 2,
+  "kin": [
+   {
+    "id": "silver-shield-low-grade",
+    "name": "Silver Shield (Low-Grade)",
+    "level": 2,
+    "price": {
+     "gp": 34
+    }
+   },
+   {
+    "id": "silver-shield-standard-grade",
+    "name": "Silver Shield (Standard-Grade)",
+    "level": 7,
+    "price": {
+     "gp": 340
+    }
+   },
+   {
+    "id": "silver-shield-high-grade",
+    "name": "Silver Shield (High-Grade)",
+    "level": 15,
+    "price": {
+     "gp": 5500
+    }
+   }
+  ],
+  "text": "Silver Shield Source GM Core pg. 234 Usage varies by shield Base Material Silver Silver shields don't typically have an additional effect, though when used for a shield bash, they're silver weapons. Silver Buckler (Low-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 30 gp Bulk L The shield has Hardness 1, HP 4, and BT 2. Craft Requirements silver worth at least 15 sp Silver Shield (Low-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 34 gp Bulk 1 The shield has Hardness 3, HP 12, and BT 6. Craft Requirements silver worth at least 17 sp Silver Buckler (Standard-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 300 gp Bulk L The shield has Hardness 3, HP 12, and BT 6. Craft Requirements silver worth at least 375 sp Silver Shield (Standard-Grade) Source GM Core pg. 234, Core Rulebook pg. 587 Price 340 gp Bulk 1 The shield has Hardness 5, HP 20, and BT 10. Craft"
+ },
+ {
+  "id": "silver-weapon",
+  "name": "Silver Weapon",
+  "itemType": "equipment",
+  "level": 2,
+  "kin": [
+   {
+    "id": "silver-weapon-low-grade",
+    "name": "Silver Weapon (Low-Grade)",
+    "level": 2,
+    "price": {
+     "gp": 40
+    }
+   },
+   {
+    "id": "silver-weapon-standard-grade",
+    "name": "Silver Weapon (Standard-Grade)",
+    "level": 10,
+    "price": {
+     "gp": 880
+    }
+   },
+   {
+    "id": "silver-weapon-high-grade",
+    "name": "Silver Weapon (High-Grade)",
+    "level": 16,
+    "price": {
+     "gp": 9000
+    }
+   }
+  ],
+  "text": "Silver Weapon Source GM Core pg. 240 Usage varies by weapon Bulk varies by weapon Base Material Silver Silver weapons deal additional damage to creatures with weakness to silver, like werewolves, and ignore the resistances of some other creatures, like devils. Silver Weapon (Low-Grade) Source GM Core pg. 240, Core Rulebook pg. 599 Price 40 gp (+4 gp per Bulk) Craft Requirements at least 20 sp of silver + 2 sp per Bulk Silver Weapon (Standard-Grade) Source GM Core pg. 240, Core Rulebook pg. 599 Price 880 gp (+88 gp per Bulk) Craft Requirements at least 110 gp of silver + 11 gp per Bulk Silver Weapon (High-Grade) Source GM Core pg. 240, Core Rulebook pg. 599 Price 9,000 gp (+900 gp per Bulk) Craft Requirements at least 4,500 gp of silver + 450 gp per Bulk"
+ },
+ {
+  "id": "silverscrap-bomb",
+  "name": "Silverscrap Bomb",
+  "itemType": "equipment",
+  "level": 3,
+  "kin": [
+   {
+    "id": "silverscrap-bomb-lesser",
+    "name": "Silverscrap Bomb (Lesser)",
+    "level": 3,
+    "price": {
+     "gp": 11
+    }
+   },
+   {
+    "id": "silverscrap-bomb-moderate",
+    "name": "Silverscrap Bomb (Moderate)",
+    "level": 11,
+    "price": {
+     "gp": 255
+    }
+   },
+   {
+    "id": "silverscrap-bomb-greater",
+    "name": "Silverscrap Bomb (Greater)",
+    "level": 17,
+    "price": {
+     "gp": 2550
+    }
+   }
+  ],
+  "text": "Silverscrap Bomb May contain spoilers from Hellbreakers Source Pathfinder #222: Hellbreakers pg. 209 Usage held in 1 hand Bulk L Activate Strike Silverscrap bombs are compact clusters of silver shards that explode upon impact, shredding everything in the vicinity. The bomb grants an item bonus to attack rolls and deals piercing damage and piercing splash damage, according to the bomb's type. All damage from the bomb is treated as silver for the purposes of weaknesses, resistances, and the like. Silverscrap Bomb (Lesser) Source Pathfinder #222: Hellbreakers pg. 209 Price 11 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d4 piercing damage and 2 piercing splash damage. Silverscrap Bomb (Moderate) Source Pathfinder #222: Hellbreakers pg. 209 Price 255 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d4 piercing damage and 3 piercing splash damage. Silverscrap Bomb "
+ },
+ {
+  "id": "silvertongue-mutagen",
+  "name": "Silvertongue Mutagen",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "silvertongue-mutagen-lesser",
+    "name": "Silvertongue Mutagen (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 4
+    }
+   },
+   {
+    "id": "silvertongue-mutagen-moderate",
+    "name": "Silvertongue Mutagen (Moderate)",
+    "level": 3,
+    "price": {
+     "gp": 12
+    }
+   },
+   {
+    "id": "silvertongue-mutagen-greater",
+    "name": "Silvertongue Mutagen (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 300
+    }
+   },
+   {
+    "id": "silvertongue-mutagen-major",
+    "name": "Silvertongue Mutagen (Major)",
+    "level": 17,
+    "price": {
+     "gp": 3000
+    }
+   }
+  ],
+  "text": "Silvertongue Mutagen Source Player Core 2 pg. 290 Usage held in 1 hand Bulk L Activate (manipulate) Your features become striking, and your voice becomes musical and commanding, though emotion clouds your reason. Benefit You gain an item bonus to Deception, Diplomacy, Intimidation, and Performance checks. Your critical failures with any of these skills become failures instead. Drawback You take a –2 penalty to Arcana, Crafting, Lore, Occultism, and Society checks. Choose one skill in which you're trained; for the duration, you become untrained in that skill. Silvertongue Mutagen (Lesser) Source Player Core 2 pg. 290, Core Rulebook pg. 550 Price 4 gp Bulk L The bonus is +1, and the duration is 1 minute. Silvertongue Mutagen (Moderate) Source Player Core 2 pg. 290, Core Rulebook pg. 550 Price 12 gp Bulk L The bonus is +2, and the duration is 10 minutes. Silvertongue Mutagen (Greater) Sourc"
+ },
+ {
+  "id": "sisterstone",
+  "name": "Sisterstone",
+  "itemType": "equipment",
+  "level": 0,
+  "kin": [
+   {
+    "id": "sisterstone-chunk",
+    "name": "Sisterstone Chunk",
+    "level": 3,
+    "price": {
+     "gp": 20
+    }
+   },
+   {
+    "id": "sisterstone-ingot",
+    "name": "Sisterstone Ingot",
+    "level": 3,
+    "price": {
+     "gp": 200
+    }
+   },
+   {
+    "id": "sisterstone-object-low-grade",
+    "name": "Sisterstone Object (Low-Grade)",
+    "level": 3,
+    "price": {
+     "gp": 30
+    }
+   },
+   {
+    "id": "sisterstone-object-standard-grade",
+    "name": "Sisterstone Object (Standard-Grade)",
+    "level": 8,
+    "price": {
+     "gp": 350
+    }
+   },
+   {
+    "id": "sisterstone-object-high-grade",
+    "name": "Sisterstone Object (High-Grade)",
+    "level": 16,
+    "price": {
+     "gp": 5500
+    }
+   },
+   {
+    "id": "sisterstone-armor",
+    "name": "Sisterstone Armor",
+    "level": 5,
+    "price": null
+   },
+   {
+    "id": "sisterstone-armor-low-grade",
+    "name": "Sisterstone Armor (Low-Grade)",
+    "level": 5,
+    "price": {
+     "gp": 140
+    }
+   },
+   {
+    "id": "sisterstone-armor-standard-grade",
+    "name": "Sisterstone Armor (Standard-Grade)",
+    "level": 10,
+    "price": {
+     "gp": 1000
+    }
+   },
+   {
+    "id": "sisterstone-armor-high-grade",
+    "name": "Sisterstone Armor (High-Grade)",
+    "level": 18,
+    "price": {
+     "gp": 19500
+    }
+   },
+   {
+    "id": "sisterstone-weapon",
+    "name": "Sisterstone Weapon",
+    "level": 3,
+    "price": null
+   },
+   {
+    "id": "sisterstone-weapon-low-grade",
+    "name": "Sisterstone Weapon (Low-Grade)",
+    "level": 3,
+    "price": {
+     "gp": 70
+    }
+   },
+   {
+    "id": "sisterstone-weapon-standard-grade",
+    "name": "Sisterstone Weapon (Standard-Grade)",
+    "level": 11,
+    "price": {
+     "gp": 1200
+    }
+   },
+   {
+    "id": "sisterstone-weapon-high-grade",
+    "name": "Sisterstone Weapon (High-Grade)",
+    "level": 19,
+    "price": {
+     "gp": 32000
+    }
+   }
+  ],
+  "text": "Sisterstone May contain spoilers from Blood Lords Source Pathfinder #183: Field of Maidens pg. 79 Sisterstone is a term used for two closely related ores infused by the spiritual runoff in the Field of Maidens, dusk sisterstone and scarlet sisterstone. They have the same physical properties except for color—dusk sisterstone is a pale orange while scarlet sisterstone is orange-red. When near an object made of the other type of sisterstone, they both begin exuding spiritual energy that repels undead. When an object made of dusk sisterstone is within 15 feet of an object made of scarlet sisterstone of the same grade, they create a reciprocal field. Any undead creature adjacent to one of the objects when the field is formed, or who moves adjacent to one while the field is active, becomes enfeebled 1 unless it succeeds at a DC 15 Fortitude save. This lasts until the undead creature is no long"
+ },
+ {
+  "id": "sisterstone-armor",
+  "name": "Sisterstone Armor",
+  "itemType": "equipment",
+  "level": 5,
+  "kin": [
+   {
+    "id": "sisterstone-armor-low-grade",
+    "name": "Sisterstone Armor (Low-Grade)",
+    "level": 5,
+    "price": {
+     "gp": 140
+    }
+   },
+   {
+    "id": "sisterstone-armor-standard-grade",
+    "name": "Sisterstone Armor (Standard-Grade)",
+    "level": 10,
+    "price": {
+     "gp": 1000
+    }
+   },
+   {
+    "id": "sisterstone-armor-high-grade",
+    "name": "Sisterstone Armor (High-Grade)",
+    "level": 18,
+    "price": {
+     "gp": 19500
+    }
+   }
+  ],
+  "text": "Sisterstone Armor May contain spoilers from Blood Lords Source Pathfinder #183: Field of Maidens pg. 80 Usage worn armor Bulk varies by armor Base Material Sisterstone Sisterstone armor incorporates stone plates. A creature wearing sisterstone armor gains the following activation to help defend an ally threatened by undead creatures. Activate command; Trigger The ally deals damage to an undead creature; Requirements A reciprocal field is active between this armor and an ally's sisterstone armor or sisterstone weapon; Effect You call on the energy in your armor to protect your companion from retaliation. The ally gains resistance 2 to all damage dealt by undead creatures for 1 round. The resistance is 3 if your sisterstone armor is standard grade, or resistance 4 if it's high grade. Sisterstone Armor (Low-Grade) Source Pathfinder #183: Field of Maidens pg. 80 Price 140 gp (plus 14 gp per "
+ },
+ {
+  "id": "sisterstone-weapon",
+  "name": "Sisterstone Weapon",
+  "itemType": "equipment",
+  "level": 3,
+  "kin": [
+   {
+    "id": "sisterstone-weapon-low-grade",
+    "name": "Sisterstone Weapon (Low-Grade)",
+    "level": 3,
+    "price": {
+     "gp": 70
+    }
+   },
+   {
+    "id": "sisterstone-weapon-standard-grade",
+    "name": "Sisterstone Weapon (Standard-Grade)",
+    "level": 11,
+    "price": {
+     "gp": 1200
+    }
+   },
+   {
+    "id": "sisterstone-weapon-high-grade",
+    "name": "Sisterstone Weapon (High-Grade)",
+    "level": 19,
+    "price": {
+     "gp": 32000
+    }
+   }
+  ],
+  "text": "Sisterstone Weapon May contain spoilers from Blood Lords Source Pathfinder #183: Field of Maidens pg. 80 Usage varies by weapon Bulk varies by weapon Base Material Sisterstone A weapon with a sisterstone striking surface can be charged with undead-destroying energy in response to violence from an undead creature. A creature wielding a sisterstone weapon gains the following activation. Only melee weapons can be made of sisterstone. Activate command; Trigger The ally is critically hit by a Strike from an undead creature you can see; Requirements A reciprocal field is active between this weapon and an ally's sisterstone armor or sisterstone weapon; Effect Your weapon leaps out with positive energy in retaliation. Strike the triggering undead with the weapon, and your Strike deals 2 additional positive damage. The positive damage increases to 4 if your sisterstone weapon is standard grade, o"
+ },
+ {
+  "id": "sixfingers-elixir",
+  "name": "Sixfingers Elixir",
+  "itemType": "equipment",
+  "level": 5,
+  "kin": [
+   {
+    "id": "sixfingers-elixir-lesser",
+    "name": "Sixfingers Elixir (Lesser)",
+    "level": 5,
+    "price": {
+     "gp": 25
+    }
+   },
+   {
+    "id": "sixfingers-elixir-moderate",
+    "name": "Sixfingers Elixir (Moderate)",
+    "level": 11,
+    "price": {
+     "gp": 250
+    }
+   },
+   {
+    "id": "sixfingers-elixir-greater",
+    "name": "Sixfingers Elixir (Greater)",
+    "level": 17,
+    "price": {
+     "gp": 2500
+    }
+   }
+  ],
+  "text": "Sixfingers Elixir May contain spoilers from The Slithering Source The Slithering pg. 61 Usage held in 1 hand Bulk L Activate Interact This gritty, spicy fluid causes you to grow a sixth finger on each hand and gives you a spiderlike grip. You gain a +2 item bonus to your Reflex DC to keep from being Disarmed and a climb Speed of 20 feet for the listed duration. Sixfingers Elixir (Lesser) Source The Slithering pg. 61 Price 25 gp The duration is 10 minutes. Sixfingers Elixir (Moderate) Source The Slithering pg. 61 Price 250 gp The duration is 1 hour. Sixfingers Elixir (Greater) Source The Slithering pg. 61 Price 2,500 gp The duration is 8 hours."
+ },
+ {
+  "id": "skeptics-elixir",
+  "name": "Skeptic's Elixir",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "skeptics-elixir-lesser",
+    "name": "Skeptic's Elixir (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 4
+    }
+   },
+   {
+    "id": "skeptics-elixir-moderate",
+    "name": "Skeptic's Elixir (Moderate)",
+    "level": 6,
+    "price": {
+     "gp": 50
+    }
+   },
+   {
+    "id": "skeptics-elixir-greater",
+    "name": "Skeptic's Elixir (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 300
+    }
+   }
+  ],
+  "text": "Skeptic's Elixir May contain spoilers from Abomination Vaults Source Pathfinder #163: Ruins of Gauntlight pg. 78 Usage held in 1 hand Bulk L Activate Interact This elixir sharpens your mind and allows you to see through lies, falsehoods, and magical trickery. You gain an item bonus to Perception checks and Perception DCs to notice falsehoods, whether they're spoken lies or written deceit. You gain this same item bonus to Will saves. Skeptic's Elixir (Lesser) Source Pathfinder #163: Ruins of Gauntlight pg. 78 Price 4 gp Bulk L The bonus is +1, and the duration is 1 minute. Skeptic's Elixir (Moderate) Source Pathfinder #163: Ruins of Gauntlight pg. 78 Price 50 gp Bulk L The bonus is +2, and the duration is 10 minutes. Skeptic's Elixir (Greater) Source Pathfinder #163: Ruins of Gauntlight pg. 78 Price 300 gp Bulk L The bonus is +3, and the duration is 1 hour."
+ },
+ {
+  "id": "skitter-knot",
+  "name": "Skitter Knot",
+  "itemType": "consumable",
+  "level": 6,
+  "kin": [
+   {
+    "id": "skitter-knot-greater",
+    "name": "Skitter Knot (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 275
+    }
+   },
+   {
+    "id": "skitter-knot-lesser",
+    "name": "Skitter Knot (Lesser)",
+    "level": 6,
+    "price": {
+     "gp": 50
+    }
+   },
+   {
+    "id": "skitter-knot-major",
+    "name": "Skitter Knot (Major)",
+    "level": 16,
+    "price": {
+     "gp": 1800
+    }
+   }
+  ],
+  "text": "Skitter Knot May contain spoilers from Wardens of Wildwood Source Pathfinder #201: Pactbreaker pg. 81 Usage affixed to armor Activate envision Trigger You are dying at the beginning of your turn. Carved from an arboreal’s knuckle, this wooden torus can be activated despite your being unconscious. The knot then sprouts several roots that arch over your body like a spider’s legs. These lift you a few inches off the ground before Striding and carrying you with them. The roots prioritize taking you away from obvious harm, though as a reaction, an ally who speaks Arboreal can command the roots to carry you to a particular point within range. After moving, the roots continue protecting you; this counts as Raising a Shield, giving you a +1 circumstance bonus to AC until the beginning of your next turn. The roots use the Shield Block reaction against the first physical attack against you, after "
+ },
+ {
+  "id": "skunk-bomb",
+  "name": "Skunk Bomb",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "skunk-bomb-lesser",
+    "name": "Skunk Bomb (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 4
+    }
+   },
+   {
+    "id": "skunk-bomb-moderate",
+    "name": "Skunk Bomb (Moderate)",
+    "level": 3,
+    "price": {
+     "gp": 12
+    }
+   },
+   {
+    "id": "skunk-bomb-greater",
+    "name": "Skunk Bomb (Greater)",
+    "level": 11,
+    "price": {
+     "gp": 240
+    }
+   },
+   {
+    "id": "skunk-bomb-major",
+    "name": "Skunk Bomb (Major)",
+    "level": 17,
+    "price": {
+     "gp": 2400
+    }
+   }
+  ],
+  "text": "Skunk Bomb Source Treasure Vault (Remastered) pg. 45 Usage held in 1 hand Bulk L Activate Strike Skunk bombs are made from the concentrated odors of xulgaths, hezrous, and other creatures with natural or supernatural stench. The bomb grants an item bonus to attack rolls and deals poison damage and poison splash damage. Any creature hit by the bomb or in its splash area must attempt a Fortitude saving throw with a DC based on the bomb's type. Creatures in the splash area treat the results of their saving throw as one step better. Critical Success The target is unaffected. Success The target is sickened 1. Failure The target is sickened 1 and slowed 1 while sickened. Critical Failure The target is blinded for 1 round, sickened 2, and slowed 1 while sickened. Creatures sickened by the bomb emit an odor that lasts 10 minutes after the sickened condition ends (or 1 hour if they were also blin"
+ },
+ {
+  "id": "sloughstone",
+  "name": "Sloughstone",
+  "itemType": "equipment",
+  "level": 0,
+  "kin": [
+   {
+    "id": "sloughstone-chunk",
+    "name": "Sloughstone Chunk",
+    "level": 0,
+    "price": {
+     "gp": 500
+    }
+   },
+   {
+    "id": "sloughstone-ingot",
+    "name": "Sloughstone Ingot",
+    "level": 0,
+    "price": {
+     "gp": 5000
+    }
+   },
+   {
+    "id": "sloughstone-object-standard-grade",
+    "name": "Sloughstone Object (Standard-Grade)",
+    "level": 8,
+    "price": {
+     "gp": 350
+    }
+   },
+   {
+    "id": "sloughstone-object-high-grade",
+    "name": "Sloughstone Object (High-Grade)",
+    "level": 16,
+    "price": {
+     "gp": 6000
+    }
+   }
+  ],
+  "text": "Sloughstone Source War of Immortals pg. 208 Weapons made from sloughstone exploit Verex-That-Was's hatred of his unwilling transformation, turning his own flesh against him. Processing sloughstone is difficult and unpleasant, increasing the DC to craft an item with the material by 4. Structures can't be made out of sloughstone. Sloughstone Sloughstone Items **Hardness ** HP BT Thin Items Standard-grade 8 36 18 High-grade 11 48 24 Items Standard-grade 12 50 25 High-grade 15 62 31 Sloughstone Chunk Source War of Immortals pg. 208 Price 500 gp Sloughstone Ingot Source War of Immortals pg. 208 Price 5,000 gp Sloughstone Object (Standard-Grade) Source War of Immortals pg. 208 Price 350 gp (per Bulk) Sloughstone Object (High-Grade) Source War of Immortals pg. 208 Price 6,000 gp (per Bulk)"
+ },
+ {
+  "id": "smoke-ball",
+  "name": "Smoke Ball",
+  "itemType": "equipment",
+  "level": 1,
+  "kin": [
+   {
+    "id": "smoke-ball-lesser",
+    "name": "Smoke Ball (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 3
+    }
+   },
+   {
+    "id": "smoke-ball-greater",
+    "name": "Smoke Ball (Greater)",
+    "level": 7,
+    "price": {
+     "gp": 53
+    }
+   }
+  ],
+  "text": "Smoke Ball Source Player Core 2 pg. 296, GM Core pg. 251 Usage held in 2 hands Bulk L Activate (manipulate) With a sharp twist of this item, you instantly create a screen of thick, opaque smoke in a burst centered on one corner of your space. All creatures within that area are concealed, and all other creatures are concealed to them. The smoke lasts for 1 minute or until dispersed by a strong wind. Smoke Ball (Lesser) Source Player Core 2 pg. 296, GM Core pg. 251 Price 3 gp Bulk L The radius of the burst is 5 feet. Smoke Ball (Greater) Source Player Core 2 pg. 296, GM Core pg. 251 Price 53 gp Bulk L The radius of the burst is 20 feet."
+ },
+ {
+  "id": "smoke-screen-snare",
+  "name": "Smoke Screen Snare",
+  "itemType": "consumable",
+  "level": 1,
+  "kin": [
+   {
+    "id": "smoke-screen-snare-lesser",
+    "name": "Smoke Screen Snare (Lesser)",
+    "level": 1,
+    "price": {
+     "gp": 3
+    }
+   },
+   {
+    "id": "smoke-screen-snare-greater",
+    "name": "Smoke  Screen Snare (Greater)",
+    "level": 7,
+    "price": {
+     "gp": 60
+    }
+   }
+  ],
+  "text": "Smoke Screen Snare May contain spoilers from Quest for the Frozen Flame Source Pathfinder #176: Lost Mammoth Valley pg. 80 You create a snare that releases a dense cloud of smoke when a creature enters the square, filling a specified area. All creatures within that area are concealed, and all other creatures are concealed to them. The smoke lasts for 1 minute or until dispersed by a strong wind. Craft Requirements Supply a lesser smokestick for the lesser snare or a greater smokestick for the greater snare. Smoke Screen Snare (Lesser) Source Pathfinder #176: Lost Mammoth Valley pg. 80 Price 3 gp Bulk L The smoke fills the snare's square and all adjacent squares. Smoke Screen Snare (Greater) Source Pathfinder #176: Lost Mammoth Valley pg. 80 Price 60 gp Bulk L The smoke fills a 20-foot burst centered on the snare's square."
+ },
+ {
+  "id": "smugglers-sack",
+  "name": "Smuggler's Sack",
+  "itemType": "equipment",
+  "level": 4,
+  "kin": [
+   {
+    "id": "smugglers-sack-type-i",
+    "name": "Smuggler's Sack (Type I)",
+    "level": 4,
+    "price": {
+     "gp": 75
+    }
+   },
+   {
+    "id": "smugglers-sack-type-ii",
+    "name": "Smuggler's Sack (Type II)",
+    "level": 7,
+    "price": {
+     "gp": 300
+    }
+   },
+   {
+    "id": "smugglers-sack-type-iii",
+    "name": "Smuggler's Sack (Type III)",
+    "level": 11,
+    "price": {
+     "gp": 1200
+    }
+   },
+   {
+    "id": "smugglers-sack-type-iv",
+    "name": "Smuggler's Sack (Type IV)",
+    "level": 13,
+    "price": {
+     "gp": 2400
+    }
+   },
+   {
+    "id": "smugglers-sack-type-v",
+    "name": "Smuggler's Sack (Type V)",
+    "level": 17,
+    "price": {
+     "gp": 12000
+    }
+   }
+  ],
+  "text": "Smuggler's Sack Source Firebrands pg. 87 Usage held in 2 hands Bulk 1 Access Second-mark members of the Firebrands have access to this item. This specialized version of a bag of holding appears to be a plain, leather bag that opens at the top, with a thin leather cord attached to cinch the sack closed. The sack's magic allows you to access either its mundane space or an extradimensional pocket. The mundane space inside the sack always holds 5 Bulk. The pocket's capacity varies with the type of sack. Anyone searching the bag can notice a thin, magical seam indicating the existence of the extradimensional space with a successful DC 18 Perception check. Activate command; Effect You speak a secret command word. Depending on which word you use, the sack either opens up to the mundane sack or the extradimensional pocket. You can Interact to put items in or remove them as normal. Smuggler's Sac"
+ }
+]

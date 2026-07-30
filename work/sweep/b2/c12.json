@@ -1,0 +1,1306 @@
+[
+ {
+  "id": "toxic-effluence",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Toxic Effluence",
+  "level": 10,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "contact",
+   "poison"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨2⟩ Interact --- This dark green sludge has a caustic scent and gritty texture. Capable of entering the body through contact with flesh, toxic effluence becomes harmful once it hits the bloodstream, where it causes internal chemical burns, intense pain, and muscle spasms. --- **Saving Throw** **Maximum Duration** 6 rounds **Stage 1** 3d6 damage, 3d6 damage, Clumsy 1, and Enfeebled 1 (1 round) **Stage 2** 4d6 damage, 4d6 damage, Clumsy 2, and Enfeebled 2 (1 round) **Stage 3** 5d6 damage, 5d6 damage, Clumsy 3, and Enfeebled 3 (1 round)"
+ },
+ {
+  "id": "tree-of-duality",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Tree of Duality",
+  "level": 6,
+  "traits": [
+   "air",
+   "composite",
+   "impulse",
+   "kineticist",
+   "primal",
+   "wood"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "An ephemeral tree bursts forth, floating on air in an unoccupied square of your choice within 60 feet. Blooming flowers and fungal growths shed pollen and spores, which a swirling gust of air spreads in a around it. The tree lasts until the end of your next turn, and you can Sustain it up to 1 minute. This has both of the following effects. - **Cleansing Pollen** (healing, vitality) Each living ally that's in the area or enters it regains HP and is then temporarily immune to regaining HP from Tree of Duality for 10 minutes. - **Hallucinogenic Spores** (mental) Enemies in the area are dazzled. An enemy that leaves the area remains dazzled until the start of its next turn. --- **Level (+2)** The healing increases by 1d4."
+ },
+ {
+  "id": "tremorsensors",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Tremorsensors",
+  "level": 4,
+  "traits": [
+   "adjustment",
+   "mechanical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "These small, metallic devices resemble squashed spheres. They each contain a tiny gyroscope that's incredibly sensitive to vibrations in the earth. While typically worn on one's footwear, the device can be affixed to any part of your armor. **Activate** ⟨4⟩ (manipulate) **Frequency** once per day --- **Effect** You stomp a foot, clap your hands, or create some other source of sound, gaining tremorsense as an imprecise sense with a range of 20 feet for the next 10 minutes."
+ },
+ {
+  "id": "trinity-geode",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Trinity Geode",
+  "level": 3,
+  "traits": [
+   "earth",
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "The crystal chamber within this split geode is divided into three lobes of equal size. The spell DC of any spell cast by Activating this item is 17. - **Armor** After you cast an earth spell by Activating the *geode*, you gain resistance 1 to physical damage (except adamantine) until the end of your next turn, or double the resistance for a non-cantrip spell. - **Weapon** After you cast an earth spell by Activating the geode, your Strikes with the weapon deal an additional 1d4 bludgeoning damage until the end of your next turn. --- **Activate** Cast a Spell **Effect** You cast Scatter Scree."
+ },
+ {
+  "id": "trinity-geode-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Trinity Geode (Greater)",
+  "level": 8,
+  "traits": [
+   "earth",
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "The crystal chamber within this split geode is divided into three lobes of equal size. The spell DC of any spell cast by Activating this item is 24. - **Armor** After you cast an earth spell by Activating the *geode*, you gain resistance 3 to physical damage (except adamantine) until the end of your next turn, or double the resistance for a non-cantrip spell. - **Weapon** After you cast an earth spell by Activating the geode, your Strikes with the weapon deal an additional 1d6 bludgeoning damage until the end of your next turn. --- **Activate** Cast a Spell **Effect** You cast Scatter Scree. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast One with Stone."
+ },
+ {
+  "id": "trinity-geode-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Trinity Geode (Major)",
+  "level": 12,
+  "traits": [
+   "earth",
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "The crystal chamber within this split geode is divided into three lobes of equal size. The spell DC of any spell cast by Activating this item is 29. - **Armor** After you cast an earth spell by Activating the *geode*, you gain resistance 5 to physical damage (except adamantine) until the end of your next turn, or double the resistance for a non-cantrip spell. - **Weapon** After you cast an earth spell by Activating the geode, your Strikes with the weapon deal an additional 1d8 bludgeoning damage until the end of your next turn. --- **Activate** Cast a Spell **Effect** You cast Scatter Scree. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast 4th-rank One with Stone. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast Spike Stones."
+ },
+ {
+  "id": "triumphant-boast",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Triumphant Boast",
+  "level": 2,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You relate a loud and impressive tale of your triumph over a formidable foe. When you Perform, choose a single target within 30 feet of you and compare the result of your Performance check to that observer's Will DC. If you're a master in Performance, you can choose up to four targets, and if you're legendary, you can choose any number of targets. If you succeed, any attempt made by you to Demoralize that creature within the next 24 hours gains a +1 circumstance bonus. If your Charisma score is 20 or higher and you're a master in Performance, this bonus increases to +2. Once a creature is boasted at in this manner, it becomes temporarily immune to further Triumphant Boasts for 24 hours."
+ },
+ {
+  "id": "truth-potion",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Truth Potion",
+  "level": 6,
+  "traits": [
+   "consumable",
+   "magical",
+   "mental",
+   "potion"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- For 10 minutes after drinking this astringent potion, you can't intentionally lie and may be compelled to tell the truth. Upon drinking the potion, attempt a save. You can voluntarily fail or critically fail. **Success** The potion does not affect you. **Failure** When you speak, you must tell the truth. **Critical Failure** As failure, and when someone asks you a question, you must attempt another saving throw. If you fail this saving throw, you must answer the question truthfully if you are able to do so; if you succeed, you are temporarily immune to further attempts to ask the same question within the potion's duration."
+ },
+ {
+  "id": "uncanny-prediction",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Uncanny Prediction",
+  "level": 8,
+  "traits": [
+   "archetype",
+   "auditory",
+   "emotion",
+   "incapacitation",
+   "linguistic",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're benefiting from the bonuses of Size Up. --- You have an eerie ability to guess the next move of creatures you've Sized Up. You inform a foe that you know exactly what it'll do next, momentarily shocking it into inaction. If your focus from Size Up is within 30 feet of you, your focus must succeed at a save against your class DC or spell DC, whichever is higher, or be Stunned 1 (or Stunned 2 on a critical failure). Regardless of the result, the target becomes temporarily immune to your Uncanny Prediction for 1 hour."
+ },
+ {
+  "id": "undead-eidolon",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Undead Eidolon",
+  "level": 1,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Your eidolon is an undead spirit pulled from the Ethereal Plane or Negative Energy Plane, embodied, and bound to your life force in an unusual, potentially antithetical way that even other summoners can't quite understand. Undead eidolons take about every imaginable shape and form, as their bodies manifest from their connection to you. Their ultimate form can be influenced by an amalgamation of the echoes and memories of their old life before becoming undead, their cause of death, their encounters in the afterlife, and portions of your own essences. Together, you and your eidolon need to explore the mysteries of life, death, and undeath to understand what your bond means for both of your futures. **Tradition** divine **Traits** eidolon, undead **Home Plane** Ethereal Plane or Negative Energy Plane --- **Size** Medium or Small **Suggested Attacks** claw (slashing), fist (bludgeoning), jaws (piercing) **Undead Brute** Str 18, Dex 14, Con 16, Int 8, Wis 10, Cha 12 **Undead Stalker** Str 14, Dex 18, Con 16, Int 8, Wis 12, Cha 10 **Skills** Intimidation, Religion **Senses** darkvision **Language** Necril **Speed** 25 feet --- **Eidolon Abilities** *Initial *negative essence*; Symbiosis *drain life*; Transcendence *rejuvenation ## Negative Essence Your undead eidolon has a link directly to your life force, which grants it a twilight state between living and undead. This renders it a living creature and therefore susceptible to many ailments that bother only the living, though it does possess some resistances to these effects. The eidolon has negative healing, meaning it heals from negative energy effects that heal undead and is damaged by positive energy effects that damage undead. It doesn't have an undead's normal immunities, but it does gain a +2 circumstance bonus to saving throws against death effects, disease, and poison effects, and non-damaging effects that target only undead. Additionally, its necrotic essence stanches its wounds easily. The flat check to remove persistent bleed damage from the eidolon is DC 10 (or DC 5 after receiving particularly effective aid). ## Drain Life 7th Your eidolon's link with you sustains it, but it still craves the life essence of the living, whether through blood or pure essence. It gains the Drain Life activity. ## Rejuvenation 17th Your eidolon's unusual connection with you allows you both to rejuvenate when defeated. The first time each day your turn begins while you're dying, you instantly regain a number of Hit Points equal to three times your level and wake up. (Increase your wounded condition as normal.) You can immediately Manifest Your Eidolon as a free action. You can then take your turn as normal."
+ },
+ {
+  "id": "unleash-yaoguai-might",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Unleash Yaoguai Might",
+  "level": 9,
+  "traits": [
+   "yaoguai"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Frequency** once per day As you enter your yaoguai form, you draw upon your internal magic to assume an even greater form. When you Change Shape to enter your yaoguai form, you can spend an additional action to gain the effects of Enlarge and an additional effect based on your heritage. This effect persists for 1 minute or until you Change Shape again. - **Animal** Your hide thickens, granting a +1 circumstance bonus to AC. - **Celestial** You recover some of your celestial perfection, granting you and all allies within 15 feet a +1 status bonus to attack rolls. - **Elements** You're surrounded in wind and dust, granting concealment each round that you spend at least 1 action that has the move trait. You can't use this concealment to Hide or Sneak, as normal for sources of obvious concealment. - **Object** Your skin transmutes partially into an inorganic substance, granting resistance 5 to your choice of bludgeoning, piercing, or slashing. - **Vegetation** You trigger an accelerated growth, gaining fast healing 5."
+ },
+ {
+  "id": "unusual-composition",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Unusual Composition",
+  "level": 10,
+  "traits": [
+   "bard",
+   "concentrate",
+   "manipulate",
+   "spellshape"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can translate the emotion and power of a composition to other mediums. If your next action is to cast a composition spell that is auditory or visual, you can have it affect creatures who can witness it with any sense, not just those the traits indicate, even including special senses like tremorsense. You can choose to exclude any senses you choose."
+ },
+ {
+  "id": "unwind-death",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Unwind Death",
+  "level": 16,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** The target's body must be mostly intact. --- Combining necromancy with the mysterious temporal powers of clockwork, you wind a creature backward from the moment of its death. Attempt a DC 40 Crafting check to revive a dead creature that has been dead for no more than 3 rounds. If you succeed, the target returns to life with the effects of Raise Dead, except it still has the wounded condition it had before dying, increased by 1 (or wounded 1 if it wasn't wounded before dying). Whether you succeed or fail, the target is then temporarily immune to Unwind Death for 1 day."
+ },
+ {
+  "id": "vaccine",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Vaccine",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "healing"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Vaccine Source Treasure Vault (Remastered) pg. 61, Legends pg. 71 Usage held in 1 hand Bulk L Activate (manipulate) A vaccine grants a creature immunity to a specific strain of disease of a level equal to or less than the vaccine’s level, and a +2 item bonus on all saving throws against other strains of the same disease. For example, a vaccine could grant immunity to putrid plague inflicted by harpies but would only grant a +2 bonus against putrid plague inflicted by a giant rat. Special A vaccine is the same rarity as the disease it’s designed to prevent, or as the creature who inflicts the disease if the disease itself doesn’t list a rarity. Craft Requirements Creating a vaccine requires a sample of the disease in question. Vaccine (Minor) Source Treasure Vault (Remastered) pg. 61, Legends pg. 71 Price 4 gp Bulk L The duration is 1 hour. Vaccine (Lesser) Source Treasure Vault (Remastered) pg. 61, Legends pg. 71 Price 12 gp Bulk L The duration is 24 hours. Vaccine (Moderate) Source Treasure Vault (Remastered) pg. 61, Legends pg. 71 Price 50 gp Bulk L The duration is 1 week. Vaccine (Greater) Source Treasure Vault (Remastered) pg. 61, Legends pg. 71 Price 400 gp Bulk L The duration is 1 year. Vaccine (Major) Source Treasure Vault (Remastered) pg. 61, Legends pg. 71 Price 5,000 gp Bulk L The duration is permanent."
+ },
+ {
+  "id": "vaccine-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Vaccine (Greater)",
+  "level": 12,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "healing"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Activate** ⟨1⟩ Interact --- A vaccine grants a creature immunity to a specific strain of disease of a level equal to or less than the vaccine's level, and a +2 item bonus on all saving throws against other strains of the same disease. For example, a vaccine could grant immunity to putrid plague inflicted by harpies, but would only grant a +2 saving throw bonus against putrid plague inflicted by a giant rat. **Craft Requirements** Creating a vaccine requires a sample of the disease in question. **Duration** 1 year. **Special** A vaccine is the same rarity as the disease it's designed to prevent, or as the creature who inflicts the disease if the disease itself doesn't list a rarity."
+ },
+ {
+  "id": "vaccine-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Vaccine (Lesser)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "healing"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- A vaccine grants a creature immunity to a specific strain of disease of a level equal to or less than the vaccine's level, and a +2 item bonus on all saving throws against other strains of the same disease. For example, a vaccine could grant immunity to putrid plague inflicted by harpies, but would only grant a +2 saving throw bonus against putrid plague inflicted by a giant rat. **Craft Requirements** Creating a vaccine requires a sample of the disease in question. **Duration** 24 hours. **Special** A vaccine is the same rarity as the disease it's designed to prevent, or as the creature who inflicts the disease if the disease itself doesn't list a rarity."
+ },
+ {
+  "id": "vaccine-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Vaccine (Major)",
+  "level": 18,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "healing"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- A vaccine grants a creature immunity to a specific strain of disease of a level equal to or less than the vaccine's level, and a +2 item bonus on all saving throws against other strains of the same disease. For example, a vaccine could grant immunity to putrid plague inflicted by harpies, but would only grant a +2 saving throw bonus against putrid plague inflicted by a giant rat. **Craft Requirements** Creating a vaccine requires a sample of the disease in question. **Duration** Permanent. **Special** A vaccine is the same rarity as the disease it's designed to prevent, or as the creature who inflicts the disease if the disease itself doesn't list a rarity."
+ },
+ {
+  "id": "vaccine-minor",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Vaccine (Minor)",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "healing"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- A vaccine grants a creature immunity to a specific strain of disease of a level equal to or less than the vaccine's level, and a +2 item bonus on all saving throws against other strains of the same disease. For example, a vaccine could grant immunity to putrid plague inflicted by harpies, but would only grant a +2 saving throw bonus against putrid plague inflicted by a giant rat. **Craft Requirements** Creating a vaccine requires a sample of the disease in question. **Duration** 1 hour. **Special** A vaccine is the same rarity as the disease it's designed to prevent, or as the creature who inflicts the disease if the disease itself doesn't list a rarity."
+ },
+ {
+  "id": "vaccine-moderate",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Vaccine (Moderate)",
+  "level": 6,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "healing"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- A vaccine grants a creature immunity to a specific strain of disease of a level equal to or less than the vaccine's level, and a +2 item bonus on all saving throws against other strains of the same disease. For example, a vaccine could grant immunity to putrid plague inflicted by harpies, but would only grant a +2 saving throw bonus against putrid plague inflicted by a giant rat. **Craft Requirements** Creating a vaccine requires a sample of the disease in question. **Duration** 1 week. **Special** A vaccine is the same rarity as the disease it's designed to prevent, or as the creature who inflicts the disease if the disease itself doesn't list a rarity."
+ },
+ {
+  "id": "vapor-sphere",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Vapor Sphere",
+  "level": 14,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Usage** affixed to armor **Activate** ⟨5⟩ envision **Trigger** You trigger a trap's reaction or an enemy that was undetected by you makes an attack against you **Requirements** You're an expert in the affixed armor and an expert in Reflex saves. --- Within this strange glass sphere swirls a cloud of smoke that occasionally appears as if it's trying to escape. You react to a surprise encounter with haste, activating this talisman and causing your body to momentarily become like vapor. Against the trap's reaction or the attack, you gain resistance 25 to physical damage and are immune to precision damage. This effect also prevents the reaction or attack from physically moving you (such as falling down a pit or being knocked prone), and after the reaction or attack, you can Fly 5 feet. When you end this flight, you leave your vaporous state and are exposed to any danger still at your location."
+ },
+ {
+  "id": "vengeful-remnant",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Vengeful Remnant",
+  "level": 14,
+  "traits": [
+   "archetype",
+   "concentrate",
+   "manipulate",
+   "occult"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per day --- You wreathe yourself in the tatters of all the souls claimed by your blade. Until the start of your next turn, you gain resistance 10 to all damage except force, ghost touch, spirit, and vitality, doubled if the source of the damage is non-magical. If you slay a significant foe not immune to spirit damage with your Spectral Dagger while under this effect, its duration increases until the end of your next turn."
+ },
+ {
+  "id": "vengful-remnant",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Vengful Remnant",
+  "level": 14,
+  "traits": [
+   "archetype",
+   "concentrate",
+   "manipulate",
+   "occult"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "Vengful Remnant Source Shining Kingdoms pg. 125 Archetype Splinter of Finality Frequency once per day You wreathe yourself in the tatters of all the souls claimed by your blade. Until the start of your next turn, you gain resistance 10 to all damage except force, ghost touch, spirit, and vitality, doubled if the source of the damage is non-magical. If you slay a significant foe not immune to spirit damage with your spectral dagger while under this effect, its duration increases until the end of your next turn."
+ },
+ {
+  "id": "vibration-sense",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Vibration Sense",
+  "level": 4,
+  "traits": [
+   "evolution",
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Your eidolon gains Tremorsense as an imprecise sense with a range of 30 feet. If aquatic, it gains Wavesense as an imprecise sense with a range of 30 feet instead. If amphibious, it gains both."
+ },
+ {
+  "id": "vicious-debilitations",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Vicious Debilitations",
+  "level": 10,
+  "traits": [
+   "rogue"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The debilitations you dish out seriously impair your foes. Add the following debilitations to the list you can choose from when you use Debilitating Strike. - **Debilitation** The target gains weakness 5 to your choice of bludgeoning, piercing, or slashing damage. - **Debilitation** The target becomes Clumsy 1."
+ },
+ {
+  "id": "victory-plate",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Victory Plate",
+  "level": 9,
+  "traits": [
+   "bulwark",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "The metal plates of this *+1 resilient full plate* are covered by a bright tabard featuring a distinctive coat of arms divided into four fields. This insignia magically records your recent victories, displaying one triumph in each field of the coat of arms, allowing you to call upon those victories for aid in future battles. --- **Activate** ⟨4⟩ envision **Trigger** You kill or destroy a creature of a level equal to or greater than your *victory plate* (adjusted as usual if you add fundamental runes to victory plate). This creature must have one of the traits listed in the second activation **Effect** You direct the armor to commemorate your victory. The coat of arms on the armor's tabard shifts to incorporate heraldry related to the slain creature, and the victory is recorded within the tabard. If you have already recorded four victories, choose one to replace with the new victory. --- **Activate** ⟨2⟩ envision, Interact **Frequency** once per hour **Effect** You touch one of the tabard's four fields representing one of your victories and recall your triumph over that creature. That creature vanishes from the tabard, and for 1 minute, you gain resistance 5 to a damage type based on the creature's trait (you gain resistance to only one type, even if the creature has more than one trait that could apply): - **Aberration or Fey** mental - **Celestial** good - **Construct** poison - **Dragon or Elemental** one energy type that matches one of the dragon's or elemental's traits - **Fiend** evil - **Ooze** precision, and the resistance is 10 - **Undead** void"
+ },
+ {
+  "id": "vivacious-afterimage",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Vivacious Afterimage",
+  "level": 20,
+  "traits": [
+   "illusion",
+   "occult",
+   "swashbuckler",
+   "visual"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You have Panache. --- You move so quickly that you create a short-lived afterimage, looks exactly like you, in front of you or behind you. You Stride. At any point along your movement, you leave an afterimage of yourself behind. Alternatively, you can stop moving and send your afterimage forward instead, up to the remainder of your Speed. A creature that spends actions to engage with your afterimage can attempt to disbelieve it with a save against your class DC. Once an enemy has disbelieved any of your afterimages, they are temporarily immune to all of your Vivacious Afterimages for 10 minutes. As long as a creature has not disbelieved the afterimage, the afterimage counts as a creature for flanking. The afterimage lasts until the beginning of your next turn or until you use Vivacious Afterimage again, whichever comes first."
+ },
+ {
+  "id": "void-mirror",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Void Mirror",
+  "level": 20,
+  "traits": [
+   "artifact",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Usage** Mounted in frame --- The *Void Mirror* was created on a distant planet by a now-extinct alien cult to aid in unlocking the secrets of the Dark Tapestry. It appears as a 5-foot-tall, 2-foot-wide mirror of dark glass. As long as it's unmounted in a frame, the *Void Mirror* functions only as a mirror, save that it always reflects the sky as if it were night, regardless of the time of day. When the *Void Mirror* is mounted in a frame, it instead serves as a window into space, displaying a star field in its glass rather than a reflection. This frame can be of any quality, but stouter frames help to prevent the frame's destruction and thus help to keep the *Void Mirror* functional. The view presented by the *Void Mirror* is any view of the night sky possible from its current physical location, regardless of time of day. Observations of the sky in this way add a +3 item bonus to Astronomy Lore or Perception checks made while using the mirror. The point of view can be shifted through hand gestures, causing the scene within the mirror to reorient in any direction desired. A character who peers into the starscape within the *Void Mirror* must attempt a save. On a **failure**, the character feels something looking back at them from the dark places between the stars. On a **critical failure**, this sensation causes the character to become Frightened 1. The character is then temporarily immune to this effect for 24 hours. By placing the *Void Mirror* in a specially-constructed frame, it can halt the ongoing transformation of a creature that has performed the apotheosis activation. Building such a frame is beyond the skill of low-level characters, as it requires an artisan with legendary proficiency in Crafting. The *Void Mirror* can be utilized in other ways, but before a character can activate these effects the occult methods to access these ritual-like effects must be Researched separately. Since the specific methods for these activations vary slightly from person to person, these methods can't be taught; each person who seeks to activate the *Void Mirror* in one of the following ways must complete their own research to unlock the artifact's secrets. Each requires a separate number of Occultism checks to Research, as detailed below for each activation. --- **Activate** 1 hour (Interact) **Research** Accumulate 12 RP by making (expert) checks when Researching (1 week per attempt) **Frequency** once per month --- **Effect** The first activation ritual is known as \"Speak to the Void\" and allows the user to contact an intelligence in a distant part of the universe, provided the mirror shows that location (regardless of distance). This alien intelligence infuses the user's mind with answers, allowing the user to Recall Knowledge using Nature or Occultism as if they were legendary proficiency with the skill (including the +8 proficiency bonus). If this check fails, the character takes 10d6 damage (100 mental damage on a critical failure) as the imparted knowledge does more harm than good. --- **Activate** 1 hour (Interact) **Research** Accumulate 12 RP by making (master) checks when Researching (1 month per attempt) **Frequency** once per year --- *"
+ },
+ {
+  "id": "volatile-grease",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Volatile Grease",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "When you cast Grease, you can modify its target to be 1 creature. If you do, replace the spell's standard effects with the following: You splash the target with combustible grease. The target must attempt a save. --- **Critical Success** The target is unaffected. **Success** The target is splattered with grease and gains weakness 2 to fire until the end of your next turn. The target or an adjacent creature can rub off the combustible grease with an Interact action, ending the effect. **Failure** As success, except the weakness to fire lasts for 1 minute. --- **Heightened (+2)** The weakness increases by 1."
+ },
+ {
+  "id": "walk-the-plank",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Walk the Plank",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You frighten a foe into moving where you want them, traditionally demanding they walk the plank. Attempt to Demoralize an opponent. On a success, in addition to the normal effects, you can also force the target to Stride up to its Speed immediately. You choose the path the target takes, but you can't force it to move into an obviously harmful space (such as into hazardous terrain or a space where it would fall) unless your check was a critical success. As normal for forced movement, this movement doesn't trigger reactions. The target then becomes temporarily immune to Walk the Plank for 10 minutes."
+ },
+ {
+  "id": "wall-of-roses",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Wall of Roses",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "innateSpells"
+  ],
+  "inRegistries": [],
+  "text": "Roses are the symbol of Milani, and you can call forth a wall of them to stymie those who don't follow her teachings. You can cast Wall of Thorns once per day as a 4th-rank divine innate spell. The wall is immune to fire and the piercing damage its thorns deal counts as silver for the purposes of resistances. Followers of Milani don't treat the wall's spaces as difficult terrain and don't take damage when they enter one of the wall's spaces."
+ },
+ {
+  "id": "wand-of-noisome-acid",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Wand of Noisome Acid",
+  "level": 6,
+  "traits": [
+   "acid",
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Wand of Noisome Acid Source Treasure Vault (Remastered) pg. 141, The Slithering pg. 61 Usage held in 1 hand Bulk L This greasy stick emits a stomach-churning scent when held in hand. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast acid grip of the indicated rank. A creature that takes initial acid damage from this spell become sickened 1. Use your spell DC if the creature attempts to recover from this sickness. This is an olfactory effect. Craft Requirements Supply a casting of acid grip of the appropriate rank. Wand of Noisome Acid (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 250 gp Bulk L Wand of Noisome Acid (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1,000 gp Bulk L Wand of Noisome Acid (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 4,500 gp Bulk L Wand of Noisome Acid (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 24,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-noisome-acid-2nd-level-spell",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (2nd-Level Spell)",
+  "level": 6,
+  "traits": [
+   "acid",
+   "evocation",
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Wand of Noisome Acid May contain spoilers from The Slithering Source The Slithering pg. 61, Treasure Vault (Remastered) pg. 141 Usage held in 1 hand Bulk L This greasy stick emits a stomach-churning scent when held in a hand. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast acid arrow of the indicated level. A creature that takes acid damage from this spell must succeed at a Fortitude save against your spell DC or become sickened 1. Craft Requirements Supply a casting of acid arrow of the appropriate level. Wand of Noisome Acid (2nd-Level Spell) Source The Slithering pg. 61 Price 250 gp Wand of Noisome Acid (4th-Level Spell) Source The Slithering pg. 61 Price 1,000 gp Wand of Noisome Acid (6th-Level Spell) Source The Slithering pg. 61 Price 4,500 gp Wand of Noisome Acid (8th-Level Spell) Source The Slithering pg. 61 Price 24,000 gp"
+ },
+ {
+  "id": "wand-of-noisome-acid-2nd-rank",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (2nd-Rank)",
+  "level": 6,
+  "traits": [
+   "acid",
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells",
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This greasy stick emits a stomach-churning scent when held in a hand. --- **Activate** Cast a Spell **Frequency** once per day, plus overcharge **Effect** You cast Acid Grip at 2nd rank. A creature that takes initial acid damage from this spell become Sickened 1. Use your spell DC if the creature attempts to recover from this sickness. This is an olfactory effect. --- **Craft Requirements** Supply a casting of *acid grip* at 2nd rank"
+ },
+ {
+  "id": "wand-of-noisome-acid-2nd-rank-spell",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (2nd-Rank Spell)",
+  "level": 6,
+  "traits": [
+   "acid",
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Wand of Noisome Acid Source Treasure Vault (Remastered) pg. 141, The Slithering pg. 61 Usage held in 1 hand Bulk L This greasy stick emits a stomach-churning scent when held in hand. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast acid grip of the indicated rank. A creature that takes initial acid damage from this spell become sickened 1. Use your spell DC if the creature attempts to recover from this sickness. This is an olfactory effect. Craft Requirements Supply a casting of acid grip of the appropriate rank. Wand of Noisome Acid (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 250 gp Bulk L Wand of Noisome Acid (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1,000 gp Bulk L Wand of Noisome Acid (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 4,500 gp Bulk L Wand of Noisome Acid (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 24,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-noisome-acid-4nd-rank",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (4nd-Rank)",
+  "level": 10,
+  "traits": [
+   "acid",
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells",
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This greasy stick emits a stomach-churning scent when held in a hand. --- **Activate** Cast a Spell **Frequency** once per day, plus overcharge **Effect** You cast Acid Grip at 4th rank. A creature that takes initial acid damage from this spell become Sickened 1. Use your spell DC if the creature attempts to recover from this sickness. This is an olfactory effect. --- **Craft Requirements** Supply a casting of *acid grip* at 4th rank"
+ },
+ {
+  "id": "wand-of-noisome-acid-4th-level-spell",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (4th-Level Spell)",
+  "level": 10,
+  "traits": [
+   "acid",
+   "evocation",
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Wand of Noisome Acid May contain spoilers from The Slithering Source The Slithering pg. 61, Treasure Vault (Remastered) pg. 141 Usage held in 1 hand Bulk L This greasy stick emits a stomach-churning scent when held in a hand. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast acid arrow of the indicated level. A creature that takes acid damage from this spell must succeed at a Fortitude save against your spell DC or become sickened 1. Craft Requirements Supply a casting of acid arrow of the appropriate level. Wand of Noisome Acid (2nd-Level Spell) Source The Slithering pg. 61 Price 250 gp Wand of Noisome Acid (4th-Level Spell) Source The Slithering pg. 61 Price 1,000 gp Wand of Noisome Acid (6th-Level Spell) Source The Slithering pg. 61 Price 4,500 gp Wand of Noisome Acid (8th-Level Spell) Source The Slithering pg. 61 Price 24,000 gp"
+ },
+ {
+  "id": "wand-of-noisome-acid-4th-rank-spell",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (4th-Rank Spell)",
+  "level": 10,
+  "traits": [
+   "acid",
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Wand of Noisome Acid Source Treasure Vault (Remastered) pg. 141, The Slithering pg. 61 Usage held in 1 hand Bulk L This greasy stick emits a stomach-churning scent when held in hand. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast acid grip of the indicated rank. A creature that takes initial acid damage from this spell become sickened 1. Use your spell DC if the creature attempts to recover from this sickness. This is an olfactory effect. Craft Requirements Supply a casting of acid grip of the appropriate rank. Wand of Noisome Acid (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 250 gp Bulk L Wand of Noisome Acid (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1,000 gp Bulk L Wand of Noisome Acid (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 4,500 gp Bulk L Wand of Noisome Acid (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 24,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-noisome-acid-6th-level-spell",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (6th-Level Spell)",
+  "level": 14,
+  "traits": [
+   "acid",
+   "evocation",
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Wand of Noisome Acid May contain spoilers from The Slithering Source The Slithering pg. 61, Treasure Vault (Remastered) pg. 141 Usage held in 1 hand Bulk L This greasy stick emits a stomach-churning scent when held in a hand. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast acid arrow of the indicated level. A creature that takes acid damage from this spell must succeed at a Fortitude save against your spell DC or become sickened 1. Craft Requirements Supply a casting of acid arrow of the appropriate level. Wand of Noisome Acid (2nd-Level Spell) Source The Slithering pg. 61 Price 250 gp Wand of Noisome Acid (4th-Level Spell) Source The Slithering pg. 61 Price 1,000 gp Wand of Noisome Acid (6th-Level Spell) Source The Slithering pg. 61 Price 4,500 gp Wand of Noisome Acid (8th-Level Spell) Source The Slithering pg. 61 Price 24,000 gp"
+ },
+ {
+  "id": "wand-of-noisome-acid-6th-rank",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (6th-Rank)",
+  "level": 14,
+  "traits": [
+   "acid",
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells",
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This greasy stick emits a stomach-churning scent when held in a hand. --- **Activate** Cast a Spell **Frequency** once per day, plus overcharge **Effect** You cast Acid Grip at 6th rank. A creature that takes initial acid damage from this spell become Sickened 1. Use your spell DC if the creature attempts to recover from this sickness. This is an olfactory effect. --- **Craft Requirements** Supply a casting of *acid grip* at 6th rank"
+ },
+ {
+  "id": "wand-of-noisome-acid-6th-rank-spell",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (6th-Rank Spell)",
+  "level": 14,
+  "traits": [
+   "acid",
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Wand of Noisome Acid Source Treasure Vault (Remastered) pg. 141, The Slithering pg. 61 Usage held in 1 hand Bulk L This greasy stick emits a stomach-churning scent when held in hand. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast acid grip of the indicated rank. A creature that takes initial acid damage from this spell become sickened 1. Use your spell DC if the creature attempts to recover from this sickness. This is an olfactory effect. Craft Requirements Supply a casting of acid grip of the appropriate rank. Wand of Noisome Acid (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 250 gp Bulk L Wand of Noisome Acid (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1,000 gp Bulk L Wand of Noisome Acid (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 4,500 gp Bulk L Wand of Noisome Acid (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 24,000 gp Bulk L"
+ },
+ {
+  "id": "wand-of-noisome-acid-8th-level-spell",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (8th-Level Spell)",
+  "level": 18,
+  "traits": [
+   "acid",
+   "evocation",
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Wand of Noisome Acid May contain spoilers from The Slithering Source The Slithering pg. 61, Treasure Vault (Remastered) pg. 141 Usage held in 1 hand Bulk L This greasy stick emits a stomach-churning scent when held in a hand. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast acid arrow of the indicated level. A creature that takes acid damage from this spell must succeed at a Fortitude save against your spell DC or become sickened 1. Craft Requirements Supply a casting of acid arrow of the appropriate level. Wand of Noisome Acid (2nd-Level Spell) Source The Slithering pg. 61 Price 250 gp Wand of Noisome Acid (4th-Level Spell) Source The Slithering pg. 61 Price 1,000 gp Wand of Noisome Acid (6th-Level Spell) Source The Slithering pg. 61 Price 4,500 gp Wand of Noisome Acid (8th-Level Spell) Source The Slithering pg. 61 Price 24,000 gp"
+ },
+ {
+  "id": "wand-of-noisome-acid-8th-rank",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (8th-Rank)",
+  "level": 18,
+  "traits": [
+   "acid",
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells",
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This greasy stick emits a stomach-churning scent when held in a hand. --- **Activate** Cast a Spell **Frequency** once per day, plus overcharge **Effect** You cast Acid Grip at 8th rank. A creature that takes initial acid damage from this spell become Sickened 1. Use your spell DC if the creature attempts to recover from this sickness. This is an olfactory effect. --- **Craft Requirements** Supply a casting of *acid grip* at 8th rank"
+ },
+ {
+  "id": "wand-of-noisome-acid-8th-rank-spell",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (8th-Rank Spell)",
+  "level": 18,
+  "traits": [
+   "acid",
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Wand of Noisome Acid Source Treasure Vault (Remastered) pg. 141, The Slithering pg. 61 Usage held in 1 hand Bulk L This greasy stick emits a stomach-churning scent when held in hand. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast acid grip of the indicated rank. A creature that takes initial acid damage from this spell become sickened 1. Use your spell DC if the creature attempts to recover from this sickness. This is an olfactory effect. Craft Requirements Supply a casting of acid grip of the appropriate rank. Wand of Noisome Acid (2nd-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 250 gp Bulk L Wand of Noisome Acid (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 1,000 gp Bulk L Wand of Noisome Acid (6th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 4,500 gp Bulk L Wand of Noisome Acid (8th-Rank Spell) Source Treasure Vault (Remastered) pg. 141 Price 24,000 gp Bulk L"
+ },
+ {
+  "id": "warcallers-chime",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Warcaller's Chime",
+  "level": 4,
+  "traits": [
+   "evocation",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Warcaller's Chime May contain spoilers from Strength of Thousands Source Pathfinder #170: Spoken on the Song Wind pg. 77 Usage held in 1 hand Bulk L The Nantambu Chime-Ringers created these magical chimes to aid in their defense of their city. Each chime is made from elaborately carved wood depicting the nature of a given chime's power. Activate envision; Effect You ring the chime, unleashing its magic. The specifics of each chime, as well as the activation's frequency (if any), appear in its entry below. Warcaller's Chime of Blasting Source Pathfinder #170: Spoken on the Song Wind pg. 77 Price 250 gp Bulk L This chime features carvings of destructive runes. When activated, it creates the effects of a 3rd-level sound burst centered on you (DC 20 Fortitude save). Instead of the spell's normal range, it has a 5-foot emanation. In addition, creatures that critically fail their save are knocked prone by the chime's effect. You can use this chime once per day. Warcaller's Chime of Destruction Source Pathfinder #170: Spoken on the Song Wind pg. 77 Price 100 gp Bulk L A series of shattered mountains are carved into this chime. When activated, you touch the chime against an unattended object, casting shatter upon the object, ignoring the object's Hardness if it's 6 or lower. You can use this chime once per day. Warcaller's Chime of Dread Source Pathfinder #170: Spoken on the Song Wind pg. 77 Price 1,000 gp Bulk L This chime's carvings depict skulls and other grim icons. When activated, it creates an aura of fear in a 5-foot emanation for 1 round. Creatures in the aura must attempt a DC 27 Will save. On a failure, they become frightened 1 (frightened 2 on a critical failure). Affected creatures can't reduce their frightened condition below frightened 1 while the chime is ringing. You can Sustain the Activation to sustain the aura, up to a total of 5 rounds. This chime can be used only once per day, whether or not you Sustain the aura. Warcaller's Chime of Refuge Source Pathfinder #170: Spoken on the Song Wind pg. 77 Price 500 gp Bulk L This chime's carvings depict a series of warding runes that evoke feelings of serene protection. When activated, you touch the chime to yourself or a willing creature. The target gains the effects of sanctuary (DC 20 Will save). You can use this chime up to five times per day, but each use must target a different creature. Warcaller's Chime of Resistance Source Pathfinder #170: Spoken on the Song Wind pg. 77 Price 160 gp Bulk L This chime features several elemental runes in its carvings. When activated, it creates a defensive aura in a 5-foot emanation. As you activate the chime, choose acid, cold, electricity, fire, or sonic. You and creatures in the aura gain resistance 5 against the damage type you chose. This aura remains active for 10 minutes. This chime can be used once per week. Warcaller's Chime of Restoration Source Pathfinder #170: Spoken on the Song Wind pg. 77 Price 2,000 gp Bulk L This chime's carvings depict blooming flowers. When activated, it creates a small aura of healing in a 5-foot emanation. Creatures in the aura gain fast healing 15. This aura remains active for 3 rounds. This chime can be used onc"
+ },
+ {
+  "id": "warcallers-chime-of-resistance",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Warcaller's Chime of Resistance",
+  "level": 5,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This chime features several elemental runes in its carvings. When activated, it creates a defensive aura in a . As you activate the chime, choose acid, cold, electricity, fire, or sonic. You and creatures in the aura gain resistance 5 against the damage type you chose. This aura remains active for 10 minutes. This chime can be used once per week."
+ },
+ {
+  "id": "warding-statuette",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Warding Statuette",
+  "level": 7,
+  "traits": [
+   "force",
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This small figurine is carved from soapstone in the shape of a deity or guardian, facing both front and back to indicate unflagging vigilance. The spell attack modifier of any spell cast by activating this item is +13. - **Armor** You gain resistance 1 against ranged weapon attacks. - **Weapon** When you hit with a Strike using the affixed weapon, or when a spell effect you created by activating the statuette hits with a Strike, you can choose a creature adjacent to the creature that was hit. That creature gains a +1 status bonus to AC until the start of your next turn. No more than one creature can benefit from this each turn. --- **Activate** Cast a Spell **Effect** You cast Shield. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast Spiritual Armament."
+ },
+ {
+  "id": "warding-statuette-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Warding Statuette (Greater)",
+  "level": 13,
+  "traits": [
+   "force",
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This small figurine is carved from soapstone in the shape of a deity or guardian, facing both front and back to indicate unflagging vigilance. The spell attack modifier of any spell cast by activating this item is +20. - **Armor** You gain resistance 5 against ranged weapon attacks. - **Weapon** When you hit with a Strike using the affixed weapon, or when a spell effect you created by activating the statuette hits with a Strike, you can choose a creature adjacent to the creature that was hit. That creature gains a +1 status bonus to AC until the start of your next turn. No more than one creature can benefit from this each turn. --- **Activate** Cast a Spell **Effect** You cast Shield. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast 5th-rank Spiritual Weapon. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast Spiritual Guardian."
+ },
+ {
+  "id": "warding-tattoo",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Warding Tattoo",
+  "level": 5,
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Many cultures of Golarion have a tattoo to turn away harm; as such, warding tattoos often resemble whichever dangers are most common to the culture, such as a wild beast or a whirlpool in the high seas of the Shackles. --- **Activate** ⟨5⟩ envision **Frequency** once per day **Trigger** An enemy, hazard, or the environment makes an attack against your AC, requires you to attempt a saving throw, or causes you to take damage automatically --- **Effect** Until the end of the current turn, against the triggering effect, you gain a +1 status bonus to AC and saving throws and gain resistance 2 to damage."
+ },
+ {
+  "id": "warding-tattoo-fiend",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Warding Tattoo (Fiend)",
+  "level": 7,
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Many cultures of Golarion have a tattoo to turn away harm; as such, warding tattoos often resemble whichever dangers are most common to the culture, such as a wild beast or a whirlpool in the high seas of the Shackles. You gain resistance 2 to spells cast by fiends and magical attacks by fiends. --- **Activate** ⟨5⟩ envision **Frequency** once per day **Trigger** An enemy, hazard, or the environment makes an attack against your AC, requires you to attempt a saving throw, or causes you to take damage automatically --- **Effect** Until the end of the current turn, against the triggering effect, you gain a +1 status bonus to AC and saving throws and gain resistance 2 to damage. Your resistance to damage from fiends and magical attacks by fiends becomes resistance 5."
+ },
+ {
+  "id": "warding-tattoo-trail",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Warding Tattoo (Trail)",
+  "level": 6,
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Many cultures of Golarion have a tattoo to turn away harm; as such, warding tattoos often resemble whichever dangers are most common to the culture, such as a wild beast or a whirlpool in the high seas of the Shackles. You gain resistance 2 to damage from hazardous terrain and environmental hazards at all times. --- **Activate** ⟨5⟩ envision **Frequency** once per day **Trigger** An enemy, hazard, or the environment makes an attack against your AC, requires you to attempt a saving throw, or causes you to take damage automatically --- **Effect** Until the end of the current turn, against the triggering effect, you gain a +1 status bonus to AC and saving throws and gain resistance 2 to damage. Your resistance to damage from hazardous terrain and environmental hazards becomes resistance 5."
+ },
+ {
+  "id": "warding-tattoo-wave",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Warding Tattoo (Wave)",
+  "level": 6,
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Many cultures of Golarion have a tattoo to turn away harm; as such, warding tattoos often resemble whichever dangers are most common to the culture, such as a wild beast or a whirlpool in the high seas of the Shackles. In addition to the normal triggers, you can activate the tattoo when you enter an environment where you can't breathe. --- **Activate** ⟨5⟩ envision **Frequency** once per day **Trigger** An enemy, hazard, or the environment makes an attack against your AC, requires you to attempt a saving throw, or causes you to take damage automatically --- **Effect** Until the end of the current turn, against the triggering effect, you gain a +1 status bonus to AC and saving throws and gain resistance 2 to damage. The tattoo casts Air Bubble."
+ },
+ {
+  "id": "warming-parka",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Warming Parka",
+  "level": 3,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Only a fool would march an army into a freezing climate without adequate protection. This thick parka with a hood protects you from even the harshest of conditions. You negate the damage from severe environmental cold, reduce the damage from extreme cold to that of severe cold, and reduce the damage from incredible cold to extreme cold. **Activate—Extra Warming** ⟨1⟩ (manipulate) **Frequency** once per day --- **Effect** You draw the hood of your warming parka closed to fend off the cold as much as possible. For the next minute, you gain resistance 3 to cold damage, but also take a –2 item penalty to Perception checks. You can Dismiss this effect."
+ },
+ {
+  "id": "wave-the-flag",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Wave the Flag",
+  "level": 16,
+  "traits": [
+   "archetype",
+   "emotion",
+   "flourish",
+   "mental",
+   "visual"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You wave your banner, inspiring allies to throw off the shackles of fear. Each ally presently benefiting from your Cavalier's Banner feat reduces their current frightened condition by 1 and can choose to immediately attempt a new saving throw against any one mental effect currently affecting them. Regardless of the result, any ally that attempts a save is temporarily immune to Wave the Flag for 10 minutes."
+ },
+ {
+  "id": "weavers-web",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Weaver's Web",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** Your swarm is outside your body. --- Your swarm can spin dense webs much like those left by stone-gray weaver spiders under eaves and in derelict city buildings, especially along the coasts of Varisia. When your swarm ends its turn, it fills all surfaces in its space with sticky webs that last for 1 minute. The webs are difficult terrain. A creature that ends its turn in the webs must succeed at a save or be immobilized until it Escapes. The webs' save DC and Escape DC are equal to the higher of your class DC or spell DC. The swarm is immune to its webs."
+ },
+ {
+  "id": "whisper-of-wings",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Whisper of Wings",
+  "level": 1,
+  "traits": [
+   "witch"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Wings and swirling winds announced the approach of your patron. The wings might have been radiantly feathered, jeweled like a dragonfly's, strangely mechanical, or leathery with the scent of sulfur, but the controlled chaos of their movements contained countless teachings. **Spell List** primal **Patron Skill** Nature **Lesson of the Observed Sky** Your patron teaches that the sky can guide you anywhere you let it. You gain the Murmuration hex cantrip, and your familiar learns Gentle Landing. **Familiar of Nimble Flight** Even if your familiar doesn't have wings, it can sometimes move as if carried aloft by the wind. When you Cast or Sustain a hex, your familiar can Fly up to 15 feet; this movement doesn't trigger reactions."
+ },
+ {
+  "id": "whispering-staff",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Whispering Staff",
+  "level": 20,
+  "traits": [
+   "apex",
+   "invested",
+   "magical",
+   "staff",
+   "two-hand-d8"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This gnarled wooden staff is carved with humanoid faces in various emotional states. When the staff is activated, the faces begin to whisper a variety of languages in sibilant tones, creating what seems to be nonsense to all but the staff's wielder or those they choose to affect. The staff functions as a Major Staff of the Unblinking Eye. While using the staff, you gain a +3 item bonus to Decipher Writing, Identify Magic, and Recall Knowledge checks, regardless of the skill. When you invest the staff, you either increase your Intelligence modifier by 1 or increase it to +4, whichever would give you a higher value. You must select the skills and languages the first time you invest the item, and whenever you invest the same whispering staff, you get the same skills and languages you chose the first time. **Activate** ⟨1⟩ (concentrate, mental) **Frequency** once per round --- **Effect** Through the staff's strange whispering, you gain a glimpse into the mind and desires of one creature you can see within 30 feet. Until the end of your next turn, that creature is off-guard to you and takes a –2 circumstance penalty to saving throws against your spells. **Activate** ⟨2⟩ (manipulate, mental, misfortune) **Frequency** once per hour --- **Effect** You point the staff at one creature you can see within 30 feet of you, causing the whispers to howl in that creature's mind. The target must attempt a save. If it fails, whenever the creature attempts an attack roll, skill check, or saving throw, it must roll twice and take the worse roll. This lasts until the start of your next turn. **Activate** ⟨2⟩ (concentrate, fortune, mental) **Frequency** once per day --- **Effect** You twirl the staff in three consecutive circles and call for the whispers to speak up. For the next minute, you and all allies within a around you can hear your staff's whispers clearly and distinctly, gaining benefit from their advice and mental protection. Whenever you and your affected allies attempt to Recall Knowledge or attempt a saving throw against a mental effect, you roll twice and take the better result. This is a fortune effect. --- **Activate** Cast a Spell --- **Effect** You expend a number of charges from the staff to cast a spell from its list. - **Cantrip** Detect Magic - **1st** Sure Strike - **2nd** Darkvision, See the Unseen, Translate - **3rd** Darkvision, Mind Reading - **4th** , Detect Scrying, Telepathy - **5th** Mind Probe, Scouting Eye - **6th** Telepathy, Truesight"
+ },
+ {
+  "id": "whispering-steps",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Whispering Steps",
+  "level": 8,
+  "traits": [
+   "amp",
+   "mental",
+   "occult",
+   "psychic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your spell leaves a lingering connection between you and a creature-one through which you can nudge the creature's mind this way or that. The amped cantrip must take 2 or more actions to cast, target one or more creatures, and either require a spell attack roll or have a saving throw. Use this amp in place of the psi cantrip's normal amp entry. --- **Amp** Choose one enemy who is a target of the spell. If that enemy fails its save or the spell hits it, you whisper in the creature's mind, forcing it to Stride up to half its Speed in a direction of your choosing; as this is forced movement, you can't force the creature to move into hazardous terrain, off a ledge, or the like. After it moves, the creature becomes temporarily immune to this amp for 24 hours."
+ },
+ {
+  "id": "wilding-steward",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Wilding Steward",
+  "level": 1,
+  "traits": [
+   "witch"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "When your patron appeared before you, they moved with the grace and ferocity of the wilderness, their voice the creaking of trees and the sound of hoof against unspoiled earth. They might have been a dryad queen or a primeval beast, but it seemed all of nature was theirs to defend. **Spell List** primal **Patron Skill** Nature **Lesson of Wild Speech** Your patron has taught you the complexities of nonverbal speech, letting you influence and call animals and plants to you. You gain the Wilding Word hex cantrip and your familiar learns your choice of Summon Animal or Summon Plant or Fungus. **Familiar of Keen Senses** Your familiar has glinting eyes, twitching ears, or some other sign of a beast's powerful senses. When you Cast or Sustain a hex, your familiar gains your choice of an imprecise scent, tremorsense, or wavesense, with a range of 60 feet until the start of your next turn, and it can immediately Point Out as a free action."
+ },
+ {
+  "id": "winged-terror",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Winged Terror",
+  "level": 16,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Winged Terror Source High Seas pg. 64 Usage worn armor Bulk 1 Base Armor Studded Leather Armor Access You're a member of the Red Mantis Assassins This +2 greater resilient winged studded leather armor features the Red Mantis emblem in carapace studs. The wearer gains resistance 5 to physical damage dealt by frightened creatures."
+ },
+ {
+  "id": "winter-sleet",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Winter Sleet",
+  "level": 4,
+  "traits": [
+   "cold",
+   "impulse",
+   "kineticist",
+   "primal",
+   "stance",
+   "water"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "core.stances"
+  ],
+  "text": "Bone-chilling, swirling sleet surrounds you, cruel as deepest winter. Surfaces in your kinetic aura are coated in slippery ice. A creature that moves on the ice immediately falls unless it succeeds at an check or save against your impulse DC – 2. A creature that Steps or Crawls doesn't have to attempt a check or save. You're immune to this effect. If a creature on the ice is critically hit by one of your water impulses or critically fails at a save against one, that creature is Slowed 1 until the end of its next turn."
+ },
+ {
+  "id": "wintershot-artifact",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Wintershot (Artifact)",
+  "level": 20,
+  "traits": [
+   "artifact",
+   "illusion",
+   "intelligent",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Wintershot (Artifact) May contain spoilers from Spore War Source Pathfinder #212: A Voice in the Blight pg. 73 Usage held in 1+ hand(s) Bulk 1 Perception +35; precise low-light vision and hearing within 30 feet Communication telepathy (partner only) Skills Diplomacy +33, Intimidation +35, Survival +35 Int +6, Wis +7, Cha +5 Will +35 The echo of the snowcaster Jelarial causes Wintershot to become chill to the touch, yet despite feeling as cold as ice, she never causes harm or discomfort to her partner. Wintershot’s string issues a soft hissing sound, as of snow softly falling, and snowflakes drift down from the string and swiftly melt each time the bow is fired. Wintershot’s voice is eager and excitable, often waxing poetic on a nearby object or creature of beauty or offering compliments to her partner. Wintershot is a +3 major striking greater frost holy composite shortbow. When making a Strike with Wintershot, targets don’t gain concealment from the effects of mist or precipitation, and circumstance penalties to attacks imparted from strong winds are negated. Activate—Auroral Shine (cold, concentrate, light) Frequency once per minute; Effect Wintershot can’t use this activation. When you activate Auroral Shine, fire an arrow at a target. If you hit, instead of dealing damage with the arrow, the creature struck must attempt a DC 43 Fortitude save. Critical Success The creature is unaffected. Success The creature is surrounded by shimmering lights akin to the aurora, causing it to become dazzled for 2 rounds. If the creature was invisible, it becomes concealed instead. If the creature was already concealed for any other reason, it’s no longer concealed. Failure As success, but the creature also takes 6d6 persistent cold damage, and the lights affect the creature for 1 minute. Critical Failure As success, but the creature also takes 6d6 persistent cold damage, and the lights affect the creature for 10 minutes. Activate—Signal Flare (light, manipulate) Frequency once per hour; Effect Wintershot fires an arrow-shaped construct of ice straight upward. The arrow soars to a height of 500 feet, or until it strikes a solid surface like a ceiling. When it reaches its apex, it explodes in a brilliant burst, creating a 100-foot radius area of bright light and dim light in the next 100 feet. In the night sky, this beacon can be seen clearly for miles. The beacon remains lit for up to 1 minute in a color of Wintershot’s choice. Alternatively, Wintershot can fire this Signal Flare like a normal arrow to attempt to Strike a target her partner can see—if it hits, the arrow inflicts normal damage and attempts to counteract one darkness effect of Wintershot’s choice that affects the creature struck, with a counteract rank of 9th and a +25 modifier to the roll (+30 modifier if the source of the darkness effect was created by a fiend). Activate—Rimecrust (cold, concentrate, incapacitation) Effect Wintershot causes the deep chill of winter to settle upon a single creature she can see or hear within 30 feet. That creature must attempt a DC 43 Fortitude save, after which point they’re temporarily immune to Rimecrust for 24 hours. Critical Success The creature is una"
+ },
+ {
+  "id": "wintershot-heroic",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Wintershot (Heroic)",
+  "level": 20,
+  "traits": [
+   "apex",
+   "artifact",
+   "deadly-d10",
+   "illusion",
+   "intelligent",
+   "invested",
+   "magical",
+   "propulsive"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "**Perception** +35; precise low-light vision and hearing within 30 feet **Communication** telepathy (partner only) **Skills** Diplomacy +33, Intimidation +35, Survival +35 **Int** +6, **Wis** +7, **Cha** +5 **Will** +35 --- The echo of the snowcaster Jelarial causes *Wintershot* to become chill to the touch, yet despite feeling as cold as ice, she never causes harm or discomfort to her partner. *Wintershot's* string issues a soft hissing sound, as of snow softly falling, and snowflakes drift down from the string and swiftly melt each time the bow is fired. *Wintershot's* voice is eager and excitable, often waxing poetic on a nearby object or creature of beauty or offering compliments to her partner. *Wintershot* is a *+3 major striking greater frost holy composite shortbow*. When making a Strike with *Wintershot*, targets don't gain concealment from the effects of mist or precipitation, and circumstance penalties to attacks imparted from strong winds are negated. --- **Activate—Auroral Shine** ⟨1⟩ (cold, concentrate, light) **Frequency** once per minute **Effect** *Wintershot* can't use this activation. When you activate Auroral Shine, fire an arrow at a target. If you hit, instead of dealing damage with the arrow, the creature struck must attempt a save. **Critical Success** The creature is unaffected. **Success** The creature is surrounded by shimmering lights akin to the aurora, causing it to become dazzled for 2 rounds. If the creature was invisible, it becomes concealed instead. If the creature was already concealed for any other reason, it's no longer concealed. **Failure** As success, but the creature also takes 6d6 damage, and the lights affect the creature for 1 minute. **Critical Failure** As success, but the creature also takes 6d6 damage, and the lights affect the creature for 10 minutes. --- **Activate—Signal Flare** ⟨1⟩ (light, manipulate) **Frequency** once per hour **Effect** *Wintershot* fires an arrow-shaped construct of ice straight upward. The arrow soars to a height of 500 feet, or until it strikes a solid surface like a ceiling. When it reaches its apex, it explodes in a brilliant burst, creating a 100-foot radius area of bright light and dim light in the next 100 feet. In the night sky, this beacon can be seen clearly for miles. The beacon remains lit for up to 1 minute in a color of *Wintershot's* choice. Alternatively, *Wintershot* can fire this Signal Flare like a normal arrow to attempt to Strike a target her partner can see—if it hits, the arrow inflicts normal damage and attempts to counteract one darkness effect of *Wintershot's* choice that affects the creature struck, with a counteract rank of 9th and a +25 modifier to the roll (+30 modifier if the source of the darkness effect was created by a fiend). --- **Activate—Rimecrust** ⟨2⟩ (cold, concentrate, incapacitation) **Effect** *Wintershot* causes the deep chill of winter to settle upon a single creature she can see or hear within 30 feet. That creature must attempt a save, after which point they're temporarily immune to Rimecrust for 24 hours. **Critical Success** The creature is unaffected **Success** The creature's discomfort and shivering from the sudden d"
+ },
+ {
+  "id": "witchs-finger",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Witch's Finger",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Shaped like a pointed, gnarled finger on a stick, witch's finger is a frozen treat imbued with berries that lend it a blood-red hue. A popular tale claims Irriseni winter witches created this dessert, but the story is apocryphal; an enterprising ice cream shop owner in New Stetven invented the treat and, as a marketing ploy, the myth surrounding it. Taking a bite makes you feel warm. For 1 hour, you have cold resistance 3, and for 8 hours, the treat negates the damage you would take from severe environmental cold and reduces the damage you take from extreme cold to that of severe cold."
+ },
+ {
+  "id": "witchwarg-fur",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Witchwarg Fur",
+  "level": 7,
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "heldSpells",
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** Cast a Spell --- The pelt of a witchwarg stays cold long after it leaves the creature's body. A tuft of this fur can freeze a Fire Shield spell into solid ice, inverting its usual effects. The spell's fire trait is replaced with the cold trait, you gain resistance to fire damage and environmental heat effects (instead of cold effects), the shield is immune to cold damage instead of fire damage, and its Hardness is halved against fire effects. The damage you deal to creatures that touch you or hit you with a melee or unarmed attack has its type changed to cold."
+ },
+ {
+  "id": "witness-to-ancient-battles",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Witness to Ancient Battles",
+  "level": 1,
+  "traits": [
+   "animist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Witnesses to ancient battles may be the lingering remnants of soldiers who never returned from their last deployment or the restless souls of warriors whose final contest left them unfulfilled. Or the apparitions may be valkyries and other beings from beyond, naturally drawn to sites of death and battle, or even the unquiet entity formed from a battlefield that saw so much death and blood it gained a spiritual essence of its own. Witnesses to ancient battles are often somber and grim. --- **Apparition Skills** Battlegrounds Lore, Heraldry Lore **Apparition Spells** - **Cantrip** Shield - **1st** Sure Strike - **2nd** Enlarge - **3rd** Ghostly Weapon - **4th** Weapon Storm - **5th** Invoke Spirits - **6th** Phantasmal Calamity - **7th** True Target - **8th** Canticle of Everlasting Grief - **9th** Weapon of Judgment **Vessel Spell** Embodiment of Battle **Avatar** *General of Endless Battle* Speed 70 feet, immune to immobilized **Melee** ⟨1⟩ final strike (agile, fatal d12, reach 15 feet), Damage 6d8+6"
+ },
+ {
+  "id": "wondrous-figurine",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Wondrous Figurine",
+  "level": 2,
+  "traits": [
+   "conjuration",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Wondrous Figurine Source Core Rulebook pg. 576 Usage held in 1 hand Bulk L Each one of these statuettes is 1 inch in height, carved from a specific material and taking the shape of a particular animal or animals. Activate command, Interact; Effect You activate the statue by placing it on solid ground and then speaking its name, causing the statuette to transform into a living creature or creatures. In creature form, the figurine has the minion trait. It can understand your language and it obeys you to the best of its ability when you use an action to command it. The specifics of each creature, as well as the activation’s frequency (if any), appear in its entry below. If the figurine is slain while in animal form, it reverts to its statue shape and cannot be activated again until 1 week has passed. If the figurine is destroyed in statue form, it is shattered and its magic is lost. Wondrous Figurine (Golden Lions) Source Core Rulebook pg. 576 Price 900 gp This statuette depicts a pair of gold lions, and when activated, it becomes a pair of adult lions. The lions can be called on only once per day, and they remain in lion form for no more than 1 hour. If either of the lions is slain, that lion cannot be summoned again until 1 week has passed, but this doesn't prevent you from summoning the other. Wondrous Figurine (Jade Serpent) Source Core Rulebook pg. 576 Price 340 gp This tiny statue first appears to be a formless lump of jade until closer inspection reveals it to be a serpentine body curled into a snug knot. When activated, this figurine becomes a giant viper. The figurine can be used only once per day, and it can remain in serpent form for no more than 10 minutes. Wondrous Figurine (Marble Elephant) Source Core Rulebook pg. 576 Price 2,700 gp Finely carved from a solid piece of marble, this gleaming elephant statuette becomes a fully grown elephant when activated. The elephant can be called upon no more than four times per month. It remains for 24 hours as long as it is being used as a beast of burden or for transport. If it attempts an attack or otherwise engages in combat, it reverts to statuette form after 1d4 rounds. Wondrous Figurine (Obsidian Steed) Source Core Rulebook pg. 576 Price 6,000 gp This sinister-looking black statuette resembles a horse rearing up on its hind legs. When activated, this figurine becomes a nightmare. It can be called upon once per week for up to 24 hours, though it won't use plane shift or its other abilities on behalf of its rider. Although evil, it allows itself to be ridden by creatures of any alignment, although if a good creature mounts it, the rider must attempt a DC 3 flat check. On a failure, the nightmare uses plane shift to take the rider to a random location in the Abyss, where it promptly returns to statue form, stranding its rider in that nightmarish place. Wondrous Figurine (Onyx Dog) Source Core Rulebook pg. 576 Price 34 gp This simple onyx statue transforms into a guard dog. The dog has a +4 circumstance bonus to Survival checks to Track, and it has darkvision. When the dog senses a hidden creature with its scent, that creature is instead observed and concealed. The onyx dog can be activated o"
+ },
+ {
+  "id": "wondrous-figurine-onyx-dog",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Wondrous Figurine (Onyx Dog)",
+  "level": 2,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Each one of these statuettes is 1 inch in height, carved from a specific material and taking the shape of a particular animal or animals. **Activate** ⟨2⟩ command, Interact --- **Effect** You activate the statue by placing it on solid ground and then speaking its name, causing the statuette to transform into a living creature or creatures. In creature form, the figurine has the minion trait. It can understand your language and it obeys you to the best of its ability when you use an action to command it. The specifics of each creature, as well as the activation's frequency (if any), appear in its entry below. If the figurine is slain while in animal form, it reverts to its statue shape and cannot be activated again until 1 week has passed. If the figurine is destroyed in statue form, it is shattered and its magic is lost. --- This simple onyx statue transforms into a Guard Dog. The dog has a +4 circumstance bonus to Survival checks to Track, and it has darkvision. When the dog senses a hidden creature with its scent, that creature is instead observed and concealed. The onyx dog can be activated once per week and remains in its form for up to 6 hours."
+ },
+ {
+  "id": "wooden-palisade",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Wooden Palisade",
+  "level": 6,
+  "traits": [
+   "impulse",
+   "kineticist",
+   "manipulate",
+   "overflow",
+   "primal",
+   "wood"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Planks of wood, embellished with carvings, spring forth to form a wall within 120 feet. The palisade is up to 30 feet long, 20 feet high, and 1 inch thick. It must form in a straight line in an unbroken open space that doesn't pass through any creatures or objects, or the impulse fails. When you create the wall, you can choose to create ledges on one side of the wall, 4 feet from the top, with ladders reaching to them from the bottom of the wall. Each 10-foot-by-10-foot section of the wall has AC 10, Hardness 10, and 20 Hit Points, and is immune to critical hits and precision damage. The wall lasts until the end of your next turn, but you can Sustain it up to 1 minute. --- **Level (+2)** The maximum length of the wall increases by 10 feet, and the HP of each section increase by 10."
+ },
+ {
+  "id": "worm-form",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Worm Form",
+  "level": 14,
+  "traits": [
+   "archetype",
+   "polymorph",
+   "primal"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "core.stances"
+  ],
+  "text": "You take on the form of a purple worm or transform into a humanoid-worm hybrid, retaining your own head but with a worm's body, transforming into a Huge battle form. You must have enough space to expand into or the ability is lost. While in this form, you gain the animal trait. You can Dismiss the form. You gain the following statistics and abilities regardless of which battle form you choose: - AC = 20 + your level. Ignore your armor's check penalty and Speed reduction. - 40 temporary Hit Points. - Darkvision. - One or more unarmed melee attacks specific to the battle form you choose, which are the only attacks you can Strike with. You're trained with them. Your attack modifier is +25, and you use the listed damage. Melee attacks are Strength based (for the purpose of the enfeebled condition, for example). If your unarmed attack modifier is higher, you can use it instead. - Athletics modifier of +30, unless your own modifier is higher. You also gain specific abilities based on the type of monster you choose: - **Purple Worm** Speed 40 feet, burrow 30 feet, swim 20 feet **Melee** 1 jaws (deadly 2d10, reach 15 feet), **Damage** 3d10+15 piercing - **Melee** 1 stinger (agile, poison, reach 15 feet), **Damage** 2d12+15 piercing plus 2d6 persistent poison - **Melee** 1 body (reach 15 feet) **Damage** 1d10+13 bludgeoning **Hybrid** Speed 40 feet - **Melee** 1 stinger (agile, poison, reach 10 feet), **Damage** 2d12+15 piercing plus 1d6 persistent poison - **Melee** 1 body (reach 10 feet), **Damage** 1d10+13 bludgeoning - **Hybrid Caster** You retain the ability to speak, and can cast spells as long as they don't have somatic or material components."
+ },
+ {
+  "id": "wyrm-claw",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Wyrm Claw",
+  "level": 12,
+  "traits": [
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "The tip of a metallic dragon's claw is set into a band of silver. When you summon dragons using the claw, you must choose metallic dragons. - **Armor** After you cast a conjuration spell by activating the *wyrm claw*, you gain resistance 5 to acid, cold, electricity, and fire for the next minute. - **Weapon** After you cast a conjuration spell by activating the claw, you gain a Breath Weapon activity that takes 2 actions and deals 6d6 damage with a . Choose the area and type of damage when you use Breath Weapon: a that deals acid, electricity, or fire, or a that deals cold or fire. You can use this activity once before the end of your next turn. --- **Activate** Cast a Spell **Effect** You cast Gouging Claw. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast Summon Dragon."
+ },
+ {
+  "id": "wyrm-on-the-wing",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Wyrm on the Wing",
+  "level": 9,
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "effectChoices",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "A massive pattern resembling dragon wings stretched to their full span crosses your body. The tattoo is typically inked on the upper back. Though the representation can be highly stylized, each wyrm's wingspan tattoo depicts the wings of a particular type of dragon. You gain resistance 5 to the damage type matching the tradition of the dragon your tattoo depicts. - **Arcane** force - **Divine** spirit - **Occult** mental - **Primal** fire --- **Activate** ⟨2⟩ (concentrate) **Frequency** once per day **Effect** The tattoo casts the Dragon Wings focus spell on you."
+ },
+ {
+  "id": "wyrm-spindle",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Wyrm Spindle",
+  "level": 12,
+  "traits": [
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "The broken tips of four dragon claws—one of each magical tradition—are set into a silver fitting. They protrude in the shape of a star or compass. - **Armor** After you cast a non-cantrip spell by activating the spindle, you gain resistance 5 to fire, force, mental, and spirit for 1 minute. - **Weapon** After you cast a non-cantrip spell by activating the spindle, you gain a Dragon Breath activity that takes 2 actions and deals 6d6 damage to all creatures in a with a save. Choose the type of damage when you use Dragon Breath: fire, force, mental, or spirit. You can use this activity once before the end of your next turn. --- **Activate** Cast a Spell **Effect** You cast Gouging Claw. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast Summon Dragon."
+ },
+ {
+  "id": "wyrms-wingspan",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Wyrm's Wingspan",
+  "level": 9,
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "effectChoices",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "A massive pattern resembling dragon wings stretched to their full span crosses your body. The tattoo is typically inked on the upper back. Though the representation can be highly stylized, each wyrm's wingspan tattoo depicts the wings of a particular type of dragon. You gain resistance 5 to the damage type matching the tradition of the dragon your tattoo depicts. - **Arcane** force - **Divine** spirit - **Occult** mental - **Primal** fire **Activate** ⟨2⟩ (concentrate) **Frequency** once per day --- **Effect** The tattoo casts the Dragon Wings focus spell on you."
+ },
+ {
+  "id": "you-cant-kill-an-idea",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "You Can't Kill an Idea",
+  "level": 20,
+  "traits": [
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Those who would destroy you instead transform you into a powerful yet formless entity. If you would be killed while you have an Ultimatum of Liberation active, you (along with your equipment) become an ideaform. As an ideaform, you are invisible and incorporeal. You have only 1 Hit Point and can't gain more, but you are immune to all damage; if your dying or doomed condition would increase to a high enough value to kill you, it does not increase, and you are immune to any effect that would instantly kill or destroy you. You are immune to the unconscious condition, yet can take only purely mental actions. You can communicate telepathically with your allies at unlimited range, and gain two extra reactions at the start of each of your turns. Additionally, you can Aid allies through nothing but telepathic advice, without having to spend an action to prepare first, and can spend a Mythic Point to do so at mythic proficiency. Any circumstance bonus you grant through Aiding is increased by 1. Before an hour passes while being an ideaform, you must choose a willing follower of your cause to fuse with and cease to be an ideaform. Use your level, their ancestry, heritage, and ancestry feats, and work with your GM to choose which combination of class, attribute modifiers, skills, and feats would make a good representation of this fusion. This new character has all your previous equipment. If you do not fuse with a follower after an hour of being an ideaform, you cease to be an ideaform and die; the equipment you had at the time of your original death also ceases to exist."
+ },
+ {
+  "id": "youre-an-embarrassment",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "You're an Embarrassment!",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "fortune"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** An ally within 30 feet fails a Will saving throw against an incapacitation effect. --- Some Firebrands can't stand it when their allies are ruining their moment, and you're no different. Your loud and forceful condemnation of an ally succumbing to an incapacitation effect gives them a second chance to impress you and shake off the effect. Your ally rerolls the triggering Will saving throw with a +1 circumstance bonus. Regardless of the result of the save, your ally is temporarily immune to You're an Embarrassment! for 10 minutes."
+ }
+]

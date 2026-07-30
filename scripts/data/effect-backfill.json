@@ -3067,9 +3067,7 @@
     "category": "items",
     "id": "gaze-of-the-mantis",
     "field": "passiveEffects",
-    "value": {
-      "perception": 2
-    }
+    "value": null
   },
   {
     "category": "items",
@@ -3707,20 +3705,13 @@
     "category": "items",
     "id": "nosoi-charm",
     "field": "passiveEffects",
-    "value": {
-      "skills": {
-        "performance": 2
-      }
-    }
+    "value": null
   },
   {
     "category": "items",
     "id": "nosoi-charm-greater",
     "field": "passiveEffects",
     "value": {
-      "skills": {
-        "performance": 3
-      },
       "senses": [
         {
           "name": "lifesense",
@@ -3734,11 +3725,7 @@
     "category": "items",
     "id": "violet-ray",
     "field": "passiveEffects",
-    "value": {
-      "skills": {
-        "medicine": 2
-      }
-    }
+    "value": null
   },
   {
     "category": "items",
@@ -4034,19 +4021,13 @@
     "category": "items",
     "id": "halcyon-heart",
     "field": "passiveEffects",
-    "value": {
-      "skills": {
-        "performance": 3
-      }
-    }
+    "value": null
   },
   {
     "category": "items",
     "id": "thunder-helm",
     "field": "passiveEffects",
-    "value": {
-      "perception": -1
-    }
+    "value": null
   },
   {
     "category": "items",
@@ -5023,11 +5004,7 @@
     "category": "items",
     "id": "conch-of-otherworldly-seas",
     "field": "passiveEffects",
-    "value": {
-      "skills": {
-        "performance": 2
-      }
-    }
+    "value": null
   },
   {
     "category": "items",
@@ -5149,71 +5126,25 @@
     "category": "items",
     "id": "maestros-instrument",
     "field": "passiveEffects",
-    "value": {
-      "skills": {
-        "performance": 1
-      }
-    }
+    "value": null
   },
   {
     "category": "items",
     "id": "maestros-instrument-lesser",
     "field": "passiveEffects",
-    "value": {
-      "skills": {
-        "performance": 1
-      }
-    }
+    "value": null
   },
   {
     "category": "items",
     "id": "maestros-instrument-moderate",
     "field": "passiveEffects",
-    "value": {
-      "skills": {
-        "performance": 2
-      }
-    }
+    "value": null
   },
   {
     "category": "items",
     "id": "maestros-instrument-greater",
     "field": "passiveEffects",
-    "value": {
-      "skills": {
-        "performance": 3
-      }
-    }
-  },
-  {
-    "category": "items",
-    "id": "maestros-instrument-lesser",
-    "field": "passiveEffects",
-    "value": {
-      "skills": {
-        "performance": 1
-      }
-    }
-  },
-  {
-    "category": "items",
-    "id": "maestros-instrument-moderate",
-    "field": "passiveEffects",
-    "value": {
-      "skills": {
-        "performance": 2
-      }
-    }
-  },
-  {
-    "category": "items",
-    "id": "maestros-instrument-greater",
-    "field": "passiveEffects",
-    "value": {
-      "skills": {
-        "performance": 3
-      }
-    }
+    "value": null
   },
   {
     "category": "items",
@@ -6019,21 +5950,13 @@
     "category": "items",
     "id": "camouflaging-chromatophores-lesser",
     "field": "passiveEffects",
-    "value": {
-      "skills": {
-        "stealth": 1
-      }
-    }
+    "value": null
   },
   {
     "category": "items",
     "id": "camouflaging-chromatophores-greater",
     "field": "passiveEffects",
-    "value": {
-      "skills": {
-        "stealth": 2
-      }
-    }
+    "value": null
   },
   {
     "category": "items",
@@ -6079,12 +6002,7 @@
     "category": "items",
     "id": "whip-tail",
     "field": "passiveEffects",
-    "value": {
-      "skills": {
-        "acrobatics": 1,
-        "athletics": 1
-      }
-    }
+    "value": null
   },
   {
     "category": "items",
@@ -6133,11 +6051,7 @@
     "category": "items",
     "id": "arachnolute",
     "field": "passiveEffects",
-    "value": {
-      "skills": {
-        "performance": 2
-      }
-    }
+    "value": null
   },
   {
     "category": "items",
@@ -6987,71 +6901,43 @@
     "category": "items",
     "id": "benthic-drums",
     "field": "passiveEffects",
-    "value": {
-      "skills": {
-        "performance": 2
-      }
-    }
+    "value": null
   },
   {
     "category": "items",
     "id": "blakenshipper",
     "field": "passiveEffects",
-    "value": {
-      "skills": {
-        "performance": 1
-      }
-    }
+    "value": null
   },
   {
     "category": "items",
     "id": "booming-bell",
     "field": "passiveEffects",
-    "value": {
-      "skills": {
-        "performance": 1
-      }
-    }
+    "value": null
   },
   {
     "category": "items",
     "id": "core-bugle",
     "field": "passiveEffects",
-    "value": {
-      "skills": {
-        "performance": 2
-      }
-    }
+    "value": null
   },
   {
     "category": "items",
     "id": "fife-of-the-faithful",
     "field": "passiveEffects",
-    "value": {
-      "skills": {
-        "performance": 1
-      }
-    }
+    "value": null
   },
   {
     "category": "items",
     "id": "guangu-of-the-steppe",
     "field": "passiveEffects",
-    "value": {
-      "skills": {
-        "performance": 1
-      }
-    }
+    "value": null
   },
   {
     "category": "items",
     "id": "horn-of-the-archon",
     "field": "passiveEffects",
-    "value": {
-      "skills": {
-        "performance": 2
-      }
-    }
+    "value": null
   },
   {
     "category": "items",
@@ -7230,21 +7116,13 @@
     "category": "items",
     "id": "fan-of-falling-words",
     "field": "passiveEffects",
-    "value": {
-      "skills": {
-        "performance": 2
-      }
-    }
+    "value": null
   },
   {
     "category": "items",
     "id": "lacquered-waist-drum",
     "field": "passiveEffects",
-    "value": {
-      "skills": {
-        "performance": 2
-      }
-    }
+    "value": null
   },
   {
     "category": "items",
@@ -7570,11 +7448,7 @@
     "category": "items",
     "id": "conductors-instrument",
     "field": "passiveEffects",
-    "value": {
-      "skills": {
-        "performance": 1
-      }
-    }
+    "value": null
   },
   {
     "category": "items",
@@ -13367,11 +13241,7 @@
     "category": "items",
     "id": "camouflaging-chromatophores",
     "field": "passiveEffects",
-    "value": {
-      "skills": {
-        "stealth": 1
-      }
-    }
+    "value": null
   },
   {
     "category": "feats",
@@ -40264,5 +40134,1838 @@
     "id": "free-spirit",
     "field": "trainedLoreChoice",
     "value": true
+  },
+  {
+    "category": "feats",
+    "id": "reveal-machinations",
+    "field": "description",
+    "value": "You reveal that you played a minor but recurring role in another humanoid's life-or at least convince them that's the case. Attempt a Deception check against the target's Will DC. On a success, the revelation makes them frightened 2, and on a critical success they are frightened 3. In addition, you gain information about the subject as though you had attempted to Recall Knowledge about them using an appropriate skill and received the same result on your roll. You can't use this ability against the same humanoid again until 1 day has passed and you've also successfully disguised yourself as a different person."
+  },
+  {
+    "category": "feats",
+    "id": "keep-up-appearances",
+    "field": "description",
+    "value": "**Access** Taldan nationality\n\n**Trigger** You are affected by an emotion effect.\n\n---\n\nTaldan pride means you never show weakness. Roll a Deception check and compare the result to any observing creatures' Perception DCs. On a success, that creature believes you were unaffected by the emotion effect.\n\nA creature tricked in this manner can't benefit from the emotion effect and can't use abilities that require you to be under this emotion effect; for example, if you successfully use this ability to trick a will-o'-wisp into believing you aren't under a fear effect, it can't use its Feed on Fear ability on you."
+  },
+  {
+    "category": "feats",
+    "id": "freeze-it",
+    "field": "description",
+    "value": "You are no rime hag or Jadwiga, but the magic of the north has still left a mark on you. Frigid ice runs through your veins, and you can expel frost from your body to freeze your foes. Attempt an Athletics check against the Fortitude DC of an adjacent foe. If you have master proficiency in Athletics, you can affect up to two adjacent foes, rolling one Athletics check against each foe.\n\n---\n\n**Critical Success** The target becomes Clumsy 2 for 1 round.\n\n**Success** The target becomes Clumsy 1 for 1 round.\n\n**Critical Failure** The target is temporarily immune for 1 minute."
+  },
+  {
+    "category": "feats",
+    "id": "unfazed-assessment",
+    "field": "description",
+    "value": "You have witnessed hundreds of fighting styles and quickly adapt to defend against complicated maneuvers. Choose a creature within 30 feet who you're aware of, and attempt a Perception check against that target's Will DC. If you succeed, you size up their fighting style, gaining a +1 circumstance bonus to AC and saving throws against that creature's attacks (or a +2 circumstance bonus for a critical success). These benefits last until the end of your next turn."
+  },
+  {
+    "category": "feats",
+    "id": "battle-prayer",
+    "field": "description",
+    "value": "Calling out to your deity, you recite scripture to harm a foe. When you select this feat, choose chaos, evil, good, or law. Your choice must match one of your deity's alignment components. This action has the trait corresponding to the chosen alignment.\n\nAttempt a Religion check against the Will DC of a foe within 30 feet. The foe is then temporarily immune to Battle Prayers from your deity for 1 day.\n\n---\n\n**Critical Success** You deal damage of the chosen alignment type, or 6d6 damage if you have legendary proficiency in Religion.\n\n**Success** You deal damage of the chosen alignment type, or 3d6 damage if you have legendary proficiency in Religion.\n\n**Failure** There is no effect.\n\n**Critical Failure** The backlash of your foe's will against your prayer prevents you from using Battle Prayer again for 10 minutes."
+  },
+  {
+    "category": "feats",
+    "id": "sacred-defense",
+    "field": "description",
+    "value": "**Frequency** once per hour\n\n---\n\nYou call upon your deity to grant you their protective blessing. Attempt a DC 30 Religion check. If you have legendary proficiency in Religion, you can instead attempt a DC 40 Religion check to increase the temporary Hit Points you gain on a successful check to 15 (25 on a critical success).\n\n---\n\n**Critical Success** You gain 10 temporary Hit Points. You lose any remaining temporary Hit Points after 1 minute.\n\n**Success** You gain 5 temporary Hit Points. You lose any remaining temporary Hit Points after 1 minute.\n\n**Critical Failure** Your deity withholds their blessing. You cannot attempt to call to your deity again for 1 day."
+  },
+  {
+    "category": "feats",
+    "id": "log-roll",
+    "field": "description",
+    "value": "**Requirements** You and an adjacent creature are both on a narrow surface or uneven ground and the other creature is off-guard.\n\n---\n\nYou shuffle your feet to dislodge the surface beneath you or otherwise cause your opponent to become unsteady. Attempt an Acrobatics check against the adjacent creature's Reflex saving throw DC. On a success, the creature falls. On a critical failure, you fall."
+  },
+  {
+    "category": "feats",
+    "id": "empathetic-plea",
+    "field": "description",
+    "value": "**Trigger** You are attacked by a creature that you haven't yet acted hostile toward. You must use this reaction before the creature rolls its attack.\n\n---\n\nThe way you cringe or use those puppy-dog eyes you've been practicing elicits an empathetic response in the attacker. Attempt a Diplomacy check against your attacker's Will DC.\n\n---\n\n**Critical Success** The creature pulls its attack, wasting its action, and can't use hostile actions against you until the beginning of its next turn.\n\n**Success** The creature takes a -2 circumstance penalty to damage on the triggering Strike and all its Strikes against you until the beginning of its next turn. The penalty is -4 if you're an expert in Diplomacy, -6 if you're a master, and -8 if you're legendary.\n\n**Failure** The creature's attack is unaffected, and the creature is temporarily immune to your Empathic Pleas for 24 hours."
+  },
+  {
+    "category": "feats",
+    "id": "explosive-death-drop",
+    "field": "description",
+    "value": "**Requirements** You are in Rain of Embers Stance and have a target grabbed or restrained.\n\n---\n\nYou lift your enemy into the air before bringing them crashing down with a fiery detonation. Roll an Athletics check against your target's Fortitude DC. You take a -1 circumstance penalty to your check if the target is one size larger than you and a -3 circumstance penalty if it's larger than that. You gain a +1 circumstance bonus to your check if the target is one size smaller than you and a +3 circumstance bonus if it's smaller than that.\n\n---\n\n**Critical Success** The target takes 12d6 damage and falls prone in an unoccupied adjacent square of your choice. The target is no longer grabbed. The target and any creature adjacent to it also each take 1d6 damage.\n\n**Success** As critical success, but the target takes 6d6 damage instead of 12d6, and creatures don't take persistent fire damage.\n\n**Failure** The target is no longer grabbed.\n\n**Critical Failure** As failure, but you fall prone."
+  },
+  {
+    "category": "feats",
+    "id": "purge-sins",
+    "field": "description",
+    "value": "**Frequency** once per day\n\n---\n\nYou call on your celestial forebears to rid your body of all toxins and impurities. For each disease or poison currently affecting you, attempt a Religion check to counteract that disease or poison. As normal, your counteract level is equal to half your level, rounded up."
+  },
+  {
+    "category": "feats",
+    "id": "catchy-tune",
+    "field": "description",
+    "value": "You create a tune so catchy, your foes can't help but dance along. Attempt a Performance check against the Will DCs of all enemies in a .\n\n---\n\n**Critical Success** The target takes a –10-foot status penalty to its Speed and is off-guard, both for 1 round.\n\n**Success** The target takes a –5-foot status penalty to its Speed for 1 round.\n\n**Critical Failure** The target is temporarily immune for 1 hour."
+  },
+  {
+    "category": "feats",
+    "id": "reveal-true-name",
+    "field": "description",
+    "value": "You attempt to get a creature to do as you wish by threatening them with your knowledge of their true name. You must know and speak the creature's true name and say what you want the creature to do. Attempt an Intimidation check against the target's Will DC.\n\n---\n\n**Critical Success** The target does as you say out of a sense of self-preservation, and will not harm itself in any way. It becomes unfriendly (if it wasn't already unfriendly or hostile) but continues to comply for up to 1 day. The target is too scared of you to retaliate or flee, certain you would find them wherever they might go.\n\n**Success** As critical success, but once the target becomes unfriendly, they avoid you and might act against you in an indirect manner, such as alerting your enemies to your location.\n\n**Failure** The target refuses to comply and typically flees your presence to avoid your further use of their true name. If they were not already unfriendly or hostile, they become unfriendly. They avoid you in the future and are likely to take indirect action against you.\n\n**Critical Failure** The target refuses to comply and becomes hostile, if it wasn't already. If they perceive you as weak, they might attack you; otherwise, they likely flee to avoid your further use of their true name."
+  },
+  {
+    "category": "feats",
+    "id": "tamper",
+    "field": "description",
+    "value": "You tamper with a foe's weapon or armor, using a free hand. Choose either a weapon held by an enemy in your reach or a suit of armor worn by an enemy in your reach. Attempt a Crafting check against the enemy's Reflex DC.\n\n---\n\n**Critical Success** Your tampering is incredibly effective. If you tampered with a weapon, the enemy takes a -2 circumstance penalty to attack rolls and damage rolls with that weapon. If you tampered with armor, the armor hampers the enemy's movement, making the enemy off-guard and inflicting a –10-foot penalty to its Speeds. The effect lasts until the enemy Interacts to remove it, regardless of which one you used.\n\n**Success** Your tampering is temporarily effective. As critical success, but the effect ends at the start of your next turn, even if the enemy doesn't Interact to end it.\n\n**Critical Failure** Your tampering backfires dramatically, creating a small explosion from your own tools or gear. You take fire damage equal to your level."
+  },
+  {
+    "category": "feats",
+    "id": "helpful-tinkering",
+    "field": "description",
+    "value": "**Frequency** once per 10 minutes\n\n---\n\nYou don't just tinker with your own innovation, you fiddle with your allies' weapons as well (for their benefit, of course). Choose an ally in your reach and one of their weapons. Attempt a Crafting check against a high DC for your level.\n\n---\n\n**Success** For 1 minute, the chosen ally's Strikes with the chosen weapon gain the same offensive boost your innovation has.\n\n**Critical Failure** Your ally takes damage of the type and amount that your offensive boost normally deals on a successful Strike."
+  },
+  {
+    "category": "feats",
+    "id": "gunpowder-gauntlet",
+    "field": "description",
+    "value": "**Requirements** You're wielding a loaded one-handed firearm.\n\n---\n\nYour flair keeps foes' attention, as your motions with your gun draw your foes into a deadly game. As you toy with them and performatively brandish your weapon, you build their tunnel vision, leaving them trapped in a perceptual gauntlet of your own making. Attempt a Performance check against the Will DC of a single target within your one-handed firearm's first range increment.\n\n---\n\n**Critical Success** The target takes a –2 status penalty to attack rolls against creatures other than you until the beginning of your next turn.\n\n**Success** The target takes a –1 status penalty to attack rolls against creatures other than you until the beginning of your next turn."
+  },
+  {
+    "category": "feats",
+    "id": "dazzling-bullet",
+    "field": "description",
+    "value": "Your tricks discombobulate your opponent, leaving spots in their vision from the bright flash of your gunshot reflected straight into their eyes (or other visual organs). Attempt a Performance check against the target creature's Will DC and make a ranged firearm Strike against that target. If the Strike deals damage to the target creature and you succeed at the Performance check, the creature is dazzled for 1 round."
+  },
+  {
+    "category": "feats",
+    "id": "whirling-knockdown",
+    "field": "description",
+    "value": "**Requirements** You're wielding a loaded one-handed firearm and a one-handed melee weapon.\n\n---\n\nYou fire your gun while throwing off a target's balance with your melee weapon. Then, you topple your foe to the ground with the quick orchestrated combination. You don't need to use brute force to do so, or even necessarily to hit with your gunshot; the effect is all about performing perfectly and eliminating your target's movements and options, leaving them no choice but to fall. Make a ranged firearm Strike against a creature within the reach of your melee weapon and then attempt a Performance check against the creature's Reflex DC. If the Strike critically succeeds, the target takes a –2 circumstance penalty to its Reflex DC against this check. The Performance check has the following effects.\n\n---\n\n**Critical Success** The target falls and lands prone. It takes 2d6 damage from the fall.\n\n**Success** The target falls and lands prone.\n\n**Critical Failure** Your plans backfired on you, and you're forced to drop your melee weapon in your space."
+  },
+  {
+    "category": "feats",
+    "id": "unwind-death",
+    "field": "description",
+    "value": "**Requirements** The target's body must be mostly intact.\n\n---\n\nCombining necromancy with the mysterious temporal powers of clockwork, you wind a creature backward from the moment of its death. Attempt a DC 40 Crafting check to revive a dead creature that has been dead for no more than 3 rounds. If you succeed, the target returns to life with the effects of Raise Dead, except it still has the wounded condition it had before dying, increased by 1 (or wounded 1 if it wasn't wounded before dying). Whether you succeed or fail, the target is then temporarily immune to Unwind Death for 1 day."
+  },
+  {
+    "category": "feats",
+    "id": "predict-weather",
+    "field": "description",
+    "value": "By observing often subtle indicators in the environment, you may try to predict the day's weather. Spend 10 minutes outdoors then attempt a DC 20 Survival check. (This check is reduced to if you have a commanding view of the region, but increases to if conditions are poor, such as attempting to predict weather with impaired visibility). Once you make an attempt to Predict the Weather, you cannot attempt to do so again for 24 hours.\n\n---\n\n**Critical Success** You accurately predict the day's precipitation, temperature, and wind. You learn if a weather event will occur in the region within the next 24 hours, and if so, what the event is and approximately when it will occur. You gain a +2 circumstance bonus to Survival checks made to prepare for this weather event.\n\n**Success** You accurately predict the day's precipitation, temperature, and wind. You learn if a weather event will occur in the region during the next 24 hours, but not what that event will be or when it will take place. You gain a +1 circumstance bonus to Survival checks made to prepare for this weather event.\n\n**Critical Failure** You come to a dramatically wrong conclusion. The GM provides information to you as though you had received a critical success, including the specifics of a weather event that will not occur that day (instead, a different event-or no event-may occur)."
+  },
+  {
+    "category": "feats",
+    "id": "alluring-performance",
+    "field": "description",
+    "value": "**Frequency** once per day\n\n---\n\nYou command the attention of those around you with an elegant display. Attempt a Performance check and compare it to the Will DC of each creature in a .\n\n---\n\n**Critical Success** The target is fascinated with you for as long as you perform (unless it breaks from the fascination, as normal for the condition) and is dazzled for 1 round or as long as it's fascinated, whichever is longer.\n\n**Success** The target is fascinated for 1 round and is dazzled for 1 round.\n\n**Failure** The target is dazzled for 1 round.\n\n**Critical Failure** The target is unaffected."
+  },
+  {
+    "category": "feats",
+    "id": "ostentatious-reload",
+    "field": "description",
+    "value": "**Requirements** You're wielding two one-handed firearms.\n\n---\n\nEvery good Firebrand knows that style can be as important as substance—so long as you don't screw up the delivery. Make a Performance check against an easy DC for your level as you spin your guns around and juggle ammunition to reload them.\n\n---\n\n**Critical Success** You Interact to reload up to two firearms you are currently wielding.\n\n**Success** You Interact to reload a single firearm you are currently wielding.\n\n**Failure** You drop one of the required firearms and a round of ammunition on the ground in your space.\n\n**Critical Failure** You drop both firearms and two rounds on the ground in your space."
+  },
+  {
+    "category": "feats",
+    "id": "helts-spelldance",
+    "field": "description",
+    "value": "Ranik Helt knows a special technique to hide his spells as part of a performance, and you've learned this technique. Ostentatiously performing, you move across the battlefield, taking foes aback and creating an opening for your spell. Attempt a Performance check against all observers' Perception DCs. Then, Stride once or twice. During this movement, you don't trigger reactions that are triggered by your movement from the creatures against which you succeeded on your Performance check.\n\nAfter your movement, you can Cast a Spell. If you used one Stride, you can cast either a 1-action or a 2-action spell; if you used two Strides, you can only cast a 1-action spell. If you critically succeed on your check against any creature, they take a –1 circumstance penalty to their saving throws against any spell you cast as part of your Helt's Spelldance due to your distracting performance.\n\nAll creatures that observed you become temporarily immune to your Helt's Spelldance for 10 minutes."
+  },
+  {
+    "category": "feats",
+    "id": "devrins-cunning-stance",
+    "field": "description",
+    "value": "You've learned Devrin Arlos's guileful ways, and his sly teachings help you remind your allies to keep their wits about them. When you use this action, attempt a Deception check. The DC is usually a standard-difficulty DC of your level, but the GM can assign a different DC based on the circumstances. The effect depends on the result of your check.\n\n---\n\n**Critical Success** Your marshal's aura increases to a , and it grants you and your allies a +1 status bonus to skill checks. When you or an ally in the aura successfully Strike an off-guard enemy, that enemy can't use reactions until the beginning of its next turn.\n\n**Success** As critical success, but your aura's size doesn't increase.\n\n**Failure** You fail to enter the stance.\n\n**Critical Failure** You fail to enter the stance and can't take this action again for 1 minute."
+  },
+  {
+    "category": "feats",
+    "id": "grudging-compliment",
+    "field": "description",
+    "value": "**Trigger** An enemy within 30 feet damages you or succeeds at a skill check.\n\n---\n\nEvery Firebrand can recognize the skill of others, but you've turned it into an art you can wield in combat. You compliment a foe's form or technique, and your unexpected praise distracts them from their surroundings. Attempt a Diplomacy check against that enemy's Will DC. Regardless of your result, they are temporarily immune to your Grudging Compliments for 10 minutes.\n\n---\n\n**Critical Success** The target becomes off-guard for 1 round.\n\n**Success** The target becomes off-guard against your attacks for 1 round."
+  },
+  {
+    "category": "feats",
+    "id": "living-for-the-applause",
+    "field": "description",
+    "value": "**Frequency** once per day\n\n**Trigger** You would be reduced to 0 Hit Points (but not immediately killed) during a combat encounter that has spectators.\n\n---\n\nNothing can stop you as long as you have an audience cheering you on. The attention reinvigorates you and keeps you from being knocked out. You remain at 1 Hit Point, and your wounded condition increases by 1.\n\nIn addition, attempt a Performance check; the DC is determined by the GM but is typically the standard DC for your level or the DC to Make an Impression on the spectators, whichever is higher. On a success, the crowd erupts in applause and cheers at your comeback, much to the dismay of your enemies. Concern for the crowd's reaction should your opponent deliver a finishing blow gives you a +1 circumstance bonus to AC until the end of your next turn. On a critical success, you don't expend your daily use of Living for the Applause and can use the reaction an additional time on the same day."
+  },
+  {
+    "category": "feats",
+    "id": "upset-balance",
+    "field": "description",
+    "value": "**Trigger** You are damaged by a melee Strike.\n\n**Requirements** You are in Tenacious Stance.\n\n---\n\nYou lean into your foe's attack, using the weight of your body and armor to send them reeling. Attempt an Athletics check against the creature's Reflex DC. On a success, the target becomes Clumsy 1 until the end of its next turn (Clumsy 2 on a critical success). If you are anchored, you gain a +2 circumstance bonus to this check."
+  },
+  {
+    "category": "feats",
+    "id": "goblin-song",
+    "field": "description",
+    "value": "You sing annoying goblin songs, distracting your foes with silly and repetitive lyrics. Attempt a Performance check against the Will DC of a single enemy within 30 feet. This has all the usual traits and restrictions of a Performance check to sing.\n\nYou can affect up to two targets within range if you have expert proficiency in Performance, four if you have master proficiency, and eight if you have legendary proficiency.\n\n---\n\n**Critical Success** The target takes a –1 status penalty to Perception checks and Will saves for 1 minute.\n\n**Success** The target takes a –1 status penalty to Perception checks and Will saves for 1 round.\n\n**Critical Failure** The target is temporarily immune to Goblin Song for 1 hour."
+  },
+  {
+    "category": "feats",
+    "id": "folksy-patter",
+    "field": "description",
+    "value": "You are adept at disguising coded messages as folksy idioms. Using slang, jokes, halfling loanwords, and the like, you convey a simple message consisting of three basic words (such as \"Danger assassin flee\" or \"Meet me moonrise\"). Your intended listener can attempt a DC 20 Perception check to discern the message. This DC is reduced by 5 if the listener is a halfling or has Folksy Patter, or by 10 if both apply ( ). Eavesdroppers can also attempt a Perception check against your Deception DC to discern your meaning. Any bonuses or penalties to Perception checks to Sense Motive apply to checks to understand Folksy Patter."
+  },
+  {
+    "category": "feats",
+    "id": "accompany",
+    "field": "description",
+    "value": "**Trigger** An ally within 30 feet Casts a Spell.\n\n---\n\nYou use your performance to supplement an ally's spellcasting, providing magical energy for their spell in their stead. Attempt a Performance check, using a very high DC for the ally's level, and either spend a Focus Point (if the triggering spell is a focus spell) or expend a spell slot at least 1 rank higher than the triggering spell. If you succeed at your Performance check, your ally's spell doesn't cost the Focus Point or spell slot that ally would normally need to spend."
+  },
+  {
+    "category": "feats",
+    "id": "sapping-symbol",
+    "field": "description",
+    "value": "**Trigger** While you have your symbol raised, you are about to take damage from a melee attack.\n\n---\n\nYour religious symbol glows with sacred energy, turning the attacker's strength to weakness. Attempt a Religion check against the triggering creature's Will DC. Regardless of the result, the creature is temporarily immune for 1 minute.\n\n---\n\n**Critical Success** The creature is Enfeebled 2 until it spends at least 1 action moving away from you.\n\n**Success** As critical success, but Enfeebled 1."
+  },
+  {
+    "category": "feats",
+    "id": "barreling-charge",
+    "field": "description",
+    "value": "You rush forward, moving enemies aside to reach your foe. You Stride, attempting to move through your enemies' spaces. Roll an Athletics check and compare the result to the Fortitude DC of each creature whose space you attempt to move through during your Stride, moving through its space on a success but ending your movement before entering its space on a failure. You can then Strike, regardless of how your Stride ended. You can use Barreling Charge to Burrow, Climb, Fly, or Swim instead of Stride if you have the corresponding movement type."
+  },
+  {
+    "category": "feats",
+    "id": "sabotage",
+    "field": "description",
+    "value": "**Requirements** You have a free hand.\n\n---\n\nYou subtly damage others' equipment. Choose one item that a creature within your reach wields or carries. The item must have moving parts that you could possibly sabotage (a shortbow could be sabotaged, but a longsword could not). Attempt a Thievery check against the Reflex DC of the creature. Damage dealt by Sabotage can't take the item below its Broken Threshold.\n\n---\n\n**Critical Success** You deal damage equal to 4 x your Thievery proficiency bonus.\n\n**Success** You deal damage equal to double your Thievery proficiency bonus.\n\n**Critical Failure** The item is temporarily immune to your Sabotage for 1 day."
+  },
+  {
+    "category": "feats",
+    "id": "stay-down",
+    "field": "description",
+    "value": "**Trigger** A prone foe within your reach Stands.\n\n---\n\nYou have ways of keeping your foes down. Attempt an Athletics check against the triggering foe's Fortitude DC. On a success, the action is disrupted, causing the creature to remain prone. On a critical success, the creature also can't Stand until its next turn."
+  },
+  {
+    "category": "feats",
+    "id": "swift-elusion",
+    "field": "description",
+    "value": "**Trigger** A foe ends its movement adjacent to you.\n\n---\n\nAttempt an Acrobatics check against the foe's Reflex DC. If you succeed, either Stride to a different space adjacent to the foe or move the foe to a different space adjacent to you."
+  },
+  {
+    "category": "feats",
+    "id": "convincing-illusion",
+    "field": "description",
+    "value": "**Trigger** A creature succeeded, but didn't critically succeed, at a Perception check or Will save to disbelieve an illusion from a spell that you cast.\n\n**Requirements** You are within 30 feet of the observer and the illusion.\n\n---\n\nYou use your deceptive skills to make your illusions seem even more real. Attempt a Deception check against the target's Perception DC. If you succeed, the target fails to disbelieve the illusion."
+  },
+  {
+    "category": "feats",
+    "id": "bonded-animal",
+    "field": "description",
+    "value": "You forge strong connections with animals. You can spend 7 days of downtime regularly interacting with a normal animal (not a companion or other special animal) that is friendly or helpful to you. After this duration, attempt a DC 20 Nature check against the animal's Will DC. If successful, you bond with the animal. The animal is permanently bonded to you until you form a bond with a different animal or do something egregious to break your bond.\n\nA helpful animal is easier to direct. If your bonded animal is level –1, it gains the minion trait, allowing you to command it more efficiently. The maximum level of creature that can be your minion increases to 3 if you're a master in Nature and to 11 if you're legendary.\n\n---\n\n**Special** You can't have both a bonded animal and an animal companion (though you can have both a bonded animal and a pet or familiar)."
+  },
+  {
+    "category": "feats",
+    "id": "divine-guidance",
+    "field": "description",
+    "value": "You're so immersed in divine scripture that you find meaning and guidance for any situation in your texts. Spend 10 minutes Deciphering Writing on religious scriptures of your deity or philosophy while thinking about a particular problem or conundrum you face, and then attempt a Religion check (DC determined by the GM). If you succeed, you unearth a relevant passage, parable, or aphorism that can help you move forward or change your thinking to help solve your conundrum."
+  },
+  {
+    "category": "feats",
+    "id": "no-cause-for-alarm",
+    "field": "description",
+    "value": "You attempt to reduce panic. Attempt a Diplomacy check, comparing it to the Will DC of creatures in a around you who are frightened. Each of them is temporarily immune for 1 hour.\n\n---\n\n**Critical Success** Reduce the creature's frightened value by 2.\n\n**Success** Reduce the creature's frightened value by 1."
+  },
+  {
+    "category": "feats",
+    "id": "scare-to-death",
+    "field": "description",
+    "value": "You can frighten foes so much, they might die. Attempt an Intimidation check against the Will DC of a living creature within 30 feet of you that you sense or observe and who can sense or observe you. If the target can't hear you or doesn't understand the language you are speaking, you take a –4 circumstance penalty. The creature is temporarily immune for 1 minute.\n\n---\n\n**Critical Success** The target must attempt a save against your Intimidation DC. On a critical failure, it dies. On any other result, it becomes Frightened 2 and is fleeing for 1 round. The critical failure effect has the death trait.\n\n**Success** The target becomes frightened 2.\n\n**Failure** The target becomes Frightened 1.\n\n**Critical Failure** The target is unaffected."
+  },
+  {
+    "category": "feats",
+    "id": "lassoing-lash",
+    "field": "description",
+    "value": "**Requirements** The target can't be more than one size larger than you.\n\n---\n\nYou quickly wrap your lash around an opponent and pull them toward you. Attempt an Athletics check against the Fortitude DC of a target within your lash's reach.\n\n---\n\n**Critical Success** You pull the target to any open space adjacent to you.\n\n**Success** You pull the target to the nearest open space adjacent to you.\n\n**Critical Failure** You misjudge your leverage and fall prone.\n\n---\n\n**Special** If you have the Titan Wrestler feat, you can target a creature up to two sizes larger than you, or up to three sizes larger than you if you're legendary in Athletics."
+  },
+  {
+    "category": "feats",
+    "id": "feral-scramble",
+    "field": "description",
+    "value": "**Requirements** You're in hybrid or animal shape.\n\n---\n\nSinking your claws in, you propel yourself at shocking speed. You Climb up to your land Speed and make a claw Strike at any point during that movement. After you finish the movement, attempt an Athletics check against the surface's Climb DC.\n\n---\n\n**Success** You maintain your position.\n\n**Failure** You slide down 60 feet or to the ground without taking falling damage."
+  },
+  {
+    "category": "feats",
+    "id": "catfolk-dance",
+    "field": "description",
+    "value": "You have a habit of always being in the way when other creatures attempt to move. Attempt an Acrobatics check against an adjacent creature's Reflex DC.\n\n---\n\n**Critical Success** The target creature gains a -2 circumstance penalty to Reflex saves and is off-guard until the start of your next turn.\n\n**Success** The target creature gains a -2 circumstance penalty to Reflex saves until the start of your next turn."
+  },
+  {
+    "category": "feats",
+    "id": "wing-buffet",
+    "field": "description",
+    "value": "You have a pair of draconic wings strong enough to batter your foes away and shove them away. Choose up to two creatures adjacent to you. Attempt an Athletics check and compare it to the Fortitude DC of each target. This counts as two attacks for your multiple attack penalty, but the penalty doesn't increase until after both attacks.\n\n---\n\n**Critical Success** The target takes bludgeoning damage equal to double your level () and is pushed up to 10 feet away from you.\n\n**Success** The target takes bludgeoning damage equal to your level () and is pushed up to 5 feet away from you.\n\n**Failure** The target takes bludgeoning damage equal to half your level ().\n\n**Critical Failure** You fall prone at the end of this activity."
+  },
+  {
+    "category": "feats",
+    "id": "blowgun-poisoner",
+    "field": "description",
+    "value": "You can capably deliver toxins with a Blowgun. Your blowgun Strikes can apply injury poisons even if they deal no damage due to a creature's resistance. If you critically succeed at a blowgun Strike using a poisoned dart, the target's initial save against the poison is one degree of success worse than the creature rolls; this is a misfortune effect.\n\nIn addition, if you make a blowgun Strike while hidden or undetected, you don't automatically become observed. Instead, immediately attempt a Stealth check against the Perception DC of the target. If you succeed, you don't become observed, and are hidden (if you were undetected, you still become hidden rather than remaining undetected)."
+  },
+  {
+    "category": "feats",
+    "id": "improvise-admixture",
+    "field": "description",
+    "value": "**Frequency** once per day\n\n**Requirements** You have fewer than your maximum number of versatile vials, and you're either holding or wearing an alchemist's toolkit.\n\n---\n\nYou scrounge together enough ingredients from what's left in your alchemist's toolkit to produce a few more versatile vials on the fly. Attempt a Crafting check. The DC is usually a standard-difficulty DC for your level, but the GM can assign a different DC based on the circumstances. The number of vials you regain depends on the result of your check (up to your maximum).\n\n---\n\n**Critical Success** You regain 3 versatile vials.\n\n**Success** You regain 2 versatile vials.\n\n**Failure** You regain 1 versatile vial.\n\n**Critical Failure** You don't regain any versatile vials."
+  },
+  {
+    "category": "feats",
+    "id": "awesome-blow",
+    "field": "description",
+    "value": "Your attacks are so powerful, they can flatten your opponents. When you use Knockback, you can attempt an Athletics check against your target's Fortitude DC.\n\n---\n\n**Critical Success** You gain the critical success effect of a Shove, then the critical success effect of a Trip against the target.\n\n**Success** You gain the success effect of a Shove, then the success effect of a Trip against the target.\n\n**Failure** You gain the normal effect of Knockback."
+  },
+  {
+    "category": "feats",
+    "id": "connect-the-dots",
+    "field": "description",
+    "value": "Ephemeral connections between people, places, and concepts are invisible to most, but seeing them is your stock and trade. Choose an ally and a non-allied creature. You must be able to see both of them. You briefly study the way they both move and attempt a Perception check against the higher of the non-allied creature's Deception DC or Will DC. Both targets are then temporarily immune to Connect the Dots for 10 minutes.\n\n---\n\n**Critical Success** You spot a way for your ally to take advantage of the other target's flaws and let them know about it. Your ally gains your Pursue a Lead investigation bonus as a circumstance bonus to all its Strikes or skill checks against the creature until the start of your next turn.\n\n**Success** As critical success, but your ally gains the bonus only for their next Strike or skill check against the creature.\n\n**Failure** You fail to make a connection.\n\n**Critical Failure** You misconstrue a vital piece of information, which temporarily disconcerts you. You are Stupefied 1 until the end of your next turn."
+  },
+  {
+    "category": "feats",
+    "id": "surgical-shock",
+    "field": "description",
+    "value": "With a few well-placed jabs with your fist or weapon, you render your opponent disoriented or ungainly. Attempt a Medicine check against the Fortitude DC of a target within your reach. The result of your check determines the severity of the condition you inflict.\n\n---\n\n**Critical Success** The target is either Clumsy 3 or Stupefied 3 until the end of your next turn. The target is then immune to Surgical Shock for 1 hour.\n\n**Success** As critical success, but the target is either Clumsy 2 or Stupefied 2.\n\n**Failure** The target is minorly inconvenienced. You gain a +1 circumstance bonus to the next attack action you attempt against it before the end of your turn.\n\n**Critical Failure** The target is unaffected and you overextend yourself, triggering reactions as if you had used a manipulate action."
+  },
+  {
+    "category": "feats",
+    "id": "glean-lore",
+    "field": "description",
+    "value": "You tap into the collected lore of the divine, accessing a variety of potentially useful information.\n\nAttempt a Religion check to understand the information you gain. The GM sets the DC (similar to the DC to Recall Knowledge), potentially adjusting the DC of the check for topics far removed from your mystery.\n\n---\n\n**Critical Success** You comprehend the lore accurately or gain a useful clue from the divine about your situation.\n\n**Success** You learn two pieces of information about the topic, one true and one erroneous, but you don't know which is which.\n\n**Failure** You recall incorrect information or gain an erroneous or misleading clue.\n\n**Critical Failure** You recall two pieces of incorrect information or gain two erroneous or misleading clues."
+  },
+  {
+    "category": "feats",
+    "id": "leading-dance",
+    "field": "description",
+    "value": "**Requirements** You are adjacent to an enemy.\n\n---\n\nYou sweep your foe into your dance. Attempt a Performance check against an adjacent enemy's Will DC.\n\n---\n\n**Critical Success** Your foe is swept up in your dance. You both move up to 10 feet in the same direction, remaining adjacent to one another. Your movement doesn't trigger reactions from the target (and the target's movement doesn't trigger reactions because it's forced movement).\n\n**Success** As critical success, but you both move only 5 feet.\n\n**Failure** The foe doesn't follow your steps. You can move 5 feet if you choose, but this movement triggers reactions normally.\n\n**Critical Failure** You stumble, falling prone in your space."
+  },
+  {
+    "category": "feats",
+    "id": "vexing-tumble",
+    "field": "description",
+    "value": "You tumble around your foes, expertly avoiding their reactions. Stride up to half your Speed and roll an Acrobatics check. Compare the result to the Reflex DC of each enemy whose reach you began in or enter during the movement, in sequence.\n\n---\n\n**Critical Success** This movement doesn't trigger reactions from the enemy, and the enemy is off-guard to you until the end of your turn\n\n**Success** This movement doesn't trigger reactions from the enemy.\n\n**Critical Failure** Your movement immediately stops when you enter the creature's reach; if you began in the creature's reach, you don't move."
+  },
+  {
+    "category": "feats",
+    "id": "unseat",
+    "field": "description",
+    "value": "**Requirements** You are riding your mount and wielding a jousting weapon.\n\n---\n\nWith a mighty blow from atop your companion, you attempt to knock an opponent off their mount. Make a melee Strike against a mounted creature. If your attack hits, attempt an Athletics check against the target's Fortitude DC. If you succeed, the target is knocked off its mount into a space of its choice adjacent to its mount. If you critically succeed, the target also lands prone."
+  },
+  {
+    "category": "feats",
+    "id": "distracting-flattery",
+    "field": "description",
+    "value": "**Trigger** You observe a target's attitude toward yourself or your allies decrease as a result of an ally's behavior.\n\n---\n\nYou know how to maintain a good impression and manage your image, even while keeping uncouth company.\n\nMake a Deception check against the target's Will DC. Regardless of your result, the target is temporarily immune to your Distracting Flattery for 10 minutes.\n\n---\n\n**Success** The target's attitude doesn't decrease as a result of your ally's social blunder.\n\n**Failure** The target's attitude decreases, as normal.\n\n**Critical Failure** Your attempt makes matters worse, decreasing the target's attitude toward you by one step, in addition to any changes from the behavior that triggered this reaction."
+  },
+  {
+    "category": "feats",
+    "id": "dread-marshal-stance",
+    "field": "description",
+    "value": "Putting on a grim face for the battle ahead, you encourage your allies to strike fear into their foes with vicious attacks. When you use this action, attempt an Intimidation check. The DC is usually an easy DC of your level, but the GM can assign a different DC based on the circumstances. The effect depends on the result of your check.\n\n---\n\n**Success** Your marshal's aura grants you and your allies in the aura a +1 status bonus to damage rolls. When you or an ally in the aura critically hit an enemy with a Strike, that enemy is Frightened 1. If you're wielding a weapon that has more than one damage die (typically due to a striking rune), you can have the status bonus equal the weapon's number of damage dice instead of +1.\n\n**Failure** You fail to enter the stance.\n\n**Critical Failure** You fail to enter the stance and can't take this action again for 1 minute."
+  },
+  {
+    "category": "feats",
+    "id": "inspiring-marshal-stance",
+    "field": "description",
+    "value": "You become a brilliant example of dedication and poise in battle, encouraging your allies to follow suit. When you spend this action, attempt a Diplomacy check. The DC is usually an easy DC of your level, but the GM can assign a different DC based on the circumstances. The effect depends on the result of your check.\n\n---\n\n**Success** Your marshal's aura grants you and allies a +1 status bonus to attack rolls and saves against mental effects.\n\n**Failure** You fail to enter the stance.\n\n**Critical Failure** You fail to enter the stance and can't take this action again for 1 minute."
+  },
+  {
+    "category": "feats",
+    "id": "resuscitate",
+    "field": "description",
+    "value": "**Requirements** You are holding healer's tools or are wearing them and have a hand free.\n\n---\n\nYou resuscitate the dead. Attempt a DC 40 Medicine check to revive a dead creature who has been dead for no more than 3 rounds and whose body is mostly intact. If you succeed, the target returns to life with the effects of Raise Dead, except it still has the wounded condition it had before dying, increased by 1 (or Wounded 1 if it wasn't wounded before dying). Whether you succeed or fail, the target is temporarily immune to Resuscitate for 1 day."
+  },
+  {
+    "category": "feats",
+    "id": "biographical-eye",
+    "field": "description",
+    "value": "In even a brief conversation or social interaction, you pick up on subtle social and visual cues to learn a great deal about a person's origin and history. You might notice bits of green under the person's fingernails and determine they're an herbalist, spy a pin indicating their membership in a secret society, or something similar. You pick up on only details that have to do with their societal role, so you might learn the city district where a vampire lives, but wouldn't learn any of their weaknesses, nor necessarily even that they are a vampire. Spend 1 minute in the presence of someone you haven't met before, or haven't met since you first gained Biographical Eye, then attempt a DC 30 Society check. You gain a +1 circumstance bonus to the check if you engaged the person in conversation during this time. If the person is deliberately trying to conceal their nature or present a false identity, you learn about their false biography rather than their true one unless the result of your Society check exceeds their Will DC.\n\n---\n\n**Critical Success** You learn the creature's profession, their specialty within that profession, and a major accomplishment or controversy from their career. You also learn the nation and settlement where they live, as well as the district in a city large enough to have districts. In addition, you learn the nation or settlement where they spent their formative years.\n\n**Success** You learn the creature's profession and specialty within that profession. You learn the nation or settlement where they normally live.\n\n**Failure** You learn the creature's profession and the region of the world they hail from, but no more.\n\n**Critical Failure** You learn a piece of erroneous information about the creature."
+  },
+  {
+    "category": "feats",
+    "id": "bon-mot",
+    "field": "description",
+    "value": "You launch an insightful quip at a foe, distracting them. Choose a foe within 30 feet and roll a Diplomacy check against the target's Will DC.\n\n---\n\n**Critical Success** The target is distracted and takes a –3 status penalty to Perception and Will saves for 1 minute.\n\nThe target can end the effect early with a retort to your Bon Mot. This can either be a single action that has the concentrate trait or an appropriate skill action to frame their retort. The GM determines which skill actions qualify, though they must take at least 1 action. Typically, the retort needs to use a linguistic Charisma-based skill action.\n\n**Success** As critical success, but the penalty is –2.\n\n**Critical Failure** Your quip is atrocious. You take the same penalty an enemy would take had you succeeded. This ends after 1 minute or if you issue another Bon Mot and succeed."
+  },
+  {
+    "category": "feats",
+    "id": "dirty-trick",
+    "field": "description",
+    "value": "**Requirements** You have a hand free and are within melee reach of an opponent.\n\n---\n\nYou hook a foe's bootlaces together, pull their hat over their eyes, loosen their belt, or otherwise confound their mobility through an underhanded tactic. Attempt a Thievery check against the target's Reflex DC.\n\n---\n\n**Critical Success** The target is Clumsy 1 until they use an Interact action to end the impediment\n\n**Success** As critical success, but the condition ends automatically after 1 round.\n\n**Critical Failure** You fall prone as your attempt backfires."
+  },
+  {
+    "category": "feats",
+    "id": "disturbing-knowledge",
+    "field": "description",
+    "value": "You utter a litany of dreadful names, prophecies, and descriptions of realms beyond mortal comprehension, drawn from your study of forbidden tomes and scrolls. Even those who don't understand your language are unsettled by these dire secrets.\n\nAttempt an Occultism check and compare the result to the Will DC of an enemy within 30 feet, or to the Will DCs of any number of enemies within 30 feet if you are legendary in Occultism. Those creatures are temporarily immune for 24 hours.\n\n---\n\n**Critical Success** The target becomes confused for 1 round and Frightened 1.\n\n**Success** The target becomes frightened 1.\n\n**Failure** The target is unaffected.\n\n**Critical Failure** You get overly caught up in your own words and become frightened 1."
+  },
+  {
+    "category": "feats",
+    "id": "evangelize",
+    "field": "description",
+    "value": "You point out a detail that incontrovertibly supports your faith, causing a listener's mind to whirl. Attempt a Diplomacy check and compare the result to the Will DC of a single target that can hear you and understands your language; that target is then temporarily immune to Evangelize with respect to your deity or philosophy for 1 day. A creature that already agrees with you is unaffected, and at the GM's discretion, a target that genuinely changes its perspective to support your faith as a result of the argument is also otherwise unaffected.\n\n---\n\n**Critical Success** The target is Stupefied 2 for 1 round.\n\n**Success** The target is Stupefied 1 for 1 round.\n\n**Failure** The target is unaffected."
+  },
+  {
+    "category": "feats",
+    "id": "dance-of-the-mousedeer",
+    "field": "description",
+    "value": "You move your body in a pattern that evokes the small and clever Sister Mousedeer, misdirecting enemies and filling their vision with shadows to hide behind. Attempt a Performance check against the Perception DC of a single enemy within 30 feet. This has all the usual traits and restrictions of a Performance check. You can affect up to two targets within range if you have expert proficiency in Performance, four if you have master proficiency, and eight if you have legendary proficiency.\n\n---\n\n**Critical Success** Imaginary shadows rise up in the target's vision, hiding you from sight. You gain greater cover against that enemy, which provides a +4 circumstance bonus to AC and to Stealth checks to Hide, Sneak, or otherwise avoid detection. As the shadows are illusory, you don't gain the typical bonus to Reflex saves from greater cover. These benefits last until the beginning of your next turn, or until you move from your current space, use an attack action, or become unconscious, whichever comes first.\n\n**Success** As critical success, except you gain only standard cover (a +2 circumstance bonus instead).\n\n**Critical Failure** The opponent grasps the movements of your dance, becoming temporarily immune to your Dance of the Mousedeer for 1 day."
+  },
+  {
+    "category": "feats",
+    "id": "dance-of-the-tiger",
+    "field": "description",
+    "value": "Tales tell of the Tiger stalking the Mousedeer for days, hidden and instilling dread upon its prey. Your dance embodies the character role so well you can trail an opponent from its own shadow. Attempt a Performance check against the Will DC of a single adjacent enemy.\n\n---\n\n**Critical Success** You step on the foe's shadow, bringing a cold dread. The opponent is Frightened 2; its shadow remains pinned underfoot, stretching and deforming to remain connected to your square, and indicates where it has gone even if you lose sight of the foe. The creature can't reduce its frightened condition below 1 as long as you remain on its shadow. Your connection to its shadow breaks if the distance between you and the target exceeds 120 feet or if you don't end your turn adjacent to the target. Once your connection to its shadow breaks, the enemy is immune to Dance of the Tiger for 1 hour.\n\n**Success** As critical success, except the creature is only Frightened 1 and your connection to its shadow breaks at 60 feet instead of 120."
+  },
+  {
+    "category": "feats",
+    "id": "dance-of-the-jester",
+    "field": "description",
+    "value": "Through your incredible dance skill, you can embody the character of the Jester, able to take control of the shadows of other players on stage (much to your amusement). Attempt a Performance check against the Fortitude DC of a single enemy within 30 feet.\n\n---\n\n**Critical Success** Your shadow and the opponent's synchronize, forcing your target to match your movements step for step. You perform any two of the following actions: Drop Prone, Release an object, Stand, Step, or Stride. You must perform two different actions. Your opponent also takes these actions, moving in the same direction as you (for instance, if you Stride north, so does your opponent) or Releasing an object when you do. The target is then temporarily immune to your Dance of the Jester for 1 day.\n\n**Success** As critical success, except you can take only one action, not two, before your target becomes temporarily immune to your dance, and you cannot move the target into hazardous terrain."
+  },
+  {
+    "category": "feats",
+    "id": "germination-of-resolve",
+    "field": "description",
+    "value": "**Frequency** once per day\n\n---\n\nVitality floods your trammeled soul, offering you rejuvenation, if not quite rest. For each effect that causes the enfeebled or fatigued conditions to affect you, attempt a Nature check to counteract that effect. The counteract rank of Germination of Resolve is equal to half your level rounded up."
+  },
+  {
+    "category": "feats",
+    "id": "peonys-flourish",
+    "field": "description",
+    "value": "**Requirements** You're wielding two fans, one in each hand.\n\n---\n\nAs you spin around and create wide arching circles with your fans, you manifest a mosaic of peonies that confuses your enemies. Stride twice and then attempt a Performance check against the Will DC of each creature you passed adjacent to.\n\n---\n\n**Critical Success** The creature is Stunned 3 and dazzled for as long as they're stunned.\n\n**Success** The creature is Stunned 1 and dazzled for 1 round.\n\n**Failure** The creature is dazzled for 1 round.\n\n**Critical Failure** The creature is unaffected and temporarily immune to further uses of Peony's Flourish for 24 hours."
+  },
+  {
+    "category": "feats",
+    "id": "acupuncturist",
+    "field": "description",
+    "value": "**Access** Tian Xia origin\n\n---\n\nYou've studied the routes by which qi flows through the body. The needles stored in your healer's tools can manipulate its flow and improve health when applied to specific meridian points. You spend a day studying an ally to attempt a Medicine check to improve their qi against a standard DC for your ally's level. The ally is then immune to all uses of Acupuncturist for 1 week.\n\n---\n\n**Critical Success** You grant your ally the choice of a +2 circumstance bonus to one downtime activity skill check within the next week, or the ability to roll twice on their next saving throw within the next week against an affliction and take the higher result; this is a fortune effect.\n\n**Success** You grant your ally a +1 circumstance bonus to one downtime activity skill check within the next week.\n\n**Critical Failure** Your ally takes a –1 circumstance penalty to all downtime activity skill checks within the next week."
+  },
+  {
+    "category": "feats",
+    "id": "banish-falsehoods-of-flesh",
+    "field": "description",
+    "value": "Your ability to manipulate supernatural energy allows you to deploy divine magic directly against a disguised enemy to reveal them as they truly are, or to cleanse an ally from an unwilling transformation. Attempt a Religion check to counteract a polymorph effect currently affecting a creature within 30 feet of you that you are aware of. The target is then temporarily immune to Banish Falsehoods of Flesh for 1 day."
+  },
+  {
+    "category": "feats",
+    "id": "ruthless-orator",
+    "field": "description",
+    "value": "**Frequency** once per hour\n\n---\n\nYou were once cast in the role of Daronlyr XII, one of Taldor's most ambitious rulers who slew his cousin to seize the crown, yet somehow still managed to convince the entire Ulfen Guard to swear loyalty to him simply through his powers of oration. You attempt a Performance check to launch into a powerful monologue, pulling lines from Daronlyr's playbook to win respect from everyone around you, even your enemies. The DC of this check is a hard difficulty DC of your level. On a success, any hostile creatures within 20 feet take a –2 circumstance penalty to attack rolls and spell attack rolls that target you until the beginning of your next turn, and any allies within 20 feet are quickened until the beginning of your next turn. The additional action can be only used to Strike or Stride."
+  },
+  {
+    "category": "feats",
+    "id": "performers-treatment",
+    "field": "description",
+    "value": "With your experience as a performer, you can keep a set of medical tools handy at all times. You can wear a healer's toolkit as part of any costume or disguise. Creatures will generally only notice the toolkit it if they use a Seek action and succeed at a check against your Performance DC. In addition, you can realize at the last moment when you should just be pretending to avoid doing any lasting harm.\n\nWhen you critically fail a Medicine check to Administer First Aid, Treat Disease, Treat Poison, or Treat Wounds, you can attempt a Performance check against the patient's Perception DC. On a success, your critical failure at the Medicine check becomes a failure."
+  },
+  {
+    "category": "feats",
+    "id": "declare-anathema",
+    "field": "description",
+    "value": "**Frequency** once per 10 minutes\n\n---\n\nYou declare a creature you are aware of within 30 feet anathema, causing their friends and strangers to shy away from them. Attempt a Religion check against the target's Will DC.\n\n---\n\n**Critical Success** Any creature that attempts to target the anathema creature with a beneficial effect must succeed at a or the action is disrupted. This curse remains until removed by Cleanse Affliction or a similar effect, or an atone ritual. In addition, the creature gains weakness 10 to spirit damage for 1 minute.\n\n**Success** As critical success, but the curse lasts for 1 minute.\n\n**Failure** As critical success, but the curse lasts for 1 round and the target doesn't gain weakness to spirit damage.\n\n**Critical Failure** The target is unaffected."
+  },
+  {
+    "category": "feats",
+    "id": "free-from-bonds",
+    "field": "description",
+    "value": "As a mortal herald, you cannot easily be captured, nor can your allies. If you are grabbed or restrained when you use Flash of Omnipresence, the creature or effect that is imparting that condition on you takes spirit damage equal to your level.\n\nIf you teleport adjacent to a grabbed or restrained ally using Flash of Omnipresence, attempt a Religion check against the hard DC for the level of the creature or effect that is imparting that condition. on a success, your ally no longer has that condition."
+  },
+  {
+    "category": "feats",
+    "id": "guiding-words",
+    "field": "description",
+    "value": "**Frequency** once per 10 minutes\n\n---\n\nYour words speak divine truth, guiding blades and arrows to their mark. Choose an ally within 30 feet and attempt a Diplomacy check. The DC is equal to the hard difficulty DC of the level of your ally. On a success, the first time the targeted ally makes an attack roll before the end of their next turn, they roll the attack twice and use the better result.\n\nRegardless of the result, the target becomes immune to Guiding Words for 10 minutes."
+  },
+  {
+    "category": "feats",
+    "id": "perfect-truths",
+    "field": "description",
+    "value": "Your knowledge of Razmir's faith and doctrines has grown. You excel in debating priests of rival faiths, wielding truths as subtly and deftly as any charlatan might wield a lie. When you use Deception to Lie, you can carefully structure your deceits so that each individual statement you make is the truth, from a certain perspective.\n\nAs long as you are wearing your Razmiri Mask, you don't take a penalty to Deception checks while subject to the Ring of Truth spell or similar effects. Whenever you are subject to *ring of truth* or a similar effect, you can attempt a Deception check when you first begin speaking to counteract the spell's effects, with a counteract rank equal to half your level (rounded up); succeeding at this check doesn't end the spell or effect, but it does cause it to indicate that you are speaking the truth, even when you are actually lying, as you weave a web of words so delicate that even you can't be certain where the truth ends and deception begins."
+  },
+  {
+    "category": "feats",
+    "id": "speedrun-strats",
+    "field": "description",
+    "value": "Whenever you take a move action to Stride, you can attempt a DC 15 Acrobatics check to roll forward.\n\n---\n\n**Critical Success** You gain 5 extra feet of movement to your Speeds and can move through solid obstacles such as walls until the end of your Stride action.\n\n**Success** You gain 5 extra feet of movement to your Speeds until the end of your Stride action.\n\n**Failure** You lose 5 feet of movement from your Speeds until the end of your Stride action.\n\n**Critical Failure** Your character softlocks and is paralyzed permanently. Only a Wish ritual or similar magic can reverse this effect."
+  },
+  {
+    "category": "feats",
+    "id": "primadonna",
+    "field": "description",
+    "value": "**Frequency** once per hour\n\n---\n\nThe spotlight should always be on you and you alone. Attempt a Performance check against the Will DCs of all enemies within 30 feet who can see or hear you. On a success, the targets focus on you and gain a +1 circumstance bonus to hit you, but they're off-guard to all creatures other than yourself. On a critical success, the effect lasts for 3 rounds."
+  },
+  {
+    "category": "feats",
+    "id": "commitment-to-equality",
+    "field": "description",
+    "value": "You help an ally shake off any impediment that would give an enemy an unfair advantage. You rally a creature within 30 feet in an attempt to reduce its frightened or stupefied condition. If a creature has multiple conditions from this list, choose one. When you're a master in Diplomacy, add clumsy and enfeebled to the list of conditions. When you're legendary in Diplomacy, add stunned to the list of conditions; if the stunned condition has a duration instead of a value, you can't use Commitment to Equality to reduce it.\n\nAttempt a Diplomacy check against the saving throw DC of the effect that caused the condition; if there was no saving throw DC, use the hard DC for the level of the creature, hazard, or item that caused the effect. You can't treat a condition that came from an artifact or effect above 20th level unless you're legendary in Diplomacy; even if you can, the counteract DC increases by 10. You can't treat a condition that is part of a curse or disease or is a natural state of the target. Once you attempt to treat a target's condition, that target is immune to further attempts for 1 hour, regardless of the result.\n\n---\n\n**Critical Success** Reduce the condition's value by 2.\n\n**Success** Reduce the condition's value by 1.\n\n**Critical Failure** Increase the condition's value by 1."
+  },
+  {
+    "category": "feats",
+    "id": "preternatural-polish",
+    "field": "description",
+    "value": "Armor you polish shines with righteous grace. You can take 10 minutes to recite prayers or oaths while polishing a suit of heavy armor that you or a willing creature is wearing. If you do, attempt a DC 35 Crafting check with the following results. The armor then becomes temporarily immune to this ability until your next daily preparations.\n\n---\n\n**Critical Success** Once in the next hour, the creature wearing the polished armor can use a reaction to shine majestically. This reaction is triggered when they would be affected by a spell or ability with the darkness trait. The creature attempts a counteract check against the triggering effect using your Crafting modifier. Additionally, the creature wearing the polished armor gains an additional reaction at the start of each of their turns that can be only used for this reaction.\n\n**Success** As critical success, but the creature wearing the polished armor doesn't gain an additional reaction at the start of each of their turns."
+  },
+  {
+    "category": "feats",
+    "id": "desperate-resuscitation",
+    "field": "description",
+    "value": "**Requirements** You are holding a Healer's Toolkit or are wearing one and have a free hand; the target's body is mostly intact; the target was not killed by a death effect.\n\n---\n\nYou can use your training in combat medicine to revive the recently deceased. Attempt a DC 40 Medicine check to revive a dead creature that has been dead for no more than 3 rounds. If you succeed, the target returns to life with the effects of Raise Dead, except it still has the wounded condition it had before dying, increased by 1 (or Wounded 1 if it wasn't wounded before dying). Whether you succeed or fail, the target is temporarily immune to Desperate Resuscitation for 1 day."
+  },
+  {
+    "category": "feats",
+    "id": "fabricate-truth",
+    "field": "description",
+    "value": "You invent a false truth by fast talking, switching arguments, shifting the standard of evidence, and generally confounding others. Choose a creature within 30 feet that you're aware of. Attempt a Deception check against that target's Will DC. Regardless of your result, the target is temporarily immune to your attempts to Fabricate Truth for 10 minutes.\n\n---\n\n**Critical Success** The target becomes Stupefied 2 for 1 round.\n\n**Success** The target becomes Stupefied 1 for 1 round."
+  },
+  {
+    "category": "feats",
+    "id": "invented-vulnerability",
+    "field": "description",
+    "value": "**Frequency** once per round\n\n---\n\nYou list off the potential fears and weaknesses of an enemy you can see or hear, speaking with such certainty that they become real. Attempt a Deception check against the enemy's Will DC. Select bludgeoning, piercing, or slashing damage. Regardless of your result, the target is temporarily immune to Invented Vulnerability for 10 minutes.\n\n---\n\n**Critical Success** The target gains weakness to the selected type of damage equal to 3 + half your level for 1 round.\n\n**Success** The target gains weakness 5 to the selected type of damage for 1 round."
+  },
+  {
+    "category": "feats",
+    "id": "stages-of-fate",
+    "field": "description",
+    "value": "At one time, the hero-gods could not tell their own prophecies. Ongalte, hero-god of deicide, defied this rule and cemented why it should be upheld. Those that can reach into the web of fates and pluck out a string are forbidden from speaking of their own myth. Yet nothing forbids them from speaking the myths of others.\n\nYou peer through the world around you to see the delicate threads connecting others to their fate when they become afflicted. Choose a creature within 30 feet that you can see and who you know is affected by an ongoing affliction that progresses through stages, such as most diseases or poisons. Spend 1 Mythic Point, then attempt a Religion check at mythic proficiency against that affliction's DC.\n\n---\n\n**Critical Success** The next time the afflicted creature attempts a saving throw against the affliction, they automatically gain a critical success. If this results in the affliction coming to an end, you gain 1 Mythic Point.\n\n**Success** The next time the afflicted creature attempts a saving throw against the affliction, they gain a +1 circumstance bonus to the roll and increase the result of the saving throw by one degree of success.\n\n**Failure** The next time the afflicted creature attempts a saving throw against the affliction, they gain a +1 circumstance bonus.\n\n**Critical Failure** You share the afflicted's fate, and are exposed to their affliction. You must immediately save against the affliction's effect."
+  },
+  {
+    "category": "feats",
+    "id": "disarming-smile",
+    "field": "description",
+    "value": "**Trigger** You are the target of a melee attack and the attacker has not rolled yet.\n\n**Requirements** You are aware of the attacker, the attacker is an intelligent humanoid creature, and you have not attempted to harm the attacker.\n\n---\n\nWith a wide and sincere smile, you give your attacker pause. You attempt a Diplomacy check against the triggering attacker's Will DC. After you use Disarming Smile, all creatures who witnessed you use it are temporarily immune to your Disarming Smile for the next 24 hours.\n\n---\n\n**Critical Success** Your enemy ceases their attack, momentarily taken aback by your disarming smile. The attack fails and the triggering target can't attempt hostile actions against you until the beginning of its next turn or until you (or your allies) take hostile actions against the enemy (or its allies). You can begin talking to the creature on your next turn to attempt another Diplomacy check; on a success, you sustain the effect until the beginning of your next turn, to a maximum of 1 minute. Talking on subsequent rounds requires that you be able to communicate with the target creature and imparts the auditory and linguistic traits to the action.\n\n**Success** Your foe pauses momentarily. Their attack fails, but they can attempt further attacks against you.\n\n**Failure** The target's attack is unaffected."
+  },
+  {
+    "category": "feats",
+    "id": "go-with-the-flow",
+    "field": "description",
+    "value": "**Frequency** once per day\n\n**Trigger** A creature detects your attempt to Impersonate, and you're within 30 feet of at least one other creature.\n\n---\n\nYou have an occult connection to the world that helps you blend in with the cacophony of life around you. Attempt an Occultism check against the creature's Perception DC. On a success, the creature mistakenly identifies another creature within 30 feet of you as you instead."
+  },
+  {
+    "category": "feats",
+    "id": "infiltrate-dream",
+    "field": "description",
+    "value": "Entering a dream is as natural to you as stepping through a doorway. If you're adjacent to a sleeping creature, you can enter a lucid dreamlike state, a process taking 10 minutes, to mentally walk into their dreamscape. While in the target's dream, you witness its contents, plots, and emotional experiences as an observer, though nothing within the dream can perceive or interact with you. Your target becomes temporarily immune to Infiltrate Dream for 1 week. You can't enter the dreams of a creature that doesn't have a conscious mind or doesn't dream.\n\nWhile within the dream, you can attempt an Occultism check against the target's Will DC to interpret symbolism and learn information about a single topic. If the target has no knowledge of the topic, you learn they don't know about the topic unless your result is a critical failure.\n\n---\n\n**Critical Success** You learn a piece of information directly relevant to the topic unless the target would want to hide it. If so, you learn something related to the topic but not a direct answer.\n\n**Success** You receive a hint or clue about the topic. This clue won't be inaccurate, but it's cryptic, vague, or might be understandable only with additional information.\n\n**Critical Failure** The dreams mislead you, and you learn an erroneous piece of information."
+  },
+  {
+    "category": "feats",
+    "id": "dream-logic",
+    "field": "description",
+    "value": "You can transmit a sense of dreamy nonchalance. If you do something especially strange or dangerous while you're in your Daydream Trance, such as entering a restricted area or fighting someone in the street, any creature that isn't one of your allies must attempt a Perception check against your class or spell DC, whichever is higher. On a success, it realizes something is amiss, and on a failure, it believes nothing is out of the ordinary. The creature can attempt a new check if you start doing something else strange, but not if you continue on the same course of action it already failed to notice was peculiar.\n\nAny hostile action by you or your allies against an affected creature automatically ends the effect for that creature. The GM might allow the creature a new check if someone else brings your actions to its attention, such as if someone you're attacking calls out for help. When your trance ends, affected creatures retain their memories of events but likely still view them as unremarkable; unless they're prompted to relate the events, they might not report them."
+  },
+  {
+    "category": "feats",
+    "id": "commitment-to-protection",
+    "field": "description",
+    "value": "You attempt to guide an ally into a more defensive pose against a particular danger. Attempt a Warfare Lore check against the hard DC for the level of a creature or hazard you can see. An ally of your choice within 30 feet gains an effect based on the outcome. If you're legendary in Warfare Lore, when you roll a failure or critical failure, you get a success instead.\n\n---\n\n**Critical Success** The ally gains a +2 circumstance bonus to AC against the target creature's or hazard's next attack.\n\n**Success** As critical success, but the bonus is +1.\n\n**Critical Failure** The ally takes a –1 circumstance penalty to AC against the target creature's or hazard's next attack."
+  },
+  {
+    "category": "feats",
+    "id": "denounce-tyranny",
+    "field": "description",
+    "value": "**Requirements** You witnessed a creature harm an ally, harm a noncombatant, or commit a wantonly evil act in the last round.\n\n---\n\nYou call out a creature's despicable or cowardly actions, disrupting its alliances or even making its allies ashamed to be seen with it. Attempt a Diplomacy check and compare the result to the Will DCs of up to three of the triggering creature's allies within 30 feet of you. If you succeed on the check, the target refuses to treat the triggering creature as an ally for 1 round (2 rounds on a critical success). It's possible to get a different degree of success for each target. If you're a master in Diplomacy, you can instead target up to five creatures, and if you're legendary in Diplomacy, you can target up to 10 creatures."
+  },
+  {
+    "category": "feats",
+    "id": "perplex",
+    "field": "description",
+    "value": "You weave a confusing web of half-truths, conspiracy theories, and plausible motives to goad an enemy into lashing out wildly. Choose a target within 30 feet that can hear you, and attempt a Diplomacy check against its Will DC. The creature is then immune to Perplex for 24 hours.\n\n---\n\n**Critical Success** The target is Stupefied 3 and confused for 1 round.\n\n**Success** The target is Stupefied 1 for 1 round.\n\n**Failure** The target is unaffected."
+  },
+  {
+    "category": "feats",
+    "id": "inked-cache",
+    "field": "description",
+    "value": "You've learned to use your Twilight Talon's mark to secret away contraband. The tattoo's level increases to 10, unless it was already higher, and it gains the abilities of a greater retrieval belt. As a part of activating the tattoo to Store Item, you can attempt a Deception check against the Perception DCs of all creatures that are currently observing you. On a success, a creature doesn't notice you use Store Item."
+  },
+  {
+    "category": "feats",
+    "id": "feign-innocence",
+    "field": "description",
+    "value": "You convince a creature that, despite appearances, you're on its side. Choose an enemy within 60 feet, and attempt a Deception check against its Will DC. The target is then temporarily immune to Feign Innocence for 1 hour. If you've taken a hostile action against it this round, your result can be no better than a failure.\n\n---\n\n**Critical Success** You and the target are considered allies until the end of your next turn or until you take a hostile action against it, whichever comes first. In order to take a hostile action against you, the target must succeed at a Will save against your Deception DC or it loses the action.\n\n**Success** As critical success, but lasts until the end of your turn or until you take a hostile action against it, whichever comes first.\n\n**Failure** No effect.\n\n**Critical Failure** The target knows you attempted to fool it and plays along. You're off-guard to the target until the beginning of your next turn."
+  },
+  {
+    "category": "feats",
+    "id": "flower-street-infamy",
+    "field": "description",
+    "value": "Your history of coquetries, flirtations, dalliances, and liaisons is so lengthy that, even in a city as large as Absalom, you're bound to run into your past at inopportune moments. Fortunately, the individual involved might be just as shocked as you are by the unexpected encounter. Choose a target within 30 feet and spin a lascivious tale of how the two of you might have met before. Attempt a Deception check against the target's Will DC. Regardless of your result, the target is temporarily immune to your Flower Street Infamy for 24 hours.\n\n---\n\n**Critical Success** The target is Stupefied 3 for 1 minute.\n\n**Success** The target is Stupefied 2 for 1 minute.\n\n**Failure** The target is Stupefied 1 until the start of your next turn.\n\n**Critical Failure** The target is unaffected."
+  },
+  {
+    "category": "feats",
+    "id": "do-you-know-who-i-am",
+    "field": "description",
+    "value": "**Frequency** once per hour\n\n---\n\nYour reputation casts a long shadow, allowing you to throw your cultural weight around, especially in larger settlements. With a well-timed tirade or attention-getting shout, you can break a foe's mind and bring them low. Choose a foe within 30 feet, and attempt an Intimidation check against the target's Will DC. You gain a +1 circumstance bonus to this check if you're in a city or a +2 circumstance bonus to this check if you're in a metropolis. If you're specifically in Absalom, the bonus is instead +3. The target is then temporarily immune to your Do You Know Who I Am? for 24 hours.\n\n---\n\n**Critical Success** The target takes 12d6 damage and becomes Frightened 3. It can't reduce its frightened condition below 1 if it ends its turn adjacent to you.\n\n**Success** The target takes 6d6 damage and becomes Frightened 2.\n\n**Failure** The target is unaffected.\n\n**Critical Failure** The target is unaffected, and the embarrassment causes you to take 6d6 damage."
+  },
+  {
+    "category": "feats",
+    "id": "edict-of-mortality",
+    "field": "description",
+    "value": "You recite an excerpt of the Laws of Mortality, often the first law: \"Let no mortal be beholden to a god.\" Attempt an Intimidation check against all enemies within 60 feet that worship a deity, comparing your result against each target's Will DC. Targets are then temporarily immune to your use of this ability for 24 hours.\n\n---\n\n**Critical Success** The target becomes Frightened 2. Until the start of your next turn, if the target attempts to Cast a Spell with the divine trait, it must succeed at a or the action is lost.\n\n**Success** As critical success, but Frightened 1, and the DC of the flat check is 5."
+  },
+  {
+    "category": "feats",
+    "id": "no-gods-only-mortals",
+    "field": "description",
+    "value": "**Frequency** once per 10 minutes\n\n**Trigger** You successfully Recognize a Spell with the divine trait.\n\n---\n\nYou order the caster to stop their spellcasting. Attempt an Intimidation check to counteract the triggering spell, using half your level rounded up as the counteract rank."
+  },
+  {
+    "category": "feats",
+    "id": "propelled-leap",
+    "field": "description",
+    "value": "Like a flying fish, you can build up momentum and launch yourself into the air. Swim toward the surface at up to twice your swim Speed, then attempt a DC 30 Athletics check to propel yourself out of the water. If you do not swim at least 10 feet, you automatically fail. If your Leap takes you near any structure or object and have at least one hand free, you can use the grab-an-edge reaction. If you do not succeed in Grabbing an Edge, you do not take any falling damage as you re-enter the water but are submerged to a distance that equals the height of your Leap.\n\n---\n\n**Critical Success** You Leap up to 15 feet vertically and 5 feet horizontally.\n\n**Success** You Leap up to 10 feet vertically and 5 feet horizontally.\n\n**Failure** You Leap up to 5 feet vertically and 5 feet horizontally.\n\n**Critical Failure** You're off-guard until the start of your next turn."
+  },
+  {
+    "category": "feats",
+    "id": "defy-chains",
+    "field": "description",
+    "value": "**Trigger** A fiend within 15 feet of you damages you with a Strike.\n\n---\n\nYou turn to face a fiend that attacked you, looking them squarely in the eyes (if it has them) and showing no fear. You increase the amount of damage you take by , and deal damage to the triggering fiend. The damage you take and deal increases to 5d6 at 18th level.\n\nIn addition, if the fiend has an aura and you're in it, you can attempt an Intimidation check to counteract the aura's effect, using half your level rounded up as the counteract rank. If you succeed, the effects of the aura are suppressed until the end of the triggering fiend's next turn."
+  },
+  {
+    "category": "feats",
+    "id": "improvise-strategy",
+    "field": "description",
+    "value": "You're a wild card on the battlefield, inventing unpredictable tactics and surprising foes. You employ one of these strategies, adding either your choice of the auditory or visual trait. Attempt a Warfare Lore check against the Perception DC of a creature within 30 feet, after which the target becomes temporarily immune to further uses of Improvise Strategy for 1 hour.\n\n---\n\n**Critical Success** The target gains one of the following conditions of your choice until the end of your next turn: Clumsy 1, dazzled, off-guard, or Stupefied 1. The target can end the effect by using either a single action with the concentrate trait to regain their bearings (if your strategy had the auditory trait) or an Interact action to rub their eyes (if your strategy had the visual trait). In addition, the target isn't temporarily immune to further uses of Improvise Strategy.\n\n**Success** As critical success, but the target is temporarily immune to further uses of Improvise Strategy.\n\n**Failure** The target is unaffected.\n\n**Critical Failure** The target sees through the gambit, leaving you off-guard until the beginning of your next turn.\n\n---\n\n**Special** Once per day, if you lead a troop that has a skirmish bond, you can Improvise Strategy to attempt a Warfare Lore check against a standard DC for your troop's level, rather than targeting a foe. If you succeed, your troop replaces its current skirmish bond with another of your choice until the end of your next turn."
+  },
+  {
+    "category": "items",
+    "id": "necklace-of-strangulation",
+    "field": "description",
+    "value": "This beautiful necklace appears to be a magical item such as a necklace of fireballs or a pendant of the occult. When invested, it magically locks in place, suspiciously tightly, and fuses to you. When you enter a situation of extreme stress (as determined by the GM), the necklace tightens around your neck, suffocating you and dealing 30 damage to you at the end of each of your turns. Once per round, you can spend a single action to attempt a DC 34 Athletics check or save; success means you don't take the damage on your current turn, but you continue suffocating. The necklace loosens after you've been dead for a month."
+  },
+  {
+    "category": "items",
+    "id": "anchor-spear",
+    "field": "description",
+    "value": "The tip of this +2 greater striking spear is large and wickedly barbed, and the haft is inlaid with fine silver lines that run the length of the weapon. Wielded by specially trained xulgath cavalry, anchor spears are used to prevent the escape of gogiteths or other monsters capable of climbing or burrowing.\n\n---\n\n**Activate** ⟨1⟩ command\n\n---\n\n**Effect** The anchor spear extends into a +2 greater striking longspear or back to its original form as a +2 greater striking spear.\n\n---\n\n**Activate** ⟨5⟩ command\n\n**Frequency** once per 10 minutes\n\n**Trigger** You damage a creature using the *anchor spear*\n\n---\n\n**Effect** The spear embeds itself into the creature, and the spear's haft splits along the silver lines to become a series of hooks attached to a thin but strong cable. As long as the *anchor spear* remains embedded in the creature, any time the creature burrows or climbs, it treats normal terrain as difficult terrain and difficult terrain as greater difficult terrain. The creature can spend an Interact action to attempt a DC 32 Athletics check to remove the spearhead.\n\n---\n\n**Critical Success** The *anchor spear* is removed, becomes broken, and falls to the ground in the creature's space.\n\n**Success** The *anchor spear* is removed, the creature takes 1d8 damage, and the spear falls to the ground in a random space adjacent to the creature.\n\n**Failure** The *anchor spear* remains in place, and the creature takes 1d8 damage.\n\n**Critical Failure** As failure, except the creature takes 2d8 damage."
+  },
+  {
+    "category": "items",
+    "id": "handcuffs-average",
+    "field": "description",
+    "value": "Developed in Absalom and rarely used except by police forces in major cities due to their significant cost, handcuffs possess a ratcheting lock system in each cuff that allows them to be quickly cinched down on a captive's limbs, even if they're actively resisting.\n\nTo apply handcuffs, you must first grab or restrain your opponent, then attempt an Athletics check against the opponent's Fortitude DC. On a success, you lock one of the cuffs around your opponent's wrist. You can lock the other cuff to yourself or a stationary object within reach as an Interact action; to lock it to another creature (either the same opponent you just cuffed or a separate creature altogether), you must first grab or restrain that creature, as before, and then make an Athletics check against its Fortitude DC. The DC to make the Athletics check against your own wrist is 5, or 10 for an unattended object.\n\nIf you bind a creature to itself, it takes the same penalties as those imposed by manacles. If you bind a creature to another creature (including yourself), the two creatures are locked together and must remain in adjacent spaces, and both creatures gain the clumsy 1 condition as long as they are handcuffed. If you lock a creature to an immobile object, such as a bar or tree, the creature is immobilized. (For creatures with an unusual physiology such as more or fewer limbs, the GM determines what effects handcuffs have, if any.)\n\nHandcuffs are unlocked via a key and are easier to slip out of than ordinary manacles. The chain between handcuffs can be Broken Open with a single Athletics check.\n\nEscaping requires two successful checks, and the Athletics DC to Break Open the chain between handcuffs is 30."
+  },
+  {
+    "category": "items",
+    "id": "handcuffs-good",
+    "field": "description",
+    "value": "Developed in Absalom and rarely used except by police forces in major cities due to their significant cost, handcuffs possess a ratcheting lock system in each cuff that allows them to be quickly cinched down on a captive's limbs, even if they're actively resisting.\n\nTo apply handcuffs, you must first grab or restrain your opponent, then attempt an Athletics check against the opponent's Fortitude DC. On a success, you lock one of the cuffs around your opponent's wrist. You can lock the other cuff to yourself or a stationary object within reach as an Interact action; to lock it to another creature (either the same opponent you just cuffed or a separate creature altogether), you must first grab or restrain that creature, as before, and then make an Athletics check against its Fortitude DC. The DC to make the Athletics check against your own wrist is 5, or 10 for an unattended object.\n\nIf you bind a creature to itself, it takes the same penalties as those imposed by manacles. If you bind a creature to another creature (including yourself), the two creatures are locked together and must remain in adjacent spaces, and both creatures gain the clumsy 1 condition as long as they are handcuffed. If you lock a creature to an immobile object, such as a bar or tree, the creature is immobilized. (For creatures with an unusual physiology such as more or fewer limbs, the GM determines what effects handcuffs have, if any.)\n\nHandcuffs are unlocked via a key and are easier to slip out of than ordinary manacles. The chain between handcuffs can be Broken Open with a single Athletics check.\n\nEscaping requires three successful checks, and the Athletics DC to Break Open the chain between handcuffs is 35."
+  },
+  {
+    "category": "items",
+    "id": "handcuffs-superior",
+    "field": "description",
+    "value": "Developed in Absalom and rarely used except by police forces in major cities due to their significant cost, handcuffs possess a ratcheting lock system in each cuff that allows them to be quickly cinched down on a captive's limbs, even if they're actively resisting.\n\nTo apply handcuffs, you must first grab or restrain your opponent, then attempt an Athletics check against the opponent's Fortitude DC. On a success, you lock one of the cuffs around your opponent's wrist. You can lock the other cuff to yourself or a stationary object within reach as an Interact action; to lock it to another creature (either the same opponent you just cuffed or a separate creature altogether), you must first grab or restrain that creature, as before, and then make an Athletics check against its Fortitude DC. The DC to make the Athletics check against your own wrist is 5, or 10 for an unattended object.\n\nIf you bind a creature to itself, it takes the same penalties as those imposed by manacles. If you bind a creature to another creature (including yourself), the two creatures are locked together and must remain in adjacent spaces, and both creatures gain the clumsy 1 condition as long as they are handcuffed. If you lock a creature to an immobile object, such as a bar or tree, the creature is immobilized. (For creatures with an unusual physiology such as more or fewer limbs, the GM determines what effects handcuffs have, if any.)\n\nHandcuffs are unlocked via a key and are easier to slip out of than ordinary manacles. The chain between handcuffs can be Broken Open with a single Athletics check.\n\nEscaping requires four successful checks, and the Athletics DC to Break Open the chain between handcuffs is 45."
+  },
+  {
+    "category": "items",
+    "id": "glass-cutter",
+    "field": "description",
+    "value": "This small rod has a tiny, sharp cutting wheel made of steel on one end and a thick bulb on the other. You can use the glass cutter's wheel to score ordinary glass and use the bulb to break the piece along your scoring. It typically takes 1 minute of work to cut a hole large enough to fit your hand. If you are attempting to break the glass quietly, you must attempt a Thievery check against the Perception DC of nearby creatures to go unnoticed."
+  },
+  {
+    "category": "items",
+    "id": "sages-lash",
+    "field": "description",
+    "value": "The thin, glittering strands of rope that comprise this thick belt appear to be spun gold. Strung along the front of the belt are a collection of four multicolored, perfectly spherical beads: jade, turquoise, quartz, and amethyst. While wearing the lash, you gain a +3 item bonus to Religion.\n\nWhen you invest the belt, you either increase your Wisdom score by 2 or to 18, whichever would give you a higher score.\n\n---\n\n**Activate** ⟨2⟩ command, Interact\n\n---\n\n**Effect** You touch one of the jewels affixed to the sage's lash and speak a command word. Depending on the jewel, a different effect is produced that affects you and all living creatures in a . After the effect occurs, all four jewels disappear from the lash, reappearing at the next dawn.\n\n- **Jade** (healing, vitality) Speak \"purity\" to produce a wave of green light that ends any sickened condition and any ongoing poison damage affecting creatures in the emanation.\n- **Turquoise** Speak \"clarity\" to grant all affected a +2 status bonus to their next Will save for 1 minute.\n- **Quartz** (healing, vitality) Speak \"lenity\" to have each creature regain 30 Hit Points.\n- **Amethyst** (divination, light, revelation) Speak \"verity\" to emit a magical trail of light from the lash that reveals the location of each creature in the emanation. For 1 round, if they would be invisible, they become concealed instead, and if they would be undetected or unnoticed by a creature, they're hidden instead. A creature can attempt a DC 43 Stealth check to avoid the lash's detection."
+  },
+  {
+    "category": "items",
+    "id": "electromuscular-stimulator",
+    "field": "description",
+    "value": "**Activate** ⟨2⟩ (manipulate)\n\n---\n\nThis rare gadget uses Stasian technology to grant someone a burst of activity, though its use can be painful. The electromuscular stimulator must be carefully attached to you, requiring 1 minute to do so. You can attach an electromuscular stimulator to yourself. When you Activate an attached electromuscular stimulator, roll a Crafting check, using the Crafting modifier of the creature who attached the stimulator to you, with a DC equal to the standard DC for your level. The effects of the activation depend on the result of the Crafting check.\n\n---\n\n**Critical Success** You gain the quickened condition for 1 minute and can use the extra action each round only to Stride or Strike.\n\n**Success** As critical success, but you also take 3 persistent electricity damage.\n\n**Failure** You gain the quickened condition for 2 rounds and can use the extra action each round only to Stride or Strike. You take 3 persistent electricity damage.\n\n**Critical Failure** You take 2d6 electricity damage and 3 persistent electricity damage."
+  },
+  {
+    "category": "items",
+    "id": "enfilading-arrow",
+    "field": "description",
+    "value": "**Ammunition** Arrow\n\n**Activate** ⟨1⟩ Interact\n\n---\n\nThis arrow splits at the far end of the shaft into five branching arrowheads, making it impractical for single targets but deadly in combat. When you fire an activated *enfilading arrow*, it sails upward and shatters into countless copies. The arrows then rain down in a at any point within your weapon's first range increment, dealing damage to all creatures in the area ().\n\nIf a creature critically fails the save and you have access to the bow critical specialization effect, the target is immobilized and must spend an Interact action to attempt a DC 10 Athletics check to pull the missile free; it can't move from its space until it succeeds."
+  },
+  {
+    "category": "items",
+    "id": "halcyon-heart",
+    "field": "description",
+    "value": "This shekere features carved prayers barely visible under a fine silk net of colorful beads. The handheld percussion instrument grants a +3 item bonus to Performance checks while playing music with it. In addition, when you Perform with it, you can make it heard by any number of creatures within 100 miles. You can specify one or more specific creatures, or otherwise describe those who will hear it, such as all humans, or all inhabitants of a village. You can send a message through the music that the targets understand. Demons and creatures connected to demons (such as a creature whose deity is a demon lord or a sorcerer with the demonic bloodline) can't easily understand any messages conveyed in this way, even if you wish to send the message to them. They must attempt a Society check against your Performance DC or against DC 40, whichever is higher. If your Performance DC is higher than DC 40 and you want demons to be able to understand the message, you can choose to use DC 40 instead.\n\n**Success** They understand the message.\n\n**Failure** They don't understand the message but are aware there was one.\n\n**Critical Failure** They don't realize the sound of the *halcyon heart* contains a message.\n\n---\n\n**Activate** ⟨1⟩ command, Interact\n\n**Requirements** The *halcyon heart* has its net of beads\n\n**Effect** You pull the net off the *halcyon heart* and throw it at a creature within 20 feet, using your attack bonus for a ranged simple weapon. On a hit, the net grows and envelops the creature, which becomes off-guard and takes a –10-foot circumstance penalty to its Speeds until it Escapes, and on a critical hit, it's also immobilized until it Escapes. The net also attempts to counteract teleportation effects and planar travel of the creature it's entrapping. The Escape DC is 44, and the net has a counteract rank of 9 and a counteract modifier of +38. If the target is a demon or connected to a demon, they must roll twice and take the lower result on all attempts to Escape (this is a misfortune effect), and for counter act checks, the net rolls twice and takes the higher result (this is a fortune effect). You can't Perform with the *halcyon heart* while it doesn't have its net. So long as the net doesn't contain a creature, you can restore it with a single action, which has the concentrate trait.\n\n---\n\n**Destruction** If the Gorilla King plays a *halcyon heart* in front of Angazhan's totem, the gourd decomposes, the net frays, and the beads shatter."
+  },
+  {
+    "category": "items",
+    "id": "camp-shroud-minor",
+    "field": "description",
+    "value": "Knights make use of this magically treated powder to help hide their camps while traveling through the Gravelands or other dangerous regions. When you toss the powder into a campfire or other sizable fire, the fire produces a thin mist that enshrouds everything in a from the fire. The mist creates protective illusions that remain for up to 12 hours and make it difficult to spot the area from afar. You can end the effect earlier by putting out the fire. Light and smoke produced in the area aren't visible from outside the area. The illusions don't prevent sound from traveling nor prevent the area or its inhabitants from being seen.\n\nA creature outside the area that uses the Seek action or Search activity to examine the area or look for smoke and light coming from that direction can attempt a DC 18 Perception check to disbelieve the illusion."
+  },
+  {
+    "category": "items",
+    "id": "camp-shroud-lesser",
+    "field": "description",
+    "value": "Knights make use of this magically treated powder to help hide their camps while traveling through the Gravelands or other dangerous regions. When you toss the powder into a campfire or other sizable fire, the fire produces a thin mist that enshrouds everything in a from the fire. The mist creates protective illusions that remain for up to 12 hours and make it difficult to spot the area from afar. You can end the effect earlier by putting out the fire. Light and smoke produced in the area aren't visible from outside the area. The illusions don't prevent sound from traveling nor prevent the area or its inhabitants from being seen.\n\nA creature outside the area that uses the Seek action or Search activity to examine the area or look for smoke and light coming from that direction can attempt a DC 18 Perception check to disbelieve the illusion."
+  },
+  {
+    "category": "items",
+    "id": "camp-shroud-moderate",
+    "field": "description",
+    "value": "Knights make use of this magically treated powder to help hide their camps while traveling through the Gravelands or other dangerous regions. When you toss the powder into a campfire or other sizable fire, the fire produces a thin mist that enshrouds everything in a from the fire. The mist creates protective illusions that remain for up to 12 hours and make it difficult to spot the area from afar. You can end the effect earlier by putting out the fire. Light and smoke produced in the area aren't visible from outside the area. The illusions don't prevent sound from traveling nor prevent the area or its inhabitants from being seen.\n\nA creature outside the area that uses the Seek action or Search activity to examine the area or look for smoke and light coming from that direction can attempt a DC 18 Perception check to disbelieve the illusion."
+  },
+  {
+    "category": "items",
+    "id": "camp-shroud-greater",
+    "field": "description",
+    "value": "Knights make use of this magically treated powder to help hide their camps while traveling through the Gravelands or other dangerous regions. When you toss the powder into a campfire or other sizable fire, the fire produces a thin mist that enshrouds everything in a from the fire. The mist creates protective illusions that remain for up to 12 hours and make it difficult to spot the area from afar. You can end the effect earlier by putting out the fire. Light and smoke produced in the area aren't visible from outside the area. The illusions don't prevent sound from traveling nor prevent the area or its inhabitants from being seen.\n\nA creature outside the area that uses the Seek action or Search activity to examine the area or look for smoke and light coming from that direction can attempt a DC 18 Perception check to disbelieve the illusion."
+  },
+  {
+    "category": "items",
+    "id": "camp-shroud-major",
+    "field": "description",
+    "value": "Knights make use of this magically treated powder to help hide their camps while traveling through the Gravelands or other dangerous regions. When you toss the powder into a campfire or other sizable fire, the fire produces a thin mist that enshrouds everything in a from the fire. The mist creates protective illusions that remain for up to 12 hours and make it difficult to spot the area from afar. You can end the effect earlier by putting out the fire. Light and smoke produced in the area aren't visible from outside the area. The illusions don't prevent sound from traveling nor prevent the area or its inhabitants from being seen.\n\nA creature outside the area that uses the Seek action or Search activity to examine the area or look for smoke and light coming from that direction can attempt a DC 18 Perception check to disbelieve the illusion."
+  },
+  {
+    "category": "items",
+    "id": "passage-pane",
+    "field": "description",
+    "value": "The pane of this large circular mirror has a diameter of 8 feet and a gray cast. The mirror reflects its surroundings in muted colors, and any living creatures that look into the mirror see themselves as preserved corpses with sallow skin, sunken cheeks, and a vacant expression. The mirror is mounted in a bone frame intricately carved with imagery of corvids, keys, and winding roads. These roads represent the Dead Roads, the secret back routes between the Boneyard and all other planes that are under the purview of the psychopomp usher Barzahk the Passage and their followers.\n\n*Passage panes* are created by incredibly powerful priests of Barzahk using mirrors that have reflected Barzahk during their travels from when Barzahk passes through mortal realms. Through prayer, powerful magic, and exceptional crafting skill, these mirrors form a spiritual connection to the Dead Roads, which can be harnessed to open a gate to the Boneyard.\n\nTo utilize a *passage pane*, the mirror must be securely mounted on a solid surface. Once mounted, a user must bond with the *passage pane* by gazing beyond their dead visage into the Dead Roads. Bonding takes patience and can only be accomplished by a living creature who has at least master proficiency in Religion and who succeeds at a check. Attempting to bond with the mirror in this way takes 1 hour. Once a creature is bonded with the mirror, they can use the *passage pane* to open a portal to a random point along the Dead Roads. A creature with knowledge of a location in the Boneyard can force the mirror to lock onto that location, allowing more pointed travel. Only one creature can be bonded with the mirror at a time. When a creature forms a bond with the mirror, any previous bonds are immediately severed. Undead can't bond with the *passage pane*.\n\nWhen Barzahk themself walks the Dead Roads, a depiction of them appears in the frame's carvings. When Barzahk is depicted in this way, they can prevent the *passage pane* from Activating or alter the destination of the *passage pane*, if desired.\n\n**Activate** 1 minute (envision, Interact; divination, divine, scrying)\n\n**Requirements** The *passage pane* is mounted firmly to a solid surface, and you're bonded with the *passage pane*\n\n---\n\n**Effect** You focus on a location in the Boneyard that you wish to travel to. You must have either seen or visited this location before or be able to describe the location in detail and its purpose or name, as appropriate. Attempt a DC 40 Religion check. On a success, the mirror locks onto your desired location, and you (and only you) see this location reflected in the mirror's pane.\n\n**Activate** ⟨3⟩ envision, Interact (conjuration, divine, teleportation)\n\n**Frequency** once per week\n\n**Requirements** The *passage pane* is mounted firmly to a solid surface, and you're bonded with the *passage pane*\n\n---\n\n**Effect** You urge the mirror to open a rift to the Boneyard. Creatures can travel through this rift in either direction. If you've successfully forced the mirror to lock onto a specific location, the mirror's pane becomes a rift to the Boneyard that opens onto that location. If you haven't forced the mirror to lock onto a specific location, the mirror's pane becomes a rift to a random location on the Dead Roads. This rift remains open until you close it, up to a maximum of 24 hours. As long as the rift is open, the mirror is immovable, no one can form a bond with the mirror, and no one but you can Activate the mirror.\n\n**Activate** ⟨3⟩ envision, Interact (conjuration, divine, teleportation)\n\n**Requirements** The *passage pane* is an active rift to the Boneyard, and you're bonded with the *passage pane*\n\n---\n\n**Effect** You close the rift.\n\n---\n\n**Destruction** The *passage pane* shatters into thousands of pieces if Barzahk the Passage bonds with the mirror and wills its destruction."
+  },
+  {
+    "category": "items",
+    "id": "sentry-fulu",
+    "field": "description",
+    "value": "**Activate** ⟨3⟩ (concentrate, manipulate)\n\n---\n\nA sentry fulu depicts an armed guard. When you activate the fulu, it takes the shape of a Tiny humanoid guard made of paper and keeps watch over an area in a 20-foot burst. The guard has a Perception DC of 20, along with precise visual senses and imprecise hearing and vibrational sense to detect creatures moving in its area, including through the air. You dictate whether the guard remains still in its area or patrols it; if the latter, you also determine the path the guard takes, at a Speed of 25 feet. You also determine a password others must give the guard to bypass it. If a creature enters the area without giving the password, the sentry creates either an audible or mental alarm. An audible alarm has the sound and volume of a human shouting, as well as the auditory trait, allowing each creature that can hear it to attempt a DC 15 Perception check to wake up if they're asleep. The mental alert reaches you if you're within 60 feet of the active guard (see below). The guard remains active for 8 hours, and then the fulu is consumed.\n\nIf you have more than one sentry fulu, you can set up several that function as a unit, provided their areas touch or overlap. When one sounds its alarm, the alarm passes through all of them, so you must be within range of only one to hear it or receive the mental alert. Creatures that give the correct password to one sentry fulu in a unit need not give that password again to the others. The destruction of one fulu-created guard in a unit sets off the alarm in others in connected areas."
+  },
+  {
+    "category": "items",
+    "id": "wooden-nickel",
+    "field": "description",
+    "value": "**Activate** ⟨3⟩ (concentrate)\n\n**Prerequisites** You are a master in Deception\n\n---\n\nThis rough wooden coin hangs from a string drilled through a hole at its center. When you Activate the *wooden nickel*, for 10 minutes, you can cause any object you touch of 2 Bulk or less to look, feel, and smell like valuables of a similar size crafted from a precious metal of your choice.\n\nA creature that touches or Interacts with an affected object can attempt a Perception check against your Deception DC to disbelieve the illusion, and a successful check against your Deception DC with or an appropriate Lore skill will also reveal the item's true nature. After 10 minutes have elapsed since you Activated the *wooden nickel*, all affected objects revert to their true form."
+  },
+  {
+    "category": "items",
+    "id": "miraculous-paintbrush",
+    "field": "description",
+    "value": "**Activate** 10 minutes (concentrate, manipulate)\n\n---\n\nThe bristles on a miraculous paintbrush shift in a rainbow of colors, and can magically create an object painted with them. The paint flows as you Activate the miraculous paintbrush and changes color at your whim as you paint. The paint can cover a 10-foot-square, two-dimensional surface. When you're done painting, attempt a DC 30 Crafting check.\n\n---\n\n**Critical Success** The object you painted emerges from the surface as a real, permanent object no larger than 10 feet in any dimension. It's non-magical and inanimate and has no value except to certain art collectors. If you paint a creature, machine, or form of energy (such as a campfire), these depictions appear only as inanimate sculptures. The created object has a painterly appearance that clearly marks its unusual origin, but is as real as any other.\n\n**Success** As critical success, but the object constantly sheds flakes of paint until it falls apart, destroyed, after 24 hours.\n\n**Failure** The pigments leave a painting that doesn't quite look right and doesn't become an object.\n\n**Critical Failure** Is it a dog? Whatever you made is a pretty lousy painting and doesn't resemble what you set out to make."
+  },
+  {
+    "category": "items",
+    "id": "the-owl",
+    "field": "description",
+    "value": "**Suit** Stars (Wis)\n\n**Alignment** neutral\n\n---\n\n*The Owl* represents the wisdom of nature and the natural order. As long as you have *The Owl* invested, it grants a +2 item bonus to Perception checks made to Sense Motive, Survival checks to Subsist in the wild, and Nature checks made when you activate this card. This increases to a +3 bonus if you are at least 17th level.\n\n**Activate** 1 hour (command, envision, Interact)\n\n**Frequency** once per day\n\n---\n\n**Effect** After spending an hour meditating, you can ask one question of the region's spirits, as if you had just performed a Commune ritual. Attempt a DC 30 Nature check to determine the result."
+  },
+  {
+    "category": "items",
+    "id": "the-deck-of-destiny",
+    "field": "description",
+    "value": "Composed of 54 cards that are powerful in their own right, the Deck of Destiny epitomizes the powers of the harrow and divination. The deck only has its full suite of abilities while complete. Completing the deck requires all 54 cards to be placed together and shuffled into their complete state over the span of 1 minute; the cards merely being in proximity of each other is not enough to complete the deck. Once complete, the deck can be invested normally.\n\nWhile the complete deck is on your person or in hand and invested, you gain a natural insight into events to be. Any divination effects you create become heightened to 10th level for the purpose of determining their counteract rank. Additionally, divination effects you create gain a +4 item bonus to their DC and to spell attack rolls. The deck also helps you maintain control of your own fate, granting you immunity to fortune and misfortune effects, though you can be affected by such effects if you wish.\n\n---\n\n**Activate** envision (daily preparations)\n\nWhen you perform your daily preparations, you can share the Deck of Destiny with your companions, allowing them to invest a hand of up to 5 cards each as if they carried the cards. When one of your companions activates one of their invested cards, an illusory image of the card appears in their hand, but the card's effects are otherwise unaltered. This lasts until the next time you perform your daily preparations.\n\n---\n\n**Activate** ⟨5⟩ envision\n\n**Trigger** A creature you can see within 60 feet is about to attempt a check\n\n**Effect** You quickly draw a card to alter the triggering creature's fate. Choose either weal or woe. With weal (a fortune effect), the triggering creature rolls twice and takes the better result on their check. With woe (a misfortune effect), the triggering creature is forced to roll twice and take the worse result. If the card you drew is related to the check, such as drawing a card from the suit of shields for a Fortitude saving throw or a card from the suit of crowns for a Deception check, the creature is affected further. When choosing weal, the creature gains a +4 circumstance bonus to the triggering check. When faced with woe, the triggering creature takes a –4 circumstance penalty to the triggering check. Regardless of whether they faced weal or woe, the triggering creature becomes temporarily immune to this ability for 24 hours.\n\n---\n\n**Activate** ⟨3⟩ envision, Interact\n\n**Effect** You call upon the deck in an attempt to put an end to a creature's life by visiting upon them a particularly grisly fate. Choose a creature within 60 feet. The deck casts Phantasmal Killer ( and , heightened to 10th level) on that creature. This effect doesn't have the emotion, fear, illusion, or mental traits, as it actually alters reality to rewrite a creature's doom. Regardless of the results, the creature becomes temporarily immune to this effect for 1 week.\n\n---\n\n**Activate** 1 hour (envision, Interact)\n\n**Frequency** once per year\n\n**Effect** You attempt to undo a creature's untimely death and return them to life. The deck performs a 10th-rank Resurrect ritual. This ritual doesn't have any cost and doesn't require any secondary casters. Instead, you are the primary caster and must attempt a DC 50 Occultism check to complete the ritual as you perform a Harrowing, perform that same harrowing in reverse in an attempt to pull back the threads of fate, and perform one final harrowing to \"rewrite\" the target's destiny.\n\n---\n\n**Destruction** The Deck of Destiny is inherently connected to the fate of Golarion. If the deck is used in a harrow reading to determine the destiny of the entire planet, or if the planet itself is destroyed or removed from this reality, the cards crumble to dust after the harrowing is complete or the planet is gone."
+  },
+  {
+    "category": "items",
+    "id": "the-crows",
+    "field": "description",
+    "value": "**Suit** Keys (Dex)\n\n**Alignment** neutral evil\n\n---\n\n*The Crows* represent taking things through violence or force, particularly when done through agility and swiftness rather than brawn. As long as *The Crows* is invested, you can attempt to Grapple targets with Acrobatics checks, and if you're at least trained in Thievery, to Disarm with Thievery checks. When you do so, you gain a +2 item bonus on the attempt, or a +3 item bonus if you're at least 17th level.\n\n**Activate** ⟨4⟩ envision, Interact (teleportation)\n\n**Frequency** once per day\n\n---\n\n**Effect** You hold the card in your hand, and with a flick of the wrist it vanishes, only to be replaced by an object of your choice within 30 feet. The object must be 2 Bulk or less. If that object is unattended, it teleports into your hand automatically. If the object is attended by a creature, you must make a Thievery check against the creature's Reflex DC.\n\n---\n\n**Critical Success** The object teleports into your hand.\n\n**Success** The object vanishes from the target's possession and lands on the ground at a point at a midway point between you two.\n\n**Failure** The object does not vanish, but the creature's grip on it falters and if it doesn't spend an Interact action on its next turn to grip the item, it drops to the ground.\n\n**Critical Failure** You fail to manipulate the object entirely."
+  },
+  {
+    "category": "items",
+    "id": "net",
+    "field": "description",
+    "value": "You can use a net either on its own or attached to a rope. When attached to a rope, you can use the net to Grapple a Medium or smaller creature up to 10 feet away (instead of only adjacent creatures). You can continue to Grapple to keep your hold on the target so long as the target remains within 10 feet and you continue to hold the net. The grabbed creature gains a +2 circumstance bonus to Escape unless you are adjacent to them, and it can attempt a DC 16 Athletics check to Force Open the net entirely. Once the target is no longer grabbed, the net is unwieldy until refolded with an Interact action with the concentrate trait that requires two hands; if used without being refolded, Grapple checks made with the net take a -2 penalty.\n\nWhen the net is unattached, you can attempt a ranged attack roll using your simple weapon proficiency against a Medium or smaller creature within 20 feet. On a hit, the target is off-guard and takes a -10- foot circumstance penalty to its Speeds until it Escapes, and on a critical hit, it's also immobilized until it Escapes. The Escape DC is 16 (escape dc=16). A creature adjacent to the target can Interact to remove the net."
+  },
+  {
+    "category": "items",
+    "id": "voyagers-pack",
+    "field": "description",
+    "value": "This leather rucksack has icons burned into it, and every time it's taken to a plane it hasn't been to before, a new icon representing that plane scorches into the surface.\n\nThe pack grants you a +3 bonus to Survival checks.\n\nIt also enables you to see the magical traces of creatures' passage, allowing you to Track a creature that has teleported. The GM sets the DC of this check, usually using the level and DC of the teleportation spell. This lets you find the location of the creature's destination, and you can use that destination when casting Teleport or activating the pack, even though you don't know what it looks like.\n\nThe pack contains an extradimensional space with the same properties as a *Spacious Pouch (Type II)*.\n\nThis space contains the contents of a climber's kit. If any components of that kit are removed and not returned, they return to the pack at dawn each day.\n\n**Activate—Group Voyage** 10 minutes (concentrate, manipulate)\n\n---\n\n**Effect** As you activate the pack, you can harness up to four willing creatures to the ropes on the pack. At the end of the activation time, the pack casts a 7th-rank Interplanar Teleport or Teleport spell, transporting you and everyone attached to the pack. Attempt a DC 45 Survival check. On a success, you arrive 25 miles off target using *interplanar teleport* or halve the distance you're off-target with *teleport*. On a critical success, you arrive exactly on target"
+  },
+  {
+    "category": "items",
+    "id": "hodag-leather",
+    "field": "description",
+    "value": "Dyed green and white and studded with the natural spines of a hodag, this *+1 Deathless studded leather armor* is an imposing sight, especially when its wearer is barreling towards you.\n\n---\n\n**Activate—Hodag Toss** ⟨2⟩ (concentrate, manipulate)\n\n**Effect** You Stride up to your Speed and make a Strike at the end of your movement. If you succeed at your Strike, attempt an Athletics check against the creature's Fortitude DC. On a success, the creature is thrown 10 feet in a straight line in the direction of your choice and lands prone. If the creature is knocked into a solid object, it takes 1d6 damage before landing prone. You can instead toss the creature straight up into the air. The creature lands in the same square it occupied, and takes 1d6 bludgeoning damage as it lands prone. You can't use this ability again for 1d4 rounds.\n\n---\n\n**Craft Requirements** The initial raw materials must include the hide of a hodag."
+  },
+  {
+    "category": "items",
+    "id": "whip-tongue-sling",
+    "field": "description",
+    "value": "This is a *+2 striking sling* made from the neck, jaw, and tongue of a mobogo to resemble its mouth. The tongue curls around each bullet, which is thrown with the snap of your wrist. Each throw causes a small croak to echo from the sling.\n\n---\n\n**Activate—Bolstering Croak** ⟨2⟩ (auditory, concentrate, emotion, manipulate, mental)\n\n**Frequency** once per day;\n\n**Effect** You raise your sling and work the handle to mimic a mobogo's croaking song. Allies within 25 feet gain a +1 status bonus to saves against fear effects for 1 round. You can Sustain this for up to 4 rounds. During this time, you can't use the sling to Strike or activate its Tongue Twister ability. After using Bolstering Croak, you can recharge it once per day by feeding the sling a number of gallons of water equal to double the number of rounds for which the Bolstering Croak was active. For example, if you activated but didn't sustain Bolstering Croak, you would require 2 gallons of water to recharge it. If you activated Bolstering Cloak and then Sustained for 1 round, you would require 4 gallons of water.\n\n---\n\n**Activate—Tongue Twister** ⟨2⟩ (manipulate)\n\n**Requirements** The sling isn't loaded\n\n**Effect** You fully unfurl the sling's tongue to grab hold of a creature within 20 feet, and attempt to move them. Attempt an Athletics check against the creature's Fortitude DC. On a success, you can move the creature up to 15 feet into any space within 20 feet of you. If you target a willing ally with this ability, you automatically succeed at the Athletics check.\n\n---\n\n**Craft Requirements** The initial raw materials must include the throat, tongue, and skin from a mobogo."
+  },
+  {
+    "category": "items",
+    "id": "spider-lily-tattoo",
+    "field": "description",
+    "value": "The spider lily tattoo marks you as a trusted member of Granny Hu's network. This crimson tattoo fades and becomes invisible within a day of being applied, reappearing only when you Activate it, when you gain the doomed condition, or when you die. The higher the doomed value, the more vivid the color.\n\nIf your tattoo is plainly visible, you gain a +1 item bonus to Intimidation checks against all creatures that can see the tattoo, but you take a –1 item penalty to Diplomacy checks to Make an Impression on those who understand the actual meaning of the spider lily tattoo (including all of Willowshore's citizens).\n\n---\n\n**Activate** ⟨1⟩ envision (concentrate)\n\n**Requirements** Your tattoo isn't currently visible\n\n**Effect** You make the tattoo visible. You can use this activation again to make the tattoo not visible, unless you have the doomed condition.\n\n---\n\n**Activate** ⟨4⟩ envision (concentrate)\n\n**Frequency** once per day\n\n**Trigger** An undead creature detects you for the first time, and you're aware of the undead creature\n\n**Effect** The spider lily tattoo manipulates your life force to make you appear to be undead for a short time. Attempt a Deception check against the triggering undead creature's Perception DC. On a success, the triggering undead believes you're undead as well—a mindless undead is likely to ignore you, while a sapient undead might react with curiosity or confusion. You can continue attempting Deception checks each round as a single action to Sustain the effect for up to 1 minute."
+  },
+  {
+    "category": "items",
+    "id": "verdant-poultice",
+    "field": "description",
+    "value": "**Activate** ⟨1⟩ (manipulate)\n\n---\n\nThis poultice of herbs and dried berries found throughout Isger was invented by those fighting against Cheliax's diabolic intrusion and those warring against demons at the Worldwound. You can use a verdant poultice on a creature that's taking persistent damage from a fiend; attempt a Nature check with a +1 item bonus against the DC of the effect that caused the persistent damage. On a success, the persistent damage ends."
+  },
+  {
+    "category": "spells",
+    "id": "flashy-disappearance",
+    "field": "description",
+    "value": "You create a puff of colorful smoke that quickly disperses while you become temporarily invisible. You become undetected to all creatures unless they can see invisible creatures. You Stride. At the end of your movement, if you have cover, greater cover, or concealment, attempt a Stealth check to Hide. You gain a +2 status bonus to this Stealth check. The invisibility then ends, and you either become observed or hidden to creatures as determined by your check to Hide, if you made one."
+  },
+  {
+    "category": "spells",
+    "id": "ki-cutting-sight",
+    "field": "description",
+    "value": "Ki flows through everything in existence—animals and plants, living and dead, mortals and spirits. Strike at just the right place, in just the right way, and the flow is stopped, with dire consequences.\n\nWhen you Cast the Spell, make a Perception check against the target's Fortitude DC. If you succeed, the next time you deal damage to the target with a Strike or ki spell, you deal 4d10 additional slashing damage.\n\n---\n\n**Heightened (+1)** The slashing damage increases by 1d10."
+  },
+  {
+    "category": "spells",
+    "id": "alarm",
+    "field": "description",
+    "value": "You ward an area to alert you when creatures enter without your permission. When you cast alarm, select a password. Whenever a Small or larger corporeal creature enters the spell's area without speaking the password, alarm sends your choice of a mental alert (in which case the spell gains the mental trait) or an audible alarm with the sound and volume of a hand bell (in which case the spell gains the auditory trait). Either option automatically awakens you, and the bell allows each creature in the area to attempt a DC 15 Perception check to wake up. A creature aware of the alarm must succeed at a Stealth check against the spell's DC or trigger the spell when moving into the area.\n\n---\n\n**Heightened (3rd)** You can specify a trigger for which types of creatures sound the alarm spell."
+  },
+  {
+    "category": "spells",
+    "id": "grease",
+    "field": "description",
+    "value": "You conjure grease, choosing an area or target.\n\n- **Area[4 contiguous 5-foot squares]** All solid ground in the area is covered with grease. Each creature standing on the greasy surface must succeed at a Reflex save or an Acrobatics check against your spell DC or fall prone. Creatures using an action to move onto the greasy surface during the spell's duration must attempt either a Reflex save or an Acrobatics check to Balance. A creature that Steps or Crawls doesn't have to attempt a check or save.\n- **Target[1 object of Bulk 1 or less]** If you Cast the Spell on an unattended object, anyone trying to pick up the object must succeed at an Acrobatics check or Reflex save against your spell DC to do so. If you target an attended object, the creature that has the object must attempt an Acrobatics check or Reflex save. On a failure, the holder or wielder takes a –2 circumstance penalty to all checks that involve using the object; on a critical failure, the holder or wielder releases the item. The object lands in an adjacent square of the GM's choice. If you Cast this Spell on a worn object, the wearer gains a +2 circumstance bonus to Fortitude saves against attempts to grapple them."
+  },
+  {
+    "category": "spells",
+    "id": "counter-performance",
+    "field": "description",
+    "value": "**Trigger** You or an ally within 60 feet rolls a saving throw against an auditory or visual effect.\n\n---\n\nYour performance protects you and your allies. Roll a Performance check for a type you know—it must be an auditory performance if the trigger was auditory or a visual one for a visual trigger, and this action gains the traits for the type of performance. You and allies in the area can use the better result between your Performance check and the saving throw."
+  },
+  {
+    "category": "spells",
+    "id": "fortissimo-composition",
+    "field": "description",
+    "value": "You call upon your muse to greatly increase the benefits you provide with your *courageous anthem*, *rallying anthem*, or *song of strength* composition. If your next action is to cast one of these compositions, attempt a Performance check. The DC is usually the highest Will DC of the composition's targets, but the GM can assign a different DC based on the circumstances. The effect of your composition depends on the result of your check.\n\n---\n\n**Critical Success** The status bonus from your composition increases to +3.\n\n**Success** The status bonus from your composition increases to +2.\n\n**Failure** Your composition provides only its normal bonus of +1, but you don't spend the Focus Point for casting this spell."
+  },
+  {
+    "category": "spells",
+    "id": "lingering-composition",
+    "field": "description",
+    "value": "You add a flourish to your composition to extend its benefits. If your next action is to cast a cantrip composition with a duration of 1 round, attempt a Performance check. The DC is usually a standard-difficulty DC of a level equal to the highest-level target of your composition, but the GM can assign a different DC based on the circumstances. The effect depends on the result of your check.\n\n---\n\n**Critical Success** The composition lasts 4 rounds.\n\n**Success** The composition lasts 3 rounds.\n\n**Failure** The composition lasts 1 round, but you don't spend the Focus Point for casting this spell."
+  },
+  {
+    "category": "spells",
+    "id": "web",
+    "field": "description",
+    "value": "You create a sticky web in the area that impedes creatures' movement. Squares filled with the web are difficult terrain. Each time a creature in the web begins to use a move action or enters the web during a move action it's using, it must attempt an Athletics check or Reflex save against your spell DC to avoid taking a circumstance penalty to its Speeds or becoming immobilized. A creature that gets out of the web ceases to take a circumstance penalty to its Speed from the web. Each square can be cleared of the web by a single attack or effect that deals at least 5 slashing damage or 1 fire damage. A square has AC 5, and it automatically fails its saving throws.\n\n---\n\n**Critical Success** The creature is unaffected, and it doesn't need to attempt further Athletics checks or saving throws against the web this turn. If it used an Athletics check, it clears the web from every square it leaves during its movement.\n\n**Success** The creature is unaffected during its action. If it used an Athletics check, it clears the web from every square it leaves during its movement.\n\n**Failure** The creature takes a –10-foot circumstance penalty to its Speeds until the start of its next turn.\n\n**Critical Failure** The creature is immobilized until the start of its next turn, after which it takes a –10-foot circumstance penalty to its Speeds for 1 round. It can attempt to Escape to remove its immobilized condition.\n\n---\n\n**Heightened (4th)** The spell's area increases to a , and its range increases to 60 feet."
+  },
+  {
+    "category": "spells",
+    "id": "wind-jump",
+    "field": "description",
+    "value": "You gain a fly Speed equal to your Speed. You must end your turn on solid ground, or you fall.\n\n---\n\n**Heightened (6th)** At the end of your turn, you can attempt a DC 30 Acrobatics check to find purchase in midair. If you succeed, you don't fall."
+  },
+  {
+    "category": "actions",
+    "id": "pointed-question",
+    "field": "description",
+    "value": "You ask a question that charms or needles someone in just the right way. Ask a question of a non-allied creature that you can see. Attempt a Diplomacy check against the creature's Will DC. The creature is then temporarily immune for 1 hour.\n\n---\n\n**Critical Success** The target must directly answer your question. It doesn't have to answer truthfully, but you gain a +4 circumstance bonus to your Perception DC if the creature attempts to Lie to you.\n\nWhether it answers truthfully or not, you glean something from its body language, and it is off-guard to the Strike you make using Devise a Stratagem against it before the end of your turn.\n\n**Success** As critical success, but the circumstance bonus to your Perception DC is +2.\n\n**Failure** The target can refuse to answer you as normal.\n\n**Critical Failure** The target can refuse to answer you as normal, and its attitude toward you decreases by one step due to your aggravating attention."
+  },
+  {
+    "category": "actions",
+    "id": "overdrive",
+    "field": "description",
+    "value": "**Frequency** once per round\n\n---\n\nTemporarily cranking the gizmos on your body into overdrive, you try to add greater power to your attacks. Attempt a Crafting check that has a standard DC for your level.\n\n---\n\n**Critical Success** Your gizmos go into a state of incredible efficiency called critical overdrive, adding great power to your attacks. Your Strikes deal additional damage equal to your Intelligence modifier for 1 minute. After the Overdrive ends, your gizmos become unusable as they cool down or reset, and you can't use Overdrive for 1 minute.\n\n**Success** Your gizmos go into overdrive, adding power to your attacks. As critical success, except the additional damage is equal to half your Intelligence modifier.\n\n**Failure** Your gizmos whine concerningly and begin to smoke. Your Strikes deal 1 additional fire damage for 1 minute.\n\n**Critical Failure** Whoops! Something explodes. You take fire damage equal to half your level (rounded up), and you can't use Overdrive again for 1d4 rounds as your gizmos reset.\n\n---\n\n**Special** When under the effects of Overdrive, you can still use the Overdrive action. You can't extend your Overdrive's duration this way, but you can turn an overdrive into a critical overdrive if you critically succeed. A failure has no effect on your current Overdrive, and you end your Overdrive on a critical failure."
+  },
+  {
+    "category": "actions",
+    "id": "craft-disharmonic-instrument",
+    "field": "description",
+    "value": "**Requirements** Legendary in Crafting\n\n---\n\nYou use legendary Vudran techniques to craft a disharmonic instrument that incorporates pieces of Kothogaz's heart. This is likely a tanpura, but legends mention other instruments and even voice enhancers. A disharmonic instrument is a virtuoso musical instrument.\n\nThis activity requires seven disharmonic heartslivers, the formula for a disharmonic instrument, 55,000 gp worth of rare materials, and 7 days of work. At the end of the 7 days, attempt a DC 40 Crafting check to Craft.\n\n---\n\n**Critical Success** You masterfully complete the disharmonic instrument. Holding the instrument grants immunity to Kothogaz's tympanic heartbeat and many-eyed blight.\n\n**Success** You complete the disharmonic instrument.\n\n**Failure** You don't complete the disharmonic instrument, and you contract many-eyed blight from the heartslivers.\n\n**Critical Failure** As failure, and whenever you're on the same plane as Kothogaz, it can immediately teleport to you with its Disharmonic Door ability."
+  },
+  {
+    "category": "actions",
+    "id": "exploit-vulnerability",
+    "field": "description",
+    "value": "**Frequency** once per round\n\n**Requirements** You are holding your implement.\n\n---\n\nYou scour your experiences and learning to identify something that might repel your foe. You retrieve an object from your esoterica with the appropriate supernatural qualities, then use your implement to stoke the remnants of its power into a blaze. Select a creature you can see and attempt an Esoteric Lore check against a standard DC for its level, as you retrieve the right object from your esoterica and use your implement to empower it. You gain the following effects until you Exploit Vulnerabilities again.\n\n---\n\n**Critical Success** You remember the creature's weaknesses, and as you empower your esoterica, you have a flash of insight that grants even more knowledge about the creature. You learn all of the creature's resistances, weaknesses, and immunities, including the amounts of the resistances and weaknesses and any unusual weaknesses or vulnerabilities, such as an oni's bean panic. You can exploit either the creature's mortal weakness or personal antithesis (see below). Your unarmed and weapon Strikes against the creature also become magical if they weren't already.\n\n**Success** You recall an important fact about the creature, learning its highest weakness (or one of its highest weaknesses, if it has multiple with the same value) but not its other weaknesses, resistances, or immunities. You can exploit either the creature's mortal weakness or personal antithesis. Your unarmed and weapon Strikes against the creature also become magical if they weren't already.\n\n**Failure** Failing to recall a salient weakness about the creature, you instead attempt to exploit a more personal vulnerability. You can exploit only the creature's personal antithesis. Your unarmed and weapon Strikes against the creature also become magical if they weren't already.\n\n**Critical Failure** You couldn't remember the right object to use and become distracted while you rummage through your esoterica. You become off-guard until the start of your next turn."
+  },
+  {
+    "category": "feats",
+    "id": "spelunker",
+    "field": "description",
+    "value": "Living underground, you have learned to find your way without landmarks or even solid ground. If you roll a success on a Survival check to Sense Direction or an Athletics check to Climb, you get a critical success instead. You're not off-guard when you attempt to Climb."
+  },
+  {
+    "category": "actions",
+    "id": "boarding-assault",
+    "field": "description",
+    "value": "Either Stride twice or attempt an Acrobatics check (DC determined by the GM, but usually DC 20) to swing up to twice your Speed on a rope or similar object, then Strike.\n\nIf you boarded or disembarked from a boat or similar vehicle during this movement, the Strike deals one additional weapon damage die."
+  },
+  {
+    "category": "classFeatures",
+    "id": "wellspring-magic",
+    "field": "description",
+    "value": "You regain magic power quickly, but it can be difficult for you to control. You must select Wellspring Mage Dedication as your 2nd-level class feat.\n\n**Wellspring Mage Adjustments** You learn spells as normal for your class, but change your spontaneous spellcasting in the following ways.\n\nYou can cast fewer spells each day unless you gain more spells thanks to your wellspring. Reduce your number of spell slots of each spell rank by 1. Reduce the number of cantrips you gain from your class by 1.\n\nA wellspring of magic fills you with power that's not fully under your control. When you roll initiative for a non-trivial combat encounter, as well as in other high-stress situations of the GM's choice, magic wells up within you. Attempt a DC 6 flat check.\n\n---\n\n**Critical Success** You temporarily recover an expended spell slot of any rank of your choice. The temporary spell slot lasts for 1 minute, and if you don't use it by then, you experience an immediate Wellspring Surges.\n\n**Success** As critical success, except you randomly determine the rank of spell slot from among your top three spell ranks (or all your ranks of spell slots if you have fewer than three). The slot lasts 3 rounds instead of 1 minute.\n\n**Failure** You generate a *wellspring surge*, with a spell rank chosen randomly among your top three ranks of spell slots (or all your ranks if you have fewer than three).\n\nYou can gain a temporary spell slot no more than twice per day. If you would gain a temporary spell slot for a rank that has no expended spell slots, there's no effect. If you use a temporary slot to cast a spell with a duration, the spell ends whenever you would have lost the slot if its duration hasn't yet elapsed. If you roll for *wellspring magic* while you currently have a temporary spell slot, you automatically fail the flat check.\n\n---\n\n### WELLSPRING SURGES\n\nWhen your wellspring magic goes out of control, it becomes a wellspring surge. Typically, this happens when you fail the flat check from wellspring magic, but other wellspring mage feats have effects that sometimes cause you to generate a wellspring surge, or might even cause your foes to do so.\n\nRoll 1d20 and use the *Wellspring Surges* rolltable to determine the surge's effect. If the effect calls for a damage type, the GM chooses the type based on the types of spells you know or your current location. The wellspring surge uses your spell DC. You have no control over the way your wellspring surge manifests. You are the point of origin for your wellspring surges, and you are not excluded from their effects. If you force a foe to generate a surge, they are the origin point of that surge instead.\n\nIf your wellspring was granted by a being like a god or muse, the entity's intentions might sometimes alter the results of wellspring surges, or move the point of origin for an area to any point within 30 feet if the GM determines this fits the situation. For example, instead of uncontrolled damage, the entity might choose to damage only creatures opposing its plan, even if they are your allies.\n\nA wellspring surge always has the trait of your magical tradition, plus any traits that appear in parentheses at the end of the surge's effects."
+  },
+  {
+    "category": "classFeatures",
+    "id": "pointed-question",
+    "field": "description",
+    "value": "You ask a question that charms or needles someone in just the right way. Ask a question of a non-allied creature that you can see. Attempt a Diplomacy check against the creature's Will DC. The creature is then temporarily immune for 1 hour.\n\n---\n\n**Critical Success** The target must directly answer your question. It doesn't have to answer truthfully, but you gain a +4 circumstance bonus to your Perception DC if the creature attempts to Lie to you.\n\nWhether it answers truthfully or not, you glean something from its body language, and it is off-guard to the Strike you make using Devise a Stratagem against it before the end of your turn.\n\n**Success** As critical success, but the circumstance bonus to your Perception DC is +2.\n\n**Failure** The target can refuse to answer you as normal.\n\n**Critical Failure** The target can refuse to answer you as normal, and its attitude toward you decreases by one step due to your aggravating attention."
+  },
+  {
+    "category": "feats",
+    "id": "opportune-trickster",
+    "field": "description",
+    "value": "**Trigger** An adjacent ally makes a melee Strike against a creature.\n\n**Requirements** You're adjacent to both your ally and the creature.\n\n---\n\nYou aren't above using underhanded tactics to gain an advantage, easily routing your opponents when they attack. Attempt a Deception check against the Perception DC of the creature that's the target of the triggering attack. Regardless of the result, the target is temporarily immune to your attempts to use Opportune Trickster for the next 10 minutes.\n\n---\n\n**Critical Success** The target is off-guard (including against the triggering attack) until the end of your ally's turn.\n\n**Success** The target is off-guard against the triggering attack.\n\n**Critical Failure** You lose your balance in your attempt to assist your ally and fall prone.\n\n---\n\n**Special** If you have the Dirty Trick skill feat, you can attempt a Thievery check instead of a Deception check; if you do, this action loses the mental trait"
+  },
+  {
+    "category": "items",
+    "id": "seven-color-raw-fish-salad",
+    "field": "description",
+    "value": "An appetizer popularized in Goka, seven-color raw fish salad (qicai yusheng) is both fun and tasty to eat. This large platter of salad of raw fish, seafood, fruits, and vegetables of various hues is dressed in generous drizzlings of crushed peanuts, plum sauce, and sesame oil. During the Lunar New Year, consuming the seven-color raw fish salad (as 'seven colors' sounds similar to 'seven riches') is a grand, often messy, affair of spectacle and skill. Diners gather around the platter with long chopsticks to toss the salad, lifting the assorted ingredients as high as possible without dropping them off the table; erudite diners lead the table in uttering auspicious sayings to wish good fortune for the new year.\n\n**Activate** 1 minute (command, Interact)\n\n---\n\n**Effect** You toss the ingredients of the seven-color raw fish salad into the air to prepare the dish. You must attempt a DC 20 Cooking Lore check, with the following results.\n\n---\n\n**Critical Success** You manage to toss the ingredients deftly without wasting food, and your enthusiastic recitation of auspicious sayings is well received-a sign of impending good fortune! For the first month of the coming year, you enjoy a +2 bonus to skill checks to Earn Income and Diplomacy checks made to Gather Information about job opportunities.\n\n**Success** You toss the ingredients adroitly, wasting a minimum of seafood, and your delivery of auspicious sayings is respectable. For the first month of the coming year, you gain a +1 bonus to skill checks to Earn Income and Diplomacy checks made to Gather Information about job opportunities.\n\n**Failure** You fumble too many of the ingredients to have enough left to eat."
+  },
+  {
+    "category": "actions",
+    "id": "craft",
+    "field": "description",
+    "value": "You can make an item from raw materials. You need the Alchemical Crafting skill feat to create alchemical items and the Magical Crafting feat to create magic items.\n\nTo craft an item, you must meet the following requirements:\n\n- The item is your level or lower. An item that doesn't list a level is level 0. If the item is 9th level or higher, you must be a master in Crafting, and if it's 17th or higher, you must be legendary.\n- The item must be common, or you must otherwise have access to it.\n- You have an appropriate set of tools and, in many cases, a workshop. For example, you need access to a smithy to forge a metal shield, or an Alchemist's Lab to produce alchemical items.\n- You must supply raw materials worth at least half the item's Price. You always expend at least that amount of raw materials when you Craft successfully. If you're in a settlement, you can usually spend currency to get the amount of raw materials you need, except in the case of rarer precious materials.\n\nYou attempt a Crafting check after you spend 2 days of work setting up, or 1 day if you have the item's formula. The GM determines the DC to Craft the item based on its level, rarity, and other circumstances.\n\nIf your attempt to create the item is successful, you expend the raw materials you supplied. You can pay the remaining portion of the item's Price in materials to complete the item immediately, or you can spend additional downtime days working on it. For each additional day you spend, reduce the value of the materials you need to expend to complete the item. This amount is determined using the Income Earned table, based on your proficiency rank in Crafting and using your own level instead of a task level.\n\nAfter any of these downtime days, you can complete the item by spending the remaining portion of its Price in materials. If the downtime days you spend are interrupted,you can return to finish the item later, continuing where you left off.\n\n---\n\n**Critical Success** Your attempt is successful. Each additional day spent Crafting reduces the materials needed to complete the item by an amount based on your level + 1 and your proficiency rank in Crafting.\n\n**Success** Your attempt is successful. Each additional day spent Crafting reduces the materials needed to complete the item by an amount based on your level and your proficiency rank.\n\n**Failure** You fail to complete the item. You can salvage the raw materials you supplied for their full value. If you want to try again, you must start over.\n\n**Critical Failure** You fail to complete the item. You ruin 10% of the raw materials you supplied, but you can salvage the rest. If you want to try again, you must start over."
+  },
+  {
+    "category": "backgrounds",
+    "id": "animal-wrangler",
+    "field": "grantedFeatByChoice",
+    "value": {
+      "athletics": "titan-wrestler",
+      "nature": "train-animal"
+    }
+  },
+  {
+    "category": "backgrounds",
+    "id": "beast-seeker",
+    "field": "grantedFeatByChoice",
+    "value": {
+      "athletics": "titan-wrestler",
+      "thievery": "dirty-trick"
+    }
+  },
+  {
+    "category": "backgrounds",
+    "id": "blow-in",
+    "field": "grantedFeatByChoice",
+    "value": {
+      "deception": "lengthy-diversion",
+      "thievery": "subtle-theft"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "bone-spikes",
+    "field": "grantedStrikes",
+    "value": [
+      {
+        "name": "Bone Spike",
+        "die": "d6",
+        "damageType": "piercing",
+        "traits": [
+          "unarmed",
+          "versatile-s",
+          "sweep"
+        ],
+        "group": "brawling"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "cape-of-justice",
+    "field": "choice",
+    "value": {
+      "flag": "capeOfJusticeOffender",
+      "prompt": "Your designated offender",
+      "kind": "text",
+      "daily": true,
+      "note": "The +1 item bonus to Demoralize applies only to this creature. Name none — or let 24 hours pass without slaying or capturing them — and you take a -1 item penalty to Perception for 24 hours instead."
+    }
+  },
+  {
+    "category": "items",
+    "id": "conflagration-club",
+    "field": "counters",
+    "value": [
+      {
+        "id": "pool",
+        "label": "Charges",
+        "max": 10,
+        "resetsOnRest": false,
+        "startsFull": false
+      }
+    ]
+  },
+  {
+    "category": "backgrounds",
+    "id": "construction-occultist",
+    "field": "grantedFeatByChoice",
+    "value": {
+      "athletics": "hefty-hauler",
+      "occultism": "oddity-identification"
+    }
+  },
+  {
+    "category": "backgrounds",
+    "id": "dauntless",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "day"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "divine-apex",
+    "field": "choice",
+    "value": {
+      "flag": "divineApexAttribute",
+      "prompt": "Divine Apex: the deity divine attribute today's touched item boosts",
+      "kind": "text",
+      "daily": true,
+      "note": "The worn magical item you touch gains the apex trait until your next preparations and increases that attribute modifier by 1, or to +4, whichever is higher. Set that item's apex attribute in the item editor to apply it; only one apex item benefits you at a time."
+    }
+  },
+  {
+    "category": "backgrounds",
+    "id": "doomcaller",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "day"
+    }
+  },
+  {
+    "category": "backgrounds",
+    "id": "feybound",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "day"
+    }
+  },
+  {
+    "category": "backgrounds",
+    "id": "genie-blessed",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "day"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "ghost-dedication",
+    "field": "speeds",
+    "value": {
+      "fly": "@actor.speed.land"
+    }
+  },
+  {
+    "category": "backgrounds",
+    "id": "glory-hound",
+    "field": "grantedFeatByChoice",
+    "value": {
+      "intimidation": "intimidating-glare",
+      "performance": "impressive-performance"
+    }
+  },
+  {
+    "category": "items",
+    "id": "hunters-dawn",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "locate",
+        "tradition": "arcane",
+        "rank": 5,
+        "usesPerDay": 1
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "invoke-defense",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "trance-resistance",
+        "prompt": "Choose the damage type for Invoke Defense",
+        "options": [
+          {
+            "value": "bludgeoning",
+            "label": "Bludgeoning",
+            "grant": {
+              "resistances": [
+                {
+                  "type": "bludgeoning",
+                  "value": "floor(@actor.level/2)"
+                }
+              ]
+            }
+          },
+          {
+            "value": "piercing",
+            "label": "Piercing",
+            "grant": {
+              "resistances": [
+                {
+                  "type": "piercing",
+                  "value": "floor(@actor.level/2)"
+                }
+              ]
+            }
+          },
+          {
+            "value": "slashing",
+            "label": "Slashing",
+            "grant": {
+              "resistances": [
+                {
+                  "type": "slashing",
+                  "value": "floor(@actor.level/2)"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "ive-been-here-before",
+    "field": "choice",
+    "value": {
+      "flag": "mythicExplorationActivity",
+      "prompt": "Which Exploration activity do you perform at full speed (and at mythic proficiency) in this region?",
+      "kind": "array",
+      "daily": true,
+      "options": [
+        {
+          "value": "avoid-notice",
+          "label": "Avoid Notice"
+        },
+        {
+          "value": "defend",
+          "label": "Defend"
+        },
+        {
+          "value": "investigate",
+          "label": "Investigate"
+        },
+        {
+          "value": "scout",
+          "label": "Scout"
+        },
+        {
+          "value": "search",
+          "label": "Search"
+        }
+      ],
+      "note": "Only in a region you have never visited before, and it ends when you enter a new region (GM's call). Heroes Heaven has no mythic proficiency rank, so the check bonus is yours to apply."
+    }
+  },
+  {
+    "category": "backgrounds",
+    "id": "martial-disciple",
+    "field": "grantedFeatByChoice",
+    "value": {
+      "acrobatics": "cat-fall",
+      "athletics": "quick-jump"
+    }
+  },
+  {
+    "category": "backgrounds",
+    "id": "mortuarium-survivor",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "day"
+    }
+  },
+  {
+    "category": "backgrounds",
+    "id": "portal-scholar",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "minute"
+    }
+  },
+  {
+    "category": "items",
+    "id": "reapers-grasp",
+    "field": "counters",
+    "value": [
+      {
+        "id": "souls",
+        "label": "Souls stored",
+        "max": 10,
+        "resetsOnRest": false,
+        "startsFull": false
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "rejuvenating-embrace",
+    "field": "choice",
+    "value": {
+      "flag": "rejuvenatingEmbrace",
+      "prompt": "Resting outdoors: which benefit until your next sleep cycle?",
+      "kind": "array",
+      "daily": true,
+      "options": [
+        {
+          "value": "father-moons-vigilance",
+          "label": "Father Moon's Vigilance",
+          "description": "While sleeping, you don't take a penalty to Perception rolls for being unconscious."
+        },
+        {
+          "value": "mother-earths-care",
+          "label": "Mother Earth's Care",
+          "description": "After 8 hours of sleep, you regain additional Hit Points equal to your Constitution modifier plus your level."
+        }
+      ]
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "school-of-thassilonian-rune-magic",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sin",
+        "prompt": "Choose one of the seven sins to specialize in",
+        "options": [
+          {
+            "value": "envy",
+            "label": "Envy"
+          },
+          {
+            "value": "gluttony",
+            "label": "Gluttony"
+          },
+          {
+            "value": "greed",
+            "label": "Greed"
+          },
+          {
+            "value": "lust",
+            "label": "Lust"
+          },
+          {
+            "value": "pride",
+            "label": "Pride"
+          },
+          {
+            "value": "sloth",
+            "label": "Sloth"
+          },
+          {
+            "value": "wrath",
+            "label": "Wrath"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "shrieking-key",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "skill",
+            "detail": "thievery"
+          }
+        ],
+        "when": "when you use the shrieking key to Pick a Lock",
+        "bonus": "-2 circumstance"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "time-mage-dedication",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "time-sense",
+        "atWill": true
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "tricksters-ace",
+    "field": "choice",
+    "value": {
+      "flag": "tricksterAceSpell",
+      "prompt": "Trickster's Ace: which spell is your contingency today?",
+      "kind": "open",
+      "daily": true,
+      "from": {
+        "type": "spell",
+        "maxRank": 4
+      },
+      "note": "The spell can't have a cost, nor a casting time over 10 minutes, and must be able to target a single creature — it targets only you. You also specify the trigger at daily preparations, using the Ready action's restrictions. Once triggered it's expended until your next daily preparations."
+    }
+  },
+  {
+    "category": "items",
+    "id": "aon-fan-of-the-four-winds",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "gust-of-wind",
+        "usesPerDay": 1
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "armor-of-the-holy-warrior",
+    "field": "passiveEffects",
+    "value": {
+      "saves": 3
+    }
+  },
+  {
+    "category": "items",
+    "id": "cassock-of-devotion",
+    "field": "dynamicSkillBonus",
+    "value": {
+      "source": "deity",
+      "value": 1
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "clue-in",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "minute",
+      "every": 10
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "elemental-eidolon",
+    "field": "choice",
+    "value": {
+      "flag": "eidolonElementalCore",
+      "prompt": "Elemental Core",
+      "kind": "array",
+      "options": [
+        {
+          "value": "air",
+          "label": "Air"
+        },
+        {
+          "value": "earth",
+          "label": "Earth"
+        },
+        {
+          "value": "fire",
+          "label": "Fire"
+        },
+        {
+          "value": "metal",
+          "label": "Metal"
+        },
+        {
+          "value": "wood",
+          "label": "Wood"
+        },
+        {
+          "value": "water",
+          "label": "Water"
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "gate-attenuator",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "element",
+        "prompt": "Attune the attenuator to one element",
+        "options": [
+          {
+            "value": "air",
+            "label": "Air"
+          },
+          {
+            "value": "earth",
+            "label": "Earth"
+          },
+          {
+            "value": "fire",
+            "label": "Fire"
+          },
+          {
+            "value": "metal",
+            "label": "Metal"
+          },
+          {
+            "value": "water",
+            "label": "Water"
+          },
+          {
+            "value": "wood",
+            "label": "Wood"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "gate-attenuator-greater",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "element",
+        "prompt": "Attune the attenuator to one element",
+        "options": [
+          {
+            "value": "air",
+            "label": "Air"
+          },
+          {
+            "value": "earth",
+            "label": "Earth"
+          },
+          {
+            "value": "fire",
+            "label": "Fire"
+          },
+          {
+            "value": "metal",
+            "label": "Metal"
+          },
+          {
+            "value": "water",
+            "label": "Water"
+          },
+          {
+            "value": "wood",
+            "label": "Wood"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "gate-attenuator-major",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "element",
+        "prompt": "Attune the attenuator to one element",
+        "options": [
+          {
+            "value": "air",
+            "label": "Air"
+          },
+          {
+            "value": "earth",
+            "label": "Earth"
+          },
+          {
+            "value": "fire",
+            "label": "Fire"
+          },
+          {
+            "value": "metal",
+            "label": "Metal"
+          },
+          {
+            "value": "water",
+            "label": "Water"
+          },
+          {
+            "value": "wood",
+            "label": "Wood"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "messengers-ring-greater",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "message",
+        "tradition": "arcane",
+        "atWill": true
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "mind-projectiles",
+    "field": "grantedStrikes",
+    "value": [
+      {
+        "name": "Mind Weapon (Ranged)",
+        "die": "d6",
+        "damageType": "as your mind weapon",
+        "traits": [],
+        "group": "brawling",
+        "range": 30
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "mythic-resilent",
+    "field": "passiveEffects",
+    "value": {
+      "saves": 4
+    }
+  },
+  {
+    "category": "items",
+    "id": "orb-of-dragonkind",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "orb-variety",
+        "prompt": "Choose which dragon's orb this is",
+        "options": [
+          {
+            "value": "black",
+            "label": "Black dragon (darkness)"
+          },
+          {
+            "value": "blue",
+            "label": "Blue dragon (hallucinatory terrain)"
+          },
+          {
+            "value": "brass",
+            "label": "Brass dragon (speak with animals)"
+          },
+          {
+            "value": "bronze",
+            "label": "Bronze dragon (control water)"
+          },
+          {
+            "value": "copper",
+            "label": "Copper dragon (hideous laughter)"
+          },
+          {
+            "value": "green",
+            "label": "Green dragon (entangle)"
+          },
+          {
+            "value": "red",
+            "label": "Red dragon (wall of fire)"
+          },
+          {
+            "value": "silver",
+            "label": "Silver dragon (detect alignment)"
+          },
+          {
+            "value": "white",
+            "label": "White dragon (wall of ice)"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "phantom-shroud",
+    "field": "grantedStrikes",
+    "value": [
+      {
+        "name": "Ghostly Touch",
+        "die": "3d6",
+        "damageType": "void",
+        "traits": [
+          "agile",
+          "finesse",
+          "magical",
+          "unarmed"
+        ],
+        "group": "brawling"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "ring-of-wizardry-type-i",
+    "field": "spellSlotBonus",
+    "value": {
+      "byRank": {
+        "1": 2
+      }
+    }
+  },
+  {
+    "category": "items",
+    "id": "ring-of-wizardry-type-ii",
+    "field": "spellSlotBonus",
+    "value": {
+      "byRank": {
+        "1": 1,
+        "2": 2
+      }
+    }
+  },
+  {
+    "category": "items",
+    "id": "ring-of-wizardry-type-iii",
+    "field": "spellSlotBonus",
+    "value": {
+      "byRank": {
+        "2": 1,
+        "3": 2
+      }
+    }
+  },
+  {
+    "category": "items",
+    "id": "ring-of-wizardry-type-iv",
+    "field": "spellSlotBonus",
+    "value": {
+      "byRank": {
+        "3": 1,
+        "4": 2
+      }
+    }
+  },
+  {
+    "category": "items",
+    "id": "sluggish-bracelet",
+    "field": "passiveEffects",
+    "value": {
+      "skills": {
+        "acrobatics": 1
+      }
+    }
+  },
+  {
+    "category": "items",
+    "id": "sun-wheel",
+    "field": "heldSpells",
+    "value": {
+      "0": [
+        "shield"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "the-dance",
+    "field": "passiveEffects",
+    "value": {
+      "skills": {
+        "performance": 3
+      }
+    }
+  },
+  {
+    "category": "items",
+    "id": "the-eclipse",
+    "field": "passiveEffects",
+    "value": {
+      "skills": {
+        "religion": 3
+      }
+    }
+  },
+  {
+    "category": "items",
+    "id": "third-eye",
+    "field": "heldSpells",
+    "value": {
+      "8": [
+        "truesight"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "thoughtwhip-claw",
+    "field": "heldSpells",
+    "value": {
+      "5": [
+        "mind-probe"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "tillers-drive",
+    "field": "landSpeedBonus",
+    "value": 5
+  },
+  {
+    "category": "items",
+    "id": "tradecraft-tattoo",
+    "field": "heldSpells",
+    "value": {
+      "4": [
+        "creation"
+      ],
+      "5": [
+        "creation"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "tradecraft-tattoo-greater",
+    "field": "heldSpells",
+    "value": {
+      "4": [
+        "creation"
+      ],
+      "5": [
+        "creation"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "vengeful-arm",
+    "field": "grantedStrikes",
+    "value": [
+      {
+        "name": "Retribution Axe",
+        "die": "1d12",
+        "damageType": "slashing",
+        "traits": [
+          "magical",
+          "sweep"
+        ],
+        "group": "axe"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "ventriloquists-ring",
+    "field": "heldSpells",
+    "value": {
+      "1": [
+        "ventriloquism"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "ventriloquists-ring-greater",
+    "field": "heldSpells",
+    "value": {
+      "2": [
+        "ventriloquism"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-legerdemain-1st-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 1
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-legerdemain-2nd-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 2
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-legerdemain-3rd-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 3
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-legerdemain-4th-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 4
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-legerdemain-5th-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 5
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-legerdemain-6th-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 6
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-legerdemain-7th-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 7
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-legerdemain-8th-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 8
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-legerdemain-9th-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 9
+    }
+  },
+  {
+    "category": "items",
+    "id": "warding-statuette",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "ranged weapon attacks",
+          "value": 1
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "warding-statuette-greater",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "ranged weapon attacks",
+          "value": 5
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wondrous-figurine-onyx-dog",
+    "field": "frequency",
+    "value": {
+      "max": 1,
+      "per": "week"
+    }
   }
 ]

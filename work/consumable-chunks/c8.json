@@ -1,0 +1,146 @@
+[
+ {
+  "id": "chivalric-emblem",
+  "name": "Chivalric Emblem",
+  "level": 5,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Originally created by Taldan cavaliers acting as knights errant, *chivalric emblems* have since spread across the Inner Sea region and beyond. A *chivalric emblem* is crafted in the form of a small iron shield, embossed with heraldic insignia. These whetstones call protective spirits into a weapon; the effects last for 1 hour. While wielding a weapon under the effect of a *chivalric emblem*, if you witness an ally being reduced to 0 Hit Points or taking damage from a critical Strike, you gain a +1 circumstance bonus to attack rolls and damage with that weapon against the creature that damaged that ally for the remainder of the *chivalric emblem*'s duration."
+ },
+ {
+  "id": "valorous-coin",
+  "name": "Valorous Coin",
+  "level": 8,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Valorous coins are metal disks emblazoned with two crossed swords, with inscriptions exhorting bravery and optimism. The effects of a valorous coin last for 1 hour. During that time, if you're reduced below a quarter of your Hit Points while wielding the affected weapon, it empowers you with determination and resolve to finish the fight. You gain temporary Hit Points equal to your level that last for 1 minute, and you gain a +1 circumstance bonus to Strikes and damage rolls with the affected weapon for 1 minute. Once this minute ends, so do all effects and the remaining duration of the valorous coin, and you're fatigued until you're healed to your maximum Hit Points."
+ },
+ {
+  "id": "champions-laurels",
+  "name": "Champions Laurels",
+  "level": 2,
+  "description": "Champions Laurels May contain spoilers from Myth-Speaker Source Pathfinder #216: The Acropolis Pyre pg. 81 Usage affixed to armor Activate (concentrate) Trigger You are about to roll an Acrobatics or Athletics check, and you are trained or better in the skill; Requirements You can perceive at least 12 allies or friendly bystanders encouraging you. This elegant crown of laurels can be worn on the head, atop a helmet, or even wrapped around the neck as a torc, signaling the wearer's athletic achievements in a past competition. When you Activate the laurels, you draw strength from your adoring crowd and gain a status bonus to the triggering check. If you critically succeed at the check, you gain temporary Hit Points equal to the item's level that last for 1 minute. Champions Laurels (Amateur) Source Pathfinder #216: The Acropolis Pyre pg. 81 Price 6 gp These laurels grant a +1 status bonus to the check. Champions Laurels (Professional) Source Pathfinder #216: The Acropolis Pyre pg. 81 Price 160 gp These laurels grant a +2 status bonus to the check. Champions Laurels (Renowned) Source Pathfinder #216: The Acropolis Pyre pg. 81 Price 3,200 gp These laurels grant a +3 status bonus to the check."
+ },
+ {
+  "id": "champions-laurels-amateur",
+  "name": "Champions Laurels (Amateur)",
+  "level": 2,
+  "description": "**Activate** ⟨4⟩ (concentrate) **Trigger** You are about to roll an Acrobatics or Athletics check, and you are trained or better in the skill **Requirements** You can perceive at least 12 allies or friendly bystanders encouraging you. --- This elegant crown of laurels can be worn on the head, atop a helmet, or even wrapped around the neck as a torc, signaling the wearer's athletic achievements in a past competition. When you Activate the laurels, you draw strength from your adoring crowd and gain a +1 status bonus to the triggering check. If you critically succeed at the check, you gain 2 temporary Hit Points that last for 1 minute."
+ },
+ {
+  "id": "champions-laurels-professional",
+  "name": "Champions Laurels (Professional)",
+  "level": 10,
+  "description": "**Activate** ⟨4⟩ (concentrate) **Trigger** You are about to roll an Acrobatics or Athletics check, and you are trained or better in the skill **Requirements** You can perceive at least 12 allies or friendly bystanders encouraging you. --- This elegant crown of laurels can be worn on the head, atop a helmet, or even wrapped around the neck as a torc, signaling the wearer's athletic achievements in a past competition. When you Activate the laurels, you draw strength from your adoring crowd and gain a +2 status bonus to the triggering check. If you critically succeed at the check, you gain 10 temporary Hit Points that last for 1 minute."
+ },
+ {
+  "id": "champions-laurels-renowned",
+  "name": "Champions Laurels (Renowned)",
+  "level": 18,
+  "description": "**Activate** ⟨4⟩ (concentrate) **Trigger** You are about to roll an Acrobatics or Athletics check, and you are trained or better in the skill **Requirements** You can perceive at least 12 allies or friendly bystanders encouraging you. --- This elegant crown of laurels can be worn on the head, atop a helmet, or even wrapped around the neck as a torc, signaling the wearer's athletic achievements in a past competition. When you Activate the laurels, you draw strength from your adoring crowd and gain a +3 status bonus to the triggering check. If you critically succeed at the check, you gain 18 temporary Hit Points that last for 1 minute."
+ },
+ {
+  "id": "star-of-cynosure",
+  "name": "Star of Cynosure",
+  "level": 10,
+  "description": "**Activate** ⟨4⟩ (concentrate) **Trigger** You attempt a Will save against a mental spell, but you haven't rolled yet **Requirements** You have master proficiency in Will saves. --- Found throughout Golarion, these star-shaped talismans of whalebone scrimshaw are carved by the Erutaki people from the Crown of the World. They are popular with adherents to the cult of Desna, who believe the talismans protect their dreams. When you activate this talisman, you gain a +2 status bonus to saves against spells with the mental trait for 1 minute. On the triggering save, if the outcome of the roll is a failure, you get a success instead, or if the outcome is a critical failure, you get a failure instead."
+ },
+ {
+  "id": "energizing-pill",
+  "name": "Energizing Pill",
+  "level": 10,
+  "description": "**Activate** ⟨1⟩ (manipulate) This special blend of potent herbs comes in the form of a compact ball the size of a marble that allows it to be held in the mouth, where it remains for 1 hour. An energizing pill has a bitter taste at first, but the longer one lets it soak, the more complex and sweet its flavor grows. It heightens your reactions, granting you a +2 item bonus to initiative rolls with Perception. **Secondary Effect** ⟨5⟩ **Trigger** You would become clumsy, drained, enfeebled, frightened, sickened, slowed, or stupefied --- **Effect** Reduce the value of the condition you just gained by 1; if this reduces the value to 0, you don't gain the triggering condition."
+ },
+ {
+  "id": "matsukis-medicinal-wine",
+  "name": "Matsuki's Medicinal Wine",
+  "level": 3,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Old Matsuki's private brew has quite the kick. In addition to making you tipsy, this medicinal wine works wonders in helping to recover from disease. When you drink a dose of this wine you must succeed at a save to avoid becoming off-guard for 10 minutes (and also Clumsy 1 for this duration if you critically fail the saving throw). Regardless of the saving throw's results, you gain a +2 item bonus to Fortitude saving throws against diseases and poisons for the next 24 hours. This applies to your daily save against a disease's progression as well."
+ },
+ {
+  "id": "covenant-tea",
+  "name": "Covenant Tea",
+  "level": 3,
+  "description": "**Activate** ⟨1⟩ (manipulate) This green tea is often steeped in a pot with a dried persimmon. Traditionally, all participants in a complex discussion start their conversation with a tea ceremony involving *covenant tea*, with each member of the group enjoying the covenant of the shared beverage. Some have been known to use trickery and sleight of hand to ensure that only those whose goals align with the tea preparer's are served covenant tea, while others in the group are served non-magical (but still delicious) green tea, thus subtly tipping the balance in discussion toward those the tea server favors. This practice has resulted in some regions referring to *covenant tea* as \"trickery tea.\" Regardless of what you prefer to call the tea, when you drink it, you gain a +1 item bonus to Diplomacy checks and to your Perception DC for 10 minutes. --- **Activate—Tea Ceremony** 10 minutes (concentrate, manipulate) The duration increases to 1 hour."
+ },
+ {
+  "id": "energizing-tea",
+  "name": "Energizing Tea",
+  "level": 4,
+  "description": "**Activate** ⟨1⟩ (manipulate) This sweet and refreshing tea is made with a mixture of honey, lemon slices, and sliced ginger. This is considered to be the bare minimum when serving *energizing tea*, and many go above and beyond by adding additional citrus fruits or berries to the mix or refusing to serve the tea at all without also serving a full platter of spiced pastries and sweets. This golden tea has energizing properties and, when consumed, grants you a +1 item bonus to Athletics and Acrobatics checks for 10 minutes. --- **Activate—Tea Ceremony** 10 minutes (concentrate, manipulate) The duration increases to 1 hour."
+ },
+ {
+  "id": "longnight-tea",
+  "name": "Longnight Tea",
+  "level": 3,
+  "description": "**Activate** ⟨1⟩ (manipulate) This tea is brewed with a mixture of matcha, turmeric, and 10 drops of morning dew, creating a fragrant but mildly bitter tea. The bitter aftertaste is said to be the most important element of *longnight tea*, for it's believed that this flavor lingers on the tongue and aids in keeping you awake and alert. The tea is favored by scholars and soldiers alike, although the value to which each attributes the ability to endure long nights without sleeping varies—and is often the subject of unusually impassioned debate. When you drink *longnight tea*, it grants you a +1 item bonus to saving throws against sleep effects for 1 hour. --- **Activate—Tea Ceremony** 10 minutes (concentrate, manipulate) The duration increases to 8 hours, and the tea removes the fatigued condition."
+ },
+ {
+  "id": "moon-blossom-tea",
+  "name": "Moon Blossom Tea",
+  "level": 9,
+  "description": "**Activate** ⟨1⟩ (manipulate) This bright and citrusy tea is traditionally made with green tea combined with orange rind shavings and flower petals plucked during a full moon. Some claim to be able to tell the difference if these petals were plucked at other times, but this does not alter the tea's effects. The tea leaves have a chance to anticipate unexpected encounters. After consuming the tea, you gain a +2 item bonus to all initiative rolls for 1 hour and gain the following reaction. **Evade Peril** ⟨5⟩ (concentrate, fortune) **Trigger** You roll a failure on a Reflex save --- **Effect** You get a success on the Reflex save instead. Reduce the remaining duration of moon blossom tea by 1 hour; if this reduces the duration to 0, the duration ends. --- **Activate—Tea Ceremony** 10 minutes (concentrate, manipulate) The duration increases to 4 hours."
+ },
+ {
+  "id": "peace-in-dreams-tea",
+  "name": "Peace in Dreams Tea",
+  "level": 6,
+  "description": "**Activate** ⟨1⟩ (manipulate) This creamy tea is made from warm soy milk steeped with whole, dried chrysanthemum flowers and honey and brewed from when the sun first touches the horizon to when it has fully set. Consuming this tea causes mild drowsiness, aids in sleep, and protects from harmful mental effects. You gain a +1 item bonus to all saving throws against mental effects for 1 hour. --- **Activate—Tea Ceremony** 10 minutes (concentrate, manipulate) The effects last for 8 hours, and as long as you're asleep, the item bonus increases to +2."
+ },
+ {
+  "id": "spiritsight-tea",
+  "name": "Spiritsight Tea",
+  "level": 7,
+  "description": "**Activate** ⟨1⟩ (manipulate) *Spiritsight tea* exudes a soft blue glow, creating illumination equal to that of a candle. When consumed, your eyes take on a soft glow as well, and you can see invisible creatures and objects for 10 minutes; such creatures appear to you as translucent shapes, and they're concealed to you. You gain a +1 item bonus to Perception checks to Seek incorporeal creatures. --- **Activate—Tea Ceremony** 10 minutes (concentrate, manipulate) The duration of being able to see invisible creatures and objects increases to 30 minutes, and the duration of the item bonus increases to 8 hours."
+ },
+ {
+  "id": "animal-turning-fulu",
+  "name": "Animal-Turning Fulu",
+  "level": 1,
+  "description": "**Activate** ⟨5⟩ (concentrate) **Trigger** A creature with the animal trait successfully Strikes you. --- Frightened animals depicted on this fulu flee in all directions from a central figure (traditionally represented by a human hunter, but sometimes depicted as a skeletal undead creature or even a fiend with long, broken arms). You activate this fulu, gaining a +2 item bonus to AC against the triggering Strike. If this causes the Strike to miss, you become concealed from the triggering creature until the start of your next turn."
+ },
+ {
+  "id": "wine-of-the-blood",
+  "name": "Wine of the Blood",
+  "level": 5,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- This wine, prepared using the blood of a creature with overwhelming vitality, soothes the body, mind, and spirit with a temporary sense of euphoria and rest. When you drink wine of the blood, you recover 2d10 Hit Points. Additionally, the wine attempts to counteract every negative emotion effect affecting you, with a counteract rank of 3 and a counteract modifier of +9. Lastly, you gain a +1 status bonus to all Will saves and a +2 status bonus against emotion effects for 1 minute."
+ },
+ {
+  "id": "unassuming-face-paint",
+  "name": "Unassuming Face Paint",
+  "level": 3,
+  "description": "**Activate** ⟨3⟩ (manipulate) --- When these drab pigments are applied to your face, you appear plain and inconspicuous for 10 minutes. You gain a +2 item bonus to Stealth checks and DCs while blending into a crowd during this time. If you take a hostile action, the effects of *unassuming face paint* immediately end."
+ },
+ {
+  "id": "antifungal-salve-greater",
+  "name": "Antifungal Salve (Greater)",
+  "level": 10,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- This foul-smelling pink paste is traditionally kept in a tightly sealed jar. Spreading the salve on exposed skin grants a +4 item bonus to saving throws against all afflictions that have the fungus trait or that originate from creatures with the fungus trait. The bonus lasts for 6 hours."
+ },
+ {
+  "id": "antifungal-salve-lesser",
+  "name": "Antifungal Salve (Lesser)",
+  "level": 1,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- This foul-smelling pink paste is traditionally kept in a tightly sealed jar. Spreading the salve on exposed skin grants a +2 item bonus to saving throws against all afflictions that have the fungus trait or that originate from creatures with the fungus trait. The bonus lasts for 6 hours."
+ },
+ {
+  "id": "antifungal-salve-major",
+  "name": "Antifungal Salve (Major)",
+  "level": 14,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- This foul-smelling pink paste is traditionally kept in a tightly sealed jar. Spreading the salve on exposed skin grants a +4 item bonus to saving throws against all afflictions that have the fungus trait or that originate from creatures with the fungus trait. The bonus lasts for 6 hours. When you apply the salve, the target can immediately attempt a saving throw against one fungal affliction of 14th level or lower that is affecting them. If they succeed, the affliction is neutralized."
+ },
+ {
+  "id": "antifungal-salve-moderate",
+  "name": "Antifungal Salve (Moderate)",
+  "level": 6,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- This foul-smelling pink paste is traditionally kept in a tightly sealed jar. Spreading the salve on exposed skin grants a +3 item bonus to saving throws against all afflictions that have the fungus trait or that originate from creatures with the fungus trait. The bonus lasts for 6 hours."
+ },
+ {
+  "id": "crimson-godsblood-serum-greater",
+  "name": "Crimson Godsblood Serum (Greater)",
+  "level": 18,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Though it contains but a tiny drop of Gorum's blood, drinking this thick, swirling potion fills the user with divine wrath and resilience. While under the effect of the potion, you gain a +4 status bonus to physical damage rolls for 1 minute. The first time during that minute you're reduced to 0 Hit Points but not immediately killed, you avoid being knocked out, regain 6d8+20 Hit Points, and become confused for 1 round, and your wounded condition increases by 1."
+ },
+ {
+  "id": "crimson-godsblood-serum-lesser",
+  "name": "Crimson Godsblood Serum (Lesser)",
+  "level": 6,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Though it contains but a tiny drop of Gorum's blood, drinking this thick, swirling potion fills the user with divine wrath and resilience. While under the effect of the potion, you gain a +2 status bonus to physical damage rolls for 1 minute. The first time during that minute you're reduced to 0 Hit Points but not immediately killed, you avoid being knocked out, regain 2d8+5 Hit Points, and become confused for 1 round, and your wounded condition increases by 1."
+ }
+]

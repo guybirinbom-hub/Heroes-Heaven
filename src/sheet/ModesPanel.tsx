@@ -31,8 +31,8 @@ export interface ScopeOption {
 /** The "Modes" tab: toggle predefined class/ancestry/archetype modes (gated to your character), plus
  *  your own saved modes. Pin a star to keep a mode visible at the top even when it's gated out. */
 export function ModesPanel({
-  library,
-  predefined,
+  library: libraryProp,
+  predefined: predefinedProp,
   catalog,
   classId,
   ancestryId,
@@ -63,6 +63,13 @@ export function ModesPanel({
   const [editing, setEditing] = useState<ModeDef | null>(null);
   const [showAll, setShowAll] = useState(false);
   const [q, setQ] = useState('');
+
+  // An item mode belongs to its consumable — you get it by drinking the thing. It is not the
+  // player's to pick, edit, pin or delete, so it is stripped here rather than at each call site:
+  // the callers build `library` from content.modes, where an item mode looks exactly like a saved
+  // one. (`modeRelevant` rejects them too, but search and "show all" deliberately bypass that gate.)
+  const library = libraryProp.filter((m) => !m.fromItemId);
+  const predefined = predefinedProp.filter((m) => !m.fromItemId);
 
   const scopeOptions: ScopeOption[] = charKey
     ? [

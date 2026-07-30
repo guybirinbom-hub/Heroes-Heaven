@@ -75,7 +75,7 @@ describe('every starred stat kind lists its situational bonuses', () => {
       // Precondition: the row IS starred. If this fails the fixture is wrong, not the app.
       expect(statHasSituational(ch, r, c), `${id} should star ${kind}`).toBe(true);
 
-      const lines = explainStat(ch, c, r).situational ?? [];
+      const lines = (explainStat(ch, c, r).situational ?? []).map((s) => s.text);
       expect(lines.length, `${kind} is starred by ${id} but its breakdown lists nothing`).toBeGreaterThan(0);
       // The line has to name its source, or the player can't tell which record is talking.
       expect(lines.join(' '), `${kind} lists lines but none names ${id}`).toContain(nameOf(id));
@@ -110,14 +110,14 @@ describe('spellDamage', () => {
     const b = explainStat(spellcaster('dangerous-sorcery'), c, { kind: 'spellDamage', entryId: 'e1' });
     expect(b.parts).toEqual([]);
     expect(b.totalText).toBe('varies');
-    expect(b.situational?.join(' ')).toContain('Dangerous Sorcery');
+    expect(b.situational?.map((s) => s.text).join(' ')).toContain('Dangerous Sorcery');
   });
 
   it('every sorcerer gets the row from Sorcerous Potency, with no feat needed', () => {
     // The class feature is owned, not chosen, so the row is part of being a sorcerer.
     const ch = spellcaster('toughness');
     expect(statHasSituational(ch, { kind: 'spellDamage', entryId: 'e1' }, c)).toBe(true);
-    expect(explainStat(ch, c, { kind: 'spellDamage', entryId: 'e1' }).situational?.join(' ')).toContain('Sorcerous Potency');
+    expect(explainStat(ch, c, { kind: 'spellDamage', entryId: 'e1' }).situational?.map((s) => s.text).join(' ')).toContain('Sorcerous Potency');
   });
 
   it('a character with no spell-damage source gets no star, so the row never renders', () => {

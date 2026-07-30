@@ -1,0 +1,1232 @@
+[
+ {
+  "id": "steelscour-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Steelscour (moderate)",
+  "level": 3,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Interact or Strike --- A viscous acidic goo fills this glass vial, specially designed to eat through metallic objects. You can throw the steelscour as an alchemical bomb, targeting a metal creature or metal object held by a creature. You gain a +1 item bonus to attack rolls. It deals 2d8 persistent acid damage that ignores up to 5 hardness from metal. Steelscour has no effect on living or undead flesh and deals half damage to objects constructed of non-metal materials. Instead of using steelscour as a bomb, you can pour it on an adjacent unattended metal object with an Interact action, automatically dealing the listed persistent acid damage for 5 rounds with no flat check to end the condition. When used this way, steelscour loses the bomb trait."
+ },
+ {
+  "id": "sticky-algae-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Sticky Algae Bomb",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "water"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Sticky Algae Bomb Source Rage of Elements pg. 178 Usage held in 1 hand Bulk L Activate Strike These bombs have been mixed with sticky algae that glow and emit poison. Attacks with this bomb don't take the normal penalties and restrictions for being used in water or underwater. A sticky algae bomb deals the listed poison damage. Many types grant an item bonus to attack rolls. In addition, the target is tagged by the bioluminescent substance and leaves a highly visible trail for the next hour. The DC to Track a creature using this trail is 19, but the trail appears only in water. Sticky Algae Bomb (Lesser) Source Rage of Elements pg. 178 Price 4 gp Bulk L The bomb deals 1d8 poison damage and 1 poison splash damage. Sticky Algae Bomb (Moderate) Source Rage of Elements pg. 178 Price 12 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d8 poison damage and 2 poison splash damage. Sticky Algae Bomb (Greater) Source Rage of Elements pg. 178 Price 280 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 3d8 poison damage and 3 poison splash damage. Sticky Algae Bomb (Major) Source Rage of Elements pg. 178 Price 2,800 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 4d8 poison damage and 4 poison splash damage."
+ },
+ {
+  "id": "sticky-algae-bomb-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Sticky Algae Bomb (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash",
+   "water"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- These bombs have been mixed with sticky algae that glow and emit poison. Attacks with this bomb don't take the normal penalties and restrictions for being used in water or underwater. You gain a +2 item bonus to attack rolls. The bomb deals 3d8 poison damage and 3 poison splash damage. In addition, the target is tagged by the bioluminescent substance and leaves a highly visible trail for the next hour. The DC to Track a creature using this trail is 19, but the trail appears only in water."
+ },
+ {
+  "id": "sticky-algae-bomb-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Sticky Algae Bomb (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash",
+   "water"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- These bombs have been mixed with sticky algae that glow and emit poison. Attacks with this bomb don't take the normal penalties and restrictions for being used in water or underwater. You gain a +3 item bonus to attack rolls. The bomb deals 4d8 poison damage and 4 poison splash damage. In addition, the target is tagged by the bioluminescent substance and leaves a highly visible trail for the next hour. The DC to Track a creature using this trail is 19, but the trail appears only in water."
+ },
+ {
+  "id": "sticky-algae-bomb-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Sticky Algae Bomb (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash",
+   "water"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- These bombs have been mixed with sticky algae that glow and emit poison. Attacks with this bomb don't take the normal penalties and restrictions for being used in water or underwater. You gain a +1 item bonus to attack rolls. The bomb deals 2d8 poison damage and 2 poison splash damage. In addition, the target is tagged by the bioluminescent substance and leaves a highly visible trail for the next hour. The DC to Track a creature using this trail is 19, but the trail appears only in water."
+ },
+ {
+  "id": "such-a-disgrace",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Such a Disgrace!",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "fortune"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** An ally within 30 feet fails a Will saving throw against a mental effect. --- You expect the same level of urbane sophistication from your allies as you possess, so whenever one of them succumbs to egregious behavior from a mental effect, you're immediately mortified. How dare they make you look bad! Whether you respond with noisy contempt or quiet distress, your reaction gives your ally a second chance to shake off the effect and save the moment, at least socially. Your ally rerolls the triggering Will saving throw with a +1 circumstance bonus and uses the higher result. Regardless of the result of the save, your ally is temporarily immune to Such a Disgrace! for 10 minutes."
+ },
+ {
+  "id": "sulfur-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Sulfur Bomb",
+  "level": 1,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Sulfur Bomb Source Grand Bazaar pg. 15 Usage held in 1 hand Bulk L Activate Strike A thick, sulfurous, irritating gas fills this golden-yellow flask. A sulfur bomb deals the listed damage. On a hit, the target takes a –1 status penalty to Perception checks and attack rolls until the end of its next turn, or becomes sickened 1 on a critical hit. Creatures hit with this bomb are temporarily immune to the effects of the bomb for 1 minute. Sulfur Bomb (Lesser) Source Grand Bazaar pg. 15 Price 4 gp Bulk L The bomb deals 1d4 acid damage and 1 acid splash damage. Sulfur Bomb (Moderate) Source Grand Bazaar pg. 15 Price 12 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d4 acid damage and 2 acid splash damage. Sulfur Bomb (Greater) Source Grand Bazaar pg. 15 Price 275 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 3d4 acid damage and 3 acid splash damage. Sulfur Bomb (Major) Source Grand Bazaar pg. 15 Price 2,750 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 4d4 acid damage and 4 acid splash damage."
+ },
+ {
+  "id": "sulfur-bomb-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Sulfur Bomb (Greater)",
+  "level": 11,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- A thick, sulfurous, irritating gas fills this golden-yellow flask. You gain a +2 item bonus to attack rolls. The bomb deals 3d4 acid damage and 3 acid splash damage. On a hit, the target takes a -1 status penalty to Perception checks and attack rolls until the end of its next turn, or becomes Sickened 1 on a critical hit. Creatures hit with this bomb are temporarily immune to the effects of the bomb for 1 minute."
+ },
+ {
+  "id": "sulfur-bomb-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Sulfur Bomb (Major)",
+  "level": 17,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- A thick, sulfurous, irritating gas fills this golden-yellow flask. You gain a +3 item bonus to attack rolls. The bomb deals 4d4 acid damage and 4 acid splash damage. On a hit, the target takes a -1 status penalty to Perception checks and attack rolls until the end of its next turn, or becomes Sickened 1 on a critical hit. Creatures hit with this bomb are temporarily immune to the effects of the bomb for 1 minute."
+ },
+ {
+  "id": "sulfur-bomb-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Sulfur Bomb (Moderate)",
+  "level": 3,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- A thick, sulfurous, irritating gas fills this golden-yellow flask. You gain a +1 item bonus to attack rolls. The bomb deals 2d4 acid damage and 2 acid splash damage. On a hit, the target takes a -1 status penalty to Perception checks and attack rolls until the end of its next turn, or becomes Sickened 1 on a critical hit. Creatures hit with this bomb are temporarily immune to the effects of the bomb for 1 minute."
+ },
+ {
+  "id": "sun-heralds-stylus",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Sun Herald's Stylus",
+  "level": 14,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This writing instrument was made from the spur of one of the giant divine roosters that heralds the presence of Shizuru. While you hold it, you gain a +2 item bonus to Calligraphy Lore and Medicine checks. **Activate—Rejuvenating Ink** ⟨2⟩ (manipulate) **Frequency** once per day --- **Effect** Drawing a circle on the ground with your stylus, you cast Field of Life centered on yourself. --- **Craft Requirements** The feathers must be plucked from a living divine rooster or given by the bird to a chosen mortal."
+ },
+ {
+  "id": "sun-wheel",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Sun Wheel",
+  "level": 5,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Created by the priests of a Qadiran sect of Sarenites, the *sun wheels* were designed to protect the Dawnflower's followers in their quest to hunt down a dangerous cult trying to raise a spawn of the evil god Rovagug. Once they completed their crusade, these priests disbanded and went on to minister other congregations. They each took their *sun wheels* with them, handing them down to the next generations. This copper medallion is etched with a stylized sun, its rays shaped like the spokes of a wagon wheel. It tends to glint brightly when exposed to sunlight. While wearing this pendant, you gain a +1 item bonus to Religion checks. You must be good-aligned to use the *sun wheel*'s true power: the following activation, which provides you a shield of burning force. --- **Activate** ⟨1⟩ (concentrate) **Effect** The *sun wheel* casts a Shield spell benefiting you. When you use the spell to prevent damage, you prevent 10 damage instead of 5. If the attacker is adjacent to you, you can choose to deal 2d6 damage to it, which it gets a save to resist. If you choose to deal the fire damage, you can't Activate the *sun wheel* again until the next morning. If you prevent damage but don't deal the fire damage, you can use it again in 10 minutes, as normal for *shield*."
+ },
+ {
+  "id": "superior-sight",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Superior Sight",
+  "level": 20,
+  "traits": [
+   "ranger"
+  ],
+  "engineFieldsPresent": [
+   "senses"
+  ],
+  "inRegistries": [],
+  "text": "Your senses are peerless. You gain a +2 circumstance bonus to Perception checks, and you gain low-light vision. If you already have low-light vision, gain darkvision instead. Furthermore, when you target an enemy, you automatically succeed at the flat check if that enemy is concealed, hidden, or undetected."
+ },
+ {
+  "id": "surprise-doll",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Surprise Doll",
+  "level": 1,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Surprise Doll Source NPC Core pg. 26 Usage held in 1 hand Bulk L This doll contains a hidden compartment or pouch capable of holding a single object of up to light Bulk—typically a bell, rattle, or dried flowers. Surprise Doll Source NPC Core pg. 26, Grand Bazaar pg. 58 Price 1 gp Bulk L Surprise Doll (Exquisite) Source NPC Core pg. 26 Price 10 gp Bulk L Hiding an object inside this beautifully crafted surprise doll grants you a +1 item bonus to Stealth checks made to Conceal an Item, as the compartment is particularly well-hidden and weighted to ensure the doll doesn't feel off-balance with an item inside."
+ },
+ {
+  "id": "swagger-stick",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Swagger Stick",
+  "level": 4,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This stick is a decorative wooden baton with a metal cap on one end and a stylized handle in the shape of a horse or other martial beast on the other. Mundane swagger sticks are carried by officers in armies all across Golarion. This one is made of particularly fine wood, with an aged silver cap and handle, and small garnets for the creature's eyes. --- **Activate—Swagger** ⟨1⟩ (manipulate, visual) **Frequency** once per day **Effect** You dramatically swing, twirl, or otherwise brandish the swagger stick to direct your troops. All allied creatures within 30 feet who can see your display gain +1 status bonus to attack rolls, Fortitude saves, and Will saves against mental effects for 1 round."
+ },
+ {
+  "id": "swallow-spike",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Swallow-Spike",
+  "level": 6,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your armor responds to your desire to break free of a creature grabbing you by growing spikes. **Activate** ⟨5⟩ (attack, concentrate) **Trigger** You become grabbed, restrained, or otherwise held immobilized in a creature's grasp, such as by being engulfed or swallowed --- **Effect** Your armor suddenly grows spikes, attacking the triggering creature. The armor makes a melee attack with an attack modifier of +14 that deals 2d6 damage. If the creature is swallowing or engulfing you, the attack deals an additional 1d6 damage, and damage from this attack can cut you free if it equals or exceeds the Rupture value of the immobilizing ability. This attack gets an item bonus to the attack roll equal to the armor's item bonus to your AC and an item bonus to damage equal to double that amount. **Activate** ⟨1⟩ (attack, concentrate) **Requirements** You're being held immobilized as described in the rune's other activation --- **Effect** Your armor attacks the creature immobilizing you. The armor makes a melee attack against the creature, as described in the rune's other activation."
+ },
+ {
+  "id": "swallow-spike-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Swallow-Spike (Greater)",
+  "level": 12,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your armor responds to your desire to break free of a creature grabbing you by growing spikes. **Activate** ⟨5⟩ (attack, concentrate) **Trigger** You become grabbed, restrained, or otherwise held immobilized in a creature's grasp, such as by being engulfed or swallowed --- **Effect** Your armor suddenly grows spikes, attacking the triggering creature. The armor makes a melee attack with an attack modifier of +22 that deals 3d6 damage. If the creature is swallowing or engulfing you, the attack deals an additional 2d6 damage, and damage from this attack can cut you free if it equals or exceeds the Rupture value of the immobilizing ability. This attack gets an item bonus to the attack roll equal to the armor's item bonus to your AC and an item bonus to damage equal to double that amount. **Activate** ⟨1⟩ (attack, concentrate) **Requirements** You're being held immobilized as described in the rune's other activation --- **Effect** Your armor attacks the creature immobilizing you. The armor makes a melee attack against the creature, as described in the rune's other activation."
+ },
+ {
+  "id": "swallow-spike-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Swallow-Spike (Major)",
+  "level": 16,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your armor responds to your desire to break free of a creature grabbing you by growing spikes. **Activate** ⟨5⟩ (attack, concentrate) **Trigger** You become grabbed, restrained, or otherwise held immobilized in a creature's grasp, such as by being engulfed or swallowed --- **Effect** Your armor suddenly grows spikes, attacking the triggering creature. The armor makes a melee attack with an attack modifier of +28 that deals 5d6 damage. If the creature is swallowing or engulfing you, the attack deals an additional 3d6 damage, and damage from this attack can cut you free if it equals or exceeds the Rupture value of the immobilizing ability. This attack gets an item bonus to the attack roll equal to the armor's item bonus to your AC and an item bonus to damage equal to double that amount. **Activate** ⟨1⟩ (attack, concentrate) **Requirements** You're being held immobilized as described in the rune's other activation --- **Effect** Your armor attacks the creature immobilizing you. The armor makes a melee attack against the creature, as described in the rune's other activation."
+ },
+ {
+  "id": "swift-eel-mount",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Swift Eel Mount",
+  "level": 13,
+  "traits": [
+   "athamaru"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your rapport with your eel lets you guide it to avoid dangers as it swims. While you're mounted on an eel, that eel ignores difficult terrain while Swimming and gets a +2 circumstance bonus to all defenses against reactions triggered by its movement."
+ },
+ {
+  "id": "swift-support",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Swift Support",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Nidalese horses are known as some of the fastest across all Golarion, and your mount has trained to ride quickly into battle. When you command your horse to take the Support action, it gains a +5-foot circumstance bonus to its Speed until the start of your next turn."
+ },
+ {
+  "id": "tallow-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Tallow Bomb",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "fire",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Tallow Bomb May contain spoilers from Quest for the Frozen Flame Source Pathfinder #175: Broken Tusk Moon pg. 75 Usage held in 1 hand Bulk L Activate Strike A mixture of rendered animal fat and acids designed to ignite the fat when exposed to air, a tallow bomb creates a splash of burning oil that adheres to skin, clothes, and hair. A tallow bomb deals the listed fire damage, persistent fire damage, and splash damage. On a critical hit, a living creature taking persistent fire damage from a tallow bomb is sickened 1 from the stench of burning fat and can't reduce its sickened value below 1 while the persistent fire damage lasts. Many types of tallow bombs grant an item bonus to attack rolls. Tallow Bomb (Lesser) Source Pathfinder #175: Broken Tusk Moon pg. 75 Price 3 gp Bulk L The bomb deals 1d4 persistent fire damage and 1 fire splash damage. Tallow Bomb (Moderate) Source Pathfinder #175: Broken Tusk Moon pg. 75 Price 10 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d4 persistent fire damage and 2 fire splash damage. Tallow Bomb (Greater) Source Pathfinder #175: Broken Tusk Moon pg. 75 Price 250 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 3d4 persistent fire damage and 3 fire splash damage. Tallow Bomb (Major) Source Pathfinder #175: Broken Tusk Moon pg. 75 Price 2,500 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 4d4 persistent fire damage and 4 fire splash damage."
+ },
+ {
+  "id": "tallow-bomb-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Tallow Bomb (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "fire",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- A mixture of rendered animal fat and acids designed to ignite the fat when exposed to air, a tallow bomb creates a splash of burning oil that adheres to skin, clothes, and hair. A tallow bomb deals the listed fire damage, persistent fire damage, and splash damage. On a critical hit, a living creature taking persistent fire damage from a tallow bomb is Sickened 1 from the stench of burning fat and can't reduce its sickened value below 1 while the persistent fire damage lasts. You gain a +2 item bonus to attack rolls. The bomb deals 3d4 persistent fire damage and 3 fire splash damage."
+ },
+ {
+  "id": "tallow-bomb-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Tallow Bomb (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "fire",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- A mixture of rendered animal fat and acids designed to ignite the fat when exposed to air, a tallow bomb creates a splash of burning oil that adheres to skin, clothes, and hair. A tallow bomb deals the listed fire damage, persistent fire damage, and splash damage. On a critical hit, a living creature taking persistent fire damage from a tallow bomb is Sickened 1 from the stench of burning fat and can't reduce its sickened value below 1 while the persistent fire damage lasts. You gain a +3 item bonus to attack rolls. The bomb deals 4d4 persistent fire damage and 4 fire splash damage."
+ },
+ {
+  "id": "tallow-bomb-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Tallow Bomb (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "fire",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- A mixture of rendered animal fat and acids designed to ignite the fat when exposed to air, a tallow bomb creates a splash of burning oil that adheres to skin, clothes, and hair. A tallow bomb deals the listed fire damage, persistent fire damage, and splash damage. On a critical hit, a living creature taking persistent fire damage from a tallow bomb is Sickened 1 from the stench of burning fat and can't reduce its sickened value below 1 while the persistent fire damage lasts. You gain a +1 item bonus to attack rolls. The bomb deals 2d4 persistent fire damage and 2 fire splash damage."
+ },
+ {
+  "id": "tasset-of-flexibility",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Tasset of Flexibility",
+  "level": 4,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "You can attach these light-brown leather flaps adorned with gold stitching to a breastplate or even clothing to protect your upper legs in battle. They give you the freedom to move your body to its limit without worrying about exposing yourself to a hit. While wearing the tasset of flexibility, you gain a +1 item bonus to Acrobatics checks. **Activate—Lunging Attack** ⟨1⟩ (concentrate) **Frequency** once per day --- **Effect** The tasset helps you stretch farther than you normally could. Make a Strike with a melee weapon, increasing your reach by 5 feet for that Strike."
+ },
+ {
+  "id": "tenderizer-grenade",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Tenderizer Grenade",
+  "level": 1,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "plant",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Tenderizer Grenade May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 77 Usage held in 1 hand Bulk L Activate Strike Made from the acidic flesh of an especially astringent fruit found on the Plane of Wood, this bomb’s contents soften, oxidize, and season whatever they touch. Many types of this bomb grant an item bonus to attack rolls. On a successful Strike, a tenderizer grenade deals the listed acid damage to the target and the listed acid splash damage. Any resistances the target has against bludgeoning, piercing, and slashing damage are reduced by an amount based on the bomb’s type. In addition, the target is showered with appetizing esters, oils, and salts, making them off-guard against jaws Strikes, fangs Strikes, or similar Strikes with a creature’s mouth. These additional effects last until the end of your next turn, or for 1 minute on a critical hit. Lesser Tenderizer Grenade Source Pathfinder #203 Shepherd of Decay pg. 77 Price 4 gp The bomb deals 1d6 acid damage. Moderate Tenderizer Grenade Source Pathfinder #203 Shepherd of Decay pg. 77 Price 12 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d6 points of acid damage. Greater Tenderizer Grenade Source Pathfinder #203 Shepherd of Decay pg. 77 Price 275 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d6 points of acid damage. Major Tenderizer Grenade Source Pathfinder #203 Shepherd of Decay pg. 77 Price 2,750 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d6 points of acid damage."
+ },
+ {
+  "id": "tenderizer-grenade-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Tenderizer Grenade (Greater)",
+  "level": 11,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "plant",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Made from the acidic flesh of an especially astringent fruit found on the Plane of Wood, this bomb's contents soften, oxidize, and season whatever they touch. You gain a +2 item bonus to attack rolls. On a successful Strike, a tenderizer grenade deals the 3d6 acid damage to the target and the 3 acid splash damage. Any resistances the target has against bludgeoning, piercing, and slashing damage are reduced by an amount based on the bomb's type. In addition, the target is showered with appetizing esters, oils, and salts, making them off-guard against jaws Strikes, fangs Strikes, or similar Strikes with a creature's mouth. These additional effects last until the end of your next turn, or for 1 minute on a critical hit."
+ },
+ {
+  "id": "tenderizer-grenade-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Tenderizer Grenade (Major)",
+  "level": 17,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "plant",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Made from the acidic flesh of an especially astringent fruit found on the Plane of Wood, this bomb's contents soften, oxidize, and season whatever they touch. You gain a +3 item bonus to attack rolls. On a successful Strike, a tenderizer grenade deals the 4d6 acid damage to the target and the 4 acid splash damage. Any resistances the target has against bludgeoning, piercing, and slashing damage are reduced by an amount based on the bomb's type. In addition, the target is showered with appetizing esters, oils, and salts, making them off-guard against jaws Strikes, fangs Strikes, or similar Strikes with a creature's mouth. These additional effects last until the end of your next turn, or for 1 minute on a critical hit."
+ },
+ {
+  "id": "tenderizer-grenade-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Tenderizer Grenade (Moderate)",
+  "level": 3,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "plant",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Made from the acidic flesh of an especially astringent fruit found on the Plane of Wood, this bomb's contents soften, oxidize, and season whatever they touch. You gain a +1 item bonus to attack rolls. On a successful Strike, a tenderizer grenade deals the 2d6 acid damage to the target and the 2 acid splash damage. Any resistances the target has against bludgeoning, piercing, and slashing damage are reduced by an amount based on the bomb's type. In addition, the target is showered with appetizing esters, oils, and salts, making them off-guard against jaws Strikes, fangs Strikes, or similar Strikes with a creature's mouth. These additional effects last until the end of your next turn, or for 1 minute on a critical hit."
+ },
+ {
+  "id": "the-bigger-they-are",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "The Bigger They Are",
+  "level": 12,
+  "traits": [
+   "bravado",
+   "swashbuckler"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "With reckless speed, you dash, jump and swing around a creature to find a more vulnerable spot. Attempt to tumble-through a creature at least one size category larger than you, using the following effects. --- **Critical Success** You move through the enemy's space, treating the squares in its space as difficult terrain (every 5 feet costs 10 feet of movement). If you don't have enough Speed to move all the way through its space, you get the same effect as a failure. If you successfully pass through the target's square, the target gains weakness to your precision damage equal to half your level, which lasts until the end of your turn. **Success** As success, but the weakness applies only against the next attack you make against the target. **Failure** Your movement ends, and you trigger reactions as if you had moved out of the square you started in. **Critical Failure** As failure, and you fall prone."
+ },
+ {
+  "id": "the-cricket",
+  "lane": "situational",
+  "collection": "items",
+  "name": "The Cricket",
+  "level": 20,
+  "traits": [
+   "artifact",
+   "harrow-court",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "**Suit** Keys (Dex) **Alignment** neutral good --- *The Cricket* represents speed and quick passage. As long as *The Cricket* is invested, it grants you a +10-foot item bonus to all your Speeds. This increases to a +20-foot item bonus if you are at least 19th level or higher. **Activate** ⟨4⟩ envision, Interact **Frequency** once per day --- **Effect** Your feet begin to glow and shimmer as if they were vibrating. Stride up to three times your Speed. You can Burrow, Climb, Fly, or Swim instead of Striding if you have the corresponding movement type. This movement doesn't trigger reactions and you can move through creatures' spaces as if they weren't there during this movement."
+ },
+ {
+  "id": "the-dance",
+  "lane": "situational",
+  "collection": "items",
+  "name": "The Dance",
+  "level": 20,
+  "traits": [
+   "artifact",
+   "harrow-court",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "**Suit** Keys (Dex) **Alignment** lawful good --- *The Dance* represents the delicately balanced rhythms of the universe and the ability stay in step with existence. As long as *The Dance* is invested, you gain a +2 item bonus on Performance checks. This increases to a +3 item bonus if you are at least 17th level. **Activate** ⟨4⟩ envision **Frequency** once per day **Trigger** You are about to roll initiative --- **Effect** Your body begins to move with anticipation, creating a trail of afterimages for a moment. You can roll initiative with a Performance check. Regardless of what skill you use to roll for initiative, roll the check three times and take the result of your choice. This is a fortune effect."
+ },
+ {
+  "id": "the-eclipse",
+  "lane": "situational",
+  "collection": "items",
+  "name": "The Eclipse",
+  "level": 20,
+  "traits": [
+   "artifact",
+   "harrow-court",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "**Suit** Stars (Wis) **Alignment** lawful evil --- *The Eclipse* represents self-doubt and loss of purpose, as well as a loss of faith. As long as *The Eclipse* is invested, you gain a +2 item bonus on Religion checks. This increases to a +3 bonus if you are at least 17th level. **Activate** ⟨5⟩ envision (mental) **Frequency** once per day **Trigger** A foe that you're aware of and who is within 60 feet achieves a critical success on a saving throw or a Strike --- **Effect** You produce an aura of doubt that overwhelms all foes in a and reduces bright light in that area to dim light, as if the region were under an eclipse. The triggering creature's critical success is reduced to a regular success. All further saving throws or Strikes attempted by enemies within the emanation suffer a –2 item penalty; saving throws or Strikes attempted by the triggering enemy suffer a –3 penalty instead. You can sustain this aura of doubt for up to 1 minute."
+ },
+ {
+  "id": "the-midwife",
+  "lane": "situational",
+  "collection": "items",
+  "name": "The Midwife",
+  "level": 20,
+  "traits": [
+   "artifact",
+   "harrow-court",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "**Suit** Stars (Wis) **Alignment** neutral good --- *The Midwife* represents the arrival of new life or new information, particularly via the aid of another. As long as you have *The Midwife* invested, it grants a +2 item bonus to Medicine checks. This increases to a +3 bonus if you are at least 17th level. **Activate** ⟨5⟩ command **Frequency** once per day **Trigger** A creature you can sense within 60 feet would die or be destroyed --- **Effect** You prevent the target from dying or being destroyed and restore to the target 6d8+24 Hit Points. This effect can prevent a death effect or from slaying a target. The amount of healing granted increases to 7d8+28 if you're at least 15th level, 8d8+32 if you're at least 17th level, and 9d8+36 if you're at least 19th level."
+ },
+ {
+  "id": "the-proud",
+  "lane": "situational",
+  "collection": "classFeatures",
+  "name": "The Proud",
+  "level": 3,
+  "traits": [
+   "exemplar"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Whether out of overconfidence, a desire to protect your comrades, or the unslakable thirst for glory, you invite challengers to strike you down. You are trained in Intimidation. After you Spark Transcendence, you can boast to one enemy within 30 feet to draw its attention; this effect has the auditory, emotion, mental, and linguistic traits. Until the start of your next turn, the target takes a –1 status penalty to attack rolls, damage rolls, and skill checks against creatures other than you, and it gains a +1 status bonus to these rolls when targeting you."
+ },
+ {
+  "id": "third-eye",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Third Eye",
+  "level": 19,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "When invested, this ornate crown and its incandescent gemstone meld into your head and take the form of a tattoo. This grants you otherworldly sight and allows you to read auras. No one but you can manipulate the *third eye* while it's invested by you. Your heightened senses and ability to sense emotional auras grant you a +3 item bonus to Perception checks. You continuously see magic auras, as a 9th-rank Detect Magic spell, except you see the location of all auras within 30 feet, not just the strongest. If you use a Seek action to study a creature you can see, you can perceive an aura that conveys knowledge of that creature's health, including all conditions and afflictions it has and an approximate percentage of its remaining Hit Points. **Activate—Truesight** ⟨2⟩ (concentrate) **Frequency** once per day --- **Effect** You gain the effects of an 8th-rank Truesight spell."
+ },
+ {
+  "id": "thoughtwhip-claw",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Thoughtwhip Claw",
+  "level": 11,
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Abraxas teaches that minds can be robbed as surely as pockets. This tattoo of a clenched fist provides a +2 item bonus to Thievery checks. **Activate** ⟨2⟩ command, envision **Frequency** once per day --- **Effect** Abraxas reaches through your hands and creates threads to yank thoughts from the mind of another. The thoughtwhip claw casts Mind Probe on a creature within range, with a DC of 28."
+ },
+ {
+  "id": "thousand-blade-thesis",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Thousand-Blade Thesis",
+  "level": 9,
+  "traits": [
+   "extradimensional",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This collection of lacquered rice paper scrolls mounted on flexible bamboo contains a wealth of calligraphic essays and paintings on the art of war, specifically focused on the use of various weapons in warfare and how to tactically deploy warriors using those weapons to the best possible advantage. Consulting the thesis grants a +2 item bonus to Warfare Lore checks. Like most scholarly compendiums, this usage requires holding the thesis in one hand. The thesis also serves as an extradimensional armory for weapons and ammunition. The thesis has a capacity of 5 Bulk, and only weapons and ammunition can be stored within it. You and others can Interact with the thesis to store or retrieve a weapon or piece of ammunition in it, like a mundane container. --- **Activate** ⟨1⟩ Interact **Frequency** once per day --- **Effect** The thousand-blade thesis dramatically unfurls, and the weapons contained within it spring forth and array themselves impressively in the air, floating within easy reach. For 1 minute, you can use a free action to Interact to draw one of the floating weapons. Others can attempt to nab them out of the air, but to do so they must critically succeed at a Disarm check. You can't place weapons back into the thesis until the minute elapses."
+ },
+ {
+  "id": "three-pillared-yang-na",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Three-Pillared Yang Na",
+  "level": 4,
+  "traits": [
+   "divine",
+   "invested",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This tattoo represents an abstract tree whose trunk is made up of three lines of Tang text. Applied in a ritual involving jasmine, turmeric, and a blossom from a yang na tree, the tattoo provides three blessings. The first blessing keeps your mind still during negotiations, granting a +1 item bonus to Diplomacy checks. **Activate—Second Blessing** ⟨1⟩ (concentrate, detection) --- **Effect** You learn the direction of the yang na tree that gave the blossom used in creating your tattoo. Most such trees are in Tang Mai, far to the west of the Inner Sea. --- **Activate—Third Blessing** ⟨5⟩ (concentrate) **Trigger** You take spirit damage --- **Effect** You gain resistance 3 against that spirit damage."
+ },
+ {
+  "id": "thunderblast-slippers",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Thunderblast Slippers",
+  "level": 9,
+  "traits": [
+   "invested",
+   "magical",
+   "sonic"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Unassuming in appearance, these slippers indicate their nature only with a signature strip of yellow stitching. You gain a +2 item bonus to Acrobatics checks. --- **Activate** ⟨2⟩ (concentrate, manipulate) **Frequency** once per day **Effect** You move like the wind, with precision and speed. You Stride up to 60 feet; this movement doesn't trigger reactions. When you stop, if you've moved at least 30 feet from where you started, you release a thunderous that deals 2d6 bludgeoning damage and 2d6 sonic damage with a . A creature that critically fails its save is also knocked prone."
+ },
+ {
+  "id": "thunderblast-slippers-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Thunderblast Slippers (Greater)",
+  "level": 15,
+  "traits": [
+   "invested",
+   "magical",
+   "sonic"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Unassuming in appearance, these slippers indicate their nature only with a signature strip of yellow stitching. You gain a +2 item bonus to Acrobatics checks. --- **Activate** ⟨2⟩ (concentrate, manipulate) **Frequency** once per day **Effect** You move like the wind, with precision and speed. You Stride up to 120 feet; this movement doesn't trigger reactions. When you stop, if you've moved at least 30 feet from where you started, you release a thunderous that deals 3d6 bludgeoning damage and 3d6 sonic damage with a . A creature that critically fails its save is also knocked prone."
+ },
+ {
+  "id": "tillers-drive",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Tiller's Drive",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "speeds"
+  ],
+  "inRegistries": [],
+  "text": "Your Speed bonus from Bellflower Dedication increases to +10 feet. Members of your crop receive a +5-foot circumstance bonus to Speed."
+ },
+ {
+  "id": "tireless-guides-mask",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Tireless Guide's Mask",
+  "level": 20,
+  "traits": [
+   "archetype",
+   "druid",
+   "wizard"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your mask hosts the legacy of Golden Snake, the Tireless Guide, allowing you to guide others with ease. Your allies can use Follow the Expert to follow you for any of your trained skills, in addition to skills in which you are an expert or better. When they follow you when you use a trained skill, their circumstance bonus is +1. Immediately after you Cast a non-cantrip Spell that targets only one ally, that ally can Stride as a free action."
+ },
+ {
+  "id": "titan-nagaji",
+  "lane": "situational",
+  "collection": "heritages",
+  "name": "Titan Nagaji",
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You were raised to be a warrior or a bodyguard, and your specialized diet and bulging muscles have made your scales as strong as armored plates. Your scales are medium armor in the plate armor group that grant a +4 item bonus to AC, a Dex cap of +1, a check penalty of –2, a Speed penalty of –5 feet, a Strength value of +3, and have the comfort trait. You can never wear other armor or remove your scales. You can etch armor runes onto your scales."
+ },
+ {
+  "id": "titan-nagaji-scales",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Titan Nagaji Scales",
+  "level": 1,
+  "traits": [
+   "comfort"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Note** Titan Nagaji heritage only --- Your scales are medium armor in the plate armor group that grant a +4 item bonus to AC, a Dex cap of +1, a check penalty of –2, a Speed penalty of –5 feet, a Strength value of +3, and have the comfort trait."
+ },
+ {
+  "id": "tough-skin",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Tough Skin",
+  "level": 1,
+  "traits": [
+   "kashrishi"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your skin is medium armor in the plate armor group that grants a +4 item bonus to AC, and has a Dex cap of +1, a check penalty of –2, a Speed penalty of –5 feet, a Strength value of +3, and the comfort trait. You can never wear other armor or remove your hide. You can etch armor runes onto your hide. If you're a lethoci kashrishi who takes this feat, your modifications also make you more buoyant, allowing you to Swim across the surface of even turbulent bodies of water without needing to make an Athletics check. **Special** You can take this feat only at 1st level, and you can't retrain into this feat."
+ },
+ {
+  "id": "track-of-the-beast",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Track of the Beast",
+  "level": 0,
+  "traits": [],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "Track of the Beast Source GM Core pg. 310 Aspect Beast The spirit of an animal fills you. The relic gives one of the following benefits, chosen by the GM when the relic gains this gift. A +10-foot status bonus to your land Speed. A climb Speed equal to your land Speed. A swim Speed equal to your land Speed."
+ },
+ {
+  "id": "trackless",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Trackless",
+  "level": 6,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Trackless runes are common among hunters and trappers, as well as thieves and anyone fleeing pursuit. While wearing trackless footwear, you have a +4 item bonus to the DC to track you. However, this bonus doesn't stack with the status bonus from Vanishing Tracks."
+ },
+ {
+  "id": "trackless-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Trackless (Greater)",
+  "level": 10,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Trackless runes are common among hunters and trappers, as well as thieves and anyone fleeing pursuit. While wearing trackless footwear, you have a +4 item bonus to the DC to track you. However, this bonus doesn't stack with the status bonus from Vanishing Tracks. **Activate** ⟨2⟩ (concentrate) **Frequency** once per day --- **Effect** You extend the effect of your rune out to a . The emanation remains for 8 hours, affecting up to 10 creatures of your choice within the area. You can Dismiss this effect."
+ },
+ {
+  "id": "tradecraft-tattoo",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Tradecraft Tattoo",
+  "level": 9,
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Crafters choose tattoos that represent their dedication and skill in their chosen field. Such tattoos might adorn the arm, fingers, or eyes, and they take the form of artistic patterns or depict tools of the trade, such as anvils, paintbrushes, or trowels. You gain a +2 item bonus to Crafting checks. Furthermore, when you roll a critical failure on a Crafting check to Earn Income, treat it as a failure instead. **Activate** 1 minute (concentrate, manipulate) **Frequency** once per day --- **Effect** The tattoo casts Creation. You choose the item and its appearance, and whether the spell is 4th or 5th rank."
+ },
+ {
+  "id": "tradecraft-tattoo-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Tradecraft Tattoo (Greater)",
+  "level": 17,
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Crafters choose tattoos that represent their dedication and skill in their chosen field. Such tattoos might adorn the arm, fingers, or eyes, and they take the form of artistic patterns or depict tools of the trade, such as anvils, paintbrushes, or trowels. You gain a +3 item bonus to Crafting checks. Furthermore, when you roll a critical failure on a Crafting check to Earn Income, treat it as a failure instead. **Activate** 1 minute (concentrate, manipulate) **Frequency** once per day --- **Effect** The tattoo casts Creation. You choose the item and its appearance, and whether the spell is 4th or 5th rank. This spell's duration is unlimited but ends when you Activate the tattoo again."
+ },
+ {
+  "id": "troubadours-cap",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Troubadour's Cap",
+  "level": 17,
+  "traits": [
+   "apex",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This jaunty cap can take the form and color of any type of hat you wish upon investing the item, but it always has a peacock feather jutting out from one side. You gain a +2 item bonus to Diplomacy and Performance checks while wearing the cap. When you invest the cap, you either increase your Charisma modifier by 1 or increase it to +4, whichever would give you a higher value. **Activate** ⟨2⟩ (concentrate) **Frequency** once per hour --- **Effect** You cast Hypnotize (DC 37). --- **Activate** ⟨2⟩ (manipulate) **Frequency** once per day --- **Effect** Picking the feather from your cap, you throw it toward a target, casting Prismatic Spray (DC 35)."
+ },
+ {
+  "id": "trueshape-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Trueshape Bomb",
+  "level": 12,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Concentrated wolfsbane and other anti-shapechanger reagents fill trueshape bombs. These bombs grant a +2 item bonus to attack rolls and deal 3d6 poison damage, 3d4 persistent poison damage, and 3 poison splash damage. If the primary target is under the effects of a morph or polymorph effect, it must succeed at a saving throw, or else the effects end and the creature returns to its normal form. Targets taking persistent poison damage from this bomb must succeed at another Fortitude saving throw at the same DC to change shape using a morph or polymorph effect. The persistent damage can last up to 1 minute."
+ },
+ {
+  "id": "trueshape-bomb-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Trueshape Bomb (Greater)",
+  "level": 18,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Concentrated wolfsbane and other anti-shapechanger reagents fill trueshape bombs. These bombs grant a +3 item bonus to attack rolls and deal 4d6 poison damage, 4d4 persistent poison damage, and 4 poison splash damage. If the primary target is under the effects of a morph or polymorph effect, it must succeed at a saving throw, or else the effects end and the creature returns to its normal form. Targets taking persistent poison damage from this bomb must succeed at another Fortitude saving throw at the same DC to change shape using a morph or polymorph effect. The persistent damage can last up to 1 minute."
+ },
+ {
+  "id": "tunnel-wall",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Tunnel Wall",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are in Tenacious Stance. --- Using your shield, you guard against the movement of foes as surely as if you were a wall of stone. You Raise a Shield and become anchored for 1 round. While anchored, you gain a +4 circumstance bonus to the DC to Tumble Through your space."
+ },
+ {
+  "id": "tupilaq-carver",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Tupilaq Carver",
+  "level": 1,
+  "traits": [
+   "human"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Access** Erutaki ethnicity --- You know the truth behind old stories that tell of sending a fetish of bone and sinew to seek vengeance. These old magics allow you to conjure constructs with ease. Add the Summon Construct spell to your spell list. The constructs you summon have a distinct ivory scrimshaw appearance, and if you include a drop of blood, lock of hair, or other portion of a creature's body as part of the spell's material component, the summoned construct gains a +4 status bonus to Perception checks to sense or locate that creature."
+ },
+ {
+  "id": "twigjack-sack",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Twigjack Sack",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Twigjack Sack May contain spoilers from Quest for the Frozen Flame Source Pathfinder #175: Broken Tusk Moon pg. 75 Usage held in 1 hand Bulk L Activate Strike Sharp, flexible brambles poke from this sack made of intricately intertwined plant fibers. The sack's contents creak under the strain of the tightly compressed bundle. When thrown, a twigjack sack bursts open, spraying brambles in all directions that gouge and slash nearby creatures. A twigjack sack deals the listed piercing damage, persistent bleed damage, and splash damage. Many types of twigjack sacks grant an item bonus to attack rolls. Twigjack Sack (Lesser) Source Pathfinder #175: Broken Tusk Moon pg. 75 Price 3 gp Bulk L The bomb deals 1d6 piercing damage, 1 persistent bleed damage, and 1 piercing splash damage. Twigjack Sack (Moderate) Source Pathfinder #175: Broken Tusk Moon pg. 75 Price 10 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d6 piercing damage, 3 persistent bleed damage, and 2 piercing splash damage. Twigjack Sack (Greater) Source Pathfinder #175: Broken Tusk Moon pg. 75 Price 250 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 3d6 piercing damage, 4 persistent bleed damage, and 3 piercing splash damage. Twigjack Sack (Major) Source Pathfinder #175: Broken Tusk Moon pg. 75 Price 2,500 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 4d6 piercing damage, 5 persistent bleed damage, and 4 piercing splash damage."
+ },
+ {
+  "id": "twigjack-sack-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Twigjack Sack (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Sharp, flexible brambles poke from this sack made of intricately intertwined plant fibers. The sack's contents creak under the strain of the tightly compressed bundle. When thrown, a twigjack sack bursts open, spraying brambles in all directions that gouge and slash nearby creatures. A twigjack sack deals the listed piercing damage, persistent bleed damage, and splash damage. You gain a +2 item bonus to attack rolls. The bomb deals 3d6 piercing damage, 4 persistent bleed damage, and 3 piercing splash damage."
+ },
+ {
+  "id": "twigjack-sack-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Twigjack Sack (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Sharp, flexible brambles poke from this sack made of intricately intertwined plant fibers. The sack's contents creak under the strain of the tightly compressed bundle. When thrown, a twigjack sack bursts open, spraying brambles in all directions that gouge and slash nearby creatures. A twigjack sack deals the listed piercing damage, persistent bleed damage, and splash damage. You gain a +3 item bonus to attack rolls. The bomb deals 4d6 piercing damage, 5 persistent bleed damage, and 4 piercing splash damage."
+ },
+ {
+  "id": "twigjack-sack-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Twigjack Sack (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Sharp, flexible brambles poke from this sack made of intricately intertwined plant fibers. The sack's contents creak under the strain of the tightly compressed bundle. When thrown, a twigjack sack bursts open, spraying brambles in all directions that gouge and slash nearby creatures. A twigjack sack deals the listed piercing damage, persistent bleed damage, and splash damage. You gain a +1 item bonus to attack rolls. The bomb deals 2d6 piercing damage, 3 persistent bleed damage, and 2 piercing splash damage."
+ },
+ {
+  "id": "twilight-tattoo",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Twilight Tattoo",
+  "level": 5,
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "**Access** You're a member of the Twilight Talons. --- This tattoo of a black eagle gripping a sword and arrows in its talons identifies the bearer as a member of the Twilight Talons. Agents typically keep the tattoo hidden unless they need to prove their identity to another member. The bearer gains a +1 item bonus to Deception checks. **Activate—Fade** ⟨1⟩ (concentrate, illusion) --- **Effect** You hide your tattoo from view. The tattoo is invisible for 1 day and can't be detected by effects such as detect magic and read aura. You can Dismiss this effect. --- **Activate—Inscribe** ⟨2⟩ (concentrate, illusion, manipulate) **Frequency** once per day --- **Effect** You lay your hand on a piece of text, and your tattoo makes a perfect copy of it, storing it as a ring of swirling letters surrounding the design. The tattoo can hold text equivalent to two pages of a book, a single scroll, or a similar area of other surfaces, though it doesn't replicate any magical effect or other special properties of the original words. You can Dismiss this effect, and when you Dismiss it, the tattoo copies the original text onto a blank writing surface you're touching."
+ },
+ {
+  "id": "tyrants-writ",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Tyrant's Writ",
+  "level": 8,
+  "traits": [
+   "grimoire",
+   "magical",
+   "necromancy"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Tyrant's Writ Source Impossible Lands pg. 178 Price 500 gp Bulk L Access Characters from Geb have access to this item. A spirited debate persists among scholars on whether the eponymous tyrant of this grimoire actually refers to Tar-Baphon, the necromancer Geb, or even the goddess Urgathoa herself. This grimoire appears at first to be a series of writs that makes arrogant demands of the reader, those around them, and the universe. Anyone who gives these writings more than a cursory look realizes the writs hold spells much like any other grimoire, with the animate dead spell being particularly prominent. Tyrant's writs grants you the ability to demand more from the undead you animate. Activate envision (metamagic) Frequency once per day; Effect If your next action is to Cast a Spell to cast an animate dead spell prepared with tyrant's writs, you can choose one of the following additional benefits to grant the summoned undead. Bloody The undead gains fast healing equal to its level. Explosive When it reaches 0 Hit Points, the undead explodes, dealing 4d6 fire damage to adjacent creatures, with a basic Reflex save using the animate dead spell's DC. As normal, since the final sacrifice spell doesn't reduce the target to 0 Hit Points, it doesn't cause this explosion. Necrotic Speed The undead gains a +10-foot status bonus to all its Speeds. Rotten Any living creature who starts its turn adjacent to the undead who isn't at full Hit Points takes 1d6 poison damage."
+ },
+ {
+  "id": "tyrants-writs",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Tyrant's Writs",
+  "level": 8,
+  "traits": [
+   "grimoire",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "A spirited debate persists among scholars on whether the eponymous tyrant of this grimoire actually refers to Tar-Baphon, the necromancer Geb, or even the goddess Urgathoa herself. This grimoire appears at first to be a series of writs that makes arrogant demands of the reader, those around them, and the universe. Anyone who gives these writings more than a cursory look realizes the writs hold spells much like any other grimoire, with the animate dead spell being particularly prominent. Tyrant's writs grants you the ability to demand more from the undead you animate. **Activate** ⟨4⟩ envision (spellshape) **Frequency** once per day --- **Effect** If your next action is to Cast a Spell to cast an animate dead spell prepared with tyrant's writs, you can choose one of the following additional benefits to grant the summoned undead. - **Bloody** The undead gains fast healing equal to its level. - **Explosive** When it reaches 0 Hit Points, the undead explodes, dealing 4d6 damage to adjacent creatures, with a basic Reflex save using the animate dead spell's DC. As normal, since the final sacrifice spell doesn't reduce the target to 0 Hit Points, it doesn't cause this explosion. - **Necrotic Speed** The undead gains a +10-foot status bonus to all its Speeds. - **Rotten** Any living creature who starts its turn adjacent to the undead who isn't at full Hit Points takes 1d6 damage"
+ },
+ {
+  "id": "unbreakable-heart",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Unbreakable Heart",
+  "level": 3,
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "The name of your beloved adorns this stylized image of a heart. An unbreakable heart tattoo can be received only at the end of a successful Heartbond ritual, serving as your token. The other participant can have a token other than a tattoo if they wish. If you have more than one *heartbond*, each unbreakable heart you have serves as a token for only one of them. The love exuding from you grants you a +1 item bonus to Diplomacy checks. When you use *heartbond*'s activity to learn your beloved's present state, you can also grant them a small gift, choosing from the following options each time. Make your choice after learning their state. - Your beloved gains 5 temporary Hit Points that last for 10 minutes. - The tattoo casts Guidance on your beloved. - The tattoo casts Stabilize on your beloved. - The tattoo casts Light on your beloved's token from *heartbond*"
+ },
+ {
+  "id": "undead-eidolon",
+  "lane": "situational",
+  "collection": "classFeatures",
+  "name": "Undead Eidolon",
+  "level": 1,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your eidolon is an undead spirit pulled from the Ethereal Plane or Negative Energy Plane, embodied, and bound to your life force in an unusual, potentially antithetical way that even other summoners can't quite understand. Undead eidolons take about every imaginable shape and form, as their bodies manifest from their connection to you. Their ultimate form can be influenced by an amalgamation of the echoes and memories of their old life before becoming undead, their cause of death, their encounters in the afterlife, and portions of your own essences. Together, you and your eidolon need to explore the mysteries of life, death, and undeath to understand what your bond means for both of your futures. **Tradition** divine **Traits** eidolon, undead **Home Plane** Ethereal Plane or Negative Energy Plane --- **Size** Medium or Small **Suggested Attacks** claw (slashing), fist (bludgeoning), jaws (piercing) **Undead Brute** Str 18, Dex 14, Con 16, Int 8, Wis 10, Cha 12 **Undead Stalker** Str 14, Dex 18, Con 16, Int 8, Wis 12, Cha 10 **Skills** Intimidation, Religion **Senses** darkvision **Language** Necril **Speed** 25 feet --- **Eidolon Abilities** *Initial *negative essence*; Symbiosis *drain life*; Transcendence *rejuvenation ## Negative Essence Your undead eidolon has a link directly to your life force, which grants it a twilight state between living and undead. This renders it a living creature and therefore susceptible to many ailments that bother only the living, though it does possess some resistances to these effects. The eidolon has negative healing, meaning it heals from negative energy effects that heal undead and is damaged by positive energy effects that damage undead. It doesn't have an undead's normal immunities, but it does gain a +2 circumstance bonus to saving throws against death effects, disease, and poison effects, and non-damaging effects that target only undead. Additionally, its necrotic essence stanches its wounds easily. The flat check to remove persistent bleed damage from the eidolon is DC 10 (or DC 5 after receiving particularly effective aid). ## Drain Life 7th Your eidolon's link with you sustains it, but it still craves the life essence of the living, whether through blood or pure essence. It gains the Drain Life activity. ## Rejuvenation 17th Your eidolon's unusual connection with you allows you both to rejuvenate when defeated. The first time each day your turn begins while you're dying, you instantly regain a number of Hit Points equal to three times your level and wake up. (Increase your wounded condition as normal.) You can immediately Manifest Your Eidolon as a free action. You can then take your turn as normal."
+ },
+ {
+  "id": "undying-conviction",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Undying Conviction",
+  "level": 4,
+  "traits": [
+   "aura",
+   "cleric",
+   "oracle",
+   "wizard"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your presence has a bolstering effect on your undead minions. Undead creatures under your control and within a around you gain a +2 status bonus to saving throws to resist vitality damage and to Will saving throws to resist effects that would make them controlled. **Special** This feat has the trait matching your spellcasting tradition."
+ },
+ {
+  "id": "unfettering-strike",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Unfettering Strike",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** A creature within your reach has an ally grabbed or restrained. --- With a damaging blow, you cause a foe to loosen their grip on an ally they're holding down. Make a melee Strike against the creature. If you hit and deal damage, your ally can attempt to Escape from being grabbed or restrained as a free action. If your Strike is a critical hit, your ally gains a +2 circumstance bonus to the attempt."
+ },
+ {
+  "id": "uzunjati-storytelling-amulet",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Uzunjati Storytelling Amulet",
+  "level": 5,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This round, flat amulet can be made of metal, clay, or leather and is usually highly personalized with runes, sigils, lines of poetry, or a depiction of a storyteller at work. In Azimbye's case, their gold-rimmed metal amulet boasts fine dwarven workmanship, and bears lines from one of the oldest epic poems of the legendary folk hero Kgalaserke on one side and a stylized portrait of a storytelling event in Ranage's Circle on the other. While wearing the amulet, you gain a +1 item bonus to Performance checks. --- **Activate—Enamoring Story** ⟨4⟩ (concentrate) **Frequency** once per day **Trigger** The perfect anecdote or story to impress your interlocutor comes floating to your memory. --- You attempt to Make an Impression or Request, using a Performance check instead of a Diplomacy check."
+ },
+ {
+  "id": "vengeful-arm",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Vengeful Arm",
+  "level": 4,
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Abraxas teaches that an eye for an eye is the basis of law. This tattoo of a coiled viper provides a +1 item bonus to Society checks. **Activate** ⟨1⟩ envision --- **Effect** Abraxas transforms the tattoo into a weapon of your vengeance. The vengeful arm crawls into your hand and becomes a Retribution Axe. You can use this activation again while holding the axe to revert the vengeful arm to a tattoo. Like other retribution axes, you can etch fundamental runes into the vengeful arm's retribution axe to increase its potency or to add striking."
+ },
+ {
+  "id": "venomed-tongue",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Venomed Tongue",
+  "level": 7,
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Secrets must be unraveled, no matter how painful. This tattoo of braided tongues provides a +1 item bonus to Deception checks. **Activate** ⟨1⟩ envision **Frequency** once per day --- **Effect** Abraxas fills your tongue with venom, causing your deceptions to poison your foes. You use Deception to Create a Diversion, Feint, or Lie. Choose one target against whom your Deception check succeeded; that target takes 2d6 damage."
+ },
+ {
+  "id": "ventriloquists-ring",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Ventriloquist's Ring",
+  "level": 3,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This elegant copper ring has miniature images of songbirds engraved around its circumference. You gain a +1 item bonus to Deception checks. **Activate—Throw Voice** ⟨2⟩ (manipulate) **Frequency** once per day --- **Effect** Twisting the ring around your finger allows you to magically throw your voice, with the effects of a spell ()."
+ },
+ {
+  "id": "ventriloquists-ring-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Ventriloquist's Ring (Greater)",
+  "level": 9,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This elegant copper ring has miniature images of songbirds engraved around its circumference. You gain a +2 item bonus to Deception checks. **Activate—Throw Voice** ⟨2⟩ (manipulate) **Frequency** any number of times per day --- **Effect** Twisting the ring around your finger allows you to magically throw your voice, with the effects of a 2nd-rank spell ()."
+ },
+ {
+  "id": "verdant-poultice",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Verdant Poultice",
+  "level": 5,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "healing"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- This poultice of herbs and dried berries found throughout Isger was invented by those fighting against Cheliax's diabolic intrusion and those warring against demons at the Worldwound. You can use a verdant poultice on a creature that's taking persistent damage from a fiend; attempt a Nature check with a +1 item bonus against the DC of the effect that caused the persistent damage. On a success, the persistent damage ends."
+ },
+ {
+  "id": "vexing-vapor",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Vexing Vapor",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "inhaled",
+   "mental",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Vexing Vapor Source Grand Bazaar pg. 27 Usage held in 1 hand Bulk L Activate Strike This flask contains a fine red powder made from toxic berries. A vexing vapor bomb deals the listed mental damage and mental splash damage. On a hit, the target must succeed at a DC 5 flat check before taking actions with the concentrate trait. This lasts until the end of its next turn (1 minute on a critical hit). Vexing Vapor (Lesser) Source Grand Bazaar pg. 27 Price 4 gp Bulk L The bomb deals 1d6 mental damage and 1 mental splash damage. Vexing Vapor (Moderate) Source Grand Bazaar pg. 27 Price 12 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d6 mental damage and 2 mental splash damage. Vexing Vapor (Greater) Source Grand Bazaar pg. 27 Price 300 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 3d6 mental damage and 3 mental splash damage. Vexing Vapor (Major) Source Grand Bazaar pg. 27 Price 3,000 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 4d6 mental damage and 4 mental splash damage."
+ },
+ {
+  "id": "vexing-vapor-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Vexing Vapor (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "inhaled",
+   "mental",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This flask contains a fine red powder made from toxic berries. You gain a +2 item bonus to attack rolls. A greater vexing vapor bomb deals 3d6 damage and 3 mental splash damage. On a hit, the target must succeed at a check before taking actions with the concentrate trait. This lasts until the end of its next turn (1 minute on a critical hit)."
+ }
+]

@@ -1,0 +1,1148 @@
+[
+ {
+  "id": "curse-of-engulfing-flames",
+  "lane": "toggle",
+  "collection": "classFeatures",
+  "name": "Curse of Engulfing Flames",
+  "level": 1,
+  "traits": [
+   "curse",
+   "divine",
+   "fire",
+   "oracle"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Fires flare noticeably (though not dangerously) in your presence, you occasionally smoke slightly, and your body is almost painfully hot to the touch. When you have the cursebound condition, you catch fire, taking persistent fire damage equal to your cursebound value, and any immunity or resistance you have to fire is suppressed. The flames shed light like a Torch, and if you enter an environment where they could not burn (such as underwater), you simply seethe with flameless heat. The flames subside when you begin Refocusing to assuage your curse or if you fall unconscious, but they resume if your Refocus activity is interrupted or when you return to consciousness."
+ },
+ {
+  "id": "cycle-of-souls",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Cycle of Souls",
+  "level": 18,
+  "traits": [
+   "animist",
+   "apparition"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** Your turn starts. --- Your spiritual allies guide your movements, allowing you to prepare for the trials before you at a speed faster than thought. You Step, then enter an animist stance you know."
+ },
+ {
+  "id": "dashing-pounce",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Dashing Pounce",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are in claw stance and have two open hands. --- With a burst of speed, you leap into the air, slashing with your hands. You Leap, and if you end your movement adjacent to an enemy, you make two frenzied claw unarmed strikes against it. Apply your multiple attack penalty to these Strikes normally. If both Strikes miss, you fall prone at the end of your Leap."
+ },
+ {
+  "id": "dazzling-block",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Dazzling Block",
+  "level": 10,
+  "traits": [
+   "light",
+   "magus",
+   "visual"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are in Arcane Cascade stance. --- When you use Shield Block, you can create a flash of brilliant, multicolored light in a . Each creature in the area must attempt a save, with the following effects. --- **Critical Success** The creature is unaffected. **Success** The creature is dazzled for 1 round. **Failure** The creature is blinded for 1 round and dazzled for 1 minute. The creature can spend an Interact action rubbing its eyes to end this blinded condition. **Critical Failure** The creature is blinded for 1 round and dazzled for 1 hour."
+ },
+ {
+  "id": "demon-hunting-bands",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Demon-Hunting Bands",
+  "level": 3,
+  "traits": [
+   "consumable",
+   "divine",
+   "holy",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨4⟩ (concentrate) --- **Trigger** You Stride. These strips of supple leather, typically about 2 inches wide and 3 feet long, feature sigils, runes, and divine marks that reflect family lineage and beliefs in the old gods of Sarkoris. When activated, the band's holy patterns surround you as you move, preventing your movement from triggering reactions from demons. The holy patterns scour nearby demons; any demons you pass adjacent to during the triggering movement take damage equal to their weakness to holy effects. You can activate the bands when you Burrow, Climb, Fly, or Swim (instead of Stride) if you have the corresponding movement type."
+ },
+ {
+  "id": "devastating-spellstrike",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Devastating Spellstrike",
+  "level": 4,
+  "traits": [
+   "magus"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are in Arcane Cascade stance and your Spellstrike is charged. --- Your Spellstrike sweeps are so wide and devastating, they splash onto nearby foes. Make a Spellstrike. Foes adjacent to the target take splash damage equal to 2 + the extra damage from Arcane Cascade. The damage type is the same as Arcane Cascade; if the spell already deals splash damage of the same type, combine the damage together before applying weaknesses or resistances."
+ },
+ {
+  "id": "devoted-guardian",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Devoted Guardian",
+  "level": 2,
+  "traits": [
+   "champion",
+   "fighter"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** Your last action was to Raise a Shield. --- You adopt a wide stance, ready to defend both yourself and your chosen ward. Select one adjacent creature. As long as your shield is raised and the creature remains adjacent to you, the creature gains a +1 circumstance bonus to their AC, or a +2 circumstance bonus if the shield you raised was a tower shield."
+ },
+ {
+  "id": "directed-poison",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Directed Poison",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "When you cast Toxic Cloud, modify its duration to be sustained up to 1 minute, and modify its standard effect to include the following: The cloud doesn't move away from you each round. Once per round when you Sustain the Spell, you can move the cloud 10 feet in the direction of your choice."
+ },
+ {
+  "id": "disarming-twist",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Disarming Twist",
+  "level": 10,
+  "traits": [
+   "fighter",
+   "press"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Requirements** You are wielding a single one-handed melee weapon and hold nothing else in your hands. --- After your initial attack redirects your foe's defenses, your follow-up wrests their weapon from their grasp. Make a melee Strike with a one-handed melee weapon. In addition to its other effects, this Strike gains the success and critical success effects of the Disarm action. The Strike also has the following failure effect. **Failure** The target is off-guard until the end of your current turn. --- **Special** If you're in Disarming Stance, you gain a +1 circumstance bonus to the attack roll."
+ },
+ {
+  "id": "disk-rider",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Disk Rider",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "When you cast Floating Disk, you can modify its duration to be sustained, up to 10 minutes. If you do, add the following heightened entry to its effects. --- **Heightened (3rd)** The disk can hold up to 10 Bulk. The spell no longer ends if you ride atop the disk (though it does if any other creature rides atop it, including if the creature is riding on you). If you are riding the disk, it changes its capacity to hold you, plus additional Bulk equal to the maximum you could carry without being encumbered. If you ride atop the disk, you can direct it to move along the ground up to 30 feet or your Speed, whichever is slower, each time you Sustain the Spell. While you ride atop it, the disk can move over liquids as long as it ends its movement on solid ground. If it ends its movement on a surface that can't support it, the spell ends."
+ },
+ {
+  "id": "distant-wandering",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Distant Wandering",
+  "level": 10,
+  "traits": [
+   "deviant",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Your body falls unconscious and your spirit projects out of it. While in spirit form, you can't consciously move your body, and you are invisible and inaudible, though a creature still might notice the signs of your presence and passing, just like for an invisible creature affected by Silence, or a Scouting Eye. You can freely move about, though you can't touch or move anything, cast spells, attack, or otherwise affect anything around you. Despite your ghostly form, you are not incorporeal and can't pass through barriers you couldn't in your body. Most effects can't harm your spirit form, though some spells, like Spirit Blast and Spirit Song, explicitly damage a creature's spirit. You can return to your body as a free action. If you are in spirit form at the beginning of your turn, you must attempt another backlash check for your deviation, returning to your body if you fail. --- **Awakening** Your spirit moves at the speed of thought. You gain a fly Speed and a +20-foot status bonus to your Speed while in spirit form. *Note: No specific fly speed was given by Paizo for this ability. A fly speed equal to your land speed has been used in the effect.* --- **Awakening** Time seems to pass more slowly while you are projecting your spirit, letting you notice things around you. When you enter spirit form, you can Recall Knowledge or Seek. You are quickened while in spirit form and can use the extra action only to Recall Knowledge or Seek."
+ },
+ {
+  "id": "distracting-spellstrike",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Distracting Spellstrike",
+  "level": 4,
+  "traits": [
+   "magus"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're in Arcane Cascade stance and have a hand free. --- You weave distracting magic with one hand to enhance your Spellstrike. Make a Spellstrike and Feint against the target of your Strike. Do this immediately before making the Strike, but after choosing your target. The feint traits=arcane,illusion,visual gains the arcane, illusion, and visual traits, and it always has the basic effects of a Feint, rather than applying any adjustments or alternate effects from other feats or abilities."
+ },
+ {
+  "id": "dragon-roar",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Dragon Roar",
+  "level": 6,
+  "traits": [
+   "auditory",
+   "emotion",
+   "fear",
+   "mental",
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Requirements** You are in Dragon Stance --- You bellow, instilling fear in your enemies. Enemies within a must succeed at a save against your Intimidation DC or be Frightened 1 (Frightened 2 on a critical failure). When a creature frightened by the roar begins its turn adjacent to you, it can't reduce its frightened value below 1 on that turn. Your first attack that hits a frightened creature after you roar and before the end of your next turn gains a +4 circumstance bonus to damage. After you use Dragon Roar, you can't use it again for 1d4 rounds. Its effects end immediately if you leave Dragon Stance. Creatures in the area are then temporarily immune for 1 minute."
+ },
+ {
+  "id": "drop-of-convergent-waters",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Drop of Convergent Waters",
+  "level": 2,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman",
+   "water"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "Abhaya's tireless years of study have allowed her to reproduce, at some level, the unconscious melding of elements she experienced during the last Challenge of Sky and Heaven. A single drop of water in a crystalline container is the simplest application of her research. When you activate this talisman, a watery echo of one of your limbs emerges from the container. Make a Strike with your fist or an unarmed attack from your ancestry. This attack gains the magical, reach, and water traits, retains any benefits from appropriate weapon fundamental runes (but not of weapon property runes), and takes no penalties for being used underwater. You can perform this Strike even if you're in a stance or under a polymorph effect that restricts your Strikes."
+ },
+ {
+  "id": "dual-handed-assault",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Dual-Handed Assault",
+  "level": 4,
+  "traits": [
+   "fighter",
+   "flourish"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Requirements** You are wielding a one-handed melee weapon and have a free hand. --- You snap your free hand over to grip your weapon just long enough to add momentum and deliver a more powerful blow to your opponent. Make a Strike with the required weapon. You quickly switch your grip during the Strike in order to make the attack with two hands. If the weapon doesn't normally have the two-hand trait, increase its weapon damage die by one step for this attack. If the weapon has the two-hand trait, you gain the benefit of that trait and a circumstance bonus to damage equal to the weapon's number of damage dice. When the Strike is complete, you resume gripping the weapon with only one hand. This action doesn't end any stance or fighter feat effect that requires you to have one hand free."
+ },
+ {
+  "id": "ebon-fulcrum-lens",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Ebon Fulcrum Lens",
+  "level": 12,
+  "traits": [
+   "invested",
+   "occult"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This strangest and most powerful of the *fulcrum lenses* resembles a chip of smooth obsidian containing three dark glimmers of Nhimbaloth's essence. Incorporeal creatures can touch and carry the *Ebon Fulcrum Lens*. While you have the *Ebon Fulcrum Lens* invested, and you're a corporeal creature, you become insubstantial, gain the incorporeal trait, and are Drained 2. Your drained condition can't be reduced below 2 as long as you have the lens invested. You can activate the lens in the following ways. Both require expenditures of glimmers within the lens; once the lens is depleted of its three glimmers, it retains its ability to make corporeal creatures insubstantial but can't be used for its other abilities until its glimmers are restored (which generally requires a ritual or being steeped in an area of Nhimbaloth's power). --- **Activate** ⟨5⟩ envision **Frequency** once per day **Requirements** At least one glimmer remains in the *Ebon Fulcrum Lens* **Prerequisites** you have the rejuvenation ability **Trigger** you would be destroyed and are able to rejuvenate **Effect** For the first 24 hours after you rejuvenate, you gain a +1 item bonus to attack rolls, saving throws, and DCs. Reduce the number of glimmers remaining in the lens by 1. --- **Activate** ⟨2⟩ Interact **Frequency** once per day **Requirements** At least one glimmer remains in the *Ebon Fulcrum Lens* **Effect** You draw upon a glimmer of Nhimbaloth's essence for power; reduce the number of glimmers remaining in the lens by 1. You're quickened for 1 minute and gain a +1 item bonus to attack rolls, saving throws, and DCs. You can use this extra action to Stride or Step, or for an action in a special ghost ability you have."
+ },
+ {
+  "id": "effortless-impulse",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Effortless Impulse",
+  "level": 12,
+  "traits": [
+   "kineticist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** Your turn begins. --- A steady ripple from your kinetic gate maintains one of your impulses. You immediately Sustain one of your active impulses that can be sustained."
+ },
+ {
+  "id": "electric-counter",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Electric Counter",
+  "level": 16,
+  "traits": [
+   "electricity",
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** You would take damage. **Requirements** You are in Wild Winds Stance. --- You gain resistance to electricity equal to your level until the start of your next turn. If the triggering damage was electricity, this resistance applies to it. If the triggering damage was from a melee attack, the attacker takes 3d6 damage. --- **Special** This feat has the trait corresponding to the tradition of ki spells you cast, either divine or occult."
+ },
+ {
+  "id": "elements-of-creation",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Elements of Creation",
+  "level": 0,
+  "traits": [
+   "air",
+   "conjuration",
+   "earth",
+   "water"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Elements of Creation Source Highhelm pg. 114 Aspect Forge Prerequisite creative spark gift When you activate creative spark, you can choose to summon an air wisp, a water wisp, and an earth wisp in unoccupied squares next to you, in addition to the fire wisp. Unlike a typical earth wisp, the summoned earth wisp takes the form of a small iron creature resembling an anvil crossed with a horned beetle. Like the fire wisp, these additional wisps don't act in combat but can assist you while you Craft items. While all four wisps are assisting you, the bonus you gain from creative spark is doubled, and your outcome for Crafting checks related to blacksmithing is one degree of success better than your roll. In addition, being assisted by all four wisps replaces the need for any equipment other than blacksmithing tools when crafting metal items. The wisps last for up to 10 minutes or until you Dismiss them all together as an action. If you extend the duration of the fire wisp, it also extends the duration for the other wisps."
+ },
+ {
+  "id": "emetic-paste",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Emetic Paste",
+  "level": 2,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "healing"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Emetic Paste Source Treasure Vault (Remastered) pg. 53 Usage held in 1 hand Bulk L Activate (manipulate) Sickened creatures have difficulty swallowing, so you can Activate emetic paste by applying it to your skin or that of a sickened creature within reach, typically on the throat. The paste makes it easy for the sickened creature to purge, granting it an immediate Fortitude save to reduce its sickened condition. The paste grants the target an item bonus to that save and to all saving throws to reduce the sickened condition for 1 hour. Emetic Paste (Lesser) Source Treasure Vault (Remastered) pg. 53 Price 5 gp Bulk L The bonus is +2. Emetic Paste (Moderate) Source Treasure Vault (Remastered) pg. 53 Price 120 gp Bulk L The bonus is +3. Emetic Paste (Greater) Source Treasure Vault (Remastered) pg. 53 Price 700 gp Bulk L The bonus is +4."
+ },
+ {
+  "id": "emetic-paste-greater",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Emetic Paste (Greater)",
+  "level": 14,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "healing"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- sickened creatures have difficulty swallowing, so you can Activate emetic paste by applying it to your skin or that of a sickened creature within reach, typically on the throat. The paste makes it easy for the sickened creature to purge, granting it an immediate Fortitude save to reduce its sickened condition. The paste grants the target a +4 item bonus to that save and to all saving throws to reduce the sickened condition for 1 hour."
+ },
+ {
+  "id": "emetic-paste-lesser",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Emetic Paste (Lesser)",
+  "level": 2,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "healing"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- sickened creatures have difficulty swallowing, so you can Activate emetic paste by applying it to your skin or that of a sickened creature within reach, typically on the throat. The paste makes it easy for the sickened creature to purge, granting it an immediate Fortitude save to reduce its sickened condition. The paste grants the target a +2 item bonus to that save and to all saving throws to reduce the sickened condition for 1 hour."
+ },
+ {
+  "id": "emetic-paste-moderate",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Emetic Paste (Moderate)",
+  "level": 9,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "healing"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- sickened creatures have difficulty swallowing, so you can Activate emetic paste by applying it to your skin or that of a sickened creature within reach, typically on the throat. The paste makes it easy for the sickened creature to purge, granting it an immediate Fortitude save to reduce its sickened condition. The paste grants the target a +3 item bonus to that save and to all saving throws to reduce the sickened condition for 1 hour."
+ },
+ {
+  "id": "entertainers-cincture",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Entertainer's Cincture",
+  "level": 10,
+  "traits": [
+   "focused",
+   "invested",
+   "occult"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "effectChoices",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "The designs adorning these lush sashes often imitate the decor of famous opera houses, theaters, and museums. When you invest this item, choose Deception, Diplomacy, Intimidation, or Performance; you gain a +2 item bonus to that skill. --- **Activate—Encore!** ⟨4⟩ (concentrate) **Frequency** once per day **Effect** Gain 1 Focus Point, which you can spend only to cast a bard composition spell. If you don't spend this point by the end of this turn, it is lost. --- **Activate—Transcribe** ⟨1⟩ (manipulate) **Frequency** once per day **Effect** You tuck a small roll of paper into the cincture. For the next 10 minutes or until you Dismiss the activation, any performance you make is recorded on the paper, and the paper expands as necessary to accommodate it. Depending on the type of performance, this might take the form of sheet music, a transcript, or a diagram of dance moves. --- **Craft Requirements** You are a bard."
+ },
+ {
+  "id": "entertainers-cincture-greater",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Entertainer's Cincture (Greater)",
+  "level": 17,
+  "traits": [
+   "focused",
+   "invested",
+   "occult"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "effectChoices",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "The designs adorning these lush sashes often imitate the decor of famous opera houses, theaters, and museums. When you invest this item, choose Deception, Diplomacy, Intimidation, or Performance; you gain a +3 item bonus to that skill. --- **Activate—Encore!** ⟨4⟩ (concentrate) **Frequency** once per day **Effect** Gain 1 Focus Point, which you can spend only to cast a bard composition spell. If you don't spend this point by the end of this turn, it is lost. --- **Activate—Transcribe** ⟨1⟩ (manipulate) **Frequency** once per day **Effect** You tuck a small roll of paper into the cincture. For the next hour or until you Dismiss the activation, any performance you make is recorded on the paper, and the paper expands as necessary to accommodate it. Depending on the type of performance, this might take the form of sheet music, a transcript, or a diagram of dance moves. --- **Craft Requirements** You are a bard."
+ },
+ {
+  "id": "expand-aura",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Expand Aura",
+  "level": 6,
+  "traits": [
+   "champion",
+   "concentrate"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You focus your divine power to extend your influence and protection. Expand the radius of your champion's aura to 30 feet until the start of your next turn. At 10th level, the expansion lasts for 1 minute, and at 16th level, it lasts until you Dismiss it."
+ },
+ {
+  "id": "explosive-death-drop",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Explosive Death Drop",
+  "level": 14,
+  "traits": [
+   "fire",
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Requirements** You are in Rain of Embers Stance and have a target grabbed or restrained. --- You lift your enemy into the air before bringing them crashing down with a fiery detonation. Roll an Athletics check against your target's Fortitude DC. You take a -1 circumstance penalty to your check if the target is one size larger than you and a -3 circumstance penalty if it's larger than that. You gain a +1 circumstance bonus to your check if the target is one size smaller than you and a +3 circumstance bonus if it's smaller than that. --- **Critical Success** The target takes 12d6 damage and falls prone in an unoccupied adjacent square of your choice. The target is no longer grabbed. The target and any creature adjacent to it also each take 1d6 damage. **Success** As critical success, but the target takes 6d6 damage instead of 12d6, and creatures don't take persistent fire damage. **Failure** The target is no longer grabbed. **Critical Failure** As failure, but you fall prone."
+ },
+ {
+  "id": "familiars-eyes",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Familiar's Eyes",
+  "level": 12,
+  "traits": [
+   "concentrate",
+   "witch"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You use your familiar's senses as easily as your own. You project your senses into your familiar. When you do, you lose all sensory information from your own body, but you can sense through your familiar's body until you Dismiss the effect. While projecting your senses in this way, you can converse telepathically with your familiar if it understands a language. --- **Special** This feat has the trait corresponding to the tradition of spells you cast (arcane, divine, occult, or primal)."
+ },
+ {
+  "id": "farlight-stone",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Farlight Stone",
+  "level": 2,
+  "traits": [
+   "light",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "*Farlight stones* are common in libraries, monasteries, labs, and other places where simple but silent communication is important. *Farlight stones* always come in linked pairs, and each of the fist-sized stones can be Activated independently. --- **Activate—Light** ⟨1⟩ (manipulate) **Effect** The stone begins to glow as a torch, shedding bright light in a 20-foot radius (and dim light to the next 20 feet). You can Activate the stone in this way again to end the effect. --- **Activate—Color** ⟨1⟩ (concentrate) **Requirements** The stone is glowing with light **Effect** You change the color of the stone's light to any other color, which remains as long as the stone sheds light. --- **Activate—Notify** ⟨1⟩ (concentrate) **Requirements** The stone is glowing with light **Effect** The stone's light begins to pulse. You can choose the rate of the pulse between slow, moderate, and fast. If the linked stone is within 15 miles, its center begins to glow in the same color and pulse at the same rate. You can use this activation to end the pulsing caused by a linked stone."
+ },
+ {
+  "id": "feather-token-chest-ammunition",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Feather Token (Chest) (Ammunition)",
+  "level": 5,
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Each feather token appears to be a simple feather from some exotic bird. The feather's shaft, dipped in gold, bears a single arcane rune. Activating a feather token causes it to transform into another object, which then can be used as normal for that object. Each feather can be activated only once, with most of them permanently becoming the item in their description. **Activate** ⟨1⟩ Strike from a ranged weapon When you use this token, a small wooden chest appears and immediately opens. This chest can hold up to 10 Bulk worth of items. Once the chest is closed, it transforms again-this time into a key-taking all of the stored items with it. You can activate this key by spending an Interact action to turn it in an imaginary lock, which causes it to transform back into a chest with all of the items still inside. Once it has turned into a chest a second time, it forever remains a wooden chest."
+ },
+ {
+  "id": "feline-dance",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Feline Dance",
+  "level": 8,
+  "traits": [
+   "archetype",
+   "fortune"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Access** catfolk ancestry **Frequency** once per hour **Trigger** You attempt a basic Reflex save. **Requirements** You're in either claw stance or talon stance. --- You fluidly move between stances in the process of dodging. Roll the save twice and take the higher result. If you were in claw stance, you shift to talon stance, and vice versa."
+ },
+ {
+  "id": "feral-claws",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Feral Claws",
+  "level": 0,
+  "traits": [
+   "morph"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Feral Claws Source GM Core pg. 310 Aspect Beast Prerequisite The relic is a worn item. Activate (concentrate); Effect Your hands transform into a pair of claws. These grant you a claw unarmed attack that deals 1d6 slashing damage and has the agile and finesse traits. This lasts until you Dismiss the effect."
+ },
+ {
+  "id": "final-gate",
+  "lane": "toggle",
+  "collection": "classFeatures",
+  "name": "Final Gate",
+  "level": 19,
+  "traits": [
+   "kineticist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your kinetic gate reaches a perfect form, its power constantly fighting to be released. If your kinetic aura is inactive, you automatically use the first action of your turn to Channel Elements as a free action. You can deliberately suppress the effect. If you're unable to act, final gate still functions, but you don't get to use the Elemental Blast or stance impulse you normally do from using Channel Elements"
+ },
+ {
+  "id": "five-breath-vanguard-dedication",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Five-breath Vanguard Dedication",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Access** Tian Xia origin or exposure to Tian elementalism --- You flow like the elemental cycle, adapting your stance and techniques constantly in response to whatever circumstances you face. You gain the Cycle Elemental Stance action."
+ },
+ {
+  "id": "five-breaths-one-death",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Five Breaths, One Death",
+  "level": 18,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Frequency** once per 10 minutes **Requirements** You're in an elemental stance, and the target is under the effects of Induce Imbalance. --- You cycle through the elements in a devastating combination attack. Strike the target using the unarmed attack associated with your current elemental stance, then Cycle Elemental Stance. Then, Strike the target with the unarmed attack associated with your new elemental stance. You can continue to Cycle Elemental Stance and Strike until you've made a Strike using the unarmed attack of every elemental stance you know, applying the multiple attack penalty as usual. If you successfully hit the target with all five elemental Strikes using this ability, it must attempt a save against your class DC or die as each elementally associated organ within its body shuts down; this is a death effect."
+ },
+ {
+  "id": "five-gods-ram",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Five-gods Ram",
+  "level": 12,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're in Rushing Goat Stance. --- You attack in an unceasing flurry of charging headbutts. Stride or Climb and then make a ramming horn Strike. If the Strike is successful, you immediately push the target back 10 feet, then Stride or Climb and make a second ramming horn Strike against them. If the second Strike is successful, you immediately knock the target prone, but if the second Strike is a failure or if you're unable to complete all the required actions, you become Stunned 1. Both Strikes count toward your multiple attack penalty, but the penalty doesn't increase until you've made both of them."
+ },
+ {
+  "id": "flame-jump",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Flame Jump",
+  "level": 13,
+  "traits": [
+   "concentrate",
+   "divine",
+   "exploration",
+   "fire",
+   "manipulate",
+   "nephilim",
+   "teleportation"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per day --- Your peri lineage has opened your mind to fire's raw, purging essence. You can spend 1 minute in focused preparation, then enter a fire your size or larger to instantly teleport to any fire that is your size or larger up to 5 miles away. You take no damage from entering or exiting fires when using this ability. Once you enter the fire, you instantly know the rough locations of other large fires within range and can exit from the original fire, if you prefer. You can't carry extradimensional spaces with you when you teleport; if you attempt to do so, the activity fails."
+ },
+ {
+  "id": "flame-navette",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Flame Navette",
+  "level": 16,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Usage** affixed to armor **Activate** ⟨1⟩ (concentrate) --- This piece of bronzite is shaped like an oval with points at both ends. It has a carved flame at its center and is traditionally worn over the heart. You can activate only one *flame navette* per day. When you activate the navette, you gain the benefit of the fighter's class feat, with a counteract rank of 8 and a counteract modifier of +22. If you have the Determination feat, you can use your own modifier if it's better."
+ },
+ {
+  "id": "flying-animal",
+  "lane": "toggle",
+  "collection": "heritages",
+  "name": "Flying Animal",
+  "traits": [],
+  "engineFieldsPresent": [
+   "immunities"
+  ],
+  "inRegistries": [],
+  "text": "You are an animal that can take flight for long or sustained bursts, such as an eagle, bat, bee, or flying squirrel. The awakening process has disrupted your ability to fly as freely as you once did. What used to be an automatic process is now one that you must apply some thought to until it becomes automatic once again. You can still slow your descent, so you take no damage from falling, regardless of the distance you fall. Most flying awakened animals choose the Take Flight ancestry feat at 1st level to regain a limited ability to fly. You have a land Speed of 20 feet and one animal attack of your choice (typically beak, claw, jaws, talon, or wing)."
+ },
+ {
+  "id": "focused-shot",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Focused Shot",
+  "level": 12,
+  "traits": [
+   "concentrate",
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are in Monastic Archer Stance. --- You achieve a state of perfect calm before unleashing your attack, opening your mind to the minute movements of the world around you to increase your accuracy. Make a ranged weapon Strike against a target within your weapon's first range increment. This Strike ignores the target's concealed condition and all cover."
+ },
+ {
+  "id": "folding-boat",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Folding Boat",
+  "level": 8,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This simple carved box can fold or unfold into a boat when activated. --- **Activate** ⟨2⟩ command, Interact --- **Effect** The folding boat can take two shapes. The first is a wooden box that's 12 inches long, 6 inches wide, and 4 inches high; it weighs 1 Bulk and can store up to 1 Bulk of items. The other form is a Rowboat. If the chosen form can't fit in the space, it takes the largest shape that does fit. You can activate the boat again to revert it to its original shape. If the boat is occupied, the item can't be activated. Much like a magical structure, a folding boat can't harm creatures when it unfolds and creatures within it are set aside harmlessly when it folds. Any items that were stored inside the box appear in the boat or ship. Items stored on the boat or ship form that are too large to fit inside the box form are ejected from the vehicle and appear on the ground adjacent to the box. A folding boat with the broken condition must be repaired before it can change form again."
+ },
+ {
+  "id": "folding-boat-greater",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Folding Boat (Greater)",
+  "level": 15,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This simple carved box can fold or unfold into a boat when activated. --- **Activate** ⟨2⟩ command, Interact --- **Effect** The folding boat can take two shapes. The first is a wooden box that's 12 inches long, 6 inches wide, and 4 inches high; it weighs 1 Bulk and can store up to 1 Bulk of items. The other form is a Cutter, piloted and crewed by ethereal sailors. The ethereal sailors don't prevent you from activating the boat to return it to a box. If the chosen form can't fit in the space, it takes the largest shape that does fit. You can activate the boat again to revert it to its original shape. If the boat is occupied, the item can't be activated. Much like a magical structure, a folding boat can't harm creatures when it unfolds and creatures within it are set aside harmlessly when it folds. Any items that were stored inside the box appear in the boat or ship. Items stored on the boat or ship form that are too large to fit inside the box form are ejected from the vehicle and appear on the ground adjacent to the box. A folding boat with the broken condition must be repaired before it can change form again."
+ },
+ {
+  "id": "fortune-cord",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Fortune Cord",
+  "level": 11,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "choice",
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "In many parts of Tian Xia, it's tradition to mint coins with holes in the centers for the purpose of being able to thread a cord through them and tie them off for security and ease of transaction. This immaculately braided red cord is made in this tradition and can hold up to 100 coins at any given time. As long as you carry a fortune cord, you gain a +2 item bonus to skill checks to Earn Income. If you load up to 100 coins onto a fortune cord as part of your daily preparations, you can Activate the magic item in two different ways until the next time you make your daily preparations, provided all the loaded coins are of the same type. **Activate—Merchant's Bludgeon** ⟨1⟩ (concentrate) **Frequency** once per day **Requirements** You have at least 50 coins loaded onto the fortune cord --- **Effect** You transform the fortune cord into a *+2 striking nunchaku* for 1 minute. The type of coin loaded onto the cord determines the additional weapon property rune that manifests on this *+2 striking nunchaku*, as follows. - **Copper**: Corrosive - **Silver**: Shock - **Gold**: Flaming - **Platinum**: Frost --- **Activate—Fling Coins** ⟨2⟩ (concentrate, manipulate) --- **Effect** You whip the fortune cord, causing 10 coins loaded onto it to detach and fire at a creature within 100 feet that you can see. That creature takes 4d6 damage ( save); the damage type depends on the type of coins you've loaded. Copper coins deal acid damage, silver coins deal electricity damage, gold coins deal fire damage, and platinum coins deal cold damage."
+ },
+ {
+  "id": "fulcrum-lenses",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Fulcrum Lenses",
+  "level": 9,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Fulcrum Lenses Source Pathfinder #165: Eyes of Empty Death pg. 75 Fulcrum lenses are unique magical crystals that each contain a sliver of Nhimbaloth's essence. They belong to a larger set of lenses created to manipulate or even bind the Empty Death; most of the other lenses are long lost and likely destroyed. The Haruvex family came into possession of four of the lenses, and they knew that bringing them together focused Nhimbaloth's attention in unprecedented and dangerous ways. Belcorra brought all four lenses to the Abomination Vaults with her, intending to install them in Gauntlight for her ultimate revenge upon Absalom. She also created a special receptacle called the Fulcrum Lattice to hold the lenses so that their power could be focused together. She realized the danger of keeping the fulcrum lenses too close together until the right time and spread them out among loyal groups in the Abomination Vaults' lowest levels for safekeeping. Belcorra keeps only the most powerful lens, the Ebon Fulcrum Lens, with her—indeed, as a ghost, it's the only one she can carry. If the heroes can bring the other three lenses to bear against Belcorra, they can draw Nhimbaloth's dread glare to the sorcerer. Despite her loyalty, Belcorra can't hope to keep her spirit intact when Nhimbaloth gazes directly upon it. The fulcrum lenses are more than mere receptacles of Nhimbaloth's essence. Each grants those who use it a fragment of the Great Old One's power. Crimson Fulcrum Lens May contain spoilers from Abomination Vaults Source Pathfinder #165: Eyes of Empty Death pg. 75 Price 700 gp Bulk 1 This concave lens has a drifting crimson cloud resembling slowly swirling blood within it. While you have the Crimson Fulcrum Lens invested, you seethe with malevolent fury you can barely contain. You gain a +2 item bonus to saving throws against fear effects and a +2 item bonus to your melee Strike damage (this increases to a +4 item bonus to damage if the melee Strike is a jaws attack). You can also activate the lens in the following ways. Activate Interact; Frequency once per day; Effect You grasp the Crimson Fulcrum Lens in one hand and make a Strike that doesn't require that hand. The Strike deals an additional 1d8 precision damage (or 2d8 precision damage if you make a jaws Strike) and doesn't count toward your multiple attack penalty. Activate Interact (attack, possession); Effect While grasping the lens, make a melee spell attack roll with a modifier of +18. On a hit, you force the splinter of Nhimbaloth's essence from the lens to possess the target. You're no longer invested in the lens, and the target gains the benefits as though it had invested the lens but can't activate the lens's other abilities. This effect is permanent, but it can be ended by any effect that removes a possession effect. The lens doesn't have any magical abilities until the possession effect ends; when it does, the essence returns to the lens. Ebon Fulcrum Lens May contain spoilers from Abomination Vaults Source Pathfinder #165: Eyes of Empty Death pg. 75 Price 2,000 gp Bulk L This strangest and most powerful of the fulcrum lenses resembles a chip of smooth obsidian containing three dark gl"
+ },
+ {
+  "id": "fuse-stance",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Fuse Stance",
+  "level": 16,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "You have combined two stances into a single stance all your own. When you take this feat, choose two stances you know and combine them into a single fused stance. Give your new fused stance a unique name. When you enter your fused stance, you gain all the effects of both stances, including the requirements and restrictions. If the stances both grant special attacks, you gain all those attacks. If a stance restricts you to one particular attack (such as Crane Stance), you must abide by that restriction. If the fused stances have incompatible restrictions, the GM determines which apply, or determines you can't fuse those stances at all."
+ },
+ {
+  "id": "gathering-moss",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Gathering Moss",
+  "level": 10,
+  "traits": [
+   "archetype",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** You enter Tenacious Stance. --- By rooting yourself in place, you are able to focus your body's natural healing to work faster. You gain fast healing equal to your level. This fast healing remains for 1 minute or until you end your Tenacious Stance, whichever comes first."
+ },
+ {
+  "id": "gorilla-pound",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Gorilla Pound",
+  "level": 6,
+  "traits": [
+   "emotion",
+   "flourish",
+   "mental",
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Requirements** You are in Gorilla Stance. --- You pound your chest before slamming into your foes. Attempt an Intimidation check to Demoralize, then make one gorilla slam Strike against the same target. If your Strike hits, you gain a circumstance bonus to the damage roll equal to triple the value of the target's frightened condition. --- **Special** If you have this feat, while you are in Gorilla Stance, you gain a Climb Speed of 15 feet."
+ },
+ {
+  "id": "grand-dance",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Grand Dance",
+  "level": 8,
+  "traits": [
+   "bard",
+   "rogue",
+   "swashbuckler"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're in Masquerade of Seasons Stance. --- You can summon the full magic of Bhopan's grand dance. Stride up to your Speed; during this Stride, you can walk on air as if it were solid ground. You can ascend and descend in this way at a maximum of a 45-degree angle. You must end your Stride on a surface that can support you or you fall."
+ },
+ {
+  "id": "greater-mat-of-resilence",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Greater Mat of Resilence",
+  "level": 12,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Mat of Resilience May contain spoilers from Triumph of the Tusk Source Pathfinder #209: Destroyer's Doom pg. 83 Usage placed on a surface Bulk 1 This light but sturdy woven mat, a miniature version of the floating foundations used in villages of the Dirt Sea, is carried tied in a tight roll. When you use an action to unfurl the mat onto an unoccupied horizontal space, the mat covers the existing terrain to create a smooth surface that can be walked on as if it were solid ground. Difficult or hazardous terrain in that square may be treated as normal while the mat of resilience covers it. The mat can be rolled back up or moved to an adjacent square using an Interact action, but it cannot be moved or put away while a creature is atop it. Activate—Steady Ground (envision) Effect You unfurl the mat and choose which shape it takes, either a 10-foot square or a 20-foot by 5-foot line. Activate—Sturdy Foundation (manipulate) Requirements A creature is atop the mat; Effect The creature enters a simple stance that makes the most of the mat’s stabilizing magic. While in this stance, if at least half of the creature’s space is atop the mat, it cannot gain the off-guard condition. Mat of Resilence Source Pathfinder #209: Destroyer's Doom pg. 83 Price 330 gp Greater Mat of Resilence Source Pathfinder #209: Destroyer's Doom pg. 83 Price 1,800 gp The mat’s surfaces increase to a 20-foot square and a 40- foot by 5-foot line."
+ },
+ {
+  "id": "greater-soldiers-syrup",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Greater Soldier's Syrup",
+  "level": 12,
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Soldier's Syrup May contain spoilers from Myth-Speaker Source Pathfinder #218: Titanbane pg. 80 Usage held in 1 hand This thick syrup sweetens potions and creates a distinctive, metallic flavor associated with the festival days in Dhuraxilis. Partygoers are fond of mixing soldier’s syrup with potions to extend their release. Activating a dose of soldier’s syrup requires you to combine it with another consumable potion that takes 1 action to activate. After swirling the mixture for a few moments, you must either imbibe the augmented potion within 1 minute, or the potion reverts to its unaugmented state. The potion’s level cannot exceed that of the soldier’s syrup it is mixed with, otherwise the syrup is wasted. When consumed, a soldier’s syrup–augmented potion does not immediately grant its benefits to you. Instead, you can activate the potion within the next hour as a single action, which has the concentrate trait. You can have only one soldier’s syrup–augmented potion consumed at a time; consuming a second one renders the first one inert. If you do not activate the potion within 1 hour, the potion spoils inside you, and you become enfeebled 1 for 24 hours. Minor Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 4 gp Lesser Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 12 gp Moderate Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 50 gp Greater Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 400 gp Major Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 5,000 gp"
+ },
+ {
+  "id": "haft-beatdown",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Haft Beatdown",
+  "level": 10,
+  "traits": [
+   "fighter",
+   "ranger",
+   "rogue"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per minute **Requirements** You are in Haft Striker Stance. --- The momentum of each of your attacks feeds into the next blow in the routine, creating a brutal rhythm that enables you to give your target one continuous beatdown. Strike twice, once with your weapon and once with its haft. Each attack counts towards your multiple attack penalty, but do not increase your penalty until you have made both attacks. Then Strike twice again, once with your weapon and once with its haft."
+ },
+ {
+  "id": "heartblood-ring",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Heartblood Ring",
+  "level": 15,
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Sealed inside the hidden compartment of a gold ring, *heartblood* has an unmistakable coppery taste, along with a thick mouth feel. A whiff of the concoction is pleasantly stimulating. --- **Stage 1 (1 Week)** The first time you enter this stage from a particular dose of *heartblood*, you are affected as if by regenerate. Each round this effect functions, it attempts to counteract one disease or poison affecting you with a bonus equal to your class DC – 10. *Heartblood* also reduces physical signs of aging, altering your appearance to that of vigorous adulthood for your ancestry. (Non-adults who drink *heartblood* change only in apparent vigor, not age.) You have fast healing equal to half your level, as well as resistance to void damage and poison damage equal to half your level. Also, you gain a +1 circumstance bonus to saving throws (or any other defense) against death effects, disease, paralysis, poison, and sleep. Treat the outcome of any saving throw you roll against death, paralyze, or sleep effects as one step better. --- **Stage 2 (1 Month)** You gain low-light vision, or you gain darkvision if your ancestry already has low-light vision. Reduce your current and maximum Hit Points by 2 × your level; you are Doomed 1. You develop a pallor and a dislike of bright light, especially sunlight. If suddenly exposed to bright light, you are dazzled until the end of your next turn. While in an area of sunlight, you remain dazzled until 1 round after the exposure ends. Normal food is unsatisfying, and you have urges to consume blood; when confronted with the opportunity to do so, you must succeed at a Will save to avoid it. Doing so once after each time you roll initiative is enough. Your normal coloration returns for a few hours after you drink blood. If you die at this stage or higher, your body becomes a bloody mist that sinks 6 feet into the ground. The third night thereafter, you rise from the earth as a vampire. This typically makes you unholy. You are under the control of the *heartblood*'s creator unless your level is higher than that creature's. The controlling vampire senses you and guides you to them via psychic link. Significant destruction of your body and circumstances that prevent the formation of undead stop this effect. --- **Stage 3 (1 Month)** You gain darkvision and now have fast healing equal to your level. A death effect can't automatically kill you or increase your dying value. Reduce your current and maximum Hit Points by 4 × your level, rounded up, instead of 2 × your level; you are Doomed 2. Your hunger for blood increases, so if you fail to drink a cup or so each day, you are considered to have gone without food that day. You are also Slowed 1 while in sunlight, becoming Slowed 2 after 1 minute. Your shadow is wispy, and your reflection in mirrors ghostly, which are apparent signs of vampirism to those who know such facts. --- **Stage 4** You die. --- **Purging** *Heartblood* loses its potency if the vampire who created it is destroyed. However, a dose of *heartblood* imposes a –2 status penalty to your saving throws against the powers of the vampire who created it."
+ },
+ {
+  "id": "heralds-ring",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Herald's Ring",
+  "level": 13,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Adorned with golden herald horns, this green ring both enhances a performer's vocal projection and provides partial protection against sonic attacks. --- **Activate—Project Voice** ⟨1⟩ (manipulate) **Frequency** Once per day **Effect** When you turn the *herald's ring* around your finger three times in either direction, you gain the ability to easily project your voice up to 200 feet without raising the volume of speech, reaching your audience in most venues, including arenas. This effect lasts up to 2 hours. --- **Activate—Reflect Sound** ⟨5⟩ (concentrate) **Frequency** once per day **Trigger** You take sonic damage from a spell or effect **Effect** You use the *herald's ring* to reflect a portion of the sonic damage back at its source by attempting to counteract the effect. The ring has a counteract modifier of +23. **Critical Success** All of the damage is reflected back on its source. **Success** Half of the damage is reflected back at its source, and the other half is negated. **Failure** Half of the damage is reflected back at the source, and you take the rest of the damage. **Critical Failure** None of the damage is reflected, but the herald's ring does absorb enough energy so that you can activate it again today."
+ },
+ {
+  "id": "hex-master",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Hex Master",
+  "level": 20,
+  "traits": [
+   "witch"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You embody the link to your patron so completely that you can cast your hexes in rapid succession. You are no longer limited to casting only a single hex each turn. In addition, when you cast Cackle to sustain a hex, you gain the effects of Sustain for all your active hexes that have a duration of sustained."
+ },
+ {
+  "id": "highhelm-stronghold-plate",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Highhelm Stronghold Plate",
+  "level": 14,
+  "traits": [
+   "bulwark",
+   "entrench-melee",
+   "hindering",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This *+2 resilient fortification bastion plate* is made almost entirely of stone plates. It looks almost unwearable and is in fact only wearable because of numerous minor enchantments for comfort and mobility. If you have armor specialization with heavy armor, your resistance while wearing *Highhelm stronghold plate* applies to both slashing and piercing damage. **Activate** ⟨3⟩ envision, Interact **Frequency** once per day --- **Effect** The plating on your armor explodes off of your body, expands, and reshapes, transforming into a stone structure with the effects of Wall of Stone. While the armor is transformed in this way, you don't gain the benefits of wearing the armor. The armor remains transformed for up to 10 minutes or until you Dismiss the effect, at which point the *wall of stone* disappears and the armor returns to you, donning itself immediately. --- **Crafting Requirements** Supply one casting of *wall of stone*."
+ },
+ {
+  "id": "hindquarter-kick",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Hindquarter Kick",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are in claw stance and have grabbed a creature. --- You hold your prey's defensive limbs in place with your claws while delivering a swift kick to their unprotected sides. Shift to talon stance and make two spinning talon Strikes against the grabbed creature. Apply your multiple attack penalty to these Strikes normally. You then release the grabbed creature."
+ },
+ {
+  "id": "hummingbird-wayfinder",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Hummingbird Wayfinder",
+  "level": 12,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Hummingbird wayfinders blend a few Arcadian secrets into the original wayfinder design, allowing the wayfinder to gain mobility for a time and act as a spy. In addition to the effects of a Wayfinder, a hummingbird wayfinder has the following activation. --- **Activate** ⟨2⟩ command, Interact **Frequency** once per hour --- **Effect** You cause the wayfinder to transform into a Tiny bee hummingbird, only 2 inches long. Other than the wayfinder being a visible bird, this has the effects of Scouting Eye. In addition to Seeking through the hummingbird, you can activate any aeon stone within the wayfinder as if the wayfinder were still on your person. When the effect ends, the wayfinder transforms back to normal in its current position. Damaging the bird ends the effect but does not destroy the wayfinder."
+ },
+ {
+  "id": "imbue-spell",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Imbue Spell",
+  "level": 16,
+  "traits": [
+   "concentrate",
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** Your previous action was to Cast a Spell. --- You pass the energy of your magic onto an ally, allowing another to release the spell. Upon completing the Casting of a Spell, instead of the normal effects of the spell, you imbue the energy of that spell to an ally that's adjacent to you or within your Spellsurge aura. You expend the spell, spell slot, or Focus Point as normal. At any time during the next hour, that ally can release the energy of the spell with a single action that has the concentrate and manipulate traits; they don't need to expend any spell slots or Focus Points. All attributes of the spell are determined based on your original casting of the spell, including any spellshape feats used, but the ally is treated as the spellcaster for determining the origin of the spell and for making any choices the spell requires. If the spell must or can be Sustained, your ally takes the action to Sustain it. You can't target yourself with this ability. If the spell isn't released by the ally within 1 hour, the energy dissipates. You can only have one spell imbued at a time; additional uses of this ability cause previously imbued spells to dissipate immediately"
+ },
+ {
+  "id": "immortal-techniques",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Immortal Techniques",
+  "level": 20,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You flow from technique to technique, renewing yourself as you embrace each style you have mastered. The first time each round that you use an action that has both the monk and stance traits, you gain 20 temporary Hit Points that last until the start of your next turn."
+ },
+ {
+  "id": "immovable",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Immovable",
+  "level": 12,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This rune utilizes magical principles to manipulate gravity and turn you into an immovable object. **Activate**⟨1⟩ (manipulate) **Frequency** once per day --- **Effect** Your armor anchors you in place, even defying gravity, rendering you immobilized until you Dismiss the Activation. While you're immobilized in this way, you can be moved only if a creature succeeds at a check to Force Open your armor. You can also be moved if 8,000 pounds of pressure are placed upon you, though this is likely fatal."
+ },
+ {
+  "id": "immovable-potion",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Immovable Potion",
+  "level": 10,
+  "traits": [
+   "consumable",
+   "magical",
+   "potion"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- When you drink the thick, slate-colored immovable potion, you become anchored in place, even defying gravity, rendering you immobilized for 1 minute or until you Dismiss the activation. While you are immobilized this way, the DC to move you from your place, including knocking you prone, is 40."
+ },
+ {
+  "id": "imperious-aura",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Imperious Aura",
+  "level": 16,
+  "traits": [
+   "impulse",
+   "kineticist",
+   "primal"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** Your turn begins. --- Your glowing and majestic kinetic aura marks you as a true child of the elements. Use a stance impulse that affects your kinetic aura."
+ },
+ {
+  "id": "induce-imbalance",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Induce Imbalance",
+  "level": 14,
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're in an elemental stance. --- Your blows can disrupt the delicate balance of elemental energies that keep a body in good health. Strike the target using the unarmed attack associated with your current elemental stance. On a success, the target must attempt a save against your class DC. On a failure, the target is Clumsy 2 until the end of your next turn. On a critical failure, the target is Clumsy 3 for 1 minute. Elementals take a –2 circumstance penalty to their save."
+ },
+ {
+  "id": "inexorable-iron",
+  "lane": "toggle",
+  "collection": "classFeatures",
+  "name": "Inexorable Iron",
+  "level": 1,
+  "traits": [
+   "magus"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Once you begin along a path, nothing can stop you from reaching its end. You transform the mass of an enormous weapon into an unstoppable force to augment your own striking power or keep you standing on the battlefield. When you enter Arcane Cascade stance and at the start of each of your turns while you're in that stance, if you're wielding a melee weapon in two hands, you gain temporary Hit Points equal to half your level (minimum 1 temporary HP). **Conflux Spell** Thunderous Strike"
+ },
+ {
+  "id": "inherit-the-dreaming-heirloom",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Inherit the Dreaming Heirloom",
+  "level": 1,
+  "traits": [
+   "wayang"
+  ],
+  "engineFieldsPresent": [
+   "choice",
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "Whether you always carried it or perhaps only recently inherited, you have a pusaka—an heirloom containing a spirit who you communicate with in your dreams. Choose one item of light Bulk to be your pusaka. It becomes a magic item that has the occult trait. As long as you sleep with this item in reach and spend 10 minutes during your daily preparations pampering the spirit within, you can Activate the pusaka that day. **Activate—Ancestral Recollection** ⟨1⟩ (concentrate) **Frequency** once per day --- **Effect** The spirit within the pusaka advises you on a subject they knew in life. When you gain this feat, select one Lore skill about a profession and one about a type of environment, such as Accounting Lore and Forest Lore. When you Activate the pusaka, you attempt to Recall Knowledge using one of these skills (you become temporarily trained in these skills for this check). Once you make your choice of Lore skills, they can't be changed. --- **Activate—Guide My Dreams** ⟨2⟩ (concentrate) --- **Effect** You ask the spirit within the pusaka to show you the way. You cast Guidance as an occult cantrip. A cantrip is heightened to a spell rank equal to half your level rounded up."
+ },
+ {
+  "id": "inner-fire-monk",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Inner Fire (Monk)",
+  "level": 6,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "While you're in Stoked Flame Stance, you have cold and fire resistance equal to half your level, and any creature that hits you with an unarmed attack, tries to Grab or Grapple you, or otherwise touches you takes fire damage equal to your Wisdom modifier (minimum 1). A creature can take this damage no more than once per turn."
+ },
+ {
+  "id": "inner-fire-som",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Inner Fire (SoM)",
+  "level": 6,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Inner Fire (SoM) Source Secrets of Magic pg. 202 Prerequisites Stoked Flame Stance While you're in Stoked Flame Stance, you have cold and fire resistance equal to half your level, and any creature that hits you with an unarmed attack, tries to Grab or Grapple you, or otherwise touches you takes fire damage equal to your Wisdom modifier (minimum 1). A creature can take this damage no more than once per turn."
+ },
+ {
+  "id": "instigate-psychic-duel",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Instigate Psychic Duel",
+  "level": 12,
+  "traits": [
+   "archetype",
+   "illusion",
+   "incapacitation",
+   "mental",
+   "occult"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per day --- You attempt to enter a psychic duel with a creature within 100 feet. The target can attempt a save against the higher of your spell DC or class DC. If it enters the duel willingly, use the result for a critical failure. --- **Critical Success** The target is unaffected. **Success** The two of you enter a psychic duel, but it ends automatically at the end of your next turn. As normal for a psychic duel, the duel ends if one participant is knocked out, as well as under any other conditions to which both participants agree. If you're in initiative when you Instigate the Psychic Duel, you keep the same initiative positions. You can each choose a psychic center for any skill in which you're trained, as you would if you were using that skill to roll initiative for the duel. **Failure** As a success, except instead of ending at the end of your next turn, the target can attempt a new save to end the duel at the end of each of your turns, starting with your next turn. **Critical Failure** As a success, except the duel doesn't end until it reaches one of the normal end conditions for a psychic duel."
+ },
+ {
+  "id": "ironblood-surge",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Ironblood Surge",
+  "level": 14,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Requirements** You are in Ironblood Stance --- You steel yourself, preparing to resist oncoming attacks and using your muscles to absorb the impact. You gain the benefits of your iron sweep's parry trait (a +1 circumstance bonus to AC until the start of your next turn) and your resistance from Ironblood Stance increases to your Strength modifier (if it's higher) for the same duration."
+ },
+ {
+  "id": "ive-been-here-before",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "I've Been Here Before",
+  "level": 14,
+  "traits": [
+   "exploration",
+   "mythic"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "You adapt quickly to new settings and terrains. When you make your daily preparations in a region you've never visited before (such as a city, geographical region, or small demiplane, but not in a dungeon, structure, or other location that focuses on encounter mode play), you spend part of that time introspectively digging into the memories of your past life to get a feel for the adventure that awaits. Choose one of the following Exploration activities: Avoid Notice, Defend, Investigate, Scout, or Search. You perform that exploration activity at full speed rather than at half speed, and any skill check you attempt as a result of this Exploration activity is made at mythic proficiency. These benefits end as soon as you enter a new region, as determined by the GM."
+ },
+ {
+  "id": "jotuns-heart",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Jotun's Heart",
+  "level": 17,
+  "traits": [
+   "jotunborn"
+  ],
+  "engineFieldsPresent": [
+   "maxHpBonus"
+  ],
+  "inRegistries": [],
+  "text": "You have unlocked the power of a true giant within you. Your size becomes Huge. You have a 10-foot reach. Your maximum Hit Points increase by your level. --- **Special** When you enter Jotun's Battle Stance, instead of its previous effects, it now increases the reach of any weapon you are wielding, or your fist unarmed attack, by 5 feet."
+ },
+ {
+  "id": "judgement-of-the-monolith",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Judgement of the Monolith",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can use the oaths bound in your ka stone to compel the truth from the living and the dead. You can activate your ka stone to target a single living creature, causing that creature to experience the effects of being in a Ring of Truth. You can also activate it with a 10-minute activation (envision) to cast Talking Corpse."
+ },
+ {
+  "id": "judgment-of-the-monolith",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Judgment of the Monolith",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Judgment of the Monolith Source World Guide pg. 59 Archetype Living Monolith Prerequisites Ka Stone Ritual You can use the oaths bound in your ka stone to compel the truth from the living and the dead. You can activate your ka stone to target a single living creature, causing that creature to experience the effects of being in a zone of truth. You can also activate it with a 10-minute activation (envision) to cast talking corpse."
+ },
+ {
+  "id": "kinetic-activation",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Kinetic Activation",
+  "level": 2,
+  "traits": [
+   "kineticist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Rather than incantations and gestures, you can use your kinetic gate to directly unlock the potential of elementally empowered magic items. You can Activate magic items that require you to be able to Cast a Spell, provided you activate them to Cast a Spell with the same trait as one of your kinetic elements; for example, if you can channel fire, you could Activate a *scroll of* Fireball. For any effects of these items that use a spell attack roll or spell DC, you can substitute your impulse attack roll or class DC. You can also prepare a staff that has at least one spell with an appropriate trait, using half your level rounded up to determine the number of charges you add. This doesn't allow you to cast spells without the trait of one of your kinetic elements, and you don't get the extra benefits prepared and spontaneous spellcasters do."
+ },
+ {
+  "id": "kinetic-pinnacle",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Kinetic Pinnacle",
+  "level": 20,
+  "traits": [
+   "kineticist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "No one can match the pace at which elements flow from you. You're permanently quickened. You can use your extra action only to Channel Elements, use a 1-action Elemental Blast, or use a 1-action stance impulse."
+ }
+]

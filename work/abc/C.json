@@ -1,0 +1,395 @@
+[
+ {
+  "id": "contract-negotiator",
+  "collection": "feats",
+  "name": "Contract Negotiator",
+  "level": 1,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "text": "Your experience with bargaining and deciding terms as part of Highhelm's guilds helps you make deals in other situations. When negotiating deals or agreements, you can use Legal Lore in place of Diplomacy to Make an Impression or a Request, even if there is no legal framework under which you are negotiating. If you are an expert in Diplomacy, you gain a +1 circumstance bonus to these checks; if you are a master in Diplomacy, this increases to +2, and +3 if you are legendary.",
+  "currentFlat": null,
+  "openQuestion": "Two things: (a) what is the exact skill key for Legal Lore in the registry — 'lore:legal', 'lore:legal-lore', or something else? (b) the bonus size scales off your DIPLOMACY proficiency while applying to a LEGAL LORE check — should the star show the character's actual computed value (+1/+2/+3) or the whole ladder as text?"
+ },
+ {
+  "id": "celebrity-dedication",
+  "collection": "feats",
+  "name": "Celebrity Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "text": "The more people you have looking at you, the more content you are, and you take every opportunity to show up others when their performances are less than perfect. You gain the Upstage reaction. In addition, when you Earn Income, if the level of the task is higher than your level, you gain a +1 circumstance bonus to your check to Earn Income.",
+  "currentFlat": null,
+  "openQuestion": "Earn Income can use any of several skills. Star every skill (skill:'all'), or narrow it to Crafting/Performance/Lore?"
+ },
+ {
+  "id": "eye-of-the-wise",
+  "collection": "items",
+  "name": "Eye of the Wise",
+  "level": 11,
+  "traits": [
+   "artifact",
+   "invested"
+  ],
+  "text": "This fist-sized, 12-rayed black star sapphire is sacred to Yueral, the elven goddess of magic and jewels, and most accounts of its creation attribute its crafting to a circle of her worshippers. In addition to the abilities listed below, the gem functions as a portal key for Jewelgate at Alseta's Ring. **Activate** ⟨1⟩ Interact --- **Effect** You touch the *Eye of the Wise* to a gem worth at least 10 gp, whereupon the *Eye of the Wise* assumes the appearance of the touched gemstone. While this connection is active, the carriers of the *Eye of the Wise* and of the other gemstone can communicate telepathically with one another over any distance, as long as both are on the same plane. This connection is broken if the other gemstone is damaged, if the *Eye of the Wise* becomes attuned to another gemstone, or if the bearer of the *Eye of the Wise* dismisses the activation. **Activate** ⟨1⟩ Interact --- **Effect** You hold the *Eye of the Wise* up to your own eye and peer through it. The *Eye of the Wise* grows transparent and grants you a +2 item bonus to attempts to Decipher Writing, Disable a Device, Identify Magic, Pick a Lock, Seek, or Sense Motive. You can Sustain this activation as long as you hold the gem in place.",
+  "currentFlat": null,
+  "openQuestion": "Should action-named bonuses like this be expanded into every skill that can perform the action (as above), or flagged once on 'all skills' with the action list in the condition text?"
+ },
+ {
+  "id": "addiction-suppressant",
+  "collection": "items",
+  "name": "Addiction Suppressant",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "text": "Addiction Suppressant Source Legends pg. 72 Usage held in 1 hand Bulk L Activate Interact When you use a dose of addiction suppressant, it suppresses the effects of that addiction for 1 day, as if you had taken an actual dose of the drug, but without any of the drug's effects, and it doesn't increase the addiction DC. You also gain an item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant. For every drug, a specific suppressant must be crafted— no generalized addiction suppressant yet exists. In order to create an addiction suppressant, you must begin with a dose of the drug to be suppressed, then use alchemical reagents to generate an elixir that can be used to fight that drug's addiction. An addiction suppressant must be a higher level than the drug it is meant to suppress in order to work. Addiction Suppressant (Lesser) Source Legends pg. 72 Price 2 gp Bulk L You gain a +1 item bonus. Addiction Suppressant (Moderate) Source Legends pg. 72 Price 30 gp Bulk L You gain a +2 item bonus. Addiction Suppressant (Greater) Source Legends pg. 72 Price 140 gp Bulk L You gain a +3 item bonus. Addiction Suppressant (Major) Source Legends pg. 72 Price 500 gp Bulk L You gain a +4 item bonus.",
+  "currentFlat": null,
+  "openQuestion": "Drug addiction is a poison-trait affliction, so the ongoing save is Fortitude — the record itself never names the save. Register this against Fortitude specifically, or against all saves with the condition text carrying the caveat?"
+ },
+ {
+  "id": "addiction-suppressant-lesser",
+  "collection": "items",
+  "name": "Addiction Suppressant (Lesser)",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "text": "**Activate** ⟨1⟩ Interact When you use a dose of addiction suppressant, it suppresses the effects of that addiction for 1 day, as if you had taken an actual dose of the drug but without any of the drug's effects, and it doesn't increase the addiction DC. You also gain a +1 item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant. For every drug, a specific suppressant must be crafted- no generalized addiction suppressant yet exists. In order to create an addiction suppressant, you must begin with a dose of the drug to be suppressed, then use alchemical reagents to generate an elixir that can be used to fight that drug's addiction. An addiction suppressant must be a higher level than the drug it is meant to suppress in order to work.",
+  "currentFlat": null,
+  "openQuestion": "The record never names the save. Drug addiction is a poison-trait affliction (Fortitude) — confirm registering this on Fortitude rather than all saves."
+ },
+ {
+  "id": "addiction-suppressant-moderate",
+  "collection": "items",
+  "name": "Addiction Suppressant (Moderate)",
+  "level": 6,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "text": "**Activate** ⟨1⟩ Interact When you use a dose of addiction suppressant, it suppresses the effects of that addiction for 1 day, as if you had taken an actual dose of the drug but without any of the drug's effects, and it doesn't increase the addiction DC. You also gain a +2 item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant. For every drug, a specific suppressant must be crafted- no generalized addiction suppressant yet exists. In order to create an addiction suppressant, you must begin with a dose of the drug to be suppressed, then use alchemical reagents to generate an elixir that can be used to fight that drug's addiction. An addiction suppressant must be a higher level than the drug it is meant to suppress in order to work.",
+  "currentFlat": null,
+  "openQuestion": "The record never names the save. Drug addiction is a poison-trait affliction (Fortitude) — confirm registering this on Fortitude rather than all saves."
+ },
+ {
+  "id": "addiction-suppressant-greater",
+  "collection": "items",
+  "name": "Addiction Suppressant (Greater)",
+  "level": 10,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "text": "**Activate** ⟨1⟩ Interact When you use a dose of addiction suppressant, it suppresses the effects of that addiction for 1 day, as if you had taken an actual dose of the drug but without any of the drug's effects, and it doesn't increase the addiction DC. You also gain a +3 item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant. For every drug, a specific suppressant must be crafted- no generalized addiction suppressant yet exists. In order to create an addiction suppressant, you must begin with a dose of the drug to be suppressed, then use alchemical reagents to generate an elixir that can be used to fight that drug's addiction. An addiction suppressant must be a higher level than the drug it is meant to suppress in order to work.",
+  "currentFlat": null,
+  "openQuestion": "The record never names the save. Drug addiction is a poison-trait affliction (Fortitude) — confirm registering this on Fortitude rather than all saves."
+ },
+ {
+  "id": "addiction-suppressant-major",
+  "collection": "items",
+  "name": "Addiction Suppressant (Major)",
+  "level": 14,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "text": "**Activate** ⟨1⟩ Interact When you use a dose of addiction suppressant, it suppresses the effects of that addiction for 1 day, as if you had taken an actual dose of the drug but without any of the drug's effects, and it doesn't increase the addiction DC. You also gain a +4 item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant. For every drug, a specific suppressant must be crafted- no generalized addiction suppressant yet exists. In order to create an addiction suppressant, you must begin with a dose of the drug to be suppressed, then use alchemical reagents to generate an elixir that can be used to fight that drug's addiction. An addiction suppressant must be a higher level than the drug it is meant to suppress in order to work.",
+  "currentFlat": null,
+  "openQuestion": "The record never names the save. Drug addiction is a poison-trait affliction (Fortitude) — confirm registering this on Fortitude rather than all saves."
+ },
+ {
+  "id": "rubbing-set",
+  "collection": "items",
+  "name": "Rubbing Set",
+  "level": 0,
+  "traits": [],
+  "text": "By using a rubbing set, you can quickly make a copy of carvings or etchings you find during your explorations, making them easier to accurately reproduce. This kit consists of a roll of thin onion-skin paper in a waterproof leather case, several thick wax crayons, and a bar of sealing wax that can be melted and used to temporarily hold the paper in place while you take the rubbing. Using the kit consumes the materials and provides a +1 item bonus on checks to document or reproduce artwork or writing that has been carved, etched, or otherwise physically added to a surface.",
+  "currentFlat": null,
+  "openQuestion": "The item names no skill ('checks to document or reproduce'). Do you want skill 'all' with the condition text, or should we narrow it to Crafting and Society (the usual skills for copying inscriptions) at the cost of guessing beyond the text?"
+ },
+ {
+  "id": "detectives-kit",
+  "collection": "items",
+  "name": "Detective's Kit",
+  "level": 3,
+  "traits": [],
+  "text": "This leather satchel contains empty vials, a pair of tweezers, a supply of small linen cloths, a set of brass calipers and a knotted string for measuring distances, several pieces of chalk, a pen, and a blank notebook for keeping notes. Every component of a detective's kit is of exceeding quality, and thus a detective's kit adds a +1 item bonus to checks to investigate a crime scene, a clue, or similar details. Like other tool kits, a detective's kit uses one hand if wearing the kit and two hands otherwise.",
+  "currentFlat": null,
+  "openQuestion": "The kit names no skill — it says only \"checks to investigate a crime scene, a clue, or similar details\". Should it star EVERY skill plus Perception (as written here), or be narrowed to a short list (Perception, Society, Medicine, relevant Lore) to avoid putting a star on every row of the skill list?"
+ },
+ {
+  "id": "fishing-tackle-professional",
+  "collection": "items",
+  "name": "Fishing Tackle (Professional)",
+  "level": 3,
+  "traits": [],
+  "text": "This kit include a collapsible fishing pole, fishhooks, line, lures, and a fishing net. Professional fishing tackle grants a +1 item bonus to checks to fish.",
+  "currentFlat": null,
+  "openQuestion": "The item names no skill — only \"checks to fish\". Survival (Subsist) is the usual home, but Fishing Lore / Sailing Lore are equally valid at many tables. Mark Survival only, or also lore:fishing?"
+ },
+ {
+  "id": "staff-of-elemental-power",
+  "collection": "items",
+  "name": "Staff of Elemental Power",
+  "level": 6,
+  "traits": [
+   "magical",
+   "staff",
+   "two-hand-d8"
+  ],
+  "text": "This staff is tapered at the base and carved into a gem-studded twist at the top. While wielding the staff, you gain a +2 circumstance bonus to checks to identify elemental creatures. **Activate** Cast a Spell --- **Effect** You expend a number of charges from the staff to cast a spell from its list. - **Cantrip** Frostbite - **1st** Breathe Fire, Pummeling Rubble, - **2nd** Blazing Bolt, Resist Energy **Craft Requirements** Supply one casting of all listed ranks of all listed spells.",
+  "currentFlat": null,
+  "openQuestion": "The text names no skill (\"checks to identify elemental creatures\"). I mapped it to the skills the creature-identification table gives for elementals (Arcana and Nature). Confirm that pair, or prefer a single 'all skills' marker phrased 'to identify elemental creatures'?"
+ },
+ {
+  "id": "verdant-staff",
+  "collection": "items",
+  "name": "Verdant Staff",
+  "level": 6,
+  "traits": [
+   "magical",
+   "staff",
+   "two-hand-d8"
+  ],
+  "text": "This oak branch grows leaves in spring that change color in autumn and shed in winter. While wielding it, you gain a +2 circumstance bonus to checks to identify plants and fungi. --- **Activate** Cast a Spell **Effect** You expend a number of charges from the staff to cast a spell from its list. - **Cantrips** Tangle Vine - **1st** Runic Body, Runic Weapon - **2nd** Entangling Flora, Oaken Resilience, One with Plants, Shape Wood --- **Craft Requirements** Supply one casting of all listed ranks of all listed spells.",
+  "currentFlat": null,
+  "openQuestion": "The text names no skill. Nature is the skill used to Recall Knowledge about plants and fungi, so I mapped it there - confirm, or should this also mark other skills a GM might allow (e.g. a relevant Lore)?"
+ },
+ {
+  "id": "gravediggers-call",
+  "collection": "items",
+  "name": "Gravedigger's Call",
+  "level": 12,
+  "traits": [
+   "deadly-d8",
+   "forceful",
+   "magical",
+   "occult",
+   "reach"
+  ],
+  "text": "This rusted shovel functions as a *+2 striking decaying glaive* when wielded as a weapon, but it more closely resembles a neglected tool. Its haft was carved from the trunk of a long-dead tree that once grew among the broken stones of an abandoned cemetery, and its blade was forged from shattered remnants of the armor that failed to protect those buried there. When you carry or wield a *gravedigger's call*, you gain a +1 item bonus to Perception checks to seek options=gravediggers-call haunts and to skill checks to determine the reasons for a haunt or spirit's existence. --- **Activate—Call the Fallen** ⟨2⟩ (concentrate, manipulate) **Frequency** once per day **Effect** You cast Rouse Skeletons as a 5th-rank occult spell. The DC is 30. --- **Craft Requirements** Supply one casting of *rouse skeletons* (5th rank).",
+  "currentFlat": null,
+  "openQuestion": "The second half of the bonus is \"+1 item bonus... to skill checks to determine the reasons for a haunt or spirit's existence\" without naming a skill. Which skills should carry that star - Occultism and Religion only, or every skill the GM might allow (Society, Lore, etc.)? I will not guess a skill list the text does not state."
+ },
+ {
+  "id": "standard-astrolabe",
+  "collection": "items",
+  "name": "Standard Astrolabe",
+  "level": 2,
+  "traits": [],
+  "text": "**Activate—Calculate** 1 minute (manipulate) --- Astrolabes can be used for navigation in unfamiliar or featureless locations. To use an astrolabe, the holder must be trained in Survival. By spending 1 minute to measure the height of the stars and planets, a holder who knows the time and date can determine the latitude, and a holder who knows their latitude can determine the date and time. An astrolabe also grants a +1 item bonus to checks to identify celestial bodies. A standard astrolabe functions only on steady ground.",
+  "currentFlat": null,
+  "openQuestion": "The text never names the skill used to \"identify celestial bodies\" — it only requires Survival training to use the astrolabe. Attach the +1 to Survival only (what I did), or also to Astronomy Lore / Nature, or to 'all' skills with the condition text carrying the restriction?"
+ },
+ {
+  "id": "mariners-astrolabe",
+  "collection": "items",
+  "name": "Mariner's Astrolabe",
+  "level": 3,
+  "traits": [],
+  "text": "**Activate—Calculate** 1 minute (manipulate) --- Astrolabes can be used for navigation in unfamiliar or featureless locations. To use an astrolabe, the holder must be trained in Survival. By spending 1 minute to measure the height of the stars and planets, a holder who knows the time and date can determine the latitude, and a holder who knows their latitude can determine the date and time. An astrolabe also grants a +1 item bonus to checks to identify celestial bodies. A standard astrolabe functions only on steady ground. A mariner's astrolabe contains additional stabilizers that make it suitable for use on moving surfaces, such as the deck of a ship.",
+  "currentFlat": null,
+  "openQuestion": "Same as standard-astrolabe: which skill key should \"checks to identify celestial bodies\" hang on — Survival (my choice), an Astronomy-style Lore, or 'all'?"
+ },
+ {
+  "id": "combat-fishing-pole",
+  "collection": "items",
+  "name": "Combat Fishing Pole",
+  "level": 0,
+  "traits": [
+   "ranged-trip",
+   "tethered",
+   "thrown-20",
+   "versatile-p"
+  ],
+  "text": "The combat fishing pole is a sturdy and flexible pole that can be used as a weapon in melee. When a lure is attached to a combat fishing pole, it can be used to make thrown weapon attacks with a range increment of 20 feet, though the lure must then be reeled back in with an Interact action before the weapon can be used at range again (see the tethered trait). The ranged trip, tethered, thrown, and versatile P traits of the combat fishing pole only apply to thrown attacks made with a lure; throwing the pole itself leaves you with no practical way to retrieve it other than moving to its location and picking it up. A combat fishing pole can be used alongside fishing tackle to fish, and it adds its item bonus from weapon potency runes (if any) as an item bonus on checks to fish when used in this manner.",
+  "currentFlat": null,
+  "openQuestion": "\"Checks to fish\" names no skill — should this map to Survival (the Subsist/fishing skill), to Fishing Lore, or be left unassigned?"
+ },
+ {
+  "id": "astrolabe-of-the-falling-stars",
+  "collection": "items",
+  "name": "Astrolabe of the Falling Stars",
+  "level": 5,
+  "traits": [
+   "magical"
+  ],
+  "text": "This astrolabe is fashioned of magically attuned platinum plates and rings and is inset with carefully measured ruby gems. The astrolabe's back is engraved with helpful charts, a calendar, and a maker's mark. An astrolabe of falling stars can be used as a Mariner's Astrolabe. In addition, it can produce the following magical effect. --- **Activate—Starfall** ⟨1⟩ (manipulate) **Frequency** once per day **Effect** With a flick of your finger, you set the astrolabe's rule spinning, causing the inset rubies to become a blur. Choose a point within 100 feet. The astrolabe of falling stars calls down a brief rain of meteorites in a centered on that point, dealing damage to creatures in the area ( save). --- **Activate—Calculate** 1 minute (manipulate) Astrolabes can be used for navigation in unfamiliar or featureless locations. To use an astrolabe, the holder must be trained in Survival. By spending 1 minute to measure the height of the stars and planets, a holder who knows the time and date can determine the latitude, and a holder who knows their latitude can determine the date and time. An astrolabe also grants a +1 item bonus to checks to identify celestial bodies.",
+  "currentFlat": null,
+  "openQuestion": "Which skill does \"checks to identify celestial bodies\" map to — Survival (implied by the Survival-training requirement in the same paragraph), Astronomy Lore, or should it stay unassigned?"
+ },
+ {
+  "id": "specialists-ring-abjuration",
+  "collection": "items",
+  "name": "Specialist's Ring (Abjuration)",
+  "level": 10,
+  "traits": [
+   "focused",
+   "invested",
+   "magical"
+  ],
+  "text": "This *specialist's ring* is dedicated to the abjuration school of magic, and the ring is covered in symbols and glyphs related to the abjuration school according to the creator's arcane studies. You gain a +2 item bonus to Arcana checks, and a +1 circumstance bonus to recognize magical effects and items of the abjuration school of magic. --- **Activate** ⟨4⟩ envision **Frequency** once per day --- **Effect** You gain 1 Focus Point, which you can use only to cast a wizard school spell of the abjuration school. If not used by the end of your turn, this Focus Point is lost.",
+  "currentFlat": {
+   "skills": {
+    "arcana": 2
+   }
+  },
+  "openQuestion": "Does the +1 circumstance bonus 'to recognize magical effects and items of the abjuration school' apply only to Arcana, or to whichever skill is actually rolled to Identify Magic / Recall Knowledge about that effect (Nature, Occultism, Religion)? Mapped to Arcana here."
+ },
+ {
+  "id": "specialists-ring-conjuration",
+  "collection": "items",
+  "name": "Specialist's Ring (Conjuration)",
+  "level": 10,
+  "traits": [
+   "focused",
+   "invested",
+   "magical"
+  ],
+  "text": "This *specialist's ring* is dedicated to the conjuration school of magic, and the ring is covered in symbols and glyphs related to the conjuration school according to the creator's arcane studies. You gain a +2 item bonus to Arcana checks, and a +1 circumstance bonus to recognize magical effects and items of the conjuration school of magic. --- **Activate** ⟨4⟩ envision **Frequency** once per day --- **Effect** You gain 1 Focus Point, which you can use only to cast a wizard school spell of the conjuration school. If not used by the end of your turn, this Focus Point is lost.",
+  "currentFlat": {
+   "skills": {
+    "arcana": 2
+   }
+  },
+  "openQuestion": "Does the +1 circumstance bonus 'to recognize magical effects and items of the conjuration school' apply only to Arcana, or to whichever skill is rolled to Identify Magic / Recall Knowledge (Nature, Occultism, Religion)? Mapped to Arcana here."
+ },
+ {
+  "id": "specialists-ring-divination",
+  "collection": "items",
+  "name": "Specialist's Ring (Divination)",
+  "level": 10,
+  "traits": [
+   "focused",
+   "invested",
+   "magical"
+  ],
+  "text": "This *specialist's ring* is dedicated to the divination school of magic, and the ring is covered in symbols and glyphs related to the divination school according to the creator's arcane studies. You gain a +2 item bonus to Arcana checks, and a +1 circumstance bonus to recognize magical effects and items of the divination school of magic. --- **Activate** ⟨4⟩ envision **Frequency** once per day --- **Effect** You gain 1 Focus Point, which you can use only to cast a wizard school spell of the divination school. If not used by the end of your turn, this Focus Point is lost.",
+  "currentFlat": {
+   "skills": {
+    "arcana": 2
+   }
+  },
+  "openQuestion": "Does the +1 circumstance bonus 'to recognize magical effects and items of the divination school' apply only to Arcana, or to whichever skill is rolled to Identify Magic / Recall Knowledge (Nature, Occultism, Religion)? Mapped to Arcana here."
+ },
+ {
+  "id": "specialists-ring-enchantment",
+  "collection": "items",
+  "name": "Specialist's Ring (Enchantment)",
+  "level": 10,
+  "traits": [
+   "focused",
+   "invested",
+   "magical"
+  ],
+  "text": "This *specialist's ring* is dedicated to the enchantment school of magic, and the ring is covered in symbols and glyphs related to the enchantment school according to the creator's arcane studies. You gain a +2 item bonus to Arcana checks, and a +1 circumstance bonus to recognize magical effects and items of the enchantment school of magic. --- **Activate** ⟨4⟩ envision **Frequency** once per day --- **Effect** You gain 1 Focus Point, which you can use only to cast a wizard school spell of the enchantment school. If not used by the end of your turn, this Focus Point is lost.",
+  "currentFlat": {
+   "skills": {
+    "arcana": 2
+   }
+  },
+  "openQuestion": "Does the +1 circumstance bonus 'to recognize magical effects and items of the enchantment school' apply only to Arcana, or to whichever skill is rolled to Identify Magic / Recall Knowledge (Nature, Occultism, Religion)? Mapped to Arcana here."
+ },
+ {
+  "id": "specialists-ring-evocation",
+  "collection": "items",
+  "name": "Specialist's Ring (Evocation)",
+  "level": 10,
+  "traits": [
+   "focused",
+   "invested",
+   "magical"
+  ],
+  "text": "This *specialist's ring* is dedicated to the evocation school of magic, and the ring is covered in symbols and glyphs related to the evocation school according to the creator's arcane studies. You gain a +2 item bonus to Arcana checks, and a +1 circumstance bonus to recognize magical effects and items of the evocation school of magic. --- **Activate** ⟨4⟩ envision **Frequency** once per day --- **Effect** You gain 1 Focus Point, which you can use only to cast a wizard school spell of the evocation school. If not used by the end of your turn, this Focus Point is lost.",
+  "currentFlat": {
+   "skills": {
+    "arcana": 2
+   }
+  },
+  "openQuestion": "Does the +1 circumstance bonus 'to recognize magical effects and items of the evocation school' apply only to Arcana, or to whichever skill is rolled to Identify Magic / Recall Knowledge (Nature, Occultism, Religion)? Mapped to Arcana here."
+ },
+ {
+  "id": "specialists-ring-illusion",
+  "collection": "items",
+  "name": "Specialist's Ring (Illusion)",
+  "level": 10,
+  "traits": [
+   "focused",
+   "illusion",
+   "invested",
+   "magical"
+  ],
+  "text": "This *specialist's ring* is dedicated to the illusion school of magic, and the ring is covered in symbols and glyphs related to the illusion school according to the creator's arcane studies. You gain a +2 item bonus to Arcana checks, and a +1 circumstance bonus to recognize magical effects and items of the illusion school of magic. --- **Activate** ⟨4⟩ envision **Frequency** once per day --- **Effect** You gain 1 Focus Point, which you can use only to cast a wizard school spell of the illusion school. If not used by the end of your turn, this Focus Point is lost.",
+  "currentFlat": {
+   "skills": {
+    "arcana": 2
+   }
+  },
+  "openQuestion": "Does the +1 circumstance bonus 'to recognize magical effects and items of the illusion school' apply only to Arcana, or to whichever skill is rolled to Identify Magic / Recall Knowledge (Nature, Occultism, Religion)? Mapped to Arcana here."
+ },
+ {
+  "id": "specialists-ring-necromancy",
+  "collection": "items",
+  "name": "Specialist's Ring (Necromancy)",
+  "level": 10,
+  "traits": [
+   "focused",
+   "invested",
+   "magical"
+  ],
+  "text": "This *specialist's ring* is dedicated to the necromancy school of magic, and the ring is covered in symbols and glyphs related to the necromancy school according to the creator's arcane studies. You gain a +2 item bonus to Arcana checks, and a +1 circumstance bonus to recognize magical effects and items of the necromancy school of magic. --- **Activate** ⟨4⟩ envision **Frequency** once per day --- **Effect** You gain 1 Focus Point, which you can use only to cast a wizard school spell of the necromancy school. If not used by the end of your turn, this Focus Point is lost.",
+  "currentFlat": {
+   "skills": {
+    "arcana": 2
+   }
+  },
+  "openQuestion": "Does the +1 circumstance bonus 'to recognize magical effects and items of the necromancy school' apply only to Arcana, or to whichever skill is rolled to Identify Magic / Recall Knowledge (Nature, Occultism, Religion)? Mapped to Arcana here."
+ },
+ {
+  "id": "specialists-ring-transmutation",
+  "collection": "items",
+  "name": "Specialist's Ring (Transmutation)",
+  "level": 10,
+  "traits": [
+   "focused",
+   "invested",
+   "magical"
+  ],
+  "text": "This *specialist's ring* is dedicated to the transmutation school of magic, and the ring is covered in symbols and glyphs related to the transmutation school according to the creator's arcane studies. You gain a +2 item bonus to Arcana checks, and a +1 circumstance bonus to recognize magical effects and items of the transmutation school of magic. --- **Activate** ⟨4⟩ envision **Frequency** once per day --- **Effect** You gain 1 Focus Point, which you can use only to cast a wizard school spell of the transmutation school. If not used by the end of your turn, this Focus Point is lost.",
+  "currentFlat": {
+   "skills": {
+    "arcana": 2
+   }
+  },
+  "openQuestion": "Does the +1 circumstance bonus 'to recognize magical effects and items of the transmutation school' apply only to Arcana, or to whichever skill is rolled to Identify Magic / Recall Knowledge (Nature, Occultism, Religion)? Mapped to Arcana here."
+ },
+ {
+  "id": "specialists-ring",
+  "collection": "items",
+  "name": "Specialist's Ring",
+  "level": 10,
+  "traits": [
+   "focused",
+   "invested",
+   "magical"
+  ],
+  "text": "Each *specialist's ring* is dedicated to a single school of magic, and the ring is covered in symbols and glyphs related to that school according to the creator's arcane studies. A specialist's ring has the trait corresponding to its school of magic. You gain a +2 item bonus to Arcana checks, and a +1 circumstance bonus to recognize magical effects and items of the specific school of magic. --- **Activate** ⟨4⟩ envision **Frequency** once per day --- **Effect** You gain 1 Focus Point, which you can use only to cast a wizard school spell of the corresponding school. If not used by the end of your turn, this Focus Point is lost.",
+  "currentFlat": {
+   "skills": {
+    "arcana": 2
+   }
+  },
+  "openQuestion": "Two questions: (a) does the +1 circumstance bonus apply only to Arcana or to whichever skill is rolled to Identify Magic / Recall Knowledge (Nature, Occultism, Religion)? (b) should this generic 'specialists-ring' record carry an entry at all, or only the eight school-specific variants, to avoid a duplicate star if a character somehow holds both?"
+ }
+]

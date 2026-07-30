@@ -1,0 +1,1213 @@
+[
+ {
+  "id": "sacred-valkyrie-helm",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Sacred Valkyrie Helm",
+  "level": 19,
+  "traits": [
+   "apex",
+   "holy",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Lightning crackles from the wings flanking this helm, which is emblazoned with images of valkyries in the service of benevolent deities. You gain a +3 item bonus to Athletics checks and gain electricity resistance 20. When you invest in the helm, you either increase your Strength modifier by 1 or increase it to +4, whichever would give you a higher score. If you are unholy, you become Drained 2 as long as you wear the helm. **Activate—Path of the Pegasus** 10 minutes (concentrate) **Frequency** once per day --- **Effect** The *sacred valkyrie helm* casts interplanar teleport to your specifications. When you start this activation, each creature you target with this spell mounts a conjured pegasus who then carries them through reality to arrive at the specified location; each affected creature experiences the 10-minute activation as a kaleidoscopic ride through strange worlds and realities atop a pegasus's back. **Activate—Storm's Arms** ⟨2⟩ (concentrate, manipulate) **Frequency** once per day --- **Effect** The helm casts a 9th-rank weapon storm to your specifications. At your option, all damage caused by this spell is electricity damage—in this option, the duplicated weapons created by the spell appear to be made of lightning."
+ },
+ {
+  "id": "safety-measures",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Safety Measures",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You're often careful to be sure you're not hoisted on your own petard, or anyone else's, for that matter. When you have cover from a bomb, you gain resistance to damage caused by that bomb equal to half your level, plus a value equal to the circumstance bonus to AC granted by the cover. You gain these benefits against your own bombs regardless of whether you have cover."
+ },
+ {
+  "id": "sailors-collar",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Sailor's Collar",
+  "level": 4,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Veteran sailors like to wear this jaunty blue collar, tied with a small bow in the front and tucked into the belt. It can even save your life if you fall overboard. When wearing the *sailor's collar*, you gain a +1 item bonus to Athletics checks. **Activate—Gasp for Air** ⟨5⟩ (air, concentrate) **Frequency** once per day **Trigger** You fail a Swim check --- **Effect** Your collar inflates, giving you something to breathe from. You can breathe underwater for 1 minute."
+ },
+ {
+  "id": "sailors-collar-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Sailor's Collar (Greater)",
+  "level": 10,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Veteran sailors like to wear this jaunty blue collar, tied with a small bow in the front and tucked into the belt. It can even save your life if you fall overboard. When wearing the *sailor's collar*, you gain a +2 item bonus to Athletics checks. **Activate—Gasp for Air** ⟨5⟩ (air, concentrate) **Frequency** once per day **Trigger** You fail a Swim check --- **Effect** Your collar inflates, giving you something to breathe from. You can breathe underwater, and you gain a 10-foot swim Speed for 1 minute."
+ },
+ {
+  "id": "sanguine-pendant",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Sanguine Pendant",
+  "level": 10,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "dynamicSkillBonus"
+  ],
+  "inRegistries": [],
+  "text": "This clear crystal pendant contains a drop of blood from a sorcerer that expands and contracts as you cast spells. A sanguine pendant is associated with a specific sorcerer bloodline, and only sorcerers with that bloodline can invest this item. This item gains the trait matching the tradition of that bloodline. The pendant grants a +2 item bonus to both of your bloodline skills. --- **Activate—Blood's Call** ⟨4⟩ (concentrate) **Frequency** once per day --- **Effect** You gain 1 Focus Point, which you can spend only to cast a bloodline spell. If you don't spend this Focus Point by the end of this turn, it's lost. --- **Craft Requirements** You're a sorcerer with the associated bloodline."
+ },
+ {
+  "id": "sanguine-pendant-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Sanguine Pendant (Greater)",
+  "level": 17,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "dynamicSkillBonus"
+  ],
+  "inRegistries": [],
+  "text": "This clear crystal pendant contains a drop of blood from a sorcerer that expands and contracts as you cast spells. A sanguine pendant is associated with a specific sorcerer bloodline, and only sorcerers with that bloodline can invest this item. This item gains the trait matching the tradition of that bloodline. The pendant grants a +3 item bonus to both of your bloodline skills. --- **Activate—Blood's Call** ⟨4⟩ (concentrate) **Frequency** once per day --- **Effect** You gain 1 Focus Point, which you can spend only to cast a bloodline spell. If you don't spend this Focus Point by the end of this turn, it's lost. --- **Craft Requirements** You're a sorcerer with the associated bloodline."
+ },
+ {
+  "id": "sash-of-prowess",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Sash of Prowess",
+  "level": 10,
+  "traits": [
+   "focused",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This humble sash can be worn around the waist or across the chest. A sash of prowess often bears a coloration or a pattern that represents the monastery in which you trained but can also sport religious symbology, such as the open hand of Irori. You gain a +2 item bonus to Acrobatics and Athletics skill checks. --- **Activate—Effortless Mastery** ⟨4⟩ (concentrate) **Frequency** once per day **Trigger** You succeed at an Acrobatics or Athletics skill check --- **Effect** You critically succeed instead. --- **Activate—Reserves of Inner Strength** ⟨4⟩ (concentrate) **Frequency** once per day --- **Effect** You gain 1 Focus Point, which you can spend only to cast a qi spell. If you don't spend this Focus Point by the end of this turn, it's lost. --- **Craft Requirements** You're a monk who can cast qi spells."
+ },
+ {
+  "id": "sash-of-prowess-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Sash of Prowess (Greater)",
+  "level": 17,
+  "traits": [
+   "focused",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This humble sash can be worn around the waist or across the chest. A sash of prowess often bears a coloration or a pattern that represents the monastery in which you trained but can also sport religious symbology, such as the open hand of Irori. You gain a +3 item bonus to Acrobatics and Athletics skill checks. --- **Activate—Effortless Mastery** ⟨4⟩ (concentrate) **Frequency** once per day **Trigger** You succeed at an Acrobatics or Athletics skill check --- **Effect** You critically succeed instead. **Activate—Reserves of Inner Strength** ⟨4⟩ (concentrate) **Frequency** once per day --- **Effect** You gain 1 Focus Point, which you can spend only to cast a qi spell. If you don't spend this Focus Point by the end of this turn, it's lost. --- **Craft Requirements** You're a monk who can cast qi spells."
+ },
+ {
+  "id": "saved-by-clockwork",
+  "lane": "situational",
+  "collection": "backgrounds",
+  "name": "Saved by Clockwork",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Through bloody combat, a terrible accident, or purposeful sacrifice, you've lost some piece of your body that has been replaced with a clockwork mechanism. Whether your arm is now a whirring series of pumps, steel coils, and iron gears; your heart a intricate crystal clock that requires winding every day; or your lower leg a sculpted metal tube powered by adamantine springs and steam, part of you needs regular maintenance and repair. You might have received instructions from the brilliant inventor who saved you, or you might have woken up on a battlefield with no memory of the procedure or the individuals involved. Regardless, you possess the knowledge to take care of yourself-even if it's how to wind a key in your own heart or reconstruct a mechanical foot. Choose two attribute boosts. One must be to **Strength** or **Intelligence**, and one is a free attribute boost. You're trained in the Crafting skill. Every day you must perform 10 minutes of maintenance and wind up your clockwork parts, or you risk failure of the components, with consequences depending on what you replaced (determined by you and the GM). Your clockwork components allow you to react to danger with alacrity. You gain a +2 circumstance bonus to initiative rolls. --- ## Background details **Attribute Boosts** Intelligence or Strength, one free **Trained Skill** Crafting"
+ },
+ {
+  "id": "scene-stealers-tunic",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Scene Stealer's Tunic",
+  "level": 13,
+  "traits": [
+   "comfort",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This suit of padded armor consists of a beautifully woven pleated tunic adorned with a gold pattern and narrow bands of white fur trim on a deep blue background with matching pants, all of which are meant to signal wealth and status. This +2 resilient raiment padded armor was custom designed for Alessandro Domenesso, an actor as well known for their astounding costume changes as for their roguish off-stage activities. Even without utilizing the magic of this armor, it's elegant enough that it could easily be mistaken as fine clothing. **Activate—Look At Me!** ⟨2⟩ (concentrate, illusion, mental, visual) **Frequency** once per hour --- **Effect** You make yourself visible and apparent to a creature you can see that's within 30 feet. The scene stealer's tunic transforms into something incredibly gaudy, distracting, or otherwise compelling to the target creature, who must attempt a save. --- **Critical Success** The target is unaffected. **Success** The target is distracted by you and keeps looking your way. They take a –1 status penalty to Perception checks against everything but you, a –1 status penalty to all saving throws against your visual effects, and gain a +2 status bonus to all saving throws against visual effects created by anyone else; these penalties and bonus last for 1 minute. **Failure** As success, but the target is also off-guard to everyone other than you as long as you remain visible. **Critical Failure** As failure, but the target also becomes Slowed 1 as they spend extra time on their turn admiring, glowering, or otherwise being distracted by you."
+ },
+ {
+  "id": "scouts-warning",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Scout's Warning",
+  "level": 4,
+  "traits": [
+   "ranger",
+   "rogue"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** You are about to roll a Perception, Stealth, or Survival check for initiative. --- You visually or audibly warn your allies of danger, granting them each a +1 circumstance bonus to their initiative rolls, or a +2 circumstance bonus if you're using the Scout exploration activity. Depending on whether you use gestures or call out, this action gains either the visual or the auditory trait, respectively."
+ },
+ {
+  "id": "security-badge",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Security Badge",
+  "level": 7,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "When displayed prominently, this iron badge grants you authority and gravitas. You gain a +1 item bonus to Intimidation checks. **Activate—Authoritative Command** ⟨1⟩ (auditory, concentrate, incapacitation, linguistic, mental) **Frequency** once per day --- **Effect** You shout at a foe within 60 feet, compelling them to stand in place and drop everything they're holding. The target attempts a save with the following results. --- **Critical Success** The target is unaffected. **Success** The target is Slowed 1 as it does one of the following at the beginning of its next turn: stand in place or release what it's holding. **Failure** The target is Slowed 2 as it stands in place and releases what it's holding at the beginning of its next turn. **Critical Failure** The target is Slowed 3 as it spends its next turn to stand in place, release what it's holding, and place its hands in the air."
+ },
+ {
+  "id": "selfless-parry",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Selfless Parry",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You protect those near to you with a flash of steel and a stroke of good luck. When you're benefiting from Dueling Parry, allies adjacent to you gain a +1 circumstance bonus to AC. If you have Dueling Riposte, you can use it when an enemy within your reach critically fails a Strike against an ally adjacent to you, not just against yourself."
+ },
+ {
+  "id": "shadewither-key",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Shadewither Key",
+  "level": 22,
+  "traits": [
+   "artifact",
+   "cursed",
+   "illusion",
+   "invested",
+   "primal",
+   "shadow"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This palm-sized talisman hangs on a string of braided bark fibers. It resembles a leaf from some unknown tree similar to oak, carved from jade and then dipped halfway into black ink that looks wet despite feeling completely dry. The gate key was originally created to open the aiudara known as the Seventh Arch. In recent years, corrupting magic has given it additional, stranger powers. When you wear and invest the *Shadewither Key*, shadows gather around you. You gain a +1 item bonus to Stealth checks. **Activate** ⟨2⟩ Interact --- **Activate—Umbral Double** ⟨1⟩ (concentrate, manipulate) --- **Effect** You touch the *Shadewither Key* and command the shadows it casts around you to peel away. The shadows form an umbral double that resembles you in every way except for its fiery red eyes and the expression of wicked delight on its face. The double occupies the same space as you and attempts to intercept any attacks aimed at you. A creature must succeed at a when targeting you with an attack, spell, or other effect; on a failure, they hit the shadowy double instead of you. The effect lasts for 1 minute or until the double is hit, whichever comes first. Once the double is hit, it's destroyed. As long as the double exists, you don't gain the *Shadewither Key's* item bonus to Stealth checks."
+ },
+ {
+  "id": "shadow",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Shadow",
+  "level": 5,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Armor etched with this rune takes on a hazy black appearance. You gain a +1 item bonus to Stealth checks while wearing the armor."
+ },
+ {
+  "id": "shadow-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Shadow (Greater)",
+  "level": 9,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Armor etched with this rune takes on a hazy black appearance. You gain a +2 item bonus to Stealth checks while wearing the armor."
+ },
+ {
+  "id": "shadow-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Shadow (Major)",
+  "level": 17,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Armor etched with this rune takes on a hazy black appearance. You gain a +3 item bonus to Stealth checks while wearing the armor."
+ },
+ {
+  "id": "shadowmist-cape",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Shadowmist Cape",
+  "level": 19,
+  "traits": [
+   "apex",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This black cape flows more like a vaporous liquid than fabric. The cape grants you a +3 item bonus to Stealth checks. When you invest the cape, you either increase your Dexterity modifier by 1 or increase it to +4, whichever would give you a higher value. **Activate** ⟨5⟩ (manipulate) **Frequency** once per hour **Trigger** A creature misses you with an attack --- **Effect** Attempt a Stealth check against the triggering creature's Perception DC. If you roll a success, you're hidden from that creature until the end of your next turn or until right after you use a hostile action against that creature. If you roll a critical success, you're hidden from that creature until the end of your next turn, even if you use hostile actions against that creature. --- **Activate** ⟨2⟩ (manipulate) **Frequency** once per day --- **Effect** With a twirl of the cape, you transform yourself into a puff of gray smoke. You cast Vapor Form on yourself."
+ },
+ {
+  "id": "shared-avoidance",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Shared Avoidance",
+  "level": 10,
+  "traits": [
+   "cleric"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can project your premonitions of danger to your allies. When you use Premonition of Avoidance, allies within 20 feet of you who are rolling the same saving throw against the same hazard also gain a +2 circumstance bonus to their saving throws."
+ },
+ {
+  "id": "shared-clarity",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Shared Clarity",
+  "level": 18,
+  "traits": [
+   "cleric"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can project your premonitions of clarity to your allies. When you use Premonition of Clarity, allies within 15 feet of you who failed the same saving throw against the same mental effect can also spend their reactions to reroll the failed saving throw with a +2 circumstance bonus."
+ },
+ {
+  "id": "shared-warding",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Shared Warding",
+  "level": 12,
+  "traits": [
+   "thaumaturge"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You ward your allies from the attacks of your foes whenever you apply those protections to yourself. When you gain a status bonus to AC and saves from Esoteric Warden, you can choose to grant the same benefit to all allies within 30 feet."
+ },
+ {
+  "id": "sharkskin-robe",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Sharkskin Robe",
+  "level": 12,
+  "traits": [
+   "invested",
+   "magical",
+   "water"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This sandy-textured robe comes with sleeves that resemble dorsal fins. It's believed to have been developed by frustrated alchemists from the Universe for trips to the Plane of Water. The *sharkskin robe* grants you a swim Speed equal to your land Speed and a +2 item bonus to Athletics checks. --- **Activate—Shark's Elegance** ⟨2⟩ (concentrate, manipulate) **Frequency** once per hour **Effect** For 1 minute, any time you make a Strike, your weapon or unarmed attack gains the benefit of the *underwater* weapon property rune."
+ },
+ {
+  "id": "shatterstone",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Shatterstone",
+  "level": 12,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "sonic",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- A shatterstone is a small ceramic orb. Inside are reactive agents that set up an intense field of sonic vibration when the stone breaks. The bomb grants a +2 item bonus to attack rolls and deals 3d6 sonic damage and 3 sonic splash damage. Much of the sound is ultrasonic, and creatures with sonic weakness that take damage from the bomb must succeed at a save or be deafened until the end of their next turn."
+ },
+ {
+  "id": "shatterstone-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Shatterstone (Greater)",
+  "level": 18,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "sonic",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- A shatterstone is a small ceramic orb. Inside are reactive agents that set up an intense field of sonic vibration when the stone breaks. The bomb grants a +3 item bonus to attack rolls and deals 4d6 sonic damage and 4 sonic splash damage. Much of the sound is ultrasonic, and creatures with sonic weakness that take damage from the bomb must succeed at a save or be deafened until the end of their next turn."
+ },
+ {
+  "id": "shield-from-arrows",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Shield from Arrows",
+  "level": 8,
+  "traits": [
+   "guardian"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** An adjacent ally is the target of a physical ranged Strike. **Requirements** You can see the attacker, you are not off-guard, and you have Raised your Shield. --- You place your shield in the path of an oncoming projectile. Your adjacent ally gains a +4 circumstance bonus to AC against the triggering attack. If the attack misses, you have deflected it with your shield."
+ },
+ {
+  "id": "shield-of-the-unified-legion",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Shield of the Unified Legion",
+  "level": 20,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This high-grade orichalcum shield (Hardness 16, HP 64, and BT 32) bears a +3 major striking shield boss that cannot be removed. It gleams brightly in any light, drawing attention at all times. When you Raise this Shield, ephemeral reflections of it appear in front of each of your allies within 30 feet, granting them its +2 circumstance bonus to AC for as long as they are within 30 feet of you and your shield is raised. --- **Activate** (2 actions) Interact (force) **Frequency** once per minute --- **Effect** You heft the shield and thrust it forward, causing ephemeral reflections of the shield to surround you and then rush outward in a or (your choice). Make a shield bash Strike against each enemy within the area, except that the damage dealt is force damage. Each target you hit is moved 10 feet away from you (each target you critically hit is also knocked prone). This is forced movement. These shield bashes count against your multiple attack penalty, but the penalty doesn't increase until after you have made all these attacks."
+ },
+ {
+  "id": "shield-wallop",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Shield Wallop",
+  "level": 8,
+  "traits": [
+   "flourish",
+   "guardian"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are wielding a shield. --- Attacks with your shield knock the sense out of your foes. Make a shield bash, Shield Boss, or Shield Spikes Strike. If you hit and deal damage, the target is Stupefied 1 until the start of your next turn (Stupefied 2 on a critical hit). If your shield is a Tower Shield, Fortress Shield, or another shield that grants a higher circumstance bonus to AC when you Take Cover behind it, the creature is instead stupefied 2 if you hit and deal damage to it (Stupefied 3 on a critical hit)."
+ },
+ {
+  "id": "shielded-recovery",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Shielded Recovery",
+  "level": 4,
+  "traits": [
+   "commander"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can bandage wounds with the same hand you use to hold your shield. You can use the same hand you are using to wield a shield to Treat Wounds or use Battle Medicine, and you are considered to have a hand free for other uses of Medicine as long as the only thing you are holding or wielding in that hand is a shield. When you use Battle Medicine on an ally while wielding a shield, they gain a +1 circumstance bonus to AC and Reflex saves that lasts until the start of your next turn or until they are no longer adjacent to you, whichever comes first."
+ },
+ {
+  "id": "shining-symbol",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Shining Symbol",
+  "level": 3,
+  "traits": [
+   "divine",
+   "invested",
+   "light"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "If you worship a deity, this golden amulet transforms into your deity's religious symbol when you invest it. You gain a +1 item bonus to Religion. The symbol casts dim light in a . --- **Activate—Spiritual Light** ⟨2⟩ (concentrate, light, revelation) **Frequency** once per day **Effect** The light cast by the symbol becomes bright light for 10 minutes and shines through bodies to reveal hints of the spirits within. Creatures in the light receive a –1 status penalty to Deception and Stealth checks. You can Dismiss this activation. --- **Craft Requirements** You must be holy or unholy."
+ },
+ {
+  "id": "shining-symbol-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Shining Symbol (Greater)",
+  "level": 9,
+  "traits": [
+   "divine",
+   "invested",
+   "light"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "If you worship a deity, this golden amulet transforms into your deity's religious symbol when you invest it. You gain a +2 item bonus to Religion. The symbol casts dim light in a . --- **Activate—Spiritual Light** ⟨2⟩ (concentrate, light, revelation) **Frequency** once per day **Effect** The light cast by the symbol becomes bright light for 10 minutes and shines through bodies to reveal hints of the spirits within. Creatures in the light receive a –2 status penalty to Deception and Stealth checks, and while it's active your enemies in the light gain weakness 5 to spirit damage. You can Dismiss this activation. --- **Craft Requirements** You must be holy or unholy."
+ },
+ {
+  "id": "shining-symbol-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Shining Symbol (Major)",
+  "level": 17,
+  "traits": [
+   "divine",
+   "invested",
+   "light"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "If you worship a deity, this golden amulet transforms into your deity's religious symbol when you invest it. You gain a +3 item bonus to Religion. The symbol casts dim light in a . --- **Activate—Spiritual Light** ⟨2⟩ (concentrate, light, revelation) **Frequency** once per day **Effect** The light cast by the symbol becomes bright light for 10 minutes and shines through bodies to reveal hints of the spirits within. Creatures in the light receive a –3 status penalty to Deception and Stealth checks, and while it's active your enemies in the light gain weakness 10 to spirit damage. You can Dismiss this activation. --- **Craft Requirements** You must be holy or unholy."
+ },
+ {
+  "id": "signature-crafting",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Signature Crafting",
+  "level": 7,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Magic items you create bear a stamp specific to your handiwork. When you successfully Craft a permanent magic item, roll a when the item is fully complete. Any benefit a creature gains from an item quirk applies only while the creature wears the item (for a worn item) or holds it (for a held item). The GM might allow custom quirks similar to those listed. --- **Critical Success** Choose an item quirk from the table and its specifics. **Success** The item gains a random item quirk with any specifics selected by the GM. | d10 | Quirk | Description | | --- | --- | --- | | 1 | Cavorting | Dances in place when not in use. | | 2 | Clean | Remains pristine despite filth. | | 3 | Environmental | Appearance changes to match its environment. | | 4 | Filthy | A layer of filth always remains. | | 5 | Floating | Slowly descends when dropped. | | 6 | Glittering | Shimmers and glows with light bright as a torch. | | 7 | Invisible | The item is invisible, but becomes visible for 1 round after being used. | | 8 | Loyal | Floats within 5 feet of its owner, as if on a tether (but can still be seized by someone else). | | 9 | Mood coloration | User's mood affects the item's color. | | 10 | Skillful | The item grants a +1 item bonus to one type of skill checks. |"
+ },
+ {
+  "id": "silent-sting",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Silent Sting",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** You make a Strike with a weapon of light bulk. --- You quickly hide your weapon to make it difficult to pin the attack on you. You attempt to Conceal an Object to hide the triggering weapon. Your Stealth check is compared to the Perception DC of all creatures within 30 feet that can see you. You automatically succeed against creatures farther than 30 feet. The target of your Strike gains a +4 circumstance bonus to their Perception DC for this check. If your Stealth check is a success, you hide your weapon so well that the creature can't clearly determine where the attack originated."
+ },
+ {
+  "id": "silverscrap-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Silverscrap Bomb",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Silverscrap Bomb May contain spoilers from Hellbreakers Source Pathfinder #222: Hellbreakers pg. 209 Usage held in 1 hand Bulk L Activate Strike Silverscrap bombs are compact clusters of silver shards that explode upon impact, shredding everything in the vicinity. The bomb grants an item bonus to attack rolls and deals piercing damage and piercing splash damage, according to the bomb's type. All damage from the bomb is treated as silver for the purposes of weaknesses, resistances, and the like. Silverscrap Bomb (Lesser) Source Pathfinder #222: Hellbreakers pg. 209 Price 11 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d4 piercing damage and 2 piercing splash damage. Silverscrap Bomb (Moderate) Source Pathfinder #222: Hellbreakers pg. 209 Price 255 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d4 piercing damage and 3 piercing splash damage. Silverscrap Bomb (Greater) Source Pathfinder #222: Hellbreakers pg. 209 Price 2,550 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d4 piercing damage and 4 piercing splash damage."
+ },
+ {
+  "id": "silverscrap-bomb-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Silverscrap Bomb (Greater)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Silverscrap bombs are compact clusters of silver shards that explode upon impact, shredding everything in the vicinity. The bomb grants a +3 item bonus to attack rolls and deals 4d4 piercing damage and 4 piercing splash damage. All damage from the bomb is treated as silver for the purposes of weaknesses, resistances, and the like."
+ },
+ {
+  "id": "silverscrap-bomb-lesser",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Silverscrap Bomb (Lesser)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Silverscrap bombs are compact clusters of silver shards that explode upon impact, shredding everything in the vicinity. The bomb grants a +1 item bonus to attack rolls and deals 2d4 piercing damage and 2 piercing splash damage. All damage from the bomb is treated as silver for the purposes of weaknesses, resistances, and the like."
+ },
+ {
+  "id": "silverscrap-bomb-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Silverscrap Bomb (Moderate)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Silverscrap bombs are compact clusters of silver shards that explode upon impact, shredding everything in the vicinity. The bomb grants a +2 item bonus to attack rolls and deals 3d4 piercing damage and 3 piercing splash damage. All damage from the bomb is treated as silver for the purposes of weaknesses, resistances, and the like."
+ },
+ {
+  "id": "silversoul-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Silversoul Bomb",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "mental",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This rare alchemical bomb gathers and concentrates the emotions that linger in a burial ground where generations of beloved ancestors have been interred, infusing that powerful emotional energy into the alchemically prepared powdered silver stored within the bomb. This energy glows with a soft, silver radiance and, if stored in a clear container, allows a silversoul bomb to be used as a torch to illuminate an area. You gain a +1 item bonus to attack rolls, and the bomb deals 2d4 mental damage, 1d6 persistent mental damage to nindorus, and 2 mental splash damage. A creature that takes splash damage from the bomb and fails a save is dazzled for 1 round as glowing silver particles cling to its face. Nindorus are particularly harmed by silversoul bombs and take 1d6 persistent mental damage. Against nindorus, the bomb's item bonus also applies to its save DC to resist being resist being dazzled or blinded. Creatures that have weakness to silver (including most nindorus) have an equal amount of weakness to the mental damage caused by a silversoul bomb, due to the silver infused into the energy within."
+ },
+ {
+  "id": "silversoul-bomb-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Silversoul Bomb (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "mental",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This rare alchemical bomb gathers and concentrates the emotions that linger in a burial ground where generations of beloved ancestors have been interred, infusing that powerful emotional energy into the alchemically prepared powdered silver stored within the bomb. This energy glows with a soft, silver radiance and, if stored in a clear container, allows a silversoul bomb to be used as a torch to illuminate an area. You gain a +2 item bonus to attack rolls, and the bomb deals 3d4 mental damage, 2d6 persistent mental damage to nindorus, and 3 mental splash damage. A creature that takes splash damage from the bomb and fails a save is blinded for 1 round and then dazzled for 1 round thereafter. Nindorus are particularly harmed by silversoul bombs and take 2d6 persistent mental damage. Against nindorus, the bomb's item bonus also applies to its save DC to resist being dazzled or blinded. Creatures that have weakness to silver (including most nindorus) have an equal amount of weakness to the mental damage caused by a silversoul bomb, due to the silver infused into the energy within."
+ },
+ {
+  "id": "silversoul-bomb-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Silversoul Bomb (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "mental",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This rare alchemical bomb gathers and concentrates the emotions that linger in a burial ground where generations of beloved ancestors have been interred, infusing that powerful emotional energy into the alchemically prepared powdered silver stored within the bomb. This energy glows with a soft, silver radiance and, if stored in a clear container, allows a silversoul bomb to be used as a torch to illuminate an area. You gain a +3 item bonus to attack rolls, and the bomb deals 4d4 mental damage, 3d6 persistent mental damage to nindorus, and 4 mental splash damage. A creature that takes splash damage from the bomb is dazzled for 1 round unless it fails a save, in which case it's permanently blinded. Nindorus are particularly harmed by silversoul bombs and take 3d6 persistent mental damage. Against nindorus, the bomb's item bonus also applies to its save DC to resist being dazzled or blinded. Creatures that have weakness to silver (including most nindorus) have an equal amount of weakness to the mental damage caused by a silversoul bomb, due to the silver infused into the energy within."
+ },
+ {
+  "id": "sinister-knight",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Sinister Knight",
+  "level": 8,
+  "traits": [
+   "illusion",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "*Sinister knight* armor shrouds the wearer's identity in secrecy, allowing Crimson Reclaimers to pass among foes without being immediately unmasked. The wearer gains a +1 item bonus to Deception checks. **Activate** ⟨1⟩ envision --- **Effect** With a thought, the wearer activates a disguise. While the *sinister knight* armor's disguise is active, any identifying insignia or aesthetic of the armor is replaced by generic malevolent aesthetics such as spikes or demonic faces. While in the disguise, the wearer is always considered to be taking precautions against lifesense, and even a creature that successfully notices the wearer with its lifesense mistakes the wearer for an undead unless it critically succeeds at its Perception check or the wearer critically fails a Deception or Stealth check. Finally, while in the disguise, the rune attempts to counteract any effects that would reveal your alignment; on a successful counteract check, rather than negate the effect, the rune causes the effect to perceive your alignment as evil (maintaining any lawful or chaotic component of your alignment). The wearer can Dismiss the disguise, and if the wearer's armor is removed, the disguise deactivates automatically."
+ },
+ {
+  "id": "skarjas-heartstone",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Skarja's Heartstone",
+  "level": 13,
+  "traits": [
+   "invested",
+   "occult"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This pale gemstone grants its wearer a +2 item bonus to saving throws and the ability to discern a target's alignment (as *detect alignment*, but can detect chaotic, evil, good, and lawful auras simultaneously) at will by peering through the gemstone. Like all hag *heartstones*, this gemstone is powered by Skarja's spirit. Skarja does not need to wear her *heartstone* to benefit from its powers, but she cannot use them if she hasn't touched her *heartstone* in the past 7 days. If Skarja's *heartstone* is separated from her for more than 7 days (or if she's been dead for 7 days), it becomes a non-magical gemstone. ***Note:** Item is worth 1000 gp when non-magical* Skarja's *heartstone* allows her to use additional occult innate spells: Ethereal Jaunt (9th level) and Seize Soul at will, Shadow Blast (6th level) twice per day, and Spirit Blast once per day. --- **Activate** ⟨1⟩ command **Requirements** You must be touching the heartstone. --- **Effect** The *heartstone* attempts to counteract one disease affecting you (counteract rank 7, counteract modifier 1d20+23). --- **Craft Requirements** You must be a night hag."
+ },
+ {
+  "id": "skyseeker",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Skyseeker",
+  "level": 8,
+  "traits": [
+   "archetype",
+   "electricity",
+   "sonic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're in Sky and Heaven Stance. --- You Leap toward an opponent. At any point in the Leap, you can make a single Strike against a creature within your reach. At 12th level, if you hit with this Strike, instead of finishing your Leap, you can immediately attempt a second Leap from the space where you struck the target of your Strike. You can make a single Strike against a target within your reach during this second Leap as well. At 16th level, you can attempt a third Leap if your second Strike hits, and you can attack a target at any point during this third Leap. All Leaps made during this activity gain a +10‐foot status bonus to the total height or distance of your leap, and no two Strikes can target the same creature."
+ },
+ {
+  "id": "sluggish-bracelet",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Sluggish Bracelet",
+  "level": 3,
+  "traits": [
+   "cursed",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "A silver charm bracelet, a sluggish bracelet appears to be a Bracelet of Dashing, granting you a +1 item bonus to Acrobatics checks. If the curse goes unrecognized, you think you can Activate it to gain a +10-foot status bonus to your Speed for 1 minute. Instead, its activation is as follows. **Activate** ⟨1⟩ (concentrate) --- **Effect** You take a –10-foot penalty to your Speed for 1 minute, and the bracelet fuses to you. Thereafter, it grants you no bonus to Acrobatics checks, and it imposes a –5-foot status penalty to your Speed."
+ },
+ {
+  "id": "snap-out-of-it",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Snap Out of It!",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "auditory",
+   "emotion",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Snap Out of It! Source Player Core 2 pg. 205 Archetype Marshal Prerequisites Marshal Dedication You give a quick shout, hoping to shake the fog clouding your ally’s thoughts. Choose one target ally in your marshal’s aura who is affected by a mental effect that allowed a Will save and has a duration of no longer than 1 minute. That ally can immediately attempt a Will save with a +1 circumstance bonus against the effect’s DC, ending the effect on a success. This can’t end the effect for any creatures other than your target ally. Regardless of the result of the save, your ally is temporarily immune to Snap Out of It! for 10 minutes."
+ },
+ {
+  "id": "snap-out-of-it-marshal",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Snap Out of It! (Marshal)",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "auditory",
+   "emotion",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You give a quick shout, hoping to shake the fog clouding your ally's thoughts. Choose one target ally in your marshal's aura who is affected by a mental effect that allowed a Will save and has a duration of no longer than 1 minute. That ally can immediately attempt a Will save with a +1 circumstance bonus against the effect's DC, ending the effect on a success. This can't end the effect for any creatures other than your target ally. Regardless of the result of the save, your ally is temporarily immune to Snap Out of It! for 10 minutes."
+ },
+ {
+  "id": "snare-kit",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Snare Kit",
+  "level": 0,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Snare Kit Source Core Rulebook pg. 291 Price 5 gp Hands 2 Bulk 2 This kit contains tools and materials for creating snares. A snare kit allows you to Craft snares using the Crafting skill. You can draw and replace a worn snare kit as part of the action to use it. Snare Kit Source Core Rulebook pg. 291 Price 5 gp Hands 2 Bulk 2 Snare Kit (Specialist) Source Core Rulebook pg. 291 Price 55 gp Hands 2 Bulk 2 A specialist snare kit gives you a +1 item bonus to the check."
+ },
+ {
+  "id": "soaring",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Soaring",
+  "level": 14,
+  "traits": [],
+  "engineFieldsPresent": [
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "A set of soaring armor helps you fly faster and protects you and nearby allies from falling. While wearing soaring armor, you gain a +10-foot item bonus to your fly Speed, if you have one. As normal, if your fly Speed is based on your land Speed and you already have an item bonus to your land Speed, these bonuses aren't cumulative. --- **Activate** ⟨5⟩ command **Trigger** You or a creature within 60 feet of you is falling --- **Effect** You cast Gentle Landing on the triggering creature."
+ },
+ {
+  "id": "sorcerous-potency",
+  "lane": "situational",
+  "collection": "classFeatures",
+  "name": "Sorcerous Potency",
+  "level": 1,
+  "traits": [
+   "sorcerer"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Because of the magical power inherent in your blood, your spells that hurt or cure are stronger than those of other spellcasters. When you Cast a Spell from your spell slots that either deals damage or restores Hit Points, you gain a status bonus to that spell's damage or healing equal to the spell's rank. This applies only to the initial damage or healing the spell deals when cast. An individual creature takes this damage or benefits from this healing only once per spell, even if the spell would damage or heal that creature multiple times."
+ },
+ {
+  "id": "southbank-traditionalist",
+  "lane": "situational",
+  "collection": "backgrounds",
+  "name": "Southbank Traditionalist",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "The political faction of Southbank represents the original founders of Willowshore, a hearty band of settlers whose skills and focus tend toward the earthly and humble. While there are certainly those in this faction who regard Northridge as vapid urbanites, merchants, and power-hungry politicians, most in Southbank devote their energy to helping Willowshore stay fed, honoring its long-standing traditions, and remaining relatively self-sufficient. Your interests in Willowshore's history are closely tied to the traditions of farming and building what you need with your own two hands, as well as taking part in the shared oral history of the region. Whether it's enjoying discussions with local elders about the past or helping newcomers learn Willowshore's ways, you're always eager to help uphold the town's traditions. Your home is likely located south of the Ceiba River, on the southernmost outskirts of town. During the Reenactment Festival, you likely spent time helping to set up the feasts, assisted in running some of the events, and otherwise worked behind the scenes. You were chosen to be an abductee during the Reenactment Festival because you lost a bet, owed a favor, or otherwise got pressured or tricked into the role by a family member, friend, or coworker. Perhaps someone who was going to be one of the abductees but had to back out at the last moment, and so you ended up taking their place. Choose two attribute boosts. One must be to **Charisma** or **Constitution**, and one is a free attribute boost. You're trained in the Crafting skill and the Farming Lore skill. You gain the Hobnobber feat. Seasonal Boon (Southbank Traditionalist) --- You can add one of the following two adjustments to any background to further modify your choice to match your vision for your PC. **Family:** You and one (or more) other PCs are close family members (siblings, parent/child, married, etc.) If you take this adjustment, the other PC(s) who are your family must also take this adjustment. Choose one of the following to replace the skill feat you otherwise would've gained from your background. (You and your sibling need not share the same choice—a sibling who wants to keep their background's skill feat can pick \"Typical\" from the list.) - **Bickering:** You have a long-standing feud with your sibling(s). Whenever your sibling(s) critically fail a significant skill check or attack roll and you witness their failure, you gain a +1 status bonus to your saving throws until the end of your next turn as you secretly (or perhaps not so secretly) delight in their failure. - **Close-Knit:** You and your sibling(s) work well together, and you go all-out to help them when they're badly hurt. When you provide Aid or Administer First Aid to your sibling(s), the DC is 5 lower than normal. - **Typical:** You have a standard relationship with your sibling(s); don't change your background's skill feat. **Foundling:** You aren't a native to Willowshore, but you did grow up in the town. You might have adoptive parents, or you could've grown up on the streets. Choose one of the following to replace the bonus feat you otherwise would've gained from your background. - **Bitter:** "
+ },
+ {
+  "id": "sovereigns-blade",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Sovereign's Blade",
+  "level": 18,
+  "traits": [
+   "light",
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're wielding a melee weapon. --- As you raise your weapon into the air, it begins to shed a bright light that pierces darkness and calls your knights to your side. Spend a Mythic Point; you automatically counteract any magical darkness whose counteract rank is 7 or lower. Any knight who can see your raised weapon can immediately use their reaction to Stride up to twice directly toward you, and any of your knights who are adjacent to you after this movement get a +2 status bonus to their attack rolls until the start of your next turn."
+ },
+ {
+  "id": "spear-of-the-destroyers-flame",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Spear of the Destroyer's Flame",
+  "level": 20,
+  "traits": [
+   "artifact",
+   "reach"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "The tip of this *+3 major striking greater flaming returning speed longspear* is edged with several razor-sharp obsidian blades. The spear has the thrown 30 feet weapon trait, in addition to the normal weapon traits for a longspear. While the *Spear of the Destroyer's Flame* is in your possession, you gain fire resistance 20. When you critically hit a creature with the spear, the creature's blood begins to boil, unleashing blasts of heat from the wound. The creature takes 2d8 damage, in addition to the persistent fire damage from the greater flaming rune; all creatures adjacent to the creature when it takes the persistent fire damage take an equal amount of fire damage. Like the fire damage from the greater flaming rune, this fire damage ignores a creature's fire resistance, though it doesn't ignore fire immunity. In addition to its deadliness as a weapon, the *Spear of the Destroyer's Flame* gives its wielder full control over the Army of Fire, though the orders of the Commander of Flame supersede the orders of anyone wielding the spear, as noted on page 17. While the spear is in your possession, you're aware of the location of the Army of Fire and the army's distance from you. In addition, you can give orders to the Army of Fire, and the army's members will understand and obey you, regardless of what language you speak. If you're within 1 mile of the Army of Fire, the army and its members gain a +10 circumstance bonus to their Speeds. Any members of the Army of Fire within 100 feet of you become quickened and can use the additional action to Step, Stride, or Strike. The army remains quickened for 1 minute after moving further than 100 feet from you. The Army of Fire has unwavering loyalty to the Commander of Flame, an individual who has completed a special activation that ties their soul to the spear. As long as the Army of Fire can see and hear the Commander of Flame, the army will follow the Commander's orders. The Commander of Flame can sense the presence of the Army of Fire and issue orders, regardless of language, with the same effects as for someone in possession of the spear. The Commander of Flame still needs the spear in hand to muster the Army of Fire, however. If the Commander of Flame doesn't hold the *Spear of the Destroyer's Flame* for 1 week, it returns to Cuetzmonquali's gut, instantly teleporting to the creature's location. If Cuetzmonquali is dead at this time, the spear also resurrects the creature, using the effects of a critical success on a 10th-rank Resurrect ritual. **Activate** 1 minute (envision, Interact) **Frequency** once per day --- **Effect** You attempt to tie your soul to the spear. If the current Commander of Flame still lives, you must attempt either a Will save, Diplomacy check, Intimidation check, or Warfare Lore check. The DC of this check is equal to the current Commander's Will DC, Diplomacy DC, Intimidation DC, or Warfare Lore DC, whichever is highest. On a success, you become the Commander of Flame. On a failure, the current Commander knows your name and appearance and is aware of your exact location for 24 hours. Activate 1 hour (envision, Interact) **Frequency** once per week --- **Effect** You us"
+ },
+ {
+  "id": "spell-swipe",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Spell Swipe",
+  "level": 8,
+  "traits": [
+   "magus"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Requirements** Your Spellstrike is charged. --- You attack in an arc and enact your spell against everyone you hit. Make a Spellstrike, but roll separate Strikes to attack two creatures, each of whom must be within your melee reach and adjacent to each other. If your spell could affect two or more targets, your spell affects whichever foes you hit, not just the first target; otherwise, choose one target to affect with the spell. A Spell Swipe counts as two attacks for your multiple attack penalty, but the penalty doesn't increase until after you make both attacks. If you're using a weapon that has the sweep trait, its circumstance bonus applies against both targets. You can use this activity with only melee Strikes, even if you have the starlit span hybrid study or a similar ability. If you use Expansive Spellstrike to Spellstrike with an area spell, apply the area as described in Expansive Spellstrike, choosing one of the creatures you Strike to determine the area and whether the spell fails due to a critically failed Strike. If you use Expansive Spellstrike to Spellstrike with a targeted spell, the spell is lost completely only if both Strikes are critical failures."
+ },
+ {
+  "id": "spellsap-grenade",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Spellsap Grenade",
+  "level": 12,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- The mixture of reagents, liquid djezet, and solid metal shrapnel inside this grenade explodes on contact with air. A *spellsap grenade* deals 3d4 slashing damage and 3 slashing splash damage. You gain a +2 item bonus to attack rolls. On a hit against a prepared or spontaneous spellcaster, the target must succeed at a saving throw or lose one prepared spell or one spontaneous spell slot. The spell is randomly selected from among the caster's highest three spell ranks (and then from among the spells prepared in that rank, for a prepared spellcaster)."
+ },
+ {
+  "id": "spellsap-grenade-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Spellsap Grenade (Greater)",
+  "level": 18,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- The mixture of reagents, liquid djezet, and solid metal shrapnel inside this grenade explodes on contact with air. A *spellsap grenade* deals 4d4 slashing damage and 4 slashing splash damage. You gain a +3 item bonus to attack rolls. On a hit against a prepared or spontaneous spellcaster, the target must succeed at a saving throw or lose one prepared spell or one spontaneous spell slot. The spell is randomly selected from among the caster's highest three spell ranks (and then from among the spells prepared in that rank, for a prepared spellcaster)."
+ },
+ {
+  "id": "spellsap-grenade-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Spellsap Grenade (Moderate)",
+  "level": 12,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Spellsap Grenade Source Rage of Elements pg. 147 Usage held in 1 hand Bulk L Activate Strike The mixture of reagents, liquid djezet, and solid metal shrapnel inside this grenade explodes on contact with air. A spellsap grenade deals the listed slashing damage and splash damage. On a hit against a prepared or spontaneous spellcaster, the target must succeed at a Will saving throw with the listed DC or lose one prepared spell or one spontaneous spell slot. The spell is randomly selected from among the caster's highest three spell ranks (and then from among the spells prepared in that rank, for a prepared spellcaster). The grenade grant an item bonus to attack rolls. Spellsap Grenade (Moderate) Source Rage of Elements pg. 147 Price 360 gp Bulk L The item bonus is +2. The bomb deals 3d4 slashing damage and 3 slashing splash damage, and the DC is 30. Spellsap Grenade (Greater) Source Rage of Elements pg. 147 Price 4,500 gp Bulk L The item bonus is +3. The bomb deals 4d4 slashing damage and 4 slashing splash damage, and the DC is 38."
+ },
+ {
+  "id": "spider-satchel",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Spider Satchel",
+  "level": 2,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Spider Satchel May contain spoilers from Wardens of Wildwood Source Pathfinder #203 Shepherd of Decay pg. 75 Usage held in 1 hand Bulk L Activate Strike The Verduran Forest’s tiny tent-trap spider lays her eggs in a pyramidal web, and her young hatch only in response to intense vibration, such as the struggles of an ensnared insect or even songbird. Sadistic alchemists gather and augment these eggs, packing them in silken satchels that disgorge thousands of biting spider babies on impact. Many types of spider satchel grant a bonus to attack rolls. Until shaken off—or for the desperate target, incinerated—these spiders make it difficult to concentrate on anything other than escaping the swarm. The fascination effect ends automatically if a creature uses further hostile actions against the target, but hostile actions against the target’s allies don’t automatically end the effect. Lesser Spider Satchel Source Pathfinder #203 Shepherd of Decay pg. 75 Price 6 gp The bomb deals 1d6 persistent poison damage, 1 poison splash damage, and fascinates the target while the persistent damage lasts. Moderate Spider Satchel Source Pathfinder #203 Shepherd of Decay pg. 76 Price 16 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d6 persistent poison damage, 2 poison splash damage, and fascinates the target while the persistent damage lasts. Greater Spider Satchel Source Pathfinder #203 Shepherd of Decay pg. 76 Price 350 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d6 persistent poison damage, 3 poison splash damage, and fascinates the target while the persistent damage lasts. Major Spider Satchel Source Pathfinder #203 Shepherd of Decay pg. 76 Price 4,000 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d6 persistent poison damage, 4 poison splash damage, and fascinates the target while the persistent damage lasts."
+ },
+ {
+  "id": "spider-satchel-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Spider Satchel (Greater)",
+  "level": 12,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- The Verduran Forest's tiny tent-trap spider lays her eggs in a pyramidal web, and her young hatch only in response to intense vibration, such as the struggles of an ensnared insect or even songbird. Sadistic alchemists gather and augment these eggs, packing them in silken satchels that disgorge thousands of biting spider babies on impact. Until shaken off—or for the desperate target, incinerated—these spiders make it difficult to concentrate on anything other than escaping the swarm. The fascination effect ends automatically if a creature uses further hostile actions against the target, but hostile actions against the target's allies don't automatically end the effect. You gain a +2 item bonus to attack rolls. The bomb deals 3d6 persistent poison damage, 3 poison splash damage, and fascinates the target while the persistent damage lasts."
+ },
+ {
+  "id": "spider-satchel-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Spider Satchel (Major)",
+  "level": 18,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- The Verduran Forest's tiny tent-trap spider lays her eggs in a pyramidal web, and her young hatch only in response to intense vibration, such as the struggles of an ensnared insect or even songbird. Sadistic alchemists gather and augment these eggs, packing them in silken satchels that disgorge thousands of biting spider babies on impact. Until shaken off—or for the desperate target, incinerated—these spiders make it difficult to concentrate on anything other than escaping the swarm. The fascination effect ends automatically if a creature uses further hostile actions against the target, but hostile actions against the target's allies don't automatically end the effect. You gain a +3 item bonus to attack rolls. The bomb deals 4d6 persistent poison damage, 4 poison splash damage, and fascinates the target while the persistent damage lasts."
+ },
+ {
+  "id": "spider-satchel-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Spider Satchel (Moderate)",
+  "level": 4,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- The Verduran Forest's tiny tent-trap spider lays her eggs in a pyramidal web, and her young hatch only in response to intense vibration, such as the struggles of an ensnared insect or even songbird. Sadistic alchemists gather and augment these eggs, packing them in silken satchels that disgorge thousands of biting spider babies on impact. Until shaken off—or for the desperate target, incinerated—these spiders make it difficult to concentrate on anything other than escaping the swarm. The fascination effect ends automatically if a creature uses further hostile actions against the target, but hostile actions against the target's allies don't automatically end the effect. You gain a +1 item bonus to attack rolls. The bomb deals 2d6 persistent poison damage, 2 poison splash damage, and fascinates the target while the persistent damage lasts."
+ },
+ {
+  "id": "spiral-athame",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Spiral Athame",
+  "level": 22,
+  "traits": [
+   "agile",
+   "artifact",
+   "finesse",
+   "thrown-10",
+   "versatile-s"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "The pommel of this *+4 major striking disruptive ghost touch high-grade silver dagger* is a black glass orb that contains a tiny blue comet that spirals through the orb's interior. Strikes with the dagger deal an additional 1d8 damage to worshippers of Urgathoa and to anyone who has ever created or summoned an undead creature. While the dagger is in your possession, you gain a +4 circumstance bonus to Medicine checks and to Midwifery Lore checks. If you're a worshipper of Pharasma, you gain imprecise lifesense with a range of 60 feet while holding the dagger. If you're undead or a worshipper of Urgathoa, you're Stupefied 4 while holding the dagger. Despite its utility in combat, the *Spiral Athame* is intended as a ritual implement, meant to bless newborns and protect them from the predations of undead. If you use the *Spiral Athame* to cut the umbilical cord of a newly born creature, that creature gains resistance to void damage equal to their level (minimum 1) and gains a +2 status bonus to saving throws against death effects and necromancy. These bonuses are permanent. Additionally, that creature can never become an undead creature. **Activate** ⟨2⟩ command, Interact (divine, necromancy) --- **Effect** You point the *Spiral Athame* at a corpse within 30 feet, shielding it from corruption. The *Spiral Athame* casts 5th-rank Peaceful Rest on the corpse. **Activate** ⟨2⟩ command, interact (divine, necromancy) --- **Effect** You point the *Spiral Athame* to the sky and pray, warding creatures against undead. This has the effect of 3rd-rank Circle of Protection, except it wards against undead creatures rather than creatures of a specified alignment, and the emanation is centered on the *Spiral Athame*. **Destruction** If an undead creature uses the *Spiral Athame* to slay a psychopomp usher while within the Boneyard, the *Spiral Athame*'s pommel shatters and the *Spiral Athame* becomes a mundane, high-grade silver dagger with no special abilities."
+ },
+ {
+  "id": "spirits-wrath",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Spirit's Wrath",
+  "level": 12,
+  "traits": [
+   "attack",
+   "barbarian",
+   "concentrate",
+   "rage"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You call forth an ephemeral spirit, typically the apparition of an ancestor or a nature spirit, which takes the form of a wisp. The wisp makes a melee wisp rush unarmed attack against an enemy within 120 feet of you. The wisp's attack modifier is equal to your proficiency bonus for martial weapons plus your Strength modifier plus a +2 item bonus, and it applies the same circumstance and status bonuses and penalties that you have. On a hit, the wisp deals spirit damage equal to 4d8 plus your Constitution modifier. Don't apply your Rage damage or your weapon specialization damage, but circumstance and status bonuses and penalties that would also affect the wisp's damage apply. On a critical hit, the wisp deals double damage and the target becomes Frightened 1. This attack uses and counts toward your multiple attack penalty as if you were the one attacking."
+ },
+ {
+  "id": "splendid-skull-mask",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Splendid Skull Mask",
+  "level": 0,
+  "traits": [
+   "ratfolk"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Prerequisite: Skull Creeper. The mask grants you a +1 item bonus to Intimidation."
+ },
+ {
+  "id": "stages-of-fate",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Stages of Fate",
+  "level": 8,
+  "traits": [
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "At one time, the hero-gods could not tell their own prophecies. Ongalte, hero-god of deicide, defied this rule and cemented why it should be upheld. Those that can reach into the web of fates and pluck out a string are forbidden from speaking of their own myth. Yet nothing forbids them from speaking the myths of others. You peer through the world around you to see the delicate threads connecting others to their fate when they become afflicted. Choose a creature within 30 feet that you can see and who you know is affected by an ongoing affliction that progresses through stages, such as most diseases or poisons. Spend 1 Mythic Point, then attempt a Religion check at mythic proficiency against that affliction's DC. --- **Critical Success** The next time the afflicted creature attempts a saving throw against the affliction, they automatically gain a critical success. If this results in the affliction coming to an end, you gain 1 Mythic Point. **Success** The next time the afflicted creature attempts a saving throw against the affliction, they gain a +1 circumstance bonus to the roll and increase the result of the saving throw by one degree of success. **Failure** The next time the afflicted creature attempts a saving throw against the affliction, they gain a +1 circumstance bonus. **Critical Failure** You share the afflicted's fate, and are exposed to their affliction. You must immediately save against the affliction's effect."
+ },
+ {
+  "id": "stags-helm",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Stag's Helm",
+  "level": 6,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This impressive-looking helmet is crafted to resemble the skull of a mighty stag. Although made from bone, the antlers and helm are as strong as iron. Rather than restrict the senses, a *stag's helm* enhances them, causing the world to appear in more vibrant colors and significantly enhancing the ambient sounds of the region without making them distracting. While worn, it grants a +1 item bonus to Perception checks. --- **Activate** ⟨4⟩ **Frequency** once per day (or once per hour if the wearer worships Erastil) **Effect** Choose a single creature within 30 feet. The *stag's helm* focuses your aim and grants supernatural insight into your next shot. Your target is off-guard to the next ranged Strike you make this turn against them."
+ },
+ {
+  "id": "stalwart-standard",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Stalwart Standard",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your banner makes it harder for your foes to push your allies around and encourages your allies to protect the innocent. Allies benefiting from your Cavalier's Banner feat also gain a +1 circumstance bonus to their Fortitude and Reflex DCs against attempts to Disarm, Grapple, Shove, and Trip. Each benefited ally also gains a +1 status bonus to attack rolls against any creature that has dealt damage to an innocent of a lower level than that ally within the last round; summoned creatures, companions, or any creatures you or your allies put into danger on purpose to attempt to gain this bonus don't count."
+ },
+ {
+  "id": "star-grenade",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Star Grenade",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "fire",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Star Grenade May contain spoilers from Outlaws of Alkenstar Source Pathfinder #180: The Smoking Gun pg. 75 Usage held in 1 hand Bulk L Activate Strike These unusual gunpowder bombs, typically marked with a symbol of a four-pointed star on their outer surface, explode outward in the shape of a cross whenever they Strike a target. When you throw a star grenade, arrange two perpendicular 25-foot lines over the target, both centered on the target and moving straight through the target, not diagonally. Creatures other than the target within these two lines take splash damage (typically 8 squares take splash damage for a Medium creature). Any effect that alters or adjusts the splash area's shape or size, like the alchemist feat Expanded Splash, doesn't apply to star grenades. Star Grenade (Lesser) Source Pathfinder #180: The Smoking Gun pg. 75 Price 3 gp Bulk L The bomb deals 1d8 fire damage and 1 splash damage. Star Grenade (Moderate) Source Pathfinder #180: The Smoking Gun pg. 75 Price 10 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d8 fire damage and 2 splash damage. Star Grenade (Greater) Source Pathfinder #180: The Smoking Gun pg. 75 Price 250 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 3d8 fire damage and 3 splash damage. Star Grenade (Major) Source Pathfinder #180: The Smoking Gun pg. 75 Price 2,500 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 4d8 fire damage and 4 splash damage."
+ },
+ {
+  "id": "star-grenade-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Star Grenade (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "fire",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- These unusual gunpowder bombs, typically marked with a symbol of a four-pointed star on their outer surface, explode outward in the shape of a cross whenever they Strike a target. When you throw a star grenade, arrange two perpendicular 25-foot lines over the target, both centered on the target and moving straight through the target, not diagonally. Creatures other than the target within these two lines take splash damage (typically 8 squares take splash damage for a Medium creature). Any effect that alters or adjusts the splash area's shape or size, like the alchemist feat Expanded Splash, doesn't apply to star grenades. You gain a +2 item bonus to attack rolls. The bomb deals 3d8 damage and 3 splash Damage."
+ },
+ {
+  "id": "star-grenade-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Star Grenade (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "fire",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- These unusual gunpowder bombs, typically marked with a symbol of a four-pointed star on their outer surface, explode outward in the shape of a cross whenever they Strike a target. When you throw a star grenade, arrange two perpendicular 25-foot lines over the target, both centered on the target and moving straight through the target, not diagonally. Creatures other than the target within these two lines take splash damage (typically 8 squares take splash damage for a Medium creature). Any effect that alters or adjusts the splash area's shape or size, like the alchemist feat Expanded Splash, doesn't apply to star grenades. You gain a +3 item bonus to attack rolls. The bomb deals 4d8 damage and 4 splash Damage."
+ },
+ {
+  "id": "star-grenade-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Star Grenade (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "fire",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- These unusual gunpowder bombs, typically marked with a symbol of a four-pointed star on their outer surface, explode outward in the shape of a cross whenever they Strike a target. When you throw a star grenade, arrange two perpendicular 25-foot lines over the target, both centered on the target and moving straight through the target, not diagonally. Creatures other than the target within these two lines take splash damage (typically 8 squares take splash damage for a Medium creature). Any effect that alters or adjusts the splash area's shape or size, like the alchemist feat Expanded Splash, doesn't apply to star grenades. You gain a +1 item bonus to attack rolls. The bomb deals 2d8 damage and 2 splash Damage."
+ },
+ {
+  "id": "starfaring-cloak",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Starfaring Cloak",
+  "level": 24,
+  "traits": [
+   "artifact",
+   "divine",
+   "invested",
+   "light"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "The swirling folds of a *starfaring cloak* appear to contain the night sky, with the stars rotating hypnotically through its firmament shedding dim light to a range of 10 feet. While wearing the cloak, you gain a +10-foot item bonus to your Speed and a fly Speed equal to your Speed. You can survive comfortably without breathing, in the void of space, and in severe or extreme cold or heat. Also, you gain sustenance from starlight and sunlight, so if you're outdoors for an hour or more per day, you don't need to eat or drink. While wearing the cloak, you can navigate perfectly and unerringly by looking up at the sky. --- **Activate** ⟨5⟩ (concentrate, fortune) **Frequency** once per day **Trigger** You make an attack roll, skill check, or saving throw **Effect** Reroll the triggering roll and take the higher result. This is a fortune effect. --- **Activate** ⟨2⟩ (concentrate, manipulate) **Frequency** once per day **Effect** The cloak casts Sleep at 4th rank (DC 42). --- **Activate** ⟨3⟩ (concentrate) **Frequency** once per week **Effect** The cloak casts Teleport at 10th rank. If you name no destination, it teleports you to a random planet in a random location that's safe for you. --- **Destruction** If the wearer of a *starfaring cloak* is bound by for a century and a day, the cloak dissolves into light. This time is reduced to a year and a day if the wearer is placed in eternal slumber by *imprisonment* and subjected to the Nightmare spell once per day."
+ },
+ {
+  "id": "steel-yourself",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Steel Yourself!",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "auditory",
+   "emotion",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You encourage an ally to toughen up, giving them a fighting chance. Choose one ally in your marshal's aura. The ally gains temporary Hit Points equal to your Charisma modifier and a +2 circumstance bonus to Fortitude saves. Both benefits last until the start of your next turn."
+ },
+ {
+  "id": "steelscour",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Steelscour",
+  "level": 1,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Steelscour Source Wake the Dead #5 pg. 25 Usage held in 1 hand Bulk L Activate Interact or Strike A viscous acidic goo fills this glass vial, specially designed to eat through metallic objects. You can throw the steelscour as an alchemical bomb, target a metal creature or metal object held by a creature. Steelscour has no effect on living or undead flesh, and deals half damage to objects constructed of non-metal materials. Instead of using steelscour as a bomb, you can pour it on an adjacent unattended metal object with an Interact action, automatically dealing the listed persistent acid damage for 5 rounds with not flat check to end the condition. When used this way, steelscour loses the bomb trait. Steelscour (lesser) Source Wake the Dead #5 pg. 25 Price 3 gp It deals 1d8 persistent acid damage that ignores up to 5 hardness from metal. Steelscour (moderate) Source Wake the Dead #5 pg. 25 Price 9 gp You gain a +1 item bonus to attack rolls. It deals 2d8 persisten acid damage that ignores up to 5 hardness from metal. Steelscour (greater) Source Wake the Dead #5 pg. 25 Price 215 gp You gain a +2 item bonus to attack rolls. It deals 3d8 persisten acid damage that ignores up to 10 hardness from metal. Steelscour (major) Source Wake the Dead #5 pg. 25 Price 210 gp You gain a +3 item bonus to attack rolls. It deals 4d8 persisten acid damage that ignores up to 15 hardness from metal."
+ },
+ {
+  "id": "steelscour-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Steelscour (greater)",
+  "level": 11,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Interact or Strike --- A viscous acidic goo fills this glass vial, specially designed to eat through metallic objects. You can throw the steelscour as an alchemical bomb, targeting a metal creature or metal object held by a creature. You gain a +2 item bonus to attack rolls. It deals 3d8 persistent acid damage that ignores up to 10 hardness from metal. Steelscour has no effect on living or undead flesh and deals half damage to objects constructed of non-metal materials. Instead of using steelscour as a bomb, you can pour it on an adjacent unattended metal object with an Interact action, automatically dealing the listed persistent acid damage for 5 rounds with no flat check to end the condition. When used this way, steelscour loses the bomb trait."
+ },
+ {
+  "id": "steelscour-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Steelscour (major)",
+  "level": 17,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Interact or Strike --- A viscous acidic goo fills this glass vial, specially designed to eat through metallic objects. You can throw the steelscour as an alchemical bomb, targeting a metal creature or metal object held by a creature. You gain a +3 item bonus to attack rolls. It deals 4d8 persistent acid damage that ignores up to 15 hardness from metal. Steelscour has no effect on living or undead flesh and deals half damage to objects constructed of non-metal materials. Instead of using steelscour as a bomb, you can pour it on an adjacent unattended metal object with an Interact action, automatically dealing the listed persistent acid damage for 5 rounds with no flat check to end the condition. When used this way, steelscour loses the bomb trait."
+ }
+]

@@ -1,0 +1,92 @@
+[
+ {
+  "id": "crimson-godsblood-serum-moderate",
+  "name": "Crimson Godsblood Serum (Moderate)",
+  "level": 12,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Though it contains but a tiny drop of Gorum's blood, drinking this thick, swirling potion fills the user with divine wrath and resilience. While under the effect of the potion, you gain a +3 status bonus to physical damage rolls for 1 minute. The first time during that minute you're reduced to 0 Hit Points but not immediately killed, you avoid being knocked out, regain 3d8+10 Hit Points, and become confused for 1 round, and your wounded condition increases by 1."
+ },
+ {
+  "id": "elixir-of-the-peaks-greater",
+  "name": "Elixir of the Peaks (Greater)",
+  "level": 11,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- With much of New Thassilon located among the rugged heights of the Kodar Mountains, these elixirs have grown in popularity among those frequently travel the region. For 1 day, drinking this elixir while in mountainous terrain protects you from the effects of severe cold and grants you a +3 item bonus to Athletics checks made to Climb, High Jump, or Long Jump, as well as to saving throws against the effects of high altitude. The elixir also protects against extreme cold."
+ },
+ {
+  "id": "elixir-of-the-peaks-lesser",
+  "name": "Elixir of the Peaks (Lesser)",
+  "level": 4,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- With much of New Thassilon located among the rugged heights of the Kodar Mountains, these elixirs have grown in popularity among those frequently travel the region. For 1 hour, drinking this elixir while in mountainous terrain protects you from the effects of severe cold and grants you a +1 item bonus to Athletics checks made to Climb, High Jump, or Long Jump, as well as to saving throws against the effects of high altitude."
+ },
+ {
+  "id": "elixir-of-the-peaks-major",
+  "name": "Elixir of the Peaks (Major)",
+  "level": 15,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- With much of New Thassilon located among the rugged heights of the Kodar Mountains, these elixirs have grown in popularity among those frequently travel the region. For 7 days, drinking this elixir while in mountainous terrain protects you from the effects of severe cold and grants you a +3 item bonus to Athletics checks made to Climb, High Jump, or Long Jump, as well as to saving throws against the effects of high altitude. The elixir also protects against extreme cold."
+ },
+ {
+  "id": "elixir-of-the-peaks-moderate",
+  "name": "Elixir of the Peaks (Moderate)",
+  "level": 7,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- With much of New Thassilon located among the rugged heights of the Kodar Mountains, these elixirs have grown in popularity among those frequently travel the region. For 1 day, drinking this elixir while in mountainous terrain protects you from the effects of severe cold and grants you a +2 item bonus to Athletics checks made to Climb, High Jump, or Long Jump, as well as to saving throws against the effects of high altitude."
+ },
+ {
+  "id": "hagbane-biscuit",
+  "name": "Hagbane Biscuit",
+  "level": 3,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- This gingerbread biscuit is stamped in the shape of a menacing witch, her features decorated with anise and fennel seeds. When you eat the biscuit, its sharp spices warm your body for 10 minutes, granting you a +1 status bonus Perception checks to pierce a hag's disguise, to skill checks to Recall Knowledge about hags, and to saving throws made against hags' abilities and spells. During this time, weapons you wield count as cold iron for any physical attacks made against hags. The biscuit tastes especially bitter to hags, changelings, and other hag-related creatures (such as a sorcerer with the hag bloodline). If such a creature attempts to eat the biscuit, they must succeed at a save or it fails and wastes the action (and is Sickened 1 on a critical failure)."
+ },
+ {
+  "id": "lastwall-soup-greater",
+  "name": "Lastwall Soup (Greater)",
+  "level": 18,
+  "description": "**Activate** 1 minute (Interact) --- Crimson Reclaimers make this rich, hearty soup using herbs that baffle the senses of the undead. A bowl of Lastwall soup is as nourishing as a full meal. Gravelands Herbalists have spent time with the Knights of Lastwall, and have learned how to improve upon Lastwall soup. For 1 hour after consuming a bowl of improved Lastwall soup, you gain a +3 item bonus to Stealth checks and DCs against undead. In addition, you gain 10 temporary hit points that last for 10 minutes. --- *Note: Paizo did not provide a price for this item, so we set it as appropriate for a level 18 consumable.*"
+ },
+ {
+  "id": "lastwall-soup-improved",
+  "name": "Lastwall Soup (Improved)",
+  "level": 10,
+  "description": "**Activate** 1 minute (Interact) --- Crimson Reclaimers make this rich, hearty soup using herbs that baffle the senses of the undead. A bowl of Lastwall soup is as nourishing as a full meal. Gravelands Herbalists have spent time with the Knights of Lastwall, and have learned how to improve upon Lastwall soup. For 1 hour after consuming a bowl of improved Lastwall soup, you gain a +3 item bonus to Stealth checks and DCs against undead. --- *Note: Paizo did not provide a price for this item, so we set it as appropriate for a level 10 consumable.*"
+ },
+ {
+  "id": "olfactory-obfuscator-lesser",
+  "name": "Olfactory Obfuscator (Lesser)",
+  "level": 3,
+  "description": "**Activate** ⟨1⟩ Interact --- This frothing fluid causes the drinker's body to exude trace odor absorbing oils. For 10 minutes after drinking this elixir, your scent is nearly unnoticeable. Creatures with imprecise scent don't detect you with that sense unless they Seek for you, and you are concealed from creatures that perceive you with precise scent. You gain a +4 item bonus against attempts to Seek you by creatures using only scent-based senses; if they use any other senses as well, the bonus doesn't apply."
+ },
+ {
+  "id": "one-days-breath",
+  "name": "One Day's Breath",
+  "level": 7,
+  "description": "This glass bottle holds breezes captured from the heart of the Plane of Air. When you inhale the bottle's contents, the air fills your lungs so completely that you no longer need to breathe, at least for a time. While the effect lasts, you also gain a status bonus against inhaled threats, such as inhaled poisons. If you spend 1 Mythic Point when you activate the day's breath, you inhale so deeply that you increase the effect's duration. You don't need to breathe for 24 hours. While the effect lasts, you gain a +1 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don't need to breathe for 7 days."
+ },
+ {
+  "id": "ten-days-breath",
+  "name": "Ten Day's Breath",
+  "level": 15,
+  "description": "This glass bottle holds breezes captured from the heart of the Plane of Air. When you inhale the bottle's contents, the air fills your lungs so completely that you no longer need to breathe, at least for a time. While the effect lasts, you also gain a status bonus against inhaled threats, such as inhaled poisons. If you spend 1 Mythic Point when you activate the day's breath, you inhale so deeply that you increase the effect's duration. You don't need to breathe for 10 days. While the effect lasts, you gain a +3 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don't need to breathe for 1 year."
+ },
+ {
+  "id": "three-days-breath",
+  "name": "Three Day's Breath",
+  "level": 11,
+  "description": "This glass bottle holds breezes captured from the heart of the Plane of Air. When you inhale the bottle's contents, the air fills your lungs so completely that you no longer need to breathe, at least for a time. While the effect lasts, you also gain a status bonus against inhaled threats, such as inhaled poisons. If you spend 1 Mythic Point when you activate the day's breath, you inhale so deeply that you increase the effect's duration. You don't need to breathe for 3 days. While the effect lasts, you gain a +2 status bonus to saves against inhaled threats. If you spend 1 Mythic Point, you don't need to breathe for 30 days."
+ },
+ {
+  "id": "aon-peshspine-grenade",
+  "name": "Peshspine Grenade",
+  "level": 1,
+  "description": "Peshspine grenades are explosive bombs packed with alchemically treated needles from the pesh cactus. A peshspine grenade deals the listed piercing damage and splash damage. On a hit, the target gains the stupefied condition until the end of its next turn. Many types of peshpine grenade grant an item bonus to attack rolls. The bomb deals 1d6 piercing damage and 1 piercing splash damage, and the target is stupefied 1. You gain a +1 item bonus to attack rolls. The bomb deals 2d6 piercing damage and 2 piercing splash damage, and the target is stupefied 1. You gain a +2 item bonus to attack rolls. The bomb deals 3d6 piercing damage and 3 piercing splash damage, and the target is stupefied 2. You gain a +3 item bonus to attack rolls. The bomb deals 4d6 piercing damage and 4 piercing splash damage, and the target is stupefied 3."
+ },
+ {
+  "id": "aon-death-knell-powder",
+  "name": "Death Knell Powder",
+  "level": 14,
+  "description": "This poison is made from toxic spores of death knell mushrooms, which are reduced to a gray powder and suffused with necromantic energy. If you're reduced to 0 Hit Points while under the effect of death knell powder , you must succeed at a DC 34 Will save or die (this is a death effect). If you die, a random creature adjacent to you is bolstered by your departing life force and gains 20 temporary HP and a +1 status bonus to attack and damage rolls for 10 minutes. Saving Throw DC 34 Fortitude; Maximum Duration 6 rounds; Stage 1 7d6 poison damage (1 round); Stage 2 9d6 poison damage (1 round); Stage 3 12d6 poison damage (1 round) Craft Requirements Supply one casting of death knell ."
+ },
+ {
+  "id": "aon-inflamation-flask",
+  "name": "Inflamation Flask",
+  "level": 2,
+  "description": "This flask contains a caustic irritant that makes a target’s skin, scales, or carapace extremely sensitive to further nicks and burns. An inflammation flask deals the listed acid damage and acid splash damage. On a hit, the target also gains weakness to acid, fire, and slashing damage for 3 rounds. Many types of inflammation flask grant a bonus to attack rolls. The target can end the weakness effect by three means: being drenched with water (such as submersion or exposure to an area water effect), being Administered First Aid (whose DC in based on the bomb type), or regaining Hit Points from a single effect equal to twice the inflammation flask’s level. A creature that critically fails to Administer First Aid in this way deals untyped damage to the target equal to the inflammation flask’s initial acid damage. The bomb deals 1d6 acid damage and 1 acid splash damage. The target gains weakness 1 to acid, fire, and slashing damage, and theMedicine DC is 17. You gain a +1 item bonus to attack rolls. The bomb deals 2d6 acid damage and 2 acid splash damage. The target gains weakness 2 to acid, fire, and slashing damage, and the Medicine DC is 20. You gain a +2 item bonus to attack rolls. The bomb deals 3d6 acid damage and 3 acid splash damage. The target gains weakness 3 to acid, fire, and slashing damage, and the Medicine DC is 30. You gain a +3 item bonus to attack rolls. The bomb deals 4d6 acid damage and 4 acid splash damage. The target gains weakness 4 to acid, fire, and slashi"
+ }
+]

@@ -34,7 +34,7 @@ import { PinStar } from './PinStar';
 import { useContent } from './ContentContext';
 import { useCustomization } from '../data/customization';
 import { traitDesc, traitLabel } from '../rules/glossary';
-import { statHasSituational, type StatRef } from '../rules/explain';
+import { spellSituationalFor, statHasSituational, statMarkClass, type StatRef } from '../rules/explain';
 import { spellCostMatches } from '../rules/spellFilter';
 import { heighteningApplies, splitHeightening, scaleDamage, scaleArea } from '../rules/heightening';
 
@@ -476,6 +476,7 @@ function SpellCard({
   onCast,
   castDisabled,
   castTitle,
+  marks,
 }: {
   name: string;
   cost?: ActionCost;
@@ -491,6 +492,9 @@ function SpellCard({
   onCast?: () => void;
   castDisabled?: boolean;
   castTitle?: string;
+  /** Ruling G: conditional bonuses that belong on THIS spell, because the spell is what you are
+   *  looking at when you cast it. Display-only, like every other star. */
+  marks?: { source: string; when: string; bonus: string }[];
 }) {
   return (
     <div
@@ -506,6 +510,11 @@ function SpellCard({
         </span>
         <span className="spell-name">{name}</span>
         {sig && <i className="ti ti-star spell-star" aria-hidden="true" />}
+        {!!marks?.length && (
+          <span className="spell-mark" title={marks.map((m) => `${m.bonus} from ${m.source} — ${m.when}`).join('\n')}>
+            <SituationalStar />
+          </span>
+        )}
       </div>
       <div className="spell-meta">
         <span className="spell-meta-text">{meta}</span>
@@ -558,6 +567,9 @@ export function SpellsTab({
 }) {
   const isMobile = useIsMobile();
   const custom = useCustomization();
+  // Ruling G: a bonus that belongs to a SPELL marks the spell's own card, "since that's what you're
+  // looking at when you cast it". Gated on the character actually having the record that grants it.
+  const marksFor = (spellId?: string) => (spellId ? spellSituationalFor(character, content, spellId) : []);
   const [filters, setFilters] = useState<Set<string>>(new Set());
   const [filtersOpen, setFiltersOpen] = useState(false); // mobile: filter row toggles open over the results
   const [search, setSearch] = useState('');
@@ -673,7 +685,7 @@ export function SpellsTab({
         .map((id, i) => {
           const sp = content.spells[id];
           return sp && visible(sp) ? (
-            <SpellCard key={id + i} name={sp.name} cost={sp.cast} meta="at will" onClick={() => setDetail(sp)} />
+            <SpellCard key={id + i} name={sp.name} cost={sp.cast} meta="at will" marks={marksFor(id)} onClick={() => setDetail(sp)} />
           ) : null;
         })
         .filter(Boolean);
@@ -710,6 +722,7 @@ export function SpellsTab({
             <SpellCard
               key={i}
               name={sp?.name ?? slot.spellId}
+              marks={marksFor(slot.spellId)}
               cost={sp?.cast}
               meta={'rank ' + rank}
               pip={slot.expended ? 'filled' : 'empty'}
@@ -754,7 +767,7 @@ export function SpellsTab({
           return (
             <SpellCard
               key={id + i}
-              name={sp?.name ?? id}
+              name={sp?.name ?? id} marks={marksFor(id)}
               cost={sp?.cast}
               meta={'rank ' + rank}
               sig={main.signature?.includes(id)}
@@ -770,7 +783,7 @@ export function SpellsTab({
           return (
             <SpellCard
               key={'sig:' + id + ':' + rank}
-              name={sp?.name ?? id}
+              name={sp?.name ?? id} marks={marksFor(id)}
               cost={sp?.cast}
               meta={'rank ' + rank + ' · signature'}
               sig={true}
@@ -873,7 +886,7 @@ export function SpellsTab({
         spellbookCards.push(
           <SpellCard
             key={'sb' + rank + id}
-            name={sp?.name ?? id}
+            name={sp?.name ?? id} marks={marksFor(id)}
             cost={sp?.cast}
             meta={ord(rank) + ' rank'}
             onClick={sp ? () => setDetail(sp) : undefined}
@@ -899,7 +912,7 @@ export function SpellsTab({
         out.push(
           <SpellCard
             key={entry.id + '/' + id}
-            name={sp?.name ?? id}
+            name={sp?.name ?? id} marks={marksFor(id)}
             cost={sp?.cast}
             meta={`rank ${shown}${from ? ` · from ${from}` : ''}`}
             fp
@@ -1052,7 +1065,7 @@ export function SpellsTab({
       const sp = content.spells[id];
       if (!visible(sp)) continue;
       cards.push(
-        <SpellCard key={`${entry.id}:c:${id}`} name={sp?.name ?? id} cost={sp?.cast} meta={isInnate ? 'at will' : 'cantrip · at will'} onClick={sp ? () => setDetail(sp) : undefined} />,
+        <SpellCard key={`${entry.id}:c:${id}`} name={sp?.name ?? id} cost={sp?.cast} meta={isInnate ? 'at will' : 'cantrip · at will'} marks={marksFor(id)} onClick={sp ? () => setDetail(sp) : undefined} />,
       );
     }
     for (const rank of Object.keys(entry.repertoire ?? {}).map(Number).sort((a, b) => a - b)) {
@@ -1076,7 +1089,7 @@ export function SpellsTab({
         cards.push(
           <SpellCard
             key={`${entry.id}:${rank}:${id}`}
-            name={sp?.name ?? id}
+            name={sp?.name ?? id} marks={marksFor(id)}
             cost={sp?.cast}
             meta={meta}
             onClick={sp ? () => setDetail(sp) : undefined}
@@ -1154,7 +1167,7 @@ export function SpellsTab({
             {shown.map((sp) => (
               <SpellCard
                 key={`ritual:${sp.id}`}
-                name={sp.name}
+                name={sp.name} marks={marksFor(sp.id)}
                 cost={sp.cast}
                 meta={`rank ${sp.rank}${sp.ritualPrimary ? ` · ${sp.ritualPrimary}` : ''}`}
                 onClick={() => setDetail(sp)}
@@ -1277,7 +1290,7 @@ export function SpellsTab({
               ] as { label: string; value: string | number; ref: StatRef }[]).map((t) => (
                 <div
                   key={t.label}
-                  className={'tile' + (onOpenStat ? ' openable' : '') + (statHasSituational(character, t.ref, content) ? ' has-mode' : '')}
+                  className={'tile' + (onOpenStat ? ' openable' : '') + statMarkClass(character, t.ref, content)}
                   title={onOpenStat ? 'How is this calculated?' : undefined}
                   onClick={onOpenStat ? () => onOpenStat(t.ref) : undefined}
                 >

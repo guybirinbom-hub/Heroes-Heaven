@@ -1,0 +1,146 @@
+[
+ {
+  "id": "golden-liberators-feather",
+  "name": "Golden Liberator's Feather",
+  "level": 19,
+  "description": "**Activate** ⟨4⟩ or ⟨1⟩ (concentrate) **Requirements** You don't have the unholy trait. --- This pristine feather is plucked from a mighty celestial, such as Talmandor. When you activate the talisman, you sprout feathery wings until the end of your turn, granting you a fly Speed of 50 feet and a +4 circumstance bonus to AC against reactions triggered by your movement. You then Fly. If you activate the talisman with 1 action, the wings buffet adjacent enemies either before or after you Fly, dealing 8d8 damage ( save)."
+ },
+ {
+  "id": "infiltrators-elixir",
+  "name": "Infiltrator's Elixir",
+  "level": 2,
+  "description": "**Activate** ⟨1⟩ Interact Favored by spies and tricksters, an infiltrator's elixir is used to alter your appearance. When imbibed, you take the shape of a humanoid creature of your size, but different enough so you might be unrecognizable. If you aren't a humanoid, you might take on a form more similar to your own, at the GM's discretion. The creator of the elixir decides the basics of the appearance you transform into when you imbibe the elixir, including eye color, skin tone, and hair color. The elixir can't change your form into that of a specific person. After the form takes hold, you retain it for the next 10 minutes. Drinking this elixir counts as setting up a disguise to Impersonate. You gain a +4 status bonus to your Deception DC to avoid others seeing through your disguise, and you add your level to this DC even if untrained."
+ },
+ {
+  "id": "lastwall-soup",
+  "name": "Lastwall Soup",
+  "level": 1,
+  "description": "**Activate** 1 minute (Interact) --- Crimson Reclaimers make this rich, hearty soup using herbs that baffle the senses of the undead. A bowl of Lastwall soup is as nourishing as a full meal. In addition, for 1 hour after consuming a bowl of Lastwall soup, you gain a +2 item bonus to Stealth checks and DCs against undead."
+ },
+ {
+  "id": "olfactory-obfuscator-greater",
+  "name": "Olfactory Obfuscator (Greater)",
+  "level": 10,
+  "description": "**Activate** ⟨1⟩ Interact --- This frothing fluid causes the drinker's body to exude trace odor absorbing oils. For 8 hours after drinking this elixir, your scent is nearly unnoticeable. Creatures with imprecise scent don't detect you with that sense unless they Seek for you, and you are concealed from creatures that perceive you with precise scent. You gain a +4 item bonus against attempts to Seek you by creatures using only scent-based senses; if they use any other senses as well, the bonus doesn't apply."
+ },
+ {
+  "id": "sun-orchid-poultice",
+  "name": "Sun Orchid Poultice",
+  "level": 18,
+  "description": "**Activate** ⟨1⟩ Interact The process of creating the *sun orchid elixir* leaves behind a large amount of thick paste with its own healing properties. Artokus commonly sells this paste to Thuvian natives who can't purchase the elixir proper and uses the income to support his alchemy students. When you apply the sun orchid poultice, it reduces your *clumsy*, *drained*, and *enfeebled* condition values by 2. In addition, the poultice provides a youthful burst of energy, granting you a +3 item bonus to saves and 20 temporary Hit Points for 1 hour."
+ },
+ {
+  "id": "addiction-suppressant-lesser",
+  "name": "Addiction Suppressant (Lesser)",
+  "level": 1,
+  "description": "**Activate** ⟨1⟩ Interact When you use a dose of addiction suppressant, it suppresses the effects of that addiction for 1 day, as if you had taken an actual dose of the drug but without any of the drug's effects, and it doesn't increase the addiction DC. You also gain a +1 item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant. For every drug, a specific suppressant must be crafted- no generalized addiction suppressant yet exists. In order to create an addiction suppressant, you must begin with a dose of the drug to be suppressed, then use alchemical reagents to generate an elixir that can be used to fight that drug's addiction. An addiction suppressant must be a higher level than the drug it is meant to suppress in order to work."
+ },
+ {
+  "id": "addiction-suppressant-moderate",
+  "name": "Addiction Suppressant (Moderate)",
+  "level": 6,
+  "description": "**Activate** ⟨1⟩ Interact When you use a dose of addiction suppressant, it suppresses the effects of that addiction for 1 day, as if you had taken an actual dose of the drug but without any of the drug's effects, and it doesn't increase the addiction DC. You also gain a +2 item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant. For every drug, a specific suppressant must be crafted- no generalized addiction suppressant yet exists. In order to create an addiction suppressant, you must begin with a dose of the drug to be suppressed, then use alchemical reagents to generate an elixir that can be used to fight that drug's addiction. An addiction suppressant must be a higher level than the drug it is meant to suppress in order to work."
+ },
+ {
+  "id": "addiction-suppressant-greater",
+  "name": "Addiction Suppressant (Greater)",
+  "level": 10,
+  "description": "**Activate** ⟨1⟩ Interact When you use a dose of addiction suppressant, it suppresses the effects of that addiction for 1 day, as if you had taken an actual dose of the drug but without any of the drug's effects, and it doesn't increase the addiction DC. You also gain a +3 item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant. For every drug, a specific suppressant must be crafted- no generalized addiction suppressant yet exists. In order to create an addiction suppressant, you must begin with a dose of the drug to be suppressed, then use alchemical reagents to generate an elixir that can be used to fight that drug's addiction. An addiction suppressant must be a higher level than the drug it is meant to suppress in order to work."
+ },
+ {
+  "id": "addiction-suppressant-major",
+  "name": "Addiction Suppressant (Major)",
+  "level": 14,
+  "description": "**Activate** ⟨1⟩ Interact When you use a dose of addiction suppressant, it suppresses the effects of that addiction for 1 day, as if you had taken an actual dose of the drug but without any of the drug's effects, and it doesn't increase the addiction DC. You also gain a +4 item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant. For every drug, a specific suppressant must be crafted- no generalized addiction suppressant yet exists. In order to create an addiction suppressant, you must begin with a dose of the drug to be suppressed, then use alchemical reagents to generate an elixir that can be used to fight that drug's addiction. An addiction suppressant must be a higher level than the drug it is meant to suppress in order to work."
+ },
+ {
+  "id": "oily-button",
+  "name": "Oily Button",
+  "level": 5,
+  "description": "**Usage** affixed to armor **Activation** ⟨4⟩ envision **Trigger** You succeed at an Athletics check to Disarm **Requirements** You are an expert in Athletics. --- A thin sheen of slick oil covers this gaudy button. When you activate the oily button, your attempts to Disarm your opponent of an item before the start of the opponent's next turn gain a +4 circumstance bonus instead of +2, and the -2 circumstance penalty to attacks with the item or other checks requiring a firm grasp on the item lasts until the end of its next turn or until it uses an Interact action to adjust its grip."
+ },
+ {
+  "id": "boulderhead-bock",
+  "name": "Boulderhead Bock",
+  "level": 2,
+  "description": "**Activate** ⟨1⟩ Interact No one is sure if Gorm brews this malty ale himself, but it seems to be an off-duty favorite of the Grand Archive faction leader. The brew packs a heavy punch, and while Gorm officially discourages drinking on the job, boulderhead bock does makes the drinker more self-assured and protects them from conditions that would addle their mental faculties. For 1 hour, you gain a +1 item bonus to saving throws against effects that would make you stunned or stupefied. However, you also become less aware of your surroundings, taking a -2 item penalty to Perception for 1 hour."
+ },
+ {
+  "id": "vermin-repellent-agent-lesser",
+  "name": "Vermin Repellent Agent (Lesser)",
+  "level": 3,
+  "description": "**Activate** ⟨3⟩ Interact --- This specialized cream serves as a repellent to stave off insects. The repellent also binds with a number of common insect venoms, dulling the potency and giving the wearer's immune system a boost to resist venoms. Once applied to your skin, the repellent grants you a +1 item bonus to Fortitude saving throws against poisons for 4 hours. --- In addition, any arthropods (insects, spiders, scorpions, crabs, and similar invertebrate animals) must attempt a save when attempting to attack you with a melee Strike, or with a swarm attack such as the spider swarm's swarming bites. The arthropod then becomes temporarily immune for 1 minute. --- **Critical Success** The creature can act normally. **Success** The creature is Frightened 1. **Failure** The creature is Frightened 2. **Critical Failure** The creature is frightened 2 and fleeing."
+ },
+ {
+  "id": "vermin-repellent-agent-moderate",
+  "name": "Vermin Repellent Agent (Moderate)",
+  "level": 8,
+  "description": "**Activate** ⟨3⟩ Interact --- This specialized cream serves as a repellent to stave off insects. The repellent also binds with a number of common insect venoms, dulling the potency and giving the wearer's immune system a boost to resist venoms. Once applied to your skin, the repellent grants you a +2 item bonus to Fortitude saving throws against poisons for 4 hours. --- In addition, any arthropods (insects, spiders, scorpions, crabs, and similar invertebrate animals) must attempt a save when attempting to attack you with a melee Strike, or with a swarm attack such as the spider swarm's swarming bites. The arthropod then becomes temporarily immune for 1 minute. --- **Critical Success** The creature can act normally. **Success** The creature is Frightened 1. **Failure** The creature is Frightened 2. **Critical Failure** The creature is frightened 2 and fleeing."
+ },
+ {
+  "id": "vermin-repellent-agent-greater",
+  "name": "Vermin Repellent Agent (Greater)",
+  "level": 12,
+  "description": "**Activate** ⟨3⟩ Interact --- This specialized cream serves as a repellent to stave off insects. The repellent also binds with a number of common insect venoms, dulling the potency and giving the wearer's immune system a boost to resist venoms. Once applied to your skin, the repellent grants you a +3 item bonus to Fortitude saving throws against poisons for 4 hours. --- In addition, any arthropods (insects, spiders, scorpions, crabs, and similar invertebrate animals) must attempt a save when attempting to attack you with a melee Strike, or with a swarm attack such as the spider swarm's swarming bites. The arthropod then becomes temporarily immune for 1 minute. --- **Critical Success** The creature can act normally. **Success** The creature is Frightened 1. **Failure** The creature is Frightened 2. **Critical Failure** The creature is frightened 2 and fleeing."
+ },
+ {
+  "id": "vermin-repellent-agent-major",
+  "name": "Vermin Repellent Agent (Major)",
+  "level": 16,
+  "description": "**Activate** ⟨3⟩ Interact --- This specialized cream serves as a repellent to stave off insects. The repellent also binds with a number of common insect venoms, dulling the potency and giving the wearer's immune system a boost to resist venoms. Once applied to your skin, the repellent grants you a +4 item bonus to Fortitude saving throws against poisons for 4 hours. --- In addition, any arthropods (insects, spiders, scorpions, crabs, and similar invertebrate animals) must attempt a save when attempting to attack you with a melee Strike, or with a swarm attack such as the spider swarm's swarming bites. The arthropod then becomes temporarily immune for 1 minute. --- **Critical Success** The creature can act normally. **Success** The creature is Frightened 1. **Failure** The creature is Frightened 2. **Critical Failure** The creature is frightened 2 and fleeing."
+ },
+ {
+  "id": "antivenom-potion",
+  "name": "Antivenom Potion",
+  "level": 2,
+  "description": "This cloudy, white liquid helps protect against poisons. When you drink an antivenom potion, you can immediately attempt a to end any persistent poison damage you're taking. In addition, for 1 minute after drinking the potion, you gain a +1 bonus to Fortitude saving throws to avoid taking persistent poison damage."
+ },
+ {
+  "id": "ichthyosis-mutagen",
+  "name": "Ichthyosis Mutagen",
+  "level": 5,
+  "description": "**Activate** ⟨1⟩ Interact After you drink this mutagen, your skin continually renews itself, thickening into large, scaly patches. --- **Benefit** For 1 minute, you gain fast healing 2 and automatically succeed at flat checks to recover from persistent bleed damage. **Drawback** Your thickened skin makes quick movement difficult, and your excess skin flakes off with the slightest movement. You take a -2 penalty to Reflex saves for 1 minute. Any creature attempting to Track you in the next 24 hours gains a +4 circumstance bonus to their check."
+ },
+ {
+  "id": "fungal-walk-musk",
+  "name": "Fungal Walk Musk",
+  "level": 5,
+  "description": "**Activate** ⟨1⟩ Interact --- This foul-smelling unguent dulls the odors and traces that fungus creatures detect. For 1 day after you slather this musk on your body, fungus creatures take a -4 penalty to Perception checks to Seek you or otherwise notice you. If a fungus creature is mindless, it instead has a -6 penalty. The musk also grants you a +1 item bonus to AC against melee attacks from fungus creatures with no vision for the same period of time. The effects of fungal walk musk end immediately if you're submerged in water or subject to another olfactory effect."
+ },
+ {
+  "id": "fulu-of-the-drunken-monkey",
+  "name": "Fulu of the Drunken Monkey",
+  "level": 5,
+  "description": "**Usage** affixed to armor **Activate** ⟨4⟩ envision **Trigger** You attempt a Fortitude save against an ingested poison. --- The monkey on this fulu sits on the point of the armor just over the bearer's stomach, happily drinking any intoxicants that come flowing down. When you activate the fulu, you gain a +2 status bonus on the triggering Fortitude save and on Fortitude saves against the same poison for the next minute. If the triggering poison was normal Alcohol, you instead automatically succeed at the triggering save and gain a +4 status bonus on saves against alcohol for 1 minute."
+ },
+ {
+  "id": "potion-of-minute-echoes",
+  "name": "Potion of Minute Echoes",
+  "level": 9,
+  "description": "**Activate** ⟨1⟩ Interact --- No matter how carefully you open this bottle, it always lets out an audible, echoing pop. For 1 minute after drinking this potion, you gain a +2 status bonus to Perception checks to hear. In addition, each time you Seek, your hearing becomes a precise sense until the beginning of your next turn, allowing you to pinpoint creatures' locations and otherwise perceive the world in detail by listening to the sound of echoes."
+ },
+ {
+  "id": "magnetic-suit",
+  "name": "Magnetic Suit",
+  "level": 4,
+  "description": "**Activate** ⟨2⟩ (manipulate) --- This magnetized suit is strapped to your body over your armor or clothes. When you Activate it, you must choose whether to set it to attract or repel. After being activated, the suit provides the listed benefits for the chosen activation type for 10 minutes before the magnets burn out and the suit becomes useless. While set to attract, you take a –1 status penalty to your AC against attacks made by metal weapons, while allies within a gain a +1 status bonus to their AC. If set to repel, you gain a +1 status bonus to AC against attacks made with metal weapons. While attracting metal, you gain a +1 status bonus to Athletics checks to Climb metal objects and Grapple metal creatures and a –1 status penalty to Athletics checks to Shove metal creatures. While repelling metal, you gain a +1 status bonus to Athletics checks to Shove metal creatures, but you take a –1 status penalty to Climb metal objects and Grapple metal creatures."
+ },
+ {
+  "id": "magnetic-suit-greater",
+  "name": "Magnetic Suit (Greater)",
+  "level": 10,
+  "description": "**Activate** ⟨2⟩ (manipulate) --- This magnetized suit is strapped to your body over your armor or clothes. When you Activate it, you must choose whether to set it to attract or repel. After being activated, the suit provides the listed benefits for the chosen activation type for 10 minutes before the magnets burn out and the suit becomes useless. While set to attract, you take a –2 status penalty to your AC against attacks made by metal weapons, while allies within a gain a +2 status bonus to their AC. If set to repel, you gain a +2 status bonus to AC against attacks made with metal weapons. While attracting metal, you gain a +2 status bonus to Athletics checks to Climb metal objects and Grapple metal creatures and a –2 status penalty to Athletics checks to Shove metal creatures. While repelling metal, you gain a +2 status bonus to Athletics checks to Shove metal creatures, but you take a –2 status penalty to Climb metal objects and Grapple metal creatures."
+ },
+ {
+  "id": "magnetic-suit-major",
+  "name": "Magnetic Suit (Major)",
+  "level": 16,
+  "description": "**Activate** ⟨2⟩ (manipulate) --- This magnetized suit is strapped to your body over your armor or clothes. When you Activate it, you must choose whether to set it to attract or repel. After being activated, the suit provides the listed benefits for the chosen activation type for 10 minutes before the magnets burn out and the suit becomes useless. While set to attract, you take a –3 status penalty to your AC against attacks made by metal weapons, while allies within a gain a +3 status bonus to their AC. If set to repel, you gain a +3 status bonus to AC against attacks made with metal weapons. While attracting metal, you gain a +3 status bonus to Athletics checks to Climb metal objects and Grapple metal creatures and a –3 status penalty to Athletics checks to Shove metal creatures. While repelling metal, you gain a +3 status bonus to Athletics checks to Shove metal creatures, but you take a –3 status penalty to Climb metal objects and Grapple metal creatures."
+ },
+ {
+  "id": "malleable-mixture-lesser",
+  "name": "Malleable Mixture (Lesser)",
+  "level": 8,
+  "description": "Your bones, muscles, and organs become vastly softer and more pliable. You can fit into and through small or narrow spaces as though you were 1 size smaller than your normal size (minimum small), and you gain a +2 item bonus to your Fortitude and Reflex DCs against attempts to Grapple, Shove, or Trip you for 1 minute."
+ }
+]

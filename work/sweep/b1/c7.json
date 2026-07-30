@@ -1,0 +1,1178 @@
+[
+ {
+  "id": "school-of-thassilonian-rune-magic",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "School of Thassilonian Rune Magic",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This curriculum, taught at a few select academies in New Thassilon, can be learned only by wizards with the runelord class archetype. You have begun to study one of the seven runes of sin, granting you great power but at the cost of anathematic magic. All runelords gain the below curriculum and school spells. In addition, you must choose one of the seven sins to specialize in. You add your sin's spells and initial school spells to your curriculum. The addictive nature of sin magic prevents you from using magic in ways aligned with other sins, represented by that sin's anathema. Casting a sin spell never invokes the anathema of its school of sin. Unlike other wizards, some of your curriculum spells may be spells that don't typically appear on the arcane spell list (marked with an asterisk). You still cast these spells as arcane spells, the unifying knowledge of sin bridging the gap between disparate magics. **Curriculum** - **cantrips:** Detect Magic, Sigil - **1st:** Mystic Armor, Runic Body, Runic Weapon, Sure Strike - **2nd:** Darkvision, See the Unseen - **3rd:** , Veil of Privacy - **4th:** , Fly - **5th:** Mind Probe, Sending - **6th:** Scrying, Truesight - **7th:** Contingency, Spell Riposte - **8th:** Unrelenting Observation, Hidden Mind - **9th:** Foresight **Advanced School Spell** Personal Runewell --- - **Envy** - **Gluttony** - **Greed** - **Lust** - **Pride** - **Sloth** - **Wrath**"
+ },
+ {
+  "id": "scion-of-slayers",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Scion of Slayers",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "innateSpells",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You were born into a lineage of undead slayers. No mere occupation, in your family slaying is a mantle of almost mystic responsibility passed from parent to child. Over the generations, this single-minded focus has begun to manifest in uncanny ways during combat. Choose two attribute boosts. One must be to **Strength** or **Intelligence**, and one is a free attribute boost. You're trained in the Athletics skill and the Undead Lore skill. You can cast Vitality Lash as an innate divine cantrip. You can use Intelligence as your spellcasting ability for this innate spell. --- ## Background details **Attribute Boosts** Intelligence or Strength, one free **Trained Skill** Athletics **Lore** Undead Lore"
+ },
+ {
+  "id": "scout",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Scout",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLoreChoice",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You called the wilderness home as you found trails and guided travelers. Your wanderlust could have called you to the adventuring life, or perhaps you served as a scout for soldiers and found you liked battle. Choose two attribute boosts. One must be to **Dexterity** or **Wisdom**, and one is a free attribute boost. You're trained in the Survival skill and a Lore skill related to one terrain you scouted in (such as Forest Lore or Cavern Lore). You gain the Forager skill feat. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Survival **Skill Feat** Forager"
+ },
+ {
+  "id": "scouts-charge",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Scout's Charge",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You meander around unpredictably, and then ambush your opponents without warning. Choose one enemy. Stride, Feint against that opponent, and then make a Strike against it. For your Feint, you can attempt a Stealth check instead of the Deception check that's usually required, using the terrain around you to surprise your foe."
+ },
+ {
+  "id": "scrounger-dedication",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Scrounger Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "While others need specialized tools and a dedicated space, you have found a way to build just about anything, anywhere. You can Craft items even without appropriate tools or a workshop. Additionally, you don't need a physical formula book to remember all of your formulas; you pay the same cost as normal to learn them, but you memorize them all. You gain the Cobble Together activity. An item you Cobble Together is a shoddy item, but when creating it you can choose one creature to build it specifically for. That creature doesn't take the normal penalty for using this shoddy item. Your temporary item lasts for 1d4 hours before falling apart into its raw components; the GM rolls the number of hours secretly."
+ },
+ {
+  "id": "second-chance-champion",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Second Chance Champion",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You competed in the last Ruby Phoenix Tournament 10 years ago, though you didn't make it to the end. One wrong step, one mistimed punch, one blocked spell—whatever it was, that was all it took for your opponent to get the upper hand and knock you out of the tournament. Well, maybe it was a simple mistake or maybe you just weren't up to snuff, and you're too headstrong to admit it. Now, after training for a decade to ensure you don't repeat any of your prior mistakes, you've joined forces with a team of fellow fighters in order to maximize your odds of making it all the way to the finals. Whatever happened before, you've vowed to return to the ring in Goka for an epic rematch, and this time you're not walking out until you've been named Ruby Phoenix Champion. Choose two attribute boosts. One must be to **Dexterity** or **Strength**, and one is a free attribute boost. You're trained in Acrobatics and the Gladiatorial Lore skill. You gain the Cat Fall skill feat --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Trained Skill** Acrobatics **Lore** Gladiatorial Lore **Skill Feat** Cat Fall"
+ },
+ {
+  "id": "second-implement",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "Second Implement",
+  "level": 5,
+  "traits": [
+   "thaumaturge"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've added another implement of power to your toolkit. You choose a second implement, which must be a different type of implement than your first. You gain the initiate benefit of your new implement. While you're holding an implement in one hand, you can quickly switch it with another implement you're wearing to use an action from the implement you're switching to. To do so, you can Interact as a free action immediately before executing the implement's action. This allows you to meet requirements of having an implement in hand to use its action. For example, if you had your lantern implement in one hand, a weapon in the other, and a chalice implement you were wearing, you could swap your lantern for your chalice to use its reaction."
+ },
+ {
+  "id": "second-path-to-perfection",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "Second Path to Perfection",
+  "level": 11,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've learned to find perfection in every success. Choose a different saving throw than the one you chose for your path to perfection. Your proficiency rank for the chosen saving throw increases to master. If you roll a success with the chosen saving throw, you instead critically succeed."
+ },
+ {
+  "id": "secret-eater",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Secret Eater",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "You have discovered and found favor with the cult within the church of Kabriri known as the Secret Eaters. You have maggots that writhe under your skin with the power to wriggle out from between your teeth, glean secrets from those you devour, and whisper them telepathically into your mind. Once per hour when you Consume Flesh, you can select a single Intelligence-, Wisdom-, or Charisma-based skill whose secrets you wish to uncover. You become subject to the effects of corpse communion as if you had critically succeeded at casting the ritual: you learn a significant piece of lore, a forgotten secret, or some other tantalizing nugget of knowledge that is of immediate use to you."
+ },
+ {
+  "id": "secular-medic",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Secular Medic",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Golden Road --- You're from Rahadoum, where the Laws of Mortality taught you to reject the gods, yet you've seen firsthand how dangerous it can be to go without healing magic. As a result, you've thrown yourself into the study of medicine, so you can save lives without saving souls. Choose two attribute boosts. One must be to **Wisdom** or **Dexterity**, and one is a free attribute boost. You're trained in the Medicine skill and the Anatomy Lore skill. You gain the Battle Medicine skill feat. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Medicine **Lore** Anatomy Lore **Skill Feat** Battle Medicine"
+ },
+ {
+  "id": "security",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Security",
+  "level": 4,
+  "traits": [
+   "champion"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Those you shield can benefit from your lasting protection. You can cast Shields of the Spirit using 2 actions instead of 1. If you do, you can choose one ally in your champion's aura to gain a spirit shield that accompanies it. For 1 minute, that ally gains the benefits of *shields of the spirit*, even while the ally isn't in your champion's aura and even if your shield isn't raised. If you create another companion shield, any previous one ends."
+ },
+ {
+  "id": "self-made",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Self-Made",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLoreChoice",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Some are born with everything they need in this life, but not you—you scraped everything you have together through hard work and sheer force of will. You might have done hard manual labor to get where you are or apprenticed for years to become a master of your craft. Choose two attribute boosts. One must be to **Strength** or **Wisdom**, and one is a free attribute boost. You're trained in the Athletics skill and a Lore skill related to how you've paved your own way through the world. You gain the Hefty Hauler skill feat. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Athletics **Skill Feat** Hefty Hauler"
+ },
+ {
+  "id": "senghor-sailor",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Senghor Sailor",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Mwangi Expanse --- As an experienced sailor from Senghor, you know that the only thing saving you from disaster on the high seas is a properly maintained ship. You know boat-building inside and out and you can quickly cobble together a solution in the event that something breaks. Choose two attribute boosts. One must be to **Intelligence** or **Wisdom**, and one is a free attribute boost. You're trained in the Crafting skill and the Sailing Lore skill. You gain the Quick Repair skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Crafting **Lore** Sailing Lore **Skill Feat** Quick Repair"
+ },
+ {
+  "id": "sentinel-reflectance",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Sentinel Reflectance",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Either through witnessing their deeds and devout heroics firsthand, or through reading chronicles of their exploits, the Shining Sentinels of the Knights of Lastwall inspire you. You may idealize their philosophy or one day hope to join their ranks; the Shining Sentinels are your guiding star. Choose two attribute boosts. One must be to **Strength** or **Charisma**, and one is a free attribute boost. You're trained in the Diplomacy skill and the Shining Sentinels Lore skill. You gain the No Cause for Alarm skill feat. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Diplomacy **Lore** Shining Sentinels Lore **Skill Feat** No Cause For Alarm"
+ },
+ {
+  "id": "servant",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Servant",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You held a role of servitude, waiting on nobles and engendering their trust as one of the confidantes of the household. You might have walked away on good terms, or perhaps you know dangerous secrets about your former employers. Regardless, you're adventuring for a change and finding that in this new role, the skills you've learned now serve you. Choose two attribute boosts. One must be to **Dexterity** or **Charisma**, and one is a free attribute boost. You're trained in the Society skill and the Labor Lore skill. You gain the Read Lips skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Society **Lore** Labor Lore **Skill Feat** Read Lips"
+ },
+ {
+  "id": "sewer-dragon",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Sewer Dragon",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisites** Kobold Ancestry --- You are one of the Sewer Dragons, born in Absalom's sewers, strengthened by a life defending your territory. Choose two attribute boosts. One must be to **Dexterity** or **Intelligence**, and one is a free attribute boost. You're trained in the Crafting skill and the Kobold Lore skill. You gain the Snare Crafting skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Crafting **Lore** Kobold Lore **Skill Feat** Snare Crafting"
+ },
+ {
+  "id": "shadow-haunted",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Shadow Haunted",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Old Cheliax --- You are from Nidal, and regardless of your personal values, Zon-Kuthon has a claim on your soul due to an ancient pact. The Midnight Lord's unsettling influence is bred deep into your bones. Choose two attribute boosts. One must be to **Intelligence** or **Wisdom**, and one is a free attribute boost. You're trained in the Intimidation skill and the Shadow Plane Lore skill. You gain the Quick Coercion skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Intimidation **Lore** Shadow Plane Lore **Skill Feat** Quick Coercion"
+ },
+ {
+  "id": "shadow-lodge-defector",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Shadow Lodge Defector",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You were among the Pathfinders recruited by the devious Shadow Lodge, lured in by promises of wealth, reform, justice, or revenge. You might have fought against the Society's loyal agents, helped sabotage the Pathfinders' reputation in distant countries, or even infiltrated the far-flung lodges as a spy. You've since made peace with and rejoined the Pathfinder Society, yet the underhanded reflexes and skills you learned are hard to forget. Choose two attribute boosts. One must be to **Dexterity** or **Intelligence**, and one is a free attribute boost. You're trained in the Deception skill and the Underworld Lore skill. You gain the Lie to Me skill feat. --- **Special** You can select this background only if you have earned credit for at least 5 First Edition scenarios from Season 2 of the Pathfinder Society organized play campaign. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Deception **Lore** Underworld Lore **Skill Feat** Lie To Me"
+ },
+ {
+  "id": "shadow-self",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Shadow Self",
+  "level": 17,
+  "traits": [
+   "halfling"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per hour **Trigger** You successfully use Stealth to Hide and become hidden from all your current foes, or use Stealth to Sneak and become undetected to all your current foes. --- You slip from your adversaries' notice and appear to be somewhere else. You become invisible for 1 minute or until you take a hostile action, whichever comes first. Choose a location within 10 feet of you. Until your invisibility ends, you appear to be hidden in that location to anyone trying to find you. If the searcher gets clear evidence that you're not there, they no longer think you're hidden there, but they don't discover your actual location."
+ },
+ {
+  "id": "shadow-spell",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Shadow Spell",
+  "level": 8,
+  "traits": [
+   "archetype",
+   "shadow",
+   "spellshape"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You attach a piece of your shadow to a spell to cloud the senses and cause mischief. If the next action you take is to Cast a Spell that has the shadow trait, choose one creature affected by the spell. This creature either gains a +2 status bonus to Stealth or takes a -2 status penalty to Perception (your choice). This lasts for 1 round. This choice and the effect occur after resolving any checks for the spell's initial effects. If the chosen creature is your enemy, it's affected only if your spell attack roll succeeded or if it failed its saving throw. The effects of *Shadow Spell* end if you use *Shadow Spell* again."
+ },
+ {
+  "id": "shadow-war-survivor",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Shadow War Survivor",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Countless factions have fought for influence in Absalom for millennia, and for decades these groups worked through the Pathfinder Society to better control the City at the Center of the World. Perhaps you were ones of these agents who clashed with other operatives during the so-called Shadow War. Or you might have been an unintended victim of these clandestine clashes, inspiring you to join the Society and stop the conflict from within. Whatever the reason, navigating the Shadow War has left you politically savvy and informed. Choose two attribute boosts. One must be to **Wisdom** or **Charisma**, and one is a free attribute boost. You're trained in the Society skill and the Absalom Lore skill. You gain the Streetwise skill feat. --- **Special** You can select this background only if you have earned credit for at least 5 First Edition scenarios from Season 1 of the Pathfinder Society organized play campaign. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Society **Lore** Absalom Lore **Skill Feat** Streetwise"
+ },
+ {
+  "id": "share-weakness",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Share Weakness",
+  "level": 10,
+  "traits": [
+   "esoterica",
+   "manipulate",
+   "thaumaturge"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are Exploiting a creature's Vulnerability using mortal weakness. --- You select an object from your esoterica that has great personal value to you, such as a locket or treasured ring, and you grant it to an adjacent ally, establishing a personal link that allows your ally to affect an enemy as if they were you. The ally's Strikes apply the weakness from your mortal weakness the same way your Strikes do. This benefit ends when your Exploit Vulnerability ends or you Share Weakness again."
+ },
+ {
+  "id": "sheltering-pulse",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Sheltering Pulse",
+  "level": 8,
+  "traits": [
+   "archetype",
+   "manipulate"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You thrust your hand or weapon into the ground and release a pulse that creates a sheltering nexus of energy for you and your allies. Choose an unoccupied square within 15 feet. The nexus appears in a around that square and lasts for 3 rounds. You and your allies gain a +1 status bonus to AC while in the area."
+ },
+ {
+  "id": "sheriff",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Sheriff",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You hold an official title of sheriff or deputy in a small community. Those that would do harm to others flee your gaze, for they know it brings the promise of castigation. You protect your town, watch over those who have placed their trust in you, and make sure those that would do others harm are brought to justice. Choose two attribute boosts. One must be to **Dexterity** or **Charisma**, and one is a free attribute boost. You're trained in the Intimidation skill and the Hunting Lore skill. You gain the Group Coercion skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Intimidation **Lore** Hunting Lore **Skill Feat** Group Coercion"
+ },
+ {
+  "id": "shielded-fortune",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Shielded Fortune",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId"
+  ],
+  "inRegistries": [],
+  "text": "You've always been tougher than your peers. As a child, you may have been able to endure the rough-and-tumble horseplay with friends more easily. You regularly emerged relatively unscathed from accidents could have been quite dangerous. At some point in your past, you had a particularly close call with death—be it from a near-fatal accident, a fight gone horribly wrong, a close call with illness, or something similar, yet you quickly recovered. You may or may not believe you're more fated to face unexpected hardship in your life, but regardless, you know you can take what destiny has to dish out. This background is associated with the suit of Shields. Choose two attribute boosts. One must be to **Constitution**, and one is a free attribute boost. You gain the Toughness general feat and also gain the Fated Not to Die free action. --- ## Background details **Attribute Boosts** Constitution, one free"
+ },
+ {
+  "id": "shoanti-name-bearer",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Shoanti Name-Bearer",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Saga Lands --- You are a member of a Shoanti quah and have gone through its coming of age ceremony, gaining the traditional tattoo of your quah and earning your adult name. Choose two attribute boosts. One must be to **Strength** or **Wisdom**, and one is a free attribute boost. You're trained in the Athletics skill and the Quah Lore skill. You gain the Combat Climber skill feat. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Athletics **Lore** Quah Lore **Skill Feat** Combat Climber"
+ },
+ {
+  "id": "shory-seeker",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Shory Seeker",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You've dedicated your life to unraveling the secrets of the ancient Shory Empire, either through meticulous research or by traveling into dangerous and distant ruins to track down long-lost artifacts. Choose two attribute boosts. One must be to **Dexterity** or **Intelligence**, and one is a free attribute boost. You're trained in the Crafting skill and the Shory Lore skill. You gain the Specialty Crafting skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Crafting **Lore** Shory Lore **Skill Feat** Specialty Crafting"
+ },
+ {
+  "id": "shrieking-key",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Shrieking Key",
+  "level": 5,
+  "traits": [
+   "cursed",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "A skull-topped metal *shrieking key* appears to be a *Skeleton Key*, useful in place of *Thieves' Tools* when attempting to Pick a Lock. A *shrieking key* has no activation, however. When you use it to Pick a Lock, the key emits a loud shriek audible for 500 feet despite ambient noise. Physical barriers still block or muffle the shriek as normal. You also take a –2 circumstance penalty to the Thievery check rather than enjoying a bonus. After you attempt such a check with the key the first time, it fuses to you, returning to your possession if discarded. To use another device to Pick a Lock, you must first succeed at a save."
+ },
+ {
+  "id": "sideshow-scion",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Sideshow Scion",
+  "traits": [
+   "persona-wildcard"
+  ],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Ah, the circus! What child didn't at some point fantasize about running away to join a troupe of clowns and daredevils and live a life on the road sharing living quarters with strange animals and even stranger coworkers? In your case, though, there was no need for fantasy, for you were born into the life. Your parents or extended family have a long tradition in the sideshow, be it as part of a traveling circus or as part of a more localized, year-round performance on a city boardwalk or marketplace. Even if you were the inverse of the youth who dreamed of running away, your childhood instead filled with visions of a sedentary aristocratic life or the rough upbringing of the working class, the sideshow skills and circus tricks you were exposed to seeped into your psyche. Now and then, a turn of phrase that spills from your lips or an unexpected little motion or act catches even your closest friends off guard. After all, what seems normal to you is anything but to someone who didn't grow up in a sideshow! Choose two attribute boosts. One must be to **Constitution** or **Intelligence**, and one is a free attribute boost. You're trained in the Acrobatics skill and the Games Lore skill. You gain the Acrobatic Performer skill feat. If you have the Wildcard persona trait, you also become trained in the Circus Lore skill. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Acrobatics **Lore** Games Lore **Skill Feat** Acrobatic Performer"
+ },
+ {
+  "id": "signature-crafting",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Signature Crafting",
+  "level": 7,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Magic items you create bear a stamp specific to your handiwork. When you successfully Craft a permanent magic item, roll a when the item is fully complete. Any benefit a creature gains from an item quirk applies only while the creature wears the item (for a worn item) or holds it (for a held item). The GM might allow custom quirks similar to those listed. --- **Critical Success** Choose an item quirk from the table and its specifics. **Success** The item gains a random item quirk with any specifics selected by the GM. | d10 | Quirk | Description | | --- | --- | --- | | 1 | Cavorting | Dances in place when not in use. | | 2 | Clean | Remains pristine despite filth. | | 3 | Environmental | Appearance changes to match its environment. | | 4 | Filthy | A layer of filth always remains. | | 5 | Floating | Slowly descends when dropped. | | 6 | Glittering | Shimmers and glows with light bright as a torch. | | 7 | Invisible | The item is invisible, but becomes visible for 1 round after being used. | | 8 | Loyal | Floats within 5 feet of its owner, as if on a tether (but can still be seized by someone else). | | 9 | Mood coloration | User's mood affects the item's color. | | 10 | Skillful | The item grants a +1 item bonus to one type of skill checks. |"
+ },
+ {
+  "id": "signature-spells",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "Signature Spells",
+  "level": 3,
+  "traits": [
+   "bard",
+   "oracle",
+   "psychic",
+   "sorcerer"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've learned to cast some of your spells more flexibly. For each spell rank you have access to, choose one spell of that rank to be a signature spell. You don't need to learn heightened versions of signature spells separately; instead, you can heighten these spells freely. If you've learned a signature spell at a higher rank than its minimum, you can also cast all its lower-rank versions without learning those separately. If you swap out a signature spell, you can choose a replacement signature spell of the same spell rank at which you learned the previous spell. You can also retrain specifically to change a signature spell to a different spell of that rank without swapping any spells; this takes as much time as retraining a spell normally does."
+ },
+ {
+  "id": "silk-farmer",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Silk Farmer",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Access** Tian Xia origin --- You've studied and mastered the art of sericulture. The cultivation of silkworms to produce silk is an important industry that requires an intense amount of study and care. The unchanging routine of a silk farmer could make any adventure an epic one by comparison, and perhaps that prospect led you toward adventuring. Choose two attribute boosts. One must be to **Wisdom** or **Intelligence**, and one is a free attribute boost. You're trained in Crafting skill and Sericulture Lore. You gain the Specialty Crafting skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Crafting **Lore** Sericulture Lore **Skill Feat** Specialty Crafting"
+ },
+ {
+  "id": "silvertongue-mutagen",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Silvertongue Mutagen",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Silvertongue Mutagen Source Player Core 2 pg. 290 Usage held in 1 hand Bulk L Activate (manipulate) Your features become striking, and your voice becomes musical and commanding, though emotion clouds your reason. Benefit You gain an item bonus to Deception, Diplomacy, Intimidation, and Performance checks. Your critical failures with any of these skills become failures instead. Drawback You take a –2 penalty to Arcana, Crafting, Lore, Occultism, and Society checks. Choose one skill in which you're trained; for the duration, you become untrained in that skill. Silvertongue Mutagen (Lesser) Source Player Core 2 pg. 290, Core Rulebook pg. 550 Price 4 gp Bulk L The bonus is +1, and the duration is 1 minute. Silvertongue Mutagen (Moderate) Source Player Core 2 pg. 290, Core Rulebook pg. 550 Price 12 gp Bulk L The bonus is +2, and the duration is 10 minutes. Silvertongue Mutagen (Greater) Source Player Core 2 pg. 290, Core Rulebook pg. 550 Price 300 gp Bulk L The bonus is +3, and the duration is 1 hour. Silvertongue Mutagen (Major) Source Player Core 2 pg. 290, Core Rulebook pg. 550 Price 3,000 gp Bulk L The bonus is +4, and the duration is 1 hour."
+ },
+ {
+  "id": "silvertongue-mutagen-greater",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Silvertongue Mutagen (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Your features become striking, and your voice becomes musical and commanding, though emotion clouds your reason. **Benefit** You gain a +3 item bonus to Deception, Diplomacy, Intimidation and Performance checks. Your critical failures with any of these skills become failures instead. **Drawback** You take a -2 item penalty to Arcana, Crafting, Lore, Occultism, and Society checks. Choose one skill in which you are trained; for the duration, you become untrained in that skill. All your failures to Recall Knowledge become critical failures. **Duration** 1 hour."
+ },
+ {
+  "id": "silvertongue-mutagen-lesser",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Silvertongue Mutagen (Lesser)",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Your features become striking, and your voice becomes musical and commanding, though emotion clouds your reason. **Benefit** You gain a +1 item bonus to Deception, Diplomacy, Intimidation and Performance checks. Your critical failures with any of these skills become failures instead. **Drawback** You take a -2 item penalty to Arcana, Crafting, Lore, Occultism, and Society checks. Choose one skill in which you are trained; for the duration, you become untrained in that skill. All your failures to Recall Knowledge become critical failures. **Duration** 1 minute."
+ },
+ {
+  "id": "silvertongue-mutagen-major",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Silvertongue Mutagen (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Your features become striking, and your voice becomes musical and commanding, though emotion clouds your reason. **Benefit** You gain a +4 item bonus to Deception, Diplomacy, Intimidation and Performance checks. Your critical failures with any of these skills become failures instead. **Drawback** You take a -2 item penalty to Arcana, Crafting, Lore, Occultism, and Society checks. Choose one skill in which you are trained; for the duration, you become untrained in that skill. All your failures to Recall Knowledge become critical failures. **Duration** 1 hour."
+ },
+ {
+  "id": "silvertongue-mutagen-moderate",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Silvertongue Mutagen (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Your features become striking, and your voice becomes musical and commanding, though emotion clouds your reason. **Benefit** You gain a +2 item bonus to Deception, Diplomacy, Intimidation and Performance checks. Your critical failures with any of these skills become failures instead. **Drawback** You take a -2 item penalty to Arcana, Crafting, Lore, Occultism, and Society checks. Choose one skill in which you are trained; for the duration, you become untrained in that skill. All your failures to Recall Knowledge become critical failures. **Duration** 10 minutes."
+ },
+ {
+  "id": "skeleton-key",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Skeleton Key",
+  "level": 5,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "A grinning skull tops the bow of this macabre key. This key can be used in place of thieves' toolkit when attempting to Pick a Lock, and it grants a +1 item bonus to the Thievery check. If the *skeleton key* becomes broken due to a critical failure on the check, it works as normal thieves' toolkit and loses its benefits until repaired. **Activate—Loosen Lock** ⟨4⟩ (manipulate) **Frequency** once per day **Trigger** You attempt to Pick a Lock but haven't rolled yet --- **Effect** The key casts Knock on the lock you're trying to pick."
+ },
+ {
+  "id": "skeleton-key-greater",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Skeleton Key (Greater)",
+  "level": 11,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "A grinning skull tops the bow of this macabre key. This key can be used in place of thieves' toolkit when attempting to Pick a Lock, and it grants a +2 item bonus to the Thievery check. If the *skeleton key* becomes broken due to a critical failure on the check, it works as normal thieves' toolkit and loses its benefits until repaired. **Activate—Loosen Lock** ⟨4⟩ (manipulate) **Frequency** once per hour **Trigger** You attempt to Pick a Lock but haven't rolled yet --- **Effect** The key casts Knock on the lock you're trying to pick."
+ },
+ {
+  "id": "sky-rider",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Sky Rider",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "The freedom of a bird in flight is something to envy, and envy it you did, but not for long. You've borrowed mechanical gliders or sought out the benefits of magically aided gliding and flight, doing anything for an opportunity to look down on the world with only the wind to keep you aloft. The expense of these experiences may have been a notable factor in why you undertook the adventuring lifestyle or perhaps you are seeking new methods of flight to master. Choose two attribute boosts. One must be to **Dexterity** or **Wisdom**, and one is a free attribute boost. You're trained in the Acrobatics skill and the Plane of Air Lore skill. You gain the Cat Fall skill feat. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Acrobatics **Lore** Plane Of Air Lore **Skill Feat** Cat Fall"
+ },
+ {
+  "id": "slurp-up",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Slurp Up",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your tongue darts out in search of refreshment. Choose a liquid container of up to light Bulk within reach of your lash, such as a potion or elixir. The container must be held or in the open, not stowed in a pack or bandoleer. If the container is unattended or held by a willing ally, you Interact to drink the contents. If the container is held by an unwilling creature, you must succeed on a check using your unarmed attack modifier or Thievery modifier against the creature's Reflex DC to drink the contents; this adds the attack trait."
+ },
+ {
+  "id": "snap-out-of-it-pathfinder-agent",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Snap Out of It! (Pathfinder Agent)",
+  "level": 8,
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Pathfinders are trained to help each other be safe and successful, and you know how to jolt your allies back to their senses. Attempt a Medicine check on an adjacent ally who is fascinated, frightened, stunned, or stupefied and choose one of those conditions. The DC is the DC for the effect that caused the condition. --- **Critical Success** Reduce the value of the chosen condition by 2. If you chose fascinated, that condition ends. **Success** Reduce the value of the chosen condition by 1. If you chose fascinated, that condition ends. **Failure** The target is unaffected. **Critical Failure** You increase the value of the chosen condition by 1. If you chose fascinated, increase the duration by 1 round instead."
+ },
+ {
+  "id": "snare-commando",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Snare Commando",
+  "level": 9,
+  "traits": [
+   "kobold"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** A creature fails or critically fails a save against your snare. --- Your snares are so befuddling that your victims rarely notice you slipping out of sight. If you have expert proficiency in Deception, you can Create a Diversion against the triggering creature. If you have expert proficiency in Intimidation, you can instead Demoralize the triggering creature. If you have both, choose one of the two effects."
+ },
+ {
+  "id": "sneaky-key",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Sneaky Key",
+  "level": 5,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) **Requirements** You are trained in Thievery --- This small silver skeleton key can be pinned to armor or a sleeve. When you turn the key to activate it, you gain a +1 status bonus to Thievery checks to Pick a Lock for 1 minute. The first time you get a success or critical success on an attempt to Pick a Lock, you achieve one additional success toward opening a complex lock."
+ },
+ {
+  "id": "snowdrift-spell",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Snowdrift Spell",
+  "level": 4,
+  "traits": [
+   "cold",
+   "druid",
+   "manipulate",
+   "spellshape"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The howling wind and precipitation of your magic turn to thick snow. If your next action is to Cast a Spell that has the air, water, or cold trait, and that does not have the fire trait, select one creature affected by the spell on the ground. Each square on the ground under or adjacent to the creature fills with ankle-deep snow. Those squares are difficult terrain until the beginning of your next turn. A creature can Interact to clear a square of snow, and the snow in a square melts if that square is exposed to a fire effect."
+ },
+ {
+  "id": "snubbed-out-stoolie",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Snubbed Out Stoolie",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You were once a distinguished informant for the shieldmarshals, working deep undercover to infiltrate gangs of bootleggers and assassins. Then, one day, you discovered that the records of your service had all been completely destroyed. In an instant, you were no longer an elite spy impersonating a criminal-you were just a plain criminal. Now, not a trace remains of your work for the city. Not only is it as though you were never a shieldmarshal at all, but you've got a rap sheet implicating you as a key member in the criminal organizations you spent your career infiltrating. Luckily, no one could take away the skills you learned from your deep-cover missions, and your new notoriety has earned you quite a reputation among Alkenstar's criminal elite. Through your underworld connections, you've identified Deputy Shieldmarshal Anjelique Loveless as the one responsible for your fall from grace. It seems you were onto something that she didn't want you to know about, but there's only one way to figure out exactly why Loveless ruined your reputation and gave you your outlaw status-find her. Choose two attribute boosts. One must be to **Strength** or **Charisma**, and one is a free attribute boost. You're trained in the Deception skill and the Underworld Lore skill. You gain the Lie to Me skill feat. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Deception **Lore** Underworld Lore **Skill Feat** Lie To Me"
+ },
+ {
+  "id": "sodden-scavenger",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Sodden Scavenger",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Mwangi Expanse --- You've managed to eke out an existence in the storm-wracked Sodden Lands and have become an expert at scavenging food and tools. Choose two attribute boosts. One must be to **Constitution** or **Wisdom**, and one is a free attribute boost. You're trained in the Survival skill and the Swamp Lore skill. You gain the Forager skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Survival **Lore** Swamp Lore **Skill Feat** Forager"
+ },
+ {
+  "id": "songsinger-in-training",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Songsinger in Training",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You are a pupil of Argakoa the Songsinger, Otter House leader and Mammoth Lord. Argakoa has been the Broken Tusk's foremost songsinger for many winters, and she sees in you a promising disciple who can carry the torch when it's time for her to pass it. The role of songsinger is a great distinction. These chanters, musicians, and poets are responsible for recording, preserving, and sharing the Broken Tusk's oral history. As one of these songsingers, it's up to you to decide which stories are worthy of passing on and which should be left along the migration trail. Choose two attribute boosts. One must be to **Intelligence** or **Charisma**, and one is a free attribute boost. You're trained in the Performance skill and the Genealogy Lore skill. You gain the Impressive Performance skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Performance **Lore** Geneaology Lore **Skill Feat** Impressive Performance"
+ },
+ {
+  "id": "southbank-traditionalist",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Southbank Traditionalist",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "The political faction of Southbank represents the original founders of Willowshore, a hearty band of settlers whose skills and focus tend toward the earthly and humble. While there are certainly those in this faction who regard Northridge as vapid urbanites, merchants, and power-hungry politicians, most in Southbank devote their energy to helping Willowshore stay fed, honoring its long-standing traditions, and remaining relatively self-sufficient. Your interests in Willowshore's history are closely tied to the traditions of farming and building what you need with your own two hands, as well as taking part in the shared oral history of the region. Whether it's enjoying discussions with local elders about the past or helping newcomers learn Willowshore's ways, you're always eager to help uphold the town's traditions. Your home is likely located south of the Ceiba River, on the southernmost outskirts of town. During the Reenactment Festival, you likely spent time helping to set up the feasts, assisted in running some of the events, and otherwise worked behind the scenes. You were chosen to be an abductee during the Reenactment Festival because you lost a bet, owed a favor, or otherwise got pressured or tricked into the role by a family member, friend, or coworker. Perhaps someone who was going to be one of the abductees but had to back out at the last moment, and so you ended up taking their place. Choose two attribute boosts. One must be to **Charisma** or **Constitution**, and one is a free attribute boost. You're trained in the Crafting skill and the Farming Lore skill. You gain the Hobnobber feat. Seasonal Boon (Southbank Traditionalist) --- You can add one of the following two adjustments to any background to further modify your choice to match your vision for your PC. **Family:** You and one (or more) other PCs are close family members (siblings, parent/child, married, etc.) If you take this adjustment, the other PC(s) who are your family must also take this adjustment. Choose one of the following to replace the skill feat you otherwise would've gained from your background. (You and your sibling need not share the same choice—a sibling who wants to keep their background's skill feat can pick \"Typical\" from the list.) - **Bickering:** You have a long-standing feud with your sibling(s). Whenever your sibling(s) critically fail a significant skill check or attack roll and you witness their failure, you gain a +1 status bonus to your saving throws until the end of your next turn as you secretly (or perhaps not so secretly) delight in their failure. - **Close-Knit:** You and your sibling(s) work well together, and you go all-out to help them when they're badly hurt. When you provide Aid or Administer First Aid to your sibling(s), the DC is 5 lower than normal. - **Typical:** You have a standard relationship with your sibling(s); don't change your background's skill feat. **Foundling:** You aren't a native to Willowshore, but you did grow up in the town. You might have adoptive parents, or you could've grown up on the streets. Choose one of the following to replace the bonus feat you otherwise would've gained from your background. - **Bitter:** "
+ },
+ {
+  "id": "sovereignty-epithet",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "Sovereignty Epithet",
+  "level": 15,
+  "traits": [
+   "exemplar"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The litany of heroic deeds left in your wake has caused your divine spark to blaze bright enough that it now illuminates your legacy. Choose one of the following epithets, which grants you an ability you can use when you Spark Transcendence. You can benefit from no more than one epithet ability each time you Spark Transcendence."
+ },
+ {
+  "id": "spear-of-the-destroyers-flame",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Spear of the Destroyer's Flame",
+  "level": 20,
+  "traits": [
+   "artifact",
+   "reach"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "The tip of this *+3 major striking greater flaming returning speed longspear* is edged with several razor-sharp obsidian blades. The spear has the thrown 30 feet weapon trait, in addition to the normal weapon traits for a longspear. While the *Spear of the Destroyer's Flame* is in your possession, you gain fire resistance 20. When you critically hit a creature with the spear, the creature's blood begins to boil, unleashing blasts of heat from the wound. The creature takes 2d8 damage, in addition to the persistent fire damage from the greater flaming rune; all creatures adjacent to the creature when it takes the persistent fire damage take an equal amount of fire damage. Like the fire damage from the greater flaming rune, this fire damage ignores a creature's fire resistance, though it doesn't ignore fire immunity. In addition to its deadliness as a weapon, the *Spear of the Destroyer's Flame* gives its wielder full control over the Army of Fire, though the orders of the Commander of Flame supersede the orders of anyone wielding the spear, as noted on page 17. While the spear is in your possession, you're aware of the location of the Army of Fire and the army's distance from you. In addition, you can give orders to the Army of Fire, and the army's members will understand and obey you, regardless of what language you speak. If you're within 1 mile of the Army of Fire, the army and its members gain a +10 circumstance bonus to their Speeds. Any members of the Army of Fire within 100 feet of you become quickened and can use the additional action to Step, Stride, or Strike. The army remains quickened for 1 minute after moving further than 100 feet from you. The Army of Fire has unwavering loyalty to the Commander of Flame, an individual who has completed a special activation that ties their soul to the spear. As long as the Army of Fire can see and hear the Commander of Flame, the army will follow the Commander's orders. The Commander of Flame can sense the presence of the Army of Fire and issue orders, regardless of language, with the same effects as for someone in possession of the spear. The Commander of Flame still needs the spear in hand to muster the Army of Fire, however. If the Commander of Flame doesn't hold the *Spear of the Destroyer's Flame* for 1 week, it returns to Cuetzmonquali's gut, instantly teleporting to the creature's location. If Cuetzmonquali is dead at this time, the spear also resurrects the creature, using the effects of a critical success on a 10th-rank Resurrect ritual. **Activate** 1 minute (envision, Interact) **Frequency** once per day --- **Effect** You attempt to tie your soul to the spear. If the current Commander of Flame still lives, you must attempt either a Will save, Diplomacy check, Intimidation check, or Warfare Lore check. The DC of this check is equal to the current Commander's Will DC, Diplomacy DC, Intimidation DC, or Warfare Lore DC, whichever is highest. On a success, you become the Commander of Flame. On a failure, the current Commander knows your name and appearance and is aware of your exact location for 24 hours. Activate 1 hour (envision, Interact) **Frequency** once per week --- **Effect** You us"
+ },
+ {
+  "id": "spell-repertoire",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "Spell Repertoire",
+  "level": 1,
+  "traits": [
+   "bard",
+   "oracle",
+   "psychic",
+   "sorcerer",
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Bard** The collection of spells you can cast is called your spell repertoire. At 1st level, you learn two 1st-rank occult spells of your choice and five occult cantrips of your choice. You choose these from the common spells from the occult list or from other occult spells to which you have access. You can cast any spell in your spell repertoire by using a spell slot of an appropriate spell rank. You add to this spell repertoire as you increase in level. Each time you get a spell slot (see the Bard Spells per Day table), you add a spell to your spell repertoire of the same rank. At 2nd level, you select another 1st-rank spell; at 3rd level, you select two 2nd-rank spells, and so on. When you add spells, you might add a higher-rank version of a spell you already have, so you can cast a heightened version of that spell. Though you gain them at the same rate, your spell slots and the spells in your spell repertoire are separate. If a feat or other ability adds a spell to your spell repertoire, it wouldn't give you another spell slot, and vice versa. **Swapping Spells in Your Repertoire** As you gain new spells in your repertoire, you might want to replace some of the spells you previously learned. Each time you gain a level and learn new spells, you can swap out one of your old spells for a different spell of the same rank. This spell can be a cantrip. You can also swap out spells by retraining during downtime. --- **Oracle** The collection of spells you can cast is called your spell repertoire. At 1st level, you learn three 1st-rank divine spells of your choice and five divine cantrips of your choice. You choose these from the common spells on the divine list or from other divine spells to which you have access. You can cast any spell in your spell repertoire by using a spell slot of an appropriate spell rank. You add to this spell repertoire as you increase in level. Each time you get a spell slot (see the Oracle Spells per Day table), you add a spell to your spell repertoire of the same rank. At 2nd level, you select another 1st-rank spell; at 3rd level, you select three 2nd-rank spells, and so on. When you add spells, you might add a higher-rank version of a spell you already have, so you can cast a heightened version of that spell. Your spell slots and the spells in your spell repertoire are separate. If a feat or other ability adds a spell to your spell repertoire, it wouldn't give you another spell slot, and vice versa. **Swapping Spells in Your Repertoire** As you gain new spells in your repertoire, you might want to replace some of the spells you previously learned. Each time you gain a level and learn new spells, you can swap out one of your old spells for a different spell of the same rank. This spell can be a cantrip. You can also swap out spells by retraining during downtime. --- **Psychic** The collection of spells you can cast is called your spell repertoire. At 1st level, you learn one 1st-rank occult spell of your choice and three occult cantrips of your choice. You choose these from the common spells from the occult list or from other occult spells to which you have access. You can cast any spell in your spell repertoire by u"
+ },
+ {
+  "id": "spell-repertoire-bard",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "Spell Repertoire (Bard)",
+  "level": 1,
+  "traits": [
+   "bard"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The collection of spells you can cast is called your spell repertoire. At 1st level, you learn two 1st-rank occult spells of your choice and five occult cantrips of your choice. You choose these from the common spells from the occult list or from other occult spells to which you have access. You can cast any spell in your spell repertoire by using a spell slot of an appropriate spell rank. You add to this spell repertoire as you increase in level. Each time you get a spell slot (see the Bard Spells per Day table), you add a spell to your spell repertoire of the same rank. At 2nd level, you select another 1st-rank spell; at 3rd level, you select two 2nd-rank spells, and so on. When you add spells, you might add a higher-rank version of a spell you already have, so you can cast a heightened version of that spell. Though you gain them at the same rate, your spell slots and the spells in your spell repertoire are separate. If a feat or other ability adds a spell to your spell repertoire, it wouldn't give you another spell slot, and vice versa. ## Swapping Spells In Your Repertoire As you gain new spells in your repertoire, you might want to replace some of the spells you previously learned. Each time you gain a level and learn new spells, you can swap out one of your old spells for a different spell of the same rank. This spell can be a cantrip. You can also swap out spells by retraining during downtime."
+ },
+ {
+  "id": "spell-repertoire-oracle",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "Spell Repertoire (Oracle)",
+  "level": 1,
+  "traits": [
+   "oracle"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The collection of spells you can cast is called your spell repertoire. At 1st level, you learn two 1st-rank divine spells of your choice and five divine cantrips of your choice. You choose these from the common spells on the divine list or from other divine spells to which you have access. You can cast any spell in your spell repertoire by using a spell slot of an appropriate spell rank. You add to this spell repertoire as you increase in level. Each time you get a spell slot (see the Oracle Spells per Day table), you add a spell to your spell repertoire of the same rank. At 2nd level, you select another 1st-rank spell; at 3rd level, you select two 2nd-rank spells, and so on. When you add spells, you might add a higher-rank version of a spell you already have, so you can cast a heightened version of that spell. Your spell slots and the spells in your spell repertoire are separate. If a feat or other ability adds a spell to your spell repertoire, it wouldn't give you another spell slot, and vice versa. ### Swapping Spells in Your Repertoire As you gain new spells in your repertoire, you might want to replace some of the spells you previously learned. Each time you gain a level and learn new spells, you can swap out one of your old spells for a different spell of the same rank. This spell can be a cantrip. You can also swap out spells by retraining during downtime."
+ },
+ {
+  "id": "spell-repertoire-psychic",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "Spell Repertoire (Psychic)",
+  "level": 1,
+  "traits": [
+   "psychic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The collection of spells you can cast is called your spell repertoire. At 1st level, you learn one 1st-rank occult spell of your choice and three occult cantrips of your choice. You choose these from the common spells from the occult list or from other occult spells to which you have access. You can cast any spell in your spell repertoire by using a spell slot of an appropriate spell rank. Your choice of conscious mind also grants you additional spells in your repertoire, starting with an additional 1st-rank spell and two cantrips listed in your conscious mind, which you cast as psi cantrips. You add to this spell repertoire as you increase in level. Each time you get a spell slot, you add a spell to your spell repertoire of the same rank. At 2nd level, you select another 1st-rank spell; at 3rd level, you select one 2nd-rank spell, and so on. When you add spells, you might add a higher-rank version of a spell you already have, so you can cast a heightened version of that spell. Your conscious mind also adds additional spells to your repertoire as you gain spells of higher levels. Though you gain them at the same rate, your spell slots and the spells in your spell repertoire are separate. If a feat or other ability adds a spell to your spell repertoire, such as the spells you gain from your conscious mind, it wouldn't give you another spell slot, and vice versa. ### **Swapping Spells in your Repertoire** As you gain new spells in your repertoire, you might want to replace some of the spells you previously learned. Each time you gain a level and learn new spells, you can swap out one of your old spells for a different spell of the same rank. This spell can be a cantrip. You can also swap out spells by retraining during downtime."
+ },
+ {
+  "id": "spell-repertoire-sorcerer",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "Spell Repertoire (Sorcerer)",
+  "level": 1,
+  "traits": [
+   "sorcerer"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The collection of spells you can cast is called your spell repertoire. At 1st level, you learn two 1st-rank spells of your choice and four cantrips of your choice, as well as an additional spell and cantrip from your bloodline. You choose these from the common spells from the tradition corresponding to your bloodline, or from other spells from that tradition to which you have access. You can cast any spell in your spell repertoire by using a spell slot of an appropriate spell rank. You add to this spell repertoire as you increase in level. Each time you get a spell slot (see the Sorcerer Spells per Day table above), you add a spell to your spell repertoire of the same rank. When you gain a new rank of spells, your first new spell is always the sorcerous gift spell for that rank that's listed in your bloodline, but you can choose the other spells. At 2nd level, you select another 1st-rank spell; at 3rd level, you gain a new spell from your bloodline and two other 2nd-rank spells, and so on. When you add spells, you might select a higher-rank version of a spell you already know so that you can cast a heightened version of that spell. Though you gain them at the same rate, your spell slots and the spells in your spell repertoire are separate. If a feat or other ability adds a spell to your spell repertoire, it wouldn't give you another spell slot or vice versa. ### Swapping Spells in Your Repertoire As you gain new spells in your spell repertoire, you might want to replace some of the spells you previously learned. Each time you gain a level and learn new spells, you can swap out one of your old spells for a different spell of the same rank. This spell can be a cantrip, but you can't swap out bloodline spells. You can also swap out spells by retraining during downtime."
+ },
+ {
+  "id": "spelldrinker",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Spelldrinker",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Requirements** Your last action was to Harvest Blood. **Frequency** once per hour --- You temporarily add a 3rd-rank spell to your spell repertoire, as determined by the type of creature whose blood you just drank (see table below). If the creature has more than one of the listed traits, choose one and gain the appropriate spell. If the granted spell is not on your chosen tradition's list, you cast the spell as though it was from your chosen tradition. The spell is removed from your spell repertoire after 24 hours, the next time you use Spelldrinker, or when you next make your daily preparations, whichever comes first. | Trait | Spell | Notes | | --- | --- | --- | | Aberration | Vampiric Feast | | | Animal, beast | Summon Animal | Summoned creatures appear as otherworldly versions of the creature whose blood you drank. | | Celestial | Holy Light | | | Dragon | Blazing Bolt | Instead of fire damage, this spell deals the same damage as the dragon breath of the dragon whose blood you drank (if applicable). | | Fey | Wall of Thorns | | | Fiend | Chilling Darkness | | | Giant | Pummeling Rubble | | | Humanoid | Crisis of Faith | | | Monitor | Impending Doom | | --- **Special** If you have Surging Blood Magic, you can add the spell at 4th rank. If you have Exultant Blood Magic, you can add the spell at 7th rank."
+ },
+ {
+  "id": "spellshield",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Spellshield",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your shield becomes a bonded item capable of storing your spells. You gain the Arcane Bond class feature and the Drain Bonded Item action. You must select a shield as your bonded item. When you make your daily preparations, you can prepare one fewer wizard spell to infuse that magic into your bonded item. This spell must be at least 1 rank lower than the highest-rank wizard spell slot you have. When you Drain your Bonded Item to Cast a Spell, that spell is automatically heightened to the rank of spell you infused into your shield, no matter what rank you originally prepared it at."
+ },
+ {
+  "id": "spellstriker-staff",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Spellstriker Staff",
+  "level": 7,
+  "traits": [
+   "magical",
+   "staff",
+   "two-hand-d8"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "A *spellstriker staff* is wrought iron with gleaming arcane sigils etched into its surface and a sharp point at the bottom. Used as a weapon, the staff is a *+1 striking shifting staff*. --- **Activate** ⟨4⟩ (concentrate) **Frequency** once per hour **Trigger** You use Spellstrike with a non-cantrip spell and miss with the Strike --- **Effect** An explosion of magical energy—stored up for the Spellstrike—explodes out. All creatures in a take 1d6 damage per rank of the spell, with a save against your spell DC. This damage is the same type the spell would have dealt, and the activation gains that trait; if the spell would have dealt multiple types of damage, choose one of them. If the damage of the explosion is mental, the save is instead of Reflex. --- **Activate** Cast a Spell **Effect** You expend a number of charges from the staff to cast a spell from its list. - **Cantrip** Ignition - **1st** Echoing Weapon, Sure Strike - **2nd** Acid Grip, Telekinetic Maneuver --- **Craft Requirements** You have the magus's Spellstrike activity. Supply one casting of all listed ranks of all listed spells."
+ },
+ {
+  "id": "spellstriker-staff-greater",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Spellstriker Staff (Greater)",
+  "level": 11,
+  "traits": [
+   "magical",
+   "staff",
+   "two-hand-d8"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "A *spellstriker staff* is wrought iron with gleaming arcane sigils etched into its surface and a sharp point at the bottom. Used as a weapon, the staff is a *+2 striking shifting staff*. --- **Activate** ⟨4⟩ (concentrate) **Frequency** once per hour **Trigger** You use Spellstrike with a non-cantrip spell and miss with the Strike --- **Effect** An explosion of magical energy—stored up for the Spellstrike—explodes out. All creatures in a take 1d6 damage per rank of the spell, with a save against your spell DC. This damage is the same type the spell would have dealt, and the activation gains that trait; if the spell would have dealt multiple types of damage, choose one of them. If the damage of the explosion is mental, the save is instead of Reflex. --- **Activate** Cast a Spell **Effect** You expend a number of charges from the staff to cast a spell from its list. - **Cantrip** Ignition - **1st** Echoing Weapon, Sure Strike - **2nd** Acid Grip, Telekinetic Maneuver - **3rd** Echoing Weapon, Haste - **4th** Acid Grip, Weapon Storm --- **Craft Requirements** You have the magus's Spellstrike activity. Supply one casting of all listed ranks of all listed spells."
+ },
+ {
+  "id": "spellstriker-staff-major",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Spellstriker Staff (Major)",
+  "level": 16,
+  "traits": [
+   "magical",
+   "staff",
+   "two-hand-d8"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "A *spellstriker staff* is wrought iron with gleaming arcane sigils etched into its surface and a sharp point at the bottom. Used as a weapon, the staff is a *+2 greater striking shifting staff*. --- **Activate** ⟨4⟩ (concentrate) **Frequency** once per hour **Trigger** You use Spellstrike with a non-cantrip spell and miss with the Strike --- **Effect** An explosion of magical energy—stored up for the Spellstrike—explodes out. All creatures in a take 1d6 damage per rank of the spell, with a save against your spell DC. This damage is the same type the spell would have dealt, and the activation gains that trait; if the spell would have dealt multiple types of damage, choose one of them. If the damage of the explosion is mental, the save is instead of Reflex. --- **Activate** Cast a Spell **Effect** You expend a number of charges from the staff to cast a spell from its list. - **Cantrip** Ignition - **1st** Echoing Weapon, Sure Strike - **2nd** Acid Grip, Telekinetic Maneuver - **3rd** Echoing Weapon, Haste - **4th** Acid Grip, Weapon Storm - **5th** Blink Charge, Echoing Weapon, Vampiric Feast - **6th** Acid Grip, Weapon Storm - **7th** Blink Charge, True Target --- **Craft Requirements** You have the magus's Spellstrike activity. Supply one casting of all listed ranks of all listed spells."
+ },
+ {
+  "id": "spirits-sacrifice",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Spirit's Sacrifice",
+  "level": 18,
+  "traits": [
+   "animist",
+   "apparition"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** You would die. --- Your attuned apparition gathers all of the energy it can through your shared bond and uses that power to disperse itself while channeling the energy back into you, saving your life. You can use Spirit's Sacrifice even while unconscious or otherwise unable to act. Choose one apparition you have attuned; you do not die, your wounded condition is reduced to 1 if it would be higher, and you regain a number of Hit Points equal to twice your level. The chosen apparition is dispersed until you can re-attune to it at your next daily preparations."
+ },
+ {
+  "id": "split-hex",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Split Hex",
+  "level": 18,
+  "traits": [
+   "concentrate",
+   "spellshape",
+   "witch"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You siphon some of the power from an offensive hex you cast to direct it at a second target as well. If the next action you use is to Cast a Spell to cast a harmful hex with a single target, reduce its rank by 2 (making it 2 ranks lower than the maximum spell rank you can cast). If you do, you can select a second target for that hex to affect."
+ },
+ {
+  "id": "split-shot",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Split Shot",
+  "level": 4,
+  "traits": [
+   "concentrate",
+   "sorcerer",
+   "spellshape"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You fragment a ranged spell. If your next action is to Cast a Spell without a duration that requires an attack roll against a single target, you can choose a second target within range. You roll a single attack roll and compare the result to the AC of both targets. This counts as one attack for your multiple attack penalty. To the second target, the spell deals half the amount of damage it would normally deal and has no effects beyond the spell's initial damage (such as imposing conditions or penalties)."
+ },
+ {
+  "id": "spot-translate",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Spot Translate",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "auditory",
+   "linguistic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** Another creature within 60 feet uses a linguistic effect in a language you understand. --- You bridge a language gap, repeating the message in a different language that you know. Choose a language you understand to repeat the message in. The linguistic effect counts as both languages, rather than only the language the triggering creature is using, potentially allowing it to affect a wider range of creatures. As normal, you can translate normal speech without Spot Translate and without using a reaction, but this reaction allows you to apply the benefits of translation to spells and actions such as command or Demoralize."
+ },
+ {
+  "id": "stags-helm",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Stag's Helm",
+  "level": 6,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This impressive-looking helmet is crafted to resemble the skull of a mighty stag. Although made from bone, the antlers and helm are as strong as iron. Rather than restrict the senses, a *stag's helm* enhances them, causing the world to appear in more vibrant colors and significantly enhancing the ambient sounds of the region without making them distracting. While worn, it grants a +1 item bonus to Perception checks. --- **Activate** ⟨4⟩ **Frequency** once per day (or once per hour if the wearer worships Erastil) **Effect** Choose a single creature within 30 feet. The *stag's helm* focuses your aim and grants supernatural insight into your next shot. Your target is off-guard to the next ranged Strike you make this turn against them."
+ },
+ {
+  "id": "star-orb",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Star Orb",
+  "level": 1,
+  "traits": [
+   "kitsune"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Your magic has crystallized into a spherical stone. You gain a familiar, except it's a star orb: a Tiny stone of light Bulk. The familiar has no Speeds and must select a Speed familiar ability before it can move, animating in a way appropriate to the chosen Speed and using the statistics of a normal familiar for that day; when it's an immobile stone, it can't select any familiar or master abilities that require it to move. It always has the innate surge master ability, which counts against your limit for familiar and master abilities."
+ },
+ {
+  "id": "stargazer",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Stargazer",
+  "level": 14,
+  "traits": [
+   "invested",
+   "magical",
+   "scrying",
+   "thrown-10"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "When you invest this clear quartz crystal ball, it orbits your head like an aeon stone. As long as you have the stargazer invested, you can use an Interact action to direct it to orbit one of your hands where you can telekinetically smash the orb into foes, wielding it as a *+2 greater striking returning club*. While you're directing the stargazer, your hand is full, and you can send it back to your head with another Interact action. On a critical hit, the *stargazer* pulses with hypnotic starlight, Dazzling the struck creature for 1 round. A *stargazer* doesn't add critical specialization effects."
+ },
+ {
+  "id": "starless-one",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Starless One",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You were born on a night when not a single star was in the night sky. While this is likely due to a haze, cloud cover, or other natural phenomena, there is always a chance that the stars hid from you on purpose. You have never been able to rely on the stars to guide you and you choose to exert your own will on your fortune rather than rely on the heavens. You've learned to reject outside influence on your fate, maintaining control of your own destiny. Choose two attribute boosts. One must be to Wisdom or Charisma, and one is a free attribute boost. You're trained in Occultism and Astrology Lore. You also gain the Reclaim Destiny action. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Occultism **Lore** Astrology Lore"
+ },
+ {
+  "id": "starwatcher",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Starwatcher",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You're one of Wrin Sivinxi's closest confidantes. You've spent many long nights with her under the stars, learning the tales associated with the Cosmic Caravan and how the heavens can predict the future. You know that Wrin has paralyzing claustrophobia; she sees menace in angles and danger in confined spaces, which is why her shop is an all domed canvas that opens to the sky. If Wrin thinks there's trouble, you'll be the first to offer to help. Choose two attribute boosts. One must be to **Constitution** or **Intelligence**, and one is a free attribute boost. You're trained in the Occultism skill and the Astrology Lore skill. You gain the Dubious Knowledge skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Occultism **Lore** Astrology Lore **Skill Feat** Dubious Knowledge"
+ },
+ {
+  "id": "steel-yourself",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Steel Yourself!",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "auditory",
+   "emotion",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You encourage an ally to toughen up, giving them a fighting chance. Choose one ally in your marshal's aura. The ally gains temporary Hit Points equal to your Charisma modifier and a +2 circumstance bonus to Fortitude saves. Both benefits last until the start of your next turn."
+ },
+ {
+  "id": "storm-flash",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Storm Flash",
+  "level": 14,
+  "traits": [
+   "deadly-d8",
+   "disarm",
+   "electricity",
+   "finesse",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "This *+2 greater striking shock rapier* has a golden blade, and miniature electric arcs flash across its guard while it's wielded. When out of its sheath under an open sky, the blade causes storm clouds to gather slowly above. --- **Activate—Lightning Stab** ⟨2⟩ (concentrate, manipulate) **Frequency** once per day --- **Effect** You cast a 6th-rank Lightning Bolt (DC 33). --- **Activate—Divert Lightning** ⟨5⟩ (concentrate) **Frequency** once per 10 minutes **Trigger** An electricity effect targets you or a creature within 10 feet of you, or has you or a creature within 10 feet of you in its area --- **Effect** You try to divert the electricity off course, to be absorbed by *storm flash*. Choose one eligible creature to protect and roll a melee attack roll against the DC of the electricity effect. If you succeed, the chosen creature takes no electricity damage from the triggering effect."
+ },
+ {
+  "id": "storm-flash-greater",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Storm Flash (Greater)",
+  "level": 18,
+  "traits": [
+   "deadly-d8",
+   "disarm",
+   "electricity",
+   "finesse",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "This *+3 greater striking greater shock rapier* has a golden blade, and miniature electric arcs flash across its guard while it's wielded. When out of its sheath under an open sky, the blade causes storm clouds to gather slowly above. --- **Activate—Lightning Stab** ⟨2⟩ (concentrate, manipulate) **Frequency** once per day --- **Effect** You cast a 8th-rank Lightning Bolt (DC 38). --- **Activate—Divert Lightning** ⟨5⟩ (concentrate) **Frequency** once per 10 minutes **Trigger** An electricity effect targets you or a creature within 10 feet of you, or has you or a creature within 10 feet of you in its area --- **Effect** You try to divert the electricity off course, to be absorbed by *storm flash*. Choose one eligible creature to protect and roll a melee attack roll against the DC of the electricity effect. If you succeed, the chosen creature takes no electricity damage from the triggering effect."
+ },
+ {
+  "id": "storm-survivor",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Storm Survivor",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - High Seas --- Through luck or through skill, you managed to survive a catastrophic maritime disaster, such as a shipwreck or being thrown overboard. You have a keen sense for weather or situations that are similar to the one you escaped. Choose two attribute boosts. One must be to **Strength** or **Wisdom**, and one is a free attribute boost. You're trained in the Survival skill and the Weather Lore skill. You gain the Forager skill feat. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Survival **Lore** Weather Lore **Skill Feat** Forager"
+ },
+ {
+  "id": "story-collector",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Story Collector",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "The power stories exude over the world has long fascinated you. No matter if they're accurate historical accounts, distorted parables, or completely fictional constructions, the way tales can shape society is a kind of magic. In some cases, literal, occult magic! One tale that's come back to modern lips of late is an ancient one indeed, the story of the elven hero Iyalirrin, an Ekujae bard who helped to create a ritual known as the anima invocation in his people's pursuit against the devastations caused by Dahak in the aftermath of Earthfall. Other heroes rediscovered Iyalirrin's story and the ritual a few short years ago, but it was Iyalirrin's admiration of the art of storytelling that spoke more to you. Whether you came to this realization recently or if you've long known about the ancient elven hero's admiration of spoken tales, you've devoted much of your adult life to the gathering and crafting of stories of your own. The way in which occult magic can manipulate the power of story is a particular obsession of yours, especially with a handy little trick you've learned that allows you to access power locked away in magic items you'd otherwise struggle to use. Simply by adjusting your story, the item's story, or both... and then giving the tiniest little push of occult magic, you can unlock a wide range of magical tools. These same tricks, you've come to discover, also work well on demons—particularly when used to remind them of their sins and the shame their once-mortal souls may have held eons ago. Choose two attribute boosts. One must be to **Charisma** or **Intelligence**, and one is a free attribute boost. You're trained in the Occultism skill and the Demon Lore skill. You gain the Trick Magic Item skill feat, as well as the Opportunistic Accusation reaction. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Occultism **Lore** Demon Lore **Skill Feat** Trick Magic Item"
+ }
+]

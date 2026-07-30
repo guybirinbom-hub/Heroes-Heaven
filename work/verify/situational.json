@@ -1,0 +1,441 @@
+[
+ {
+  "id": "abidance-blinders",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Abidance Blinders",
+  "level": 2,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "text": "While many skilled cavalry units have their own beloved mounts, troops often need to make do with whatever animals are available for mounted combat. These blinders, made of dark brown leather, nearly cover an animal's eyes and prevent it from seeing the dangers around them. It takes 1 minute to affix the blinders on an animal, whose attitude toward you must be indifferent or better. These blinders can be used only on a domesticated animal that doesn't have combat training or the minion trait. Animals with these blinders on do not suffer from the frightened condition due to being in combat, nor do they automatically flee combat, as would be normal for an animal without combat training. Unless mounted by a rider with the paired headband, which is braided from the same dark brown leather, the animal's speed is reduced to 10 feet. --- **Activate—It Can't Hurt You** ⟨5⟩ (concentrate) **Frequency** once per day **Trigger** An animal within 30 feet wearing the paired blinders attempts a saving throw against a fear effect but hasn't rolled yet --- **Effect** You grant a +1 status bonus to its saving throw against the triggering effect."
+ },
+ {
+  "id": "alignment-ampoule-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Alignment Ampoule (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Alignment Ampoule Source PFS Guide pg. 38 PFS Note Players can gain access to faction-specific gear by taking the corresponding Faction Gear Access Game Reward, available when they reach 20 reputation with the respective faction. Usage held in 1 hand Bulk L Access Member of the Pathfinder Society. This glass sphere is divided into four quarters, each of which contains a different material aligned with good, evil, chaos, or law, such as shavings from a holy relic or dried flowers that grew near a planar rift to the Abyss. When an alignment ampoule strikes a creature with a weakness to good, evil, chaos, or law, it deals the listed damage, which matches the creature's highest weakness. This damage is always based on the weaknesses of the initial target of the attack. If a creature has multiple eligible weaknesses, randomly determine the damage type. An alignment ampoule has no effect against creatures that don't have a weakness to the ampoule's associated alignment types. Alignment Ampoule (Lesser) Source PFS Guide pg. 38 Price 4 gp Bulk L The ampoule deals 1 damage and 1 splash damage. Alignment Ampoule (Moderate) Source PFS Guide pg. 38 Price 12 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 1d4 damage and 2 splash damage. Alignment Ampoule (Greater) Source PFS Guide pg. 38 Price 300 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 2d4 damage and 3 splash damage. Alignment Ampoule (Major) Source PFS Guide pg. 38 Price 3,000 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 3d4 damage and 4 splash damage."
+ },
+ {
+  "id": "aon-mythic-resilent",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Mythic Resilent",
+  "level": 20,
+  "traits": [
+   "magical",
+   "mythic"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "text": "Mythic resilient runes imbue armor with unrivaled protection from a wide array of effects. The armor grants a +4 item bonus to saving throws to the wearer. Activate—Defy Obliteration Reaction (concentrate) Trigger You critically fail a saving throw; Effect Spend a Mythic Point; if the triggering save was made due to an effect created by a mythic monster, hazard, or other effect, it’s a normal failure instead. If the save was made due to an effect that wasn’t mythic, it becomes a success. Craft Requirements Mythic resilient runes can only be crafted, etched, or transferred by a mythic character capable of making a Crafting check at mythic proficiency (such as by having the Artisan’s Calling)."
+ },
+ {
+  "id": "atrophy-bomb-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Atrophy Bomb (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash",
+   "void"
+  ],
+  "engineFieldsPresent": [],
+  "text": "**Activate** ⟨1⟩ Strike Atrophy bombs contain powerful chemicals developed by Urgathoan alchemists that sap a living creature's strength and drain their energy. The bomb deals 3d4 persistent void damage and 3 void splash damage, and the target is Enfeebled 2 until the start of your next turn. You gain a +2 item bonus to attack rolls with this bomb."
+ },
+ {
+  "id": "blasting-stone-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Blasting Stone (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "sonic",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "text": "**Activate** ⟨1⟩ Strike --- When this pebble hits a creature or a hard surface, it explodes with a deafening bang. A blasting stone deals 4d4 sonic damage and 4 sonic splash damage, and each creature within 10 feet of the space in which the stone exploded must succeed at a saving throw with the listed DC or be deafened until the end of its next turn. You gain a +3 item bonus to attack rolls."
+ },
+ {
+  "id": "bounce-boost",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Bounce Boost",
+  "level": 1,
+  "traits": [
+   "tripkee"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Bounce Boost Source High Seas pg. 21 Prerequisites Trained in Athletics Trigger An adjacent ally attempts to High Jump or Long Jump. You’ve learned to use your own athletic abilities and springy legs to help others who need a boost with their leaps. The triggering ally gains a +1 circumstance bonus to their Athletics check to High Jump or Long Jump. This bonus increases to +2 if you’re an expert in Athletics, +3 if you’re a master, and +4 if you’re legendary. Additionally, the triggering ally’s Leap distance on a successful check increases by 2 feet for a High Jump or 5 feet for a Long Jump, even if it would allow the ally to Leap further than their land Speed."
+ },
+ {
+  "id": "clockwork-heels",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Clockwork Heels",
+  "level": 7,
+  "traits": [
+   "clockwork"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "text": "This clockwork footwear features a marvelous mechanical heel built into the base to increase your speed. When you lean your weight onto your heel, a springboard triggers and pops out small metal wheels that propel you forward. You gain a +5-foot item bonus to your Speed."
+ },
+ {
+  "id": "courageous-onslaught",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Courageous Onslaught",
+  "level": 16,
+  "traits": [
+   "auditory",
+   "bard",
+   "concentrate",
+   "spellshape"
+  ],
+  "engineFieldsPresent": [],
+  "text": "You use your performance to orchestrate an onslaught against your enemies. If your next action is to cast the Courageous Anthem composition cantrip, one ally of your choice who gains a status bonus from the spell can immediately use their reaction to Stride and then make a melee Strike."
+ },
+ {
+  "id": "defoliation-bomb-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Defoliation Bomb (Greater)",
+  "level": 12,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash",
+   "void"
+  ],
+  "engineFieldsPresent": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This brightly painted ceramic sphere contains chemicals that cause plants to wither and die. You gain a +2 item bonus to attack rolls. A defoliation bomb deals the 3d6 void damage, 3d4 persistent void damage, and 3 void splash damage to all plants in the area. Non-creature plants in the area immediately wither and die."
+ },
+ {
+  "id": "dread-ampoule-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Dread Ampoule (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "emotion",
+   "fear",
+   "mental",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This flask is filled with a murky purple gas that briefly interferes with normal brain activity. A dread ampoule deals 4d6 mental damage and 4 mental splash damage. On a hit, the target becomes Frightened 1, or Frightened 2 on a critical hit. Many types also grant an item bonus to attack rolls. You gain a +3 item bonus to attack rolls."
+ },
+ {
+  "id": "fan-of-the-four-winds",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Fan of the Four Winds",
+  "level": 4,
+  "traits": [
+   "air",
+   "magical",
+   "relic"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "text": "Fan of the Four Winds Source Treasure Vault (Remastered) pg. 204 Usage held in 1 hand Bulk L The fan of the four winds once belonged to a sage of Gozreh and was passed down as a sacred relic for generations to those found worthy. Since that time, no one has unlocked the fan's full powers, though many devout priests have used it to aid them in their travels. A worthy member of this order might receive the fan as a reward, as could a suitable helper of the clergy. The fan might also have been lost, allowing for a new wielder to find it. The fan of the four winds has the following activation. Activate (concentrate, manipulate) Frequency once per day; Effect You fan in a direction, and the fan casts gust of wind. If this casting is directed toward the sail of a vessel, it instead fills it with swirling air. The vessel gains a +10-foot circumstance bonus to its Speed for 8 hours. Minor Gifts: feather steps, wind barrier Major Gifts: lightning storm, propelling winds Grand Gift: living storm"
+ },
+ {
+  "id": "ghost-charge-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Ghost Charge (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash",
+   "vitality"
+  ],
+  "engineFieldsPresent": [],
+  "text": "**Activate** ⟨1⟩ Strike --- These spring-loaded metal canisters contain a mixture of chemicals and salts that drain and disintegrate nearby undead creatures. A *ghost charge* gives a +2 item bonus to attack rolls, deals 3d8 vitality damage and 3 vitality splash damage, though as usual for vitality damage, this damage harms only undead and creatures with void healing. A primary target that takes damage from a *ghost charge* becomes Enfeebled 2 until the start of your next turn. *Ghost charges* are designed to explode even on contact with a spiritual substance, making them ideal for damaging incorporeal undead."
+ },
+ {
+  "id": "greater-sihedron-medallion",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Greater Sihedron Medallion",
+  "level": 9,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency",
+   "passiveEffects"
+  ],
+  "text": "Sihedron Medallion May contain spoilers from Revenge of the Runelords Source Pathfinder Adventure Path #219: Lord of the Trinity Star pg. 69 Usage worn These amulets once served as tokens of loyalty between the runelords and their favored agents. Though they vary in appearance, they all share a common design—a leather or metallic cord attached to a metal disc inscribed with the seven-pointed star known as the Sihedron. For original Sihedron medallions created before Earthfall, a runelord of old Thassilon (not a character with the runelord archetype) doesn’t reduce the DC of any scrying spell they cast against a creature that wears a Sihedron medallion even if they have never met the target or are unaware of the target’s identity. If such a runelord successfully scries on a creature wearing an original Sihedron medallion, they can use the wearer’s voice to issue messages to those in the vicinity. Sihedron medallions created in more modern times don’t possess this disadvantage. A dead body that wears a Sihedron medallion doesn’t decay, and bugs or other pests (such as maggots) are prevented from consuming the remains, but unlike the effects of peaceful rest, this doesn’t offer any protection against undeath, nor does it have an impact on spells that require the corpse to have died within a certain amount of time. Activate—Bolster Flesh (concentrate, manipulate) Frequency once per day; Effect Your flesh is augmented with magical vitality. You gain 10 temporary Hit Points for 8 hours. Sihedron Medallion Source Pathfinder Adventure Path #219: Lord of the Trinity Star pg. 69 Price 16 gp Usage worn Activate (concentrate, manipulate) Greater Sihedron Medallion Source Pathfinder Adventure Path #219: Lord of the Trinity Star pg. 69 Price 70 gp Usage worn Activate (concentrate, manipulate) The medallion grants a +1 item bonus to saving throws and grants 16 temporary Hit Points when activated. Major Sihedron Medallion Source Pathfinder Adventure Path #219: Lord of the Trinity Star pg. 69 Price 650 gp Usage worn Activate (concentrate, manipulate) The medallion grants a +2 item bonus to saving throws and grants 25 temporary Hit Points when activated."
+ },
+ {
+  "id": "healers-gloves",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Healer's Gloves",
+  "level": 4,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "text": "These clean, white gloves never show signs of blood, even when used to stitch up wounds or treat other ailments. They give you a +1 item bonus to Medicine checks. --- **Activate—Healer's Touch** ⟨1⟩ (manipulate) **Frequency** once per day **Effect** You can soothe the wounds of a willing, living, adjacent creature, restoring Hit Points to that creature. This is a healing vitality effect. You can't harm undead with this healing."
+ },
+ {
+  "id": "instrument-of-death",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Instrument of Death",
+  "level": 16,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Your splinter of finality has reached the apex of its death-dealing potential. Whenever you critically succeed at an attack roll against an enemy and use Lethal Edge, add the following effects to the list you can choose from. - The target is cursed and can't benefit from circumstance or status bonuses. This is a curse effect. - The target gains weakness 10 to spirit damage."
+ },
+ {
+  "id": "lead-investigator",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Lead Investigator",
+  "level": 18,
+  "traits": [
+   "exploration",
+   "investigator"
+  ],
+  "engineFieldsPresent": [],
+  "text": "You spend 1 minute briefing up to four allies about one of your open investigations. Those allies gain the same circumstance bonus you do from Pursue a Lead to checks to investigate the question at the heart of that investigation. This bonus lasts until you cease Pursing that Lead or for 1 day, whichever comes first. This doesn't confer any other benefits of pursuing a lead, such as adding the circumstance bonus to your saves with Detective's Readiness."
+ },
+ {
+  "id": "magic-armor-3-greater-resilient",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Magic Armor (+3 Greater Resilient)",
+  "level": 18,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Magic Armor Source GM Core pg. 229 Usage worn armor Bulk varies by armor A suit of magic armor is simply a suit of armor or explorer’s clothing etched with fundamental runes. An armor potency rune increases the armor’s item bonus to AC, and a resilient rune adds an item bonus to saving throws. The Prices here are for all types of armor. You don’t need to adjust the Price from leather armor to full plate or the like. These armors are made of standard materials, not precious materials such as dawnsilver. Magic Armor (+1) Source GM Core pg. 229, Core Rulebook pg. 556 Price 160 gp This armor has a +1 armor potency rune (increase the item bonus to AC by 1). Magic Armor (+1 Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 500 gp This armor has a +1 armor potency rune (increase the item bonus to AC by 1) and a resilient rune (+1 item bonus to saves). Magic Armor (+2 Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 1,400 gp This armor has a +2 armor potency rune (increase the item bonus to AC by 2) and a resilient rune (+1 item bonus to saves). Magic Armor (+2 Greater Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 4,500 gp This armor has a +2 armor potency rune (increase the item bonus to AC by 2) and a greater resilient rune (+2 item bonus to saves). Magic Armor (+3 Greater Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 24,000 gp This armor has a +3 armor potency rune (increase the item bonus to AC by 3) and a greater resilient rune (+2 item bonus to saves). Magic Armor (+3 Major Resilient) Source GM Core pg. 229, Core Rulebook pg. 556 Price 70,000 gp This armor has a +3 armor potency rune (increase the item bonus to AC by 3) and a major resilient rune (+3 item bonus to saves)."
+ },
+ {
+  "id": "marvelous-medicines",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Marvelous Medicines",
+  "level": 12,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "text": "This healer's toolkit contains a seemingly endless supply of bandages, herbs, and healing items of impeccable quality, granting you a +2 item bonus to Medicine checks. If you use the *marvelous medicines* when you Treat Poison or Treat Disease, before you roll your check, the medicines attempt to counteract the poison or disease you're treating, with a counteract rank of 5 and a counteract modifier of +21. This is a healing effect. The medicines can't be used to treat the same affliction for that patient again"
+ },
+ {
+  "id": "mounted-shield",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Mounted Shield",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "text": "You've trained with your shield to defend both yourself and your mount. When you Raise a Shield while mounted, both you and your mount gain the shield's circumstance bonus to AC. If you have the Shield Block reaction, you can use it when your mount would take physical damage, as long as you're riding your mount. If you do, the shield prevents your mount from taking damage instead of preventing you from taking damage, following the normal rules for Shield Block."
+ },
+ {
+  "id": "one-moment-till-glory",
+  "lane": "situational",
+  "collection": "classFeatures",
+  "name": "One Moment till Glory",
+  "level": 1,
+  "traits": [
+   "concentrate",
+   "emotion",
+   "mental",
+   "transcendence"
+  ],
+  "engineFieldsPresent": [],
+  "text": "You rally your allies, carrying them from the brink of disaster to the verge of victory. Each ally in your aura can immediately attempt a new saving throw with a +2 status bonus against one ongoing negative effect or condition currently affecting it that required a save. Use the result of the new save to determine the outcome of the effect, unless the new save would have a worse result than the original save, in which case nothing happens. Each ally can gain this benefit against a given effect only once."
+ },
+ {
+  "id": "peshspine-grenade-lesser",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Peshspine Grenade (Lesser)",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Peshspine Grenade May contain spoilers from Age of Ashes Source Pathfinder #149: Against the Scarlet Triad pg. 77 Usage held in 1 hand Bulk L Activate Strike Peshspine grenades are explosive bombs packed with alchemically treated needles from the pesh cactus. A peshspine grenade deals the listed piercing damage and splash damage. On a hit, the target gains the stupefied condition until the end of its next turn. Many types of peshpine grenade grant an item bonus to attack rolls. Peshspine Grenade (Lesser) Source Pathfinder #149: Against the Scarlet Triad pg. 77 Price 3 gp Bulk L The bomb deals 1d6 piercing damage and 1 piercing splash damage, and the target is stupefied 1. Peshspine Grenade (Moderate) Source Pathfinder #149: Against the Scarlet Triad pg. 77 Price 10 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d6 piercing damage and 2 piercing splash damage, and the target is stupefied 1. Peshspine Grenade (Greater) Source Pathfinder #149: Against the Scarlet Triad pg. 77 Price 250 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 3d6 piercing damage and 3 piercing splash damage, and the target is stupefied 2. Peshspine Grenade (Major) Source Pathfinder #149: Against the Scarlet Triad pg. 77 Price 2,500 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 4d6 piercing damage and 4 piercing splash damage, and the target is stupefied 3."
+ },
+ {
+  "id": "prognostic-veil-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Prognostic Veil (Greater)",
+  "level": 18,
+  "traits": [
+   "focused",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "text": "This gauzy purple veil is embroidered with symbols of divinatory significance. As your curse worsens, the veil ripples in an ever-increasing unseen wind. You gain a +3 item bonus to Religion checks. **Activate—Remember the Future** ⟨4⟩ (concentrate) **Frequency** once per day --- **Effect** You gain 1 Focus Point, which you can spend only to cast a revelation spell. If you don't spend this Focus Point by the end of this turn, it's lost. --- **Activate—Twist the Skeins of Fate** ⟨5⟩ (concentrate) **Frequency** once per day **Trigger** An ally within 30 feet is about to attempt a saving throw or an attack roll **Requirements** You have the cursebound condition --- **Effect** The ally gains a status bonus to the saving throw or attack roll equal to the value of your cursebound condition. --- **Craft Requirements** You're an oracle."
+ },
+ {
+  "id": "ring-of-wizardry-type-iv",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Ring of Wizardry (Type IV)",
+  "level": 14,
+  "traits": [
+   "arcane",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "text": "This ring is made from the purest platinum and is covered in esoteric arcane symbols. It does nothing unless you have a spellcasting class feature with the arcane tradition. While wearing the ring of wizardry, you gain a +2 item bonus to Arcana checks and have two additional 4th-rank and one additional 3rd-rank arcane spell slot each day. You prepare spells in these slots or cast from them spontaneously, just as you normally cast your spells. If you take off the ring for any reason, you lose the additional spell slots. You can't gain spell slots from more than one ring of wizardry per day, nor can a single ring of wizardry grant spell slots more than once per day. If you can cast arcane spells in a variety of different ways (such as if you are a draconic bloodline sorcerer with the wizard multiclass archetype), you can divide the spell slots as you wish among your various sources of arcane spells. **Craft Requirements** You have a spellcasting class feature with the arcane tradition."
+ },
+ {
+  "id": "shared-avoidance",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Shared Avoidance",
+  "level": 10,
+  "traits": [
+   "cleric"
+  ],
+  "engineFieldsPresent": [],
+  "text": "You can project your premonitions of danger to your allies. When you use Premonition of Avoidance, allies within 20 feet of you who are rolling the same saving throw against the same hazard also gain a +2 circumstance bonus to their saving throws."
+ },
+ {
+  "id": "sluggish-bracelet",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Sluggish Bracelet",
+  "level": 3,
+  "traits": [
+   "cursed",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "text": "A silver charm bracelet, a sluggish bracelet appears to be a Bracelet of Dashing, granting you a +1 item bonus to Acrobatics checks. If the curse goes unrecognized, you think you can Activate it to gain a +10-foot status bonus to your Speed for 1 minute. Instead, its activation is as follows. **Activate** ⟨1⟩ (concentrate) --- **Effect** You take a –10-foot penalty to your Speed for 1 minute, and the bracelet fuses to you. Thereafter, it grants you no bonus to Acrobatics checks, and it imposes a –5-foot status penalty to your Speed."
+ },
+ {
+  "id": "star-grenade-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Star Grenade (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "fire",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "text": "**Activate** ⟨1⟩ Strike --- These unusual gunpowder bombs, typically marked with a symbol of a four-pointed star on their outer surface, explode outward in the shape of a cross whenever they Strike a target. When you throw a star grenade, arrange two perpendicular 25-foot lines over the target, both centered on the target and moving straight through the target, not diagonally. Creatures other than the target within these two lines take splash damage (typically 8 squares take splash damage for a Medium creature). Any effect that alters or adjusts the splash area's shape or size, like the alchemist feat Expanded Splash, doesn't apply to star grenades. You gain a +3 item bonus to attack rolls. The bomb deals 4d8 damage and 4 splash Damage."
+ },
+ {
+  "id": "swift-eel-mount",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Swift Eel Mount",
+  "level": 13,
+  "traits": [
+   "athamaru"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Your rapport with your eel lets you guide it to avoid dangers as it swims. While you're mounted on an eel, that eel ignores difficult terrain while Swimming and gets a +2 circumstance bonus to all defenses against reactions triggered by its movement."
+ },
+ {
+  "id": "titan-nagaji",
+  "lane": "situational",
+  "collection": "heritages",
+  "name": "Titan Nagaji",
+  "traits": [],
+  "engineFieldsPresent": [],
+  "text": "You were raised to be a warrior or a bodyguard, and your specialized diet and bulging muscles have made your scales as strong as armored plates. Your scales are medium armor in the plate armor group that grant a +4 item bonus to AC, a Dex cap of +1, a check penalty of –2, a Speed penalty of –5 feet, a Strength value of +3, and have the comfort trait. You can never wear other armor or remove your scales. You can etch armor runes onto your scales."
+ },
+ {
+  "id": "vengeful-arm",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Vengeful Arm",
+  "level": 4,
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "text": "Abraxas teaches that an eye for an eye is the basis of law. This tattoo of a coiled viper provides a +1 item bonus to Society checks. **Activate** ⟨1⟩ envision --- **Effect** Abraxas transforms the tattoo into a weapon of your vengeance. The vengeful arm crawls into your hand and becomes a Retribution Axe. You can use this activation again while holding the axe to revert the vengeful arm to a tattoo. Like other retribution axes, you can etch fundamental runes into the vengeful arm's retribution axe to increase its potency or to add striking."
+ },
+ {
+  "id": "wand-of-legerdemain-6th-rank",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Wand of Legerdemain (6th-rank)",
+  "level": 14,
+  "traits": [
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "text": "This wand of lacquered black wood has a handle wrapped in interwoven colorful ribbons. A silver bell caps the wand's tasseled pommel. --- **Activate** Cast a Spell **Frequency** once per day, plus overcharge **Effect** You Cast the Spell. --- **Activate** ⟨1⟩ (emotion, illusion, light, manipulate. mental, visual) **Requirements** The last action you took this turn was to Cast a Spell from the wand **Effect** You make yourself the center of attention. An illusory spotlight shines bright light upon your space as you pull inane objects from the wand's tip, such as confetti, silk flowers, streamers, or a long string of colorful kerchiefs knotted end to end. Each enemy within 30 feet must attempt a Will save against your spell DC, receiving a +4 circumstance bonus to the save if you or any of your allies recently threatened it or used hostile actions against it. On a failure, the creature becomes fascinated with you until the end of your next turn. The fascination ends if the target is subject to a hostile act, or if another creature succeeds at a Diplomacy or Intimidation check against it. The spotlight follows you wherever you move. You can't be concealed while in the spotlight. The effect ends if you become invisible, attempt a Stealth check, or Dismiss the activation. You can Sustain this Activation for up to 1 minute. Since you need to keep performing tricks, Sustain an Activation has the manipulate trait. Sustaining extends the spotlight, and keeps fascinated creatures fascinated, but doesn't cause creatures not already fascinated to become fascinated. --- **Craft Requirements** Supply a casting of a spell of the appropriate rank."
+ }
+]

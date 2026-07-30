@@ -30,7 +30,7 @@ describe('etched property runes keep their situational bonuses', () => {
   it('deathdrinking stars saves once etched, not only while loose in the pack', () => {
     const ch = withRune('deathdrinking');
     expect(statHasSituational(ch, { kind: 'save', save: 'will' }, c)).toBe(true);
-    expect(explainStat(ch, c, { kind: 'save', save: 'will' }).situational?.join(' ')).toContain('against void damage and death effects');
+    expect(explainStat(ch, c, { kind: 'save', save: 'will' }).situational?.map((s) => s.text).join(' ')).toContain('against void damage and death effects');
   });
 
   it('a rune on a weapon you are NOT wielding contributes nothing', () => {

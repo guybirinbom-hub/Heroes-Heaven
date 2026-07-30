@@ -1,0 +1,1132 @@
+[
+ {
+  "id": "animated",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Animated",
+  "level": 13,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "An *animated* weapon flies autonomously and strikes your foes. **Activate—Set Free** ⟨2⟩ (concentrate, manipulate) --- **Effect** You Release the weapon and it flutters through the air, fighting on its own against the last enemy you attacked, or the nearest enemy to it if your target has been defeated. At the end of your turn each round, the weapon can Fly up to its fly Speed of 40 feet, and then can either Fly again or Strike one creature within its reach. The weapon has a space of 5 feet, but it doesn't block or impede enemies attempting to move though that space, nor does it benefit from or provide flanking. The weapon can't move through an enemy's space. The weapon can't use reactions, and its Fly actions don't trigger reactions. While it's activated, an *animated* weapon makes Strikes with an attack modifier of 1d20+24 plus its item bonus to attack rolls. It uses the weapon's normal damage but has a +0 Strength modifier. The weapon's abilities that automatically trigger on a hit or critical hit still function, but the weapon can't be activated or benefit from any of your abilities while animated. Each round, when the weapon finishes using its actions, attempt a . On a failure, the activation ends. The weapon falls to the ground and can't be Set Free again for 10 minutes."
+ },
+ {
+  "id": "anti-dragon-barding-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Anti-Dragon Barding (Greater)",
+  "level": 12,
+  "traits": [
+   "companion",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Consisting of long steel spikes projecting from light barding, anti-dragon barding helps to protect vulnerable mounts and livestock from massive aerial predators, including dragons, griffons, and rocs. An animal companion wearing anti-dragon barding gains a +4 item bonus to its Fortitude DC and Reflex DC against attempts to grapple, reposition, shove, or trip it, and a creature that successfully Grapples the animal companion takes 3d4 damage."
+ },
+ {
+  "id": "aon-alacritous-horsehoes",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Alacritous Horsehoes",
+  "level": 7,
+  "traits": [
+   "companion",
+   "invested",
+   "primal"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "When you affix these simple iron horseshoes to the hooves of an ordinary horse or a quadrupedal animal companion and the animal companion invests them, that creature gains a +5-foot item bonus to its land Speed and a +2 circumstance bonus to Athletics checks to High Jump and Long Jump. In addition, when it Leaps, it can move 5 feet farther if jumping horizontally or 3 feet higher if jumping vertically. The bonus to Speed is +10 feet, and the bonus to Athletics checks is +3."
+ },
+ {
+  "id": "aon-alignment-ampoule",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Alignment Ampoule",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This glass sphere is divided into four quarters, each of which contains a different material aligned with good, evil, chaos, or law, such as shavings from a holy relic or dried flowers that grew near a planar rift to the Abyss. When an alignment ampoule strikes a creature with a weakness to good, evil, chaos, or law, it deals the listed damage, which matches the creature's highest weakness. This damage is always based on the weaknesses of the initial target of the attack. If a creature has multiple eligible weaknesses, randomly determine the damage type. An alignment ampoule has no effect against creatures that don't have a weakness to the ampoule's associated alignment types. The ampoule deals 1 damage and 1 splash damage. You gain a +1 item bonus to attack rolls. The bomb deals 1d4 damage and 2 splash damage. You gain a +2 item bonus to attack rolls. The bomb deals 2d4 damage and 3 splash damage. You gain a +3 item bonus to attack rolls. The bomb deals 3d4 damage and 4 splash damage."
+ },
+ {
+  "id": "aon-civil-service",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Civil Service",
+  "level": 1,
+  "traits": [
+   "general",
+   "kingdom"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "Everyone has a place and a role, and as long as those roles are filled, the government functions. When you select this feat, choose one leadership role; that role is now supported by your efficient civil servants, so its vacancy penalty is no longer applicable. If you wish to change the leadership role to which Civil Service applies, you can do so using the New Leadership activity at the start of a Kingdom turn. You gain a +2 status bonus to New Leadership checks."
+ },
+ {
+  "id": "aon-cooperative-leadership",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Cooperative Leadership",
+  "level": 1,
+  "traits": [
+   "general",
+   "kingdom"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your leaders are skilled at working with one another. When a leader uses the Focused Attention kingdom activity to aid another leader's kingdom check, the circumstance bonus granted by a success is increased to +3. At 11th level, your leaders' collaborative style leads them to ever greater successes when they work together. When a leader uses the Focused Attention kingdom activity to aid another leader's check, treat a critical failure on the aided check as a failure. If your kingdom has at least the expert rank in the skill used in the aided check, treat a failure on the check as a success. (This does not allow you to ever improve a critical failure to a success.)"
+ },
+ {
+  "id": "aon-crush-dissent",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Crush Dissent",
+  "level": 1,
+  "traits": [
+   "general",
+   "kingdom"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your rule brooks no dissent and stamps out traitors, making harsh examples of them. Once per Kingdom turn when you gain Unrest, you can attempt to crush the dissent by attempting a basic Warfare check. On a success, the Unrest increase is canceled, but on a critical failure, the Unrest increase is doubled. In addition, you gain a +1 status bonus to checks to resolve dangerous kingdom events that involve internal bickering, such as Feud."
+ },
+ {
+  "id": "aon-death-knell-powder",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Death Knell Powder",
+  "level": 14,
+  "traits": [
+   "consumable",
+   "divine",
+   "injury",
+   "poison"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This poison is made from toxic spores of death knell mushrooms, which are reduced to a gray powder and suffused with necromantic energy. If you're reduced to 0 Hit Points while under the effect of death knell powder , you must succeed at a DC 34 Will save or die (this is a death effect). If you die, a random creature adjacent to you is bolstered by your departing life force and gains 20 temporary HP and a +1 status bonus to attack and damage rolls for 10 minutes. Saving Throw DC 34 Fortitude; Maximum Duration 6 rounds; Stage 1 7d6 poison damage (1 round); Stage 2 9d6 poison damage (1 round); Stage 3 12d6 poison damage (1 round) Craft Requirements Supply one casting of death knell ."
+ },
+ {
+  "id": "aon-fan-of-the-four-winds",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Fan of the Four Winds",
+  "level": 4,
+  "traits": [
+   "air",
+   "magical",
+   "relic"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "The fan of the four winds once belonged to a sage of Gozreh and was passed down as a sacred relic for generations to those found worthy. Since that time, no one has unlocked the fan's full powers, though many devout priests have used it to aid them in their travels. A worthy member of this order might receive the fan as a reward, as could a suitable helper of the clergy. The fan might also have been lost, allowing for a new wielder to find it. The fan of the four winds has the following activation. Activate Two Actions (concentrate, manipulate) Frequency once per day; Effect You fan in a direction, and the fan casts gust of wind . If this casting is directed toward the sail of a vessel, it instead fills it with swirling air. The vessel gains a +10-foot circumstance bonus to its Speed for 8 hours. Minor Gifts : feather steps, wind barrier Major Gifts : lightning storm, propelling winds Grand Gift : living storm"
+ },
+ {
+  "id": "aon-fortified-fiefs",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Fortified Fiefs",
+  "level": 1,
+  "traits": [
+   "general",
+   "kingdom"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your vassals take their duty to protect those under their stewardship seriously, and your engineers emphasize the value of a strong defense when it comes to building settlements and fortifications. You gain a +2 circumstance bonus to checks attempted as part of the Fortify Hex activity and on activities to build or repair a Barracks, Castle, Garrison, Keep, Stone Wall, or Wooden Wall. In addition, you gain a +1 status bonus to all kingdom checks attempted during dangerous events that directly impact your settlements' defenses."
+ },
+ {
+  "id": "aon-free-and-fair",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Free and Fair",
+  "level": 7,
+  "traits": [
+   "general",
+   "kingdom"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your reputation for transparency and fairness in conducting elections, appointments, and other changes in government inspires tremendous public trust. You gain a +2 circumstance bonus to Loyalty-based checks attempted as part of the New Leadership and Pledge of Fealty activities. If you fail or critically fail such a check, you can spend 2 RP to reroll the check (but without the +2 circumstance bonus); attempting this adds the Fortune trait. You must take the result of the second roll, even if it is worse than the original roll."
+ },
+ {
+  "id": "aon-inflamation-flask",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Inflamation Flask",
+  "level": 2,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "disease",
+   "splash"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This flask contains a caustic irritant that makes a target’s skin, scales, or carapace extremely sensitive to further nicks and burns. An inflammation flask deals the listed acid damage and acid splash damage. On a hit, the target also gains weakness to acid, fire, and slashing damage for 3 rounds. Many types of inflammation flask grant a bonus to attack rolls. The target can end the weakness effect by three means: being drenched with water (such as submersion or exposure to an area water effect), being Administered First Aid (whose DC in based on the bomb type), or regaining Hit Points from a single effect equal to twice the inflammation flask’s level. A creature that critically fails to Administer First Aid in this way deals untyped damage to the target equal to the inflammation flask’s initial acid damage. The bomb deals 1d6 acid damage and 1 acid splash damage. The target gains weakness 1 to acid, fire, and slashing damage, and theMedicine DC is 17. You gain a +1 item bonus to attack rolls. The bomb deals 2d6 acid damage and 2 acid splash damage. The target gains weakness 2 to acid, fire, and slashing damage, and the Medicine DC is 20. You gain a +2 item bonus to attack rolls. The bomb deals 3d6 acid damage and 3 acid splash damage. The target gains weakness 3 to acid, fire, and slashing damage, and the Medicine DC is 30. You gain a +3 item bonus to attack rolls. The bomb deals 4d6 acid damage and 4 acid splash damage. The target gains weakness 4 to acid, fire, and slashing damage, and the Medicine DC is 38."
+ },
+ {
+  "id": "aon-insider-trading",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Insider Trading",
+  "level": 1,
+  "traits": [
+   "general",
+   "kingdom"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your leading citizens share valuable business information with one another and with associates in other lands, and they hire one another's workers to supply the labor they need to fuel their production. You gain a +1 status bonus to Establish Work Site, Establish Trade Agreement, and Trade Commodities activities. In addition, gain 1 bonus Resource Die at the start of each Kingdom turn."
+ },
+ {
+  "id": "aon-inspiring-entertainment",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Inspiring Entertainment",
+  "level": 3,
+  "traits": [
+   "general",
+   "kingdom"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your kingdom's artists and entertainers are talented and prolific, and there's never a shortage of new plays, operas, novels, music, sculptures, paintings, or other forms of distraction to entertain the citizens, even during times of upheaval. When you check for Unrest during the Upkeep phase of a Kingdom turn, you may roll a Culture-based check rather than a Loyalty-based check to determine the outcome. Your kingdom also gains a +2 status bonus to all Culture-based skill checks whenever your kingdom has at least 1 Unrest."
+ },
+ {
+  "id": "aon-inubrix-armor",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Inubrix Armor",
+  "level": 11,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Inubrix's malleable nature means armor crafted from it is less rigid than usual, though this slightly increased mobility comes at the cost of protection. Metal armor crafted from inubrix gains the flexible armor trait; its item bonus to AC decreases by 1 but its maximum Dexterity bonus increases by 1."
+ },
+ {
+  "id": "aon-inubrix-weapon",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Inubrix Weapon",
+  "level": 11,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "While inubrix weapons don't pack the same punch as more durable weapons, they have the unique ability to bypass some of the protections offered by metal armors and shields. A weapon crafted from inubrix reduces the weapon's damage die by 1 size. However, they ignore the resistance to damage from metal armor's armor specialization effects and the circumstance bonus to AC from metal shields. Strikes with inubrix weapons don't trigger the Shield Block reaction from a metal shield. Weapons that normally deal 1d4 damage can't be crafted from inubrix."
+ },
+ {
+  "id": "aon-keep-stone-weapon",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Keep Stone Weapon",
+  "level": 18,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "As a material with defensive properties, keep stone isn't particularly prized for weapons, but it does offer a particular niche. When used with abilities that allow you to use a Strike to counteract spells or magical effects, such as the Sunder Spell feat, the counteract check gains a +2 circumstance bonus. If the counteract check is tied to the Strike's result, add the bonus when calculating your counteract result, but not to the attack roll. Keep stone is treated as adamantine for the purpose of overcoming resistances."
+ },
+ {
+  "id": "aon-magic-armor",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Magic Armor",
+  "level": 5,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "A suit of magic armor is simply a suit of armor or explorer’s clothing etched with fundamental runes. An armor potency rune increases the armor’s item bonus to AC, and a resilient rune adds an item bonus to saving throws. The Prices here are for all types of armor. You don’t need to adjust the Price from leather armor to full plate or the like. These armors are made of standard materials, not precious materials such as dawnsilver. This armor has a +1 armor potency rune (increase the item bonus to AC by 1). This armor has a +1 armor potency rune (increase the item bonus to AC by 1) and a resilient rune (+1 item bonus to saves). This armor has a +2 armor potency rune (increase the item bonus to AC by 2) and a resilient rune (+1 item bonus to saves). This armor has a +2 armor potency rune (increase the item bonus to AC by 2) and a greater resilient rune (+2 item bonus to saves). This armor has a +3 armor potency rune (increase the item bonus to AC by 3) and a greater resilient rune (+2 item bonus to saves). This armor has a +3 armor potency rune (increase the item bonus to AC by 3) and a major resilient rune (+3 item bonus to saves)."
+ },
+ {
+  "id": "aon-magic-weapon",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Magic Weapon",
+  "level": 2,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "A magic weapon is a weapon etched with only fundamental runes. A weapon potency rune gives an item bonus to attack rolls with the weapon, and a striking rune increases the weapon's number of weapon damage dice. The Prices here are for all types of weapons. You don't need to adjust the Price from a club to a greataxe or the like. These weapons are made of standard materials, not precious materials such as cold iron."
+ },
+ {
+  "id": "aon-muse",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Muse",
+  "level": 0,
+  "traits": [],
+  "engineFieldsPresent": [
+   "choice",
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "Muse Aspect Artistry Prerequisite The relic is 3rd level or higher. The relic guides you in your art like a muse, giving you inspirational ideas and providing an item bonus to Crafting or Performance checks. (Choose one. If your relic allows you to do so, you can take this gift again to choose the other.) If the relic is 3rd level or higher, you gain a +1 item bonus. Once the relic attains 9th level, the bonus increases to +2. The bonus increases to +3 when the relic is 17th level."
+ },
+ {
+  "id": "aon-mythic-resilent",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Mythic Resilent",
+  "level": 20,
+  "traits": [
+   "magical",
+   "mythic"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Mythic resilient runes imbue armor with unrivaled protection from a wide array of effects. The armor grants a +4 item bonus to saving throws to the wearer. Activate—Defy Obliteration Reaction (concentrate) Trigger You critically fail a saving throw; Effect Spend a Mythic Point; if the triggering save was made due to an effect created by a mythic monster, hazard, or other effect, it’s a normal failure instead. If the save was made due to an effect that wasn’t mythic, it becomes a success. Craft Requirements Mythic resilient runes can only be crafted, etched, or transferred by a mythic character capable of making a Crafting check at mythic proficiency (such as by having the Artisan’s Calling)."
+ },
+ {
+  "id": "aon-peshspine-grenade",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Peshspine Grenade",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "Peshspine grenades are explosive bombs packed with alchemically treated needles from the pesh cactus. A peshspine grenade deals the listed piercing damage and splash damage. On a hit, the target gains the stupefied condition until the end of its next turn. Many types of peshpine grenade grant an item bonus to attack rolls. The bomb deals 1d6 piercing damage and 1 piercing splash damage, and the target is stupefied 1. You gain a +1 item bonus to attack rolls. The bomb deals 2d6 piercing damage and 2 piercing splash damage, and the target is stupefied 1. You gain a +2 item bonus to attack rolls. The bomb deals 3d6 piercing damage and 3 piercing splash damage, and the target is stupefied 2. You gain a +3 item bonus to attack rolls. The bomb deals 4d6 piercing damage and 4 piercing splash damage, and the target is stupefied 3."
+ },
+ {
+  "id": "aon-practical-magic",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Practical Magic",
+  "level": 1,
+  "traits": [
+   "general",
+   "kingdom"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Magic has an honored place in your society, and your people incorporate it into their everyday work to make life easier. You gain a +1 status bonus to Magic checks, and you can use Magic checks in place of Engineering checks. In addition, as magic-wielding NPCs find your nation a comfortable place to live and work, you reduce the cost of using the Hire Adventurers activity to 1 RP."
+ },
+ {
+  "id": "aon-shotalashu",
+  "lane": "situational",
+  "collection": "animalCompanions",
+  "name": "Shotalashu",
+  "traits": [
+   "beast",
+   "minion"
+  ],
+  "engineFieldsPresent": [
+   "senses",
+   "speeds"
+  ],
+  "inRegistries": [],
+  "text": "Your companion is a shotalashu, a telepathic creature originally from the planet of Castrovel but now introduced in small numbers to Golarion. Acquiring a shotalashu typically requires that the prospective rider bond with it first by spending a week of time with it and succeeding on a DC 21 Occultism check to establish a telepathic link. A rider who fails the check can attempt it again after another week with the shotalashu for each attempt. Any creature with telepathic capabilities, such as telepathy, touch telepathy, empathic sense, or the ability to cast spells such as telepathy, gains a +4 circumstance bonus to this check. The GM is the final arbiter of whether a given ability counts as telepathy for the purposes of forming a link. This link remains, and neither can form a new link until one member dies. The shock of a bonded partner dying leaves the survivor stupefied 2 for 24 hours and prevents them from forming a new link for at least a month. A shotalashu has the beast trait instead of the animal trait but otherwise functions normally as an animal companion. Special mount"
+ },
+ {
+  "id": "aon-snare-kit",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Snare Kit",
+  "level": 0,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This kit contains tools and materials for creating snares. A snare kit allows you to Craft snares using the Crafting skill. You can draw and replace a worn snare kit as part of the action to use it. A specialist snare kit gives you a +1 item bonus to the check."
+ },
+ {
+  "id": "aon-track-of-the-beast",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Track of the Beast",
+  "level": 0,
+  "traits": [],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "Track of the Beast Aspect Beast The spirit of an animal fills you. The relic gives one of the following benefits, chosen by the GM when the relic gains this gift. A +10-foot status bonus to your land Speed. A climb Speed equal to your land Speed. A swim Speed equal to your land Speed."
+ },
+ {
+  "id": "aon-tyrant-s-writ",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Tyrant's Writ",
+  "level": 8,
+  "traits": [
+   "grimoire",
+   "magical",
+   "necromancy"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "A spirited debate persists among scholars on whether the eponymous tyrant of this grimoire actually refers to Tar-Baphon, the necromancer Geb, or even the goddess Urgathoa herself. This grimoire appears at first to be a series of writs that makes arrogant demands of the reader, those around them, and the universe. Anyone who gives these writings more than a cursory look realizes the writs hold spells much like any other grimoire, with the animate dead spell being particularly prominent. Tyrant's writs grants you the ability to demand more from the undead you animate. Activate Free Action envision (metamagic) Frequency once per day; Effect If your next action is to Cast a Spell to cast an animate dead spell prepared with tyrant's writs , you can choose one of the following additional benefits to grant the summoned undead. Bloody The undead gains fast healing equal to its level. Explosive When it reaches 0 Hit Points, the undead explodes, dealing 4d6 fire damage to adjacent creatures, with a basic Reflex save using the animate dead spell's DC. As normal, since the final sacrifice spell doesn't reduce the target to 0 Hit Points, it doesn't cause this explosion. Necrotic Speed The undead gains a +10-foot status bonus to all its Speeds. Rotten Any living creature who starts its turn adjacent to the undead who isn't at full Hit Points takes 1d6 poison damage."
+ },
+ {
+  "id": "apotheosis-knife",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Apotheosis Knife",
+  "level": 20,
+  "traits": [
+   "agile",
+   "finesse",
+   "magical",
+   "thrown-10",
+   "unholy",
+   "versatile-s"
+  ],
+  "engineFieldsPresent": [
+   "counters"
+  ],
+  "inRegistries": [],
+  "text": "This slim *+3 major striking unholy wounding dagger* has a curved blade akin to that of a peeling knife. Soft elf-leather strips adorn the handle. If you are a demon, it amplifies any auras you have by granting a +1 item bonus to your aura's DCs. **Activate—Burrowing Splinter** ⟨1⟩ (manipulate) **Frequency** one per day **Requirements** Your previous action was a successful Strike with the *apotheosis knife* --- **Effect** You twist the blade, causing a sliver of the dagger to break off inside the body of the creature you damaged with the *apotheosis knife* on your prior action. Just as the blade itself cuts away flesh, this splinter slices away at the target's mind. The target must attempt a save. If the target is a demon, the burrowing splinter automatically triggers the effects of their sin vulnerability, regardless of their saving throw result. --- **Critical Success** The target takes no additional damage. **Success** The target takes 6d6 damage and is Stupefied 1 until the end of their next turn. **Failure** The target takes 6d6 damage and is stupefied 1 with an unlimited duration. **Critical Failure** The target takes 12d6 damage, is stupefied 1 with an unlimited duration, and is Stunned 3."
+ },
+ {
+  "id": "arboreal-boots",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Arboreal Boots",
+  "level": 5,
+  "traits": [
+   "invested",
+   "primal"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "These soft leather boots are embossed with simple woodland scenes. The boots grant a +1 item bonus to Acrobatics and allow you to ignore difficult terrain from plants and fungi."
+ },
+ {
+  "id": "arboreal-boots-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Arboreal Boots (Greater)",
+  "level": 9,
+  "traits": [
+   "invested",
+   "primal"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "These soft leather boots are embossed with simple woodland scenes. The boots grant a +2 item bonus to Acrobatics and allow you to ignore difficult terrain from plants and fungi. You also gain a 10-foot climb Speed while climbing plants or fungi and don't need to use your hands to Climb them."
+ },
+ {
+  "id": "archaeologists-warning",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Archaeologist's Warning",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** You are about to roll a Perception, Society, or Thievery check for initiative. --- You visually or audibly warn your companions of danger, granting them a +1 circumstance bonus to their initiative rolls. Depending on whether you use gestures or call out, this free action gains either the visual or auditory trait."
+ },
+ {
+  "id": "archivists-gaze",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Archivist's Gaze",
+  "level": 18,
+  "traits": [
+   "apex",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This strange contraption slides over your eyes, supernaturally sharpening your mind. While peering through it, you can feel some entity whispering to you, telling all sorts of things about the subject of your gaze. You gain a +3 item bonus to Occultism (though some entities might grant a bonus to a different skill, as determined by your GM). In addition, when you employ an exploration tactic other than Investigating, you also gain the benefits of Investigating unless you choose not to. When you invest the spectacles, you either increase your Intelligence score by 2 or increase it to 18, whichever would give you the higher score. This gives you additional trained skills and languages, as normal for increasing your Intelligence score. You must select skills and languages the first time you invest the item, and whenever you invest the same archivist's gaze, you get the same skills and languages you chose the first time. --- **Activate** ⟨2⟩ command, Interact **Frequency** once per hour --- **Effect** Pushing the glasses up your nose and asking the entity for help, you cause the spectacles to cast either Truesight or a 3rd-rank Translate on you. Because the entity tied to the spectacles chooses which one, the GM picks whichever spell is most immediately useful in your current situation (and chooses the most useful language each time the item casts comprehend language). The spell lasts for 1 minute."
+ },
+ {
+  "id": "area-armor",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Area Armor",
+  "level": 4,
+  "traits": [
+   "guardian"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The armor you wear protects you and shelters your allies against explosions and other large-scale assaults. While you're wearing medium or heavy armor, allies adjacent to you gain a +1 circumstance bonus to Reflex saves against area effects. If you're a master in the armor, the bonus is +2 instead."
+ },
+ {
+  "id": "armbands-of-athleticism-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Armbands of Athleticism (Greater)",
+  "level": 17,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Skilled awl work has imprinted images of a muscled weightlifter into these tiered leather bands, which grant you enhanced stamina and skill when performing athletic exercises. While fastened to your upper arms, the armbands give you a +3 item bonus to Athletics checks. In addition, whenever you use an action to Climb or Swim and you succeed at the Athletics check, add a +10-foot item bonus to the distance you move."
+ },
+ {
+  "id": "armor-innovation",
+  "lane": "situational",
+  "collection": "classFeatures",
+  "name": "Armor Innovation",
+  "level": 1,
+  "traits": [
+   "inventor"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your innovation is a cutting-edge suit of medium armor with a variety of attached gizmos and devices. Choose one of the sets of statistics on Innovation Armor Statistics table for your innovation armor (or choose another set of innovation armor statistics to which you have access). Your innovation armor can have fundamental and property runes added to it in the same way as ordinary armor. Because of the unique features of your innovation, everyone except you is untrained in it, even if they would normally be trained (or better) in medium armor. Choose one initial armor modification to apply to your innovation, either from the following or from other initial armor modifications to which you have access. - **Harmonic Oscillator:** You designed your armor to inaudibly thrum at just the right frequency to create interference against force and sound waves. You gain resistance equal to 3 + half your level to force and sonic damage. When under the effects of Overdrive, the resistance increases by 2. - **Metallic Reactance:** The metals in your armor are carefully alloyed to ground electricity and protect from acidic chemical reactions. You gain resistance equal to 3 + half your level to acid and electricity damage. When under the effects of Overdrive, the resistance increases by 2. - **Muscular Exoskeleton (Power Suit only):** Your armor supports your muscles with a carefully crafted exoskeleton. When you send your armor into overdrive, the exoskeleton supplements your feats of athletics as well. When under the effects of Overdrive, you gain a +1 circumstance bonus to Athletics checks; if you're a master in Crafting, this increases to a +2 circumstance bonus. - **Otherworldly Protection:** Just because you prefer science doesn't mean you can't build your armor with materials and gizmos designed to protect against otherworldly attacks. You gain resistance equal to 3 + half your level to void damage, or to vitality damage if you have void healing (such as if you're a dhampir). You gain the same amount of resistance to spirit damage. If you are sanctified (such as by also being a champion or cleric dedicated to a deity who allows or enforces sanctification) this resistance applies to unholy damage (if you are sanctified holy) or holy damage (if you are sanctified unholy), regardless of what other traits the damage has. - **Phlogistonic Regulator:** A layer of insulation within your armor protects you from rapid temperature fluctuations. You gain resistance equal to half your level to cold and fire damage. When under the effects of Overdrive, the resistance increases by 2. - **Speed Boosters:** You have boosters in your armor that increase your Speed. You gain a +5-foot status bonus to your Speed, which increases to a +10-foot status bonus when under the effects of Overdrive. - **Subtle Dampeners(Subterfuge Suit only)**: You've designed your armor to help you blend in and dampen noise slightly. When you send your armor into overdrive, the dampeners increase their effect, improving your Stealth. When under the effects of Overdrive, you gain a +1 circumstance bonus to Stealth checks. If you're a master in Crafting, this increases to a +2 circumstance bonu"
+ },
+ {
+  "id": "armor-of-the-holy-warrior",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Armor of the Holy Warrior",
+  "level": 16,
+  "traits": [
+   "divine",
+   "good",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Based on the armors used by the holy warriors who served under General Arnisant in the Shining Crusade, this well-polished *+2 greater resilient half plate* is decorated with religious motifs and carved with sacred scripture. While wearing armor of the holy warrior, your item bonus from the *greater resilient rune* increases from +2 to +3; if you upgrade to a *major resilient rune*, the item bonus instead increases from +3 to +4. An undead that critically fails an unarmed attack against you while you wear this armor takes 1d6 vitality damage. If you are evil, you're Enfeebled 2 while wearing the armor. If you're undead, you also take 2d6 damage each round that you wear the armor. --- **Activate** ⟨3⟩ command, envision, Interact **Frequency** once per day --- **Effect** The armor casts the three-action version of a 6th-rank Heal spell."
+ },
+ {
+  "id": "armor-potency",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Armor Potency",
+  "level": 5,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Armor Potency Source GM Core pg. 226 Usage etched onto armor Magic wards deflect attacks. Increase the armor's item bonus to AC by 1. The armor can be etched with one property rune. You can upgrade the armor potency rune already etched on a suit of armor using the normal process for upgrading items and runes. Armor Potency (+1) Source GM Core pg. 226, Core Rulebook pg. 581 Price 160 gp Craft Requirements You're an expert in Crafting. Armor Potency (+2) Source GM Core pg. 226, Core Rulebook pg. 581 Price 1,060 gp Increase the armor's item bonus to AC by 2, and the armor can be etched with two property runes. Craft Requirements You're a master in Crafting. Armor Potency (+3) Source GM Core pg. 226, Core Rulebook pg. 581 Price 20,560 gp Increase the armor's item bonus to AC by 3, and the armor can be etched with three property runes. Craft Requirements You're legendary in Crafting."
+ },
+ {
+  "id": "armor-potency-1",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Armor Potency (+1)",
+  "level": 5,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Magic wards deflect attacks. Increase the armor's item bonus to AC by 1. The armor can be etched with one property rune. You can upgrade the *armor potency* rune already etched on a suit of armor using the normal process for upgrading items and runes. **Craft Requirements** You are an expert in Crafting."
+ },
+ {
+  "id": "armor-potency-2",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Armor Potency (+2)",
+  "level": 11,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Magic wards deflect attacks. Increase the armor's item bonus to AC by 2. The armor can be etched with two property runes. You can upgrade the *armor potency* rune already etched on a suit of armor using the normal process for upgrading items and runes. **Craft Requirements** You are an master in Crafting."
+ },
+ {
+  "id": "armor-potency-3",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Armor Potency (+3)",
+  "level": 18,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Magic wards deflect attacks. Increase the armor's item bonus to AC by 3. The armor can be etched with three property runes. You can upgrade the *armor potency* rune already etched on a suit of armor using the normal process for upgrading items and runes. **Craft Requirements** You are an legendary in Crafting."
+ },
+ {
+  "id": "armored-skirt",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Armored Skirt",
+  "level": 0,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "These armor-plated skirts, which are also known as armored kilts, are favored by Knights of Lastwall for their versatility and aesthetic appeal. An armored skirt can be donned with 2 Interact actions when it's worn with light or medium armor, or as part of donning heavy armor. When worn with a breastplate, chain shirt, chain mail, or scale mail, an armored skirt increases the armor's item bonus to AC by 1, worsens the armor's check penalty by 1, reduces the armor's Dex cap by 1, increases the Strength score required to ignore the check penalty and reduce the Speed penalty by 2, and adds the noisy trait. This also makes the armor one step heavier (from light to medium, or medium to heavy), and you use the proficiency bonus appropriate to this adjusted armor type. Alternatively, when wearing an armored skirt to replace appropriate portions of a set of half plate or full plate, reduce the armor's item bonus to AC by 1, lessen the check penalty by 1, decrease the Strength score required to ignore the check penalty and reduce the Speed penalty by 2, increase the armor's Dex cap by 1, and add the noisy trait to the armor. An armored skirt grants no benefit when worn by itself or with armors other than those listed here."
+ },
+ {
+  "id": "ash-gown",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Ash Gown",
+  "level": 7,
+  "traits": [
+   "fire",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "resistances",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "*Ash gowns* are formal wear spun from smoke, ash, and char collected from the Plane of Fire. Typically, they're voluminous floor-length dresses or three-piece suits, but regardless of their specific tailoring, *ash gowns* are always an ostentatious display of wealth and loyalty to the powers of the Plane of Fire. They're exceptionally popular in the courts of the Elemental Lords and among the high society of Medina Mudii'a. The gown grants you resistance 5 to fire and a +1 item bonus to Intimidation checks. --- **Activate—Blazing Promenade** ⟨2⟩ (manipulate) **Frequency** once per day **Effect** The *ash gown* ignites in a ferocious blaze, flames licking the floor and trailing behind you like a dancing cape. You Stride and make a Strike at the end of your movement. During the Stride, your flames incinerate minor obstacles in your path; you ignore non-magical difficult terrain, and any you move through is destroyed. Creatures that are adjacent to you at any point during your movement take 2d6 damage with a save. A creature doesn't need to attempt this save more than once, even if you move past it multiple times."
+ },
+ {
+  "id": "ash-gown-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Ash Gown (Greater)",
+  "level": 11,
+  "traits": [
+   "fire",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "*Greater ash gowns* are formal wear spun from smoke, ash, and char collected from the Plane of Fire. Typically, they're voluminous floor-length dresses or three-piece suits, but regardless of their specific tailoring, *greater ash gowns* are always an ostentatious display of wealth and loyalty to the powers of the Plane of Fire. They're exceptionally popular in the courts of the Elemental Lords and among the high society of Medina Mudii'a. The gown grants you resistance 10 to fire and a +2 item bonus to Intimidation checks. --- **Activate—Blazing Promenade** ⟨2⟩ (manipulate) **Frequency** once per 10 minutes **Effect** The *greater ash gown* ignites in a ferocious blaze, flames licking the floor and trailing behind you like a dancing cape. You Stride and make a Strike at the end of your movement. During the Stride, your flames incinerate minor obstacles in your path; you ignore non-magical difficult terrain, and any you move through is destroyed. Creatures that are adjacent to you at any point during your movement take 4d6 damage with a save. A creature doesn't need to attempt this save more than once, even if you move past it multiple times."
+ },
+ {
+  "id": "assisting-shot",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Assisting Shot",
+  "level": 2,
+  "traits": [
+   "fighter",
+   "press"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are wielding a ranged weapon. --- Using your last shot to gauge your accuracy, you can fire off a quick shot to interfere with a foe in combat. Make a Strike with a ranged weapon. If the Strike hits, the next creature other than you to attack the same target before the start of your next turn gains a +1 circumstance bonus to their roll, or a +2 circumstance bonus if your Strike was a critical hit."
+ },
+ {
+  "id": "atrophy-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Atrophy Bomb",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "negative",
+   "splash",
+   "void"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Atrophy Bomb May contain spoilers from Hellbreakers Source Pathfinder #222: Hellbreakers pg. 209 Usage held in 1 hand Bulk L Activate Strike Atrophy bombs contain powerful chemicals developed by Urgathoan alchemists that sap a living creature's strength and drain their energy. A primary living target that takes damage from an atrophy bomb becomes enfeebled until the start your next turn. Many types of bombs grant an item bonus to attack rolls. Atrophy Bomb (Lesser) Source Pathfinder #222: Hellbreakers pg. 209 Price 4 gp The bomb deals 1d4 persistent void damage and 1 void splash damage, and the target is enfeebled 1 until the start of your next turn. Atrophy Bomb (Moderate) Source Pathfinder #222: Hellbreakers pg. 209 Price 11 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d4 persistent void damage and 2 void splash damage, and the target is enfeebled 1 until the start of your next turn. Atrophy Bomb (Greater) Source Pathfinder #222: Hellbreakers pg. 209 Price 255 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d4 persistent void damage and 3 void splash damage, and the target is enfeebled 2 until the start of your next turn. Atrophy Bomb (Major) Source Pathfinder #222: Hellbreakers pg. 209 Price 2,550 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d4 persistent void damage and 4 void splash damage, and the target is enfeebled 2 until the start of your next turn."
+ },
+ {
+  "id": "atrophy-bomb-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Atrophy Bomb (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash",
+   "void"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike Atrophy bombs contain powerful chemicals developed by Urgathoan alchemists that sap a living creature's strength and drain their energy. The bomb deals 3d4 persistent void damage and 3 void splash damage, and the target is Enfeebled 2 until the start of your next turn. You gain a +2 item bonus to attack rolls with this bomb."
+ },
+ {
+  "id": "atrophy-bomb-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Atrophy Bomb (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash",
+   "void"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike Atrophy bombs contain powerful chemicals developed by Urgathoan alchemists that sap a living creature's strength and drain their energy. The bomb deals 4d4 persistent void damage and 4 void splash damage, and the target is Enfeebled 2 until the start of your next turn. You gain a +3 item bonus to attack rolls with this bomb."
+ },
+ {
+  "id": "atrophy-bomb-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Atrophy Bomb (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash",
+   "void"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike Atrophy bombs contain powerful chemicals developed by Urgathoan alchemists that sap a living creature's strength and drain their energy. The bomb deals 2d4 persistent void damage and 2 void splash damage, and the target is Enfeebled 1 until the start of your next turn. You gain a +1 item bonus to attack rolls with this bomb."
+ },
+ {
+  "id": "axumas-vigor",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Axuma's Vigor",
+  "level": 11,
+  "traits": [
+   "general"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your vigor grants anyone using Medicine checks to Administer First Aid to you, or use any of the Treat actions on you, a +2 circumstance bonus to their check. During the Long-Term Rest activity, you heal at twice the normal rate."
+ },
+ {
+  "id": "bakuwa-lizardfolk",
+  "lane": "situational",
+  "collection": "heritages",
+  "name": "Bakuwa Lizardfolk",
+  "traits": [
+   "lizardfolk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your body is covered in bony plates. Your plates are medium armor in the plate armor group that grant a +4 item bonus to AC, a Dex cap of +1, a check penalty of –2, a Speed penalty of –5 feet, a Strength value of +3, and have the aquadynamic and comfort traits. You can never wear other armor or remove your plates. You can etch armor runes onto your plates."
+ },
+ {
+  "id": "bakuwa-lizardfolk-bony-plates",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Bakuwa Lizardfolk Bony Plates",
+  "level": 1,
+  "traits": [
+   "aquadynamic",
+   "comfort"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Note** Bakuwa Lizardfolk heritage only --- Your plates are medium armor in the plate armor group that grant a +4 item bonus to AC, a Dex cap of +1, a check penalty of –2, a Speed penalty of –5 feet, a Strength value of +3, and have the aquadynamic and comfort traits. You can never wear other armor or remove your plates. You can etch armor runes onto your plates."
+ },
+ {
+  "id": "bands-of-force",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Bands of Force",
+  "level": 8,
+  "traits": [
+   "force",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Decorated with clear gemstones, these thick metal bands spread an inflexible layer of force over your body. The force grants you a +1 item bonus to AC and saving throws, and a maximum Dexterity modifier of +5 as armor. You can affix talismans to the bands as though they were light armor. **Activate—Return Force** ⟨5⟩ (force, manipulate) **Trigger** A creature critically misses you with a melee Strike --- **Effect** You Shove the creature using the bands' Athletics modifier of +14."
+ },
+ {
+  "id": "bands-of-force-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Bands of Force (Greater)",
+  "level": 14,
+  "traits": [
+   "force",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Decorated with clear gemstones, these thick metal bands spread an inflexible layer of force over your body. The force grants you a +2 item bonus to AC and saving throws, and a maximum Dexterity modifier of +5 as armor. You can affix talismans to the bands as though they were light armor. **Activate—Return Force** ⟨5⟩ (force, manipulate) **Trigger** A creature critically misses you with a melee Strike --- **Effect** You Shove the creature using the bands' Athletics modifier of +21."
+ },
+ {
+  "id": "bands-of-force-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Bands of Force (Major)",
+  "level": 20,
+  "traits": [
+   "force",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Decorated with clear gemstones, these thick metal bands spread an inflexible layer of force over your body. The force grants you a +3 item bonus to AC and saving throws, and a maximum Dexterity modifier of +5 as armor. You can affix talismans to the bands as though they were light armor. **Activate—Return Force** ⟨5⟩ (force, manipulate) **Trigger** A creature critically misses you with a melee Strike --- **Effect** You Shove the creature using the bands' Athletics modifier of +33."
+ },
+ {
+  "id": "banner-of-the-restful-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Banner of the Restful (Greater)",
+  "level": 12,
+  "traits": [
+   "aura",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This peach-colored magical banner offers the promise of a good watch and a comfortable sleep. You and allies within the banner's aura gain a +2 item bonus to Perception DCs and protection from severe cold and heat."
+ },
+ {
+  "id": "banner-of-the-restful-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Banner of the Restful (Major)",
+  "level": 19,
+  "traits": [
+   "aura",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This peach-colored magical banner offers the promise of a good watch and a comfortable sleep. You and allies within the banner's aura gain a +3 item bonus to Perception DCs and protection from severe cold and heat."
+ },
+ {
+  "id": "barricade-snare",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Barricade Snare",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Using clever gnomish engineering, you can quickly erect small barriers in which your snares are hidden. When you prepare snares for quick deployment, you can prepare some of them as barricade snares. A barricade snare consists of a small barricade in which the snare is hidden, but it costs two of your quick deployment snares. Though creatures can automatically see the barricade, the snare hidden inside the barricade must be detected like a standard snare, but with a +2 circumstance bonus to the DC. The barricade occupies the same space as the snare and is 5 feet high; it provides standard cover, can be Climbed with a successful check, has an AC of 10, Hardness 5, and 20 Hit Points, and is immune to critical hits and precision damage. The barricade lasts as long as the snare does. A creature triggers and is affected by the hidden snare when it attempts to Climb the barricade or successfully attacks the barricade while adjacent to it. The snare and barricade are destroyed when the snare is triggered or if the barricade is destroyed, whichever comes first. --- **Special** Even if you have the Surprise Snare feat, you must craft a barricade snare in an empty square."
+ },
+ {
+  "id": "battle-medics-baton",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Battle Medic's Baton",
+  "level": 3,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This short bronze rod has the form of a serpent coiled around it. While you hold it, you gain a +1 item bonus to Medicine checks. **Activate** ⟨2⟩ (concentrate, manipulate) **Frequency** once per hour **Requirements** You have the Battle Medicine action --- **Effect** You use Battle Medicine. The target is temporarily immune to your Battle Medicine for 1 hour instead of 1 day."
+ },
+ {
+  "id": "beasts-charge",
+  "lane": "situational",
+  "collection": "classFeatures",
+  "name": "Beast's Charge",
+  "level": 1,
+  "traits": [
+   "eidolon"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your eidolon rushes forward, using its momentum to increase the power of its attack. Your eidolon Strides twice and then Strikes. If the eidolon moved at least 20 feet away from its starting position and moved entirely in a straight line, it gains a +1 circumstance bonus to this attack roll."
+ },
+ {
+  "id": "beautiful-knifework",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Beautiful Knifework",
+  "level": 7,
+  "traits": [
+   "archetype",
+   "exploration",
+   "manipulate",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You perform surgical adjustments to disguise a willing ally or your construct companion. This counts as preparing a disguise to Impersonate, taking 10 minutes and requiring a healer's toolkit instead of a disguise kit. The DC to see through the deception with Seek is your Medicine DC () unless the disguised character's Deception DC is higher. If the target directly interacts with someone while disguised, they gain a +2 circumstance bonus to their Deception check. You can reverse this effect with another 10-minute surgery. The disguised character can also end it as a free action when they receive any healing effect."
+ },
+ {
+  "id": "begin-stampede",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Begin Stampede",
+  "level": 17,
+  "traits": [
+   "minotaur",
+   "visual"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The sight of you charging forward into battle emboldens your allies to follow. You Stride up to twice your Speed and make a horns melee Strike. If your Strike hits and damages an enemy, each ally within 60 feet who saw you hit can use a reaction to Stride up to twice their Speed, but each must end their Stride closer to you than where they started. Each such ally that Strides gains a +1 status bonus to their first Strike on their next turn."
+ },
+ {
+  "id": "bellflower-dedication",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Bellflower Dedication",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You dedicate yourself to freeing slaves and escorting them to freedom. You gain a +5-foot status bonus to your Speed. Choose up to six other people to be your \"crop.\" Members of your crop can use your Speed for overland travel if it's higher than their own. Members more than 60 feet from you lose all benefits (from this or other Bellflower tiller feats) of being part of your crop, but they regain those benefits immediately when they return. You can add or remove someone from your crop by spending 10 minutes in conversation with them."
+ },
+ {
+  "id": "big-debut",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Big Debut",
+  "level": 10,
+  "traits": [
+   "archetype",
+   "mental"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Frequency** once per day **Trigger** You're about to roll initiative. --- Now's your chance! You're a Firebrand, and the world must know it. You strike a dramatic pose, deliver a snappy quip, or reveal a shocking new costume, captivating everyone who can see you. You don't roll initiative. Instead, you voluntarily go last. Enemies who can see you must attempt a saving throw against your class DC or spell DC, whichever is higher. On a failure, the enemy is overcome with anticipation for what you'll do next on the battlefield and becomes Stunned 1 (Stunned 2 on a critical failure). As your first action on your first turn, you can Interact to draw or stow an item of light Bulk as a free action; if this item is a small garment or accessory, such as a fan, a pair of gloves, or a wine glass, you gain a +1 circumstance bonus on Charisma-based skill checks until the end of your turn."
+ },
+ {
+  "id": "black-tendril-shot",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Black Tendril Shot",
+  "level": 7,
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Black Tendril Shot Source Treasure Vault (Remastered) pg. 80 Ammunition any Activate (concentrate) A glistening, tar-like substance that's displeasing to the touch coats a black tendril shot. When the activated ammunition hits a target, it exudes tendrils that encase the target, which must attempt a Fortitude saving throw. The ammunition's effects last until the target Escapes. DCs for the saving throw and Escape vary by type. Critical Success The target is unaffected. Success The target is slowed 1 but gains a +2 circumstance bonus to Escape the ammunition's effect. Failure The target is slowed 1. Critical Failure The target is slowed 2. Black Tendril Shot (Lesser) Source Treasure Vault (Remastered) pg. 80 Price 60 gp Both DCs are 25. Black Tendril Shot (Moderate) Source Treasure Vault (Remastered) pg. 80 Price 360 gp Both DCs are 31. Black Tendril Shot (Greater) Source Treasure Vault (Remastered) pg. 80 Price 2,160 gp Both DCs are 39."
+ },
+ {
+  "id": "black-tendril-shot-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Black Tendril Shot (Greater)",
+  "level": 17,
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (concentrate) --- A glistening, tar-like substance that's displeasing to the touch coats a black tendril shot. When the activated ammunition hits a target, it exudes tendrils that encase the target, which must attempt a saving throw. The ammunition's effects last until the target Escapes. --- **Critical Success** The target is unaffected. **Success** The target is Slowed 1 but gains a +2 circumstance bonus to Escape the ammunition's effect. **Failure** The target is slowed 1. **Critical Failure** The target is Slowed 2."
+ },
+ {
+  "id": "black-tendril-shot-lesser",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Black Tendril Shot (Lesser)",
+  "level": 7,
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (concentrate) --- A glistening, tar-like substance that's displeasing to the touch coats a black tendril shot. When the activated ammunition hits a target, it exudes tendrils that encase the target, which must attempt a saving throw. The ammunition's effects last until the target Escapes. --- **Critical Success** The target is unaffected. **Success** The target is Slowed 1 but gains a +2 circumstance bonus to Escape the ammunition's effect. **Failure** The target is slowed 1. **Critical Failure** The target is Slowed 2."
+ },
+ {
+  "id": "black-tendril-shot-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Black Tendril Shot (Moderate)",
+  "level": 12,
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (concentrate) --- A glistening, tar-like substance that's displeasing to the touch coats a black tendril shot. When the activated ammunition hits a target, it exudes tendrils that encase the target, which must attempt a saving throw. The ammunition's effects last until the target Escapes. --- **Critical Success** The target is unaffected. **Success** The target is Slowed 1 but gains a +2 circumstance bonus to Escape the ammunition's effect. **Failure** The target is slowed 1. **Critical Failure** The target is Slowed 2."
+ },
+ {
+  "id": "blanket-defense",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Blanket Defense",
+  "level": 14,
+  "traits": [
+   "flourish",
+   "guardian"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are wielding a shield. --- You become a bulwark against foes' attacks that target you and your allies. Raise a Shield. Until the start of your next turn or until you no longer have your shield raised, each ally that ends their turn adjacent to you gains the benefits of your raised shield. You can Shield Block a hit against any adjacent ally (each one costs you a reaction as normal). If you are wielding a tower shield, fortress shield, or another shield that grants a higher circumstance bonus to AC when you Take Cover behind it, any adjacent ally can Take Cover behind your shield to gain the increased bonus to Armor Class."
+ },
+ {
+  "id": "blasting-stone",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Blasting Stone",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "sonic",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Blasting Stone Source Player Core 2 pg. 283 Usage held in 1 hand Bulk L Activate Strike When this pebble hits a creature or a hard surface, it explodes with a deafening bang. A blasting stone deals the listed sonic damage and sonic splash damage, and each creature within 10 feet of the space in which the stone exploded must succeed at a Fortitude saving throw with the listed DC or be deafened until the end of its next turn. Many types of blasting stones grant an item bonus to attack rolls. Blasting Stone (Lesser) Source Player Core 2 pg. 283 Price 3 gp Bulk L The bomb deals 1d4 sonic damage and 1 sonic splash damage, and the DC is 17. Blasting Stone (Moderate) Source Player Core 2 pg. 283 Price 10 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d4 sonic damage and 2 sonic splash damage, and the DC is 20. Blasting Stone (Greater) Source Player Core 2 pg. 283 Price 250 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 3d4 sonic damage and 3 sonic splash damage, and the DC is 28. Blasting Stone (Major) Source Player Core 2 pg. 283 Price 2,500 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 4d4 sonic damage and 4 sonic splash damage, and the DC is 36."
+ },
+ {
+  "id": "blasting-stone-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Blasting Stone (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "sonic",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- When this pebble hits a creature or a hard surface, it explodes with a deafening bang. A blasting stone deals 3d4 sonic damage and 3 sonic splash damage, and each creature within 10 feet of the space in which the stone exploded must succeed at a saving throw with the listed DC or be deafened until the end of its next turn. You gain a +2 item bonus to attack rolls."
+ },
+ {
+  "id": "blasting-stone-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Blasting Stone (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "sonic",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- When this pebble hits a creature or a hard surface, it explodes with a deafening bang. A blasting stone deals 4d4 sonic damage and 4 sonic splash damage, and each creature within 10 feet of the space in which the stone exploded must succeed at a saving throw with the listed DC or be deafened until the end of its next turn. You gain a +3 item bonus to attack rolls."
+ },
+ {
+  "id": "blasting-stone-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Blasting Stone (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "sonic",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- When this pebble hits a creature or a hard surface, it explodes with a deafening bang. A blasting stone deals 2d4 sonic damage and 2 sonic splash damage, and each creature within 10 feet of the space in which the stone exploded must succeed at a saving throw with the listed DC or be deafened until the end of its next turn. You gain a +1 item bonus to attack rolls."
+ },
+ {
+  "id": "blessed-swiftness",
+  "lane": "situational",
+  "collection": "classFeatures",
+  "name": "Blessed Swiftness",
+  "level": 3,
+  "traits": [
+   "champion"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain a +5-foot status bonus to Speed. If you're mounted, your mount gains the bonus instead. In addition, when the movement of one of your allies triggers an enemy's reaction while the ally is in your champion's aura, the ally gains a +2 status bonus to all defenses against that reaction."
+ },
+ {
+  "id": "blessing-of-the-devoted",
+  "lane": "situational",
+  "collection": "classFeatures",
+  "name": "Blessing of the Devoted",
+  "level": 3,
+  "traits": [
+   "champion"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your deity blesses your service with a boon. This might come in the form of a spirit that visits you and inhabits your items or body, a mysterious divine tattoo upon your body, or the like. Choose one of the following blessings, or any other to which you have access. **Blessed Armament**: Select one weapon or handwraps of mighty blows. You gain that armament's critical specialization effect, and you grant the armament a property rune of your choice from the following list: Fearsome, Ghost Touch, Returning, Shifting, or Vitalizing. During your daily preparations, you can change the spirit to inhabit a different armament, grant a different rune, or both. **Blessed Shield:** In your hands, a shield gains the minor Reinforcing rune. As you go up in level, the shield gains the reinforcing rune of your level (lesser at 7th level, moderate at 10th level, greater at 13th level, major at 16th level, and supreme at 19th level). If your shield already has the appropriate reinforcing rune for your level, or if it's a Sturdy Shield of the same level as the appropriate reinforcing rune, the shield's Hardness instead increases by 1. **Blessed Swiftness:** You gain a +5-foot status bonus to Speed. If you're mounted, your mount gains the bonus instead. In addition, when the movement of one of your allies triggers an enemy's reaction while the ally is in your champion's aura, the ally gains a +2 status bonus to all defenses against that reaction."
+ },
+ {
+  "id": "blight-bomb",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Blight Bomb",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "poison",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Blight Bomb Source Player Core 2 pg. 283 Usage held in 1 hand Bulk L Activate Strike Blight bombs contain volatile toxic chemicals that rot flesh. A blight bomb deals the listed poison damage, persistent poison damage, and splash damage. Many types grant an item bonus to attack rolls. Blight Bomb (Lesser) Source Player Core 2 pg. 283, Advanced Player's Guide pg. 252 Price 3 gp Bulk L The bomb deals 1d4 poison damage, 1d4 persistent poison damage, and 1 poison splash damage. Blight Bomb (Moderate) Source Player Core 2 pg. 283, Advanced Player's Guide pg. 252 Price 10 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d4 poison damage, 2d4 persistent poison damage, and 2 poison splash damage. Blight Bomb (Greater) Source Player Core 2 pg. 283, Advanced Player's Guide pg. 252 Price 250 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 3d4 poison damage, 3d4 persistent poison damage, and 3 poison splash damage. Blight Bomb (Major) Source Player Core 2 pg. 283, Advanced Player's Guide pg. 252 Price 2,500 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 4d4 poison damage, 4d4 persistent poison damage, and 4 poison splash damage."
+ }
+]

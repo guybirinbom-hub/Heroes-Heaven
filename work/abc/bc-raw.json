@@ -1,0 +1,1495 @@
+{
+ "B": {
+  "extracted": [
+   {
+    "id": "fey-ascension",
+    "verdict": "no-bonus",
+    "reason": "Nothing is in the flat lane today (currentFlat is null) and the feat grants no bonus to the character as such: it is a choose-one-of-eight menu, and only the Unicorn option carries a typed bonus (+2 status to saves against poison and charm effects). A character who took Anteater, Dryad, Monarch, etc. gets no save bonus at all, so a star on this record would show a bonus most owners of the feat do not have. The bonus belongs to the stored Fey Ascension choice, not to the feat record.",
+    "quote": "You gain one of the following features and abilities; this must be the same animal or fey type as you chose for Fey Influence."
+   },
+   {
+    "id": "gaze-of-the-mantis",
+    "verdict": "move-to-star",
+    "reason": "The printed text limits the +2 item bonus to visual Perception checks, a restriction the flat lane cannot express. Left flat it also inflates hearing-based Seek, scent, and tremorsense checks. Strip passiveEffects.perception and show the +2 as a star on Perception. Only the perception key goes; the item's 'cannot be flanked' clause is not a typed bonus and is unaffected.",
+    "quote": "You gain a +2 item bonus to visual Perception checks and cannot be flanked.",
+    "stripFlat": {
+     "perception": true
+    },
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "perception"
+       }
+      ],
+      "when": "on visual Perception checks",
+      "bonus": "+2 item"
+     }
+    ]
+   },
+   {
+    "id": "nosoi-charm",
+    "verdict": "move-to-star",
+    "reason": "The bonus is printed against three named ways to Perform (instrument, orate, sing) — not dance, act, or any other Performance use — so it is not a bonus to every Performance check and cannot sit in the flat total. Strip skills.performance and show the +2 as a star with the printed list as the trigger. This is the same treatment applied to nosoi-charm-greater and violet-ray for consistency.",
+    "quote": "You gain a +2 item bonus to Performance checks to play an instrument, orate, or sing.",
+    "stripFlat": {
+     "skills": [
+      "performance"
+     ]
+    },
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "performance"
+       }
+      ],
+      "when": "to play an instrument, orate, or sing",
+      "bonus": "+2 item"
+     }
+    ]
+   },
+   {
+    "id": "nosoi-charm-greater",
+    "verdict": "move-to-star",
+    "reason": "Identical wording to the base charm at +3: restricted to instrument, orate, or sing, so it leaves the flat lane and becomes a star. IMPORTANT: strip only skills.performance — the record's passiveEffects.senses entry (lifesense, imprecise, 30 feet) is printed as an unconditional property of the greater charm ('You gain lifesense as an imprecise sense with a range of 30 feet as long as you continue holding the charm') and must stay exactly as it is.",
+    "quote": "You gain a +3 item bonus to Performance checks to play an instrument, orate, or sing.",
+    "stripFlat": {
+     "skills": [
+      "performance"
+     ]
+    },
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "performance"
+       }
+      ],
+      "when": "to play an instrument, orate, or sing",
+      "bonus": "+3 item"
+     }
+    ]
+   },
+   {
+    "id": "violet-ray",
+    "verdict": "move-to-star",
+    "reason": "The bonus is scoped to four named Medicine actions, so flat application wrongly inflates unrelated Medicine checks such as Recall Knowledge and Treat Disease-adjacent uses it does not name. Strip skills.medicine and show the +2 as a star listing the four actions. Same pattern and same call as nosoi-charm.",
+    "quote": "A violet ray functions as a Healer's Toolkit and provides a +2 item bonus to Medicine checks to Administer First Aid, Treat Disease, Treat Poison, or Treat Wounds.",
+    "stripFlat": {
+     "skills": [
+      "medicine"
+     ]
+    },
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "medicine"
+       }
+      ],
+      "when": "to Administer First Aid, Treat Disease, Treat Poison, or Treat Wounds",
+      "bonus": "+2 item"
+     }
+    ]
+   },
+   {
+    "id": "energy-robe",
+    "verdict": "no-bonus",
+    "reason": "This merged variant-parent has no flat bonus today (currentFlat is null) and grants none by itself: what you get depends on the energy-type variant chosen, and only the Fire variant's +30-foot status bonus to Speed is a typed bonus at all — and even that requires the once-per-day activation and lasts 1 minute. A cold, acid, or electricity robe never grants it, so an ungated star on the parent would show a Speed bonus to characters who cannot have it. The resistance 5 clauses are resistances, not typed bonuses, and are untouched.",
+    "quote": "The benefit you receive from the energy robe depends on its type."
+   },
+   {
+    "id": "halcyon-heart",
+    "verdict": "move-to-star",
+    "reason": "The text attaches the +3 to playing music with the shekere, so it must not apply to singing, oratory, dance, or acting Performance checks made without it. Strip skills.performance and star it with the printed condition. This also settles the inconsistency the open question notes: instrument bonuses are situational, so horn-of-the-sun-aurochs and busine-of-divine-reinforcement should be authored the same way (star, no flat entry) rather than being given passiveEffects.",
+    "quote": "The handheld percussion instrument grants a +3 item bonus to Performance checks while playing music with it.",
+    "stripFlat": {
+     "skills": [
+      "performance"
+     ]
+    },
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "performance"
+       }
+      ],
+      "when": "while playing music with it",
+      "bonus": "+3 item"
+     }
+    ]
+   },
+   {
+    "id": "thunder-helm",
+    "verdict": "move-to-star",
+    "reason": "On (b): the -1 is restricted to auditory and visual Perception checks, so passiveEffects.perception = -1 is wrong — it currently subtracts 1 from scent-based, tremorsense, and every other Perception check the text does not touch. Strip it and star the penalty with the printed trigger. On (a): yes, penalties belong in the same registry — the lane is display-only and a star that only ever showed bonuses would silently hide a printed drawback; the sign lives in the `bonus` string. I also added the printed companion clause (+1 circumstance to saves against auditory and visual effects), which is in the same sentence, is equally restricted, and has no flat entry today.",
+    "quote": "As long as a creature wears a *thunder helm*, it takes a -1 circumstance penalty to auditory and visual Perception checks but also gain a +1 circumstance bonus to saving throws against auditory and visual effects.",
+    "stripFlat": {
+     "perception": true
+    },
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "perception"
+       }
+      ],
+      "when": "on auditory and visual Perception checks",
+      "bonus": "-1 circumstance"
+     },
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "all"
+       }
+      ],
+      "when": "against auditory and visual effects",
+      "bonus": "+1 circumstance"
+     }
+    ]
+   },
+   {
+    "id": "fiddle-of-the-maestro",
+    "verdict": "keep-flat",
+    "reason": "Confirmed: unlike every other instrument in this batch, the fiddle's Performance sentence carries no 'while playing music' qualifier — it is a bare grant, and the conditional wording that follows ('If you're a master in Performance, while playing it...') is attached only to the Reflex and Dexterity-skill bonuses, which proves the +2 was deliberately printed unconditional. So passiveEffects.skills.performance = 2 stays in the total and must NOT be repeated as a star. The Reflex/Dex-skill rows stay situational; on your enumeration question, three rows (acrobatics, stealth, thievery) is right because the registry has no 'Dex-based skills' target, and the rank-varying size has to live in the bonus text.",
+    "quote": "It grants a +2 item bonus to Performance checks."
+   },
+   {
+    "id": "maestros-instrument",
+    "verdict": "move-to-star",
+    "reason": "The grant is explicitly conditioned on playing music with the instrument, so the flat entry wrongly boosts oratory, dance, and acting Performance checks — and the item is held in 2 hands, so it is not even always in use. Strip skills.performance and star the +1 with the printed condition. The variant text raises the number to +2 (moderate) and +3 (greater); those records take the same treatment with their own numbers.",
+    "quote": "A maestro's instrument grants you a +1 item bonus to Performance checks while playing music with the instrument.",
+    "stripFlat": {
+     "skills": [
+      "performance"
+     ]
+    },
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "performance"
+       }
+      ],
+      "when": "while playing music with the instrument",
+      "bonus": "+1 item"
+     }
+    ]
+   },
+   {
+    "id": "maestros-instrument-lesser",
+    "verdict": "move-to-star",
+    "reason": "Same printed sentence as the parent record at +1: the bonus is conditioned on playing music with the instrument, so it leaves the flat total and becomes a star. Only skills.performance is removed; the record carries nothing else in passiveEffects.",
+    "quote": "A *maestro's instrument* grants you a +1 item bonus to Performance checks while playing music with the instrument.",
+    "stripFlat": {
+     "skills": [
+      "performance"
+     ]
+    },
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "performance"
+       }
+      ],
+      "when": "while playing music with the instrument",
+      "bonus": "+1 item"
+     }
+    ]
+   },
+   {
+    "id": "maestros-instrument-moderate",
+    "verdict": "move-to-star",
+    "reason": "The item bonus is gated on actively playing music with the instrument, so it cannot apply to Performance checks made by singing, oratory, dance or acting, nor while the instrument isn't being played. The flat lane cannot express that, so the +2 leaves passiveEffects.skills.performance and becomes a star.",
+    "quote": "A *maestro's instrument* grants you a +2 item bonus to Performance checks while playing music with the instrument.",
+    "stripFlat": {
+     "skills": [
+      "performance"
+     ]
+    },
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "performance"
+       }
+      ],
+      "when": "while playing music with the instrument",
+      "bonus": "+2 item"
+     }
+    ]
+   },
+   {
+    "id": "maestros-instrument-greater",
+    "verdict": "move-to-star",
+    "reason": "Same gating as the moderate version, only the size differs: the bonus applies only while music is being played on the instrument, so it must not sit in the flat Performance total.",
+    "quote": "A *maestro's instrument* grants you a +3 item bonus to Performance checks while playing music with the instrument.",
+    "stripFlat": {
+     "skills": [
+      "performance"
+     ]
+    },
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "performance"
+       }
+      ],
+      "when": "while playing music with the instrument",
+      "bonus": "+3 item"
+     }
+    ]
+   },
+   {
+    "id": "conch-of-otherworldly-seas",
+    "verdict": "move-to-star",
+    "reason": "The bonus is printed as applying to Performance checks \"attempted while using it\" — i.e. only performances played on the conch. That restriction is invisible in a flat total, so it moves to a star. The planar-key and Activate effects are unaffected and nothing else is stripped.",
+    "quote": "A *conch of otherworldly seas* is a virtuoso handheld musical instrument that grants a +2 item bonus to Performance checks attempted while using it.",
+    "stripFlat": {
+     "skills": [
+      "performance"
+     ]
+    },
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "performance"
+       }
+      ],
+      "when": "on Performance checks attempted while playing the conch",
+      "bonus": "+2 item"
+     }
+    ]
+   },
+   {
+    "id": "camouflaging-chromatophores",
+    "verdict": "move-to-star",
+    "reason": "The printed bonus covers only Stealth checks to Sneak and Hide, not every Stealth check (e.g. Stealth for initiative or to Create a Diversion-style uses), so the flat +1 over-applies. This combined record is the level-4 entry, and its own text sets that grade's value at +1, matching currentFlat.",
+    "quote": "You gain the listed item bonus to Stealth checks to Sneak and Hide.",
+    "stripFlat": {
+     "skills": [
+      "stealth"
+     ]
+    },
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "stealth"
+       }
+      ],
+      "when": "on Stealth checks to Sneak and Hide",
+      "bonus": "+1 item"
+     }
+    ]
+   },
+   {
+    "id": "camouflaging-chromatophores-lesser",
+    "verdict": "move-to-star",
+    "reason": "The text names the two actions the bonus covers, so it is not a bonus to every Stealth check; the flat +1 inflates Stealth checks that aren't Sneak or Hide. The once-per-day Background Adaptation activation is a separate effect and is untouched.",
+    "quote": "You gain a +1 item bonus to Stealth checks to Sneak and Hide.",
+    "stripFlat": {
+     "skills": [
+      "stealth"
+     ]
+    },
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "stealth"
+       }
+      ],
+      "when": "on Stealth checks to Sneak and Hide",
+      "bonus": "+1 item"
+     }
+    ]
+   },
+   {
+    "id": "camouflaging-chromatophores-greater",
+    "verdict": "move-to-star",
+    "reason": "Identical restriction to the lesser version at +2: only Sneak and Hide are covered, so the bonus cannot live in the flat Stealth total.",
+    "quote": "You gain a +2 item bonus to Stealth checks to Sneak and Hide.",
+    "stripFlat": {
+     "skills": [
+      "stealth"
+     ]
+    },
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "stealth"
+       }
+      ],
+      "when": "on Stealth checks to Sneak and Hide",
+      "bonus": "+2 item"
+     }
+    ]
+   },
+   {
+    "id": "whip-tail",
+    "verdict": "move-to-star",
+    "reason": "Each half of the bonus is tied to one specific action — Acrobatics only to Balance, Athletics only to Climb — so the current flat +1 to all Acrobatics and all Athletics inflates Tumble Through, Grapple, Long Jump, Swim and so on. Two stars replace the two flat entries. The tail unarmed attack (brawling, 1d6 bludgeoning) and the Grab an Edge allowance are separate grants and stay.",
+    "quote": "You gain a +1 item bonus to Acrobatics checks to Balance and to Athletics checks to Climb.",
+    "stripFlat": {
+     "skills": [
+      "acrobatics",
+      "athletics"
+     ]
+    },
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "acrobatics"
+       }
+      ],
+      "when": "on Acrobatics checks to Balance",
+      "bonus": "+1 item"
+     },
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "athletics"
+       }
+      ],
+      "when": "on Athletics checks to Climb",
+      "bonus": "+1 item"
+     }
+    ]
+   },
+   {
+    "id": "arachnolute",
+    "verdict": "move-to-star",
+    "reason": "Like every instrument in this family, the bonus is conditioned on playing music with the instrument, so it does not reach Performance checks to sing, orate, act or dance. The flat +2 must go; the Web Chord activation is unrelated and stays.",
+    "quote": "An *arachnolute* grants you a +2 item bonus to Performance checks while playing music with the instrument.",
+    "stripFlat": {
+     "skills": [
+      "performance"
+     ]
+    },
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "performance"
+       }
+      ],
+      "when": "while playing music with the instrument",
+      "bonus": "+2 item"
+     }
+    ]
+   },
+   {
+    "id": "paws-of-the-grogrisant",
+    "verdict": "keep-flat",
+    "reason": "Reading (a) is the correct one: \"against forced movement\" attaches to \"saves\", not to \"Athletics checks\" — PF2e has no such thing as an Athletics check against forced movement (forced movement is resisted with a save or a DC, not an Athletics roll), so the only coherent parse is +3 to Athletics generally plus +3 to saves specifically against forced movement. The flat athletics: 3 therefore stays and nothing is stripped; the apex Strength increase is likewise untouched. The saves half IS restricted and was never in currentFlat, so it is added as a star only.",
+    "quote": "You gain a +3 item bonus to Athletics checks and saves against forced movement.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "all"
+       }
+      ],
+      "when": "against forced movement",
+      "bonus": "+3 item"
+     }
+    ]
+   },
+   {
+    "id": "fan-of-falling-words",
+    "verdict": "move-to-star",
+    "reason": "The text enumerates the performance types it covers — acting, comedy, oratory and singing — which excludes Dance and Play an Instrument, and it also requires the fan to be held. A flat +2 to every Performance check overstates it.",
+    "quote": "While held, the *fan of falling words* grants you a +2 item bonus to Performance checks to act or perform comedy, orate, or sing.",
+    "stripFlat": {
+     "skills": [
+      "performance"
+     ]
+    },
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "performance"
+       }
+      ],
+      "when": "while held, on Performance checks to act or perform comedy, orate, or sing",
+      "bonus": "+2 item"
+     }
+    ]
+   },
+   {
+    "id": "lacquered-waist-drum",
+    "verdict": "move-to-star",
+    "reason": "The bonus is conditioned on the drum being played as an instrument, so it doesn't apply to Performance checks to sing, orate, act or dance. This matches the house handling of the other drums (drums-of-war-major: \"while playing the drums, on Performance checks\"). The two undead-damaging activations are unrelated and stay.",
+    "quote": "This drum can be played as an instrument, granting a +2 item bonus to Performance.",
+    "stripFlat": {
+     "skills": [
+      "performance"
+     ]
+    },
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "performance"
+       }
+      ],
+      "when": "while playing the drum as an instrument",
+      "bonus": "+2 item"
+     }
+    ]
+   },
+   {
+    "id": "conductors-instrument",
+    "verdict": "move-to-star",
+    "reason": "The +1 item bonus is gated on playing music with the instrument (which also occupies the hand(s)); it does not apply to sung, spoken, danced or acted Performances, so the flat lane cannot express it. Matches the existing house-style stars for entertainers-lute / warpipes / composer-staff.",
+    "quote": "The instrument grants you a +1 item bonus to Performance checks while playing music with it.",
+    "stripFlat": {
+     "skills": [
+      "performance"
+     ]
+    },
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "performance"
+       }
+      ],
+      "when": "while playing music with the instrument",
+      "bonus": "+1 item"
+     }
+    ]
+   },
+   {
+    "id": "benthic-drums",
+    "verdict": "move-to-star",
+    "reason": "Same restriction: the bonus only applies to Performance checks made by playing music on the drum, not to every Performance check. The whale-communication line grants no typed bonus, so nothing else changes.",
+    "quote": "This drum grants you a +2 item bonus to Performance checks while playing music with the instrument.",
+    "stripFlat": {
+     "skills": [
+      "performance"
+     ]
+    },
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "performance"
+       }
+      ],
+      "when": "while playing music with the instrument",
+      "bonus": "+2 item"
+     }
+    ]
+   },
+   {
+    "id": "blakenshipper",
+    "verdict": "move-to-star",
+    "reason": "The printed bonus is conditional on playing music with the blakenshipper, so it must leave the Performance total. The Be the Band activation grants temporary Hit Points, not a typed bonus, and is out of scope for this ruling.",
+    "quote": "The blakenshipper grants you a +1 item bonus to Performance checks while playing music with the instrument.",
+    "stripFlat": {
+     "skills": [
+      "performance"
+     ]
+    },
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "performance"
+       }
+      ],
+      "when": "while playing music with the instrument",
+      "bonus": "+1 item"
+     }
+    ]
+   },
+   {
+    "id": "booming-bell",
+    "verdict": "move-to-star",
+    "reason": "Conditional on playing the bell as an instrument, so it cannot sit in the flat Performance total.",
+    "quote": "It grants you a +1 item bonus to Performance checks while playing music with the instrument.",
+    "stripFlat": {
+     "skills": [
+      "performance"
+     ]
+    },
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "performance"
+       }
+      ],
+      "when": "while playing music with the instrument",
+      "bonus": "+1 item"
+     }
+    ]
+   },
+   {
+    "id": "core-bugle",
+    "verdict": "move-to-star",
+    "reason": "Conditional on playing music with the bugle, so the +2 item bonus moves out of the flat lane.",
+    "quote": "This bugle grants you a +2 item bonus to Performance checks while playing music with the instrument.",
+    "stripFlat": {
+     "skills": [
+      "performance"
+     ]
+    },
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "performance"
+       }
+      ],
+      "when": "while playing music with the instrument",
+      "bonus": "+2 item"
+     }
+    ]
+   },
+   {
+    "id": "fife-of-the-faithful",
+    "verdict": "move-to-star",
+    "reason": "The Performance bonus is conditional on playing music with the fife, so it becomes a star. Note on the record's second question: the Call to Arms +1 status bonus to saves is a once-per-day, 1-round activation effect that is not part of currentFlat, so this ruling does not touch it — it should be handled as a Mode/effect (or a separately authored star), not folded into Fort/Reflex/Will here.",
+    "quote": "A fife of the faithful grants you a +1 item bonus to Performance checks while playing music with the instrument.",
+    "stripFlat": {
+     "skills": [
+      "performance"
+     ]
+    },
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "performance"
+       }
+      ],
+      "when": "while playing music with the instrument",
+      "bonus": "+1 item"
+     }
+    ]
+   },
+   {
+    "id": "guangu-of-the-steppe",
+    "verdict": "move-to-star",
+    "reason": "Conditional on playing music with the drum. The Hammer of Hooves activation bonuses go to mounted allies and their mounts, not to the wearer's own flat stats, so nothing else is folded in.",
+    "quote": "This drum grants you a +1 item bonus to Performance checks while playing music with the instrument.",
+    "stripFlat": {
+     "skills": [
+      "performance"
+     ]
+    },
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "performance"
+       }
+      ],
+      "when": "while playing music with the instrument",
+      "bonus": "+1 item"
+     }
+    ]
+   },
+   {
+    "id": "horn-of-the-archon",
+    "verdict": "move-to-star",
+    "reason": "Conditional on playing music with the trumpet, so the +2 item bonus leaves the Performance total. The Archon's Note activation bonus is printed for allies in the area for 1 round and is a separate activation effect, not part of currentFlat.",
+    "quote": "This trumpet grants you a +2 item bonus to Performance checks while playing music with the instrument.",
+    "stripFlat": {
+     "skills": [
+      "performance"
+     ]
+    },
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "performance"
+       }
+      ],
+      "when": "while playing music with the instrument",
+      "bonus": "+2 item"
+     }
+    ]
+   },
+   {
+    "id": "born-of-celestial",
+    "verdict": "move-to-star",
+    "reason": "The +1 circumstance bonus to Religion is printed under the Humanoid Form sub-heading, so it is form-gated rather than unconditional and must not sit in the Religion total. currentFlat is null, so there is nothing to strip — stripFlat is omitted and only the star is added. The Yaoguai Form entry grants a chosen divine cantrip, not a typed bonus, so it is untouched here.",
+    "quote": "**Humanoid Form** Fragments of divine memory still litter your mind. You gain a +1 circumstance bonus to Religion checks.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "religion"
+       }
+      ],
+      "when": "while in Humanoid Form",
+      "bonus": "+1 circumstance"
+     }
+    ]
+   }
+  ],
+  "findings": [
+   {
+    "id": "fey-ascension",
+    "problem": "Verdict \"no-bonus\" discards a printed typed bonus. The text plainly prints \"+2 status bonus to saves against poison and charm effects\" under the Unicorn option. Their argument (\"the bonus belongs to the stored choice, not the feat record\") is a design claim, not a text claim, and it is contradicted by the registry's own house style, which routinely encodes choose-one-of-N bonuses by naming the option inside `when` — e.g. mutate-weapon (\"only if you chose the attack-bonus option instead of 10-foot reach\"), bloodline-demonic / bloodline-diabolic / bloodline-aesir (\"if you choose the self-benefit of ... instead of ...\"). Their stated risk (\"shows a bonus most owners of the feat do not have\") is exactly what the trigger field prevents, and the star lane is display-only, so nothing in the total can be inflated. Dropping it means an Anteater/Unicorn player never sees a rule the book prints.",
+    "correction": "{\"id\":\"fey-ascension\",\"verdict\":\"move-to-star\",\"reason\":\"currentFlat is null, so nothing leaves the flat lane, but the Unicorn option prints a typed bonus (+2 status to saves against poison and charm effects) that must not be lost. The star lane is display-only and its `when` carries the option name, matching existing choice-gated entries (mutate-weapon, bloodline-demonic, bloodline-aesir). The other seven options grant no typed bonus: Anteater/Gremlin grant proficiency and innate spells, Dryad grants an unarmed attack, Monarch a fly Speed equal to your Speed (not a bonus), Cat Sith a Will save against misfortune, Faun/Cursed Bluebird innate spells, and Unicorn's Medicine training is proficiency, not a bonus — so none of them produce a second row.\",\"quote\":\"**Unicorn** You become trained in Medicine, or an expert if you were already trained. You gain a +2 status bonus to saves against poison and charm effects.\",\"situational\":[{\"targets\":[{\"kind\":\"save\",\"detail\":\"all\"}],\"when\":\"if you chose the Unicorn option, against poison and charm effects\",\"bonus\":\"+2 status\"}]}"
+   },
+   {
+    "id": "energy-robe",
+    "problem": "Same defect as fey-ascension: verdict \"no-bonus\" throws away the printed \"+30-foot status bonus to Speed\" of the Fire variant. Their reasons for dropping it (variant-gated, once-per-day, lasts 1 minute) are all trigger facts, not reasons to omit the row — the registry already carries variant-gated and once-per-day-activation entries with exactly that shape (metallic-skin: \"for 1 minute after you activate Metallic Skin (once per day)\"; pushing-wind: \"for 1 round, while holding a fan\"). Since the star never touches a number, an entry whose `when` names the fire type cannot mislead a cold/acid/electricity owner, whereas silently dropping it loses the only typed bonus in the record. Their claim about resistances is correct and untouched.",
+    "correction": "{\"id\":\"energy-robe\",\"verdict\":\"move-to-star\",\"reason\":\"currentFlat is null, so no flat entry is stripped, but the Fire variant prints a typed bonus (+30-foot status to Speed) that belongs in the display-only lane with the variant and the activation window named in the trigger, in line with metallic-skin and other once-per-day activation entries. The other three variants grant water walk, a climb Speed equal to your Speed, and a fly Speed equal to your Speed — none of which is a typed bonus — and the resistance 5 clauses are resistances, not bonuses, so no further rows and no stripFlat.\",\"quote\":\"When the robe is activated, you gain a +30-foot status bonus to Speed for 1 minute as flames shoot out behind you to speed you up.\",\"situational\":[{\"targets\":[{\"kind\":\"speed\"}],\"when\":\"energy robe (fire) only, for 1 minute after you activate the robe (once per day)\",\"bonus\":\"+30-foot status\"}]}"
+   },
+   {
+    "id": "fiddle-of-the-maestro",
+    "problem": "The keep-flat call on the +2 Performance is right and I am not disturbing it — the sentence carries no qualifier, and the following sentence's \"while playing it\" is scoped to the Reflex/Dex clause. But the record ships with NO situational array at all, so the two conditional typed bonuses printed in that very next sentence (+1 status Reflex, +1 item to Dexterity-based skills, both rising to +2 at legendary) are encoded nowhere. The reason text asserts \"the Reflex/Dex-skill rows stay situational\" while the record itself contains none, so committing it as written loses them. Their open-question answer is also wrong on schema: `targets` is an array, so the three Dex skills are one row with three targets (cf. adept-benefit-regalia, amorphous-aspect), not three rows.",
+    "correction": "{\"id\":\"fiddle-of-the-maestro\",\"verdict\":\"keep-flat\",\"reason\":\"Confirmed on the flat +2: the Performance sentence is a bare, unqualified grant, and the 'while playing it' qualifier belongs to the following sentence, so passiveEffects.skills.performance = 2 stays in the total and is deliberately NOT repeated as a star. But the record must still carry the two conditional bonuses printed in that following sentence, which have no flat entry. Both are gated on playing the fiddle AND on Performance rank; both printed sizes (+1 master, +2 legendary) go in the bonus string rather than being scaled or averaged, matching adept-benefit-regalia's house style. The three Dexterity-based skills are one row with three targets, since `targets` is an array and the registry has no 'Dex-based skills' kind.\",\"quote\":\"If you're a master in Performance, while playing it you also gain a +1 status bonus to Reflex saves and a +1 item bonus to Dexterity-based skill checks. If you're legendary in Performance, the bonuses are +2.\",\"situational\":[{\"targets\":[{\"kind\":\"save\",\"detail\":\"reflex\"}],\"when\":\"while playing the fiddle, if you're a master in Performance\",\"bonus\":\"+1 status (+2 if you're legendary in Performance)\"},{\"targets\":[{\"kind\":\"skill\",\"detail\":\"acrobatics\"},{\"kind\":\"skill\",\"detail\":\"stealth\"},{\"kind\":\"skill\",\"detail\":\"thievery\"}],\"when\":\"while playing the fiddle, if you're a master in Performance (Dexterity-based skills)\",\"bonus\":\"+1 item (+2 if you're legendary in Performance)\"}]}"
+   },
+   {
+    "id": "nosoi-charm",
+    "problem": "The Performance row is correct and I keep it verbatim. The record is incomplete: the 3-action Interact activation prints a second typed bonus — \"+2 item bonus to Diplomacy checks to make Requests\" — which is a textbook situational (it applies only while the charm is twisted, and it replaces the Performance bonus). It has no flat entry today, so leaving it out means it is encoded nowhere. This is the same class of activated typed bonus the registry already carries elsewhere, and their own thunder-helm record set the precedent of encoding the companion clause from the same passage.",
+    "correction": "{\"id\":\"nosoi-charm\",\"verdict\":\"move-to-star\",\"reason\":\"The +2 is printed against three named ways to Perform (instrument, orate, sing) — not dance or act — so it is not a bonus to every Performance check and cannot sit in the flat total. Strip skills.performance and star it with the printed list as the trigger. Adding the activation's +2 item Diplomacy bonus as a second row: it is printed, typed, has no flat entry, and is mutually exclusive with the Performance bonus, which the trigger states. Only skills.performance is stripped; the once-per-day lifesense activation is temporary (1 hour) and is not in passiveEffects, so nothing else is touched.\",\"quote\":\"You gain a +2 item bonus to Performance checks to play an instrument, orate, or sing. ... You lose the item bonus to Performance checks and gain a +2 item bonus to Diplomacy checks to make Requests until you use this activation again.\",\"stripFlat\":{\"skills\":[\"performance\"]},\"situational\":[{\"targets\":[{\"kind\":\"skill\",\"detail\":\"performance\"}],\"when\":\"to play an instrument, orate, or sing\",\"bonus\":\"+2 item\"},{\"targets\":[{\"kind\":\"skill\",\"detail\":\"diplomacy\"}],\"when\":\"to make Requests, while the charm is twisted to boost your arguments (you lose the Performance bonus until you use the activation again)\",\"bonus\":\"+2 item\"}]}"
+   },
+   {
+    "id": "nosoi-charm-greater",
+    "problem": "Same incompleteness as the base charm: the +3 Performance row and the warning to preserve passiveEffects.senses are both correct, but the activation's printed \"+3 item bonus to Diplomacy checks to make Requests\" is a typed situational bonus with no flat entry and is missing from the record entirely.",
+    "correction": "{\"id\":\"nosoi-charm-greater\",\"verdict\":\"move-to-star\",\"reason\":\"Identical wording to the base charm at +3: restricted to instrument, orate, or sing, so it leaves the flat lane and becomes a star. Strip ONLY skills.performance — the passiveEffects.senses entry (lifesense, imprecise, 30 feet) is printed as an unconditional property of the greater charm and must stay exactly as it is. Added the activation's +3 item Diplomacy row, which is printed, typed, has no flat entry, and is mutually exclusive with the Performance bonus per the trigger.\",\"quote\":\"You gain a +3 item bonus to Performance checks to play an instrument, orate, or sing. ... You lose the item bonus to Performance checks and gain a +3 item bonus to Diplomacy checks to make Requests until you use this activation again.\",\"stripFlat\":{\"skills\":[\"performance\"]},\"situational\":[{\"targets\":[{\"kind\":\"skill\",\"detail\":\"performance\"}],\"when\":\"to play an instrument, orate, or sing\",\"bonus\":\"+3 item\"},{\"targets\":[{\"kind\":\"skill\",\"detail\":\"diplomacy\"}],\"when\":\"to make Requests, while the charm is twisted to boost your arguments (you lose the Performance bonus until you use the activation again)\",\"bonus\":\"+3 item\"}]}"
+   },
+   {
+    "id": "conch-of-otherworldly-seas",
+    "problem": "INVENTED RESTRICTION in `when`: the printed trigger is \"Performance checks attempted while using it\", but the encoding rewrote it as \"while playing the conch\". The conch's own text describes uses other than playing music with it (planar key for Interplanar Teleport, and both Activate entries hold it to your ear), so \"using it\" is strictly broader than \"playing\" it. The trigger must stay in the book's words. The move-to-star verdict and the performance strip are correct and are kept.",
+    "correction": "{\"id\":\"conch-of-otherworldly-seas\",\"verdict\":\"move-to-star\",\"reason\":\"The +2 is printed as applying only to Performance checks \\\"attempted while using it\\\", a condition a flat total cannot express, so it leaves passiveEffects.skills.performance and becomes a star. The planar-key benefit and both Activate effects are unrelated and nothing else is stripped.\",\"quote\":\"A *conch of otherworldly seas* is a virtuoso handheld musical instrument that grants a +2 item bonus to Performance checks attempted while using it.\",\"stripFlat\":{\"skills\":[\"performance\"]},\"situational\":[{\"targets\":[{\"kind\":\"skill\",\"detail\":\"performance\"}],\"when\":\"on Performance checks attempted while using the conch\",\"bonus\":\"+2 item\"}]}"
+   },
+   {
+    "id": "fife-of-the-faithful",
+    "problem": "Dropped a printed self-affecting bonus. The record's openQuestion (b) asks whether the Call to Arms save bonus should be starred; the encoder declined, reasoning that a once-per-day 1-round activation \"is not part of currentFlat, so this ruling does not touch it\" and belongs in Modes. That principle is wrong for this codebase: src/rules/situationalBonuses.ts already carries activation-triggered stars that were never in currentFlat, in exactly this shape and on exactly this item family - \"warpipes\" (+1 status for 1 minute after Activate Inspirational Salute), \"bellows-pipes\" (four stars for the 1/day Hand Chords activation, including save/all), \"tritons-conch\", \"emerald-fulcrum-lens\", \"metallic-skin\". The star lane is display-only and never changes the number, so a temporary bonus is precisely what it is for. The fife's text also plainly includes the wearer - \"You and all allies in a gain a +1 status bonus to saving throws for 1 round\" - unlike horn-of-the-archon (\"Allies in the area\") and guangu-of-the-steppe (\"mounted allies within a\"), where the encoder was right to add nothing. Leaving it out reproduces the very \"Fort/Reflex says nothing\" complaint the record flags. The Performance half of their answer is correct and is preserved unchanged.",
+    "correction": "{\"id\":\"fife-of-the-faithful\",\"verdict\":\"move-to-star\",\"reason\":\"Two printed bonuses, both conditional, both belonging in the star lane. (a) The +1 item Performance bonus is gated on playing music with the fife, so it leaves the flat Performance total. (b) The Call to Arms activation prints a +1 status bonus to saving throws for 'you and all allies', so it affects the wearer's own saves; it is temporary and display-only, which is what a star is for, and the registry already authors activation bonuses this way for the same item family (warpipes' Inspirational Salute, bellows-pipes' Hand Chords, triton's conch). Only skills.performance is stripped - the save star was never in currentFlat, so nothing else is removed.\",\"quote\":\"A fife of the faithful grants you a +1 item bonus to Performance checks while playing music with the instrument. [...] Activate-Call to Arms ... Frequency once per day ... You and all allies in a gain a +1 status bonus to saving throws for 1 round.\",\"stripFlat\":{\"skills\":[\"performance\"]},\"situational\":[{\"targets\":[{\"kind\":\"skill\",\"detail\":\"performance\"}],\"when\":\"while playing music with the instrument\",\"bonus\":\"+1 item\"},{\"targets\":[{\"kind\":\"save\",\"detail\":\"all\"}],\"when\":\"for 1 round after you Activate Call to Arms (once per day; you and allies in the area)\",\"bonus\":\"+1 status\"}]}"
+   }
+  ]
+ },
+ "C": {
+  "extracted": [
+   {
+    "id": "contract-negotiator",
+    "verdict": "star",
+    "action": "Make an Impression or a Request (when negotiating a deal or agreement)",
+    "reason": "Make an Impression and Request are Diplomacy actions, and this feat adds Legal Lore as a second skill that can perform them while negotiating. But the bonus is NOT attached to the action generally — \"these checks\" are the checks just described, i.e. the Legal-Lore-in-place-of-Diplomacy ones. Foundry's rule element agrees: selector `legal-lore`, predicated on action:make-an-impression / action:request, with the value scaling off skill:diplomacy:rank. So the only skill that can carry the bonus is Legal Lore; Diplomacy can still perform the action but gets nothing, and starring it would invent a bonus the text does not grant. Diplomacy proficiency only sets the SIZE of the bonus. Answering the open question: (a) the registry key is `lore:legal` — build.ts keys lores as lore:<subject> with the trailing \" Lore\" stripped, lowercased and hyphenated (matching lore:games, lore:warfare, lore:fortune-telling already in the file); (b) show the whole ladder as text, since the star is display-only and must not recompute — the house style already does this (\"+1 to +4 item (by grade)\").",
+    "quote": "When negotiating deals or agreements, you can use Legal Lore in place of Diplomacy to Make an Impression or a Request, even if there is no legal framework under which you are negotiating. If you are an expert in Diplomacy, you gain a +1 circumstance bonus to these checks; if you are a master in Diplomacy, this increases to +2, and +3 if you are legendary.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "lore:legal"
+       }
+      ],
+      "when": "to Make an Impression or a Request while negotiating a deal or agreement, using Legal Lore in place of Diplomacy",
+      "bonus": "+1 circumstance if expert in Diplomacy, +2 if master, +3 if legendary"
+     }
+    ]
+   },
+   {
+    "id": "celebrity-dedication",
+    "verdict": "star",
+    "action": "Earn Income",
+    "reason": "Earn Income is performed with Crafting, Performance, or a Lore skill — those are the only skills the downtime activity accepts, so all three lanes get the star and nothing else does. skill:'all' would over-star: Athletics, Stealth, Medicine etc. cannot Earn Income, and the star must not appear on stats the bonus can never touch. Answering the open question: narrow to Crafting / Performance / any Lore, not 'all'. (The feat also grants the Upstage reaction, which is an action grant, not a stat bonus, so it has no situational entry.)",
+    "quote": "In addition, when you Earn Income, if the level of the task is higher than your level, you gain a +1 circumstance bonus to your check to Earn Income.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "crafting"
+       },
+       {
+        "kind": "skill",
+        "detail": "performance"
+       },
+       {
+        "kind": "skill",
+        "detail": "lore:*"
+       }
+      ],
+      "when": "to Earn Income at a task whose level is higher than your level",
+      "bonus": "+1 circumstance"
+     }
+    ]
+   },
+   {
+    "id": "eye-of-the-wise",
+    "verdict": "star",
+    "action": "Decipher Writing, Disable a Device, Identify Magic, Pick a Lock, Seek, or Sense Motive (while Sustaining the peer-through activation)",
+    "reason": "Answering the open question: expand into every skill that can perform the action — 'all skills' would star Athletics, Deception, Diplomacy, Medicine, Nature-for-Decipher etc., none of which can attempt any of the six listed actions. The six actions map to: Decipher Writing = Arcana, Occultism, Religion, Society (the four skills the action lists); Identify Magic = Arcana, Nature, Occultism, Religion; Disable a Device and Pick a Lock = Thievery only; Seek and Sense Motive = Perception only (they are Perception actions, not skill actions). Union of capable stats: arcana, nature, occultism, religion, society, thievery, perception. This is the one record I split into more than one entry: the six actions have disjoint skill lists, so a single merged entry would tell a Thievery reader that their +2 applies to Decipher Writing and Identify Magic. Each entry still names its action in `when`, exactly as the ruling requires.",
+    "quote": "The *Eye of the Wise* grows transparent and grants you a +2 item bonus to attempts to Decipher Writing, Disable a Device, Identify Magic, Pick a Lock, Seek, or Sense Motive.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "arcana"
+       },
+       {
+        "kind": "skill",
+        "detail": "occultism"
+       },
+       {
+        "kind": "skill",
+        "detail": "religion"
+       },
+       {
+        "kind": "skill",
+        "detail": "society"
+       }
+      ],
+      "when": "to Decipher Writing, while peering through the Eye (⟨1⟩ Interact, Sustained)",
+      "bonus": "+2 item"
+     },
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "arcana"
+       },
+       {
+        "kind": "skill",
+        "detail": "nature"
+       },
+       {
+        "kind": "skill",
+        "detail": "occultism"
+       },
+       {
+        "kind": "skill",
+        "detail": "religion"
+       }
+      ],
+      "when": "to Identify Magic, while peering through the Eye (⟨1⟩ Interact, Sustained)",
+      "bonus": "+2 item"
+     },
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "thievery"
+       }
+      ],
+      "when": "to Disable a Device or Pick a Lock, while peering through the Eye (⟨1⟩ Interact, Sustained)",
+      "bonus": "+2 item"
+     },
+     {
+      "targets": [
+       {
+        "kind": "perception"
+       }
+      ],
+      "when": "to Seek or Sense Motive, while peering through the Eye (⟨1⟩ Interact, Sustained)",
+      "bonus": "+2 item"
+     }
+    ]
+   },
+   {
+    "id": "addiction-suppressant",
+    "verdict": "star",
+    "action": "the ongoing (recurring) save against the drug's addiction",
+    "reason": "No skill is involved — the 'task' here is an affliction's recurring save, so the capable-stat list is a save list rather than a skill list. Applying the same ruling: name every save that could BE that check, and no others. A drug's addiction is a poison-trait affliction, and poison afflictions' recurring saves are Fortitude, so Fortitude is the only save this bonus can ever land on; save:'all' would put a permanent wrong star on Reflex and Will for a bonus that can never apply there. Answering the open question: register on Fortitude, and carry the caveat in the trigger text since the record itself never names the save. This generic record covers all four grades, so the bonus string spans the printed ladder (+1/+2/+3/+4) rather than picking one. The suppression of the addiction's effects for 1 day is a narrative effect with no stat lane.",
+    "quote": "You also gain an item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "fortitude"
+       }
+      ],
+      "when": "on the ongoing save against the addiction of the one drug this suppressant was crafted for (a poison affliction, so Fortitude); the suppressant must be a higher level than that drug",
+      "bonus": "+1 to +4 item (by grade: lesser/moderate/greater/major)"
+     }
+    ]
+   },
+   {
+    "id": "addiction-suppressant-lesser",
+    "verdict": "star",
+    "action": "the ongoing (recurring) save against the drug's addiction",
+    "reason": "Same lane as the generic entry: not a skill action, so the capable-stat list is the save that the affliction actually calls for. Drug addiction is a poison-trait affliction whose recurring save is Fortitude, so Fortitude is the only save that can be this check; save:'all' would star Reflex and Will where the bonus can never apply. The record prints its own number (+1), so no scaling or averaging is needed. Confirming the open question: Fortitude, with the 'text never names the save' caveat carried in the trigger.",
+    "quote": "You also gain a +1 item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "fortitude"
+       }
+      ],
+      "when": "on the ongoing save against the addiction of the one drug this lesser suppressant was crafted for (a poison affliction, so Fortitude); the suppressant must be a higher level than that drug",
+      "bonus": "+1 item"
+     }
+    ]
+   },
+   {
+    "id": "addiction-suppressant-moderate",
+    "verdict": "star",
+    "action": "the ongoing (recurring) save against the drug's addiction",
+    "reason": "Same lane as the generic entry: not a skill action, so the capable-stat list is the save the affliction calls for. Drug addiction is a poison-trait affliction whose recurring save is Fortitude, so Fortitude is the only save this can land on; save:'all' would star Reflex and Will where the bonus can never apply. The +2 is copied verbatim from this grade's text. Confirming the open question: Fortitude, with the caveat in the trigger.",
+    "quote": "You also gain a +2 item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "fortitude"
+       }
+      ],
+      "when": "on the ongoing save against the addiction of the one drug this moderate suppressant was crafted for (a poison affliction, so Fortitude); the suppressant must be a higher level than that drug",
+      "bonus": "+2 item"
+     }
+    ]
+   },
+   {
+    "id": "addiction-suppressant-greater",
+    "verdict": "star",
+    "action": "the ongoing (recurring) save against the drug's addiction",
+    "reason": "Same lane as the generic entry: not a skill action, so the capable-stat list is the save the affliction calls for. Drug addiction is a poison-trait affliction whose recurring save is Fortitude, so Fortitude is the only save this can land on; save:'all' would star Reflex and Will where the bonus can never apply. The +3 is copied verbatim from this grade's text. Confirming the open question: Fortitude, with the caveat in the trigger.",
+    "quote": "You also gain a +3 item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "fortitude"
+       }
+      ],
+      "when": "on the ongoing save against the addiction of the one drug this greater suppressant was crafted for (a poison affliction, so Fortitude); the suppressant must be a higher level than that drug",
+      "bonus": "+3 item"
+     }
+    ]
+   },
+   {
+    "id": "addiction-suppressant-major",
+    "verdict": "star",
+    "action": "the ongoing (recurring) save against the drug's addiction",
+    "reason": "Same lane as the generic entry: not a skill action, so the capable-stat list is the save the affliction calls for. Drug addiction is a poison-trait affliction whose recurring save is Fortitude, so Fortitude is the only save this can land on; save:'all' would star Reflex and Will where the bonus can never apply. The +4 is copied verbatim from this grade's text. Confirming the open question: Fortitude, with the caveat in the trigger.",
+    "quote": "You also gain a +4 item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "fortitude"
+       }
+      ],
+      "when": "on the ongoing save against the addiction of the one drug this major suppressant was crafted for (a poison affliction, so Fortitude); the suppressant must be a higher level than that drug",
+      "bonus": "+4 item"
+     }
+    ]
+   },
+   {
+    "id": "rubbing-set",
+    "verdict": "star",
+    "action": "document or reproduce carved, etched, or physically added artwork or writing",
+    "reason": "Answering the open question: skill:'all' with the condition text, NOT a narrowing to Crafting and Society. \"Checks to document or reproduce\" is not a codified PF2e action with a published skill list — there is no Document action, and Craft, Decipher Writing and Recall Knowledge are all different things — so there is no rules basis for saying which skills can and cannot be rolled. Every other record here narrows because the action itself names its skills (Earn Income lists three, Identify Magic lists four); this one names none, so ruling out Society, Thievery, Art Lore, Architecture Lore or anything else would be inventing a restriction the text does not support. Starring all skills with the trigger spelled out is the only faithful encoding: the star never changes a number, so the cost of the wide net is only that the note appears on more stats, whereas narrowing would silently hide a bonus the player is entitled to. Note the +1 is consumed on use (the kit is expended), which the trigger records.",
+    "quote": "Using the kit consumes the materials and provides a +1 item bonus on checks to document or reproduce artwork or writing that has been carved, etched, or otherwise physically added to a surface.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "all"
+       }
+      ],
+      "when": "on checks to document or reproduce artwork or writing that has been carved, etched, or otherwise physically added to a surface (using the kit consumes it)",
+      "bonus": "+1 item"
+     }
+    ]
+   },
+   {
+    "id": "detectives-kit",
+    "verdict": "star",
+    "action": "Investigate a crime scene, a clue, or similar details",
+    "reason": "The text names no skill at all — it ties the bonus to the TASK of investigating, which in PF2e has no fixed skill. Seeking the scene for physical evidence is Perception; the kit's own contents map onto several different skills (vials and tweezers = Crafting/Medicine on a body or a substance, calipers and knotted string = Society or Crafting for measurements, chalk and notebook = Society/Thievery for reconstructing a break-in, plus any relevant Lore). Because the printed trigger is a task and not an action with a published skill list, the only honest expansion under the ruling is Perception plus skill 'all' — 'every skill that could do it' here really is any skill the GM allows for that investigation. I deliberately do NOT narrow it to a short list, because the text gives no basis for excluding any particular skill.",
+    "quote": "Every component of a detective's kit is of exceeding quality, and thus a detective's kit adds a +1 item bonus to checks to investigate a crime scene, a clue, or similar details.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "perception"
+       },
+       {
+        "kind": "skill",
+        "detail": "all"
+       }
+      ],
+      "when": "to investigate a crime scene, a clue, or similar details, while carrying the kit",
+      "bonus": "+1 item"
+     }
+    ]
+   },
+   {
+    "id": "fishing-tackle-professional",
+    "verdict": "star",
+    "action": "Fish (Subsist by fishing / Earn Income fishing)",
+    "reason": "Fishing is not its own action — it is Subsist, which is Survival only (Society covers Subsist in a settlement, which is not fishing). The one other skill that can perform the same task is a relevant Lore: Fishing Lore, which can both Recall Knowledge about fishing and Earn Income by fishing. No other skill in the list has any published claim on catching fish — Athletics is used to swim, not to fish; Nature identifies fish but does not catch them. So the star goes on Survival and Fishing Lore, and nowhere else.",
+    "quote": "Professional fishing tackle grants a +1 item bonus to checks to fish.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "survival"
+       },
+       {
+        "kind": "skill",
+        "detail": "lore:fishing"
+       }
+      ],
+      "when": "on checks to fish",
+      "bonus": "+1 item"
+     }
+    ]
+   },
+   {
+    "id": "staff-of-elemental-power",
+    "verdict": "star",
+    "action": "Recall Knowledge to identify an elemental creature",
+    "reason": "Identifying a creature is Recall Knowledge, and the skill is set by the creature's type. Elemental appears on the Recall Knowledge creature table under Arcana and Nature — those are the two core skills that can identify an elemental, and no others (Occultism and Religion cover different types, Society covers humanoids, Crafting covers constructs). A relevant Lore (Elemental Lore, Plane of Fire Lore, etc.) can always substitute for a Recall Knowledge check, so lore:* is included; the trigger keeps it honest by naming the subject, so only a Lore about elementals actually qualifies.",
+    "quote": "While wielding the staff, you gain a +2 circumstance bonus to checks to identify elemental creatures.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "arcana"
+       },
+       {
+        "kind": "skill",
+        "detail": "nature"
+       },
+       {
+        "kind": "skill",
+        "detail": "lore:*"
+       }
+      ],
+      "when": "to identify elemental creatures, while wielding the staff",
+      "bonus": "+2 circumstance"
+     }
+    ]
+   },
+   {
+    "id": "verdant-staff",
+    "verdict": "star",
+    "action": "Recall Knowledge to identify plants and fungi",
+    "reason": "Both Plant and Fungus are creature types whose Recall Knowledge skill is Nature, and Nature is also the skill for non-creature flora — so Nature is the only core skill that can identify a plant or a fungus (Arcana, Occultism and Religion each cover other creature types; Crafting identifies manufactured items, and Medicine identifies diseases and poisons, not the plants themselves). The only other thing that can perform the same Recall Knowledge is a relevant Lore — Plant Lore, Herbalism Lore, Forest Lore — so lore:* is starred with the subject named in the trigger.",
+    "quote": "While wielding it, you gain a +2 circumstance bonus to checks to identify plants and fungi.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "nature"
+       },
+       {
+        "kind": "skill",
+        "detail": "lore:*"
+       }
+      ],
+      "when": "to identify plants and fungi, while wielding the staff",
+      "bonus": "+2 circumstance"
+     }
+    ]
+   },
+   {
+    "id": "gravediggers-call",
+    "verdict": "star",
+    "action": "Seek haunts; Recall Knowledge to determine why a haunt or spirit exists",
+    "reason": "This item carries two differently-triggered halves, so it gets two entries. The first half is printed as Perception explicitly (Seek), so it is Perception only — the text pins the stat itself ('Perception checks to seek ... haunts'); note the source text has a data artifact, 'to seek options=gravediggers-call haunts', which reads as 'to Seek haunts'. The second half says only 'skill checks', naming no skill: working out why a haunt or a spirit persists is Recall Knowledge about a haunt (an occult hazard, identified with Occultism) or about an undead/spirit-trait entity (identified with Religion for undead, Occultism for the spirit trait) — those two are the skills that can perform it. A relevant Lore (the cemetery's or the region's history) can substitute for that Recall Knowledge, so lore:* joins them. Society is NOT starred: it identifies humanoids and settlements, not haunts or spirits, and the text gives no basis for it.",
+    "quote": "When you carry or wield a *gravedigger's call*, you gain a +1 item bonus to Perception checks to seek options=gravediggers-call haunts and to skill checks to determine the reasons for a haunt or spirit's existence.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "perception"
+       }
+      ],
+      "when": "to Seek haunts, while carrying or wielding the shovel",
+      "bonus": "+1 item"
+     },
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "occultism"
+       },
+       {
+        "kind": "skill",
+        "detail": "religion"
+       },
+       {
+        "kind": "skill",
+        "detail": "lore:*"
+       }
+      ],
+      "when": "to determine the reasons for a haunt or spirit's existence",
+      "bonus": "+1 item"
+     }
+    ]
+   },
+   {
+    "id": "standard-astrolabe",
+    "verdict": "star",
+    "action": "Identify celestial bodies (celestial navigation / Calculate)",
+    "reason": "The item itself gates its use on one skill — 'the holder must be trained in Survival' — and the task it performs is navigation by the stars, which is Survival's territory (Sense Direction). Survival therefore can perform it. The only other skill that can identify a star or planet is a relevant Lore, Astronomy Lore, since no core skill lists astronomy in its purview: Nature covers terrain, weather, flora and fauna; Arcana covers magical theory and the planes; Occultism covers esoterica — none of them is the published home of celestial bodies. This matches the existing house entry for starless-scope, which puts sky-observation on Astronomy Lore. So: Survival and Astronomy Lore, and no others.",
+    "quote": "An astrolabe also grants a +1 item bonus to checks to identify celestial bodies.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "survival"
+       },
+       {
+        "kind": "skill",
+        "detail": "lore:astronomy"
+       }
+      ],
+      "when": "to identify celestial bodies (requires training in Survival to use the astrolabe; standard model works only on steady ground)",
+      "bonus": "+1 item"
+     }
+    ]
+   },
+   {
+    "id": "mariners-astrolabe",
+    "verdict": "star",
+    "action": "Identify celestial bodies (celestial navigation / Calculate)",
+    "reason": "Identical wording to the standard astrolabe, so identical skill set: the item requires training in Survival to use and its task is star navigation (Sense Direction, Survival), and the only other skill that can identify a star or planet is Astronomy Lore, because no core skill claims astronomy — Nature is terrain/weather/flora/fauna, Arcana is magical theory and the planes, Occultism is esoterica. The mariner's version differs only in working on a moving deck, which changes where you can use it, not which skills can.",
+    "quote": "An astrolabe also grants a +1 item bonus to checks to identify celestial bodies.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "survival"
+       },
+       {
+        "kind": "skill",
+        "detail": "lore:astronomy"
+       }
+      ],
+      "when": "to identify celestial bodies (requires training in Survival to use the astrolabe; usable on moving surfaces such as a ship's deck)",
+      "bonus": "+1 item"
+     }
+    ]
+   },
+   {
+    "id": "combat-fishing-pole",
+    "verdict": "star",
+    "action": "Fish (Subsist by fishing / Earn Income fishing), using the pole alongside fishing tackle",
+    "reason": "Same task as the fishing tackle, so the same skills: fishing is Subsist, which is Survival (Society's Subsist is the settlement version, not fishing), plus Fishing Lore, which can Recall Knowledge about and Earn Income by fishing. Nothing else in the skill list can catch a fish. The bonus is not a printed number — it is whatever item bonus the pole's weapon potency rune provides, so an unruned pole grants nothing until a potency rune is etched; that is copied, not scaled, and mirrors the existing fighting-oar entry. The bonus also requires the pole to be used together with fishing tackle, which the trigger states.",
+    "quote": "A combat fishing pole can be used alongside fishing tackle to fish, and it adds its item bonus from weapon potency runes (if any) as an item bonus on checks to fish when used in this manner.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "survival"
+       },
+       {
+        "kind": "skill",
+        "detail": "lore:fishing"
+       }
+      ],
+      "when": "on checks to fish, when the pole is used alongside fishing tackle (only if the pole has a weapon potency rune)",
+      "bonus": "+item bonus equal to the pole's weapon potency rune (+1/+2/+3)"
+     }
+    ]
+   },
+   {
+    "id": "astrolabe-of-the-falling-stars",
+    "verdict": "star",
+    "action": "Identify celestial bodies (celestial navigation / Calculate)",
+    "reason": "The Calculate activation reprints the astrolabe text word for word, so the skill set is the one the plain astrolabes get: Survival, which the item explicitly requires training in and which owns star-based navigation (Sense Direction), and Astronomy Lore, the only other skill that can identify a star or planet since no core skill lists astronomy in its purview (Nature = terrain/weather/flora/fauna, Arcana = magical theory and the planes, Occultism = esoterica). The Starfall activation is a separate once-per-day damage effect and carries no check bonus, so it adds no target here.",
+    "quote": "An astrolabe also grants a +1 item bonus to checks to identify celestial bodies.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "survival"
+       },
+       {
+        "kind": "skill",
+        "detail": "lore:astronomy"
+       }
+      ],
+      "when": "to identify celestial bodies (requires training in Survival to use the astrolabe; functions as a mariner's astrolabe)",
+      "bonus": "+1 item"
+     }
+    ]
+   },
+   {
+    "id": "specialists-ring-abjuration",
+    "verdict": "star",
+    "action": "Identify Magic / Recall Knowledge (recognize magical effects and items)",
+    "reason": "The +1 circumstance bonus is tied to the act of recognizing magical effects and items, i.e. Identify Magic and Recall Knowledge about magic. In PF2e those are rolled with the four magical-tradition skills — Arcana, Nature, Occultism, Religion — and only those: Crafting handles Identify Alchemy (non-magical), and Society/Medicine/etc. never identify a magical effect's school. An abjuration effect can belong to any tradition, so the ring must star all four, not Arcana alone. The separate +2 item bonus to Arcana checks has no printed restriction, so it stays flat.",
+    "quote": "You gain a +2 item bonus to Arcana checks, and a +1 circumstance bonus to recognize magical effects and items of the abjuration school of magic.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "arcana"
+       },
+       {
+        "kind": "skill",
+        "detail": "nature"
+       },
+       {
+        "kind": "skill",
+        "detail": "occultism"
+       },
+       {
+        "kind": "skill",
+        "detail": "religion"
+       }
+      ],
+      "when": "you recognize magical effects and items of the abjuration school of magic",
+      "bonus": "+1 circumstance"
+     }
+    ]
+   },
+   {
+    "id": "specialists-ring-conjuration",
+    "verdict": "star",
+    "action": "Identify Magic / Recall Knowledge (recognize magical effects and items)",
+    "reason": "The bonus attaches to recognizing magical effects and items, which is Identify Magic / Recall Knowledge about magic. Those checks are made with Arcana, Nature, Occultism, or Religion — the four tradition skills — and with no others (Crafting only covers Identify Alchemy). A conjuration effect can come from any tradition, so all four capable skills are starred rather than Arcana alone. The +2 item bonus to Arcana is printed without a trigger and remains flat.",
+    "quote": "You gain a +2 item bonus to Arcana checks, and a +1 circumstance bonus to recognize magical effects and items of the conjuration school of magic.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "arcana"
+       },
+       {
+        "kind": "skill",
+        "detail": "nature"
+       },
+       {
+        "kind": "skill",
+        "detail": "occultism"
+       },
+       {
+        "kind": "skill",
+        "detail": "religion"
+       }
+      ],
+      "when": "you recognize magical effects and items of the conjuration school of magic",
+      "bonus": "+1 circumstance"
+     }
+    ]
+   },
+   {
+    "id": "specialists-ring-divination",
+    "verdict": "star",
+    "action": "Identify Magic / Recall Knowledge (recognize magical effects and items)",
+    "reason": "Recognizing magical effects and items is the Identify Magic action (and Recall Knowledge about magic), performable only with Arcana, Nature, Occultism, or Religion — the skills keyed to the four magical traditions. Crafting identifies alchemical items, not magic, and no other skill can be rolled to place an effect's school. Divination effects appear in every tradition, so every capable skill is starred. The unconditional +2 item bonus to Arcana checks stays flat.",
+    "quote": "You gain a +2 item bonus to Arcana checks, and a +1 circumstance bonus to recognize magical effects and items of the divination school of magic.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "arcana"
+       },
+       {
+        "kind": "skill",
+        "detail": "nature"
+       },
+       {
+        "kind": "skill",
+        "detail": "occultism"
+       },
+       {
+        "kind": "skill",
+        "detail": "religion"
+       }
+      ],
+      "when": "you recognize magical effects and items of the divination school of magic",
+      "bonus": "+1 circumstance"
+     }
+    ]
+   },
+   {
+    "id": "specialists-ring-enchantment",
+    "verdict": "star",
+    "action": "Identify Magic / Recall Knowledge (recognize magical effects and items)",
+    "reason": "The trigger is an action — recognizing magical effects and items (Identify Magic / Recall Knowledge about magic) — not a skill. That action is rolled with Arcana, Nature, Occultism, or Religion, the four tradition skills, and nothing else; Crafting's identification action is Identify Alchemy. Enchantment effects exist in all four traditions, so all four are starred. The +2 item bonus to Arcana carries no printed condition and remains flat.",
+    "quote": "You gain a +2 item bonus to Arcana checks, and a +1 circumstance bonus to recognize magical effects and items of the enchantment school of magic.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "arcana"
+       },
+       {
+        "kind": "skill",
+        "detail": "nature"
+       },
+       {
+        "kind": "skill",
+        "detail": "occultism"
+       },
+       {
+        "kind": "skill",
+        "detail": "religion"
+       }
+      ],
+      "when": "you recognize magical effects and items of the enchantment school of magic",
+      "bonus": "+1 circumstance"
+     }
+    ]
+   },
+   {
+    "id": "specialists-ring-evocation",
+    "verdict": "star",
+    "action": "Identify Magic / Recall Knowledge (recognize magical effects and items)",
+    "reason": "Recognizing magical effects and items maps to Identify Magic and Recall Knowledge about magic, which can be attempted with Arcana, Nature, Occultism, or Religion and with no other skill — those four are the tradition skills, while Crafting covers only alchemical identification. An evocation effect can be arcane, divine, occult, or primal, so the star goes on all four. The +2 item bonus to Arcana checks is unrestricted and stays flat.",
+    "quote": "You gain a +2 item bonus to Arcana checks, and a +1 circumstance bonus to recognize magical effects and items of the evocation school of magic.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "arcana"
+       },
+       {
+        "kind": "skill",
+        "detail": "nature"
+       },
+       {
+        "kind": "skill",
+        "detail": "occultism"
+       },
+       {
+        "kind": "skill",
+        "detail": "religion"
+       }
+      ],
+      "when": "you recognize magical effects and items of the evocation school of magic",
+      "bonus": "+1 circumstance"
+     }
+    ]
+   },
+   {
+    "id": "specialists-ring-illusion",
+    "verdict": "star",
+    "action": "Identify Magic / Recall Knowledge (recognize magical effects and items)",
+    "reason": "The +1 circumstance bonus is tied to recognizing magical effects and items — Identify Magic / Recall Knowledge about magic — which uses Arcana, Nature, Occultism, or Religion. No other skill can perform it: Crafting identifies alchemy, and Society, Medicine and the rest have no magic-identification use. Illusions occur in every tradition, so all four capable skills are starred instead of Arcana alone. The +2 item bonus to Arcana checks is unconditional and stays flat.",
+    "quote": "You gain a +2 item bonus to Arcana checks, and a +1 circumstance bonus to recognize magical effects and items of the illusion school of magic.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "arcana"
+       },
+       {
+        "kind": "skill",
+        "detail": "nature"
+       },
+       {
+        "kind": "skill",
+        "detail": "occultism"
+       },
+       {
+        "kind": "skill",
+        "detail": "religion"
+       }
+      ],
+      "when": "you recognize magical effects and items of the illusion school of magic",
+      "bonus": "+1 circumstance"
+     }
+    ]
+   },
+   {
+    "id": "specialists-ring-necromancy",
+    "verdict": "star",
+    "action": "Identify Magic / Recall Knowledge (recognize magical effects and items)",
+    "reason": "Recognition of magical effects and items is Identify Magic (and Recall Knowledge about magic), performable with Arcana, Nature, Occultism, or Religion only — the four tradition skills. Crafting handles Identify Alchemy, which is not magic, so it is excluded. Necromantic effects appear across all traditions (divine and occult especially), so all four skills carry the star. The printed +2 item bonus to Arcana checks has no trigger and remains flat.",
+    "quote": "You gain a +2 item bonus to Arcana checks, and a +1 circumstance bonus to recognize magical effects and items of the necromancy school of magic.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "arcana"
+       },
+       {
+        "kind": "skill",
+        "detail": "nature"
+       },
+       {
+        "kind": "skill",
+        "detail": "occultism"
+       },
+       {
+        "kind": "skill",
+        "detail": "religion"
+       }
+      ],
+      "when": "you recognize magical effects and items of the necromancy school of magic",
+      "bonus": "+1 circumstance"
+     }
+    ]
+   },
+   {
+    "id": "specialists-ring-transmutation",
+    "verdict": "star",
+    "action": "Identify Magic / Recall Knowledge (recognize magical effects and items)",
+    "reason": "The bonus is scoped to an action — recognizing magical effects and items, i.e. Identify Magic / Recall Knowledge about magic — which is rolled with Arcana, Nature, Occultism, or Religion and no other skill (Crafting's equivalent, Identify Alchemy, is not magic identification). A transmutation effect may belong to any tradition, so every skill that could make the check is starred. The +2 item bonus to Arcana checks is unconditional and stays flat.",
+    "quote": "You gain a +2 item bonus to Arcana checks, and a +1 circumstance bonus to recognize magical effects and items of the transmutation school of magic.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "arcana"
+       },
+       {
+        "kind": "skill",
+        "detail": "nature"
+       },
+       {
+        "kind": "skill",
+        "detail": "occultism"
+       },
+       {
+        "kind": "skill",
+        "detail": "religion"
+       }
+      ],
+      "when": "you recognize magical effects and items of the transmutation school of magic",
+      "bonus": "+1 circumstance"
+     }
+    ]
+   },
+   {
+    "id": "specialists-ring",
+    "verdict": "star",
+    "action": "Identify Magic / Recall Knowledge (recognize magical effects and items)",
+    "reason": "This is the generic parent entry, and it grants the player a real bonus, so it is starred rather than skipped; the school is simply whichever one the ring is dedicated to, so the `when` names it generically. The action — recognizing magical effects and items — is Identify Magic / Recall Knowledge about magic, which can be attempted with Arcana, Nature, Occultism, or Religion, the four skills keyed to the magical traditions. Crafting is excluded because its identification action is Identify Alchemy, and no other skill can identify a magical effect's school. Since the ring's school can appear in any tradition, all four are starred. The +2 item bonus to Arcana checks is printed with no condition and stays flat. (Duplicate-star risk if a character holds both this and a school-specific variant is a data-hygiene concern, not a reason to withhold the bonus here.)",
+    "quote": "You gain a +2 item bonus to Arcana checks, and a +1 circumstance bonus to recognize magical effects and items of the specific school of magic.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "arcana"
+       },
+       {
+        "kind": "skill",
+        "detail": "nature"
+       },
+       {
+        "kind": "skill",
+        "detail": "occultism"
+       },
+       {
+        "kind": "skill",
+        "detail": "religion"
+       }
+      ],
+      "when": "you recognize magical effects and items of the ring's school of magic",
+      "bonus": "+1 circumstance"
+     }
+    ]
+   }
+  ],
+  "findings": [
+   {
+    "id": "addiction-suppressant",
+    "problem": "RECORD SHOULD GET NO ENTRIES AT ALL (ruling A violation), plus an invented bonus ladder. `addiction-suppressant` is an UMBRELLA record, not a real item: it is listed verbatim in work/abc/umbrella-candidates.json (line 593) and work/abc/umbrella0.json with `kin` = the four graded twins (lesser 2gp / moderate 30gp / greater 140gp / major 500gp) and NO price of its own — exactly the ruling-A test (\"an umbrella record has no price and a graded twin at the same base name\"). Ruling A: \"the summery of all of the items shouldn't be an option for the characters, it's not a real item so they shouldn't even see that\" -> umbrella records get NO situational entries and are hidden from pickers. Starring it puts a phantom item's bonus on the sheet. Secondary defect: the bonus string \"+1 to +4 item (by grade: lesser/moderate/greater/major)\" is not printed anywhere in THIS record's quoted sentence (\"You also gain an item bonus ... depending on the type\") — the ladder was assembled from the appended grade blurbs, which are the four real records' text, not this one's. Third defect, inherited: narrowing to Fortitude (see the four sibling findings).",
+    "correction": "{\"id\":\"addiction-suppressant\",\"verdict\":\"none\",\"action\":null,\"reason\":\"Umbrella/summary record, not an ownable item: no price of its own, four graded kin at the same base name (confirmed in work/abc/umbrella-candidates.json and work/abc/umbrella0.json). Ruling A applies before ruling C: umbrella records get NO situational entries and are hidden from pickers, so the bonus lives on addiction-suppressant-lesser/-moderate/-greater/-major only. Hidden, not deleted — a character who already owns this resolves it as before.\",\"quote\":\"You also gain an item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant.\",\"situational\":[]}"
+   },
+   {
+    "id": "addiction-suppressant-lesser",
+    "problem": "INVENTED RESTRICTION: the target was narrowed to Fortitude, but the printed text names no save — the extraction's own reason admits it (\"the record itself never names the save\") and then supplies Fortitude from outside the text via the poison-affliction inference. Ruling H decided this exact case against them: \"WHERE THE RULES ARE OPEN, STAY OPEN. Bootstrap Respirator stars every save with the printed trigger as its note. Narrowing it to Fortitude would put my ruling on the sheet dressed as the book's.\" Same shape here, same answer: star save:all and let the trigger carry the caveat. Secondary defect: the `when` smuggles the ruling into the sheet (\"a poison affliction, so Fortitude\") and runs well over ruling H's ~one-line cap on note length. The number (+1 item) is correct.",
+    "correction": "{\"id\":\"addiction-suppressant-lesser\",\"verdict\":\"star\",\"action\":\"the ongoing save against the drug's addiction\",\"reason\":\"The printed text names a bonus and a trigger but no save, so per ruling H (stay open where the rules are open — the Bootstrap Respirator precedent) this stars every save with the printed trigger as its note, rather than resolving 'the ongoing save' to Fortitude on the app's authority. The star is display-only, so the open reading costs nothing but a note on three rows, whereas guessing Fortitude would hide the bonus if the GM's drug uses another save. Two printed conditions are kept: the suppressant works only against the one drug it was crafted from, and only if it is a higher level than that drug. The 1-day suppression of the addiction's effects is narrative and has no stat lane.\",\"quote\":\"You also gain a +1 item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant.\",\"situational\":[{\"targets\":[{\"kind\":\"save\",\"detail\":\"all\"}],\"when\":\"on the ongoing save against the addiction of the drug this suppressant was crafted for (it must be a higher level than that drug)\",\"bonus\":\"+1 item\"}]}"
+   },
+   {
+    "id": "addiction-suppressant-moderate",
+    "problem": "INVENTED RESTRICTION, same as the lesser grade: narrowed to Fortitude although the printed text names no save. Ruling H already decided this shape (\"Narrowing it to Fortitude would put my ruling on the sheet dressed as the book's\") — star save:all with the printed trigger. The `when` also states the app's inference as fact (\"a poison affliction, so Fortitude\") and exceeds ruling H's one-line note cap. The number (+2 item) is correct.",
+    "correction": "{\"id\":\"addiction-suppressant-moderate\",\"verdict\":\"star\",\"action\":\"the ongoing save against the drug's addiction\",\"reason\":\"The printed text names a bonus and a trigger but no save, so per ruling H (stay open where the rules are open — the Bootstrap Respirator precedent) this stars every save with the printed trigger as its note, rather than resolving 'the ongoing save' to Fortitude on the app's authority. The star is display-only, so the open reading costs nothing but a note on three rows. Two printed conditions are kept: it works only against the one drug it was crafted from, and only if it is a higher level than that drug.\",\"quote\":\"You also gain a +2 item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant.\",\"situational\":[{\"targets\":[{\"kind\":\"save\",\"detail\":\"all\"}],\"when\":\"on the ongoing save against the addiction of the drug this suppressant was crafted for (it must be a higher level than that drug)\",\"bonus\":\"+2 item\"}]}"
+   },
+   {
+    "id": "addiction-suppressant-greater",
+    "problem": "INVENTED RESTRICTION, same as the lesser grade: narrowed to Fortitude although the printed text names no save. Ruling H governs (\"WHERE THE RULES ARE OPEN, STAY OPEN\") — star save:all with the printed trigger as the note. The `when` also asserts the inference on the sheet (\"a poison affliction, so Fortitude\") and overruns the one-line note cap. The number (+3 item) is correct.",
+    "correction": "{\"id\":\"addiction-suppressant-greater\",\"verdict\":\"star\",\"action\":\"the ongoing save against the drug's addiction\",\"reason\":\"The printed text names a bonus and a trigger but no save, so per ruling H (stay open where the rules are open — the Bootstrap Respirator precedent) this stars every save with the printed trigger as its note, rather than resolving 'the ongoing save' to Fortitude on the app's authority. The star is display-only, so the open reading costs nothing but a note on three rows. Two printed conditions are kept: it works only against the one drug it was crafted from, and only if it is a higher level than that drug.\",\"quote\":\"You also gain a +3 item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant.\",\"situational\":[{\"targets\":[{\"kind\":\"save\",\"detail\":\"all\"}],\"when\":\"on the ongoing save against the addiction of the drug this suppressant was crafted for (it must be a higher level than that drug)\",\"bonus\":\"+3 item\"}]}"
+   },
+   {
+    "id": "addiction-suppressant-major",
+    "problem": "INVENTED RESTRICTION, same as the lesser grade: narrowed to Fortitude although the printed text names no save. Ruling H governs — star save:all with the printed trigger as the note. The `when` also states the inference as printed fact (\"a poison affliction, so Fortitude\") and overruns the one-line note cap. The number (+4 item) is correct.",
+    "correction": "{\"id\":\"addiction-suppressant-major\",\"verdict\":\"star\",\"action\":\"the ongoing save against the drug's addiction\",\"reason\":\"The printed text names a bonus and a trigger but no save, so per ruling H (stay open where the rules are open — the Bootstrap Respirator precedent) this stars every save with the printed trigger as its note, rather than resolving 'the ongoing save' to Fortitude on the app's authority. The star is display-only, so the open reading costs nothing but a note on three rows. Two printed conditions are kept: it works only against the one drug it was crafted from, and only if it is a higher level than that drug.\",\"quote\":\"You also gain a +4 item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant.\",\"situational\":[{\"targets\":[{\"kind\":\"save\",\"detail\":\"all\"}],\"when\":\"on the ongoing save against the addiction of the drug this suppressant was crafted for (it must be a higher level than that drug)\",\"bonus\":\"+4 item\"}]}"
+   },
+   {
+    "id": "standard-astrolabe",
+    "problem": "INVENTED RESTRICTION / WRONG SKILL SET. The printed text never says the check to identify celestial bodies is a Survival check. What it says is 'To use an astrolabe, the holder must be trained in Survival' — that is a training gate on operating the item, not the skill the check is rolled with. The encoder converted that gate into 'Survival is the identifying skill' and then used it to EXCLUDE every other skill. Nothing in the text supports the exclusion: 'checks to identify celestial bodies' names no skill at all, and there is no published action or creature-type table that assigns celestial bodies to Survival (Sense Direction is navigation, not identifying a star). Concrete omissions caused by the narrowing: Occultism (astrology/esoterica is squarely occult), Nature, Arcana, and every Lore other than Astronomy — none of which the text excludes. The app already encodes this exact sentence four times and every one of them uses skill 'all': astrolabe-standard, astrolabe-mariners, aon-astrolabe and astrolabe in src/rules/situationalBonuses.ts (lines 2191, 2192, 2225, 2299). Corrected to skill 'all', keeping the two printed conditions (Survival training to use it; standard model works only on steady ground) in the trigger.",
+    "correction": "{\"id\":\"standard-astrolabe\",\"verdict\":\"star\",\"action\":\"Identify celestial bodies (Calculate / celestial navigation)\",\"reason\":\"The text names no skill for the check — it only requires the holder to be trained in Survival to USE the astrolabe, which is a gate on operating the item, not a statement that the check is Survival. With no printed skill and no published table assigning celestial bodies to a skill, the non-inventing encoding is skill 'all', which is also exactly how the registry already encodes this identical sentence (astrolabe-standard, astrolabe-mariners, aon-astrolabe, astrolabe). The two printed conditions — Survival training and steady ground — stay in the trigger.\",\"quote\":\"An astrolabe also grants a +1 item bonus to checks to identify celestial bodies.\",\"situational\":[{\"targets\":[{\"kind\":\"skill\",\"detail\":\"all\"}],\"when\":\"on checks to identify celestial bodies (you must be trained in Survival to use the astrolabe; a standard astrolabe functions only on steady ground)\",\"bonus\":\"+1 item\"}]}"
+   },
+   {
+    "id": "mariners-astrolabe",
+    "problem": "INVENTED RESTRICTION / WRONG SKILL SET, same defect as standard-astrolabe. The text ties Survival to USING the astrolabe ('To use an astrolabe, the holder must be trained in Survival'), never to the check itself; 'checks to identify celestial bodies' names no skill. Pinning the star to Survival + Astronomy Lore silently excludes Occultism, Nature, Arcana and every other Lore, an exclusion the text does not make. House precedent for this identical sentence is skill 'all' (astrolabe-mariners, line 2192 of src/rules/situationalBonuses.ts). Corrected to 'all'; the mariner's-only fact (works on moving surfaces) is kept in the trigger, and the standard model's steady-ground limit is correctly not applied.",
+    "correction": "{\"id\":\"mariners-astrolabe\",\"verdict\":\"star\",\"action\":\"Identify celestial bodies (Calculate / celestial navigation)\",\"reason\":\"Identical wording to the standard astrolabe, so identical encoding: the text names no skill for the check and only gates USE of the item on Survival training, so no skill may be excluded. Skill 'all' matches the registry's existing entry for this same sentence. The mariner's model adds stabilizers for moving surfaces, which changes where it can be used, not which skill rolls the check.\",\"quote\":\"An astrolabe also grants a +1 item bonus to checks to identify celestial bodies.\",\"situational\":[{\"targets\":[{\"kind\":\"skill\",\"detail\":\"all\"}],\"when\":\"on checks to identify celestial bodies (you must be trained in Survival to use the astrolabe; this model also works on moving surfaces such as a ship's deck)\",\"bonus\":\"+1 item\"}]}"
+   },
+   {
+    "id": "astrolabe-of-the-falling-stars",
+    "problem": "INVENTED RESTRICTION / WRONG SKILL SET, inherited from the astrolabe encodings above. The Calculate activation reprints the astrolabe paragraph verbatim, so it inherits the same fact: Survival is the requirement to USE the astrolabe, not the skill of the check, and 'checks to identify celestial bodies' names no skill. Restricting the star to Survival + Astronomy Lore excludes Occultism, Nature, Arcana and all other Lores with no textual basis. Corrected to skill 'all', matching the four existing registry entries for the same sentence. The Starfall activation correctly contributes no target.",
+    "correction": "{\"id\":\"astrolabe-of-the-falling-stars\",\"verdict\":\"star\",\"action\":\"Identify celestial bodies (Calculate / celestial navigation)\",\"reason\":\"The Calculate activation reprints the plain astrolabe text word for word, so it gets the plain astrolabe encoding: no skill is named for the check, and the Survival requirement is printed as a gate on using the item, so no skill can be excluded — skill 'all' with the printed conditions in the trigger. The once-per-day Starfall activation is a damage effect with no check bonus and adds no target.\",\"quote\":\"An astrolabe also grants a +1 item bonus to checks to identify celestial bodies.\",\"situational\":[{\"targets\":[{\"kind\":\"skill\",\"detail\":\"all\"}],\"when\":\"on checks to identify celestial bodies (you must be trained in Survival to use the astrolabe; it functions as a mariner's astrolabe)\",\"bonus\":\"+1 item\"}]}"
+   },
+   {
+    "id": "gravediggers-call",
+    "problem": "Two defects. (1) LOST RESTRICTION: the printed sentence opens 'When you carry or wield a gravedigger's call...', and that condition governs BOTH halves of the bonus. The encoder kept it on the Perception entry ('while carrying or wielding the shovel') but dropped it entirely from the second entry, whose `when` is just 'to determine the reasons for a haunt or spirit's existence' — as written that star would show even with the shovel left at home, and it contradicts the encoder's own first entry. (2) INVENTED RESTRICTION / WRONG SKILL SET: the text says 'skill checks', naming no skill; narrowing that to Occultism + Religion excludes Society (researching a cemetery's or a family's history to learn why a spirit lingers) and every other skill the text does not exclude. This is also internally inconsistent with the same encoder's detectives-kit record, where an equally skill-less trigger ('investigate a crime scene, a clue, or similar details') was correctly given skill 'all'; and with house precedent spirit-walk (src/rules/situationalBonuses.ts line 558), which encodes 'Recall Knowledge checks about spirits, haunts, and undead' as skill 'all'. Corrected: keep Perception-only for the explicitly-Perception half, use skill 'all' for the 'skill checks' half, and restore the carry/wield condition on both. The bonus value and type (+1 item) were right and are unchanged.",
+    "correction": "{\"id\":\"gravediggers-call\",\"verdict\":\"star\",\"action\":\"Seek haunts; determine the reasons for a haunt or spirit's existence\",\"reason\":\"The item carries two differently-triggered halves, both governed by the printed opener 'When you carry or wield a gravedigger's call', so that condition appears in both triggers. The first half pins the stat itself ('Perception checks to seek ... haunts'), so it is Perception only; the source text's 'to seek options=gravediggers-call haunts' is a data artifact that reads as 'to Seek haunts'. The second half says only 'skill checks' and names no skill, so no skill may be excluded — Occultism and Religion are plausible but Society (researching the site's or the family's history) and relevant Lores are equally capable, and the text draws no line. Skill 'all' with the subject named in the trigger, matching the registry's spirit-walk entry for Recall Knowledge about spirits, haunts and undead.\",\"quote\":\"When you carry or wield a *gravedigger's call*, you gain a +1 item bonus to Perception checks to seek options=gravediggers-call haunts and to skill checks to determine the reasons for a haunt or spirit's existence.\",\"situational\":[{\"targets\":[{\"kind\":\"perception\"}],\"when\":\"to Seek haunts, while carrying or wielding the gravedigger's call\",\"bonus\":\"+1 item\"},{\"targets\":[{\"kind\":\"skill\",\"detail\":\"all\"}],\"when\":\"on skill checks to determine the reasons for a haunt or spirit's existence, while carrying or wielding the gravedigger's call\",\"bonus\":\"+1 item\"}]}"
+   }
+  ]
+ }
+}

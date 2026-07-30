@@ -1,0 +1,1146 @@
+[
+ {
+  "id": "energy-fusion",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Energy Fusion",
+  "level": 10,
+  "traits": [
+   "concentrate",
+   "sorcerer",
+   "spellshape"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You fuse two spells together, combining their energy types. If the next action you use is to Cast a Spell that deals energy damage, select a non-cantrip spell in your spell repertoire that deals a different type of energy damage, and expend an additional spell slot of the same rank as this secondary spell. The spell you cast deals additional damage equal to the rank of the secondary spell slot expended. The spell's total damage is divided evenly between the energy type of the spell you cast and the energy type of the secondary spell."
+ },
+ {
+  "id": "enforce-oath",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Enforce Oath",
+  "level": 12,
+  "traits": [
+   "champion"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Frequency** once per hour **Requirements** You can see a creature you've sworn an oath against. --- You call on your oath to embolden you in combat. Select one creature you can see that you've sworn an oath against (per the terms of your oath feat). You gain a +1 status bonus to AC and saves against attacks and effects by the chosen creature. You also gain a +1 status bonus to attack rolls against the chosen creature. However, your dedication draws your focus away from all other enemies. You take a –1 status penalty to AC, attack rolls, and saves against all other creatures until you stop Enforcing your Oath. Enforce Oath lasts indefinitely, but it ends if the enemy is reduced to 0 Hit Points, the enemy offers a legitimate surrender to you or your allies, you fall unconscious, or the enemy goes unnoticed by you for more than 1 minute. You can also Dismiss the effect as a free action."
+ },
+ {
+  "id": "enigma-mirror",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Enigma Mirror",
+  "level": 7,
+  "traits": [
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "Mist fills the glass of this small circular hand mirror, creating strange patterns in the shifting gray wisps. The back of the mirror bears a flowing script engraving in an unknown language. The spell DC of any spell cast by activating this item is 23. - **Armor** After you cast an illusion spell by activating the mirror, choose one ally within 30 feet. That ally is concealed as if seen in a misty mirror, until the end of your next turn. - **Weapon** After you cast an illusion spell by activating the mirror, illusory copies of the weapon swirl in the air around it. You're affected by the Thicket of Knives spell until the end of your next turn. The spell ends if you stop wielding the affixed weapon. **Activate** Cast a Spell --- **Effect** You cast Forbidding Ward. --- **Activate** Cast a Spell **Frequency** once per day --- **Effect** You cast Blur"
+ },
+ {
+  "id": "enigma-mirror-greater",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Enigma Mirror (Greater)",
+  "level": 10,
+  "traits": [
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "Mist fills the glass of this small circular hand mirror, creating strange patterns in the shifting gray wisps. The back of the mirror bears a flowing script engraving in an unknown language. The spell DC of any spell cast by activating this item is 27. - **Armor** After you cast an illusion spell by activating the mirror, choose one ally within 30 feet. That ally is concealed as if seen in a misty mirror, until the end of your next turn. - **Weapon** After you cast an illusion spell by activating the mirror, illusory copies of the weapon swirl in the air around it. You're affected by the Thicket of Knives spell until the end of your next turn. The spell ends if you stop wielding the affixed weapon. **Activate** Cast a Spell --- **Effect** You cast Forbidding Ward. --- **Activate** Cast a Spell **Frequency** once per day --- **Effect** You cast Mirror's Misfortune."
+ },
+ {
+  "id": "enigma-mirror-major",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Enigma Mirror (Major)",
+  "level": 13,
+  "traits": [
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "Mist fills the glass of this small circular hand mirror, creating strange patterns in the shifting gray wisps. The back of the mirror bears a flowing script engraving in an unknown language. The spell DC of any spell cast by activating this item is 30. - **Armor** After you cast an illusion spell by activating the mirror, choose one ally within 30 feet. That ally is concealed as if seen in a misty mirror, until the end of your next turn. - **Weapon** After you cast an illusion spell by activating the mirror, illusory copies of the weapon swirl in the air around it. You're affected by the Thicket of Knives spell until the end of your next turn. The spell ends if you stop wielding the affixed weapon. **Activate** Cast a Spell --- **Effect** You cast Forbidding Ward. --- **Activate** Cast a Spell **Frequency** once per day --- **Effect** You cast Mirror's Misfortune. --- **Activate** Cast a Spell **Frequency** once per day --- **Effect** You cast Mirror Malefactors."
+ },
+ {
+  "id": "entertainer",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Entertainer",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Through an education in the arts or sheer dogged practice, you learned to entertain crowds. You might have been an actor, a dancer, a musician, a street magician, or any other sort of performer. Choose two attribute boosts. One must be to **Dexterity** or **Charisma**, and one is a free attribute boost. You're trained in the Performance skill and the Theater Lore skill. You gain the Fascinating Performance skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Performance **Lore** Theatre Lore **Skill Feat** Fascinating Performance"
+ },
+ {
+  "id": "escaped-from-time",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Escaped from Time",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You were born before Earthfall, but when that doom came to Golarion, you were in the city of Xin-Edasseril—a city pulled out of time itself when Runelord Belimarius's Runewell of Envy malfunctioned. Even though you've since learned that you (along with everyone else trapped in Xin-Edasseril) relived that final week of Thassilon thousands of times over without realizing it while trapped outside of time, to you, it feels like Earthfall instantly transformed reality into what you now know to be the present age. Everything between Earthfall and the year of 4718 ar (when heroes restored Xin-Edasseril to reality) passed in less than the blink of an eye. You spent the next several years learning about the new age in which you found yourself—whether you've embraced this as a welcome escape from your pre-Earthfall life or you've struggled with melancholy for lost friend, family, or deeds left undone, you've managed to assimilate into the Age of Lost Omens—in large part due to the support of the other PCs. Queen Sorshen has taken an interest in all those who've escaped Runelord Belimarius's control after being restored to the modern era, but in your case, she's particularly interested in how you might be able to help her forge diplomatic ties with the city of Xin-Edasseril—with or without her bitter rival Runelord Belimarius in charge. She's said as much in her invitation to attend the opening of the Circle of Open Hands, hinting that linking the portal to Xin-Edasseril may be a good way to shore up relations with the far side of New Thassilon, although you doubt such a peace can be reached while Runelord Belimarius remains in control. Choose two attribute boosts. One must be to **Dexterity** or **Intelligence**, and the other is a free attribute boost. You're trained in Occultism and Architecture Lore. Your experience trapped in time for so long has had a unique side effect on your mind—when you're startled or threatened, you see brief flashes of competing timelines that can help guide your reactions. You've learned how to interpret these strange occult visions to bolster your reflexes. You can always choose to roll Occultism for initiative; when you do so, you gain a +2 circumstance bonus to the check. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Occultism **Lore** Architecture Lore"
+ },
+ {
+  "id": "essence-forge",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Essence Forge",
+  "level": 6,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Essence Forge May contain spoilers from Shades of Blood Source Pathfinder #214: The Broken Palace pg. 79 Bulk 20 An essence forge consists of a large stone workbench with a receptacle for fuel built into the left side. Sparkling crystals are embedded across the forge’s structure, with additional flourishes made from a different material, as appropriate to the type of forge. Life forges are adorned with fossilized bones and petrified wood. They’re used to craft items associated with the divine and primal magic traditions. One must attempt a Nature or Religion check to prime a life forge. Matter forges are decorated with strips of precious metal. They can be used to craft items associated with the arcane and primal magic traditions. One must attempt an Arcana or Nature check to prime a matter forge. Mind forges are accentuated with glittering gemstones. They can be used to craft items associated with the arcane and occult magic traditions. One must attempt an Arcana or Occultism check to prime a mind forge. Spirit forges are emblazoned with strange runes and obscure symbols enhanced by different pigments. They can be used to craft items associated with the divine and occult magic traditions. One must attempt an Occultism or Religion check to prime a spirit forge. Activate—Prime the Forge 1 minute (concentrate, healing, manipulate) Requirements The essence forge doesn’t currently contain any stored essence; Effect You prepare the essence forge for use by placing raw materials in its receptacle then spend an hour concentrating on the forge, using your own magical potential to consume the materials. The combined gp value of the raw materials sets the maximum price of the item you can craft with the essence forge. An essence forge’s receptacle can hold no more than 3 Bulk of raw materials, so coins, gemstones, or small valuable objects or items make for the best sources of fuel. Attempt an Arcana, Nature, Occultism, or Religion check as appropriate for the tradition of essence forge you’re using to focus your magical potential on the receptacle; the DC for this check depends on the type of forge (lesser, moderate, or greater) you’re using. Critical Success The raw materials are consumed, and the essence forge stores essence equal to the value of the raw materials. Additional essence overflows back into you, granting an item bonus to the skill you used to Prime the Forge for the next 24 hours. The size of the item bonus depends on the type of the forge. Success The raw materials are consumed, and the essence forge stores essence equal to the value of the raw materials. Failure The raw materials are consumed, but the burn is inefficient, and the essence forge stores essence equal to half the value of the raw materials. Critical Failure The raw materials are consumed and lost, but no essence is stored in the forge; the raw materials are wasted. Activate—Craft an Item 2 hours (concentrate, manipulate) Requirements The essence forge has been primed with raw materials equaling or exceeding the value o f the item you intend to craft, and you are not fatigued; Effect You place your hands atop the forge’s workspace and focus your concentration on the essenc"
+ },
+ {
+  "id": "essence-forge-greater",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Essence Forge (Greater)",
+  "level": 18,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "An *essence forge* consists of a large stone workbench with a receptacle for fuel built into the left side. Sparkling crystals are embedded across the forge's structure, with additional flourishes made from a different material, as appropriate to the type of forge. *Life forges* are adorned with fossilized bones and petrified wood. They're used to craft items associated with the divine and primal magic traditions. One must attempt a Nature or Religion check to prime a *life forge*. *Matter forges* are decorated with strips of precious metal. They can be used to craft items associated with the arcane and primal magic traditions. One must attempt an Arcana or Nature check to prime a *matter forge*. *Mind forges* are accentuated with glittering gemstones. They can be used to craft items associated with the arcane and occult magic traditions. One must attempt an Arcana or Occultism check to prime a *mind forge*. *Spirit forges* are emblazoned with strange runes and obscure symbols enhanced by different pigments. They can be used to craft items associated with the divine and occult magic traditions. One must attempt an Occultism or Religion check to prime a *spirit forge*. --- **Activate—Prime the Forge** 1 minute (concentrate, manipulate) **Requirements** The *essence forge* doesn't currently contain any stored essence **Effect** You prepare the *essence forge* for use by placing raw materials in its receptacle then spend an hour concentrating on the forge, using your own magical potential to consume the materials. The combined gp value of the raw materials sets the maximum price of the item you can craft with the *essence forge*. An *essence forge*'s receptacle can hold no more than 3 Bulk of raw materials, so coins, gemstones, or small valuable objects or items make for the best sources of fuel. Attempt an , , , or check as appropriate for the tradition of *essence forge* you're using to focus your magical potential on the receptacle. **Critical Success** The raw materials are consumed, and the *essence forge* stores essence equal to the value of the raw materials. Additional essence overflows back into you, granting a +3 item bonus to the skill you used to Prime the Forge for the next 24 hours. **Success** The raw materials are consumed, and the *essence forge* stores essence equal to the value of the raw materials. **Failure** The raw materials are consumed, but the burn is inefficient, and the *essence forge* stores essence equal to half the value of the raw materials. **Critical Failure** The raw materials are consumed and lost, but no essence is stored in the forge; the raw materials are wasted. --- **Activate—Craft an Item** 2 hours (concentrate, manipulate) **Requirements** The *essence forge* has been primed with raw materials equaling or exceeding the value of the item you intend to craft, and you are not fatigued **Effect** You place your hands atop the forge's workspace and focus your concentration on the essence contained within the forge. Choose an item whose formula you have and whose level is equal to or less than the *essence forge*'s level, or choose an Essence Charm. The *essence forge* begins to construct that item as you con"
+ },
+ {
+  "id": "essence-forge-lesser",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Essence Forge (Lesser)",
+  "level": 6,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "An *essence forge* consists of a large stone workbench with a receptacle for fuel built into the left side. Sparkling crystals are embedded across the forge's structure, with additional flourishes made from a different material, as appropriate to the type of forge. *Life forges* are adorned with fossilized bones and petrified wood. They're used to craft items associated with the divine and primal magic traditions. One must attempt a Nature or Religion check to prime a *life forge*. *Matter forges* are decorated with strips of precious metal. They can be used to craft items associated with the arcane and primal magic traditions. One must attempt an Arcana or Nature check to prime a *matter forge*. *Mind forges* are accentuated with glittering gemstones. They can be used to craft items associated with the arcane and occult magic traditions. One must attempt an Arcana or Occultism check to prime a *mind forge*. *Spirit forges* are emblazoned with strange runes and obscure symbols enhanced by different pigments. They can be used to craft items associated with the divine and occult magic traditions. One must attempt an Occultism or Religion check to prime a *spirit forge*. --- **Activate—Prime the Forge** 1 minute (concentrate, manipulate) **Requirements** The *essence forge* doesn't currently contain any stored essence **Effect** You prepare the *essence forge* for use by placing raw materials in its receptacle then spend an hour concentrating on the forge, using your own magical potential to consume the materials. The combined gp value of the raw materials sets the maximum price of the item you can craft with the *essence forge*. An *essence forge*'s receptacle can hold no more than 3 Bulk of raw materials, so coins, gemstones, or small valuable objects or items make for the best sources of fuel. Attempt an , , , or check as appropriate for the tradition of *essence forge* you're using to focus your magical potential on the receptacle. **Critical Success** The raw materials are consumed, and the *essence forge* stores essence equal to the value of the raw materials. Additional essence overflows back into you, granting a +1 item bonus to the skill you used to Prime the Forge for the next 24 hours. **Success** The raw materials are consumed, and the *essence forge* stores essence equal to the value of the raw materials. **Failure** The raw materials are consumed, but the burn is inefficient, and the *essence forge* stores essence equal to half the value of the raw materials. **Critical Failure** The raw materials are consumed and lost, but no essence is stored in the forge; the raw materials are wasted. --- **Activate—Craft an Item** 2 hours (concentrate, manipulate) **Requirements** The *essence forge* has been primed with raw materials equaling or exceeding the value of the item you intend to craft, and you are not fatigued **Effect** You place your hands atop the forge's workspace and focus your concentration on the essence contained within the forge. Choose an item whose formula you have and whose level is equal to or less than the *essence forge*'s level, or choose an Essence Charm. The *essence forge* begins to construct that item as you con"
+ },
+ {
+  "id": "essence-forge-moderate",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Essence Forge (Moderate)",
+  "level": 12,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "An *essence forge* consists of a large stone workbench with a receptacle for fuel built into the left side. Sparkling crystals are embedded across the forge's structure, with additional flourishes made from a different material, as appropriate to the type of forge. *Life forges* are adorned with fossilized bones and petrified wood. They're used to craft items associated with the divine and primal magic traditions. One must attempt a Nature or Religion check to prime a *life forge*. *Matter forges* are decorated with strips of precious metal. They can be used to craft items associated with the arcane and primal magic traditions. One must attempt an Arcana or Nature check to prime a *matter forge*. *Mind forges* are accentuated with glittering gemstones. They can be used to craft items associated with the arcane and occult magic traditions. One must attempt an Arcana or Occultism check to prime a *mind forge*. *Spirit forges* are emblazoned with strange runes and obscure symbols enhanced by different pigments. They can be used to craft items associated with the divine and occult magic traditions. One must attempt an Occultism or Religion check to prime a *spirit forge*. --- **Activate—Prime the Forge** 1 minute (concentrate, manipulate) **Requirements** The *essence forge* doesn't currently contain any stored essence **Effect** You prepare the *essence forge* for use by placing raw materials in its receptacle then spend an hour concentrating on the forge, using your own magical potential to consume the materials. The combined gp value of the raw materials sets the maximum price of the item you can craft with the *essence forge*. An *essence forge*'s receptacle can hold no more than 3 Bulk of raw materials, so coins, gemstones, or small valuable objects or items make for the best sources of fuel. Attempt an , , , or check as appropriate for the tradition of *essence forge* you're using to focus your magical potential on the receptacle. **Critical Success** The raw materials are consumed, and the *essence forge* stores essence equal to the value of the raw materials. Additional essence overflows back into you, granting a +2 item bonus to the skill you used to Prime the Forge for the next 24 hours. **Success** The raw materials are consumed, and the *essence forge* stores essence equal to the value of the raw materials. **Failure** The raw materials are consumed, but the burn is inefficient, and the *essence forge* stores essence equal to half the value of the raw materials. **Critical Failure** The raw materials are consumed and lost, but no essence is stored in the forge; the raw materials are wasted. --- **Activate—Craft an Item** 2 hours (concentrate, manipulate) **Requirements** The *essence forge* has been primed with raw materials equaling or exceeding the value of the item you intend to craft, and you are not fatigued **Effect** You place your hands atop the forge's workspace and focus your concentration on the essence contained within the forge. Choose an item whose formula you have and whose level is equal to or less than the *essence forge*'s level, or choose an Essence Charm. The *essence forge* begins to construct that item as you con"
+ },
+ {
+  "id": "eternal-guide",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Eternal Guide",
+  "level": 20,
+  "traits": [
+   "animist",
+   "apparition"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per week --- Your attuned apparitions recognize that you still have essential work to do and refuse to allow you to pass on, gathering up your essence to carry your soul back to the community you call home. Choose a single settlement with a population of at least 100 people. Whenever you die and are not returned to life within 24 hours by other means, as long as the settlement still exists and there are no other claims on your soul (such as a contract with a devil) and nothing trapping your soul (such as being slain by a critical hit from a vilderavn), your attuned apparition magically transports your soul, remains, and all of the items you had worn or carried at the time of your death (so long as they have not been otherwise recovered) back to the chosen settlement, where you are reborn. The nature of this rebirth varies between animists; some magically reconstitute and reinvigorate their physical forms to return to life in their original bodies, while others pass their knowledge and power on to a new inheritor who effectively takes their place in the grand story of existence. When returned to your original physical form in this manner, you are brought back in your physical prime, restored to youthful health and vigor. This effectively makes you immune to dying of old age so long as you are not killed by violence less than a week before you would have died of old age. Regardless of the exact nature of your rebirth, you or your inheritor are fully restored with your level, experience, and equipment intact one week after your death. If you choose an inheritor and their ancestry is different than yours, your attribute scores do not change but you can freely retrain your ancestry feats and any other feats that relied on them as prerequisites as part of your rebirth. There is no limit to the number of times you can be reborn, but if you die before a week has passed since your last rebirth, neither you nor your attuned apparitions have recovered enough energy to complete the process again, and your soul passes to whatever final reward it has earned."
+ },
+ {
+  "id": "ex-mendevian-crusader",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Ex-Mendevian Crusader",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "When the Great Quake rumbled across the eastern lands and opened the rift that southerners called \"the Worldwound,\" you answered the call to arms to fight back the demonic hordes. What you saw during the war changed you forever-so much so that you became a wanderer, hermit, or other voluntary outcast. When you came upon the Broken Tusk following, you determined you'd finally found a people whose values and traditions made you feel whole again. The Broken Tusk was supposedly once a much bigger following, and so you've joined them in the hopes of helping them heal old wounds and rebuild in the shadow of loss. In the process, perhaps this new family will help you do the same. Choose two attribute boosts. One must be to **Constitution** or **Wisdom**, and one is a free attribute boost. You're trained in the Religion skill and the Demon Lore skill. You gain the Pilgrim's Token skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Religion **Lore** Demon Lore **Skill Feat** Pilgrim's Token"
+ },
+ {
+  "id": "expert-disassembly",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Expert Disassembly",
+  "level": 7,
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can apply the same techniques you use to reverse engineer objects to disable dangerous traps and break apart locks. You can use Crafting instead of Thievery to Disable a Device or Pick a Lock. pick-a-lock skill=crafting disable-device skill=crafting"
+ },
+ {
+  "id": "expert-longevity",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Expert Longevity",
+  "level": 9,
+  "traits": [
+   "elf"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "You've continued to refine the knowledge and skills you've gained through your life. When you choose a skill in which to become trained with Ancestral Longevity, you can also choose a skill in which you are already trained and become an expert in that skill. This lasts until your Ancestral Longevity expires. When the effects of Ancestral Longevity and Expert Longevity expire, you can retrain one of your skill increases. The skill increase you gain from this retraining must either make you trained in the skill you chose with Ancestral Longevity or make you an expert in the skill you chose with Expert Longevity."
+ },
+ {
+  "id": "exploitive-bomb",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Exploitive Bomb",
+  "level": 16,
+  "traits": [
+   "additive",
+   "alchemist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can mix a refractile substance into an alchemical bomb to foil resistances. Choose one damage type the bomb can deal. Any damage dealt by the bomb—including initial, splash, and persistent damage—ignores an amount of that resistance equal to your level."
+ },
+ {
+  "id": "eye-of-the-wise",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Eye of the Wise",
+  "level": 11,
+  "traits": [
+   "artifact",
+   "invested"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This fist-sized, 12-rayed black star sapphire is sacred to Yueral, the elven goddess of magic and jewels, and most accounts of its creation attribute its crafting to a circle of her worshippers. In addition to the abilities listed below, the gem functions as a portal key for Jewelgate at Alseta's Ring. **Activate** ⟨1⟩ Interact --- **Effect** You touch the *Eye of the Wise* to a gem worth at least 10 gp, whereupon the *Eye of the Wise* assumes the appearance of the touched gemstone. While this connection is active, the carriers of the *Eye of the Wise* and of the other gemstone can communicate telepathically with one another over any distance, as long as both are on the same plane. This connection is broken if the other gemstone is damaged, if the *Eye of the Wise* becomes attuned to another gemstone, or if the bearer of the *Eye of the Wise* dismisses the activation. **Activate** ⟨1⟩ Interact --- **Effect** You hold the *Eye of the Wise* up to your own eye and peer through it. The *Eye of the Wise* grows transparent and grants you a +2 item bonus to attempts to Decipher Writing, Disable a Device, Identify Magic, Pick a Lock, Seek, or Sense Motive. You can Sustain this activation as long as you hold the gem in place."
+ },
+ {
+  "id": "fake-it-till-you-make-it",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Fake It Till You Make it",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "When you take on a role, you become more capable with all sorts of tasks involving that role. When you Assume a Role, choose two skills associated with the role in some way; if you're untrained, you can use your level as your proficiency bonus for those skills, and you gain a +1 circumstance bonus to skill checks with those skills as long as you remain in that role. You and the GM determine which skills you assume."
+ },
+ {
+  "id": "false-medium",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "False Medium",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "There are people in this world who possess the ability to pierce the veil between the world of the living and the world of the dead, allowing them to communicate with spirits. You... are not one of them. But you know enough about the occult, as well as cold reading tricks and various practices from local religions, to scam your way into people's coinpurses. Unlike a through-and-through charlatan, there's some real occult methodology behind your flimflam, but that's likely cold comfort to the people you swindle. Whether you decided to take a more righteous path, were caught and pledged to make it right, or still slip in a few \"séances\" between adventures, you've taken to an adventuring lifestyle as you move from place to place. Choose two attribute boosts. One must be to **Intelligence** or **Charisma**, and one is a free attribute boost. You're trained in Occultism and Fortune-Telling Lore. You gain the Deceptive Worship skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Occultism **Lore** Fortune Telling Lore **Skill Feat** Deceptive Worship"
+ },
+ {
+  "id": "farmhand",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Farmhand",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "With a strong back and an understanding of seasonal cycles, you tilled the land and tended crops. Your farm could have been razed by invaders, you could have lost the family tying you to the land, or you might have simply tired of the drudgery, but at some point, you became an adventurer. Choose two attribute boosts. One must be to **Constitution** or **Wisdom**, and one is a free attribute boost. You're trained in the Athletics skill and the Farming Lore skill. You gain the Assurance skill feat with Athletics. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Athletics **Lore** Farming Lore"
+ },
+ {
+  "id": "farmsteader",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Farmsteader",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You built your house using wood from the trees surrounding it. Raised it up from the dirt and called it home. You thought that it would be where you would grow old and die. But despite your best efforts, you were wrong. The land that once gave you food fell fallow, and dust took to the air and choked the livestock. Now you wander the world as an adventurer. Are you in search of a new place to settle down and try again, or have you become disillusioned by your old dreams, leading you to seek out a new purpose? Choose two attribute boosts. One must be to **Constitution** or **Wisdom**, and one is a free attribute boost. You're trained in the Survival skill and the Farming Lore skill. You gain the Forager skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Survival **Lore** Farming Lore **Skill Feat** Forager"
+ },
+ {
+  "id": "fated-duel",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Fated Duel",
+  "level": 18,
+  "traits": [
+   "mythic"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per week --- You and your knights are an unbeatable force together, but sometimes it's a monarch's duty to resolve the fate of their kingdom with nothing more than their own trusted weapon. Spend a Mythic Point, and choose one opponent within 30 feet; you declare a Fated Duel against that opponent. If the opponent accepts your challenge, you're locked in mystical combat together. Neither you nor your opponent can move more than 30 feet from each other; you both can't be harmed by any creature other than each other; and you both can't harm any creature other than each other. This mystical bond is incredibly draining on both parties, pulling at their life and spirit; if neither you nor your opponent has defeated the other by the time 1 minute has passed, you both become Doomed 1. Your doomed conditions increase by 1 for each additional minute that passes until one or both of you die. If your opponent refuses your challenge, you regain a Mythic Point and can immediately attempt an Intimidation check at mythic proficiency to Demoralize them."
+ },
+ {
+  "id": "feral-child",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Feral Child",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "senses",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You spent your youth in the wilderness, living close to or perhaps raised by animals. You have a close, mystical connection with these animals and gained certain abilities from them, though this limited your well-roundedness in mental pursuits. Choose one ability boost. It must be **Strength**, **Dexterity**, or **Constitution**. You are trained in Nature and Survival. You gain low-light vision (or darkvision if you already had low-light vision), imprecise scent with a range of 30 feet, and the Forager skill feat. --- ## Background details **Attribute Boosts** Constitution or Dexterity or Strength **Trained Skill** Nature **Skill Feat** Forager"
+ },
+ {
+  "id": "fey-friend",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Fey Friend",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Many grow up hearing cautionary tales of mischievous fey, and with good reason: from sprites' pranks to gremlins' sabotage to redcaps' outright lethality, fey pose a real danger to the unwary. But not for you—usually! Whether you grew up near an enchanted wilderness, have visited the First World, frequently deal with nature spirits, or even were a fey foundling raised by otherworldly beings, you're well acquainted with fey, their myriad traditions, and their even more numerous tricks. Fey and the Wildwood Lodge aren't the same thing, yet there's enough overlap that you're sure to fit in at the upcoming Greenwood Gala. Choose two attribute boosts. One must be to **Charisma** or **Dexterity**, and one is a free attribute boost. You're trained in the Deception skill and the Fey Lore skill. You gain the Charming Liar skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Deception **Lore** Fey Lore **Skill Feat** Charming Liar"
+ },
+ {
+  "id": "feybound",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Feybound",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "trainedLore"
+  ],
+  "inRegistries": [],
+  "text": "You have spent time in the First World or another realm of the fey and aren't entirely the same person you were before. Perhaps you made a purchase at the legendary Witchmarket or partook deeply of fey food and wine. Whatever the case, willingly or inadvertently, you made a bargain with the fey, the benefits of which come at a price. Choose two attribute boosts. One must be to **Dexterity** or **Charisma**, and one is a free attribute boost. You are trained in Fey Lore and gain the Fey's Fortune free action. You must follow some rule or limitation as part of your pact with the fey. If you violate the rule, you lose Fey's Fortune until you receive the effects of a successful Atone ritual using the Nature skill. The exact limitation is up to you and the GM, but the most common requirement is that you must fulfill a single request from any fey who knows your name. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Lore** Fey Lore"
+ },
+ {
+  "id": "field-medic",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Field Medic",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "In the chaotic rush of battle, you learned to adapt to rapidly changing conditions as you administered to battle casualties. You patched up soldiers, guards, or other combatants, and learned a fair amount about the logistics of war. Choose two attribute boosts. One must be to **Constitution** or **Wisdom**, and one is a free attribute boost. You're trained in the Medicine skill and the Warfare Lore skill. You gain the Battle Medicine skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Medicine **Lore** Warfare Lore **Skill Feat** Battle Medicine"
+ },
+ {
+  "id": "fiendbreaking-pilgrim",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Fiendbreaking Pilgrim",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Soon after the elves returned to stop Treerazer's corruption of Kyonin, word spread across the globe, reaching the distant elven nation of Jinin in the heart of Tian Xia. No strangers to the fight against evil, a group of Jinin priests and oracles made a desperate pilgrimage across the world to join the fight against Tanglebriar. With them they brought one of their greatest treasures, the legendary staff Fiendbreaker. Created by Jininsiel, founder of Jinin, to serve as a gift to aid the nation's neighbors in Tianjing against their own fiendish invasion, Fiendbreaker's role in helping to defeat Tanglebriar's forces in that ancient war is well known. Today, with Tanglebriar relatively contained, the need for powerful weapons like Fiendbreaker may be lessened, but this treasured gift's legendary journey across the world is honored still by pilgrimages, during which a group of priests and worshippers from a wide range of faiths gather and carry Fiendbreaker out from Kyonin and back again to honor that legacy. The goal of these journeys isn't to deliver the staff where it's needed. Instead, it's a journey of self-discovery, where the petitioners meditates on Fiendbreaker, the legacy of its creator Jininsiel, and a promise among all pilgrims to stand against the demonic evil. You have been on at least one of these pilgrimages, and the journey has touched you deeply. You focused your studies on Treerazer, his cult, and his methods, and your long hours studying Fiendbreaker have resulted in a knack for understanding the inner workings of other magic items. Choose two attribute boosts. One must be to **Strength** or **Wisdom**, and one is a free attribute boost. You're trained in the Religion skill and the Treerazer Lore skill. You gain the Quick Identification skill feat, can use Treerazer Lore checks in place of Perception when you attempt to Seek or Sense the Motive of a creature you suspect of being an agent of Treerazer. You also gain the Hunt the Razer's Pawn action. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Religion **Lore** Treerazer Lore **Skill Feat** Quick Identification"
+ },
+ {
+  "id": "fiendish-bargain",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Fiendish Bargain",
+  "level": 0,
+  "traits": [
+   "unholy"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Fiendish Bargain Source GM Core pg. 313 Aspect Fiend Activate (concentrate) Frequency once per day; Effect You bargain with the evil force empowering your relic for a boon, though you must trade something in return. Select one of the following benefits to gain. Your relic attempts to counteract a harmful condition affecting you. You regain 3d8+16 Hit Points. This is a healing effect. You gain a +2 status bonus to attack rolls for 1 minute. One of the following randomly determined effects occurs to you in payment, after applying the benefit. You are stupefied 1 for 1 minute. You are clumsy 1 for 1 minute. You lose 1d8 Hit Points. You take a –1 penalty to damage rolls for 1 minute."
+ },
+ {
+  "id": "fighter-weapon-mastery",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "Fighter Weapon Mastery",
+  "level": 5,
+  "traits": [
+   "fighter"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Hours spent training with your preferred weapons, learning and developing new combat techniques, have made you particularly effective with your weapons of choice. Choose one weapon group. Your proficiency rank increases to master with the simple weapons, martial weapons, and unarmed attacks in that group, and to expert with the advanced weapons in that group. You gain access to the critical specialization effects of all weapons and unarmed attacks for which you have master proficiency."
+ },
+ {
+  "id": "finadar-leshy",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Finadar Leshy",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisites** Leshy ancestry --- You are a leshy from Finadar Forest, originally created under the corruption of a cyclopean monolith. Though the Pathfinder Society managed to sever the monolith's connection, freeing the forest and your people from its influence, you retain a trace, unnerving connection to the Abyss. Choose two attribute boosts. One must be to **Constitution** or **Charisma**, and one is a free attribute boost. You're trained in the Intimidation skill and the Abyssal Lore skill. You gain the Intimidating Glare skill feat. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Intimidation **Lore** Abyssal Lore **Skill Feat** Intimidating Glare"
+ },
+ {
+  "id": "final-blade-survivor",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Final Blade Survivor",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Shining Kingdoms --- You fell prey to the whims of the Galtan mob and were scheduled for execution by *Final Blade*, but through skill-or sheer luck-you managed to talk your way out of it. Choose two attribute boosts. One must be to **Charisma** or **Wisdom**, and one is a free attribute boost. You're trained in the Deception skill and the Revolution Lore skill. You gain the Charming Liar skill feat. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Deception **Lore** Revolution Lore **Skill Feat** Charming Liar"
+ },
+ {
+  "id": "fire-warden",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Fire Warden",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Whether you fought against fires in the wilderness or in crowded city streets, you've had your fair share of dealing with uncontrolled flames. Battling thick smoke and toxic fumes, you've broken down obstacles to save trapped people from a fiery grave, and you've studied the nature and source of fire itself to try and better learn how to fight it. Choose two attribute boosts. One must be to **Strength** or **Constitution**, and one is a free attribute boost. You're trained in the Athletics skill and the Plane of Fire Lore skill. You gain the Breath Control feat. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Trained Skill** Athletics **Lore** Plane Of Fire Lore **Skill Feat** Breath Control"
+ },
+ {
+  "id": "fireworks-performer",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Fireworks Performer",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Few celebrations in Tian Xia are complete without a show of fireworks, and your job is to make sure they go off without a hitch. You load the fireworks, set the fuses, and choreograph the performance, bringing the show together in a finale of lights and explosions. Then it's time to pack up your gear and move on to the next civic holiday or religious festival. Of course, someone who travels the roads with a pack full of high explosives is bound to run into an adventure or two along the way, and so over time, your fireworks have been spent in support of that life. Choose two attribute boosts. One must be to **Intelligence** or **Charisma**, and one is a free attribute boost. You're trained in the Performance skill and the Fireworks Lore skill. You gain the Fascinating Performance skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Performance **Lore** Fireworks Lore **Skill Feat** Fascinating Performance"
+ },
+ {
+  "id": "first-implement-and-esoterica",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "First Implement and Esoterica",
+  "level": 1,
+  "traits": [
+   "thaumaturge"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your implement is a special object of symbolic importance: your badge as you treat with the supernatural and a powerful tool if things turn violent. Choose an implement from the options presented below: - Amulet - Bell - Chalice - Lantern - Mirror - Regalia - Shield - Tome - Wand - Weapon You begin play with a mundane item of that type, and you gain the initiate benefit for that implement. While an implement is useful to you, it typically has no value if sold. If you acquire a new object of the same general implement type, you can switch your implement to the new object by spending 1 day of downtime with the new item. As you advance as a thaumaturge, you will collect up to three implements and unlock the hidden potential stored within each, so you can mix and match their benefits to suit your situation. While your implements are your primary tools in your dealings with the supernatural, you know the value of always being prepared. You constantly collect and carry various smaller mystic objects, bits of materials with paranormal affinities, and items used in folk practices: your esoterica. These might include cold-iron nails, scraps of scrolls and scriptures, fragments of bones purportedly from a saint, and other similar objects. You keep your esoterica in easy-to-access places on your person and are well practiced in brandishing your implement and esoterica together, so you can draw and use esoterica with the same hand you're using to wield an implement. ### **Exploit Vulnerability** You know that every creature, no matter how obscure, has a weakness. By identifying and empowering the right object, you can strike down even the most resilient of monsters. You gain the Exploit Vulnerability action. You can attempt to Exploit Vulnerabilities in one of two ways: either by invoking properties that repel that type of creature, or by attempting a more improvisational, ad-hoc method with your esoterica that can impose a custom weakness on any creature, albeit one that usually isn't as dire as a creature's existing weakness. - **Mortal Weakness** After identifying a creature's weakness, you use a thematically resonant bit of esoterica to attune your attacks to your discovery. Your unarmed and weapon Strikes activate the highest weakness you discovered with Exploit Vulnerability, even though the damage type your weapon deals doesn't change. This damage affects the target of your Exploit Vulnerability, as well as any other creatures of the exact same type, but not other creatures with the same weakness. For example, when fighting a pack of werewolves, you might use silver shavings or crushed moonstone to deal damage that applies their weakness to silver to your attacks against any of the werewolves, but you wouldn't apply this damage to any other monsters with a weakness to silver. - **Personal Antithesis** You improvise a custom weakness on a creature by forcefully presenting and empowering a piece of esoterica that repels it on an individual level; for instance, against a tyrant, you might procure a broken chain that once held a captive. This causes the target creature, and only the target creature, to gain a weakness against your unarmed and weapon S"
+ },
+ {
+  "id": "flash-forge",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Flash Forge",
+  "level": 1,
+  "traits": [
+   "impulse",
+   "kineticist",
+   "metal",
+   "primal"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Flash Forge Source Rage of Elements pg. 30 An artificial metal object forms in the hands of you or a willing ally within 30 feet. You can choose a level 0, common, handheld weapon or piece of adventuring gear of 1 Bulk or less. The item is entirely made from metal, making some items impossible or impractical to use (if it's unclear, the GM decides). You can make items with simple moving parts or magnetism, like a compass, poor lock, or merchant's scale. The item lasts for 10 minutes, but each time it's used, the user must succeed at a DC 5 flat check or the item is destroyed after the action is completed."
+ },
+ {
+  "id": "flashforge",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Flashforge",
+  "level": 1,
+  "traits": [
+   "impulse",
+   "kineticist",
+   "metal",
+   "primal"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "An artificial metal object forms in the hands of you or a willing ally within 30 feet. You can choose a level 0, common, handheld weapon or piece of adventuring gear of 1 Bulk or less. The item is entirely made from metal, making some items impossible or impractical to use (if it's unclear, the GM decides). You can make items with simple moving parts or magnetism, like a compass, poor lock, or merchant's scale. The item lasts for 10 minutes, but each time it's used, the user must succeed at a or the item is destroyed after the action is completed."
+ },
+ {
+  "id": "flawed-orb-of-gold-dragonkind",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Flawed Orb of Gold Dragonkind",
+  "level": 25,
+  "traits": [
+   "artifact",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Each of the legendary *Orbs of Dragonkind* contains the essence and personality of a powerful dragon. The *Orb of Gold Dragonkind* was the most powerful of them all, until it was shattered by Mengkare's draconic breath. Reconstructed at great expense by enslaved spellcasters toiling under the Scarlet Triad's watch, the *Flawed Orb of Gold Dragonkind* is a shadow of its prior self, yet it remains a potent weapon against dragons of all types. While carried, the *Flawed Orb of Gold Dragonkind* grants its owner resistance 30 to the Breath Weapons of gold dragons. The owner also can sense if there are any dragons within 10 miles, or any gold dragons within 100 miles. When within 1 mile of a dragon, they can determine the direction to the dragon and the dragon's age category (such as young, ancient, or wyrm). --- **Activate** ⟨2⟩ envision, Interact **Frequency** Three times per day **Effect** You attempt to overwhelm a dragon's mind-while you cannot control the dragon, you can render it immobile for a short time. Choose a dragon within 60 feet; the dragon can attempt to resist the orb with a saving throw (or higher with *orb shards*). Gold dragons take a -4 circumstance penalty to this saving throw. Any stun from this activation ends if the dragon is attacked or otherwise subject to a hostile act other than that of the orb. --- **Critical Success** The dragon is unaffected. **Success** The dragon is Stunned 3. **Failure** The dragon is stunned for as long as the orb's wielder Sustains the Activation. **Critical Failure** As failure, but hostile actions don't end the dragon's stun. --- **Destruction** The *Flawed Orb of Gold Dragonkind* is resilient, but its imperfect nature leaves it vulnerable. It can be damaged or even destroyed by mundane attacks (Hardness 40, HP 200, BT 100). It has weakness 30 to the Breath Weapons and Strikes of gold dragons."
+ },
+ {
+  "id": "flexible-transmogrification",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Flexible Transmogrification",
+  "level": 12,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "You've learned how to transmogrify your eidolon to suit the circumstances of the day. Each day, choose one evolution feat of 6th level or lower during your daily preparations. Your eidolon gains that feat until your next daily preparations."
+ },
+ {
+  "id": "fly-on-shadowed-wings",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Fly on Shadowed Wings",
+  "level": 10,
+  "traits": [
+   "animist",
+   "apparition"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per hour --- Your apparition embraces you, feeding on your magic to become a pair of protective wings. Choose one of your attuned apparitions; for 10 minutes, you gain a fly Speed equal to your land Speed and resistance to precision damage equal to your level, but your chosen apparition is dispersed for the duration, automatically re-attuning to you after 10 minutes."
+ },
+ {
+  "id": "fogfen-tale-teller",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Fogfen Tale-Teller",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You know there are monstrous things out in the swamp known as Fogfen; you've seen these things through the mist, gliding through the murky water and heaving themselves over sodden bits of land. No one in Otari believes your tales of swamp monsters from the depths, even when you embellish the creatures of your stories with fangs, wings, or tentacles. You'll just have to prove to them that there are truly monsters out there, and that they were wrong to doubt you. Choose two attribute boosts. One must be to **Strength** or **Charisma**, and one is a free attribute boost. You're trained in Athletics and the Swamp Lore skill. You gain the Titan Wrestler skill feat. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Athletics **Lore** Swamp Lore **Skill Feat** Titan Wrestler"
+ },
+ {
+  "id": "folklore-enthusiast",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Folklore Enthusiast",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Willowshore is a small town in a rural part of Shenmen, but that doesn't exempt it from the world of the strange and unexplained. There are plenty of mysterious events and haunting legends about Willowshore or its hinterlands, and as a result of your upbringing, you've become particularly interested in learning more about them. While much of the regional folklore comes from one of Willowshore's many religions and local faiths (of which you might be a practicing member or perhaps instead have a secular interest in the lore), you've noticed that these beliefs also influence artisans and crafters in ways they might not even realize. You're convinced that many of these local beliefs have roots in a deeper, historical event of great significance and hope one day to learn more about Willowshore's true history. If you're religious, your home is likely near a shrine associated with your faith—if your faith isn't represented among Willowshore's shrines, speak with your GM about potentially having a shrine to your faith in or near to your home. During the Reenactment Festival, you likely spent time chatting with others about ghost stories and sharing spooky legends and tales. You weren't chosen to be an abductee during the Reenactment Festival so much as you volunteered, eagerly, for the chance—you might have even participated in previous years as an abductee! Choose two attribute boosts. One must be to **Intelligence** or **Wisdom**, and one is a free attribute boost. You're trained in the Religion skill and the Art Lore skill. You gain the Oddity Identification skill feat. Seasonal Boon (Folklore Enthusiast) --- You can add one of the following two adjustments to any background to further modify your choice to match your vision for your PC. **Family:** You and one (or more) other PCs are close family members (siblings, parent/child, married, etc.) If you take this adjustment, the other PC(s) who are your family must also take this adjustment. Choose one of the following to replace the skill feat you otherwise would've gained from your background. (You and your sibling need not share the same choice—a sibling who wants to keep their background's skill feat can pick \"Typical\" from the list.) - **Bickering:** You have a long-standing feud with your sibling(s). Whenever your sibling(s) critically fail a significant skill check or attack roll and you witness their failure, you gain a +1 status bonus to your saving throws until the end of your next turn as you secretly (or perhaps not so secretly) delight in their failure. - **Close-Knit:** You and your sibling(s) work well together, and you go all-out to help them when they're badly hurt. When you provide Aid or Administer First Aid to your sibling(s), the DC is 5 lower than normal. - **Typical:** You have a standard relationship with your sibling(s); don't change your background's skill feat. **Foundling:** You aren't a native to Willowshore, but you did grow up in the town. You might have adoptive parents, or you could've grown up on the streets. Choose one of the following to replace the bonus feat you otherwise would've gained from your background. - **Bitter:** You appreciate the town of Willowshore "
+ },
+ {
+  "id": "foolproof-instructions",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Foolproof Instructions",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You feel confident that you can explain your scrolls so well that even your allies can use them... hopefully. During your daily preparations, you can select a single scroll and instruct a single ally in its use. Until your next daily preparations, the ally can attempt to use the scroll with a single action that has the manipulate trait. The ally rolls the skill corresponding to the spellcasting tradition. The GM determines the DC based on the scroll's level, possibly adjusted for the situation. If the spell has a spell attack bonus or a spell DC, use your level as the proficiency bonus and the highest of your ally's Intelligence, Wisdom, or Charisma modifiers. --- **Success** For the rest of the ally's turn, they can spend actions to Cast the Spell. **Failure** The ally misremembers your instructions and can't use the scroll this turn. **Critical Failure** The ally misunderstood your instructions and can't use the scroll."
+ },
+ {
+  "id": "foreign-diplomat",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Foreign Diplomat",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You have traveled a long way to be here, using your keen listening skills and careful words to make alliances that benefit your people and surgically sever ties that have become strained. You might be from Druma or Oprak, taking advantage of this invitation to forge new relationships, or you might be from the nations around Lake Encarthan and hoping to find an ally against Tar-Baphon. Choose two attribute boosts. One must be to **Charisma** or **Constitution**, and one is a free attribute boost. You're trained in the Diplomacy skill and the Heraldry Lore skill. You gain the Group Impression skill feat. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Diplomacy **Lore** Heraldry Lore **Skill Feat** Group Impression"
+ },
+ {
+  "id": "form-up",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Form Up!",
+  "level": 10,
+  "traits": [
+   "archetype",
+   "auditory",
+   "flourish"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've trained in battle formations for a plethora of situations. Choose a formation. Allies within your aura can use their reaction to Stride up to their Speed and take a place in the chosen formation. Allies can't benefit from this movement if there isn't room for them in the chosen formation. If there are more eligible allies than there are available spaces in the chosen formation, you choose which allies benefit. - **Line** Your allies gather adjacent to you and each other to form a straight line in a direction of your choosing. - **Wedge** Your allies gather into any space that would be covered by a originating from you in a direction of your choosing. - **Cluster** Your allies gather into any space that would be covered by a in an aura around you."
+ },
+ {
+  "id": "former-aspis-agent",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Former Aspis Agent",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "For more than a century, the Pathfinder Society has clashed with the avaricious and underhanded Aspis Consortium, and several years ago the Society dealt its rival a decisive blow. You may be one of the few survivors of a doomed Aspis expedition, or perhaps you chafed at the Consortium's villainous practices and defected to the Pathfinders. No matter your reasons, you know how to be efficient and ruthless when the circumstances demand. Choose two attribute boosts. One must be to **Intelligence** or **Charisma**, and one is a free attribute boost. You're trained in the Intimidation skill and the Aspis Consortium Lore skill. You gain the Group Coercion skill feat. You gain access to any uncommon options as though you were a member of the Aspis Consortium. --- **Special** You can select this background only if you have earned credit for at least 5 First Edition scenarios from Season 7 of the Pathfinder Society organized play campaign. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Intimidation **Lore** Aspis Consortium Lore **Skill Feat** Group Coercion"
+ },
+ {
+  "id": "fortune-teller",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Fortune Teller",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "The strands of fate are clear to you, as you have learned many traditional forms by which laypeople can divine the future. You might have used these skills to guide your community, or simply to make money. But even the slightest peek into these practices connects you to the occult mysteries of the universe. Choose two attribute boosts. One must be to **Intelligence** or **Charisma**, and one is a free attribute boost. You're trained in the Occultism skill and the Fortune-Telling Lore skill. You gain the Oddity Identification skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Occultism **Lore** Fortune Telling Lore **Skill Feat** Oddity Identification"
+ },
+ {
+  "id": "framed-in-ferrous-quarter",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Framed in Ferrous Quarter",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Everyone knows that Ferrous Quarter isn't exactly the nicest part of Alkenstar. Hard-working laborers, gunsmiths suffering from black lung, and red-eyed tinkerers alike can toil their entire lives on these grimy streets and still wind up dead in an alley with nothing to show for it. You were once one of these humble artisans, until one day, out of nowhere, things broke bad. Maybe you hung out with the wrong crowd. Maybe it was just bad luck. Whatever the case, you were framed for a crime you didn't commit-larceny, smuggling, possibly even murder. You didn't stick around long enough to find out what, exactly, the shieldmarshals banging on your door were charging you with. Now, you're on the lam, uncertain where you'll be able to get a good night's sleep, let alone your next meal. At least one thing's for sure, though: before you turned heel and ran into the streets, you saw a telltale signature on the arrest warrant. It was the scrawl of a corrupt shieldmarshal who's framed countless other hardworking folks in your neighborhood on the basis of cooked-up evidence. Yes, you're sure of it-the crooked guard who took you down is none other than Deputy Anjelique Loveless, and you're determined to return the favor. Choose two attribute boosts. One must be to **Dexterity** or **Constitution**, and one is a free attribute boost. You're trained in the Crafting skill and the Engineering Lore skill. You gain the Specialty Crafting skill feat. --- ## Background details **Attribute Boosts** Constitution or Dexterity, one free **Trained Skill** Crafting **Lore** Engineering Lore **Skill Feat** Specialty Crafting"
+ },
+ {
+  "id": "freed-slave-of-absalom",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Freed Slave of Absalom",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Absalom and Starstone Isle --- As a recently freed slave in Absalom, you belong to a new, close-knit social class at the heart of the city's most important trades. Choose two attribute boosts. One must be to **Constitution** or **Intelligence**, and one is a free attribute boost. You're trained in the Society skill and the Absalom Lore skill. You gain the Streetwise skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Society **Lore** Absalom Lore **Skill Feat** Streetwise"
+ },
+ {
+  "id": "fulminating-synergy",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Fulminating Synergy",
+  "level": 16,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "When you draw upon your spells' synergy, you create a physical manifestation of their magical resonance and invoke it to harm a foe. When you use Dualistic Synergy, choose a damage type: acid, cold, electricity, or fire. In addition to Dualistic Synergy's normal effect, a foe within 30 feet of you takes an amount of damage of the chosen type equal to the spell's rank. If the spell already deals damage of the chosen type, combine the damage before applying weaknesses and resistances."
+ },
+ {
+  "id": "fulu-of-concealment",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Fulu of Concealment",
+  "level": 6,
+  "traits": [
+   "consumable",
+   "fulu",
+   "illusion",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Usage** affixed to the ground in four spaces along a 10-foot radius circle **Duration** 1 hour --- This fulu comes in four pieces, one placed in each cardinal direction. Choose one of the following traits when Activating the fulus: animal, beast, celestial, fey, fiend, humanoid, monitor, plant, or undead. Those within the fulus' circle upon activation (including the fulus themselves) gain the effect of Invisibility Sphere, but only against creatures with the chosen trait. If any of the fulus are moved or destroyed after activation, the effect ends."
+ },
+ {
+  "id": "fulus-of-concealment",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Fulus of Concealment",
+  "level": 6,
+  "traits": [
+   "consumable",
+   "fulu",
+   "illusion",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Fulus of Concealment Source Secrets of Magic pg. 159 Price 40 gp Duration 1 hour Usage affixed to the ground in four spaces along a 10-foot radius circle This fulu comes in four pieces, one placed in each cardinal direction. Choose one of the following traits when Activating the fulus: animal, beast, celestial, fey, fiend, humanoid, monitor, plant, or undead. Those within the fulus' circle upon activation (including the fulus themselves) gain the effect of invisibility sphere, but only against creatures with the chosen trait. If any of the fulus are moved or destroyed after activation, the effect ends."
+ },
+ {
+  "id": "gambler",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Gambler",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "The thrill of the win drew you into games of chance. This might have been a lucrative sideline that paled in comparison to the real risks of adventuring, or you might have fallen on hard times due to your gambling and pursued adventuring as a way out of a spiral. Choose two attribute boosts. One must be to **Dexterity** or **Charisma**, and one is a free attribute boost. You're trained in the Deception skill and the Games Lore skill. You gain the Lie to Me skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Deception **Lore** Games Lore **Skill Feat** Lie To Me"
+ },
+ {
+  "id": "garden-path",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Garden Path",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can guide your crop to move without notice. When you and any of your crop are Avoiding Notice, you can choose one member of your crop to temporarily gain the benefits of the Quiet Allies skill feat until the group is no longer Avoiding Notice. The group rolls two checks instead of one, using the higher die roll. This is a fortune effect."
+ },
+ {
+  "id": "gate-junction",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "Gate Junction",
+  "level": 5,
+  "traits": [
+   "kineticist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "### **Gate Junctions** When you gain a gate junction, you develop a specialized kinetic technique. Choose one benefit from the gate junction table for one of your kinetic elements. - A **critical blast** junction happens when you get a critical success with an Elemental Blast of the kinetic element. - An **elemental resistance** grants you resistance to damage while your kinetic aura is active. This resistance is equal to your level, and it applies to damage of any listed type or that comes from a creature or effect that has any of the listed traits. At 17th level, you gain immunity to effects with any of the listed traits. This doesn't make you immune to creatures with such a trait. You can voluntarily forgo this resistance, immunity, or both if you want an effect to work on you. - You can choose an **impulse junction** instead of one of the listed junctions. Impulse junctions are listed under Single Gate. - An **aura junction** adds an effect to your kinetic aura when you Channel Elements. - A **skill junction** makes you trained in the listed skill and grants you the listed skill feat. If you were already trained in the listed skill, you instead become trained in a skill of your choice. While your kinetic aura is active, you gain a +1 status bonus to the listed skill; the bonus increases to +2 at 10th level and +3 at 17th level. You can select each gate junction only once, unless noted otherwise, but you can have the same type of junction for multiple elements. You can always choose not to use a gate junction when it would normally occur. If you have multiple junctions that would apply at the same time - such as kinetic aura junctions for different elements - you can apply any number of them. (Though note that you can use only one impulse junction per round.)"
+ },
+ {
+  "id": "gates-threshold",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "Gate's Threshold",
+  "level": 5,
+  "traits": [
+   "kineticist"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You reach a new milestone in your odyssey to become in tune with your kinetic gate and must decide how to expand the gate's power. At 5th level and every 4 levels thereafter, you choose to either expand the portal or fork the path. - **Expand the Portal**: Your gate attunes more precisely to one of your elements. Gain an impulse feat of your level or lower for one of your kinetic elements; if you have more than one element, you can choose a composite impulse. You also gain a gate junction for one of your kinetic elements. If you have no valid options for the feat-typically because you have one kinetic element and devoted your class feats to gaining that element's impulses-you can instead select any kineticist class feat of your level or lower for which you meet the prerequisites. - **Fork the Path**: Your gate reaches to another elemental plane. Add a new element of your choice to your kinetic elements. Gain an impulse feat of your level or lower with the trait of that element. You can't select a composite impulse feat with this feat selection."
+ },
+ {
+  "id": "geb-crusader",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Geb Crusader",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Impossible Lands --- You grew up considering the existence of the undead nation of Geb an atrocity and trained to one day take part in destroying it and putting its vile inhabitants to their final rest. Key to your preparations is a thorough study of Pharasma, Urgathoa, and other undead-related deities and their philosophies. Choose two attribute boosts. One must be to **Constitution** or **Wisdom**, and one is a free attribute boost. You're trained in the Religion skill and the Undead Lore skill. You gain the Student of the Canon skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Religion **Lore** Undead Lore **Skill Feat** Student of the Canon"
+ },
+ {
+  "id": "genie-blessed",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Genie-Blessed",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You've sought out a powerful genie and requested their blessing, hoping to increase your fortune. Your wish was vague, but fortune and the genie favored you with a more powerful effect than an ordinary wish, granting you bits of wish-twisted luck throughout the rest of your life. Meanwhile, other genies of the same kind recognize you as one blessed by one of their most powerful nobles, and might treat you with greater respect or envy. Choose two attribute boosts. One must be to **Charisma**, and one is a free attribute boost. You're trained in the Diplomacy skill and the Genie Lore skill. You gain the Wish for Luck free action. --- ## Background details **Attribute Boosts** Charisma, one free **Trained Skill** Diplomacy **Lore** Genie Lore"
+ },
+ {
+  "id": "ghost-dedication",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Ghost Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [
+   "immunities"
+  ],
+  "inRegistries": [],
+  "text": "You have risen as a shell of your former self, a spirit of mist and anguish. You gain the ghost, spirit, and undead traits, and the Basic Undead Benefits. Your undead craving is to settle your unfinished business. You also gain the incorporeal trait, except you can't pass through solid objects unless you select the Pass Through feat. Being a ghost has the following major effects. **Floating** You can float but are still tethered to the ground. Replace your land Speed with an equal fly Speed. You can't rise more than a few inches above the ground when you Fly. This means you can move above many types of difficult or hazardous terrain without moving slowly or being damaged, even though you can't fly without limit. You can Leap, High Jump, Long Jump, and take similar actions, and use your fly Speed for any calculations that would normally require your land Speed. **Items** You can transmute physical items to make them part of your incorporeal form. This requires spending 10 minutes with the items within reach, during which you transform the items into part of your form; you can return items you already have incorporated to a corporeal state at the same time. The items retain all their runes and other abilities, need to be invested normally if they have the invested trait, and need to be worn, held, or stowed appropriately. Once you've incorporated the items, you and other incorporeal creatures can use them normally-you can Interact with them, Release them, and so on. Your incorporated weapons gain the benefits of the ghost touch property rune, allowing you to use them normally against both corporeal and incorporeal creatures. Incorporated items become corporeal again only if you transmute them back or are destroyed, in which case, they drop to the ground under you. **Attacks** Your unarmed attacks become magical and deal void damage instead of their normal type. **Strength** Unlike most incorporeal creatures, your Strength modifier is not -5; you keep the same Strength score you had before you became a ghost, though you can only attempt Strength-based skill checks-typically Athletics checks-against other incorporeal creatures, as normal for an incorporeal creature. Against incorporeal creatures, use your Strength normally to determine the results of Athletics checks, Strikes with melee weapons, and any other checks or damage rolls dependent on Strength. **Ties that Bind** When you become a ghost, work with your GM to choose a bound site and unfinished business, both of which matter for your character's story, as well as some ghost archetype feats. Your bound site tethers you to the physical world and is typically either a location important to you in life or the place where you died. Unfinished business keeps you from passing to the afterlife. If someone resolves your unfinished business, you decide whether to accept the change and pass on, or to fight it. If you pass on, you get a few minutes to say your goodbyes, and then move into the River of Souls and the afterlife. Your character ceases to be. If you fight the change, you remain, though you and the GM might determine a new unfinished business. If you are physically destroyed, you cease you"
+ },
+ {
+  "id": "ghost-lantern",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Ghost Lantern",
+  "level": 12,
+  "traits": [
+   "light",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Crafted from cold iron, this black hooded lantern has gray glass and lenses that emit a pale gray light when the lantern is lit. Anything this light falls on looks gray or desaturated. The lantern uses oil as a standard hooded lantern. The lantern's light shines within the Ethereal Plane as well as the Universe. On any other plane, the light functions as a normal hooded lantern. **Activate** ⟨1⟩ (concentrate) **Frequency** once per day **Requirements** The lantern's shutters are open --- **Effect** You concentrate on the lantern's light to soften the boundary between the Ethereal Plane and the Universe. Any creature in the lantern's bright light on the Universe gains the effects of the Ghost Touch property rune on all its weapons and unarmed attacks. If an affected weapon or attack is magical and already has the maximum number of property runes, the wielder can choose one to suppress to gain ghost touch. This benefit lasts for 5 minutes or until the shutters are closed, whichever comes first. It applies to a creature only while it's in the lantern's bright light, and if the creature leaves the light and returns it regains the benefit once more."
+ },
+ {
+  "id": "gladiator",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Gladiator",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "The bloody games of the arena taught you the art of combat. Before you attained true fame, you departed—or escaped—the arena to explore the world. Your skill at drawing both blood and a crowd's attention pay off in a new adventuring life. Choose two attribute boosts. One must be to **Strength** or **Charisma**, and one is a free attribute boost. You're trained in the Performance skill and the Gladiatorial Lore skill. You gain the Impressive Performance skill feat. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Performance **Lore** Gladatorial Lore **Skill Feat** Impressive Performance"
+ },
+ {
+  "id": "glitter-crystals",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Glitter Crystals",
+  "level": 8,
+  "traits": [
+   "additive",
+   "alchemist",
+   "healing"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can mix a blend of crushed flowers and alchemical salt into an alchemical elixir with the healing trait or alchemical food. Choose one of the following effects: reduce the drained condition by 1, reduce the stupefied condition by 1, remove the dazzled condition, or remove the deafened condition. The creature who consumes the modified healing elixir or alchemical food gains this benefit in addition to the food or elixir's normal effects. This has no effect against permanent conditions."
+ },
+ {
+  "id": "glorianas-fixer",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Gloriana's Fixer",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You used to run certain \"errands\" for Gloriana Morilla, a close confidante of Grand Princess Eutropia Stavian, the ruler of Taldor. Gloriana took note of your skills and suggested you join the Pathfinder Society, a group she's heavily involved in herself. Choose two attribute boosts. One must be to **Dexterity** or **Charisma**, and one is a free attribute boost. You're trained in the Thievery skill and the Underworld Lore skill. You gain the Subtle Theft skill feat. Additionally, when Gloriana Morilla is present during your mission briefings, she discreetly checks in with you and provides some pointers. You gain a +2 circumstance bonus to your checks to Gather Information or Recall Knowledge during the Getting Started segment of such adventures. Be sure to remind your GM that you have a relevant background. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Thievery **Lore** Underworld Lore **Skill Feat** Subtle Theft"
+ },
+ {
+  "id": "glory-hound",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Glory Hound",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkillChoice"
+  ],
+  "inRegistries": [],
+  "text": "Eventually, even the greatest hero-god must die. Yet many live eternally through song, poetry, shrines, and art. Even though Iblydos isn't producing new hero-gods, its people know how to appreciate and commemorate a real hero. You hope to seize that same immortality through exceptional deeds and a little luck. If everything goes to plan, you'll retire rich and famous, looking good all the while. If the fates turn against you, at the very least you know tales of your exploits will dazzle audiences for ages. Choose two attribute boosts. One must be to **Strength** or **Charisma**, and one is a free attribute boost. You're trained in either the Intimidation or Performance skill, as well as the Games Lore skill. If you choose Intimidation, you gain the Intimidating Glare skill feat. If you choose Performance, you gain the Impressive Performance skill feat. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Lore** Games Lore"
+ },
+ {
+  "id": "gloves-of-precision",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Gloves of Precision",
+  "level": 10,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Gloves of Precision Source High Seas pg. 50 Usage worn gloves Access You're from Hermea These fingerless gloves increase the agility and sensitivity of the hands, enabling the wearer to perform more delicate, precise work. While wearing the gloves of precision, you gain a +2 item bonus to Athletics checks to Climb, and to Thievery checks to Disable a Device and Pick a Lock. Activate—Nimble Fingers (fortune, manipulate) Frequency once per day; Trigger You attempt a skill check to Climb, Disable a Device, or Pick a Lock; Effect You roll the skill check twice and take the better result. Gloves of Precision Source High Seas pg. 50 Price 900 gp Greater Gloves of Precision Source High Seas pg. 50 Price 19,000 gp The gloves grant a +3 item bonus."
+ },
+ {
+  "id": "goblinblood-orphan",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Goblinblood Orphan",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Old Cheliax --- Your family, whether goblin, hobgoblin, or human, died in the Goblinblood Wars. Though you were marked by these losses, you managed to survive through your own resilience and resourcefulness. Choose two attribute boosts. One must be to **Dexterity** or **Constitution**, and one is a free attribute boost. You're trained in the Survival skill and the Goblin Lore skill. You gain the Assurance skill feat with Survival. --- ## Background details **Attribute Boosts** Constitution or Dexterity, one free **Trained Skill** Survival **Lore** Goblin Lore"
+ },
+ {
+  "id": "goblinblood-survivor",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Goblinblood Survivor",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You lost your family to the chaos of the Goblinblood Wars. Maybe you soothed your grief by creating new bonds, or maybe you never put out the flames of righteous anger in your heart. Now whatever semblance of peace you've found is threatened yet again—but this time, you have the skills to ensure that you won't be the one left to mourn. Choose two attribute boosts. One must be to **Dexterity** or **Constitution**, and one is a free attribute boost. You're trained in the Survival skill and the Goblin Lore skill. You gain the Forager skill feat. --- ## Background details **Attribute Boosts** Constitution or Dexterity, one free **Trained Skill** Survival **Lore** Goblin Lore **Skill Feat** Forager"
+ },
+ {
+  "id": "golden-blade-of-mzali",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Golden Blade of Mzali",
+  "level": 15,
+  "traits": [
+   "fire",
+   "light",
+   "magical",
+   "monk",
+   "thrown-20"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Each of these golden spears was forged in the days of old Mzali, when the sun kings ruled the city. The majority of these weapons are lost, most likely buried with warriors in tombs and temples sealed by Walkena's decrees. Walkena retains a single golden blade, which he grants to his Master of Spears. This *+2 greater striking returning spear* is coated in brilliant gold, and beautiful engravings run along the shaft, depicting the rising and setting of the sun against Mzali's skyline. The spear glows with the effects of 4th-rank Light. You can suppress or resume this light by using an action, which has the concentrate trait. When you hit a creature with the spear, it takes 1d6 additional fire damage. When you critically hit a creature with the spear, the creature takes 1d8 damage and 1d8 as its blood boils away. Unlike normal when taking two types of persistent damage, a creature needs only a single successful flat check to remove both the fire and bleed damage. --- **Activate** ⟨5⟩ envision **Frequency** once per day **Trigger** You critically hit a creature with the weapon --- **Effect** You call upon the spear's light to guide the creature away from violence. The creature must choose one of the following options: - The creature surrenders, immediately receiving the critical failure effects of Calm and Paralyze. - The weapon casts 7th-rank Blindness on the creature with a . Regardless of the choice, the spear loses its ability to glow with light until your next daily preparations. --- **Activate** ⟨2⟩ envision, Interact **Frequency** once per day --- **Effect** The spear casts 7th-rank Elemental Form on you, choosing fire as the form's trait. The spear loses its additional fire damage until your next daily preparations."
+ },
+ {
+  "id": "goldhand-arms-dealer",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Goldhand Arms Dealer",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You're a dwarven agent of the Goldhand Lodge, a collection of dwarven merchants based out of Dongun Hold who seeks to sell guns far and wide. High King Anong Arunak hasn't expressed approval for such a method of distribution yet, but in the meantime you're still out and about, talking up your wares and occasionally providing visceral demonstrations of the overwhelming stopping power of your firearms. These demonstrations and sales have given you a taste for adventure, and the constant threat of piracy has convinced you of the importance of adventuring with a group. Choose two attribute boosts. One must be to **Dexterity** or **Charisma**, and one is a free attribute boost. You're trained in Diplomacy and Mercantile Lore. You gain the Group Impression skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Diplomacy **Lore** Mercantile Lore **Skill Feat** Group Impression"
+ },
+ {
+  "id": "grand-council-bureaucrat",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Grand Council Bureaucrat",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Absalom and Starstone Isle --- You spent years working as a clerk to a functionary in Absalom's government. Your service taught you a thing or two about rousing speeches and manipulating the city's bureaucracy. Choose two attribute boosts. One must be to **Charisma** or **Intelligence**, and one is a free attribute boost. You're trained in the Diplomacy skill and the Government Lore skill. You gain the Group Impression skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Diplomacy **Lore** Government Lore **Skill Feat** Group Impression"
+ },
+ {
+  "id": "grave-robber",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Grave Robber",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Resurrectionist. Body snatcher. No matter what you're called, you know where the bodies are buried, and how many coins they'll fetch when dug up. Adventuring comes naturally to you-in your mind dungeons are just oversized tombs-as does returning home with your loot undetected. Choose two attribute boosts. One must be to **Strength** or **Dexterity**, and one is a free attribute boost. You're trained in the Stealth skill and the Underworld Lore skill. You gain the Experienced Smuggler skill feat. --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Trained Skill** Stealth **Lore** Underworld Lore **Skill Feat** Experienced Smuggler"
+ },
+ {
+  "id": "greater-deific-power",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Greater Deific Power",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "Divine power continues to fill you. Choose two common divine spells, one of 4th rank and one of 5th rank. You can cast each of these spells as divine innate spells once per day."
+ },
+ {
+  "id": "greater-gloves-of-precision",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Greater Gloves of Precision",
+  "level": 18,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Gloves of Precision Source High Seas pg. 50 Usage worn gloves Access You're from Hermea These fingerless gloves increase the agility and sensitivity of the hands, enabling the wearer to perform more delicate, precise work. While wearing the gloves of precision, you gain a +2 item bonus to Athletics checks to Climb, and to Thievery checks to Disable a Device and Pick a Lock. Activate—Nimble Fingers (fortune, manipulate) Frequency once per day; Trigger You attempt a skill check to Climb, Disable a Device, or Pick a Lock; Effect You roll the skill check twice and take the better result. Gloves of Precision Source High Seas pg. 50 Price 900 gp Greater Gloves of Precision Source High Seas pg. 50 Price 19,000 gp The gloves grant a +3 item bonus."
+ },
+ {
+  "id": "greater-sun-blessing",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Greater Sun Blessing",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "Your connection to the Old Sun Gods grows stronger. You gain an advanced domain spell from a domain you chose with Blessing of the Sun Gods. Increase the number of Focus Points in your focus pool by 1. **Special** You can select this feat multiple times. Each time you do so, you must select a different domain for which you have an initial domain spell from Blessing of the Sun Gods."
+ },
+ {
+  "id": "green-faith-pilgrim",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Green Faith Pilgrim",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You are an adherent of the Green Faith, striving to bring harmony between nature and civilization. While you might hail from Shining Kingdom region surrounding the Verduran Forest, the annual Moot of Ages draws visitors from across the world. Traveling here is a sacred journey that could deepen your understanding of nature's will. As part of your journey and natural communion, you've relied heavily on flora and fauna to ease your sores and other injuries. Choose two attribute boosts. One must be to **Constitution** or **Wisdom**, and one is a free attribute boost. You're trained in the Nature skill and the Green Faith Lore skill. You gain the Natural Medicine skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Nature **Lore** Green Faith Lore **Skill Feat** Natural Medicine"
+ },
+ {
+  "id": "group-taunt",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Group Taunt",
+  "level": 8,
+  "traits": [
+   "guardian"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your taunts draw the attention of multiple enemies at once. When you use Taunt, you can choose up to three targets within range, and you can have up to three taunted enemies at a time. Each time you Taunt, you can choose which enemies remain taunted and which the effect ends for. You must remain at or below this limit."
+ }
+]

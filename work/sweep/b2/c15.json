@@ -1,0 +1,1143 @@
+[
+ {
+  "id": "kineticist-dedication",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Kineticist Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication",
+   "multiclass"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [
+   "featGrantsAuto"
+  ],
+  "text": "You become trained in kineticist class DC and impulse attack rolls. Choose one element to be your kinetic element (air, earth, fire, metal, water, or wood). You gain a kinetic aura and the Channel Elements action, though you don't get to use an Elemental Blast or stance impulse when you take that action. You gain the Elemental Blast action. Your Elemental Blast does not automatically gain additional damage dice every four levels, instead requiring you to take the Improved Elemental Blast feat. You become trained in Nature; if you were already trained in Nature, you instead become trained in another skill of your choice."
+ },
+ {
+  "id": "klingegeist",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Klingegeist",
+  "level": 10,
+  "traits": [
+   "archetype",
+   "concentrate",
+   "possession"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your imprisonment inside a Final Blade used to perform countless executions has instilled in you an aptitude for entering and possessing similar sharp implements of murder. You project your mind and incorporeal body into an unattended weapon of 2 Bulk or less that deals slashing damage. While possessing a blade, you have a space of 5 feet, but you don't block or impede enemies attempting to move through your space, nor do you benefit from or provide flanking. You're trained in the use of the weapon, unless your proficiency was already better, and you can make Strike actions with the weapon as if you were wielding it. You gain a Fly speed of 30 feet and can only take Strike and Fly actions, which don't trigger reactions. You have an AC of 18 + your level and the Hardness and Hit Points of the weapon you're possessing, which for most one-handed slashing weapons is Hardness 5 and HP 20. You can't be Disarmed, nor can your true body be directly injured except by spirit damage, which bypasses both the weapon's Hardness and Hit Points to damage you directly. If you're reduced to 0 Hit Points or the weapon you're inhabiting is broken or destroyed, you're immediately ejected from it and paralyzed for 1 round. Otherwise, the effect lasts for 10 minutes or until you Dismiss it."
+ },
+ {
+  "id": "know-your-enemy",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Know Your Enemy",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're in Strategist Stance. --- You aim to turn knowledge into power against your foes. Attempt a Recall Knowledge check against an enemy you're observing. Any ally within your aura who's trained in the skill you use to attempt the Recall Knowledge check can use their reaction to Aid you on the check without having prepared to help first."
+ },
+ {
+  "id": "ladys-blessing-oil",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Lady's Blessing Oil",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** Administer First Aid --- Lady's blessing oil is favored by Pharasmin healers who ease the transitions of life. You can Activate the item as part of the same activity you use to Administer First Aid to stabilize a creature. If you use lady's blessing oil, the DC of the check to Administer First Aid is reduced to the creature's recovery roll DC, rather than 5 + the recovery roll DC. However, if you roll a failure on the check, you get a critical failure instead."
+ },
+ {
+  "id": "laughing-shadow",
+  "lane": "toggle",
+  "collection": "classFeatures",
+  "name": "Laughing Shadow",
+  "level": 1,
+  "traits": [
+   "magus"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Magic is freeing, a means to your ends, and you can use it to go where you want, do as you please, and avoid the consequences. You are a laughing shadow of spell and blade, always one step ahead of your foes, always with a trick up your sleeve. While in Arcane Cascade stance, you gain a +5-foot status bonus to your Speeds, or a +10-foot bonus if you're unarmored. If you have a free hand while in the stance and are attacking an off-guard creature, you increase the extra damage to 3, to 5 if you have weapon specialization, or to 7 if you have greater weapon specialization. You must have your other hand completely free; the extra damage doesn't apply if you have a free-hand weapon or other item in that hand, even if you would normally be able to use the hand for other things. **Conflux Spell** Dimensional Assault"
+ },
+ {
+  "id": "leopards-armor",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Leopard's Armor",
+  "level": 9,
+  "traits": [
+   "flexible",
+   "magical",
+   "noisy"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Made of cobalt-colored steel rings that flow down the entire length of the garment, this *+1 resilient chain mail* includes an armored face covering. The armor is said to be based on the same armor once worn by Azure Leopard, one of Old-Mage Jatembe's magic warriors. --- **Activate** ⟨2⟩ command, envision **Frequency** once per day --- **Effect** You call upon the ferocity and grace of the leopard. The armor's rings flatten out to become a solid piece of flexible armor. You gain a +2 item bonus to Stealth checks and Intimidation checks to Demoralize, but take a -2 penalty to Diplomacy and Society checks. This lasts for 1 hour, but you can Activate the armor again to revert it back to its original form."
+ },
+ {
+  "id": "lesser-mariners-mien",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Lesser Mariner's Mien",
+  "level": 8,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Mariner's Mien Source High Seas pg. 78 PFS Note Pathfinder Society does not use vehicle rules Usage worn mask Bulk L Access You're from the Mordant Spire The swirls on this wooden mask—often worn by Mordant Censors—move and shift, reflecting the shape of the nearest currents. Wearing the mask grants you a +1 item bonus to Sailing Lore and Survival checks. In addition, it allows you to pilot a boat with simply a thought. When you pilot a vehicle, you can keep both hands free and Drive from any location on the vehicle. Activate—Set the Course (concentrate) Frequency once per day; Requirements You are aboard a vehicle; Effect You become quickened for 1 minute or until you leave the vehicle, whichever comes first, and can use the extra action to Take Control of the vehicle or, if you’re already piloting it, Drive or Stop the vehicle. Lesser Mariner's Mien Source High Seas pg. 78 Price 425 gp Moderate Mariner's Mien Source High Seas pg. 78 Price 5,300 gp The mask grants a +2 item bonus, and you can activate it once per hour."
+ },
+ {
+  "id": "lesser-soldiers-syrup",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Lesser Soldier's Syrup",
+  "level": 3,
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Soldier's Syrup May contain spoilers from Myth-Speaker Source Pathfinder #218: Titanbane pg. 80 Usage held in 1 hand This thick syrup sweetens potions and creates a distinctive, metallic flavor associated with the festival days in Dhuraxilis. Partygoers are fond of mixing soldier’s syrup with potions to extend their release. Activating a dose of soldier’s syrup requires you to combine it with another consumable potion that takes 1 action to activate. After swirling the mixture for a few moments, you must either imbibe the augmented potion within 1 minute, or the potion reverts to its unaugmented state. The potion’s level cannot exceed that of the soldier’s syrup it is mixed with, otherwise the syrup is wasted. When consumed, a soldier’s syrup–augmented potion does not immediately grant its benefits to you. Instead, you can activate the potion within the next hour as a single action, which has the concentrate trait. You can have only one soldier’s syrup–augmented potion consumed at a time; consuming a second one renders the first one inert. If you do not activate the potion within 1 hour, the potion spoils inside you, and you become enfeebled 1 for 24 hours. Minor Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 4 gp Lesser Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 12 gp Moderate Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 50 gp Greater Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 400 gp Major Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 5,000 gp"
+ },
+ {
+  "id": "life-salt",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Life Salt",
+  "level": 5,
+  "traits": [
+   "consumable",
+   "divine",
+   "vitality"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike This crystal vial contains salts blessed by channeling life-giving energies into waters purified by holy fire. You can activate this vial by throwing it as a Strike. It's a simple thrown ranged weapon with a range increment of 10 feet. Unlike an alchemical bomb, it doesn't add the manipulate trait to the attack made with it. On a hit against an undead, *life salt* deals 1 persistent vitality damage, and the undead must succeed at a or be unable to attack you as long as it continues taking the persistent vitality damage. If you use a hostile action against any undead, this second effect ends, and the undead can attack you normally."
+ },
+ {
+  "id": "little-love",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Little Love",
+  "level": 3,
+  "traits": [
+   "agile",
+   "finesse",
+   "thrown-10",
+   "versatile-s"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This steel *+1 dagger* is chipped and worn but no less deadly for its much-used appearance. When you critically succeed at an attack roll with *Little Love*, you can activate the dagger to spring away from your foes. **Activate** ⟨4⟩ (manipulate) **Frequency** once per 10 minutes **Trigger** You critically hit a creature with *Little Love* --- **Effect** You Leap (or Vault, if you're Spring-Heeled Jack)."
+ },
+ {
+  "id": "lock-down",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Lock Down",
+  "level": 6,
+  "traits": [
+   "flourish",
+   "guardian"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are in Hampering Stance. --- You attack an enemy to ensure they can't move beyond your reach. Strike an enemy within your reach. If you hit and deal damage, that enemy can't use move actions to move beyond the reach of the weapon or unarmed attack you used for the Strike. The enemy can still move to other squares within reach of that weapon or unarmed attack. This effect lasts until the beginning of your next turn, until you move, or until you use that weapon or unarmed attack to make another attack, whichever comes first."
+ },
+ {
+  "id": "majestic-presence",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Majestic Presence",
+  "level": 13,
+  "traits": [
+   "dragonblood",
+   "emotion",
+   "fear",
+   "mental",
+   "visual"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "By taking an impressive stance, the full force of your personality cows lesser beings. Each creature in a must attempt a save against the higher of your class DC or spell DC. Regardless of the result of the saving throw, the creature is temporarily immune to your Majestic Presence for 24 hours. --- **Critical Success** The creature is unaffected. **Success** The creature is Frightened 1. **Failure** The creature is Frightened 2. **Critical Failure** The creature is Frightened 4."
+ },
+ {
+  "id": "major-soldiers-syrup",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Major Soldier's Syrup",
+  "level": 18,
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Soldier's Syrup May contain spoilers from Myth-Speaker Source Pathfinder #218: Titanbane pg. 80 Usage held in 1 hand This thick syrup sweetens potions and creates a distinctive, metallic flavor associated with the festival days in Dhuraxilis. Partygoers are fond of mixing soldier’s syrup with potions to extend their release. Activating a dose of soldier’s syrup requires you to combine it with another consumable potion that takes 1 action to activate. After swirling the mixture for a few moments, you must either imbibe the augmented potion within 1 minute, or the potion reverts to its unaugmented state. The potion’s level cannot exceed that of the soldier’s syrup it is mixed with, otherwise the syrup is wasted. When consumed, a soldier’s syrup–augmented potion does not immediately grant its benefits to you. Instead, you can activate the potion within the next hour as a single action, which has the concentrate trait. You can have only one soldier’s syrup–augmented potion consumed at a time; consuming a second one renders the first one inert. If you do not activate the potion within 1 hour, the potion spoils inside you, and you become enfeebled 1 for 24 hours. Minor Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 4 gp Lesser Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 12 gp Moderate Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 50 gp Greater Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 400 gp Major Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 5,000 gp"
+ },
+ {
+  "id": "mariners-mien",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Mariner's Mien",
+  "level": 8,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Mariner's Mien Source High Seas pg. 78 PFS Note Pathfinder Society does not use vehicle rules Usage worn mask Bulk L Access You're from the Mordant Spire The swirls on this wooden mask—often worn by Mordant Censors—move and shift, reflecting the shape of the nearest currents. Wearing the mask grants you a +1 item bonus to Sailing Lore and Survival checks. In addition, it allows you to pilot a boat with simply a thought. When you pilot a vehicle, you can keep both hands free and Drive from any location on the vehicle. Activate—Set the Course (concentrate) Frequency once per day; Requirements You are aboard a vehicle; Effect You become quickened for 1 minute or until you leave the vehicle, whichever comes first, and can use the extra action to Take Control of the vehicle or, if you’re already piloting it, Drive or Stop the vehicle. Lesser Mariner's Mien Source High Seas pg. 78 Price 425 gp Moderate Mariner's Mien Source High Seas pg. 78 Price 5,300 gp The mask grants a +2 item bonus, and you can activate it once per hour."
+ },
+ {
+  "id": "marvelous-miniature",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Marvelous Miniature",
+  "level": 1,
+  "traits": [
+   "consumable",
+   "expandable",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Marvelous Miniature Source GM Core pg. 268 Usage held in 1 hand Activate (manipulate) Every marvelous miniature is an exceptionally small replica of a real creature or object. The miniature is made from wood, pewter, or other simple materials, and features a rune etched into the underside of the replica's base. Marvelous miniatures sometimes come packaged together; for example, the camping set features the boat, campfire, and horse miniatures. Activating a _marvelous miniatur_e causes it to transform into another creature or object, which then can be used as normal for that object. Each miniature can be activated only once, with most of them permanently becoming the item in their description. Marvelous Miniature (Boat) Source GM Core pg. 268 Price 76 gp This miniature can be activated only when tossed into a large body of water, such as a lake or broad river. It transforms into a cutter. The cutter lasts 1 day. Marvelous Miniature (Campfire) Source GM Core pg. 268 Price 1 gp When activated, this miniature transforms into an active campfire. The campfire doesn't require attending and remains fully lit for 8 hours, though it can be quenched as any other campfire. Marvelous Miniature (Chest) Source GM Core pg. 268 Price 10 gp When you use this miniature, a small wooden chest appears and immediately opens. This chest can hold up to 10 Bulk worth of items. Once the chest is closed, it transforms again—this time into a key—taking all of the stored items with it. You can activate this key by spending an Interact action to turn it in an imaginary lock, which causes it to transform back into a chest with all of the items still inside. Once it has turned into a chest a second time, it forever remains a wooden chest. Marvelous Miniature (Horse) Source GM Core pg. 268 Price 13 gp When activated, this miniature transforms into a horse. The horse can't attack or use reactions, but otherwise uses all the statistics of a riding horse and follows your basic commands. The horse doesn't need to eat or drink. After 8 hours, it reverts back to miniature form, then crumbles to dust. Marvelous Miniature (Ladder) Source GM Core pg. 268 Price 3 gp When activated, this miniature transforms permanently into a 20-foot-long wooden ladder. Marvelous Miniature (Swift Sparrow) May contain spoilers from Hellbreakers Source Pathfinder #222: Hellbreakers pg. 210 Price 6 gp Usage held in 1 hand When activated, this miniature transforms into a seemingly mundane sparrow. The sparrow flies to a destination of your choice within 200 feet that you can see, then Seeks in a 30-foot burst using your Perception modifier before returning. The sparrow then unravels into a small map of the area it perceived, including any creatures it saw. The map is rudimentary and doesn't reveal anything the sparrow failed to perceive."
+ },
+ {
+  "id": "marvelous-miniature-chest",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Marvelous Miniature (Chest)",
+  "level": 3,
+  "traits": [
+   "consumable",
+   "expandable",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Every *marvelous miniature* is an exceptionally small replica of a real creature or object. The miniature is made from wood, pewter, or other simple materials, and features a rune etched into the underside of the replica's base. *Marvelous miniatures* sometimes come packaged together; for example, the camping set features the boat, campfire, and horse miniatures. Activating a *marvelous miniature* causes it to transform into another creature or object, which then can be used as normal for that object. Each miniature can be activated only once, with most of them permanently becoming the item in their description. --- When you use this miniature, a small wooden chest appears and immediately opens. This chest can hold up to 10 Bulk worth of items. Once the chest is closed, it transforms again—this time into a key—taking all of the stored items with it. You can activate this key by spending an Interact action to turn it in an imaginary lock, which causes it to transform back into a chest with all of the items still inside. Once it has turned into a chest a second time, it forever remains a wooden chest"
+ },
+ {
+  "id": "master-detective",
+  "lane": "toggle",
+  "collection": "classFeatures",
+  "name": "Master Detective",
+  "level": 19,
+  "traits": [
+   "investigator"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "As a master detective, you can solve any case and find all the clues available. Your reputation precedes you, and even the most skilled criminals and deceivers fear you. Your proficiency rank for your investigator class DC increases to master. In addition, if you enter a new location that includes another clue toward answering the question at the heart of one of your active investigations, the GM informs you of the existence of the clue and its type: an object, person, spell effect, or the like. When you find the clue, the GM informs you that you've done so. If there is more than one clue in the location, the GM chooses one to inform you about. When you find any of the clues in that location, the GM informs you that you've done so, even if it wasn't the clue they'd chosen or there are other clues you haven't found."
+ },
+ {
+  "id": "master-of-many-styles",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Master of Many Styles",
+  "level": 16,
+  "traits": [
+   "fighter",
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** Your turn begins. --- You move fluidly between stances, using your mastery of combat to always adopt the best tactics. You use an action with the stance trait."
+ },
+ {
+  "id": "mat-of-resilence",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Mat of Resilence",
+  "level": 7,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Mat of Resilience May contain spoilers from Triumph of the Tusk Source Pathfinder #209: Destroyer's Doom pg. 83 Usage placed on a surface Bulk 1 This light but sturdy woven mat, a miniature version of the floating foundations used in villages of the Dirt Sea, is carried tied in a tight roll. When you use an action to unfurl the mat onto an unoccupied horizontal space, the mat covers the existing terrain to create a smooth surface that can be walked on as if it were solid ground. Difficult or hazardous terrain in that square may be treated as normal while the mat of resilience covers it. The mat can be rolled back up or moved to an adjacent square using an Interact action, but it cannot be moved or put away while a creature is atop it. Activate—Steady Ground (envision) Effect You unfurl the mat and choose which shape it takes, either a 10-foot square or a 20-foot by 5-foot line. Activate—Sturdy Foundation (manipulate) Requirements A creature is atop the mat; Effect The creature enters a simple stance that makes the most of the mat’s stabilizing magic. While in this stance, if at least half of the creature’s space is atop the mat, it cannot gain the off-guard condition. Mat of Resilence Source Pathfinder #209: Destroyer's Doom pg. 83 Price 330 gp Greater Mat of Resilence Source Pathfinder #209: Destroyer's Doom pg. 83 Price 1,800 gp The mat’s surfaces increase to a 20-foot square and a 40- foot by 5-foot line."
+ },
+ {
+  "id": "mat-of-resilience",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Mat of Resilience",
+  "level": 7,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This light but sturdy woven mat, a miniature version of the floating foundations used in villages of the Dirt Sea, is carried tied in a tight roll. When you use an action to unfurl the mat onto an unoccupied horizontal space, the mat covers the existing terrain to create a smooth surface that can be walked on as if it were solid ground. Difficult or hazardous terrain in that square may be treated as normal while the mat of resilience covers it. The mat can be rolled back up or moved to an adjacent square using an Interact action, but it cannot be moved or put away while a creature is atop it. --- **Activate—Steady Ground** ⟨1⟩ (envision) You unfurl the mat and choose which shape it takes, either a or a 20-foot by 5-foot line. --- **Activate—Sturdy Foundation** ⟨1⟩ (manipulate) **Requirements** A creature is atop the mat **Effect** The creature enters a simple stance that makes the most of the mat's stabilizing magic. While in this stance, if at least half of the creature's space is atop the mat, it cannot gain the off-guard condition."
+ },
+ {
+  "id": "mat-of-resilience-greater",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Mat of Resilience (Greater)",
+  "level": 12,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This light but sturdy woven mat, a miniature version of the floating foundations used in villages of the Dirt Sea, is carried tied in a tight roll. When you use an action to unfurl the mat onto an unoccupied horizontal space, the mat covers the existing terrain to create a smooth surface that can be walked on as if it were solid ground. Difficult or hazardous terrain in that square may be treated as normal while the mat of resilience covers it. The mat can be rolled back up or moved to an adjacent square using an Interact action, but it cannot be moved or put away while a creature is atop it. --- **Activate—Steady Ground** ⟨1⟩ (envision) You unfurl the mat and choose which shape it takes, either a or a 40-foot by 5-foot line. --- **Activate—Sturdy Foundation** ⟨1⟩ (manipulate) **Requirements** A creature is atop the mat **Effect** The creature enters a simple stance that makes the most of the mat's stabilizing magic. While in this stance, if at least half of the creature's space is atop the mat, it cannot gain the off-guard condition."
+ },
+ {
+  "id": "minor-soldiers-syrup",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Minor Soldier's Syrup",
+  "level": 1,
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Soldier's Syrup May contain spoilers from Myth-Speaker Source Pathfinder #218: Titanbane pg. 80 Usage held in 1 hand This thick syrup sweetens potions and creates a distinctive, metallic flavor associated with the festival days in Dhuraxilis. Partygoers are fond of mixing soldier’s syrup with potions to extend their release. Activating a dose of soldier’s syrup requires you to combine it with another consumable potion that takes 1 action to activate. After swirling the mixture for a few moments, you must either imbibe the augmented potion within 1 minute, or the potion reverts to its unaugmented state. The potion’s level cannot exceed that of the soldier’s syrup it is mixed with, otherwise the syrup is wasted. When consumed, a soldier’s syrup–augmented potion does not immediately grant its benefits to you. Instead, you can activate the potion within the next hour as a single action, which has the concentrate trait. You can have only one soldier’s syrup–augmented potion consumed at a time; consuming a second one renders the first one inert. If you do not activate the potion within 1 hour, the potion spoils inside you, and you become enfeebled 1 for 24 hours. Minor Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 4 gp Lesser Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 12 gp Moderate Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 50 gp Greater Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 400 gp Major Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 5,000 gp"
+ },
+ {
+  "id": "moderate-mariners-mien",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Moderate Mariner's Mien",
+  "level": 15,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Mariner's Mien Source High Seas pg. 78 PFS Note Pathfinder Society does not use vehicle rules Usage worn mask Bulk L Access You're from the Mordant Spire The swirls on this wooden mask—often worn by Mordant Censors—move and shift, reflecting the shape of the nearest currents. Wearing the mask grants you a +1 item bonus to Sailing Lore and Survival checks. In addition, it allows you to pilot a boat with simply a thought. When you pilot a vehicle, you can keep both hands free and Drive from any location on the vehicle. Activate—Set the Course (concentrate) Frequency once per day; Requirements You are aboard a vehicle; Effect You become quickened for 1 minute or until you leave the vehicle, whichever comes first, and can use the extra action to Take Control of the vehicle or, if you’re already piloting it, Drive or Stop the vehicle. Lesser Mariner's Mien Source High Seas pg. 78 Price 425 gp Moderate Mariner's Mien Source High Seas pg. 78 Price 5,300 gp The mask grants a +2 item bonus, and you can activate it once per hour."
+ },
+ {
+  "id": "moderate-soldiers-syrup",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Moderate Soldier's Syrup",
+  "level": 6,
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Soldier's Syrup May contain spoilers from Myth-Speaker Source Pathfinder #218: Titanbane pg. 80 Usage held in 1 hand This thick syrup sweetens potions and creates a distinctive, metallic flavor associated with the festival days in Dhuraxilis. Partygoers are fond of mixing soldier’s syrup with potions to extend their release. Activating a dose of soldier’s syrup requires you to combine it with another consumable potion that takes 1 action to activate. After swirling the mixture for a few moments, you must either imbibe the augmented potion within 1 minute, or the potion reverts to its unaugmented state. The potion’s level cannot exceed that of the soldier’s syrup it is mixed with, otherwise the syrup is wasted. When consumed, a soldier’s syrup–augmented potion does not immediately grant its benefits to you. Instead, you can activate the potion within the next hour as a single action, which has the concentrate trait. You can have only one soldier’s syrup–augmented potion consumed at a time; consuming a second one renders the first one inert. If you do not activate the potion within 1 hour, the potion spoils inside you, and you become enfeebled 1 for 24 hours. Minor Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 4 gp Lesser Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 12 gp Moderate Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 50 gp Greater Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 400 gp Major Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 5,000 gp"
+ },
+ {
+  "id": "momentous-charge",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Momentous Charge",
+  "level": 6,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're in Rushing Goat Stance. --- You rush into your enemies with great and reckless force. You Climb, Stride, or Leap, then make a ramming horn Strike. On a success, the target of the Strike is pushed up to 10 feet directly away from you. On a critical success, the target is also Stunned 1."
+ },
+ {
+  "id": "monastic-weaponry",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Monastic Weaponry",
+  "level": 1,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featGrantsAuto"
+  ],
+  "text": "You have trained with the weaponry of your monastery or school. You gain access to uncommon weapons with the monk trait and become trained in simple and martial monk weapons. When your proficiency for unarmed attacks increases to expert or master, your proficiency rank for these weapons increases to expert or master as well. If you have familiarity with an agile or finesse weapon (such as from the Catfolk Weapon Familiarity feat), that weapon also gains the monk trait for you. You can use melee monk weapons with any of your monk feats or monk abilities that normally require unarmed attacks, though not if the feat or ability requires you to use a single specific type of attack, such as Crane Stance. If you gain the critical specialization benefit for unarmed attacks—with the expert strikes class feature, for example—you also gain it with monk weapons."
+ },
+ {
+  "id": "mountain-quake",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Mountain Quake",
+  "level": 14,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are in Mountain Stance --- You stomp, shaking the earth beneath you. Creatures on the ground within a take damage equal to your Strength modifier (minimum 0), with a save against your class DC. On a failure, they also fall prone. After you use this action, you can't use it again for 1d4 rounds. --- **Special** If you have this feat, the Dexterity modifier cap to your AC while using Mountain Stance increases from +1 to +2."
+ },
+ {
+  "id": "mountain-stronghold",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Mountain Stronghold",
+  "level": 6,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Requirements** You are in Mountain Stance --- You focus on your connection to the earth and call upon the mountain to block attacks against you. You gain a +2 circumstance bonus to AC until the beginning of your next turn. --- **Special** If you have this feat, the Dexterity modifier cap to your AC while you're in Mountain Stance increases from +0 to +1."
+ },
+ {
+  "id": "necklace-of-strangulation",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Necklace of Strangulation",
+  "level": 15,
+  "traits": [
+   "cursed",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This beautiful necklace appears to be a magical item such as a necklace of fireballs or a pendant of the occult. When invested, it magically locks in place, suspiciously tightly, and fuses to you. When you enter a situation of extreme stress (as determined by the GM), the necklace tightens around your neck, suffocating you and dealing 30 damage to you at the end of each of your turns. Once per round, you can spend a single action to attempt a DC 34 Athletics check or save; success means you don't take the damage on your current turn, but you continue suffocating. The necklace loosens after you've been dead for a month."
+ },
+ {
+  "id": "not-so-fast",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Not so Fast!",
+  "level": 4,
+  "traits": [
+   "guardian"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** A creature within your reach leaves a square during a move action it's using. **Requirements** You are in Hampering Stance. --- You lash out when foes try to get past you, possibly stopping them in their tracks. Make a melee Strike against the triggering creature. The Strike gains the following additional results. --- **Critical Success** The target's movement is disrupted. **Success** The target takes a –10-foot circumstance penalty to its Speed for the rest of its triggering movement. This penalty might cause the triggering creature's movement to end immediately based on its affected Speed. **Failure** As success, but the target instead takes a –5-foot circumstance penalty to its Speed. **Critical Failure** The target is unaffected."
+ },
+ {
+  "id": "oathbow",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Oathbow",
+  "level": 11,
+  "traits": [
+   "deadly-d10",
+   "magical",
+   "propulsive",
+   "volley-30"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Constructed of a flexible, white wood and with ornate, twisting designs carved into its surface, this +2 striking composite longbow appears to have been made by elves. Sometimes when you loose an arrow, its whistling in flight sounds like a voice whispering in Elven, wishing for the swift defeat of your enemies. **Activate** ⟨1⟩ command --- **Effect** You swear an oath to destroy one creature you can see. For the next 7 days or until that creature is slain, your attacks with the bow against that creature deal 1d6 additional damage, and you gain a +2 circumstance bonus to Survival checks to Track that creature. Your critical hits against the target gain the bow's critical specialization effect; if they would already do so, they instead increase the DC of the Athletics check to Escape when critically hit to DC 20. After you activate the bow, you can't activate it again for 7 days. If you kill the creature you've sworn an oath against, the oath ends and you need to wait only 10 minutes before you can activate it again."
+ },
+ {
+  "id": "oculus-of-abaddon",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Oculus of Abaddon",
+  "level": 15,
+  "traits": [
+   "artifact",
+   "evil",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells",
+   "senses",
+   "passiveEffects"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "An *oculus of Abaddon* is a potent artifact rumored to have been created by one of the Four Horsemen of the Apocalypse as a way to reward those who work as their agents on the Material Plane. More likely, these items were crafted by a powerful pre-Earthfall death cult that has long since moved on, leaving behind these dangerous artifacts to tempt mortals into serving the needs of the Horsemen. An *oculus of Abaddon* appears as a sphere of clear crystal that contains a pinpoint of flickering red light at its center. When held, the oculus feels warm to the touch and fills you with a sudden desire to pluck out an eye and place the oculus within the socket-this causes 4d6 damage. Once placed in an eye socket, the oculus can be removed only by ripping it free (causing the same amount of persistent bleed damage as the initial plucking). When you place the oculus in your empty eye socket, you immediately heal all damage caused by plucking the previous eye out. Once placed, an oculus grants you constant Darkvision. It can also be activated to perform a number of other magical effects, as detailed below, but if you aren't evil, each time you activate an *oculus of Abaddon*, you must succeed at a save or become affected by a subconscious suggestion (heightened to 8th level) to perform an evil act the next time an opportunity to do so arises, as determined by the GM. --- **Activate** 10 minutes (envision) **Frequency** three times per day **Effect** You gain the effects of Scrying, heightened to 7th level. --- **Activate** Cast a Spell **Frequency** once per week **Effect** You use the *oculus of Abaddon* to cast a Binding Circle ritual, heightened to 7th level. You can only conjure neutral evil creatures with this casting of planar binding. If you already know the planar binding ritual, you gain a +3 item bonus on the primary check when casting planar binding. --- **Activate** ⟨3⟩ envision; **Requirement** you have a familiar or animal companion **Effect** You can see and hear through your familiar or animal companion's eyes and ears, provided you are on the same plane. This effect can be sustained, but as long as you do so you can take no other actions. --- **Activate** 1 hour (envision; evil) **Frequency** once per year **Effect** You manipulate the minds of a huge number of targets, provided that the end goal of the manipulation is a tragic or otherwise horrific fate for those being manipulated. This functions as Suggestion, but with a range of 1 mile. All creatures within this area are affected, with the same suggestion implanted in their minds. Creatures hear the telepathic suggestion in their native language, and creatures that are 7th level or higher can attempt a save to resist the effect. This power was used by Vordakai to cause the vanishing of Varnhold, suggesting to its inhabitants to leave their homes and travel south to his tomb. If this effect is counteracted or removed on one victim, it ends for all victims. --- **Destruction** A foul and hideous object, an *oculus of Abaddon* is fortunately relatively easy to destroy, as far as artifacts go. It has Hardness 25 and 100 Hit Points, but repairs damage to itself swiftly, regaining 10 Hit P"
+ },
+ {
+  "id": "of-verse-unbroken",
+  "lane": "toggle",
+  "collection": "classFeatures",
+  "name": "Of Verse Unbroken",
+  "level": 7,
+  "traits": [
+   "exemplar"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Though you are a warrior, you respect the power of song, oratory, and other arts, knowing it is these forces that make fights worth fighting. You gain the Energized Spark feat for your choice of sonic or vitality. When you critically succeed on a Strike, haunting melodies play around the target, making them Stupefied 1 unless they succeed on a save against your class DC. When you Spark Transcendence, your divine spark releases a sublime song that harmonizes with your allies. Until the start of your next turn, any of your allies that starts their turn within 30 feet of you can hum to Sustain one of their effects that can be sustained. This is a free action triggered by the ally's turn beginning. Your song then ends, and that ally can't benefit from this ability again for 10 minutes. This is an auditory and mental effect."
+ },
+ {
+  "id": "one-more-activation",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "One More Activation",
+  "level": 6,
+  "traits": [
+   "thaumaturge"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "You've forged a deeper bond to your invested items, allowing you to activate them more than usual. Once each day, you can Activate an Item you've invested even after you've used that activation the maximum number of times for its frequency. You can do so only if the item's level is half your level or lower, the activation has a frequency of once per day or more frequent, and you haven't already used the activation this round."
+ },
+ {
+  "id": "one-toed-hop",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "One-Toed Hop",
+  "level": 1,
+  "traits": [
+   "tengu"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Assuming a peculiar stance, you make a short hop on each toe. You make a vertical Leap without triggering reactions that can be triggered by move actions or upon leaving or entering a square."
+ },
+ {
+  "id": "opening-stance",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Opening Stance",
+  "level": 14,
+  "traits": [
+   "fighter",
+   "guardian"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** You roll initiative. --- At the first sign of trouble, often before you consciously realize the danger, you drop into a stance with a mere thought. Use an action that has the stance trait."
+ },
+ {
+  "id": "opening-stance-fighter",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Opening Stance (Fighter)",
+  "level": 14,
+  "traits": [
+   "fighter"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Opening Stance (Fighter) Source Player Core pg. 150 Trigger You roll initiative At the first sign of trouble, often before you consciously realize the danger, you drop into a stance with a mere thought. Use an action that has the stance trait. Opening Stance (Fighter) leads to... Master of Many Styles"
+ },
+ {
+  "id": "ore-fists",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Ore Fists",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "When you enter the Stonestrike Stance, your fists appear to be covered with veins of unrefined ore. Your stonestrike attacks count as cold iron and silver when determining weaknesses and bypassing resistances."
+ },
+ {
+  "id": "passage-pane",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Passage Pane",
+  "level": 25,
+  "traits": [
+   "artifact",
+   "divine",
+   "teleportation"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "The pane of this large circular mirror has a diameter of 8 feet and a gray cast. The mirror reflects its surroundings in muted colors, and any living creatures that look into the mirror see themselves as preserved corpses with sallow skin, sunken cheeks, and a vacant expression. The mirror is mounted in a bone frame intricately carved with imagery of corvids, keys, and winding roads. These roads represent the Dead Roads, the secret back routes between the Boneyard and all other planes that are under the purview of the psychopomp usher Barzahk the Passage and their followers. *Passage panes* are created by incredibly powerful priests of Barzahk using mirrors that have reflected Barzahk during their travels from when Barzahk passes through mortal realms. Through prayer, powerful magic, and exceptional crafting skill, these mirrors form a spiritual connection to the Dead Roads, which can be harnessed to open a gate to the Boneyard. To utilize a *passage pane*, the mirror must be securely mounted on a solid surface. Once mounted, a user must bond with the *passage pane* by gazing beyond their dead visage into the Dead Roads. Bonding takes patience and can only be accomplished by a living creature who has at least master proficiency in Religion and who succeeds at a check. Attempting to bond with the mirror in this way takes 1 hour. Once a creature is bonded with the mirror, they can use the *passage pane* to open a portal to a random point along the Dead Roads. A creature with knowledge of a location in the Boneyard can force the mirror to lock onto that location, allowing more pointed travel. Only one creature can be bonded with the mirror at a time. When a creature forms a bond with the mirror, any previous bonds are immediately severed. Undead can't bond with the *passage pane*. When Barzahk themself walks the Dead Roads, a depiction of them appears in the frame's carvings. When Barzahk is depicted in this way, they can prevent the *passage pane* from Activating or alter the destination of the *passage pane*, if desired. **Activate** 1 minute (envision, Interact; divination, divine, scrying) **Requirements** The *passage pane* is mounted firmly to a solid surface, and you're bonded with the *passage pane* --- **Effect** You focus on a location in the Boneyard that you wish to travel to. You must have either seen or visited this location before or be able to describe the location in detail and its purpose or name, as appropriate. Attempt a DC 40 Religion check. On a success, the mirror locks onto your desired location, and you (and only you) see this location reflected in the mirror's pane. **Activate** ⟨3⟩ envision, Interact (conjuration, divine, teleportation) **Frequency** once per week **Requirements** The *passage pane* is mounted firmly to a solid surface, and you're bonded with the *passage pane* --- **Effect** You urge the mirror to open a rift to the Boneyard. Creatures can travel through this rift in either direction. If you've successfully forced the mirror to lock onto a specific location, the mirror's pane becomes a rift to the Boneyard that opens onto that location. If you haven't forced the mirror to lock onto a specific location"
+ },
+ {
+  "id": "peafowl-strut",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Peafowl Strut",
+  "level": 10,
+  "traits": [
+   "flourish",
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are in Peafowl Stance. --- You slowly move across the battlefield with dangerous grace. Step twice and then Strike. The Strike must be made with the sword required by Peafowl Stance."
+ },
+ {
+  "id": "perfections-first-step",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Perfection's First Step",
+  "level": 5,
+  "traits": [
+   "consumable",
+   "mental",
+   "occult",
+   "water"
+  ],
+  "engineFieldsPresent": [
+   "heldSpells",
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (concentrate) --- This palm-leaf manuscript contains an incomplete philosophical treatise about perfection, which you must complete and provide written commentaries upon before you can activate it. This activity takes 10 minutes, but can occur at any time before you activate the treatise. When you activate *perfection's first step*, you cast Unbreaking Wave Advance with a save DC of 19. You are then temporarily immune to benefiting from further copies of *perfection's first step* until your next daily preparations."
+ },
+ {
+  "id": "petal-dance",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Petal Dance",
+  "level": 0,
+  "traits": [
+   "plant"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Petal Dance Source GM Core pg. 317 Aspect Plant Activate (concentrate) Frequency once per hour; Effect You discorporate into a cloud of petals and leaves. This grants you the swarm trait, immunity to falling damage, resistance 5 to bludgeoning and slashing damage, and weakness 5 to area and splash damage. You can fit into spaces only a few inches wide, moving your constituent petals through the gap. You don't gain the swarm mind ability, so you're still affected normally by mental effects. As a swarm, you can't speak, cast spells, use manipulate actions requiring your hands, activate your magic items, or make any of your Strikes with your normal body. You remain in this form for 1 minute or until you Dismiss the activation. At 13th level, the relic gains a reaction that triggers when you fall or take damage, applying this gift's resistances, weaknesses, and immunity to falling damage to the triggering effect."
+ },
+ {
+  "id": "petrified-skin",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Petrified Skin",
+  "level": 12,
+  "traits": [
+   "aftermath",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "It might have been a medusa, basilisk, or even a paleohemoth; regardless of the source, you were the target of some petrifying effect, and an element of that stony gaze has remained with you, both protecting and slowly consuming you. Your limbs are coated with a layer of stone that rests atop your skin and covers more of your body as you lose health. You gain a stone fist unarmed attack that deals 1d8 bludgeoning damage, has the shove trait, and is in the brawling weapon group (unlike a normal fist, it doesn't have the agile or finesse traits). Additionally, you become more petrified as your life force ebbs. When you have fewer than half your maximum Hit Points, you increase the damage die size of your stone fist from 1d8 to 1d10 and gain resistance to physical damage (except adamantine) equal to your Constitution modifier. If you would gain the dying condition, you can choose to instead be permanently petrified and avoid the risk of death. When you do, you enter your petrified form with your full maximum Hit Points instead of the normal number. If you become unpetrified, you return to 0 Hit Points, as normal. You can't voluntarily end this petrification. An effect that suppresses, counteracts, or otherwise ends petrification (such as sure footing) functions against this petrification, but has no effect against the petrification unless the effect has a counteract rank equal to half your level or higher and the effect's creator succeeds at a counteract check against the hard DC for your level. Each time you recover from this petrification, you gain a new scar on your skin in the shape of a long, thin crack."
+ },
+ {
+  "id": "phoenix-cinder",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Phoenix Cinder",
+  "level": 16,
+  "traits": [
+   "consumable",
+   "fire",
+   "primal"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- An incandescent, multipronged crystal the color of dying fire, a phoenix cinder gives off pleasant warmth and a sense of peace. A low, soft chirruping around the crystal invokes the idea of using fire to cleanse and protect. The crystal offers this power to anyone who touches it. A partaker must be willing to gain the boon's effects. --- **Stage 1 (1 Week)** The first time you enter this stage from a particular phoenix cinder, you are affected as if by Regenerate. For 3 days after taking in the cinder, you are immune to fire. While in this stage or higher, you have fast healing equal to half your level, as well as resistance to fire damage equal to half your level. You gain a +1 circumstance bonus to saving throws (or any other defense) against fire. Treat the outcome of any saving throw you roll against fire effects as one step better. You can cast Ignition as an innate spell, and you have access to the following activation. **Activate** ⟨1⟩ (concentrate, fire) **Frequency** once per day **Effect** You wreathe yourself in flame for 1 minute. Adjacent creatures that hit you with a melee attack, as well as creatures that touch you or hit you with an unarmed attack, take 2d6. You can Dismiss the activation. --- **Stage 2 (1 Month)** You can use the activation once per hour. Always feverish and flushed, you feel as if temperatures lower than sweltering are cold. Reduce your current and maximum Hit Points by 2 × your level, and you have a weakness to cold damage equal to half your level. You have urges to burn and use fire when you can. When confronted with the opportunity to do so, you must succeed at a Will save to avoid it. Doing so once after each time you roll initiative is enough. If you die at this stage or higher, your body burns from the inside out over 1d4 rounds, reducing you to fine ash. Anything flammable on you is destroyed. A phoenix emerges from your remains, but doesn't have the holy trait and is interested more in selfish pursuits and spreading fire than kindness. You also attempt a ; on a failure, the phoenix gains the unholy trait, and also thirsts for vengeance against the little beings like the one who dared to use its power for a time. --- **Stage 3 (1 Month)** You now have fast healing equal to your level but reduce your current and maximum Hit Points by 4 × your level, rounded up, instead of 2 × your level. Also, you have a weakness to cold damage equal to your level and a weakness to holy equal to half your level. You can use the activation you previously gained once per minute, but you can no longer Dismiss it. Whenever you drop to 0 Hit Points, a flame strike erupts from a randomly chosen point on the edge of your space. --- **Stage 4** You die. --- **Purging** You must collect the remains of a phoenix of your level or higher who has been unable to self-resurrect, compressing the remains with powdered diamonds, opals, and rubies worth 75 gp × your level into an egg. You can then use Divine Immolation as if you dropped to 0 Hit Points during this boon's stage 3. If you do so, the phoenix whose remains you collected is reborn as if it used its Self-Resurrection, and the phoenix cinder's "
+ },
+ {
+  "id": "pirouette",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Pirouette",
+  "level": 6,
+  "traits": [
+   "bard",
+   "rogue",
+   "swashbuckler"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Requirements** You're in Masquerade of Seasons Stance. **Trigger** An enemy targets you with a Strike. --- You twirl gracefully, spinning on one foot to evade your opponent's attack. You gain a +2 circumstance bonus to AC against the triggering attack. If the attack misses you, you can immediately Step. If the attack hits you anyway, reduce the damage it deals by an amount equal to half your level; this reduction in damage is applied after calculating immunities, resistances, and weakness."
+ },
+ {
+  "id": "precise-hooks",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Precise Hooks",
+  "level": 14,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your body is a varied and deadly weapon. When you critically hit a target with your claw or talon, you can apply a critical specialization effect based on the stance you're in. For claw stance, apply the knife weapon group's effect. For talon stance, apply the axe group's effect. These effects are in addition to the claw's or talon's normal critical specialization effect if you apply it."
+ },
+ {
+  "id": "prevailing-position",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Prevailing Position",
+  "level": 10,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Trigger** You are targeted by an attack or attempt a Reflex saving throw against a damaging effect, and you are in a stance. --- Your flexibility with stances lets you sacrifice their benefits to better protect yourself. You leave the stance you were in, gaining a +4 circumstance bonus to the triggering saving throw or to your AC against the triggering attack."
+ },
+ {
+  "id": "protective-cycle",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Protective Cycle",
+  "level": 16,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Trigger** You take damage from an attack. **Requirements** You're in an elemental stance. --- You react to harm by flowing into an elemental stance with new advantages. You Cycle Elemental Stance and gain a +2 circumstance bonus to AC until the end of your next turn."
+ },
+ {
+  "id": "psychic-duelist-dedication",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Psychic Duelist Dedication",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Through experience and in-depth visualizations of mental battles, you've grown adept at psychic duels. You gain a +2 circumstance bonus to your initiative rolls for psychic duels. Each time you enter a psychic duel, choose one of the following benefits for the duration of that duel. - **Mind Mace** You gain a status bonus to mental damage with spells you cast equal to the spell's rank. - **Psychic Fist** You can use your standard attribute modifier for Strike damage instead of your highest mental modifier, and you can use your full AC instead of using your Will DC in place of your AC."
+ },
+ {
+  "id": "pyrefeather-token",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Pyrefeather Token",
+  "level": 3,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman",
+   "vitality"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨4⟩ (concentrate) **Trigger** You succeed at, fail, or critically fail a recovery check while dying by 1. --- This pyrefowl feather, accentuated with beadwork, stores a spark of the bird's self-healing power. When you Activate the token, you reduce the triggering recovery check's DC by 1, potentially improving your check's degree of success. You also gain 5 temporary Hit Points that last for 1 minute. You can Activate this talisman even while unconscious."
+ },
+ {
+  "id": "qi-center",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Qi Center",
+  "level": 18,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per minute --- You center yourself with the universe and draw upon its vast power. You cast a single action qi spell with the stance trait, without spending a Focus Point."
+ },
+ {
+  "id": "quick-shape",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Quick Shape",
+  "level": 1,
+  "traits": [
+   "beastkin"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** You roll initiative. --- Your instincts kick in and you take on an aggressive stance. You use Change Shape to enter your hybrid form or a new form granted by a beastkin feat."
+ },
+ {
+  "id": "razors-edge",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Razor's Edge",
+  "level": 18,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your curse and your power are one and the same, and you accept both equally. You can enter Spear of Doom stance as a free action."
+ },
+ {
+  "id": "reflexive-stance",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Reflexive Stance",
+  "level": 12,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** You roll initiative --- You enter a stance without a thought. Use an action that has the stance trait."
+ },
+ {
+  "id": "renewing-cycle",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Renewing Cycle",
+  "level": 10,
+  "traits": [
+   "archetype",
+   "healing",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The first time each round that you Cycle Elemental Stance, you gain temporary Hit Points equal to half your level that last until the start of your next turn. After you've gained temporary Hit Points for entering a specific elemental stance, you can't gain temporary Hit Points from entering that stance again until you've entered every other elemental stance you know or 10 minutes passes, whichever comes first."
+ },
+ {
+  "id": "rescuers-press",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Rescuer's Press",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Any shield you wield gains the shove trait. When you Shove using a shield and Stride as part of that action, you can move an additional 5 feet to either side of the creature you Shoved. In addition, if you are in the Everstand Stance and successfully Shove a creature using a shield that you wield two-handed, you can increase the distance of your Shove to 10 feet."
+ },
+ {
+  "id": "resounding-cascade",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Resounding Cascade",
+  "level": 16,
+  "traits": [
+   "magus"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** You use Arcane Cascade. --- When you enter your Arcane Cascade, you disperse the magical reinforcement to nearby allies. You grant the extra damage of Arcane Cascade in an aura affecting all allies in a . This uses only the base damage of the stance, based on the ally's weapon specialization; it doesn't use any increase you get from bonuses, the Laughing Shadow hybrid study, or the like. As normal for duplicate effects, multiple Arcane Cascades affecting the same creature aren't cumulative."
+ },
+ {
+  "id": "resurgent-maelstrom",
+  "lane": "toggle",
+  "collection": "classFeatures",
+  "name": "Resurgent Maelstrom",
+  "level": 1,
+  "traits": [
+   "magus"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "While fate may conspire to strip you of your armaments, you're never helpless. For you, anything can be a dangerous weapon, bolstered by the might of towering waves and crushing tides. You know these tools are transient, and so you think nothing of shattering and reforming them with your magic. Your attacks with improvised weapons do not take the normal –2 item penalty. While you wield an improvised weapon, streams of water flow from your limbs to surround the weapon, granting it the water trait. These improvised weapons have a minimum damage die of 1d6, or 1d4 if the improvised weapon is agile. Effects that apply runes to your unarmed attacks, like Runic Body and Handwraps of Might Blows, also apply those runes to your non-magical improvised weapons. The improvised weapon also gains an additional trait, depending on how many hands it takes to wield. A one-handed improvised weapon gains the backstabber trait; if it would already have the backstabber trait, double the amount of additional precision damage. A two-handed improvised weapon gains the forceful trait; if it would already have the forceful trait, treat the number of weapon damage dice the weapon has as 1 higher for the purpose of calculating the additional damage. While you're in Arcane Cascade stance , you can manipulate the water around your improvised weapon, making it cut like a knife or bash with the force of falling rocks. The weapon gains the versatile traits for the types of damage that it doesn't normally deal. For instance, an improvised weapon that normally deals bludgeoning damage gains the versatile P and versatile S traits. **Conflux Spell** Turbulent Tide"
+ },
+ {
+  "id": "return-fire",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Return Fire",
+  "level": 6,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are in Monastic Archer Stance, are wielding a bow, and have a free hand. --- Snatching an arrow out of the air, you instantly put it to your bow and return fire. When you successfully Deflect Projectile that's an arrow, as part of that reaction you can immediately make a ranged bow Strike from your own bow by firing the arrow you deflected."
+ },
+ {
+  "id": "ricochet-feint",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Ricochet Feint",
+  "level": 12,
+  "traits": [
+   "rogue"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "While in Ricochet Stance, you can bounce a thrown weapon off a foe to distract them. You can attempt a Feint against a creature within the first range increment of a thrown weapon you are wielding, rather than only creatures within your melee reach."
+ },
+ {
+  "id": "rippling-spin",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Rippling Spin",
+  "level": 8,
+  "traits": [
+   "flourish",
+   "monk",
+   "occult",
+   "water"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** You're hit by a physical melee attack by an attacker you can see that's in reach. **Requirements** You're in Reflective Ripple Stance. --- After the triggering attack is done, Step. You must end this Step within the attacker's reach. Then, you can attempt an Athletics check to Disarm or Trip the attacker."
+ },
+ {
+  "id": "riptide-undersea-privateer",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Riptide (Undersea Privateer)",
+  "level": 8,
+  "traits": [
+   "archetype",
+   "attack",
+   "manipulate"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're in Anchor Stance, and your target is within 5 feet of the edge of a water vehicle or already in the water. --- You swirl water around you to make a current that pulls creatures closer. Attempt an Athletics check against the Fortitude DC of a creature within 20 feet. If the creature is willing, you increase your degree of success by one (turning a failure into a success and a success into a critical success). --- **Critical Success** The target is pulled 10 feet toward you. **Success** The target is pulled 5 feet toward you. **Critical Failure** Your movements cause you to be off-guard until the beginning of your next turn."
+ },
+ {
+  "id": "rope-of-climbing",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Rope of Climbing",
+  "level": 3,
+  "traits": [
+   "magical",
+   "transmutation"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Rope of Climbing Source Advanced Player's Guide pg. 262 Usage held in 1 hand Bulk L This silk rope measures 50 feet long and is capable of holding up to 3,000 pounds. If the rope is ever cut, only the longest remaining portion retains its magic. Activate Interact; Frequency once per day; Effect You hold one end of the rope and point to a destination. The rope animates for 1 minute, moving 10 feet per round until it reaches the destination or runs out of length. The rope can move across any non-damaging horizontal or vertical surface, but it can't extend upward without a surface to support it. At any point while the rope is animated, you can use an Interact action to wiggle the rope, giving it one of the following commands: stop in place, fasten securely to the nearest available object, detach from an object, or knot or unknot itself. Rope of Climbing (Lesser) Source Advanced Player's Guide pg. 262 Price 45 gp Bulk L Rope of Climbing (Moderate) Source Advanced Player's Guide pg. 262 Price 125 gp Bulk L You can activate the moderate rope of climbing once per hour instead of once per day. Rope of Climbing (Greater) Source Advanced Player's Guide pg. 262 Price 300 gp Bulk L You can activate the greater rope of climbing without any frequency limit."
+ },
+ {
+  "id": "ruby-string",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Ruby String",
+  "level": 14,
+  "traits": [
+   "consumable"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "The frayed threads from the rips and tears in *Hao Jin's Tapestry* still contain traces of the Ruby Phoenix's magic. Hao Jin has collected most of these loose strings, but others occasionally find these potent silk strands in unexpected places. A ruby string can fulfill the cost requirement for an 8th-rank *create demiplane* ritual. When used in this way, the ruby string negates the need for secondary casters, and you get a success for all secondary checks. Alternatively, you can activate it to create a smaller demiplane without requiring the ritual. **Activate** 8 hours (envision, Interact) --- **Effect** You spin the thread to form a demiplane with the effects of a successful 8th-rank *create demiplane*, but the space is a single 10-foot cube."
+ },
+ {
+  "id": "rupture-stomp",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Rupture Stomp",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per day **Requirements** You are in Tenacious Stance. --- Every dwarf knows that the rock they walk upon can be either a best friend or a treacherous path. With a heavy impact of your armored heel, you crack the ground underneath you. The ground within a becomes difficult terrain. If you are a master or better in the armor you are wearing, this becomes greater difficult terrain. The cracked ground settles and reverts to normal terrain after 1 minute. --- **Special** At 16th level, you can take this feat again. If you do, you can use it once per hour instead of once per day."
+ },
+ {
+  "id": "safe-elements",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Safe Elements",
+  "level": 4,
+  "traits": [
+   "kineticist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Elements are wild and dangerous, but you've found ways to reduce their risk. When you Channel Elements or use a stance impulse that affects your kinetic aura, you can designate a number of creatures up to your Constitution modifier (minimum 1 creature). Choose whether they are immune to the benefits of your kinetic aura or immune to its damage and drawbacks. You don't have to be able to see a creature to designate it, nor does it need to be in your kinetic aura, but you can't designate a creature that's unnoticed by you. In addition, you gain the Pacifying Infusion action."
+ },
+ {
+  "id": "scattering-in-spring",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Scattering in Spring",
+  "level": 8,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Trigger** An enemy within your reach targets you with a melee attack, and you're aware of the attack. **Requirements** You're in Twisting Petal Stance. --- You evade an incoming attack by twisting your enemy's tactics in your favor. You gain a +2 circumstance bonus to AC against the triggering attack. If the attack misses you, you can immediately attempt a Feint or Shove against the triggering attacker; if you roll a success, you get a critical success instead."
+ },
+ {
+  "id": "scroll-thaumaturgy",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Scroll Thaumaturgy",
+  "level": 1,
+  "traits": [
+   "thaumaturge"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your multidisciplinary study of magic means you know how to activate the magic in scrolls with ease. You can activate scrolls of any magical tradition, using your thaumaturge class DC for the scroll's DC, rather than a particular spell DC. If a spell is on the spell list for multiple traditions, you choose which tradition to use at the time you activate the scroll. You can draw and activate scrolls with the same hand holding an implement, much like you can for esoterica."
+ },
+ {
+  "id": "serpent-dagger",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Serpent Dagger",
+  "level": 5,
+  "traits": [
+   "agile",
+   "finesse",
+   "magical",
+   "poison",
+   "thrown-10",
+   "versatile-s"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "The serrated blade of this *+1 striking dagger* has a greenish tinge, and the hilt is sculpted to look like the head of a serpent about to strike. When you critically succeed at an attack roll with the *serpent dagger*, the target becomes Sickened 1 unless it succeeds at a save. This is a poison effect. In addition, you can activate the dagger to poison a creature with a more potent poison. --- **Activate—Drip Poison** ⟨4⟩ (manipulate) **Frequency** once per day **Trigger** You damage a creature with the *serpent dagger* **Effect** You poison the creature you hit with dagger venom. --- **Dagger Venom** (poison) **Saving Throw** **Maximum Duration** 4 rounds **Stage 1** 1d8 damage and Enfeebled 1"
+ },
+ {
+  "id": "shadowpiercer",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Shadowpiercer",
+  "level": 23,
+  "traits": [
+   "artifact",
+   "magical",
+   "monk",
+   "mythic",
+   "thrown-20"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Muted, silvery moonlight gleams along the curved blade of this *+4 major striking ghost touch spear*. Braided tassels of horsehair dangle from its sturdy haft, and archaic runes in Nidalese script shimmer along the weapon in the presence of shadow magic. *Shadowpiercer* ignores immunity and resistance to precision damage of creatures with the incorporeal or shadow trait, and deals an additional 2d6 precision damage to such creatures. While wielding *Shadowpiercer*, you gain a +2 status bonus to saving throws against darkness and shadow effects; this bonus also applies to allies within 60 feet of you while you wield the spear. If you are a worshipper of Zon-Kuthon, you are Drained 4 and Enfeebled 4 while carrying or wielding *Shadowpiercer*. If you use a darkness or shadow effect while carrying or wielding *Shadowpiercer*, you become enfeebled 4; this condition's value reduces by 1 at the start of each day you do not have physical contact with *Shadowpiercer*. --- **Activate—Absorb Shadows** ⟨2⟩ (concentrate, healing, manipulate, occult) **Frequency** once per day **Effect** You touch *Shadowpiercer* to a darkness or shadow effect to siphon its energy and bolster yourself. You gain a number of temporary Hit Points equal to four times the effect's counteract rank. These temporary Hit Points last for 1 hour. In addition, if the effect is causing darkness, that darkness is automatically counteracted within 15 feet of you for as long as you have those temporary Hit Points. This doesn't provide light—it merely restores the area to its natural illumination level. --- **Activate—Rebuff Gloom** ⟨5⟩ (concentrate, occult) **Trigger** You or an ally within 60 feet is targeted by a darkness or shadow effect **Requirements** You don't currently have the drained condition **Effect** Spend a Mythic Point; the spear drains your vitality to counteract the effect. You can attempt to counteract the effect (+46 modifier level, counteract rank 10). You can activate this effect without having a Mythic Point available but doing so makes you Drained 2. --- **Destruction** *Shadowpiercer* simply disappears if a worshipper of Zon-Kuthon casts a 10th-rank Darkness spell on it once a day for an entire month while it is unattended."
+ },
+ {
+  "id": "shattering-spellstrike",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Shattering Spellstrike",
+  "level": 4,
+  "traits": [
+   "force",
+   "magus"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're in Arcane Cascade stance and wielding an improvised weapon. --- You intentionally channel a rampaging cascade of magic through your weapon, breaking it to deal more damage. Make a Spellstrike against a target with your improvised weapon. If the attack hits, it deals an additional 2d6 damage as your improvised weapon breaks. If the spell used with the Spellstrike wasn't a cantrip or focus spell, increase this additional damage by the spell's rank. If the item has a Hardness greater than your level, or if it's an artifact, cursed item, or other item that's difficult to break or destroy, it doesn't break and you don't deal additional damage."
+ },
+ {
+  "id": "shifting-terrain",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Shifting Terrain",
+  "level": 14,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** Your terrain attunement matches the terrain you're in and you're in Rough Terrain Stance. --- You slam your fist into the ground or twirl your arms about to cause the terrain around you to shift and ripple, potentially throwing others off balance. Each creature within your area of difficult terrain from Rough Terrain Stance must attempt a saving throw against your spell DC with the following effects. After you use this action, you can't use it again for 1d4 rounds. --- **Critical Success** The creature is unaffected. **Success** The creature is Clumsy 1 for 1 round. **Failure** The creature is Clumsy 2 for 1 round. **Critical Failure** The creature is clumsy 2 for 1 round and falls prone."
+ },
+ {
+  "id": "shining-hackle",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Shining Hackle",
+  "level": 4,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Some troops wear this plume of short feathers in their hats as part of a formal uniform, but the soft glow emanating from it can be useful elsewhere. While wearing the *shining hackle*, you gain a +1 item bonus to Perception checks based on sight, but you also take a –1 item penalty to your Stealth checks. **Activate—Glowing Hackle** ⟨1⟩ (concentrate, light) --- **Effect** Your *shining hackle* glows even brighter, shedding bright light in a 20-foot radius (and dim light for the next 20 feet). This effect lasts until you Dismiss it."
+ },
+ {
+  "id": "silver-tripod",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Silver Tripod",
+  "level": 1,
+  "traits": [
+   "consumable",
+   "force",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (concentrate) --- This tiny, silver facsimile of a weapon tripod is usually attached to the underside of the affixed weapon's barrel. When activated, it creates an invisible construct of magical force that attaches to the weapon and automatically stabilizes it in any location, even in midair. The effect lasts for 1 minute or until you Dismiss it. The effect also ends immediately if you let go of the affixed weapon. The affixed weapon cannot be moved while this effect is active."
+ },
+ {
+  "id": "singing-bowl-of-the-versatile-stance",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Singing Bowl of the Versatile Stance",
+  "level": 11,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "In true Iroran form, the simplicity of this small, inverted copper bell belies its flawlessness. When struck with a mallet (included with the singing bowl), it emits a harmonious tone that inspires bodily perfection in those who know how to hear it. **Activate** ⟨1⟩ Interact (auditory) --- **Effect** While holding the *singing bowl of the versatile stance* with one hand, you strike the lip of it with a mallet held in the other. Anyone within 60 feet currently in a stance can spend a reaction to use one of their stance actions in order to change to a different stance."
+ }
+]

@@ -1,0 +1,121 @@
+[
+ {
+  "id": "contract-negotiator",
+  "collection": "feats",
+  "name": "Contract Negotiator",
+  "level": 1,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "text": "Your experience with bargaining and deciding terms as part of Highhelm's guilds helps you make deals in other situations. When negotiating deals or agreements, you can use Legal Lore in place of Diplomacy to Make an Impression or a Request, even if there is no legal framework under which you are negotiating. If you are an expert in Diplomacy, you gain a +1 circumstance bonus to these checks; if you are a master in Diplomacy, this increases to +2, and +3 if you are legendary.",
+  "currentFlat": null,
+  "openQuestion": "Two things: (a) what is the exact skill key for Legal Lore in the registry — 'lore:legal', 'lore:legal-lore', or something else? (b) the bonus size scales off your DIPLOMACY proficiency while applying to a LEGAL LORE check — should the star show the character's actual computed value (+1/+2/+3) or the whole ladder as text?"
+ },
+ {
+  "id": "celebrity-dedication",
+  "collection": "feats",
+  "name": "Celebrity Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "text": "The more people you have looking at you, the more content you are, and you take every opportunity to show up others when their performances are less than perfect. You gain the Upstage reaction. In addition, when you Earn Income, if the level of the task is higher than your level, you gain a +1 circumstance bonus to your check to Earn Income.",
+  "currentFlat": null,
+  "openQuestion": "Earn Income can use any of several skills. Star every skill (skill:'all'), or narrow it to Crafting/Performance/Lore?"
+ },
+ {
+  "id": "eye-of-the-wise",
+  "collection": "items",
+  "name": "Eye of the Wise",
+  "level": 11,
+  "traits": [
+   "artifact",
+   "invested"
+  ],
+  "text": "This fist-sized, 12-rayed black star sapphire is sacred to Yueral, the elven goddess of magic and jewels, and most accounts of its creation attribute its crafting to a circle of her worshippers. In addition to the abilities listed below, the gem functions as a portal key for Jewelgate at Alseta's Ring. **Activate** ⟨1⟩ Interact --- **Effect** You touch the *Eye of the Wise* to a gem worth at least 10 gp, whereupon the *Eye of the Wise* assumes the appearance of the touched gemstone. While this connection is active, the carriers of the *Eye of the Wise* and of the other gemstone can communicate telepathically with one another over any distance, as long as both are on the same plane. This connection is broken if the other gemstone is damaged, if the *Eye of the Wise* becomes attuned to another gemstone, or if the bearer of the *Eye of the Wise* dismisses the activation. **Activate** ⟨1⟩ Interact --- **Effect** You hold the *Eye of the Wise* up to your own eye and peer through it. The *Eye of the Wise* grows transparent and grants you a +2 item bonus to attempts to Decipher Writing, Disable a Device, Identify Magic, Pick a Lock, Seek, or Sense Motive. You can Sustain this activation as long as you hold the gem in place.",
+  "currentFlat": null,
+  "openQuestion": "Should action-named bonuses like this be expanded into every skill that can perform the action (as above), or flagged once on 'all skills' with the action list in the condition text?"
+ },
+ {
+  "id": "addiction-suppressant",
+  "collection": "items",
+  "name": "Addiction Suppressant",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "text": "Addiction Suppressant Source Legends pg. 72 Usage held in 1 hand Bulk L Activate Interact When you use a dose of addiction suppressant, it suppresses the effects of that addiction for 1 day, as if you had taken an actual dose of the drug, but without any of the drug's effects, and it doesn't increase the addiction DC. You also gain an item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant. For every drug, a specific suppressant must be crafted— no generalized addiction suppressant yet exists. In order to create an addiction suppressant, you must begin with a dose of the drug to be suppressed, then use alchemical reagents to generate an elixir that can be used to fight that drug's addiction. An addiction suppressant must be a higher level than the drug it is meant to suppress in order to work. Addiction Suppressant (Lesser) Source Legends pg. 72 Price 2 gp Bulk L You gain a +1 item bonus. Addiction Suppressant (Moderate) Source Legends pg. 72 Price 30 gp Bulk L You gain a +2 item bonus. Addiction Suppressant (Greater) Source Legends pg. 72 Price 140 gp Bulk L You gain a +3 item bonus. Addiction Suppressant (Major) Source Legends pg. 72 Price 500 gp Bulk L You gain a +4 item bonus.",
+  "currentFlat": null,
+  "openQuestion": "Drug addiction is a poison-trait affliction, so the ongoing save is Fortitude — the record itself never names the save. Register this against Fortitude specifically, or against all saves with the condition text carrying the caveat?"
+ },
+ {
+  "id": "addiction-suppressant-lesser",
+  "collection": "items",
+  "name": "Addiction Suppressant (Lesser)",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "text": "**Activate** ⟨1⟩ Interact When you use a dose of addiction suppressant, it suppresses the effects of that addiction for 1 day, as if you had taken an actual dose of the drug but without any of the drug's effects, and it doesn't increase the addiction DC. You also gain a +1 item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant. For every drug, a specific suppressant must be crafted- no generalized addiction suppressant yet exists. In order to create an addiction suppressant, you must begin with a dose of the drug to be suppressed, then use alchemical reagents to generate an elixir that can be used to fight that drug's addiction. An addiction suppressant must be a higher level than the drug it is meant to suppress in order to work.",
+  "currentFlat": null,
+  "openQuestion": "The record never names the save. Drug addiction is a poison-trait affliction (Fortitude) — confirm registering this on Fortitude rather than all saves."
+ },
+ {
+  "id": "addiction-suppressant-moderate",
+  "collection": "items",
+  "name": "Addiction Suppressant (Moderate)",
+  "level": 6,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "text": "**Activate** ⟨1⟩ Interact When you use a dose of addiction suppressant, it suppresses the effects of that addiction for 1 day, as if you had taken an actual dose of the drug but without any of the drug's effects, and it doesn't increase the addiction DC. You also gain a +2 item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant. For every drug, a specific suppressant must be crafted- no generalized addiction suppressant yet exists. In order to create an addiction suppressant, you must begin with a dose of the drug to be suppressed, then use alchemical reagents to generate an elixir that can be used to fight that drug's addiction. An addiction suppressant must be a higher level than the drug it is meant to suppress in order to work.",
+  "currentFlat": null,
+  "openQuestion": "The record never names the save. Drug addiction is a poison-trait affliction (Fortitude) — confirm registering this on Fortitude rather than all saves."
+ },
+ {
+  "id": "addiction-suppressant-greater",
+  "collection": "items",
+  "name": "Addiction Suppressant (Greater)",
+  "level": 10,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "text": "**Activate** ⟨1⟩ Interact When you use a dose of addiction suppressant, it suppresses the effects of that addiction for 1 day, as if you had taken an actual dose of the drug but without any of the drug's effects, and it doesn't increase the addiction DC. You also gain a +3 item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant. For every drug, a specific suppressant must be crafted- no generalized addiction suppressant yet exists. In order to create an addiction suppressant, you must begin with a dose of the drug to be suppressed, then use alchemical reagents to generate an elixir that can be used to fight that drug's addiction. An addiction suppressant must be a higher level than the drug it is meant to suppress in order to work.",
+  "currentFlat": null,
+  "openQuestion": "The record never names the save. Drug addiction is a poison-trait affliction (Fortitude) — confirm registering this on Fortitude rather than all saves."
+ },
+ {
+  "id": "addiction-suppressant-major",
+  "collection": "items",
+  "name": "Addiction Suppressant (Major)",
+  "level": 14,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "text": "**Activate** ⟨1⟩ Interact When you use a dose of addiction suppressant, it suppresses the effects of that addiction for 1 day, as if you had taken an actual dose of the drug but without any of the drug's effects, and it doesn't increase the addiction DC. You also gain a +4 item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant. For every drug, a specific suppressant must be crafted- no generalized addiction suppressant yet exists. In order to create an addiction suppressant, you must begin with a dose of the drug to be suppressed, then use alchemical reagents to generate an elixir that can be used to fight that drug's addiction. An addiction suppressant must be a higher level than the drug it is meant to suppress in order to work.",
+  "currentFlat": null,
+  "openQuestion": "The record never names the save. Drug addiction is a poison-trait affliction (Fortitude) — confirm registering this on Fortitude rather than all saves."
+ },
+ {
+  "id": "rubbing-set",
+  "collection": "items",
+  "name": "Rubbing Set",
+  "level": 0,
+  "traits": [],
+  "text": "By using a rubbing set, you can quickly make a copy of carvings or etchings you find during your explorations, making them easier to accurately reproduce. This kit consists of a roll of thin onion-skin paper in a waterproof leather case, several thick wax crayons, and a bar of sealing wax that can be melted and used to temporarily hold the paper in place while you take the rubbing. Using the kit consumes the materials and provides a +1 item bonus on checks to document or reproduce artwork or writing that has been carved, etched, or otherwise physically added to a surface.",
+  "currentFlat": null,
+  "openQuestion": "The item names no skill ('checks to document or reproduce'). Do you want skill 'all' with the condition text, or should we narrow it to Crafting and Society (the usual skills for copying inscriptions) at the cost of guessing beyond the text?"
+ }
+]

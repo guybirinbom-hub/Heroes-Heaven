@@ -1,0 +1,1267 @@
+{
+ "D": {
+  "extracted": [
+   {
+    "id": "magic-hands",
+    "verdict": "action-marker",
+    "reason": "The feat changes nothing about the Medicine roll — it changes what a successful Treat Wounds heals (d10s instead of d8s, plus a status bonus equal to your level). Per the owner's ruling the marker goes on the Treat Wounds action row, showing the changed die inline. core.json actions bucket has id \"treat-wounds\".",
+    "quote": "When you succeed at a Medicine check to Treat Wounds, you can roll d10s instead of d8s for the healing and add a status bonus to the healing equal to your level.",
+    "marker": {
+     "targetId": "treat-wounds",
+     "targetName": "Treat Wounds",
+     "value": "d10",
+     "note": "On a success you roll d10s instead of d8s and add a status bonus to the healing equal to your level."
+    }
+   },
+   {
+    "id": "cardinal-guardians",
+    "verdict": "ordinary-star",
+    "reason": "Both halves map to the existing spell row. The +2 is explicitly to the spell ATTACK modifier only, so detail 'attack' (never 'dc' or 'all'). The second half is a -2 status penalty to the enemy's saves, which is the spell-DC side of the same window — filed as a second entry on spell/dc, worded so the player knows the penalty lands on the enemy's roll, not on their own DC calculation.",
+    "quote": "Whenever you succeed at a spell attack with an apparition spell or vessel spell, or when a creature fails its save against such a spell, you gain a +2 status bonus to your spell attack modifier against that creature with spells granted by any of your other apparitions, and it takes a –2 status penalty to its saves against such spells.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "spell",
+        "detail": "attack"
+       }
+      ],
+      "when": "until the end of your next turn, against a creature you hit with a spell attack from one apparition or vessel spell — with spells from your other apparitions",
+      "bonus": "+2 status"
+     },
+     {
+      "targets": [
+       {
+        "kind": "spell",
+        "detail": "dc",
+        "dcOnly": true
+       }
+      ],
+      "when": "until the end of your next turn, that creature's saves against spells from your other apparitions (the penalty is on its roll)",
+      "bonus": "-2 status"
+     }
+    ]
+   },
+   {
+    "id": "black-powder-boost",
+    "verdict": "action-marker",
+    "reason": "It does not raise your Speed; it adds distance to the Leap this activity performs. Owner's ruling names this record explicitly: show the +10 in parentheses with a * linking back to the feat. core.json actions bucket has id \"leap\".",
+    "quote": "You Leap and discharge your firearm to add a +10-foot status bonus to the distance traveled.",
+    "marker": {
+     "targetId": "leap",
+     "targetName": "Leap",
+     "value": "+10 feet",
+     "note": "Discharging a loaded firearm as you Leap adds a +10-foot status bonus to the distance travelled; the 2-action version does High Jump or Long Jump instead, so the same marker belongs on core.json's \"high-jump\" and \"long-jump\" rows."
+    }
+   },
+   {
+    "id": "reach-for-the-stars",
+    "verdict": "action-marker",
+    "reason": "Same surface as Black Powder Boost — it extends the same Leap, up to five extra 10-foot boosts. Marker on the Leap row; value is the printed maximum since the actual amount depends on how much powder/ammunition you spend.",
+    "quote": "For each dose of black powder or piece of firearm ammunition you spend in addition to your shot, you add another 10 feet to the height or distance of your Leap, to a maximum of 5 boosts (a +50-foot status bonus).",
+    "marker": {
+     "targetId": "leap",
+     "targetName": "Leap",
+     "value": "up to +50 feet",
+     "note": "Only when using Black Powder Boost: each extra dose of black powder or piece of ammunition spent adds another 10 feet to the Leap, max 5 boosts (+50-foot status bonus)."
+    }
+   },
+   {
+    "id": "explosive-death-drop",
+    "verdict": "ordinary-star",
+    "reason": "DATA DEFECT CONFIRMED: the skill is ATHLETICS. The local AoN mirror (aon-2e-archive/data/by-category/feat/feat-2271.json) prints \"Roll an Athletics check against your target's Fortitude DC\", and the Foundry source (.import-src/pf2e/packs/pf2e/feats/class/monk/level-14/explosive-death-drop.json) has \"Roll an @Check[athletics|defense:fortitude] check\" — the importer dropped the inline @Check macro, leaving \"Roll an check\". That is a visible display defect players will hit and should be fixed in the data independently of this registry. Mechanically the feat grants an Athletics check with size-based circumstance modifiers, so it does map to the athletics skill row; the entry is signed both ways because the modifier can be a penalty.",
+    "quote": "Roll an Athletics check against your target's Fortitude DC. You take a -1 circumstance penalty to your check if the target is one size larger than you and a -3 circumstance penalty if it's larger than that. You gain a +1 circumstance bonus to your check if the target is one size smaller than you and a +3 circumstance bonus if it's smaller than that.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "athletics"
+       }
+      ],
+      "when": "on the Athletics check for Explosive Death Drop, scaled by the target's size relative to yours",
+      "bonus": "+1 circumstance (one size smaller) or +3 (smaller still); -1 / -3 circumstance if the target is larger"
+     }
+    ]
+   },
+   {
+    "id": "mountain-stance",
+    "verdict": "dc-only-save",
+    "reason": "Reposition, Shove and Trip are Athletics checks rolled by the opponent against your Fortitude DC — you never roll, so this is a DC-only bonus, not a Fortitude save bonus. \"any defenses\" is broader than that one DC, so a second, non-dcOnly target covers a save you actually roll against some other forced-movement effect. The rest of the stance (+4 item AC, Dex cap +0, Speeds -5) is flat and already handled by the stance manager (core.json stances has \"mountain-stance\"); nothing of that belongs in this lane.",
+    "quote": "While in Mountain Stance, you gain a +4 item bonus to AC and a +2 circumstance bonus to any defenses against Reposition, Shove, Trip, and other forced movement effects.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "fortitude",
+        "dcOnly": true
+       },
+       {
+        "kind": "save",
+        "detail": "all"
+       }
+      ],
+      "when": "while in Mountain Stance, against Reposition, Shove, Trip and other forced movement — this raises the Fortitude DC the opponent rolls against, and applies to any save you roll against another forced-movement effect",
+      "bonus": "+2 circumstance"
+     }
+    ]
+   },
+   {
+    "id": "field-propagandist-dedication",
+    "verdict": "no-surface",
+    "reason": "Owner's standing ruling on skill/Perception DCs: \"don't add a place for this, the user will need to remember.\" Both bonuses here are DCs others roll against (Perception DC vs Lie, and Deception DC if you have Lie to Me), and the second is additionally gated on owning another feat. Separately: the Society trained/expert grant is a proficiency grant handled by the FEAT_GRANTS lane, not this one; do not encode it here.",
+    "quote": "You gain a +2 circumstance bonus to your Perception DC against attempts made by others to Lie to you."
+   },
+   {
+    "id": "sixfingers-elixir",
+    "verdict": "dc-only-save",
+    "reason": "Disarm is an Athletics check the opponent rolls against your Reflex DC — this raises that DC and does nothing for a Reflex save you roll, which is exactly the case already documented on SituationalTarget.dcOnly in src/rules/situationalBonuses.ts. This umbrella record is the AoN parent page carrying all three variants; the mechanical text is identical to them. The climb Speed of 20 feet is a flat speed while the elixir is active (consumable-mode lane), not a situational bonus.",
+    "quote": "You gain a +2 item bonus to your Reflex DC to keep from being Disarmed and a climb Speed of 20 feet for the listed duration.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "reflex",
+        "dcOnly": true
+       }
+      ],
+      "when": "while the elixir is active, when a creature tries to Disarm you — this raises the Reflex DC they roll against, not a save you roll",
+      "bonus": "+2 item"
+     }
+    ]
+   },
+   {
+    "id": "sixfingers-elixir-lesser",
+    "verdict": "dc-only-save",
+    "reason": "Same as the parent record; only the duration differs (10 minutes). Reflex DC vs Disarm is a DC other creatures roll against, so dcOnly. Climb Speed 20 feet is a flat effect for the elixir's duration, not this lane.",
+    "quote": "You gain a +2 item bonus to your Reflex DC to keep from being Disarmed and a Climb Speed of 20 feet for the listed duration.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "reflex",
+        "dcOnly": true
+       }
+      ],
+      "when": "for 10 minutes after drinking, when a creature tries to Disarm you — this raises the Reflex DC they roll against, not a save you roll",
+      "bonus": "+2 item"
+     }
+    ]
+   },
+   {
+    "id": "sixfingers-elixir-moderate",
+    "verdict": "dc-only-save",
+    "reason": "Same as the parent record; only the duration differs (1 hour). The printed bonus is +2 item at every grade — the grades change duration, not the bonus.",
+    "quote": "You gain a +2 item bonus to your Reflex DC to keep from being Disarmed and a Climb Speed of 20 feet for the listed duration.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "reflex",
+        "dcOnly": true
+       }
+      ],
+      "when": "for 1 hour after drinking, when a creature tries to Disarm you — this raises the Reflex DC they roll against, not a save you roll",
+      "bonus": "+2 item"
+     }
+    ]
+   },
+   {
+    "id": "sixfingers-elixir-greater",
+    "verdict": "dc-only-save",
+    "reason": "Same as the parent record; only the duration differs (8 hours). The printed bonus stays +2 item.",
+    "quote": "You gain a +2 item bonus to your Reflex DC to keep from being Disarmed and a Climb Speed of 20 feet for the listed duration.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "reflex",
+        "dcOnly": true
+       }
+      ],
+      "when": "for 8 hours after drinking, when a creature tries to Disarm you — this raises the Reflex DC they roll against, not a save you roll",
+      "bonus": "+2 item"
+     }
+    ]
+   },
+   {
+    "id": "weapon-innovation",
+    "verdict": "no-surface",
+    "reason": "The bonus is not granted by Weapon Innovation. It is granted by ONE of eleven initial weapon modifications (Segmented Frame), and only while the innovation has been Interacted with to collapse it to light Bulk. The app does not record which modification the inventor chose, so registering it on the class feature would put a permanent Stealth star on every inventor who has none of it. It is also a bonus to hiding THE WEAPON (Conceal an Object, core.json \"conceal-an-object\"), and covers a Stealth DC as well as a Stealth check, which one star cannot distinguish. Correct home once modifications are tracked: a marker on the collapsed innovation item / the Conceal an Object row, keyed to the Segmented Frame choice — not on this record.",
+    "quote": "When it's collapsed to light Bulk, it has the concealable trait, which grants you a +2 circumstance bonus to Stealth checks and DCs to hide or conceal the weapon."
+   },
+   {
+    "id": "elemental-blast",
+    "verdict": "action-marker",
+    "reason": "Elemental Blast is its own action row (core.json actions has \"elemental-blast\"), and the Constitution bonus is part of that blast's printed damage formula, not a bonus to weapon Strikes. Starring strikeDamage would attach it to the kineticist's Strikes, which it never touches. Marker on the blast's own row; the melee Str-to-damage clause and the Level (+4) die increase belong in the same computed damage entry.",
+    "quote": "If you make a 2-action Elemental Blast, you gain a status bonus to the damage roll equal to your Constitution modifier.",
+    "marker": {
+     "targetId": "elemental-blast",
+     "targetName": "Elemental Blast",
+     "value": "2 actions: +Con to damage",
+     "note": "Spending 2 actions adds a status bonus to the blast's damage equal to your Constitution modifier (a melee blast also adds Strength to damage; damage increases by one die at every 4th level)."
+    }
+   },
+   {
+    "id": "commanders-banner",
+    "verdict": "ordinary-star",
+    "reason": "The Will-save half maps straight to the will save row — the text says the aura gives the bonus to \"you and all allies\", so the commander is a beneficiary and this is not not-yours (the allies' copies belong to their own sheets). The \"and DCs against fear effects\" half is a DC others roll against, e.g. the Will DC an enemy Demoralizes against, so it is a second, dcOnly entry rather than being folded into the save star. Both are conditional on the banner being visible and in your possession, and can be paused/resumed.",
+    "quote": "As long as your banner is visible and in your possession, it provides an aura that gives you and all allies in a a +1 status bonus to Will saves and DCs against fear effects.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "will"
+       }
+      ],
+      "when": "against fear effects, while your banner is visible and in your possession (effect can be paused when you stow it)",
+      "bonus": "+1 status"
+     },
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "will",
+        "dcOnly": true
+       }
+      ],
+      "when": "against fear effects, the Will DC an enemy rolls against — e.g. Demoralize — while your banner is visible and in your possession",
+      "bonus": "+1 status"
+     }
+    ]
+   },
+   {
+    "id": "face-your-fears",
+    "verdict": "condition-marker",
+    "reason": "The load-bearing half is a change to how the frightened condition runs for you — once per hour you knock its value down by 1 — which is exactly the Survivor/dying pattern in the owner's ruling, so the * goes on the frightened condition row (core.json conditions has \"frightened\"). The trailing +1 does map to a stat row, so I have also supplied it as a star; the printed text names no statistic, and since fear effects are resolved with saves I restricted it to saves and did NOT extend it to AC or to your Will DC — the text does not support either.",
+    "quote": "Reduce the value of your frightened condition by 1. If this would reduce the value to 0, you are no longer frightened and gain a +1 circumstance bonus against fear effects for 1 minute.",
+    "marker": {
+     "targetId": "frightened",
+     "targetName": "Frightened",
+     "value": "-1",
+     "note": "Once per hour you can reduce your frightened value by 1; if that removes the condition you also gain +1 circumstance against fear effects for 1 minute."
+    },
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "all"
+       }
+      ],
+      "when": "for 1 minute after Face Your Fears removes your frightened condition entirely, against fear effects",
+      "bonus": "+1 circumstance"
+     }
+    ]
+   },
+   {
+    "id": "living-leaf-weave",
+    "verdict": "dc-only-save",
+    "reason": "Three separate surfaces from one activation. The Athletics-to-Grapple half is an ordinary star and is supplied as its own entry. The other two are DCs the opponent rolls against — note the armour prints REFLEX DC for Trip (not the usual Fortitude), so the entry follows the printed text rather than the general rule. The bonus size is not printed: it equals the installed Elixir of Life's item bonus, so the value must be read off the installed elixir rather than hard-coded.",
+    "quote": "Slithering vines grow from the armor, granting an item bonus to Athletics checks to Grapple, to your Fortitude DC to resist Grapple, Disarm, or Shove attempts, and to your Reflex DC to resist Trip attempts.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "athletics"
+       }
+      ],
+      "when": "to Grapple, for 3 rounds after activating the armor with an elixir of life installed",
+      "bonus": "+ the installed elixir's item bonus (item)"
+     },
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "fortitude",
+        "dcOnly": true
+       },
+       {
+        "kind": "save",
+        "detail": "reflex",
+        "dcOnly": true
+       }
+      ],
+      "when": "for those 3 rounds, when a creature tries to Grapple, Disarm or Shove you (Fortitude DC) or Trip you (Reflex DC) — this raises the DC they roll against, not a save you roll",
+      "bonus": "+ the installed elixir's item bonus (item)"
+     }
+    ]
+   },
+   {
+    "id": "execution-powder",
+    "verdict": "no-surface",
+    "reason": "Nothing here lands on the character as a persistent, knowable number. Two things are granted: (a) a death effect imposed on a POISONED CREATURE at 0 HP — the poison's own save (the printed **Saving Throw** field is empty in this record; the importer dropped the save type and DC), which is the item's DC, not a DC the character owns or modifies; and (b) 20 temporary Hit Points plus +1 status to attack and damage — but the beneficiary is 'a random creature adjacent to the victim', decided at the table, and could be an ally, an enemy, or nobody the sheet knows about. Starring the character's strikeAttack/strikeDamage would promise a bonus the character has no claim to. If the owner wants it reachable at all, the natural home is the consumable-MODE lane already built (lane E): a player-toggled pill the character switches on only if the GM says the spores landed on them. Do not register it as a passive or a star.",
+    "quote": "If a creature dies from execution powder, the spores from their last breath alight on a random creature adjacent to the victim, granting that creature 20 temporary Hit Points and a +1 status bonus to attack and damage rolls for 10 minutes."
+   },
+   {
+    "id": "lightweave-scarf",
+    "verdict": "ordinary-star",
+    "reason": "On re-reading this maps cleanly to two existing stat rows: saves and the Deception skill. Reading (a) in the openQuestion is correct and is already SHIPPED precedent — src/rules/situationalBonuses.ts line 1211 registers `lightweave-scarf-major` as exactly this pair of stars ('while the scarf is affixed to armor, on saving throws against illusions' / 'on Deception checks to Create a Diversion') at +3 item. Reading (b) is mechanically impossible: Create a Diversion is opposed by Perception DC and is never resisted with a saving throw. The base scarf is the same sentence at +2 item, so it should mirror the major's wording verbatim for pooling to work (poolSituationalLines compares trigger TEXT). Both bonuses are gated on the Armor affixture, which belongs in `when`. The Weapon-mode clause (next Strike confuses on a hit) grants no bonus to any stat and is not part of this star.",
+    "quote": "- **Armor** You gain a +2 item bonus to saving throws against illusions and Deception checks to Create a Diversion.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "all"
+       }
+      ],
+      "when": "while the scarf is affixed to armor, on saving throws against illusions",
+      "bonus": "+2 item"
+     },
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "deception"
+       }
+      ],
+      "when": "while the scarf is affixed to armor, on Deception checks to Create a Diversion",
+      "bonus": "+2 item"
+     }
+    ]
+   },
+   {
+    "id": "lightweave-scarf-greater",
+    "verdict": "ordinary-star",
+    "reason": "Identical printed sentence to the base scarf, identical value (+2 item — the greater version raises only the item's spell DC to 34 and adds activations; it does NOT raise the Armor-mode bonus). Same resolution as the base: reading (a), matching the already-shipped `lightweave-scarf-major` entry at line 1211. Keep the wording byte-identical across base/greater/major so the stacking pooler keeps only the best item bonus when more than one scarf is worn.",
+    "quote": "- **Armor** You gain a +2 item bonus to saving throws against illusions and Deception checks to Create a Diversion.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "all"
+       }
+      ],
+      "when": "while the scarf is affixed to armor, on saving throws against illusions",
+      "bonus": "+2 item"
+     },
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "deception"
+       }
+      ],
+      "when": "while the scarf is affixed to armor, on Deception checks to Create a Diversion",
+      "bonus": "+2 item"
+     }
+    ]
+   },
+   {
+    "id": "gelid-shard",
+    "verdict": "ordinary-star",
+    "reason": "The shard's save clause does map to an existing row, so it is an ordinary star: +2 status to ALL saves against emotion effects (the registry has many identical 'against emotion effects' entries, e.g. cold-minded, emotional-partitions). The cold resistance is already correctly flat in currentFlat (@actor.level). The other two clauses get NO surface and should stay description text: (1) 'the DC of checks to Make an Impression or Request a favor... is increased by +2' is a skill DC, which the owner ruled no-surface — and it is not even the character's own DC, it is the DC they roll against, so re-expressing it as a -2 penalty on Diplomacy would be inventing a modifier the text never prints; (2) 'When you gain a bonus from an emotion effect, that bonus is reduced by 1' is a meta-modifier on other bonuses with no target kind at all — it touches whatever stat the emotion effect happened to buff, which no single target row can express. Both are worth telling the owner about explicitly rather than silently dropping.",
+    "quote": "You gain resistance to cold equal to your level and a +2 status bonus to all saves against emotion effects.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "all"
+       }
+      ],
+      "when": "against emotion effects, while the shard is invested",
+      "bonus": "+2 status"
+     }
+    ]
+   },
+   {
+    "id": "the-survivor",
+    "verdict": "condition-marker",
+    "reason": "This is the owner's own worked example: 'The Survivor add a * on the dying condition linking to the feat.' Both of the item's invested benefits act on Dying and nothing else. Recovery checks exist only inside the dying condition — core.json's `dying` text says so directly ('When you're dying, you must attempt a recovery check at the start of your turn each round') — and the sheet has no recovery-check stat row (I grepped: the registry has zero 'recovery check' entries, confirming there is nowhere else for this to go). Do NOT answer the record's openQuestion by inventing a 'recovery'/'flatCheck' kind, and do NOT put it on the HP tile: HP is not what the bonus modifies. The granted Diehard also changes Dying (you die at dying 5 instead of 4), so the mark covers both halves of the sentence. Value shown inline on the dying row is the recovery bonus; the +3 upgrade is level-gated, so it is carried in the value text rather than as a second mark.",
+    "quote": "When you have *The Survivor* invested, you gain Diehard as a bonus feat. If you already possess this feat, you gain a +2 item bonus to all recovery checks. This item bonus increases to +3 if you are at least 17th-level.",
+    "marker": {
+     "targetId": "dying",
+     "targetName": "Dying",
+     "value": "+2 (+3 at 17th)",
+     "note": "While invested: recovery checks take a +2 item bonus (+3 if you are at least 17th level) — but only if you already had Diehard; otherwise The Survivor grants Diehard itself, so you die at dying 5 instead of dying 4."
+    }
+   },
+   {
+    "id": "bombers-eye-elixir-lesser",
+    "verdict": "no-surface",
+    "reason": "The elixir changes a number on the TARGET, not on the character: it shaves 1 off the circumstance bonus to AC the target gets from cover. The app models no target AC and no cover, so there is nothing to attach to. Answering the record's openQuestion: do NOT star strikeAttack as an effective '+1 to hit' — the text grants no bonus to the attack roll, and a target in the open (no cover) gains nothing at all from the elixir, so the star would be false roughly half the time. There is also no ACTION to mark: the thing modified is the target's Take Cover benefit, not one of the character's actions, so Ruling D's action-marker does not reach it. Shipped precedent for this exact shape is `motion-seeking-lenses` (line 1912), where the identical cover-loss clause was folded into the `when` text of a bonus that already existed rather than given its own star — Bomber's Eye has no other bonus to ride along on. If the owner wants it visible, the honest home is a display-only MODE pill ('Bomber's Eye: bomb Strikes ignore 1 of a target's cover bonus, 5 minutes') that changes no number.",
+    "quote": "For the next 5 minutes, your alchemical bomb Strikes reduce the circumstance bonus to AC your targets gain from cover by 1."
+   },
+   {
+    "id": "bombers-eye-elixir-greater",
+    "verdict": "no-surface",
+    "reason": "Same shape as the lesser elixir at 2 instead of 1 — a reduction to the TARGET's cover bonus to AC, on bomb Strikes only. Same reasoning: no target-AC/cover model, no character stat row moves, no action of the character's is modified, and starring strikeAttack with '+2' would invent a bonus the text does not print (against a target with no cover it is worth nothing). Best available surface if the owner ever wants one is the display-only mode pill, not a star.",
+    "quote": "For the next 5 minutes, your alchemical bomb Strikes reduce the circumstance bonus to AC your targets gain from cover by 2."
+   },
+   {
+    "id": "potion-of-disguise",
+    "verdict": "no-surface",
+    "reason": "Per the owner's standing ruling on skill DCs (Potion of Disguise named explicitly): \"don't add a place for this, the user will need to remember.\" The +4 raises the character's Deception DC — the number an onlooker's Perception check is rolled against while Impersonating — and never the Deception check the player rolls. Starring the Deception row would be read as a check bonus, which it is not. The 'add your level even if untrained' clause is part of the same DC and has the same fate. No action-marker either: Impersonate exists as an action id, but the potion does not change what Impersonate DOES, it only sets the DC opponents face, which is the exact thing the owner declined to surface.",
+    "quote": "You gain a +4 status bonus to your Deception DC against such Perception checks and add your level even if untrained."
+   },
+   {
+    "id": "potion-of-disguise-lesser",
+    "verdict": "no-surface",
+    "reason": "Same sentence, same ruling as the parent record — a Deception DC (not a check), which the owner ruled explicitly gets no place on the sheet. The lesser variant adds only a size floor of Small and craft requirements, neither of which is a bonus to anything.",
+    "quote": "You gain a +4 status bonus to your Deception DC against such Perception checks and add your level even if untrained."
+   },
+   {
+    "id": "potion-of-disguise-moderate",
+    "verdict": "no-surface",
+    "reason": "Same Deception-DC-only bonus as the parent, ruled no-surface by the owner. The moderate variant's only extra mechanics are a wider size range (Tiny to Large) and 'reducing your reach to 0 as a Tiny creature' — a reach change, not a bonus, and reach is not one of the available target kinds either.",
+    "quote": "You gain a +4 status bonus to your Deception DC against such Perception checks and add your level even if untrained."
+   },
+   {
+    "id": "potion-of-disguise-greater",
+    "verdict": "no-surface",
+    "reason": "Same Deception-DC-only bonus, ruled no-surface. The greater variant's addition ('You can attempt to Impersonate a specific individual, though you still need to roll Deception') expands what you may attempt and explicitly grants NO bonus to the roll, so it does not become an action-marker on `impersonate` either — there is no changed value to show in parentheses.",
+    "quote": "You gain a +4 status bonus to your Deception DC against such Perception checks and add your level even if untrained."
+   },
+   {
+    "id": "olfactory-obfuscator-lesser",
+    "verdict": "no-surface",
+    "reason": "Owner ruled this item by name under the skill-DC decision: no surface. The +4 raises the DC a Seeking creature's Perception check must beat (the character's Stealth DC), never a check the player rolls, and it evaporates the moment the seeker uses any non-scent sense — so a Stealth star would over-promise twice over. IMPORTANT INCONSISTENCY TO FIX: `olfactory-obfuscator-greater` is currently SHIPPED as a Stealth star in src/rules/situationalBonuses.ts line 856 ('+4 item', 'against Seek attempts by creatures using only scent'). That entry predates the ruling and contradicts it; it should be removed so the lesser and greater variants behave the same.",
+    "quote": "You gain a +4 item bonus against attempts to Seek you by creatures using only scent-based senses; if they use any other senses as well, the bonus doesn't apply."
+   },
+   {
+    "id": "anti-dragon-barding",
+    "verdict": "not-yours",
+    "reason": "Every number in this item belongs to the ANIMAL COMPANION wearing the barding, not to the character: the +2 item bonus to Fortitude DC and Reflex DC is the companion's, and the 1d4 damage is dealt by the companion's spikes to whoever Grapples it. The character's own saves, DCs and stats are untouched, so nothing goes on the character sheet. (Note this is doubly removed from the player's rows — it is a companion's DC, i.e. the number an attacker rolls against, not even a check the companion rolls.)",
+    "quote": "An animal companion wearing anti-dragon barding gains a +2 item bonus to its Fortitude DC and Reflex DC against attempts to grapple, reposition, shove, or trip it, and a creature that successfully Grapples the animal companion takes 1d4 damage."
+   },
+   {
+    "id": "greater-anti-dragon-barding",
+    "verdict": "not-yours",
+    "reason": "Same as the base barding, at +4 and 3d4 piercing: the bonus is on the ANIMAL COMPANION wearing the barding, never on the character. (This record is a scraped composite that reprints the base item's text before the greater line, but both paragraphs name the animal companion as the recipient.)",
+    "quote": "The barding grants a +4 item bonus against Grapple, Reposition, Shove, and Trip, and deals 3d4 piercing damage when the wearer is Grappled."
+   },
+   {
+    "id": "stalwarts-banner-greater",
+    "verdict": "dc-only-save",
+    "reason": "The text names Fortitude DC and Reflex DC — the numbers an opponent's check (an Athletics Shove/Trip, a spell effect that moves you) is rolled against — not the saves the player rolls. It does apply to the character ('You and allies within your banner's aura'), so it is yours, unlike the barding. This is exactly what SituationalTarget.dcOnly was added for, and the registry already ships the same reading for the other two banners (lines 1839-1841, `stalwarts-banner` / `greater-stalwarts-banner` / `major-stalwarts-banner`) — though those entries pre-date the flag and carry the 'not your save' warning only in prose; they should be updated to set dcOnly:true so the * lands beside the DC and not beside the save's name. Note the id collision: this record is `stalwarts-banner-greater` (itemAliases.ts maps aon-greater-stalwart-s-banner to it) while the shipped entry is keyed `greater-stalwarts-banner`; one of the two keys is dead and should be reconciled or the star will never display. The 10 temporary Hit Points are registered separately on the hp row, following the `play-to-the-crowd` precedent for temp HP.",
+    "quote": "You and allies within your banner's aura gain 10 temporary Hit Points and a +2 status bonus to your Fortitude DC and Reflex DC against any effect that would move you or knock you prone.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "fortitude",
+        "dcOnly": true
+       },
+       {
+        "kind": "save",
+        "detail": "reflex",
+        "dcOnly": true
+       }
+      ],
+      "when": "for 1 round after Stand Firm — raises the Fortitude DC and Reflex DC an opponent rolls against to move you or knock you prone; it does nothing for a save you roll yourself",
+      "bonus": "+2 status"
+     },
+     {
+      "targets": [
+       {
+        "kind": "hp"
+       }
+      ],
+      "when": "for 1 round after Stand Firm (you and allies within the banner's aura)",
+      "bonus": "10 temporary Hit Points"
+     }
+    ]
+   },
+   {
+    "id": "stalwarts-banner-major",
+    "verdict": "dc-only-save",
+    "reason": "Identical wording to the Greater banner at +3 and 15 temporary Hit Points. Same call: Fortitude DC / Reflex DC are the numbers others roll against, so the entry goes in the save popup with dcOnly:true and wording that says which number moves, rather than marking the save name. Same key-collision caveat as the Greater banner — this record's id is `stalwarts-banner-major` while the shipped registry entry is `major-stalwarts-banner`.",
+    "quote": "You and allies within your banner's aura gain 15 temporary Hit Points and a +3 status bonus to your Fortitude DC and Reflex DC against any effect that would move you or knock you prone.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "fortitude",
+        "dcOnly": true
+       },
+       {
+        "kind": "save",
+        "detail": "reflex",
+        "dcOnly": true
+       }
+      ],
+      "when": "for 1 round after Stand Firm — raises the Fortitude DC and Reflex DC an opponent rolls against to move you or knock you prone; it does nothing for a save you roll yourself",
+      "bonus": "+3 status"
+     },
+     {
+      "targets": [
+       {
+        "kind": "hp"
+       }
+      ],
+      "when": "for 1 round after Stand Firm (you and allies within the banner's aura)",
+      "bonus": "15 temporary Hit Points"
+     }
+    ]
+   }
+  ],
+  "findings": [
+   {
+    "id": "cardinal-guardians",
+    "problem": "LOST TRIGGER plus a WRONG-OWNER entry in an undefined shape. The printed text fires on EITHER outcome — \"whenever you succeed at a spell attack ... OR when a creature fails its save against such a spell\" — and the encoding kept only the spell-attack half. Worse, the second entry puts \"-2 status\" on {kind:'spell', detail:'dc', dcOnly:true}: the -2 is a penalty to the CREATURE's saving throws, not a change to your spell DC, and dcOnly is documented in src/rules/situationalBonuses.ts as a `save`-only flag (\"the bonus moves the SAVE DC\"). Rendering -2 beside the player's own spell DC states the opposite of the rule.",
+    "correction": "{\"id\":\"cardinal-guardians\",\"verdict\":\"ordinary-star\",\"reason\":\"Restores the dropped half of the trigger: the +2 applies after you succeed at a spell attack OR after the creature fails its save against an apparition or vessel spell, and the encoding kept only the attack half. The second entry is removed: the -2 status penalty lands on the creature's own saving throws, not on your spell DC, and SituationalTarget.dcOnly is defined for `save` targets only, so {kind:'spell',detail:'dc',dcOnly:true} is not a shape the registry knows how to render; a -2 shown beside the player's spell DC would read as their DC dropping. The enemy-side penalty stays where the book puts it, in the feat's own description, consistent with ruling F's principle that what lands on another creature is not a line on your sheet.\",\"quote\":\"Whenever you succeed at a spell attack with an apparition spell or vessel spell, or when a creature fails its save against such a spell, you gain a +2 status bonus to your spell attack modifier against that creature with spells granted by any of your other apparitions, and it takes a –2 status penalty to its saves against such spells.\",\"situational\":[{\"targets\":[{\"kind\":\"spell\",\"detail\":\"attack\"}],\"when\":\"until the end of your next turn, against a creature you hit with, or that failed its save against, one apparition or vessel spell — with spells from your other apparitions\",\"bonus\":\"+2 status\"}]}"
+   },
+   {
+    "id": "sixfingers-elixir",
+    "problem": "This is an UMBRELLA record and ruling A gives umbrella records no situational entries at all. It passes the ruling's own test exactly: core.json has no price on sixfingers-elixir while sixfingers-elixir-lesser/moderate/greater carry 25 / 250 / 2,500 gp under the same base name, and its text is the AoN parent page listing all three grades. The three graded records already carry the Reflex-DC star ruling D asked for, so this fourth copy both duplicates it and contradicts ruling A.",
+    "correction": "{\"id\":\"sixfingers-elixir\",\"verdict\":\"no-surface\",\"reason\":\"UMBRELLA RECORD. Ruling A: 'the summery of all of the items shouldn't be an option for the characters, it's not a real item so they shouldn't even see that' — umbrella/summary records get NO situational entries and are hidden from pickers. Verified against core.json: sixfingers-elixir has no price, its three graded twins (lesser/moderate/greater, levels 5/11/17) have 25/250/2,500 gp, which is precisely the ruling's stated test. Ruling D's 'Six-Fingers Elixir add a * in the reflex description pop up that says the effect and that it only effects the dc' is satisfied by the three grade records, which are the ones a character can actually own and which already carry the entry.\",\"quote\":\"You gain a +2 item bonus to your Reflex DC to keep from being Disarmed and a climb Speed of 20 feet for the listed duration.\"}"
+   },
+   {
+    "id": "mountain-stance",
+    "problem": "INVENTED RESTRICTION. The text reads \"a +2 circumstance bonus to any defenses\" — 'any' is open, and ruling H is explicit that where the rules are open the app stays open. Dropping AC narrows the book on the player's behalf. Separately, the entry mixes a dcOnly target and a non-dcOnly target under one `when`, which ruling D's DC handling cannot render: the DC line has to be worded so it plainly says it touches the DC and the * has to sit beside the DC, not beside the save's name.",
+    "correction": "{\"id\":\"mountain-stance\",\"verdict\":\"ordinary-star\",\"reason\":\"The printed word is 'any defenses'. Ruling H: 'keep it open... You decide at the table' — an open phrase stays open, so AC is starred alongside all saves rather than being reasoned away. Reposition, Shove and Trip are indeed rolled against your Fortitude DC, which is why the Fortitude-DC line is kept, but 'and other forced movement effects' is deliberately unbounded and can arrive at AC or at a save you roll. Split into two entries because ruling D requires the DC-only line to say so in its own words and to place the * next to the DC; one entry with a shared `when` cannot do that for both a rolled defence and a DC. The +4 item AC, the Dex cap of +0 and the -5 Speeds remain flat in the stance manager (core.json stances has 'mountain-stance'), unchanged.\",\"quote\":\"While in Mountain Stance, you gain a +4 item bonus to AC and a +2 circumstance bonus to any defenses against Reposition, Shove, Trip, and other forced movement effects.\",\"situational\":[{\"targets\":[{\"kind\":\"ac\"},{\"kind\":\"save\",\"detail\":\"all\"}],\"when\":\"while in Mountain Stance, against Reposition, Shove, Trip, and other forced movement effects\",\"bonus\":\"+2 circumstance\"},{\"targets\":[{\"kind\":\"save\",\"detail\":\"fortitude\",\"dcOnly\":true}],\"when\":\"while in Mountain Stance, on the Fortitude DC an opponent rolls against to Reposition, Shove or Trip you\",\"bonus\":\"+2 circumstance\"}]}"
+   },
+   {
+    "id": "explosive-death-drop",
+    "problem": "WRONG VALUE SHAPE and a doctored quote. `bonus` must be \"<sign><value> <type>\"; the submitted string \"+1 circumstance (one size smaller) or +3 (smaller still); -1 / -3 circumstance if the target is larger\" crams four printed modifiers and their triggers into one field, which the stacking display (best bonus / worst penalty per type, compared by `when` string) cannot read — four printed values with four different conditions are four entries. The `quote` also inserts the word \"Athletics\", which the record's printed text does not contain; the importer dropped it and the owner filed that as its own data bug.",
+    "correction": "{\"id\":\"explosive-death-drop\",\"verdict\":\"ordinary-star\",\"reason\":\"Athletics is confirmed \\u2014 the local AoN mirror at C:\\\\wonderers guide\\\\aon-2e-archive\\\\data\\\\by-category\\\\feat\\\\feat-2271.json prints 'Roll an [Athletics](/Skills.aspx?ID=3) check against your target's Fortitude DC', so the skill target stands and the missing word is a separate importer fix, exactly as ruling D's leftovers record it ('not a design question... A data bug, fixed on its own'). Two things are corrected here. The four printed size modifiers are split into four entries so each carries one '<sign><value> <type>' bonus and its own trigger, which is what the stacking display compares; a single blended string cannot be pooled or deduplicated. And the quote is restored to the record's actual printed text rather than a repaired version of it \\u2014 the registry should not silently launder a data defect it is not fixing.\",\"quote\":\"Roll an check against your target's Fortitude DC. You take a -1 circumstance penalty to your check if the target is one size larger than you and a -3 circumstance penalty if it's larger than that. You gain a +1 circumstance bonus to your check if the target is one size smaller than you and a +3 circumstance bonus if it's smaller than that.\",\"situational\":[{\"targets\":[{\"kind\":\"skill\",\"detail\":\"athletics\"}],\"when\":\"on Explosive Death Drop's check, if the target is one size smaller than you\",\"bonus\":\"+1 circumstance\"},{\"targets\":[{\"kind\":\"skill\",\"detail\":\"athletics\"}],\"when\":\"on Explosive Death Drop's check, if the target is more than one size smaller than you\",\"bonus\":\"+3 circumstance\"},{\"targets\":[{\"kind\":\"skill\",\"detail\":\"athletics\"}],\"when\":\"on Explosive Death Drop's check, if the target is one size larger than you\",\"bonus\":\"-1 circumstance\"},{\"targets\":[{\"kind\":\"skill\",\"detail\":\"athletics\"}],\"when\":\"on Explosive Death Drop's check, if the target is more than one size larger than you\",\"bonus\":\"-3 circumstance\"}]}"
+   },
+   {
+    "id": "black-powder-boost",
+    "problem": "NOTE FAR OVER ONE LINE, and it prints repo bookkeeping on the player's sheet. Ruling H caps the note at roughly one line with the full text a click away; this one runs two clauses and then tells the reader that \"the same marker belongs on core.json's \\\"high-jump\\\" and \\\"long-jump\\\" rows\". The surface itself is right (ruling D names this record, and core.json's actions bucket does contain leap, high-jump and long-jump) — only the note is wrong.",
+    "correction": "{\"id\":\"black-powder-boost\",\"verdict\":\"action-marker\",\"reason\":\"Surface confirmed: ruling D names this record by hand ('Black Powder Boost -> Leap action, \\\"+10 feet ( )\\\", * -> Black Powder Boost') and core.json's actions bucket has 'leap'. The note is trimmed to its essential trigger per ruling H's one-line cap — the full text stays in the feat's own description, which is what the * links to. The instruction about the 2-action High Jump / Long Jump form is removed from the note: it is real and those two rows (core.json actions has 'high-jump' and 'long-jump') do each need their own marker record, but that is a note to the applier, not player-facing text, and a marker that tells the reader which JSON rows to edit is a defect in itself.\",\"quote\":\"You Leap and discharge your firearm to add a +10-foot status bonus to the distance traveled.\",\"marker\":{\"targetId\":\"leap\",\"targetName\":\"Leap\",\"value\":\"+10 feet\",\"note\":\"Discharging a loaded firearm as you Leap adds a +10-foot status bonus to the distance travelled.\"}}"
+   },
+   {
+    "id": "living-leaf-weave",
+    "problem": "MISLABELLED VERDICT. The record's first entry is an ordinary star on a check the player rolls (Athletics to Grapple); only the second is DC-only. Filing the whole record as \"dc-only-save\" contradicts the chunk's own convention — commanders-banner pairs a rolled Will save with a Will-DC entry and is filed \"ordinary-star\" — and risks an applier that routes by verdict emitting only the dcOnly targets and silently dropping the Grapple star.",
+    "correction": "{\"id\":\"living-leaf-weave\",\"verdict\":\"ordinary-star\",\"reason\":\"Entries are right; the label is not. One activation produces a bonus to a check the player ROLLS (Athletics to Grapple) and bonuses to two DCs the opponent rolls against, so by this chunk's own convention for mixed records (commanders-banner) the verdict is ordinary-star, not dc-only-save. The printed text is followed rather than the general maneuver rule — the armour puts Grapple, Disarm and Shove on the Fortitude DC but Trip on the REFLEX DC, which is unusual and is left as printed. The bonus size is genuinely not printed: it equals the installed elixir of life's item bonus, so it is read off the installed elixir rather than hard-coded, and the whole thing lasts 3 rounds and consumes the elixir.\",\"quote\":\"Slithering vines grow from the armor, granting an item bonus to Athletics checks to Grapple, to your Fortitude DC to resist Grapple, Disarm, or Shove attempts, and to your Reflex DC to resist Trip attempts.\",\"situational\":[{\"targets\":[{\"kind\":\"skill\",\"detail\":\"athletics\"}],\"when\":\"to Grapple, for 3 rounds after activating the armor with an elixir of life installed\",\"bonus\":\"+ the installed elixir's item bonus (item)\"},{\"targets\":[{\"kind\":\"save\",\"detail\":\"fortitude\",\"dcOnly\":true},{\"kind\":\"save\",\"detail\":\"reflex\",\"dcOnly\":true}],\"when\":\"for those 3 rounds, when a creature tries to Grapple, Disarm or Shove you (Fortitude DC) or Trip you (Reflex DC) — this raises the DC they roll against, not a save you roll\",\"bonus\":\"+ the installed elixir's item bonus (item)\"}]}"
+   },
+   {
+    "id": "weapon-innovation",
+    "problem": "Verdict is right but the stated reason is factually wrong and would spawn work that is already finished. It claims the bonus has no home until the app tracks weapon-modification selections and that its correct home would be a Conceal an Object marker. In fact Segmented Frame is its own record — core.json classFeatures has 'segmented-frame' — and src/rules/situationalBonuses.ts line 880 already ships the entry for it.",
+    "correction": "{\"id\":\"weapon-innovation\",\"verdict\":\"no-surface\",\"reason\":\"Verdict stands — the bonus is not granted by Weapon Innovation, it is granted by one of eleven initial weapon modifications (Segmented Frame) and only while the innovation is collapsed to light Bulk, so registering it here would put a permanent Stealth star on every inventor who never took it. But the bonus is NOT homeless and nothing is waiting on modification tracking: core.json's classFeatures bucket has its own 'segmented-frame' record, and src/rules/situationalBonuses.ts already registers it — targets skill/stealth, when 'to Stealth checks (and your DC) to hide or conceal your innovation, while it's collapsed to light Bulk', bonus '+2 circumstance'. Adding it to weapon-innovation would double-list it for the inventors who did choose Segmented Frame. No new surface, no follow-up work.\",\"quote\":\"When it's collapsed to light Bulk, it has the concealable trait, which grants you a +2 circumstance bonus to Stealth checks and DCs to hide or conceal the weapon.\"}"
+   },
+   {
+    "id": "anti-dragon-barding",
+    "problem": "WRONG OWNER, in the direction that loses the data. The owner's ★ COMPANIONS ruling in work/rulings/DECISIONS.md answers this record by name: \"A companion item's bonus marks the COMPANION's stat block, not the character's\", and the ruling's NEW-work list literally cites \"companion items with conditional bonuses (anti-dragon-barding) currently mark nothing anywhere\" as the defect to fix. The candidate's 'not-yours' verdict records no bonus, no value and no trigger anywhere, which re-creates exactly the state the owner ordered fixed. It is also not the same case as ruling F (a teammate): a companion is yours and has its own stat block in the app. Shipped precedent for how to encode a companion-owned bonus in this registry is `motivating-treat-bag` (src/rules/situationalBonuses.ts:1701), which keeps ordinary situational entries and names the companion at the front of `when`. The printed bonus is also DC-only (it moves the companion's Fortitude DC and Reflex DC, the numbers an opponent's Athletics check is rolled against), so it needs dcOnly:true — the same flag the candidate correctly used for the banners. The 1d4 damage to a creature that Grapples the companion has no target kind and stays description text.",
+    "correction": "{\"id\":\"anti-dragon-barding\",\"verdict\":\"ordinary-star\",\"reason\":\"Per the owner's ★ COMPANIONS ruling, a companion item's bonus marks the COMPANION's stat block rather than the character's — so it is recorded, not dropped. The printed bonus is the companion's Fortitude DC and Reflex DC (the number an opponent rolls against when it tries to Grapple, Reposition, Shove or Trip the companion), not a save the companion rolls, so both targets carry dcOnly:true. Encoded in the shipped `motivating-treat-bag` shape (situationalBonuses.ts:1701), which names the companion at the front of `when` so the line reads correctly wherever it renders. The 1d4 damage a successful grappler takes has no target kind and stays in the item description.\",\"quote\":\"An animal companion wearing anti-dragon barding gains a +2 item bonus to its Fortitude DC and Reflex DC against attempts to grapple, reposition, shove, or trip it, and a creature that successfully Grapples the animal companion takes 1d4 damage.\",\"situational\":[{\"targets\":[{\"kind\":\"save\",\"detail\":\"fortitude\",\"dcOnly\":true},{\"kind\":\"save\",\"detail\":\"reflex\",\"dcOnly\":true}],\"when\":\"YOUR ANIMAL COMPANION wearing the barding, against attempts to Grapple, Reposition, Shove, or Trip it\",\"bonus\":\"+2 item\"}]}"
+   },
+   {
+    "id": "greater-anti-dragon-barding",
+    "problem": "Same defect as the base barding: 'not-yours' discards a bonus the owner's ★ COMPANIONS ruling says must appear on the companion's stat block. Values from the greater line are +4 item and 3d4 piercing; the DC context (Fortitude DC / Reflex DC) comes from the base paragraph reprinted in this same composite record, so the bonus is DC-only and needs dcOnly:true. Wording is kept byte-identical to the base entry apart from the value so the stacking pooler (which compares `when` text) keeps only the better item bonus if both records are ever present.",
+    "correction": "{\"id\":\"greater-anti-dragon-barding\",\"verdict\":\"ordinary-star\",\"reason\":\"Same call as the base barding under the owner's ★ COMPANIONS ruling: the bonus is the COMPANION's and is recorded against the companion's block, not dropped. This scraped composite reprints the base item first, which is where the 'Fortitude DC and Reflex DC' framing comes from — so the +4 is DC-only (dcOnly:true) and applies against Grapple, Reposition, Shove and Trip. The 3d4 piercing damage dealt to a creature that Grapples the wearer has no target kind and stays description text. `when` matches the base barding's wording so same-type pooling keeps only the better bonus.\",\"quote\":\"The barding grants a +4 item bonus against Grapple, Reposition, Shove, and Trip, and deals 3d4 piercing damage when the wearer is Grappled.\",\"situational\":[{\"targets\":[{\"kind\":\"save\",\"detail\":\"fortitude\",\"dcOnly\":true},{\"kind\":\"save\",\"detail\":\"reflex\",\"dcOnly\":true}],\"when\":\"YOUR ANIMAL COMPANION wearing the barding, against attempts to Grapple, Reposition, Shove, or Trip it\",\"bonus\":\"+4 item\"}]}"
+   },
+   {
+    "id": "stalwarts-banner-greater",
+    "problem": "The verdict and the targets are right; the `when` strings are not. (1) VERBOSITY / DOUBLED DISCLAIMER: 'it does nothing for a save you roll yourself' is text the UI already writes itself — src/rules/explain.ts:336 appends '(raises the DC others roll against, not your own save)' to every dcOnly line — so the rendered line says it twice, and the string is far past ruling H's roughly-one-line cap. (2) It also restates the mechanic instead of stating the trigger, which is what `when` is for. (3) The candidate argued (correctly) in the lightweave records that grade variants must be worded identically for the stacking pooler, then wrote wording that matches neither its own Major sibling's intent nor the three shipped entries at situationalBonuses.ts:1839-1841. Corrected to the trigger alone, split per save the way the shipped entries are, and temp HP phrased like the shipped precedents ('20 temporary HP', sun-orchid-poultice:863). Also note the reason's id claim is wrong and should not be acted on: core.json contains BOTH `stalwarts-banner-greater` and `greater-stalwarts-banner` as separate level-12 item records (one is the AoN composite), so neither key is dead — they are duplicate records, which is a data-dedupe question, not a registry-key question.",
+    "correction": "{\"id\":\"stalwarts-banner-greater\",\"verdict\":\"dc-only-save\",\"reason\":\"The text names Fortitude DC and Reflex DC — the numbers an opponent's check is rolled against — not the saves the player rolls, so both save targets carry dcOnly:true and the * lands beside the DC (ruling D, DC-only bonuses). It is the character's own DC ('You and allies within your banner's aura'), so unlike the barding it does belong on this sheet. `when` carries the trigger only: the 'not your save' wording is added automatically by explain.ts for dcOnly lines and must not be duplicated here, and ruling H caps the note at about one line. Split per save and worded to match the shipped entries at situationalBonuses.ts:1839-1841 so the stacking pooler can compare them. Temp HP is registered on the hp row following sun-orchid-poultice / play-to-the-crowd. NOTE: core.json holds both `stalwarts-banner-greater` and `greater-stalwarts-banner` as duplicate level-12 records — a dedupe question, not a dead registry key.\",\"quote\":\"You and allies within your banner's aura gain 10 temporary Hit Points and a +2 status bonus to your Fortitude DC and Reflex DC against any effect that would move you or knock you prone.\",\"situational\":[{\"targets\":[{\"kind\":\"save\",\"detail\":\"fortitude\",\"dcOnly\":true}],\"when\":\"against effects that would move you or knock you prone, for 1 round after Stand Firm\",\"bonus\":\"+2 status\"},{\"targets\":[{\"kind\":\"save\",\"detail\":\"reflex\",\"dcOnly\":true}],\"when\":\"against effects that would move you or knock you prone, for 1 round after Stand Firm\",\"bonus\":\"+2 status\"},{\"targets\":[{\"kind\":\"hp\"}],\"when\":\"for 1 round after Stand Firm, while within your banner's aura\",\"bonus\":\"10 temporary HP\"}]}"
+   },
+   {
+    "id": "stalwarts-banner-major",
+    "problem": "Same two `when` defects as the Greater banner, at +3 / 15 temporary HP: the trigger string carries an explanatory 'it does nothing for a save you roll yourself' clause that src/rules/explain.ts:336 already appends for every dcOnly target, and it runs well past ruling H's one-line cap. Corrected to the bare printed trigger, split per save, worded identically to the Greater banner so same-type pooling can compare the two, and temp HP phrased like the shipped precedents. The id-collision claim in the reason is also wrong: `stalwarts-banner-major` and `major-stalwarts-banner` both exist in core.json as separate records.",
+    "correction": "{\"id\":\"stalwarts-banner-major\",\"verdict\":\"dc-only-save\",\"reason\":\"Identical wording to the Greater banner at +3 status and 15 temporary Hit Points. Fortitude DC and Reflex DC are the numbers others roll against, so both save targets carry dcOnly:true and the * goes beside the DC; the effect is explicitly the character's own ('You and allies within your banner's aura'). `when` gives the trigger only — explain.ts adds the 'raises the DC others roll against, not your own save' wording for dcOnly lines automatically, and ruling H caps the note at about one line. Wording matches the Greater banner and the shipped entries at situationalBonuses.ts:1839-1841 so the stacking pooler keeps only the best status bonus. NOTE: `stalwarts-banner-major` and `major-stalwarts-banner` are duplicate core.json records, not a dead key.\",\"quote\":\"You and allies within your banner's aura gain 15 temporary Hit Points and a +3 status bonus to your Fortitude DC and Reflex DC against any effect that would move you or knock you prone.\",\"situational\":[{\"targets\":[{\"kind\":\"save\",\"detail\":\"fortitude\",\"dcOnly\":true}],\"when\":\"against effects that would move you or knock you prone, for 1 round after Stand Firm\",\"bonus\":\"+3 status\"},{\"targets\":[{\"kind\":\"save\",\"detail\":\"reflex\",\"dcOnly\":true}],\"when\":\"against effects that would move you or knock you prone, for 1 round after Stand Firm\",\"bonus\":\"+3 status\"},{\"targets\":[{\"kind\":\"hp\"}],\"when\":\"for 1 round after Stand Firm, while within your banner's aura\",\"bonus\":\"15 temporary HP\"}]}"
+   },
+   {
+    "id": "the-survivor",
+    "problem": "Surface and value are right (the `dying` condition does exist in core.json's conditions bucket, and it is the owner's own worked example), but the note breaks two rules. (1) INVENTED VALUE: 'so you die at dying 5 instead of dying 4' appears nowhere in this record's printed text — it is Diehard's effect, imported from outside the record, and this file's core rule is to answer only from the printed text. (Core.json's own dying entry states you die at dying 4, so the marker would be printing an unsourced override of the very condition it sits on.) (2) LENGTH: ruling H caps the note at roughly one line, with the full text a click away in the item's own description; this note runs to three clauses and about 230 characters. Trimmed to the printed content, keeping the load-bearing condition that the recovery bonus only exists if you already had Diehard.",
+    "correction": "{\"id\":\"the-survivor\",\"verdict\":\"condition-marker\",\"reason\":\"The owner's worked example for ruling D: 'The Survivor add a * on the dying condition linking to the feat.' Both invested benefits act on Dying and nothing else — recovery checks exist only inside the dying condition (core.json's `dying` text: you attempt a recovery check at the start of your turn each round while dying) and the sheet has no recovery-check stat row, so no new 'recovery'/'flatCheck' kind is invented and it does not go on the HP tile. The note is trimmed to the record's printed text per ruling H's one-line cap: the earlier draft's 'you die at dying 5 instead of dying 4' is Diehard's rules text, not this item's, and must not be printed as if the record said it. The +3 is level-gated so it is carried in the value text rather than as a second mark.\",\"quote\":\"When you have *The Survivor* invested, you gain Diehard as a bonus feat. If you already possess this feat, you gain a +2 item bonus to all recovery checks. This item bonus increases to +3 if you are at least 17th-level.\",\"marker\":{\"targetId\":\"dying\",\"targetName\":\"Dying\",\"value\":\"+2 (+3 at 17th)\",\"note\":\"While invested: +2 item bonus to recovery checks (+3 at 17th level) if you already have Diehard; otherwise it grants you Diehard.\"}}"
+   }
+  ]
+ },
+ "F": {
+  "extracted": [
+   {
+    "id": "tweak-appearances",
+    "verdict": "ally-timed",
+    "whoGetsIt": "the person whose clothing/appearance you adjusted (\"the target\"), while they speak to the chosen audience",
+    "reason": "The text separates the actor from the beneficiary: you spend the minute, \"the target\" gains the Diplomacy/Performance bonus. Nothing lands on your own sheet. It is not instant, though — the text explicitly states an end condition (\"This bonus lasts until...\"), so it is a lasting effect you started and should show as a display-only pill on you.",
+    "quote": "You spend 1 minute making quick adjustments to someone's clothing and appearance, causing their words to carry more weight with an audience of your choice. While speaking to that audience, the target gains a +1 item bonus to Diplomacy and Performance checks.",
+    "mode": {
+     "name": "Tweak Appearances",
+     "duration": "until used on the target again, the situation they were prepared for ends, or they next change their outfit",
+     "note": "The target you tweaked has +1 item (up to +3 at master/legendary Crafting) to Diplomacy and Performance with the chosen audience. Your own checks are unchanged.",
+     "survivesRest": false
+    }
+   },
+   {
+    "id": "aegis-for-the-innocent",
+    "verdict": "ally-timed",
+    "whoGetsIt": "the willing creature you selected within your nimbus (\"an ally\")",
+    "reason": "The text names the recipient as an ally and calls them \"the target\" throughout; the +1 status AC is theirs. The barrier has a printed duration, and the activator carries a real ongoing state (their nimbus is halved while it runs), so the exemplar gets a pill and no number change.",
+    "quote": "The target gains a +1 status bonus to AC.",
+    "mode": {
+     "name": "Aegis for the Innocent",
+     "duration": "1 minute",
+     "note": "An ally inside your nimbus is barriered: they have +1 status AC and enemies in/entering it must save vs your class or spell DC. While it runs, your nimbus area is halved. Your own AC is unchanged.",
+     "survivesRest": false
+    }
+   },
+   {
+    "id": "incredible-scout",
+    "verdict": "ally-instant",
+    "whoGetsIt": "your allies, on their initiative rolls",
+    "reason": "The feat's printed text upgrades only what you GRANT: \"you grant your allies a +2 ... instead of a +1\". It never says you gain the improved bonus, and an initiative roll resolves once — there is no stated duration to run. Nothing goes on your sheet, no mode.",
+    "quote": "When using the Scout exploration activity, you grant your allies a +2 circumstance bonus to their initiative rolls instead of a +1 circumstance bonus."
+   },
+   {
+    "id": "ward-slumber",
+    "verdict": "ally-timed",
+    "whoGetsIt": "the up to eight creatures within 30 feet of you that the ward protects",
+    "reason": "The text describes the beneficiaries as creatures \"within 30 feet of you\" — it never puts you among them, so per Ruling F nothing goes on your own saves. But it prints an explicit end point (\"until your next daily preparations\"), so the warder gets a display-only pill saying the ward is up.",
+    "quote": "All creatures affected by the ritual gain a +4 status bonus on saving throws against Nightmare or other effects influencing dreams (such as those provided by this archetype) until your next daily preparations.",
+    "mode": {
+     "name": "Ward Slumber",
+     "duration": "until your next daily preparations",
+     "note": "Up to eight creatures you warded have +4 status to saves vs Nightmare and dream effects and heal double HP from resting. Your own saves are unchanged.",
+     "survivesRest": false
+    }
+   },
+   {
+    "id": "duchy-defender",
+    "verdict": "yours-after-all",
+    "whoGetsIt": "you, the wielder — the anti-disarm bonus is granted \"to you\", and Declare Judgment's extra damage is dealt by the weapon you are Striking with",
+    "reason": "Overturning the ally reading: both benefits resolve on the wielder's sheet. The disarm bonus is printed as granted \"to you\" (it raises the DC an opponent rolls against, hence dcOnly), and Declare Judgment's 2d8 precision is added to the damage the weapon deals — i.e. your Strike damage. That the intelligent weapon may refuse or misfire is a GM condition, not a different beneficiary.",
+    "quote": "In the hands of a worthy owner, a duchy defender is nearly impossible to steal, since it transports itself back to you at the first opportunity after someone takes it, and it grants you a +2 circumstance bonus to their Reflex DC to resist being disarmed of it.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "reflex",
+        "dcOnly": true
+       }
+      ],
+      "when": "resisting attempts to Disarm you of the duchy defender, while it deems you a worthy owner",
+      "bonus": "+2 circumstance"
+     },
+     {
+      "targets": [
+       {
+        "kind": "strikeDamage"
+       }
+      ],
+      "when": "the next time the duchy defender damages a target it Declared Judgment on (a creature it knows is guilty of a crime in Alkenstar)",
+      "bonus": "+2d8 precision"
+     }
+    ]
+   },
+   {
+    "id": "admirers-bouquet",
+    "verdict": "ally-instant",
+    "whoGetsIt": "the triggering ally you hand the bouquet to",
+    "reason": "The +1 item bonus is printed for \"they\" — the ally who accepts the bouquet — and it is conditioned on possession of the item, not on a stated span of time: it lasts \"as long as they continue to carry\" it. Once handed over the item has left your sheet entirely, so there is nothing running on you to pill. (The 1-action self activation only reduces your sickened value by 1; that is a condition change, not a bonus to any stat.)",
+    "quote": "If they accept the bouquet, they gain a +1 item bonus to saves against emotion and mental effects as long as they continue to carry the admirer's bouquet."
+   },
+   {
+    "id": "architects-pattern-book",
+    "verdict": "yours-after-all",
+    "whoGetsIt": "any character who rests in the conjured recreation room — which plainly includes the book's owner if they use it",
+    "reason": "Overturning the ally reading: the text says \"any character\", with no exclusion of the caster, so the owner qualifies whenever they spend the hour and sleep there. That makes it a genuine self bonus with a printed window, so it stars the owner's Athletics and Will rather than being dropped.",
+    "quote": "They regain double the amount of Hit Points they would normally receive for an 8-hour rest, and when they make the next day's preparations, they gain a +1 circumstance bonus to Athletics checks and Will saves for the next 12 hours.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "athletics"
+       },
+       {
+        "kind": "save",
+        "detail": "will"
+       }
+      ],
+      "when": "for 12 hours after using the conjured recreation room at least 1 hour and sleeping 8 hours inside the spell's structure",
+      "bonus": "+1 circumstance"
+     }
+    ]
+   },
+   {
+    "id": "canary-informant-basic-services",
+    "verdict": "yours-after-all",
+    "whoGetsIt": "you — the canary Aids YOUR check",
+    "reason": "Overturning the earlier doubt: the informant is the one acting, but the printed bonus is granted \"to your checks\". An Aid landing on your own Gather Information check is your number, not an ally's, so it stars your Diplomacy. Whether the service is hired is an inventory/GM matter, not a reason to strip a printed self bonus.",
+    "quote": "A canary informant automatically Aids you on attempts to Gather Information about a specific person, a locale, rumors spreading in the area, or movements of enemy forces, granting you a +1 circumstance bonus to your checks.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "diplomacy"
+       }
+      ],
+      "when": "Gather Information about a specific person, locale, rumors, or enemy movements while a canary informant is hired",
+      "bonus": "+1 circumstance"
+     }
+    ]
+   },
+   {
+    "id": "canary-informant-advanced-services",
+    "verdict": "yours-after-all",
+    "whoGetsIt": "you — the advanced canary critically succeeds at Aiding YOUR check",
+    "reason": "Same as the basic service: the Aid resolves on your own Gather Information check and the text grants the bonus \"to your check\". The advanced tier only changes the value to +2.",
+    "quote": "Advanced canary informants critically succeed at Aiding you, granting you a +2 circumstance bonus to your check.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "diplomacy"
+       }
+      ],
+      "when": "Gather Information about a specific person, locale, rumors, or enemy movements while an advanced canary informant is hired",
+      "bonus": "+2 circumstance"
+     }
+    ]
+   },
+   {
+    "id": "the-publican",
+    "verdict": "ally-instant",
+    "whoGetsIt": "the ally you Aid — the increase is to the bonus you PROVIDE them",
+    "reason": "The only numeric bonus in the text is the one you hand to someone else, and it is a passive property of the invested artifact with no stated running time, so no pill either. The crit-fail-to-fail clause does touch your own Aid check, but it changes a degree of success rather than granting a bonus to any stat, so there is no value to print in a star. The activation improves an NPC's attitude, which is likewise not a stat bonus.",
+    "quote": "If you are at least 14th level, the circumstance bonus you provide for succeeding or critically succeeding at checks to Aid increases by 1."
+   },
+   {
+    "id": "globe-of-shrouds",
+    "verdict": "ally-instant",
+    "whoGetsIt": "an ally in the haze (the Stealth bonus); the see-invisible clause covers you and your allies but grants no bonus",
+    "reason": "The text says \"An ally in the aura\" — it pointedly does NOT say \"you and your allies\", and where it does mean both it writes \"to you and your allies\" in the very next sentence. So the Stealth bonus is not yours. It also prints no span for the haze itself (only that wisps fade at the start of a creature's next turn after it leaves), so there is no printed duration to put on a pill.",
+    "quote": "An ally in the aura is concealed and gains a +2 status bonus to Stealth checks."
+   },
+   {
+    "id": "strand-of-the-seven-births",
+    "verdict": "ally-timed",
+    "whoGetsIt": "allies within the image's bright light",
+    "reason": "The bonus is printed for \"Allies within the image's bright light\", with no wording that includes the activator, so nothing goes on your saves. The light has an explicit printed span, so the character who detached the charm gets a display-only pill.",
+    "quote": "Allies within the image's bright light hear the constant whispers of Ekriathe or her successor's voice, and they gain a +2 status bonus to saving throws against auditory effects.",
+    "mode": {
+     "name": "Hero-God's Whisper",
+     "duration": "1 hour",
+     "note": "The charm's image sheds bright light in a 20-foot radius: allies inside get +2 status to saves vs auditory effects, and enemies entering must save or be fascinated. Your own saves are unchanged.",
+     "survivesRest": false
+    }
+   },
+   {
+    "id": "paradigm-cube",
+    "verdict": "ally-timed",
+    "whoGetsIt": "allies in the illusion's area — every one of the six colors is worded \"Allies in the area gain...\"",
+    "reason": "All six colored effects grant their +2 item bonus to allies in the area, never to the cube's holder, so no star on your sheet. The illusion has an explicit printed duration and only one color runs at a time, which is exactly the display-only pill case (that also answers the second open question: one pill naming the active color, not six situational entries).",
+    "quote": "Once activated, the illusion created fills a  from you and lasts for 1 minute.",
+    "mode": {
+     "name": "Paradigm Cube (active color)",
+     "duration": "1 minute",
+     "note": "One color's illusion is up (Red/Orange/Yellow/Green/Blue/Indigo). Allies in the area get that color's +2 item bonus — Coerce, Performance, Demoralize, Lore to Recall Knowledge, Perception to Sense Motive, or Stealth to Hide. None of it applies to you. Re-activating swaps the color.",
+     "survivesRest": false
+    }
+   },
+   {
+    "id": "hopeful-athamaru",
+    "verdict": "ally-instant",
+    "whoGetsIt": "any ally inside your 10-foot aura",
+    "reason": "The aura's bonus is printed for \"any ally in it\", which by definition excludes you, so it never touches your saves. It is a permanent heritage trait with no stated duration and nothing to activate, so there is no timed state to pill either. (The Large size clause is a size change, not a bonus lane.)",
+    "quote": "You have a 10-foot aura that grants any ally in it a +1 circumstance bonus to saving throws against fear; this is an emotion and mental effect."
+   },
+   {
+    "id": "folklore-enthusiast",
+    "verdict": "yours-after-all",
+    "whoGetsIt": "you — the sibling fails, YOU gain the bonus",
+    "reason": "The Bickering adjustment reads the opposite way round from an ally buff: the trigger happens to your sibling, but the +1 status bonus is printed \"to your saving throws\", with a printed window. That is a self situational bonus. (Close-Knit instead lowers the DC of your Aid/Administer First Aid check, which is not a bonus to any stat and gets nothing.)",
+    "quote": "Whenever your sibling(s) critically fail a significant skill check or attack roll and you witness their failure, you gain a +1 status bonus to your saving throws until the end of your next turn as you secretly (or perhaps not so secretly) delight in their failure.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "all"
+       }
+      ],
+      "when": "you witness a sibling PC critically fail a significant skill check or attack roll, until the end of your next turn (Family: Bickering)",
+      "bonus": "+1 status"
+     }
+    ]
+   },
+   {
+    "id": "northridge-scholar",
+    "verdict": "yours-after-all",
+    "whoGetsIt": "you — the sibling fails, YOU gain the bonus",
+    "reason": "Identical Bickering text to the other Willowshore backgrounds: the bonus is printed \"to your saving throws\" and lasts until the end of your next turn, so it is a self situational bonus, not an ally buff.",
+    "quote": "Whenever your sibling(s) critically fail a significant skill check or attack roll and you witness their failure, you gain a +1 status bonus to your saving throws until the end of your next turn as you secretly (or perhaps not so secretly) delight in their failure.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "all"
+       }
+      ],
+      "when": "you witness a sibling PC critically fail a significant skill check or attack roll, until the end of your next turn (Family: Bickering)",
+      "bonus": "+1 status"
+     }
+    ]
+   },
+   {
+    "id": "outskirt-dweller",
+    "verdict": "yours-after-all",
+    "whoGetsIt": "you — the sibling fails, YOU gain the bonus",
+    "reason": "Identical Bickering text again: the printed beneficiary of the +1 status bonus is \"your saving throws\", so it stars your saves. Nothing here lands on the sibling.",
+    "quote": "Whenever your sibling(s) critically fail a significant skill check or attack roll and you witness their failure, you gain a +1 status bonus to your saving throws until the end of your next turn as you secretly (or perhaps not so secretly) delight in their failure.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "all"
+       }
+      ],
+      "when": "you witness a sibling PC critically fail a significant skill check or attack roll, until the end of your next turn (Family: Bickering)",
+      "bonus": "+1 status"
+     }
+    ]
+   },
+   {
+    "id": "glittering-snare",
+    "verdict": "ally-instant",
+    "whoGetsIt": "the creature that sets off the snare — and what it gets is a penalty, not a bonus",
+    "reason": "The earlier whyNotYours holds. Everything the snare prints lands on the triggering creature: a Stealth penalty and a hidden-instead-of-undetected effect. The 1/2/5-minute spans run on that victim, not on you, and a rigged snare waiting on a trip wire is not an effect running on its setter — so no star, no modifier, no mode.",
+    "quote": "The first creature to enter the square or open the container must attempt a save as the area is showered with bright, glittering dust that sticks to skin, fur, and clothing."
+   },
+   {
+    "id": "necrobinding-serum",
+    "verdict": "ally-timed",
+    "whoGetsIt": "the undead creature struck by the coated weapon",
+    "reason": "The whyNotYours is right that nothing lands on you — the serum is applied to a weapon and every result falls on the struck undead. But it is not instant: the charmed state carries a printed duration (10 minutes / 8 hours if mindless on a failure, 1 hour / 24 hours if mindless on a critical failure), so the character who applied and delivered it gets a display-only pill telling them the charm is still running. No number of theirs moves — 'the undead creature is momentarily disoriented; it takes a -1 status penalty to all attack rolls made against you' is a penalty on the foe, not a bonus to your AC.",
+    "quote": "The undead creature becomes friendly toward you. If it was already friendly, it becomes helpful. It can't use hostile actions against you. This effect persists for 8 hours if the undead is mindless. Against other undead, the effect gains the mental trait and persists for 10 minutes.",
+    "mode": {
+     "name": "Necrobinding Serum",
+     "duration": "10 minutes (8 hours if the undead is mindless); on a critical failure 1 hour (24 hours if mindless)",
+     "note": "The undead you struck is friendly (or helpful) toward you and can't use hostile actions against you. The effect sits on that creature — none of your own numbers change."
+    }
+   },
+   {
+    "id": "colorful-coating-blue",
+    "verdict": "ally-timed",
+    "whoGetsIt": "the coated 5-foot square, and whoever happens to be caught in or forcing open that surface",
+    "reason": "The whyNotYours correctly reads the ownership — the coating is slathered on a 5-foot square, the +1 circumstance bonus to Reflex belongs to whoever is caught in that surface's collapse, and the +2 raises the coated surface's Force Open DC, which is an obstacle's DC. But the text prints a duration for what you started, so it is timed rather than instant: 'Colorful coating dries instantly, and its effect in the square you coated lasts for 1 minute.' The activator gets a pill saying the coated square is live; no stat of theirs is touched.",
+    "quote": "Colorful coating dries instantly, and its effect in the square you coated lasts for 1 minute.",
+    "mode": {
+     "name": "Blue Coating (coated square)",
+     "duration": "1 minute",
+     "note": "The square you coated holds twice the weight, gives +1 circumstance to Reflex saves against its own collapse, and adds +2 to its Force Open DC. Those belong to the surface and anyone on it, not to your sheet.",
+     "survivesRest": false
+    }
+   },
+   {
+    "id": "colorful-coating-yellow",
+    "verdict": "ally-timed",
+    "whoGetsIt": "the coated 5-foot square, and any creature climbing or moving across it",
+    "reason": "Same shape as the blue coating and the whyNotYours ownership reading holds — 'It provides a +2 circumstance bonus to checks to Climb the coated surface' is a property of the surface that any climber gets, and the difficult-terrain reduction is a terrain change. It is timed, not instant: 'Colorful coating dries instantly, and its effect in the square you coated lasts for 1 minute.' So the activator gets a display-only pill and no stat change.",
+    "quote": "It provides a +2 circumstance bonus to checks to Climb the coated surface.",
+    "mode": {
+     "name": "Yellow Coating (coated square)",
+     "duration": "1 minute",
+     "note": "The square you coated reduces slipperiness-based difficult terrain and gives +2 circumstance to Climb it. That applies to anyone using the surface, including enemies — nothing on your sheet moves.",
+     "survivesRest": false
+    }
+   },
+   {
+    "id": "execution-powder",
+    "verdict": "ally-instant",
+    "whoGetsIt": "a random creature adjacent to the victim, and only if the victim dies from the poison",
+    "reason": "The whyNotYours is correct and I am keeping it. The only bonus in the text goes to 'a random creature adjacent to the victim' — which may well be an enemy — and it is gated behind a contingency ('If a creature dies from execution powder'), not a duration you started running. That is the same shape as 'on a failure', which the ruling says is not a duration. The poison itself is damage on the target you used it against. Nothing to add: no star, no modifier, no mode.",
+    "quote": "If a creature dies from execution powder, the spores from their last breath alight on a random creature adjacent to the victim, granting that creature 20 temporary Hit Points and a +1 status bonus to attack and damage rolls for 10 minutes."
+   },
+   {
+    "id": "heartening-missive",
+    "verdict": "ally-timed",
+    "whoGetsIt": "the individual creature you addressed the missive to, wherever they are",
+    "reason": "The whyNotYours is right that the bonus is the recipient's — 'You must dedicate the missive to an individual creature you know and address it to their location' and the missive then flies to them. But the benefit runs for a printed 24 hours, so under the ruling the sender gets a display-only pill. This is the umbrella entry covering all four folds (Bull +1 Fortitude, Rabbit +1 Reflex, Turtle +1 Will, Butterfly one Diplomacy/Performance failure-to-success reroll); every one of them says 'The recipient gains…', never 'you gain'.",
+    "quote": "After Activating the missive, the recipient gets its benefit and becomes temporarily immune to all heartening missives for 24 hours.",
+    "mode": {
+     "name": "Heartening Missive Sent",
+     "duration": "24 hours",
+     "note": "The missive is in flight to (or already delivered to) the creature you addressed. They get the benefit — Bull +1 Fortitude, Rabbit +1 Reflex, Turtle +1 Will, Butterfly one Diplomacy/Performance reroll — for 24 hours. You get nothing.",
+     "survivesRest": true
+    }
+   },
+   {
+    "id": "heartening-missive-bull",
+    "verdict": "ally-timed",
+    "whoGetsIt": "the recipient the missive is addressed to and flies to",
+    "reason": "The whyNotYours has the ownership right — the text says 'The recipient gains', never 'you gain', and the missive physically flies to a creature elsewhere. It is timed though ('for the next 24 hours'), so the composer gets a display-only pill saying the missive is out and running, changing none of their own numbers.",
+    "quote": "The recipient gains a +1 item bonus to Fortitude saves for the next 24 hours.",
+    "mode": {
+     "name": "Missive Sent (Bull)",
+     "duration": "24 hours",
+     "note": "The addressed recipient has a +1 item bonus to Fortitude saves for 24 hours. Your own Fortitude is unchanged.",
+     "survivesRest": true
+    }
+   },
+   {
+    "id": "heartening-missive-rabbit",
+    "verdict": "ally-timed",
+    "whoGetsIt": "the recipient the missive is addressed to and flies to",
+    "reason": "Ownership per the whyNotYours is correct — the bonus is granted to 'the recipient', a different creature the missive flies to. The printed 24-hour window makes it timed, so the composer gets a display-only pill only.",
+    "quote": "The recipient gains a +1 item bonus to Reflex saves for the next 24 hours.",
+    "mode": {
+     "name": "Missive Sent (Rabbit)",
+     "duration": "24 hours",
+     "note": "The addressed recipient has a +1 item bonus to Reflex saves for 24 hours. Your own Reflex is unchanged.",
+     "survivesRest": true
+    }
+   },
+   {
+    "id": "heartening-missive-turtle",
+    "verdict": "ally-timed",
+    "whoGetsIt": "the recipient the missive is addressed to and flies to",
+    "reason": "Ownership per the whyNotYours is correct — 'The recipient gains', and the missive flies to that other creature. The printed 24-hour window makes it timed, so the composer gets a display-only pill only.",
+    "quote": "The recipient gains a +1 item bonus to Will saves for the next 24 hours.",
+    "mode": {
+     "name": "Missive Sent (Turtle)",
+     "duration": "24 hours",
+     "note": "The addressed recipient has a +1 item bonus to Will saves for 24 hours. Your own Will is unchanged.",
+     "survivesRest": true
+    }
+   },
+   {
+    "id": "candle-of-inflamed-passions",
+    "verdict": "ally-timed",
+    "whoGetsIt": "every creature within 10 feet of the candle — allies, enemies, and you if you stand there — and it is a penalty, not a bonus",
+    "reason": "The whyNotYours is right that lighting the candle grants the activator nothing: the -1 status penalty is an area effect on creatures within 10 feet of the candle, not a self-buff. But the text prints a duration for the thing you lit, so it belongs in the timed lane: the person who lit it gets a pill saying it is burning. No number on their sheet changes (and the penalty, being on the whole area, is the GM's business).",
+    "quote": "Creatures in the area take a -1 status penalty to saving throws against emotion effects. Once lit, the candle burns for 10 minutes.",
+    "mode": {
+     "name": "Candle of Inflamed Passions (lit)",
+     "duration": "10 minutes",
+     "note": "The lit candle affects everything within 10 feet of it — allies, enemies, and you if you stay close — with a -1 status penalty to saves against emotion effects. Nothing is applied to your sheet.",
+     "survivesRest": false
+    }
+   },
+   {
+    "id": "deadweight-snare",
+    "verdict": "ally-instant",
+    "whoGetsIt": "the creature that enters the snare's square",
+    "reason": "The whyNotYours is correct. A snare you set sits waiting for a trigger — that is not something running on you, per the ruling's explicit example. When it does fire, the attack-roll penalty (and any dropped metal items) lands entirely on the creature that entered the square. There is no bonus to you and nothing to display, so nothing is added anywhere.",
+    "quote": "The creature takes a -2 status penalty to attack rolls for 1 minute or until it Escapes (DC 18)."
+   },
+   {
+    "id": "demortification-oil",
+    "verdict": "ally-timed",
+    "whoGetsIt": "the non-incorporeal undead creature the oil is applied to",
+    "reason": "The whyNotYours is right about ownership — the AC bonus goes to the undead you smear the oil on, and used on a corpse the effect is instantaneous restoration with no ongoing benefit. But the undead application carries a printed 1-hour duration, so the character who applied it gets a display-only pill; their own AC is untouched.",
+    "quote": "Applied to a non-incorporeal undead, a dose of *demortification oil* grants the undead creature a +1 item bonus to Armor Class for 1 hour.",
+    "mode": {
+     "name": "Demortification Oil Applied",
+     "duration": "1 hour",
+     "note": "The non-incorporeal undead you oiled has a +1 item bonus to AC for 1 hour. Your own AC does not change.",
+     "survivesRest": false
+    }
+   },
+   {
+    "id": "psyche-salts",
+    "verdict": "ally-timed",
+    "whoGetsIt": "the adjacent creature whose head you pass the open vial by",
+    "reason": "The whyNotYours reads the target correctly — you 'pass the open end of the vial near the head of an adjacent creature' and then 'The creature gains' the effects, so nothing attaches to you. It is timed rather than instant (10 minutes), so the activator gets a display-only pill. This is the umbrella entry; the Lesser/Moderate/Greater grades set the item bonus at +1/+2/+3.",
+    "quote": "The creature gains the effect of a clear mind spell and a +1 item bonus to saving throws against mental effects for 10 minutes.",
+    "mode": {
+     "name": "Psyche Salts Administered",
+     "duration": "10 minutes",
+     "note": "The adjacent creature you dosed has clear mind plus an item bonus to saves against mental effects (+1/+2/+3 by grade) for 10 minutes. Your own saves are unchanged.",
+     "survivesRest": false
+    }
+   },
+   {
+    "id": "psyche-salts-lesser",
+    "verdict": "ally-timed",
+    "whoGetsIt": "the adjacent creature whose head you pass the open vial by",
+    "reason": "The whyNotYours is right — an adjacent creature is by definition someone other than you, and the text grants everything to 'The creature'. The 10-minute window makes it timed, so the activator gets a display-only pill and no stat change.",
+    "quote": "The creature gains the effect of a 2nd-rank Clear Mind spell with a +11 counteract check modifier and a +1 item bonus to saving throws against mental effects for 10 minutes.",
+    "mode": {
+     "name": "Psyche Salts, Lesser (administered)",
+     "duration": "10 minutes",
+     "note": "The adjacent creature you dosed has 2nd-rank Clear Mind and a +1 item bonus to saves against mental effects for 10 minutes. None of your saves move.",
+     "survivesRest": false
+    }
+   },
+   {
+    "id": "psyche-salts-moderate",
+    "verdict": "ally-timed",
+    "whoGetsIt": "the adjacent creature whose head you pass the open vial by",
+    "reason": "Same delivery and same ownership as the other grades, as the whyNotYours says: the vial is passed near an adjacent creature's head and 'The creature gains' the +2. The 10-minute window makes it timed, so the activator gets a display-only pill only.",
+    "quote": "The creature gains the effect of a 4th-rank Clear Mind spell with a +17 counteract check modifier and a +2 item bonus to saving throws against mental effects for 10 minutes.",
+    "mode": {
+     "name": "Psyche Salts, Moderate (administered)",
+     "duration": "10 minutes",
+     "note": "The adjacent creature you dosed has 4th-rank Clear Mind and a +2 item bonus to saves against mental effects for 10 minutes. None of your saves move.",
+     "survivesRest": false
+    }
+   },
+   {
+    "id": "psyche-salts-greater",
+    "verdict": "ally-timed",
+    "whoGetsIt": "the adjacent creature whose head you pass the open vial by",
+    "reason": "The whyNotYours is right that the greater salts still target an adjacent creature and grant the bonus to 'the creature'. The 10-minute window makes it timed, so the activator gets a display-only pill and no number of theirs changes.",
+    "quote": "The creature gains the effect of a 8th-rank Clear Mind spell with a +27 counteract check modifier and a +3 item bonus to saving throws against mental effects for 10 minutes.",
+    "mode": {
+     "name": "Psyche Salts, Greater (administered)",
+     "duration": "10 minutes",
+     "note": "The adjacent creature you dosed has 8th-rank Clear Mind and a +3 item bonus to saves against mental effects for 10 minutes. None of your saves move.",
+     "survivesRest": false
+    }
+   },
+   {
+    "id": "aon-peshspine-grenade",
+    "verdict": "yours-after-all",
+    "whoGetsIt": "you — the text says 'You gain a +1 item bonus to attack rolls'; only the piercing damage and stupefied land on the target",
+    "reason": "Overturning the whyNotYours. It is right that the damage and the stupefied condition land on the target, but it then argues the attack bonus away as 'the bomb's own attack bonus, not a lingering effect' — the printed text does not say that, it says 'You gain a +1 item bonus to attack rolls', which is a bonus on the thrower's own roll. Ruling F only removes things that land on someone else, and this one lands on you. Being a consumable bomb, it is not always-on, so it belongs in the situational lane rather than as a flat modifier. The bonus tracks the grade (+1 at 1d6, +2 at 2d6, +3 at 3d6); this record is the level 1 entry, so +1.",
+    "quote": "You gain a +1 item bonus to attack rolls.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "strikeAttack"
+       }
+      ],
+      "when": "on the attack roll when you throw this bomb",
+      "bonus": "+1 item"
+     }
+    ]
+   },
+   {
+    "id": "aon-death-knell-powder",
+    "verdict": "ally-instant",
+    "whoGetsIt": "a random creature adjacent to whoever dies under the poison",
+    "reason": "The conclusion in the whyNotYours holds even though its framing is loose — the printed text is written from the poisoned creature's side ('If you're reduced to 0 Hit Points while under the effect of death knell powder'), and no version of it puts a bonus on the person who used the item. The only bonus goes to 'a random creature adjacent to you' and only after a death, which is a contingency rather than a duration you set running. Nothing is added: no star, no modifier, no mode.",
+    "quote": "If you die, a random creature adjacent to you is bolstered by your departing life force and gains 20 temporary HP and a +1 status bonus to attack and damage rolls for 10 minutes."
+   },
+   {
+    "id": "aon-inflamation-flask",
+    "verdict": "yours-after-all",
+    "whoGetsIt": "you — 'You gain a +1 item bonus to attack rolls'; the acid damage and the 3-round weakness are the target's",
+    "reason": "Overturning the whyNotYours for the same reason as the peshspine grenade. Its first half is right — the acid damage and the weakness to acid, fire, and slashing apply to the target struck. But it dismisses the attack bonus as 'inherent to throwing the bomb, not a toggleable duration effect', which is an argument about lanes, not about ownership. The text plainly says 'You gain', so the bonus is on your sheet; it is conditional on throwing this consumable, which makes it a star rather than a flat modifier. The bonus scales with grade (+1/+2/+3); this is the level 2 entry, so +1.",
+    "quote": "You gain a +1 item bonus to attack rolls.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "strikeAttack"
+       }
+      ],
+      "when": "on the attack roll when you throw this bomb",
+      "bonus": "+1 item"
+     }
+    ]
+   }
+  ],
+  "findings": [
+   {
+    "id": "ward-slumber",
+    "problem": "WRONG OWNER. The encoder excluded the warder from their own ward on an inference the print does not make. The text says the ward protects \"up to eight creatures within 30 feet of you\" and then \"All creatures affected by the ritual gain a +4 status bonus\" — it never says \"other than you\", and you are trivially within 30 feet of yourself. Ruling F only strips a bonus that lands on a teammate AND NOT YOU; Ruling H is explicit that where the print is open the app stays open rather than shipping an inferred restriction dressed as the book's. The encoder's own openQuestion even read it the other way (\"I read yes\"). Secondary defect in the record as written: the display-only mode carried survivesRest:false, but Ruling E names \"until your next daily preparations\" as the exact case that SURVIVES a rest — so even on the ally-only reading the pill was wrong. Corrected to a self situational star on all saves (unqualified \"saving throws\", narrowed only by the printed effect type), with no mode, since the mode lane is for effects that miss you entirely.",
+    "correction": "{\"id\":\"ward-slumber\",\"verdict\":\"yours-after-all\",\"whoGetsIt\":\"every creature the ward protects, the warder included — the text never excludes you, and you are within 30 feet of yourself\",\"reason\":\"Overturning the ally-only reading. The print says the ward protects 'up to eight creatures within 30 feet of you' and then grants the bonus to 'All creatures affected by the ritual'. Nothing excludes the warder, so per Ruling H the app stays open and stars your own saves; Ruling F's drop-it rule applies only where the effect lands on a teammate and not you. Unqualified 'saving throws' is save:all, narrowed only by the printed effect type. The double Hit Points from resting is HP, which never moves a sheet stat. No display-only mode, because the effect is not one you merely started for someone else.\",\"quote\":\"All creatures affected by the ritual gain a +4 status bonus on saving throws against Nightmare or other effects influencing dreams (such as those provided by this archetype) until your next daily preparations.\",\"situational\":[{\"targets\":[{\"kind\":\"save\",\"detail\":\"all\"}],\"when\":\"against Nightmare or other effects influencing dreams, until your next daily preparations, while your ward covers you\",\"bonus\":\"+4 status\"}]}"
+   },
+   {
+    "id": "paradigm-cube",
+    "problem": "NOTE FAR OVER ONE LINE. The verdict, the ally-only owner call and the 1-minute duration are all right (every colour reads \"Allies in the area gain...\", and the print says the illusion \"lasts for 1 minute\"), but the pill note runs four sentences and roughly 55 words — three to four rendered lines. Ruling H caps a note at roughly one line, with the full text staying a click away in the item's own description. Trimmed to the essential state; the six colours and their individual +2 item bonuses stay in the Paradigm Cube description, which is one click from the pill.",
+    "correction": "{\"id\":\"paradigm-cube\",\"verdict\":\"ally-timed\",\"whoGetsIt\":\"allies in the illusion's area — every one of the six colors is worded \\\"Allies in the area gain...\\\"\",\"reason\":\"All six colored effects grant their +2 item bonus to allies in the area, never to the cube's holder, so no star on your sheet. The illusion has an explicit printed duration and only one color runs at a time, which is exactly the display-only pill case (that also answers the second open question: one pill naming the active color, not six situational entries). Note trimmed to about one line per Ruling H; the per-color detail stays in the item's description.\",\"quote\":\"Once activated, the illusion created fills a  from you and lasts for 1 minute.\",\"mode\":{\"name\":\"Paradigm Cube (active color)\",\"duration\":\"1 minute\",\"note\":\"One color is active; allies in the area get that color's +2 item bonus. None of it applies to you.\",\"survivesRest\":false}}"
+   },
+   {
+    "id": "aon-peshspine-grenade",
+    "problem": "WRONG VALUE + WRONG SURFACE. The overturn to 'yours-after-all' is right on ownership ('You gain' is the thrower), but the +1 is mis-paired with the wrong grade and put on a record no player can own. In the printed run-on text the bonus sentence PRECEDES the damage line it belongs to: '...the target is stupefied 1. You gain a +1 item bonus to attack rolls. The bomb deals 2d6 piercing damage...'. core.json's graded records settle it: peshspine-grenade-lesser (1d6, level 1) prints NO attack bonus at all, and peshspine-grenade-moderate prints 'You gain a +1 item bonus to attack rolls. The bomb deals 2d6...'. So the ladder is +1/2d6, +2/3d6, +3/4d6 — the reviewer's stated ladder ('+1 at 1d6, +2 at 2d6, +3 at 3d6') and its conclusion ('this record is the level 1 entry, so +1') both contradict the print, and would hand a level-1 character a +1 attack bonus the item does not grant. Separately this is an umbrella record: core.json shows it with an empty price and four graded twins (peshspine-grenade-lesser/moderate/greater/major), plus it is an `aon-` duplicate of `peshspine-grenade` (also priceless). Ruling A: umbrella records get NO situational entries and are hidden from pickers. The star belongs on the graded twins, not here.",
+    "correction": "{\"id\":\"aon-peshspine-grenade\",\"verdict\":\"yours-after-all\",\"whoGetsIt\":\"you — 'You gain a +N item bonus to attack rolls' is the thrower's own roll; the piercing damage and stupefied land on the target\",\"reason\":\"Ownership is right: the printed subject is 'You', so this is not a ruling-F ally effect. But NO entry goes on this record. It is the combined all-grades entry — empty price, four graded twins in core.json, and an `aon-` duplicate of the equally priceless `peshspine-grenade` — so ruling A hides it from pickers and gives it no situational entries. The value the reviewer chose is also wrong on the print: the bonus sentence sits BEFORE the damage line it belongs to, and core.json confirms peshspine-grenade-lesser (1d6, level 1) grants no attack bonus while peshspine-grenade-moderate grants the +1 with 2d6. The real ladder is +1 (moderate, 2d6), +2 (greater, 3d6), +3 (major, 4d6), and those three ownable records are where the strikeAttack star belongs.\",\"quote\":\"You gain a +1 item bonus to attack rolls. The bomb deals 2d6 piercing damage and 2 piercing splash damage, and the target is stupefied 1.\"}"
+   },
+   {
+    "id": "aon-inflamation-flask",
+    "problem": "WRONG VALUE + WRONG SURFACE, identical to the peshspine grenade. The text reads '...the Medicine DC is 17. You gain a +1 item bonus to attack rolls. The bomb deals 2d6 acid damage...' — the bonus sentence belongs to the 2d6 grade that follows it, not the 1d6 grade before it. core.json is decisive: inflammation-flask-lesser (1d6, weakness 1, DC 17) prints no attack bonus, while inflammation-flask-moderate (2d6, weakness 2, DC 20) prints 'You gain a +1 item bonus to attack rolls'. The reviewer's 'this is the level 2 entry, so +1' therefore puts a bonus on the one grade that does not have it. And this record is again an umbrella/`aon-` duplicate — empty price, eight graded twins in core.json (lesser/moderate/greater/major, twice) — so ruling A gives it no entries and hides it from pickers.",
+    "correction": "{\"id\":\"aon-inflamation-flask\",\"verdict\":\"yours-after-all\",\"whoGetsIt\":\"you — 'You gain a +N item bonus to attack rolls'; the acid damage and the 3-round weakness are the target's\",\"reason\":\"Ownership is right — the printed subject is 'You', so ruling F does not strip it. But nothing goes on THIS record: empty price plus graded twins in core.json make it an umbrella, and the `aon-` prefix makes it a suppressed duplicate, so ruling A gives it no situational entries. The value is also mis-paired: the '+1' sentence precedes the 2d6 line it belongs to, and core.json shows inflammation-flask-lesser (1d6, DC 17) with no attack bonus while inflammation-flask-moderate (2d6, DC 20) carries the +1. The ladder is +1 moderate / +2 greater / +3 major, and the star belongs on those ownable records.\",\"quote\":\"You gain a +1 item bonus to attack rolls. The bomb deals 2d6 acid damage and 2 acid splash damage.\"}"
+   },
+   {
+    "id": "colorful-coating-yellow",
+    "problem": "WRONG OWNER. The text grants '+2 circumstance bonus to checks to Climb the coated surface' with no other creature named — it is an unqualified property of the surface, and the archetypal use is coating a wall so YOU can climb it. Calling it an ally effect narrows the print (ruling H: where the rules are open, the app stays open), and ruling F only strips 'an effect that effects a teamate and not you'. The repo already agrees: src/rules/situationalBonuses.ts line 1281 carries colorful-coating-yellow as a star on the character's own Athletics ('+2 circumstance', 'to Climb the coated wall or ceiling'). Accepting the ally verdict deletes a correct bonus from the player's sheet. Climb is an Athletics check, so the surface is skill:athletics.",
+    "correction": "{\"id\":\"colorful-coating-yellow\",\"verdict\":\"yours-after-all\",\"whoGetsIt\":\"any creature that Climbs the coated surface — which includes you; the text names no other creature\",\"reason\":\"Overturning the ally reading. The coating does sit on a 5-foot square rather than on a creature, but the printed sentence is 'It provides a +2 circumstance bonus to checks to Climb the coated surface' — unqualified, and you are the creature most likely to be climbing a wall you just coated. Ruling F strips only what goes to a teammate and not to you; ruling H forbids narrowing an open sentence. So the +2 is a star on your Athletics with the surface named in the when. The difficult-terrain reduction really is a terrain change and stays display-only, as does the 1-minute life of the coated square.\",\"quote\":\"It provides a +2 circumstance bonus to checks to Climb the coated surface.\",\"situational\":[{\"targets\":[{\"kind\":\"skill\",\"detail\":\"athletics\"}],\"when\":\"to Climb a wall or ceiling you coated (the coating lasts 1 minute)\",\"bonus\":\"+2 circumstance\"}],\"mode\":{\"name\":\"Yellow Coating (coated square)\",\"duration\":\"1 minute\",\"note\":\"The square you coated reduces slipperiness-based difficult terrain; anyone using the surface, including enemies, benefits.\",\"survivesRest\":false}}"
+   },
+   {
+    "id": "colorful-coating-blue",
+    "problem": "WRONG OWNER, same shape as the yellow coating. 'granting a +1 circumstance bonus to Reflex saving throws in reaction to the coated surface's collapse' names no creature, so it covers you if you are the one under the ceiling you shored up. The whyNotYours itself concedes the bonus goes to 'whoever happens to be caught in that surface's collapse' — that set includes the activator, and ruling F only removes what goes to a teammate and NOT to you. src/rules/situationalBonuses.ts line 1280 already carries this as a star on the character's own Reflex save ('+1 circumstance'), which the ally verdict would delete. The +2 to the Force Open DC is correctly given no surface (ruling D: obstacle/skill DCs get none).",
+    "correction": "{\"id\":\"colorful-coating-blue\",\"verdict\":\"yours-after-all\",\"whoGetsIt\":\"whoever is caught in the coated surface's collapse — which includes you; the text names no other creature\",\"reason\":\"Overturning the ally reading. The coating is on terrain, but the printed Reflex bonus is unqualified: '+1 circumstance bonus to Reflex saving throws in reaction to the coated surface's collapse'. You are a creature who can be under a ceiling you shored up, and ruling F removes only what lands on a teammate and not on you, while ruling H forbids narrowing an open sentence. So the +1 is a star on your Reflex save with the trigger named. The doubled weight capacity and the +2 to the surface's Force Open DC belong to the obstacle and get no surface, per ruling D.\",\"quote\":\"The coating also slows any collapse, making it easier to avoid and granting a +1 circumstance bonus to Reflex saving throws in reaction to the coated surface's collapse.\",\"situational\":[{\"targets\":[{\"kind\":\"save\",\"detail\":\"reflex\"}],\"when\":\"reacting to the collapse of a surface you coated (the coating lasts 1 minute)\",\"bonus\":\"+1 circumstance\"}],\"mode\":{\"name\":\"Blue Coating (coated square)\",\"duration\":\"1 minute\",\"note\":\"The square you coated holds twice the weight and adds +2 to its own Force Open DC — those are the obstacle's numbers, not yours.\",\"survivesRest\":false}}"
+   },
+   {
+    "id": "heartening-missive",
+    "problem": "UMBRELLA RECORD GIVEN AN ENTRY. core.json shows `heartening-missive` with no price and four graded twins at the same base name (heartening-missive-bull/butterfly/rabbit/turtle) — exactly ruling A's test. Ruling A: umbrella records get NO entries AND are hidden from pickers, because 'it's not a real item so they shouldn't even see that'. A record the player can never own can never be used, so a display-only 'missive sent' pill can never fire; and the pill the reviewer wrote lumps all four folds into one pill, which is the composite-that-doesn't-exist the owner rejected. (For reference, the stale umbrella entry at src/rules/situationalBonuses.ts line 2364 should go for the same reason.) The graded records bull/rabbit/turtle already carry the correct ally-timed modes.",
+    "correction": "{\"id\":\"heartening-missive\",\"verdict\":\"ally-timed\",\"whoGetsIt\":\"the individual creature you addressed the missive to — but this record carries nothing\",\"reason\":\"The ownership and duration reading is right: 'The recipient gains…' for 24 hours, never 'you gain'. But no entry goes here. core.json shows this record with no price and four graded twins (bull, butterfly, rabbit, turtle), which is ruling A's umbrella test, so it gets NO situational entries and is hidden from pickers — the player only ever sees the fold they actually own. A pill on a record nobody can hold cannot fire, and rolling all four folds into one pill is exactly the not-a-real-item composite the owner rejected. The display-only modes live on heartening-missive-bull/rabbit/turtle (and butterfly, wherever it is classified).\",\"quote\":\"After Activating the missive, the recipient gets its benefit and becomes temporarily immune to all heartening missives for 24 hours.\"}"
+   },
+   {
+    "id": "psyche-salts",
+    "problem": "UMBRELLA RECORD GIVEN AN ENTRY. core.json shows `psyche-salts` with no price and three graded twins (psyche-salts-lesser 30 gp, -moderate 150 gp, -greater 3,000 gp) — ruling A's test exactly, so it gets no entries and is hidden from pickers. The reviewer even acknowledges it ('This is the umbrella entry; the Lesser/Moderate/Greater grades set the item bonus at +1/+2/+3') and then attaches a mode anyway, whose note invents a composite value '+1/+2/+3 by grade' that no single ownable item prints. The three graded records in the same chunk already carry the correct ally-timed modes.",
+    "correction": "{\"id\":\"psyche-salts\",\"verdict\":\"ally-timed\",\"whoGetsIt\":\"the adjacent creature whose head you pass the open vial by — but this record carries nothing\",\"reason\":\"The ownership reading is right — you pass the vial near an adjacent creature's head and 'The creature gains' everything, for 10 minutes. But no entry goes here. core.json shows this record with no price and three priced graded twins (lesser 30 gp, moderate 150 gp, greater 3,000 gp), which is ruling A's umbrella test: no situational entries, hidden from pickers. The reviewer's own note concedes the record is an umbrella and then prints a '+1/+2/+3 by grade' value that no ownable item carries. The display-only modes belong on psyche-salts-lesser/moderate/greater, which already have them.\",\"quote\":\"The creature gains the effect of a clear mind spell and a +1 item bonus to saving throws against mental effects for 10 minutes.\"}"
+   },
+   {
+    "id": "deadweight-snare",
+    "problem": "FALSE INSTANT. The record is called ally-instant, but the text prints durations: '-1 status penalty to attack rolls for 1 round' and '-2 status penalty to attack rolls for 1 minute or until it Escapes (DC 18)'. The reason justifies the call with 'per the ruling's explicit example' — DECISIONS.md ruling F contains no snare example; its examples are Tweak Appearances, Aegis for the Innocent, and Endemic Herbs. Ruling F case 2 is written flatly: 'if its active to a limited to an amount of time then add mode to the user that activated the thing'. It is also inconsistent with the same reviewer's own necrobinding-serum call in this chunk: that item is equally contingent (apply, Strike, target fails a save) and got a mode, while the snare (creature enters, fails a save) did not. The two are the same shape, so both take a display-only pill.",
+    "correction": "{\"id\":\"deadweight-snare\",\"verdict\":\"ally-timed\",\"whoGetsIt\":\"the creature that enters the snare's square\",\"reason\":\"Ownership is right — the penalty and the dropped metal items land entirely on the creature that triggers the snare, and nothing touches your sheet. But it is not instant: the text prints '1 round' on a success and '1 minute or until it Escapes (DC 18)' on a failure, so ruling F case 2 gives the character who set it a display-only pill once it fires. This also matches necrobinding-serum in this same chunk, which is contingent on a Strike and a failed save and was still treated as timed.\",\"quote\":\"The creature takes a -2 status penalty to attack rolls for 1 minute or until it Escapes (DC 18).\",\"mode\":{\"name\":\"Deadweight Snare (triggered)\",\"duration\":\"1 round on a success; 1 minute, or until the creature Escapes (DC 18), on a failure\",\"note\":\"The creature that set off your snare has a status penalty to its attack rolls until it Escapes. None of your own numbers change.\",\"survivesRest\":false}}"
+   }
+  ]
+ },
+ "GH": {
+  "extracted": [
+   {
+    "id": "the-distant-grasp",
+    "verdict": "move-to-other-record",
+    "moveToId": "dancing-blade",
+    "moveToCollection": "spells",
+    "reason": "Ruling G: the mark lives on the thing you are looking at when it matters — 'Distant Grasp: on the spell, since that's what you're looking at when you cast it.' The only numeric bonus in this class feature exists solely inside the amped Dancing Blade, and only while that spell is up, so the star belongs on the Dancing Blade spell record, not on the conscious-mind feature that is always listed on the sheet.",
+    "quote": "**Guard** Rather than attacking, the weapon grants a +2 circumstance bonus to AC against melee attacks to the creature it's following.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "ac"
+       }
+      ],
+      "when": "while an amped dancing blade is following you and you chose Guard — against melee attacks",
+      "bonus": "+2 circumstance"
+     }
+    ]
+   },
+   {
+    "id": "seers-array",
+    "verdict": "star-replaces",
+    "replacesId": "recalculate",
+    "reason": "Ruling G: 'Relic set: the set entry replaces the piece's, so you read one line, not two.' The Two Items collective feature only upgrades the Recalculate gift's own circumstance bonus, so the set entry supersedes the gift's row and carries the whole statement — trigger plus both values — on one line.",
+    "quote": "Two Items: The circumstance bonus from recalculate increases by 1.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "strikeAttack"
+       }
+      ],
+      "when": "on your next attack roll against a target you just missed, if you Activate the relic before your next turn starts",
+      "bonus": "+1 circumstance (+2 with two or more Seer's Array items)"
+     }
+    ]
+   },
+   {
+    "id": "bootstrap-respirator",
+    "verdict": "star",
+    "reason": "Ruling H1: 'keep it open. Star all saves, and the note says \"saves that require you to smell or taste.\" You decide at the table.' Both printed examples are Fortitude, but the text says 'any saves' without qualification; narrowing to Fortitude would put my inference on the sheet dressed as the book's. Star all three saves and let the printed smell/taste condition do the filtering.",
+    "quote": "While wearing a bootstrap respirator, you gain a +1 item bonus to any saves that require you to smell or taste, such as inhaled poisons and airborne diseases.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "all"
+       }
+      ],
+      "when": "on saves that require you to smell or taste, such as inhaled poisons and airborne diseases",
+      "bonus": "+1 item"
+     }
+    ]
+   },
+   {
+    "id": "demons-knot",
+    "verdict": "no-star",
+    "reason": "Ruling H3, decided by the owner: 'the -1 status penalty does NOT apply to the wearer, only to other creatures within 30 feet. So: NO star on the wearer's Will save.' The penalty is an aura aimed at creatures who might covet the necklace, not at its bound wearer, so no Will row is registered on this item. (The once-per-day activation's +2 status to Intimidation and extra Strike damage are a separate activated effect, not part of this question.)",
+    "quote": "Creatures within 30 feet of the *demon's knot* feel a subtle urge to acquire the necklace and take a –1 status penalty to Will saves.",
+    "situational": []
+   },
+   {
+    "id": "trusty-helmet",
+    "verdict": "star",
+    "reason": "Ruling H: never add a restriction the printed text does not support. This record prints no duration for Hunker Down, so the displayed condition stays verbatim — no invented 'until the start of your next turn'. The trigger is the activation itself plus the printed ranged-attack qualifier, kept to one line.",
+    "quote": "You hunker down, protecting your head using your helmet. You gain a +1 circumstance bonus to your AC against ranged attacks.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "ac"
+       }
+      ],
+      "when": "while Hunkered Down (1 action, manipulate) — against ranged attacks",
+      "bonus": "+1 circumstance"
+     }
+    ]
+   },
+   {
+    "id": "aon-seer-s-array",
+    "verdict": "star-replaces",
+    "replacesId": "aon-recalculate",
+    "reason": "Ruling G applied to the AoN copy of the same set: 'Relic set: the set entry replaces the piece's, so you read one line, not two.' The collective feature only upgrades the gift's number, so it must not sit beside aon-recalculate as a second row — it supersedes it and states trigger and both values together.",
+    "quote": "Two Items : The circumstance bonus from recalculate increases by 1.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "strikeAttack"
+       }
+      ],
+      "when": "on your next attack roll against a target you just missed, if made before the start of your next turn (Reaction)",
+      "bonus": "+1 circumstance (+2 with two or more Seer's Array items)"
+     }
+    ]
+   },
+   {
+    "id": "haunted",
+    "verdict": "star",
+    "reason": "Ruling H1: where the rules are open, stay open — 'Star all saves, and the note says [the printed condition]. You decide at the table.' The entity's skill is GM-determined and unqualified in the text, so the open target (all skills) is starred and the printed trigger carries the qualifier. Leaving the record out entirely would drop a printed bonus; picking a skill would be my ruling, not the book's.",
+    "quote": "Any time you attempt a skill check for the entity's skill, the GM can offer you a +1 circumstance bonus to the check, as though the entity were Aiding you.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "all"
+       }
+      ],
+      "when": "on a check with the haunting entity's GM-chosen skill, if you accept the offered aid (failing then leaves you Frightened 2)",
+      "bonus": "+1 circumstance"
+     }
+    ]
+   },
+   {
+    "id": "runelord-researcher",
+    "verdict": "star",
+    "reason": "Ruling H2: cap the note at about one line, trimmed to its essential trigger — so the seven-school table stays in the background description and the note reads 'the school you chose during daily preparations'. Ruling H1 keeps both targets open: Recall Knowledge is not tied to a named skill here and the save bonus is not tied to one save, so neither is narrowed (the Envy +2-vs-higher-level rider is likewise left to the description).",
+    "quote": "In addition, during your daily preparations, you can choose one of the following schools of Thassilonian rune magic to focus your mind on, gaining a +1 status bonus to saving throws against the listed effect for the next 8 hours.",
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "all"
+       }
+      ],
+      "when": "when you Recall Knowledge about runelords or ancient Thassilon",
+      "bonus": "+2 circumstance"
+     },
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "all"
+       }
+      ],
+      "when": "against the effects of the Thassilonian school you chose during daily preparations (8 hours)",
+      "bonus": "+1 status"
+     }
+    ]
+   }
+  ],
+  "findings": [
+   {
+    "id": "the-distant-grasp",
+    "problem": "LOST RESTRICTION. The Guard option prints its own duration — \"The bonus lasts until the start of your next turn or until the weapon Changes Partners, whichever comes first\" — and the encoding drops it entirely, leaving an open-ended +2 AC star. The same submission argues on trusty-helmet that a duration must never be invented where the text prints none; the converse holds here, where the text does print one. It is also a real display defect: Dancing Blade lasts 1 minute and Guard is re-chosen each Sustain, so a star with no end condition tells the player the +2 AC is up for the whole minute. (The move itself is correct per ruling G, and scoping the `when` to \"following you\" is correct per ruling F, since the weapon's target may be a foe or an ally.)",
+    "correction": "{\"id\":\"the-distant-grasp\",\"verdict\":\"move-to-other-record\",\"moveToId\":\"dancing-blade\",\"moveToCollection\":\"spells\",\"reason\":\"Ruling G: 'Distant Grasp: on the spell, since that's what you're looking at when you cast it.' The only numeric bonus lives inside the amped Dancing Blade, so the star belongs on the spell record. Scoped to 'following you' because the printed subject is 'the creature it's following', which is a foe by default and only you or an ally after Change Partners — ruling F keeps someone else's bonus off your sheet. The printed duration is kept: Guard ends at the start of your next turn or when the weapon Changes Partners, so a star with no end would overstate it across the spell's 1-minute duration.\",\"quote\":\"**Guard** Rather than attacking, the weapon grants a +2 circumstance bonus to AC against melee attacks to the creature it's following. The bonus lasts until the start of your next turn or until the weapon Changes Partners, whichever comes first.\",\"situational\":[{\"targets\":[{\"kind\":\"ac\"}],\"when\":\"while an amped dancing blade Guards you — vs melee attacks, until your turn starts or it Changes Partners\",\"bonus\":\"+2 circumstance\"}]}"
+   },
+   {
+    "id": "seers-array",
+    "problem": "WRONG RESTRICTION. The printed deadline is on the ATTACK, not on the activation: recalculate reads \"You gain a +1 circumstance bonus to your next attack roll against the target you missed, as long as it's made before the beginning of your next turn.\" The encoding rewrites this as \"if you Activate the relic before your next turn starts\", which both moves the deadline onto the activation and loses the actual condition on the attack roll. The activation's own trigger is \"You fail an attack roll\" — it is spent on the miss, so gating the activation by the next turn is a condition the text never states. Their own aon-seer-s-array row states it correctly (\"if made before the start of your next turn\"), so this record is also internally inconsistent with its twin. Verdict, replacesId (`items/recalculate` confirmed present in core.json), targets and values are all correct and preserved.",
+    "correction": "{\"id\":\"seers-array\",\"verdict\":\"star-replaces\",\"replacesId\":\"recalculate\",\"reason\":\"Ruling G: 'Relic set: the set entry replaces the piece's, so you read one line, not two.' The Two Items collective feature only upgrades the Recalculate gift's own circumstance bonus, so the set entry supersedes the gift's row and carries the whole statement — trigger plus both values — on one line. The printed deadline is restated verbatim in sense: it constrains the ATTACK ROLL ('as long as it's made before the beginning of your next turn'), not the moment you Activate, whose trigger is simply failing an attack roll.\",\"quote\":\"Two Items: The circumstance bonus from recalculate increases by 1.\",\"situational\":[{\"targets\":[{\"kind\":\"strikeAttack\"}],\"when\":\"on your next attack roll against the target you missed, if made before the start of your next turn\",\"bonus\":\"+1 circumstance (+2 with two or more Seer's Array items)\"}]}"
+   },
+   {
+    "id": "demons-knot",
+    "problem": "LOST BONUS. The no-star verdict is right about the Will penalty (ruling H3, owner: 'dosent effect the user'), but the record is then filed with an empty `situational`, dropping a printed bonus that lands squarely on the wearer: \"you gain a +2 status bonus to Intimidation checks, and your Strikes deal an additional 1d6 damage\" for 1 minute, once per day. The submission excuses this as \"a separate activated effect, not part of this question\" — but trusty-helmet, in this same chunk, stars exactly that shape (a once-per-day item activation granting a circumstance bonus), so the omission is not a policy, it is an inconsistency. No ruling authorizes dropping it: ruling E's mode treatment is scoped to consumables, and demon's knot is an invested artifact. A star is display-only, so registering it cannot disturb any total.",
+    "correction": "{\"id\":\"demons-knot\",\"verdict\":\"star\",\"reason\":\"Ruling H3, decided by the owner: 'the -1 status penalty does NOT apply to the wearer, only to other creatures within 30 feet. So: NO star on the wearer's Will save.' That penalty stays unregistered. But the item also prints bonuses that do land on the wearer — the once-per-day 1-action Activation grants +2 status to Intimidation and +1d6 on Strikes for 1 minute — and those are starred, the same treatment trusty-helmet's Hunker Down activation gets. Ruling E's mode lane does not cover this item (it is an invested artifact, not a consumable), and a star changes no total.\",\"quote\":\"During this time, you gain a +2 status bonus to Intimidation checks, and your Strikes deal an additional 1d6 damage.\",\"situational\":[{\"targets\":[{\"kind\":\"skill\",\"detail\":\"intimidation\"}],\"when\":\"for 1 minute after Activating the demon's knot (1 action command, once per day)\",\"bonus\":\"+2 status\"},{\"targets\":[{\"kind\":\"strikeDamage\"}],\"when\":\"for 1 minute after Activating the demon's knot (1 action command, once per day)\",\"bonus\":\"+1d6 untyped\"}]}"
+   }
+  ]
+ }
+}

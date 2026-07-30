@@ -35,9 +35,9 @@ import {
   type PlayUpdater,
 } from '../rules/play';
 import { useCustomization, DEFAULT_RAIL_ORDER } from '../data/customization';
-import { CATALOG_MODES, CATALOG_MODE_MAP } from '../rules/modes';
+import { CATALOG_MODES, modeTargetLabel, playerModeLibrary } from '../rules/modes';
 import { resourcesForCharacter, resourceMax } from '../rules/classResources';
-import { statHasSituational, type StatRef } from '../rules/explain';
+import { nameOfRecord, recordMarkersFor, saveDcHasSituational, statHasSituational, statMarkClass, type StatRef } from '../rules/explain';
 import { ConditionsModal } from './ConditionsModal';
 import { ItemDetail } from './ItemDetail';
 import { ItemEditorModal } from './ItemEditorModal';
@@ -104,6 +104,10 @@ export function VitalsRail({
   const [shAmt, setShAmt] = useState('');
   const { hpCommandEntry, shieldAutoHardness, showSaveDCs, railOrder, railHidden } = useCustomization();
   const [condOpen, setCondOpen] = useState(false);
+  /** The mode whose detail popup is open — clicking a pill opens it. */
+  const [modeInfo, setModeInfo] = useState<ModeDef | null>(null);
+  /** The "what changes this condition for me" popup — ruling D's condition marker. */
+  const [condMark, setCondMark] = useState<{ name: string; marks: { sourceId: string; value?: string; note: string }[] } | null>(null);
   const [shieldDetailOpen, setShieldDetailOpen] = useState(false);
   const [shieldEditOpen, setShieldEditOpen] = useState(false);
   const [mythicRulesOpen, setMythicRulesOpen] = useState(false);
@@ -251,7 +255,7 @@ export function VitalsRail({
           className={
             'ct' +
             (onOpenStat ? ' openable' : '') +
-            (statHasSituational(character, { kind: 'hp' }, content) ? ' has-mode' : '')
+            statMarkClass(character, { kind: 'hp' }, content)
           }
           onClick={onOpenStat ? () => onOpenStat({ kind: 'hp' }) : undefined}
           title={onOpenStat ? 'How is this calculated?' : undefined}
@@ -375,7 +379,7 @@ export function VitalsRail({
         <div className="defs">
           {defenses.map((d) => (
             <div
-              className={'tile' + (d.title ? ' has-note' : '') + (onOpenStat ? ' openable' : '') + (statHasSituational(character, d.ref, content) ? ' has-mode' : '')}
+              className={'tile' + (d.title ? ' has-note' : '') + (onOpenStat ? ' openable' : '') + statMarkClass(character, d.ref, content)}
               key={d.label}
               title={d.title ?? (onOpenStat ? 'How is this calculated?' : undefined)}
               onClick={onOpenStat ? () => onOpenStat(d.ref) : undefined}
@@ -521,7 +525,7 @@ export function VitalsRail({
           const d = deriveSave(character, s, content);
           return (
             <div
-              className={'stat-row' + (onOpenStat ? ' rollable' : '') + (statHasSituational(character, { kind: 'save', save: s }, content) ? ' has-mode' : '')}
+              className={'stat-row' + (onOpenStat ? ' rollable' : '') + statMarkClass(character, { kind: 'save', save: s }, content)}
               key={s}
               onClick={onOpenStat ? () => onOpenStat({ kind: 'save', save: s }) : undefined}
               title={onOpenStat ? `${SAVE_LABEL[s]} — how is this calculated?` : undefined}
@@ -532,13 +536,20 @@ export function VitalsRail({
                 {statHasSituational(character, { kind: 'save', save: s }, content) && <SituationalStar />}
               </span>
               <span className="stat-short">{SAVE_SHORT[s]}</span>
-              {showSaveDCs && <span className="stat-dc" title="Save DC">DC {10 + d.modifier}</span>}
+              {/* Ruling D: a bonus that only moves the DC others roll against gets its `*` HERE, not
+                  beside the save's name — the save you roll gets nothing from it. */}
+              {showSaveDCs && (
+                <span className="stat-dc" title="Save DC">
+                  DC {10 + d.modifier}
+                  {saveDcHasSituational(character, s, content) && <SituationalStar />}
+                </span>
+              )}
               <span className="stat-mod">{formatMod(d.modifier)}</span>
             </div>
           );
         })}
         <div
-          className={'stat-row' + (onOpenStat ? ' rollable' : '') + (statHasSituational(character, { kind: 'perception' }, content) ? ' has-mode' : '')}
+          className={'stat-row' + (onOpenStat ? ' rollable' : '') + statMarkClass(character, { kind: 'perception' }, content)}
           onClick={onOpenStat ? () => onOpenStat({ kind: 'perception' }) : undefined}
           title={onOpenStat ? 'Perception — how is this calculated?' : undefined}
         >
@@ -585,7 +596,7 @@ export function VitalsRail({
             'rail-kv' +
             (onOpenStat ? ' openable' : '') +
             (hasTempSpeed ? ' has-temp' : '') +
-            (statHasSituational(character, { kind: 'speed' }, content) ? ' has-mode' : '')
+            statMarkClass(character, { kind: 'speed' }, content)
           }
           onClick={onOpenStat ? () => onOpenStat({ kind: 'speed' }) : undefined}
           title={onOpenStat ? 'Speed — how is this calculated? Set a temporary Speed here.' : undefined}
@@ -872,11 +883,25 @@ export function VitalsRail({
             // make that unmistakable instead of showing the same neutral pill as Dying 1.
             const doomedVal = character.conditions.find((x) => x.id === 'doomed')?.value ?? 0;
             const dead = c.id === 'dying' && (c.value ?? 1) >= dyingDeathThreshold(doomedVal);
+            // Ruling D: something that changes how a condition works FOR YOU (The Survivor and Dying)
+            // marks the condition itself — there is no stat row it could sit on, and starring the
+            // nearest roll would claim a bonus it does not give.
+            const marks = recordMarkersFor(character, content, 'condition', c.id);
             return (
               <span className={'cond-pill' + (dead ? ' cond-dead' : '')} key={c.id}>
                 <InfoTerm title={name} description={def?.description} descRefs={def?.descRefs} descKey="conditions">
                   {dead ? `Dead — ${name}` : name}
                 </InfoTerm>
+                {marks.length > 0 && (
+                  <button
+                    className="cond-mark"
+                    title={marks.map((m) => m.note).join('\n')}
+                    onClick={() => setCondMark({ name, marks })}
+                    aria-label={`What changes ${name} for you`}
+                  >
+                    <SituationalStar />
+                  </button>
+                )}
                 {valued && onPlay ? (
                   <span className="cond-pill-step">
                     <button aria-label="Decrease" onClick={() => onPlay((p) => setConditionValue(p, c.id, (c.value ?? 1) - 1), `cond:${c.id}`)}>
@@ -899,8 +924,15 @@ export function VitalsRail({
             );
           })}
           {(character.activeModes ?? []).map((m) => (
-            <span className="cond-pill mode-pill" key={m.id} title={m.note ?? m.name}>
-              {m.name}
+            <span className="cond-pill mode-pill" key={m.id}>
+              {/* The pill is CLICKABLE: a mode's own text was previously only a hover tooltip, which
+                  is unreachable on a phone and easy to miss anywhere else. A display-only mode (a
+                  timed state with no numbers — fast healing, concealment) is ENTIRELY its note, so
+                  hiding that behind a tooltip hid the whole point of it. */}
+              <button className="mode-pill-name" onClick={() => setModeInfo(m)} title="What is this?">
+                {m.name}
+                {m.duration && <span className="mode-pill-dur">{m.duration}</span>}
+              </button>
               {onPlay && (
                 <button
                   className="cond-pill-x"
@@ -959,6 +991,59 @@ export function VitalsRail({
         />
       )}
 
+      {/* Ruling D: what one of the character's own records changes about this condition. */}
+      {condMark && (
+        <div className="picker-overlay" onClick={() => setCondMark(null)}>
+          <div className="picker confirm-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="picker-head">
+              <span>{condMark.name} — what changes it for you</span>
+              <button className="picker-close" onClick={() => setCondMark(null)} aria-label="Close">
+                <i className="ti ti-x" aria-hidden="true" />
+              </button>
+            </div>
+            <div className="confirm-body">
+              <ul className="mode-info-mods">
+                {condMark.marks.map((m, i) => (
+                  <li key={i}>
+                    <strong>{nameOfRecord(content, m.sourceId)}</strong> — {m.note}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* A mode's detail: what it does, how long it lasts, and every stat it touches. For a
+          display-only mode the note IS the mode, so this is the only place it can be read. */}
+      {modeInfo && (
+        <div className="picker-overlay" onClick={() => setModeInfo(null)}>
+          <div className="picker confirm-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="picker-head">
+              <span>{modeInfo.name}</span>
+              <button className="picker-close" onClick={() => setModeInfo(null)} aria-label="Close">
+                <i className="ti ti-x" aria-hidden="true" />
+              </button>
+            </div>
+            <div className="confirm-body">
+              {modeInfo.duration && <p className="mode-info-dur">Lasts {modeInfo.duration}.</p>}
+              {modeInfo.note && <p>{modeInfo.note}</p>}
+              {modeInfo.modifiers.length > 0 ? (
+                <ul className="mode-info-mods">
+                  {modeInfo.modifiers.map((mod, i) => (
+                    <li key={i}>
+                      <strong>{formatMod(mod.value)}</strong> {mod.type} to {modeTargetLabel(mod)}
+                      {mod.appliesWhen && <span className="mode-info-when"> — {mod.appliesWhen}</span>}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                !modeInfo.note && <p>Nothing on the sheet changes — this is here so you can see it is running.</p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
       {condOpen && onPlay && (
         <ConditionsModal
           // The Kingmaker book's conditions (Mired, Routed, Weary, …) are ALL army conditions — they
@@ -973,7 +1058,7 @@ export function VitalsRail({
           onSetValue={(id, value) => onPlay((p) => setConditionValue(p, id, value), `cond:${id}`)}
           onClose={() => setCondOpen(false)}
           modesEnabled
-          library={Object.values(content.modes).filter((m) => !CATALOG_MODE_MAP[m.id] && (!m.charId || m.charId === charKey))}
+          library={playerModeLibrary(Object.values(content.modes), charKey)}
           predefined={CATALOG_MODES}
           catalog={CATALOG_MODES}
           classId={character.classId}

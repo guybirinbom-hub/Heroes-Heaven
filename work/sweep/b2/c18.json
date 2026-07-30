@@ -1,0 +1,1147 @@
+[
+ {
+  "id": "chorus-companion",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Chorus Companion",
+  "level": 12,
+  "traits": [
+   "bard"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Animals can be musical partners as much as the subjects or audience. Your animal companion becomes trained in Performance (or expert if it was already trained). When you cast a composition spell, you can have it originate either from you or from your animal companion, if your animal companion is within 30 feet of you."
+ },
+ {
+  "id": "chronocognizance",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Chronocognizance",
+  "level": 7,
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The flows and ebbs of time are obvious to you, as are the tangles that form when it's distorted. You're automatically aware if any creature that you observe is under the effects of the slowed or quickened conditions. You have a general idea when you're in the vicinity of time-manipulating phenomena, though this grants you no particular insight into the specific effects of the anomaly. Particularly subtle temporal anomalies might still escape your notice, requiring a Perception check, as determined by the GM. If you're legendary in Arcana, Nature, Occultism, or Religion, whenever a creature that you can observe gains the benefits of Freeze Time or similar effects, you can observe what happens during the stopped time, though you still can't act yourself for the duration."
+ },
+ {
+  "id": "cloistered-cleric",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Cloistered Cleric",
+  "level": 1,
+  "traits": [
+   "cleric"
+  ],
+  "engineFieldsPresent": [
+   "grantsFeats"
+  ],
+  "inRegistries": [],
+  "text": "You are a cleric of the cloth, focusing on divine magic and your connection to your deity's domains. **First Doctrine (1st):** You gain the Domain Initiate cleric feat. **Second Doctrine (3rd):** Your proficiency rank for Fortitude saves increases to expert. **Third Doctrine (7th):** Your proficiency ranks for the spell attack modifier and spell DC statistics increase to expert. **Fourth Doctrine (11th):** You gain expert proficiency with your deity's favored weapon, simple weapons, and unarmed attacks. When you critically succeed at an attack roll using your deity's favored weapon, you apply the weapon's critical specialization effect; you can use your spell DC in place of your class DC. **Fifth Doctrine (15th):** Your proficiency ranks for the spell attack modifier and spell DC statistics increase to master. **Final Doctrine (19th):** Your proficiency ranks for the spell attack modifier and spell DC statistics increase to legendary."
+ },
+ {
+  "id": "cobyslarni",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Cobyslarni",
+  "level": 1,
+  "traits": [
+   "witch"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Though Cobyslarni doesn't often interact directly with mortals these days, your quest for wisdom has drawn his attention. You studied at his academy, encountered him on his travels throughout the planes, or responded to his strange psychic call. However your meeting occurred, Cobyslarni empowered your studies. Though Cobyslarni rarely demands anything directly from his witches, you may receive visions of danger to the academy or its students in times of dire need. Most witches chosen by Cobyslarni, if they're not already students at the academy, make their way there at some point. Some who follow these nudges remain at the academy indefinitely, but most eventually move on to experience their own journeys or even establish their own schools. **Spell List** occult; **Patron Skill** Occultism **Lesson of Wandering Mind** Cobyslarni has taught you to keep an open mind and seek knowledge in all things, sifting through an array of facts that others would find bewildering. You gain the Information Overload hex cantrip and your familiar learns Déjà Vu. **Familiar of Insightful Observation** Your familiar boasts a third eye upon their head or body, resembling the one set in Cobyslarni's forehead. When you Cast or Sustain a hex, your familiar can attempt a check to Recall Knowledge as a free action with any skill in which you are trained or better, using your bonus, and psychically transmit the information to you."
+ },
+ {
+  "id": "cognitive-mutagen",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Cognitive Mutagen",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Cognitive Mutagen Source Player Core 2 pg. 289 Usage held in 1 hand Bulk L Activate (manipulate) Your mind becomes clear, but physical matters seem ephemeral. Benefit You gain an item bonus to Arcana, Crafting, Lore, Occultism, and Society checks and all checks to Recall Knowledge. Your critical failures on Recall Knowledge checks become failures instead. Drawback You take a –2 penalty to weapon and unarmed attack rolls, Athletics checks, and Acrobatics checks. You can carry 2 less Bulk than normal before becoming encumbered, and the maximum Bulk you can carry is reduced by 4. Cognitive Mutagen (Lesser) Source Player Core 2 pg. 289, Core Rulebook pg. 547 Price 4 gp Bulk L The bonus is +1, and the duration is 1 minute. Cognitive Mutagen (Moderate) Source Player Core 2 pg. 289, Core Rulebook pg. 547 Price 12 gp Bulk L The bonus is +2, and the duration is 10 minutes. Cognitive Mutagen (Greater) Source Player Core 2 pg. 289, Core Rulebook pg. 547 Price 300 gp Bulk L The bonus is +3, and the duration is 1 hour. You become trained in one Intelligence-based skill, chosen at creation. Cognitive Mutagen (Major) Source Player Core 2 pg. 289, Core Rulebook pg. 547 Price 3,000 gp Bulk L The bonus is +4, and the duration is 1 hour. You become trained in one skill, chosen at creation."
+ },
+ {
+  "id": "cognitive-mutagen-greater",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Cognitive Mutagen (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Your mind becomes clear, but physical matters seem ephemeral. **Benefit** You gain a +3 item bonus to Arcana, Crafting, Lore, Occultism, and Society checks and all checks to Recall Knowledge. Your critical failures on Recall Knowledge checks become failures instead. You become trained in one Intelligence-based skill [Arcana, Crafting, Lore, Occultism, Society], chosen at creation. **Drawback** You take a -2 penalty to weapon and unarmed attack rolls, Athletics checks, and acrobatics checks. You can carry 2 less Bulk than normal before becoming encumbered, and the maximum Bulk you can carry is reduced by 4. **Duration** 1 hour."
+ },
+ {
+  "id": "cognitive-mutagen-major",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Cognitive Mutagen (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Your mind becomes clear, but physical matters seem ephemeral. **Benefit** You gain a +4 item bonus to Arcana, Crafting, Lore, Occultism, and Society checks and all checks to Recall Knowledge. Your critical failures on Recall Knowledge checks become failures instead. You become trained in one skill, chosen at creation. **Drawback** You take a -2 penalty to weapon and unarmed attack rolls, Athletics checks, and acrobatics checks. You can carry 2 less Bulk than normal before becoming encumbered, and the maximum Bulk you can carry is reduced by 4. **Duration** 1 hour."
+ },
+ {
+  "id": "commitment-to-equality",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Commitment to Equality",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "auditory",
+   "mental",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You help an ally shake off any impediment that would give an enemy an unfair advantage. You rally a creature within 30 feet in an attempt to reduce its frightened or stupefied condition. If a creature has multiple conditions from this list, choose one. When you're a master in Diplomacy, add clumsy and enfeebled to the list of conditions. When you're legendary in Diplomacy, add stunned to the list of conditions; if the stunned condition has a duration instead of a value, you can't use Commitment to Equality to reduce it. Attempt a Diplomacy check against the saving throw DC of the effect that caused the condition; if there was no saving throw DC, use the hard DC for the level of the creature, hazard, or item that caused the effect. You can't treat a condition that came from an artifact or effect above 20th level unless you're legendary in Diplomacy; even if you can, the counteract DC increases by 10. You can't treat a condition that is part of a curse or disease or is a natural state of the target. Once you attempt to treat a target's condition, that target is immune to further attempts for 1 hour, regardless of the result. --- **Critical Success** Reduce the condition's value by 2. **Success** Reduce the condition's value by 1. **Critical Failure** Increase the condition's value by 1."
+ },
+ {
+  "id": "commitment-to-protection",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Commitment to Protection",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "auditory",
+   "mental",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You attempt to guide an ally into a more defensive pose against a particular danger. Attempt a Warfare Lore check against the hard DC for the level of a creature or hazard you can see. An ally of your choice within 30 feet gains an effect based on the outcome. If you're legendary in Warfare Lore, when you roll a failure or critical failure, you get a success instead. --- **Critical Success** The ally gains a +2 circumstance bonus to AC against the target creature's or hazard's next attack. **Success** As critical success, but the bonus is +1. **Critical Failure** The ally takes a –1 circumstance penalty to AC against the target creature's or hazard's next attack."
+ },
+ {
+  "id": "communal-crafting",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Communal Crafting",
+  "level": 2,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can have other PCs help you Craft an item, under your direction. A helper PC rolls a check with a skill in which they're trained. The skill must be Crafting or another skill relevant to the item, as determined by the GM. For example, a PC might use Religion to help you Craft an item with the divine trait or Warfare Lore to help you Craft a weapon. Your roll still determines whether you successfully create the item. Any helper's roll contributes toward reducing the cost of raw materials using the numbers from the Earn Income table; this uses the ally PC's proficiency rank in the skill and their level – 1 for their level. Helping PCs must accompany you throughout the Craft activity (preventing them from pursuing other downtime activities) or the benefit is lost. The GM might determine that only a certain number of PCs can help depending on the circumstances. Communal Crafting also allows you to take the role of a helper when someone else is crafting, provided they accept your help."
+ },
+ {
+  "id": "confabulator",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Confabulator",
+  "level": 2,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Even when caught in falsehoods, you pile lie upon lie. Reduce the circumstance bonus a target gains for your previous attempts to Create a Diversion or Lie to it from +4 to +2. If you're a master in Deception, reduce the bonus to +1, and if you're legendary, your targets don't get these bonuses at all."
+ },
+ {
+  "id": "construct-innovation",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Construct Innovation",
+  "level": 1,
+  "traits": [
+   "inventor"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Your innovation is a mechanical creature, such as a clockwork construct made of cogs and gears. It's a prototype construct companion, and you can adjust most of its base statistics by taking feats at higher levels, such as Advanced Companion. If you use the Overdrive action, your construct gains the same Overdrive benefits you do, and it also takes the same amount of fire damage on a critical failure. You know how to spend additional time directing, controlling, or programming your construct innovation for a more complex plan of action. You can spend 2 actions to Command instead of 1 when commanding your construct companion; your construct companion can then use an additional action (normally 3 actions, rather than 2). Choose one initial construct modification to apply to your innovation, either from the following or from other initial construct modifications to which you have access. These modifications alter the construct's abilities or form. - **Accelerated Mobility** Actuated legs, efficient gears in the wheels or treads, or add-on boosters make your construct faster. Your innovation's Speed increases to 40 feet. - **Amphibious Construction** Increased buoyancy, rudders, and a means of propulsion like a fluked tail or powerful propeller make your construct able to travel in water. Your innovation gains a swim Speed of 25 feet. - **Increased Size** You built your construct innovation bigger than most. Your construct is Large. If you have this modification and your construct innovation becomes an advanced construct companion or otherwise gains the ability to become Large, you can immediately change increased size to a different initial construct modification. - **Manual Dexterity** Your construct innovation has articulated hands or similar appendages with significant manual dexterity. It can perform manipulate actions with up to two of its limbs. As normal for a companion, it still can't wield weapons or held items that don't have the companion trait, and it can't activate items. - **Projectile Launcher** Your construct has a mounted dart launcher, embedded cannon, or similar armament. Your innovation gains a ranged unarmed attack that deals 1d4 bludgeoning or piercing damage (you choose when you pick this modification). The attack has the propulsive trait and a range increment of 30 feet. - **Sensory Array** Additional sensory devices give your innovation low-light vision and darkvision, as well as imprecise tremorsense out to a range of 30 feet. - **Wonder Gears** You map specialized skills into your construct's crude intelligence. Your innovation becomes trained in Intimidation, Stealth, and Survival."
+ },
+ {
+  "id": "consult-the-spirits",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Consult the Spirits",
+  "level": 7,
+  "traits": [
+   "general",
+   "secret",
+   "skill"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per day --- You have learned rites or meditations that enable you to perceive minor, invisible spirits within a place. Choose Nature, Occultism, or Religion when you select this feat. Nature allows you to contact the spirits of nature that form leshies, who are born of pure life essence rather than spiritual energy and can answer questions about natural features like the location of nearby water or plant life. Religion reveals the presence of angelic, demonic, or other spirits in service to divine beings, who provide information about sources of powerful life energy or energy from the Void; sacred or profane influences; or the presence of undead. Occultism allows you to contact lingering spirits, psychic echoes of the departed dead, and spirits from beyond reality, who tell you about things like strange auras, effects, or the presence of unnatural occult beings. Spend 10 minutes and attempt a check to Recall Knowledge with the chosen skill; the DC is determined by the GM (usually a very high DC for the level of the highest-level creature you might encounter in the area). If you're legendary in the chosen skill, you can use this feat once per hour, instead of only once per day, but you can't use it again on any area that overlaps a previous area. --- **Critical Success** The spirits reveal themselves to you and have a helpful attitude toward you. Only you can perceive these spirits. They answer three simple questions about the environment within 100 feet of you, depending on the skill you chose and thus the type of spirits you contact. Their answers are almost always a single word, and their knowledge is limited to within their area of interest. **Success** As with a critical success, but the spirits are indifferent to you and answer only one question. **Failure** You are unable to contact the spirits of this place. **Critical Failure** You contact one or more malevolent spirits. They are hostile toward you, though they may not immediately appear so. They answer up to three questions but give you information that is harmful to you in some way, as determined by the GM. --- **Special** You can select this feat multiple times, each time picking a different skill in which you have the master proficiency rank. You can use this feat with each skill once per day (or once per hour, if you're legendary)."
+ },
+ {
+  "id": "consult-the-stars",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Consult the Stars",
+  "level": 1,
+  "traits": [
+   "lizardfolk"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "You find wisdom in the movements of the heavens. Once per day, you can spend 10 minutes to draw upon your readings of a recent night's sky to gain the trained proficiency rank in one skill of your choice; the chosen skill's key attribute must be Charisma, Intelligence, or Wisdom. This proficiency lasts until your next daily preparation. Since this proficiency is temporary, you can't use it as a prerequisite for a skill increase or a permanent character option like a feat."
+ },
+ {
+  "id": "contingency-gadgets",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Contingency Gadgets",
+  "level": 12,
+  "traits": [
+   "inventor"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You are too brilliant to be caught off guard, and you always have just the right gadget for the situation. When you prepare your gadgets during your daily preparations, you can choose to leave one of them as a contingency gadget that you keep ready for just this situation, rather than declaring which gadget you're making. You can pull the contingency gadget out using an Interact action, at which point you must choose which gadget you had prepared as a contingency. If you're legendary in Crafting, you can leave two contingency gadgets during your daily preparations, instead of just one."
+ },
+ {
+  "id": "contract-negotiator",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Contract Negotiator",
+  "level": 1,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Your experience with bargaining and deciding terms as part of Highhelm's guilds helps you make deals in other situations. When negotiating deals or agreements, you can use Legal Lore in place of Diplomacy to Make an Impression or a Request, even if there is no legal framework under which you are negotiating. If you are an expert in Diplomacy, you gain a +1 circumstance bonus to these checks; if you are a master in Diplomacy, this increases to +2, and +3 if you are legendary."
+ },
+ {
+  "id": "crude-communication",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Crude Communication",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Even if you don't speak a creature's language, you can rely on inflection, root words, and body language to infer rudimentary meaning. If you interact with a creature for at least 10 minutes and that creature can speak a language, the GM rolls a secret Society check with a DC appropriate for the language's rarity. On a success, you understand the gist of the meaning and can communicate basic concepts back to the creature; on a failure, you are mistaken or communicate incorrect concepts. If you're legendary in Society, you can communicate instantly without needing to attempt a Society check; even if you didn't know the medium of communication the creature uses (speech, sign language, and so on), you intuit this information as soon as they try to communicate."
+ },
+ {
+  "id": "crushing-bough-bracers",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Crushing Bough Bracers",
+  "level": 13,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "heldSpells",
+   "innateSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Carved from the heartwood of some impossibly large tree on the Plane of Wood or First World, *crushing bough bracers* enable wearers to cling to and shape plant material with ease. The pine cone designs appear to open and bare their seeds when the bracers are in especially verdant areas. The bracers grant you a 20-foot climb Speed while climbing plants or fungi. Your Strikes deal damage to fungus, plant, and wood creatures as though their resistances were 5 lower (minimum 0). In addition, the bracers allow you to cast Timber as an innate primal cantrip. When you cast *timber* on a plane with the wood planar essence trait (or a supernaturally verdant area, at the GM's discretion), you can modify the spell in one of the following two ways: increase the spell's area to 20 feet, to 25 feet if your proficiency rank for spell attack modifier and spell DC is expert, or to 30 feet if your proficiency is legendary; or increase the cantrip's damage die size to d6."
+ },
+ {
+  "id": "crystal-healing",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Crystal Healing",
+  "level": 1,
+  "traits": [
+   "general",
+   "healing",
+   "manipulate",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You know how to stimulate a body's natural healing abilities through the application of resonant crystals. Doing so requires you to use at least two semiprecious stones with a total value of 5 gp or more in place of a healer's toolkit, which allows you to attempt to treat-disease skill=occultism or treat-poison skill=occultism using Occultism rather than Medicine. If you're an expert in Occultism and you use gems whose total value equals or exceeds 50 gp, you gain a +1 item bonus to your Occultism check. If you're a master and the gems' value equals or exceeds 700 gp, the item bonus increases to +2; if you're legendary in Occultism and the gems' value equals or exceeds 15,000 gp, the item bonus increases to +3."
+ },
+ {
+  "id": "crystal-ward-spells",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Crystal Ward Spells",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "focusSpells"
+  ],
+  "inRegistries": [],
+  "text": "Your study of crystals and the energies held within a gem's facets grants you special arcane crystal ward spells, which are a type of focus spell. It costs 1 Focus Point to cast a focus spell, and you start with a focus pool of 1 Focus Point. You refill your focus pool when you make your next daily preparations, and you can regain 1 Focus Point by spending 10 minutes using the Refocus activity to research and memorize the properties of gems. Focus spells are automatically heightened to half your level rounded up. Certain feats can give you more focus spells and increase the size of your focus pool, though your focus pool can never hold more than 3 Focus Points. You gain the Electrified Crystal Ward focus spell, and you are trained in arcane spell attack rolls and spell DCs. Your spellcasting ability is Intelligence."
+ },
+ {
+  "id": "cultivation-order",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Cultivation Order",
+  "level": 1,
+  "traits": [
+   "druid"
+  ],
+  "engineFieldsPresent": [
+   "grantsFeats"
+  ],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "You believe that nature is best tended, pruned, and maintained. Nature is inherently random and chaotic out of necessity of survival—the flower spreads its seeds far and wide, hoping that some might sprout, but you believe that plants truly thrive in orderly environments. Thus, you lend a hand, decluttering that which is stagnant, planting in ideal locations, replanting that which grows in suboptimal locations, mulching the soil, and performing other maintenance. While many druids might consider your approach \"meddling\" or \"unnatural,\" you know that the work you do is vital for the overall health of the environment you tend. You're trained in Crafting. You also gain the Leshy Familiar druid feat. You gain the cornucopia order spell. Committing wanton cruelty to plants or fungi or neglecting to nurture plants in need of tending is anathema to your order. This doesn't prevent you from killing plants or fungi and it doesn't prevent you from defending yourself against plants or fungi. --- **Order Skill** Crafting **Druid Feat** Leshy Familiar **Order Spell** Cornucopia **Anathema** Commit wanton cruelty to plants or fungi or kill them unnecessarily. (This doesn't prevent you from defending yourself or harvesting them for survival.) --- **Special**: The cultivation order is a variant of the leaf order. If you have the cultivation order, you count as a member of the leaf order, and you qualify for leaf order feats."
+ },
+ {
+  "id": "daredevil-boots",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Daredevil Boots",
+  "level": 10,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "These brightly colored, soft-soled boots motivate you to perform risky stunts and grant you the agility to succeed. The boots grant you a +2 item bonus to Acrobatics checks and a +1 circumstance bonus to checks to tumble-through an enemy's space. The boots can grip solid surfaces and help you avoid a fall, allowing you to use the grab-an-edge reaction even if your hands aren't free. You treat falls as 10 feet shorter or, if you have the Cat Fall feat, treat your proficiency rank in Acrobatics as one degree better to determine the benefits of that feat. If you have Cat Fall and are already legendary in Acrobatics, you can choose the speed of your fall, from 60 feet per round up to normal falling speed."
+ },
+ {
+  "id": "daredevil-boots-greater",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Daredevil Boots (Greater)",
+  "level": 17,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "These brightly colored, soft-soled boots motivate you to perform risky stunts and grant you the agility to succeed. The boots grant you a +3 item bonus to Acrobatics checks and a +2 circumstance bonus to checks to tumble-through an enemy's space. The boots can grip solid surfaces and help you avoid a fall, allowing you to use the grab-an-edge reaction even if your hands aren't free. You treat falls as 10 feet shorter or, if you have the Cat Fall feat, treat your proficiency rank in Acrobatics as one degree better to determine the benefits of that feat. If you have Cat Fall and are already legendary in Acrobatics, you can choose the speed of your fall, from 60 feet per round up to normal falling speed. **Activate—Daredevil Impulse** ⟨2⟩ (concentrate) **Frequency** once per day --- **Effect** The boots cast Unfettered Movement on you."
+ },
+ {
+  "id": "death-from-above",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Death from Above",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are standing, climbing, or balancing on a surface at least 10 feet above your target. --- You leap down on your target, using their body to cushion your fall and your momentum to empower your attack. Attempt an Athletics check to Leap to a space adjacent to the target. If you land adjacent to the target, compare the check result against your target's Reflex DC. When you leap onto a creature in this way, you do not also deal damage for falling on a creature. Regardless of your result, the target is temporarily immune to your Death from Above for 1 minute. --- **Critical Success** The target falls and lands prone, reducing the falling damage you take by an amount equal to twice your level. You then can make a melee Strike against the target. The Strike gains the deadly d8 weapon property and deals an additional 1d6 bludgeoning damage. This additional damage increases to 2d6 if you are a master in Athletics, and to 3d6 if you are legendary in Athletics. **Success** The target is off-guard until the beginning of your next turn, reducing the falling damage you take by an amount equal to your level. You can then make a melee Strike against the target, adding the deadly d8 weapon property to the attack. **Failure** You can make a Strike against the target. **Critical Failure** You fall prone, whether you take falling damage or not."
+ },
+ {
+  "id": "deceptive-tactics",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Deceptive Tactics",
+  "level": 1,
+  "traits": [
+   "commander"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featFeatGrants"
+  ],
+  "text": "**Requirements** You can prepare at least three tactics. --- Your training has taught you that the art of war is the art of deception. You can use your Warfare Lore modifier in place of your Deception modifier for Deception checks to create-a-diversion skill=warfare-lore or feint skill=warfare-lore, and can use your proficiency rank in Warfare Lore instead of your proficiency rank in Deception to meet the prerequisites of feats that modify the Create a Diversion or Feint actions (such as Lengthy Diversion). You gain the Lengthy Diversion feat."
+ },
+ {
+  "id": "deductive-improvisation",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Deductive Improvisation",
+  "level": 11,
+  "traits": [
+   "investigator"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You use your skills at deduction to perform whatever task is necessary to solve the case. You can attempt any check that requires you to be trained in a skill, even if you're untrained in it; you can attempt any check that requires you to have expert proficiency in a skill so long as you're trained in it; and you can attempt any check that requires you to have master proficiency in a skill as long as you have expert proficiency in it."
+ },
+ {
+  "id": "denounce-tyranny",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Denounce Tyranny",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "auditory",
+   "emotion",
+   "linguistic",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You witnessed a creature harm an ally, harm a noncombatant, or commit a wantonly evil act in the last round. --- You call out a creature's despicable or cowardly actions, disrupting its alliances or even making its allies ashamed to be seen with it. Attempt a Diplomacy check and compare the result to the Will DCs of up to three of the triggering creature's allies within 30 feet of you. If you succeed on the check, the target refuses to treat the triggering creature as an ally for 1 round (2 rounds on a critical success). It's possible to get a different degree of success for each target. If you're a master in Diplomacy, you can instead target up to five creatures, and if you're legendary in Diplomacy, you can target up to 10 creatures."
+ },
+ {
+  "id": "devastator",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Devastator",
+  "level": 19,
+  "traits": [
+   "barbarian"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your Strikes are so devastating that you hardly care about resistance, and your barbarian abilities are unparalleled. Your proficiency rank for your barbarian class DC increases to master. Your melee Strikes ignore up to 10 resistance to the physical damage they deal."
+ },
+ {
+  "id": "disturbing-knowledge",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Disturbing Knowledge",
+  "level": 7,
+  "traits": [
+   "emotion",
+   "fear",
+   "general",
+   "mental",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You utter a litany of dreadful names, prophecies, and descriptions of realms beyond mortal comprehension, drawn from your study of forbidden tomes and scrolls. Even those who don't understand your language are unsettled by these dire secrets. Attempt an Occultism check and compare the result to the Will DC of an enemy within 30 feet, or to the Will DCs of any number of enemies within 30 feet if you are legendary in Occultism. Those creatures are temporarily immune for 24 hours. --- **Critical Success** The target becomes confused for 1 round and Frightened 1. **Success** The target becomes frightened 1. **Failure** The target is unaffected. **Critical Failure** You get overly caught up in your own words and become frightened 1."
+ },
+ {
+  "id": "dracomancer",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Dracomancer",
+  "level": 9,
+  "traits": [
+   "kobold"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices",
+   "spellcastingGrant"
+  ],
+  "inRegistries": [],
+  "text": "The power infused into you by your draconic benefactor's presence allows you to manifest their most iconic spells. Choose one 1st-rank spell and one 2nd-rank spell from those listed for a dragon spellcaster of your draconic benefactor's type, (for example, Fear and for a conspirator dragon benefactor). You can cast each of these spells once per day as innate spells of the same tradition as your draconic benefactor. You gain the trained proficiency rank in the spell attack modifier and spell DC statistics, and your key spellcasting attribute is Charisma."
+ },
+ {
+  "id": "dragon-disciple-dedication",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Dragon Disciple Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [
+   "choice",
+   "effectChoices"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Access** You are a kobold with the dragonscaled or spellscaled heritage, a dragon instinct barbarian, or a draconic bloodline sorcerer. --- You choose to study or worship one type of dragon, and your focus grants you a measure of its power. You become trained in arcane spell DCs and arcane spell attack rolls. Choose one color of dragon when you select this feat; if you are a sorcerer with the draconic bloodline, this must be the same type as your bloodline. You gain resistance equal to half your level against one type of damage determined by the chosen dragon type. The GM may allow you to choose a dragon type not listed below, and will determine the damage type appropriate for that dragon. - **Black or Copper** Acid - **Blue, Bronze, or Cloud** Electricity - **Brass, Gold, or Red** Fire - **Green** Poison - **Silver or White** Cold You also gain a +1 circumstance bonus to saving throws against sleep effects and effects that would make you paralyzed. **Special** If you later take the sorcerer archetype, you must choose the draconic bloodline. ---"
+ },
+ {
+  "id": "dragon-turtle-scale",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Dragon Turtle Scale",
+  "level": 4,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (concentrate) **Requirements** You're trained in Athletics --- This shimmering green scale is usually attached to a golden clasp or chain. When you activate the scale, for 1 minute you gain a swim Speed equal to half your land Speed."
+ },
+ {
+  "id": "dragon-turtle-scale-greater",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Dragon Turtle Scale (Greater)",
+  "level": 8,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (concentrate) **Requirements** You're trained in Athletics --- This shimmering green scale is usually attached to a golden clasp or chain. When you activate the scale, for 1 minute you gain a swim Speed equal to your land Speed."
+ },
+ {
+  "id": "dream-magic",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Dream Magic",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featCantripGrants"
+  ],
+  "text": "You learn dream-related magic to aid your studies. Choose Dream Message or Sleep upon taking this feat; you learn this spell as a 4th-rank occult innate spell that you can cast once per day. If you choose *sleep*, you can cast the spell only while in a Daydream Trance. You become trained in the spell attack modifier and spell DC statistics, and your spellcasting attribute for these spells is Wisdom. --- **Special** You can take this feat twice, gaining the spell you didn't select initially the second time."
+ },
+ {
+  "id": "druidic-order",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Druidic Order",
+  "level": 1,
+  "traits": [
+   "druid"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Upon becoming a druid, you align yourself with a druidic order, which grants you a class feat, an order spell (see below), and an additional trained skill tied to your order While you'll always be a member of your initial order, it's not unheard of for a druid to request to study with other orders in search of greater understanding of the natural world, and PC druids are among the most likely to blend the powers of different orders. Order spells are a type of focus spell. It costs 1 Focus Point to cast a focus spell, and you start with a focus pool of 1 Focus Point. You refill your focus pool during your daily preparations, and you can regain 1 Focus Point by spending 10 minutes using the Refocus activity to commune with local nature spirits or otherwise tend to the wilderness in a way befitting your order. Focus spells are automatically heightened to half your level rounded up, much like cantrips. Focus spells don't require spell slots, and you can't cast them using spell slots. Certain feats give you more focus spells. The maximum Focus Points your focus pool can hold is equal to the number of focus spells you have, but can never be more than 3 points. **Order Skill** You become trained in the listed skill. If you're already trained in that skill, you become trained in a different skill of your choice. **Druid Feat** You gain this 1st-level druid feat. **Order Spell** You automatically gain the listed order spell at 1st level. **Anathema** Add this anathema to those for all druids. --- Animal Order Flame Order Leaf Order Stone Order Storm Order Untamed Order Wave Order"
+ },
+ {
+  "id": "dwarven-reinforcement",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Dwarven Reinforcement",
+  "level": 5,
+  "traits": [
+   "dwarf"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can use your knowledge of engineering and metalwork to temporarily strengthen thick objects and structures. By spending 1 hour working on an item, you can give it a +1 circumstance bonus to its Hardness for 24 hours. If you're a master in Crafting, the bonus is +2, and if you're legendary, the bonus is +3. You can reinforce a portion of a structure, though 1 hour usually reinforces only a door, a few windows, or another section that fits within a 10-foot cube."
+ },
+ {
+  "id": "dwarven-weapon-expertise",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Dwarven Weapon Expertise",
+  "level": 13,
+  "traits": [
+   "dwarf"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Dwarven Weapon Expertise Source Core Rulebook pg. 37 Prerequisites Dwarven Weapon Familiarity Your dwarven affinity blends with your training, granting you great skill with dwarven weapons. Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency for battle axes, picks, warhammers, and all dwarven weapons in which you are trained."
+ },
+ {
+  "id": "echo-of-the-fallen",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Echo of the Fallen",
+  "level": 4,
+  "traits": [
+   "aftermath"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "With the utmost gratitude for your help in releasing them from their unearthly coil, a tiny sliver of a ghostly entity has remained attached to you. This manifests as an echo of their former self that follows you around and that you and anyone capable of casting divine or occult spells can see and speak with. When you take this feat, work with your GM to choose one martial weapon and one skill (or an advanced weapon if you're trained in all martial weapons) that are appropriate for the spirit; once you've chosen the weapon and skill, you can't change them. You gain the Accept Echo action."
+ },
+ {
+  "id": "eclectic-obsession",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Eclectic Obsession",
+  "level": 5,
+  "traits": [
+   "gnome"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per day --- Your desire for stimulation has led you from one pursuit to another and granted you a smattering of expertise with myriad crafts and professions. You reflect on snippets you've learned to temporarily become trained in one Lore skill of your choice. This proficiency lasts for 10 minutes or until you critically fail a check with that skill. Since this training is temporary, you can't use it as a prerequisite for a permanent character option like a feat or a skill increase."
+ },
+ {
+  "id": "eclipseborn",
+  "lane": "proficiency",
+  "collection": "backgrounds",
+  "name": "Eclipseborn",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "innateSpells"
+  ],
+  "inRegistries": [],
+  "text": "You were born at the exact moment of a solar or lunar eclipse. At the eclipse's junction, or not long after, a catastrophe fell upon the area of your birth-perhaps it affected only the people around you, a city, or even spanned the entire region. Whatever the scope, those present at your arrival came to believe the eclipse was the omen of ill fortune, and you were its harbinger. You grew up distinctly aware others viewed you as a child of misfortune and, to a certain extent, they were right. Choose two attribute boosts. One must be to Charisma or Constitution, and one is a free attribute boost. Decide with the GM what catastrophic event coincided with your birth; you're trained in a Lore skill related to that event. You can cast Ill Omen as an occult innate spell once per day. After you Cast this Spell, but before you regain the ability to cast it the following day, the GM can force you to reroll a successful saving throw, attack roll, or skill check as misfortune finds its way back to you. This is a misfortune effect. If this effect causes you to fail the associated saving throw, attack roll, or skill check, you can cast *ill omen* again a second time that day. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free"
+ },
+ {
+  "id": "effervescent-ampoule",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Effervescent Ampoule",
+  "level": 2,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) **Requirements** You're trained in Acrobatics --- Light spring water fizzes and bubbles within this small glass globe, spilling onto the affixed armor when activated. Until the end of your turn, you can move across water and other liquids as if they were solid ground. Your movement does not trigger any device or hazard that relies on a weight-sensitive pressure plate or similar device. When the ampoule's effect ends, you sink, fall, break through flimsy ground, or land on pressure plates as normal for your current location."
+ },
+ {
+  "id": "efficient-explorer",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Efficient Explorer",
+  "level": 4,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You are more efficient at exploring uncharted territories. As long as you're in a hex that is predominantly a terrain in which you are trained in an associated Lore skill, you grant your group one additional hexploration activity."
+ },
+ {
+  "id": "eidolon-defensive-expertise",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Eidolon Defensive Expertise",
+  "level": 11,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your eidolon increases its ability to avoid attacks. Its proficiency rank for unarmored defense increases to expert."
+ },
+ {
+  "id": "eidolon-defensive-mastery",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Eidolon Defensive Mastery",
+  "level": 19,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your eidolon's form becomes particularly difficult to assail. Its proficiency rank for unarmored defense increases to master."
+ },
+ {
+  "id": "eidolon-unarmed-expertise",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Eidolon Unarmed Expertise",
+  "level": 5,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your eidolon becomes more capable of using its unarmed attacks. Its proficiency rank for unarmed attacks increases to expert."
+ },
+ {
+  "id": "eidolon-unarmed-mastery",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Eidolon Unarmed Mastery",
+  "level": 13,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your eidolon truly masters its unarmed attacks, reaching greater heights. Its proficiency rank for unarmed attacks increases to master."
+ },
+ {
+  "id": "eldritch-archer-dedication",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Eldritch Archer Dedication",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "dedication",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You channel powerful magic with your archery, allowing you to deliver potent spells through the tip of an arrow rather than the more mundane flick of the wrist or whatever other gestures are usually used. If you don't already cast spells from spell slots, you learn to cast spontaneous spells and gain the Cast a Spell activity. You gain a spell repertoire with one cantrip of your choice, from a tradition of your choice. You choose a common cantrip or other cantrip to which you have access. This cantrip must require a spell attack roll and come from your chosen tradition. You're trained in spell attack modifier and spell DC. Your key spellcasting attribute for these spells is Charisma. Regardless of whether you can already cast spells or gained the ability from this dedication, you gain the Eldritch Shot activity."
+ },
+ {
+  "id": "elven-weapon-expertise",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Elven Weapon Expertise",
+  "level": 13,
+  "traits": [
+   "elf"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Elven Weapon Expertise Source Core Rulebook pg. 41 Prerequisites Elven Weapon Familiarity Your elven affinity blends with your class training, granting you great skill with elven weapons. Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency in longbows, composite longbows, longswords, rapiers, shortbows, composite shortbows, and all elf weapons in which you are trained."
+ },
+ {
+  "id": "emerald-grasshopper",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Emerald Grasshopper",
+  "level": 5,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (concentrate) **Requirements** You're trained in Athletics --- This metal grasshopper studded with emeralds is usually clasped to the legs of a suit of armor. When you activate it, make a Leap, traveling up to 40 feet horizontally and up to 10 feet vertically. If you don't end your jump on solid ground, you flutter in the air until the end of your turn, then fall harmlessly at a rate of 60 feet per round until you reach the ground."
+ },
+ {
+  "id": "emerald-grasshopper-greater",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Emerald Grasshopper (Greater)",
+  "level": 9,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (concentrate) **Requirements** You're trained in Athletics --- This metal grasshopper studded with emeralds is usually clasped to the legs of a suit of armor. When you activate it, make a Leap, traveling up to 100 feet horizontally and up to 30 feet vertically. This benefit applies to any other Leaps you make before the end of your turn. If you don't end your jump on solid ground, you flutter in the air until the end of your turn, then fall harmlessly at a rate of 60 feet per round until you reach the ground."
+ },
+ {
+  "id": "emergency-disguise",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Emergency Disguise",
+  "level": 1,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Usage** affixed to armor **Activate** ⟨1⟩ Envision **Requirements** You're trained in Deception --- In Woodsedge Lodge, this thin red ribbon, typically worn around the neck, symbolizes the reach of Galt's soul-trapping guillotines, the infamous final blades. Each of these talismans stores a specific disguise, chosen at the time of its creation. When activated, the talisman applies a disguise to its wearer, allowing them to Impersonate without taking the time to assemble a convincing disguise first. The components the disguise creates can appear to be worth up to 3 gp total. The instant nature of the disguise leaves a few traces of its haphazard nature, imposing a -2 circumstance penalty on checks to Impersonate using the disguise. Wearers with the Quick Disguise feat don't take this penalty. Any objects created as a part of the disguise disappear after 24 hours or after you remove them."
+ },
+ {
+  "id": "empathetic-plea",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Empathetic Plea",
+  "level": 1,
+  "traits": [
+   "auditory",
+   "emotion",
+   "gnome",
+   "mental",
+   "visual"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** You are attacked by a creature that you haven't yet acted hostile toward. You must use this reaction before the creature rolls its attack. --- The way you cringe or use those puppy-dog eyes you've been practicing elicits an empathetic response in the attacker. Attempt a Diplomacy check against your attacker's Will DC. --- **Critical Success** The creature pulls its attack, wasting its action, and can't use hostile actions against you until the beginning of its next turn. **Success** The creature takes a -2 circumstance penalty to damage on the triggering Strike and all its Strikes against you until the beginning of its next turn. The penalty is -4 if you're an expert in Diplomacy, -6 if you're a master, and -8 if you're legendary. **Failure** The creature's attack is unaffected, and the creature is temporarily immune to your Empathic Pleas for 24 hours."
+ },
+ {
+  "id": "empiricism-methodology",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Empiricism Methodology",
+  "level": 1,
+  "traits": [
+   "investigator"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featFeatGrants"
+  ],
+  "text": "Everything comes down to data. Calculating statistics, running numbers, and using inductive reasoning allows you to determine the most likely outcome of any scenario, and anything out of place draws your keen attention. You are trained in one Intelligence-based skill of your choice. You gain the That's Odd investigator feat, and you gain the Expeditious Inspection free action."
+ },
+ {
+  "id": "energized-cartridge",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Energized Cartridge",
+  "level": 4,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Usage** affixed to a firearm or crossbow **Activate** ⟨4⟩ (concentrate) **Trigger** You attempt an attack roll with the affixed firearm or crossbow **Requirements** You're trained in use of the affixed firearm or crossbow. --- This simple brass shell casing contains trace amounts of alchemical ingredients and is usually attached to the underside of the affixed weapon's barrel. When activated, it causes the ammunition fired from the affixed weapon to transform into your choice of acid, cold, electricity, or fire, dealing damage of the appropriate energy type instead of its usual damage as well as 1d6 persistent damage of the same type on a critical hit."
+ },
+ {
+  "id": "energy-fortification",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Energy Fortification",
+  "level": 2,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Access** Minkai or Forest of Spirits origin --- You learn Minkaian traditions about the void and know how to manipulate the five elements to fortify vitality and void energies in the body. When you Prepare Elemental Medicine, you can choose to use instead of the usual skills. If you do, the medicine also grants the recipient resistance 2 and weakness 2 based on the element you chose. A wood, earth, or water elemental medicine grants resistance to void damage and weakness to vitality damage, and a living recipient loses its immunity to vitality damage for the duration. A fire or metal elemental medicine grants resistance to vitality damage and weakness to void damage, and an undead recipient loses its immunity to void damage for the duration. If you're a master in Occultism, increase the resistance and weakness to 4. If you're legendary, instead increase them to 8."
+ },
+ {
+  "id": "environmental-guide",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Environmental Guide",
+  "level": 7,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can rapidly adapt to climates and help others do the same. After an hour in an environment, you and up to five allies can treat the natural temperature effects of an environment as one step less severe (treat extreme cold as severe cold or extreme heat as severe heat, for instance). This reduction in severity is cumulative with any equipment (such as cold-weather gear) or spells (such as environmental endurance). If you're legendary in Survival, you may protect yourself and up to five allies, and you treat temperature effects as two steps less severe."
+ },
+ {
+  "id": "evasion",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Evasion",
+  "level": 7,
+  "traits": [
+   "gunslinger"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've learned to move quickly to avoid explosions, dragon's breath, and worse. Your proficiency rank for Reflex saves increases to master. When you roll a success on a Reflex save, you get a critical success instead."
+ },
+ {
+  "id": "expeditious-search",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Expeditious Search",
+  "level": 7,
+  "traits": [
+   "general"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You have a system that lets you search at great speed, finding details and secrets twice as quickly as others can. When Searching, you take half as long as usual to Search a given area. This means that while exploring, you double the Speed you can move while ensuring you've Searched an area before walking into it (up to half your Speed). If you're legendary in Perception, you instead Search areas four times as quickly."
+ },
+ {
+  "id": "experienced-smuggler",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Experienced Smuggler",
+  "level": 1,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You often smuggle things past the authorities. When the GM rolls your Stealth check to see if a passive observer notices a small item you've concealed, the GM uses the number rolled or 10—whichever is higher—as the result of your die roll, adding it to your Stealth modifier to determine your Stealth check result. If you're a master in Stealth, the GM uses the number rolled or 15, and if you're legendary in Stealth, you automatically succeed at hiding a small concealed item from passive observers. This provides no benefits when a creature attempts a Perception check while actively searching you for hidden items. --- **PFS Note** This feat allows you to Earn Income with Underworld Lore with tasks of your level -1 (instead of the normal level -2)."
+ },
+ {
+  "id": "experienced-tracker",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Experienced Tracker",
+  "level": 1,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Tracking is second nature to you, and when necessary you can follow a trail without pause. You can Track while moving at full Speed by taking a –5 penalty to your Survival check. If you're a master in Survival, you don't take the –5 penalty. If you're legendary in Survival, you no longer need to roll a new Survival check every hour when tracking, though you still need to roll whenever there are significant changes in the trail."
+ },
+ {
+  "id": "expert-longevity",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Expert Longevity",
+  "level": 9,
+  "traits": [
+   "elf"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "You've continued to refine the knowledge and skills you've gained through your life. When you choose a skill in which to become trained with Ancestral Longevity, you can also choose a skill in which you are already trained and become an expert in that skill. This lasts until your Ancestral Longevity expires. When the effects of Ancestral Longevity and Expert Longevity expire, you can retrain one of your skill increases. The skill increase you gain from this retraining must either make you trained in the skill you chose with Ancestral Longevity or make you an expert in the skill you chose with Expert Longevity."
+ },
+ {
+  "id": "eye-of-the-arclords",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Eye of the Arclords",
+  "level": 2,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Frequency** once per day **Access** You are a member of the Arclords of Nex. --- You open an incandescent third eye upon your forehead. The eye can remain open for 1 minute, and you can close it before then with a single action with the concentrate trait. It can remain open for 2 minutes if you're a master in Arcana, or 5 minutes if you're legendary. While the eye is open, you gain the following benefits: - you gain the effects of the detect magic arcane innate spell from your Arcane Sense at the start of each of your turns without needing to cast the spell; - you gain darkvision; - you gain a +2 status bonus to Perception checks to Seek undetected and hidden creatures and to your Perception DC against Hide and Sneak. After your third eye closes, you are dazzled for an amount of time equal to how long you had it open."
+ },
+ {
+  "id": "eyes-of-the-city",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Eyes of the City",
+  "level": 2,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can track down targets with the help of locals. You can use Diplomacy or Society, whichever you're trained in, to Track creatures in settlements. You chat with locals to help follow the trail of creatures you Track. At the GM's discretion, there might not be enough people to speak with to keep following the trail."
+ },
+ {
+  "id": "fabricated-credentials",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Fabricated Credentials",
+  "level": 7,
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You're so familiar with the paperwork necessary to maintain your cover that you can easily whip up documents that support your fabrications. You can Create a Forgery using Deception, rather than Society, and doing so only takes 10 minutes, or 1 minute if you're legendary in Deception. With your paranoid nature, you're always on the lookout for forgeries. The GM rolls a secret Perception or Society check for you any time you encounter a forgery, even if you don't examine it closely."
+ },
+ {
+  "id": "fade-band",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Fade Band",
+  "level": 12,
+  "traits": [
+   "consumable",
+   "illusion",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨5⟩ (concentrate) **Trigger** An attack misses you **Requirements** You are trained in Stealth --- This thin, silvery wire wraps around your armor. When you activate the band, it casts a 2nd-rank spell on you."
+ },
+ {
+  "id": "fascinating-performance",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Fascinating Performance",
+  "level": 1,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "When you Perform, compare your result to the Will DC of one observer. If you succeed, the target is fascinated by you for 1 round. If the observer is in a situation that demands immediate attention, such as combat, you must critically succeed to fascinate it and the Perform action gains the incapacitation trait. You must choose which creature you're trying to fascinate before you roll your check, and the target is then temporarily immune for 1 hour. If you're an expert in Performance, you can fascinate up to four observers; if you're a master, you can fascinate up to 10 observers; and if you're legendary, you can fascinate any number of observers at the same time."
+ },
+ {
+  "id": "feather-step-stone",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Feather Step Stone",
+  "level": 3,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨4⟩ (concentrate) **Trigger** You Stride or Step **Requirements** You are trained in Acrobatics --- This stone, usually shaped as a cabochon, is a small chunk of amber with a bit of feather or a flying insect caught within it. When you activate the stone, you ignore the effects of any difficult terrain and greater difficult terrain you move through until the end of your turn."
+ },
+ {
+  "id": "fell-rider",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Fell Rider",
+  "level": 9,
+  "traits": [
+   "hobgoblin"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "You have trained with your animal companion to become a terrifying juggernaut on the battlefield. Your animal companion becomes trained in Intimidation. If your animal companion uses Support while serving as your mount, it grants you the effects of the Aid reaction on your first Intimidation check to Demoralize on the same turn, even though it can't take reactions."
+ },
+ {
+  "id": "fencer",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Fencer",
+  "level": 1,
+  "traits": [
+   "swashbuckler"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You move carefully, feinting and creating false openings to lead your foes into inopportune attacks. You are trained in Deception. When you Create a Diversion or Feint, the action gains the bravado trait."
+ },
+ {
+  "id": "fey-ascension",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Fey Ascension",
+  "level": 9,
+  "traits": [],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "The fey influence on your form and features grows even more powerful and notable. You gain one of the following features and abilities; this must be the same animal or fey type as you chose for Fey Influence. - **Anteater** You become an expert in primal DCs and spell attack rolls. You can cast Slow as an innate primal spell once per day. - **Cat Sith** You laugh off the outraged curses of those you have tricked or wronged. Whenever a creature targets you with a misfortune effect, make a . On a success, you are unaffected. - **Cursed Bluebird** You have enough control over your curse to turn a bane into a minor blessing. Once per day, you can temporarily transform yourself or an ally into a blue bird, as a 4th-rank Pest Form (bird only) targeting one willing creature. - **Dryad** Your hair becomes intermixed with delicate but razor-edged leaves that move as you command. You gain a leaves ranged unarmed attack that deals 1d6 slashing damage. Your leaves are in the dart weapon group and have the magical and unarmed traits. *Note: A range was not provided for this strike in the source. For Foundry automation we have assumed a 20-foot range increment, to be in line with similar abilities.* - **Faun** You can cast Charm, Sleep, and Triple Time as innate primal spells once per day each. Whenever you cast one of these spells, you can Step or Stride as part of the activity. - **Gremlin** You become an expert in primal DCs and spell attack rolls. You can cast Mad Monkeys as an innate primal spell once per day. - **Monarch** Once per day, you gain the ability to manifest a pair of exquisite butterfly wings. These wings remain for 10 minutes. You gain a fly Speed equal to your Speed while you've manifested your wings. - **Unicorn** You become trained in Medicine, or an expert if you were already trained. You gain a +2 status bonus to saves against poison and charm effects. --- **Special** This feat gains the trait appropriate for your ancestry (human for human, goblin for goblin, etc.)."
+ },
+ {
+  "id": "fey-influence",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Fey Influence",
+  "level": 5,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featCantripGrants"
+  ],
+  "text": "You have been exposed to powerful fey magic. You become trained in primal DCs and spell attack rolls. You gain the fey trait and one of the following features which grant an innate primal spell that can be used once per day. - **Anteater** You can launch your tongue forward as a deadly attack, gaining Grim Tendrils. - **Cat Sith** You have catlike features and can appear as a mundane cat with Pest Form (cat only). - **Cursed Bluebird** You have blue feathers or wings. It's terrible luck to harm a bluebird, and you can manifest that power as Ill Omen. - **Dryad** Your body is covered in elegant vines, granting you Summon Plant or Fungus. - **Faun** Faun Your legs and feet are swift and possibly hooved, granting you Fleet Step. - **Gremlin** You have long, bat-like ears and gain Bane. - **Monarch** You have vestigial, insectile features and gain Spider Sting. - **Unicorn** You have a magical horn or a prominent symbol of one on your forehead, which you can use to cast Heal. **Special** This feat gains the trait appropriate for your ancestry (human for human, goblin for goblin, etc.)"
+ },
+ {
+  "id": "fiddle-of-the-maestro",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Fiddle of the Maestro",
+  "level": 16,
+  "traits": [
+   "coda",
+   "occult",
+   "staff"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "heldSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This exquisite fiddle is perfectly carved and balanced to produce the purest sound while granting its player perfect balance and poise. It grants a +2 item bonus to Performance checks. If you're a master in Performance, while playing it you also gain a +1 status bonus to Reflex saves and a +1 item bonus to Dexterity-based skill checks. If you're legendary in Performance, the bonuses are +2. When you Perform with the fiddle, you can choose to create a harsh and discordant note. You critically fail the Performance check, shred the strings of the fiddle, and create an 8th-rank Noise Blast, with a around you instead of a . The fiddle can't be played again until the strings are replaced at a cost of 200 gp. --- **Activate** Cast a Spell **Effect** You expend a number of charges from this instrument to cast a spell from its list. - **Cantrips** Figment, Light, Message - **1st** Command - **2nd** Calm, Revealing Light - **3rd** Enthrall - **4th** Honeyed Words - **5th** Sending - **6th** Calm, Dominate, Vibrant Pattern - **7th** Dominate, Mask of Terror, True Target, Vibrant Pattern, Visions of Danger --- **Craft Requirements** Supply one casting of all listed ranks of all listed spells."
+ },
+ {
+  "id": "fifth-doctrine-warpriest",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Fifth Doctrine (Warpriest)",
+  "level": 15,
+  "traits": [
+   "cleric"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your proficiency rank for Fortitude saves increases to master. When you roll a success at a Fortitude save, you get a critical success instead."
+ },
+ {
+  "id": "fighter-expertise",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Fighter Expertise",
+  "level": 11,
+  "traits": [
+   "fighter"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your practiced techniques have made you even more formidable. Your proficiency rank for your fighter class DC increases to expert."
+ },
+ {
+  "id": "fighter-weapon-mastery",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Fighter Weapon Mastery",
+  "level": 5,
+  "traits": [
+   "fighter"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Hours spent training with your preferred weapons, learning and developing new combat techniques, have made you particularly effective with your weapons of choice. Choose one weapon group. Your proficiency rank increases to master with the simple weapons, martial weapons, and unarmed attacks in that group, and to expert with the advanced weapons in that group. You gain access to the critical specialization effects of all weapons and unarmed attacks for which you have master proficiency."
+ }
+]

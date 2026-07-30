@@ -1,0 +1,394 @@
+[
+ {
+  "id": "able-carter",
+  "lane": "grantsFeat",
+  "collection": "backgrounds",
+  "name": "Able Carter",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "choice",
+   "trainedLoreChoice",
+   "trainedSkillChoice"
+  ],
+  "text": "You worked for many years as a hauler within Geb, either on your own or with a larger operation that shipped goods across Geb's ancient roads. In either case, you were loosely affiliated with the Carters Consortium, and you might have even been part of that faction when allegations of Pharasma worship among its leaders caused the faction's sharp drop in significance. Yet the goods still need to be moved from ports to warehouses or from town to town, and that was your business. You've seen a lot of Geb in your time, and you're good at interacting with the quick and the dead alike, but you've given up the shipping business for more lucrative opportunities. The Carters Consortium values your past work, especially because so few people are sticking by them today. Your party gains 1 Reputation Point with the Carters Consortium at the start of the campaign. Choose two attribute boosts. One must be to **Strength** or **Charisma**, and one is a free attribute boost. You're trained in your choice of the Deception or Diplomacy skill. You gain a skill feat: Charming Liar if you chose Deception or Hobnobber if you chose Diplomacy. You're also trained in a Lore skill with one of Geb's cities: Graydirge, Mechitar, or Yled. --- ## Background details **Attribute Boosts** Charisma or Strength, one free"
+ },
+ {
+  "id": "advanced-element-control",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Advanced Element Control",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "text": "You gain one kineticist feat. For the purpose of meeting its prerequisites, your kineticist level is equal to half your level. Your options include impulse feats for your kinetic element, as normal for a kineticist. --- **Special** You can select this feat more than once. Each time you select it, you gain another kineticist feat."
+ },
+ {
+  "id": "advanced-muses-whispers",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Advanced Muse's Whispers",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "text": "You gain one bard feat. For the purpose of meeting its prerequisites, your bard level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another bard feat."
+ },
+ {
+  "id": "affinity-stones",
+  "lane": "grantsFeat",
+  "collection": "items",
+  "name": "Affinity Stones",
+  "level": 9,
+  "traits": [
+   "artifact",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Dwarven tales state that the first set of these stones was created by a dwarven lapidary for his elven sweetheart. The gem he chose was amber—to show his clan that a union between stone and leaf was possible. His family remained hesitant, despite the unmistakable love that the men shared. The tales then say that it was Folgrit who grew impatient and transformed the stones as a sign of her approval. Since then, more sets of these have been created, but doing so is an unsure process. Some of the stones are seemingly given their magical abilities at random, which most attribute as further blessings from Folgrit. Each set of affinity stones typically comes as a pair of gems set into worn items such as hilts, necklaces, or rings, though some sets of affinity stones feature additional gems. The full set of stones must be invested together across multiple creatures, or else their magic fails to function. To invest these items, one person must be a dwarf and everyone must perform a one-hour ceremony that includes divulging their innermost feelings. Their love need not be romantic, but it must be genuine and deep. If they pass this test, they receive the following benefits. - You are always aware of each other and permanently gain the effects of the Status spell. - Non-dwarves gain the benefits of a 1st- or 5th-level ancestry feat with the dwarf trait, and dwarves gain the benefits one 1st- or 5th-level ancestry feat with a trait corresponding to the ancestry of another person with which the affinity stones are invested. For example, if you share investment in the stones with a halfling, you can take halfling ancestry feats. You can't use these feats to meet prerequisites, but the benefits of the feats otherwise function as if you had taken the feat. - You gradually take on some of the physical characteristics of your counterparts. An elf may begin to grow a beard, while their dwarven counterpart may develop pointed ears. These changes have no mechanical effect. --- **Destruction** If one of the people who had invested in the *affinity stones* commits an act of true and regretless betrayal against someone else invested in the *affinity stones*, all of the stones shatter to dust."
+ },
+ {
+  "id": "animal-shape",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Animal Shape",
+  "level": 17,
+  "traits": [
+   "beastkin"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "text": "You have full control over your shape and can transform into your inherent animal. You can use Change Shape to enter an animal shape. When you gain this feat, choose either Aerial Form, Animal Form, Dinosaur Form, or Insect Form; after you choose a form, you can't change the form. While in animal shape, you gain the effects of a 5th-rank casting of your chosen form spell, except you always transform into an animal matching your inherent animal and can use your humanoid form's AC if it's higher than what the animal form grants. If your inherent animal isn't among the animals listed in the form, you default to the statistics and abilities of the bird battle form, cat battle form, deinonychus battle form, or ant battle form for *aerial form*, *animal form, dinosaur form*, or *insect form* respectively (at the GM's discretion, you instead default to a different form that is closest to your inherent animal). You can remain in animal shape indefinitely and can use Change Shape to return to your humanoid or hybrid shape at any time. If you have the Critter Shape feat, you can choose to gain the effects of a 4th-rank Pest Form, can remain in critter shape indefinitely, and can return to your critter shape at any time after leaving the shape, just as you can with Animal Shape."
+ },
+ {
+  "id": "aon-half-elf",
+  "lane": "grantsFeat",
+  "collection": "heritages",
+  "name": "Half-Elf",
+  "traits": [],
+  "engineFieldsPresent": [
+   "senses"
+  ],
+  "text": "Either one of your parents was an elf, or one or both were half-elves. You have pointed ears and other telltale signs of elf heritage. You gain the elf trait, the half-elf trait, and low-light vision. In addition, you can select elf, half-elf, and human feats whenever you gain an ancestry feat."
+ },
+ {
+  "id": "arodens-innovation",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Aroden's Innovation",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "text": "As befits the god of humanity and innovation, Aroden left teachings that continue to inspire. You've studied his works, and you understand the need to constantly reinvent yourself to meet new challenges. Each day during your daily preparations, choose a general feat of 3rd level or lower. If you meet the feat's prerequisites, you gain the benefits of that feat until your next daily preparations."
+ },
+ {
+  "id": "basic-concoction",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Basic Concoction",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "text": "You gain a 1st- or 2nd-level alchemist feat."
+ },
+ {
+  "id": "basic-kata",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Basic Kata",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "text": "You gain a 1st- or 2nd-level monk feat."
+ },
+ {
+  "id": "basic-wilding",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Basic Wilding",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "text": "You gain a 1st- or 2nd-level druid feat."
+ },
+ {
+  "id": "born-of-the-bones-of-the-earth",
+  "lane": "grantsFeat",
+  "collection": "classFeatures",
+  "name": "Born of the Bones of the Earth",
+  "level": 7,
+  "traits": [
+   "exemplar"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Your dominion is over stone and soil, the pillars holding up the stage of history's great legends. You gain the Energized Spark feat for your choice of earth or fire. When you critically succeed on a Strike and the target of the critical hit is standing on a surface of earth or stone, the target is driven down and mired in the ground. The target is immobilized and must succeed at an Escape attempt against your class DC to end the immobilization. The creature doesn't become stuck if it is incorporeal, is liquid (like a water elemental or some oozes), has a burrow speed, or could otherwise escape without effort. When you Spark Transcendence while standing on a surface of earth or stone, you can choose to shatter the surface in a , making it difficult terrain. You are not affected by this difficult terrain."
+ },
+ {
+  "id": "champion-dedication",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Champion Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication",
+   "multiclass"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "text": "Choose a deity. You are bound by your deity's anathema and gain the champion's aura and sanctification as described in the champion class. Choose a cause as you would if you were a champion, with the same options a champion must abide by. You gain its edicts and anathema but don't gain the other abilities. You become trained in Religion and your deity's associated skill; for each of these skills in which you were already trained, you instead become trained in a skill of your choice. You become trained in champion class DC. If you later gain a devotion spell, you become trained in spell attack modifier and spell DC. You become trained in light armor and medium armor. If you already were trained in light armor and medium armor, you gain training in heavy armor as well. Whenever you gain a class feature that grants you expert or greater proficiency in any type of armor (but not unarmored defense), you also gain that proficiency in the armor types granted to you by this feat. If you have a class feature that grants you expert proficiency in unarmored defense and you're 13th level or higher, you also become an expert in the armor types granted to you by this feat."
+ },
+ {
+  "id": "construction-occultist",
+  "lane": "grantsFeat",
+  "collection": "backgrounds",
+  "name": "Construction Occultist",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "trainedLore",
+   "trainedSkillChoice"
+  ],
+  "text": "You helped to build and design buildings and public works on behalf of Geb's architectural faction, the Builders League. You've been taught that creating bridges, gatehouses, roads, walls, and more is as much about planning as it is about brute labor. You learned that the Builders League has plans of occult significance for many of its construction projects and might have even aided them in the way you laid stones or designed walls (although you never learned the great design behind those secret plans). Although you've left construction behind, the skills in long-term planning and leveraging effort remain with you. You are still well-regarded by the Builders League. Your party gains 1 Reputation Point with the Builders League at the start of the campaign. Choose two attribute boosts. One must be to **Intelligence** or **Strength**, and one is a free attribute boost. You're trained in your choice of the Athletics or Occultism skill. You gain a skill feat: Hefty Hauler if you chose Athletics or Oddity Identification if you chose Occultism. You're also trained in Architecture Lore. --- ## Background details **Attribute Boosts** Intelligence or Strength, one free **Lore** Architecture Lore"
+ },
+ {
+  "id": "dragons-breath",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Dragon's Breath",
+  "level": 9,
+  "traits": [
+   "kobold"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Dragon's Breath Source Advanced Player's Guide pg. 15 Prerequisites Kobold Breath You can put more effort into your Kobold Breath to channel greater draconic power, though it takes more out of you. When you use Kobold Breath, you can increase the damage dice to d8s and increase the area to 60 feet for a line breath weapon or 30 feet for a cone. If you do, you can't use Kobold Breath again for 1 hour."
+ },
+ {
+  "id": "dromaar",
+  "lane": "grantsFeat",
+  "collection": "heritages",
+  "name": "Dromaar",
+  "traits": [
+   "dromaar"
+  ],
+  "engineFieldsPresent": [
+   "senses"
+  ],
+  "text": "Orcish strength emboldens your bloodline. You have a green tinge to your skin and other indicators of orc heritage. You gain the orc trait, the dromaar trait, and low-light vision. When you gain an ancestry feat, you can choose from dromaar and orc feats in addition to those from your ancestry."
+ },
+ {
+  "id": "empiricists-eye",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Empiricist's Eye",
+  "level": 12,
+  "traits": [
+   "investigator"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Sharp and piercing, your eyes see all and convey more. Your Point Out actions lose the auditory trait, and you don't need to be heard to convey the information to your allies. In addition, a creature you Point Out is off-guard to your allies until the start of your next turn. --- **Special** If you have the Blind-Fight feat, your allies gain that feat's benefits against any creature that's off-guard due to Empiricist's Eye."
+ },
+ {
+  "id": "fey-eidolon",
+  "lane": "grantsFeat",
+  "collection": "classFeatures",
+  "name": "Fey Eidolon",
+  "level": 1,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Your eidolon is a fey, a capricious being of the mysterious First World. Many fey appear similar to mortal humanoids with unusual features such as pointed ears, wings, or bodies composed of natural elements, but the full variety of fey is endless, and many others appear completely inhuman. Fey from the First World never truly die, instead forming a new creature. Fey eidolons usually come about when a summoner helps stabilize a difficult reformation. This means your fey eidolon likely lived a different life just before meeting you and might remember fragments of its old memories. Together, you might have to unravel a memory from your eidolon's past life among the fey. **Tradition** primal (but see Fey Gift Spells below) **Traits** eidolon, fey **Home Plane** First World --- **Size** Small or Medium **Suggested Attacks** fist (bludgeoning), wing (bludgeoning), attacks shaped like a weapon **Skirmisher Fey** Str 14, Dex 18, Con 14, Int 10, Wis 10, Cha 12; +1 AC (+4 Dex cap) **Trickster Fey** Str 12, Dex 18, Con 12, Int 12, Wis 8, Cha 16; +1 AC (+4 Dex cap) **Skills** Deception, Nature **Senses** low-light vision **Language** Sylvan **Speed** 25 feet --- **Eidolon Abilities** *Initial *fey gift spells*; Symbiosis *fey mischief*; Transcendence *fey chicanery ## Fey Gift Spells Your eidolon expands your primal magic with enchantment and illusion magic, allowing both of you to wield the power of fey charm and glamour. When you add spells to your repertoire, you can choose from the primal list as well as from enchantment and illusion spells that appear on the arcane spell list. As usual for when you add spells of a different tradition to your spell list, you're still a primal spellcaster, so all of your spells are primal spells. Your eidolon gains the Magical Understudy summoner feat, despite not meeting the prerequisite level, and it can choose fey gift cantrips in addition to primal cantrips. As usual for a feat you are granted by name, you can't retrain Magical Understudy into another feat. ## Fey Mischief 7th Your eidolon's fey magic becomes more powerful and mischievous. Your eidolon gains the Magical Adept feat, despite not meeting the prerequisite level, and can choose from fey gift spells in addition to primal spells. ## Fey Chicanery 17th Ever full of tricks, your fey eidolon twists magical protections into your shared life force, granting it a contingency in its back pocket for desperate situations. During your daily preparations, your eidolon can cast a contingency spell. The 4th-rank spell it chooses must come from the primal or fey gift list, and must either be common or be another spell you have access to."
+ },
+ {
+  "id": "foxfire",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Foxfire",
+  "level": 1,
+  "traits": [
+   "kitsune"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "text": "A crack of your tail sparks wisps of blue energy. Choose either electricity or fire when you gain this feat. You gain a foxfire ranged unarmed attack with a maximum range of 20 feet. The attack deals 1d4 damage of the chosen type (no ability modifier is added to the damage roll). Your foxfire attack is in the sling weapon group and has the magical trait. Like other unarmed attacks, you can improve this attack with Handwraps of Mighty Blows. --- **Special** If you are a frozen wind kitsune, your foxfire deals cold damage instead of electricity or fire."
+ },
+ {
+  "id": "gildedsoul",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Gildedsoul",
+  "level": 1,
+  "traits": [
+   "lineage",
+   "talos"
+  ],
+  "engineFieldsPresent": [
+   "choice",
+   "effectChoices"
+  ],
+  "text": "Your elemental lineage manifests in the polished gleam of precious metals, such as silver and gold, or even rare and valuable skymetals like adamantine or orichalcum. This natural luster enhances your charm; you become trained in your choice of Diplomacy or Society. If you would automatically become trained in both these skills (from your background or class, for example), you instead become trained in a skill of your choice. If you're trained in Society, you also gain the Courtly Graces skill feat."
+ },
+ {
+  "id": "grippli-weapon-expertise",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Grippli Weapon Expertise",
+  "level": 13,
+  "traits": [
+   "grippli"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Grippli Weapon Expertise Source The Mwangi Expanse pg. 121 Prerequisites Grippli Weapon Familiarity You fight with effortless expertise with grippli weapons. Whenever you gain a class feature that grants you expert or greater proficiency in a given weapon or weapons, you also gain that proficiency in the blowgun, hatchet, scythe, shortbow, composite shortbow, or grippli weapons in which you are trained."
+ },
+ {
+  "id": "hungerseed",
+  "lane": "grantsFeat",
+  "collection": "heritages",
+  "name": "Hungerseed",
+  "traits": [
+   "oni"
+  ],
+  "engineFieldsPresent": [],
+  "text": "One of your parents was an oni or a hungerseed. You possess a pair of horns, ranging in size from conical nubs to lengthy protrusions. You might have other signs of your parentage, such as colorful skin, fangs and claws, or a third eye in your forehead. You gain the oni trait. You gain a horns unarmed attack that deals 1d6 piercing damage and is in the brawling group. You can select from hungerseed feats and feats from your other parent's ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "kobold-weapon-expertise",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Kobold Weapon Expertise",
+  "level": 13,
+  "traits": [
+   "kobold"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Kobold Weapon Expertise Source Ancestry Guide pg. 39 Prerequisites Kobold Weapon Familiarity Whenever you gain a class feature that grants you expert or greater proficiency in a given weapon or weapons, you also gain that proficiency in the crossbow, greatpick, light pick, pick, and spear, as well as any kobold weapons in which you are trained."
+ },
+ {
+  "id": "molten-wit",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Molten Wit",
+  "level": 1,
+  "traits": [
+   "naari"
+  ],
+  "engineFieldsPresent": [
+   "choice",
+   "effectChoices"
+  ],
+  "text": "Your elemental soul has sparked not just your body but also your mind. You either become trained in Deception and gain the Charming Liar skill feat, or you become trained in Diplomacy and gain the Group Impression skill feat. If you're already trained in one of these skills, you must take the other and can choose from either skill feat. If you're trained in both skills, you become trained in a different skill of your choice instead and can choose from either skill feat."
+ },
+ {
+  "id": "mythic-magic",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Mythic Magic",
+  "level": 8,
+  "traits": [
+   "mythic"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "text": "You convert your mythic power into a magical effect. When you gain this feat, choose up to three spells of 1st or 2nd rank that take no more than 3 actions to cast and that are either instantaneous or have a duration of 10 minutes or less. You can spend a Mythic Point to cast any of those spells for their normal action cost and use mythic proficiency to determine your spell attack rolls and spell DCs, and the spells are automatically heightened to a rank equal to half your level (rounded up). If you don't normally have the ability to cast spells, you use Charisma as your spellcasting attribute modifier; otherwise, you use the spellcasting ability associated with your spellcasting class. You gain the Cast a Spell activity only for spells cast with this feat; you don't otherwise gain the typical benefits of being a spellcaster. --- **Special** At 14th level, add one spell of 3rd rank for you to cast using this ability. At 20th level, add one 4th-rank spell."
+ },
+ {
+  "id": "of-verse-unbroken",
+  "lane": "grantsFeat",
+  "collection": "classFeatures",
+  "name": "Of Verse Unbroken",
+  "level": 7,
+  "traits": [
+   "exemplar"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Though you are a warrior, you respect the power of song, oratory, and other arts, knowing it is these forces that make fights worth fighting. You gain the Energized Spark feat for your choice of sonic or vitality. When you critically succeed on a Strike, haunting melodies play around the target, making them Stupefied 1 unless they succeed on a save against your class DC. When you Spark Transcendence, your divine spark releases a sublime song that harmonizes with your allies. Until the start of your next turn, any of your allies that starts their turn within 30 feet of you can hum to Sustain one of their effects that can be sustained. This is a free action triggered by the ally's turn beginning. Your song then ends, and that ally can't benefit from this ability again for 10 minutes. This is an auditory and mental effect."
+ },
+ {
+  "id": "pirate-combat-training",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Pirate Combat Training",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "text": "You're particularly skilled at wielding the weapons used traditionally by pirates. You gain either the Combat Climber or Underwater Marauder skill feat, even if you do not meet its prerequisites. You have familiarity with the following weapons: Hatchet, Rapier, Scimitar, and Whip—for the purposes of proficiency, you treat any of these weapons as simple weapons. Your GM may add additional martial weapons to this list as appropriate for your world or region. At 5th level, whenever you get a critical hit with one of these weapons, you get its critical specialization effect."
+ },
+ {
+  "id": "rogue-dedication",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Rogue Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication",
+   "multiclass"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "text": "You gain a skill feat and the rogue's Surprise Attack class feature. You become trained in light armor. In addition, you become trained in Stealth or Thievery plus one skill of your choice; if you are already trained in both Stealth and Thievery, you become trained in an additional skill of your choice. You become trained in rogue class DC."
+ },
+ {
+  "id": "shall-not-falter-shall-not-rout",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Shall Not Falter, Shall Not Rout",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "focusSpells",
+   "spellcastingGrant"
+  ],
+  "text": "You gain the Shall not Falter, Shall not Rout focus spell. If you don't already have one, you gain a focus pool of 1 Focus Point, which you can regain using the Refocus activity to recite the Crimson Oath and meditate on its teachings. If you already have a focus pool, increase the number of Focus Points in your focus pool by 1. Your knight reclaimant focus spells are divine spells; when you gain this feat, you become trained in divine spell attacks and spell DCs and your spellcasting ability is Charisma."
+ },
+ {
+  "id": "specialized-companion-animal-trainer",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Specialized Companion (Animal Trainer)",
+  "level": 18,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "text": "The animal companion you gain from the Animal Trainer Dedication feat gains one specialization of your choice. Increase its proficiency rank in Performance to legendary instead of one of the specialization's skill increases."
+ },
+ {
+  "id": "stylish-tricks",
+  "lane": "grantsFeat",
+  "collection": "classFeatures",
+  "name": "Stylish Tricks",
+  "level": 3,
+  "traits": [
+   "swashbuckler"
+  ],
+  "engineFieldsPresent": [],
+  "text": "At 3rd level, 7th level, and 15th level, you gain an additional skill increase you can apply only to Acrobatics or the skill from your swashbuckler's style. You also gain an additional skill feat at these levels. This feat must be for Acrobatics or the trained skill from your swashbuckler's style."
+ }
+]

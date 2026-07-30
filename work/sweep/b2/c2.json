@@ -1,0 +1,1238 @@
+[
+ {
+  "id": "burglars-rosebud-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Burglar's Rosebud (Greater)",
+  "level": 8,
+  "traits": [
+   "consumable",
+   "emotion",
+   "mental",
+   "plant",
+   "wood"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Though originally intended to protect a green man's favorite agents against predation by pesky herbivores, thieves have adapted the design to help them disperse guard animals. The soft flower bud belies the horrible perfume contained within. Activated by cracking open the petals, the rosebud exudes a noxious cloud that has the olfactory trait for 10 minutes. If dropped, it fills a 10-foot-burst. If you carry it in one hand and periodically waft it as a free action, the rosebud instead gives you a . Creatures that enter or start their turn in the cloud must succeed at a save or become Sickened 1. Animals and beasts that critically fail are also fleeing for 1 round. A creature that successfully saves against the burglar's rosebud becomes temporarily immune to the effects for 24 hours."
+ },
+ {
+  "id": "captivating-rosebud",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Captivating Rosebud",
+  "level": 3,
+  "traits": [
+   "consumable",
+   "emotion",
+   "magical",
+   "wood"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "Named because of its popularity among thieves to distract any authorities in pursuit, a *captivating rosebud* has a near-irresistible fragrance. --- **Activate - Scent of Roses** ⟨1⟩ (manipulate, mental, olfactory) **Effect** You throw the captivating rosebud in a square adjacent to you. The rosebud quickly sprouts into a little rosebush that lasts for 1 hour. Any creature that passes within 15 feet of the rose bush, other than yourself, must attempt a save. --- **Critical Success** The creature is unaffected. **Success** The creature takes a –1 status penalty to Perception checks for 10 minutes. **Failure** As success, but a –2 penalty. **Critical Failure** As success, but a –2 penalty and the creature is fascinated by the rosebush. --- **Activate - Rose Vines** 10 minutes (manipulate) **Effect** You plant the captivating rosebud into a square adjacent to a building or other structure. It grows into a rosebush that stretches up to 30 feet tall. You and your allies can use the rosebush as a ladder to Climb easily up and down the side of the adjacent structure, but all other creatures must succeed at a saving throw or fail to notice the rosebush's presence."
+ },
+ {
+  "id": "cast-out",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Cast Out",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "concentrate",
+   "manipulate"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You attempt to cast a malevolent entity out of the creature or object it's possessing. Roll a counteract check against the possession effect; you must be within 30 feet of the possessed creature or object to do so. Your counteract rank is half your level rounded up, and your counteract modifier is your Occultism modifier, Religion modifier, or spell DC - 10, whichever is highest. If you succeed, the entity is driven out and can't attempt to possess that creature or object for 1 week. If you fail, the possessing creature is immune to your Cast Out for a year and a day"
+ },
+ {
+  "id": "castrovels-beacon",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Castrovel's Beacon",
+  "level": 14,
+  "traits": [
+   "deadly-d8",
+   "disarm",
+   "finesse",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "The tip of this *+2 greater striking brilliant standard-grade cold iron rapier* shines with a flickering sheen of green light that mimics the glittering appearance of Castrovel in the night sky. The carrier of *Castrovel's Beacon* instinctively knows Castrovel's position in the sky even if it hasn't actually yet risen into view, which grants the wielder a +2 item bonus to Sense Direction when using the stars to orient themself. Additionally, the weapon grants a +2 item bonus to all saving throws against effects that cause the dazzled or blinded conditions. When its *brilliant* rune is activated, the counteract rank is 6 and the counteract modifier is +21. **Activate—Starlight Burst** ⟨1⟩ (manipulate) **Frequency** once per day --- **Effect** You cast Vibrant Pattern from *Castrovel's Beacon* as a 6th-rank arcane spell with a save. Creatures with the elf trait are immune to Starlight Burst, and creatures with the demon trait take a –2 item penalty on all Will saves against the effect."
+ },
+ {
+  "id": "catoblepas-maul",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Catoblepas Maul",
+  "level": 13,
+  "traits": [
+   "magical",
+   "poison",
+   "shove"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "The putrid stench emanating from the catoblepas antlers adorning this *+2 greater striking Greater Crushing maul* interferes with your sense of smell. While wielding this weapon, you gain a +2 item bonus to saves against olfactory effects. --- **Activate—Vile Stench** ⟨1⟩ (manipulate, olfactory) **Requirements** Your last action was a successful Strike with the *catoblepas maul* **Effect** The target must succeed at a save or become Sickened 1 (plus Slowed 1 for as long as it's sickened on a critical failure). A creature that succeeds at its save becomes temporarily immune to Vile Stench for 1 minute. --- **Craft Requirements** The initial raw materials must include antlers from a catoblepas."
+ },
+ {
+  "id": "cauthooj-bagpipes",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Cauthooj Bagpipes",
+  "level": 13,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "The main portion of this set of bagpipes is fashioned from the dried skin of a cauthooj, with the feathers still attached. The bird's vocal cords are crafted into the instrument's reeds. The pipes grant a +2 item bonus to Performance checks while playing music with them. --- **Activate—Disorienting Fugue** ⟨2⟩(auditory, incapacitation, manipulation, mental) **Frequency** once per hour **Effect** You play several notes on the pipes, quickly altering their pitch and tone. Each creature within a must attempt a save to resist the song. Creatures that attempt this save become temporarily immune to Disorienting Fugue for 1 minute. --- **Critical Success** The target is unaffected and its temporary immunity to Disorienting Fugue increases to 1 hour. **Success** The target is unaffected. **Failure** The target is confused for 1 round. **Critical Failure** The target is confused for 1 round and immediately attacks itself (in the normal fashion for attacking oneself while confused). This Strike doesn't give the creature a flat check to recover from the confusion. --- **Activate—Throw Song** ⟨5⟩ (auditory, mental) **Trigger** A creature within 30 feet attempts a melee Strike against you or an ally **Effect** You let loose a staccato chirp from the pipes that appears to come from somewhere else. The triggering creature must attempt a save. On a failure, the creature redirects the Strike to another creature of your choice within reach of the melee Strike. If no other creatures are within range, the affected creature instead takes a –2 penalty to the Strike. --- **Craft Requirements** The initial raw materials must include the skin and vocal cords of a cauthooj."
+ },
+ {
+  "id": "caydens-tankard",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Cayden's Tankard",
+  "level": 25,
+  "traits": [
+   "agile",
+   "artifact",
+   "divine",
+   "thrown-20"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This ordinary-looking silver tankard functions as a *+4 major striking returning shockwave light hammer* when wielded as a weapon. Imbued with Cayden Cailean's courage, you are immune to fear effects. Any liquid poured into the tankard transforms into a strong, alcoholic ambrosia that remains contained safely within until you drink it. Drinking the ambrosia Activates the tankard, with one of the following effects. If you aren't the one blessed to borrow the tankard, you are Drained 4 and Enfeebled 4 while holding it, and its magic doesn't function for you. --- **Activate** ⟨5⟩ (manipulate) **Trigger** You are targeted or included in the area of a fear effect **Effect** Calmly swigging a drink on the battlefield turns your foe's attempt to frighten you against them. The fear effect is counteracted for all targets, and the creature that created the effect must attempt a saving throw as if it alone were the original target of the effect. --- **Activate** ⟨2⟩ (concentrate, manipulate) **Frequency** once per hour **Effect** You drink from the tankard, ending the controlled, grabbed, immobilized, paralyzed, restrained, and slowed conditions on yourself and creatures of your choice within 120 feet of you, as well as anything giving such targets a circumstance penalty to Speed. Any effect causing these conditions ends, and if the source of the effect is an item, that item can't produce the effect for 1 week, provided it is of a level lower than the tankard's. If a target needs to Escape an effect imposing any of these conditions, it automatically does so on its next attempt. You can Activate this ability even if one of the listed conditions would normally prevent you from doing so (such as paralyzed). --- **Activate** ⟨2⟩ (concentrate, manipulate) **Frequency** once per day **Effect** You enhance yourself with a shard of Cayden's divine fortune and cast indestructibility. --- **Destruction** If an unholy creature carries Cayden's Tankard into the Starstone Cathedral, drinks from it, and returns outside with it, the tankard shatters."
+ },
+ {
+  "id": "celestial-mount",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Celestial Mount",
+  "level": 20,
+  "traits": [
+   "champion"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Celestial Mount Source Core Rulebook pg. 115 Prerequisites divine ally (steed); tenets of good Your steed gains incredible celestial powers granted by your deity. It gains darkvision, its maximum Hit Points increase by 40, and it gains weakness 10 to unholy. Additionally, it grows wings appropriate to a servitor of your deity (such as metallic wings for an archon), granting it a fly Speed equal to its Speed. It gains the celestial trait and the trait appropriate to the type of servitor it has become (archon, angel, or azata, for example)."
+ },
+ {
+  "id": "ceremony-of-suns-gift",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Ceremony of Sun's Gift",
+  "level": 17,
+  "traits": [
+   "conrasu"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your connection to the sun has become an unbreakable bond. You don't become temporarily immune to the effects of your Sunlight Healing, and instead of rolling to recover Hit Points, you gain the maximum number of HP possible (for example, 64 HP instead of 8d8)."
+ },
+ {
+  "id": "chain-of-command",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Chain of Command",
+  "level": 6,
+  "traits": [
+   "disarm",
+   "finesse",
+   "magical",
+   "trip"
+  ],
+  "engineFieldsPresent": [
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "This *+1 striking spiked chain*, strung with bloodied military insignia and other grisly trophies harvested from slain soldiers, is commonly used by hobgoblin commandants to motivate their troops. On a critical hit, the *chain of command* deals an additional 1d6 mental damage. --- **Activate—Mercy of the Commander** ⟨1⟩ (concentrate) The chain of command gains the nonlethal trait for 1 minute. --- **Activate—Will of the Commander** ⟨1⟩ (concentrate) **Requirements** Your last action was a critical hit with the chain of command **Effect** You cast Command on the target of your critical hit with a DC of 22. Regardless of the outcome, the target is then immune to this effect for 24 hours. --- **Craft Requirements** Supply one casting of Command."
+ },
+ {
+  "id": "channel-protection-amulet",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Channel Protection Amulet",
+  "level": 3,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This nugget of polished tektite is trapped in a cage of braided wire and hangs from a silken cord. When wearing this amulet, you gain resistance 5 against damage from Harm spells if you're living, or against Heal spells if you're undead."
+ },
+ {
+  "id": "charm-of-resistance",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Charm of Resistance",
+  "level": 6,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "This charm, normally hung from the belt or worn around the neck, grants you resistance 5 against one type of energy damage: acid, cold, electricity, fire, or sonic. Each charm is crafted to protect against a particular type of energy damage, and its design usually embodies the type of energy it protects the wearer from in some way. For instance, a *charm of cold resistance* could be carved in the shape of a yeti, whereas a *charm of fire resistance* would be made from volcanic glass."
+ },
+ {
+  "id": "chromatic-jellyfish-oil",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Chromatic Jellyfish Oil",
+  "level": 9,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Chromatic Jellyfish Oil Source Treasure Vault (Remastered) pg. 59 Usage held in 1 hand Bulk L Activate (manipulate) Made from several oils of differing hues extracted from jellyfish and rare plants, the layers of chromatic jellyfish oil stack to form a rainbow within their vial. For 10 minutes after consuming chromatic jellyfish oil, you gain resistance to precision damage and extra damage from critical hits according to the jellyfish oil's type. While the effect lasts, you ignore difficult terrain caused by moving through tight spaces that aren't tight enough to force you to Squeeze, and you can move 5 feet per round when you successfully Squeeze (or 10 feet per round on a critical success). You can also Crawl at half your Speed. Chromatic Jellyfish Oil (Lesser) Source Treasure Vault (Remastered) pg. 59 Price 120 gp Bulk L The oil grants resistance 5. Chromatic Jellyfish Oil (Moderate) Source Treasure Vault (Remastered) pg. 59 Price 800 gp Bulk L The oil grants resistance 10. Chromatic Jellyfish Oil (Greater) Source Treasure Vault (Remastered) pg. 59 Price 5,200 gp Bulk L The oil grants resistance 15."
+ },
+ {
+  "id": "chromatic-jellyfish-oil-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Chromatic Jellyfish Oil (Lesser)",
+  "level": 9,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Made from several oils of differing hues extracted from jellyfish and rare plants, the layers of chromatic jellyfish oil stack to form a rainbow within their vial. For 10 minutes after consuming chromatic jellyfish oil, you gain resistance 5 to precision damage and extra damage from critical hits. While the effect lasts, you ignore difficult terrain caused by moving through tight spaces that aren't tight enough to force you to Squeeze, and you can move 5 feet per round when you successfully Squeeze (or 10 feet per round on a critical success). You can also Crawl at half your Speed."
+ },
+ {
+  "id": "cindergrass-poultice",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Cindergrass Poultice",
+  "level": 6,
+  "traits": [
+   "consumable",
+   "healing",
+   "magical",
+   "oil"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- This thick, waxy gel erases the effects of flame. It restores 2d12 Hit Points to a creature when applied to their body. If the creature has taken fire damage within the last minute, it restores additional Hit Points equal to the amount of fire damage the creature took within the last minute (maximum +10). Finally, the creature becomes immune to the effects of severe heat for 1 hour."
+ },
+ {
+  "id": "cinnamon-seers",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Cinnamon Seers",
+  "level": 4,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "lozenge"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Zippy, alchemically treated cinnamon suffuses cinnamon seers, a rock candy with a lively taste that provides a mental boost. A cinnamon seer remains in your mouth for 1 hour, its stimulating flavor granting you a +1 item bonus to checks to Recall Knowledge. **Secondary Effect** ⟨5⟩ (fortune) **Trigger** You gain no information from a Recall Knowledge check --- **Effect** Reroll the triggering check. If this was a secret check, the GM rerolls rather than you; the candy doesn't give you any insight into what the GM rolled, so in that case, you're rerolling based only on guesswork. The seer becomes inert. You become temporarily immune to cinnamon seers until the next time you make your daily preparations."
+ },
+ {
+  "id": "clay-sphere",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Clay Sphere",
+  "level": 3,
+  "traits": [
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This dry clay ball becomes malleable when activated, shifting into a variety of forms. The spell attack roll of any spell cast by Activating this item is +7 and the spell DC 17. - **Armor** You gain resistance 2 to precision damage and a +1 item bonus to saving throws against effects with the morph or polymorph traits. - **Weapon** After you cast a morph or polymorph spell by activating the *clay sphere*, the weapon becomes malleable, shifting its form to your whims. Your Strikes with the affixed weapon have the versatile bludgeoning, versatile piercing, and versatile slashing trait for 1 minute. Until the end of your next turn, Strikes with the affixed weapon have their damage dice increase by one step. --- **Activate** Cast a Spell **Effect** You cast Gouging Claw."
+ },
+ {
+  "id": "clay-sphere-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Clay Sphere (Greater)",
+  "level": 6,
+  "traits": [
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This dry clay ball becomes malleable when activated, shifting into a variety of forms. The spell attack roll of any spell cast by Activating this item is +10 and the spell DC 20. - **Armor** You gain resistance 5 to precision damage and a +2 item bonus to saving throws against effects with the morph or polymorph traits. - **Weapon** After you cast a morph or polymorph spell by activating the *clay sphere*, the weapon becomes malleable, shifting its form to your whims. Your Strikes with the affixed weapon have the versatile bludgeoning, versatile piercing, and versatile slashing trait for 1 minute. Until the end of your next turn, Strikes with the affixed weapon have their damage dice increase by one step. --- **Activate** Cast a Spell **Effect** You cast Gouging Claw. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast Enlarge."
+ },
+ {
+  "id": "clinging-bubbles",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Clinging Bubbles",
+  "level": 3,
+  "traits": [
+   "consumable",
+   "magical",
+   "transmutation"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Clinging Bubbles Source Firebrands pg. 85 Usage held in 2 hands Bulk L This small vial of viscous, clear, soapy solution comes with a wand, attached to the inside of the vial's cap, with a little loop at its end. A vial has enough solution to be used 10 times. Activate Interact; Effect You dip the wand in the solution and blow on it. An improbably large cloud of bubbles emerges in a square adjacent to you. This cloud travels in a straight line, moving 10 feet at the end of your turns. The bubbles are thick and sticky, and any creature who enters the same space as the bubble cloud becomes shrouded in them, taking a –5-foot circumstance penalty to its Speed. A creature covered in bubbles can use an Interact action to pop the bubbles and remove the penalty. The cloud can be redirected with strong winds. The cloud of bubbles has AC 5, 20 Hit Points, and weakness 5 to piercing and slashing. The bubbles pop naturally and harmlessly after 1 minute. Clinging Bubbles (Lesser) Source Firebrands pg. 85 Price 12 gp Bulk L Clinging Bubbles (Moderate) Source Firebrands pg. 85 Price 70 gp Bulk L The cloud of bubbles takes up a 5-foot burst. Creatures covered in bubbles take a –10-foot circumstance penalty. Each Interact action used to pop bubbles reduces the penalty by 5 feet. The cloud of bubbles has 30 Hit Points. Clinging Bubbles (Greater) Source Firebrands pg. 85 Price 250 gp Bulk L The cloud of bubbles takes up a 10-foot burst. Creatures covered in bubbles take a –15-foot circumstance penalty. Each Interact action used to pop bubbles reduces the penalty by 5 feet. The cloud of bubbles has 40 Hit Points."
+ },
+ {
+  "id": "clinging-bubbles-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Clinging Bubbles (Greater)",
+  "level": 11,
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This small vial of viscous, clear, soapy solution comes with a wand, attached to the inside of the vial's cap, with a little loop at its end. A vial has enough solution to be used 10 times. **Activate** ⟨1⟩ Interact --- **Effect** You dip the wand in the solution and blow on it. An improbably large cloud of bubbles emerges in a . This cloud travels in a straight line, moving 10 feet at the end of your turns. The bubbles are thick and sticky, and any creature who enters the same space as the bubble cloud becomes shrouded in them, taking a –15-foot circumstance penalty to its Speed. A creature covered in bubbles can use an Interact action to pop the bubbles and reduce the penalty by 5 feet. The cloud can be redirected with strong winds. The cloud of bubbles has AC 5, 40 Hit Points, and weakness 5 to piercing and slashing. The bubbles pop naturally and harmlessly after 1 minute."
+ },
+ {
+  "id": "clinging-bubbles-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Clinging Bubbles (Lesser)",
+  "level": 3,
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This small vial of viscous, clear, soapy solution comes with a wand, attached to the inside of the vial's cap, with a little loop at its end. A vial has enough solution to be used 10 times. **Activate** ⟨1⟩ Interact --- **Effect** You dip the wand in the solution and blow on it. An improbably large cloud of bubbles emerges in a square adjacent to you. This cloud travels in a straight line, moving 10 feet at the end of your turns. The bubbles are thick and sticky, and any creature who enters the same space as the bubble cloud becomes shrouded in them, taking a –5-foot circumstance penalty to its Speed. A creature covered in bubbles can use an Interact action to pop the bubbles and remove the penalty. The cloud can be redirected with strong winds. The cloud of bubbles has AC 5, 20 Hit Points, and weakness 5 to piercing and slashing. The bubbles pop naturally and harmlessly after 1 minute."
+ },
+ {
+  "id": "clinging-bubbles-moderate",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Clinging Bubbles (Moderate)",
+  "level": 7,
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This small vial of viscous, clear, soapy solution comes with a wand, attached to the inside of the vial's cap, with a little loop at its end. A vial has enough solution to be used 10 times. **Activate** ⟨1⟩ Interact --- **Effect** You dip the wand in the solution and blow on it. An improbably large cloud of bubbles emerges in a . This cloud travels in a straight line, moving 10 feet at the end of your turns. The bubbles are thick and sticky, and any creature who enters the same space as the bubble cloud becomes shrouded in them, taking a –10-foot circumstance penalty to its Speed. A creature covered in bubbles can use an Interact action to pop the bubbles and reduce the penalty by 5 feet. The cloud can be redirected with strong winds. The cloud of bubbles has AC 5, 30 Hit Points, and weakness 5 to piercing and slashing. The bubbles pop naturally and harmlessly after 1 minute."
+ },
+ {
+  "id": "clockwork-goggles",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Clockwork Goggles",
+  "level": 1,
+  "traits": [
+   "clockwork",
+   "consumable",
+   "gadget"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨2⟩ (manipulate) --- This heavy set of mechanical goggles contains a variety of different lenses for different situations, including lenses that filter light at different intensities and frequencies and even some that capture heat and other stimuli. Clockwork mechanisms can swap between the lenses rapidly as needed. However, many of these lenses can only capture a single stimulus once and then are forever etched with it, making them unsuitable for long-term use. When activated, the clockwork mechanism on the goggles rapidly switches between the different lenses, granting you low-light vision for 10 minutes."
+ },
+ {
+  "id": "clockwork-goggles-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Clockwork Goggles (Greater)",
+  "level": 4,
+  "traits": [
+   "clockwork",
+   "consumable",
+   "gadget"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨2⟩ (manipulate) --- This heavy set of mechanical goggles contains a variety of different lenses for different situations, including lenses that filter light at different intensities and frequencies and even some that capture heat and other stimuli. Clockwork mechanisms can swap between the lenses rapidly as needed. However, many of these lenses can only capture a single stimulus once and then are forever etched with it, making them unsuitable for long-term use. When activated, the clockwork mechanism on the goggles rapidly switches between the different lenses, granting you low-light vision and darkvision for 10 minutes."
+ },
+ {
+  "id": "clockwork-goggles-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Clockwork Goggles (Major)",
+  "level": 8,
+  "traits": [
+   "clockwork",
+   "consumable",
+   "gadget"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨2⟩ (manipulate) --- This heavy set of mechanical goggles contains a variety of different lenses for different situations, including lenses that filter light at different intensities and frequencies and even some that capture heat and other stimuli. Clockwork mechanisms can swap between the lenses rapidly as needed. However, many of these lenses can only capture a single stimulus once and then are forever etched with it, making them unsuitable for long-term use. When activated, the clockwork mechanism on the goggles rapidly switches between the different lenses, granting you low-light vision, darkvision, and the effects of See the Unseen for 10 minutes."
+ },
+ {
+  "id": "cloning-potion",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Cloning Potion",
+  "level": 18,
+  "traits": [
+   "consumable",
+   "magical",
+   "potion"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- When you drink a cloning potion, you split in two, one version of you remaining in your space and the other moving into an adjacent space. Your clone, which has the minion trait, looks like you and remains for 1 minute. Provided you are both on the same plane, you can command your clone telepathically with a single action with the concentrate trait. You can also issue verbal commands, as normal for a minion. As an action that has the concentrate trait, you can sense through your clone. When you do, you lose all sensory information from your own body. You can Dismiss this sense-sharing effect. You and your clone share Hit Points, and the clone uses your statistics. Spells and effects target you and your clone as if you are separate creatures. The clone can Activate your abilities and Cast your Spells, limited by its number of actions, but you share elements such as use limits, frequency, and spell slots. In other words, your clone using one of your resources works as if you did so in or from your clone's space. Your clone has gear identical to your own, excepting artifacts and consumables. Any item taken from the clone melts into silvery dust within seconds, with ammunition or thrown objects lasting just long enough to travel to and possibly hit their target. When the duration lapses, your clone melts into silvery dust. You become temporarily immune to cloning potion for 1d4 days."
+ },
+ {
+  "id": "close-formation",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Close Formation",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You practiced fan dance as a member of a large group, coordinating your moves together to create living art and heightening your sense of spatial awareness. When you wield two fans, each in a different hand, you gain tremorsense as an imprecise sense with a range of 20 feet."
+ },
+ {
+  "id": "cold-comfort",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Cold Comfort",
+  "level": 7,
+  "traits": [
+   "alchemical",
+   "cold",
+   "consumable"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Cold Comfort Source Grand Bazaar pg. 18 Usage held in 1 hand Bulk L Activate Interact The contraption called cold comfort is a watertight pouch filled with a handful of small, heavy, silvery pellets. When emptied into an adjacent body of water, the pellets freeze the water's surface almost instantly, creating an ice block in a 10-foot square to a depth of 1 foot. Any creatures inside this space must attempt a DC 23 Reflex save. On a failure, the creature takes 2d6 cold damage and is immobilized for 1 minute or until it Escapes (DC 20) or the ice is broken. The entire ice block has AC 10, Hardness 10, and 40 Hit Points, and it's immune to critical hits, cold damage, and precision damage. The ice is strong enough to support one Large creature or up to four Medium or Small creatures. Traversing the slippery ice requires a successful DC 20 Acrobatics check to Balance. Cold Comfort (Lesser) Source Grand Bazaar pg. 18 Price 70 gp Bulk L Ice created by the pellets lasts for 1 hour or until broken. Cold Comfort (Greater) Source Grand Bazaar pg. 18 Price 1,300 gp Bulk L The area increases to a 20-foot square, the save DC increases to 34, the cold damage increases to 4d6 and the Escape DC increases to 31. Ice created by the pellets lasts for 3 hours or until broken. The block of ice is strong enough to support one Huge creature, up to 2 Large creatures, or up to 8 Medium or Small creatures."
+ },
+ {
+  "id": "cold-comfort-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Cold Comfort (Greater)",
+  "level": 15,
+  "traits": [
+   "alchemical",
+   "cold",
+   "consumable"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Interact **Duration** Ice created by the pellets lasts for 3 hours or until broken. --- The contraption called cold comfort is a watertight pouch filled with a handful of small, heavy, silvery pellets. When emptied into an adjacent body of water, the pellets freeze the water's surface almost instantly, creating an ice block in a to a depth of 1 foot. Any creatures inside this space must attempt a save. On a failure, the creature takes 4d6 damage and is immobilized for 1 minute or until it Escapes (DC 31) or the ice is broken. The entire ice block has AC 10, Hardness 10, and 40 Hit Points, and it's immune to critical hits, cold damage, and precision damage. The ice is strong enough to support one Huge creature, up to two Large creatures or up to eight Medium or Small creatures. Traversing the slippery ice requires a successful check to Balance."
+ },
+ {
+  "id": "cold-comfort-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Cold Comfort (Lesser)",
+  "level": 7,
+  "traits": [
+   "alchemical",
+   "cold",
+   "consumable"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Interact **Duration** Ice created by the pellets lasts for 1 hour or until broken. --- The contraption called cold comfort is a watertight pouch filled with a handful of small, heavy, silvery pellets. When emptied into an adjacent body of water, the pellets freeze the water's surface almost instantly, creating an ice block in a to a depth of 1 foot. Any creatures inside this space must attempt a save. On a failure, the creature takes 2d6 damage and is immobilized for 1 minute or until it Escapes (DC 20) or the ice is broken. The entire ice block has AC 10, Hardness 10, and 40 Hit Points, and it's immune to critical hits, cold damage, and precision damage. The ice is strong enough to support one Large creature or up to four Medium or Small creatures. Traversing the slippery ice requires a successful check to Balance."
+ },
+ {
+  "id": "combat-assessment",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Combat Assessment",
+  "level": 1,
+  "traits": [
+   "commander",
+   "fighter"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You make a telegraphed attack to learn about your foe. Make a melee Strike. On a hit, you can immediately attempt a check to Recall Knowledge about the target. On a critical hit, you gain a +2 circumstance bonus to the check to Recall Knowledge. The target is temporarily immune to Combat Assessment for 1 day."
+ },
+ {
+  "id": "combat-reading",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Combat Reading",
+  "level": 4,
+  "traits": [
+   "bard",
+   "secret"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You use a performer's cold reading techniques, aura reading, and other tricks to discover your foe's strengths and weaknesses. The GM rolls a secret check for you against the Deception or Stealth DC (whichever is higher) of an enemy of your choice who is not concealed from you, hidden from you, or undetected by you, and who is engaged in combat. The GM might apply a penalty for the distance between you and the enemy. The enemy is then temporarily immune to your Combat Reading for 1 day. --- **Critical Success** The GM chooses and tells you two of the following pieces of information about the enemy: which of the enemy's weaknesses is highest, which of the enemy's saving throws has the lowest modifier, one immunity the enemy has, or which of the enemy's resistances is highest. In the event of a tie, the GM should pick one at random. **Success** The GM chooses one piece of information from the above list to tell you about the enemy. **Critical Failure** The GM gives you false information (the GM makes up the information)."
+ },
+ {
+  "id": "combine-elixirs",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Combine Elixirs",
+  "level": 6,
+  "traits": [
+   "additive",
+   "alchemist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can add the full ingredients of a second elixir to an elixir you make to create a hybrid concoction. You must expend an additional versatile vial to make this combined elixir, and the ingredients must be for an elixir of the same level or lower that you could create with Quick Alchemy. When this combination elixir is consumed, both the constituent elixirs take effect. For example, you can combine two Lesser Elixirs of Life to create a combined elixir that heals twice the normal amount, or you can combine a Lesser Darkvision Elixir with a Lesser Eagle-Eye Elixir to both gain darkvision and find secret doors."
+ },
+ {
+  "id": "commitment-to-equality",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Commitment to Equality",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "auditory",
+   "mental",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You help an ally shake off any impediment that would give an enemy an unfair advantage. You rally a creature within 30 feet in an attempt to reduce its frightened or stupefied condition. If a creature has multiple conditions from this list, choose one. When you're a master in Diplomacy, add clumsy and enfeebled to the list of conditions. When you're legendary in Diplomacy, add stunned to the list of conditions; if the stunned condition has a duration instead of a value, you can't use Commitment to Equality to reduce it. Attempt a Diplomacy check against the saving throw DC of the effect that caused the condition; if there was no saving throw DC, use the hard DC for the level of the creature, hazard, or item that caused the effect. You can't treat a condition that came from an artifact or effect above 20th level unless you're legendary in Diplomacy; even if you can, the counteract DC increases by 10. You can't treat a condition that is part of a curse or disease or is a natural state of the target. Once you attempt to treat a target's condition, that target is immune to further attempts for 1 hour, regardless of the result. --- **Critical Success** Reduce the condition's value by 2. **Success** Reduce the condition's value by 1. **Critical Failure** Increase the condition's value by 1."
+ },
+ {
+  "id": "confusing-commands",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Confusing Commands",
+  "level": 16,
+  "traits": [
+   "auditory",
+   "commander",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You shout out bewildering but authoritative commands while imitating the voices, linguistic quirks, and speech patterns of your opponents. Each enemy within the aura of your commander's banner must succeed at a save against your class DC or become confused for 1 round (2 rounds on a critical failure). Targets who succeed at their saving throw are temporarily immune to Confusing Commands for 1 day."
+ },
+ {
+  "id": "conjure-hell",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Conjure Hell",
+  "level": 12,
+  "traits": [
+   "archetype",
+   "concentrate",
+   "divine",
+   "fire",
+   "manipulate",
+   "spirit",
+   "unholy"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per day --- Though you might not worship Asmodeus or other devils, you've studied enough of Hell to call forth a brief burst of its fire. Each creature in a within 120 feet takes damage with a save against your spell DC. This fire damage ignores an amount of fire resistance equal to your level, but not immunity to fire. A creature that fails its save also has its soul set aflame, taking damage (or damage on a critical failure). At 14th level and every 2 levels thereafter, the initial fire damage increases by 2d6."
+ },
+ {
+  "id": "connect-the-dots",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Connect the Dots",
+  "level": 6,
+  "traits": [
+   "auditory",
+   "concentrate",
+   "investigator",
+   "linguistic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Ephemeral connections between people, places, and concepts are invisible to most, but seeing them is your stock and trade. Choose an ally and a non-allied creature. You must be able to see both of them. You briefly study the way they both move and attempt a Perception check against the higher of the non-allied creature's Deception DC or Will DC. Both targets are then temporarily immune to Connect the Dots for 10 minutes. --- **Critical Success** You spot a way for your ally to take advantage of the other target's flaws and let them know about it. Your ally gains your Pursue a Lead investigation bonus as a circumstance bonus to all its Strikes or skill checks against the creature until the start of your next turn. **Success** As critical success, but your ally gains the bonus only for their next Strike or skill check against the creature. **Failure** You fail to make a connection. **Critical Failure** You misconstrue a vital piece of information, which temporarily disconcerts you. You are Stupefied 1 until the end of your next turn."
+ },
+ {
+  "id": "consolidated-overlay-panopticon",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Consolidated Overlay Panopticon",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You volunteered for a controversial experimental procedure to install clockwork prosthetic eyes. These eyes relay what you see to shieldmarshal headquarters, which consolidates and analyzes environmental data—Bronzetime/Surgetime probabilities, pressure, temperature, wind, and so on—and feeds them back to you. The Ironmaster periodically reviews the information archives in their ongoing efforts to root out police corruption. When you use your Consolidated Overlay Panopticon, you supercharge the prosthetic eyes; for the next minute, you gain darkvision and low-light vision, and you gain a +1 status bonus to visual Perception checks. Even when the prosthetic eyes aren't supercharged, you retain your normal vision."
+ },
+ {
+  "id": "constant-crosier",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Constant Crosier",
+  "level": 10,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This weathered crook is often carried by chaplains of more primal deities. The carved wooden shaft bears the marks of fire damage and smells of campfire meals past. It counts as a wooden religious symbol for deities who grant the nature domain. While traveling in exploration mode, you and your allies within 120 feet count anyone's travel Speed of 15 feet or lower as 25 feet. --- **Activate—Season of Grit** ⟨1⟩ (manipulate, visual) **Frequency** once per day **Effect** You brandish the constant crosier high in the air and wave it about. All allies within 60 feet who can see the crosier receive a +1 status bonus to Fortitude saves and resistance 5 to persistent damage for 1 minute."
+ },
+ {
+  "id": "construct-eidolon",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Construct Eidolon",
+  "level": 1,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "companionGrants"
+  ],
+  "text": "Your eidolon is a mental construct based on an astral thoughtform and given physical presence and life by its connection to you, its shape limited only by your imagination. Your eidolon's appearance and physical form vary based on your shared vision for its construction, from clockworks to stuffed dolls and everything between, and it's not uncommon for that appearance to change greatly as your construct gains evolutions. Because it arises from an astral entity, your construct is no mindless servitor, but a fully thinking being with its own ideas, goals, and even emotions. These entities are extremely diverse; while many construct eidolons come from a powerful symbiotic connection with astral denizens, just as many arise from the forgotten memories of ancient empires and craftworks drifting across the Silver Sea of the Astral Plane. **Tradition** arcane **Traits** astral, construct, eidolon **Home Plane** Astral Plane --- **Size** Medium **Suggested Attacks** fist (bludgeoning) **Warrior Construct** Str 18, Dex 14, Con 16, Int 12, Wis 10, Cha 8; +2 AC (+3 Dex cap) **Scout Construct** Str 14, Dex 18, Con 16, Int 12, Wis 10, Cha 8; +1 AC (+4 Dex cap) **Skills** Arcana, Crafting **Senses** darkvision **Language** one common mortal language **Speed** 25 feet --- **Eidolon Abilities** *Initial* construct heart; *Symbiosis* reconfigured evolution; *Transcendence* ultimate reconfiguration ## Construct Heart Your construct eidolon has a link directly to your life force, which renders it a living creature and therefore susceptible to many ailments that bother only the living, though it does possess some resistances to these effects. It doesn't have a construct's normal immunities, but does gain a +2 circumstance bonus to saving throws against death effects, disease, necromancy, and poison effects, as well as effects causing the fatigued or sickened conditions. Additionally, its astral essence bleeds off slowly, and it only needs to succeed at a to remove persistent bleed damage (or DC 5 after receiving particularly effective aid). ## Reconfigured Evolution 7th Your construct eidolon is particularly easy to reconfigure, gaining an additional evolution that suits both of your whims. Choose one additional evolution feat of 6th level or lower. Your eidolon gains that feat. You can Retrain this feat for any other evolution feat of 6th level or lower with only a single day of downtime if you succeed at a Crafting check, with a standard DC of your eidolon's level. If you fail, you can try again on a later day. Many summoners choose Eidolon's Wrath for this ability. ## Ultimate Reconfiguration 17th Your construct eidolon becomes even more customizable. Choose an evolution feat of 16th level or lower. Your eidolon gains that feat. You can spend downtime to adjust it using Crafting, just like the feat from reconfigured evolution. Many summoners select Ever-Vigilant Senses for this ability."
+ },
+ {
+  "id": "construct-innovation",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Construct Innovation",
+  "level": 1,
+  "traits": [
+   "inventor"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Your innovation is a mechanical creature, such as a clockwork construct made of cogs and gears. It's a prototype construct companion, and you can adjust most of its base statistics by taking feats at higher levels, such as Advanced Companion. If you use the Overdrive action, your construct gains the same Overdrive benefits you do, and it also takes the same amount of fire damage on a critical failure. You know how to spend additional time directing, controlling, or programming your construct innovation for a more complex plan of action. You can spend 2 actions to Command instead of 1 when commanding your construct companion; your construct companion can then use an additional action (normally 3 actions, rather than 2). Choose one initial construct modification to apply to your innovation, either from the following or from other initial construct modifications to which you have access. These modifications alter the construct's abilities or form. - **Accelerated Mobility** Actuated legs, efficient gears in the wheels or treads, or add-on boosters make your construct faster. Your innovation's Speed increases to 40 feet. - **Amphibious Construction** Increased buoyancy, rudders, and a means of propulsion like a fluked tail or powerful propeller make your construct able to travel in water. Your innovation gains a swim Speed of 25 feet. - **Increased Size** You built your construct innovation bigger than most. Your construct is Large. If you have this modification and your construct innovation becomes an advanced construct companion or otherwise gains the ability to become Large, you can immediately change increased size to a different initial construct modification. - **Manual Dexterity** Your construct innovation has articulated hands or similar appendages with significant manual dexterity. It can perform manipulate actions with up to two of its limbs. As normal for a companion, it still can't wield weapons or held items that don't have the companion trait, and it can't activate items. - **Projectile Launcher** Your construct has a mounted dart launcher, embedded cannon, or similar armament. Your innovation gains a ranged unarmed attack that deals 1d4 bludgeoning or piercing damage (you choose when you pick this modification). The attack has the propulsive trait and a range increment of 30 feet. - **Sensory Array** Additional sensory devices give your innovation low-light vision and darkvision, as well as imprecise tremorsense out to a range of 30 feet. - **Wonder Gears** You map specialized skills into your construct's crude intelligence. Your innovation becomes trained in Intimidation, Stealth, and Survival."
+ },
+ {
+  "id": "contagion-metabolizer",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Contagion Metabolizer",
+  "level": 5,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "healing"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Contagion Metabolizer Source Treasure Vault (Remastered) pg. 59 Usage held in 1 hand Bulk L Activate (manipulate) Contagion metabolizers seek out toxins in the bloodstream and attempt to purify them into humors the body processes naturally. When you drink this elixir, it attempts a counteract check with the listed counteract modifier to remove the highest-level poison or disease afflicting you. This takes longer for a disease—the counteract check doesn't happen until 10 minutes after you drink the elixir. After drinking, you become temporarily immune to contagion metabolizers for 1 hour. If you're a chirurgeon alchemist and have powerful alchemy, you can substitute your statistics when you create a contagion metabolizer using Quick Alchemy, if your stats are higher. This replaces the counteract rank with half your level rounded up and the counteract modifier with your class DC – 10. Contagion Metabolizer (Lesser) Source Treasure Vault (Remastered) pg. 59 Price 30 gp Bulk L The elixir has a counteract rank of 3 and a +11 counteract modifier. Contagion Metabolizer (Moderate) Source Treasure Vault (Remastered) pg. 59 Price 300 gp Bulk L The elixir has a counteract rank of 6 and a +19 counteract modifier. Contagion Metabolizer (Greater) Source Treasure Vault (Remastered) pg. 59 Price 8,000 gp Bulk L The elixir has a counteract rank of 10 and a +30 counteract modifier."
+ },
+ {
+  "id": "contagion-metabolizer-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Contagion Metabolizer (Greater)",
+  "level": 19,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "healing"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Contagion metabolizers seek out toxins in the bloodstream and attempt to purify them into humors the body processes naturally. When you drink this elixir, it attempts a counteract check with a +30 modifier to remove the highest-level poison or disease afflicting you. The elixir has a counteract rank of 10. This takes longer for a disease—the counteract check doesn't happen until 10 minutes after you drink the elixir. After drinking, you become temporarily immune to contagion metabolizers for 1 hour. If you're a chirurgeon alchemist and have powerful alchemy, you can substitute your statistics when you create a contagion metabolizer using Quick Alchemy, if your stats are higher. This replaces the counteract rank with half your level rounded up and the counteract modifier with your class DC – 10."
+ },
+ {
+  "id": "contagion-metabolizer-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Contagion Metabolizer (Lesser)",
+  "level": 5,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "healing"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Contagion metabolizers seek out toxins in the bloodstream and attempt to purify them into humors the body processes naturally. When you drink this elixir, it attempts a counteract check with a +11 modifier to remove the highest-level poison or disease afflicting you. The elixir has a counteract rank of 3. This takes longer for a disease—the counteract check doesn't happen until 10 minutes after you drink the elixir. After drinking, you become temporarily immune to contagion metabolizers for 1 hour. If you're a chirurgeon alchemist and have powerful alchemy, you can substitute your statistics when you create a contagion metabolizer using Quick Alchemy, if your stats are higher. This replaces the counteract rank with half your level rounded up and the counteract modifier with your class DC – 10."
+ },
+ {
+  "id": "contagion-metabolizer-moderate",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Contagion Metabolizer (Moderate)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "healing"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Contagion metabolizers seek out toxins in the bloodstream and attempt to purify them into humors the body processes naturally. When you drink this elixir, it attempts a counteract check with a +19 modifier to remove the highest-level poison or disease afflicting you. The elixir has a counteract rank of 6. This takes longer for a disease—the counteract check doesn't happen until 10 minutes after you drink the elixir. After drinking, you become temporarily immune to contagion metabolizers for 1 hour. If you're a chirurgeon alchemist and have powerful alchemy, you can substitute your statistics when you create a contagion metabolizer using Quick Alchemy, if your stats are higher. This replaces the counteract rank with half your level rounded up and the counteract modifier with your class DC – 10."
+ },
+ {
+  "id": "coral-aspect",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Coral Aspect",
+  "level": 4,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Coral Aspect Source High Seas pg. 78 Price 80 gp Usage worn mask Bulk L Access You're from the Mordant Spire Made of petrified wood, this mask evokes the form of a coral reef. When you wear it, you gain a +1 item bonus to Athletics checks to Swim, and any armor you’re wearing gains the aquadynamic trait. Activate—Cohabitate (concentrate, manipulate, polymorph) Frequency once per day; Effect For 1 minute, your body becomes a mobile coral reef, letting much smaller creatures pass through or shelter in it. Creatures at least one size category smaller than you can share your space. Allies that share your space gain a +2 circumstance bonus to their AC, and you gain resistance 5 to any damage caused by a creature sharing the same space as you."
+ },
+ {
+  "id": "corgi-mount",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Corgi Mount",
+  "level": 1,
+  "traits": [
+   "sprite"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "The smallest of fey have ridden corgis as mounts since time immemorial, leading to a pattern on corgis' backs called a \"faerie saddle.\" You have formed a magical connection with a corgi that can serve as your mount. Your corgi familiar is Small rather than Tiny, and it's appropriate for use as your mount, unlike most familiars. It has the scent ability, which counts against your limit for familiar and master abilities as normal. Furthermore, it can never gain a familiar ability that grants it any Speeds other than a land Speed. If you're a pixie, you can't ride a corgi due to your Size, but you can take this feat to gain a corgi familiar."
+ },
+ {
+  "id": "corpse-stench",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Corpse Stench",
+  "level": 12,
+  "traits": [
+   "archetype",
+   "aura",
+   "olfactory"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your body exudes an overwhelming scent of decay in a , so putrid that it nauseates creates within that range. Any creature that starts its turn in the aura must succeed at a save against your class DC or spell DC, whichever is higher, or be Sickened 1 (plus Slowed 1 on a critical failure). While within the aura, the creature takes a -2 circumstance penalty to saves against disease and to recover from the sickened condition. A creature that succeeds at its save is temporarily immune to Corpse Stench for 1 minute."
+ },
+ {
+  "id": "corpse-tender-dedication",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Corpse Tender Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featGrantsAuto"
+  ],
+  "text": "You have a connection to mindless undead that allows you to communicate your intentions to them on a rudimentary level. You can use Diplomacy to Make an Impression on mindless undead and to make very simple Requests of them; their mindless trait doesn't grant immunity to these mental effects. Most mindless undead are likely hostile toward you by default and must be kept at a safe distance to give you time to Make an Impression. You become trained in Diplomacy; if already trained, you instead become trained in another skill of your choice."
+ },
+ {
+  "id": "corpseward-pendant",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Corpseward Pendant",
+  "level": 5,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "A *corpseward pendant* is usually shaped like the skull of a humanoid or small animal. --- **Activate** ⟨1⟩ (manipulate) **Frequency** once per hour **Effect** You become undetectable to undead creatures for 10 minutes. Undead can't see, hear, or smell you, or detect you with sensory capabilities such as tremorsense. A creature can attempt a saving throw to ignore this effect. If an undead has reason to believe that undetected opponents are present, it can still attempt to Seek or Strike you. If you attempt to use a vitality spell to damage undead, touch or damage an undead creature, or attack any creature while warded in this manner, the pendant's effects immediately end. An undead creature who observes you in this manner or one who succeeds at the Will save is immune to the *corpseward pendant* for 24 hours."
+ },
+ {
+  "id": "cozy-campfire",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Cozy Campfire",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "consecration",
+   "divine",
+   "exploration",
+   "fire"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You spend 1 hour building a campfire in a single unoccupied square and whispering the stories of those you've met on your journeys. The campfire sheds bright light in a 30-foot radius (and dim light for the next 30 feet). The campfire can't be put out or get larger through mundane means; it instead burns out after your next daily preparations or when you use this ability again. The first time each round a creature within the campfire's bright light performs an action with the attack trait, they must then attempt a save against your class DC or spell DC (whichever is higher). This is a divine curse effect, and you are aware of any attempt, although other creatures in the area are not. --- **Critical Success** The creature is aware of the effect and can choose to disrupt their action. If they don't disrupt it, the campfire goes out. **Success** The creature is aware of the effect and can choose to disrupt their action. If they don't disrupt it, they become temporarily immune to the campfire's effects for 24 hours. **Failure** The creature takes a –2 status penalty to the action's attack roll and to all other attack rolls until the beginning of their next turn. **Critical Failure** The action is disrupted, and the creature takes a –2 status penalty to attack rolls until the beginning of their next turn."
+ },
+ {
+  "id": "craft-runewell",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Craft Runewell",
+  "level": 20,
+  "traits": [
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Even if the runelord whose soul influences you never did so themselves, you know how to create your own *runewell*—an artifact that grants you a measure of immortality. You learn the Create Demiplane ritual. To create your *runewell*, you must cast *create demiplane* heightened to 10th-rank. When you do so, you also create an anima focus (an immobile object like a statue or fortification with an appearance you design) at the location you cast the ritual, connecting your other-worldly home to this location. Once you create your *runewell*, you cannot create another unless the current one is destroyed. While you are located on the same plane that your anima focus is located on, or while you are within your *runewell*, any doomed value you gain stops at Doomed 3. The only way an adversary can destroy your anima focus or *runewell* is to reduce you to 0 Hit Points and doomed 3 and then reduce your anima focus to 0 Hit Points using arcane magic (or an agent affected by arcane magic) from one of the schools in opposition to your specialized sin chosen when you took Avenging Runelord Dedication. Your anima focus has Hardness equal to twice your level and Hit Points equal to your own. Your anima focus has fast healing equal to twice your Intelligence modifier. Your anima focus is associated with the same sin as your chosen avenging runelord sin. As long as at least one sizable settlement in which this sin is prevalent (subject to the GM's discretion) is within a hundred miles of it, your anima focus absorbs energy from these sins. As long as it does so and you are on the same plane as the anima focus, you do not age and are immune to effects that rob you of your mental abilities (such as the never mind spell or the confused and stupefied conditions). Other creatures cannot enter your *runewell* unless they possess a planar key you created and gave to them, or unless they're adjacent to your anima focus. Your *runewell* has an exit that allows adjacent creatures within to activate with an Interact action; when they do so, they exit the *runewell* and appear adjacent to your anima focus. You gain the Enter Runewell activity."
+ },
+ {
+  "id": "crawling-fire",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Crawling Fire",
+  "level": 6,
+  "traits": [
+   "fire",
+   "impulse",
+   "kineticist",
+   "manipulate",
+   "primal"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You mimic the motions of a beast of your devising, and it becomes real, with a flaming pelt and searing claws. It is Small and appears in an unoccupied space within 30 feet. You can sense from the crawling fire's space as well as your own, using your senses. When you use a fire impulse, you can have it originate from the crawling fire instead of you (with the exception of impulses that affect your kinetic aura). The creation lasts until the end of your next turn, but you can Sustain it up to 1 minute. Each time you Sustain it, you can have the crawling fire Stride up to 40 feet. The crawling fire can be attacked. It uses your statistics for defenses but is immune to fire. Any damage that would be dealt to the crawling fire is dealt to you instead, though you take damage only once from any ability that includes both you and the creation in the area of effect. If you use Crawling Fire again, any previous one ends. --- **Level (8th)** The fire can be Small or Medium. **Level (10th)** The fire can be Small, Medium, or Large. **Level (14th)** The fire can be Small, Medium, Large, or Huge."
+ },
+ {
+  "id": "creature-of-myth",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Creature of Myth",
+  "level": 18,
+  "traits": [
+   "mythic"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "Your specialized united companion grows with unparalleled power and strength, becoming a creature of myth. It gains one of the following effects. - **Baleful Body** Your united companion's blood is boiling, its mechanical fluid is acidic, or its insides are otherwise destructive to the touch. Choose acid, fire, or poison. If your united companion would take damage from a melee attack, it deals half your level in damage of the chosen type to the creature that made the melee attack. By spending a Mythic Point when you Command your united companion, your united companion can spew its corrosive power as a 2-action activity to deal 14d6 damage of the chosen type in a 15-foot cone or 30-foot line (basic Reflex save against your class DC or spell DC, whichever is higher). - **Chimeric Heads** Your united companion sprouts an extra head which gives it extra eyes and allows it to make additional attacks with related unarmed attacks. Your united companion gains all-around vision. By spending a Mythic Point when you Command your united companion, your united companion can make two Strikes with its unarmed attacks as a single action, each using its current multiple attack penalty. Both Strikes must have the same target. If both attacks hit, combine their damage, and then add any other applicable effects. This counts as one attack when calculating your united companion's multiple attack penalty. Your united companion must have a head and at least one unarmed attack that uses its mouth or head (such as a beak, jaws, or mandible attack) to select this. - **Energy Aegis** Your united companion is protected from hazardous energy. Your united companion becomes immune to your choice of acid, cold, electricity, or fire. Your companion gains a +1 status bonus to AC and saves that originate from creatures with the listed trait and to effects and spells with the listed trait. By spending a Mythic Point when you Command your united companion, your united companion can take a single action with the concentrate trait to extend these same benefits to all creatures who are adjacent to it until the beginning of your next turn. - **Magnificent Flight** Your united companion grows wings or learns some other method of flight. Your united companion gains a Fly speed equal to its Speed and it gains the mount special ability. If your united companion already had the mount special ability or a Fly speed equal to its Speed, it instead increases its Speed by 10 feet. By spending a Mythic Point when you Command your united companion, your united companion can, as a two-action activity, Fly up to twice its speed and make a single unarmed melee attack at any point along the way. - **Protective Skin** Your united companion is hardened by the infused magic of otherworldly powers. Its maximum Hit Points increase by 30 but it gains a weakness of 10 to either cold iron or silver. By spending a Mythic Point when you Command your united companion, your united companion gains fast healing equal to your level for 1 minute."
+ },
+ {
+  "id": "cringe",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Cringe",
+  "level": 1,
+  "traits": [
+   "emotion",
+   "kobold",
+   "mental",
+   "visual"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** A creature you are aware of critically succeeds on a Strike against you and would deal damage to you. --- With pitiful posturing, you cause your foe to pull back a deadly attack. The attacking creature takes a circumstance penalty to the damage of the triggering Strike equal to your level + 2. This penalty applies after doubling the damage for a critical hit. The attacker is then immune to your Cringe for 24 hours."
+ },
+ {
+  "id": "crown-of-insight",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Crown of Insight",
+  "level": 7,
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "A series of evenly spaced, unblinking tattooed eyes line your skin. When you enter an area that contains creatures within 60 feet that are unnoticed to you, the GM rolls a secret Perception check for you against the creatures' Stealth DCs. On a success, the creature becomes undetected by you, rather than unnoticed, and on a critical success, the creature becomes hidden to you. All creatures in the area are then temporarily immune to your crown of insight for 24 hours. The crown of insight doesn't help you find hidden items or traps, nor can it help you discern a creature hiding in plain sight, such as a gargoyle pretending to be an inanimate statue. Additionally, since the effect occurs when you move to enter an area that contains creatures, it doesn't detect an unnoticed creature Sneaking up on you."
+ },
+ {
+  "id": "cry-havoc",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Cry Havoc!",
+  "level": 1,
+  "traits": [
+   "brandish",
+   "commander",
+   "tactic"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per day --- Your squad rallies with a resounding clangor that drowns out all other sounds of war. Choose an enemy you are observing and signal all squadmates within the aura of your commander's banner. All squadmates can Stride up to twice their Speed directly toward the target as a reaction, yelling and trampling. When any squadmate enters a square adjacent to any enemy, that enemy must attempt a save against your class DC or take 2d6 bludgeoning damage and 2d6 sonic damage damage, plus an additional 2d6 bludgeoning and 2d6 sonic damage for every squadmate participating in Cry Havoc! (enemies who critically fail are deafened for 1 round). Regardless of the outcome, the enemy is then temporarily immune to any further damage from Cry Havoc! for 24 hours. Squadmates can use Cry Havoc! while Burrowing, Climbing, Flying, or Swimming instead of Striding if they have the corresponding movement type."
+ },
+ {
+  "id": "curled-cure-gel",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Curled Cure Gel",
+  "level": 7,
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** Treat Wounds --- Curled cure secretes a gel that gently warms the skin and stimulates healing. You can Activate the item as part of the same activity you use to Treat Wounds. If you successfully Treat Wounds, you can also reduce the value of one of the targets' clumsy, enfeebled, or stupefied conditions by 1. The target of your Treat Wounds is then temporarily immune to curled cure gel for 24 hours, whether or not your attempt to Treat Wounds was successful."
+ },
+ {
+  "id": "curse-of-creeping-ashes",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Curse of Creeping Ashes",
+  "level": 1,
+  "traits": [
+   "curse",
+   "divine",
+   "fire",
+   "oracle"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your body is slowly being consumed by the fires of your internal power, purifying you with each passing day. You are occasionally wracked with dry, wheezing coughs, and wherever you go you leave behind a fine trace of ash that falls from your body. **Cursebound 1** You gain weakness 2 to fire damage. Any immunity or resistance you have to fire is suppressed. **Cursebound 2** Swirling ash imposes a -2 circumstance penalty to ranged attack rolls you make. **Cursebound 3** Your weakness to fire damage is equal to 5 + your level. **Cursebound 4** You take a –10-foot status penalty to all your Speeds as your limbs begin to crumble like ash."
+ },
+ {
+  "id": "curse-of-inclement-headwinds",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Curse of Inclement Headwinds",
+  "level": 1,
+  "traits": [
+   "curse",
+   "divine",
+   "oracle"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The weather seems to always oppose you in ways large and small. Even when you are calm and at rest, your hair and clothing are inconveniently blown about by gentle winds, you are slightly damp from the faintest drizzle, and your touch often comes with a static shock. When you have the cursebound condition, you are opposed by the elements, with the following effects. **Cursebound 1** Lightning is drawn to you. You gain electricity weakness 2 and electricity spells or effects that have additional effects for a creature wearing or holding metal treat you as though you were wearing metal. Any immunity or resistance you have to such spells and effects is suppressed. **Cursebound 2** Blowing winds impose a -2 circumstance penalty to ranged attack rolls you make. **Cursebound 3** Your weakness to electricity is equal to 5 + your level. **Cursebound 4** The raging winds push you back, imposing a -10-foot status penalty to all your Speeds."
+ },
+ {
+  "id": "curse-of-inevitable-rot",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Curse of Inevitable Rot",
+  "level": 1,
+  "traits": [
+   "curse",
+   "divine",
+   "oracle",
+   "poison"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your magic is a constant reminder that all creatures will eventually submit to the ravages of time and the environment. You are suffused with an aura of decay. Leaves wilt and insects fall out of the sky as you pass, silverware tarnishes in your hands, and the dregs of wine turn to vinegar in your goblet. **Cursebound 1** You gain weakness 2 to acid and poison damage. **Cursebound 2** You take a –1 status penalty to saving throws against diseases and poisons. In addition, anyone attempting to Treat your Disease, Poison, or Wounds takes a –1 status penalty to the associated skill check. **Cursebound 3** Your weakness to acid and poison damage increases to twice your level. **Cursebound 4** Your status penalty to saving throws against diseases and poisons and the status penalty for anyone attempting to Treat your Disease, Poison, or Wounds increases to –2."
+ },
+ {
+  "id": "curse-of-the-living-death",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Curse of the Living Death",
+  "level": 1,
+  "traits": [
+   "curse",
+   "divine",
+   "oracle",
+   "vitality",
+   "void"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your body is slowly decaying even though you are alive, and using your powers furthers this unnatural living death. You carry a touch of the grave about you, manifesting as bloodless pallor, a faint smell of earth, or deathly cold skin. **Cursebound 1** You gain weakness 2 to vitality and void damage. You can be targeted by and are hurt by both vitality and void damage even if one or the other normally has no effect on you (such as being targeted and damaged by Heal even if you aren't undead). Any immunity or resistance you have to vitality or void is suppressed. **Cursebound 2** You take a –1 status penalty to Fortitude saves. **Cursebound 3** Your weakness to vitality and void damage is equal to 5 + your level. **Cursebound 4** Your status penalty to Fortitude saving throws increases to –2."
+ },
+ {
+  "id": "curse-of-the-mortal-warrior",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Curse of the Mortal Warrior",
+  "level": 1,
+  "traits": [
+   "curse",
+   "divine",
+   "oracle"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You thrive in the thick of battle, but your mystery's sheer focus on the physical and material leaves your soul weak against the tricks of spellcraft. You smell faintly of steel and blood no matter how you try to remove or mask the scent, you appear more imposing and muscular than you actually are, and you hear the faint clash and clamor of battle in the distance at all times. **Cursebound 1** Spells have an easier time wounding you. You gain weakness 2 to any damage dealt by a spell. Any immunity or resistance you have to spells is suppressed. This applies only to spells, not other magical abilities. **Cursebound 2** You take a –1 status penalty to saving throws against spells. **Cursebound 3** Your weakness to spells is equal to your level. **Cursebound 4** Your status penalty to saving throws against spells increases to –2."
+ },
+ {
+  "id": "curse-of-the-saumen-kar",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Curse of the Saumen Kar",
+  "level": 14,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per day --- You activate the runes on your body to create an icy prison around a Huge or smaller creature you can see within 60 feet. The prison is a sphere made of unmelting ice, just large enough to fit your target. The target, and any creatures sharing its space, must attempt a Reflex save, with a DC using the higher of your class DC and spell DC. A creature that fails becomes trapped inside the prison. If it succeeds, the creature is pushed outside the prison into a space of its choice. If the target shares its space with a gargantuan creature, the effect fails. The dome has AC 10, Hardness 20, and 40 Hit Points; it's immune to cold, critical hits, and precision damage. The prison lasts until destroyed, until you use this ability to create a new prison, or until you die."
+ },
+ {
+  "id": "dagger-of-eternal-sleep",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Dagger of Eternal Sleep",
+  "level": 5,
+  "traits": [
+   "agile",
+   "consumable",
+   "finesse",
+   "magical",
+   "thrown-10",
+   "versatile-s"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This tiny serrated dagger looks like a miniature sawtooth sabre. Until activated, it is too small and ornamental to function as a weapon, which might allow it to be passed off as a weapon-shaped decoration. **Activate** ⟨1⟩ Interact --- **Effect** You transform the dagger of eternal sleep into a +1 Grievous striking dagger and Strike an unconscious target with the dagger. If you are not in an encounter or otherwise threatened and you roll a hit with your Strike, you get a critical hit instead. The damage from the Strike and the bleed from the critical specialization effect do not awaken the target, though the target becomes temporarily immune to this effect until the next time it wakes up, meaning further daggers of eternal sleep awaken it as normal. The dagger disintegrates immediately after use."
+ },
+ {
+  "id": "dance-of-the-jester",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Dance of the Jester",
+  "level": 13,
+  "traits": [
+   "wayang"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Through your incredible dance skill, you can embody the character of the Jester, able to take control of the shadows of other players on stage (much to your amusement). Attempt a Performance check against the Fortitude DC of a single enemy within 30 feet. --- **Critical Success** Your shadow and the opponent's synchronize, forcing your target to match your movements step for step. You perform any two of the following actions: Drop Prone, Release an object, Stand, Step, or Stride. You must perform two different actions. Your opponent also takes these actions, moving in the same direction as you (for instance, if you Stride north, so does your opponent) or Releasing an object when you do. The target is then temporarily immune to your Dance of the Jester for 1 day. **Success** As critical success, except you can take only one action, not two, before your target becomes temporarily immune to your dance, and you cannot move the target into hazardous terrain."
+ },
+ {
+  "id": "dance-of-the-mousedeer",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Dance of the Mousedeer",
+  "level": 1,
+  "traits": [
+   "illusion",
+   "occult",
+   "shadow",
+   "visual",
+   "wayang"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You move your body in a pattern that evokes the small and clever Sister Mousedeer, misdirecting enemies and filling their vision with shadows to hide behind. Attempt a Performance check against the Perception DC of a single enemy within 30 feet. This has all the usual traits and restrictions of a Performance check. You can affect up to two targets within range if you have expert proficiency in Performance, four if you have master proficiency, and eight if you have legendary proficiency. --- **Critical Success** Imaginary shadows rise up in the target's vision, hiding you from sight. You gain greater cover against that enemy, which provides a +4 circumstance bonus to AC and to Stealth checks to Hide, Sneak, or otherwise avoid detection. As the shadows are illusory, you don't gain the typical bonus to Reflex saves from greater cover. These benefits last until the beginning of your next turn, or until you move from your current space, use an attack action, or become unconscious, whichever comes first. **Success** As critical success, except you gain only standard cover (a +2 circumstance bonus instead). **Critical Failure** The opponent grasps the movements of your dance, becoming temporarily immune to your Dance of the Mousedeer for 1 day."
+ },
+ {
+  "id": "dance-of-the-tiger",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Dance of the Tiger",
+  "level": 9,
+  "traits": [
+   "emotion",
+   "fear",
+   "mental",
+   "occult",
+   "wayang"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Tales tell of the Tiger stalking the Mousedeer for days, hidden and instilling dread upon its prey. Your dance embodies the character role so well you can trail an opponent from its own shadow. Attempt a Performance check against the Will DC of a single adjacent enemy. --- **Critical Success** You step on the foe's shadow, bringing a cold dread. The opponent is Frightened 2; its shadow remains pinned underfoot, stretching and deforming to remain connected to your square, and indicates where it has gone even if you lose sight of the foe. The creature can't reduce its frightened condition below 1 as long as you remain on its shadow. Your connection to its shadow breaks if the distance between you and the target exceeds 120 feet or if you don't end your turn adjacent to the target. Once your connection to its shadow breaks, the enemy is immune to Dance of the Tiger for 1 hour. **Success** As critical success, except the creature is only Frightened 1 and your connection to its shadow breaks at 60 feet instead of 120."
+ },
+ {
+  "id": "darkening-poison",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Darkening Poison",
+  "level": 0,
+  "traits": [
+   "consumable"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "Many calignis keep several doses of darkening poison, an uncommon injury poison made from Darklands spider venom, on hand to incapacitate foes. --- **Saving Throw** **Maximum Duration** 6 rounds --- **Stage 1** 1d6 (1 round) **Stage 2** 1d6 poison and creatures you can see only with darkvision are concealed from you (1 round) **Stage 3** 1d6 poison and creatures you can see only with darkvision are hidden from you (1 round)."
+ },
+ {
+  "id": "darkvision-elixir",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Darkvision Elixir",
+  "level": 2,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Darkvision Elixir Source Player Core 2 pg. 287, GM Core pg. 246 Usage held in 1 hand Bulk L Activate (manipulate) After you drink this elixir, your sight becomes sharper in darkness. You gain darkvision for the listed duration. Darkvision Elixir (Lesser) Source Player Core 2 pg. 287, GM Core pg. 246, Core Rulebook pg. 547 Price 6 gp Bulk L The duration is 10 minutes. Darkvision Elixir (Moderate) Source Player Core 2 pg. 287, GM Core pg. 246, Core Rulebook pg. 547 Price 11 gp Bulk L The duration is 1 hour. Darkvision Elixir (Greater) Source Player Core 2 pg. 287, GM Core pg. 246, Core Rulebook pg. 547 Price 90 gp Bulk L The duration is 24 hours."
+ },
+ {
+  "id": "darkvision-elixir-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Darkvision Elixir (Greater)",
+  "level": 8,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- After you drink this elixir, your sight becomes sharper in darkness. You gain darkvision for 24 hours."
+ },
+ {
+  "id": "darkvision-elixir-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Darkvision Elixir (Lesser)",
+  "level": 2,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- After you drink this elixir, your sight becomes sharper in darkness. You gain darkvision for 10 minutes."
+ },
+ {
+  "id": "darkvision-elixir-moderate",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Darkvision Elixir (Moderate)",
+  "level": 4,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- After you drink this elixir, your sight becomes sharper in darkness. You gain darkvision for 1 hour."
+ },
+ {
+  "id": "darkvision-scope",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Darkvision Scope",
+  "level": 5,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "These scopes, popular with snipers and other sneaky sharpshooters who ply their trade in the dead of night, incorporate clouded crystals with magical properties into their design. While relatively useless under normal lighting conditions, these crystals can help bring things into focus when used in dim light. The scope is then given an enchantment to enhance these properties for use in darkness. The scope grants you a +1 item bonus to Perception checks involving sight in areas of dim light visible through the scope (as well as in areas of darkness, if the scope has been activated). **Activate—See Through Night** ⟨1⟩ (manipulate) --- **Effect** You gain darkvision until the beginning of your next turn, as long as you continue to look through the scope."
+ },
+ {
+  "id": "darkvision-scope-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Darkvision Scope (Greater)",
+  "level": 15,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "These scopes, popular with snipers and other sneaky sharpshooters who ply their trade in the dead of night, incorporate clouded crystals with magical properties into their design. While relatively useless under normal lighting conditions, these crystals can help bring things into focus when used in dim light. The scope is then given an enchantment to enhance these properties for use in darkness. The scope grants you a +2 item bonus to Perception checks involving sight in areas of dim light visible through the scope (as well as in areas of darkness, if the scope has been activated). **Activate—See Through Night** ⟨1⟩ (manipulate) --- **Effect** You gain greater darkvision until the beginning of your next turn, as long as you continue to look through the scope."
+ }
+]

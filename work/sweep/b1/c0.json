@@ -1,0 +1,1116 @@
+[
+ {
+  "id": "abadars-avenger",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Abadar's Avenger",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Hao Jin really has some nerve for a supposed disciple of Abadar. First, she dares to start a collection of trinkets in hopes of emulating the great Abadar's unsurpassable First Vault. As if that weren't enough, she also sets up a contest to give away her most powerful treasures to anyone who can throw a punch! Abadar hasn't directly told you as much, per se, but surely this kind of hubris can't sit well with your beloved deity, regardless of Hao Jin's own supposed ties to the Master of the First Vault. At the very least, someone's got to check out this shoddy imitation of the First Vault and write a report for the church of Abadar - and you've decided that someone is you. With or without the blessing of an actual priest of Abadar, you've taken it upon yourself to investigate Hao Jin's \"wondrous\" vault by winning her Ruby Phoenix Tournament. You read a few flyers about the tournament's home city and joined the first team that could handle your righteous zealotry, but any more preparation would be a waste of time. You clearly have the divine will of Abadar on your side (but again, no actual proof of this), which is all you'll need to win this tournament and dispel any notions of Hao Jin's ties to your patron deity. Choose two attribute boosts. One must be to **Charisma** or **Wisdom**, and one is a free attribute boost. You're trained in Religion and the Goka Lore skill. You gain the Assurance skill feat with Religion. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Religion **Lore** Goka Lore"
+ },
+ {
+  "id": "academy-dropout",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Academy Dropout",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You were enrolled at a prestigious magical academy, but you've since dropped out. Maybe there was a momentous incident, maybe you had to return to other responsibilities, or perhaps it was just too much for you. Whatever the case, your exit from the academy has shaped your life as much as your entrance and led you to a life of adventure. Choose two attribute boosts. One must be to **Intelligence** or **Charisma**, and one is a free attribute boost. You're trained in Arcana and Academia Lore. You gain the Dubious Knowledge skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Arcana **Lore** Academia Lore **Skill Feat** Dubious Knowledge"
+ },
+ {
+  "id": "acolyte",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Acolyte",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You spent your early days in a religious monastery or cloister. You may have traveled out into the world to spread the message of your religion or because you cast away the teachings of your faith, but deep down, you'll always carry within you the lessons you learned. Choose two attribute boosts. One must be to **Intelligence** or **Wisdom**, and one is a free attribute boost. You're trained in the Religion skill and the Scribing Lore skill. You gain the Student of the Canon skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Religion **Lore** Scribing Lore **Skill Feat** Student of the Canon"
+ },
+ {
+  "id": "acrobat",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Acrobat",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "In a circus or on the streets, you earned your pay by performing as an acrobat. You might have turned to adventuring when the money dried up, or simply decided to put your skills to better use. Choose two attribute boosts. One must be to **Strength** or **Dexterity**, and one is a free attribute boost. You're trained in the Acrobatics skill and the Circus Lore skill. You gain the Steady Balance skill feat. --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Trained Skill** Acrobatics **Lore** Circus Lore **Skill Feat** Steady Balance"
+ },
+ {
+  "id": "acupuncturist",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Acupuncturist",
+  "level": 1,
+  "traits": [
+   "downtime",
+   "manipulate"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Access** Tian Xia origin --- You've studied the routes by which qi flows through the body. The needles stored in your healer's tools can manipulate its flow and improve health when applied to specific meridian points. You spend a day studying an ally to attempt a Medicine check to improve their qi against a standard DC for your ally's level. The ally is then immune to all uses of Acupuncturist for 1 week. --- **Critical Success** You grant your ally the choice of a +2 circumstance bonus to one downtime activity skill check within the next week, or the ability to roll twice on their next saving throw within the next week against an affliction and take the higher result; this is a fortune effect. **Success** You grant your ally a +1 circumstance bonus to one downtime activity skill check within the next week. **Critical Failure** Your ally takes a –1 circumstance penalty to all downtime activity skill checks within the next week."
+ },
+ {
+  "id": "advanced-deific-power",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Advanced Deific Power",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "Like a muscle, the more you flex your divine power, the stronger it gets. Choose two common divine spells, one of 2nd rank and one of 3rd rank. You can cast each of these spells as divine innate spells once per day."
+ },
+ {
+  "id": "aegis-for-the-innocent",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Aegis for the Innocent",
+  "level": 14,
+  "traits": [
+   "manipulate",
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "core.modes(feat-gated)"
+  ],
+  "text": "**Requirements** Your nimbus is active. --- You transfer a portion of your divine spark to an ally, temporarily dimming your nimbus to encase an ally in a barrier of light that repels attackers. Select a willing creature within the bright light of your nimbus. You surround the target in a protective barrier of light; this is a centered on the target. This barrier lasts for 1 minute, or until you Dismiss it. While the Aegis of the Innocent is active, the area of your nimbus is halved. The target gains a +1 status bonus to AC. Any enemy within the barrier, or entering the barrier, must attempt a saving throw against your class DC or your spell DC. A creature needs to attempt this save only once each round. --- **Critical Success** The creature is unaffected. **Success** The creature becomes dazzled for 1 round and treats the space within the barrier as difficult terrain. **Failure** The creature becomes dazzled for 1 minute, is pushed 10 feet, and treats the space within the barrier as difficult terrain. If a creature would be pushed into a solid barrier or another creature, it stops at that point and takes damage. **Critical Failure** As failure, but the creature is also blinded for 1 round."
+ },
+ {
+  "id": "aerialist",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Aerialist",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Experienced with trapezes, aerial silks, and hoops, your skill is in performing death-defying stunts high above the ground. The Celestial Menagerie skimped on safety devices such as nets and quality ropes, so you also learned to take a fall better than most. After a harrowing near-death experience involving a cracked trapeze bar, you decided to take your expertise elsewhere. Choose two attribute boosts. One must be to **Dexterity** or **Charisma**, and one is a free attribute boost. You're trained in the Acrobatics skill and the Rope Lore skill. You gain the Cat Fall skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Acrobatics **Lore** Rope Lore **Skill Feat** Cat Fall"
+ },
+ {
+  "id": "aeronaut",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Aeronaut",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You have mastered the techniques for piloting all manner of airships—balloons, dirigibles, winged vehicles, or something altogether more fantastical. You have developed expertise in using these vehicles for transport, exploration, and battle. You live for the majestic view these vehicles provide high above the fray and can harness the winds that fill the skies. Choose two attribute boosts. One must be to **Strength** or **Dexterity**, and one is a free attribute boost. You're trained in the Athletics skill and the Piloting Lore skill. You gain the Assurance skill feat with Piloting Lore. --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Trained Skill** Athletics **Lore** Piloting Lore"
+ },
+ {
+  "id": "agile-hand",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Agile Hand",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "When you cast Telekinetic Hand, you can modify its target to be a Thieves' Toolkit. When you Cast the Spell in this way, the tools move up to 20 feet towards a device or lock. After you Sustain the spell on future turns, you can use the tools to attempt Thievery checks to Disable a Device or Pick a Lock within the spell's range, but you take a -2 penalty to your Thievery check. If you critically fail, the spell ends and you can't use this modification again for 24 hours."
+ },
+ {
+  "id": "aiudara-seeker",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Aiudara Seeker",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**[Legacy - Age of Ashes]** The aiudara of Alseta's Ring have become more well known, and you are interested in learning more about them. Choose two attribute boosts. One must be to **Intelligence** or **Wisdom**, and one is a free attribute boost. You're trained in the Arcana skill and the Portal Lore skill. You gain the Quick Identification skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Arcana **Lore** Portal Lore **Skill Feat** Quick Identification"
+ },
+ {
+  "id": "alkenstar-outlaw",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Alkenstar Outlaw",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You're an outlaw whose first crime was stealing the guns from Alkenstar's Gunworks which allowed you to commence a crime spree of epic proportions. You don't know where your road ends, but it's probably going to be a bloody affair. The life of an adventurer might even be a relief compared to a life forever on the run from Alkenstar authorities and their allies. Choose two attribute boosts. One boost must be to **Dexterity** or **Constitution**, and one is a free attribute boost. You're trained in Thievery and Underworld Lore. You gain the Subtle Theft skill feat. --- ## Background details **Attribute Boosts** Constitution or Dexterity, one free **Trained Skill** Thievery **Lore** Underworld Lore **Skill Feat** Subtle Theft"
+ },
+ {
+  "id": "alkenstar-sojourner",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Alkenstar Sojourner",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You came to Alkenstar because you heard they had guns, but you stayed because of the atmosphere. Or the guns. Either way, journalism and scientific curiosity opened the door to a life of adventure. Now you continue to adventure in the Alkenstar area, using your skills to deal with whatever situations present themselves. Choose two attribute boosts. One must be to **Intelligence** or **Charisma**, and one is a free attribute boost. You're trained in Society and Engineering Lore. You gain the Streetwise skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Society **Lore** Engineering Lore **Skill Feat** Streetwise"
+ },
+ {
+  "id": "alkenstar-tinker",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Alkenstar Tinker",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Impossible Lands --- Your dedication to the scientific inquiry of your native Alkenstar provides great insight into mechanical and chemical innovation. Choose two attribute boosts. One must be to **Dexterity** or **Intelligence**, and one is a free attribute boost. You're trained in the Crafting skill and the Engineering Lore skill. You gain the Alchemical Crafting skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Crafting **Lore** Engineering Lore **Skill Feat** Alchemical Crafting"
+ },
+ {
+  "id": "all-of-the-animal",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "All of the Animal",
+  "level": 1,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You know how to make the best and most efficient use of a hunted animal's carcass. Choose a Large or larger corpse of an animal that died within the past day. While using Survival to Subsist near the carcass, you always receive enough food for yourself and one additional Medium creature, using up the meat from the carcass to do so. Since you're using all of the animal, others can't use the carcass's meat for any other purpose, including their own use of All of the Animal."
+ },
+ {
+  "id": "alloysmith",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Alloysmith",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Blacksmithing might be an ancient profession, but you are its cutting edge. You've studied the properties of different metals, experimented with them by combining them, exposing them to different elements and processes, and have even delved into the metaphysical nature of metal in your quest to master it. You might have taken up adventuring to acquire more funding and materials or to test your designs. Choose two attribute boosts. One must be to **Strength** or **Intelligence**, and one is a free attribute boost. You're trained in the Crafting skill and the Plane of Metal Lore skill. You gain the Specialty Crafting skill feat with the blacksmithing specialty. --- ## Background details **Attribute Boosts** Intelligence or Strength, one free **Trained Skill** Crafting **Lore** Plane Of Metal Lore"
+ },
+ {
+  "id": "almas-clerk",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Almas Clerk",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You worked as a clerk at the Golden Cathedral of Almas in Andoran. The Pathfinder Society's activities in the city, and its passionate defense of its mission, inspired you to join the organization. You help the Society pursue its goals and navigate the laws of Golarion's many locales. Choose two attribute boosts. One must be to **Intelligence** or **Charisma**, and one is a free attribute boost. You're trained in the Society skill and the Legal Lore skill. You gain the Glean Contents skill feat. Additionally, when you receive a mission briefing in the city of Almas, you know just how to find the information you need. You gain a +2 circumstance bonus to your checks to Gather Information or Recall Knowledge during the Getting Started segment of such adventures. Be sure to remind your GM that you have a relevant background. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Society **Lore** Legal Lore **Skill Feat** Glean Contents"
+ },
+ {
+  "id": "always-chosen-last",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Always Chosen Last",
+  "traits": [
+   "persona-underdog"
+  ],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "When you were young, for whatever reason, you were always the last pick when it came to choosing teammates for a game, selecting someone for an important job, or the final person in your social circle to achieve an important milestone. As a result, you've come to expect being overlooked, and that's helped to shape your worldview. Maybe you take advantage of this to get away with things that no one would suspect you of, or perhaps it has encouraged you to focus on your training and become even better at what you do. Nothing's worked, exactly, but that's just left you with more time to watch and learn how everyone else behaves, which has given you greater insights into the societies that always seem to forget about you. You've studied the rules of countless games and competitions so that you're always ready to capitalize on a technicality to make up for being regarded as a weak link. When you do succeed at a task, it's often to the surprise of observers, and it's happened enough by now that there are those who, perhaps as a result of also always being chosen last, have come to view you as an inspiration to look up to. Choose two attribute boosts. One must be to **Intelligence** or **Wisdom**, and one is a free attribute boost. You're trained in the Society skill and the Games Lore skill. You gain the Streetwise skill feat. If you have the Underdog persona trait, you also become trained in the Scouting Lore skill. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Society **Lore** Games Lore **Skill Feat** Streetwise"
+ },
+ {
+  "id": "amateur-director",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Amateur Director",
+  "traits": [
+   "persona-leader"
+  ],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You grew up a child of the theater. Perhaps your parents were actors or directors, or maybe you fell in with a theater crowd at a young age. Perhaps you and your siblings shared a tradition of putting on plays for your parents or, if you were an only child, maybe you directed your toys and stuffed animals in elaborate productions that played out in your mind. Whatever the case, as you grew older, you found that you were most comfortable helping to organize and facilitate the goals and dreams of others—and not just in the role of being a director for a stage production. You've always derived satisfaction from being the one in charge of something and helping others get organized so as to accomplish something significant. Yet for whatever reason, this never quite grew into your job; you've never actually made money directing, or if you have, it was never enough to allow you to abandon your other responsibilities. Still, the experience you've gained at this amateur work has given you some impressive skills and self-confidence. Choose two attribute boosts. One must be to **Wisdom** or **Charisma**, and one is a free attribute boost. You're trained in the Diplomacy skill and the Theater Lore skill. You gain the Group Impression skill feat. If you have the Leader persona trait, you also become trained in the Scribing Lore skill. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Diplomacy **Lore** Theater Lore **Skill Feat** Group Impression"
+ },
+ {
+  "id": "amnesiac",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Amnesiac",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts"
+  ],
+  "inRegistries": [],
+  "text": "Your background is... well... honestly, you can't remember! You might have inklings deep within your mind, undercurrents of unusual emotions or unexpected responses to certain people or situations, but ultimately you don't know who you once were. You might be adventuring specifically to help discover yourself. It's up to you and the GM how to handle the truth of your character's backstory. You could leave it to the GM so it's a secret, work together with the GM, or even choose to leave it undecided until later. In any case, you and your GM should determine a few noteworthy details about your character or their belongings to get the first clues to your past. You gain three free attribute boosts. You choose two, and the GM chooses the third based on their first inklings of your character's possible history. --- ## Background details **Attribute Boosts** three free"
+ },
+ {
+  "id": "anathema-fulu",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Anathema Fulu",
+  "level": 11,
+  "traits": [
+   "consumable",
+   "fulu",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Duration** 1 hour --- First used by celestial-touched nephilim of Tianjing to weaken qlippoth, an anathema fulu comes in four pieces, one placed in each cardinal direction. Choose one of the following traits when activating the fulus: celestial, elemental, fey, fiend, monitor, or undead. If a creature with that trait starts its turn in the area, it must succeed at a saving throw or become Sickened 2 until the start of its next turn. On a critical success, the creature becomes temporarily immune to any anathema fulus for 1 hour. Regardless of the save result, if you subsequently cast Banishment on such a creature in the area, the creature takes the –2 penalty described in that spell for adding a special cost of an object that's anathema to that creature. The fulu acts as that object; you don't need to add it. If a creature affected by this penalty rolls a saving throw against *banishment*, the caster can use a free action to force the result one step lower. Doing so burns the whole fulu out, ending the effect. If any of the fulu's pieces are moved or destroyed after activation, the effect ends."
+ },
+ {
+  "id": "animal-strength",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Animal Strength",
+  "level": 6,
+  "traits": [
+   "ranger"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You tap into the primal strength of your animal feature. When you gain a claw or jaws attack from animal feature, you can choose a weapon you're carrying and apply all runes from that weapon (if they're applicable) to that unarmed attack. This replaces any runes the unarmed attacks would normally have from other sources, like handwraps of mighty blows. In addition, when you critically hit with a claw or jaws attack from animal feature, you deal 1d6 damage."
+ },
+ {
+  "id": "animal-whisperer",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Animal Whisperer",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLoreChoice",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You have always felt a connection to animals, and it was only a small leap to learn to train them. As you travel, you continuously encounter different creatures, befriending them along the way. Choose two attribute boosts. One must be to **Wisdom** or **Charisma**, and one is a free attribute boost. You're trained in the Nature skill and a Lore skill related to one terrain inhabited by animals you like (such as Plains Lore or Swamp Lore). You gain the Train Animal skill feat. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Nature **Skill Feat** Train Animal"
+ },
+ {
+  "id": "animal-wrangler",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Animal Wrangler",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "trainedLoreChoice",
+   "trainedSkillChoice"
+  ],
+  "inRegistries": [],
+  "text": "You have a long history of working with large circus animals for the Celestial Menagerie, such as performing in an animal act, jostling animals back into their cages, or even sweeping dung out of squalid pens. Mistress Dusklight's ongoing mistreatment of her animals compelled you to quit, and you now strive to ensure animals aren't abused. Choose two attribute boosts. One must be to **Strength** or **Wisdom**, and one is a free attribute boost. You're trained in your choice of the Athletics or Nature skills. You gain a skill feat: Titan Wrestler if you chose Athletics, or Train Animal if you chose Nature. You are also trained in a Lore skill related to a particular kind of common animal (such as Equine Lore, Feline Lore, or Pachyderm Lore). --- ## Background details **Attribute Boosts** Strength or Wisdom, one free"
+ },
+ {
+  "id": "animalistic-brutality",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Animalistic Brutality",
+  "level": 8,
+  "traits": [
+   "barbarian",
+   "concentrate",
+   "morph",
+   "primal",
+   "rage"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You deepen the connection into your animal instincts. Your unarmed attack from bestial rage gains one of the following traits until you stop raging: backswing, forceful, parry, razing, or sweep. You can't use this ability again until the next time you Rage. You can choose a different trait each time you use Animalistic Brutality."
+ },
+ {
+  "id": "animistic-practice",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "Animistic Practice",
+  "level": 1,
+  "traits": [
+   "animist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "At 1st level, you choose an animistic practice that influences the way your power grows and develops, and you gain its first invocation. At 9th level, you gain its second invocation, and at 17th, you gain its third."
+ },
+ {
+  "id": "anti-tech-activist",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Anti-Tech Activist",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You've seen the sorts of things that technology brings—polluted environments, workers put out of their jobs or horribly injured, and the slow erosion of society—and you've vowed to inform the larger world of these ills. You do so with long, impassioned speeches on street corners and village squares and by talking personally with the heads of various guilds. Adventuring into the wider world could help spread your message even farther. Choose two attribute boosts. One must be to **Constitution** or **Charisma**, and one is a free attribute boost. You're trained in the Intimidation skill and the Guild Lore skill. You gain the Group Coercion skill feat. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Intimidation **Lore** Guild Lore **Skill Feat** Group Coercion"
+ },
+ {
+  "id": "aon-atheism",
+  "lane": "choice",
+  "collection": "deities",
+  "name": "Atheism",
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "In a world where the gods demonstrably exist, few people uphold a strictly atheistic or agnostic worldview; that is, a belief that there are no gods, or that the existence of gods is unknowable. However, a good number of people choose not to worship any deities whatsoever. Many do so because of the value they place on freedom—not being beholden to a deity means no limitations, no censure, no anathema, and no strictures. While this decision might sound amoral to some, for atheists, it can be motivated by a desire for autonomy and the right to choose one's own fate. **Edicts** none **Anathema** none"
+ },
+ {
+  "id": "aon-awakened-metal-shot",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Awakened Metal Shot",
+  "level": 17,
+  "traits": [
+   "consumable",
+   "evocation",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "These bullets are formed from a liquefied high-grade precious metal and enchanted to unlock that metal's true potential. Each version has a different special effect. The shot is a high-grade adamantine bullet. The awakened adamantine breaks through any resistance. The shot ignores the first 20 resistance a creature has to physical damage, all damage, or piercing or bludgeoning damage. Against a golem or creature who already has a resistance bypassed by adamantine, or a weakness to adamantine, the shot shatters the target's defenses, causing them to become flat-footed for 1 minute instead. Because adamantine is uncommon, this version of awakened metal shot is uncommon even for gunslingers or other characters with access to uncommon guns and bullets from this book. The shot is a high-grade cold iron bullet. The awakened cold iron attempts to disrupt enchantments the target placed on others' minds. You can name a creature you believe to be enchanted by your target or allow the shot to choose an enchanted creature randomly. On a hit, the shot attempts to counteract the enchantment the target is using to manipulate that creature's mind. The counteract level is 9, and the counteract modifier is +27. If you fail (but don't critically fail) the counteract check against a demon or fey, you get a success instead. If you hit a demon or fey with no active enchantment effects on other creatures, the target is stupefied 1 for 1 minute instead. The shot is a high-grade silver bullet. The awakened silver gleams with altered celestial moonlight designed to weaken and expose devils and werecreatures. On a hit, it attempts to counteract any polymorph effect on the target. The counteract level is 9, and the counteract modifier is +27. If you fail (but don't critically fail) the counteract check against a devil or a werecreature, you get a success instead. If you counteracted the Change Shape ability, the creature can't use that ability again for 1 round, or 1 minute on a critical success. If you hit a devil or werecreature not under a polymorph effect, the target is enfeebled 1 for 1 minute instead."
+ },
+ {
+  "id": "aon-civil-service",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Civil Service",
+  "level": 1,
+  "traits": [
+   "general",
+   "kingdom"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "Everyone has a place and a role, and as long as those roles are filled, the government functions. When you select this feat, choose one leadership role; that role is now supported by your efficient civil servants, so its vacancy penalty is no longer applicable. If you wish to change the leadership role to which Civil Service applies, you can do so using the New Leadership activity at the start of a Kingdom turn. You gain a +2 status bonus to New Leadership checks."
+ },
+ {
+  "id": "aon-fiendish-bargain",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Fiendish Bargain",
+  "level": 0,
+  "traits": [
+   "unholy"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Fiendish Bargain Aspect Fiend Activate Single Action (concentrate) Frequency once per day; Effect You bargain with the evil force empowering your relic for a boon, though you must trade something in return. Select one of the following benefits to gain. Your relic attempts to counteract a harmful condition affecting you. You regain 3d8+16 Hit Points. This is a healing effect. You gain a +2 status bonus to attack rolls for 1 minute. One of the following randomly determined effects occurs to you in payment, after applying the benefit. You are stupefied 1 for 1 minute. You are clumsy 1 for 1 minute. You lose 1d8 Hit Points. You take a –1 penalty to damage rolls for 1 minute."
+ },
+ {
+  "id": "aon-fulus-of-concealment",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Fulus of Concealment",
+  "level": 6,
+  "traits": [
+   "consumable",
+   "fulu",
+   "illusion",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This fulu comes in four pieces, one placed in each cardinal direction. Choose one of the following traits when Activating the fulus: animal, beast, celestial, fey, fiend, humanoid, monitor, plant, or undead. Those within the fulus' circle upon activation (including the fulus themselves) gain the effect of invisibility sphere , but only against creatures with the chosen trait. If any of the fulus are moved or destroyed after activation, the effect ends."
+ },
+ {
+  "id": "aon-harsh-judgment",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Harsh Judgment",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "vigilante"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Choose one creature you can see, and loudly declare the creature's life forfeit by your judgment. That creature becomes your condemned foe until they are defeated, you use Harsh Judgment on a different creature, or the encounter ends. You gain a +2 circumstance bonus to Perception checks to Seek your condemned foe and on Intimidation checks to Demoralize them. You have a –1 circumstance penalty to Perception checks to Seek creatures other than your condemned foe and on Intimidation checks to Demoralize anyone other than your condemned foe. You typically can use Harsh Judgment only during an encounter, and if you try to use it to declare someone's life forfeit during exploration or downtime, you are likely to start an encounter."
+ },
+ {
+  "id": "aon-kingdom-assurance",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Kingdom Assurance",
+  "level": 1,
+  "traits": [
+   "fortune",
+   "general",
+   "kingdom"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "Even when things go poorly in other areas, you can count on consistency in carrying out kingdom activities with a chosen skill. Choose one Kingdom skill in which your kingdom is trained. Once per Kingdom turn, when you would attempt a skill check for that skill, you can forgo rolling and instead take a result equal to 10 + your proficiency bonus; do not apply any other bonuses, penalties, or modifiers to this result. **Special** You can select this feat multiple times. Each time, choose a different skill and gain the benefits of this feat for that skill."
+ },
+ {
+  "id": "aon-muesello-s-student",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Muesello's Student",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You trained under Venture-Captain Muesello of the Oppara Lodge in Taldor. You learned a few of the mage-machinist's crafting techniques, and your extensive knowledge of magic items comes in handy during your adventures as a Pathfinder field agent. Choose two attribute boosts. One must be to Dexterity or Intelligence , and one is a free attribute boost. You're trained in the Crafting skill and the Engineering Lore skill. You gain the Crafter's Appraisal skill feat. Additionally, when Muesello is present during your mission briefings, he takes some time to catch up with you and discuss your mission. You gain a +2 circumstance bonus to your checks to Gather Information or Recall Knowledge during the Getting Started segment of such adventures. Be sure to remind your GM that you have a relevant background."
+ },
+ {
+  "id": "aon-profane-fervor",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Profane Fervor",
+  "level": 0,
+  "traits": [
+   "unholy"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Profane Fervor Aspect Fiend Activate Two Actions (concentrate, manipulate) Effect Profane energies twist your weapons, filling them with rage toward everything good. For 1 minute, your weapons and unarmed attacks gain the unholy weapon rune while you hold them. If a weapon is at its limit on property runes, you can choose one property rune on the weapon to go dormant while the unholy rune takes effect. In addition, Strikes your allies make while they're within 30 feet of you gain the unholy trait."
+ },
+ {
+  "id": "aon-propaganda",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Propaganda",
+  "level": 0,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Propaganda is strongly biased information presented in a way that may mislead those who are exposed to it. Most commonly, propaganda is used to drive a specific political agenda. While this is oftentimes a tool utilized by regimes to maintain a specific image among their oppressed people, the Firebrands use propaganda to bring shocking truths to light, drive wedges between enemy factions, and encourage uprisings against tyrannical regimes. Many groups of Firebrands specialize in the creation and dissemination of propaganda, though they are just as likely to utilize local resources to do the disseminating for them. When used at the correct time and place, propagandists can adjust the temperature of the political climate to tear down tyrants and shift the narrative in a way that evokes specific sentiments, like hope or anger, and thus inspires rebellious action. Spreading propaganda occurs over the course of days because it typically requires time for its widespread dissemination through physical flyers and word of mouth. Once you select a specific subject for your propaganda, it typically takes 1d4+2 days for a propagandist to compose and then disseminate their work. Twice as long is required if the propaganda is contradictory to existing rumors or to the opinions of those viewing or reading it, but only half as long is necessary if the propaganda supports existing rumors and public opinion. Propaganda typically influences an entire settlement or area, though the GM can determine that it only influences specific areas like a city district in a larger city or even a single neighborhood. In these cases, you should be able to pay for more propaganda services to influence additional areas. The level of the propagandist determines how effective they and their team are at influencing the mindset of the people. The GM rolls a secret check using the bonus of the propagandist against the DC required to Gather Information on the given subject of the propaganda. On a success, the propaganda takes hold, becoming the talk of the people for 1 week, or 1 month on a critical success. On a failure, the propaganda is unsuccessful but is otherwise ignored. On a critical failure, the propaganda backfires, and further attempts at propaganda related to that subject fail for 1 week. In addition, the people in the region are aware that someone was trying to spread rumors about the subject. +6; trained +7 +9; Expert +10 +12 +13 +15; Master"
+ },
+ {
+  "id": "aon-reclaimed-investigator",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Reclaimed Investigator",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You believe the mysterious patron of the Crimson Reclaimers has an ulterior motive that bedevils the Knights of Lastwall. Whatever the organization gains from the pact, some mysterious force with its own agenda and a need for anonymity benefits as well. You've made it your mission to determine what that agenda is before the patron decides it has manipulated from the shadows long enough. Choose two attribute boosts. One must be to **Intelligence** or **Wisdom**, and one is a free attribute boost. You're trained in the Occultism skill, and the Crimson Reclaimers Lore skill. You gain the Oddity Identification skill feat."
+ },
+ {
+  "id": "aon-righteous-call",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Righteous Call",
+  "level": 0,
+  "traits": [
+   "holy"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Righteous Call Aspect Celestial Activate Two Actions (concentrate, manipulate) Frequency once per day; Effect Holy magic fills your armaments, making them true weapons against evil. For 1 minute, your weapons and unarmed attacks gain the holy weapon rune while you hold them. If a weapon is at its limit on property runes, you can choose one property rune on the weapon to go dormant while the holy rune takes effect. In addition, Strikes your allies make while they're within 30 feet of you gain the holy trait."
+ },
+ {
+  "id": "aon-tyrant-s-writ",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Tyrant's Writ",
+  "level": 8,
+  "traits": [
+   "grimoire",
+   "magical",
+   "necromancy"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "A spirited debate persists among scholars on whether the eponymous tyrant of this grimoire actually refers to Tar-Baphon, the necromancer Geb, or even the goddess Urgathoa herself. This grimoire appears at first to be a series of writs that makes arrogant demands of the reader, those around them, and the universe. Anyone who gives these writings more than a cursory look realizes the writs hold spells much like any other grimoire, with the animate dead spell being particularly prominent. Tyrant's writs grants you the ability to demand more from the undead you animate. Activate Free Action envision (metamagic) Frequency once per day; Effect If your next action is to Cast a Spell to cast an animate dead spell prepared with tyrant's writs , you can choose one of the following additional benefits to grant the summoned undead. Bloody The undead gains fast healing equal to its level. Explosive When it reaches 0 Hit Points, the undead explodes, dealing 4d6 fire damage to adjacent creatures, with a basic Reflex save using the animate dead spell's DC. As normal, since the final sacrifice spell doesn't reduce the target to 0 Hit Points, it doesn't cause this explosion. Necrotic Speed The undead gains a +10-foot status bonus to all its Speeds. Rotten Any living creature who starts its turn adjacent to the undead who isn't at full Hit Points takes 1d6 poison damage."
+ },
+ {
+  "id": "apotropaic-fulu",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Apotropaic Fulu",
+  "level": 5,
+  "traits": [
+   "consumable",
+   "fulu",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Usage** affixed over an entrance --- This unassuming yellow paper, affixed above a door or gate, flickers in the light. Pick an alignment trait: chaotic, good, lawful, or evil. When a creature with the opposing alignment trait of the fulu (good for an evil fulu, and so on) passes through the entrance, it must succeed at a save or become Sickened 2; regardless of whether they succeed, the creature becomes temporarily immune for 1 day."
+ },
+ {
+  "id": "apparition-attunement",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "Apparition Attunement",
+  "level": 1,
+  "traits": [
+   "animist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Animists have a gift for divine magic that allows them to serve as conduits or bridges for otherworldly spiritual entities known collectively as apparitions; through them, these entities can commune and interact with the physical world in a process called attunement. Apparitions are myriad and diverse: they may be human spirits lingering on the border between becoming phantoms or ghosts, animal spirits with particularly strong connections to the physical world but lacking the malice that would spur a transition into true undeath, manifestations of natural locations that have grown thought and purpose over time, or they may be a different variation altogether. Some animists attune to one or more specific apparitions that accompany them in their travels, forming deep partnerships over time, while others adapt to their surroundings by befriending the local apparitions who dwell wherever the animist's journey takes them. Each day during your daily preparations, choose two apparitions from the list on page 17 to attune to. Of these, choose one to be your primary apparition. Your attuned apparitions each grant you knowledge in the form of Lore skills and a repertoire of additional spells you can cast using apparition spellcasting (see below), and your primary apparition grants you even further power in the form a unique vessel focus spell and, when you are higher level, a unique avatar form. When you Refocus, you can change which of your currently attuned apparitions is your primary apparition, selecting from any of the apparitions you attuned to during your daily preparations. All your apparitions typically remain attuned to you until your next daily preparations, but some animist abilities can temporarily disperse them, usually in exchange for a powerful boon. If an apparition is dispersed, you lose access to its gifts—you forget its apparition skills, its spells are removed from your apparition spell repertoire, and you can't use its vessel spell or avatar form—until you attune to it again. When you disperse your primary apparition, one of your remaining apparitions becomes your primary apparition, chosen by you at the time of dispersal."
+ },
+ {
+  "id": "arcane-revolutionary",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Arcane Revolutionary",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLoreChoice",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You have fought against oppressive leaders and governments, harnessing ancient magical energies to help liberate your community from much larger, better-resourced armies. Using magical methods to harass and sabotage your oppressors, you've learned to take advantage of their blind spots and use their own resources against them. Choose two attribute boosts. One must be to **Dexterity** or **Intelligence**, and one is a free attribute boost. You're trained in the Arcana skill and the Lore skill related to the settlement you liberated. You gain the Quick Identification skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Arcana **Skill Feat** Quick Identification"
+ },
+ {
+  "id": "archdevil-apostate",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Archdevil Apostate",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You once worshipped a powerful archdevil, but have turned away from fiendish practices. Whether you walked away due to moral compunctions or cold pragmatism, you know your soul was once bound for Hell, and you can only pray that your new path erases the sins you've committed. Choose two attribute boosts. One must be to **Charisma** or **Intelligence**, and one is a free attribute boost. You're trained in the Religion skill and the Devil Lore skill. You gain the Student of the Canon skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Religion **Lore** Devil Lore **Skill Feat** Student of the Canon"
+ },
+ {
+  "id": "art-tutor",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Art Tutor",
+  "traits": [
+   "persona-scholar"
+  ],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Art has always been important to you. It's likely that you've got a significant talent for creating artwork yourself, but at the very least, you grew up in a home, neighborhood, or city where artwork was freely available for you to enjoy. The first time you met someone who hadn't had this luxury was a shock, and you promised yourself that you would do whatever you could to bring the joy of artwork to places and people unfortunate enough to be bereft of it. Of course, original art isn't always something that can be transported, so you've settled on the next best thing—teaching others about art, art history, and artistic theory. Whether you've made money by teaching others about art or taken it upon yourself to altruistically educate others, the only thing that approaches the feeling of euphoria you receive from admiring or creating a new piece of art is what you gain by spreading this appreciation to others. Choose two attribute boosts. One must be to **Dexterity** or **Intelligence**, and one is a free attribute boost. You're trained in the Crafting skill and the Art Lore skill. You gain the Crafter's Appraisal feat. If you have the Scholar persona trait, you also become trained in the Academia Lore skill. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Crafting **Lore** Art Lore **Skill Feat** Crafter's Appraisal"
+ },
+ {
+  "id": "aspiring-free-captain",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Aspiring Free Captain",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - High Seas --- You seek to join the Free Captains of the Shackles and have learned everything you need to know about sailing and bossing people around. Now you just need a crew and a ship. Choose two attribute boosts. One must be to **Wisdom** or **Charisma**, and one is a free attribute boost. You're trained in the Intimidation skill and the Sailing Lore skill. You gain the Group Coercion skill feat. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Intimidation **Lore** Sailing Lore **Skill Feat** Group Coercion"
+ },
+ {
+  "id": "aspiring-river-monarch",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Aspiring River Monarch",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Broken Lands --- New realms rise constantly in the River Kingdoms, and you intend to lead one of them. Making your reign last, however, will require both strength and grace. Choose two attribute boosts. One must be to **Wisdom** or **Charisma**, and one is a free attribute boost. You're trained in the Society skill and the Politics Lore skill. You gain the Courtly Graces skill feat. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Society **Lore** Politics Lore **Skill Feat** Courtly Graces"
+ },
+ {
+  "id": "assured-ritualist",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Assured Ritualist",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can cover for a secondary caster's error. If you are the primary caster, after all the secondary checks are rolled, you can choose one check that was a failure or critical failure, and improve the result to one degree of success better than what the secondary caster rolled."
+ },
+ {
+  "id": "astral-tether",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Astral Tether",
+  "level": 4,
+  "traits": [
+   "occult",
+   "psychic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You spin out a thread of psychic energy that connects you to an ally, using it as a conduit for your abilities. Choose a willing creature within 60 feet and connect to it. Whenever you would gain a benefit from a psychic amp, you can have the amp affect the tethered creature instead. You can do so only if the amp grants a distinct benefit, not if it alters the amped spell. The tether can't be severed physically but breaks if the distance between you and the tethered ally ever exceeds 60 feet, if you become unconscious, or if you use Astral Tether again."
+ },
+ {
+  "id": "astrologer",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Astrologer",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Astrologers look to the stars for signs and portents, using their positions in the heavens to chart courses for those living beneath them. As the celestial spheres move, so does fate itself. You studied the stars and learned to divine your path based on their guidance. Whether the stars directly called you to a life of adventure or you use the stars to guide your wanderlust, you're living out the stars' guidance in a life of adventure. Choose two attribute boosts. One must be to **Intelligence** or **Wisdom**, and one is a free attribute boost. You're trained in Occultism and Astrology Lore. You gain the Oddity Identification skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Occultism **Lore** Astrology Lore **Skill Feat** Oddity Identification"
+ },
+ {
+  "id": "astrological-augur",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Astrological Augur",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "innateSpells",
+   "trainedLore"
+  ],
+  "inRegistries": [],
+  "text": "During your formative years, you learned the stars are a gateway to mystical power or glimpses into the future. Perhaps you grew up surrounded by Iruxi culture or were raised in one of the remaining Lirgeni sanctuaries. You've studied the constellations, using their alignment to predict fortune (or misfortune) and gaining magical powers unlike any of the other astrologers you know. Your readings might primarily focus on the Cosmic Caravan, or perhaps you use other stars to guide you, like the zodiac of Tian Xia. Choose two attribute boosts. One must be to Wisdom or Charisma, and one is a free attribute boost. You're trained in Astrology Lore. You can cast Augury as a divine innate spell once per week, and the spell's effects can see up to 1 hour in the future rather than 30 minutes. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Lore** Astrology Lore"
+ },
+ {
+  "id": "atheists-and-free-agents",
+  "lane": "choice",
+  "collection": "deities",
+  "name": "Atheists and Free Agents",
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "In a world where the gods demonstrably exist, few people uphold a strictly atheistic or agnostic worldview. That is, a belief that there are no gods or that the existence of gods is unknowable. However, a good number of people choose not to worship any deities whatsoever. In some cases, this is not a deliberate choice so much as an inadvertent apathy, as the gods can seem distant compared to the pressing trials of life. Many other atheists choose not to worship because of the value they place on freedom—not being beholden to a deity means no limitations, no censure, no anathema, and no strictures. While this decision might sound amoral to some, for atheists, it can be motivated by a desire for autonomy and the right to choose one's own fate. **Edicts** none **Anathema** none"
+ },
+ {
+  "id": "attention-addict",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Attention Addict",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "A roaring crowd chanting your name. Your face plastered all over the city. Fawning fans begging for your autograph. Jealous rivals. Endless fame. The promise of all this and more is what drove you to enter this year's Ruby Phoenix Tournament, and with your prodigious star power it's no wonder why they selected you for the prequalifier on Danger Island. You've got champion stamped all over you. Obviously, the organizers knew a winner when they saw one. It's already clear that you'll be named Ruby Phoenix Champion - the challenges leading up to your prize ceremony are mere formalities, but you're happy to indulge the impassioned masses. After all, the people want a show, and what kind of celebrity would you be if you denied them? You might even deign to compete in some fights, too, as long as your hair doesn't get mussed. Choose two attribute boosts. One must be to **Strength** or **Charisma**, and one is a free attribute boost. You're trained in Performance and the Gladiatorial Lore skill. You gain the Impressive Performance skill feat --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Performance **Lore** Gladiatorial Lore **Skill Feat** Impressive Performance"
+ },
+ {
+  "id": "atteran-rancher",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Atteran Rancher",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Old Cheliax --- You grew up breeding and training the famous horses of the Atteran Ranches in northern Nidal. You may even be sympathetic to the Desnan dissidents who hide there from the Umbral Court. Choose two attribute boosts. One must be to **Strength** or **Dexterity**, and one is a free attribute boost. You're trained in the Nature skill and the Animal Lore skill. You gain the Train Animal skill feat. --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Trained Skill** Nature **Lore** Animal Lore **Skill Feat** Train Animal"
+ },
+ {
+  "id": "aura-shaping",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Aura Shaping",
+  "level": 10,
+  "traits": [
+   "kineticist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You control the size of your kinetic aura. You can make your kinetic aura's emanation any size from a to a (you must choose a multiple of 5). You choose the size when you Channel Elements and can change it when you use a stance impulse that affects your kinetic aura. Increase the maximum size you can choose by 5 feet at 15th and 20th levels."
+ },
+ {
+  "id": "autonomous-arms",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Autonomous Arms",
+  "level": 16,
+  "traits": [
+   "mythic"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "A portion of the ancient grasping spirit that infuses your being spills over into a spear or polearm you carry. When you perform your daily preparations, choose one spear or polearm you own. This weapon becomes infused with arcane magic and fragments of thought—it doesn't become fully intelligent, but it instinctually recognizes you as its wielder and denies its abilities to any other wielder while you live. If your weapon doesn't possess it already, it gains the effects of the animated property rune. This does not count against the maximum number of property runes your weapon can have at one time. You also gain the Call to Hand action."
+ },
+ {
+  "id": "awakened-cold-iron-shot",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Awakened Cold Iron Shot",
+  "level": 17,
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Ammunition** round **Activate** ⟨1⟩ (manipulate) --- These bullets are formed from a liquefied high-grade precious metal and enchanted to unlock that metal's true potential. The shot is a high-grade cold iron bullet. The awakened cold iron attempts to disrupt magic influences the target placed on others' minds. You can name a creature you believe to be enchanted by your target or allow the shot to choose an enchanted creature randomly. On a hit, the shot attempts to counteract the spell or effect the target is using to manipulate that creature's mind. The counteract rank is 9, and the counteract modifier is +27. If you fail (but don't critically fail) the counteract check against a demon or fey, you get a success instead. If you hit a demon or fey with no active spell effects on other creatures, the target is Stupefied 1 for 1 minute instead."
+ },
+ {
+  "id": "awakened-metal-shot",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Awakened Metal Shot",
+  "level": 17,
+  "traits": [
+   "consumable",
+   "evocation",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Awakened Metal Shot Source Guns & Gears (Remastered) pg. 168 Ammunition round Activate Interact These bullets are formed from a liquefied high-grade precious metal and enchanted to unlock that metal's true potential. Each version has a different special effect. Awakened Metal Shot (Awakened Adamantine Shot) Source Guns & Gears (Remastered) pg. 168 Price 3,500 gp The shot is a high-grade adamantine bullet. The awakened adamantine breaks through any resistance. The shot ignores the first 20 resistance a creature has to physical damage, all damage, or piercing or bludgeoning damage. Against a golem or creature who already has a resistance bypassed by adamantine, or a weakness to adamantine, the shot shatters the target's defenses, causing them to become flat-footed for 1 minute instead. Because adamantine is uncommon, this version of awakened metal shot is uncommon even for gunslingers or other characters with access to uncommon guns and bullets from this book. Awakened Metal Shot (Awakened Cold Iron Shot) Source Guns & Gears (Remastered) pg. 168 Price 2,300 gp The shot is a high-grade cold iron bullet. The awakened cold iron attempts to disrupt enchantments the target placed on others' minds. You can name a creature you believe to be enchanted by your target or allow the shot to choose an enchanted creature randomly. On a hit, the shot attempts to counteract the enchantment the target is using to manipulate that creature's mind. The counteract level is 9, and the counteract modifier is +27. If you fail (but don't critically fail) the counteract check against a demon or fey, you get a success instead. If you hit a demon or fey with no active enchantment effects on other creatures, the target is stupefied 1 for 1 minute instead. Awakened Metal Shot (Awakened Silver Shot) Source Guns & Gears (Remastered) pg. 168 Price 2,300 gp The shot is a high-grade silver bullet. The awakened silver gleams with altered celestial moonlight designed to weaken and expose devils and werecreatures. On a hit, it attempts to counteract any polymorph effect on the target. The counteract level is 9, and the counteract modifier is +27. If you fail (but don't critically fail) the counteract check against a devil or a werecreature, you get a success instead. If you counteracted the Change Shape ability, the creature can't use that ability again for 1 round, or 1 minute on a critical success. If you hit a devil or werecreature not under a polymorph effect, the target is enfeebled 1 for 1 minute instead."
+ },
+ {
+  "id": "awakened-metal-shot-awakened-adamantine-shot",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Awakened Metal Shot (Awakened Adamantine Shot)",
+  "level": 18,
+  "traits": [
+   "consumable",
+   "evocation",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Awakened Metal Shot Source Guns & Gears (Remastered) pg. 168 Ammunition round Activate Interact These bullets are formed from a liquefied high-grade precious metal and enchanted to unlock that metal's true potential. Each version has a different special effect. Awakened Metal Shot (Awakened Adamantine Shot) Source Guns & Gears (Remastered) pg. 168 Price 3,500 gp The shot is a high-grade adamantine bullet. The awakened adamantine breaks through any resistance. The shot ignores the first 20 resistance a creature has to physical damage, all damage, or piercing or bludgeoning damage. Against a golem or creature who already has a resistance bypassed by adamantine, or a weakness to adamantine, the shot shatters the target's defenses, causing them to become flat-footed for 1 minute instead. Because adamantine is uncommon, this version of awakened metal shot is uncommon even for gunslingers or other characters with access to uncommon guns and bullets from this book. Awakened Metal Shot (Awakened Cold Iron Shot) Source Guns & Gears (Remastered) pg. 168 Price 2,300 gp The shot is a high-grade cold iron bullet. The awakened cold iron attempts to disrupt enchantments the target placed on others' minds. You can name a creature you believe to be enchanted by your target or allow the shot to choose an enchanted creature randomly. On a hit, the shot attempts to counteract the enchantment the target is using to manipulate that creature's mind. The counteract level is 9, and the counteract modifier is +27. If you fail (but don't critically fail) the counteract check against a demon or fey, you get a success instead. If you hit a demon or fey with no active enchantment effects on other creatures, the target is stupefied 1 for 1 minute instead. Awakened Metal Shot (Awakened Silver Shot) Source Guns & Gears (Remastered) pg. 168 Price 2,300 gp The shot is a high-grade silver bullet. The awakened silver gleams with altered celestial moonlight designed to weaken and expose devils and werecreatures. On a hit, it attempts to counteract any polymorph effect on the target. The counteract level is 9, and the counteract modifier is +27. If you fail (but don't critically fail) the counteract check against a devil or a werecreature, you get a success instead. If you counteracted the Change Shape ability, the creature can't use that ability again for 1 round, or 1 minute on a critical success. If you hit a devil or werecreature not under a polymorph effect, the target is enfeebled 1 for 1 minute instead."
+ },
+ {
+  "id": "awakened-metal-shot-awakened-cold-iron-shot",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Awakened Metal Shot (Awakened Cold Iron Shot)",
+  "level": 17,
+  "traits": [
+   "consumable",
+   "evocation",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Awakened Metal Shot Source Guns & Gears (Remastered) pg. 168 Ammunition round Activate Interact These bullets are formed from a liquefied high-grade precious metal and enchanted to unlock that metal's true potential. Each version has a different special effect. Awakened Metal Shot (Awakened Adamantine Shot) Source Guns & Gears (Remastered) pg. 168 Price 3,500 gp The shot is a high-grade adamantine bullet. The awakened adamantine breaks through any resistance. The shot ignores the first 20 resistance a creature has to physical damage, all damage, or piercing or bludgeoning damage. Against a golem or creature who already has a resistance bypassed by adamantine, or a weakness to adamantine, the shot shatters the target's defenses, causing them to become flat-footed for 1 minute instead. Because adamantine is uncommon, this version of awakened metal shot is uncommon even for gunslingers or other characters with access to uncommon guns and bullets from this book. Awakened Metal Shot (Awakened Cold Iron Shot) Source Guns & Gears (Remastered) pg. 168 Price 2,300 gp The shot is a high-grade cold iron bullet. The awakened cold iron attempts to disrupt enchantments the target placed on others' minds. You can name a creature you believe to be enchanted by your target or allow the shot to choose an enchanted creature randomly. On a hit, the shot attempts to counteract the enchantment the target is using to manipulate that creature's mind. The counteract level is 9, and the counteract modifier is +27. If you fail (but don't critically fail) the counteract check against a demon or fey, you get a success instead. If you hit a demon or fey with no active enchantment effects on other creatures, the target is stupefied 1 for 1 minute instead. Awakened Metal Shot (Awakened Silver Shot) Source Guns & Gears (Remastered) pg. 168 Price 2,300 gp The shot is a high-grade silver bullet. The awakened silver gleams with altered celestial moonlight designed to weaken and expose devils and werecreatures. On a hit, it attempts to counteract any polymorph effect on the target. The counteract level is 9, and the counteract modifier is +27. If you fail (but don't critically fail) the counteract check against a devil or a werecreature, you get a success instead. If you counteracted the Change Shape ability, the creature can't use that ability again for 1 round, or 1 minute on a critical success. If you hit a devil or werecreature not under a polymorph effect, the target is enfeebled 1 for 1 minute instead."
+ },
+ {
+  "id": "awakened-metal-shot-awakened-silver-shot",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Awakened Metal Shot (Awakened Silver Shot)",
+  "level": 17,
+  "traits": [
+   "consumable",
+   "evocation",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Awakened Metal Shot Source Guns & Gears (Remastered) pg. 168 Ammunition round Activate Interact These bullets are formed from a liquefied high-grade precious metal and enchanted to unlock that metal's true potential. Each version has a different special effect. Awakened Metal Shot (Awakened Adamantine Shot) Source Guns & Gears (Remastered) pg. 168 Price 3,500 gp The shot is a high-grade adamantine bullet. The awakened adamantine breaks through any resistance. The shot ignores the first 20 resistance a creature has to physical damage, all damage, or piercing or bludgeoning damage. Against a golem or creature who already has a resistance bypassed by adamantine, or a weakness to adamantine, the shot shatters the target's defenses, causing them to become flat-footed for 1 minute instead. Because adamantine is uncommon, this version of awakened metal shot is uncommon even for gunslingers or other characters with access to uncommon guns and bullets from this book. Awakened Metal Shot (Awakened Cold Iron Shot) Source Guns & Gears (Remastered) pg. 168 Price 2,300 gp The shot is a high-grade cold iron bullet. The awakened cold iron attempts to disrupt enchantments the target placed on others' minds. You can name a creature you believe to be enchanted by your target or allow the shot to choose an enchanted creature randomly. On a hit, the shot attempts to counteract the enchantment the target is using to manipulate that creature's mind. The counteract level is 9, and the counteract modifier is +27. If you fail (but don't critically fail) the counteract check against a demon or fey, you get a success instead. If you hit a demon or fey with no active enchantment effects on other creatures, the target is stupefied 1 for 1 minute instead. Awakened Metal Shot (Awakened Silver Shot) Source Guns & Gears (Remastered) pg. 168 Price 2,300 gp The shot is a high-grade silver bullet. The awakened silver gleams with altered celestial moonlight designed to weaken and expose devils and werecreatures. On a hit, it attempts to counteract any polymorph effect on the target. The counteract level is 9, and the counteract modifier is +27. If you fail (but don't critically fail) the counteract check against a devil or a werecreature, you get a success instead. If you counteracted the Change Shape ability, the creature can't use that ability again for 1 round, or 1 minute on a critical success. If you hit a devil or werecreature not under a polymorph effect, the target is enfeebled 1 for 1 minute instead."
+ },
+ {
+  "id": "awful-scab",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Awful Scab",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Prior to the Evisceration of 4707, the district of V'drysha was a lovely borough on the southern edge of Ecanus. Now, it's the Awful, a vast morass of spell-resistant flesh and sinew, ever threatening to engulf the city. You were once a Scab working to push back its influence. It's a nasty, dangerous job, and poorly paid as well, but at least you learned enough to mimic a viscerasuit, the enchanted, airtight suit that protected you from the poisons and plagues of the Awful. Choose two attribute boosts. One must be to **Dexterity** or **Constitution**, and one is a free attribute boost. You're trained in Medicine and Fleshforged Lore. You also know how to seal your clothing or armor like a viscerasuit. During your daily preparations, you can seal your outfit. The first time each day you are introduced to poison or disease without taking physical damage, the sealed outfit attempts to counteract it using your Medicine modifier as the counteract modifier. --- ## Background details **Attribute Boosts** Constitution or Dexterity, one free **Trained Skill** Medicine **Lore** Fleshforged Lore"
+ },
+ {
+  "id": "axumas-awakening",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Axuma's Awakening",
+  "level": 11,
+  "traits": [
+   "general"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "Choose two cantrips from the arcane spells list. You can cast these cantrips at will as arcane innate spells. A cantrip is heightened to a spell rank equal to half your level rounded up. Then, choose one 1st-rank spell and one 2nd-rank spell from the arcane spells list. You can cast each of these spells once per day as arcane innate spells. Spells gained from this feat must be common spells or spells to which you have access."
+ },
+ {
+  "id": "bachuan-revolutionary",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Bachuan Revolutionary",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Access** Bachuan origin --- Your heart yearns for change and burns for your people. You refuse to conform to the laws that bind you, so you rebel in flashy ways. Your hair is either shaved or grown wild and loose. Your clothes don't conform to Bachuan's society, often cut out in garish shapes and dyed in vivid colors. Your call for change is a dire battle, and not every rebellion is well equipped. Whether you choose to fight another day or bring your cause on your adventures, that's up to you. Choose two attribute boosts. One must be to **Wisdom** or **Strength**, and one is a free attribute boost. You're trained in Society and Law Lore. You gain the Sign Language skill feat. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Society **Lore** Law Lore **Skill Feat** Sign Language"
+ },
+ {
+  "id": "back-alley-doctor",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Back-Alley Doctor",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You're the medic many turn to when a more official clinic or healer might not be available. You may specialize in stitching up bullet wounds or have a standing, confidential deal with a criminal syndicate to provide your services any time of day or night. In either case, you've perhaps turned to the adventuring life because a former client is unhappy with your work or members of the local constabulary have been asking too many questions. Choose two attribute boosts. One must be to **Constitution** or **Wisdom**, and one is a free attribute boost. You're trained in the Medicine skill and the Underworld Lore skill. You gain the Risky Surgery skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Medicine **Lore** Underworld Lore **Skill Feat** Risky Surgery"
+ },
+ {
+  "id": "badlands-scout",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Badlands Scout",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You're accustomed to the desolate wilds of Belkzen and able to blend into the sparse shadows of craggy rocks and quench your thirst with drops of water. You might be a member of an isolated orc hold, traveling mercenary, or wandering warrior from nearby human settlements. Choose two attribute boosts. One must be to **Constitution** or **Wisdom**, and one is a free attribute boost. You're trained in the Survival skill and the Badlands Lore skill. You gain the Forager skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Survival **Lore** Badlands Lore **Skill Feat** Forager"
+ },
+ {
+  "id": "bandit",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Bandit",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLoreChoice",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Your past includes no small amount of rural banditry, robbing travelers on the road and scraping by. Whether your robbery was sanctioned by a local noble or you did so of your own accord, you eventually got caught up in the adventuring life. Choose two attribute boosts. One must be to **Dexterity** or **Charisma**, and one is a free attribute boost. You're trained in the Intimidation skill and a Lore skill related to the terrain you worked in (such as Desert Lore or Plains Lore). You gain the Group Coercion skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Intimidation **Skill Feat** Group Coercion"
+ },
+ {
+  "id": "banished-brighite",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Banished Brighite",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Once, you were a dedicated and important priest of Brigh, goddess of clockwork and invention, based out of the largest church to your deity, the Temple of Brigh in Alkenstar. Here, you made important discoveries in the annals of your religion's canon and furthered the Bronze Lady's agendas of innovation and creation. Your future seemed bright, and you predicted that it was only a matter of time until you ascended to the rank of primary cog or, someday, grand cog. Then, your years of devout service were undone in an instant. A man named Ambrost Mugland came to the Temple and demanded not only access to the religious formulas you'd been uncovering, but exclusive rights to the precious knowledge. When you refused, Mugland sent word to the church's leaders that you'd been meddling in heretical doctrine. He also implicated you in the theft of church funds that had mysteriously gone missing as of late. Sure enough, you found yourself being asked to hand in your robes. Your church colleagues didn't turn you in, but they told you in no uncertain terms that you wouldn't be able to find sanctuary for your alleged crimes in the halls of the Temple of Brigh. On the run and with nowhere to turn, your faith has been thoroughly tested, though so far you've remained true to your religion and maintained your sacred skills and divine powers. It's unclear what the Bronze Lady has in store for you, but at least one thing's for certain: Ambrost Mugland will pay for what he did. Choose two attribute boosts. One must be to **Intelligence** or **Wisdom**, and one is a free attribute boost. You're trained in the Religion skill and the Brigh Lore skill. You gain the Quick Identification skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Religion **Lore** Brigh Lore **Skill Feat** Quick Identification"
+ },
+ {
+  "id": "barber",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Barber",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Haircuts, dentistry, bloodletting, and surgery—if it takes a steady hand and a razor, you can do it. You may have taken to the road to expand your skills or test yourself against a world that leaves your patients so battered and bruised. Choose two attribute boosts. One must be to **Dexterity** or **Wisdom**, and one is a free attribute boost. You're trained in the Medicine skill and the Surgery Lore skill. You gain the Risky Surgery skill feat. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Medicine **Lore** Surgery Lore **Skill Feat** Risky Surgery"
+ },
+ {
+  "id": "barkeep",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Barkeep",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You have five specialties: hefting barrels, drinking, polishing steins, drinking, and drinking. You worked in a bar, where you learned how to hold your liquor and rowdily socialize. Choose two attribute boosts. One must be to **Constitution** or **Charisma**, and one is a free attribute boost. You're trained in the Diplomacy skill and the Alcohol Lore skill. You gain the Hobnobber skill feat. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Diplomacy **Lore** Alcohol Lore **Skill Feat** Hobnobber"
+ },
+ {
+  "id": "barker",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Barker",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You're skilled at shouting to catch and keep the attention of passersby. A few well-timed and forcefully spoken words not only get people to notice you but also engage them to respond to you. You may have previously worked as a crier or in a more formal barker capacity with Mistress Dusklight's Celestial Menagerie. Either way, your ability to bully a crowd is impressive. Choose two attribute boosts. One must be to **Constitution** or **Charisma**, and one is a free attribute boost. You're trained in the Intimidation skill, and the Crowd Lore skill. You gain the Group Coercion skill feat. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Intimidation **Lore** Crowd Lore **Skill Feat** Group Coercion"
+ },
+ {
+  "id": "barrister",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Barrister",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Piles of legal manuals, stern teachers, and experience in the courtroom have instructed you in legal matters. You're capable of mounting a prosecution or defense in court, and you tend to keep abreast of local laws, as you never can tell when you might need to know them on short notice. Choose two attribute boosts. One must be to **Intelligence** or **Charisma**, and one is a free attribute boost. You're trained in the Diplomacy skill and the Legal Lore skill. You gain the Group Impression skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Diplomacy **Lore** Legal Lore **Skill Feat** Group Impression"
+ },
+ {
+  "id": "base-kinesis",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Base Kinesis",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain the Base Kinesis impulse. For the purposes of determining when the range and Bulk improvements of the action occur, your kineticist level is equal to half your level (for example, Base Kinesis for a 10th-level character with this feat would have a range of 45 feet and could affect 1 Bulk of their chosen element)."
+ },
+ {
+  "id": "battle-assessment",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Battle Assessment",
+  "level": 4,
+  "traits": [
+   "rogue",
+   "secret"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "With careful observation during battle, you identify an enemy's strengths and weaknesses. The GM rolls a secret Perception check for you against the Deception or Stealth DC (whichever is higher) of an enemy of your choice who is not concealed from you, hidden from you, or undetected by you, and who is engaged in combat. The GM might apply a penalty for the distance between you and the enemy. The enemy is then temporarily immune to your Battle Assessment for 1 day. --- **Critical Success** The GM chooses two of the following pieces of information about the enemy to tell you: which of the enemy's weaknesses is highest, which of the enemy's saving throws has the lowest modifier, one immunity the enemy has, or which of the enemy's resistances is highest. If the event of a tie, the GM should pick one at random. **Success** The GM chooses one piece of information from the above list to tell you about the enemy. **Critical Failure** The GM gives you false information (the GM makes up the information)."
+ },
+ {
+  "id": "battle-mechanic",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Battle Mechanic",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "All vehicles eventually break down, from both wear and tear and through contact with the enemy, and someone needs to fix them. You have experience repairing air, land, and sea vehicles of all types, and you are knowledgeable about how they function and what specialized tools they require. Choose two attribute boosts. One must be to **Intelligence** or **Wisdom**, and one is a free attribute boost. You're trained in the Crafting skill and the Vehicle Lore skill. You gain the Quick Repair skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Crafting **Lore** Vehicle Lore **Skill Feat** Quick Repair"
+ }
+]

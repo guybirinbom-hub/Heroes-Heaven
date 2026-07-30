@@ -1,0 +1,505 @@
+[
+ {
+  "id": "fey-ascension",
+  "collection": "feats",
+  "name": "Fey Ascension",
+  "level": 9,
+  "traits": [],
+  "text": "The fey influence on your form and features grows even more powerful and notable. You gain one of the following features and abilities; this must be the same animal or fey type as you chose for Fey Influence. - **Anteater** You become an expert in primal DCs and spell attack rolls. You can cast Slow as an innate primal spell once per day. - **Cat Sith** You laugh off the outraged curses of those you have tricked or wronged. Whenever a creature targets you with a misfortune effect, make a . On a success, you are unaffected. - **Cursed Bluebird** You have enough control over your curse to turn a bane into a minor blessing. Once per day, you can temporarily transform yourself or an ally into a blue bird, as a 4th-rank Pest Form (bird only) targeting one willing creature. - **Dryad** Your hair becomes intermixed with delicate but razor-edged leaves that move as you command. You gain a leaves ranged unarmed attack that deals 1d6 slashing damage. Your leaves are in the dart weapon group and have the magical and unarmed traits. *Note: A range was not provided for this strike in the source. For Foundry automation we have assumed a 20-foot range increment, to be in line with similar abilities.* - **Faun** You can cast Charm, Sleep, and Triple Time as innate primal spells once per day each. Whenever you cast one of these spells, you can Step or Stride as part of the activity. - **Gremlin** You become an expert in primal DCs and spell attack rolls. You can cast Mad Monkeys as an innate primal spell once per day. - **Monarch** Once per day, you gain the ability to manifest a pair of exquisite butterfly wings. These wings remain for 10 minutes. You gain a fly Speed equal to your Speed while you've manifested your wings. - **Unicorn** You become trained in Medicine, or an expert if you were already trained. You gain a +2 status bonus to saves against poison and charm effects. --- **Special** This feat gains the trait appropriate for your ancestry (human for human, goblin for goblin, etc.).",
+  "currentFlat": null,
+  "openQuestion": "Fey Ascension is a choose-one-of-eight feat and only the Unicorn option grants a typed bonus. Should a choice-gated bonus be listed unconditionally on the star (with the option named in the condition text), or suppressed unless the character's stored Fey Ascension choice is Unicorn?"
+ },
+ {
+  "id": "gaze-of-the-mantis",
+  "collection": "items",
+  "name": "Gaze of the Mantis",
+  "level": 11,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "text": "Gaze of the Mantis Source High Seas pg. 64 PFS Note Seeing all Red Mantis contracts is outside the scope of PFS play. Price 1,400 gp Usage worn eyepiece Bulk L Access You're a member of the Red Mantis Assassins These glasses have faceted red lenses like those of a mantis and are popular as a less ostentatious alternative to a full mask. While wearing the gaze of the mantis, your field of view increases to give you better awareness of your surroundings. You gain a +2 item bonus to visual Perception checks and cannot be flanked. Activate—Target Sense ; Frequency once per day; Requirements You’re a Red Mantis assassin; Effect You learn the distance to and direction of all creatures that have a Red Mantis contract on them within 10 miles. If one of these creatures is within 100 feet, you also know any afflictions, conditions, and spells affecting them. This awareness lasts for 1 hour.",
+  "currentFlat": {
+   "perception": 2
+  },
+  "openQuestion": "core.json gives this item passiveEffects.perception = 2, i.e. the engine currently applies the +2 to EVERY Perception check unconditionally, but the printed text limits it to visual Perception checks. Should the flat passiveEffects entry be removed and replaced by this situational marker (correct but loses the number from the total), or kept as-is with a note (inflates non-visual Perception, including Seek in darkness and scent-based checks)?"
+ },
+ {
+  "id": "nosoi-charm",
+  "collection": "items",
+  "name": "Nosoi Charm",
+  "level": 12,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "text": "Nosois serve as scribes and messengers to psychopomps. They are rare outside of the Boneyard, so it's common for psychopomps venturing to other planes to carry a nosoi facsimile to aid in their travels. This tiny icon of a masked raven emits twittering sounds in perfect accompaniment to your performances. You gain a +2 item bonus to Performance checks to play an instrument, orate, or sing. You can cast Sending once per day as a divine innate spell. --- **Activate** ⟨3⟩ Interact --- **Effect** You twist the base of the charm, and the twittering it emits becomes helpful words to boost your arguments. You lose the item bonus to Performance checks and gain a +2 item bonus to Diplomacy checks to make Requests until you use this activation again. --- **Activate** ⟨1⟩ Interact **Frequency** once per day --- **Effect** You gain lifesense as an imprecise sense with a range of 30 feet for 1 hour as long as you continue to hold the charm. This allows you to sense the life force that animates living creatures and the perverse force that animates the dead, though you can't distinguish between the two.",
+  "currentFlat": {
+   "skills": {
+    "performance": 2
+   }
+  },
+  "openQuestion": "The Performance bonus is restricted to three of the several ways to Perform (instrument/orate/sing — not dance, act, etc.), yet the app applies it flat via passiveEffects.skills.performance = 2. Should near-universal-but-not-total skill restrictions stay flat with a star as a caveat, or be pulled out of the flat maths entirely? Whichever you pick, apply it consistently to the same pattern in violet-ray and day-goggles."
+ },
+ {
+  "id": "nosoi-charm-greater",
+  "collection": "items",
+  "name": "Nosoi Charm (Greater)",
+  "level": 18,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "text": "Nosois serve as scribes and messengers to psychopomps. They are rare outside of the Boneyard, so it's common for psychopomps venturing to other planes to carry a nosoi facsimile to aid in their travels. This tiny icon of a masked raven emits twittering sounds in perfect accompaniment to your performances. You gain a +3 item bonus to Performance checks to play an instrument, orate, or sing. You can cast Sending once per day as a divine innate spell. You gain lifesense as an imprecise sense with a range of 30 feet as long as you continue holding the charm. This allows you to sense the life force that animates living creatures and the perverse force that animates the dead, though you can't distinguish between the two. --- **Activate** ⟨3⟩ Interact --- **Effect** You twist the base of the charm, and the twittering it emits becomes helpful words to boost your arguments. You lose the item bonus to Performance checks and gain a +3 item bonus to Diplomacy checks to make Requests until you use this activation again.",
+  "currentFlat": {
+   "skills": {
+    "performance": 3
+   },
+   "senses": [
+    {
+     "name": "lifesense",
+     "range": 30,
+     "acuity": "imprecise"
+    }
+   ]
+  },
+  "openQuestion": "Same call as the base Nosoi Charm: the +3 Performance bonus is restricted to instrument/orate/sing but is applied flat via passiveEffects.skills.performance = 3 — keep it flat with a caveat star, or remove it from the flat maths?"
+ },
+ {
+  "id": "violet-ray",
+  "collection": "items",
+  "name": "Violet Ray",
+  "level": 12,
+  "traits": [],
+  "text": "One of the many wondrous devices brought into the world by Stasian technology is the seemingly miraculous violet ray. Physicians claim it anything from headaches to heartburn, or nausea to deafness, all with an easy and painless treatment. The device is a glass vacuum with an insulated handle connected to a small Stasian coil. When powered, the glass tube fills with purple light and becomes warm to the touch. Pressing the tube to one's body is said to increase blood flow, eliminate toxins, and many other beneficial effects. A violet ray functions as a Healer's Toolkit and provides a +2 item bonus to Medicine checks to Administer First Aid, Treat Disease, Treat Poison, or Treat Wounds. --- **Activate—Electric Love** ⟨3⟩ (manipulate) **Frequency** once per day --- **Effect** You apply the violet ray to an adjacent creature and attempt to counteract the blinded, clumsy, confused, deafened, drained, enfeebled, sickened, or stupefied condition with a counteract rank of 6 and a counteract modifier of +22, using the source of the condition to determine the condition's counteract rank and DC. If the condition was caused by an ongoing effect and you don't remove that effect, the condition returns after 1 minute. Each use of this ability can only counteract a single condition.",
+  "currentFlat": {
+   "skills": {
+    "medicine": 2
+   }
+  },
+  "openQuestion": "The bonus is limited to four named Medicine actions (it functions as an expanded healer's toolkit), but the app applies it flat via passiveEffects.skills.medicine = 2, so it currently inflates unrelated Medicine checks such as Recall Knowledge. Narrow the flat application to those actions, or keep it flat and use the star only as a caveat? Same pattern as nosoi-charm."
+ },
+ {
+  "id": "energy-robe",
+  "collection": "items",
+  "name": "Energy Robe",
+  "level": 7,
+  "traits": [
+   "invested",
+   "magical",
+   "transmutation"
+  ],
+  "text": "Energy Robe Source Grand Bazaar pg. 50 Usage worn clothing Bulk L This brightly colored linen robe is covered in delicate embroidery depicting creatures and natural phenomena suiting its aligned energy, such as a living thunderclap, pools of acid, roaring flames, or dancing marids. Activate command, Interact; Frequency once per day; Effect You speak a command word, and the embroidered threads in the robe glow vividly. The benefit you receive from the energy robe depends on its type. Energy Robe (Fire) Source Grand Bazaar pg. 50 Price 320 gp Bulk L You gain resistance 5 to fire. When the robe is activated, you gain a +30-foot status bonus to Speed for 1 minute as flames shoot out behind you to speed you up. Energy Robe (Cold) Source Grand Bazaar pg. 50 Price 450 gp Bulk L You gain resistance 5 to cold. When the robe is activated, you gain the effects of water walk for 1 minute, as you momentarily flash freeze the surface of water as you walk across it. Energy Robe (Acid) Source Grand Bazaar pg. 50 Price 575 gp Bulk L You gain resistance 5 to acid. When the robe is activated, you gain a climb Speed equal to your Speed, as the acid on your hands grants you easier handholds. Energy Robe (Electricity) Source Grand Bazaar pg. 50 Price 900 gp Bulk L You gain resistance 5 to electricity. When the robe is activated, you gain a fly Speed equal to your Speed for 1 minute.",
+  "currentFlat": null,
+  "openQuestion": "This is the merged variant-parent record and it carries an effectChoices 'energy-type' picker (fire/cold/acid/electricity). Should the parent show the Fire-only Speed star unconditionally, or should the situational entry be gated on the chosen effectChoice value (only when energy-type = fire)?"
+ },
+ {
+  "id": "halcyon-heart",
+  "collection": "items",
+  "name": "Halcyon Heart",
+  "level": 21,
+  "traits": [
+   "artifact",
+   "magical"
+  ],
+  "text": "This shekere features carved prayers barely visible under a fine silk net of colorful beads. The handheld percussion instrument grants a +3 item bonus to Performance checks while playing music with it. In addition, when you Perform with it, you can make it heard by any number of creatures within 100 miles. You can specify one or more specific creatures, or otherwise describe those who will hear it, such as all humans, or all inhabitants of a village. You can send a message through the music that the targets understand. Demons and creatures connected to demons (such as a creature whose deity is a demon lord or a sorcerer with the demonic bloodline) can't easily understand any messages conveyed in this way, even if you wish to send the message to them. They must attempt a check against your Performance DC or against DC 40, whichever is higher. If your Performance DC is higher than DC 40 and you want demons to be able to understand the message, you can choose to use DC 40 instead. **Success** They understand the message. **Failure** They don't understand the message but are aware there was one. **Critical Failure** They don't realize the sound of the *halcyon heart* contains a message. --- **Activate** ⟨1⟩ command, Interact **Requirements** The *halcyon heart* has its net of beads **Effect** You pull the net off the *halcyon heart* and throw it at a creature within 20 feet, using your attack bonus for a ranged simple weapon. On a hit, the net grows and envelops the creature, which becomes off-guard and takes a –10-foot circumstance penalty to its Speeds until it Escapes, and on a critical hit, it's also immobilized until it Escapes. The net also attempts to counteract teleportation effects and planar travel of the creature it's entrapping. The Escape DC is 44, and the net has a counteract rank of 9 and a counteract modifier of +38. If the target is a demon or connected to a demon, they must roll twice and take the lower result on all attempts to Escape (this is a misfortune effect), and for counter act checks, the net rolls twice and takes the higher result (this is a fortune effect). You can't Perform with the *halcyon heart* while it doesn't have its net. So long as the net doesn't contain a creature, you can restore it with a single action, which has the concentrate trait. --- **Destruction** If the Gorilla King plays a *halcyon heart* in front of Angazhan's totem, the gourd decomposes, the net frays, and the beads shatter.",
+  "currentFlat": {
+   "skills": {
+    "performance": 3
+   }
+  },
+  "openQuestion": "The record already carries passiveEffects.skills.performance = 3, i.e. the app currently adds +3 to ALL Performance checks (singing, dancing, oratory) whenever the item is carried. Should instrument bonuses stay unconditional in passiveEffects, or move to this registry as \"while playing music with it\"? The same call decides horn-of-the-sun-aurochs and busine-of-divine-reinforcement, which have no passiveEffects at all today — so the app is currently inconsistent between the three."
+ },
+ {
+  "id": "thunder-helm",
+  "collection": "items",
+  "name": "Thunder Helm",
+  "level": 5,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "text": "The creator of the original *thunder helm* tried and failed time and again to craft a reliable, helmet-mounted firearm that enabled hands-free gunplay, but even after resorting to magical enhancements, they were never quite able to realize their vision. The allure of the *thunder helm* continues to compel certain mindsets in the Mana Wastes, and these items continue to be crafted to this day. A *thunder helm* appears as a cylindrical iron helmet adorned with a crown-like display of gun barrels extending out in all directions. A slit in the front allows for limited visibility, while sound is muffled by the inner lining. As long as a creature wears a *thunder helm*, it takes a -1 circumstance penalty to auditory and visual Perception checks but also gain a +1 circumstance bonus to saving throws against auditory and visual effects. --- **Activate** ⟨2⟩ envision, Interact **Frequency** once per day --- **Effect** The helm's gun barrels swivel and aim randomly, then conjure enough gunpowder and bullets to fire in all directions around you. Every creature within a takes damage (). When determining a creature's resistance or immunity to this damage, use the weaker of the target's resistance or immunity to piercing or bludgeoning.",
+  "currentFlat": {
+   "perception": -1
+  },
+  "openQuestion": "Two questions. (a) Should conditional PENALTIES live in this registry alongside bonuses, or only bonuses? (b) The record carries passiveEffects.perception = -1, which subtracts 1 from EVERY Perception check — but the text limits the penalty to auditory and visual checks. Should that passiveEffects entry be removed and replaced by the conditional entry above? Removing it changes existing characters' Perception, so it is your call."
+ },
+ {
+  "id": "fiddle-of-the-maestro",
+  "collection": "items",
+  "name": "Fiddle of the Maestro",
+  "level": 16,
+  "traits": [
+   "coda",
+   "occult",
+   "staff"
+  ],
+  "text": "This exquisite fiddle is perfectly carved and balanced to produce the purest sound while granting its player perfect balance and poise. It grants a +2 item bonus to Performance checks. If you're a master in Performance, while playing it you also gain a +1 status bonus to Reflex saves and a +1 item bonus to Dexterity-based skill checks. If you're legendary in Performance, the bonuses are +2. When you Perform with the fiddle, you can choose to create a harsh and discordant note. You critically fail the Performance check, shred the strings of the fiddle, and create an 8th-rank Noise Blast, with a around you instead of a . The fiddle can't be played again until the strings are replaced at a cost of 200 gp. --- **Activate** Cast a Spell **Effect** You expend a number of charges from this instrument to cast a spell from its list. - **Cantrips** Figment, Light, Message - **1st** Command - **2nd** Calm, Revealing Light - **3rd** Enthrall - **4th** Honeyed Words - **5th** Sending - **6th** Calm, Dominate, Vibrant Pattern - **7th** Dominate, Mask of Terror, True Target, Vibrant Pattern, Visions of Danger --- **Craft Requirements** Supply one casting of all listed ranks of all listed spells.",
+  "currentFlat": {
+   "skills": {
+    "performance": 2
+   }
+  },
+  "openQuestion": "The separate flat \"+2 item bonus to Performance checks\" is UNCONDITIONAL and is already in the maths (passiveEffects.skills.performance = 2) — I deliberately left it out of the situational list so it is not shown twice. Confirm that is what you want. Also: I enumerated \"Dexterity-based skill checks\" as Acrobatics/Stealth/Thievery (the three Dex skills in PF2e) — confirm the registry should carry three rows rather than one, and note the bonus size varies by Performance rank (+1 master / +2 legendary), which the registry can only express as text in the `bonus` string, so the star will show for an expert-in-Performance character who does not actually qualify."
+ },
+ {
+  "id": "maestros-instrument",
+  "collection": "items",
+  "name": "Maestro's Instrument",
+  "level": 3,
+  "traits": [
+   "magical"
+  ],
+  "text": "Maestro's Instrument Source GM Core pg. 275 Usage held in 2 hand Bulk 1 A maestro's instrument can be crafted in the form of any variety of handheld musical instruments. A maestro's instrument grants you a +1 item bonus to Performance checks while playing music with the instrument. Activate—Charming Performance (manipulate) Frequency once per day; Effect You play the instrument, causing it to cast a DC 17 charm spell. Maestro's Instrument (Lesser) Source GM Core pg. 275, Core Rulebook pg. 574 Price 60 gp Maestro's Instrument (Moderate) Source GM Core pg. 275, Core Rulebook pg. 574 Price 900 gp The item bonus is +2, and the charm spell is 4th rank (DC 27). Maestro's Instrument (Greater) Source GM Core pg. 275, Core Rulebook pg. 574 Price 19,000 gp The item bonus is +3, and the charm spell is 8th rank (DC 38).",
+  "currentFlat": {
+   "skills": {
+    "performance": 1
+   }
+  },
+  "openQuestion": "The instrument's bonus is conditional (\"while playing music with the instrument\", held in two hands), yet the app currently applies it unconditionally via passiveEffects.skills.performance, so it also inflates Performance checks made by oratory, dance or acting. Should it move to the situational registry (star + condition, out of the flat total), or stay folded into the maths as an accepted simplification? Same question for the lesser/moderate/greater records."
+ },
+ {
+  "id": "maestros-instrument-lesser",
+  "collection": "items",
+  "name": "Maestro's Instrument (Lesser)",
+  "level": 3,
+  "traits": [
+   "magical"
+  ],
+  "text": "A *maestro's instrument* can be crafted in the form of any variety of handheld musical instruments. A *maestro's instrument* grants you a +1 item bonus to Performance checks while playing music with the instrument. --- **Activate—Charming Performance** ⟨2⟩ (manipulate) **Frequency** once per day **Effect** You play the instrument, causing it to cast a DC 17 Charm spell. --- **Craft Requirements** You must supply a casting of *charm* of the appropriate rank.",
+  "currentFlat": {
+   "skills": {
+    "performance": 1
+   }
+  },
+  "openQuestion": "Currently applied unconditionally via passiveEffects.skills.performance = 1, but the text limits it to \"while playing music with the instrument\". Move it to the situational registry, or keep it in the flat total?"
+ },
+ {
+  "id": "maestros-instrument-moderate",
+  "collection": "items",
+  "name": "Maestro's Instrument (Moderate)",
+  "level": 10,
+  "traits": [
+   "magical"
+  ],
+  "text": "A *maestro's instrument* can be crafted in the form of any variety of handheld musical instruments. A *maestro's instrument* grants you a +2 item bonus to Performance checks while playing music with the instrument. --- **Activate—Charming Performance** ⟨2⟩ (manipulate) **Frequency** once per day **Effect** You play the instrument, causing it to cast a 4th-rank Charm spell with DC 27. --- **Craft Requirements** You must supply a casting of *charm* of the appropriate rank.",
+  "currentFlat": {
+   "skills": {
+    "performance": 2
+   }
+  },
+  "openQuestion": "Currently applied unconditionally via passiveEffects.skills.performance = 2, but the text limits it to \"while playing music with the instrument\". Move it to the situational registry, or keep it in the flat total?"
+ },
+ {
+  "id": "maestros-instrument-greater",
+  "collection": "items",
+  "name": "Maestro's Instrument (Greater)",
+  "level": 18,
+  "traits": [
+   "magical"
+  ],
+  "text": "A *maestro's instrument* can be crafted in the form of any variety of handheld musical instruments. A *maestro's instrument* grants you a +3 item bonus to Performance checks while playing music with the instrument. --- **Activate—Charming Performance** ⟨2⟩ (manipulate) **Frequency** once per day **Effect** You play the instrument, causing it to cast a 8th-rank Charm spell with DC 38. --- **Craft Requirements** You must supply a casting of *charm* of the appropriate rank.",
+  "currentFlat": {
+   "skills": {
+    "performance": 3
+   }
+  },
+  "openQuestion": "Currently applied unconditionally via passiveEffects.skills.performance = 3, but the text limits it to \"while playing music with the instrument\". Move it to the situational registry, or keep it in the flat total?"
+ },
+ {
+  "id": "conch-of-otherworldly-seas",
+  "collection": "items",
+  "name": "Conch of Otherworldly Seas",
+  "level": 12,
+  "traits": [
+   "magical",
+   "water"
+  ],
+  "text": "Magical writing covers the surface of this beautiful conch shell, which emits a blue light from inside. A *conch of otherworldly seas* is a virtuoso handheld musical instrument that grants a +2 item bonus to Performance checks attempted while using it. The conch is a planar key for Interplanar Teleport and similar magic to travel to the Plane of Water. When using it this way, you can attune it to the waters of your destination to make it more likely to arrive where you intend to be, appearing 1d6×25 miles from your intended destination instead of 1d10×25 miles away. --- **Activate—Voice of Oceans** ⟨1⟩ (manipulate) **Effect** You hold the horn to your ear and can understand and speak Thalassic as long as it remains there. --- **Activate—Sounds of the Deep** 10 minutes (concentrate, manipulate) **Effect** You hold the horn to your ear and touch the correct series of runes inscribed on its surface, causing the conch to cast a 5th-rank spell for your benefit. Provided you choose a location that's underwater, you can extend the spell's range to 1 mile and hear with perfect clarity.",
+  "currentFlat": {
+   "skills": {
+    "performance": 2
+   }
+  },
+  "openQuestion": "Instrument bonuses: keep the +2 in the maths via passiveEffects (current behaviour, over-applies to non-instrument Performance) and use the star only to explain the condition, or drop it from passiveEffects and make it star-only? The same call governs every magical instrument in the data set."
+ },
+ {
+  "id": "camouflaging-chromatophores",
+  "collection": "items",
+  "name": "Camouflaging Chromatophores",
+  "level": 4,
+  "traits": [
+   "graft",
+   "invested",
+   "magical"
+  ],
+  "text": "Camouflaging Chromatophores Source Howl of the Wild pg. 97 Usage implanted Special cells in your skin can change color to help you blend in with your environment. You gain the listed item bonus to Stealth checks to Sneak and Hide. Activate—Background Adaptation (concentrate) Frequency once per day; Effect For 1 minute, you can Hide without needing cover or concealment to do so. This doesn’t allow you to Sneak without ending your movement in cover or concealment, however, as your skin’s attempts to match the background as you move produce noticeable rippling waves of color. Camouflaging Chromatophores (Lesser) Source Howl of the Wild pg. 98 Price 95 gp The bonus is +1. Camouflaging Chromatophores (Greater) Source Howl of the Wild pg. 98 Price 665 gp The bonus is +2, and you can use Background Adaptation once per hour.",
+  "currentFlat": {
+   "skills": {
+    "stealth": 1
+   }
+  },
+  "openQuestion": "This record's core.json passiveEffects already folds a flat +1 into ALL Stealth checks, but the printed bonus applies only to Sneak and Hide. Should the flat passiveEffects bonus be removed in favour of the situational marker (avoiding an inflated Stealth total on e.g. Stealth checks that aren't Sneak/Hide), or kept because the app treats Stealth ≈ Sneak/Hide in practice?"
+ },
+ {
+  "id": "camouflaging-chromatophores-lesser",
+  "collection": "items",
+  "name": "Camouflaging Chromatophores (Lesser)",
+  "level": 4,
+  "traits": [
+   "graft",
+   "invested",
+   "magical"
+  ],
+  "text": "Special cells in your skin can change color to help you blend in with your environment. You gain a +1 item bonus to Stealth checks to Sneak and Hide. --- **Activate—Background Adaptation** ⟨2⟩ (concentrate) **Frequency** once per day **Effect** For 1 minute, you can Hide without needing cover or concealment to do so. This doesn't allow you to Sneak without ending your movement in cover or concealment, however, as your skin's attempts to match the background as you move produce noticeable rippling waves of color.",
+  "currentFlat": {
+   "skills": {
+    "stealth": 1
+   }
+  },
+  "openQuestion": "core.json's passiveEffects on this item grants a flat +1 to ALL Stealth checks while the printed bonus is limited to Sneak and Hide — should the flat bonus be dropped so the restriction is expressed only by the situational marker?"
+ },
+ {
+  "id": "camouflaging-chromatophores-greater",
+  "collection": "items",
+  "name": "Camouflaging Chromatophores (Greater)",
+  "level": 9,
+  "traits": [
+   "graft",
+   "invested",
+   "magical"
+  ],
+  "text": "Special cells in your skin can change color to help you blend in with your environment. You gain a +2 item bonus to Stealth checks to Sneak and Hide. --- **Activate—Background Adaptation** ⟨2⟩ (concentrate) **Frequency** once per hour **Effect** For 1 minute, you can Hide without needing cover or concealment to do so. This doesn't allow you to Sneak without ending your movement in cover or concealment, however, as your skin's attempts to match the background as you move produce noticeable rippling waves of color.",
+  "currentFlat": {
+   "skills": {
+    "stealth": 2
+   }
+  },
+  "openQuestion": "core.json's passiveEffects on this item grants a flat +2 to ALL Stealth checks while the printed bonus is limited to Sneak and Hide — should the flat bonus be dropped so the restriction is expressed only by the situational marker?"
+ },
+ {
+  "id": "whip-tail",
+  "collection": "items",
+  "name": "Whip Tail",
+  "level": 3,
+  "traits": [
+   "graft",
+   "invested",
+   "magical"
+  ],
+  "text": "You have a strong, prehensile tail. You gain a tail unarmed attack that deals 1d6 bludgeoning damage. This tail is in the brawling group. You gain a +1 item bonus to Acrobatics checks to Balance and to Athletics checks to Climb. You can also use your tail for the Grab an Edge action, even if your hands are otherwise occupied.",
+  "currentFlat": {
+   "skills": {
+    "acrobatics": 1,
+    "athletics": 1
+   }
+  },
+  "openQuestion": "core.json's passiveEffects on this graft grants a flat +1 to ALL Acrobatics and ALL Athletics, but the printed bonus only covers Balance and Climb — should those flat bonuses be removed so the two situational markers carry it? (Left as-is, every Tumble Through / Grapple / Long Jump is inflated by +1.)"
+ },
+ {
+  "id": "arachnolute",
+  "collection": "items",
+  "name": "Arachnolute",
+  "level": 11,
+  "traits": [
+   "magical"
+  ],
+  "text": "The strings of this spider-shaped lute are made from the webbing of a goliath spider and the tuning pegs are crafted from the spider's spinnerets. An *arachnolute* grants you a +2 item bonus to Performance checks while playing music with the instrument. --- **Activate—Web Chord** ⟨2⟩ (manipulate) **Frequency** once per hour **Effect** Sticky webbing sprays in a as you strum the lute's strings. Each creature in the area of the webbing is immobilized unless it succeeds at a save. --- **Craft Requirements** The initial materials must include the spinnerets of a goliath spider, as well as a spool of its webbing.",
+  "currentFlat": {
+   "skills": {
+    "performance": 2
+   }
+  },
+  "openQuestion": "core.json's passiveEffects folds a flat +2 into ALL Performance for this instrument, but the printed bonus only covers performances played on the instrument (not singing, oratory, dance, acting — and not Performance used for Impress by other means). Should instrument item bonuses stay flat, or become situational-only across the whole instrument family?"
+ },
+ {
+  "id": "paws-of-the-grogrisant",
+  "collection": "items",
+  "name": "Paws of the Grogrisant",
+  "level": 17,
+  "traits": [
+   "apex",
+   "invested",
+   "primal"
+  ],
+  "text": "Princess Eutropia commissioned Taldor's Imperial College of Heralds to preserve the paws that fell off the Mantle of the Grogrisant. A few weeks later, the college presented this pair of boots. You gain a +3 item bonus to Athletics checks and saves against forced movement. When you invest in the boots, you either increase your Strength modifier by 1 or increase it to +4, whichever would give you a higher value. **Activate—Grogrisant Leap** ⟨1⟩ (concentrate) **Frequency** once per day --- **Effect** The Grogrisant's legendary strength and reflexes empower your movement. You Leap, doubling the vertical and horizontal distance of your Leap action. If you land adjacent to a creature, you can Strike that creature once as part of this action.",
+  "currentFlat": {
+   "skills": {
+    "athletics": 3
+   }
+  },
+  "openQuestion": "The sentence parses two ways: (a) +3 to ALL Athletics checks AND +3 to saves against forced movement, or (b) +3 to Athletics checks against forced movement and saves against forced movement. core.json already encodes reading (a) via passiveEffects.skills.athletics = 3. Confirm reading (a) is intended before adding the save marker."
+ },
+ {
+  "id": "fan-of-falling-words",
+  "collection": "items",
+  "name": "Fan of Falling Words",
+  "level": 10,
+  "traits": [
+   "magical"
+  ],
+  "text": "This folding handheld paper fan appears blank when first found, but if the wielder unfolds its leaves as an Interact action, they display an ink-brush painting of the wielder's choice. The fan must be closed and opened again to display a different painting. While held, the *fan of falling words* grants you a +2 item bonus to Performance checks to act or perform comedy, orate, or sing. **Activate—Whispered World** ⟨3⟩ (concentrate, manipulate) **Frequency** once per day --- **Effect** You manifest the tapestry of your words, causing the image you depict on the fan to leap off its leaves. The fan casts illusory scene to your specifications ( save). While this only takes 3 actions to perform (as opposed to the spell's normal 10 minutes of casting), the effect has no range, and the it creates is centered on you.",
+  "currentFlat": {
+   "skills": {
+    "performance": 2
+   }
+  },
+  "openQuestion": "This record already carries passiveEffects.skills.performance = 2, which adds +2 to EVERY Performance check — but the text limits it to acting, comedy, oratory and singing (so not Dance or Play an Instrument). Should the flat passiveEffect be narrowed and replaced by a situational marker, or kept as-is and the marker skipped?"
+ },
+ {
+  "id": "lacquered-waist-drum",
+  "collection": "items",
+  "name": "Lacquered Waist Drum",
+  "level": 11,
+  "traits": [
+   "magical"
+  ],
+  "text": "This hourglass-shaped drum has two heads, each of which produces a different sound when struck. When played together, the resonance of the two sounds is effective in repelling evil spirits. This drum can be played as an instrument, granting a +2 item bonus to Performance. **Activate—Memories of Life** ⟨2⟩ (concentrate, manipulate, vitality) **Frequency** once per hour --- **Effect** You play both heads of the drums, generating a pulse of energy that targets one creature within 30 feet that has the undead trait. This deals 5d8 damage ( save) to that creature; if the undead also has the ghost trait, the ghost becomes Sickened 1 if it fails the save. **Activate—Memories of Joy** ⟨3⟩ (concentrate, manipulate, vitality) **Frequency** once per hour --- **Effect** You raucously play both heads of the drums, accompanied with shouting and dancing. This display generates a pulse of energy in a from you. All undead creatures within this area must attempt a save. --- **Critical Success** The creature takes no damage. **Success** The creature takes 2d8 damage. Failure The creature takes 5d8 damage; if the creature has the ghost trait, it becomes Stupefied 1 for 1 minute. **Critical Failure** The creature takes 10d8 damage; if the creature has the ghost trait, it becomes Stupefied 2 for 1 minute.",
+  "currentFlat": {
+   "skills": {
+    "performance": 2
+   }
+  },
+  "openQuestion": "The record already carries passiveEffects.skills.performance = 2 (flat). The text conditions the bonus on the drum being \"played as an instrument\" (it is held in two hands), which would exclude Performance checks to sing, orate, act or dance. Treat it as instrument-only situational, or leave it as the current flat bonus?"
+ },
+ {
+  "id": "conductors-instrument",
+  "collection": "items",
+  "name": "Conductor's Instrument",
+  "level": 3,
+  "traits": [
+   "magical"
+  ],
+  "text": "This item can be found in the form of any variety of handheld musical instruments. The instrument grants you a +1 item bonus to Performance checks while playing music with it. Once per day, you can use the following activity. --- **Activate—Command Performance** ⟨2⟩ (manipulate) You play a special tune on the instrument, causing it to cast a DC 17 Command bard spell.",
+  "currentFlat": {
+   "skills": {
+    "performance": 1
+   }
+  },
+  "openQuestion": "The app already folds this into the maths unconditionally (passiveEffects.skills.performance = 1), but the printed text limits it to Performances made by playing music with the instrument (it does not apply to singing, oratory, dance, or acting, and requires both hands). Should the passive be removed and replaced by a situational star, or kept as-is (and the star omitted to avoid double-reporting)? The same question applies to every 'while playing/wielding X' item bonus currently in passiveEffects."
+ },
+ {
+  "id": "benthic-drums",
+  "collection": "items",
+  "name": "Benthic Drums",
+  "level": 17,
+  "traits": [
+   "magical"
+  ],
+  "text": "This large bass drum is made of driftwood and whale hide, with swirling shapes that hint at more distinct and sinister forms carved on its surface. This drum grants you a +2 item bonus to Performance checks while playing music with the instrument. You can communicate basic ideas with whales and other large sea animals by playing music with this instrument. --- **Activate—Call from the Depths** ⟨3⟩ (concentrate, emotion, fear, manipulate, mental, sonic) **Frequency** once per week --- **Effect** You drum a song of an ancient creature, calling forth the cries of a great whale in the minds of your foes. All enemies in a take damage ( save). Creatures who fail are also Frightened 1.",
+  "currentFlat": {
+   "skills": {
+    "performance": 2
+   }
+  },
+  "openQuestion": "Same family question as Bellows Pipes: the record carries passiveEffects.skills.performance = 2 (unconditional) while the text says 'while playing music with the instrument'. Situational star, or leave it folded into the Performance total?"
+ },
+ {
+  "id": "blakenshipper",
+  "collection": "items",
+  "name": "Blakenshipper",
+  "level": 7,
+  "traits": [
+   "magical"
+  ],
+  "text": "This strange instrument is both played and worn, consisting of a set of pipes on a metal arm attached to a harness, a horn, a drum attached to a foot pedal, arm bellows, various keys, cymbals, and more esoteric elements. The blakenshipper grants you a +1 item bonus to Performance checks while playing music with the instrument. --- **Activate—Be the Band** ⟨3⟩ (auditory, concentrate, manipulate) **Frequency** once per day **Effect** You work double-time, playing an entire band's composition yourself, bolstering those around you by your mighty effort. You and all allies within a gain 15 temporary Hit Points that last for 1 round. For the next minute, you can Sustain to continue the music, granting you and all allies within a 5 temporary Hit Points that last for 1 round; this Sustain action gains the auditory and manipulate traits.",
+  "currentFlat": {
+   "skills": {
+    "performance": 1
+   }
+  },
+  "openQuestion": "Same family question: passiveEffects.skills.performance = 1 applies unconditionally, but the text limits the bonus to 'while playing music with the instrument'. Star it, or keep it in the maths?"
+ },
+ {
+  "id": "booming-bell",
+  "collection": "items",
+  "name": "Booming Bell",
+  "level": 6,
+  "traits": [
+   "magical"
+  ],
+  "text": "This large bronze bell has a fine ash handle, and the clapper is made of blackened iron. It grants you a +1 item bonus to Performance checks while playing music with the instrument. **Activate—Clarion Crescendo** ⟨2⟩ (manipulate, sonic) **Frequency** once per day --- **Effect** You ring a blasting note on the bell that sends shock waves through the air. The blast deals damage to each creature in a ( save). On a failure, the target is also deafened for 1 round.",
+  "currentFlat": {
+   "skills": {
+    "performance": 1
+   }
+  },
+  "openQuestion": "Same family question: passiveEffects.skills.performance = 1 is unconditional; the printed bonus is conditional on playing the bell. Situational star or folded maths?"
+ },
+ {
+  "id": "core-bugle",
+  "collection": "items",
+  "name": "Core Bugle",
+  "level": 12,
+  "traits": [
+   "magical"
+  ],
+  "text": "This brass horn is marked by age but remains in excellent condition. The rim of the mouth is ringed by finely carved runes. This bugle grants you a +2 item bonus to Performance checks while playing music with the instrument. --- **Activate—Reveille** ⟨1⟩ (auditory, manipulate) **Frequency** once per day **Effect** You blow a swift cadence of sharp notes that carries through the air. You and all allies within a can immediately Stand as a free action; this doesn't provoke reactions.",
+  "currentFlat": {
+   "skills": {
+    "performance": 2
+   }
+  },
+  "openQuestion": "Same family question: passiveEffects.skills.performance = 2 is applied unconditionally against a conditional printed bonus. Star it, or keep it in the maths?"
+ },
+ {
+  "id": "fife-of-the-faithful",
+  "collection": "items",
+  "name": "Fife of the Faithful",
+  "level": 4,
+  "traits": [
+   "magical"
+  ],
+  "text": "This small metal fife is of extraordinary fine quality, with gold filigree on the embouchure. A fife of the faithful grants you a +1 item bonus to Performance checks while playing music with the instrument. --- **Activate—Call to Arms** ⟨2⟩ (auditory, concentrate, manipulate) **Frequency** once per day **Effect** You play a rousing tune on the fife that carries across the battlefield. You and all allies in a gain a +1 status bonus to saving throws for 1 round.",
+  "currentFlat": {
+   "skills": {
+    "performance": 1
+   }
+  },
+  "openQuestion": "Two things in one record: (a) passiveEffects.skills.performance = 1 applies the conditional Performance bonus unconditionally — star or maths? and (b) should the 1-round Call to Arms save bonus be a permanent star on Fortitude/Reflex/Will, or a Mode/effect? This is exactly the 'Fort/Reflex says nothing' case the user reported, so it may be wanted despite being temporary."
+ },
+ {
+  "id": "guangu-of-the-steppe",
+  "collection": "items",
+  "name": "Guangu of the Steppe",
+  "level": 6,
+  "traits": [
+   "magical"
+  ],
+  "text": "This large drum is made of hardwood and horse hide, with white silhouettes of coursing stallions along its circumference. This drum grants you a +1 item bonus to Performance checks while playing music with the instrument. --- **Activate—The Hammer of Hooves** ⟨2⟩ (auditory, concentrate, manipulate) **Frequency** once per day **Effect** You hammer a thundering beat on the guangu. For 10 minutes, mounted allies within a gain a +10-foot status bonus to their mount's Speeds. They also gain a +1 status bonus to Nature checks to Command an Animal and automatically succeed when they Command an Animal they're mounted on to take a move action (such as Stride).",
+  "currentFlat": {
+   "skills": {
+    "performance": 1
+   }
+  },
+  "openQuestion": "Same family question: passiveEffects.skills.performance = 1 is unconditional against a conditional printed bonus. Star it, or keep it in the maths?"
+ },
+ {
+  "id": "horn-of-the-archon",
+  "collection": "items",
+  "name": "Horn of the Archon",
+  "level": 16,
+  "traits": [
+   "magical"
+  ],
+  "text": "Crafted by archons for mortal use, this trumpet is made of luminous gold and ivory, giving off a soft glow that warms the soul. This trumpet grants you a +2 item bonus to Performance checks while playing music with the instrument. --- **Activate—Archon's Note** ⟨1⟩ (auditory, incapacitation, manipulate) **Frequency** once per day **Effect** You blast a note on the horn so clear and pure that its grandeur stuns your enemies and inspires your allies. Allies in the area gain a +1 status bonus to attack rolls and saving throws for 1 round. Enemies within a must attempt a saving throw. They're then temporarily immune for 1 day. --- **Critical Success** The creature is unaffected. **Success** The creature is off-guard for 1 round. **Failure** The creature is Stunned 1 and off-guard for 1 round. **Critical Failure** The creature is Stunned 2 and off-guard for 1 round.",
+  "currentFlat": {
+   "skills": {
+    "performance": 2
+   }
+  },
+  "openQuestion": "Same family question: passiveEffects.skills.performance = 2 is unconditional against a conditional printed bonus. Star it, or keep it in the maths?"
+ },
+ {
+  "id": "born-of-celestial",
+  "collection": "heritages",
+  "name": "Born of Celestial",
+  "traits": [
+   "yaoguai"
+  ],
+  "text": "You were once a powerful celestial before an escape or great punishment left you trapped in a mortal shell, with only vague memories and limited power. Due to your residual divine power, the tradition of any spells or magical abilities you gain from a yaoguai heritage or ancestry feat is divine instead of its normal tradition (usually occult). - **Humanoid Form** Fragments of divine memory still litter your mind. You gain a +1 circumstance bonus to Religion checks. - **Yaoguai Form** Celestial power flows through you. Choose one cantrip from the divine spell list. You can cast this spell as an innate divine cantrip at will. A cantrip is heightened to a spell rank equal to half your level rounded up.",
+  "currentFlat": null,
+  "openQuestion": "Does Heroes Heaven model yaoguai Humanoid Form vs Yaoguai Form as a toggle? If not, should form-gated flat bonuses (this +1 Religion, and Born of Item's +1 Lore) be folded into the totals as unconditional instead of starred?"
+ }
+]

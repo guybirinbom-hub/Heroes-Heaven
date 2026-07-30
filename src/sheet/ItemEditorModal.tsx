@@ -16,11 +16,14 @@ import type {
   InventoryItem,
   Item,
   Rarity,
+  SituationalBonus,
+  SituationalTarget,
   Size,
   SpellRank,
   WeaponCategory,
   WeaponRunes,
 } from '../rules/types';
+import { ABILITIES, SKILLS } from '../rules/types';
 import { MonsterPartsPanel, itemCanUseMonsterParts } from './MonsterPartsEditor';
 import { availableMonsterParts, salvageToMonsterPart, MONSTER_PART_TAGS } from '../rules/monsterParts';
 import { PopupSelect, SearchSelect } from '../builder/shared';
@@ -64,6 +67,9 @@ const TYPE_LABEL: Record<string, string> = {
 
 /* ---- helpers ---- */
 const cap = (s: string) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s);
+const ABIL_NAME: Record<string, string> = {
+  str: 'Strength', dex: 'Dexterity', con: 'Constitution', int: 'Intelligence', wis: 'Wisdom', cha: 'Charisma',
+};
 const label = (s: string) => cap(s.replace(/-/g, ' '));
 
 /** Sentinel option value for the "Monster Part" entry in the material dropdown (variant rule on). */
@@ -133,6 +139,13 @@ interface Draft {
   isMonsterPart: boolean;
   /** Chosen vocabulary + free-text tags for the part (energy types, senses, creature types, …). */
   mpTags: string[];
+  /** Advanced: player-authored conditional effects — a `*` on each stat named. Display-only. */
+  situational: SituationalBonus[];
+  /** Advanced: always-on item bonuses applied while the item is equipped/worn/invested. Strings
+   *  because they are typed into number boxes and an empty box has to stay empty, not become 0. */
+  pAc: string; pPerception: string; pSaves: string; pAttack: string; pSpeed: string;
+  /** Always-on bonus per skill, keyed by skill id (`lore:` keys supported by the engine). */
+  pSkills: { skill: string; value: string }[];
 }
 
 function defaults(): Draft {
@@ -148,6 +161,7 @@ function defaults(): Draft {
     capBulk: '', ignoredBulk: '',
     tpp: '', tgp: '', tsp: '', tcp: '',
     isMonsterPart: false, mpTags: [],
+    situational: [], pAc: '', pPerception: '', pSaves: '', pAttack: '', pSpeed: '', pSkills: [],
   };
 }
 
@@ -174,6 +188,13 @@ function fromItem(it: Item): Draft {
   d.craft = it.craftRequirements ?? '';
   d.isMonsterPart = !!it.isMonsterPart;
   d.mpTags = [...(it.monsterPartTags ?? [])];
+  // Deep-copied: the row editors mutate entries, and sharing them with the content record would edit
+  // the saved item live, before the player pressed Save (and un-doably if they then cancelled).
+  d.situational = (it.situational ?? []).map((s) => ({ ...s, targets: s.targets.map((t) => ({ ...t })) }));
+  const pe = it.passiveEffects;
+  d.pAc = str(pe?.ac); d.pPerception = str(pe?.perception); d.pSaves = str(pe?.saves);
+  d.pAttack = str(pe?.attack); d.pSpeed = str(pe?.speedBonus);
+  d.pSkills = Object.entries(pe?.skills ?? {}).map(([skill, value]) => ({ skill, value: String(value) }));
   switch (it.itemType) {
     case 'weapon':
       d.wCat = it.category; d.wGroup = it.group; d.wDice = String(it.damage.dice); d.wDie = it.damage.die; d.wType = it.damage.type;
@@ -202,6 +223,135 @@ function fromItem(it: Item): Draft {
       break;
   }
   return d;
+}
+
+/* ---- Advanced effects: what a player-authored conditional entry can point at ---- */
+
+/** Every stat a `*` can be attached to, in the order they appear on the sheet. `needsDetail` says
+ *  whether the kind narrows further (which skill, which save) and what to offer. */
+const SIT_KINDS: { kind: SituationalTarget['kind']; label: string; detail?: 'skill' | 'save' | 'spell' | 'ability' }[] = [
+  { kind: 'skill', label: 'Skill', detail: 'skill' },
+  { kind: 'save', label: 'Saving throw', detail: 'save' },
+  { kind: 'perception', label: 'Perception' },
+  { kind: 'ac', label: 'AC' },
+  { kind: 'strikeAttack', label: 'Attack rolls' },
+  { kind: 'strikeDamage', label: 'Weapon damage' },
+  { kind: 'spell', label: 'Spell attack / DC', detail: 'spell' },
+  { kind: 'spellDamage', label: 'Spell damage' },
+  { kind: 'classDc', label: 'Class DC' },
+  { kind: 'speed', label: 'Speed' },
+  { kind: 'hp', label: 'Hit Points' },
+  { kind: 'ability', label: 'Attribute modifier', detail: 'ability' },
+];
+const SIT_DETAILS: Record<string, { value: string; label: string }[]> = {
+  skill: [{ value: 'all', label: 'Every skill' }, ...SKILLS.map((s) => ({ value: s, label: cap(s) }))],
+  save: [
+    { value: 'all', label: 'All three' },
+    { value: 'fortitude', label: 'Fortitude' },
+    { value: 'reflex', label: 'Reflex' },
+    { value: 'will', label: 'Will' },
+  ],
+  spell: [
+    { value: 'all', label: 'Both' },
+    { value: 'attack', label: 'Spell attack rolls' },
+    { value: 'dc', label: 'Spell DC' },
+  ],
+  ability: [{ value: 'all', label: 'Every attribute' }, ...ABILITIES.map((a) => ({ value: a, label: ABIL_NAME[a] }))],
+};
+
+/** "Skill: Stealth" — how a chosen target reads on its chip. */
+function targetLabel(t: SituationalTarget): string {
+  const spec = SIT_KINDS.find((k) => k.kind === t.kind);
+  if (!spec?.detail) return spec?.label ?? t.kind;
+  if (t.detail?.startsWith('lore:')) return `${cap(t.detail.slice(5))} Lore`;
+  const d = SIT_DETAILS[spec.detail]?.find((o) => o.value === t.detail);
+  return d ? `${spec.label}: ${d.label}` : spec.label;
+}
+
+/**
+ * One authored conditional effect: which stats it can apply to, when it applies, and what it gives.
+ *
+ * Nothing here changes a number. That is the point — these are the effects that only apply
+ * sometimes, which no total can honestly include. The sheet puts a `*` on each stat named and shows
+ * the trigger and the bonus when the player opens it, exactly as it does for a shipped one.
+ */
+function ConditionalEffectRow({
+  entry,
+  onChange,
+  onRemove,
+}: {
+  entry: SituationalBonus;
+  onChange: (e: SituationalBonus) => void;
+  onRemove: () => void;
+}) {
+  const [kind, setKind] = useState<SituationalTarget['kind']>('skill');
+  const [detail, setDetail] = useState('all');
+  const [lore, setLore] = useState('');
+  const spec = SIT_KINDS.find((k) => k.kind === kind)!;
+
+  const addTarget = () => {
+    const t: SituationalTarget = spec.detail
+      ? { kind, detail: spec.detail === 'skill' && detail === 'lore' ? `lore:${lore.trim().toLowerCase()}` : detail }
+      : { kind };
+    // Adding the same stat twice would star it once and list the effect twice.
+    if (entry.targets.some((x) => x.kind === t.kind && x.detail === t.detail)) return;
+    if (spec.detail === 'skill' && detail === 'lore' && !lore.trim()) return;
+    onChange({ ...entry, targets: [...entry.targets, t] });
+    setLore('');
+  };
+
+  return (
+    <div className="ie-adv-row">
+      <div className="ie-adv-targets">
+        {entry.targets.map((t, i) => (
+          <span className="ie-adv-chip" key={i}>
+            {targetLabel(t)}
+            <button
+              type="button"
+              aria-label={`Remove ${targetLabel(t)}`}
+              onClick={() => onChange({ ...entry, targets: entry.targets.filter((_, j) => j !== i) })}
+            >
+              <i className="ti ti-x" aria-hidden="true" />
+            </button>
+          </span>
+        ))}
+        {!entry.targets.length && <span className="ie-adv-empty">No stat chosen — this effect would show nowhere.</span>}
+      </div>
+
+      <div className="ie-adv-add">
+        <select aria-label="Stat" value={kind} onChange={(e) => { setKind(e.target.value as SituationalTarget['kind']); setDetail('all'); }}>
+          {SIT_KINDS.map((k) => <option key={k.kind} value={k.kind}>{k.label}</option>)}
+        </select>
+        {spec.detail && (
+          <select aria-label="Which" value={detail} onChange={(e) => setDetail(e.target.value)}>
+            {SIT_DETAILS[spec.detail].map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+            {spec.detail === 'skill' && <option value="lore">A Lore skill…</option>}
+          </select>
+        )}
+        {spec.detail === 'skill' && detail === 'lore' && (
+          <input aria-label="Lore subject" placeholder="Warfare" value={lore} onChange={(e) => setLore(e.target.value)} />
+        )}
+        <button type="button" className="ie-adv-addbtn" onClick={addTarget}>
+          <i className="ti ti-plus" aria-hidden="true" /> Add stat
+        </button>
+      </div>
+
+      <div className="ie-grid2">
+        <label className="ci-field">
+          <span>When it applies</span>
+          <input placeholder="against undead" value={entry.when} onChange={(e) => onChange({ ...entry, when: e.target.value })} />
+        </label>
+        <label className="ci-field">
+          <span>What you get</span>
+          <input placeholder="+1 circumstance" value={entry.bonus} onChange={(e) => onChange({ ...entry, bonus: e.target.value })} />
+        </label>
+      </div>
+
+      <button type="button" className="ie-adv-del" onClick={onRemove}>
+        <i className="ti ti-trash" aria-hidden="true" /> Remove this effect
+      </button>
+    </div>
+  );
 }
 
 /** Grouped vocabulary chips + a free-text box for a monster part's descriptor tags. Selecting a
@@ -387,6 +537,34 @@ export function ItemEditorModal({
     setEditorKey((k) => k + 1); // reflect a copied description in the (uncontrolled) editor
   };
 
+  // A conditional entry only ships once it names a stat AND says what you get — anything less would
+  // put a `*` on the sheet that explains nothing when opened. The trigger may be blank: "+1 item to
+  // Stealth" with no condition is a legitimate thing to note.
+  const advSituational = d.situational
+    .filter((s) => s.targets.length && s.bonus.trim())
+    .map((s) => ({ targets: s.targets, when: s.when.trim(), bonus: s.bonus.trim() }));
+
+  // Always-on numbers, folded into the existing passive-item lane. Zero is dropped along with blank:
+  // a "+0 to AC" is not an effect, and storing it would make the section read as configured.
+  const advPassive = (() => {
+    const pe: NonNullable<Item['passiveEffects']> = {};
+    const put = (k: 'ac' | 'perception' | 'saves' | 'attack' | 'speedBonus', v: string) => {
+      const n = num(v);
+      if (v.trim() && n) pe[k] = n;
+    };
+    put('ac', d.pAc); put('perception', d.pPerception); put('saves', d.pSaves);
+    put('attack', d.pAttack); put('speedBonus', d.pSpeed);
+    const skills: Record<string, number> = {};
+    for (const row of d.pSkills) {
+      const n = num(row.value);
+      if (row.skill && n) skills[row.skill] = n;
+    }
+    if (Object.keys(skills).length) pe.skills = skills as NonNullable<Item['passiveEffects']>['skills'];
+    return Object.keys(pe).length ? pe : null;
+  })();
+
+  const advCount = advSituational.length + (advPassive ? Object.keys(advPassive).length : 0);
+
   const build = (): Item | null => {
     const name = tidyName(d.name);
     if (!name) return null;
@@ -420,6 +598,11 @@ export function ItemEditorModal({
       // Monster-part authoring: `isMonsterPart` marks the item a harvested part (Price = its value);
       // its tags carry the vocabulary/free-text descriptors. An empty tag list is still a valid part.
       ...(d.isMonsterPart ? { isMonsterPart: true as const, monsterPartTags: d.mpTags.map((t) => t.trim().toLowerCase()).filter(Boolean) } : {}),
+      // Advanced effects. A conditional entry with no target would star nothing and a bonus with no
+      // wording would render as a blank line, so half-written rows are dropped on save rather than
+      // stored — the player can leave one open while they think and it simply doesn't ship.
+      ...(advSituational.length ? { situational: advSituational } : {}),
+      ...(advPassive ? { passiveEffects: { ...item?.passiveEffects, ...advPassive } } : item?.passiveEffects ? { passiveEffects: item.passiveEffects } : {}),
       source,
     };
     switch (d.itemType) {
@@ -786,6 +969,105 @@ export function ItemEditorModal({
                   <div className="ie-rich ie-rich-sm">
                     <RichEditor key={`craft-${editorKey}`} initialHtml={d.craft} onChange={(html) => upd({ craft: html })} enableRefLink hideToolbarUntilFocus placeholder="e.g. Supply one casting of fireball" />
                   </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* ---- Advanced effects ----
+              The app models what the printed data says. This is where the player says the rest: an
+              effect the data doesn't carry, one their table rules differently, or anything on an item
+              too open-ended to model. Behind its own collapsible because most items never need it. */}
+          <div className="ie-collap">
+            <div className="ie-collap-h" onClick={() => toggle('advanced')}>
+              <i className={'ti ' + (isOpen('advanced') ? 'ti-chevron-down' : 'ti-chevron-right')} aria-hidden="true" />
+              <span className="ttl">Advanced effects</span>
+              <span className="ie-badge">{advCount ? `${advCount} set` : 'none'}</span>
+            </div>
+            {isOpen('advanced') && (
+              <div className="ie-collap-b">
+                <p className="ie-adv-intro">
+                  Make this item actually change the sheet. <strong>Conditional</strong> effects put a{' '}
+                  <span className="sit-star">✱</span> on each stat you name and spell out the trigger when it's opened —
+                  nothing is added to the number, because it only applies sometimes.{' '}
+                  <strong>Always-on</strong> bonuses go straight into the total while the item is equipped, worn or
+                  invested.
+                </p>
+
+                <div className="ie-adv-sec">
+                  <div className="ie-adv-sec-h">
+                    <span>Conditional effects</span>
+                    <button
+                      type="button"
+                      className="ie-adv-addbtn"
+                      onClick={() => upd({ situational: [...d.situational, { targets: [], when: '', bonus: '' }] })}
+                    >
+                      <i className="ti ti-plus" aria-hidden="true" /> Add effect
+                    </button>
+                  </div>
+                  {d.situational.length === 0 ? (
+                    <p className="ie-adv-none">
+                      None yet. Add one for anything that applies only sometimes — “+1 circumstance to Athletics to Climb
+                      wet surfaces”, “+2 to Will saves against fear”.
+                    </p>
+                  ) : (
+                    d.situational.map((entry, i) => (
+                      <ConditionalEffectRow
+                        key={i}
+                        entry={entry}
+                        onChange={(next) => upd({ situational: d.situational.map((e, j) => (j === i ? next : e)) })}
+                        onRemove={() => upd({ situational: d.situational.filter((_, j) => j !== i) })}
+                      />
+                    ))
+                  )}
+                </div>
+
+                <div className="ie-adv-sec">
+                  <div className="ie-adv-sec-h">
+                    <span>Always-on bonuses</span>
+                  </div>
+                  <p className="ie-adv-none">
+                    Item bonuses, applied while this is equipped, worn or invested. Item bonuses don't stack — the sheet
+                    takes the best one it has. Leave a box empty for no bonus.
+                  </p>
+                  <div className="ie-grid3">
+                    <label className="ci-field"><span>AC</span><input type="number" value={d.pAc} onChange={(e) => upd({ pAc: e.target.value })} /></label>
+                    <label className="ci-field"><span>Perception</span><input type="number" value={d.pPerception} onChange={(e) => upd({ pPerception: e.target.value })} /></label>
+                    <label className="ci-field"><span>All saves</span><input type="number" value={d.pSaves} onChange={(e) => upd({ pSaves: e.target.value })} /></label>
+                    <label className="ci-field"><span>Attack rolls</span><input type="number" value={d.pAttack} onChange={(e) => upd({ pAttack: e.target.value })} /></label>
+                    <label className="ci-field"><span>Speed (feet)</span><input type="number" step={5} value={d.pSpeed} onChange={(e) => upd({ pSpeed: e.target.value })} /></label>
+                  </div>
+
+                  <div className="ie-adv-sec-h">
+                    <span>Per skill</span>
+                    <button
+                      type="button"
+                      className="ie-adv-addbtn"
+                      onClick={() => upd({ pSkills: [...d.pSkills, { skill: SKILLS[0], value: '1' }] })}
+                    >
+                      <i className="ti ti-plus" aria-hidden="true" /> Add skill
+                    </button>
+                  </div>
+                  {d.pSkills.map((row, i) => (
+                    <div className="ie-adv-skillrow" key={i}>
+                      <select
+                        aria-label="Skill"
+                        value={row.skill}
+                        onChange={(e) => upd({ pSkills: d.pSkills.map((r, j) => (j === i ? { ...r, skill: e.target.value } : r)) })}
+                      >
+                        {SKILLS.map((s) => <option key={s} value={s}>{cap(s)}</option>)}
+                      </select>
+                      <input
+                        type="number"
+                        aria-label="Bonus"
+                        value={row.value}
+                        onChange={(e) => upd({ pSkills: d.pSkills.map((r, j) => (j === i ? { ...r, value: e.target.value } : r)) })}
+                      />
+                      <button type="button" aria-label="Remove skill bonus" onClick={() => upd({ pSkills: d.pSkills.filter((_, j) => j !== i) })}>
+                        <i className="ti ti-x" aria-hidden="true" />
+                      </button>
+                    </div>
+                  ))}
                 </div>
               </div>
             )}

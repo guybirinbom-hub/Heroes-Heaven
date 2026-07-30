@@ -1,0 +1,1088 @@
+[
+ {
+  "id": "final-creed",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Final Creed",
+  "level": 19,
+  "traits": [
+   "cleric"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your proficiency ranks for light and medium armor, as well as for unarmed defense, increase to master. Your proficiency rank for your class DC increases to legendary."
+ },
+ {
+  "id": "first-doctrine-warpriest",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "First Doctrine (Warpriest)",
+  "level": 1,
+  "traits": [
+   "cleric"
+  ],
+  "engineFieldsPresent": [
+   "grantsFeats"
+  ],
+  "inRegistries": [],
+  "text": "You're trained in light and medium armor, and you have expert proficiency in Fortitude saves. You gain the Shield Block general feat, a reaction to reduce damage with a shield. If your deity's favored weapon is a simple weapon or an unarmed attack, you gain the Deadly Simplicity cleric feat. At 13th level, if you gain the Divine Defense class feature, you also gain expert proficiency in light and medium armor."
+ },
+ {
+  "id": "fluttering-distraction",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Fluttering Distraction",
+  "level": 10,
+  "traits": [
+   "archetype",
+   "manipulate",
+   "misfortune"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** An enemy attempts a ranged or melee Strike against an ally within 30 feet. **Requirements** You're wielding two fans, one in each hand. --- You're trained in snapping and fluttering your fans to draw the eyes of observers around you. You manipulate your fans to create a distraction. The enemy must roll its attack twice and take the lower result."
+ },
+ {
+  "id": "focus-spells",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Focus Spells",
+  "level": 1,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Focus spells are a special type of spell attained directly from a branch of study, from a deity, or from another specific source. You can learn focus spells only through special class features or feats, rather than choosing them from a spell list. Furthermore, you cast focus spells using a special pool of Focus Points-you can't prepare a focus spell in a spell slot or use your spell slots to cast focus spells; similarly, you can't spend your Focus Points to cast spells that aren't focus spells. Even some classes that don't normally grant spellcasting, such as the Champion and Monk, can grant focus spells. Focus spells are automatically heightened to half your level rounded up, just like cantrips are. You can't cast a focus spell if its minimum level is greater than half your level rounded up, even if you somehow gain access to it. Casting any of your focus spells costs you 1 Focus Point. You automatically gain a focus pool of 1 Focus Point the first time you gain an ability that gives you a focus spell. You replenish all the Focus Points in your pool during your daily preparations. You can also use the Refocus activity to pray, study, meditate, or otherwise reattune yourself to the source of your focus magic and regain a Focus Point. Some abilities allow you to increase the Focus Points in your pool beyond 1. Typically, these are feats that give you a new focus spell and increase the number of points in your pool by 1. Your focus pool can't have a capacity beyond 3 Focus Points, even if feats that increase your pool would cause it to exceed this number. --- To regain focus points, see the Refocus action. --- # Spellcasters with Focus Spells Source**Core Rulebook pg. 302** If you are a spellcaster, your focus spells are the same tradition of spell as the class that gave you the focus spell. A Bard's are Occult, a Cleric's are Divine, a Druid's are Primal, a Wizard's are Arcane, and a Sorcerer's are determined by their bloodline. # Non-Spellcasters with Focus Spells Source **Core Rulebook pg. 302** If you get focus spells from a class or other source that doesn't grant spellcasting ability (for example, if you're a Monk with the Qi Spells feat), the ability that gives you focus spells also provides your proficiency rank for spell attack rolls and spell DCs, as well as the magical tradition of your focus spells. You gain the ability to Cast a Spell and use any spellcasting actions necessary to cast your focus spells (see below). However, you don't qualify for feats and other rules that require you to be a spellcaster."
+ },
+ {
+  "id": "food-preservation",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Food Preservation",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "Your techniques extend the storage life for certain ingredients and food through pickling, alcohol, or fermentation. When you use advanced alchemy to create alchemical food, you can designate one infused item to not automatically expire when you next make your daily preparations. When you preserve another item in this way, the previous item becomes inedible. The number of items you can preserve during your daily preparation and the maximum number of items you can have preserved before spoiling older items increases to two if you're an expert in Crafting or Cooking Lore, to three if you're a master, and to five if you're legendary."
+ },
+ {
+  "id": "forager",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Forager",
+  "level": 1,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "While using Survival to Subsist, if you roll any result worse than a success, you get a success. On a success, you can provide subsistence living for yourself and four additional creatures, and on a critical success, you can take care of twice as many additional creatures. You can choose to support half the number of creatures with a comfortable living. Increase the number of additional creatures you feed on a success to eight if you're an expert in Survival, 16 if you're a master, and 32 if you're legendary."
+ },
+ {
+  "id": "forced-entry",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Forced Entry",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You are trained to preserve the archaeological value of your location when entering. You don't take a penalty to Force Open doors, windows, or containers without a crowbar. If you roll a success on a check to Force Open, you get a critical success instead."
+ },
+ {
+  "id": "forensic-medicine-methodology",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Forensic Medicine Methodology",
+  "level": 1,
+  "traits": [
+   "investigator"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featFeatGrants"
+  ],
+  "text": "You've learned that in most cases, especially murders, criminals tend to leave more evidence of the crime on the body than they'd like to believe. Information from bruising, bone fractures, blood spatters, and even the life cycle of carrion insects can provide valuable clues that help reconstruct the scene. You're trained in Medicine and gain the Forensic Acumen and Battle Medicine skill feats. When you use Battle Medicine, on a success the target recovers additional Hit Points equal to your level, and the target becomes temporarily immune for only 1 hour, not 1 day"
+ },
+ {
+  "id": "frying-pan",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Frying Pan",
+  "level": 0,
+  "traits": [
+   "fatal-d8",
+   "halfling"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The cast-iron frying pan is an essential tool for adventuring halflings, gold panners, and remote tavern owners. Characters with the Halfling Weapon Familiarity ancestry feat are trained in the frying pan."
+ },
+ {
+  "id": "gadget-specialist",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Gadget Specialist",
+  "level": 4,
+  "traits": [
+   "inventor"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Rather than just using your gadgets for various boosts and tweaks, you also craft a few specific temporary consumable gadgets each day. You gain the formulas for three common or uncommon gadgets. Each day during your daily preparations, you can create two temporary gadgets from your formula book. Gadgets prepared in this way don't cost you any resources to Craft and don't have any sale value. They are temporary items and fall apart the next time you make your daily preparations if you haven't already used them. If you're a master in Crafting, you can create three gadgets per day, and you gain three additional common or uncommon gadget formulas. If you're legendary in Crafting, you can create four gadgets per day, and you gain another additional three common or uncommon gadget formulas, for a total of nine."
+ },
+ {
+  "id": "gate-junction",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Gate Junction",
+  "level": 5,
+  "traits": [
+   "kineticist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "### **Gate Junctions** When you gain a gate junction, you develop a specialized kinetic technique. Choose one benefit from the gate junction table for one of your kinetic elements. - A **critical blast** junction happens when you get a critical success with an Elemental Blast of the kinetic element. - An **elemental resistance** grants you resistance to damage while your kinetic aura is active. This resistance is equal to your level, and it applies to damage of any listed type or that comes from a creature or effect that has any of the listed traits. At 17th level, you gain immunity to effects with any of the listed traits. This doesn't make you immune to creatures with such a trait. You can voluntarily forgo this resistance, immunity, or both if you want an effect to work on you. - You can choose an **impulse junction** instead of one of the listed junctions. Impulse junctions are listed under Single Gate. - An **aura junction** adds an effect to your kinetic aura when you Channel Elements. - A **skill junction** makes you trained in the listed skill and grants you the listed skill feat. If you were already trained in the listed skill, you instead become trained in a skill of your choice. While your kinetic aura is active, you gain a +1 status bonus to the listed skill; the bonus increases to +2 at 10th level and +3 at 17th level. You can select each gate junction only once, unless noted otherwise, but you can have the same type of junction for multiple elements. You can always choose not to use a gate junction when it would normally occur. If you have multiple junctions that would apply at the same time - such as kinetic aura junctions for different elements - you can apply any number of them. (Though note that you can use only one impulse junction per round.)"
+ },
+ {
+  "id": "gather-disciples",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Gather Disciples",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Gods need followers, and you know that its best to gather a flock in the present to support you in your endeavor. Of course, you'll reward their faith in you in the future when you become a true deity. You can spend 1 week of downtime in a settlement to evangelize your coming godhood and establish a small group of disciples to your faith. Once this group has been established, these disciples are always helpful to you. You can use Religion to request skill=religion something of them, though your request must be able to be performed by the type of people who would follow you, at the GM's discretion. If you critically succeed at this check, your disciples give a piece of helpful advice or let you in on a small secret, granting you or a member of your party a +2 circumstance bonus to the first skill check you attempt when acting on the favor. If you critically fail this check, your disciples' attitude toward you doesn't worsen. You can have three groups of disciples at any one time (or five if you're legendary in Religion). If you exceed this number, the oldest group disbands and must be established again if you return to that settlement."
+ },
+ {
+  "id": "ghost-dust",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Ghost Dust",
+  "level": 16,
+  "traits": [
+   "consumable",
+   "illusion",
+   "occult",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (concentrate) **Requirements** You are trained in Stealth --- This small vial is filled with a grayish-green dust rendered from dried ectoplasm. When you activate the dust, it casts a 4th-rank spell on you. You may then Stride or Step. You can instead Burrow, Climb, Fly, or Swim if you have the corresponding Speed."
+ },
+ {
+  "id": "gnome-weapon-expertise",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Gnome Weapon Expertise",
+  "level": 13,
+  "traits": [
+   "gnome"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Gnome Weapon Expertise Source Core Rulebook pg. 45 Prerequisites Gnome Weapon Familiarity Your gnome affinity blends with your class training, granting you great skill with gnome weapons. Whenever you gain a class feature that grants you expert or greater proficiency in a given weapon or weapons, you also gain that proficiency in the glaive, kukri, and all gnome weapons in which you are trained."
+ },
+ {
+  "id": "goblin-weapon-expertise",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Goblin Weapon Expertise",
+  "level": 13,
+  "traits": [
+   "goblin"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Goblin Weapon Expertise Source Core Rulebook pg. 49 Prerequisites Goblin Weapon Familiarity Your goblin affinity blends with your class training, granting you great skill with goblin weapons. Whenever you gain a class feature that grants you expert or greater proficiency in a given weapon or weapons, you also gain that proficiency in the dogslicer, horsechopper, and all goblin weapons in which you are trained."
+ },
+ {
+  "id": "greater-resolve",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Greater Resolve",
+  "level": 17,
+  "traits": [
+   "investigator"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your unbelievable training grants you mental resiliency. Your proficiency rank for Will saves increases to legendary. When you roll a success at a Will save, you get a critical success. When you roll a critical failure at a Will save, you get a failure instead. When you roll a failure on a Will save against a damaging effect, you take half damage."
+ },
+ {
+  "id": "greater-spirit-striking",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Greater Spirit Striking",
+  "level": 15,
+  "traits": [
+   "exemplar"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your additional damage from spirit striking increases to 4 with weapons and unarmed attacks in which you're an expert, 6 if you're a master, and 8 if you're legendary."
+ },
+ {
+  "id": "greater-weapon-specialization",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Greater Weapon Specialization",
+  "level": 15,
+  "traits": [
+   "champion",
+   "commander",
+   "fighter",
+   "gunslinger",
+   "inventor",
+   "investigator",
+   "magus",
+   "monk",
+   "ranger",
+   "rogue",
+   "swashbuckler",
+   "thaumaturge"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your damage from weapon specialization increases to 4 with weapons and unarmed attacks in which you're an expert, 6 if you're a master, and 8 if you're legendary."
+ },
+ {
+  "id": "greater-weapon-specialization-barbarian",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Greater Weapon Specialization (Barbarian)",
+  "level": 15,
+  "traits": [
+   "barbarian"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The weapons you've mastered become truly fearsome in your hands. Your damage from weapon specialization increases to 4 with weapons and unarmed attacks in which you're an expert, 6 if you're a master, and 8 if you're legendary. You gain a greater benefit from your instinct's specialization ability. See specific instincts for more information."
+ },
+ {
+  "id": "group-coercion",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Group Coercion",
+  "level": 1,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can strong-arm people effectively, even when you don't have them isolated. When you Coerce, you can compare your Intimidation check result to the Will DCs of up to five targets instead of one. It's possible to get a different degree of success for each target. The number of targets you can Coerce in a single action increases to 10 if you're an expert, 25 if you're a master, and 50 if you're legendary."
+ },
+ {
+  "id": "group-impression",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Group Impression",
+  "level": 1,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "When you Make an Impression, you can compare your Diplomacy check result to the Will DCs of up to 10 targets you conversed with, with no penalty. The number of targets increases to 20 if you're an expert, 50 if you're a master, and 100 if you're legendary."
+ },
+ {
+  "id": "gunslinger-expertise",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Gunslinger Expertise",
+  "level": 9,
+  "traits": [
+   "gunslinger"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your special shots become harder for opponents to predict or resist. Your proficiency rank for your gunslinger class DC increases to expert."
+ },
+ {
+  "id": "gymnast",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Gymnast",
+  "level": 1,
+  "traits": [
+   "swashbuckler"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You reposition, maneuver, and bewilder your foes with daring feats of physical prowess. You are trained in Athletics. When you Grapple, Reposition, Shove, or Trip, the action gains the bravado trait."
+ },
+ {
+  "id": "halcyon-spellcasting-adept",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Halcyon Spellcasting Adept",
+  "level": 14,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You refine your halcyon magic. You gain two common 4th-rank halcyon spells and two 5th-rank halcyon spells. You also gain a 4th-rank halcyon spell slot and a 5th-rank halcyon spell slot. Your proficiency rank in either arcane or primal spell DCs and spell attack rolls advances from trained to expert."
+ },
+ {
+  "id": "halcyon-spellcasting-sage",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Halcyon Spellcasting Sage",
+  "level": 18,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your command over halcyon magic is nearly unmatched. You gain two common 6th-rank and 7th-rank halcyon spells. You also gain a 6th-rank halcyon spell slot and a 7th-rank halcyon spell slot. Your proficiency rank in either arcane or primal spell DCs and spell attack rolls advances from expert to master."
+ },
+ {
+  "id": "halfling-weapon-expertise",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Halfling Weapon Expertise",
+  "level": 13,
+  "traits": [
+   "halfling"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Halfling Weapon Expertise Source Core Rulebook pg. 53 Prerequisites Halfling Weapon Familiarity Your halfling affinity blends with your class training, granting you great skill with halfling weapons. Whenever you gain a class feature that grants you expert or greater proficiency in a given weapon or weapons, you also gain that proficiency in the sling, halfling sling staff, shortsword, and all halfling weapons in which you are trained."
+ },
+ {
+  "id": "haunting-memories",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Haunting Memories",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your soul bears metaphysical impressions of the innumerable other spirits imprisoned with you in the Final Blade from which you escaped, allowing you to draw upon their memories. When you make your daily preparations, you can either gain the expert proficiency rank in one skill in which you're untrained or raise your proficiency rank to master in one skill in which you're trained or better. You also gain one skill feat with a minimum requirement of your new rank in the chosen skill. For the purpose of meeting level prerequisites for this feat, your level is equal to half your level. This proficiency and feat last until you make your daily preparations again. Since the proficiency is temporary, you can't use it as a prerequisite for any permanent character option."
+ },
+ {
+  "id": "heightened-senses",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Heightened Senses",
+  "level": 17,
+  "traits": [
+   "barbarian"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your instinct heightens each of your senses further. Your proficiency rank for Perception increases to master."
+ },
+ {
+  "id": "holy-bloom",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Holy Bloom",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices",
+   "spellcastingGrant"
+  ],
+  "inRegistries": [],
+  "text": "Though you might not be a priest of Milani, her divine spirit flows through you. You gain holy sanctification. Select the or domain. You gain the initial domain spell for that domain. If you don't have one, you gain a focus pool of 1 Focus Point. You can Refocus by praying to Milani or by working with others to plan a just uprising. You become trained in spell attack modifier and spell DC, and your spellcasting attribute for these spells is Wisdom. --- **Special** You can choose this feat a second time, gaining the initial domain spell of the domain you didn't gain the first time."
+ },
+ {
+  "id": "horn-of-the-aoyin",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Horn of the Aoyin",
+  "level": 13,
+  "traits": [
+   "cursed",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This musical instrument is crafted from the horn of an aoyin—a large, cannibalistic beast whose form resembles an ox with a white body, four horns, and hair as coarse as straw—and carved with fell symbols. If the horn of the aoyin's owner doesn't use the instrument's activation on sapient creatures at least once a day, the horn of the aoyin activates at some point of its own choosing on the owner, and the owner critically fails with no saving throw. **Activate—Cannibal Call** ⟨2⟩ (auditory, emotion, incapacitation, magical, manipulate, mental) **Frequency** once per hour **Requirements** You're trained in Performance --- **Effect** You blow the horn, creating a low growling sound. Creatures other than you in a must attempt a save. Those who fail become overwhelmed with an animalistic rage and the urge to consume flesh for 1 round, or 1 minute on a critical failure. They indiscriminately attack the nearest target unaffected by the magic of the horn unless there are no such targets, at which point they set on each other. While affected, they gain a jaws unarmed attack that deals 1d8 piercing damage, deal an additional 2 damage with unarmed attacks, and lose the ability to use any weaponry. They also gain a +2 status bonus to saving throws against mental effects, can detect bleeding creatures and open wounds as an imprecise sense with a range of 30 feet, and gain a +10-foot status bonus to their Speed. Lastly, they take a –1 penalty to AC and are unable to use concentrate actions other than Seeking. Creatures who critically succeed are temporarily immune for 24 hours. --- **Craft Requirements** A horn of the aoyin can be crafted only from a single aoyin horn. Crafting this object must be undertaken using tools soaked in the wielder's blood."
+ },
+ {
+  "id": "hunters-bane",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Hunter's Bane",
+  "level": 2,
+  "traits": [
+   "consumable",
+   "detection",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Usage** affixed to armor **Activate** ⟨4⟩ (concentrate) **Trigger** A hidden or undetected enemy hits you with an attack **Requirements** You are trained in Survival --- This talisman is a ring of dried, interwoven pieces of straw. When you activate the *hunter's bane*, you sense the exact location of the attacker. It becomes observed by you if it was hidden from you or becomes hidden from you if it was undetected. If the attacker is behind lead, the *hunter's bane* has no effect."
+ },
+ {
+  "id": "hyper-boosters",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Hyper Boosters",
+  "level": 7,
+  "traits": [
+   "inventor"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You've improved your speed boosters' power through a breakthrough that significantly increases the energy flow without risking exploding. You gain a +10-foot status bonus to your Speed, which increases to a +20-foot status bonus when you're in Overdrive. If you're legendary in Crafting, it instead increases to a +30-foot status bonus when you're in Overdrive. You must have the speed boosters modification to select this modification."
+ },
+ {
+  "id": "i-knew-the-heroes",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "I knew the Heroes",
+  "level": 18,
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Your stories aren't mere tales passed down from elder to youth or teacher to student. They're the lived experiences of those you've met, and they're the stuff of legend. When you use Uzunjati Recollection, if you're legendary in the skill you use to Recall Knowledge, you gain a +1 circumstance bonus to the Recall Knowledge check, and the circumstance bonus to Uzunjati Storytelling increases to +2."
+ },
+ {
+  "id": "illuminating-stories",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Illuminating Stories",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "divine"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Stories serve as beacons in the night, illuminating valuable knowledge even if the tale itself misses the mark. When you Offer a Story about any topic, you can choose that illumination in place of the normal benefits of Offer Story. You receive a +1 status bonus on checks to Recall Knowledge for the duration and can Recall Knowledge about the topic of the story as a free action. The creature you share a story with can choose this benefit even if you did not. The bonus increases to +2 if you are a master of Religion and +3 if you are legendary."
+ },
+ {
+  "id": "ilverani-purist",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Ilverani Purist",
+  "level": 8,
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "All twilight speakers are trained to resist the alluring customs of younger peoples, but you have made it your mandate to keep the Ilverani way unchanged. Such dedication has given you a trained eye for subtlety and deception. When you attempt to Sense the Motive of a non-elf humanoid creature and you roll a critical failure, you fail instead."
+ },
+ {
+  "id": "impossible-polymath",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Impossible Polymath",
+  "level": 18,
+  "traits": [
+   "bard"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your esoteric formulas are so unusual that they allow you to dabble in magic from diverse traditions that other bards don't understand. As long as you're trained in Arcana, you can add arcane spells to your book from Esoteric Polymath; as long as you're trained in Nature, you can add primal spells to your book; and as long as you are trained in Religion, you can add divine spells to your book. Like your other spells in your book, you can add one of these spells from another tradition to your repertoire as an occult spell each day using Esoteric Polymath, but you can't retain any spells from another tradition when you prepare again, even if you have Eclectic Polymath."
+ },
+ {
+  "id": "improved-evasion",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Improved Evasion",
+  "level": 13,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your ability to elude danger is matchless. Your proficiency rank for Reflex saves increases to legendary. When you roll a critical failure on a Reflex save, you get a failure instead. When you roll a failure on a Reflex save against a damaging effect, you take half damage."
+ },
+ {
+  "id": "inexplicable-apparatus",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Inexplicable Apparatus",
+  "level": 18,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This strange and intricate harness fits snugly to the torso. Once you invest the apparatus, numerous artificial limbs with various tools, clamps, and lenses whirl into action, following your mental commands effortlessly. When using this apparatus, you gain a +3 item bonus to Crafting checks to Craft, Earn Income, and Repair, and you reduce the minimum time required to Craft an item to 1 day. If you succeed at your Crafting check and spend more downtime to continue work on the item after the minimum number of days, each day you spend reduces the remaining raw material cost by an amount based on your level + 1 and your proficiency rank in Crafting; on a critical success, each day reduces the remaining raw material cost by an amount based on your level + 2 and your proficiency rank. If you are 20th level, on a critical success your progress is 50 gp, 100 gp, 200 gp, or 350 gp for trained, expert, master, or legendary proficiency, respectively. **Activate—Inexplicable Patch** ⟨2⟩ (concentrate, manipulate) **Frequency** once per day --- **Effect** You command the apparatus to magically jury-rig an item you hold or that's within 5 feet of you. The item is repaired, as a 3rd-rank Mending spell. This lasts for 10 minutes, after which the item returns to its previous state of disrepair unless you've Repaired it before then."
+ },
+ {
+  "id": "influence-nature",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Influence Nature",
+  "level": 7,
+  "traits": [
+   "downtime",
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "With patience and time, you can make bird calls, leave game trails, and ultimately influence the behavior of a certain type of animals in the region to favor and even aid you in the days to come. The GM determines the DC of any check required and the amount of time your work requires (usually at least a day or two of downtime). While you can't directly control how you've influenced nature, you can hope for certain effects, such as easier hunts or birds falling silent whenever danger is approaching. If you're legendary in Nature, you can elicit these same adjustments to animal behavior in the area by spending only 10 minutes."
+ },
+ {
+  "id": "initial-creed",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Initial Creed",
+  "level": 1,
+  "traits": [
+   "cleric"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You're trained in light and medium armor, and you have expert proficiency in Fortitude saves. You're trained in martial weapons. If your deity's favored weapon is a simple weapon or an unarmed attack, you gain the Deadly Simplicity cleric feat. At 13th level when you gain the Divine Defense class feature, you also gain expert proficiency in light and medium armor."
+ },
+ {
+  "id": "inspiring-recitation",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Inspiring Recitation",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "concentrate",
+   "emotion",
+   "mental"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Frequency** once per hour --- You quietly speak or recall coded phrases and metaphors whose meanings inspire you to complete your mission. You gain a +1 status bonus to one skill of your choice until the beginning of your next turn. You can Sustain this effect for up to 1 minute. If you're an expert in Performance, the bonus increases to +2. If you're a master in Performance, the bonus is +3, and if you're legendary, the bonus is +4."
+ },
+ {
+  "id": "instigate-psychic-duel",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Instigate Psychic Duel",
+  "level": 12,
+  "traits": [
+   "archetype",
+   "illusion",
+   "incapacitation",
+   "mental",
+   "occult"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per day --- You attempt to enter a psychic duel with a creature within 100 feet. The target can attempt a save against the higher of your spell DC or class DC. If it enters the duel willingly, use the result for a critical failure. --- **Critical Success** The target is unaffected. **Success** The two of you enter a psychic duel, but it ends automatically at the end of your next turn. As normal for a psychic duel, the duel ends if one participant is knocked out, as well as under any other conditions to which both participants agree. If you're in initiative when you Instigate the Psychic Duel, you keep the same initiative positions. You can each choose a psychic center for any skill in which you're trained, as you would if you were using that skill to roll initiative for the duel. **Failure** As a success, except instead of ending at the end of your next turn, the target can attempt a new save to end the duel at the end of each of your turns, starting with your next turn. **Critical Failure** As a success, except the duel doesn't end until it reaches one of the normal end conditions for a psychic duel."
+ },
+ {
+  "id": "interrogation-methodology",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Interrogation Methodology",
+  "level": 1,
+  "traits": [
+   "investigator"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featFeatGrants"
+  ],
+  "text": "People can't help but trust you, whether through your inherent likableness or your firm insistence on sticking to the truth. You have a way about you that gets others talking, and you've developed interrogative techniques to help you get to the truth of your investigations. You are trained in Diplomacy. You gain the No Cause for Alarm skill feat. You can also Pursue a Lead at the same time you Make an Impression, as long as you ask a question related to the creature with which you're conversing or a topic of your conversation. You also gain the Pointed Question action."
+ },
+ {
+  "id": "inventive-expertise",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Inventive Expertise",
+  "level": 9,
+  "traits": [
+   "inventor"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Through innovation and experimentation, you've made your inventions more effective and reliable. Your proficiency rank for your inventor class DC increases to expert."
+ },
+ {
+  "id": "inventive-mastery",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Inventive Mastery",
+  "level": 17,
+  "traits": [
+   "inventor"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your inventions are incredibly effective. Your proficiency rank for your inventor class DC increases to master."
+ },
+ {
+  "id": "invoke-the-crimson-oath",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Invoke the Crimson Oath",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "focusSpells",
+   "spellcastingGrant"
+  ],
+  "inRegistries": [],
+  "text": "You can invoke the Crimson Oath to unleash blasts of ruby energy from your weapon. You gain the Invoke the Crimson Oath focus spell. If you don't already have one, you gain a focus pool of 1 Focus Point, which you can regain using the Refocus activity to recite the Crimson Oath and meditate on its teachings; if you already have a focus pool, increase the number of Focus Points in your focus pool by 1. Your knight reclaimant focus spells are divine spells; when you gain this feat, you become trained in divine spell attacks and spell DCs. Your key spellcasting ability for these spells is Charisma."
+ },
+ {
+  "id": "iron-will",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Iron Will",
+  "level": 3,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Alchemist** Your mental defenses are an iron fortress. Your proficiency rank for Will saves increases to expert. **Ranger** Your training has hardened your resolve. Your proficiency rank for Will saves increases to expert."
+ },
+ {
+  "id": "jade-cat",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Jade Cat",
+  "level": 2,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨4⟩ (concentrate) **Trigger** You fall or attempt an Acrobatics check to Balance **Requirements** You are trained in Acrobatics --- A thumb-sized feline carved of rare stone, the *jade cat* is typically worn as a pendant upon a suit of armor. For 1 minute after you activate the cat, you treat all falls as 20 feet shorter, you are not off-guard when you Balance, and narrow surfaces and uneven ground are not difficult terrain for you."
+ },
+ {
+  "id": "keeper-jotunborn",
+  "lane": "proficiency",
+  "collection": "heritages",
+  "name": "Keeper Jotunborn",
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses",
+   "featFeatGrants"
+  ],
+  "text": "Your work as an iivlar keeper has granted you a greater understanding of these sacred creatures and the ability to track them, as elusive as they may be. You are trained in Survival, and you gain the Survey Wildlife skill feat. You gain a +1 circumstance bonus to Track animals."
+ },
+ {
+  "id": "ki-spells",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Ki Spells",
+  "level": 1,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "## Ki Spells By tapping into a supernatural inner reserve called ki, you can create magical effects. Certain feats grant you special spells called ki spells, which are a type of focus spell. It costs 1 Focus Point to cast a focus spell. When you gain your first ki spell, you also gain a focus pool of 1 Focus Point. You refill your focus pool during your daily preparations, and you regain 1 Focus Point by spending 10 minutes using the Refocus activity to meditate in order to reach inner peace. When you first gain a ki spell, decide whether your ki spells are divine spells or occult spells. You become trained in spell attacks and spell DCs of that tradition and your key spellcasting ability is Wisdom. Focus spells are automatically heightened to half your level rounded up. Taking feats can give you more focus spells and increase the size of your focus pool, though your focus pool can never hold more than 3 points."
+ },
+ {
+  "id": "kinetic-expertise",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Kinetic Expertise",
+  "level": 7,
+  "traits": [
+   "kineticist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your kinetic gate grows stronger, making your elements harder to resist. The power flowing from you is even harder to resist. Your proficiency rank for your kineticist class DC increases to expert."
+ },
+ {
+  "id": "kinetic-legend",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Kinetic Legend",
+  "level": 19,
+  "traits": [
+   "kineticist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your elements become almost impossible to resist. Your proficiency rank for your kineticist class DC increases to legendary."
+ },
+ {
+  "id": "kinetic-mastery",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Kinetic Mastery",
+  "level": 15,
+  "traits": [
+   "kineticist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The power flowing from you grows even difficult to resist. Your proficiency rank for your kineticist class DC increases to master."
+ },
+ {
+  "id": "klingegeist",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Klingegeist",
+  "level": 10,
+  "traits": [
+   "archetype",
+   "concentrate",
+   "possession"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your imprisonment inside a Final Blade used to perform countless executions has instilled in you an aptitude for entering and possessing similar sharp implements of murder. You project your mind and incorporeal body into an unattended weapon of 2 Bulk or less that deals slashing damage. While possessing a blade, you have a space of 5 feet, but you don't block or impede enemies attempting to move through your space, nor do you benefit from or provide flanking. You're trained in the use of the weapon, unless your proficiency was already better, and you can make Strike actions with the weapon as if you were wielding it. You gain a Fly speed of 30 feet and can only take Strike and Fly actions, which don't trigger reactions. You have an AC of 18 + your level and the Hardness and Hit Points of the weapon you're possessing, which for most one-handed slashing weapons is Hardness 5 and HP 20. You can't be Disarmed, nor can your true body be directly injured except by spirit damage, which bypasses both the weapon's Hardness and Hit Points to damage you directly. If you're reduced to 0 Hit Points or the weapon you're inhabiting is broken or destroyed, you're immediately ejected from it and paralyzed for 1 round. Otherwise, the effect lasts for 10 minutes or until you Dismiss it."
+ },
+ {
+  "id": "krasovnatype",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Krasovnatype",
+  "level": 4,
+  "traits": [
+   "consumable",
+   "gadget"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- A krasovnatype (named after Dr. Krasovna Gerenevich) consists of a carefully prepared silvered glass plate charged by a Stasian coil. When you touch the front of the glass or hold it near a living creature within your reach, an image of that creature's aura is imprinted on the glass. Once a krasovnatype has an image on it, you can't use the glass plate on another creature. If you are trained in Occultism, you can look at the image and learn if the associated creature has innate, prepared, or spontaneous spellcasting, along with the tradition of that casting and the highest rank of spells they can cast. Referencing the image grants a +1 item bonus to any Recall Knowledge check regarding the creature."
+ },
+ {
+  "id": "lassoing-lash",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Lassoing Lash",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "attack"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** The target can't be more than one size larger than you. --- You quickly wrap your lash around an opponent and pull them toward you. Attempt an Athletics check against the Fortitude DC of a target within your lash's reach. --- **Critical Success** You pull the target to any open space adjacent to you. **Success** You pull the target to the nearest open space adjacent to you. **Critical Failure** You misjudge your leverage and fall prone. --- **Special** If you have the Titan Wrestler feat, you can target a creature up to two sizes larger than you, or up to three sizes larger than you if you're legendary in Athletics."
+ },
+ {
+  "id": "lasting-coercion",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Lasting Coercion",
+  "level": 2,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "When you successfully Coerce someone, the maximum time they comply increases to a week, still determined by the GM. If you're legendary, the maximum increases to a month."
+ },
+ {
+  "id": "leech-clip",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Leech-Clip",
+  "level": 1,
+  "traits": [
+   "hobgoblin"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You are trained to capture deserters, or \"leeches.\" Make a melee Strike with weapon from the flail group. On a hit, the target takes a –10-foot status penalty to its Speed (or a –15-foot status penalty on a critical hit). The penalty lasts for 1 round. It applies only if the target has a land Speed and depends on legs or other targetable appendages to use its land Speed. As with all penalties to Speed, this can't reduce a creature's Speed below 5 feet."
+ },
+ {
+  "id": "lesser-creed",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Lesser Creed",
+  "level": 5,
+  "traits": [
+   "cleric"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain expert proficiency with your deity's favored weapon, martial weapons, simple weapons, and unarmed attacks. When you critically succeed at an attack roll using your deity's favored weapon, you apply the weapon's critical specialization effect. Your proficiency rank for your class DC increases to expert."
+ },
+ {
+  "id": "lethargy-poisoner",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Lethargy Poisoner",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've learned more than the use of hand crossbows. During your daily preparations, you can prepare a dose of Lethargy Poison from ordinary materials in a wilderness or urban area. If you're an expert in Crafting, you can instead craft a dose of Stupor Poison. You can prepare two doses (of either poison) if you're a master in Crafting and three doses if you're legendary in Crafting. The save DC for this poison is equal to your class DC. Only you can use these poisons, and they expire the next time you make your daily preparations. The GM might decide that the area you're in is too barren to provide the materials you need for this feat."
+ },
+ {
+  "id": "leverage-anguish",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Leverage Anguish",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "healing"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per day **Trigger** You fail or critically fail a saving throw against a curse, death, emotion, or fear effect. --- You leverage your emotional turmoil to mend your physical form. You regain Hit Points. If you're a master in Athletics, you regain 4d8 Hit Points instead. If you're legendary in Athletics, you regain 6d8 Hit Points instead."
+ },
+ {
+  "id": "light-mortar-innovation",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Light Mortar Innovation",
+  "level": 1,
+  "traits": [
+   "inventor"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "Through years of experience and countless hours of experimentation, you've developed a siege weapon compact enough to operate by yourself while still packing a deadly punch. **Prerequisites:** You must be an inventor. **Munitions Master Adjustments:** Instead of choosing an innovation from the options listed in the inventor class, you have the light mortar innovation, as well as the following changes to the class features listed on the following pages. You gain these abilities at the same levels as normal for the class unless otherwise specified. You must select Munitions Master Dedication as your 2nd-level class feat. ### Innovation Your innovation is a mounted siege weapon called a light mortar that weighs 2 Bulk. Whether it propels its payload via an elaborate mechanism or explosive reagents, it's capable of dealing immense damage. Your light mortar requires an Interact action to deploy it before you can Aim, Load, or Launch it, and it includes its own wheeled platform that it is mounted on as part of the deployment. It can be packed back up for easy transport as a 2-action activity with the manipulate trait and either worn as a backpack or carried in one hand while packed. Because of the light mortar's smaller size, the Move Siege Engine activity takes only 1 action when it is deployed. Your light mortar begins as a 1st-level siege weapon with the statistics shown below. It deals an additional die of damage at 5th level and every 4 levels thereafter. When you Launch your light mortar, the Reflex save is equal to your class DC. Its AC is equal to your inventor class DC and it has Hardness 5. It has trained proficiency in Reflex and Fortitude saves, using your Intelligence modifier to calculate these bonuses. It has 10 Hit Points, plus a number of Hit Points equal to 2 plus your Intelligence modifier for each level you have. Its Broken Threshold is equal to half its total Hit Points (rounded down). At 5th level, your light mortar's Hardness increases to 10. At 10th level it increases to 15 and its proficiency rank in Reflex and Fortitude saves increases to expert. At 15th level, its Hardness increases to 20, and its proficiency rank in Reflex and Fortitude saves increases to master. Your innovation fires small cannonballs called carry shot. A group of 10 carry shot, which weighs 1 Bulk, can be purchased for 5 sp from most shops that sell ammunition. Choose one initial light mortar modification to apply to your innovation, either from the following or from other initial light mortar modifications to which you have access. These modifications alter the abilities or form of your light mortar. - **Contained Shrapnel** You alter your light mortar's ammunition to prevent fragments of it from flying outward on impact. Your innovation gains the nonlethal trait. You can choose whether to apply the nonlethal trait on each Launch. - **Enhanced Shrapnel** You alter your light mortar's ammunition to change the way it shatters on impact, spraying nearby creatures with a hail of razor-sharp pieces. Your innovation gains the versatile P and versatile S traits. You can choose whether to apply one of these traits on each Launch with your innovation. - **Spri"
+ },
+ {
+  "id": "like-a-roach",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Like a Roach",
+  "level": 1,
+  "traits": [
+   "downtime",
+   "reincarnated"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Living with the bare necessities isn't terribly hard for someone who has defied death, and like a cockroach, you always know how to survive. When you Subsist during downtime, the DC for your skill check is reduced by 2. You don't need a minimum proficiency rank to Subsist in unusual environments, nor do you take a –5 penalty if you Subsist after 8 hours or less of exploration."
+ },
+ {
+  "id": "listeners-boon",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Listener's Boon",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featFeatGrants"
+  ],
+  "text": "Isthralei has given you a gift to assist you on your journey. You gain the Domain Initiate feat for the domain of fire, knowledge, protection, or travel. You can Refocus by spending 10 minutes telling stories of your travels or listening to others' stories of theirs. You gain the trained proficiency rank in spell attack modifier and spell DC, increasing to expert at 11th level. --- **Special** You can select this feat multiple times, selecting a different domain each time and gaining its domain spell. --- *PFS Note:* For the purposes of this feat, use charisma as your spellcasting attribute."
+ },
+ {
+  "id": "lock-on",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Lock On",
+  "level": 10,
+  "traits": [
+   "inventor"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Aha! You lock on to your enemy's weak point to assist your construct companion in destroying it. When you Lock On, designate an enemy you can see. If your next action is to Command your construct, the construct gains a +2 circumstance bonus to attack rolls against the designated enemy until the end of the turn. If you use 2 actions for the Command, the bonus is instead a +3 circumstance bonus, or a +4 circumstance bonus if you're legendary in Crafting."
+ },
+ {
+  "id": "lore-seeker",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Lore Seeker",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "innateSpells"
+  ],
+  "inRegistries": [],
+  "text": "You see what others don't, and you've developed magical tricks to find hidden truth. You can cast Translate, Sound Body, and See the Unseen as innate spells, each once per day. If you could already cast spells, these spells are of the same tradition. Otherwise, they are arcane spells, you use Intelligence as your spellcasting ability, and you become trained in spell attack rolls and spell DCs for arcane spells."
+ },
+ {
+  "id": "lovers-knot",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Lover's Knot",
+  "level": 2,
+  "traits": [
+   "consumable",
+   "healing",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ envision; **Requirement** You are trained in Medicine. --- This lock of hair is wrapped around a twig twisted into the shape of a heart. Popular among many of Restov's explorers, traders, and mercenaries, often a person carries several lover's knots on their person in case of emergency. While the original lover's knots were specific rewards granted by a particularly flirtatious Swordlord to her favored agents, time has seen these talismans become much more widespread through southern Brevoy. When you activate a lover's knot, you regain 2d6 Hit Points. If you have the Battle Medicine feat, you instead regain 2d6+7 Hit Points."
+ },
+ {
+  "id": "magic-finder",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Magic Finder",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "innateSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You've learned a few tricks to ensure you find every last magic item and interesting magical effect during your missions. You can cast detect magic and read aura as innate spells at will. You can also cast locate as an innate spell once per day, but only to locate magic items, not specific mundane objects or types of objects. If you could already cast spells, these spells are of the same tradition. Otherwise, they're arcane spells, you use Intelligence as your spellcasting ability, and you become trained in spell attack rolls and spell DCs for arcane spells. When you cast detect magic or read aura from this feat on an item or creature under the effect of a magic aura spell or interact with an item under the effect of an item facade spell, you gain a +2 circumstance bonus on your check to disbelieve the illusion."
+ },
+ {
+  "id": "major-creed",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Major Creed",
+  "level": 13,
+  "traits": [
+   "cleric"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain master proficiency with your deity's favored weapon. Your proficiency rank for Fortitude saves increases to master. When you roll a success on a Fortitude save, you get a critical success instead."
+ },
+ {
+  "id": "malleable-clay",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Malleable Clay",
+  "level": 5,
+  "traits": [
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨4⟩ envision **Trigger** You Strike with the affixed weapon **Requirements** You're trained in the affixed weapon. --- This small lump of clay is malleable and can be molded into innumerable shapes and forms. When affixed, the clay takes on the appearance of the affixed weapon. When activated, the affixed weapon gains the versatile bludgeoning, versatile piercing, and versatile slashing weapon traits for the triggering Strike and all other attacks for 1 minute. With each attack, the clay changes shape, taking on the appearance of a different weapon that deals damage of the chosen damage type."
+ },
+ {
+  "id": "martial-exercise",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Martial Exercise",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "You've become comfortable in using weapons that you might not have picked up before training with the Swords. Choose one weapon group, such as hammer or sword. Whenever your proficiency rank in any weapon increases to expert or beyond, you also gain that new proficiency rank with both simple and martial weapons of your chosen weapon group."
+ },
+ {
+  "id": "mask-of-pain",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Mask of Pain",
+  "level": 9,
+  "traits": [
+   "orc"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** You succeed at a Demoralize check. --- **Requirements** You're wearing your *warmask*. --- Your mask has grown into a manifestation of your pain, which you can release. The creature you successfully Demoralized takes 2d6 damage, or 4d6 damage if you're legendary in Intimidation. The target is then temporarily immune to additional damage from Mask of Pain for 24 hours."
+ },
+ {
+  "id": "master-strike",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Master Strike",
+  "level": 19,
+  "traits": [
+   "rogue"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can incapacitate an unwary foe with a single strike. Your proficiency rank for your rogue class DC increases to master. You gain the Master Strike free action."
+ },
+ {
+  "id": "masterful-hunter",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Masterful Hunter",
+  "level": 17,
+  "traits": [
+   "ranger"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You have honed your abilities as a hunter to incredible levels. Your proficiency rank for your ranger class DC increases to master. If you have warden spells, your proficiency rank for spell attacks and spell DCs increases to master. When using a ranged weapon that you have master proficiency in, you can ignore the penalty if attacking your hunted prey within the weapon's second and third range increments. If you have master proficiency in Perception, you gain a +4 circumstance bonus to Perception checks when you Seek your prey, and if you have master proficiency in Survival, you gain a +4 circumstance bonus to Survival checks when you Track your prey. You also gain an additional benefit depending on your hunter's edge. **Flurry:** You can blend your weapon mastery with skillful targeting to make a series of precise attacks. If you have master proficiency with your weapon, your multiple attack penalty for attacks against your hunted prey is –2 (–1 with an agile weapon) on your second attack of the turn, and –4 (–2 with an agile weapon) on your third and subsequent attacks of the turn. **Outwit:** Your mastery of skills allows you to overwhelm your prey. If you have master proficiency in Deception, Intimidation, Stealth, or the skill you use to Recall Knowledge about your prey, increase the circumstance bonus against the prey with that skill from +2 to +4. If you have master proficiency with your armor, increase the circumstance bonus to AC against the prey from +1 to +2. **Precision:** Your weapon mastery allows you to hit your prey's vital areas multiple times. The second time in a round you hit your hunted prey, you also deal 1d8 precision damage. At 19th level, your second hit in a round against your hunted prey deals 2d8 precision damage, and your third hit in a round against your hunted prey deals 1d8 precision damage."
+ },
+ {
+  "id": "mature-trained-companion",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Mature Trained Companion",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your animal companion grows up, becoming a mature animal companion. Increase its proficiency rank in Performance to expert instead of one of the three skill increases for mature. It gains the Mesmerizing Performance advanced maneuver, rather than the normal advanced maneuver for its type."
+ }
+]

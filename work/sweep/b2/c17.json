@@ -1,0 +1,1086 @@
+[
+ {
+  "id": "whip-tongue-sling",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Whip-Tongue Sling",
+  "level": 11,
+  "traits": [
+   "propulsive"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This is a *+2 striking sling* made from the neck, jaw, and tongue of a mobogo to resemble its mouth. The tongue curls around each bullet, which is thrown with the snap of your wrist. Each throw causes a small croak to echo from the sling. --- **Activate—Bolstering Croak** ⟨2⟩ (auditory, concentrate, emotion, manipulate, mental) **Frequency** once per day; **Effect** You raise your sling and work the handle to mimic a mobogo's croaking song. Allies within 25 feet gain a +1 status bonus to saves against fear effects for 1 round. You can Sustain this for up to 4 rounds. During this time, you can't use the sling to Strike or activate its Tongue Twister ability. After using Bolstering Croak, you can recharge it once per day by feeding the sling a number of gallons of water equal to double the number of rounds for which the Bolstering Croak was active. For example, if you activated but didn't sustain Bolstering Croak, you would require 2 gallons of water to recharge it. If you activated Bolstering Cloak and then Sustained for 1 round, you would require 4 gallons of water. --- **Activate—Tongue Twister** ⟨2⟩ (manipulate) **Requirements** The sling isn't loaded **Effect** You fully unfurl the sling's tongue to grab hold of a creature within 20 feet, and attempt to move them. Attempt an Athletics check against the creature's Fortitude DC. On a success, you can move the creature up to 15 feet into any space within 20 feet of you. If you target a willing ally with this ability, you automatically succeed at the Athletics check. --- **Craft Requirements** The initial raw materials must include the throat, tongue, and skin from a mobogo."
+ },
+ {
+  "id": "whirling-in-the-summer-storm",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Whirling in the Summer Storm",
+  "level": 12,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're in Twisting Petal Stance. --- Your hands move in a hypnotic and distracting flurry that throws your foes off-balance before you cast them away with a violent pirouette. You Step. Then each enemy within your reach must attempt a Will save against the higher of your class DC or your Deception DC; on a failure, they're off-guard to melee attacks from you and your allies until the end of your next turn. Then, shove up to three adjacent enemies; each Shove counts toward your multiple attack penalty, but you don't increase your penalty until after you've resolved all the Shove attempts."
+ },
+ {
+  "id": "wild-winds-gust",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Wild Winds Gust",
+  "level": 14,
+  "traits": [
+   "air",
+   "concentrate",
+   "manipulate",
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are in Wild Winds Stance --- You build air pressure with repeated motions, before releasing an enormous crescent of rushing wind strikes. Make a wind crash Strike against each creature in your choice of a or a . These attacks all count toward your multiple attack penalty, but the penalty doesn't increase until after you make all the attacks."
+ },
+ {
+  "id": "wild-winds-initiate",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Wild Winds Initiate",
+  "level": 8,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [
+   "focusSpells"
+  ],
+  "inRegistries": [],
+  "text": "You learn a stance that lets you attack from a distance. You gain the Wild Winds Stance qi spell. While entering the stance is a qi spell, the wind crash Strikes the stance grants are not, so you can use them as often as you like while in the stance."
+ },
+ {
+  "id": "winged",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Winged",
+  "level": 13,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This rune is a swirling glyph on the front of the armor. A large pair of transparent, ephemeral wings floats out from the back of the armor. **Activate—Take to the Skies** ⟨2⟩ (concentrate, manipulate) **Frequency** once per hour --- **Effect** You trace the rune on the front of the breastplate, and the armor's ephemeral wings grow tangible, granting you a fly Speed of 25 feet or your land Speed, whichever is slower. This effect lasts for 5 minutes or until you Dismiss it. Once the effect ends, the wings disappear completely, reappearing in their ephemeral form 1 hour later"
+ },
+ {
+  "id": "wish-alchemy",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Wish Alchemy",
+  "level": 20,
+  "traits": [
+   "alchemist"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "You have learned Artokus Kirran's most hidden secrets, granting you the ability to create alchemy infused with the power of wishes. Once per day when you use Advanced Alchemy during your daily preparations, you can spend a batch of infused reagents to create a wish vial containing a single common arcane spell of your choice of 8th level or lower. The spell must have a casting time of no more than 3 actions, no Cost, and must be able to target you. Only you can Activate the wish vial, which takes the same number of Interact actions as the spell's casting time and grants you the effects of the spell."
+ },
+ {
+  "id": "witchs-bottle",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Witch’s Bottle",
+  "level": 8,
+  "traits": [
+   "witch"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You spend 10 minutes and 1 Focus Point brewing a special potion containing the power of one of your hexes that targets a creature. A creature that consumes this potion is targeted by the hex. If the hex has a sustained duration and you have Cackle, you can cast *cackle* into the bottle just before you seal it. If you do, the hex's duration is extended as if you had cast cackle the round after the hex was cast (typically this extends the duration by 1 round). Your cackling laugh sounds out when the potion is unsealed. Any potion you create this way loses its power the next time you make your daily preparations. While the potion is in your possession, you can render it inert using a single action that has the concentrate trait. You can't regain the Focus Point you spent to create the potion (or the Focus Point you spent to cast cackle) until the potion is consumed or loses its magic."
+ },
+ {
+  "id": "wolf-drag",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Wolf Drag",
+  "level": 6,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are in Wolf Stance --- You rip your enemy off their feet. Make a wolf jaw Strike. Your wolf jaw gains the fatal d12 trait for this Strike, and if the attack succeeds, you knock the target prone."
+ },
+ {
+  "id": "world-breaking-footfall",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "World-breaking Footfall",
+  "level": 14,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are in Kaiju Stance and are touching the ground. --- You slam the ground and unleash a fearsome roar, sending broken shards of earth flying in all directions. The ground in a around you becomes difficult terrain, or greater difficult terrain if it was already difficult terrain. All other creatures within the emanation take damage with a save against your class DC. You then can't use World-breaking Footfall for 1d4."
+ },
+ {
+  "id": "wrathful-presence",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Wrathful Presence",
+  "level": 12,
+  "traits": [
+   "archetype",
+   "aura",
+   "divine",
+   "emotion",
+   "fear",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Frequency** once per 10 minutes --- You channel the unending wrath of the erinyes all around you. You have a 30-foot aura for 1 minute or until you Dismiss it. You and your allies in the aura gain a +3 status bonus to damage with Strikes. Your enemies who end their turn within the aura can't reduce their frightened value below 1."
+ },
+ {
+  "id": "wyrms-flight",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Wyrm's Flight",
+  "level": 0,
+  "traits": [
+   "transmutation"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Wyrm's Flight Source Secrets of Magic pg. 230 Aspect Dragon Activate command, envision; Frequency once per day; Effect Ghostly draconic wings grant you a fly Speed equal to your Speed or 20 feet, whichever is greater. This lasts for 10 minutes or until you Dismiss the effect. At 17th level, you can Activate and Dismiss the ability as often as you want, and it has unlimited duration."
+ },
+ {
+  "id": "accursed-magic",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Accursed Magic",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "innateSpells",
+   "spellcastingGrant"
+  ],
+  "inRegistries": [],
+  "text": "When the curse within you spills out, you can lay curses on others and claim them for yourself with ease. You can cast Claim Curse. At 10th level, you can also cast Seal Fate, and at 12th level, you can also cast Inevitable Disaster. You can cast these spells once per day as occult innate spells, but only while within your curse maelstrom state. If you couldn't already cast occult spells, these spells use Wisdom as your spellcasting attribute, and you become trained in the spell attack modifier and spell DC statistics."
+ },
+ {
+  "id": "acrobatic-performer",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Acrobatic Performer",
+  "level": 1,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You're an incredible acrobat, evoking wonder and enrapturing audiences with your prowess. You can roll an Acrobatics check instead of a Performance check when using the Perform action. If you are trained in both Acrobatics and Performance, you gain a +1 circumstances bonus on Acrobatics checks made to Perform."
+ },
+ {
+  "id": "adept-benefit-regalia",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Adept Benefit (Regalia)",
+  "level": 7,
+  "traits": [
+   "thaumaturge"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Your regalia's power increases, and so do the abilities it grants. The circumstance bonus you gain to Deception, Diplomacy, and Intimidation increases to +2, as long as you have master proficiency in each skill. When others use Follow the Expert to follow you, you grant them a +2 circumstance bonus if you are trained, +3 if you have expert proficiency, or +4 if you have master or legendary proficiency. The courage your aura instills grows stronger. The +1 status bonus now applies to all saving throws against mental effects, rather than only against fear, and you and allies in your aura gain a +2 status bonus to damage rolls. At 11th level, this increases to a +3 status bonus to damage rolls, and at 17th level, this increases to a +4 status bonus to damage rolls."
+ },
+ {
+  "id": "adept-storyteller",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Adept Storyteller",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your ability to tell stories rivals those of the finest bards. You can use your proficiency rank in any skill that can be used to Recall Knowledge to meet the requirements of skill feats that require a particular rank in Performance. You gain two Performance skill feats of 7th level or lower that you meet the prerequisites for."
+ },
+ {
+  "id": "admonishing-band",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Admonishing Band",
+  "level": 4,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Usage** affixed to a firearm **Activate** ⟨1⟩ (concentrate) **Requirements** You're trained in Intimidation. --- This wide strip of treated lizard hide is wrapped around the grip or stock of the affixed weapon, augmenting the unease that your gunshot creates. When you activate it, you fire your gun into the air with the effects of Warning Shot. If you already have the Warning Shot feat, the target doesn't become temporarily immune to your Demoralize, potentially allowing you to Demoralize them again."
+ },
+ {
+  "id": "aerobatics-mastery",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Aerobatics Mastery",
+  "level": 7,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You move with grace in flight and can perform amazing aerial stunts. You gain a +2 circumstance bonus to Acrobatics checks to Maneuver in Flight and can combine two maneuvers into a single action, such as reversing direction while making a steep ascent or descent or hovering in gale-force winds. The DC of the Acrobatics check is equal to the DC of the most difficult maneuver + 5. If you're legendary in Acrobatics, you can combine three such maneuvers into a single action; the DC of the Acrobatics check is equal to the DC of the most difficult maneuver + 10. Regardless of the combination, these maneuvers rarely allow you to move farther than your Fly Speed."
+ },
+ {
+  "id": "ageless-spirit",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Ageless Spirit",
+  "level": 1,
+  "traits": [
+   "leshy"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You remember more about your previous incarnations than most leshys. During your daily preparations, you can meditate upon fragmentary memories of your past lives to gain the trained proficiency rank in one skill of your choice. This proficiency lasts until you prepare again. Since this proficiency is temporary, you can't use it as a prerequisite for a skill increase or a permanent character option like a feat."
+ },
+ {
+  "id": "alchemical-discoveries",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Alchemical Discoveries",
+  "level": 4,
+  "traits": [
+   "investigator"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've devoted extra time in the lab to improve your knowledge of alchemy. You learn the formulas for two alchemical items each time you level up instead of one; these must still be elixirs or tools. The number of versatile vials you can create each day increases by one if you're an expert in Crafting, two if you're a master, or three if you're legendary."
+ },
+ {
+  "id": "alchemical-expertise",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Alchemical Expertise",
+  "level": 9,
+  "traits": [
+   "alchemist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Constant practice has increased the effectiveness of your concoctions. Your proficiency rank for your alchemist class DC increases to expert. In addition, when you gather reagents during exploration mode, you can regain three vials instead of two."
+ },
+ {
+  "id": "alchemical-mastery",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Alchemical Mastery",
+  "level": 17,
+  "traits": [
+   "alchemist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your concoctions are incredibly effective. Your proficiency rank for your alchemist class DC increases to master."
+ },
+ {
+  "id": "alchemical-sciences-methodology",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Alchemical Sciences Methodology",
+  "level": 1,
+  "traits": [
+   "investigator"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featFeatGrants"
+  ],
+  "text": "Your methodology emphasizes chemical and alchemical analysis, collecting information from unusual particles and fluids found on the scene. You possess enough alchemical know-how to whip up a few tinctures to help you with your cases. You're trained in Crafting and gain the Alchemical Crafting skill feat. You start with a standard formula book, which contains the formulas for two common 1st-level alchemical items of your choice (these must be elixirs or tools), in addition to the formulas gained from Alchemical Crafting. Each time you gain a level, you learn the formula for one common alchemical elixir or alchemical tool of any level of item you can create. During your daily preparations, you can create a number of versatile vials equal to your Intelligence modifier. Statistics for versatile vials appear in the alchemist class. You gain the Quick Tincture action, which you can use to turn one of these vials into an elixir or alchemical tool for which you know the formula. If you have the ability to create versatile vials from more than one source (such as the alchemist multiclass archetype), you can use any of your versatile vials for any ability you have that requires them."
+ },
+ {
+  "id": "ambush-tactics",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Ambush Tactics",
+  "level": 4,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've made a study of the best practices for laying ambushes in terrains you've spent time learning about, be it the best way to ambush foes or the best methods of reacting to surprise attacks in those terrains. In any combat during which an enemy rolls Stealth to determine initiative, you can choose to roll initiative using a Lore check that's appropriate for the encounter's terrain, if you're trained in the appropriate Lore skill."
+ },
+ {
+  "id": "ancestral-echoing",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Ancestral Echoing",
+  "level": 15,
+  "traits": [
+   "dwarf",
+   "magical",
+   "saggorak"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The wisdom of this weapon's past owners flows into your mind, amplifying your own abilities with the weapon. Your proficiency rank with this weapon is one step higher than normal, to a maximum of the highest proficiency rank you have in any weapon. For instance, if you had master proficieny with martial weapons and expert proficiency with advanced weapons, you would have master proficiency with advanced weapon that had this rune. In addition, while wielding the ancestral echoing weapon, you have expert proficiency in one Lore skill relevant to one or more of the weapon's previous owners. This is typically Dwarven Lore but is ultimately determined by the GM depending on the weapon's history."
+ },
+ {
+  "id": "ancestral-longevity",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Ancestral Longevity",
+  "level": 1,
+  "traits": [
+   "elf"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You have accumulated a vast array of lived knowledge over the years. During your daily preparations, you can reflect upon your life experiences to gain the trained proficiency rank in one skill of your choice. This proficiency lasts until you prepare again. Since this proficiency is temporary, you can't use it as a prerequisite for a skill increase or a permanent character option like a feat."
+ },
+ {
+  "id": "animist-dedication",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Animist Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication",
+   "multiclass"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You have formed a bond with an apparition and can cast divine spells. Choose a single apparition from those available to the animist. You become bound to that apparition and can attune to it each day during your daily preparations to become trained in its apparition skills. If you are 8th level, you are expert in its apparition skills while attuned to it, and if you are 16th level, you are a master in its apparition skills while attuned to it. You can spend 1 day of downtime ending your relationship with this apparition and bonding to a new one. You gain the Cast a Spell activity. You can prepare two common cantrips each day from the divine spell list or any other divine cantrips you have access to, including the cantrip listed in your apparition's apparition spells. You're trained in the spell attack modifier and spell DC statistics. Your key spellcasting attribute for animist archetype spells is Wisdom, and they are divine animist spells."
+ },
+ {
+  "id": "ant-kholo",
+  "lane": "proficiency",
+  "collection": "heritages",
+  "name": "Ant Kholo",
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You're a sharp-featured, big-eared kholo about 3 feet tall. Many are skeptical that you are in fact a kholo. Your size is Small instead of Medium. You are trained in Deception (or another skill if you were already trained in Deception). You gain a +1 circumstance bonus to Deception checks to Lie when specifically claiming innocence, to Deception DCs against Sense Motive checks to uncover such lies, and to initiative checks when you roll Deception for initiative."
+ },
+ {
+  "id": "aon-barding",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Barding",
+  "level": 0,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can purchase special armor for animals, called barding (shown on Table 6–18). All animals have a trained proficiency rank in light barding, and combat-trained animals are trained in heavy barding. Barding uses the same rules as armor except for the following. The Price and Bulk of barding depend on the animal’s size. Unlike for a suit of armor, barding’s Strength entry is listed as a modifier, not a score. Barding can’t be etched with magic runes, though special magical barding might be available. ## Barding Barding Size Price AC Bonus Dex Cap Check Penalty Speed Penalty Bulk Strength Light Small or Medium 10 gp +1 +5 -1 -5 ft. 2 +3 Large 20 gp +1 +5 -1 -5 ft. 4 +3 Heavy Small or Medium (Level 2) 25 gp +3 +3 -3 -10 ft. 4 +5 Large (Level 3) 50 gp +3 +3 -3 -10 ft. 8 +5"
+ },
+ {
+  "id": "aon-repository-of-knowledge",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Repository of Knowledge",
+  "level": 0,
+  "traits": [
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Repository of Knowledge Aspect Mind Your relic is imbued with the psychic impressions of ages past. While the relic is on your person, you are trained in 3 additional Lore skills of the GM's choice that fit the relic's history, decided at the time of gaining this gift. If the relic is 9th level, you instead have expert proficiency in these Lore skills, and if the relic is 17th level, you have master proficiency in these Lore skills."
+ },
+ {
+  "id": "arcane-sense",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Arcane Sense",
+  "level": 1,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [
+   "innateSpells"
+  ],
+  "inRegistries": [],
+  "text": "Your study of magic allows you to instinctively sense its presence. You can cast 1st-rank Detect Magic at will as an arcane innate spell. If you're a master in Arcana, the spell is heightened to 3rd rank; if you're legendary, it is heightened to 4th rank."
+ },
+ {
+  "id": "armor-potency",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Armor Potency",
+  "level": 5,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Armor Potency Source GM Core pg. 226 Usage etched onto armor Magic wards deflect attacks. Increase the armor's item bonus to AC by 1. The armor can be etched with one property rune. You can upgrade the armor potency rune already etched on a suit of armor using the normal process for upgrading items and runes. Armor Potency (+1) Source GM Core pg. 226, Core Rulebook pg. 581 Price 160 gp Craft Requirements You're an expert in Crafting. Armor Potency (+2) Source GM Core pg. 226, Core Rulebook pg. 581 Price 1,060 gp Increase the armor's item bonus to AC by 2, and the armor can be etched with two property runes. Craft Requirements You're a master in Crafting. Armor Potency (+3) Source GM Core pg. 226, Core Rulebook pg. 581 Price 20,560 gp Increase the armor's item bonus to AC by 3, and the armor can be etched with three property runes. Craft Requirements You're legendary in Crafting."
+ },
+ {
+  "id": "armored-exercise",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Armored Exercise",
+  "level": 14,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've spent time training in your armor alongside other agents from the Swords. Your proficiency rank for light, medium, and heavy armor increases to expert for whichever of those you already had the trained proficiency rank in."
+ },
+ {
+  "id": "armored-stealth",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Armored Stealth",
+  "level": 2,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You have learned techniques to adjust and modify your armor and movements to reduce the noise you make. When you wear non-noisy armor with which you are trained, your penalty to Stealth checks is reduced by 1 (to a minimum penalty of 0). If you're a master in Stealth, reduce the penalty by 2, and if you're legendary, reduce the penalty by 3. If your armor has the noisy trait, instead of reducing the penalty to Stealth checks, you ignore the effects of the noisy trait, enabling you to remove the penalty with a sufficient Strength score as normal."
+ },
+ {
+  "id": "artery-map",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Artery Map",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "While you've learned all the places a scalpel can cause extensive bleeding to avoid disasters in surgery, such knowledge can serve other purposes. When you Strike an off-guard creature with a weapon from the knife group, you deal 1d6 persistent bleed damage. The damage increases to 1d10 when you are legendary in Medicine."
+ },
+ {
+  "id": "as-on-the-board-so-on-the-battlefield",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "As on the Board, so on the Battlefield",
+  "level": 7,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "You're a master of strategy games, able to translate strategies and mechanics from these games to the actual battles they were created to simulate. You can use your proficiency rank in Games Lore for anything that requires proficiency in Warfare Lore (such as prerequisites) and use your Games Lore modifier in place of your Warfare Lore modifier for checks. You can use Games Lore to make-an-impression on military professionals, such as mercenaries and commanders. Your reputation as a strategist opens up opportunities while you're in a military camp, near a battlefield, or somewhere else that has numerous non-hostile soldiers, allowing you to Earn Income with Games Lore with a task level of at least your level –1. If you lead a troop and have had time to create a skirmish bond with them, you've also spent time going over the finer points of strategy and even played against many members of your troop. Once per day, you can roll Games Lore for initiative when leading this troop."
+ },
+ {
+  "id": "assume-godhood",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Assume Godhood",
+  "level": 20,
+  "traits": [
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You complete your apotheosis into living godhood, allowing you to empower more followers. You can serve as the deity for classes with a deity feature, such as clerics, empowering them to cast divine spells with their class features. When you serve as the deity in this way, you can provide any aspect of a deity stat block (such as domains or a favored weapon) that you yourself have acquired from a godling feat. In addition, you can choose one skill you are legendary in to act as your divine skill, and your divine attributes include your key attribute and one other attribute of your choosing. When you Assume Godhood, choose three spells from any list other than the divine list; one must be 1st rank, one must be 2nd or 3rd rank, and one can be of any rank. These spells become additional cleric spells you can grant to your followers. You gain the Intercession Spell ability, allowing you to directly provide the magic that your hierophant uses to enact your miracles. If you die after Assuming Godhood, only your mortal body perishes, and you continue your existence as a deity, watching over the Universe from afar. In this deific form, you cannot move, act, or speak normally, though you still grant spells to your followers and can perceive and affect them using your godling abilities like Receive Prayers or Intercession Spell, regardless of range. If you need to take more direct action in creation, you can descend to the Universe and incarnate yourself into a mortal body of your choosing within 1 mile of one of your followers or a holy site relevant to your faith, which has the same statistics and abilities that you had before you died. This new body can have any appearance you wish, but typically retains at least one feature important to your divine iconography, such as eye color, a scar, or a unique birthmark. You can incarnate yourself as often as you like, but repeated direct intercessions in the affairs of mortals typically attract the attention and sanction of older and more established deities."
+ },
+ {
+  "id": "assurance",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Assurance",
+  "level": 1,
+  "traits": [
+   "fortune",
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "Even in the worst circumstances, you can perform basic tasks. Choose a skill you're trained in. You can forgo rolling a skill check for that skill to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers). --- **Special** You can select this feat multiple times. Each time, choose a different skill and gain the benefits for that skill."
+ },
+ {
+  "id": "auspicious-mount",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Auspicious Mount",
+  "level": 16,
+  "traits": [
+   "champion"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Guided by your ongoing care, your steed has developed incredible intelligence and skill. The mount you gained with Faithful Steed is now a specialized animal companion. You can select one of the usual specializations or the auspice specialization. A faithful steed with the auspice specialization gains the following benefits. - It gains the celestial, fiend, or monitor trait—whichever best matches your deity's servitors, and its appearance shifts to look more like those servitors. It also gains the holy trait if it's a celestial or the unholy trait if it's a fiend. - Its Intelligence modifier increases by 2 and its Wisdom modifier by 1. - Its proficiency rank in Religion increases to expert. - It can speak the language associated with your deity's servitors (such as Empyrean for celestials, Chthonian for demons, or Requian for psychopomps). - Its maximum Hit Points increase by 20, increasing to 25 at 18th level and 30 at 20th level. If the mount has the celestial trait, the extra HP increase by 5, and the mount gains weakness 5 to unholy. If it has the fiend trait, the extra HP increase by 5, and the mount gains weakness 5 to holy. - It gains wings that grant it a fly Speed equal to its land Speed."
+ },
+ {
+  "id": "avenger",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Avenger",
+  "level": 1,
+  "traits": [
+   "rogue"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "Trained far from watching eyes, you use stealth, intimidation, and deadly bladework to root out threats to your church. You must select Avenger Dedication as your 2nd-level class feat. **Prerequisites:** You must be a rogue. **Avenger Adjustments:** You must choose a deity to be a follower of. You are trained in Intimidation, Religion, Stealth, the divine skill granted by your racket, and a number of additional skills equal to 3 plus your Intelligence modifier, instead of your normal starting skill proficiencies. You must choose the avenger racket for your rogue's racket. You do not gain the Surprise Attack class feature. You gain the Hunt Prey action. ## Avenger Racket Trained to be a precise but brutal weapon by the priests of your faith, you eschew complex trickery for swift and deadly efficiency. Subtlety and deception have their uses, but when a false smile fails, your blades have their own way of finding the truth. You are trained in your deity's favored weapon. Whenever you gain a class feature that grants you expert or greater proficiency with simple or martial weapons, you also gain that proficiency rank with your deity's favored weapon. You can deal sneak attack damage to your prey with your deity's favored weapon, in addition to the weapons listed in the sneak attack class feature. When you critically succeed at an attack roll using your deity's favored weapon and the target has the off-guard condition, you also apply the weapon's critical specialization effect. You're trained in your deity's divine skill and medium armor; if you're already trained in your deity's divine skill, you are instead trained in another skill of your choice. You can choose Strength as your key attribute modifier. When you gain light armor expertise, you also gain expert proficiency in medium armor, and when you gain light armor mastery, you also gain master proficiency in medium armor."
+ },
+ {
+  "id": "azarketi-weapon-expertise",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Azarketi Weapon Expertise",
+  "level": 13,
+  "traits": [
+   "azarketi"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your mastery with weapons both above and below water is unmatched. Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency in Crossbows, Hand Crossbows, Longspears, Spears, Tridents, and all azarketi weapons in which you are trained."
+ },
+ {
+  "id": "backup-disguise",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Backup Disguise",
+  "level": 2,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You have a specific disguise that you keep at the ready, worn underneath your outer garment. You can change into this disguise to Impersonate as a 3-action activity. If you are a master in Deception, it is instead a 2-action activity, and if you are legendary in Deception, it is a single action. You can create a new backup disguise by spending the normal amount of time it takes you to Impersonate, but you can have only one backup disguise at a time. Having a backup disguise doesn't allow you to remove your armor or any other complex piece of clothing any more quickly, but once you have those off, the disguise is readily available. Because you have the backup disguise at the ready, it's possible that a thorough search might reveal some elements of the disguise (see Conceal an Object in the Stealth skill)."
+ },
+ {
+  "id": "banished-celestial",
+  "lane": "proficiency",
+  "collection": "backgrounds",
+  "name": "Banished Celestial",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts"
+  ],
+  "inRegistries": [],
+  "text": "You were once something supernatural—a heavenly agent, grim reaper, immortal phoenix, or demonic tyrant. For some reason, you've been forced to live in a mortal form. You might have been sealed by the holy power of a monk or cruelly betrayed and slain, but most likely, your superiors punished you for your hubris. You can't remember your previous life very well, if you're even aware you were once anything more than you currently are, but you aren't completely forsaken by the powers that once ruled your life. You often find a spark of enlightenment in failure, as fate nudges you to correct the mistakes or tragedies that caused your unmaking. You gain two free attribute boosts. You choose one, and the GM chooses the other based on your past life. You're trained in any one skill of your choice and any one Lore skill of your choice. You gain the Enlightenment in Adversity ability. --- ## Background details **Attribute Boosts** two free"
+ },
+ {
+  "id": "barding",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Barding",
+  "level": 0,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Barding Source Player Core pg. 295 Bulk L You can purchase special armor for animals, called barding (shown on Table 6–18). All animals have a trained proficiency rank in light barding, and combat-trained animals are trained in heavy barding. Barding uses the same rules as armor except for the following. The Price and Bulk of barding depend on the animal’s size. Unlike for a suit of armor, barding’s Strength entry is listed as a modifier, not a score. Barding can’t be etched with magic runes, though special magical barding might be available. Barding Barding Size Price AC Bonus Dex Cap Check Penalty Speed Penalty Bulk Strength Light Small or Medium 10 gp +1 +5 -1 -5 ft. 2 +3 Large 20 gp +1 +5 -1 -5 ft. 4 +3 Heavy Small or Medium (Level 2) 25 gp +3 +3 -3 -10 ft. 4 +5 Large (Level 3) 50 gp +3 +3 -3 -10 ft. 8 +5 Barding (Light; Small or Medium) Source Player Core pg. 295, Core Rulebook pg. 295 Price 10 gp Bulk 2 Barding (Light; Large) Source Player Core pg. 295, Core Rulebook pg. 295 Price 20 gp Bulk 4 Barding (Heavy; Small or Medium) Source Player Core pg. 295, Core Rulebook pg. 295 Price 25 gp Bulk 4 Barding (Heavy; Large) Source Player Core pg. 295, Core Rulebook pg. 295 Price 50 gp Bulk 8"
+ },
+ {
+  "id": "barding-heavy-large",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Barding (Heavy; Large)",
+  "level": 3,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Barding Source Player Core pg. 295 Bulk L You can purchase special armor for animals, called barding (shown on Table 6–18). All animals have a trained proficiency rank in light barding, and combat-trained animals are trained in heavy barding. Barding uses the same rules as armor except for the following. The Price and Bulk of barding depend on the animal’s size. Unlike for a suit of armor, barding’s Strength entry is listed as a modifier, not a score. Barding can’t be etched with magic runes, though special magical barding might be available. Barding Barding Size Price AC Bonus Dex Cap Check Penalty Speed Penalty Bulk Strength Light Small or Medium 10 gp +1 +5 -1 -5 ft. 2 +3 Large 20 gp +1 +5 -1 -5 ft. 4 +3 Heavy Small or Medium (Level 2) 25 gp +3 +3 -3 -10 ft. 4 +5 Large (Level 3) 50 gp +3 +3 -3 -10 ft. 8 +5 Barding (Light; Small or Medium) Source Player Core pg. 295, Core Rulebook pg. 295 Price 10 gp Bulk 2 Barding (Light; Large) Source Player Core pg. 295, Core Rulebook pg. 295 Price 20 gp Bulk 4 Barding (Heavy; Small or Medium) Source Player Core pg. 295, Core Rulebook pg. 295 Price 25 gp Bulk 4 Barding (Heavy; Large) Source Player Core pg. 295, Core Rulebook pg. 295 Price 50 gp Bulk 8"
+ },
+ {
+  "id": "barding-heavy-small-or-medium",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Barding (Heavy; Small or Medium)",
+  "level": 2,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Barding Source Player Core pg. 295 Bulk L You can purchase special armor for animals, called barding (shown on Table 6–18). All animals have a trained proficiency rank in light barding, and combat-trained animals are trained in heavy barding. Barding uses the same rules as armor except for the following. The Price and Bulk of barding depend on the animal’s size. Unlike for a suit of armor, barding’s Strength entry is listed as a modifier, not a score. Barding can’t be etched with magic runes, though special magical barding might be available. Barding Barding Size Price AC Bonus Dex Cap Check Penalty Speed Penalty Bulk Strength Light Small or Medium 10 gp +1 +5 -1 -5 ft. 2 +3 Large 20 gp +1 +5 -1 -5 ft. 4 +3 Heavy Small or Medium (Level 2) 25 gp +3 +3 -3 -10 ft. 4 +5 Large (Level 3) 50 gp +3 +3 -3 -10 ft. 8 +5 Barding (Light; Small or Medium) Source Player Core pg. 295, Core Rulebook pg. 295 Price 10 gp Bulk 2 Barding (Light; Large) Source Player Core pg. 295, Core Rulebook pg. 295 Price 20 gp Bulk 4 Barding (Heavy; Small or Medium) Source Player Core pg. 295, Core Rulebook pg. 295 Price 25 gp Bulk 4 Barding (Heavy; Large) Source Player Core pg. 295, Core Rulebook pg. 295 Price 50 gp Bulk 8"
+ },
+ {
+  "id": "barding-light-large",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Barding (Light; Large)",
+  "level": 0,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Barding Source Player Core pg. 295 Bulk L You can purchase special armor for animals, called barding (shown on Table 6–18). All animals have a trained proficiency rank in light barding, and combat-trained animals are trained in heavy barding. Barding uses the same rules as armor except for the following. The Price and Bulk of barding depend on the animal’s size. Unlike for a suit of armor, barding’s Strength entry is listed as a modifier, not a score. Barding can’t be etched with magic runes, though special magical barding might be available. Barding Barding Size Price AC Bonus Dex Cap Check Penalty Speed Penalty Bulk Strength Light Small or Medium 10 gp +1 +5 -1 -5 ft. 2 +3 Large 20 gp +1 +5 -1 -5 ft. 4 +3 Heavy Small or Medium (Level 2) 25 gp +3 +3 -3 -10 ft. 4 +5 Large (Level 3) 50 gp +3 +3 -3 -10 ft. 8 +5 Barding (Light; Small or Medium) Source Player Core pg. 295, Core Rulebook pg. 295 Price 10 gp Bulk 2 Barding (Light; Large) Source Player Core pg. 295, Core Rulebook pg. 295 Price 20 gp Bulk 4 Barding (Heavy; Small or Medium) Source Player Core pg. 295, Core Rulebook pg. 295 Price 25 gp Bulk 4 Barding (Heavy; Large) Source Player Core pg. 295, Core Rulebook pg. 295 Price 50 gp Bulk 8"
+ },
+ {
+  "id": "barding-light-small-or-medium",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Barding (Light; Small or Medium)",
+  "level": 0,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Barding Source Player Core pg. 295 Bulk L You can purchase special armor for animals, called barding (shown on Table 6–18). All animals have a trained proficiency rank in light barding, and combat-trained animals are trained in heavy barding. Barding uses the same rules as armor except for the following. The Price and Bulk of barding depend on the animal’s size. Unlike for a suit of armor, barding’s Strength entry is listed as a modifier, not a score. Barding can’t be etched with magic runes, though special magical barding might be available. Barding Barding Size Price AC Bonus Dex Cap Check Penalty Speed Penalty Bulk Strength Light Small or Medium 10 gp +1 +5 -1 -5 ft. 2 +3 Large 20 gp +1 +5 -1 -5 ft. 4 +3 Heavy Small or Medium (Level 2) 25 gp +3 +3 -3 -10 ft. 4 +5 Large (Level 3) 50 gp +3 +3 -3 -10 ft. 8 +5 Barding (Light; Small or Medium) Source Player Core pg. 295, Core Rulebook pg. 295 Price 10 gp Bulk 2 Barding (Light; Large) Source Player Core pg. 295, Core Rulebook pg. 295 Price 20 gp Bulk 4 Barding (Heavy; Small or Medium) Source Player Core pg. 295, Core Rulebook pg. 295 Price 25 gp Bulk 4 Barding (Heavy; Large) Source Player Core pg. 295, Core Rulebook pg. 295 Price 50 gp Bulk 8"
+ },
+ {
+  "id": "basic-summoner-spellcasting",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Basic Summoner Spellcasting",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain the benefits. You gain the Cast a Spell activity. Your key spellcasting ability for summoner archetype spells is Charisma, and they are summoner spells of your eidolon's tradition. You become trained in spell attack rolls and spell DCs of that tradition. You gain a spell repertoire and two cantrips. Each time you gain a spell slot of a new rank from the summoner archetype, add a spell of that rank or lower to your repertoire. Each time you lose spell slots of a particular rank, remove those spells from your repertoire."
+ },
+ {
+  "id": "battle-creed",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Battle Creed",
+  "level": 1,
+  "traits": [
+   "cleric"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've undergone a special training to focus your body toward combat. While you still adhere to the teachings of your faith, you also know that you serve as an instrument of your church. More so than any warpriest, the physical rigors that come with battle are key to your training. You've dedicated yourself to the battle creed, a specific approach that puts combat prowess first, even at the expense of a cleric's typical spellcasting and restorative abilities. Defeating one's enemies is more important than healing an ally in the heat of battle; the time for healing comes after. As you abide by the battle creed, your physical and martial capabilities grow stronger. You must select Battle Harbinger Dedication as your 2nd- level class feat. **Prerequisites:** - You must be a cleric. - You don't gain the Resolute Faith class feature. - You don't gain the Miraculous Spell class feature. **Spellcasting Adjustment**: Your spellcasting capabilities are more restricted. At 1st level, you can prepare one 1st-rank spell and five cantrips. As you increase in level, your number of spell slots and the highest rank of spells you can cast from spell slots increases, shown in Battle Harbinger Spells per Day. Because of your focus on your physical training at the expense of magical aptitude, you have no more than two spell slots of your highest rank and, if you can cast 2nd-rank spells or higher, two spell slots of 1 rank lower than your highest spell rank. For anything that requires the ability to cast spells of a certain rank that's lower than the highest slots you have, you still qualify even if you no longer have spell slots at those ranks. | Your Level | Cantrips | 1st | 2nd | 3rd | 4th | 5th | 6th | 7th | 8th | 9th | | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | | 1 | 5 | 1 | - | - | - | - | - | - | - | - | | 2 | 5 | 2 | - | - | - | - | - | - | - | - | | 3 | 5 | 2 | 1 | - | - | - | - | - | - | - | | 4 | 5 | 2 | 2 | - | - | - | - | - | - | - | | 5 | 5 | - | 2 | 2 | - | - | - | - | - | - | | 6 | 5 | - | 2 | 2 | - | - | - | - | - | - | | 7 | 5 | - | - | 2 | 2 | - | - | - | - | - | | 8 | 5 | - | - | 2 | 2 | - | - | - | - | - | | 9 | 5 | - | - | - | 2 | 2 | - | - | - | - | | 10 | 5 | - | - | - | 2 | 2 | - | - | - | - | | 11 | 5 | - | - | - | - | 2 | 2 | - | - | - | | 12 | 5 | - | - | - | - | 2 | 2 | - | - | - | | 13 | 5 | - | - | - | - | - | 2 | 2 | - | - | | 14 | 5 | - | - | - | - | - | 2 | 2 | - | - | | 15 | 5 | - | - | - | - | - | - | 2 | 2 | - | | 16 | 5 | - | - | - | - | - | - | 2 | 2 | - | | 17 | 5 | - | - | - | - | - | - | - | 2 | 2 | | 18 | 5 | - | - | - | - | - | - | - | 2 | 2 | | 19 | 5 | - | - | - | - | - | - | - | 2 | 2 | | 20 | 5 | - | - | - | - | - | - | - | 2 | 2 | **Divine Font Adjustment:** Instead of preparing Heal or Harm spells with your divine font, you instead gain the battle font, which allows you to prepare battle aura spells. You gain 4 additional spell slots each day at your highest rank of cleric spell slots. You can prepare only Bane or Bless in these slots. Any feats and effects that refer to a battle aura refers to these spells, regardless of whether they were cast with your standard spell slots or your divin"
+ },
+ {
+  "id": "battle-cry",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Battle Cry",
+  "level": 7,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "When you roll initiative, you can yell a mighty battle cry and demoralize an observed foe as a free action. If you're legendary in Intimidation, you can use a reaction to Demoralize your foe when you critically succeed at an attack roll."
+ },
+ {
+  "id": "battle-medicine",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Battle Medicine",
+  "level": 1,
+  "traits": [
+   "general",
+   "healing",
+   "manipulate",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're holding or wearing a healer's toolkit. --- You can patch up wounds, even in combat. Attempt a Medicine check with the same DC as for Treat Wounds and restore the corresponding amount of HP; this doesn't remove the wounded condition. As with Treat Wounds, you can attempt checks against higher DCs if you have the minimum proficiency rank. The target is then to your Battle Medicine for 1 day. This does not make them immune to, or otherwise count as, Treat Wounds."
+ },
+ {
+  "id": "battledancer",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Battledancer",
+  "level": 1,
+  "traits": [
+   "swashbuckler"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featFeatGrants"
+  ],
+  "text": "To you, a fight is a kind of performance art, and you command your foes' attention with mesmerizing motions. You are trained in Performance and gain the Fascinating Performance skill feat. When you Perform, the action gains the bravado trait."
+ },
+ {
+  "id": "beast-gunner-dedication",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Beast Gunner Dedication",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "dedication",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "You've unlocked the first hints of your weapon's hidden potential. You treat all beast guns as martial firearms when determining your proficiency with them, even beast guns that are normally advanced weapons. You can change your bonded beast gun to another beast gun you own each day during your daily preparations, as long as you've previously performed a ritual hunt associated with the new beast gun. The beast gun also acts as a conduit, amplifying any latent or active magic power you have. Unlocking this ability allows you to master it with other magical firearms. You learn to cast spontaneous spells and gain the Cast a Spell activity. You gain a spell repertoire with one cantrip of your choice, from either the arcane or primal spell list. You choose this cantrip from the common spells on your chosen spell list or from other spells you have access to on the list. This cantrip must require a spell attack roll. You're trained in the spell attack modifier and spell DC statistics. Your key spellcasting ability for these spells is either Charisma or Intelligence, chosen when you take this feat. If you already cast arcane or primal spells from spell slots, you learn one additional cantrip from that tradition. If you're a prepared caster, you can prepare this spell in addition to your usual cantrips per day; if you're a spontaneous caster, you add this cantrip to your spell repertoire. You also gain Spellsling. **Spellsling** ⟨3⟩"
+ },
+ {
+  "id": "beastmaster-bond",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Beastmaster Bond",
+  "level": 10,
+  "traits": [
+   "archetype",
+   "mental",
+   "primal"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can communicate telepathically with your animal companions within 100 feet. If you're legendary in Nature, you can communicate telepathically with your animal companions anywhere on the planet."
+ },
+ {
+  "id": "beastmaster-dedication",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Beastmaster Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "You gain the service of a young animal companion that travels with you and obeys your commands. Contrary to the usual rules for animal companions, this feat can grant you a second animal companion. If you ever have more than one animal companion, you gain the Call Companion action. See the Beastmaster Animal Companions sidebar for details on this action. Certain beastmaster feats give you focus spells. When you gain your first beastmaster focus spell, you become trained in the spell attack modifier and spell DC statistics. Your key spellcasting attribute for beastmaster archetype spells is Charisma, and they are primal spells. You can Refocus by feeding, playing with, or otherwise tending to an animal companion. --- **BEASTMASTER ANIMAL COMPANIONS** If you're playing a beastmaster, you determine the statistics and abilities of your animal companions. As a beastmaster, it's possible for you to have more than one animal companion at one time—up to four companions—but only one of those companions, your \"active companion,\" follows you during exploration and in encounters; the rest are nearby, usually foraging or hunting for food. As soon as you gain a second animal companion from the Beastmaster archetype, you also gain Call Companion to switch your active companion. These rules apply to all your companions, regardless of whether you got the animal companion from the beastmaster archetype or from another source."
+ },
+ {
+  "id": "beneath-notice",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Beneath Notice",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featFeatGrants"
+  ],
+  "text": "You are skilled at hiding from your foes and targets among the common populace. You gain the Quick Disguise and Slippery Secrets skill feats. In addition, while in a crowd, you can Impersonate a nondescript member of the crowd as a three action activity (one action if you are legendary in Deception)"
+ },
+ {
+  "id": "bless-tonic",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Bless Tonic",
+  "level": 7,
+  "traits": [
+   "general",
+   "skill",
+   "vitality"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You channel vitality energy into restoratives that ward against harm. When you Craft an alchemical item that restores Hit Points (rather than create it with advanced alchemy, Quick Alchemy, or another means), it becomes a blessed alchemical item and gains the vitality trait. For example, an Elixir of Life would become a blessed elixir of life. When a creature regains Hit Points using a blessed alchemical item, the overflowing energy grants them void resistance 5 for 1 round, or void resistance 10 if you are legendary in Crafting."
+ },
+ {
+  "id": "bless-toxin",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Bless Toxin",
+  "level": 7,
+  "traits": [
+   "general",
+   "skill",
+   "void"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You pour void energy into toxins you create to further debilitate your targets. When you Craft an alchemical poison (rather than create it with advanced alchemy, Quick Alchemy, or another means), it becomes a blessed alchemical poison and gains the void trait. When a creature is afflicted with a blessed alchemical poison, for 1 round, any Hit Points it would regain from a vitality effect are reduced by 5, or by 10 if you are legendary in Crafting."
+ },
+ {
+  "id": "bloodline-spells",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Bloodline Spells",
+  "level": 1,
+  "traits": [
+   "sorcerer"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your bloodline grants you bloodline spells, special spells unique to your lineage. Bloodline spells are a type of focus spell. It costs 1 Focus Point to cast a focus spell, and you start with a focus pool of 1 Focus Point. You refill your focus pool during your daily preparations, and you can regain 1 Focus Point by spending 10 minutes using the Refocus activity. Unlike other characters, you don't need to do anything specific to Refocus, as the power flowing through your veins naturally replenishes your focus pool. Focus spells are automatically heightened to half your level rounded up, much like cantrips. Focus spells don't require spell slots; you can't cast them using spell slots. The maximum Focus Points your focus pool can hold is equal to the number of focus spells you have, but can never be more than 3 points. You learn the initial bloodline spell, which is unique to your bloodline. ### Reading a Bloodline Entry A bloodline entry contains the following information. **Tradition** You use this magical tradition and spell list **Bloodline Skills** You become trained in the listed skills. **Sorcerous Gifts** You automatically add the spells listed here to your spell repertoire, as described in the Spell Repertoire feature. At 1st level, you gain a cantrip and a 1st-rank spell. You learn the other spells on the list as soon as you gain the ability to cast sorcerer spells of that rank. **Bloodline Spells** You automatically gain the initial bloodline spell at 1st level and can gain more by selecting the Advanced Bloodline and Greater Bloodline feats. **Blood Magic** Whenever you cast a bloodline spell using a Focus Point or a sorcerous gift spell using a spell slot, you choose one blood magic effect you know to benefit from. You begin play with the benefit listed in your bloodline and can gain others through sorcerer feats. If the blood magic effect offers a choice, make it before resolving the spell. The blood magic effect occurs after resolving any checks for the spell's initial effects and, against a foe, applies only if the spell is a successful attack or the foe fails its saving throw. If the spell has an area, you must designate yourself or one target in the area when you cast the spell to be the target of the blood magic effect. All references to spell rank refer to the rank of the spell you cast."
+ },
+ {
+  "id": "boasters-challenge",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Boaster's Challenge",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You call out a foe, causing them to become flustered and easier to defeat. Select one creature you can see and declare a challenge. For your challenge, attempt a , , or check against that creature's Will DC. Your challenge must include a linguistic, auditory, or visual component and gains the corresponding trait. If you succeed, you gain a +2 status bonus to damage rolls with your weapon or unarmed Strikes against that foe until the end of your next turn; if you have master proficiency in the skill you used, you gain a +4 status bonus instead, and if you're legendary, you gain a +6 status bonus. On a critical success, the status bonus lasts for 3 rounds instead. Whether you succeed or fail, creatures who witnessed your challenge gain a +4 circumstance bonus to their Will DCs against your attempts to challenge for 1 minute."
+ },
+ {
+  "id": "bonded-animal",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Bonded Animal",
+  "level": 2,
+  "traits": [
+   "downtime",
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You forge strong connections with animals. You can spend 7 days of downtime regularly interacting with a normal animal (not a companion or other special animal) that is friendly or helpful to you. After this duration, attempt a DC 20 Nature check against the animal's Will DC. If successful, you bond with the animal. The animal is permanently bonded to you until you form a bond with a different animal or do something egregious to break your bond. A helpful animal is easier to direct. If your bonded animal is level –1, it gains the minion trait, allowing you to command it more efficiently. The maximum level of creature that can be your minion increases to 3 if you're a master in Nature and to 11 if you're legendary. --- **Special** You can't have both a bonded animal and an animal companion (though you can have both a bonded animal and a pet or familiar)."
+ },
+ {
+  "id": "bookkeepers-calling",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Bookkeeper's Calling",
+  "level": 1,
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your passion and destiny are both tied to the preservation of knowledge and a deep-seated love of instruments designed to preserve and propagate knowledge, such as books and scrolls. When you attempt a check to Recall Knowledge or Earn Income using a Lore skill you're trained in, you can spend a Mythic Point to attempt the check at mythic proficiency. The first time each day that you critically succeed on a check to Recall Knowledge while researching in a library or similar facility, you regain a Mythic Point. --- **Edicts** educate others, record new knowledge so that others can share in your discoveries **Anathema** destroy books, scrolls, or other instruments used to record information; refuse an opportunity to share your knowledge with an earnest knowledge-seeker"
+ },
+ {
+  "id": "borrowed-ability",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Borrowed Ability",
+  "level": 2,
+  "traits": [
+   "deviant",
+   "magical",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Your touch opens a conduit into the mind of your target, the emptiness within you pulling skills and memories through. You touch an adjacent creature and choose any skill you believe they are trained or better in. If you choose a skill that they are trained or better in, you borrow their proficiency in that skill, becoming trained in that skill for 1 minute. If they are not trained in the skill you choose, the GM chooses the next most applicable skill (for instance, choosing Acrobatics instead of Athletics). At 12th level, you can become an expert in the skill if the target is as well. If the target of Borrowed Ability is unwilling, the effects depend on the target's Will save. --- **Critical Success** The target resists your touch completely. **Success** Your borrowing is unstable. At the beginning of each of your turns, you must either relinquish your hold on the borrowed skill (as a free action), or attempt another backlash check for your deviation; the ability ends if you fail. **Failure** Borrowed Ability lasts for its full duration. --- **Awakening** You gain some of the target's defensive abilities. When you use Borrowed Ability, you also gain a +1 circumstance bonus to one of your saving throws for the duration, matching the target's highest saving throw. You can choose to apply a –1 circumstance penalty to the target's saving throw when you do so. **Awakening** Your touch establishes a lingering link through which you can sense what your target does. When you use Borrowed Ability, you gain any special senses—such as darkvision, scent, or tremorsense—that the target possesses. If the target does not have a sense that you normally have (for instance, an ooze that has no vision), you lose those senses as well. Your senses remain altered for the duration of Borrowed Ability."
+ },
+ {
+  "id": "braggart",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Braggart",
+  "level": 1,
+  "traits": [
+   "swashbuckler"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You boast, taunt, and psychologically needle your foes. You are trained in Intimidation. When you Demoralize, the action gains the bravado trait."
+ },
+ {
+  "id": "brawling-focus",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Brawling Focus",
+  "level": 2,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You know how to make the most of your attacks when fighting hand-to-hand. You gain access to the critical specialization effects of unarmed strikes in the brawling group and weapons in the brawling group. If you have Monastic Weaponry, you also gain the critical specialization effects of all monk weapons in which you are trained."
+ },
+ {
+  "id": "break-curse",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Break Curse",
+  "level": 7,
+  "traits": [
+   "concentrate",
+   "exploration",
+   "healing",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You spend 8 hours praying or performing occult rites over the target, weakening a curse's power over them. Attempt to counteract the curse, using or for your counteract check and half your level rounded up for the counteract rank. Break Curse only takes 10 minutes of prayer and rites if you are legendary in Occultism or Religion."
+ },
+ {
+  "id": "breakthrough-innovation",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Breakthrough Innovation",
+  "level": 7,
+  "traits": [
+   "inventor"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've made a breakthrough in your field of study and discovered a powerful new way to enhance your innovation. Choose a breakthrough modification of your innovation's type to apply to your innovation. You can choose an initial modification of your innovation's type instead if you prefer. ### Breakthrough Armor Modifications - **Antimagic Plating** Whether you used some clever adaptation of the magic-negating skymetal known as noqual or created magical protections of your own design, you've strengthened your armor against magic. While wearing the armor, you gain a +1 circumstance bonus to all saving throws against spells and to AC against spells. Against spells that target the armor directly (like heat metal), you instead gain a +4 circumstance bonus to all saving throws and to AC. - **Camouflage Pigmentation (Subterfuge Suit Only)** You've modified your armor's exterior to let you blend into your surroundings with ease, as long as you stay still. While wearing your armor, you can Hide even without cover or concealment, as the pigmentation shifts to match your surroundings. - **Dense Plating** You have encased your armor in robust plating. While wearing your armor, you gain resistance to slashing damage equal to half your level. - **Enhanced Resistance** You've improved upon your initial modification's ability to resist damage. The resistance from your initial armor modification adds your full level, instead of half your level (for instance, phlogistonic regulator's resistance would increase to your level). If you have more than one initial modification that gives resistance, choose which one this applies to. - **Heavy Construction (Power Suit Only)** You've expanded your innovation into a heavy bulwark, and your groundbreaking design ensures you don't take any of the drawbacks for such heavy defenses. Your innovation becomes heavy armor, and your proficiency in your innovation armor (but no other heavy armor) advances to be equal to your proficiency in medium armor. If your Strength modifier is at least +3, you remove the Speed penalty entirely instead of reducing it to –5 feet. The armor's adjusted statistics are: *AC Bonus* +5; *Dex Cap* +1; *Check Penalty* –2; *Speed Penalty* –10 feet; *Strength* +3; *Bulk* 3; *Group* composite; *Armor Traits* bulwark, entrench. - **Hyper Boosters** You've improved your speed boosters' power through a breakthrough that significantly increases the energy flow without risking exploding. You gain a +10-foot status bonus to your Speed, which increases to a +20-foot status bonus when you're in Overdrive. If you're legendary in Crafting, it instead increases to a +30-foot status bonus when you're in Overdrive. You must have the speed boosters modification to select this modification. - **Layered Mesh** You've woven an incredibly powerful network of interlocking mesh around your armor, which catches piercing attacks and diffuses them. While wearing your armor, you gain resistance to piercing damage equal to half your level. - **Tensile Absorption** You've enhanced the tensile capabilities of your armor, enabling it to bend with bludgeoning attacks. While wearing your armor, you gain resistance to bludgeoning dam"
+ },
+ {
+  "id": "cat-fall",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Cat Fall",
+  "level": 1,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your catlike aerial acrobatics allow you to cushion your falls. Treat falls as 10 feet shorter. If you're an expert in Acrobatics, treat falls as 25 feet shorter and 50 feet if you're a master. If you're legendary in Acrobatics, you always land on your feet and don't take damage, regardless of the distance of the fall."
+ },
+ {
+  "id": "cataphract-fleshwarp",
+  "lane": "proficiency",
+  "collection": "heritages",
+  "name": "Cataphract Fleshwarp",
+  "traits": [],
+  "engineFieldsPresent": [
+   "grantsFeats"
+  ],
+  "inRegistries": [],
+  "text": "Your battle-hardened skeleton is laced with additional cartilage and muscle to help bear armor across vast areas of operation, and your skin is bedecked with tiny spurs of pliable, resilient keratin to optimize the grip and weight distribution of your armor. You gain the Armor Proficiency feat. If your class makes you trained in all types of armor, you instead become trained in Athletics (or a skill of your choice if you're already trained in Athletics) and gain the Armor Assist skill feat."
+ },
+ {
+  "id": "cautious-delver",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Cautious Delver",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "innateSpells"
+  ],
+  "inRegistries": [],
+  "text": "You've studied the many ways that ancient architects and spellcasters protected their possessions, such as by implementing deadly traps and curses, and learned some magic to counteract them. You can cast dispel magic, knock, and resist energy as innate spells, each once per day. If you can already cast spells, these spells are of the same tradition. Otherwise, they're arcane spells, you use Intelligence as your spellcasting ability, and you become trained in spell attack rolls and spell DCs for arcane spells."
+ },
+ {
+  "id": "champions-laurels",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Champions Laurels",
+  "level": 2,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Champions Laurels May contain spoilers from Myth-Speaker Source Pathfinder #216: The Acropolis Pyre pg. 81 Usage affixed to armor Activate (concentrate) Trigger You are about to roll an Acrobatics or Athletics check, and you are trained or better in the skill; Requirements You can perceive at least 12 allies or friendly bystanders encouraging you. This elegant crown of laurels can be worn on the head, atop a helmet, or even wrapped around the neck as a torc, signaling the wearer's athletic achievements in a past competition. When you Activate the laurels, you draw strength from your adoring crowd and gain a status bonus to the triggering check. If you critically succeed at the check, you gain temporary Hit Points equal to the item's level that last for 1 minute. Champions Laurels (Amateur) Source Pathfinder #216: The Acropolis Pyre pg. 81 Price 6 gp These laurels grant a +1 status bonus to the check. Champions Laurels (Professional) Source Pathfinder #216: The Acropolis Pyre pg. 81 Price 160 gp These laurels grant a +2 status bonus to the check. Champions Laurels (Renowned) Source Pathfinder #216: The Acropolis Pyre pg. 81 Price 3,200 gp These laurels grant a +3 status bonus to the check."
+ },
+ {
+  "id": "champions-laurels-amateur",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Champions Laurels (Amateur)",
+  "level": 2,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨4⟩ (concentrate) **Trigger** You are about to roll an Acrobatics or Athletics check, and you are trained or better in the skill **Requirements** You can perceive at least 12 allies or friendly bystanders encouraging you. --- This elegant crown of laurels can be worn on the head, atop a helmet, or even wrapped around the neck as a torc, signaling the wearer's athletic achievements in a past competition. When you Activate the laurels, you draw strength from your adoring crowd and gain a +1 status bonus to the triggering check. If you critically succeed at the check, you gain 2 temporary Hit Points that last for 1 minute."
+ },
+ {
+  "id": "champions-laurels-professional",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Champions Laurels (Professional)",
+  "level": 10,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨4⟩ (concentrate) **Trigger** You are about to roll an Acrobatics or Athletics check, and you are trained or better in the skill **Requirements** You can perceive at least 12 allies or friendly bystanders encouraging you. --- This elegant crown of laurels can be worn on the head, atop a helmet, or even wrapped around the neck as a torc, signaling the wearer's athletic achievements in a past competition. When you Activate the laurels, you draw strength from your adoring crowd and gain a +2 status bonus to the triggering check. If you critically succeed at the check, you gain 10 temporary Hit Points that last for 1 minute."
+ },
+ {
+  "id": "champions-laurels-renowned",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Champions Laurels (Renowned)",
+  "level": 18,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨4⟩ (concentrate) **Trigger** You are about to roll an Acrobatics or Athletics check, and you are trained or better in the skill **Requirements** You can perceive at least 12 allies or friendly bystanders encouraging you. --- This elegant crown of laurels can be worn on the head, atop a helmet, or even wrapped around the neck as a torc, signaling the wearer's athletic achievements in a past competition. When you Activate the laurels, you draw strength from your adoring crowd and gain a +3 status bonus to the triggering check. If you critically succeed at the check, you gain 18 temporary Hit Points that last for 1 minute."
+ },
+ {
+  "id": "chirurgeon",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Chirurgeon",
+  "level": 1,
+  "traits": [
+   "alchemist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You concentrate on healing others with alchemy. **Formulas** Two common 1st-level alchemical elixirs with the healing trait (like lesser antidote, lesser antiplague, or minor elixir of life). **Field Benefit** You can use your proficiency rank in Crafting for anything that requires a proficiency rank in Medicine (such as prerequisites) and use your Crafting modifier in place of your Medicine modifier for all Medicine checks. **Field Vials** Your versatile vials can be used to heal a living creature a number of Hit Points equal to the vial's initial damage. A creature can drink the vial for this benefit, or you can throw the vial at a willing creature within 20 feet as an Interact action to heal that creature. In either case, a vial used this way loses the acid and splash traits and gains the coagulant and healing traits, plus the elixir trait if a creature drinks it. **Field Discovery (5th)** Your medicinal elixirs are quite fortifying. When a creature drinks an infused elixir with the healing trait that you have created, that creature gains a number of temporary Hit Points equal to your Intelligence modifier (minimum 0); these temporary Hit Points last for 1 minute. **Advanced Vials (11th)** When you use a field vial to heal a creature that has half its maximum Hit Points or fewer, the coagulant trait doesn't apply to that healing. **Greater Field Discovery (13th)** When you use Quick Alchemy to create any type of elixir of life, the creature healed by the item regains the maximum Hit Points possible, instead of rolling to determine the number of Hit Points regained."
+ }
+]

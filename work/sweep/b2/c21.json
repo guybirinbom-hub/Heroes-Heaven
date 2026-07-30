@@ -1,0 +1,1109 @@
+[
+ {
+  "id": "skilled-human",
+  "lane": "proficiency",
+  "collection": "heritages",
+  "name": "Skilled Human",
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your ingenuity allows you to train in a wide variety of skills. You become trained in one skill of your choice. At 5th level, you become an expert in the chosen skill."
+ },
+ {
+  "id": "slippery-prey",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Slippery Prey",
+  "level": 2,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You're able to escape bonds more easily than others. When you attempt to Escape using Acrobatics or Athletics, you reduce the multiple attack penalty for repeated attempts to –4 and –8 if you're trained in the skill. The penalty becomes –3 and –6 if you're a master in the appropriate skill. If you're legendary in the skill, you don't take penalties for multiple Escape attempts in the same turn. Regardless of your training, your attempts to Escape still have the attack trait and incur a multiple attack penalty with other actions."
+ },
+ {
+  "id": "snap-out-of-it-pathfinder-agent",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Snap Out of It! (Pathfinder Agent)",
+  "level": 8,
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Pathfinders are trained to help each other be safe and successful, and you know how to jolt your allies back to their senses. Attempt a Medicine check on an adjacent ally who is fascinated, frightened, stunned, or stupefied and choose one of those conditions. The DC is the DC for the effect that caused the condition. --- **Critical Success** Reduce the value of the chosen condition by 2. If you chose fascinated, that condition ends. **Success** Reduce the value of the chosen condition by 1. If you chose fascinated, that condition ends. **Failure** The target is unaffected. **Critical Failure** You increase the value of the chosen condition by 1. If you chose fascinated, increase the duration by 1 round instead."
+ },
+ {
+  "id": "snare-genius",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Snare Genius",
+  "level": 5,
+  "traits": [
+   "kobold"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "If the snare normally takes 1 minute to Craft, you can Craft it with 3 Interact actions instead. Each day during your daily preparations, you can prepare three snares from your formula book for quick deployment (increasing to four snares if you're a master in Crafting and five if you're legendary). Snares prepared in this way don't cost you any resources to Craft. When a creature critically fails its saving throw against and takes damage from the initial effect of a snare you Crafted and deployed, that creature is off-guard until the end of its next turn."
+ },
+ {
+  "id": "snare-specialist",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Snare Specialist",
+  "level": 4,
+  "traits": [
+   "ranger"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You specialize in creating quick traps to obstruct your enemies on the battlefield. If your proficiency rank in Crafting is expert, you gain the formulas for three common or uncommon snares. If your rank is master, you gain 6. If your rank is legendary, you gain 9. Each day during your daily preparations, you can prepare four snares from your formula book for quick deployment; if they normally take 1 minute to Craft, you can Craft them with 3 Interact actions. The number of snares increases to six if you have master proficiency in Crafting and eight if you have legendary proficiency in Crafting. Snares prepared in this way don't cost you any resources to Craft."
+ },
+ {
+  "id": "snarecrafter-dedication",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Snarecrafter Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featFeatGrants"
+  ],
+  "text": "You have studied the art of crafting snares and laying traps, and few have shown more talent in these arts than you. You gain the Snare Crafting feat. When you set a snare, the DC of any saving throw it requires uses the higher of your class DC or the snare's DC. If a snare normally takes 1 minute to Craft, you can Craft it with 3 Interact actions instead. Each day during your daily preparations, you can prepare four snares from your formula book for quick deployment (increasing to six snares if you're a master in Crafting and eight if you're legendary). Snares prepared in this way don't cost you any resources to Craft. When you increase your proficiency rank in Crafting to expert, master, or legendary, add three additional snare formulas to your formula book. The snares must be of your level or lower. --- **Special** Rangers can adapt snare crafting techniques to create snares from natural materials. If you are a ranger, you can use Survival instead of Crafting for all prerequisites and functions of feats from this archetype. (This includes using Survival to Craft a snare.)"
+ },
+ {
+  "id": "sneaky-key",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Sneaky Key",
+  "level": 5,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) **Requirements** You are trained in Thievery --- This small silver skeleton key can be pinned to armor or a sleeve. When you turn the key to activate it, you gain a +1 status bonus to Thievery checks to Pick a Lock for 1 minute. The first time you get a success or critical success on an attempt to Pick a Lock, you achieve one additional success toward opening a complex lock."
+ },
+ {
+  "id": "sound-mirror",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Sound Mirror",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "innateSpells"
+  ],
+  "inRegistries": [],
+  "text": "You twist not just the visual, but the auditory as well, allowing you to pass without a sound and create minor noises as distractions—perfect for misdirection and infiltration. You can cast Silence on yourself as a 2nd-rank innate occult spell and as a 1st-rank innate occult spell, each once per day. You also can cast Figment as an innate occult cantrip. You become trained in the spell attack modifier and spell DC statistics, and your key spellcasting attribute for alter ego archetype spells is Charisma."
+ },
+ {
+  "id": "specialized-companion",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Specialized Companion",
+  "level": 18,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Specialized Companion May contain spoilers from Extinction Curse Source Pathfinder #152: Legacy of the Lost God pg. 76 Archetype Animal Trainer Prerequisites Splendid Companion The animal companion you gain from the Animal Trainer Dedication feat gains one specialization of your choice. Increase its proficiency rank in Performance to legendary instead of one of the specialization's skill increases."
+ },
+ {
+  "id": "specialized-companion-animal-trainer",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Specialized Companion (Animal Trainer)",
+  "level": 18,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "The animal companion you gain from the Animal Trainer Dedication feat gains one specialization of your choice. Increase its proficiency rank in Performance to legendary instead of one of the specialization's skill increases."
+ },
+ {
+  "id": "spellmaster-dedication",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Spellmaster Dedication",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "As a Spellmaster, you are adept at identifying magic. You gain a +2 circumstance bonus when you Identify Magic with a skill in which you are trained or better. If you have the Wayfinder Resonance Tinkerer feat, you can change the cantrip you chose for that feat each day during your daily preparations."
+ },
+ {
+  "id": "spirit-guide-form",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Spirit Guide Form",
+  "level": 14,
+  "traits": [
+   "archetype",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [
+   "core.stances"
+  ],
+  "text": "**Frequency** once per day --- You fuse with your spirit guide, becoming a hybrid being with enhanced physical and spiritual power. This effect lasts 1 minute; you can end it early as a free action. During this time, you can't use any other actions granted by this archetype. You gain the following statistics and abilities, regardless of your type of spirit guide. - You become incorporeal. - You gain resistance 10 to all damage (except force, ghost touch, or spirit; double resistance vs. non-magical). - Darkvision. - An unarmed melee attack of the same type as your spirit guide (either claws or jaws), which is the only attack you can Strike with. You're trained with this attack. Your attack modifier is +29 or your normal unarmed attack modifier, whichever is higher. You use the listed statistics for the unarmed attack type: **Claws** (agile, backstabber, finesse) 1 , **Damage** 3d6+5 slashing plus 1d6 force; - **Jaws** (forceful) 1 **Damage** 3d10+5 piercing plus 1d6 force."
+ },
+ {
+  "id": "spirit-striking",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Spirit Striking",
+  "level": 7,
+  "traits": [
+   "exemplar"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your divine power can't be contained, escaping in flits and embers as you wreak violence. You deal 2 additional spirit damage with weapons and unarmed attacks in which you are an expert. This damage increases to 3 if you're a master, and 4 if you're legendary."
+ },
+ {
+  "id": "splendid-companion",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Splendid Companion",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your animal companion continues to develop. It becomes a nimble or savage animal companion (your choice), gaining abilities determined by its type. Increase its proficiency rank in Performance to master instead of Athletics or Acrobatics."
+ },
+ {
+  "id": "spore-order",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Spore Order",
+  "level": 1,
+  "traits": [
+   "druid"
+  ],
+  "engineFieldsPresent": [
+   "grantsFeats"
+  ],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "You're fascinated by molds and fungi, and you understand the important role they play in the continued health of ecosystems. This interest often puts you at odds with local communities, who view molds and fungi as something to be eradicated, rather than nurtured. You're trained in Intimidation. You also gain the Leshy Familiar druid feat, but you must create a fungus leshy. You gain the *mushroom patch* order spell. Committing wanton cruelty to molds or fungi, killing molds or fungi unnecessarily, or interfering with the natural processes of decay, is anathema to your order. This doesn't prevent you from defending yourself against fungi or molds or from harvesting fungi or molds for sustenance. --- **Order Skill** Intimidation **Druid Feat** Leshy Familiar **Order Spell** Mushroom Patch **Anathema** Committing wanton cruelty to molds or fungi, killing molds or fungi unnecessarily, or interfering with the natural processes of decay, is anathema to your order. This doesn't prevent you from defending yourself against fungi or molds or from harvesting fungi or molds for sustenance. --- **Special**: The spore order is a variant of the leaf order. If you have the spore order, you count as a member of the leaf order, and you qualify for leaf order feats."
+ },
+ {
+  "id": "stealthy-companion",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Stealthy Companion",
+  "level": 14,
+  "traits": [
+   "ranger"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've trained your animal companion to blend in to its surroundings. Your animal companion gains the benefit of the Camouflage feat. If your companion is a specialized ambusher, its proficiency rank for Stealth increases to master (or legendary if it was already master)."
+ },
+ {
+  "id": "stir-allies",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Stir Allies",
+  "level": 10,
+  "traits": [
+   "archetype",
+   "auditory",
+   "flourish"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You shout a command for your allies to scramble. Allies within 30 feet can use a reaction to Step. If you're legendary in Diplomacy, they can instead Stride."
+ },
+ {
+  "id": "stone-of-unrivaled-skill",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Stone of Unrivaled Skill",
+  "level": 17,
+  "traits": [
+   "contract",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "choice",
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You traded your senses to a hag for unrivaled expertise stolen from various souls who were once the greatest in their field. Your *bargained contract* is sealed by sleeping with a pitch-black stone under your pillow every night. Choose one skill when you seal this *bargained contract*. You become an expert in that skill; if you were already an expert, you become a master, and if you were already a master, you become legendary. Once per day, from any distance, the hag that holds your contract can take over your senses for 10 minutes, during which time the hag hears, sees, smells, tastes, and feels everything you would typically experience. During this time, you're dazzled by your own disjointed senses. **Activate—Taste Fluency** ⟨2⟩ (concentrate) **Frequency** once per day --- **Effect** You place the stone sealing your *bargained contract* in your mouth. For the next 10 minutes, you gain a +3 status bonus to skill checks using the skill you chose for your contract."
+ },
+ {
+  "id": "summoner-dedication",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Summoner Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication",
+   "multiclass"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've formed a bond with an eidolon, an entity that manifests in a physical body only through its link to your life force. Your bond may be tenuous, but that doesn't make your connection any less special. You gain an eidolon as well as the Manifest Eidolon activity. Due to your tenuous link, you can't gain or use tandem actions. Because you don't have Act Together, only you or your eidolon can perform an exploration activity at one time, so for instance you couldn't both be Searching or Investigating. Your eidolon is trained in unarmed attacks and unarmored defense, and shares your proficiency rank for Perception, saving throws, and skill checks. Choose an eidolon type. You become trained in your eidolon's listed skills. For each of those skills that you are already trained in, you become trained in a different skill of your choice. Your eidolon's initial ability scores are reduced. It starts with a 16 in any ability score listed at 18 for its eidolon array. It otherwise gains the statistics listed for an eidolon of that type. At 5th level, the eidolon's ability score that was reduced to 16 increases to 18, before applying ability boosts. At levels 5, 10, 15, and 20, your eidolon also gets four ability boosts, which follow the same rules as yours."
+ },
+ {
+  "id": "suns-fury",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Sun's Fury",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "focusSpells",
+   "spellcastingGrant"
+  ],
+  "inRegistries": [],
+  "text": "The Old Sun Gods have granted you a gift in your fight against Walkena. You gain the Sun's Fury focus spell. If you don't already have one, you gain a focus pool of 1 Focus Point, which you can regain using the Refocus activity to pray to the Old Sun Gods; if you already have a focus pool, increase the number of Focus Points in your focus pool by 1. Your Bright Lion focus spells are divine spells; when you gain this feat, if you aren't already, you become trained in divine spell attacks and spell DCs, using Charisma as your spellcasting ability score."
+ },
+ {
+  "id": "tactical-acumen",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Tactical Acumen",
+  "level": 2,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Even if you don't know much about its constituent creatures, you can always recognize a troop's capabilities through features like the formation they move in or even more subtle hints others might miss. You can always use Warfare Lore when you Recall Knowledge to identify a troop. This works like using an applicable Lore to identify a creature. If you're legendary in Warfare Lore, reduce any adjustment to the Recall Knowledge check's DC caused by the troop's rarity by 5. If you lead a troop, when you successfully use Warfare Lore to identify a troop, that troop takes a –1 circumstance penalty to saves against your troop's offensive abilities until the end of your next turn."
+ },
+ {
+  "id": "talisman-dabbler-dedication",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Talisman Dabbler Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You are trained in the use of talismans and similar magical paraphernalia. This training might have occurred in a formal classroom or been an accumulation of folk magic picked up over time. You can craft talismans and know the formulas for all common talismans of your level or lower. You remember talisman formulas and don't need a formula book for them. Additionally, you carry a vast collection of magical baubles you can turn into temporary talismans. Each day during your daily preparations, you can make two talismans with an item level no higher than half your level. You must know each talisman's formula. A talisman created this way is a temporary item and loses its magic the next time you make your daily preparations if you haven't already used it. Any saving throw DC required by a temporary talisman you create uses the highest of your class DC, spell DC, or the talisman's DC. Finally, when you Affix a Talisman, you can (in any combination) affix or remove up to four talismans in the 10-minute span."
+ },
+ {
+  "id": "thats-not-natural",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "That's Not Natural!",
+  "level": 4,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Your mastery at surviving in the wild has given you a sort of sixth-sense when it comes to noticing creatures that aren't part of the natural order. You gain a +1 circumstance bonus to all initiative checks made at the start of a battle in which at least one of your enemies is an aberration, fey, mutant, or undead, or if one of your enemies is from a plane other than the Material Plane, as long as the battle takes place in a wilderness region. In wilderness regions, you also increase your Perception DC by 1 against these types of creatures for the purposes of resolving their Stealth checks. If you're master in Survival, this circumstance bonus increases to +2. If you know the Commune ritual, you can use Survival as a primary or secondary check to resolve that ritual-if you do so, you gain a +2 circumstance bonus."
+ },
+ {
+  "id": "the-brave",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "The Brave",
+  "level": 3,
+  "traits": [
+   "exemplar"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your deeds show fearlessness: when a beast surfaces, you're there to fight it; when someone's lost in the dark, you're first to the rescue. You're trained in Athletics. After you Spark Transcendence, your body carries you forward, allowing you to Stride up to half your Speed in a straight line toward one enemy of your choice as a free action. Once you have used this ability on a given enemy, you can't use it against that enemy again for 10 minutes."
+ },
+ {
+  "id": "the-cunning",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "The Cunning",
+  "level": 3,
+  "traits": [
+   "exemplar"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Why race a hare across a meadow, or a salmon up a waterfall? Why face a titan in a test of strength? Wouldn't it be better to best your foes with a bit of creativity? After all, the stories that echo throughout history are always those where wits and trickery, rather than raw talent or power, win the day. You are trained in Deception. After you Spark Transcendence, you can Create a Diversion or Feint as a free action."
+ },
+ {
+  "id": "the-deft",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "The Deft",
+  "level": 3,
+  "traits": [
+   "exemplar"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Speed, subtlety, and precision. Your feet rush as fast as a gale, but your fingers touch as lightly as a breeze. You are trained in Thievery. After you Spark Transcendence, you can attempt to Steal or Palm an Object. When you Spark Transcendence, you can Interact as a free action to reload or draw a weapon ikon, either directly before or directly after your transcendence action. The weapon ikon must be a ranged weapon with the reload trait or a one-handed melee weapon with the thrown trait."
+ },
+ {
+  "id": "the-harder-they-fall-kingmaker",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "The Harder They Fall (Kingmaker)",
+  "level": 8,
+  "traits": [
+   "ranger"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You know how to make a larger creature hurt when it falls to the ground. If you successfully Trip a foe that's larger than you, it takes 1d8 damage (or 2d8 damage on a critical success). If you are master in Athletics, the damage increases to 2d8 damage (or 4d8 damage on a critical success)."
+ },
+ {
+  "id": "the-harder-they-fall-ranger",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "The Harder They Fall (Ranger)",
+  "level": 8,
+  "traits": [
+   "ranger"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The Harder They Fall (Ranger) May contain spoilers from Kingmaker Source Kingmaker Companion Guide pg. 23 Prerequisites Titan Wrestler You know how to make a larger creature hurt when it falls to the ground. If you successfully Trip a foe that's larger than you, it takes 1d8 bludgeoning damage (or 2d8 bludgeoning damage on a critical success). If you are master in Athletics, the damage increases to 2d8 bludgeoning (or 4d8 bludgeoning on a critical success). Adventuring with Ekundayo Source Kingmaker Companion Guide pg. 23 Ekundayo eventually develops his own methods to pursue his favored enemies—giants. Once he gains the Magical Crafting feat at 4th level, he begins to craft specialized ammunition and runes for weapons. As long as his attitude toward the PCs is at least friendly, he shares these discoveries with them, unlocking the following ranger class feats and items as soon as his level equals the level of the feat or item. Related Feats: Giant Hunter, Giant Slayer, Hamstringing Strike, Roll with It (Ranger)"
+ },
+ {
+  "id": "the-mournful",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "The Mournful",
+  "level": 3,
+  "traits": [
+   "exemplar"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "To be a hero is to endure countless hardships and stand where others have fallen, shouldering dreams and destinies in their stead. Though this weight may reach your eyes, you bear this burden so that those under you can live smiling. You are trained in Diplomacy. After you Spark Transcendence, your act resonates with bittersweet poignancy, making one enemy of your choice within 30 feet who witnessed the act dazzled as tears or memories dance in their eyes. This is an emotion and mental effect. The enemy remains dazzled until the start of your next turn, and then they are temporarily immune for 10 minutes."
+ },
+ {
+  "id": "the-proud",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "The Proud",
+  "level": 3,
+  "traits": [
+   "exemplar"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Whether out of overconfidence, a desire to protect your comrades, or the unslakable thirst for glory, you invite challengers to strike you down. You are trained in Intimidation. After you Spark Transcendence, you can boast to one enemy within 30 feet to draw its attention; this effect has the auditory, emotion, mental, and linguistic traits. Until the start of your next turn, the target takes a –1 status penalty to attack rolls, damage rolls, and skill checks against creatures other than you, and it gains a +1 status bonus to these rolls when targeting you."
+ },
+ {
+  "id": "the-radiant",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "The Radiant",
+  "level": 3,
+  "traits": [
+   "exemplar"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Leaders must live bigger lives than any other, shining so brightly that they attract followers, inspire troops, and change the course of kingdoms. You are trained in Diplomacy. After you Spark Transcendence, you inspire an ally within 30 feet to push on, restoring Hit Points equal to 2 + double your level; this is a mental and emotion effect. The ally is then temporarily immune for 10 minutes."
+ },
+ {
+  "id": "the-trader",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "The Trader",
+  "level": 20,
+  "traits": [
+   "artifact",
+   "harrow-court",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Suit** Books (Int) **Alignment** neutral --- *The Trader* represents trades and exchanges of information. As long as you have *The Trader* invested, you gain a +2 item bonus to Diplomacy checks made to Gather Information. This increases to a +3 item bonus if you are at least 17th level. **Activate** ⟨2⟩ envision, Interact **Frequency** once per day --- **Effect** The Trader allows you to make an exchange with yourself. Press the card to your brow, and then select two skills. Your proficiency rank with those two skills swaps for 1 hour. For example, if you were a master in Athletics and untrained in Crafting, you would become untrained in Athletics and a master in Crafting. If making this swap would break prerequisites to feats, you lose access to those feats until your skill proficiencies change back in an hour."
+ },
+ {
+  "id": "thief",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Thief",
+  "level": 1,
+  "traits": [
+   "rogue"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Nothing beats the thrill of taking something that belongs to someone else. You might be a pickpocket working the streets, a cat burglar sneaking through windows, or even a consultant, testing your clients' vaults for openings. When a fight breaks out, you prefer swift, lightweight weapons, and you strike where it hurts. When you make a melee Strike with a finesse weapon or finesse unarmed attack, you can add your Dexterity modifier to the damage roll instead of your Strength modifier. You are trained in Thievery."
+ },
+ {
+  "id": "titan-wrestler",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Titan Wrestler",
+  "level": 1,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can attempt to Disarm, Grapple, Reposition, Shove, or Trip creatures up to two sizes larger than you, or up to three sizes larger than you if you're legendary in Athletics."
+ },
+ {
+  "id": "to-the-ends-of-the-earth",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "To the Ends of the Earth",
+  "level": 20,
+  "traits": [
+   "ranger"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your ability to track your prey has surpassed explanation, allowing you to trace your prey's movements and predict its location with ease. When you use Hunt Prey on a creature within 100 feet, you can follow that creature's movements, allowing you to know the creature's exact location no matter how far away it becomes, as long as it remains your prey. You must be legendary in Nature to track your prey's location across teleportation or planar travel. This feat gains the detection and primal traits if you're legendary in Nature."
+ },
+ {
+  "id": "train-animal",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Train Animal",
+  "level": 1,
+  "traits": [
+   "downtime",
+   "general",
+   "manipulate",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You spend time teaching an animal to do a certain action. You can either select a basic action the animal already knows how to do (typically those listed in the Command an Animal action) or attempt to teach the animal a new basic action. The GM determines the DC of any check required and the amount of time the training takes (usually at least a week). It's usually impossible to teach an animal a trick that uses critical thinking. If you're expert, master, or legendary in Nature, you might be able to train more unusual creatures, at the GM's discretion. --- **Success** The animal learns the action. If it was an action the animal already knew, you can Command the Animal to take that action without attempting a Nature check. If it was a new basic action, add that action to the actions the animal can take when Commanded, but you must still roll. **Failure** The animal doesn't learn the trick."
+ },
+ {
+  "id": "trap-finder",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Trap Finder",
+  "level": 1,
+  "traits": [
+   "investigator",
+   "rogue"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You have an intuitive sense that alerts you to the dangers and presence of traps. You gain a +1 circumstance bonus to Perception checks to find traps, to AC against attacks made by traps, and to saves against traps. Even if you aren't Searching, you get a check to find traps that normally require you to be Searching. You still need to meet any other requirements to find the trap. You can disable traps that require a proficiency rank of master in Thievery. If you have master proficiency in Thievery, you can disable traps that require a proficiency rank of legendary instead, and your circumstance bonuses against traps increase to +2."
+ },
+ {
+  "id": "travelers-fulu",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Traveler's Fulu",
+  "level": 2,
+  "traits": [
+   "consumable",
+   "fulu",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨4⟩ (concentrate) **Trigger** You attempt to Sense Direction **Requirements** You're trained in Survival. --- This fulu shows a series of constellations and arrows depicting astronomical movements through the night sky. When you activate a traveler's fulu, the magic infuses your mind with sensations of deja vu, as if you'd been in this region before. Your attempt to Sense Direction functions as if you have a compass, and you use the outcome one degree of success better than the result of your Survival check to Sense Direction, or by two degrees of success if you're a master in Survival."
+ },
+ {
+  "id": "trick-magic-item",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Trick Magic Item",
+  "level": 1,
+  "traits": [
+   "general",
+   "manipulate",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You examine a magic item you normally couldn't use in an effort to fool it and activate it temporarily. For example, this might allow a fighter to cast a spell from a wand or allow a wizard to cast a spell that's not on the arcane list using a scroll. You must know what activating the item does, or you can't attempt to trick it. Attempt a check using the skill matching the item's magic tradition, or matching a tradition that has the spell on its list, if you're trying to cast a spell from the item. The relevant skills are for arcane, for primal, for occult, for divine, or any of the four for an item that has the magical trait and not a tradition trait. The GM determines the DC based on the item's level (possibly adjusted depending on the item or situation). If you activate a magic item that requires a spell attack modifier or spell DC and you don't have proficiency in the relevant statistic, use your level as your proficiency bonus and the highest of your Intelligence, Wisdom, or Charisma modifiers. If you're a master in the appropriate skill for the item's tradition, you instead use the trained proficiency bonus; if you're legendary, you instead use the expert proficiency bonus. --- **Success** For the rest of the current turn, you can spend actions to activate the item as if you could normally use it. **Failure** You can't use the item or try to trick it again this turn, but you can try again on subsequent turns. **Critical Failure** You can't use the item, and you can't try to trick it again until your next daily preparations."
+ },
+ {
+  "id": "triumphant-boast",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Triumphant Boast",
+  "level": 2,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You relate a loud and impressive tale of your triumph over a formidable foe. When you Perform, choose a single target within 30 feet of you and compare the result of your Performance check to that observer's Will DC. If you're a master in Performance, you can choose up to four targets, and if you're legendary, you can choose any number of targets. If you succeed, any attempt made by you to Demoralize that creature within the next 24 hours gains a +1 circumstance bonus. If your Charisma score is 20 or higher and you're a master in Performance, this bonus increases to +2. Once a creature is boasted at in this manner, it becomes temporarily immune to further Triumphant Boasts for 24 hours."
+ },
+ {
+  "id": "true-creed",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "True Creed",
+  "level": 15,
+  "traits": [
+   "cleric"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your proficiency rank for your class DC increases to master. Your proficiency rank for Will saves increases to master."
+ },
+ {
+  "id": "tsukumogami-poppet",
+  "lane": "proficiency",
+  "collection": "heritages",
+  "name": "Tsukumogami Poppet",
+  "traits": [
+   "poppet"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You have the form and memories of a common tool. Choose one Lore skill related to what kind of tool you were; for instance, Cooking Lore for a kitchen knife or spoon. You're trained in this skill, and you gain a +2 circumstance bonus to checks to Aid with this skill. If you take the Helpful Poppet feat, the bonus increases to +3. While most poppets are made of stuffing, cloth, or soft metals, some tsukumogami are made of other materials, changing the poppet weakness to fire. If your body is primarily wood or cloth, you have the normal poppet weakness to fire. If your body is primarily metal, you're instead weak to electricity; if its primarily ceramic, you're instead weak to cold."
+ },
+ {
+  "id": "unconventional-weaponry",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Unconventional Weaponry",
+  "level": 1,
+  "traits": [
+   "human"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "You've familiarized yourself with a particular weapon, potentially from another ancestry or culture. Choose an uncommon simple or martial weapon with a trait corresponding to an ancestry (such as dwarf, goblin, or orc) or that is common in another culture. You gain access to that weapon, and for the purpose of proficiency, you treat it as a simple weapon. If you are trained in all martial weapons, you can instead choose an uncommon advanced weapon that has an ancestry's trait or is common in another culture. You gain access to that weapon and have familiarity with that weapon. For the purpose of proficiency, you treat it as a martial weapon."
+ },
+ {
+  "id": "unmistakable-lore",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Unmistakable Lore",
+  "level": 2,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You never get information about your areas of expertise wrong. When you Recall Knowledge using any Lore subcategory in which you're trained, if you roll a critical failure, you get a failure instead. If you're a master in a Lore subcategory, on a critical success, you gain even more information or context than usual."
+ },
+ {
+  "id": "unshaken-in-iron",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Unshaken in Iron",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You know the precise limits of your armor, and trust it to save you from harm. You gain the armor specialization effect of light armor. If you are trained in medium or heavy armor, you gain the respective armor specialization effect for those armors as well. While in Tenacious Stance, you increase the value of your armor specialization effects by an amount equal to the value of your armor check penalty (adding +3 to the resistance while wearing plate armors, for example)."
+ },
+ {
+  "id": "unusual-treatment",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Unusual Treatment",
+  "level": 2,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your medical training extends to less obvious conditions. When you succeed against a DC 20 check to Treat Wounds, you can also reduce the value of one clumsy, enfeebled, or stupefied condition on the patient by 1. If you're able to treat more than one creature at once, choose only one to gain this benefit. A creature can benefit from Unusual Treatment only once per day. If the condition results from an affliction, the affliction isn't cured, though the condition is reduced as long as the affliction remains at that stage. If you are a master in Medicine, add the drained condition to the list of conditions you can remove if you succeed at a DC 30 check. If you are legendary in Medicine, you reduce the chosen condition by 2 instead of by 1."
+ },
+ {
+  "id": "vanishing-coin",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Vanishing Coin",
+  "level": 10,
+  "traits": [
+   "consumable",
+   "illusion",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨4⟩ (concentrate) **Trigger** You attempt a Stealth check for initiative, but you haven't rolled yet **Requirements** You are trained in Stealth --- This copper coin dangles from a leather strip strung through a hole drilled in the center. Until activated, the coin becomes invisible for a few seconds at random intervals every few minutes. When you activate the coin, it casts a 2nd-rank spell on you, lasting until the end of your next turn."
+ },
+ {
+  "id": "vasodilation",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Vasodilation",
+  "level": 2,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Using the power of your own blood, you encourage increased blood flow to nourish damaged tissue or stifle the flow to clot wounds or prevent the spread of poison and disease. You no longer require a healer's toolkit to Administer First Aid, Treat Disease, Treat Poison, or Treat Wounds, though you take 1 damage each time you take one of these actions without the proper tools from the expenditure of your blood. You can't reduce or prevent this damage. You gain a +1 item bonus when performing these actions using your blood, which increases to +2 if you're a master in Medicine and +3 if you're legendary."
+ },
+ {
+  "id": "veil-may",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Veil May",
+  "level": 1,
+  "traits": [
+   "changeling",
+   "lineage"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featFeatGrants"
+  ],
+  "text": "Born of a blood hag, a fiery blood drinker hidden behind a false skin, you have one blood-red eye and the ability to slough off your appearance in an instant. You gain the Lie to Me skill feat, and you can shed a disguise quickly by peeling off the outer layer of your skin. Changing from a disguise used to Impersonate back to your true appearance is a 3-action activity for you; if you're an expert in Deception, it's a 2-action activity, and if you're legendary in Deception, it takes only a single action. This doesn't allow you to don or remove armor or other equipment any faster, but your physical appearance otherwise returns to its normal state."
+ },
+ {
+  "id": "verdant-weapon",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Verdant Weapon",
+  "level": 1,
+  "traits": [
+   "druid",
+   "exploration"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "You cultivate a seed that can sprout into a wooden staff, vine whip, or another weapon. You spend 10 minutes focusing primal energy into a seed, imprinting it with the potential of a single level 0 weapon you are trained with and that has no mechanical parts or metal components. When holding the imprinted seed, you can use an Interact action to cause it to immediately grow into that weapon; a second Interact action returns it to seed form. The verdant weapon can be etched with runes or affixed with talismans as normal, which are suppressed when the weapon is in seed form. You can have only one verdant seed at a time. If you prepare a second, your first verdant seed immediately becomes a mundane seed; any runes on the previous seed transfer to the new seed at no cost, but inapplicable runes are suppressed."
+ },
+ {
+  "id": "versatile-performance",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Versatile Performance",
+  "level": 1,
+  "traits": [
+   "bard"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can rely on the grandeur of your performances rather than ordinary social skills. You can use Performance instead of Diplomacy to make-an-impression statistic=performance and instead of Intimidation to demoralize statistic=performance. You can also use an acting Performance instead of Deception to impersonate statistic=performance. In addition, you can use your proficiency rank in Performance to meet the prerequisites of skill feats that require a particular proficiency rank in Deception, Diplomacy, or Intimidation."
+ },
+ {
+  "id": "vicious-snares",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Vicious Snares",
+  "level": 13,
+  "traits": [
+   "kobold"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You deal an additional 1d6 precision damage with damage snares you craft. This increases to 2d6 additional precision damage if you're legendary in Crafting."
+ },
+ {
+  "id": "vigilant-goloma",
+  "lane": "proficiency",
+  "collection": "heritages",
+  "name": "Vigilant Goloma",
+  "traits": [],
+  "engineFieldsPresent": [
+   "innateSpells"
+  ],
+  "inRegistries": [],
+  "text": "You've learned to be aware of not just obvious physical dangers, but also noticeable magical threats. You can cast the Detect Magic cantrip as an arcane innate spell at will. A cantrip is heightened to a spell rank equal to half your level rounded up. In addition, your awareness allows you to notice magical traps easier than others. Your proficiency rank in Perception is considered one step better when attempting to detect magical traps. (Trained is considered expert, expert is considered master, and master is considered legendary)."
+ },
+ {
+  "id": "viking-weapon-specialist",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Viking Weapon Specialist",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Viking Weapon Specialist Source Advanced Player's Guide pg. 198 Archetype Viking Prerequisites Viking Weapon Familiarity You are even more skilled in the weapons of your people. You gain the critical specialization effects of the battle axe, hatchet, longsword, and shortsword. Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency rank in the above four weapons."
+ },
+ {
+  "id": "vindicator",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Vindicator",
+  "level": 1,
+  "traits": [
+   "ranger"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You have been specially trained to use guile and magic to reveal hidden threats. You must select Vindicator Dedication as your 2nd-level class feat. **Prerequisites:** You must be a ranger. **Vindicator Adjustments:** You must choose a deity to be a follower of, and you gain your deity's sanctification. You are trained in Religion instead of Nature. You are trained in your deity's favored weapon. If your deity's favored weapon is a simple weapon or unarmed attack with a damage die smaller than d6, you gain the Deadly Simplicity feat. If your deity's favored weapon is an advanced weapon, your proficiency with it is equal to your proficiency with martial weapons. You must choose the vindication edge for your hunter's edge. You learn warden spells as divine spells instead of primal spells, and your spellcasting attribute is Wisdom. When you gain domain spells via the Domain Initiate or Advanced Domain feats, they are warden spells for the purposes of all your vindicator feats and abilities. ## Vindication Edge Your specialized training gives you a unique edge that allows you to more effectively bring the tools of your faith to bear against the monsters that lurk in the night or hide among the faithful. You gain a +1 status bonus to your spell attack rolls against your hunted prey, and they take a –1 status penalty to their saving throws against divine spells you cast. You gain the Vindicator's Mark warden spell. ## Trackless Journey 5th Vindicators can choose to gain the benefits of this class feature in either urban or natural terrain, chosen at the time the class feature is gained. ## Masterful Hunter 17th The masterful hunter class feature gives an additional benefit based on your hunter's edge. Included here is the additional benefit for the vindication edge. **Vindication:** You combine skill and magic to swiftly defeat your prey. The status bonus to divine spell attack rolls against your hunted prey increases to +2, and the status penalty to their saving throws against divine spells you cast is –2."
+ },
+ {
+  "id": "virtuosic-dancer",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Virtuosic Dancer",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You're so fond of using your Acrobatic feats on the stage that you've begun adding your own flair to these dances on the big stage. When you Perform, if you do a performance that is either related to dance, acting or opera, you gain a +1 circumstance bonus to the roll. If you're legendary in Acrobatics, this increases to a +2 circumstance bonus. You gain the Dancing Dodge reaction."
+ },
+ {
+  "id": "waking-dream",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Waking Dream",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "focusSpells",
+   "spellcastingGrant"
+  ],
+  "inRegistries": [],
+  "text": "While in your trance, you can blur the line between dreams and reality for others. You gain the Waking Dream focus spell, which you can use only while you're in a Daydream Trance. You gain a pool of Focus Points with 1 Focus Point, and you can Refocus by taking a nap for 10 minutes. You become trained in the spell attack modifier and spell DC statistics, and your spellcasting attribute for these spells is Wisdom."
+ },
+ {
+  "id": "wall-jump",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Wall Jump",
+  "level": 7,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can use your momentum from a jump to propel yourself off a wall. If you're adjacent to a wall at the end of a jump (whether performing a High Jump, Long Jump, or Leap), you don't fall as long as your next action is another jump. Your previous jump gives you momentum, letting you use High Jump or Long Jump as a single action, but you don't get to Stride as part of the activity. You can use Wall Jump only once in a turn, unless you're legendary in Athletics, in which case you can use it as many times as you can use consecutive jump actions in that turn."
+ },
+ {
+  "id": "wandering-oasis",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Wandering Oasis",
+  "level": 12,
+  "traits": [
+   "druid"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You're surrounded by soothing energy. You and allies within 60 feet of you are protected from severe environmental heat and cold. If you're legendary in Survival, you and those allies are also protected from extreme environmental heat and cold."
+ },
+ {
+  "id": "war-magic",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "War Magic",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "engineFieldsPresent": [
+   "grantsFeats",
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "Your studies have focused on using magic on the battlefield along with the basics of warfare. With a sturdy breastplate to turn aside errant arrows, you confidently use your spells to turn the tide of battle. If you choose this class archetype, you must select War Mage Dedication as your 2nd-level class feat. **Prerequisites:** You must be a wizard. **War Mage Adjustments:** You become trained in light and medium armor. At 11th level, you gain expert proficiency with light and medium armor, as well as unarmored defense. You gain the Shield Block general feat at 1st level. You gain the war magic class feature at 1st level. You must choose the School of Battle Magic as your arcane school. You have familiarity with martial weapons, treating them as simple weapons for the purposes of proficiency. You do not gain the Arcane Bond or Arcane Thesis class features. You do not gain the Defensive Robes feature at 13th level. **War Magic:** As a free action that can be taken once per round at the start of your turn, you can exchange any spell you currently have memorized for Sure Strike, heightened to the same level as the replaced spell. As normal, you can cast most spells while wielding a weapon in your hands. You can Refocus by studying plans of war, maps of troop movement, and reports from the field for an active conflict in lieu of studying your spellbook."
+ },
+ {
+  "id": "ward-medic",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Ward Medic",
+  "level": 2,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've studied in large medical wards, treating several patients at once and tending to all their needs. When you use Treat Disease or Treat Wounds, you can treat up to two targets. If you're a master in Medicine, you can treat up to four targets, and if you're legendary, you can treat up to eight targets."
+ },
+ {
+  "id": "warden-human-bb",
+  "lane": "proficiency",
+  "collection": "heritages",
+  "name": "Warden Human (BB)",
+  "traits": [],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "You and your family members are survivors, and you've learned how to take care of yourself. Pick one of the following benefits. - Add 4 to your maximum Hit Points. - You become an expert in Fortitude saving throws. - You become trained in medium armor. *Note: This heritage is from the Beginner Box and features non-standard heritage features*"
+ },
+ {
+  "id": "warden-spells",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Warden Spells",
+  "level": 1,
+  "traits": [
+   "ranger"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your relationship with the world around you extends from the physical to the magical. Certain feats grant you warden spells, which are a type of focus spells. It costs 1 Focus Point (FP) to cast a focus spell. When you gain your first warden spell, you also gain a focus pool of 1 FP. You refill your focus pool during your daily preparations, and you regain 1 FP by spending 10 minutes using the Refocus activity to commune with nature. Your warden spells are primal spells. When you first gain a warden spell, you become trained in primal spell attacks and spell DCs. Your spellcasting ability is Wisdom. Focus spells are automatically heightened to half your level rounded up. Taking feats can give you more focus spells and increase the size of your focus pool, though your focus pool can never hold more than 3 FP. The full rules for focus spells appear here."
+ },
+ {
+  "id": "warpriest",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Warpriest",
+  "level": 1,
+  "traits": [
+   "cleric"
+  ],
+  "engineFieldsPresent": [
+   "grantsFeats"
+  ],
+  "inRegistries": [],
+  "text": "You have trained in the more militant doctrine of your church, focusing on both spells and battle. **First Doctrine (1st):** You're trained in light and medium armor, and you have expert proficiency in Fortitude saves. You gain the Shield Block general feat, a reaction to reduce damage with a shield. If your deity's favored weapon is a simple weapon or an unarmed attack, you gain the Deadly Simplicity cleric feat. At 13th level, if you gain the Divine Defense class feature, you also gain expert proficiency in light and medium armor. **Second Doctrine (3rd):** You're trained in martial weapons. **Third Doctrine (7th):** You gain expert proficiency with your deity's favored weapon, martial weapons, simple weapons, and unarmed attacks. When you critically succeed at an attack roll using your deity's favored weapon, you apply the weapon's critical specialization effect; you can use your spell DC in place of your class DC. **Fourth Doctrine (11th):** Your proficiency ranks for the spell attack modifier and spell DC statistics increase to expert. **Fifth Doctrine (15th):** Your proficiency rank for Fortitude saves increases to master. When you roll a success at a Fortitude save, you get a critical success instead. **Final Doctrine (19th):** You gain master proficiency with your deity's favored weapon, spell attack modifier, and spell DC."
+ },
+ {
+  "id": "warrior-android",
+  "lane": "proficiency",
+  "collection": "heritages",
+  "name": "Warrior Android",
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your body was originally created to function as a security officer or soldier. You're a naturally gifted warrior preprogrammed for combat. You're trained in all simple and martial weapons."
+ },
+ {
+  "id": "warrior-of-legend",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Warrior of Legend",
+  "level": 1,
+  "traits": [
+   "fighter"
+  ],
+  "engineFieldsPresent": [
+   "choice",
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You have received a blessing that will ensure your ascension to legend, and a curse that foretells your inevitable fall. You must select Warrior of Legend Dedication as your 2nd-level class feat. **Prerequisites:** You must be a fighter. **Warrior of Legend Adjustments:** You aren't trained in heavy armor. The armor expertise and armor mastery class features only improve your proficiency rank for light armor, medium armor, and unarmored defense. You don't gain Shield Block as a class feature. You are trained in both Acrobatics and Athletics, rather than one or the other. Choose one physical damage type, which becomes your cursed weakness: bludgeoning, piercing, or slashing. You gain weakness to this damage type equal to half your level (minimum 1). You gain Diehard as a bonus feat, but you become Doomed 2 whenever you take damage from your cursed weakness (unless your doomed value is already higher). Your fighter weapon mastery and weapon legend class features grant you increased proficiency in both spears and polearms, but you can't choose any other weapon group with these class features."
+ },
+ {
+  "id": "warshard-warrior-dedication",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Warshard Warrior Dedication",
+  "level": 12,
+  "traits": [
+   "destiny",
+   "mythic"
+  ],
+  "engineFieldsPresent": [
+   "choice",
+   "grantsFeats"
+  ],
+  "inRegistries": [],
+  "text": "When you became infused with a shard of the god of war, you knew in your gut that your destiny would be one for the ages—yet you may not, at first, know the exact way such a destiny would play out. If you still carry the warshard that empowered you, you might carry it as a token or wear it as jewelry—if indeed it's not simply embedded into your body. Regardless, the warshard itself no longer has any intrinsic power of its own, and even if you toss the warshard aside, its gifts do not leave you, nor can another benefit from them. If you throw the warshard away or lose it, your destiny remains unaltered; you have, in effect, become the warshard itself. This power manifests through a weapon you wield. When you make your daily preparations, choose one weapon in your possession in which you have at least expert proficiency. That weapon becomes your warshard weapon until you choose a different weapon in your possession during another of your daily preparations. You can choose a mundane nonmagical weapon, a weapon with magical runes, one made of an unusual material, or even a specific magic weapon such as a storm flash or a bloodletting kukri, but not an intelligent weapon or an artifact like the bastard sword Serithtial or one of the seven swords of sin. While you don't lose access to your warshard warrior feats if your warshard weapon is taken from you or destroyed, note that several of this destiny's feats require you to be wielding your warshard weapon. You can etch or remove runes from a warshard weapon normally. You can have only one warshard weapon at a time. Your gain the Mythic Strike feat, but you can only use it with your warshard weapon. Whenever you make a Strike with your warshard weapon at mythic proficiency, you double the amount of additional damage you deal with the weapon specialization class feature. When you make Crafting checks to Repair your warshard weapon, your treat your proficiency rank in Crafting as legendary for determining how many Hit Points you restore to the item; in addition, if your Crafting result is a critical failure, you get a failure instead. You also gain the Call Warshard Weapon action."
+ },
+ {
+  "id": "water-sprint",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Water Sprint",
+  "level": 7,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Experience and training have taught you that water has just enough surface tension for a master sprinter to traverse the surface. When you Stride in a straight line, if you move at least half your Speed over ground, you can move any amount of the remaining distance across a level body of water. If you don't end your Stride on solid ground, you fall into the water. If you're legendary in Athletics, as long as you start on solid ground, any part of your Stride can cross the water's surface, even if you aren't moving a straight line, though you still fall into the water if you don't end your movement on solid ground."
+ },
+ {
+  "id": "weapon-potency",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Weapon Potency",
+  "level": 2,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Weapon Potency Source GM Core pg. 236 Usage etched onto a weapon Magical enhancements make this weapon strike true. Attack rolls with this weapon gain a +1 item bonus, and the weapon can be etched with one property rune. You can upgrade the weapon potency rune already etched on a weapon to a stronger version, increasing the values of the existing rune to those of the new rune. The Price of the upgrade is the difference between the two runes' prices. Weapon Potency (+1) Source GM Core pg. 236, Core Rulebook pg. 581 Price 35 gp Craft Requirements You are an expert in Crafting. Weapon Potency (+2) Source GM Core pg. 236, Core Rulebook pg. 581 Price 935 gp The item bonus to attack rolls is +2, and the weapon can be etched with two property runes. Craft Requirements You are a master in Crafting. Weapon Potency (+3) Source GM Core pg. 236, Core Rulebook pg. 581 Price 8,935 gp The item bonus to attack rolls is +3, and the weapon can be etched with three property runes. Craft Requirements You are legendary in Crafting."
+ },
+ {
+  "id": "weapon-potency-3",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Weapon Potency (+3)",
+  "level": 16,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Magical enhancements make this weapon strike true. Attack rolls with this weapon gain a +3 item bonus, and the weapon can be etched with three property rune. You can upgrade the *weapon potency* rune already etched on a weapon to a stronger version, increasing the values of the existing rune to those of the new rune. You must have the formula of the stronger rune to do so, and the Price of the upgrade is the difference between the two runes' Prices. **Craft Requirements** You are legendary in Crafting."
+ },
+ {
+  "id": "weapon-specialization",
+  "lane": "proficiency",
+  "collection": "classFeatures",
+  "name": "Weapon Specialization",
+  "level": 7,
+  "traits": [
+   "alchemist",
+   "animist",
+   "bard",
+   "champion",
+   "cleric",
+   "commander",
+   "druid",
+   "fighter",
+   "gunslinger",
+   "inventor",
+   "investigator",
+   "kineticist",
+   "ranger",
+   "rogue",
+   "sorcerer",
+   "summoner",
+   "swashbuckler",
+   "witch",
+   "wizard"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've learned how to inflict greater injuries with the weapons you know best. You deal an additional 2 damage with weapons and unarmed attacks in which you are an expert. This damage increases to 3 if you're a master, and 4 if you're legendary."
+ },
+ {
+  "id": "weapon-weird-oil",
+  "lane": "proficiency",
+  "collection": "items",
+  "name": "Weapon-Weird Oil",
+  "level": 7,
+  "traits": [
+   "consumable",
+   "magical",
+   "oil"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Each dose of weapon-weird oil is keyed to a particular melee weapon group, selected from among axe, brawling, club, flail, hammer, knife, pick, polearm, shield, spear, and sword. The oil creates a synergy between skill and weapon, enabling you to wield the weapon in unexpected ways. You must have proficiency with the original weapon to benefit from the oil; however, you use your proficiency rank with the oil's keyed group instead of the weapon's original group. Also, you apply the critical specialization effect from the oil's keyed group instead of the weapon's normal critical specialization effect. While the oil remains effective, the Grievous rune and similar magic react as if the weapon belongs to the oil's group. A weapon can be coated in only one type of weapon-weird oil at a time. Any new application of this oil supersedes any previous one. These effects last for 1 hour."
+ },
+ {
+  "id": "weaver-jotunborn",
+  "lane": "proficiency",
+  "collection": "heritages",
+  "name": "Weaver Jotunborn",
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You've mastered the art of iivlar silk weaving, a technique that requires a fine attention to detail. You are trained in Crafting. You gain a +1 circumstance bonus to Perception checks to Seek when searching for hidden details like secret doors or traps."
+ },
+ {
+  "id": "web-weaver",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "Web Weaver",
+  "level": 1,
+  "traits": [
+   "anadi"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featFeatGrants"
+  ],
+  "text": "You can produce a soft silk to weave into useful items. You gain the Specialty Crafting feat with a specialty in weaving. You can use your webbing to Craft simple, nonconsumable threaded items, such as clothing and rope, at zero cost as long as their base Price is 1 sp or less. These items have no resale value, and they naturally degrade after 24 hours without regular (if minor) maintenance. You can maintain up to 10 such items at a time; if you create a new one, your oldest creation breaks down from neglect. These temporary items take you only 1 day to Craft instead of 4. If you're an expert in Crafting, you can Craft these items in 1 hour; if you're a master, you can Craft them in 10 minutes; if you're legendary, you can Craft them in 1 minute."
+ },
+ {
+  "id": "what-could-have-been",
+  "lane": "proficiency",
+  "collection": "feats",
+  "name": "What Could Have Been",
+  "level": 8,
+  "traits": [
+   "archetype",
+   "concentrate",
+   "spellshape"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Rather than conjuring creatures from elsewhere in the world or the planes, you can temporarily pull a much different version of yourself from an alternate timeline—for instance, instead of summoning a generic or random troll with Summon Giant, you summon a troll version of yourself from a timeline where you're a troll. If your next action is to Cast a Spell that summons a creature, that creature is another version of you. This creature remains the type of creature you summoned and has largely the same abilities (plus the following adjustments), but it clearly resembles you, likely sharing some distinguishing features, such as mannerisms, speech patterns, tattoos, or clothing. The summoned creature gains a +1 status bonus to any skill check in which you're trained, a +2 status bonus if you're an expert, a +3 status bonus if you're a master, or a +4 status bonus if you're legendary. The creature also takes a –2 penalty to all skills in which you're untrained."
+ }
+]

@@ -1,0 +1,1245 @@
+[
+ {
+  "id": "poison-fizz-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Poison Fizz (Greater)",
+  "level": 15,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "lozenge"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Made from a special mixture of honey and alchemical reagents, poison fizz is a zesty, sweet rock candy that pops and crackles in your mouth. For 1 hour, you have a +3 item bonus to saving throws against poison and being petrified. **Secondary Effect** ⟨2⟩ (poison) **Effect** You bite the poison fizz to release its poisonous liquid center and spray green mist in a . This deals with a . A creature that critically fails is also blinded until the end of your next turn and is then temporarily immune to being blinded by poison fizz for 1 hour."
+ },
+ {
+  "id": "poison-fizz-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Poison Fizz (Lesser)",
+  "level": 8,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "lozenge"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Made from a special mixture of honey and alchemical reagents, poison fizz is a zesty, sweet rock candy that pops and crackles in your mouth. For 1 hour, you have a +2 item bonus to saving throws against poison and being petrified. **Secondary Effect** ⟨2⟩ (poison) **Effect** You bite the poison fizz to release its poisonous liquid center and spray green mist in a . This deals with a . A creature that critically fails is also blinded until the end of your next turn and is then temporarily immune to being blinded by poison fizz for 1 hour."
+ },
+ {
+  "id": "poison-fizz-moderate",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Poison Fizz (Moderate)",
+  "level": 12,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "lozenge"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Made from a special mixture of honey and alchemical reagents, poison fizz is a zesty, sweet rock candy that pops and crackles in your mouth. For 1 hour, you have a +2 item bonus to saving throws against poison and being petrified. **Secondary Effect** ⟨2⟩ (poison) **Effect** You bite the poison fizz to release its poisonous liquid center and spray green mist in a . This deals with a . A creature that critically fails is also blinded until the end of your next turn and is then temporarily immune to being blinded by poison fizz for 1 hour."
+ },
+ {
+  "id": "polished-demon-horn-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Polished Demon Horn (Greater)",
+  "level": 8,
+  "traits": [
+   "divine",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "This spellheart is fashioned from the tip of a demon's horn that's been polished until smooth and shiny. The spell DC of any spell cast by Activating this item is 24. - **Armor** You gain resistance 5 to unholy. - **Weapon** After you cast an enchantment spell by Activating the *horn*, your Strikes with the weapon deal an additional 1d6 mental damage until end of your next turn. --- **Activate** Cast a Spell **Effect** You cast Daze (). --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast 3rd-rank Fear ()."
+ },
+ {
+  "id": "portable-seal",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Portable Seal",
+  "level": 6,
+  "traits": [
+   "consumable",
+   "gadget",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Portable Seal May contain spoilers from Convocation Source Rival Academies pg. 93 Usage held in 2 hands Bulk L Activate (manipulate) A portable seal is a stiff framework of copper wires and strategically placed hinges, so that when the device is snapped open it forms an instant geometric design. A tiny Stasian coil is attached, which when activated runs a mixture of occult energy and high-voltage electricity through the wire. The design covers a 5-foot burst when unfolded and must be unfolded into an area free of major obstructions such as rocks or hostile creatures. When a creature with the summoned trait attempts to enter the seal’s area or make a melee Strike against a creature in that area, the summoned creature must attempt a Will save. Success The action occurs normally, and the creature is immune to the effects of this portable seal this round. Failure The movement or Strike is disrupted, but the creature is immune to further effects of the portable seal this round. Critical Failure The movement or Strike is disrupted. Lesser Portable Seal Source Rival Academies pg. 93 Price 45 gp The Will DC is 20. Moderate Portable Seal Source Rival Academies pg. 93 Price 400 gp The Will DC is 28. Major Portable Seal Source Rival Academies pg. 93 Price 5,000 gp The Will DC is 36."
+ },
+ {
+  "id": "portable-seal-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Portable Seal (Lesser)",
+  "level": 6,
+  "traits": [
+   "consumable",
+   "gadget",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨2⟩ (manipulate) --- A portable seal is a stiff framework of copper wires and strategically placed hinges, so that when the device is snapped open it forms an instant geometric design. A tiny Stasian coil is attached, which when activated runs a mixture of occult energy and high-voltage electricity through the wire. The design covers a when unfolded and must be unfolded into an area free of major obstructions such as rocks or hostile creatures. When a creature with the summoned trait attempts to enter the seal's area or make a melee Strike against a creature in that area, the summoned creature must attempt a save. --- **Success** The action occurs normally, and the creature is immune to the effects of this portable seal this round. **Failure** The movement or Strike is disrupted, but the creature is immune to further effects of the portable seal this round. **Critical Failure** The movement or Strike is disrupted."
+ },
+ {
+  "id": "portable-seal-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Portable Seal (Major)",
+  "level": 18,
+  "traits": [
+   "consumable",
+   "gadget",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨2⟩ (manipulate) --- A portable seal is a stiff framework of copper wires and strategically placed hinges, so that when the device is snapped open it forms an instant geometric design. A tiny Stasian coil is attached, which when activated runs a mixture of occult energy and high-voltage electricity through the wire. The design covers a when unfolded and must be unfolded into an area free of major obstructions such as rocks or hostile creatures. When a creature with the summoned trait attempts to enter the seal's area or make a melee Strike against a creature in that area, the summoned creature must attempt a save. --- **Success** The action occurs normally, and the creature is immune to the effects of this portable seal this round. **Failure** The movement or Strike is disrupted, but the creature is immune to further effects of the portable seal this round. **Critical Failure** The movement or Strike is disrupted."
+ },
+ {
+  "id": "portable-seal-moderate",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Portable Seal (Moderate)",
+  "level": 12,
+  "traits": [
+   "consumable",
+   "gadget",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨2⟩ (manipulate) --- A portable seal is a stiff framework of copper wires and strategically placed hinges, so that when the device is snapped open it forms an instant geometric design. A tiny Stasian coil is attached, which when activated runs a mixture of occult energy and high-voltage electricity through the wire. The design covers a when unfolded and must be unfolded into an area free of major obstructions such as rocks or hostile creatures. When a creature with the summoned trait attempts to enter the seal's area or make a melee Strike against a creature in that area, the summoned creature must attempt a save. --- **Success** The action occurs normally, and the creature is immune to the effects of this portable seal this round. **Failure** The movement or Strike is disrupted, but the creature is immune to further effects of the portable seal this round. **Critical Failure** The movement or Strike is disrupted."
+ },
+ {
+  "id": "potion-of-acid-resistance-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Potion of Acid Resistance (Lesser)",
+  "level": 6,
+  "traits": [
+   "consumable",
+   "magical",
+   "potion"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Drinking this thick, fortifying potion grants resistance 5 against acid damage for 1 hour."
+ },
+ {
+  "id": "potion-of-cold-resistance-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Potion of Cold Resistance (Lesser)",
+  "level": 6,
+  "traits": [
+   "consumable",
+   "magical",
+   "potion"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Drinking this thick, fortifying potion grants resistance 5 against cold damage for 1 hour."
+ },
+ {
+  "id": "potion-of-electricity-resistance-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Potion of Electricity Resistance (Lesser)",
+  "level": 6,
+  "traits": [
+   "consumable",
+   "magical",
+   "potion"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Drinking this thick, fortifying potion grants resistance 5 against electrical damage for 1 hour."
+ },
+ {
+  "id": "potion-of-fire-resistance-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Potion of Fire Resistance (Lesser)",
+  "level": 6,
+  "traits": [
+   "consumable",
+   "magical",
+   "potion"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Drinking this thick, fortifying potion grants resistance 5 against fire damage for 1 hour."
+ },
+ {
+  "id": "potion-of-resistance",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Potion of Resistance",
+  "level": 6,
+  "traits": [
+   "consumable",
+   "magical",
+   "potion"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Potion of Resistance Source GM Core pg. 260 Usage held in 1 hand Bulk L Activate (manipulate) Drinking this thick, fortifying potion grants resistance against a single damage type for 1 hour. Each potion of resistance is created to defend against acid, cold, electricity, fire, or sonic damage (and is called a lesser potion of fire resistance or the like). Potion of Resistance (Lesser) Source GM Core pg. 260, Core Rulebook pg. 563 Price 45 gp You gain resistance 5 to the appropriate energy type Potion of Resistance (Moderate) Source GM Core pg. 260, Core Rulebook pg. 563 Price 180 gp You gain resistance 10 to the appropriate energy type. Potion of Resistance (Greater) Source GM Core pg. 260, Core Rulebook pg. 563 Price 850 gp You gain resistance 15 to the appropriate energy type."
+ },
+ {
+  "id": "potion-of-sonic-resistance-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Potion of Sonic Resistance (Lesser)",
+  "level": 6,
+  "traits": [
+   "consumable",
+   "magical",
+   "potion"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Drinking this thick, fortifying potion grants resistance 5 against sonic damage for 1 hour."
+ },
+ {
+  "id": "practiced-opposition",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Practiced Opposition",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've battled more undead than you care to remember, often with little time to prepare between foes, forcing you to rely on experience and muscle memory to guide your blade. Attempt a check to Recall Knowledge about an undead you can see and then Strike that undead. If your attempt to Recall Knowledge is successful, your Strike treats the target's resistances as 5 lower. The target is then immune to your Practiced Opposition for 24 hours."
+ },
+ {
+  "id": "preternatural-polish",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Preternatural Polish",
+  "level": 16,
+  "traits": [
+   "archetype",
+   "exploration",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Armor you polish shines with righteous grace. You can take 10 minutes to recite prayers or oaths while polishing a suit of heavy armor that you or a willing creature is wearing. If you do, attempt a DC 35 Crafting check with the following results. The armor then becomes temporarily immune to this ability until your next daily preparations. --- **Critical Success** Once in the next hour, the creature wearing the polished armor can use a reaction to shine majestically. This reaction is triggered when they would be affected by a spell or ability with the darkness trait. The creature attempts a counteract check against the triggering effect using your Crafting modifier. Additionally, the creature wearing the polished armor gains an additional reaction at the start of each of their turns that can be only used for this reaction. **Success** As critical success, but the creature wearing the polished armor doesn't gain an additional reaction at the start of each of their turns."
+ },
+ {
+  "id": "prey-mutagen",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Prey Mutagen",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Prey Mutagen May contain spoilers from Sky King's Tomb Source Pathfinder #194: Cult of the Cave Worm pg. 79 Usage held in 1 hand Bulk L Activate Interact A mixture of fey blood and rare ingredients give you incredible speed but also cause you to become particularly attractive to predators. Benefit You gain a status bonus to your speed and are able to use the following reaction: Timely Dodge Trigger You are targeted by a Strike; Effect You dart aside, gaining a circumstance bonus to AC, then Step after the Strike resolves. Drawback The range at which creatures can detect you with scent or tremorsense doubles. Animals and beasts gain a +2 circumstance bonus to attack rolls against you. Prey Mutagen (Lesser) Source Pathfinder #194: Cult of the Cave Worm pg. 79 Price 4 gp Bulk L You gain a +10 status bonus to your Speed and gain a +1 circumstance bonus to AC when using Timely Dodge. The duration is 1 minute. Prey Mutagen (Moderate) Source Pathfinder #194: Cult of the Cave Worm pg. 79 Price 12 gp Bulk L You gain a +20 status bonus to your Speed and gain a +2 circumstance bonus to AC when using Timely Dodge. The duration is 10 minutes. Prey Mutagen (Greater) Source Pathfinder #194: Cult of the Cave Worm pg. 79 Price 300 gp Bulk L You gain a +30 status bonus to your Speed and gain a +3 circumstance bonus to AC when using Timely Dodge. The duration is 1 hour. Prey Mutagen (Major) Source Pathfinder #194: Cult of the Cave Worm pg. 79 Price 3,000 gp Bulk L You gain a +40 status bonus to your Speed and gain a +4 circumstance bonus to AC when using Timely Dodge. The duration is 1 hour."
+ },
+ {
+  "id": "prey-mutagen-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Prey Mutagen (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Interact --- A mixture of fey blood and rare ingredients give you incredible speed but also cause you to become particularly attractive to predators. **Benefit** You gain a +30 status bonus to your speed and are able to use the following reaction: **Timely Dodge** ⟨5⟩ **Trigger** You are targeted by a Strike **Effect** You dart aside, gaining a +3 circumstance bonus to AC, then Step after the Strike resolves. **Drawback** The range at which creatures can detect you with scent or tremorsense doubles. Animals and beasts gain a +2 circumstance bonus to attack rolls against you. The duration is 1 hour."
+ },
+ {
+  "id": "prey-mutagen-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Prey Mutagen (Lesser)",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Interact --- A mixture of fey blood and rare ingredients give you incredible speed but also cause you to become particularly attractive to predators. **Benefit** You gain a +10 status bonus to your speed and are able to use the following reaction: **Timely Dodge** ⟨5⟩ **Trigger** You are targeted by a Strike **Effect** You dart aside, gaining a +1 circumstance bonus to AC, then Step after the Strike resolves. **Drawback** The range at which creatures can detect you with scent or tremorsense doubles. Animals and beasts gain a +2 circumstance bonus to attack rolls against you. The duration is 1 minute."
+ },
+ {
+  "id": "prey-mutagen-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Prey Mutagen (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Interact --- A mixture of fey blood and rare ingredients give you incredible speed but also cause you to become particularly attractive to predators. **Benefit** You gain a +40 status bonus to your speed and are able to use the following reaction: **Timely Dodge** ⟨5⟩ **Trigger** You are targeted by a Strike **Effect** You dart aside, gaining a +4 circumstance bonus to AC, then Step after the Strike resolves. **Drawback** The range at which creatures can detect you with scent or tremorsense doubles. Animals and beasts gain a +2 circumstance bonus to attack rolls against you. The duration is 1 hour."
+ },
+ {
+  "id": "prey-mutagen-moderate",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Prey Mutagen (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Interact --- A mixture of fey blood and rare ingredients give you incredible speed but also cause you to become particularly attractive to predators. **Benefit** You gain a +20 status bonus to your speed and are able to use the following reaction: **Timely Dodge** ⟨5⟩ **Trigger** You are targeted by a Strike **Effect** You dart aside, gaining a +2 circumstance bonus to AC, then Step after the Strike resolves. **Drawback** The range at which creatures can detect you with scent or tremorsense doubles. Animals and beasts gain a +2 circumstance bonus to attack rolls against you. The duration is 10 minute."
+ },
+ {
+  "id": "psychopomp-eidolon",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Psychopomp Eidolon",
+  "level": 1,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Your eidolon is a psychopomp, a creature whose sworn duty is to usher souls safely to the afterlife and maintain the courts of the dead. Psychopomp eidolons have a variety of appearances, but since they often traffic with mortals, their form typically includes an elaborate mask. You and your psychopomp eidolon share an important fate together, whether it relates directly to your own soul or to a mission that will somehow protect the souls of others. **Tradition** divine **Traits** eidolon, monitor, psychopomp **Alignment** must be true neutral **Home Plane** The Boneyard --- **Size** Medium **Suggested Attacks** beak (piercing), claw (slashing), fist (bludgeoning), jaws (piercing), unarmed attacks shaped like a weapon **Soul Guardian** Str 18, Dex 14, Con 16, Int 10, Wis 12, Cha 8; +2 AC (+3 Dex cap) **Scribe of the Dead** Str 12, Dex 18, Con 12, Int 14, Wis 12, Cha 10; +1 AC (+4 Dex cap) **Skills** Intimidation, Religion **Senses** darkvision **Language** Requian **Speed** 25 feet --- **Eidolon Abilities***Initial *spirit touch*; Symbiosis *hidden watcher*; Transcendence *spirit taker ## Spirit Touch Your eidolon's attacks possess a psychopomp's ability to harm the living and the dead. Your eidolon's unarmed Strikes affect incorporeal creatures as though etched with a Ghost Touch property rune and deal an extra 1 void damage to living creatures and an extra 1 vitality damage to undead. ## Hidden Watcher 7th Your eidolon can render both of you unseen. Once per hour, it can cast targeting you, them, or both of you at once. If the spell targeted both of you, the spell ends for both of you if either of you uses a hostile action. ## Spirit Taker 17th Your eidolon is particularly capable when it comes to handling bodiless spirits and putting undead to their final rest. Your eidolon can see incorporeal creatures inside of solid objects and can attack them with Strikes without penalty; an incorporeal creature in a solid object that takes damage from your eidolon's Strike is expelled from the object to the nearest available space, moving closer to your eidolon if possible. Additionally, your eidolon can target or affect a creature projecting its consciousness (such as via Project Image) or possessing another creature, even if its body is elsewhere, though your eidolon must know about the possession or projection and choose to do so. Finally, the spirit of an undead destroyed by your eidolon's Strikes is sent directly to the Boneyard for judgment; an undead with an ability to avoid such a fate automatically, such as a ghost's rejuvenation, can attempt a counteract check against your spell DC to return via that ability as normal. In that case, it uses its Will save modifier as its counteract modifier."
+ },
+ {
+  "id": "psychopomp-mask",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Psychopomp Mask",
+  "level": 1,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "These minor magic items are painted to resemble your face, or some metaphorical depiction thereof, to encourage the ushers of death to take the mask in your place. If you begin your turn with a dying value of 3 or greater, instead of making your recovery check, you lose the dying condition but remain unconscious at 0 Hit Points. The mask then cracks in half and is destroyed. The psychopomps won't be so easily fooled again-you are temporarily immune to the effects of any psychopomp mask for 1 year."
+ },
+ {
+  "id": "public-execution",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Public Execution",
+  "level": 8,
+  "traits": [
+   "archetype",
+   "auditory",
+   "flourish",
+   "linguistic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You have designated a mark using Mark for Death. --- Some rebel Firebrand cells make a practice of publicly declaring the main target of a given operation. You announce your intention to kill your mark for all to hear and reveal the reason they must die, perhaps listing their crimes or sharing a damning secret. Creatures within 30 feet who can see and hear you are shocked by your proclamation or otherwise reluctant to come to your mark's aid. They must attempt a save against your class DC or spell DC, whichever is higher. On a failure, the creature can't attack you or otherwise perform hostile actions against you until the end of your next turn. If you use a hostile action against a creature other than your mark, this effect ends. Your mark becomes temporarily immune to your Public Execution for 1 day."
+ },
+ {
+  "id": "purple-pepper-powder",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Purple Pepper Powder",
+  "level": 8,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "processed"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This nearly black purple powder is made from the extremely spicy Kuthite's kiss pepper and is a favorite among the Sklar-Quah. When you eat a meal flavored with this purple pepper powder, you gain resistance 10 to fire and resistance 5 to poison for 1 hour."
+ },
+ {
+  "id": "pyrefeather-cloak",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Pyrefeather Cloak",
+  "level": 3,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "The red and dark-orange feathers of a pyrefowl have been woven into a beautiful cloak. **Activate—Deflect Flame** ⟨5⟩ (manipulate) **Trigger** You would be affected by a fire effect **Frequency** once per day --- **Effect** You flourish the cloak, using the feathers to reduce the incoming heat. You gain fire resistance 5 and a +1 circumstance bonus to saving throws against the triggering effect until the beginning of your next turn. If you are taking persistent fire damage, you can immediately attempt a flat check to end the persistent damage."
+ },
+ {
+  "id": "pyrophilic-recovery",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Pyrophilic Recovery",
+  "level": 1,
+  "traits": [
+   "leshy"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You rely on fire and extreme heat to sprout and regrow. Whenever you take fire damage, at the beginning of your next turn, you regain Hit Points equal to half your character level (minimum 1). The total number of Hit Points you recover in this way, including any adjustments that increase the effects of healing, can't exceed half the Hit Points you lost from the fire damage you took. For example, if an effect deals 15 fire Damage and you have fire resistance 5, you would take 10 fire Damage and Pyrophilic Recovery could recover at most 5 Hit Points, regardless of any other effects that increase healing. If you take fire damage more than once before your next turn, the Hit Points recovered from Pyrophilic Recovery are cumulative, though still no more than half the fire damage taken each time."
+ },
+ {
+  "id": "quickening-emotion",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Quickening Emotion",
+  "level": 0,
+  "traits": [
+   "emotion",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Quickening Emotion Source Treasure Vault (Remastered) pg. 199 Aspect Emotion Activate (concentrate) Trigger You are the target of an emotion effect from a hostile source; Effect The relic attempts a counteract check. If the check succeeds, the relic absorbs the effect completely, negating it. Instead, you're quickened for up to 1 minute, but no longer than the triggering effect's duration. You then become temporarily immune to this effect for 1 hour."
+ },
+ {
+  "id": "radiant-spark",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Radiant Spark",
+  "level": 25,
+  "traits": [
+   "artifact",
+   "occult"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This shining prism is bound within a golden frame. The bright glow within the artifact is the gleaming essence of celestials bound within it in ancient times. Each activation consumes a bit of this celestial energy, projecting the screams of the celestials into your mind. While holding the Radiant Spark, you gain a +2 item bonus to saving throws against divine spells and effects and you are aware of its powers. If you are good, while holding the Radiant Spark, you are Sickened 3 and can't recover from this condition. --- **Activate** ⟨2⟩ envision, Interact --- **Effect** The Radiant Spark casts a 10th-rank Dominate spell () on a creature that isn't from the Material Plane. Celestials get an outcome one degree of success worse than the result of their save. --- **Activate** ⟨4⟩ envision **Trigger** You begin casting a Binding Circle ritual --- **Effect** The Radiant Spark reduces the casting time of the ritual to 1 hour, and you don't need secondary casters for this ritual. --- **Activate** ⟨5⟩ envision, Interact **Trigger** The target critically fails their save against the Radiant Spark's dominate spell or you critically succeed at binding the target with the planar binding ritual using the artifact --- **Effect** The target must attempt a save and is immune to further attempts for 24 hours. --- **Critical Success** The target is unaffected. **Success** The target is Drained 2. **Failure** The target dies and its essence is trapped within the Radiant Spark. It can be brought back to life only with powerful magic such as Wish or Miracle. **Critical Failure** As failure, and the target can't be brought back to life until the Radiant Spark is destroyed. --- **Destruction** An archfiend or evil demigod must willingly swap their essence with that of a celestial dominated or bound by the artifact, then critically fail the saving throw against having their essence consumed. This permanently destroys both the artifact and the fiend or demigod."
+ },
+ {
+  "id": "radiate-glory",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Radiate Glory",
+  "level": 17,
+  "traits": [
+   "divine",
+   "light",
+   "nephilim",
+   "visual"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your inherent glory radiates into the world with all the divine power of the celestial planes for 1 minute. Any creature that can see you while you Radiate Glory must attempt a saving throw against your class or spell DC, whichever is higher. The creature then becomes temporarily immune to this effect for 24 hours. --- **Critical Success** The creature is unaffected. **Success** You are concealed to the creature for 1 round by the shining light, but can't use this concealment to Hide, as normal for when your location is obvious. **Failure** As success, except you are concealed to the creature while your glory radiates. **Critical Failure** You are hidden to the creature while your glory radiates, lost amid the radiant corona of your presence. Your general position is still obvious, so you can't use this to Sneak."
+ },
+ {
+  "id": "rainbow-vinegar",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Rainbow Vinegar",
+  "level": 4,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Rainbow Vinegar Source Tian Xia Character Guide pg. 105 Usage held in 1 hand Bulk L Access Tian Xia Origin Activate (manipulate) Black swill with multicolored ribbons makes this vinegar look like an oil spill. Ingesting a dose of rainbow vinegar makes your sweat acidic and nonconductive for 10 minutes. During this time, your unarmed attacks deal an additional 1d4 acid damage, and you have resistance 10 to electricity. Vampires find this vinegar particularly harmful and take an additional 2d4 acid damage instead. Taking more than one dose of rainbow vinegar in a single day gives you weakness 5 to acid until your next daily preparations. Rainbow Vinegar Source Tian Xia Character Guide pg. 105 Price 15 gp Rainbow Vinegar (Greater) Source Tian Xia Character Guide pg. 105 Price 110 gp The resistance increases to 15. You deal an additional 1d8 acid damage with your unarmed attacks, or 2d8 acid damage against vampires."
+ },
+ {
+  "id": "rainbow-vinegar-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Rainbow Vinegar (Greater)",
+  "level": 12,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) **Access** Tian Xia origin --- Black swill with multicolored ribbons makes this vinegar look like an oil spill. Ingesting a dose of rainbow vinegar makes your sweat acidic and nonconductive for 10 minutes. During this time, your unarmed attacks deal an additional 1d8 acid damage, and you have resistance 15 to electricity. Vampires find this vinegar particularly harmful and take an additional 2d8 acid damage instead. Taking more than one dose of rainbow vinegar in a single day gives you weakness 5 to acid until your next daily preparations."
+ },
+ {
+  "id": "rainbow-vinegar-moderate",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Rainbow Vinegar (Moderate)",
+  "level": 4,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) **Access** Tian Xia origin --- Black swill with multicolored ribbons makes this vinegar look like an oil spill. Ingesting a dose of rainbow vinegar makes your sweat acidic and nonconductive for 10 minutes. During this time, your unarmed attacks deal an additional 1d4 acid damage, and you have resistance 10 to electricity. Vampires find this vinegar particularly harmful and take an additional 2d4 acid damage instead. Taking more than one dose of rainbow vinegar in a single day gives you weakness 5 to acid until your next daily preparations."
+ },
+ {
+  "id": "rampart-shield",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Rampart Shield",
+  "level": 12,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This massive tower shield is painted a cool cyan green and is decorated with an image of Absalom's mother-sphinx emerging from a cresting wave. | Hardness | HP | BT | | --- | --- | --- | | 10 | 60 | 30 | --- **Activate** ⟨2⟩ Command **Frequency** once per day --- **Effect** You transform the shield into a 1-foot-thick, 10-foot-by-10-foot stone rampart topped with a battlement and adorned with the flags of Absalom. If any part of the rampart would pass through any creatures or objects, the activation fails. At the center of each 5-foot length of the rampart is an arrow slit. The rampart has AC 10, Hardness 15, and 30 Hit Points. The rampart is immune to critical hits and precision damage. Attacks that would destroy the rampart cause it to instead revert back to its shield form and drop to the ground in an open space below the rampart. When this happens, the shield loses 30 Hit Points. You can Dismiss the activation, causing the wall to revert back to its shield form. The shield then returns secured to your arm if you are adjacent to the rampart, or drops to the ground in an open space if you're not adjacent to the rampart. If neither destroyed nor Dismissed, the rampart reverts back to a shield automatically after 1 hour."
+ },
+ {
+  "id": "ration-tonic",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Ration Tonic",
+  "level": 1,
+  "traits": [
+   "consumable",
+   "magical",
+   "potion"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- This slender vial appears to hold clean, clear water with a faintly fruity scent. Drinking a *ration tonic* magically nourishes you with the equivalent of a day's worth of food and water. The tonic has a subtle, pleasant taste, its particulars chosen when the potion is crafted."
+ },
+ {
+  "id": "ration-tonic-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Ration Tonic (Greater)",
+  "level": 7,
+  "traits": [
+   "consumable",
+   "magical",
+   "potion"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- This slender vial appears to hold clean, clear water with a faintly fruity scent. Drinking a ration tonic magically nourishes you with the equivalent of a week's worth of food and water, distributing the nourishment in a constant and healthy flow across the week. The tonic has a subtle, pleasant taste, its particulars chosen when the potion is crafted."
+ },
+ {
+  "id": "reach-for-the-sky",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Reach for the Sky",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're wielding a loaded firearm. --- You command the room, firing a gun into the air and ordering everyone to surrender and put their hands in the air. You fire your firearm and then attempt a single Intimidation check to Demoralize each enemy within 30 feet. Creatures who become frightened instinctively put their hands in the air. If they had Raised a Shield, they lose the benefits, as they raise the shield above their head where it's of little use to block attacks. With their hands in the air, each of these frightened creatures can't use reactions or free actions that require their hands, or items held in their hands, until the beginning of their next turn. Regardless of the result, each creature is then temporarily immune to Reach for the Sky for 1 minute."
+ },
+ {
+  "id": "read-the-roots",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Read the Roots",
+  "level": 5,
+  "traits": [
+   "ardande",
+   "primal",
+   "scrying",
+   "wood"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are standing on the ground, and there are plants rooted in the ground within 100 feet of you. --- The root systems of trees are a far-reaching network of information, and you know how to access them and extract their secrets. You Seek within 30 feet using tremorsense, an imprecise sense, instead of one of your own senses. You can also detect subjects touching or burrowing through the surface you are standing on in this way."
+ },
+ {
+  "id": "reapers-grasp",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Reaper's Grasp",
+  "level": 11,
+  "traits": [
+   "concussive",
+   "fatal-d12",
+   "kickback"
+  ],
+  "engineFieldsPresent": [
+   "counters"
+  ],
+  "inRegistries": [],
+  "text": "This *+2 striking arquebus* has an ashwood stock plated with worked silver, featuring a mosaic of agonized skulls carved into the metal. The mere mention of Galt's infamous final blades is enough to make any mortal creature shudder. Used to execute political opponents in the nation's constant civil war, these guillotines hold the souls of those they execute, preventing them from reaching a natural afterlife. When one of the final blades was destroyed in 4710, some of the metal from its remains made its way to Alkenstar and was reforged into a deadly firearm that retained the guillotine's soul-stealing properties. Whenever the *reaper's grasp* kills a sapient living or undead creature, a portion of that creature's soul is drawn inexorably into the weapon, and another skull is added to the mosaic as if scrawled by an invisible hand, to a maximum of 10 souls. Creatures whose souls are protected by outside forces, such as a lich's soul cage, are immune to this effect, though the process, while painful, does not prevent the soul from going to the afterlife or being resurrected. Keep track of the level of each creature whose souls are stored in the reaper's grasp. --- **Activate—Soul Shot** ⟨1⟩ (concentrate) **Requirements** There's at least one soul stored in the reaper's grasp **Effect** You channel the necromantic energy of a soul stored in the weapon into your next attack, increasing the attack's destructive power. Choose a soul stored in the weapon. The next Strike you make with the reaper's grasp before the end of your turn deals an additional void damage equal to twice the level of the creature whose soul you chose. Using this ability releases the chosen soul, and a skull on the mosaic fades away. --- **Activate—Devour Captured Soul** ⟨1⟩ (concentrate) **Requirements** There's at least one soul stored in the reaper's grasp **Effect** You channel the necromantic energy of a soul stored in the weapon into a mantle around you, protecting you from harm. Choose a soul stored in the weapon. You gain temporary Hit Points equal to three times the level of the creature whose soul you chose, which last until the end of your next turn. Using this ability releases the chosen soul, and a skull on the mosaic fades away."
+ },
+ {
+  "id": "reassuring-presence",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Reassuring Presence",
+  "level": 1,
+  "traits": [
+   "anadi",
+   "auditory",
+   "visual"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** An ally within 30 feet gains the frightened condition. --- You serve as an anchor to your close companions, calming them in times of stress. Decrease the value of the triggering ally's frightened condition by 1. The ally is then temporarily immune to your Reassuring Presence for 1 hour."
+ },
+ {
+  "id": "rebirth-in-living-stone",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Rebirth in Living Stone",
+  "level": 18,
+  "traits": [
+   "earth",
+   "impulse",
+   "kineticist",
+   "polymorph",
+   "primal"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "core.stances"
+  ],
+  "text": "Rock overflows from within you to consume your form before cracking open to reveal your body transformed into living stone. You gain 40 temporary Hit Points. You're immune to critical hits and precision damage. You can't be pushed, pulled, or tripped while you're standing on earth or stone. Your earth Elemental Blasts deal an additional 1d10 damage of their normal type. These benefits last until the end of your next turn, but you can Sustain them up to 1 minute. After you gain temporary Hit Points from this impulse, you can't do so again for 10 minutes. --- **Level (20th)** You gain 50 temporary Hit Points."
+ },
+ {
+  "id": "reincarnated-ridiculer",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Reincarnated Ridiculer",
+  "level": 5,
+  "traits": [
+   "reincarnated"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've practiced the art of taunting an enemy, ensuring they know death will only make you stronger. When you Demoralize an opponent, the target doesn't become temporarily immune to your attempts to Demoralize it unless you critically fail the check. If the target critically hit you with a Strike on its previous turn, the DC for this check is reduced by 4."
+ },
+ {
+  "id": "remember-their-names",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Remember Their Names",
+  "level": 16,
+  "traits": [
+   "auditory",
+   "linguistic",
+   "mental",
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You peer into the eyes of a target of your Ultimatum of Liberation, as you say aloud the names of their victims, searing them into the oppressor's mind, cursing them to feel their victims' pain. The target takes 12d6 damage ( save against your class DC or spell DC, whichever is higher). If the target fails or critically fails this check, they also take 2d6 damage. For the next hour, when the target stops taking this persistent damage, you or one of your allies can mention a victim's name as a single action to the target, forcing them to succeed at another save or begin taking the persistent damage again. This is a curse effect. Once you use Remember Their Names on a target, the target is immune to it for 24 hours."
+ },
+ {
+  "id": "remember-thy-names",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Remember thy Names",
+  "level": 16,
+  "traits": [
+   "auditory",
+   "linguistic",
+   "mental",
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Remember thy Names Source War of Immortals pg. 124 Archetype Broken Chain Prerequisites Broken Chain Dedication You peer into the eyes of a target of your Ultimatum of Liberation, as you say aloud the names of their victims, searing them into the oppressor’s mind, cursing them to feel their victims’ pain. The target takes 12d6 mental damage (basic Will save against your class DC or spell DC, whichever is higher). If the target fails or critically fails this check, they also take 2d6 persistent mental damage. For the next hour, when the target stops taking this persistent damage, you or one of your allies can mention a victim’s name as a single action to the target, forcing them to succeed at another Will save or begin taking the persistent damage again. This is a curse effect. Once you use Remember Their Names on a target, the target is immune to it for 24 hours."
+ },
+ {
+  "id": "resonating-fork",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Resonating Fork",
+  "level": 5,
+  "traits": [
+   "magical",
+   "sonic",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This two-pronged fork of metal emits a constant low hum, vibrating slightly when touched. The spell attack modifier of any spell cast by activating this item is +9, and the spell DC is 19. - **Armor** You gain resistance 2 to sonic damage and a +1 item bonus to saving throws against effects with the auditory or sonic trait. - **Weapon** After you cast a sonic spell by activating the fork, the weapon reverberates with trapped sound waves. Your next Strike causes the target to be deafened for 1 round if it hits (or for 3 rounds on a critical hit). If you don't make a Strike by the end of your next turn, the sound waves dissipate with no effect. --- **Activate** Cast a Spell **Effect** You cast Bullhorn. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast Biting Words."
+ },
+ {
+  "id": "resonating-fork-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Resonating Fork (Greater)",
+  "level": 7,
+  "traits": [
+   "magical",
+   "sonic",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This two-pronged fork of metal emits a constant low hum, vibrating slightly when touched. The spell attack modifier of any spell cast by activating this item is +13, and the spell DC is 23. - **Armor** You gain resistance 5 to sonic damage and a +2 item bonus to saving throws against effects with the auditory or sonic trait. - **Weapon** After you cast a sonic spell by activating the fork, the weapon reverberates with trapped sound waves. Your next Strike causes the target to be deafened for 3 rounds if it hits (or for 1 minute on a critical hit). If you don't make a Strike by the end of your next turn, the sound waves dissipate with no effect. --- **Activate** Cast a Spell **Effect** You cast Bullhorn. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast 2nd-rank Biting Words. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast Noise Blast."
+ },
+ {
+  "id": "resuscitate",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Resuscitate",
+  "level": 16,
+  "traits": [
+   "archetype",
+   "healing",
+   "manipulate"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are holding healer's tools or are wearing them and have a hand free. --- You resuscitate the dead. Attempt a DC 40 Medicine check to revive a dead creature who has been dead for no more than 3 rounds and whose body is mostly intact. If you succeed, the target returns to life with the effects of Raise Dead, except it still has the wounded condition it had before dying, increased by 1 (or Wounded 1 if it wasn't wounded before dying). Whether you succeed or fail, the target is temporarily immune to Resuscitate for 1 day."
+ },
+ {
+  "id": "revolutionary-innovation",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Revolutionary Innovation",
+  "level": 15,
+  "traits": [
+   "inventor"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You are an unparalleled genius and have discovered a technique that will revolutionize your chosen field—or at least for the time being, your innovation! Choose a revolutionary modification to apply to your innovation. You can also choose an initial or breakthrough modification of the same type instead, if you prefer. ### Revolutionary Armor Modifications - **Automated Impediments:** Your armor uses electromagnetic fields, subharmonic distortions, or other techniques to make it difficult for those close to you to move unless you allow it. While wearing your armor, all spaces adjacent to you are difficult terrain for your enemies. - **Energy Barrier:** Your armor's defenses ablate any kind of energy coming your way. While wearing your armor, you gain resistance to all energy damage (acid, cold, electricity, fire, force, sonic, vitality, and void damage) equal to 2 + half your level. You must have the harmonic oscillator, metallic reactance, or phlogistonic regulator modification to select this modification. - **Incredible Resistance:** You've improved upon your breakthrough modification's ability to resist damage. Choose one of the following breakthrough modifications your innovation has: dense plating, layered mesh, or tensile absorption. Increase the resistance you gain from that modification to be equal to your level, instead of half your level. - **Multisensory Mask (subterfuge suit only):** You've built a multisensory mask over your armor that protects you by distorting your figure from all senses, leaving behind only a hazy image, muffled sounds, and so forth. While wearing the armor, you gain concealment against all creatures, even if they are using a nonvisual precise sense, such as a bat's echolocation. As normal for effects that leave your location obvious, you can't use this concealment to Hide or Sneak. If you use a hostile action, the concealment ends until you restore the mask as a single action, which has the manipulate trait. - **Perfect Fortification (power suit only):** You've outfitted your armor with such heavy fortifications that deadly attacks often lose their edge. Each time you're critically hit while wearing the armor, attempt a DC 13 flat check. On a success, it becomes a normal hit. This isn't cumulative with *fortification* runes or other abilities that reduce critical hits with a flat check. Additionally, you gain resistance 2 + half your level against precision damage. - **Physical Protections:** Your armor has so many adjustments and precautions that it can guard against all physical damage. While wearing your armor, you gain resistance to all physical damage (bludgeoning, piercing, and slashing damage, as well as persistent bleed damage) equal to half your level. You must have the dense plating, layered mesh, or tensile absorption breakthrough modification to select this modification. - **Rune Capacity:** Whether you've done some dabbling in orichalcum alloys or found another engineering solution, you've built your innovation in such a way that it can hold an additional property rune. Your innovation can have one more property rune than a normal item of its kind (to a maximum of four property runes with a +3 *po"
+ },
+ {
+  "id": "rhino-hide-brooch",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Rhino Hide Brooch",
+  "level": 5,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Usage** affixed to armor **Activate** ⟨5⟩ envision **Trigger** You would take physical damage. --- This thick brooch is carved from a single piece of rhino hide. It's lacquered and covered in a thin layer of silver dust. When activated, the talisman grants you resistance 5 to physical damage until the end of the current creature's turn. This resistance applies to the triggering attack."
+ },
+ {
+  "id": "rime-crystal",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Rime Crystal",
+  "level": 3,
+  "traits": [
+   "cold",
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "Slowly spinning at the center of this crystalline orb is a single snowflake, and its surface remains lightly covered in frost no matter how hot the weather is outside. The spell attack modifier of any spell cast by activating this item is +7, and the spell DC is 17. - **Armor** You gain resistance 2 to cold. - **Weapon** After you cast a cold spell by activating the *crystal*, your Strikes with the weapon deal an additional 1d4 damage until the end of your next turn. --- **Activate** Cast a Spell **Effect** You cast Frostbite."
+ },
+ {
+  "id": "rime-crystal-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Rime Crystal (Greater)",
+  "level": 8,
+  "traits": [
+   "cold",
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "Slowly spinning at the center of this crystalline orb is a single snowflake, and its surface remains lightly covered in frost no matter how hot the weather is outside. The spell attack modifier of any spell cast by activating this item is +14, and the spell DC is 24. - **Armor** You gain resistance 5 to cold. - **Weapon** After you cast a cold spell by activating the *crystal*, your Strikes with the weapon deal an additional 1d6 damage until the end of your next turn. --- **Activate** Cast a Spell **Effect** You cast Frostbite. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast 3rd-rank Chilling Spray."
+ },
+ {
+  "id": "ring-of-bestial-friendship",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Ring of Bestial Friendship",
+  "level": 9,
+  "traits": [
+   "cursed",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "The ring is made from a lock of green hair woven around several small gemstones. --- **Activate** ⟨2⟩ Interact **Frequency** once per day **Effect** You cast Charm (heightened to 4th level) on an animal or beast within 30 feet. If the spell succeeds, it forms a mental bond between you and the target for the duration of the charm, which allows you to remain aware of the creature's present state, its direction from you, its distance from you, and any conditions affecting it, as long as you are both on the same plane of existence and are both alive. If you fail to affect the creature with this *charm*, or once the *charm* ends (such as if it is counteracted, or its duration expires), the creature becomes enraged and is immune to the ring's *charm* from that point on. The creature's rage drives it to attack you and grants it a +1 item bonus on all checks and DCs to do so for 1 hour."
+ },
+ {
+  "id": "ring-of-torag",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Ring of Torag",
+  "level": 3,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This simple golden ring has a large, red gemstone set into it that sparkles with an inner fire. --- **Activate** ⟨1⟩ Interact **Frequency** once per round **Requirements** You're taking persistent fire damage **Effect** You call upon the ring to put out the flame and its magic attempts to bring the fire under control. This is especially effective assistance against persistent fire damage, so you gain an immediate flat check to remove the persistent fire damage, and the DC typically decreases from 15 to 10. --- **Activate** ⟨5⟩ envision **Frequency** once per day **Trigger** You're targeted by a fire effect **Effect** The ring's red gemstone flashes with light, granting you resistance 5 against fire and a +1 status bonus on your AC or saving throw against the fire effect targeting you; these benefits end as soon as the fire effect is resolved."
+ },
+ {
+  "id": "rite-of-light",
+  "lane": "defense",
+  "collection": "heritages",
+  "name": "Rite of Light",
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your exoskeleton bears small shoots that can share life. When using your Sunlight Healing, you can restore the Hit Points of an adjacent ally instead of yourself. That ally becomes temporarily immune to all uses of Sunlight Healing for 1 day."
+ },
+ {
+  "id": "robe-of-the-archmagi",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Robe of the Archmagi",
+  "level": 15,
+  "traits": [
+   "comfort"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Embroidered with fine silver thread in ornate arcane patterns, these robes come in one of three colors depending on their attuned alignment. Good robes are gold, neutral robes are light blue, and evil robes are red. An evil or good robe gains the appropriate trait. The robes benefit only characters who can cast arcane spells and whose alignment on the good-evil axis matches that of the robe. If your alignment does not match that of the robe, or you are not an arcane spellcaster, you are instead Stupefied 2 while wearing a *robe of the archmagi*. This condition can't be removed in any way until you remove the robe. The robes are *+2 greater resilient explorer's clothing*, and they grant a +1 circumstance bonus to saving throws against arcane spells and resistance 5 to damage from arcane spells. --- **Activate** ⟨5⟩ command **Frequency** once per day **Trigger** You attempt a saving throw against an arcane spell, but you haven't rolled yet **Effect** You automatically succeed at your save against the triggering arcane spell. --- **Craft Requirements** You are an arcane spellcaster."
+ },
+ {
+  "id": "robust-health",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Robust Health",
+  "level": 3,
+  "traits": [
+   "general"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Your physiology responds well to first aid. You gain a circumstance bonus to the number of Hit Points you regain equal to your level from a successful attempt to Treat your Wounds or use Battle Medicine on you. After you or an ally use Battle Medicine on you, you become temporarily immune to that Battle Medicine for only 1 hour, instead of 1 day."
+ },
+ {
+  "id": "rolling-geode",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Rolling Geode",
+  "level": 0,
+  "traits": [
+   "earth"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Rolling Geode Source GM Core pg. 312 Aspect Earth Activate (concentrate) Frequency once per hour; Effect Stone and crystal form a sphere that chases your foes. You create a geode in an unoccupied square within 30 feet. You can spend a single action, which has the concentrate trait, to move the geode up to 30 feet along the ground. If the geode enters a creature's space, the creature must succeed at a basic Reflex save or take 2d6 bludgeoning damage; a creature can take damage this way only once per turn, even if you roll the geode through its space multiple times. The geode persists for up to 1 minute or until destroyed or Dismissed; it has AC 5, Hardness 10, and 40 Hit Points, and is immune to critical hits and precision damage."
+ },
+ {
+  "id": "rune-of-sin",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Rune of Sin",
+  "level": 12,
+  "traits": [
+   "arcane",
+   "invested",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This jagged glyph, one of the Thassilonian runes of sin, reacts to magic of a particular school (there's no rune for divination, as it was considered lesser within sin magic). When you Cast a Spell of the school matching the sin, you gain resistance 5 to damage from spells until the start of your next turn. This resistance is increased to 7 against spells of the matching school. This tattoo has the school trait matching the rune: abjuration for envy, necromancy for gluttony, transmutation for greed, enchantment for lust, illusion for pride, conjuration for sloth, and evocation for wrath."
+ },
+ {
+  "id": "rune-of-sin-envy",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Rune of Sin (Envy)",
+  "level": 12,
+  "traits": [
+   "arcane",
+   "invested",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This jagged glyph, the envy Thassilonian rune of sin, reacts to abjuration magic. When you Cast an abjuration Spell, you gain resistance 5 to damage from spells until the start of your next turn. This resistance is increased to 7 against abjuration spells."
+ },
+ {
+  "id": "rune-of-sin-gluttony",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Rune of Sin (Gluttony)",
+  "level": 12,
+  "traits": [
+   "arcane",
+   "invested",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This jagged glyph, the gluttony Thassilonian rune of sin, reacts to necromancy magic. When you Cast a necromancy Spell, you gain resistance 5 to damage from spells until the start of your next turn. This resistance is increased to 7 against necromancy spells."
+ },
+ {
+  "id": "rune-of-sin-greed",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Rune of Sin (Greed)",
+  "level": 12,
+  "traits": [
+   "arcane",
+   "invested",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This jagged glyph, the greed Thassilonian rune of sin, reacts to transmutation magic. When you Cast a transmutation Spell, you gain resistance 5 to damage from spells until the start of your next turn. This resistance is increased to 7 against transmutation spells."
+ },
+ {
+  "id": "rune-of-sin-lust",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Rune of Sin (Lust)",
+  "level": 12,
+  "traits": [
+   "arcane",
+   "invested",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This jagged glyph, the lust Thassilonian rune of sin, reacts to enchantment magic. When you Cast an enchantment Spell, you gain resistance 5 to damage from spells until the start of your next turn. This resistance is increased to 7 against enchantment spells."
+ },
+ {
+  "id": "rune-of-sin-pride",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Rune of Sin (Pride)",
+  "level": 12,
+  "traits": [
+   "arcane",
+   "illusion",
+   "invested",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This jagged glyph, the pride Thassilonian rune of sin, reacts to illusion magic. When you Cast an illusion Spell, you gain resistance 5 to damage from spells until the start of your next turn. This resistance is increased to 7 against illusion spells."
+ },
+ {
+  "id": "rune-of-sin-sloth",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Rune of Sin (Sloth)",
+  "level": 12,
+  "traits": [
+   "arcane",
+   "invested",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This jagged glyph, the sloth Thassilonian rune of sin, reacts to conjuration magic. When you Cast a conjuration Spell, you gain resistance 5 to damage from spells until the start of your next turn. This resistance is increased to 7 against conjuration spells."
+ },
+ {
+  "id": "rune-of-sin-wrath",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Rune of Sin (Wrath)",
+  "level": 12,
+  "traits": [
+   "arcane",
+   "invested",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This jagged glyph, the wrath Thassilonian rune of sin, reacts to evocation magic. When you Cast an evocation Spell, you gain resistance 5 to damage from spells until the start of your next turn. This resistance is increased to 7 against evocation spells."
+ },
+ {
+  "id": "sabotage",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Sabotage",
+  "level": 4,
+  "traits": [
+   "incapacitation",
+   "rogue"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You have a free hand. --- You subtly damage others' equipment. Choose one item that a creature within your reach wields or carries. The item must have moving parts that you could possibly sabotage (a shortbow could be sabotaged, but a longsword could not). Attempt a Thievery check against the Reflex DC of the creature. Damage dealt by Sabotage can't take the item below its Broken Threshold. --- **Critical Success** You deal damage equal to 4 x your Thievery proficiency bonus. **Success** You deal damage equal to double your Thievery proficiency bonus. **Critical Failure** The item is temporarily immune to your Sabotage for 1 day."
+ },
+ {
+  "id": "safe-elements",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Safe Elements",
+  "level": 4,
+  "traits": [
+   "kineticist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Elements are wild and dangerous, but you've found ways to reduce their risk. When you Channel Elements or use a stance impulse that affects your kinetic aura, you can designate a number of creatures up to your Constitution modifier (minimum 1 creature). Choose whether they are immune to the benefits of your kinetic aura or immune to its damage and drawbacks. You don't have to be able to see a creature to designate it, nor does it need to be in your kinetic aura, but you can't designate a creature that's unnoticed by you. In addition, you gain the Pacifying Infusion action."
+ },
+ {
+  "id": "sages-bloom",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Sage's Bloom",
+  "level": 5,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨4⟩ (concentrate) **Trigger** You attempt a Nature check to Recall Knowledge but haven't rolled **Requirements** You're trained in Nature. --- This simple white flower is placed into a hat or worn braided into your hair. When activated, it releases a soothing scent, which helps you focus your mind. When you activate the talisman, you Recall Knowledge three times, rather than once. If you use Nature for any of these checks and get a critical failure, that check is instead a failure."
+ },
+ {
+  "id": "sairazul-blue",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Sairazul Blue",
+  "level": 10,
+  "traits": [
+   "consumable",
+   "earth",
+   "magical",
+   "potion"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- A *Sairazul blue* potion is a rich navy blue in color. Subjects of the Crystalline Queen produced the potion to protect themselves from the radiation Ayrzul left behind. For the next 8 hours, your skin becomes navy blue, and you gain resistance 5 to poison damage and void damage. If you drop to 0 Hit Points due to poison or void damage, the *Sairazul blue* within your body reacts, healing you for 8d8 Hit Points. The resistances the potion grants then end."
+ },
+ {
+  "id": "sandcastle",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Sandcastle",
+  "level": 11,
+  "traits": [
+   "earth",
+   "magical",
+   "structure"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "A *sandcastle* comes in a cylindrical, waterproof satchel that contains densely packed fine sand. The sand's color depends on where it was collected when the item was made. This sand can be shaped and magically activated to create a fortification made of hard-packed sand. It can survive most ordinary weather, but a sandcastle has little resilience against water. It collapses if activated on water or if the structure is caught in a deluge or heavy rainfall. Each 10-foot-by-10-foot section of the wall has AC 10, Hardness 10, and 40 Hit Points. It's immune to critical hits and precision damage, and it has weakness to water 15. If destroyed, a section of the sandcastle becomes a pile of sand, or wet sand if it was destroyed by water. This sand is difficult terrain, which lasts for the remaining duration of the activation. It's easy to make handholds and footholds in the sand walls, so the DC to climb the walls is 15. **Activate—Shape the Castle** 1 minute (concentrate, manipulate) **Frequency** once per day --- **Effect** You empty the satchel and shape the sand into a miniature castle. When finished, you utter \"build\" in Petran, and the *sandcastle* swiftly builds into a full-size structure. The castle is shaped as you choose, up to 120 feet in any dimension. Its walls must be 10 feet thick, and each story must be at least 10 feet tall from floor to ceiling. The *sandcastle* has only rudimentary furnishings with no moving parts—even a chair or door is too complicated, but block-like benches and platforms can be created. Typically, the castle has little more than staircases and windows. You can return the *sandcastle* to its portable form by using one Interact action to fill the item's satchel with sand from the castle."
+ },
+ {
+  "id": "sanguine-fang",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Sanguine Fang",
+  "level": 9,
+  "traits": [
+   "magical",
+   "spellheart",
+   "void"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "A pointed vampire fang hovers within this smoked-glass vial, its tip crimson with slowly dripping blood. The spell DC of any spell cast by activating this item is 25. - **Armor** You gain resistance 3 to persistent bleed damage and a +2 item bonus on saving throws against effects with the void trait. - **Weapon** After you cast a spell by activating the *fang*, your Strikes with the weapon deal 1d4 persistent bleed damage until the end of your next turn. --- **Activate** Cast a Spell **Effect** You cast Void Warp. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast Vampiric Feast."
+ },
+ {
+  "id": "sanguine-fang-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Sanguine Fang (Greater)",
+  "level": 12,
+  "traits": [
+   "magical",
+   "spellheart",
+   "void"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "A pointed vampire fang hovers within this smoked-glass vial, its tip crimson with slowly dripping blood. The spell DC of any spell cast by activating this item is 29. - **Armor** You gain resistance 5 to persistent bleed damage and a +2 item bonus on saving throws against effects with the void trait. - **Weapon** After you cast a spell by activating the *fang*, your Strikes with the weapon deal 1d6 persistent bleed damage until the end of your next turn. --- **Activate** Cast a Spell **Effect** You cast Void Warp. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast Sanguine Mist. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast 4th-rank Vampiric Feast."
+ },
+ {
+  "id": "sanguine-revitalization",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Sanguine Revitalization",
+  "level": 1,
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per day --- Your squad is rejuvenated by the arterial spray of your enemies. Choose a creature within the aura of your commander's banner and signal all squadmates within the aura who are wielding a piercing or slashing melee weapon, or who have a piercing or slashing melee unarmed attack. Those allies can Stride up to half their Speed as a free action. If they end this movement within reach of the designated target, they can Strike the target with the required weapon or unarmed attack as a reaction. Once all Strikes are completed, if the target took damage and is not immune to bleed damage, it must succeed at a saving throw against your class DC or take 10 points of persistent bleed damage. The target takes a circumstance penalty on their save equal to the number of successful Strikes made as part of this tactic (up to a maximum –4 circumstance penalty). Your squadmates are energized by the display of your enemy's imminent defeat; each squadmate in a is healed for 10d6 Hit Points."
+ },
+ {
+  "id": "saurian-spike",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Saurian Spike",
+  "level": 9,
+  "traits": [
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "This jagged, bony growth narrows to a sharp, pointed tip. Deep groves from some former battle scar its surface. The bearer of a *saurian spike* often feels a sudden surge in power and confidence. The spell attack modifier of any spell cast by activating this item is +15. - **Armor** You gain imprecise scent with a range of 30 feet. - **Weapon** (auditory, emotion, fear, visual) When you cast a polymorph spell by activating the spike, your battle form is exceptionally fearsome. Each enemy in a must succeed at a saving throw or become Frightened 1 (Frightened 2 on a critical failure). **Activate** Cast a Spell --- **Effect** You cast Gouging Claw. --- **Activate** Cast a Spell **Frequency** once per day --- **Effect** You cast Dinosaur Form."
+ },
+ {
+  "id": "saurian-spike-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Saurian Spike (Greater)",
+  "level": 11,
+  "traits": [
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "This jagged, bony growth narrows to a sharp, pointed tip. Deep groves from some former battle scar its surface. The bearer of a *saurian spike* often feels a sudden surge in power and confidence. The spell attack modifier of any spell cast by activating this item is +18. - **Armor** You gain imprecise scent with a range of 60 feet. - **Weapon** (auditory, emotion, fear, visual) When you cast a polymorph spell by activating the spike, your battle form is exceptionally fearsome. Each enemy in a must succeed at a saving throw or become Frightened 1 (Frightened 2 on a critical failure). **Activate** Cast a Spell --- **Effect** You cast Gouging Claw. --- **Activate** Cast a Spell **Frequency** once per day --- **Effect** You cast 5th-rank Dinosaur Form."
+ }
+]

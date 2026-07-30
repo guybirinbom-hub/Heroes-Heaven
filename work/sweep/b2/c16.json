@@ -1,0 +1,1144 @@
+[
+ {
+  "id": "skim-scroll",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Skim Scroll",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can activate the magic of a scroll with a cursory read as you draw it from your belt. You Interact to draw forth a scroll, then use Trick Magic Item on the scroll."
+ },
+ {
+  "id": "skinstitch-salve",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Skinstitch Salve",
+  "level": 7,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "healing"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This sticky salve stubbornly holds wounds closed and encourages swift natural healing. You can activate the salve in either of the following ways. **Activate—Administer Stitch** ⟨1⟩ (manipulate) --- **Effect** You Administer First Aid without requiring Healer's Toolkit. You either gain a +2 item bonus to the Medicine check, or you can use the skinstitch salve's Medicine modifier of 1d20+13 instead of your own. **Activate—Stitch Wounds** ⟨4⟩ (manipulate) --- **Trigger** You Treat Wounds or use Battle Medicine **Effect** You gain a +2 item bonus to the triggering Medicine check. If you roll a success on the Medicine check, you get a critical success instead."
+ },
+ {
+  "id": "sky-piercing-bow",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Sky-Piercing Bow",
+  "level": 19,
+  "traits": [
+   "deadly-d10",
+   "magical",
+   "propulsive"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This shortbow is made from horn, wood, and sinew laminated together to increase the power of its pull and the force of its projectile. Its compact size and power make it a favorite of mounted archers. Any time an ability is specifically restricted to a shortbow, it also applies to composite shortbows unless otherwise stated. Large turquoise gems stud the outer edge of this sturdy +3 greater striking ghost touch composite shortbow. Arrows shot from the bow are unimpaired by wind and air effects. --- **Activate** ⟨2⟩ Interact (conjuration, teleportation) **Frequency** once per day --- **Effect** You shoot an arrow at an open space on a surface within 500 feet and momentarily vanish into a wind that carries the arrow. You teleport to that location. --- **Activate** ⟨2⟩ command, Interact (electricity) **Frequency** once per hour --- **Effect** You shoot an arrow at the sky and it tears an extraplanar rift that resembles a storm cloud in a centered on a point within 200 feet. A torrent of rain pours down from the rift for 1 minute or until you Dismiss the effect. The area within the torrent becomes difficult terrain for all movement (including Flying). As an Interact action, you can fire an arrow into the rift to cause a bolt of lightning to strike a creature in the area. The creature takes 5d12 damage and must attempt a save. --- **Activate** 10 minutes (command, envision, Interact) **Frequency** once per week --- **Effect** You fire a volley of arrows into the sky. You create the effects of a successful Control Weather ritual."
+ },
+ {
+  "id": "skyseeker",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Skyseeker",
+  "level": 8,
+  "traits": [
+   "archetype",
+   "electricity",
+   "sonic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're in Sky and Heaven Stance. --- You Leap toward an opponent. At any point in the Leap, you can make a single Strike against a creature within your reach. At 12th level, if you hit with this Strike, instead of finishing your Leap, you can immediately attempt a second Leap from the space where you struck the target of your Strike. You can make a single Strike against a target within your reach during this second Leap as well. At 16th level, you can attempt a third Leap if your second Strike hits, and you can attack a target at any point during this third Leap. All Leaps made during this activity gain a +10‐foot status bonus to the total height or distance of your leap, and no two Strikes can target the same creature."
+ },
+ {
+  "id": "sluggish-bracelet",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Sluggish Bracelet",
+  "level": 3,
+  "traits": [
+   "cursed",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "A silver charm bracelet, a sluggish bracelet appears to be a Bracelet of Dashing, granting you a +1 item bonus to Acrobatics checks. If the curse goes unrecognized, you think you can Activate it to gain a +10-foot status bonus to your Speed for 1 minute. Instead, its activation is as follows. **Activate** ⟨1⟩ (concentrate) --- **Effect** You take a –10-foot penalty to your Speed for 1 minute, and the bracelet fuses to you. Thereafter, it grants you no bonus to Acrobatics checks, and it imposes a –5-foot status penalty to your Speed."
+ },
+ {
+  "id": "snakebirds-shadow",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Snakebird's Shadow",
+  "level": 8,
+  "traits": [
+   "flourish",
+   "monk",
+   "occult",
+   "water"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are in Waterfowl Stance and are wielding a monk weapon from the sword group. --- Ganhil developed this technique through observing the sharp-beaked darters fishing Prada Hanam's waters, seeking to match their speed and suppleness with the elemental flash of his blade. Make a melee Strike with the required weapon against each enemy in a as razor-sharp shadows of water surge from your blade. Each attack counts toward your multiple attack penalty, but you do not increase your penalty until you have made all your attacks."
+ },
+ {
+  "id": "soaring-wings-major",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Soaring Wings (Major)",
+  "level": 19,
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Wings, normally tattooed on the upper back, enable you to fly when activated. The visual manifestation is typically a slight glow or ripple in the ink, but some artists make it so the tattoo creates a glowing aura or lines of light in the shape of wings. --- **Activate** ⟨2⟩ (concentrate) **Effect** You gain a fly Speed equal to either your land Speed or 20 feet, whichever is greater. You can activate the tattoo any number of times, and the effect lasts until you Dismiss the activation."
+ },
+ {
+  "id": "soldiers-syrup",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Soldier's Syrup",
+  "level": 1,
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Soldier's Syrup May contain spoilers from Myth-Speaker Source Pathfinder #218: Titanbane pg. 80 Usage held in 1 hand This thick syrup sweetens potions and creates a distinctive, metallic flavor associated with the festival days in Dhuraxilis. Partygoers are fond of mixing soldier’s syrup with potions to extend their release. Activating a dose of soldier’s syrup requires you to combine it with another consumable potion that takes 1 action to activate. After swirling the mixture for a few moments, you must either imbibe the augmented potion within 1 minute, or the potion reverts to its unaugmented state. The potion’s level cannot exceed that of the soldier’s syrup it is mixed with, otherwise the syrup is wasted. When consumed, a soldier’s syrup–augmented potion does not immediately grant its benefits to you. Instead, you can activate the potion within the next hour as a single action, which has the concentrate trait. You can have only one soldier’s syrup–augmented potion consumed at a time; consuming a second one renders the first one inert. If you do not activate the potion within 1 hour, the potion spoils inside you, and you become enfeebled 1 for 24 hours. Minor Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 4 gp Lesser Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 12 gp Moderate Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 50 gp Greater Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 400 gp Major Soldier's Syrup Source Pathfinder #218: Titanbane pg. 80 Price 5,000 gp"
+ },
+ {
+  "id": "soldiers-syrup-greater",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Soldier's Syrup (Greater)",
+  "level": 12,
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This thick syrup sweetens potions and creates a distinctive, metallic flavor associated with the festival days in Dhuraxilis. Partygoers are fond of mixing *soldier's syrup* with potions to extend their release. Activating a dose of *soldier's syrup* requires you to combine it with another consumable potion that takes 1 action to activate. After swirling the mixture for a few moments, you must either imbibe the augmented potion within 1 minute, or the potion reverts to its unaugmented state. The potion's level cannot exceed that of the *soldier's syrup* it is mixed with, otherwise the syrup is wasted. When consumed, a *soldier's syrup*–augmented potion does not immediately grant its benefits to you. Instead, you can activate the potion within the next hour as a single action, which has the concentrate trait. You can have only one *soldier's syrup*–augmented potion consumed at a time; consuming a second one renders the first one inert. If you do not activate the potion within 1 hour, the potion spoils inside you, and you become Enfeebled 1 for 24 hours."
+ },
+ {
+  "id": "soldiers-syrup-lesser",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Soldier's Syrup (Lesser)",
+  "level": 3,
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This thick syrup sweetens potions and creates a distinctive, metallic flavor associated with the festival days in Dhuraxilis. Partygoers are fond of mixing *soldier's syrup* with potions to extend their release. Activating a dose of *soldier's syrup* requires you to combine it with another consumable potion that takes 1 action to activate. After swirling the mixture for a few moments, you must either imbibe the augmented potion within 1 minute, or the potion reverts to its unaugmented state. The potion's level cannot exceed that of the *soldier's syrup* it is mixed with, otherwise the syrup is wasted. When consumed, a *soldier's syrup*–augmented potion does not immediately grant its benefits to you. Instead, you can activate the potion within the next hour as a single action, which has the concentrate trait. You can have only one *soldier's syrup*–augmented potion consumed at a time; consuming a second one renders the first one inert. If you do not activate the potion within 1 hour, the potion spoils inside you, and you become Enfeebled 1 for 24 hours."
+ },
+ {
+  "id": "soldiers-syrup-major",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Soldier's Syrup (Major)",
+  "level": 18,
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This thick syrup sweetens potions and creates a distinctive, metallic flavor associated with the festival days in Dhuraxilis. Partygoers are fond of mixing *soldier's syrup* with potions to extend their release. Activating a dose of *soldier's syrup* requires you to combine it with another consumable potion that takes 1 action to activate. After swirling the mixture for a few moments, you must either imbibe the augmented potion within 1 minute, or the potion reverts to its unaugmented state. The potion's level cannot exceed that of the *soldier's syrup* it is mixed with, otherwise the syrup is wasted. When consumed, a *soldier's syrup*–augmented potion does not immediately grant its benefits to you. Instead, you can activate the potion within the next hour as a single action, which has the concentrate trait. You can have only one *soldier's syrup*–augmented potion consumed at a time; consuming a second one renders the first one inert. If you do not activate the potion within 1 hour, the potion spoils inside you, and you become Enfeebled 1 for 24 hours."
+ },
+ {
+  "id": "soldiers-syrup-minor",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Soldier's Syrup (Minor)",
+  "level": 1,
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This thick syrup sweetens potions and creates a distinctive, metallic flavor associated with the festival days in Dhuraxilis. Partygoers are fond of mixing *soldier's syrup* with potions to extend their release. Activating a dose of *soldier's syrup* requires you to combine it with another consumable potion that takes 1 action to activate. After swirling the mixture for a few moments, you must either imbibe the augmented potion within 1 minute, or the potion reverts to its unaugmented state. The potion's level cannot exceed that of the *soldier's syrup* it is mixed with, otherwise the syrup is wasted. When consumed, a *soldier's syrup*–augmented potion does not immediately grant its benefits to you. Instead, you can activate the potion within the next hour as a single action, which has the concentrate trait. You can have only one *soldier's syrup*–augmented potion consumed at a time; consuming a second one renders the first one inert. If you do not activate the potion within 1 hour, the potion spoils inside you, and you become Enfeebled 1 for 24 hours."
+ },
+ {
+  "id": "soldiers-syrup-moderate",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Soldier's Syrup (Moderate)",
+  "level": 6,
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This thick syrup sweetens potions and creates a distinctive, metallic flavor associated with the festival days in Dhuraxilis. Partygoers are fond of mixing *soldier's syrup* with potions to extend their release. Activating a dose of *soldier's syrup* requires you to combine it with another consumable potion that takes 1 action to activate. After swirling the mixture for a few moments, you must either imbibe the augmented potion within 1 minute, or the potion reverts to its unaugmented state. The potion's level cannot exceed that of the *soldier's syrup* it is mixed with, otherwise the syrup is wasted. When consumed, a *soldier's syrup*–augmented potion does not immediately grant its benefits to you. Instead, you can activate the potion within the next hour as a single action, which has the concentrate trait. You can have only one *soldier's syrup*–augmented potion consumed at a time; consuming a second one renders the first one inert. If you do not activate the potion within 1 hour, the potion spoils inside you, and you become Enfeebled 1 for 24 hours."
+ },
+ {
+  "id": "sparkling-targe",
+  "lane": "toggle",
+  "collection": "classFeatures",
+  "name": "Sparkling Targe",
+  "level": 1,
+  "traits": [
+   "magus"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses",
+   "featFeatGrants"
+  ],
+  "text": "You've studied the applications of magic, training yourself to perform not just offensive maneuvers but defensive tactics as well. When magic flows through you, your shield can block impossible things, even a dragon's breath or a magic missile. You gain the Shield Block general feat. When you're in Arcane Cascade stance with your shield raised, your circumstance bonus to AC from your shield also applies to your saves against spells and other magical effects. In addition, damage you take as a result of a spell or magical effect while you're in Arcane Cascade can trigger your Shield Block reaction, even if the damage isn't physical. When blocking damage in this way, increase your shield's Hardness by an amount equal to the extra damage from Arcane Cascade (typically 1, but 2 if you have weapon specialization, or 3 if you have greater weapon specialization). These benefits apply whether you're using an actual shield, the shield spell, or something else that works like a shield (such as a raised tome if you have the Raise a Tome feat). **Conflux Spell** Shielding Strike"
+ },
+ {
+  "id": "spinning-stand",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Spinning Stand",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're prone. --- You flare your legs around, using the momentum to both lash out and return to a standing position. You enter talon stance if you weren't in it already, make a spinning talon Strike against an enemy in reach, and then Stand. You don't take the -2 circumstance penalty for attacking while prone, and your Stand action doesn't trigger reactions. You can spend two actions using Spinning Stand to make two spinning talon Strikes instead of one; these Strikes must be against separate targets."
+ },
+ {
+  "id": "staff-of-sun-wukong",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Staff of Sun Wukong",
+  "level": 20,
+  "traits": [
+   "artifact",
+   "divine",
+   "monk",
+   "parry",
+   "reach",
+   "trip"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Also known as *Ruyi Bang*, this *+3 major striking greater extending grievous bo staff* is a legendary artifact wielded by the Monkey King, Sun Wukong. Unlike normal bo staves, the *Staff of Sun Wukong* is made of solid iron with two brilliant gold bands at either end. **Activate—Meteor Slam** ⟨1⟩ (concentrate, manipulate) **Frequency** once per day --- **Effect** You extend the staff with the force of a meteor, dealing 10d10 damage to a single creature within 120 feet and making it Enfeebled 1 for 1 day. All other creatures within 10 feet of the target (except the staff's wielder) take damage ( save). **Activate—Close at Hand** ⟨4⟩ --- **Effect** It's said that Sun Wukong tucked this magical staff behind his ear during his travels. When not in use, the Staff of Sun Wukong shrinks to the size and weight of a needle or toothpick, making it highly concealable (+4 circumstance bonus to Stealth checks to hide it from sight). In this form, the item has negligible Bulk. You can Activate this ability again to return the staff to its normal size. **Activate—Cloud Somersault** ⟨1⟩ (manipulate) --- **Effect** You use the shapeshifting capabilities of this relic to propel yourself great distances. You Leap up to 50 feet in any direction. --- **Destruction** Despite being made of iron and gold, mundane heat sources can't damage the Staff of Sun Wukong. Magical fire similarly has no effect on this relic. The only way to destroy this item is to expose it to the intense heat of a specific volcano in the depths of the Songil Sea (though which volcano remains shrouded in myth)."
+ },
+ {
+  "id": "stalwart-defender-dedication",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Stalwart Defender Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Access** You are a dwarf or have undergone defender training in a dwarven settlement such as Highhelm. --- You have completed your initial training in the ways of a stalwart defender. You gain the Tenacious Stance action."
+ },
+ {
+  "id": "stalwart-song",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Stalwart Song",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Trigger** You're about to attempt a saving throw against a fear effect. **Requirements** You're in Tenacious Stance. --- As a stalwart defender, you rely on your martial training and your tried-and-true armor to face any danger without flinching. Your mountain-like resilience and courage draw strength from the centuries-old traditions of dwarven song. You bring to mind—and possibly give voice to—a cherished dwarven song of inspiring heroism, granting you a +2 circumstance bonus to the saving throw."
+ },
+ {
+  "id": "starlit-eyes",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Starlit Eyes",
+  "level": 4,
+  "traits": [
+   "magus"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Starlight shines in your sight, enhancing your perception and range. When you make a ranged Strike while in Arcane Cascade stance, you lower the DC of your flat check to target a creature that's concealed or hidden from you. The DC is reduced to 3 instead of 5 against a concealed creature and to 9 instead of 11 against a hidden one. When you cast shooting star and target a hidden creature, you don't have to attempt the flat check for targeting a hidden creature with a ranged Strike."
+ },
+ {
+  "id": "stone-body",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Stone Body",
+  "level": 16,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are in Tenacious Stance. --- Emulating the great defenders throughout dwarven history, you close your mind to the sensation of pain, becoming as resolute as stone itself. You gain resistance 10 to all damage. This effect lasts until the end of your next turn or immediately upon being critically hit."
+ },
+ {
+  "id": "stone-brawler-dedication",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Stone Brawler Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've learned to call the primal power of elemental stone to your aid. You gain the Stonestrike Stance action."
+ },
+ {
+  "id": "stone-communion",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Stone Communion",
+  "level": 14,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain a unique communion with the earth and stones. You learn the Terran language and you can Activate your *ka stone* with a 10-minute activation (envision) to cast Speak with Stones."
+ },
+ {
+  "id": "stoney-deflection",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Stoney Deflection",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Requirements** You are in Stonestrike Stance. --- You gather the resiliency of stone to block attacks against you. You gain a +2 circumstance bonus to AC and to any defenses against being Shoved or Tripped until the beginning of your next turn."
+ },
+ {
+  "id": "storm-of-claws",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Storm of Claws",
+  "level": 16,
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're in either claw stance or talon stance. --- You lash out with your clawed limbs like a beast that has fallen upon its first meal in days, then back off to see your handiwork. Strike three times, with your multiple attack penalty increasing as normal. After each attack that hits and deals damage, you can Step."
+ },
+ {
+  "id": "stoutheart-centaur",
+  "lane": "toggle",
+  "collection": "heritages",
+  "name": "Stoutheart Centaur",
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You're a hardy centaur, firm of stance and strong of heart. You gain 10 Hit Points from your ancestry instead of 8 and gain a +1 circumstance bonus to Acrobatics checks to Balance and to your Reflex DC to avoid being tripped."
+ },
+ {
+  "id": "strafing-breath",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Strafing Breath",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** War Rider Stance is active. --- You urge your dragon mount forward, wreathed in magical power. Your mount Strides three times. If your mount has a fly Speed, it can substitute a Fly action for any of these Stride actions. As it moves, your dragon companion's magical breath billows around you. The aura from War Rider Stance increases to a during this movement, and each creature that's in the emanation at any point during your movement takes the damage from it (with the normal save). A creature can take damage only once, even if you move past it multiple times."
+ },
+ {
+  "id": "student-of-the-dueling-arts",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Student of the Dueling Arts",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Dueling is your art, and your weapon is your instrument. You have studied and evaluated a great many combat techniques, which you can review each day without fail to ensure you are prepared for any and every situation that may occur. During your daily preparations, you can swap out any number of your duelist archetype feats for other duelist archetype feats of the appropriate level for which you are qualified. You can't swap out Duelist Dedication or Student of the Dueling Arts in this way. In addition, you can enter a stance from a duelist archetype feat you don't have (such as one listed under Additional Feats) by increasing the number of actions it takes to enter the stance by 1 (typically to 2 actions). You must still meet the stance feat's prerequisites."
+ },
+ {
+  "id": "student-of-the-staff",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Student of the Staff",
+  "level": 4,
+  "traits": [
+   "magus"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've studied the staff extensively to learn the hidden capabilities of your chosen weapon. When you critically succeed at an attack roll using a staff, you apply the critical specialization effect of the club group. While you're in Arcane Cascade stance, your staff gains the deadly d6 trait, with the damage from the deadly die being the same damage type as the extra damage from Arcane Cascade. In addition, you can place property runes into a magic staff you prepare, even though a magic staff can't typically hold property runes. You must first inscribe the property runes into your spellbook, using the same process as transferring a rune. The rune takes the form of a specialized diagram in your spellbook, occupying one page. You can't inscribe runes that can't be placed on a non-magical staff, nor can you inscribe the Shifting rune. When you prepare a staff, you can impart any number of property runes from your spellbook into the staff, up to the limit imposed by the staff's *weapon potency* rune."
+ },
+ {
+  "id": "stumbling-feint",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Stumbling Feint",
+  "level": 6,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are in Stumbling Stance. --- You lash out confusingly with what seems to be a weak move but instead allows you to unleash a dangerous flurry of blows upon your unsuspecting foe. When you use Flurry of Blows, you can attempt a check to Feint as a free action just before the first Strike. On a success, instead of making the target off-guard against your next attack, they become off-guard against both attacks from the Flurry of Blows."
+ },
+ {
+  "id": "summon-ensemble",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Summon Ensemble",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "When you cast Summon Instrument, you can modify its duration to be sustained, up to 1 minute. When you do, you summon a number of instruments equal to your spellcasting ability modifier that hover around you and play of their own accord. Once per turn when you Sustain the Spell, choose an opponent within 30 feet who can hear your performance. The target must attempt a save against the spell's DC; on a failure, it becomes distracted by your performance and becomes off-guard for 1 round. The target is then temporarily immune for 24 hours."
+ },
+ {
+  "id": "sustaining-steel",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Sustaining Steel",
+  "level": 10,
+  "traits": [
+   "arcane",
+   "healing",
+   "magus",
+   "vitality"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** You Cast a Spell using a spell slot. **Requirements** You're in Arcane Cascade stance. --- You pull magic into your weapon, using its substance to transform the magic into restorative energy. You regain Hit Points equal to double the spell's rank and roll to end any Persistent Void Damage you have. If the spell was of the necromancy school, any persistent void damage you have ends automatically, and you can change the damage type from Arcane Cascade to vitality if you wish. (Vitality damage typically damages only undead or other creatures with Void Healing.)"
+ },
+ {
+  "id": "talon-sweep",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Talon Sweep",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** A creature attempts to Strike you while it's flanking you. --- Your long clawed legs let you catch enemies to either side. You shift to talon stance if you weren't in it already. If the Strike misses, you can make a spinning talon Strike against any creature flanking you."
+ },
+ {
+  "id": "tangled-forest-rake",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Tangled Forest Rake",
+  "level": 14,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are in Tangled Forest Stance. --- You reposition foes with raking attacks. Make a lashing branch Strike. If you hit and deal damage, you can Reposition the target up to 10 feet. You can move the target through your space during this movement."
+ },
+ {
+  "id": "tear-tendons",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Tear Tendons",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are in claw stance and have two open hands. --- You rake into your opponent with two claws, cutting into their muscle and depriving them of needed strength. Make two frenzied claw attacks against the same target, increasing the multiple attack penalty normally. If both attacks hit, the target must succeed at a save against your class DC or be Enfeebled 2 for 1 round; if it critically fails, it's instead enfeebled 2 for 1 minute."
+ },
+ {
+  "id": "thats-odd",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "That's Odd",
+  "level": 1,
+  "traits": [
+   "investigator"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "When you enter a new location, such as a room or corridor, you immediately notice one thing out of the ordinary. The GM determines what it is, or whether there's nothing reasonable to pick up, skipping obvious clues that can be easily noticed without a check or specifically looking for them. You learn only that an area or object is suspicious, but not why it's suspicious. For example, if you entered a study with a large bloodstain on the ground, the bloodstain is so obviously suspicious it's evident to you already, so the GM might note that there's something suspicious about the desk drawer instead. You would then need to investigate the drawer further to find out what specifically is out of the ordinary. If you wish, you can Pursue a Lead concerning this detail even if you have Pursued a Lead less than 10 minutes ago. That's Odd doesn't reveal whether creatures are suspicious. You don't typically get any benefit when you leave and come back to a place, though if a major change has happened there and time has passed, the GM might determine that you do."
+ },
+ {
+  "id": "the-tangible-dream",
+  "lane": "toggle",
+  "collection": "classFeatures",
+  "name": "The Tangible Dream",
+  "level": 1,
+  "traits": [
+   "psychic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You pull colors and shapes from the depth of your mind, projecting impossible creations into the world as tapestries of astral thread or sculptures of force and light. **Granted Spells** - 1st: Dizzying Colors - 2nd: - 3rd: Sea of Thought - 4th: Containment - 5th: Etheric Shards - 6th: Scintillating Safeguard - 7th: Project Image - 8th: Confusing Colors - 9th: Resplendent Mansion **Standard Psi Cantrips** Figment Your minor illusions shift and dance in a way that draws the eye. The range of figment increases to 60 feet. When you Sustain the spell, you can move the apparent sound or vision up to 15 feet. You can then attempt to create-a-diversion as usual. Those creatures who disbelieved the illusion aren't affected by this diversion. Your figment also gains the following amp. **Amp** When you amp the spell, you can create a particularly distracting illusion as part of its normal effects. Choose an unoccupied square within the spell's range. The illusion in that square provides flanking for a single melee attack made before the beginning of your next turn. If you Sustain the spell, the details of the illusion change and shift to keep your enemies unsettled; the flanking illusion's duration extends until the beginning of your next turn and you can move it to any unoccupied square in the spell's range. The flanking illusion can't provide its benefit against any creature who has disbelieved the figment. Shield Your shield spell can be deployed on behalf of others. When you cast shield, you can choose a target ally within 30 feet to gain the benefits of the spell instead of you. The option to Shield Block with the spell is up to you and uses your reaction, not the target's. Your shield also gains the following amp. **Amp** You create a layered barrier of three shields to improve your defenses. The duration increases to sustained up to 1 minute. The shield still lowers at the start of each of your turns, but you can raise it again when you Sustain the Spell. When you Shield Block with this spell, one of the three layers breaks and you cease to gain the bonus to AC, but the spell doesn't end. You can keep using the spell until the final layer breaks; once it does, the spell ends and you can't cast shield or amped shield again for 10 minutes. You can choose to break additional layers when you Shield Block with this spell to improve your defenses. If you break two layers instead of one, increase the Hardness to 1-1/2 × the normal amount (7 at 1st rank, 15 at 3rd rank, 22 at 5th rank, 30 at 7th rank, and 37 at 9th rank). If you break all three layers, increase the Hardness to double the normal amount. **Unique Psi Cantrips** surface: Imaginary Weapon **Amp** You form multiple force weapons to lash out at multiple foes. You can target two creatures, making an attack against each. These attacks each increase your multiple attack penalty, but you don't increase your multiple attack penalty until after you make all the spell attack rolls. **Amp Heightened (+1)** The damage increases by 2d6 instead of 1d6. deeper: Astral Rain **Amp** The area changes to a , and you can Sustain the Spell up to 1 minute. The first time each round that you Sustain the Spell, y"
+ },
+ {
+  "id": "the-thousand-lashes-of-the-weeping-willow",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "The Thousand Lashes of the Weeping Willow",
+  "level": 18,
+  "traits": [
+   "impulse",
+   "kineticist",
+   "overflow",
+   "plant",
+   "primal",
+   "wood"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You conjure a massive willow tree, which lashes your foes with a thousand branches. The trunk of the weeping willow tree is 10-feet in diameter and appears in an unoccupied space within 500 feet. The tree whips its branches at all your enemies within a 30-foot-radius emanation centered on the willow's trunk, dealing damage with a save against your class DC. A creature that fails its save is also overcome with sorrow, becoming Slowed 1 for as long as the willow remains, as it weeps uncontrollably. The willow doesn't target you or your allies. The willow tree remains until the end of your next turn, but you can Sustain it up to 1 minute. The first time you Sustain the impulse each round, the weeping willow attacks again, dealing damage to all enemies in the area with a basic reflex save. If you use this impulse again, the previous one ends. --- **Level (20th)** The initial damage is 14d8, and the Sustained damage is 5d8."
+ },
+ {
+  "id": "tide-of-death",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Tide of Death",
+  "level": 0,
+  "traits": [
+   "negative",
+   "void"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Tide of Death Source GM Core pg. 312 Aspect Death Prerequisite death gaze gift You can Activate death gaze with 3 actions instead of 2. If you do, it targets all living creatures within 30 feet except for you. If you have the void healing ability, you can include yourself to be healed."
+ },
+ {
+  "id": "tiger-fork",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Tiger Fork",
+  "level": 5,
+  "traits": [
+   "disarm",
+   "grapple",
+   "magical",
+   "thrown-20"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "The tiger fork is a *+1 trident* with the disarm and grapple traits. It has wide, flaring prongs that can be used to fend off deadly beasts and entrap opponents during combat. While you have another creature Grabbed with the *tiger fork*, you gain a +1 circumstance bonus to saves against forced movement effects. **Activate—Fork Grip** ⟨1⟩ (manipulate) **Requirements** Your last action was a successful Strike against a creature --- **Effect** You can activate the *tiger fork* to attempt to Grapple the creature. This attempt uses the same multiple attack penalty as the required Strike."
+ },
+ {
+  "id": "tiger-slash",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Tiger Slash",
+  "level": 6,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are in Tiger Stance --- You make a fierce swipe with both hands. Make a tiger claw Strike. It deals two extra weapon damage dice (three extra dice if you're 14th level or higher), and you can push the target 5 feet away as if you had successfully Shoved them. If the attack is a critical success and deals damage, add your Strength modifier to the persistent bleed damage from your tiger claw."
+ },
+ {
+  "id": "toadskin-salve",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Toadskin Salve",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "poison"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This thick, oily salve reacts with the air to exude a toxic mucus when applied to skin. Once it's applied, you can activate the salve in one of the two ways detailed below. After either reaction has been used, the remaining mucus loses its reactive properties and falls away as the effect ends. You can only have one dose applied at a time. If you don't use either reaction, after 10 minutes, the mucus flakes away and the effect ends. --- **Activate** ⟨5⟩ Interact **Trigger** You hit a creature with a melee Strike --- **Effect** You fling mucus on the creature, dealing 1d4. --- **Activate** ⟨5⟩ Interact **Trigger** You are hit with a melee attack that deals physical damage --- **Effect** The mucus dulls the blow, granting you resistance 3 to physical damage against the triggering attack."
+ },
+ {
+  "id": "toadskin-salve-greater",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Toadskin Salve (Greater)",
+  "level": 7,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "poison"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This thick, oily salve reacts with the air to exude a toxic mucus when applied to skin. Once it's applied, you can activate the salve in one of the two ways detailed below. After either reaction has been used, the remaining mucus loses its reactive properties and falls away as the effect ends. You can only have one dose applied at a time. If you don't use either reaction, after 10 minutes, the mucus flakes away and the effect ends. --- **Activate** ⟨5⟩ Interact **Trigger** You hit a creature with a melee Strike --- **Effect** You fling mucus on the creature, dealing 2d4. --- **Activate** ⟨5⟩ Interact **Trigger** You are hit with a melee attack that deals physical damage --- **Effect** The mucus dulls the blow, granting you resistance 5 to physical damage against the triggering attack."
+ },
+ {
+  "id": "toadskin-salve-major",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Toadskin Salve (Major)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "poison"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This thick, oily salve reacts with the air to exude a toxic mucus when applied to skin. Once it's applied, you can activate the salve in one of the two ways detailed below. After either reaction has been used, the remaining mucus loses its reactive properties and falls away as the effect ends. You can only have one dose applied at a time. If you don't use either reaction, after 1 hour, the mucus flakes away and the effect ends. --- **Activate** ⟨5⟩ Interact **Trigger** You hit a creature with a melee Strike --- **Effect** You fling mucus on the creature, dealing 3d4. --- **Activate** ⟨5⟩ Interact **Trigger** You are hit with a melee attack that deals physical damage --- **Effect** The mucus dulls the blow, granting you resistance 8 to physical damage against the triggering attack."
+ },
+ {
+  "id": "tornado-trompo",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Tornado Trompo",
+  "level": 18,
+  "traits": [
+   "air",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Various runes are carved along the entirety of this wooden top. Spinning the top requires wrapping a thick string around its base and pulling the string in a vigorous motion. Wrapping a string and pulling the string each require an Interact action. The top's magic is connected to the power of the wind, which becomes evident when placed on a surface as it hovers in place. **Activate** ⟨2⟩ envision, Interact **Requirements** A string is wrapped around the top and you have a hand free --- **Effect** You lightly pull on the string and catch the top in your free hand. It spins in place, hovering over your open palm, sharing its power over the winds with you. You gain the effects of fly as long as you keep the top in your hand. You can Release the top at any time to end the effect. --- **Activate** ⟨2⟩ command, Interact **Frequency** once per day **Requirements** A string is wrapped around the top --- **Effect** You call upon the top's power and give the string a powerful pull. The top travels across the ground in a . As it does, it unleashes a powerful vortex of winds, becoming a tornado temporarily. This tornado has the effects of Whirlwind except that it's not limited by being used outside or in a cramped space and can't be sustained. Creatures in the tornado's path must attempt a save to determine the effects of the tornado. The tornado ends after traveling its full distance, causing any creatures that rose in the air due to a failed save to begin falling immediately."
+ },
+ {
+  "id": "toxicologist",
+  "lane": "toggle",
+  "collection": "classFeatures",
+  "name": "Toxicologist",
+  "level": 1,
+  "traits": [
+   "alchemist"
+  ],
+  "engineFieldsPresent": [
+   "resistances"
+  ],
+  "inRegistries": [],
+  "text": "You specialize in toxins and venoms of all types. **Formulas** Two common 1st-level alchemical poisons. **Field Benefit** You can Activate an injury poison as a single action, provided you apply it to a weapon you're holding or a piece of ammunition on your person or loaded in a weapon you're holding. This can be an item you're holding or you can Interact to draw an eligible item or make one using Quick Alchemy as part of the single action; if you can make more than one item with Quick Alchemy (such as with the double brew class feature), you can still Activate only one. In addition, you flexibly mix acidic and poisonous alchemical compounds. Your infused items with the poison trait can affect creatures immune to poison. A creature takes acid damage instead of poison damage from such items if either the creature is immune to poison or that would be more detrimental to the creature (as determined by the GM). **Field Vials** Your versatile vials have the poison trait and deal poison damage instead of having the acid trait and dealing acid damage (though your field benefit still applies). You can apply the contents of a versatile vial to a weapon or piece of ammunition as an injury poison. Add the versatile vial's initial damage to the first successful Strike with that weapon or ammunition. The substance becomes inert at the end of your current turn. **Field Discovery (5th)** You have handled enough poisons to become inured to their effects. You gain poison resistance equal to half your level. **Advanced Vials (11th)** When you damage a creature with a versatile vial you've used as an injury poison, that creature takes persistent poison damage equal to the vial's splash damage in addition to the initial damage. **Greater Field Discovery (13th)** When a creature fails its initial saving throw against an infused injury poison you created, the wound sprays poison onto another creature adjacent to it. The attacker who caused the injury chooses which creature, if there's more than one, and can choose to forgo this effect. That creature is exposed to the poison. The second creature doesn't spread the poison further."
+ },
+ {
+  "id": "trample",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Trample",
+  "level": 17,
+  "traits": [
+   "sarangay"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Trample Source Tian Xia Character Guide pg. 63 You know how to leverage your size and momentum when using your horns attack, and can use your movement speed to overrun your foes. You Stride up to double your Speed and can move through the spaces of creatures at least one size smaller than you, Trampling each creature whose space you enter. You can attempt to Trample the same creature only once in a single Trample. You deal piercing damage equal to the damage of your horns unarmed attack against these creatures, which can attempt a basic Reflex save against the higher of your class DC or spell DC."
+ },
+ {
+  "id": "trample-centaur",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Trample (Centaur)",
+  "level": 13,
+  "traits": [
+   "centaur"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've trained to stampede right over smaller foes without causing yourself any harm. Stride up to double your Speed; you can move through the spaces of creatures at least one size smaller, Trampling each creature whose space you enter. You can attempt to Trample the same creature only once in a single Trample. You deal bludgeoning damage equal to your hoof attack (or your unarmed strike if you lack a hoof attack) against these creatures, who can attempt a save against your class DC."
+ },
+ {
+  "id": "trample-mimicry",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Trample Mimicry",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You Stride up to double your speed and can move through the spaces of creatures at least one size smaller, trampling each creature whose space you enter. You can attempt to trample the same creature only once in a single use of Trample Mimicry. You deal damage to each trampled creature ( save against the higher of your class DC or spell DC). This damage increases by 1d12 at levels 14 and 18."
+ },
+ {
+  "id": "trample-sarangay",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Trample (Sarangay)",
+  "level": 17,
+  "traits": [
+   "sarangay"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You know how to leverage your size and momentum when using your horns attack, and can use your movement speed to overrun your foes. You Stride up to double your Speed and can move through the spaces of creatures at least one size smaller than you, Trampling each creature whose space you enter. You can attempt to Trample the same creature only once in a single Trample. You deal piercing damage equal to the damage of your horns unarmed attack against these creatures, which can attempt a save against the higher of your class DC or spell DC."
+ },
+ {
+  "id": "triangle-shot",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Triangle Shot",
+  "level": 18,
+  "traits": [
+   "concentrate",
+   "fortune",
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are in Monastic Archer Stance and wielding a bow usable with that stance. --- You string three arrows to your bow and fire them all at once. Make three ranged Strikes against a single target with the required weapon, each using your current multiple attack penalty, and you take an additional –2 penalty. This counts as two attacks when calculating your multiple attack penalty, and you combine the attacks' damage for the purpose of resistances and weaknesses. Your Stunning Blows benefit applies to Triangle Shot, even though it isn't a Flurry of Blows. If all three Strikes hit, the target takes 3d6 damage."
+ },
+ {
+  "id": "tunnel-wall",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Tunnel Wall",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Requirements** You are in Tenacious Stance. --- Using your shield, you guard against the movement of foes as surely as if you were a wall of stone. You Raise a Shield and become anchored for 1 round. While anchored, you gain a +4 circumstance bonus to the DC to Tumble Through your space."
+ },
+ {
+  "id": "twisting-tree",
+  "lane": "toggle",
+  "collection": "classFeatures",
+  "name": "Twisting Tree",
+  "level": 1,
+  "traits": [
+   "magus"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The staff is perhaps one of the simplest of weapons, but this simplicity belies its elegance and versatility. To you, a staff is casting implement and martial weapon alike-the foundation of a fighting style. While you wield a staff in one hand, the staff adjusts in shape and weight, gaining the agile trait and increasing its damage die size to 1d6. While you wield a staff in both hands, it lengthens, twists, and reshapes, gaining the parry, reach, and trip traits. While you're in Arcane Cascade stance, you can Interact or Release to change your grip on the weapon as a free action when you Strike with your staff, including Strikes made in a Spellstrike. This happens before you roll your attack roll. You can also Interact to change your grip on the staff as a free action triggered at the end of your turn. **Conflux Spell** Spinning Staff"
+ },
+ {
+  "id": "twisting-twine",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Twisting Twine",
+  "level": 3,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Twisting Twine Source Player Core 2 pg. 307 Usage held in 1 hand Bulk L This ball of hempen twine resists efforts to unravel it by hand. Activate—Unravel Twine (manipulate) Frequency once per day; Effect You toss the ball of twine into a square within 20 feet. The twine then unravels and animates, attempting to Disarm or Trip (your choice) a creature in the square with a total of +9 to the Athletics check. At the end of your turn, the twine winds itself back into a ball and returns to your hand; if you don't have a free hand, it returns to your space instead. Twisting Twine (Lesser) Source Player Core 2 pg. 307 Price 45 gp Bulk L Twisting Twine (Moderate) Source Player Core 2 pg. 307 Price 125 gp Bulk L You can activate the moderate twisting twine once per hour instead of once per day, and the Athletics modifier is +12. Twisting Twine (Greater) Source Player Core 2 pg. 307 Price 300 gp Bulk L You can activate the greater twisting twine without any frequency limit, and the Athletics modifier is +15."
+ },
+ {
+  "id": "unfurling-brocade",
+  "lane": "toggle",
+  "collection": "classFeatures",
+  "name": "Unfurling Brocade",
+  "level": 1,
+  "traits": [
+   "magus"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You disdain others' reliance on crude contrivances of iron, instead favoring the elegance of fabric, with thread and brocade your panoply. Your mastery of qinggong allows qi-infused fabric to tear flesh, bind blades, and pierce steel. You can create a special weapon, qi-infused fabric, by Interacting to grip a length of cloth of 1 Bulk or less and filling it with your qi. If you Interact to draw the object, you can do this as part of that action. For most unfurling brocade magi, this item is a scarf, sash, ribbon, or a similarly voluminous article of worn clothing, such as long sleeves. You can use the fabric as a Bladed Scarf. Unlike a normal bladed scarf, you have the option to wield the fabric in one hand instead of two. Its damage die is d4 if held in one hand. If you're wearing Handwraps of Mighty Blows, you can apply any of its runes to the fabric, provided those runes could be added to a bladed scarf. This begins when you wield the fabric and ends when you cease doing so. While in Arcane Cascade stance, the magical energy flowing through your fabric partially animates it to accomplish an even greater range of tricks. - If you critically succeed at an Athletics check to Disarm, you can spend a single action immediately afterward to flick your fabric, causing the disarmed object to fall to the ground in your space rather than in your opponent's. - Your fabric gains the grapple trait. If you succeed at an Athletics check to Grapple using your fabric, you can spend a single action immediately afterward to pull the creature 5 feet toward you. - When you attempt to Trip a foe using your fabric, the target can be two sizes larger than you instead of one. **Conflux Spell** Home Among Mulberry Leaves"
+ },
+ {
+  "id": "unleash-yaoguai-might",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Unleash Yaoguai Might",
+  "level": 9,
+  "traits": [
+   "yaoguai"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Frequency** once per day As you enter your yaoguai form, you draw upon your internal magic to assume an even greater form. When you Change Shape to enter your yaoguai form, you can spend an additional action to gain the effects of Enlarge and an additional effect based on your heritage. This effect persists for 1 minute or until you Change Shape again. - **Animal** Your hide thickens, granting a +1 circumstance bonus to AC. - **Celestial** You recover some of your celestial perfection, granting you and all allies within 15 feet a +1 status bonus to attack rolls. - **Elements** You're surrounded in wind and dust, granting concealment each round that you spend at least 1 action that has the move trait. You can't use this concealment to Hide or Sneak, as normal for sources of obvious concealment. - **Object** Your skin transmutes partially into an inorganic substance, granting resistance 5 to your choice of bludgeoning, piercing, or slashing. - **Vegetation** You trigger an accelerated growth, gaining fast healing 5."
+ },
+ {
+  "id": "unshaken-in-iron",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Unshaken in Iron",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You know the precise limits of your armor, and trust it to save you from harm. You gain the armor specialization effect of light armor. If you are trained in medium or heavy armor, you gain the respective armor specialization effect for those armors as well. While in Tenacious Stance, you increase the value of your armor specialization effects by an amount equal to the value of your armor check penalty (adding +3 to the resistance while wearing plate armors, for example)."
+ },
+ {
+  "id": "unstoppable-force",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Unstoppable Force",
+  "level": 18,
+  "traits": [
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "While you are in the stance provided by Immovable Object, you ignore difficult terrain and greater difficult terrain. Once per 10 minutes, if you Dismiss your Immovable Object stance, you can Stride as a free action. At the end of that Stride, your final footfall causes an explosion of energy. Each creature within a takes damage ( save against your class DC). Creatures that fail the save are also knocked prone."
+ },
+ {
+  "id": "upset-balance",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Upset Balance",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** You are damaged by a melee Strike. **Requirements** You are in Tenacious Stance. --- You lean into your foe's attack, using the weight of your body and armor to send them reeling. Attempt an Athletics check against the creature's Reflex DC. On a success, the target becomes Clumsy 1 until the end of its next turn (Clumsy 2 on a critical success). If you are anchored, you gain a +2 circumstance bonus to this check."
+ },
+ {
+  "id": "veiled-figurehead",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Veiled Figurehead",
+  "level": 7,
+  "traits": [
+   "figurehead",
+   "magical",
+   "water"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "**Usage** attached to a ship's bow This figurehead is carved in the shape of a humanoid, but it has no facial features whatsoever. --- **Activate—Veil!** 1 minute (concentrate, illusion, visual) **Frequency** once per day **Effect** You change the appearance of the ship in minor but noticeable ways. Its general size and shape can't be changed, but you can alter surface details to your liking. Flags and sails can be recolored and given new markings, and the overall material of the ship can appear a different color or quality. Wear and surface damage (like small holes, tears, and burns) can be masked to make the vessel look unblemished, or you can create such damage and wear. The figurehead itself shifts to fit the change and gains a face to match the rest of the ship. The illusion lasts for 6 hours or until you Dismiss this effect. Any creature that boards the ship or uses the Seek action to examine it disbelieves the illusion if it succeeds at a check."
+ },
+ {
+  "id": "veiled-figurehead-greater",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Veiled Figurehead (Greater)",
+  "level": 14,
+  "traits": [
+   "figurehead",
+   "magical",
+   "water"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "**Usage** attached to a ship's bow This figurehead is carved in the shape of a humanoid, but it has no facial features whatsoever. --- **Activate—Veil!** 1 minute (concentrate, illusion, visual) **Frequency** once per day **Effect** You change the appearance of the ship in minor but noticeable ways. Its general size and shape can't be changed, but you can alter surface details to your liking. Flags and sails can be recolored and given new markings, and the overall material of the ship can appear a different color or quality. Wear and surface damage (like small holes, tears, and burns) can be masked to make the vessel look unblemished, or you can create such damage and wear. The figurehead itself shifts to fit the change and gains a face to match the rest of the ship. The illusion lasts for 24 hours or until you Dismiss this effect. Any creature that boards the ship or uses the Seek action to examine it disbelieves the illusion if it succeeds at a check. Activating a *greater veiled figurehead* also extends the illusion to those on the ship. The figurehead casts a Illusory Disguise spell upon them, except it targets everyone on board when activated, and it alters their clothing to a general look that matches the new appearance of the ship. In addition, it can make everyone appear as a specific ancestry, but you must choose the same one for all targets. This effect ends for any target who leaves the ship and ends for all targets if the illusion on the ship ends. A creature that disbelieves the illusion for the ship or any disguised crew member disbelieves the entire illusion."
+ },
+ {
+  "id": "vexing-tumble",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Vexing Tumble",
+  "level": 6,
+  "traits": [
+   "bravado",
+   "swashbuckler"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You tumble around your foes, expertly avoiding their reactions. Stride up to half your Speed and roll an Acrobatics check. Compare the result to the Reflex DC of each enemy whose reach you began in or enter during the movement, in sequence. --- **Critical Success** This movement doesn't trigger reactions from the enemy, and the enemy is off-guard to you until the end of your turn **Success** This movement doesn't trigger reactions from the enemy. **Critical Failure** Your movement immediately stops when you enter the creature's reach; if you began in the creature's reach, you don't move."
+ },
+ {
+  "id": "vine-baton",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Vine Baton",
+  "level": 5,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This wooden baton is carved with a vine design that spirals from one end of the rod to the other. Similar batons were used by Taldan commanders of their Armies of Exploration for thousands of years. --- **Activate—Forward March!** ⟨2⟩ (manipulate, visual) **Frequency** once per day **Effect** You brandish the *vine baton* with a flourish or in some other dramatic manner. You and your allies within 120 feet can Hustle for 1 additional hour. If you enter an encounter during this time period, the effect ends, but you receive a +2 status bonus to your initiative rolls for that encounter."
+ },
+ {
+  "id": "vipers-fang",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Viper's Fang",
+  "level": 14,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨5⟩ (concentrate) **Trigger** A creature within your reach uses a manipulate or move action, makes a ranged attack, or leaves a square during a moving action it's using **Requirements** You are a master with the affixed weapon --- When you activate this resin-strengthened viper skull, make a melee Strike against the triggering creature. If you have Reactive Strike, you can activate the *viper's fang* as a free action. If your attack is a critical hit and the trigger was a manipulate action, you disrupt that action. This Strike doesn't count toward your multiple attack penalty, and your multiple attack penalty doesn't apply to this Strike. --- If you hit with this attack, the creature is exposed to viper fang venom. **Viper Fang Venom** (poison) **Saving Throw** **Maximum Duration** 4 rounds **Stage 1** 3d10 damage and Enfeebled 1."
+ },
+ {
+  "id": "void-fragment",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Void Fragment",
+  "level": 13,
+  "traits": [
+   "consumable",
+   "occult"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Hovering midair, thrumming and whispering of its power, a *void fragment* is a crystalline fragment of swirling colors, reminiscent of stars and deep darkness. It thrums intermittently with a beckoning vibration, drawing attention from and pulling at nearby creatures with a tangible sense of gravity. A chill hangs in the air around it. At a touch, the wisp vanishes, giving the point of contact a gangrenous color. If the partaker succeeds at the initial save, the wisp reappears somewhere on the same planet. --- **Stage 1 (8 Days)** The first time you enter this stage from a given void fragment, you gain the effect of a potion of truespeech for 3 days. The wisp grants you telepathy with a range of 30 feet. Also, you are under the effects of Hidden Mind, except that its status bonus is +1 and it counteracts with a modifier equal to your class DC – 9 or your spell DC – 9, whichever is higher. The wisp grants you resistance to mental damage equal to half your level. You also have access to the following activation. **Activate** ⟨1⟩ or ⟨2⟩ (concentrate, teleportation) **Frequency** once per hour **Effect** You teleport up to 30 feet to an unoccupied space you can see. If you used 2 actions, you can teleport up to 60 feet. --- **Stage 2 (24 Days)** You gain imprecise thoughtsense to half your telepathy's range, which increases to 60 feet. However, you have a tough time filtering the mental noise. If any creatures can be detected by your thoughtsense, you take a –1 penalty to Perception checks. When you arrive in a space after using the activation to teleport, you create a that works like Strange Geometry for 1 round. This emanation can affect you. If you die at this stage or higher, your body implodes. Your soul reincarnates as an aberration of a level close to yours, which extrudes from the location of your implosion. Common forms include jah-tohl, gosreg, quelaunt, rhu-chalik, shoggoth, and xoarian. This creature isn't you, but fleeting memories of your former existence remain with it. You can't be raised from the dead while this monster endures. Its mindset is as alien as one of these aberrations, barely resembling yours at all. The void fragment reappears somewhere on the same planet. --- **Stage 3 (32 Days)** Your telepathy range increases to 100 feet, and the wisp grants you resistance to mental damage equal to your level. The mental noise increases the penalty to Perception to –2. Whenever you roll initiative, you become confused for up to 1d4 rounds. --- **Stage 4** You die. --- **Purging** You must find and slay a powerful aberration or a servant of such creatures the GM deems appropriate. The creature must be of your level or higher. Then, someone must cast a Rest Eternal ritual on you and the dead being; you must be anointed with the same oils the ritual normally requires. If the ritual results in a success, it casts the slain creature into the void along with the *void fragment* inside you, ending its effects on you."
+ },
+ {
+  "id": "wake-of-devastation",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Wake of Devastation",
+  "level": 20,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're in Kaiju Stance. --- Like a kaiju, you leave a trail of destruction in your wake. Your shattering earth attacks gain the razing trait. Whenever you succeed with a shattering earth attack while standing on the ground, the earth buckles under the force of the blow, and all the squares beneath you become difficult terrain. Whenever you critically succeed with a shattering earth attack against a creature standing on the ground in an area of difficult terrain, you pummel the creature into the earth; they become immobilized until they succeed at an Escape attempt against your class DC."
+ },
+ {
+  "id": "warding-tattoo-wave",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Warding Tattoo (Wave)",
+  "level": 6,
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Many cultures of Golarion have a tattoo to turn away harm; as such, warding tattoos often resemble whichever dangers are most common to the culture, such as a wild beast or a whirlpool in the high seas of the Shackles. In addition to the normal triggers, you can activate the tattoo when you enter an environment where you can't breathe. --- **Activate** ⟨5⟩ envision **Frequency** once per day **Trigger** An enemy, hazard, or the environment makes an attack against your AC, requires you to attempt a saving throw, or causes you to take damage automatically --- **Effect** Until the end of the current turn, against the triggering effect, you gain a +1 status bonus to AC and saving throws and gain resistance 2 to damage. The tattoo casts Air Bubble."
+ },
+ {
+  "id": "wardrobe-stone",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Wardrobe Stone",
+  "level": 3,
+  "traits": [
+   "illusion",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Wardrobe Stone Source Grand Bazaar pg. 51 Usage held in 1 hand Bulk L This large stone eye is the size of a fist and decorated with elaborate carvings of robes and other garments. Activate (1 minute) envision, Interact; Effect You enter a brief trance in which you envision yourself entering a large dressing room. You maneuver through the endless dressing-room mindscape and search for whatever articles of clothing, accessories, and other garments you desire. After the activation, you gain the effects of illusory disguise, except that it only causes you to appear to be wearing the exact outfit you selected within the mindscape. The illusion also disguises the wardrobe stone to match your outfit and not appear out of place, such as by appearing to be a glove or bracelet, though it continues to occupy your hand while you're under the effects of illusory disguise. You can actively Dismiss the Spell, but the effects are also dismissed immediately when you're no longer holding the wardrobe stone. Wardrobe Stone (Lesser) Source Grand Bazaar pg. 51 Price 50 gp Bulk L Wardrobe Stone (Moderate) Source Grand Bazaar pg. 51 Price 1,250 gp Bulk L You gain a +2 item bonus to a specific Lore skill associated with your outfit, such as Carpentry Lore when wearing a carpenter's outfit or Cooking Lore when wearing a chef's outfit. Activate (1 minute) envision, Interact; Frequency once per day; Effect You cast prying eye. Wardrobe Stone (Greater) Source Grand Bazaar pg. 51 Price 55,000 gp Bulk L You gain +3 item bonus to Perception checks involving sight and a +3 item bonus to a specific Lore skill associated with your outfit. Activate (1 minute) envision, Interact; Effect You cast prying eye. Activate (10 minutes) envision, Interact; Effect The wardrobe stone splits open and permanently transforms into a specific type of magical robe of your choosing. It can transform into any 20th-level or lower magical robe to which you have access, except for items that can't normally be Crafted, such as artifacts. This process is irreversible."
+ },
+ {
+  "id": "wardrobe-stone-greater",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Wardrobe Stone (Greater)",
+  "level": 20,
+  "traits": [
+   "illusion",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This large stone eye is the size of a fist and decorated with elaborate carvings of robes and other garments. You gain +3 item bonus to Perception checks involving sight and you gain a +3 item bonus to a specific Lore skill associated with your outfit, such as Carpentry Lore when wearing a carpenter's outfit or Cooking Lore when wearing a chef's outfit. --- **Activate** (1 minute) envision, Interact --- **Effect** You enter a brief trance in which you envision yourself entering a large dressing room. You maneuver through the endless dressing-room mindscape and search for whatever articles of clothing, accessories, and other garments you desire. After the activation, you gain the effects of Illusory Disguise, except that it only causes you to appear to be wearing the exact outfit you selected within the mindscape. The illusion also disguises the wardrobe stone to match your outfit and not appear out of place, such as by appearing to be a glove or bracelet, though it continues to occupy your hand while you're under the effects of *illusory disguise*. You can actively Dismiss the Spell, but the effects are also dismissed immediately when you're no longer holding the wardrobe stone. --- **Activate** (1 minute) envision, Interact **Frequency** once per day --- **Effect** You cast Scouting Eye. --- **Activate** (10 minutes) envision, Interact --- **Effect** The wardrobe stone splits open and permanently transforms into a specific type of magical robe of your choosing. It can transform into any 20th-level or lower magical robe to which you have access, except for items that can't normally be Crafted, such as artifacts. This process is irreversible."
+ },
+ {
+  "id": "wardrobe-stone-lesser",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Wardrobe Stone (Lesser)",
+  "level": 3,
+  "traits": [
+   "illusion",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This large stone eye is the size of a fist and decorated with elaborate carvings of robes and other garments. --- **Activate** (1 minute) envision, Interact --- **Effect** You enter a brief trance in which you envision yourself entering a large dressing room. You maneuver through the endless dressing-room mindscape and search for whatever articles of clothing, accessories, and other garments you desire. After the activation, you gain the effects of Illusory Disguise, except that it only causes you to appear to be wearing the exact outfit you selected within the mindscape. The illusion also disguises the wardrobe stone to match your outfit and not appear out of place, such as by appearing to be a glove or bracelet, though it continues to occupy your hand while you're under the effects of *illusory disguise*. You can actively Dismiss the Spell, but the effects are also dismissed immediately when you're no longer holding the wardrobe stone."
+ },
+ {
+  "id": "wardrobe-stone-moderate",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Wardrobe Stone (Moderate)",
+  "level": 11,
+  "traits": [
+   "illusion",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This large stone eye is the size of a fist and decorated with elaborate carvings of robes and other garments. You gain a +2 item bonus to a specific Lore skill associated with your outfit, such as Carpentry Lore when wearing a carpenter's outfit or Cooking Lore when wearing a chef's outfit. --- **Activate** (1 minute) envision, Interact --- **Effect** You enter a brief trance in which you envision yourself entering a large dressing room. You maneuver through the endless dressing-room mindscape and search for whatever articles of clothing, accessories, and other garments you desire. After the activation, you gain the effects of Illusory Disguise, except that it only causes you to appear to be wearing the exact outfit you selected within the mindscape. The illusion also disguises the wardrobe stone to match your outfit and not appear out of place, such as by appearing to be a glove or bracelet, though it continues to occupy your hand while you're under the effects of *illusory disguise*. You can actively Dismiss the Spell, but the effects are also dismissed immediately when you're no longer holding the wardrobe stone. --- **Activate** (1 minute) envision, Interact **Frequency** once per day --- **Effect** You cast Scouting Eye."
+ },
+ {
+  "id": "wave-spiral",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Wave Spiral",
+  "level": 12,
+  "traits": [
+   "flourish",
+   "monk",
+   "occult",
+   "water"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per minute **Requirements** You're in Reflective Ripple Stance. --- You dip and spin, unleashing a wide whirlpool of water. Make an Athletics check to Trip each creature standing on the ground in a . These attacks all count toward your multiple attack penalty, but the penalty doesn't increase until after you make all the attacks."
+ },
+ {
+  "id": "wayfinder-of-rescue",
+  "lane": "toggle",
+  "collection": "items",
+  "name": "Wayfinder of Rescue",
+  "level": 4,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "As a standard Wayfinder, but once per day you can activate it to cast Heal on a creature other than yourself, using either the one-action or two-action version of heal as a 1st-rank spell."
+ },
+ {
+  "id": "wayfinder-resonance-infiltrator",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Wayfinder Resonance Infiltrator",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "You are adept at using the unusual resonance of your *wayfinder* to aid in any deceptions you might employ. Once per day you can activate your *wayfinder* to cast Illusory Disguise, heightened to 2nd level, as an arcane spell. Additionally, once per day, you can Activate your *wayfinder* with a single-action envision activation to transform it into a perfect replica of another similarly sized badge of membership or office, such as an Aspis Consortium badge. This transformation lasts for 1 hour."
+ },
+ {
+  "id": "wayfinder-resonance-tinkerer",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Wayfinder Resonance Tinkerer",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You can use the unusual resonance of your *wayfinder* to grant it additional effects. Choose one cantrip from the arcane, divine, occult, or primal list. You can activate your *wayfinder* to cast that cantrip at will. As normal, this cantrip is heightened to a spell rank equal to half your level rounded up. Additionally, you can Activate your *wayfinder* with a ⟨1⟩ (envision) activation to transform it into a nondescript pin or brooch to hide your affiliation with the Pathfinder Society. This transformation lasts for 1 hour."
+ },
+ {
+  "id": "wheeling-grab",
+  "lane": "toggle",
+  "collection": "feats",
+  "name": "Wheeling Grab",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "flourish"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You cartwheel on your claws, dancing over your foes. You shift into claw stance and Tumble Through. If you moved through an enemy's space, you can Grapple it."
+ }
+]

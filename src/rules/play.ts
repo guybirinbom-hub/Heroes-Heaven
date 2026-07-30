@@ -781,6 +781,25 @@ export function setItemQuantity(play: PlayState, instanceId: string, qty: number
   };
 }
 
+/**
+ * Consume one of a consumable.
+ *
+ * Drops the quantity by one, and removes the item outright when that was the last of them — a potion
+ * you just drank should not linger in the pack at quantity 1. If the item has a mode (an elixir whose
+ * effect runs for a while), using it switches that mode on, which is the only way an item mode is
+ * ever activated: they are hidden from the Modes panel.
+ */
+export function useConsumable(play: PlayState, instanceId: string, modeDefs?: Record<string, ModeDef>): PlayState {
+  const inv = (play.inventory ?? []).find((i) => i.instanceId === instanceId);
+  if (!inv) return play;
+  const next = inv.quantity > 1 ? setItemQuantity(play, instanceId, inv.quantity - 1) : removeInventoryItem(play, instanceId);
+  const mode = Object.values(modeDefs ?? {}).find((m) => m.fromItemId === inv.itemId);
+  if (!mode) return next;
+  // Already running (a second dose of the same elixir) — leave it on rather than toggling it off.
+  if ((next.activeModes ?? []).includes(mode.id)) return next;
+  return toggleMode(next, mode.id, modeDefs);
+}
+
 /** Toggle a per-item carry flag (worn / equipped / invested). */
 export function toggleItemFlag(play: PlayState, instanceId: string, flag: ItemFlag): PlayState {
   return {
@@ -1092,7 +1111,7 @@ function restConditions(list: ActiveCondition[]): ActiveCondition[] {
  */
 export function rest(
   play: PlayState,
-  opts: { level: number; conMod: number; initialResources?: Record<string, number> },
+  opts: { level: number; conMod: number; initialResources?: Record<string, number>; modeDefs?: Record<string, ModeDef> },
 ): PlayState {
   const recovered = Math.max(0, opts.level) * Math.max(1, opts.conMod);
   const damage = Math.max(0, play.damage - recovered);
@@ -1143,5 +1162,13 @@ export function rest(
     companionHp,
     resources: opts.initialResources ?? play.resources,
     inventory,
+    // An elixir you drank yesterday is not still running. Item modes clear overnight unless their
+    // printed duration outlasts a night ("until your next daily preparations"), which is exactly the
+    // rest that would otherwise wipe them. Modes the player toggled themselves are left alone —
+    // those are theirs to manage.
+    activeModes: (play.activeModes ?? []).filter((id) => {
+      const def = opts.modeDefs?.[id];
+      return !def?.fromItemId || def.survivesRest;
+    }),
   };
 }

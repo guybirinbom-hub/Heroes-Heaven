@@ -1,0 +1,1233 @@
+[
+ {
+  "id": "elven-verve",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Elven Verve",
+  "level": 1,
+  "traits": [
+   "elf"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "While all elves are immune to the paralyzing touch of ghouls, you can shake off flesh-numbing magic of all kinds. You gain a +1 circumstance bonus to saves against effects that would impose the immobilized, paralyzed, or slowed conditions. When you would be immobilized, paralyzed, or slowed for at least 2 rounds, reduce that duration by 1 round."
+ },
+ {
+  "id": "emotion-conduit",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Emotion Conduit",
+  "level": 0,
+  "traits": [
+   "emotion",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Emotion Conduit Source Treasure Vault (Remastered) pg. 199 Aspect Emotion Activate (concentrate, manipulate) Effect You channel your relic's emotion at a target within 30 feet, overpowering an emotion effect on that creature. The relic attempts a counteract check. If the check succeeds, the target feels a sudden rush of the relic's emotion, and the counteracted effect ends on the target. The target is temporarily immune to your relic's emotion conduit until you make your next daily preparations."
+ },
+ {
+  "id": "empathetic-plea",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Empathetic Plea",
+  "level": 1,
+  "traits": [
+   "auditory",
+   "emotion",
+   "gnome",
+   "mental",
+   "visual"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** You are attacked by a creature that you haven't yet acted hostile toward. You must use this reaction before the creature rolls its attack. --- The way you cringe or use those puppy-dog eyes you've been practicing elicits an empathetic response in the attacker. Attempt a Diplomacy check against your attacker's Will DC. --- **Critical Success** The creature pulls its attack, wasting its action, and can't use hostile actions against you until the beginning of its next turn. **Success** The creature takes a -2 circumstance penalty to damage on the triggering Strike and all its Strikes against you until the beginning of its next turn. The penalty is -4 if you're an expert in Diplomacy, -6 if you're a master, and -8 if you're legendary. **Failure** The creature's attack is unaffected, and the creature is temporarily immune to your Empathic Pleas for 24 hours."
+ },
+ {
+  "id": "enchanting-lily",
+  "lane": "defense",
+  "collection": "heritages",
+  "name": "Enchanting Lily",
+  "traits": [],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You smell ever so sweet—a delicate, floral scent like the intoxicating fragrance of lilies and the soft scent of lilacs. You're trained in Diplomacy (or another skill if you were already trained in Diplomacy). You also gain a +1 circumstance bonus to checks to Make an Impression if the target can smell your fragrance."
+ },
+ {
+  "id": "encouraging-words",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Encouraging Words",
+  "level": 2,
+  "traits": [
+   "auditory",
+   "general",
+   "linguistic",
+   "mental",
+   "skill",
+   "stamina"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** The target ally lost Stamina Points within the last round. --- You give an ally within 30 feet a quick pep talk, helping them recover. Attempt a Diplomacy check. The DC is usually 15, though the GM might adjust it based on the circumstances. If you have expert proficiency in Diplomacy, you can instead attempt a DC 20 check to increase the Stamina Points recovered by 5; if you have master proficiency, you can attempt a DC 30 check to increase the Stamina Points by 15; if you have legendary proficiency, you can attempt a DC 40 check to increase the Stamina Points by 25. No matter the result, the ally is temporarily immune to Encouraging Words until they either Take a Breather or rest for the day. --- **Critical Success** The ally recovers 2d8 Stamina Points. **Success** The ally recovers 1d8 Stamina Points. **Critical Failure** The ally takes 1d8 mental damage, but this can reduce only Stamina Points, never Hit Points."
+ },
+ {
+  "id": "endure-deaths-touch",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Endure Death's Touch",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Requirements** You are wearing medium or heavy armor in which you have expert proficiency. **Trigger** An undead hits you with an unarmed attack. --- Your conviction redirects the undead's attack through your armor and then harmlessly away. You gain resistance 5 to physical damage and resistance 10 to void damage against the triggering attack. You gain a +2 circumstance bonus on any saving throws against effects from the undead's natural attack; if you succeed at the saving throw, you get a critical success instead."
+ },
+ {
+  "id": "energetic-meltdown",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Energetic Meltdown",
+  "level": 1,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "As you channel energy through your deviant abilities, some of it turns back on you, spiking your body temperature or dancing across your skin. **Mild Backlash** You take damage equal to your level as energy scours your body. **Moderate Backlash** Energy wracks your body. After taking the damage, you gain weakness to the energy type of your backlash until your next daily preparations. The weakness is equal to one-third of your level. You also lose immunity to the energy type if you had it, until your next daily preparations. **Severe Backlash** Whatever furnace or well within you that provides the energy for your deviation overloads completely, cascading out of you in an uncontrolled burst. You deal 1d6 damage per level to all creatures in a with a save. You automatically take full damage without attempting a save."
+ },
+ {
+  "id": "energy-adaptive",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Energy Adaptive",
+  "level": 13,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "A complex pattern of protective symbols gives protection against various forms of energy, but only part of the runic structure can be active at a given time. **Activate**⟨5⟩ (concentrate) **Frequency** once per hour **Trigger** You take acid, cold, electricity, or fire damage --- **Effect** You gain resistance 5 to the triggering damage type. This doesn't apply to the triggering damage. This resistance lasts until you Activate this rune again or the armor is no longer invested by you."
+ },
+ {
+  "id": "energy-fortification",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Energy Fortification",
+  "level": 2,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Access** Minkai or Forest of Spirits origin --- You learn Minkaian traditions about the void and know how to manipulate the five elements to fortify vitality and void energies in the body. When you Prepare Elemental Medicine, you can choose to use instead of the usual skills. If you do, the medicine also grants the recipient resistance 2 and weakness 2 based on the element you chose. A wood, earth, or water elemental medicine grants resistance to void damage and weakness to vitality damage, and a living recipient loses its immunity to vitality damage for the duration. A fire or metal elemental medicine grants resistance to vitality damage and weakness to void damage, and an undead recipient loses its immunity to void damage for the duration. If you're a master in Occultism, increase the resistance and weakness to 4. If you're legendary, instead increase them to 8."
+ },
+ {
+  "id": "energy-mutagen",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Energy Mutagen",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Energy Mutagen Source Treasure Vault (Remastered) pg. 60, The Fall of Plaguestone pg. 56 Usage held in 1 hand Bulk L Activate (manipulate) When created, this mutagen is attuned to your choice of one of four energy types: acid, cold, electricity, or fire. When consumed, the mutagen suffuses your body with energy that spills out of you whenever you attack. At higher levels, it can even grant you the ability to unleash the energy in controlled bursts. Benefit You gain resistance to the attuned energy type. Whenever you score a hit with a melee weapon, add the listed amount of damage of the attuned energy type. Drawback You gain weakness 5 to the other three energy types. Energy Mutagen (Lesser) Source Treasure Vault (Remastered) pg. 60, The Fall of Plaguestone pg. 56 Price 4 gp Bulk L You gain resistance 5, add 1 damage on a hit with a melee weapon, and the duration is 1 minute. Energy Mutagen (Moderate) Source Treasure Vault (Remastered) pg. 60, The Fall of Plaguestone pg. 56 Price 12 gp Bulk L You gain resistance 10, add 1d4 damage on a hit with a melee weapon, and the duration is 10 minutes. Energy Mutagen (Greater) Source Treasure Vault (Remastered) pg. 60, The Fall of Plaguestone pg. 56 Price 300 gp Bulk L You gain resistance 15, add 1d6 damage on a hit with a melee weapon, and the duration is 1 hour. In addition, you can end the benefits of this mutagen to unleash a 30-foot cone of energy as a 2-action activity. This deals 2d6 damage of the attuned type for every full 10 minutes of duration remaining (maximum 8d6) to each creature in the area, with a DC 25 basic Reflex save. Energy Mutagen (Major) Source Treasure Vault (Remastered) pg. 60, The Fall of Plaguestone pg. 56 Price 3,000 gp Bulk L You gain resistance 20, add 2d6 damage on a hit with a melee weapon, and the duration is 1 hour. In addition, you can end the benefits of this mutagen to unleash a 30-foot cone of energy as a 2-action activity. This deals 3d6 damage of the attuned type for every full 10 minutes of duration remaining (maximum 12d6) to each creature in the area, with a DC 32 basic Reflex save."
+ },
+ {
+  "id": "energy-mutagen-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Energy Mutagen (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- When created, this mutagen is attuned to one of four energy types: acid, cold, electricity, or fire. When consumed, the mutagen suffuses your body with energy that spills out whenever you attack. At higher levels, it can even grant you the ability to unleash the energy in controlled bursts. **Benefit** You gain resistance 15 to the attuned energy type. Whenever you score a hit with a melee weapon, add 1d6 damage of the attuned energy type. In addition, you can end the benefits of this mutagen to unleash a of energy as a 2-action activity. This deals 2d6 damage of the attuned type for every full 10 minutes of duration remaining (maximum 8d6) to each creature in the area, with a save. **Drawback** You gain weakness 5 to the other three energy types. **Duration** 1 hour."
+ },
+ {
+  "id": "energy-mutagen-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Energy Mutagen (Lesser)",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- When created, this mutagen is attuned to one of four energy types: acid, cold, electricity, or fire. When consumed, the mutagen suffuses your body with energy that spills out whenever you attack. At higher levels, it can even grant you the ability to unleash the energy in controlled bursts. **Benefit** You gain resistance 5 to the attuned energy type. Whenever you score a hit with a melee weapon, add 1 damage of the attuned energy type. **Drawback** You gain weakness 5 to the other three energy types. **Duration** 1 minute."
+ },
+ {
+  "id": "energy-mutagen-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Energy Mutagen (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- When created, this mutagen is attuned to one of four energy types: acid, cold, electricity, or fire. When consumed, the mutagen suffuses your body with energy that spills out whenever you attack. At higher levels, it can even grant you the ability to unleash the energy in controlled bursts. **Benefit** You gain resistance 20 to the attuned energy type. Whenever you score a hit with a melee weapon, add 2d6 damage of the attuned energy type. In addition, you can end the benefits of this mutagen to unleash a of energy as a 2-action activity. This deals 3d6 damage of the attuned type for every full 10 minutes of duration remaining (maximum 12d6) to each creature in the area, with a save. **Drawback** You gain weakness 5 to the other three energy types. **Duration** 1 hour."
+ },
+ {
+  "id": "energy-mutagen-moderate",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Energy Mutagen (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- When created, this mutagen is attuned to one of four energy types: acid, cold, electricity, or fire. When consumed, the mutagen suffuses your body with energy that spills out whenever you attack. At higher levels, it can even grant you the ability to unleash the energy in controlled bursts. **Benefit** You gain resistance 10 to the attuned energy type. Whenever you score a hit with a melee weapon, add 1d4 damage of the attuned energy type. **Drawback** You gain weakness 5 to the other three energy types. **Duration** 10 minutes."
+ },
+ {
+  "id": "energy-resistant",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Energy-Resistant",
+  "level": 8,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "These symbols convey protective forces from the Elemental Planes. You gain resistance 5 to acid, cold, electricity, or fire. The crafter chooses the damage type when creating the rune. Multiple *energy-resistant* runes can be etched onto a suit of armor; rather than using only the strongest effect, each must provide resistance to a different damage type. For instance, a *+2 acid-resistant greater fire-resistant breastplate* would give you acid resistance 5 and fire resistance 10."
+ },
+ {
+  "id": "energy-resistant-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Energy-Resistant (Greater)",
+  "level": 12,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "These symbols convey protective forces from the Elemental Planes. You gain resistance 10 to acid, cold, electricity, or fire. The crafter chooses the damage type when creating the rune. Multiple *energy-resistant* runes can be etched onto a suit of armor; rather than using only the strongest effect, each must provide resistance to a different damage type. For instance, a *+2 acid-resistant greater fire-resistant breastplate* would give you acid resistance 5 and fire resistance 10."
+ },
+ {
+  "id": "energy-robe",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Energy Robe",
+  "level": 7,
+  "traits": [
+   "invested",
+   "magical",
+   "transmutation"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Energy Robe Source Grand Bazaar pg. 50 Usage worn clothing Bulk L This brightly colored linen robe is covered in delicate embroidery depicting creatures and natural phenomena suiting its aligned energy, such as a living thunderclap, pools of acid, roaring flames, or dancing marids. Activate command, Interact; Frequency once per day; Effect You speak a command word, and the embroidered threads in the robe glow vividly. The benefit you receive from the energy robe depends on its type. Energy Robe (Fire) Source Grand Bazaar pg. 50 Price 320 gp Bulk L You gain resistance 5 to fire. When the robe is activated, you gain a +30-foot status bonus to Speed for 1 minute as flames shoot out behind you to speed you up. Energy Robe (Cold) Source Grand Bazaar pg. 50 Price 450 gp Bulk L You gain resistance 5 to cold. When the robe is activated, you gain the effects of water walk for 1 minute, as you momentarily flash freeze the surface of water as you walk across it. Energy Robe (Acid) Source Grand Bazaar pg. 50 Price 575 gp Bulk L You gain resistance 5 to acid. When the robe is activated, you gain a climb Speed equal to your Speed, as the acid on your hands grants you easier handholds. Energy Robe (Electricity) Source Grand Bazaar pg. 50 Price 900 gp Bulk L You gain resistance 5 to electricity. When the robe is activated, you gain a fly Speed equal to your Speed for 1 minute."
+ },
+ {
+  "id": "enter-divine-realm",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Enter Divine Realm",
+  "level": 20,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "innateSpells"
+  ],
+  "inRegistries": [],
+  "text": "You are granted access to your deity's realm and can travel there quickly. You can cast Interplanar Teleport once per day as an innate divine spell with a casting time of only 1 minute. You act as the planar key for the destination, and you can only travel to your deity's realm. You and the other targets of the spell always appear in the center of your deity's realm, and you (but not necessarily your allies) are immune to all the realm's harmful conditions (such as toxic air or extreme temperatures) while there. You can return to your previous location by spending 1 minute picturing your destination; you can bring up to 8 willing creatures back with you in this way, and they need not be the same targets of the previous casting of interplanar teleport."
+ },
+ {
+  "id": "eroding-bullet",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Eroding Bullet",
+  "level": 5,
+  "traits": [
+   "acid",
+   "alchemical",
+   "consumable"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Ammunition** round **Activate** ⟨1⟩ (manipulate) --- Eroding bullets cast a faint green glow, and smell like the sickly- sweet organic gases that rise from corpses. Handling an eroding bullet without gloves deals 1 damage and leaves the putrid scent coated on your fingers. Upon Striking an enemy, the glass casing inside the bullet bursts, releasing a splattering of bubbling green acid that coats the target. The target takes 2d6 damage in addition to the damage normally dealt by the attack."
+ },
+ {
+  "id": "eternal-guide",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Eternal Guide",
+  "level": 20,
+  "traits": [
+   "animist",
+   "apparition"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per week --- Your attuned apparitions recognize that you still have essential work to do and refuse to allow you to pass on, gathering up your essence to carry your soul back to the community you call home. Choose a single settlement with a population of at least 100 people. Whenever you die and are not returned to life within 24 hours by other means, as long as the settlement still exists and there are no other claims on your soul (such as a contract with a devil) and nothing trapping your soul (such as being slain by a critical hit from a vilderavn), your attuned apparition magically transports your soul, remains, and all of the items you had worn or carried at the time of your death (so long as they have not been otherwise recovered) back to the chosen settlement, where you are reborn. The nature of this rebirth varies between animists; some magically reconstitute and reinvigorate their physical forms to return to life in their original bodies, while others pass their knowledge and power on to a new inheritor who effectively takes their place in the grand story of existence. When returned to your original physical form in this manner, you are brought back in your physical prime, restored to youthful health and vigor. This effectively makes you immune to dying of old age so long as you are not killed by violence less than a week before you would have died of old age. Regardless of the exact nature of your rebirth, you or your inheritor are fully restored with your level, experience, and equipment intact one week after your death. If you choose an inheritor and their ancestry is different than yours, your attribute scores do not change but you can freely retrain your ancestry feats and any other feats that relied on them as prerequisites as part of your rebirth. There is no limit to the number of times you can be reborn, but if you die before a week has passed since your last rebirth, neither you nor your attuned apparitions have recovered enough energy to complete the process again, and your soul passes to whatever final reward it has earned."
+ },
+ {
+  "id": "eternal-hero",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Eternal Hero",
+  "level": 20,
+  "traits": [
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You might be protected by divine intervention or the necessity of cosmic balance. You might be watched over by agents of destiny or fate. You could even be simply someone whose luck and skill have always worked together to ensure your triumph, no matter the odds you might face. Whatever the explanation, you're almost impossible to kill. You reduce the DC of recovery checks by 1 (this is cumulative with the reduction from the Heroic Scion Dedication feat). Whenever your doomed condition would increase to 4 or more, it doesn't increase. The first time each day you would be reduced to 0 Hit Points or outright killed by magical means, you instead remain at 1 Hit Point and become immune to all damage until the end of your next turn. If you finally do die, you can spend a Mythic Point as a free action to immediately reincarnate—manifesting in a new body with the same statistics (save for potential changes to your ancestry and ancestry feats) within 15 feet of where your death occurred. Each time you repeat this reincarnation, the cost to do so increases by 1, so that after your third reincarnation, you can no longer swiftly return (as no mythic character can ever have more than 3 Mythic Points at one time)."
+ },
+ {
+  "id": "evangelize",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Evangelize",
+  "level": 7,
+  "traits": [
+   "auditory",
+   "general",
+   "linguistic",
+   "mental",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You point out a detail that incontrovertibly supports your faith, causing a listener's mind to whirl. Attempt a Diplomacy check and compare the result to the Will DC of a single target that can hear you and understands your language; that target is then temporarily immune to Evangelize with respect to your deity or philosophy for 1 day. A creature that already agrees with you is unaffected, and at the GM's discretion, a target that genuinely changes its perspective to support your faith as a result of the argument is also otherwise unaffected. --- **Critical Success** The target is Stupefied 2 for 1 round. **Success** The target is Stupefied 1 for 1 round. **Failure** The target is unaffected."
+ },
+ {
+  "id": "execution",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Execution",
+  "level": 14,
+  "traits": [
+   "archetype",
+   "vigilante"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You have condemned a foe with Harsh Judgment. --- You swing wide, attempting to behead your condemned foe. Make a melee Strike against your condemned foe. If you hit, your condemned foe takes 8d6 extra precision damage with a save against your class DC or spell DC, whichever is higher. If the condemned foe is reduced to 0 Hit Points by the execution and requires a head to live, they die. For creatures with multiple heads, this usually kills the creature only if you sever its last head. The creature then becomes temporarily immune to your Execution for 1 day."
+ },
+ {
+  "id": "exemplary-finisher",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Exemplary Finisher",
+  "level": 9,
+  "traits": [
+   "swashbuckler"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You execute your finishing moves with spectacular flair, adding special effects to your finishers. If a Strike you make as part of a finisher hits a foe, you add one of the following effects to the Strike, depending on your swashbuckler's style. - **Battledancer** You can Step as a free action immediately after the finisher. - **Braggart** If the foe was temporarily immune to your Demoralize, their temporary immunity ends. - **Fencer** The foe is off-guard until your next turn. - **Gymnast** If the foe is grabbed, restrained, or prone, you gain a circumstance bonus to the damage roll equal to double the number of weapon damage dice. - **Rascal** The foe takes a -10 circumstance penalty to its speed until the start of your next turn. - **Wit** The foe takes a -2 circumstance penalty to attack rolls against you until the start of your next turn."
+ },
+ {
+  "id": "expanded-senses",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Expanded Senses",
+  "level": 1,
+  "traits": [
+   "evolution",
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your eidolon evolves more acute senses. Your eidolon gains low-light vision and darkvision, as well as scent as an imprecise sense with a range of 30 feet."
+ },
+ {
+  "id": "explosive-expert",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Explosive Expert",
+  "level": 13,
+  "traits": [
+   "dwarf"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Access** You are from Dongun Hold or Alkenstar. --- Through your extensive training with volatile weapons, you've built up a fair bit of tolerance to your own black powder explosions. You are immune to splash damage caused by your own Strikes with bombs and firearms (such as the splash damage from the scatter trait)."
+ },
+ {
+  "id": "exsanguinate",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Exsanguinate",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** On your last action, you dealt damage to a creature that isn't immune to bleed damage and is within 10 feet. The damage must have come from a piercing or slashing Strike. You must have succeeded at your attack roll, or the creature must have failed its saving throw, as applicable. --- After one of your attacks, you direct your foe's blood to spray upon you, infusing you with life energy. You gain a number of sanguimancy HP equal to half your level that last only until the end of your next turn. Exsanguinate works only against active foes who are able to act and aren't restrained."
+ },
+ {
+  "id": "exsanguinating-ammunition",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Exsanguinating Ammunition",
+  "level": 4,
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- This ammunition includes a small reservoir of a tacky red substance that coats the ammunition when you activate it. The substance makes a creature bleed more freely. For 1 minute after you deal damage to a creature with an activated exsanguinating ammunition that creature gains weakness 1 to persistent bleed damage. In addition, the DC of any flat checks to end persistent bleed damage increases from 15 to 17 (from 10 to 12 when receiving particularly effective assistance) for the duration."
+ },
+ {
+  "id": "exsanguinating-ammunition-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Exsanguinating Ammunition (Greater)",
+  "level": 8,
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- This ammunition includes a small reservoir of a tacky red substance that coats the ammunition when you activate it. The substance makes a creature bleed more freely. For 1 minute after you deal damage to a creature with an activated exsanguinating ammunition that creature gains weakness 3 to persistent bleed damage. In addition, the DC of any flat checks to end persistent bleed damage increases from 15 to 17 (from 10 to 12 when receiving particularly effective assistance) for the duration."
+ },
+ {
+  "id": "exsanguinating-ammunition-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Exsanguinating Ammunition (Major)",
+  "level": 12,
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Ammunition** any **Activate** ⟨1⟩ (manipulate) --- This ammunition includes a small reservoir of a tacky red substance that coats the ammunition when you activate it. The substance makes a creature bleed more freely. For 1 minute after you deal damage to a creature with an activated exsanguinating ammunition that creature gains weakness 5 to persistent bleed damage. In addition, the DC of any flat checks to end persistent bleed damage increases from 15 to 17 (from 10 to 12 when receiving particularly effective assistance) for the duration."
+ },
+ {
+  "id": "extract-vow-of-nonviolence",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Extract Vow of Nonviolence",
+  "level": 12,
+  "traits": [
+   "auditory",
+   "concentrate",
+   "exemplar"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You entice or threaten a weapon, making it swear not to harm you. Attempt a Diplomacy check to Request or an Intimidation check to Demoralize against one weapon within 60 feet—even though most weapons are inanimate and mindless, your words somehow still can affect it as if it were living and you shared a language. The DC for this check is the Will DC of the creature wielding the weapon or a moderate DC for the weapon's level if it's unattended. If the weapon is an intelligent item, use its Will DC. Regardless of the result of the save, the weapon is then temporarily immune to Extract Vow of Nonviolence for 1 day. --- **Critical Success** The object swears not to hurt you. You gain resistance to all damage dealt by that specific weapon as the weapon attempts to mitigate harm to you. The resistance is equal to half your level and lasts for 10 minutes. **Success** As critical success, but the remaining duration decreases by 1 minute each time the weapon hits you (even if it deals no damage). --- **Special** When you gain this feat, choose cold iron, duskwood, dawnsilver, or silver. For some reason—perhaps because you underestimate this material, or because you think it a friend—you are forever unable to use Extract Vow of Nonviolence on objects composed of the chosen material."
+ },
+ {
+  "id": "eye-of-the-arclords",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Eye of the Arclords",
+  "level": 2,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Frequency** once per day **Access** You are a member of the Arclords of Nex. --- You open an incandescent third eye upon your forehead. The eye can remain open for 1 minute, and you can close it before then with a single action with the concentrate trait. It can remain open for 2 minutes if you're a master in Arcana, or 5 minutes if you're legendary. While the eye is open, you gain the following benefits: - you gain the effects of the detect magic arcane innate spell from your Arcane Sense at the start of each of your turns without needing to cast the spell; - you gain darkvision; - you gain a +2 status bonus to Perception checks to Seek undetected and hidden creatures and to your Perception DC against Hide and Sneak. After your third eye closes, you are dazzled for an amount of time equal to how long you had it open."
+ },
+ {
+  "id": "eye-slash",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Eye Slash",
+  "level": 1,
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Small scars or marks around your eye improve your distant vision. These scars are especially common among orc scouts, who favor scars shaped like eagle talons. You can see four times farther than normal. If you have darkvision, you can see blood in color. Higher-level versions of an eye slash are larger and more elaborate scars or marks, radiating out around the eye."
+ },
+ {
+  "id": "eye-slash-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Eye Slash (Greater)",
+  "level": 4,
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Small scars or marks around your eye improve your distant vision. These scars are especially common among orc scouts, who favor scars shaped like eagle talons. You can see four times farther than normal. If you have darkvision, you can see blood in color. Higher-level versions of an eye slash are larger and more elaborate scars or marks, radiating out around the eye. The tattoo also grants you a +1 item bonus to Perception checks that involve sight."
+ },
+ {
+  "id": "eye-slash-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Eye Slash (Major)",
+  "level": 9,
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Small scars or marks around your eye improve your distant vision. These scars are especially common among orc scouts, who favor scars shaped like eagle talons. You can see four times farther than normal. If you have darkvision, you can see blood in color. Higher-level versions of an eye slash are larger and more elaborate scars or marks, radiating out around the eye. The tattoo also grants you a +2 item bonus to Perception checks that involve sight."
+ },
+ {
+  "id": "eye-slash-true",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Eye Slash (True)",
+  "level": 17,
+  "traits": [
+   "invested",
+   "magical",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Small scars or marks around your eye improve your distant vision. These scars are especially common among orc scouts, who favor scars shaped like eagle talons. You can see four times farther than normal. If you have darkvision, you can see blood in color. Higher-level versions of an eye slash are larger and more elaborate scars or marks, radiating out around the eye. The tattoo also grants you a +3 item bonus to Perception checks that involve sight."
+ },
+ {
+  "id": "fabricate-truth",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Fabricate Truth",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "auditory",
+   "concentrate",
+   "emotion",
+   "linguistic",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You invent a false truth by fast talking, switching arguments, shifting the standard of evidence, and generally confounding others. Choose a creature within 30 feet that you're aware of. Attempt a Deception check against that target's Will DC. Regardless of your result, the target is temporarily immune to your attempts to Fabricate Truth for 10 minutes. --- **Critical Success** The target becomes Stupefied 2 for 1 round. **Success** The target becomes Stupefied 1 for 1 round."
+ },
+ {
+  "id": "face-your-fears",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Face Your Fears",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "emotion",
+   "mental"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Frequency** once per hour --- A lifetime of facing Nidal's terrors has taught you to fight through fear. Although you aren't immune to it, you can subdue the emotion to such an extent that many believe it doesn't affect you. Reduce the value of your frightened condition by 1. If this would reduce the value to 0, you are no longer frightened and gain a +1 circumstance bonus against fear effects for 1 minute."
+ },
+ {
+  "id": "faerie-queens-bower",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Faerie Queen's Bower",
+  "level": 13,
+  "traits": [
+   "divine",
+   "holy",
+   "intelligent",
+   "laminar"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "**Perception** +23; precise vision (darkvision) 60 feet, imprecise hearing 30 feet **Communication** telepathy (Celestial, Common) **Skills** Diplomacy +25, Religion +25 **Int** +4, **Wis** +4, **Cha** +6 **Will** +25 --- A suit of Autumn's Embrace armor can gain sapience when lovingly crafted by a fey monarch of sufficient power; a suit of faerie queen's bower is one such example. The armor is happy to give you and your companions counsel, hoping to guide you on a path of benevolence and aid you in battles against forces that seek to cause harm to the natural world. It refuses access to its magic to anyone who causes undue harm to plants or animals. In addition to the features and activation of autumn's embrace, faerie queen's bower has the following activation. --- **Activate** ⟨2⟩ (aura, concentrate) **Frequency** once per day **Effect** You call forth a storm of leaves from *autumn's embrace*. These leaves swirl in a for 1 minute. Creatures within the area are concealed, and creatures outside the area are concealed to creatures within the leaves. However, you can see through this concealment. You can Dismiss the activation. --- **Activate** ⟨2⟩ (concentrate) **Frequency** once per day **Effect** The armor casts 4th-rank Safe Passage, with the protected area beginning from your square and extending to a place of relative safety."
+ },
+ {
+  "id": "fanged-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Fanged (Greater)",
+  "level": 8,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "When etched with this rune, a weapon's hilt or haft becomes engraved with grooves that match the imprints of a wolf's teeth. By putting a *fanged* weapon in your mouth, you can transform into an animal. --- **Activate** ⟨1⟩ Interact (magical, polymorph, transmutation) --- **Effect** You transform into a Small or Medium animal that wields the *fanged* weapon in its jaws; the animal matches the animal you are most closely associated with (a lizardfolk would turn into a lizard, a kitsune into a fox, a deer instinct barbarian into a deer, etc.) or a wolf if no specific animal is applicable. While in this form, you can attack with the *fanged* weapon even though you don't have any hands. However, you can attack only with the *fanged* weapon and you don't have hands or the ability to hold items. For effects dependent on how many hands you are using to hold the item, such as the two-hand trait, you are holding the weapon in two hands. You can Dismiss this effect, and it ends automatically if you drop the *fanged* weapon (whether or not of your own volition). In animal form, you gain low-light vision and a +5-foot item bonus to your Speed."
+ },
+ {
+  "id": "fanged-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Fanged (Major)",
+  "level": 15,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "When etched with this rune, a weapon's hilt or haft becomes engraved with grooves that match the imprints of a wolf's teeth. By putting a *fanged* weapon in your mouth, you can transform into an animal. --- **Activate** ⟨1⟩ Interact (magical, polymorph, transmutation) --- **Effect** You transform into a Small or Medium animal that wields the *fanged* weapon in its jaws; the animal matches the animal you are most closely associated with (a lizardfolk would turn into a lizard, a kitsune into a fox, a deer instinct barbarian into a deer, etc.) or a wolf if no specific animal is applicable. While in this form, you can attack with the *fanged* weapon even though you don't have any hands. However, you can attack only with the *fanged* weapon and you don't have hands or the ability to hold items. For effects dependent on how many hands you are using to hold the item, such as the two-hand trait, you are holding the weapon in two hands. You can Dismiss this effect, and it ends automatically if you drop the *fanged* weapon (whether or not of your own volition). In animal form, you gain low-light vision, imprecise scent to a range of 30 feet, and a +10-foot item bonus to your Speed."
+ },
+ {
+  "id": "fascinating",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Fascinating",
+  "level": 0,
+  "traits": [
+   "mental"
+  ],
+  "engineFieldsPresent": [
+   "grantsFeats"
+  ],
+  "inRegistries": [],
+  "text": "Fascinating Source Treasure Vault (Remastered) pg. 198 Aspect Artistry You gain the Fascinating Performance skill feat while wearing or wielding the relic, even if you don't meet its prerequisites. If you critically succeed against an observer, that target doesn't become temporarily immune to this effect."
+ },
+ {
+  "id": "fear-of-god",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Fear of God",
+  "level": 14,
+  "traits": [
+   "archetype",
+   "divine",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Frequency** once per 10 minutes **Trigger** You successfully Demoralize an enemy. --- You embed a divine fear into the triggering foe that lasts for 10 minutes. During that time, you ignore that creature's temporary immunity to your Demoralize attempts and whenever you successfully Demoralize the triggering enemy, you can instead increase their existing frightened condition by 1 (or 2 on a critical success) to a maximum of Frightened 4."
+ },
+ {
+  "id": "fearful-symmetry",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Fearful Symmetry",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "emotion",
+   "fear",
+   "mental",
+   "visual"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're in hybrid or tiger shape and your last action was a critically successful Strike with your unarmed attack. --- You attack with a feline grace as captivatingly beautiful as it is deadly. All enemies within 30 feet of the creature you critically hit must attempt at a save against your class DC. Enemies that fail their saves become Frightened 1 and are fascinated with you for 1 round. Your hostile actions don't end this fascination, but those of your allies do. Regardless of the effects of the save, the creature is immune to Fearful Symmetry for 1 hour."
+ },
+ {
+  "id": "feeding-frenzy",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Feeding Frenzy",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Your serrated teeth rip and tear at your prey. When you critically hit with your jaws Strike from Werecreature Dedication, your target takes 1d4 persistent bleed damage and you gain a +1 circumstance bonus to jaws Strikes against the target until the end of your turn. If you have scent as a special sense, it's a precise sense with double its normal range when locating creatures taking persistent bleed damage."
+ },
+ {
+  "id": "feign-innocence",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Feign Innocence",
+  "level": 12,
+  "traits": [
+   "archetype",
+   "auditory",
+   "concentrate",
+   "linguistic",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You convince a creature that, despite appearances, you're on its side. Choose an enemy within 60 feet, and attempt a Deception check against its Will DC. The target is then temporarily immune to Feign Innocence for 1 hour. If you've taken a hostile action against it this round, your result can be no better than a failure. --- **Critical Success** You and the target are considered allies until the end of your next turn or until you take a hostile action against it, whichever comes first. In order to take a hostile action against you, the target must succeed at a Will save against your Deception DC or it loses the action. **Success** As critical success, but lasts until the end of your turn or until you take a hostile action against it, whichever comes first. **Failure** No effect. **Critical Failure** The target knows you attempted to fool it and plays along. You're off-guard to the target until the beginning of your next turn."
+ },
+ {
+  "id": "feral-senses",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Feral Senses",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The eyes and noses of animals are naturally sharper than most humanoids. While in your hybrid or animal shape, you gain low-light vision and imprecise scent with a range of 30 feet."
+ },
+ {
+  "id": "ferrofluid-urchin",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Ferrofluid Urchin",
+  "level": 7,
+  "traits": [
+   "consumable",
+   "magical",
+   "metal",
+   "talisman"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Ferrofluid Urchin Source Rage of Elements pg. 146 Usage affixed to a medium metal armor or heavy metal armor Activate (concentrate) Trigger You take physical damage This spiky glob of magnetic liquid attaches directly onto the metal of your armor. When you activate the globule, it reshapes to deflect the incoming harm. You gain resistance to the triggering damage. Ferrofluid Urchin (Lesser) Source Rage of Elements pg. 146 Price 55 gp You gain resistance 3. Ferrofluid Urchin (Moderate) Source Rage of Elements pg. 146 Price 225 gp You gain resistance 6. Ferrofluid Urchin (Greater) Source Rage of Elements pg. 146 Price 925 gp You gain resistance 10."
+ },
+ {
+  "id": "ferrofluid-urchin-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Ferrofluid Urchin (Lesser)",
+  "level": 7,
+  "traits": [
+   "consumable",
+   "magical",
+   "metal",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨4⟩ (concentrate) **Prerequisites** You have the armor specialization effect of the affixed armor **Trigger** You take physical damage. --- This spiky glob of magnetic liquid attaches directly onto the metal of your armor. When you activate the globule, it reshapes to deflect the incoming harm. You gain resistance 3 to the triggering damage."
+ },
+ {
+  "id": "ferrofluid-urchin-moderate",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Ferrofluid Urchin (Moderate)",
+  "level": 11,
+  "traits": [
+   "consumable",
+   "magical",
+   "metal",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨4⟩ (concentrate) **Prerequisites** You have the armor specialization effect of the affixed armor **Trigger** You take physical damage. --- This spiky glob of magnetic liquid attaches directly onto the metal of your armor. When you activate the globule, it reshapes to deflect the incoming harm. You gain resistance 6 to the triggering damage."
+ },
+ {
+  "id": "festrem-mortu",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Festrem Mortu",
+  "level": 6,
+  "traits": [
+   "cursed",
+   "grimoire",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "The book's cover is a patchwork of tanned humanoid skin that reeks of rotting meat. The longer a living creature studies this book, the more the scent of decay appeals to them. **Activate** ⟨5⟩ (concentrate, necromancy) **Frequency** once per day **Trigger** Your last action was to cast a necromancy spell prepared from this grimoire --- **Effect** You draw void energy from the triggering spell. You gain 10 temporary hit points that last for 1 hour. --- **Special** If this grimoire is used to prepare spells five days in succession by the same caster, that caster is subjected to the curse of the ravenous. **Curse of the Ravenous** This hideous curse kills through constant hunger. You become gaunt and repeatedly gnash your teeth. **Saving Throw** --- **Effect** No matter how much you eat, you aren't satiated. After 1 day, you begin starving. Each week, you receive a new saving throw against the curse."
+ },
+ {
+  "id": "fey-eidolon",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Fey Eidolon",
+  "level": 1,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Your eidolon is a fey, a capricious being of the mysterious First World. Many fey appear similar to mortal humanoids with unusual features such as pointed ears, wings, or bodies composed of natural elements, but the full variety of fey is endless, and many others appear completely inhuman. Fey from the First World never truly die, instead forming a new creature. Fey eidolons usually come about when a summoner helps stabilize a difficult reformation. This means your fey eidolon likely lived a different life just before meeting you and might remember fragments of its old memories. Together, you might have to unravel a memory from your eidolon's past life among the fey. **Tradition** primal (but see Fey Gift Spells below) **Traits** eidolon, fey **Home Plane** First World --- **Size** Small or Medium **Suggested Attacks** fist (bludgeoning), wing (bludgeoning), attacks shaped like a weapon **Skirmisher Fey** Str 14, Dex 18, Con 14, Int 10, Wis 10, Cha 12; +1 AC (+4 Dex cap) **Trickster Fey** Str 12, Dex 18, Con 12, Int 12, Wis 8, Cha 16; +1 AC (+4 Dex cap) **Skills** Deception, Nature **Senses** low-light vision **Language** Sylvan **Speed** 25 feet --- **Eidolon Abilities** *Initial *fey gift spells*; Symbiosis *fey mischief*; Transcendence *fey chicanery ## Fey Gift Spells Your eidolon expands your primal magic with enchantment and illusion magic, allowing both of you to wield the power of fey charm and glamour. When you add spells to your repertoire, you can choose from the primal list as well as from enchantment and illusion spells that appear on the arcane spell list. As usual for when you add spells of a different tradition to your spell list, you're still a primal spellcaster, so all of your spells are primal spells. Your eidolon gains the Magical Understudy summoner feat, despite not meeting the prerequisite level, and it can choose fey gift cantrips in addition to primal cantrips. As usual for a feat you are granted by name, you can't retrain Magical Understudy into another feat. ## Fey Mischief 7th Your eidolon's fey magic becomes more powerful and mischievous. Your eidolon gains the Magical Adept feat, despite not meeting the prerequisite level, and can choose from fey gift spells in addition to primal spells. ## Fey Chicanery 17th Ever full of tricks, your fey eidolon twists magical protections into your shared life force, granting it a contingency in its back pocket for desperate situations. During your daily preparations, your eidolon can cast a contingency spell. The 4th-rank spell it chooses must come from the primal or fey gift list, and must either be common or be another spell you have access to."
+ },
+ {
+  "id": "feyfoul",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Feyfoul",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Feyfoul May contain spoilers from Kingmaker Source Kingmaker Companion Guide pg. 35 Usage held in 1 hand Bulk L Activate Interact To creatures other than fey, the scent of feyfoul seems to be a faint but non-obnoxious odor of cinnamon, but fey find that the stuff interferes with their ability to manipulate a creature's mind. Jubilost invented feyfoul accidentally while he was attempting to create a cologne that would enhance its wearer's appearance to make them seem more otherworldly, but to anyone that asks, the gnome alchemist quickly claims that he'd always intended to create an alchemical tool that provided protection from fey magic. A single dose of feyfoul spritzed on a person in the manner of perfume grants the wearer an item bonus to Will saving throws against mental effects generated by fey creatures. Feyfoul (Lesser) Source Kingmaker Companion Guide pg. 35 Price 4 gp Bulk L You gain a +1 item bonus, and the duration is 1 minute. Feyfoul (Moderate) Source Kingmaker Companion Guide pg. 35 Price 90 gp Bulk L You gain a +2 item bonus, and the duration is 1 hour. Feyfoul (Greater) Source Kingmaker Companion Guide pg. 35 Price 750 gp Bulk L You gain a +3 item bonus, and the duration is 8 hours."
+ },
+ {
+  "id": "feyfoul-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Feyfoul (Greater)",
+  "level": 14,
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ Interact --- To creatures other than fey, the scent of feyfoul seems to be a faint but non-obnoxious odor of cinnamon, but fey find that the stuff interferes with their ability to manipulate a creature's mind. Jubilost invented feyfoul accidentally while he was attempting to create a cologne that would enhance its wearer's appearance to make them seem more otherworldly, but to anyone that asks, the gnome alchemist quickly claims that he'd always intended to create an alchemical tool that provided protection from fey magic. A single dose of feyfoul spritzed on a person in the manner of perfume grants the wearer a +3 item bonus to Will saving throws against mental effects generated by fey creatures for 8 hours."
+ },
+ {
+  "id": "feyfoul-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Feyfoul (Lesser)",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ Interact --- To creatures other than fey, the scent of feyfoul seems to be a faint but non-obnoxious odor of cinnamon, but fey find that the stuff interferes with their ability to manipulate a creature's mind. Jubilost invented feyfoul accidentally while he was attempting to create a cologne that would enhance its wearer's appearance to make them seem more otherworldly, but to anyone that asks, the gnome alchemist quickly claims that he'd always intended to create an alchemical tool that provided protection from fey magic. A single dose of feyfoul spritzed on a person in the manner of perfume grants the wearer a +1 item bonus to Will saving throws against mental effects generated by fey creatures for 1 minute."
+ },
+ {
+  "id": "feyfoul-moderate",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Feyfoul (Moderate)",
+  "level": 8,
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ Interact --- To creatures other than fey, the scent of feyfoul seems to be a faint but non-obnoxious odor of cinnamon, but fey find that the stuff interferes with their ability to manipulate a creature's mind. Jubilost invented feyfoul accidentally while he was attempting to create a cologne that would enhance its wearer's appearance to make them seem more otherworldly, but to anyone that asks, the gnome alchemist quickly claims that he'd always intended to create an alchemical tool that provided protection from fey magic. A single dose of feyfoul spritzed on a person in the manner of perfume grants the wearer a +2 item bonus to Will saving throws against mental effects generated by fey creatures for 1 hour."
+ },
+ {
+  "id": "field-propagandist-dedication",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Field Propagandist Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featGrantsAuto"
+  ],
+  "text": "Having devoted your life to crafting propaganda, you know that winning the hearts and minds of soldiers can be a deciding factor in securing the successful outcome of a war. You gain the Spread Propaganda exploration activity. While you are not immune to propaganda, you are resistant to it. You gain a +2 circumstance bonus to your Perception DC against attempts made by others to Lie to you. If you have the Lie to Me skill feat, you gain a +2 circumstance bonus to your Deception DC. You become trained in Society. If you were already trained, you become an expert instead."
+ },
+ {
+  "id": "fiend-eternal",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Fiend Eternal",
+  "level": 20,
+  "traits": [
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Through all your machinations and accumulation of power, you have completed your apotheosis and become a true archfiend. You gain the fiend and unholy traits and are immune to your realm's damage type. You don't age. Your planned realm becomes a complete reality, forming within a section of Hell, the Outer Rifts, the Netherworld, its own fiendish demiplane, or some other planar space of your choosing. If you have the Seat of Power feat, that seat of power is grafted onto your realm and the Enter Seat Of Power activity transports you to any place within your realm; otherwise, you can enter and exit your realm in a similar fashion with a brief ritual that takes 10 minutes (though you can't bring anyone with you). Whenever you would die, you are instead reduced to 0 Hit Points, become unconscious, and are immediately transported to your seat of power within your realm. After 1 hour (or 1 round if you have the Seat of Power feat), you regain 5 Hit Points and reawaken. You can't leave your realm until you're fully healed or 1 week passes (whichever comes first). In addition, you gain a small group of fiendish followers who reside in your realm. They never leave your realm (though one might occasionally come to your aid if you have the Marshall Fiendish Forces feat), but they constantly spy on the mortal world to keep you informed. You are telepathically linked to these followers and can choose to speak with the group, or a specific fiend, as a three-action activity that has the concentrate trait. In doing so, you can avail yourself of the fiends' surveillance to learn about the world or current events. You can either Recall Knowledge on any topic or Gather Information. If you critically fail to do either, you get a failure instead."
+ },
+ {
+  "id": "fiend-slayer",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Fiend Slayer",
+  "level": 16,
+  "traits": [
+   "archetype",
+   "death",
+   "void"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** Your last action was a successful Strike against a fiend that dealt damage. --- Your attack tears through a fiend, possibly sending it back to where it came from. The fiend you just struck takes 80 damage with a save against your class DC or spell DC, whichever is higher. On a critical failure, the target is also Stunned 1. Regardless of the results of the saving throw, the target is then temporarily immune to Fiend Slayer for 24 hours."
+ },
+ {
+  "id": "fiendbreaker-artifact",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Fiendbreaker (Artifact)",
+  "level": 20,
+  "traits": [
+   "artifact",
+   "intelligent",
+   "invested",
+   "magical",
+   "staff"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Fiendbreaker (Artifact) May contain spoilers from Spore War Source Pathfinder #212: A Voice in the Blight pg. 72 Usage held in 1 hand Bulk 1 Perception +35; precise low-light vision and hearing within 30 feet Communication telepathy (partner only) Skills Demon Lore +33, Diplomacy +34, Religion +35 Int +5, Wis +7, Cha +6 Will +35 The stately echo of Jininsiel, the woman who guided her people through the Darklands to escape the devastation of Earthfall, causes Fiendbreaker to softly shimmer with a silvery radiance equivalent to that of candlelight. Fiendbreaker can activate or deactivate this radiance as a free action once per round on her partner’s turn. Fiendbreaker’s telepathic voice is calm and soothing, seeking to support her partner’s decisions with compliments or warnings against overconfidence as needed. Fiendbreaker functions as a +3 major striking holy high-grade cold iron staff. While wielding the staff, you gain a +3 circumstance bonus to checks to Recall Knowledge about any sort of fiend. Activate Cast a Spell; Frequency once per round; Effect You expend a number of charges from the staff to cast a spell from her list. Fiendbreaker can use this activation only if you’re holding the staff and only if you haven’t used Fiendbreaker to Cast a Spell this round. Likewise, if Fiendbreaker Casts a Spell from the staff, you can’t activate the staff to Cast a Spell this round. Cantrip divine lance 1st sanctuary 2nd see the unseen 3rd anointed ground, holy light 4th clear mind, planar tether 5th banishment, divine wrath 6th holy light, spirit blast 7th divine decree, planar seal 8th divine wrath, holy light 9th banishment _, _divine decree Activate—Restore Mind (concentrate) Frequency once per hour; Effect Fiendbreaker attempts to counteract an ongoing mental affect you’re suffering from, with a counteract rank of 9th and a +25 modifier to the roll (or a +30 modifier if the source of the mental effect on you was created by a fiend). _Nethys Note: the non-artifact version of the item is here. This artifact's heroic legacy, and its subsequent skills and ability attribute, are presented here. _"
+ },
+ {
+  "id": "fiendbreaker-heroic",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Fiendbreaker (Heroic)",
+  "level": 20,
+  "traits": [
+   "apex",
+   "artifact",
+   "divine",
+   "intelligent",
+   "invested",
+   "magical",
+   "monk",
+   "staff",
+   "two-hand-d8"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Perception** +35; precise low-light vision and hearing within 30 feet **Communication** telepathy (partner only) **Skills** Demon Lore +33, Diplomacy +34, Religion +35 **Int** +5, **Wis** +7, **Cha** +6 **Will** +35 --- The stately echo of Jininsiel, the woman who guided her people through the Darklands to escape the devastation of Earthfall, causes *Fiendbreaker* to softly shimmer with a silvery radiance equivalent to that of candlelight. *Fiendbreaker* can activate or deactivate this radiance as a free action once per round on her partner's turn. *Fiendbreaker's* telepathic voice is calm and soothing, seeking to support her partner's decisions with compliments or warnings against overconfidence as needed. *Fiendbreaker* functions as a *+3 major striking holy high-grade cold iron staff*. While wielding the staff, you gain a +3 circumstance bonus to checks to Recall Knowledge about any sort of fiend. --- **Activate** Cast a Spell **Frequency** once per round **Effect** You expend a number of charges from the staff to cast a spell from her list. *Fiendbreaker* can use this activation only if you're holding the staff and only if you haven't used *Fiendbreaker* to Cast a Spell this round. Likewise, if *Fiendbreaker* Casts a Spell from the staff, you can't activate the staff to Cast a Spell this round. - **Cantrip** Divine Lance - **1st** Sanctuary - **2nd** See the Unseen - **3rd** Anointed Ground, Holy Light - **4th** Clear Mind, Planar Tether - **5th** Banishment, Divine Wrath - **6th** Holy Light, Spirit Blast - **7th** Divine Decree, Planar Seal - **8th** Divine Wrath, Holy Light - **9th** Banishment, Divine Decree --- **Activate—Restore Mind** ⟨2⟩ (concentrate) **Frequency** once per hour **Effect** *Fiendbreaker* attempts to counteract an ongoing mental affect you're suffering from, with a counteract rank of 9th and a +25 modifier to the roll (or a +30 modifier if the source of the mental effect on you was created by a fiend)."
+ },
+ {
+  "id": "fiendish-mount",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Fiendish Mount",
+  "level": 20,
+  "traits": [
+   "champion"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Fiendish Mount Source Advanced Player's Guide pg. 121 Prerequisites divine ally (steed); tenets of evil Your steed ally manifests a suite of powerful and sinister gifts granted to it by your deity. It gains darkvision, its maximum Hit Points increase by 40, and it gains weakness 10 to holy. Additionally, it grows wings appropriate for a servitor of your deity (such as bat wings for a devil), granting it a fly Speed equal to its Speed. It gains the fiend trait and the trait appropriate to the type of servitor it has become (such as daemon, demon, or devil)."
+ },
+ {
+  "id": "fiendish-teleportation",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Fiendish Teleportation",
+  "level": 11,
+  "traits": [
+   "contract",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You tap into the fiendish ability to slip through space. When you Stride, you gain a +3 item bonus to Armor Class against reactions triggered by your movement. Once per day, from any distance, Abrogail Thrune II can call on a provision in your Thrune contract as a single action, causing you to become *paralyzed* for 1 hour or until Abrogail releases you, whichever comes first. **Activate** ⟨2⟩ command **Frequency** once per day --- **Effect** You recite a subclause of your contract regarding change in venue. You cast dimension *door.* The space you leave and the one you appear in are filled with the scent of brimstone, dealing 2d6 spirit damage to creatures adjacent to both spaces."
+ },
+ {
+  "id": "fight-through-oblivion",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Fight Through Oblivion",
+  "level": 20,
+  "traits": [
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Mortal wounds that would kill other warriors are no more than the flutter of butterfly wings to you. When you are reduced to 0 Hit Points, you aren't knocked unconscious and you don't gain the dying condition. Until the start of your next turn, you become immune to all damage, but you also can't regain Hit Points in any way except the following. If you Strike and damage a foe on this turn, you regain 4d8+30 Hit Points. Otherwise, your wounded value increases by 1 and you remain immune to damage and healing. This cycle continues until you regain Hit Points by damaging a foe or until you reach wounded 4, at which point you lose the wounded condition, fall unconscious, and gain the dying condition."
+ },
+ {
+  "id": "finish-their-story",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Finish Their Story!",
+  "level": 20,
+  "traits": [
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Though your tale is immortal, your foes aren't afforded such an advantage and mainly serve only to further your legend. When the time is right, you can shepherd a weaker opponent off this mortal coil. Spend a Mythic Point and make a Strike at mythic proficiency against an enemy. This Strike counts as two attacks for your multiple attack penalty and either kills or damages the target depending on their level, as noted below. After you make this Strike, the target becomes temporarily immune to Finish Their Story!, for 1 hour. **16th Level or Lower** If the Strike hits, the target dies instantly. **17th Level** If the Strike hits, the target takes the Strike's normal damage plus an additional three damage die. **18th Level or Higher** If the Strike hits, the target takes the Strike's normal damage plus an additional two damage die."
+ },
+ {
+  "id": "fire-and-iceberg",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Fire and Iceberg",
+  "level": 7,
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Interact --- Fiery Anulite paprika, sunrise cinnamon, and winterbite are hidden inside this salad's translucent leaves, bringing the cool of snow and the heat of steam to every bite. The dueling sensations make some diners sweat and others shiver, but all leave with a lasting sense of heat and cold that make other sources pale in comparison. When you consume the salad, you gain resistance 5 to fire and cold for 1 minute."
+ },
+ {
+  "id": "fire-gate",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Fire Gate",
+  "level": 1,
+  "traits": [],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "| Fire Gate Junction | | --- | | **Critical Blast** The target takes 1d6 persistent fire damage. You gain an item bonus to this persistent damage equal to your item bonus to impulse attack rolls, such as from a *gate attenuator*. | | **Elemental Resistance** cold, fire | | **Impulse Junction** Increase the damage die size of fire damage dealt by the impulse by one step. | | **Aura Junction** Enemies in your kinetic aura gain weakness to fire from your fire impulses. The weakness is equal to half your level (minimum weakness 1). | | **Skill Junction** Intimidation, Intimidating Glare |"
+ },
+ {
+  "id": "five-feather-wreath",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Five-Feather Wreath",
+  "level": 4,
+  "traits": [
+   "air",
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Identical feathers radiate from the center of this spellheart, held in place by woven straw. The spell attack roll of any spell cast by Activating this item is +8, and the spell DC is 18. - **Armor** You gain a +1 item bonus to Acrobatics checks and resistance 2 to falling damage. - **Weapon** After you cast an air spell by Activating the *wreath*, you can Fly 5 feet as a single action, or you can Fly 10 feet as a free action if the spell you cast wasn't a cantrip. This must be your next action, and if you don't have a fly Speed, you must end the flight on solid ground or fall. --- **Activate** Cast a Spell **Effect** You cast Gale Blast."
+ },
+ {
+  "id": "five-feather-wreath-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Five-Feather Wreath (Greater)",
+  "level": 8,
+  "traits": [
+   "air",
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Identical feathers radiate from the center of this spellheart, held in place by woven straw. The spell attack roll of any spell cast by Activating this item is +14, and the spell DC is 24. - **Armor** You gain a +1 item bonus to Acrobatics checks and resistance 5 to falling damage. - **Weapon** After you cast an air spell by Activating the *wreath*, you can Fly 5 feet as a single action, or you can Fly 25 feet as a free action if the spell you cast wasn't a cantrip. This must be your next action, and if you don't have a fly Speed, you must end the flight on solid ground or fall. --- **Activate** Cast a Spell **Effect** You cast Gale Blast. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast Wall of Wind."
+ },
+ {
+  "id": "flag-of-the-stronghold",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Flag of the Stronghold",
+  "level": 10,
+  "traits": [
+   "aura",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This magical banner is off-white with a depiction of a stronghold that's often colored in a striking blue. Those who stand under the banner are prepared to face the weapons of war and defend their keep until the end. You and allies within the banner's aura gain resistance 5 to damage from siege weapons."
+ },
+ {
+  "id": "flaming-star",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Flaming Star",
+  "level": 3,
+  "traits": [
+   "fire",
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "A sheen of red crosses the surface of this star-shaped goldstone medallion when the light hits it. The affixed armor or weapon is warm to the touch. The spell attack roll of any spell cast by Activating this item is +7, and the spell DC is 17. - **Armor** You gain resistance 2 to fire. - **Weapon** After you cast a fire spell by Activating the *star*, your Strikes with the weapon deal an additional 1d4 fire damage until the end of your next turn. --- **Activate** Cast a Spell **Effect** You cast Ignition."
+ },
+ {
+  "id": "flaming-star-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Flaming Star (Greater)",
+  "level": 8,
+  "traits": [
+   "fire",
+   "magical",
+   "spellheart"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "A sheen of red crosses the surface of this star-shaped goldstone medallion when the light hits it. The affixed armor or weapon is warm to the touch. The spell attack roll of any spell cast by Activating this item is +14, and the spell DC is 24. - **Armor** You gain resistance 5 to fire. - **Weapon** After you cast a fire spell by Activating the *star*, your Strikes with the weapon deal an additional 1d6 fire damage until the end of your next turn. --- **Activate** Cast a Spell **Effect** You cast Ignition. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast Fireball."
+ },
+ {
+  "id": "flourishing-finish",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Flourishing Finish",
+  "level": 12,
+  "traits": [
+   "archetype",
+   "concentrate",
+   "emotion",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** Your last action was a Strike that dropped an opponent to 0 Hit Points. --- Attempt a Performance check, comparing the result to the Will DC of each foe within 30 feet who can see you. Regardless of the result, each target is immune to your Flourishing Finish for 10 minutes. --- **Critical Success** The target is Frightened 2. **Success** The target is frightened 1."
+ },
+ {
+  "id": "flower-street-infamy",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Flower Street Infamy",
+  "level": 11,
+  "traits": [
+   "archetype",
+   "auditory",
+   "concentrate",
+   "linguistic",
+   "mental",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your history of coquetries, flirtations, dalliances, and liaisons is so lengthy that, even in a city as large as Absalom, you're bound to run into your past at inopportune moments. Fortunately, the individual involved might be just as shocked as you are by the unexpected encounter. Choose a target within 30 feet and spin a lascivious tale of how the two of you might have met before. Attempt a Deception check against the target's Will DC. Regardless of your result, the target is temporarily immune to your Flower Street Infamy for 24 hours. --- **Critical Success** The target is Stupefied 3 for 1 minute. **Success** The target is Stupefied 2 for 1 minute. **Failure** The target is Stupefied 1 until the start of your next turn. **Critical Failure** The target is unaffected."
+ },
+ {
+  "id": "force-shield",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Force Shield",
+  "level": 9,
+  "traits": [
+   "force",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "The edges of this elaborately engraved steel shield (Hardness 8, HP 32, BT 16) bear tiny glass tiles set in mosaic patterns. --- **Activate—Force Bubble** ⟨1⟩ (concentrate, force) **Frequency** once per day **Effect** The shield surrounds you with a bubble of force that protects you from harm, granting you resistance 5 to physical damage for 1 minute. The activation ends if you cease holding the shield."
+ }
+]

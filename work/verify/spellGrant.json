@@ -1,0 +1,410 @@
+[
+ {
+  "id": "absorb-spell",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Absorb Spell",
+  "level": 14,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "text": "**Frequency** once per 10 minutes **Trigger** You critically succeed at a saving throw against a foe's spell, and that spell is of a level you can normally cast. --- You absorb a spell and store it in your body. If you are a spontaneous spellcaster, you can cast the triggering spell once during the next 10 minutes, even if it's not on your spell list as if it were in your repertoire. If you are a prepared spellcaster, you can replace one of your prepared spells of the same rank with the absorbed spell, but you must cast the absorbed spell within 10 minutes or you lose that spell slot for the day. You cast the spell at the same spell rank as the spell you absorbed, but the spell is of your magical tradition and uses your spell DC, spell attack roll, and other statistics to determine its effects."
+ },
+ {
+  "id": "advanced-seeker-of-truths",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Advanced Seeker of Truths",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "text": "You have unlocked deeper secrets to uncovering and hoarding lore. You gain an advanced domain spell from one domain you selected with Seeker of Truths. Increase the number of Focus Points in your focus pool by 1. --- **Special** You can take this feat up to three times, each time selecting a different advanced domain spell from a domain you selected with Seeker of Truths."
+ },
+ {
+  "id": "aon-noqual-armor",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Noqual Armor",
+  "level": 12,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "text": "The mere sight of a suit of noqual armor is enough to make some opposing spellcasters withdraw from the battlefield. While wearing noqual armor, you gain a +1 circumstance bonus to AC against spell attack rolls. If you Cast a Spell while wearing noqual armor, you must succeed at a DC 5 flat check or the spell fails."
+ },
+ {
+  "id": "basic-beast-gunner-spellcasting",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Basic Beast Gunner Spellcasting",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "text": "You've unlocked the first secrets of beast guns, granting you your own pool of magical might through the amplifying power of their synergistic magic. You gain the . Each time you gain a spell slot of a new rank from this archetype, add a spell of the appropriate spell rank to your repertoire, either a common spell of your chosen tradition or another spell of that tradition you've learned or discovered."
+ },
+ {
+  "id": "basic-summoner-spellcasting",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Basic Summoner Spellcasting",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "text": "You gain the benefits. You gain the Cast a Spell activity. Your key spellcasting ability for summoner archetype spells is Charisma, and they are summoner spells of your eidolon's tradition. You become trained in spell attack rolls and spell DCs of that tradition. You gain a spell repertoire and two cantrips. Each time you gain a spell slot of a new rank from the summoner archetype, add a spell of that rank or lower to your repertoire. Each time you lose spell slots of a particular rank, remove those spells from your repertoire."
+ },
+ {
+  "id": "bloodrager-dedication",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Bloodrager Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "class",
+   "dedication"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "text": "Drinking powerful blood has awakened magical potential within you. You gain a spell repertoire with two cantrips of your choice, from either the arcane or divine spell list. You choose these cantrips from the common spells for your tradition or from other spells you have access to on that tradition's spell list. At least one cantrip must require a spell attack roll. You're trained in spell attack modifier and spell DC. Your key spellcasting attribute for these spells is Charisma. Spells in your repertoire gain the rage trait while you are raging, and when you Cast a Spell from your repertoire, you become Drained 1 (or increase the value of your drained condition by 1); you can reduce the value of this condition only by Harvesting Blood (see below). You become trained in Arcana if you chose arcane cantrips or Religion if you chose divine cantrips. If you were already trained in this skill, you become trained in a skill of your choice. You also gain the Harvest Blood action."
+ },
+ {
+  "id": "champion-dedication",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Champion Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication",
+   "multiclass"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "text": "Choose a deity. You are bound by your deity's anathema and gain the champion's aura and sanctification as described in the champion class. Choose a cause as you would if you were a champion, with the same options a champion must abide by. You gain its edicts and anathema but don't gain the other abilities. You become trained in Religion and your deity's associated skill; for each of these skills in which you were already trained, you instead become trained in a skill of your choice. You become trained in champion class DC. If you later gain a devotion spell, you become trained in spell attack modifier and spell DC. You become trained in light armor and medium armor. If you already were trained in light armor and medium armor, you gain training in heavy armor as well. Whenever you gain a class feature that grants you expert or greater proficiency in any type of armor (but not unarmored defense), you also gain that proficiency in the armor types granted to you by this feat. If you have a class feature that grants you expert proficiency in unarmored defense and you're 13th level or higher, you also become an expert in the armor types granted to you by this feat."
+ },
+ {
+  "id": "cosmic-cocktail",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Cosmic Cocktail",
+  "level": 14,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "text": "**Frequency** once per day --- Using the liquors, vinegars, and fruits or herbs at your disposal, you spend 1 minute to create a cocktail with colors reminiscent of space and its stars. If immediately consumed after creation, you temporarily see everything all at once, and you gain a new understanding of the universe. You gain the effects of a Truesight spell for 10 minutes. Use your Crafting or Cooking Lore for any counteract checks."
+ },
+ {
+  "id": "deitys-domain",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Deity's Domain",
+  "level": 1,
+  "traits": [
+   "champion"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "text": "You embody an aspect of your deity. Choose one of your deity's domains. You gain the domain's initial domain spell as a devotion spell."
+ },
+ {
+  "id": "double-spellstrike",
+  "lane": "spellGrant",
+  "collection": "classFeatures",
+  "name": "Double Spellstrike ",
+  "level": 19,
+  "traits": [
+   "magus"
+  ],
+  "engineFieldsPresent": [],
+  "text": "You can extend the magic of spells you store with Spellstrike. After you make a Spellstrike with a spell cast from a spell slot, you retain an echo of the spell, stored in your body. The next time you Spellstrike, you can cast the same spell again without expending a spell slot. If you choose to cast a different spell with Spellstrike, or you go 1 minute without using the stored spell, the stored spell dissipates harmlessly."
+ },
+ {
+  "id": "dragons-breath-9th-level-spell",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Dragon's Breath (9th-Level Spell)",
+  "level": 20,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "text": "This rune depicts a specific type of dragon, resizing after application to fit the surface of the item. --- **Activate** ⟨4⟩ envision (spellshape) **Requirements** You're receiving a bonus to AC from your *dragon's breath* cape or shield --- **Effect** If your next action is to Cast a Spell with an area of effect that deals the same type of damage as the depicted dragon's breath weapon, the spell gains the effects of the Widen Spell feat. The rune can only affect spells of 9th rank or lower."
+ },
+ {
+  "id": "elementally-infused",
+  "lane": "spellGrant",
+  "collection": "backgrounds",
+  "name": "Elementally Infused",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "choice",
+   "trainedLoreChoice"
+  ],
+  "text": "You were exposed to a strong burst of elemental essence originating directly from an elemental plane, most likely caused by a planar breach. Your body absorbed the elemental essence with no ill effects, and now it coalesces within you. With time, you've learned to project elemental power in a manner safe to you but still deadly to others. Choose two attribute boosts. One must be to **Constitution** or **Charisma**, and one is a free attribute boost. Choose one elemental plane: Air, Earth, Fire, Metal, Water, or Wood. You are trained in the corresponding Lore skill: Plane of Air Lore, Plane of Earth Lore, Plane of Fire Lore, Plane of Metal Lore, Plane of Water Lore, or Plane of Wood Lore. You also gain a cantrip according to your chosen plane: **Air:** Gale Blast **Earth:** Scatter Scree **Fire:** Ignition **Metal:** Needle Darts **Water:** Spout **Wood:** Root Reading You can cast this spell as a primal innate spell at will. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free"
+ },
+ {
+  "id": "fervent-spell",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Fervent Spell",
+  "level": 0,
+  "traits": [
+   "emotion",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Fervent Spell Source Treasure Vault (Remastered) pg. 199 Aspect Emotion Prerequisite fervor gift While the relic's fervor gift lasts, you have access to the spell provided by the emotional state, which you can cast using your own spell slots. You also have access to the following activation. Activate (concentrate, manipulate) Effect The relic Casts the Spell associated with its emotional fervor at the spell's lowest rank."
+ },
+ {
+  "id": "fungal-armor",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Fungal Armor",
+  "level": 15,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "text": "This *+2 greater resilient Studded Leather Armor* is made of hardened fungus. Every day the armor grows dozens of unusual mushrooms that can be used for cooking, infused reagents, or common spell material components. --- **Activate** ⟨5⟩ or ⟨1⟩ Envision **Frequency** once per day **Trigger** You are hit by a melee, ranged, or spell attack --- **Effect** The attack misses you, dealing no damage as you transform into a cloud of spores. You gain the benefits of a Vapor Form spell for 1 minute. For the duration, a cloud of deadly spores surrounds you. Each breathing creature that begins its turn within 10 feet of you takes 6d8 damage (). You can Dismiss the cloud form. --- **Craft Requirements** Supply a casting of Toxic Cloud and *gaseous form*."
+ },
+ {
+  "id": "greater-feral-linguist",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Greater Feral Linguist",
+  "level": 8,
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Feral Linguist May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 78 Usage held in 1 hand Bulk L Activate Cast a Spell (add 1 action) This wooden whistle is stuffed with cotton and carved with images of bellowing stags, howling wolves, and chirping birds. You can blow on this whistle to use it as a catalyst when casting an animal form spell. When you do, you gain the listed benefit for the duration of the spell. Feral Linguist Source Pathfinder #202: Severed at the Root pg. 78 Price 3 gp You retain the ability to speak, though this doesn’t allow you to cast spells. Greater Feral Linguist Source Pathfinder #202: Severed at the Root pg. 78 Price 85 gp You retain the ability to speak. Once during the spell’s duration, you can cast either a spell of 4th-rank or lower or a cantrip of any level, ignoring the inability to cast spells while in your battle form."
+ },
+ {
+  "id": "helts-spelldance",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Helt's Spelldance",
+  "level": 8,
+  "traits": [
+   "bard",
+   "sorcerer",
+   "witch",
+   "wizard"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Ranik Helt knows a special technique to hide his spells as part of a performance, and you've learned this technique. Ostentatiously performing, you move across the battlefield, taking foes aback and creating an opening for your spell. Attempt a Performance check against all observers' Perception DCs. Then, Stride once or twice. During this movement, you don't trigger reactions that are triggered by your movement from the creatures against which you succeeded on your Performance check. After your movement, you can Cast a Spell. If you used one Stride, you can cast either a 1-action or a 2-action spell; if you used two Strides, you can only cast a 1-action spell. If you critically succeed on your check against any creature, they take a –1 circumstance penalty to their saving throws against any spell you cast as part of your Helt's Spelldance due to your distracting performance. All creatures that observed you become temporarily immune to your Helt's Spelldance for 10 minutes."
+ },
+ {
+  "id": "ki-spells",
+  "lane": "spellGrant",
+  "collection": "classFeatures",
+  "name": "Ki Spells",
+  "level": 1,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "text": "## Ki Spells By tapping into a supernatural inner reserve called ki, you can create magical effects. Certain feats grant you special spells called ki spells, which are a type of focus spell. It costs 1 Focus Point to cast a focus spell. When you gain your first ki spell, you also gain a focus pool of 1 Focus Point. You refill your focus pool during your daily preparations, and you regain 1 Focus Point by spending 10 minutes using the Refocus activity to meditate in order to reach inner peace. When you first gain a ki spell, decide whether your ki spells are divine spells or occult spells. You become trained in spell attacks and spell DCs of that tradition and your key spellcasting ability is Wisdom. Focus spells are automatically heightened to half your level rounded up. Taking feats can give you more focus spells and increase the size of your focus pool, though your focus pool can never hold more than 3 points."
+ },
+ {
+  "id": "magical-adept",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Magical Adept",
+  "level": 8,
+  "traits": [
+   "evolution",
+   "summoner"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "text": "Your eidolon gains more magic. Choose one 2nd-rank spell and one 1st-rank spell of your eidolon's tradition. Your eidolon can cast them each once per day as innate spells. At every even level after you take this feat, your eidolon can swap one of these innate spells for a new innate spell that's 2 or more levels lower than your highest-rank spell slot."
+ },
+ {
+  "id": "minor-deific-power",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Minor Deific Power",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "text": "Your mental, physical, and spiritual training have granted you access to divine magic that doesn't rely on any other deity or patron. Choose a common divine cantrip and one common 1st-rank divine spell. You can cast the cantrip as a divine innate spell at will and the 1st-rank spell as a divine innate spell once per day."
+ },
+ {
+  "id": "oatia-skysage-dedication",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Oatia Skysage Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices",
+   "spellcastingGrant"
+  ],
+  "text": "Your study of the stars unlocks supernatural insights and magic. You either become trained in Astronomy Lore or an expert in Occultism. You learn to cast spontaneous spells and gain the Cast a Spell activity. You gain a spell repertoire with two of the following cantrips of your choice: Detect Magic, Guidance, Know the Way, or Read Aura. You cast these spells as occult spells as you draw on the stars and night sky. You're trained in occult spell attack rolls and spell DCs. Your key spellcasting ability for these spells is Intelligence."
+ },
+ {
+  "id": "otherworldly-acumen",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Otherworldly Acumen",
+  "level": 9,
+  "traits": [
+   "elf"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "text": "The arcane magic you possess grows in power and complexity. Choose one common 2nd-rank spell from the same tradition as an innate spell you previously gained from another elf ancestry feat (from the arcane list if you have Otherworldly Magic, for example). You can cast that spell as an innate spell once per day, using the same tradition as the list you chose the spell from. Your magic is adaptable. By spending 1 day of downtime, you can change the spell you chose to a different common 2nd-rank spell from the same tradition."
+ },
+ {
+  "id": "perfect-ki-grandmaster",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Perfect Ki Grandmaster",
+  "level": 18,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices",
+   "spellcastingGrant"
+  ],
+  "text": "You gain an appropriate qi spell for your School of Perfection: Unblinking Flame Ignition for Unblinking Flame, Unbreaking Wave Containment for Unbreaking Waves, Unfolding Wind Crash for Unfolding Wind, or Untwisting Iron Pillar for Untwisting Iron. Increase the number of Focus Points in your focus pool by 1. You become a master in occult spell DCs and occult spell attack rolls."
+ },
+ {
+  "id": "psyche-salts",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Psyche Salts",
+  "level": 5,
+  "traits": [
+   "consumable",
+   "magical",
+   "potion"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Psyche Salts May contain spoilers from Shades of Blood Source Pathfinder #214: The Broken Palace pg. 81 Usage held in 1 hand Bulk L Activate (manipulate) A dose of psyche salts is kept in a small, corked vial. When you activate psyche salts, you uncork and pass the open end of the vial near the head of an adjacent creature. The salts within fizz and evaporate, creating a sour-smelling cloud that envelops the creature’s head before fading. As they do, the vapors attempt to clear harmful influences from the creature’s mind. The creature gains the effect of a clear mind spell and a +1 item bonus to saving throws against mental effects for 10 minutes. Psyche Salts (Lesser) Source Pathfinder #214: The Broken Palace pg. 81 Price 30 gp The psyche salts grants the effects of a 2nd-rank clear mind spell, with a +11 counteract check modifier. Psyche Salts (Moderate) Source Pathfinder #214: The Broken Palace pg. 81 Price 150 gp The psyche salts grants the effects of a 4th-rank clear mind spell, with a +17 counteract check modifier. The item bonus increases to +2. Psyche Salts (Greater) Source Pathfinder #214: The Broken Palace pg. 81 Price 3,000 gp The psyche salts grants the effects of an 8th-rank clear mind spell, with a +27 counteract check modifier. The item bonus increases to +3."
+ },
+ {
+  "id": "retain-absorbed-spell",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Retain Absorbed Spell",
+  "level": 18,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "text": "When you absorb a spell using the Absorb Spell reaction, you utilize secret, techniques that allow you to retain the power and knowledge necessary to cast the spell repeatedly-potentially for a greater period of time. If you're a spontaneous caster, you can cast the triggering spell up to three times instead of once. If you're a prepared spellcaster, you can replace up to three of your prepared spells of the same rank with the absorbed spell instead of one. Either way, you can choose to retain the absorbed spell for the next hour instead of the next 10 minutes; if you choose to extend the absorption to an hour, you can't use Absorb Spell again until one hour after the spell is absorbed."
+ },
+ {
+  "id": "roaring-potion",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Roaring Potion",
+  "level": 8,
+  "traits": [
+   "consumable",
+   "magical",
+   "potion",
+   "sonic"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Roaring Potion Source Treasure Vault (Remastered) pg. 90 Usage held in 1 hand Bulk L Activate (manipulate) Ripples move constantly through a roaring potion, a cloudy liquid that growls when you open its container. Drinking it gives you access to two other activations for 1 hour. Activate (concentrate) Effect You gain the effects of a bullhorn spell. You can Dismiss the activation. Activate (concentrate) Frequency once every 1d4 rounds; Effect You emit a scream in a 15-foot cone that deals 4d4 sonic damage. Each creature in the area can attempt a DC 24 Fortitude saving throw. Critical Success The creature is unaffected. Success The creature takes half damage. Failure The creature takes full damage and is frightened 1. Critical Failure The creature takes double damage and is frightened 2. Roaring Potion (Lesser) Source Treasure Vault (Remastered) pg. 90 Price 90 gp Bulk L Roaring Potion (Moderate) Source Treasure Vault (Remastered) pg. 90 Price 550 gp Bulk L You gain the effects of a 5th-rank bullhorn spell. The damage is 6d4 and the save DC is 30. Roaring Potion (Greater) Source Treasure Vault (Remastered) pg. 90 Price 3,600 gp Bulk L You gain the effects of a 7th-rank bullhorn spell. The damage is 10d4 and the save DC is 38."
+ },
+ {
+  "id": "shadow-magic",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Shadow Magic",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices",
+   "spellcastingGrant"
+  ],
+  "text": "You gain the ability to fuse and play with shadows by using focus spells specific to shadowdancers. You learn a shadowdancer focus spell of your choice: Dance of Darkness or Shadow Jump. If you don't already have one, you gain a focus pool of 1 Focus Point, which you can Refocus by meditating within an area of dim light or darkness. Shadowdancer focus spells are occult spells. You become trained in occult spell attack rolls and spell DCs, and your spellcasting ability for these spells is Charisma."
+ },
+ {
+  "id": "sorcerous-potency",
+  "lane": "spellGrant",
+  "collection": "classFeatures",
+  "name": "Sorcerous Potency",
+  "level": 1,
+  "traits": [
+   "sorcerer"
+  ],
+  "engineFieldsPresent": [],
+  "text": "Because of the magical power inherent in your blood, your spells that hurt or cure are stronger than those of other spellcasters. When you Cast a Spell from your spell slots that either deals damage or restores Hit Points, you gain a status bonus to that spell's damage or healing equal to the spell's rank. This applies only to the initial damage or healing the spell deals when cast. An individual creature takes this damage or benefits from this healing only once per spell, even if the spell would damage or heal that creature multiple times."
+ },
+ {
+  "id": "spelldrinker",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Spelldrinker",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "text": "**Requirements** Your last action was to Harvest Blood. **Frequency** once per hour --- You temporarily add a 3rd-rank spell to your spell repertoire, as determined by the type of creature whose blood you just drank (see table below). If the creature has more than one of the listed traits, choose one and gain the appropriate spell. If the granted spell is not on your chosen tradition's list, you cast the spell as though it was from your chosen tradition. The spell is removed from your spell repertoire after 24 hours, the next time you use Spelldrinker, or when you next make your daily preparations, whichever comes first. | Trait | Spell | Notes | | --- | --- | --- | | Aberration | Vampiric Feast | | | Animal, beast | Summon Animal | Summoned creatures appear as otherworldly versions of the creature whose blood you drank. | | Celestial | Holy Light | | | Dragon | Blazing Bolt | Instead of fire damage, this spell deals the same damage as the dragon breath of the dragon whose blood you drank (if applicable). | | Fey | Wall of Thorns | | | Fiend | Chilling Darkness | | | Giant | Pummeling Rubble | | | Humanoid | Crisis of Faith | | | Monitor | Impending Doom | | --- **Special** If you have Surging Blood Magic, you can add the spell at 4th rank. If you have Exultant Blood Magic, you can add the spell at 7th rank."
+ },
+ {
+  "id": "student-of-magic",
+  "lane": "spellGrant",
+  "collection": "backgrounds",
+  "name": "Student of Magic",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "choice",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkillChoice"
+  ],
+  "text": "You are currently enrolled at a school of magic, where you're learning the fundamentals of your magical tradition. Whether your adventuring occurs during breaks between semesters, as part of a work study program, or even within the halls of the academy itself, you'll have to learn to juggle your dual life. Choose two attribute boosts. One must be to **Intelligence** or **Wisdom**, and one is a free attribute boost. You're trained in your choice of Arcana, Nature, Occultism, or Religion, as well as Academia Lore. You gain the Recognize Spell skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Lore** Academia Lore **Skill Feat** Recognize Spell"
+ },
+ {
+  "id": "true-channel-spell",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "True Channel Spell",
+  "level": 20,
+  "traits": [
+   "animist"
+  ],
+  "engineFieldsPresent": [],
+  "text": "You are a true conduit for spiritual power, able to unleash the greatest spells. You gain a single 10th-rank spell slot and can prepare a spell in that slot using animist spellcasting. You can't use 10th-rank slots with abilities that give you more spell slots or that let you cast spells without expending spell slots."
+ }
+]

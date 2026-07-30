@@ -1,0 +1,238 @@
+[
+ {
+  "id": "execution-powder",
+  "collection": "items",
+  "name": "Execution Powder",
+  "level": 14,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "injury",
+   "poison"
+  ],
+  "text": "**Activate** ⟨2⟩ (manipulate) --- The spores of a certain mushrooms, if carefully collected and suspended in a properly mixed alchemical fluid, can kill those near death. If a creature is reduced to 0 Hit Points while under the effect of execution powder, it must succeed at a save or die (this is a death effect). If a creature dies from execution powder, the spores from their last breath alight on a random creature adjacent to the victim, granting that creature 20 temporary Hit Points and a +1 status bonus to attack and damage rolls for 10 minutes. **Saving Throw** **Maximum Duration** 6 rounds **Stage 1** 7d6 damage (1 round) **Stage 2** 9d6 damage (1 round) **Stage 3** 12d6 damage (1 round)",
+  "currentFlat": null,
+  "openQuestion": "Should effects whose beneficiary is a random/other creature (not necessarily this character) be registered at all? And should temporary Hit Points be expressed via targetKind 'hp', or excluded because it is a resource grant rather than a typed bonus?"
+ },
+ {
+  "id": "lightweave-scarf",
+  "collection": "items",
+  "name": "Lightweave Scarf",
+  "level": 8,
+  "traits": [
+   "magical",
+   "spellheart",
+   "visual"
+  ],
+  "text": "The first of these strips of glittering cloth was worn by a monk from Jinin who would interweave it into his *handwraps of mighty blows*. The spell DC of any spell cast by activating this item is 24. - **Armor** You gain a +2 item bonus to saving throws against illusions and Deception checks to Create a Diversion. - **Weapon** (visual) After you cast an illusion spell by activating the scarf, the weapon is shrouded in a mesmerizing illusory pattern. Your next Strike causes the target to be confused for 1 round if it hits. If you don't make a Strike by the end of your next turn, the illusion ends with no effect. **Activate** Cast a Spell --- **Effect** You cast Light. **Activate** Cast a Spell **Frequency** once per day --- **Effect** You cast Hypnotize.",
+  "currentFlat": null,
+  "openQuestion": "The printed sentence can be parsed two ways: (a) +2 to saves against illusions AND +2 to your own Deception checks to Create a Diversion, or (b) +2 to saves against illusions and against other creatures' Create a Diversion attempts. I chose (a), because Create a Diversion is opposed by Perception DC and is never resisted with a saving throw, so (b) is mechanically impossible as written - and Foundry links Create a Diversion as an action you perform (its rules array is empty, so it offers no mechanical confirmation). Confirm (a) before shipping the Deception star."
+ },
+ {
+  "id": "lightweave-scarf-greater",
+  "collection": "items",
+  "name": "Lightweave Scarf (Greater)",
+  "level": 15,
+  "traits": [
+   "magical",
+   "spellheart",
+   "visual"
+  ],
+  "text": "The first of these strips of glittering cloth was worn by a monk from Jinin who would interweave it into his *handwraps of mighty blows*. The spell DC of any spell cast by activating this item is 34. - **Armor** You gain a +2 item bonus to saving throws against illusions and Deception checks to Create a Diversion. - **Weapon** (visual) After you cast an illusion spell by activating the scarf, the weapon is shrouded in a mesmerizing illusory pattern. Your next Strike causes the target to be confused for 1 round if it hits. If you don't make a Strike by the end of your next turn, the illusion ends with no effect. **Activate** Cast a Spell --- **Effect** You cast Light. **Activate** Cast a Spell **Frequency** once per day --- **Effect** You cast 6th-rank Hypnotize. **Activate** Cast a Spell **Frequency** once per day --- **Effect** You cast Vibrant Pattern.",
+  "currentFlat": null,
+  "openQuestion": "Same parse question as the base Lightweave Scarf: does the +2 apply to your own Deception checks to Create a Diversion (my reading) or to defending against another creature's Create a Diversion? Create a Diversion is opposed by Perception DC, never a save, so only the first reading works mechanically - please confirm before shipping the Deception star."
+ },
+ {
+  "id": "gelid-shard",
+  "collection": "items",
+  "name": "Gelid Shard",
+  "level": 2,
+  "traits": [
+   "arcane",
+   "artifact",
+   "cold",
+   "invested"
+  ],
+  "text": "This crystal shard shimmers with its own light even as it seems to draw the heat out of its surroundings. Plunging it into your heart grants you the tranquil lethality of deepest winter, but the more you draw upon its power, the colder your heart grows. Your frozen heart dulls your emotions. When you gain a bonus from an emotion effect, that bonus is reduced by 1, to a minimum of 0. At 10th level, the bonus is reduced by 2. Your dulled emotions make it hard to relate to others; the DC of checks to Make an Impression or Request a favor of other creatures, or to Aid in such attempts, is increased by +2. You gain resistance to cold equal to your level and a +2 status bonus to all saves against emotion effects. **Destruction** The *gelid shard* must be left exposed in the Plane of Fire for a week and a day, then smashed with an adamantine hammer by someone who felt true love for the shard's creator.",
+  "currentFlat": {
+   "resistances": [
+    {
+     "type": "cold",
+     "value": "@actor.level"
+    }
+   ]
+  },
+  "openQuestion": "Same penalty question as Ursine Avenger Hood, plus: should a DC-increase effect (which is not a modifier on the character's own roll) be surfaced as a star on the skill it affects, or left as description text only?"
+ },
+ {
+  "id": "the-survivor",
+  "collection": "items",
+  "name": "The Survivor",
+  "level": 20,
+  "traits": [
+   "artifact",
+   "harrow-court",
+   "invested",
+   "magical"
+  ],
+  "text": "**Suit** Shields (Con) **Alignment** neutral good --- *The Survivor* represents rebirth through ordeal. When you have *The Survivor* invested, you gain Diehard as a bonus feat. If you already possess this feat, you gain a +2 item bonus to all recovery checks. This item bonus increases to +3 if you are at least 17th-level. **Activate** ⟨4⟩ envision **Frequency** once per day **Trigger** you are reduced to 0 Hit Points --- **Effect** You somehow manage to survive what could have been a fatal blow. Instead of being reduced to 0 Hit Points, you drop to 1 Hit Point instead and immediately restore an additional 4d8+16 Hit Points. The amount of Hit Point restored increases to 5d8+20 if you are at least 15th level, 6d8+24 if you're at least 17th level, and 7d8+28 if you're at least 19th level.",
+  "currentFlat": null,
+  "openQuestion": "Recovery checks have no target kind. Do you want a new kind (e.g. 'recovery' / 'flatCheck'), or should recovery-check bonuses be displayed on the HP tile using the existing 'hp' kind?"
+ },
+ {
+  "id": "bombers-eye-elixir-lesser",
+  "collection": "items",
+  "name": "Bomber's Eye Elixir (Lesser)",
+  "level": 4,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- This tincture lets you pinpoint your foes. For the next 5 minutes, your alchemical bomb Strikes reduce the circumstance bonus to AC your targets gain from cover by 1.",
+  "currentFlat": null,
+  "openQuestion": "Should target-side effects like cover reduction be surfaced as a strikeAttack star described as an effective +1 to hit, or omitted entirely because the app models no target AC/cover?"
+ },
+ {
+  "id": "bombers-eye-elixir-greater",
+  "collection": "items",
+  "name": "Bomber's Eye Elixir (Greater)",
+  "level": 14,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- This tincture lets you pinpoint your foes. For the next 5 minutes, your alchemical bomb Strikes reduce the circumstance bonus to AC your targets gain from cover by 2.",
+  "currentFlat": null,
+  "openQuestion": "Same call as bombers-eye-elixir-lesser: surface cover reduction as an effective strikeAttack bonus, or omit it?"
+ },
+ {
+  "id": "potion-of-disguise",
+  "collection": "items",
+  "name": "Potion of Disguise",
+  "level": 5,
+  "traits": [
+   "consumable",
+   "magical",
+   "polymorph",
+   "potion"
+  ],
+  "text": "Potion of Disguise Source Player Core 2 pg. 304 Usage held in 1 hand Bulk L Activate (manipulate) Upon imbibing this potion, you take on the appearance of a specific type of creature for 2d12 hours. The type of creature is determined when the potion is created. For example, you might have a potion of elf disguise or potion of frog disguise. Drinking the potion doesn't impart the knowledge of how long the effect lasts; the GM rolls the duration in secret. The disguise doesn't change your traits or statistics, nor does it give you any of the special abilities of the creature you're imitating. It might affect what items you can hold or wear (for example, your new form might lack opposable thumbs). The potion shrinks you down to a minimum of size Small or maintains your size if the creature is your size or larger. For example, if you are Medium and drink a potion of fire giant disguise, you'll take on the appearance of a fire giant but remain Medium. The creature has to be of a specific kind, such as “leopard” or “lion” rather than just “cat,” or “fire giant” or “ogre” rather than just “giant,” but the potion can't cause you to mimic a specific individual creature. The effects of this potion use the same rules as the Impersonate activity of Deception. Onlookers always assume you're the chosen type of creature unless they're actively Seeking. You gain a +4 status bonus to your Deception DC against such Perception checks and add your level even if untrained. Potion of Disguise (Lesser) Source Player Core 2 pg. 304, Advanced Player's Guide pg. 258 Price 30 gp Bulk L Craft Requirements Initial raw materials must include a bit of blood, hair, or flesh of the creature the potion will allow the drinker to imitate. Potion of Disguise (Moderate) Source Player Core 2 pg. 304, Advanced Player's Guide pg. 258 Price 100 gp Bulk L The moderate potion of disguise can increase your size if the creature is larger than you, to a maximum of Large, and it can shrink you to a creature of size Tiny. This doesn't change any of your statistics, with the exception of reducing your reach to 0 feet as a Tiny creature. Craft Requirements Initial raw materials must include a bit of blood, hair, or flesh of the creature the potion will allow the drinker to imitate. Potion of Disguise (Greater) Source Player Core 2 pg. 304, Advanced Player's Guide pg. 258 Price 300 gp Bulk L While drinking a greater potion of disguise, if you picture the specific form you want to transform into, the potion will change you into that form. You can attempt to Impersonate a specific individual, though you still need to roll Deception.",
+  "currentFlat": null,
+  "openQuestion": "Should a bonus that only raises a skill DC (never the check) be shown as a star on that skill, or does it need a separate 'skill DC' display so it can't be misread as a check bonus?"
+ },
+ {
+  "id": "potion-of-disguise-lesser",
+  "collection": "items",
+  "name": "Potion of Disguise (Lesser)",
+  "level": 5,
+  "traits": [
+   "consumable",
+   "magical",
+   "polymorph",
+   "potion"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Upon imbibing this potion, you take on the appearance of a specific type of creature for 2d12 hours. The type of creature is determined when the potion is created. For example, you might have a *potion of elf disguise* or *potion of frog disguise*. Drinking the potion doesn't impart the knowledge of how long the effect lasts; the GM rolls the duration in secret. The disguise doesn't change your traits or statistics, nor does it give you any of the special abilities of the creature you're imitating. It might affect what items you can hold or wear (for example, your new form might lack opposable thumbs). The potion shrinks you down to a minimum of size Small, or maintains your size if the creature is your size or larger. For example, if you are Medium and drink a *potion of fire giant disguise*, you'll take on the appearance of a fire giant but remain Medium. The creature has to be of a specific kind, such as \"leopard\" or \"lion\" rather than just \"cat\", or \"fire giant\" or \"ogre\" rather than just \"giant\", but the potion can't cause you to mimic a specific individual creature. The effects of this potion use the same rules as the Impersonate activity of Deception. Onlookers always assume you're the chosen type of creature unless they're actively Seeking. You gain a +4 status bonus to your Deception DC against such Perception checks and add your level even if untrained. --- **Craft Requirements** Initial raw materials must include a bit of blood, hair, or flesh of the creature the potion will allow the drinker to imitate.",
+  "currentFlat": null,
+  "openQuestion": "Same as the parent record: should a skill-DC-only bonus be starred on the skill row, or does it need its own DC display?"
+ },
+ {
+  "id": "potion-of-disguise-moderate",
+  "collection": "items",
+  "name": "Potion of Disguise (Moderate)",
+  "level": 8,
+  "traits": [
+   "consumable",
+   "magical",
+   "polymorph",
+   "potion"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Upon imbibing this potion, you take on the appearance of a specific type of creature for 2d12 hours. The type of creature is determined when the potion is created. For example, you might have a *potion of elf disguise* or *potion of frog disguise*. Drinking the potion doesn't impart the knowledge of how long the effect lasts; the GM rolls the duration in secret. The disguise doesn't change your traits or statistics, nor does it give you any of the special abilities of the creature you're imitating. It might affect what items you can hold or wear (for example, your new form might lack opposable thumbs). The potion shrinks you down to a minimum of size Tiny, or increases your size if the creature is larger than you, to a maximum of Large. This does not change any of your statistics, with the exception of reducing your reach to 0 as a Tiny creature. The creature has to be of a specific kind, such as \"leopard\" or \"lion\" rather than just \"cat\", or \"fire giant\" or \"ogre\" rather than just \"giant\", but the potion can't cause you to mimic a specific individual creature. The effects of this potion use the same rules as the Impersonate activity of Deception. Onlookers always assume you're the chosen type of creature unless they're actively Seeking. You gain a +4 status bonus to your Deception DC against such Perception checks and add your level even if untrained. --- **Craft Requirements** Initial raw materials must include a bit of blood, hair, or flesh of the creature the potion will allow the drinker to imitate.",
+  "currentFlat": null,
+  "openQuestion": "Same as the parent record: should a skill-DC-only bonus be starred on the skill row, or does it need its own DC display?"
+ },
+ {
+  "id": "potion-of-disguise-greater",
+  "collection": "items",
+  "name": "Potion of Disguise (Greater)",
+  "level": 11,
+  "traits": [
+   "consumable",
+   "magical",
+   "polymorph",
+   "potion"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Upon imbibing this potion, you take on the appearance of a specific type of creature for 2d12 hours. The type of creature is determined when the potion is created. For example, you might have a *potion of elf disguise* or *potion of frog disguise*. Drinking the potion doesn't impart the knowledge of how long the effect lasts; the GM rolls the duration in secret. The disguise doesn't change your traits or statistics, nor does it give you any of the special abilities of the creature you're imitating. It might affect what items you can hold or wear (for example, your new form might lack opposable thumbs). The potion shrinks you down to a minimum of size Tiny, or increases your size if the creature is larger than you, to a maximum of Large. This does not change any of your statistics, with the exception of reducing your reach to 0 as a Tiny creature. The creature has to be of a specific kind, such as \"leopard\" or \"lion\" rather than just \"cat\", or \"fire giant\" or \"ogre\" rather than just \"giant\", but the potion can't cause you to mimic a specific individual creature. The effects of this potion use the same rules as the Impersonate activity of Deception. Onlookers always assume you're the chosen type of creature unless they're actively Seeking. You gain a +4 status bonus to your Deception DC against such Perception checks and add your level even if untrained. While drinking a *greater potion of disguise*, if you picture the specific form you want to transform into, the potion will change you into that form. You can attempt to Impersonate a specific individual, though you still need to roll Deception.",
+  "currentFlat": null,
+  "openQuestion": "Same as the parent record: should a skill-DC-only bonus be starred on the skill row, or does it need its own DC display?"
+ },
+ {
+  "id": "olfactory-obfuscator-lesser",
+  "collection": "items",
+  "name": "Olfactory Obfuscator (Lesser)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir"
+  ],
+  "text": "**Activate** ⟨1⟩ Interact --- This frothing fluid causes the drinker's body to exude trace odor absorbing oils. For 10 minutes after drinking this elixir, your scent is nearly unnoticeable. Creatures with imprecise scent don't detect you with that sense unless they Seek for you, and you are concealed from creatures that perceive you with precise scent. You gain a +4 item bonus against attempts to Seek you by creatures using only scent-based senses; if they use any other senses as well, the bonus doesn't apply.",
+  "currentFlat": null,
+  "openQuestion": "Should DC-only bonuses (they raise the DC an enemy rolls against, never a check you roll) be shown as a star on the related skill with DC-only wording, or suppressed until the sheet can display skill DCs separately?"
+ },
+ {
+  "id": "anti-dragon-barding",
+  "collection": "items",
+  "name": "Anti-Dragon Barding",
+  "level": 6,
+  "traits": [
+   "companion",
+   "invested",
+   "magical"
+  ],
+  "text": "Consisting of long steel spikes projecting from light barding, anti-dragon barding helps to protect vulnerable mounts and livestock from massive aerial predators, including dragons, griffons, and rocs. An animal companion wearing anti-dragon barding gains a +2 item bonus to its Fortitude DC and Reflex DC against attempts to grapple, reposition, shove, or trip it, and a creature that successfully Grapples the animal companion takes 1d4 damage.",
+  "currentFlat": null,
+  "openQuestion": "Do you want companion-worn items (barding) to mark stats on the companion block, and if so should 'save' entries be allowed to mean the companion's DC rather than its roll?"
+ },
+ {
+  "id": "greater-anti-dragon-barding",
+  "collection": "items",
+  "name": "Greater Anti-Dragon Barding",
+  "level": 12,
+  "traits": [
+   "companion",
+   "invested",
+   "magical"
+  ],
+  "text": "Anti-Dragon Barding Source Draconic Codex pg. 222 PFS Note This item uses the same defense stats as light barding. Usage worn barding Bulk L Consisting of long steel spikes projecting from light barding, anti-dragon barding helps to protect vulnerable mounts and livestock from massive aerial predators, including dragons, griffons, and rocs. An animal companion wearing anti-dragon barding gains a +2 item bonus to its Fortitude DC and Reflex DC against attempts to Grapple, Reposition, Shove, or Trip it, and a creature that successfully Grapples the animal companion takes 1d4 piercing damage. Anti-Dragon Barding Source Draconic Codex pg. 222 Price 200 gp Greater Anti-Dragon Barding Source Draconic Codex pg. 222 Price 1,700 gp The barding grants a +4 item bonus against Grapple, Reposition, Shove, and Trip, and deals 3d4 piercing damage when the wearer is Grappled.",
+  "currentFlat": null,
+  "openQuestion": "Same as anti-dragon-barding: should companion barding mark the companion block, and may 'save' mean a DC?"
+ },
+ {
+  "id": "stalwarts-banner-greater",
+  "collection": "items",
+  "name": "Stalwart's Banner (Greater)",
+  "level": 12,
+  "traits": [
+   "aura",
+   "magical"
+  ],
+  "text": "This magical banner mimics the rich green of summer grass. While holding a stalwart's banner, you can use the following ability. **Activate—Stand Firm** ⟨1⟩ (concentrate) **Frequency** once per minute --- **Effect** You and allies within your banner's aura gain 10 temporary Hit Points and a +2 status bonus to your Fortitude DC and Reflex DC against any effect that would move you or knock you prone. These effects last for 1 round.",
+  "currentFlat": null,
+  "openQuestion": "Should DC-only bonuses (Fortitude DC / Reflex DC) be surfaced on the matching save row with a 'this is your DC, not your roll' note, or suppressed entirely until the sheet has a save-DC stat?"
+ },
+ {
+  "id": "stalwarts-banner-major",
+  "collection": "items",
+  "name": "Stalwart's Banner (Major)",
+  "level": 17,
+  "traits": [
+   "aura",
+   "magical"
+  ],
+  "text": "This magical banner mimics the rich green of summer grass. While holding a stalwart's banner, you can use the following ability. **Activate—Stand Firm** ⟨1⟩ (concentrate) **Frequency** once per minute --- **Effect** You and allies within your banner's aura gain 15 temporary Hit Points and a +3 status bonus to your Fortitude DC and Reflex DC against any effect that would move you or knock you prone. These effects last for 1 round.",
+  "currentFlat": null,
+  "openQuestion": "Same as the Greater banner: surface DC-only bonuses on the save row with a disclaimer, or suppress until a save-DC stat exists?"
+ }
+]

@@ -1,0 +1,1098 @@
+[
+ {
+  "id": "printer",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Printer",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Keeping your finger on the pulse of the city, you write a small news broadsheet to sell on street corners. You rent the use of a printing press to achieve this goal, so you're familiar with such machines. However, people and their stories are your main focus, and you adventure to chase the latest scoop. Choose two attribute boosts. One must be to **Intelligence** or **Charisma**, and one is a free attribute boost. You're trained in the Society skill and the Scribing Lore skill. You gain the skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Society **Lore** Scribing Lore **Skill Feat** Multilingual"
+ },
+ {
+  "id": "prisoner",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Prisoner",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You have been imprisoned or punished for crimes (whether you were guilty or not). Now that your sentence has ended or you've escaped, you take full advantage of the newfound freedom of your adventuring life. Choose two attribute boosts. One must be to **Strength** or **Constitution**, and one is a free attribute boost. You're trained in the Stealth skill and the Underworld Lore skill. You gain the Experienced Smuggler skill feat. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Trained Skill** Stealth **Lore** Underworld Lore **Skill Feat** Experienced Smuggler"
+ },
+ {
+  "id": "profane-bargain",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Profane Bargain",
+  "level": 18,
+  "traits": [
+   "divine",
+   "mental",
+   "mythic"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "You can strike a profane bargain with a willing, sapient creature. That creature promises to never take hostile actions against you, to never lie to you, to never speak of this bargain, and to either perform, or refrain from performing, one other specified task, such as paying you a specified sum every year, gifting you their first-born child, or never speaking. If the target accepts, they verbally make a request. You can choose to twist their request by selecting specific details, as long as you still fulfill the requirements of their request. If the request could be granted by a Wish ritual, you spend 1 Mythic Point and the request is magically granted. As long as the bargain persists, you always know the target's location, can communicate telepathically with the target at any distance, and can see through the target's senses by taking a single action that has the concentrate trait. Once per day, you can take control of the target as an activity that takes three actions and has the concentrate trait. When you do, they become controlled by you for 10 minutes. They have no memory of their time spent under your control. If the target ever breaks the terms of this bargain, you immediately select one of the following punishments: they die, they die and you possess their soul, they become permanently controlled by you, or they become imprisoned in a cell within your realm's dungeon (you must have the Imprison Foe feat to select this final option). A target can only enter into a Profane Bargain with you once—not even the breaking of this bargain, death, a *wish* ritual, or divine intervention frees them of this limitation. You can't make a Profane Bargain with yourself."
+ },
+ {
+  "id": "profane-fervor",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Profane Fervor",
+  "level": 0,
+  "traits": [
+   "unholy"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Profane Fervor Source GM Core pg. 314 Aspect Fiend Activate (concentrate, manipulate) Effect Profane energies twist your weapons, filling them with rage toward everything good. For 1 minute, your weapons and unarmed attacks gain the unholy weapon rune while you hold them. If a weapon is at its limit on property runes, you can choose one property rune on the weapon to go dormant while the unholy rune takes effect. In addition, Strikes your allies make while they're within 30 feet of you gain the unholy trait."
+ },
+ {
+  "id": "propaganda",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Propaganda",
+  "level": 0,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Propaganda Source Firebrands pg. 94 Propaganda is strongly biased information presented in a way that may mislead those who are exposed to it. Most commonly, propaganda is used to drive a specific political agenda. While this is oftentimes a tool utilized by regimes to maintain a specific image among their oppressed people, the Firebrands use propaganda to bring shocking truths to light, drive wedges between enemy factions, and encourage uprisings against tyrannical regimes. Many groups of Firebrands specialize in the creation and dissemination of propaganda, though they are just as likely to utilize local resources to do the disseminating for them. When used at the correct time and place, propagandists can adjust the temperature of the political climate to tear down tyrants and shift the narrative in a way that evokes specific sentiments, like hope or anger, and thus inspires rebellious action. Spreading propaganda occurs over the course of days because it typically requires time for its widespread dissemination through physical flyers and word of mouth. Once you select a specific subject for your propaganda, it typically takes 1d4+2 days for a propagandist to compose and then disseminate their work. Twice as long is required if the propaganda is contradictory to existing rumors or to the opinions of those viewing or reading it, but only half as long is necessary if the propaganda supports existing rumors and public opinion. Propaganda typically influences an entire settlement or area, though the GM can determine that it only influences specific areas like a city district in a larger city or even a single neighborhood. In these cases, you should be able to pay for more propaganda services to influence additional areas. The level of the propagandist determines how effective they and their team are at influencing the mindset of the people. The GM rolls a secret check using the bonus of the propagandist against the DC required to Gather Information on the given subject of the propaganda. On a success, the propaganda takes hold, becoming the talk of the people for 1 week, or 1 month on a critical success. On a failure, the propaganda is unsuccessful but is otherwise ignored. On a critical failure, the propaganda backfires, and further attempts at propaganda related to that subject fail for 1 week. In addition, the people in the region are aware that someone was trying to spread rumors about the subject. Propaganda (Level 1) Source Firebrands pg. 94 Price 15 gp +6; trained Propaganda (Level 2) Source Firebrands pg. 94 Price 25 gp +7 Propaganda (Level 3) Source Firebrands pg. 94 Price 40 gp +9; Expert Propaganda (Level 4) Source Firebrands pg. 94 Price 60 gp +10 Propaganda (Level 5) Source Firebrands pg. 94 Price 100 gp +12 Propaganda (Level 6) Source Firebrands pg. 94 Price 150 gp +13 Propaganda (Level 7) Source Firebrands pg. 94 Price 300 gp +15; Master"
+ },
+ {
+  "id": "propaganda-level-1",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Propaganda (Level 1)",
+  "level": 0,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Propaganda Source Firebrands pg. 94 Propaganda is strongly biased information presented in a way that may mislead those who are exposed to it. Most commonly, propaganda is used to drive a specific political agenda. While this is oftentimes a tool utilized by regimes to maintain a specific image among their oppressed people, the Firebrands use propaganda to bring shocking truths to light, drive wedges between enemy factions, and encourage uprisings against tyrannical regimes. Many groups of Firebrands specialize in the creation and dissemination of propaganda, though they are just as likely to utilize local resources to do the disseminating for them. When used at the correct time and place, propagandists can adjust the temperature of the political climate to tear down tyrants and shift the narrative in a way that evokes specific sentiments, like hope or anger, and thus inspires rebellious action. Spreading propaganda occurs over the course of days because it typically requires time for its widespread dissemination through physical flyers and word of mouth. Once you select a specific subject for your propaganda, it typically takes 1d4+2 days for a propagandist to compose and then disseminate their work. Twice as long is required if the propaganda is contradictory to existing rumors or to the opinions of those viewing or reading it, but only half as long is necessary if the propaganda supports existing rumors and public opinion. Propaganda typically influences an entire settlement or area, though the GM can determine that it only influences specific areas like a city district in a larger city or even a single neighborhood. In these cases, you should be able to pay for more propaganda services to influence additional areas. The level of the propagandist determines how effective they and their team are at influencing the mindset of the people. The GM rolls a secret check using the bonus of the propagandist against the DC required to Gather Information on the given subject of the propaganda. On a success, the propaganda takes hold, becoming the talk of the people for 1 week, or 1 month on a critical success. On a failure, the propaganda is unsuccessful but is otherwise ignored. On a critical failure, the propaganda backfires, and further attempts at propaganda related to that subject fail for 1 week. In addition, the people in the region are aware that someone was trying to spread rumors about the subject. Propaganda (Level 1) Source Firebrands pg. 94 Price 15 gp +6; trained Propaganda (Level 2) Source Firebrands pg. 94 Price 25 gp +7 Propaganda (Level 3) Source Firebrands pg. 94 Price 40 gp +9; Expert Propaganda (Level 4) Source Firebrands pg. 94 Price 60 gp +10 Propaganda (Level 5) Source Firebrands pg. 94 Price 100 gp +12 Propaganda (Level 6) Source Firebrands pg. 94 Price 150 gp +13 Propaganda (Level 7) Source Firebrands pg. 94 Price 300 gp +15; Master"
+ },
+ {
+  "id": "propaganda-level-2",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Propaganda (Level 2)",
+  "level": 0,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Propaganda Source Firebrands pg. 94 Propaganda is strongly biased information presented in a way that may mislead those who are exposed to it. Most commonly, propaganda is used to drive a specific political agenda. While this is oftentimes a tool utilized by regimes to maintain a specific image among their oppressed people, the Firebrands use propaganda to bring shocking truths to light, drive wedges between enemy factions, and encourage uprisings against tyrannical regimes. Many groups of Firebrands specialize in the creation and dissemination of propaganda, though they are just as likely to utilize local resources to do the disseminating for them. When used at the correct time and place, propagandists can adjust the temperature of the political climate to tear down tyrants and shift the narrative in a way that evokes specific sentiments, like hope or anger, and thus inspires rebellious action. Spreading propaganda occurs over the course of days because it typically requires time for its widespread dissemination through physical flyers and word of mouth. Once you select a specific subject for your propaganda, it typically takes 1d4+2 days for a propagandist to compose and then disseminate their work. Twice as long is required if the propaganda is contradictory to existing rumors or to the opinions of those viewing or reading it, but only half as long is necessary if the propaganda supports existing rumors and public opinion. Propaganda typically influences an entire settlement or area, though the GM can determine that it only influences specific areas like a city district in a larger city or even a single neighborhood. In these cases, you should be able to pay for more propaganda services to influence additional areas. The level of the propagandist determines how effective they and their team are at influencing the mindset of the people. The GM rolls a secret check using the bonus of the propagandist against the DC required to Gather Information on the given subject of the propaganda. On a success, the propaganda takes hold, becoming the talk of the people for 1 week, or 1 month on a critical success. On a failure, the propaganda is unsuccessful but is otherwise ignored. On a critical failure, the propaganda backfires, and further attempts at propaganda related to that subject fail for 1 week. In addition, the people in the region are aware that someone was trying to spread rumors about the subject. Propaganda (Level 1) Source Firebrands pg. 94 Price 15 gp +6; trained Propaganda (Level 2) Source Firebrands pg. 94 Price 25 gp +7 Propaganda (Level 3) Source Firebrands pg. 94 Price 40 gp +9; Expert Propaganda (Level 4) Source Firebrands pg. 94 Price 60 gp +10 Propaganda (Level 5) Source Firebrands pg. 94 Price 100 gp +12 Propaganda (Level 6) Source Firebrands pg. 94 Price 150 gp +13 Propaganda (Level 7) Source Firebrands pg. 94 Price 300 gp +15; Master"
+ },
+ {
+  "id": "propaganda-level-3",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Propaganda (Level 3)",
+  "level": 0,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Propaganda Source Firebrands pg. 94 Propaganda is strongly biased information presented in a way that may mislead those who are exposed to it. Most commonly, propaganda is used to drive a specific political agenda. While this is oftentimes a tool utilized by regimes to maintain a specific image among their oppressed people, the Firebrands use propaganda to bring shocking truths to light, drive wedges between enemy factions, and encourage uprisings against tyrannical regimes. Many groups of Firebrands specialize in the creation and dissemination of propaganda, though they are just as likely to utilize local resources to do the disseminating for them. When used at the correct time and place, propagandists can adjust the temperature of the political climate to tear down tyrants and shift the narrative in a way that evokes specific sentiments, like hope or anger, and thus inspires rebellious action. Spreading propaganda occurs over the course of days because it typically requires time for its widespread dissemination through physical flyers and word of mouth. Once you select a specific subject for your propaganda, it typically takes 1d4+2 days for a propagandist to compose and then disseminate their work. Twice as long is required if the propaganda is contradictory to existing rumors or to the opinions of those viewing or reading it, but only half as long is necessary if the propaganda supports existing rumors and public opinion. Propaganda typically influences an entire settlement or area, though the GM can determine that it only influences specific areas like a city district in a larger city or even a single neighborhood. In these cases, you should be able to pay for more propaganda services to influence additional areas. The level of the propagandist determines how effective they and their team are at influencing the mindset of the people. The GM rolls a secret check using the bonus of the propagandist against the DC required to Gather Information on the given subject of the propaganda. On a success, the propaganda takes hold, becoming the talk of the people for 1 week, or 1 month on a critical success. On a failure, the propaganda is unsuccessful but is otherwise ignored. On a critical failure, the propaganda backfires, and further attempts at propaganda related to that subject fail for 1 week. In addition, the people in the region are aware that someone was trying to spread rumors about the subject. Propaganda (Level 1) Source Firebrands pg. 94 Price 15 gp +6; trained Propaganda (Level 2) Source Firebrands pg. 94 Price 25 gp +7 Propaganda (Level 3) Source Firebrands pg. 94 Price 40 gp +9; Expert Propaganda (Level 4) Source Firebrands pg. 94 Price 60 gp +10 Propaganda (Level 5) Source Firebrands pg. 94 Price 100 gp +12 Propaganda (Level 6) Source Firebrands pg. 94 Price 150 gp +13 Propaganda (Level 7) Source Firebrands pg. 94 Price 300 gp +15; Master"
+ },
+ {
+  "id": "propaganda-level-4",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Propaganda (Level 4)",
+  "level": 0,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Propaganda Source Firebrands pg. 94 Propaganda is strongly biased information presented in a way that may mislead those who are exposed to it. Most commonly, propaganda is used to drive a specific political agenda. While this is oftentimes a tool utilized by regimes to maintain a specific image among their oppressed people, the Firebrands use propaganda to bring shocking truths to light, drive wedges between enemy factions, and encourage uprisings against tyrannical regimes. Many groups of Firebrands specialize in the creation and dissemination of propaganda, though they are just as likely to utilize local resources to do the disseminating for them. When used at the correct time and place, propagandists can adjust the temperature of the political climate to tear down tyrants and shift the narrative in a way that evokes specific sentiments, like hope or anger, and thus inspires rebellious action. Spreading propaganda occurs over the course of days because it typically requires time for its widespread dissemination through physical flyers and word of mouth. Once you select a specific subject for your propaganda, it typically takes 1d4+2 days for a propagandist to compose and then disseminate their work. Twice as long is required if the propaganda is contradictory to existing rumors or to the opinions of those viewing or reading it, but only half as long is necessary if the propaganda supports existing rumors and public opinion. Propaganda typically influences an entire settlement or area, though the GM can determine that it only influences specific areas like a city district in a larger city or even a single neighborhood. In these cases, you should be able to pay for more propaganda services to influence additional areas. The level of the propagandist determines how effective they and their team are at influencing the mindset of the people. The GM rolls a secret check using the bonus of the propagandist against the DC required to Gather Information on the given subject of the propaganda. On a success, the propaganda takes hold, becoming the talk of the people for 1 week, or 1 month on a critical success. On a failure, the propaganda is unsuccessful but is otherwise ignored. On a critical failure, the propaganda backfires, and further attempts at propaganda related to that subject fail for 1 week. In addition, the people in the region are aware that someone was trying to spread rumors about the subject. Propaganda (Level 1) Source Firebrands pg. 94 Price 15 gp +6; trained Propaganda (Level 2) Source Firebrands pg. 94 Price 25 gp +7 Propaganda (Level 3) Source Firebrands pg. 94 Price 40 gp +9; Expert Propaganda (Level 4) Source Firebrands pg. 94 Price 60 gp +10 Propaganda (Level 5) Source Firebrands pg. 94 Price 100 gp +12 Propaganda (Level 6) Source Firebrands pg. 94 Price 150 gp +13 Propaganda (Level 7) Source Firebrands pg. 94 Price 300 gp +15; Master"
+ },
+ {
+  "id": "propaganda-level-5",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Propaganda (Level 5)",
+  "level": 0,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Propaganda Source Firebrands pg. 94 Propaganda is strongly biased information presented in a way that may mislead those who are exposed to it. Most commonly, propaganda is used to drive a specific political agenda. While this is oftentimes a tool utilized by regimes to maintain a specific image among their oppressed people, the Firebrands use propaganda to bring shocking truths to light, drive wedges between enemy factions, and encourage uprisings against tyrannical regimes. Many groups of Firebrands specialize in the creation and dissemination of propaganda, though they are just as likely to utilize local resources to do the disseminating for them. When used at the correct time and place, propagandists can adjust the temperature of the political climate to tear down tyrants and shift the narrative in a way that evokes specific sentiments, like hope or anger, and thus inspires rebellious action. Spreading propaganda occurs over the course of days because it typically requires time for its widespread dissemination through physical flyers and word of mouth. Once you select a specific subject for your propaganda, it typically takes 1d4+2 days for a propagandist to compose and then disseminate their work. Twice as long is required if the propaganda is contradictory to existing rumors or to the opinions of those viewing or reading it, but only half as long is necessary if the propaganda supports existing rumors and public opinion. Propaganda typically influences an entire settlement or area, though the GM can determine that it only influences specific areas like a city district in a larger city or even a single neighborhood. In these cases, you should be able to pay for more propaganda services to influence additional areas. The level of the propagandist determines how effective they and their team are at influencing the mindset of the people. The GM rolls a secret check using the bonus of the propagandist against the DC required to Gather Information on the given subject of the propaganda. On a success, the propaganda takes hold, becoming the talk of the people for 1 week, or 1 month on a critical success. On a failure, the propaganda is unsuccessful but is otherwise ignored. On a critical failure, the propaganda backfires, and further attempts at propaganda related to that subject fail for 1 week. In addition, the people in the region are aware that someone was trying to spread rumors about the subject. Propaganda (Level 1) Source Firebrands pg. 94 Price 15 gp +6; trained Propaganda (Level 2) Source Firebrands pg. 94 Price 25 gp +7 Propaganda (Level 3) Source Firebrands pg. 94 Price 40 gp +9; Expert Propaganda (Level 4) Source Firebrands pg. 94 Price 60 gp +10 Propaganda (Level 5) Source Firebrands pg. 94 Price 100 gp +12 Propaganda (Level 6) Source Firebrands pg. 94 Price 150 gp +13 Propaganda (Level 7) Source Firebrands pg. 94 Price 300 gp +15; Master"
+ },
+ {
+  "id": "propaganda-level-6",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Propaganda (Level 6)",
+  "level": 0,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Propaganda Source Firebrands pg. 94 Propaganda is strongly biased information presented in a way that may mislead those who are exposed to it. Most commonly, propaganda is used to drive a specific political agenda. While this is oftentimes a tool utilized by regimes to maintain a specific image among their oppressed people, the Firebrands use propaganda to bring shocking truths to light, drive wedges between enemy factions, and encourage uprisings against tyrannical regimes. Many groups of Firebrands specialize in the creation and dissemination of propaganda, though they are just as likely to utilize local resources to do the disseminating for them. When used at the correct time and place, propagandists can adjust the temperature of the political climate to tear down tyrants and shift the narrative in a way that evokes specific sentiments, like hope or anger, and thus inspires rebellious action. Spreading propaganda occurs over the course of days because it typically requires time for its widespread dissemination through physical flyers and word of mouth. Once you select a specific subject for your propaganda, it typically takes 1d4+2 days for a propagandist to compose and then disseminate their work. Twice as long is required if the propaganda is contradictory to existing rumors or to the opinions of those viewing or reading it, but only half as long is necessary if the propaganda supports existing rumors and public opinion. Propaganda typically influences an entire settlement or area, though the GM can determine that it only influences specific areas like a city district in a larger city or even a single neighborhood. In these cases, you should be able to pay for more propaganda services to influence additional areas. The level of the propagandist determines how effective they and their team are at influencing the mindset of the people. The GM rolls a secret check using the bonus of the propagandist against the DC required to Gather Information on the given subject of the propaganda. On a success, the propaganda takes hold, becoming the talk of the people for 1 week, or 1 month on a critical success. On a failure, the propaganda is unsuccessful but is otherwise ignored. On a critical failure, the propaganda backfires, and further attempts at propaganda related to that subject fail for 1 week. In addition, the people in the region are aware that someone was trying to spread rumors about the subject. Propaganda (Level 1) Source Firebrands pg. 94 Price 15 gp +6; trained Propaganda (Level 2) Source Firebrands pg. 94 Price 25 gp +7 Propaganda (Level 3) Source Firebrands pg. 94 Price 40 gp +9; Expert Propaganda (Level 4) Source Firebrands pg. 94 Price 60 gp +10 Propaganda (Level 5) Source Firebrands pg. 94 Price 100 gp +12 Propaganda (Level 6) Source Firebrands pg. 94 Price 150 gp +13 Propaganda (Level 7) Source Firebrands pg. 94 Price 300 gp +15; Master"
+ },
+ {
+  "id": "propaganda-level-7",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Propaganda (Level 7)",
+  "level": 0,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Propaganda Source Firebrands pg. 94 Propaganda is strongly biased information presented in a way that may mislead those who are exposed to it. Most commonly, propaganda is used to drive a specific political agenda. While this is oftentimes a tool utilized by regimes to maintain a specific image among their oppressed people, the Firebrands use propaganda to bring shocking truths to light, drive wedges between enemy factions, and encourage uprisings against tyrannical regimes. Many groups of Firebrands specialize in the creation and dissemination of propaganda, though they are just as likely to utilize local resources to do the disseminating for them. When used at the correct time and place, propagandists can adjust the temperature of the political climate to tear down tyrants and shift the narrative in a way that evokes specific sentiments, like hope or anger, and thus inspires rebellious action. Spreading propaganda occurs over the course of days because it typically requires time for its widespread dissemination through physical flyers and word of mouth. Once you select a specific subject for your propaganda, it typically takes 1d4+2 days for a propagandist to compose and then disseminate their work. Twice as long is required if the propaganda is contradictory to existing rumors or to the opinions of those viewing or reading it, but only half as long is necessary if the propaganda supports existing rumors and public opinion. Propaganda typically influences an entire settlement or area, though the GM can determine that it only influences specific areas like a city district in a larger city or even a single neighborhood. In these cases, you should be able to pay for more propaganda services to influence additional areas. The level of the propagandist determines how effective they and their team are at influencing the mindset of the people. The GM rolls a secret check using the bonus of the propagandist against the DC required to Gather Information on the given subject of the propaganda. On a success, the propaganda takes hold, becoming the talk of the people for 1 week, or 1 month on a critical success. On a failure, the propaganda is unsuccessful but is otherwise ignored. On a critical failure, the propaganda backfires, and further attempts at propaganda related to that subject fail for 1 week. In addition, the people in the region are aware that someone was trying to spread rumors about the subject. Propaganda (Level 1) Source Firebrands pg. 94 Price 15 gp +6; trained Propaganda (Level 2) Source Firebrands pg. 94 Price 25 gp +7 Propaganda (Level 3) Source Firebrands pg. 94 Price 40 gp +9; Expert Propaganda (Level 4) Source Firebrands pg. 94 Price 60 gp +10 Propaganda (Level 5) Source Firebrands pg. 94 Price 100 gp +12 Propaganda (Level 6) Source Firebrands pg. 94 Price 150 gp +13 Propaganda (Level 7) Source Firebrands pg. 94 Price 300 gp +15; Master"
+ },
+ {
+  "id": "protect-ally",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Protect Ally",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You place your body between your friends and your enemies, protecting your allies against oncoming attacks. You choose one adjacent ally. That ally gains a +1 circumstance bonus to AC until the start of your next turn or until that ally is no longer adjacent to you, whichever comes first. You can only protect a single ally in this way. If you choose to Protect a different Ally, the previous ally loses the bonus to AC."
+ },
+ {
+  "id": "psychic-duelist-dedication",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Psychic Duelist Dedication",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Through experience and in-depth visualizations of mental battles, you've grown adept at psychic duels. You gain a +2 circumstance bonus to your initiative rolls for psychic duels. Each time you enter a psychic duel, choose one of the following benefits for the duration of that duel. - **Mind Mace** You gain a status bonus to mental damage with spells you cast equal to the spell's rank. - **Psychic Fist** You can use your standard attribute modifier for Strike damage instead of your highest mental modifier, and you can use your full AC instead of using your Will DC in place of your AC."
+ },
+ {
+  "id": "psychopomp-familiar",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Psychopomp Familiar",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Your familiar becomes a masked psychopomp-an extraplanar guardian of the cycle of souls. This familiar continues to use all the same rules as other familiars, but one of its abilities must always be speech and it has the monitor and psychopomp traits. As normal when a familiar must always have a certain ability, the speech ability counts against your familiar's abilities each day. You can select three familiar or master abilities each day, instead of two, but one must be one of the following psychopomp familiar abilities. - **Soul Sight** Your familiar gains lifesense with a range of 30 feet. - **Spirit Touch** Your familiar can touch incorporeal creatures. If you have the spell delivery master ability from your familiar, any spell the familiar delivers with it gains the benefits of the *Ghost Touch* property rune."
+ },
+ {
+  "id": "purify-element",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Purify Element",
+  "level": 8,
+  "traits": [
+   "impulse",
+   "kineticist",
+   "primal"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You turn an element into its purest form. Choose one of your kinetic elements and target up to 1 cubic foot of that element within 30 feet. (One cubic foot of liquid is roughly 8 gallons.) You remove toxins and pollutants from the element as well as anything intruding into the element, such as plant roots in soil. This can't change the grade of a material, alter the form of a manufactured object, or change the structural integrity of the element. If the purification would remove an alchemical or magical pollutant (such as a poison or curse), Purify Element attempts to counteract that impurity, using your class DC - 10 for the counteract check. If it fails to counteract a particular impurity, any further attempt you make to counteract that impurity with Purify Element fails as well."
+ },
+ {
+  "id": "purveyor-of-the-bizarre",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Purveyor of the Bizarre",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Golden Road --- Whether in Katapesh or one of the bustling markets along the Path of Salt, you've spent enough time buying and selling ancient or unusual items to give you an instinctive ability to quickly sort valuable trinkets from worthless baubles. Choose two attribute boosts. One must be to **Intelligence** or **Wisdom**, and one is a free attribute boost. You're trained in the Arcana skill and the Mercantile Lore skill. You gain the Quick Identification skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Arcana **Lore** Mercantile Lore **Skill Feat** Quick Identification"
+ },
+ {
+  "id": "putrefaction",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Putrefaction",
+  "level": 14,
+  "traits": [
+   "concentrate",
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You spoil the food and water nearby, even within your foes' bodies. Spend a Mythic Point. Enemies within 60 feet of you must succeed at a save against your class DC or spell DC (whichever is higher) or become Sickened 1. You also cause edible food to rot and potable water to turn brackish within the area. Choose a number of potions or alchemical elixirs within the area equal to your key attribute modifier and attempt a counteract against each of them using or at mythic proficiency. Your counteract rank is half your level. If you succeed, the elixir or potion spoils and becomes a mundane item."
+ },
+ {
+  "id": "pyre-tender",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Pyre Tender",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You're experienced at building funeral pyres. You might have lit flaming biers in the Land of the Linnorm Kings, tended the cremation pits of Cheliax or Vudra, or been a backwoods charcoal burner, using the right mixture of alchemy to act as an accelerant. However you worship, you know nothing sends off the departed like flame. Choose two attribute boosts. One must be to **Dexterity** or **Intelligence**, and one is a free attribute boost. You're trained in the Crafting skill and the Funeral Lore skill. You gain the Alchemical Crafting skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Crafting **Lore** Funeral Lore **Skill Feat** Alchemical Crafting"
+ },
+ {
+  "id": "quartermaster",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Quartermaster",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "An army marches on its stomach, and you have been on the forefront of ensuring your troops were properly fed and supplied. Through your logistical expertise, you understand that it can be vital to keep a tight fist around necessary supplies. And when soldiers ask for items without the proper clearance, you know how to turn them away with a withering look. Choose two attribute boosts. One must be to **Intelligence** or **Charisma**, and one is a free attribute boost. You're trained in the Intimidation skill and the Legal Lore skill. You gain the Intimidating Glare skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Intimidation **Lore** Legal Lore **Skill Feat** Intimidating Glare"
+ },
+ {
+  "id": "quick",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Quick",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Impossible Lands --- Staying alive among the scheming, ravenous undead of Geb required a deep knowledge of their motivations, capabilities, and weaknesses. More often than not, it also required the ability to weave alibis and life-preserving half-truths capable of swaying a stilled heart. Choose two attribute boosts. One must be to **Charisma** or **Constitution**, and one is a free attribute boost. You're trained in the Deception skill and the Undead Lore skill. You gain the Charming Liar skill feat. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Deception **Lore** Undead Lore **Skill Feat** Charming Liar"
+ },
+ {
+  "id": "quick-refugee",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Quick Refugee",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "The living residents of Geb are known as the quick, and it is not, overall, a very pleasant thing to be. While some of the quick choose to make the best of their lot, or even thrive in Geb's undead-dominated society, you decided that whatever terrors the outside world holds, they pale in comparison to those that make up the Gebbite upper class. And considering that escape means braving the Mana Wastes, you must have been very, very certain indeed. Choose two attribute boosts. One must be to **Dexterity** or **Wisdom**, and one is a free attribute boost. You're trained in Stealth and Undead Lore. When you Hide or Sneak successfully, you are also hidden or concealed from undeads' lifesense and other special precise senses the undead possess. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Stealth **Lore** Undead Lore"
+ },
+ {
+  "id": "quick-unlock",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Quick Unlock",
+  "level": 7,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can Pick a Lock using 1 action instead of 2."
+ },
+ {
+  "id": "rally-support",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Rally Support",
+  "level": 8,
+  "traits": [
+   "archetype",
+   "skill"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "You often rely on the local populace for supplies and shelter. Once per day, you can attempt a check to request or coerce against an easy DC for your level when speaking with someone who is a non-hostile, long-term resident of your favored location. On a success, choose one of the following to obtain. - A nonmagical item of your level or lower - A safe place to shelter for 24 hours - 3 days' worth of food and water for you and up to 5 allies"
+ },
+ {
+  "id": "rapid-switch",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Rapid Switch",
+  "level": 16,
+  "traits": [
+   "mythic"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per round **Requirements** Your Spellsurge aura is active. --- You've honed your control over your *spellsurge* aura and can rapidly alter its effects. Sustain *spellsurge* to choose a different effect for its aura."
+ },
+ {
+  "id": "ratted-out-gun-runner",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Ratted-Out Gun Runner",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Sure, you've got a checkered past. Who doesn't? It's hard to make a living in the City of Smog, so you did what you could to put silvers in your pocket and food on the table. You made a good deal of money selling firearms from the Gunworks to people who perhaps shouldn't have had them. You even worked with wasteland marauders a few times, sticking up Ustradi barges plying the river between the Gunworks and Alkenstar. Of course, you never hurt any innocents or did anything truly heinous; your criminal career was always just a matter of money. One day, a corrupt financier named Ambrost Mugland-a true crook if there ever was one-approached you, demanding a cut of your business. When you refused, he put in a word with the shieldmarshals that you'd be a certain somewhere at a certain time with a certain large quantity of illegally obtained firearms. Even though you escaped arrest, your identity was compromised, and your old accomplices have all turned their backs on you. Your gun-running days are clearly over. Now, you're just running. Choose two attribute boosts. One must be to **Dexterity** or **Wisdom**, and one is a free attribute boost. You're trained in the Stealth skill and the Firearm Lore skill. You gain the Experienced Smuggler skill feat. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Stealth **Lore** Firearm Lore **Skill Feat** Experienced Smuggler"
+ },
+ {
+  "id": "razmiran-faithful",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Razmiran Faithful",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Broken Lands --- You serve a living god who rules upon the face of Golarion, and this gives your actions a divine mandate not to be trifled with. Choose two attribute boosts. One must be to **Strength** or **Charisma**, and one is a free attribute boost. You're trained in the Intimidation skill and the Razmir Lore skill. You gain the Group Coercion skill feat. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Intimidation **Lore** Razmir Lore **Skill Feat** Group Coercion"
+ },
+ {
+  "id": "reactive-charm",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Reactive Charm",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per day **Trigger** You are the target of a spell or attack. --- You're so charming and distracting that when pressed, you can cast a simple enchantment in time to foil an attacker. You cast any of your 1st-rank enchantment spells that normally take two actions or fewer to cast. This takes effect before the triggering spell or attack, and if the attacker is affected by your spell, it can make different decisions based on the effects (for instance, if you charm the attacker and it becomes friendly to you, it can choose a different target than you for its attack or spell). The attacking creature must be in range of your chosen spell, and if your spell requires targets, the attacking creature must be a valid target. Your spell affects only the attacking creature, even if it would normally affect more targets or an area."
+ },
+ {
+  "id": "reactive-transformation",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Reactive Transformation",
+  "level": 14,
+  "traits": [
+   "druid"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** varies --- You transform reflexively when in danger. You cast Untamed Form to transform into one shape granted by one of the prerequisite feats you have, depending on the trigger. Your shape's resistances and weaknesses apply against the triggering damage. --- **Trigger** You fall 10 feet or more **Effect** Choose a shape from Aerial Form. --- **Trigger** You take bludgeoning or poison damage **Effect** Choose a primal dragon shape from Dragon Form that resists the triggering damage. --- **Trigger** You take fire damage **Effect** Choose a fire elemental shape from Elemental Form. --- **Trigger** You take poison damage **Effect** Choose a shape from Plant Form."
+ },
+ {
+  "id": "reapers-grasp",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Reaper's Grasp",
+  "level": 11,
+  "traits": [
+   "concussive",
+   "fatal-d12",
+   "kickback"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This *+2 striking arquebus* has an ashwood stock plated with worked silver, featuring a mosaic of agonized skulls carved into the metal. The mere mention of Galt's infamous final blades is enough to make any mortal creature shudder. Used to execute political opponents in the nation's constant civil war, these guillotines hold the souls of those they execute, preventing them from reaching a natural afterlife. When one of the final blades was destroyed in 4710, some of the metal from its remains made its way to Alkenstar and was reforged into a deadly firearm that retained the guillotine's soul-stealing properties. Whenever the *reaper's grasp* kills a sapient living or undead creature, a portion of that creature's soul is drawn inexorably into the weapon, and another skull is added to the mosaic as if scrawled by an invisible hand, to a maximum of 10 souls. Creatures whose souls are protected by outside forces, such as a lich's soul cage, are immune to this effect, though the process, while painful, does not prevent the soul from going to the afterlife or being resurrected. Keep track of the level of each creature whose souls are stored in the reaper's grasp. --- **Activate—Soul Shot** ⟨1⟩ (concentrate) **Requirements** There's at least one soul stored in the reaper's grasp **Effect** You channel the necromantic energy of a soul stored in the weapon into your next attack, increasing the attack's destructive power. Choose a soul stored in the weapon. The next Strike you make with the reaper's grasp before the end of your turn deals an additional void damage equal to twice the level of the creature whose soul you chose. Using this ability releases the chosen soul, and a skull on the mosaic fades away. --- **Activate—Devour Captured Soul** ⟨1⟩ (concentrate) **Requirements** There's at least one soul stored in the reaper's grasp **Effect** You channel the necromantic energy of a soul stored in the weapon into a mantle around you, protecting you from harm. Choose a soul stored in the weapon. You gain temporary Hit Points equal to three times the level of the creature whose soul you chose, which last until the end of your next turn. Using this ability releases the chosen soul, and a skull on the mosaic fades away."
+ },
+ {
+  "id": "reclaimed",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Reclaimed",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "A unit of Crimson Reclaimers saved you from certain death in the Gravelands. You spent time with one or more Crimson Reclaimers as they escorted you to safety, and you've learned the ways of this faction of the Knights of Lastwall. You consider yourself forever in their debt and defend their reputation unquestioningly against any accusations of duplicity. Choose two attribute boosts. One must be to **Constitution** or **Charisma**, and one is a free attribute boost. You're trained in the Intimidation skill and the Crimson Reclaimers Lore skill. You gain the Group Coercion skill feat. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Intimidation **Lore** Crimson Reclaimers Lore **Skill Feat** Group Coercion"
+ },
+ {
+  "id": "reclaimer-investigator",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Reclaimer Investigator",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You believe the mysterious patron of the Crimson Reclaimers has an ulterior motive that bedevils the Knights of Lastwall. Whatever the organization gains from the pact, some mysterious force with its own agenda and a need for anonymity benefits as well. You've made it your mission to determine what that agenda is before the patron decides it has manipulated from the shadows long enough. Choose two attribute boosts. One must be to **Intelligence** or **Wisdom**, and one is a free attribute boost. You're trained in the Occultism skill and the Crimson Reclaimers Lore skill. You gain the Oddity Identification skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Occultism **Lore** Crimson Reclaimers Lore **Skill Feat** Oddity Identification"
+ },
+ {
+  "id": "redeemers-pistol",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Redeemer's Pistol",
+  "level": 11,
+  "traits": [
+   "concealable",
+   "concussive",
+   "fatal-d10",
+   "good",
+   "holy",
+   "mental"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This *+2 striking dueling pistol* is fashioned from silvery steel that glistens with a radiant light. You can choose to make a nonlethal attack with the redeemer's pistol without taking a -2 penalty; if you do so, the attack deals 1d6 additional mental damage. You can also call forth the redemptive spirit within the gun to pass judgment on your foes. **Activate** ⟨5⟩ command **Frequency** once per day **Trigger** An enemy within 30 feet damages you --- **Effect** The protective spirit within the gun imposes a vision of redemption in your foe's mind. The foe must choose one of the following options. - You're unharmed by the triggering damage. - You gain resistance to all damage against the triggering damage equal to 2 + your level. After the damaging effect is applied, the enemy becomes Enfeebled 2 until the end of its next turn and takes 4 damage"
+ },
+ {
+  "id": "refugee-fall-of-plaguestone",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Refugee (Fall of Plaguestone)",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "The fighting around the Lake Encarthan region has forced many of the people residing there to flee from the violence. Although your home is gone, you have managed to survive and are making your way south in search of a better life. When play begins, you are riding along in a caravan taking you to what might be either a new home in Andoran or simply another waypoint in your journey. Choose two attribute boosts. One must be to **Constitution** or **Intelligence**, and one is a free attribute boost. You're trained in the Survival skill and the Hunting Lore skill. You gain the Forager skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Survival **Lore** Hunting Lore **Skill Feat** Forager"
+ },
+ {
+  "id": "rejuvenating-embrace",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Rejuvenating Embrace",
+  "level": 13,
+  "traits": [
+   "sarangay"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You rejuvenate your spirit by taking your rest where Mother Earth embraces Father Moon. When you rest outdoors, you can choose one of the following benefits, which lasts until your next sleep cycle and can't be changed. - **Father Moon's Vigilance** While sleeping, you don't take a penalty to Perception rolls for being unconscious. - **Mother Earth's Care** After 8 hours of sleep, you regain additional Hit Points equal to your Constitution modifier plus your level."
+ },
+ {
+  "id": "relentless-dedication",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Relentless Dedication",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore"
+  ],
+  "inRegistries": [],
+  "text": "Recruiters invite many candidates like you to train to be Knights of Lastwall, but only a select few make the cut. Whereas others lose heart, your perseverance paid off. Your commitment to the cause is so clear, it overcame whatever disqualified your previous attempts to join the new Shining Crusade. Choose two attribute boosts. One must be to **Strength** or **Constitution**, and one is a free attribute boost. You're trained in the Warfare Lore skill, and you gain the Canny Acumen feat. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Lore** Warfare Lore **Skill Feat** Canny Acumen"
+ },
+ {
+  "id": "remote-detonation",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Remote Detonation",
+  "level": 8,
+  "traits": [
+   "archetype",
+   "concentrate",
+   "force",
+   "manipulate"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Brastlewark snarecrafters know that sometimes it's more advantageous to magically destroy a snare before it's triggered. Choose a magical snare within 120 feet that you crafted. The snare is automatically destroyed and each creature in a takes damage per level of the destroyed snare with a basic save against the higher of your class DC or spell DC. --- **Special** If you detonate a broad snare or giant snare, choose one square that snare occupies to be the center of the emanation."
+ },
+ {
+  "id": "report-runner",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Report Runner",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "During times of war, armies might venture far from the seats of government that send them out or get separated from their commanders by the terrain. Thanks to your riding skill and affinity with the animals that serve as mounts, you were tasked with carrying reports of an ongoing war from one place to another. Speed was of utmost importance, and sometimes you would need to spend days in the saddle. Choose two attribute boosts. One must be to **Strength** or **Wisdom**, and one is a free attribute boost. You're trained in the Nature skill and the Stabling Lore skill. You gain the Express Rider skill feat. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Nature **Lore** Stabling Lore **Skill Feat** Express Rider"
+ },
+ {
+  "id": "reset-the-past",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Reset the Past",
+  "level": 14,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per day --- You manipulate time to recharge one of your temporal techniques—by revising your past so you never used it in the first place. Select one of your chronoskimmer feats that has a frequency of once per day (or more frequent) that you've already used. You can use the feat again, as if you hadn't used it already."
+ },
+ {
+  "id": "resilient-physiology",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Resilient Physiology",
+  "level": 5,
+  "traits": [
+   "nephilim"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per day **Requirements** You're afflicted by a disease or poison, or are taking persistent damage. --- Your ordered physiology rejects unwelcome elements, allowing you to reject the negative effects of poisons and diseases or shrug off other lasting negative effects. Choose one. **Disease or Poison** Attempt a saving throw against the affliction. On a failure or critical failure, the affliction's stage doesn't increase. **Persistent Damage** Attempt a to recover from the persistent damage."
+ },
+ {
+  "id": "restore-the-mind",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "Restore the Mind",
+  "level": 1,
+  "traits": [
+   "emotion",
+   "healing",
+   "mental",
+   "psyche",
+   "psychic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your unleashed psyche gives you closer connections to the emotions of your allies, letting you project reassurance and strength that replenishes their mind and body. Choose one of the two benefits to grant one ally within 30 feet that you can see. That ally is then temporarily immune for 10 minutes. - The ally gains a +1 status bonus to saving throws against mental effects until your psyche ends. - The ally regains Hit Points equal to 2 + double your level."
+ },
+ {
+  "id": "returned",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Returned",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore"
+  ],
+  "inRegistries": [],
+  "text": "You died and miraculously returned with knowledge of the realms beyond death and a stronger link to life. Some dead and undead souls might feel a strange, instinctual kinship with you. Choose two attribute boosts. One must be to **Constitution** or **Wisdom**, and one is a free attribute boost. You gain the Diehard feat and the Additional Lore feat for Boneyard Lore. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Lore** Boneyard Lore (with Additional Lore Perks) **Skill Feat** Diehard"
+ },
+ {
+  "id": "returning-descendant",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Returning Descendant",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You aren't from Breachill yourself-you might not even be from Isger or Avistan at all. You've lived a hard life, in any event. You have often had to make tough decisions, and have developed a knack for understanding how things work (and the best way to take them apart) that has helped you support yourself. Recently you discovered that an ancestor was from the town of Breachill and had a modest career as an adventurer. You can't help but wonder if you would have had an easier life if you'd grown up there instead, and have decided to seek out this small town to learn more about it. You've decided to respond to the Call for Heroes to follow in your ancestor's footsteps, either to honor their memory or accomplish the great deeds they did not. Choose two attribute boosts. One must be to **Dexterity** or **Wisdom**, and one is a free attribute boost. You're trained in the Thievery skill and the Engineering Lore skill. You gain the Pickpocket skill feat. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Thievery **Lore** Engineering Lore **Skill Feat** Pickpocket"
+ },
+ {
+  "id": "revenant",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Revenant",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You died. No real doubt about that. Bullet to the brain or knife to the throat, you were dead as dead can be. Then you got back up again. Maybe you had some unfinished business, or maybe you were just so tough and so mean that Hell itself spat you out. Either way, you came back for a reason. Choose two attribute boosts. One must be to **Constitution** or **Charisma**, and one is a free attribute boost. You're trained in Religion and Boneyard Lore. You're still alive, not undead, but you have the void healing ability, which means you're harmed by vitality damage and healed by void effects as if you were undead. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Religion **Lore** Boneyard Lore"
+ },
+ {
+  "id": "revolutionary-innovation",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "Revolutionary Innovation",
+  "level": 15,
+  "traits": [
+   "inventor"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You are an unparalleled genius and have discovered a technique that will revolutionize your chosen field—or at least for the time being, your innovation! Choose a revolutionary modification to apply to your innovation. You can also choose an initial or breakthrough modification of the same type instead, if you prefer. ### Revolutionary Armor Modifications - **Automated Impediments:** Your armor uses electromagnetic fields, subharmonic distortions, or other techniques to make it difficult for those close to you to move unless you allow it. While wearing your armor, all spaces adjacent to you are difficult terrain for your enemies. - **Energy Barrier:** Your armor's defenses ablate any kind of energy coming your way. While wearing your armor, you gain resistance to all energy damage (acid, cold, electricity, fire, force, sonic, vitality, and void damage) equal to 2 + half your level. You must have the harmonic oscillator, metallic reactance, or phlogistonic regulator modification to select this modification. - **Incredible Resistance:** You've improved upon your breakthrough modification's ability to resist damage. Choose one of the following breakthrough modifications your innovation has: dense plating, layered mesh, or tensile absorption. Increase the resistance you gain from that modification to be equal to your level, instead of half your level. - **Multisensory Mask (subterfuge suit only):** You've built a multisensory mask over your armor that protects you by distorting your figure from all senses, leaving behind only a hazy image, muffled sounds, and so forth. While wearing the armor, you gain concealment against all creatures, even if they are using a nonvisual precise sense, such as a bat's echolocation. As normal for effects that leave your location obvious, you can't use this concealment to Hide or Sneak. If you use a hostile action, the concealment ends until you restore the mask as a single action, which has the manipulate trait. - **Perfect Fortification (power suit only):** You've outfitted your armor with such heavy fortifications that deadly attacks often lose their edge. Each time you're critically hit while wearing the armor, attempt a DC 13 flat check. On a success, it becomes a normal hit. This isn't cumulative with *fortification* runes or other abilities that reduce critical hits with a flat check. Additionally, you gain resistance 2 + half your level against precision damage. - **Physical Protections:** Your armor has so many adjustments and precautions that it can guard against all physical damage. While wearing your armor, you gain resistance to all physical damage (bludgeoning, piercing, and slashing damage, as well as persistent bleed damage) equal to half your level. You must have the dense plating, layered mesh, or tensile absorption breakthrough modification to select this modification. - **Rune Capacity:** Whether you've done some dabbling in orichalcum alloys or found another engineering solution, you've built your innovation in such a way that it can hold an additional property rune. Your innovation can have one more property rune than a normal item of its kind (to a maximum of four property runes with a +3 *po"
+ },
+ {
+  "id": "ricochet-shot",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Ricochet Shot",
+  "level": 12,
+  "traits": [
+   "concentrate",
+   "gunslinger"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You bounce your shot off a nearby surface to strike your opponent from an unexpected angle. Attempt a Strike with a firearm or crossbow. When determining whether a target has cover from this Strike, you can choose one solid surface within your weapon's first range increment to ricochet your shot off of. If you do, you determine the target's cover from the point where you ricochet your shot instead of from you."
+ },
+ {
+  "id": "rigger",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Rigger",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You've worked as a roustabout to erect tents and set up rigging for acrobatic performances; you've sometimes even aided aerialists and acrobats in their death-defying training. Even though your work is often done before the crowds arrive, you know your skills contribute to the success and safety of the circus. Mistress Dusklight treats her roustabouts as little more than slaves, and you've resolved to join a company where your expertise is appreciated. Choose two attribute boosts. One must be to **Strength** or **Dexterity**, and one is a free attribute boost. You're trained in the Athletics skill and the Circus Lore skill. You gain the Combat Climber skill feat. --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Trained Skill** Athletics **Lore** Circus Lore **Skill Feat** Combat Climber"
+ },
+ {
+  "id": "righteous-call",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Righteous Call",
+  "level": 0,
+  "traits": [
+   "holy"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Righteous Call Source GM Core pg. 311 Aspect Celestial Activate (concentrate, manipulate) Frequency once per day; Effect Holy magic fills your armaments, making them true weapons against evil. For 1 minute, your weapons and unarmed attacks gain the holy weapon rune while you hold them. If a weapon is at its limit on property runes, you can choose one property rune on the weapon to go dormant while the holy rune takes effect. In addition, Strikes your allies make while they're within 30 feet of you gain the holy trait."
+ },
+ {
+  "id": "ring-of-fair-assessment",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Ring of Fair Assessment",
+  "level": 7,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "While the Kalistocrats of Druma profiteer off selling weapons to both Hellbreakers and Hellknights, they also offer options suitable for intelligence and counterintelligence efforts. This white gold ring grants you a +1 item bonus to skill checks to Decipher Writing that's primarily numerical or mathematical in nature as well as to skill checks to Make an Impression and Coerce to convince others of the fairness or accuracy of your judgments. **Activate—Fair Assessment** ⟨2⟩ (concentrate, manipulate, mental) **Frequency** once per hour --- **Effect** The Prophecies of Kalistrade reveal the secrets of wealth to you; this appears as a balance sheet of numbers only you can see. Choose an area of up to 1 cubic foot within 30 feet; you can estimate the value in gold pieces of any items within this area. If you attempt to estimate the value of items worn or held by a creature, you must succeed at a Society check to Decipher Writing against their Will DC."
+ },
+ {
+  "id": "ring-of-maniacal-devices",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Ring of Maniacal Devices",
+  "level": 11,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This magic ring seems like simple tarnished brass, but it enhances your curiosity about traps and devices of all kinds. You can use an Interact action to pull a Thieves' Toolkit from the ring. This toolkit appears in your hand and any part of it folds back into the ring if they would leave your possession. They grant you a +2 item bonus to Thievery checks to Disable a Device and to Pick a Lock, and the ring's insights grant you the same bonus to Crafting checks to Craft and Repair snares and traps. --- **Activate—Fireball Trap** 10 minutes (manipulate) **Frequency** once per day **Effect** You create the effects of a Rune Trap trap ritual containing Fireball. You can have only one trapped rune from a *ring of maniacal devices* active at a time, even if you have multiple rings, and the rune disappears if you lose your investiture in the ring."
+ },
+ {
+  "id": "ring-of-maniacal-devices-greater",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Ring of Maniacal Devices (Greater)",
+  "level": 18,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This magic ring seems like simple tarnished brass, but it enhances your curiosity about traps and devices of all kinds. You can use an Interact action to pull a Thieves' Toolkit from the ring. This toolkit appears in your hand and any part of it folds back into the ring if they would leave your possession. They grant you a +3 item bonus to Thievery checks to Disable a Device and to Pick a Lock, and the ring's insights grant you the same bonus to Crafting checks to Craft and Repair snares and traps. --- **Activate—Fireball Trap** 10 minutes (manipulate) **Frequency** once per day **Effect** You create the effects of a Rune Trap ritual containing your choice of either a 7th-rank Howling Blizzard or 7th-rank Fireball. You can have only one trapped rune from a *ring of maniacal devices* active at a time, even if you have multiple rings, and the rune disappears if you lose your investiture in the ring."
+ },
+ {
+  "id": "rivethun-adherent",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Rivethun Adherent",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Shining Kingdoms --- You have spent time learning the practices and traditions of the ancient Rivethun dwarven shamans and can recognize all sorts of magic. You may have chosen your own road since then, or you may remain an adherent of the philosophy. Choose two attribute boosts. One must be to **Constitution** or **Wisdom**, and one is a free attribute boost. You're trained in the Occultism skill and the Spirit Lore skill. You gain the Recognize Spell skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Occultism **Lore** Spirit Lore **Skill Feat** Recognize Spell"
+ },
+ {
+  "id": "rogues-racket",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "Rogue's Racket",
+  "level": 1,
+  "traits": [
+   "rogue"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've begun to develop your techniques and approach to a job, while building your reputation in rogues' circles. Choose a rogue's racket from the list below. Eldritch Trickster Mastermind Ruffian Scoundrel Thief"
+ },
+ {
+  "id": "root-worker",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Root Worker",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Some ailments can't be cured by herbs alone. You learned ritual remedies as well, calling on nature spirits to soothe aches and ward off the evil eye. Taking up with adventurers has given you company on the road, as well as protection from those who would brand you a fake—or worse. Choose two attribute boosts. One must be to **Intelligence** or **Wisdom**, and one is a free attribute boost. You're trained in the Occultism skill and the Herbalism Lore skill. You gain the Root Magic skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Occultism **Lore** Herbalism Lore **Skill Feat** Root Magic"
+ },
+ {
+  "id": "rostland-partisan",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Rostland Partisan",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Broken Lands --- You grew up among the southern houses of Brevoy in old Rostland. You're accustomed to arguing from a position of underappreciated worth. Choose two attribute boosts. One must be to **Constitution** or **Charisma**, and one is a free attribute boost. You're trained in the Diplomacy skill and the Politics Lore skill. You gain the Group Impression skill feat. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Diplomacy **Lore** Politics Lore **Skill Feat** Group Impression"
+ },
+ {
+  "id": "rostlander",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Rostlander",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You were raised in the south of Brevoy, a land of dense forests and rolling plains, of crystalline rivers and endless sapphire skies. You come from hardy stock and were raised with simple sensibilities-that hard work earns well-deserved gains, the importance of charity and compassion, and the value of personal and familial honor. Yours is the country of the Aldori swordlords and the heroes who refused to bend before the armies of a violent conqueror. You care little for matters of politics and nobles or of deception and schemes. You are thoroughly Brevic, and the call for champions willing to expand your land's influence into the Stolen Lands has inflamed your sense of patriotism and honor, and so you have joined an expedition to journey southward and build a kingdom. Choose two attribute boosts. One must be to **Strength** or **Constitution**, and one is a free attribute boost. You're trained in the Athletics skill and the Farming Lore skill. You gain the Hefty Hauler skill feat. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Trained Skill** Athletics **Lore** Farming Lore **Skill Feat** Hefty Hauler"
+ },
+ {
+  "id": "rough-rider",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Rough Rider",
+  "level": 1,
+  "traits": [
+   "goblin"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses",
+   "featFeatGrants"
+  ],
+  "text": "You are especially good at riding traditional goblin mounts. You gain the Ride feat, even if you don't meet the prerequisites. You gain a +1 circumstance bonus to Nature checks to use Command an Animal on a goblin dog or wolf mount. If you gain a wolf as an animal companion, it gains the mount special ability (and if you gain an ability that grants you an animal companion with the mount special ability, you can choose a wolf)."
+ },
+ {
+  "id": "royalty",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Royalty",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You are a prominent member of a royal family. You have eschewed the daily routines of royal life and taken up an adventurous quest—perhaps you're a deposed queen hoping to regain her throne, a prince seeking a more exciting life, or a sovereign's heir on a secret mission. Choose two attribute boosts. One must be to **Intelligence** or **Charisma**, and one is a free attribute boost. You are trained in Society. You gain the Courtly Graces skill feat and can influence commoners in your family's territory, as well as nobility anywhere. If you later gain the Leverage Connections skill feat, you automatically have common and noble connections within any community in your royal family's territory and have noble connections in large communities outside your territory. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Society **Skill Feat** Courtly Graces"
+ },
+ {
+  "id": "ruby-phoenix-enthusiast",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Ruby Phoenix Enthusiast",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Named for the legendary sorcerer Hao Jin, the Ruby Phoenix Tournament occurs once every 10 years in Goka and attracts extraordinary talent from across the world. You might have begun training for the tournament but never participated, or perhaps you entered the tournament only to be defeated by (and inspired to join) the Pathfinder Society. Either way, your dedicated training prepares you for the rigors of the adventuring lifestyle. Choose two attribute boosts. One must be to **Strength** or **Dexterity**, and one is a free attribute boost. You're trained in the Athletics skill and the Gladiatorial Lore skill. You gain the Combat Climber skill feat. In addition, you gain access to one of the following uncommon monk weapons: - Kama, - Nunchaku, - Sai, - Shuriken, or - Temple Sword. --- **Special** You can select this background only if you have earned credit for at least 5 First Edition scenarios from Season 3 of the Pathfinder Society organized play campaign. --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Trained Skill** Athletics **Lore** Gladatorial Lore **Skill Feat** Combat Climber"
+ },
+ {
+  "id": "ruby-phoenix-fanatic",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Ruby Phoenix Fanatic",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore"
+  ],
+  "inRegistries": [],
+  "text": "Have you heard of the peerless sorcerer Hao Jin, also known as the Ruby Phoenix? Of course you have! You're her biggest fan! She's got amazing powers of self-resurrection, her hair is as red and fiery as a phoenix, and she has a huge vault full of the most incredible treasures in the multiverse. Now she's finally back from a mysterious 300-year quest on the plane of Axis so she can host this year's Ruby Phoenix Tournament—and you can't wait to meet her! In order to get as close to Hao Jin as possible, you've researched everything there is to know about the Ruby Phoenix's home, her planar escapades, and her competition. You've also trained your body to prove yourself a worthy champion. When Hao Jin's committee invited you and some friends to take part in the tournament's prequalifier, you just about fainted from excitement. Is your dream of meeting the Ruby Phoenix about to come true? As long as you win enough matches to get into the actual tournament, it just might! Just try not to act too star-struck when you finally get a chance to talk to her, okay? Choose two attribute boosts. One must be to **Constitution** or **Intelligence**, and one is a free attribute boost. You're trained in the Axis Lore, Gladiatorial Lore, and Goka Lore skills. You gain the Dubious Knowledge skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Lore** Axis Lore **Skill Feat** Dubious Knowledge"
+ },
+ {
+  "id": "ruin-delver",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Ruin Delver",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You've looked through some of the smaller ruins in the Otari hinterlands but have never quite built up the courage to check out the creepy lighthouse called Gauntlight. You've heard that these ruins are pretty well picked over, and mostly collapsed, but you always planned to some day explore them and perhaps find some bauble left behind from the centuries-old battle where the Roseguard slew an evil sorcerer. You know that the crumbled stone of old ruins has a tendency to shift, so you'd better step lightly if you get the chance to explore Gauntlight. Choose two attribute boosts. One must be to **Dexterity** or **Intelligence**, and one is a free attribute boost. You're trained in Acrobatics and the Roseguard Lore skill. You gain the Cat Fall skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Acrobatics **Lore** Roseguard Lore **Skill Feat** Cat Fall"
+ },
+ {
+  "id": "runelord-researcher",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Runelord Researcher",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "choice",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "For thousands of years, the looming monoliths found throughout the Saga Lands were a source of pride, fear, and curiosity, yet the dangers associated with them and the gulf of time itself kept their secrets mostly hidden. When Runelord Karzoug rose from his eons-long slumber in 4707 ar, these ancient secrets became thrust into the light, and Thassilon's legacy became a topic of modern discussion and exploration. The foundation of New Thassilon only strengthened this shift, and now you're one of many who have devoted your studies on the deep history of Thassilon and its runelords—a topic still shrouded in mystery. Whether the focus of your studies has been one of the more recently active runelords, like Karzoug, Alaznist, Belimarius, or Sorshen, or you're focused on one of the more obscure dozens of runelords who ruled during the centuries Thassilon existed, your knowledge has made you an invaluable asset on many adventures in the Saga Lands. It's also attracted Queen Sorshen's attention, and in her invitation to attend the opening ceremonies for the Circle of Open Hands, she made it clear she wants to engage you in several long discussions about the truths of ancient Thassilon, impressing upon you that while the runelords (including herself, she admits) of the ancient era were cruel and domineering, that many of the wonders they created could benefit the modern age–if people could trust that these wonders were safe! With your aid, she hopes to bring these innovations back. Choose two attribute boosts. One must be to **Dexterity** or **Intelligence**, and the other is a free attribute boost. You're trained in Arcana and Academia Lore. When you Recall Knowledge about runelords or ancient Thassilon, you gain a +2 circumstance bonus to the check. You automatically recognize the name and time of rule of any runelord you encounter or see an accurate representation of (such as a painting or statue). In addition, during your daily preparations, you can choose one of the following schools of Thassilonian rune magic to focus your mind on, gaining a +1 status bonus to saving throws against the listed effect for the next 8 hours. - **Envy** any effect that has the incapacitation trait (against foes who are higher level than you, the status bonus increases to +2) - **Gluttony** death effects and void - **Greed** polymorph and effects that can cause the following conditions: enfeebled, clumsy, or petrified - **Lust** emotion - **Pride** illusion - **Sloth** effects that cause paralysis, slow, stun, or that grant penalties to your Speed - **Wrath** effects that cause acid, cold, electricity, fire, or sonic damage (choose one) --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Arcana **Lore** Academia Lore"
+ },
+ {
+  "id": "runelord-survivor",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Runelord Survivor",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Whether you're a native-born Saga Lander or someone who came to this region relatively recently, you were there when Runelord Karzoug woke, when Runelord Krune's followers attempted to resurrect him, or when Runelord Alaznist's attempt to rework the flow of time itself brought ruin and death down upon the region. You barely escaped with your life and likely lost everything (perhaps even friends and family) as a result of a runelord's ambition. Since then, you've managed to rebuild and recover, and the other PCs are now among your closest friends—you might even regard them as your new family—yet your need for revenge against the runelords has become the primary motivation to better yourself, gain power, and indeed become the renowned hero you are today. If you played through a previous runelord-themed Adventure Path, with your GM's aid you could be one of the NPCs who featured in one of those adventures and watched in fear as that campaign's PCs did the best they could to oppose the runelords. You may or may not blame those PCs for the tragedy that befell you, but you always know it was one of the runelords themselves who was the ultimate cause of your pain. For some time—perhaps even years—after your brush with a runelord nearly killed you, you were forced to scavenge to survive in the wilds, perhaps in hiding or possibly because you had no other choice. In that time, you learned much about the natural world, but perhaps more important to your future plans, upon reintegrating into society you began to study the arts of war to achieve vengeance. When you received an invitation from Queen Sorshen to attend the opening ceremonies for the Circle of Open Hands, you may have had conflicting feelings or even pondered using the opportunity to get revenge. Yet in her invitation, the fact that she apologized for your suffering and made it clear that she wants to make amends for all of those who suffered from the actions of her fellow runelords over the past several years gave you pause. If she truly does seek repentance and wants to help repair the damage the runelord legacy has wrought upon the world, her aid would go a long way toward enabling your own peace of mind. Choose two attribute boosts. One must be to **Constitution** or **Wisdom**, and the other is a free attribute boost. You are trained in Nature and Warfare Lore. You gain the Hunt Runelord action. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Nature **Lore** Warfare Lore"
+ },
+ {
+  "id": "sabotage",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Sabotage",
+  "level": 4,
+  "traits": [
+   "incapacitation",
+   "rogue"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You have a free hand. --- You subtly damage others' equipment. Choose one item that a creature within your reach wields or carries. The item must have moving parts that you could possibly sabotage (a shortbow could be sabotaged, but a longsword could not). Attempt a Thievery check against the Reflex DC of the creature. Damage dealt by Sabotage can't take the item below its Broken Threshold. --- **Critical Success** You deal damage equal to 4 x your Thievery proficiency bonus. **Success** You deal damage equal to double your Thievery proficiency bonus. **Critical Failure** The item is temporarily immune to your Sabotage for 1 day."
+ },
+ {
+  "id": "saboteur",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Saboteur",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Whether you do it for personal enjoyment or at the behest of a mercenary company or military organization, you have a knack for destroying things. You have a sense for an object or structure's weak spots and know where to deliver a hammer strike or alchemical bomb. You adventure to hone your skills or complete a particular mission. Choose two attribute boosts. One must be to **Strength** or **Dexterity**, and one is a free attribute boost. You're trained in the Thievery skill and the Engineering Lore skill. You gain the Concealing Legerdemain skill feat. --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Trained Skill** Thievery **Lore** Engineering Lore **Skill Feat** Concealing Legerdemain"
+ },
+ {
+  "id": "sailor",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Sailor",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You heard the call of the sea from a young age. Perhaps you signed onto a merchant's vessel, joined the navy, or even fell in with a crew of pirates and scalawags. Choose two attribute boosts. One must be to **Strength** or **Dexterity**, and one is a free attribute boost. You're trained in the Athletics skill and the Sailing Lore skill. You gain the Underwater Marauder skill feat. --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Trained Skill** Athletics **Lore** Sailing Lore **Skill Feat** Underwater Marauder"
+ },
+ {
+  "id": "sanctify-water",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Sanctify Water",
+  "level": 2,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You imbue water with your deity's blessing. Choose a container of water with light Bulk possessed by you or an ally within your reach. Until the end of your next turn, it becomes holy water or unholy water. You can choose holy water if your deity allows holy sanctification, unholy water if your deity allows unholy sanctification, or either if your deity allows both sanctifications. This is a temporary effect and doesn't impart monetary value or allow the water to be used for costs of rituals or the like. If you're a master in Religion, you can sanctify two containers when you take this action, and if you're legendary, you can sanctify three."
+ },
+ {
+  "id": "sarkorian-reclaimer",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Sarkorian Reclaimer",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Broken Lands --- Whether you trace your heritage to lost Sarkoris or are a crusader trying to atone for past fanatics' wrongs, you seek to liberate the Sarkorian homeland from the demons who have defiled it. Choose two attribute boosts. One must be to **Constitution** or **Wisdom**, and one is a free boost. You're trained in the Medicine skill and the Abyssal Lore skill. You gain the Battle Medicine skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Medicine **Lore** Abyssal Lore **Skill Feat** Battle Medicine"
+ },
+ {
+  "id": "sarkorian-survivor",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Sarkorian Survivor",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Broken Lands --- The devastation and carnage of the Worldwound were nearly complete, but you somehow managed to survive it. Choose two attribute boosts. One must be to **Strength** or **Constitution**, and one is a free boost. You're trained in the Survival skill and the Sarkorian History Lore skill. You gain the Forager skill feat. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Trained Skill** Survival **Lore** Sarkorian History Lore **Skill Feat** Forager"
+ },
+ {
+  "id": "saved-by-clockwork",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Saved by Clockwork",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Through bloody combat, a terrible accident, or purposeful sacrifice, you've lost some piece of your body that has been replaced with a clockwork mechanism. Whether your arm is now a whirring series of pumps, steel coils, and iron gears; your heart a intricate crystal clock that requires winding every day; or your lower leg a sculpted metal tube powered by adamantine springs and steam, part of you needs regular maintenance and repair. You might have received instructions from the brilliant inventor who saved you, or you might have woken up on a battlefield with no memory of the procedure or the individuals involved. Regardless, you possess the knowledge to take care of yourself-even if it's how to wind a key in your own heart or reconstruct a mechanical foot. Choose two attribute boosts. One must be to **Strength** or **Intelligence**, and one is a free attribute boost. You're trained in the Crafting skill. Every day you must perform 10 minutes of maintenance and wind up your clockwork parts, or you risk failure of the components, with consequences depending on what you replaced (determined by you and the GM). Your clockwork components allow you to react to danger with alacrity. You gain a +2 circumstance bonus to initiative rolls. --- ## Background details **Attribute Boosts** Intelligence or Strength, one free **Trained Skill** Crafting"
+ },
+ {
+  "id": "scarnetti-connected",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Scarnetti-Connected",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "There's no denying that the Scarnettis, once one of Sandpoint's most established and successful families, have fallen on hard times. When locals were hired to help rebuild the Scarnetti manor after the giant raid on Sandpoint 17 some years ago, rumors about the family's shady deals with local criminals associated with the Bunyip Club began to spread. While no hard evidence ever came to light, those associated with the Bunyip Club cut ties and Titus Scarnetti had to spend years trying to rebuild the family reputation while also replenishing the family treasury after rebuilding their ostentatious cliffside mansion. With the Varisian Compact coming up for renewal, old wounds have resurfaced as well; people haven't forgotten the actions of Alamon Scarnetti, who nearly destroyed Sandpoint before it was born when he led a drunken raid against local Varisians after diplomatic discussions became strained. Your relationship with the Scarnettis has ensured you're part of all of this, like it or not. You don't bear the family name, but you might be a distant relation from Riddleport or Magnimar hoping for a new chance at life. You could be a petty criminal whose fines were paid by the Scarnettis in return for a promise of service for several months or years. You might even admire the family's tenacity and see in the Scarnettis a chance for your own fortune. The majority of your work for them has either been at one of the family's mills (the Sandpoint Lumber Mill or the Scarnetti Mill), or as one of their agents and \"watchdogs\" at another business in town, where you were expected to keep an eye out for rumors and opportunities that the family could benefit from. Your knack at making lies seem like compliments helped you excel in this role, and while the Scarnettis do seem to appreciate your apparent loyalty (or at least the services you've provided in the past), they haven't yet fully embraced you into their circle. Whether that's something you want or seek to escape from, you can't ignore the fact that your reputation as a Scarnetti ally has tarnished your standing with the Sandpoint Cathedral, simply as a side effect of the growing animosity between the two factions. Your home might be with your family, or you could have been staying in a room rented to you at a discount (or perhaps even free of charge) from the Scarnettis, but those accommodations have recently come to an end. Joining this new adventuring group gives you an opportunity to make some of your own money, perhaps get out from under the Scarnettis' shadow, or might even be the leverage you hope to build to finally earn old Titus's approval. Choose two attribute boosts. One must be to **Charisma** or **Dexterity**, and one is a free attribute boost. You're trained in the Intimidation skill and the Mercantile Lore skill. You gain the Charming Liar skill feat. Increase the party's reputation with the Scarnetti Consortium by 1 and reduce the party's reputation with the Sandpoint Cathedral by 1. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Intimidation **Lore** Mercantile Lore **Skill Feat** Charming Liar"
+ },
+ {
+  "id": "scholar",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Scholar",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkillChoice"
+  ],
+  "inRegistries": [],
+  "text": "You have a knack for learning and sequestered yourself from the outside world to learn all you could. You read about so many wondrous places and things in your books, always dreaming about one day seeing the real things. Eventually, that curiosity led you to leave your studies and become an adventurer. Choose two attribute boosts. One must be to **Intelligence** or **Wisdom**, and one is a free attribute boost. You're trained in your choice of the Arcana, Nature, Occultism, or Religion skill, and gain the Assurance skill feat in your chosen skill. You're also trained in the Academia Lore skill. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Lore** Academia Lore"
+ },
+ {
+  "id": "scholar-of-battlefields",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Scholar of Battlefields",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Though you probably don't revel in the violence of war, you are fascinated by battlefield tactics and regional conflicts' effects on history. Perhaps you traveled to Cheliax to study its strategies, document its logistical innovations, and chronicle events. You might instead be an enterprising mercenary looking to sell your services in the conflict. No matter your original intentions, you've become mired in Corentyn's martial law, and the more that Cheliax harms its own citizens to maintain wartime compliance, the more eager you've become to aid its enemies. Choose two attribute boosts. One must be to **Strength** or **Intelligence**, and one is a free attribute boost. You're trained in Athletics and the Warfare Lore skill. You gain the Relentless Assault action. --- ## Background details **Attribute Boosts** Intelligence or Strength, one free **Trained Skill** Athletics **Lore** Warfare Lore"
+ },
+ {
+  "id": "scholar-of-the-ancients",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Scholar of the Ancients",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - High Seas --- You're fascinated by the lost Azlanti Empire and have dedicated yourself to seeking out and studying every broken artifact or scrap of knowledge that remains, whether as an academic pursuit or simply for the joy of treasure hunting. Choose two attribute boosts. One must be to **Intelligence** or **Charisma**, and one is a free attribute boost. You're trained in the Arcana skill and the Azlant Lore skills. You gain the Quick Identification skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Arcana **Lore** Azlant Lore **Skill Feat** Quick Identification"
+ },
+ {
+  "id": "scholar-of-the-sky-key",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Scholar of the Sky Key",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "The unfamiliar technology of Numeria's Silver Mount still baffles Society scholars, yet you are one of the innovators who discovered how to operate a handful of these futuristic tools-possibly after surviving more than a few explosions. The Society might have recruited you for your esoteric abilities, or you might have sought out the Society's protection in escaping the covetously vile Technic League. Even if your understanding of advanced technology is imperfect, your hard-learned lessons are invaluable in deciphering and repairing gear. Choose two attribute boosts. One must be to **Constitution** or **Intelligence**, and one is a free attribute boost. You're trained in the Crafting skill and the Engineering Lore skill. You gain the Quick Repair skill feat. --- **Special** You can select this background only if you have earned credit for at least 5 First Edition scenarios from Season 6 of the Pathfinder Society organized play campaign. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Crafting **Lore** Engineering Lore **Skill Feat** Quick Repair"
+ }
+]

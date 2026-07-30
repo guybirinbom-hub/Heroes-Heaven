@@ -1,0 +1,1231 @@
+[
+ {
+  "id": "varisian-wanderer",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Varisian Wanderer",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Saga Lands --- You have spent your youth wandering the lands of Varisia and beyond among the brightly painted wagons of a Varisian caravan. You have heard endless tales of your people's history and lore, and have learned many songs and stories from the disparate people you have met. Choose two attribute boosts. One must be to **Dexterity** or **Charisma**, and one is a free attribute boost. You're trained in the Performance skill and the Circus Lore skill. You gain the Fascinating Performance skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Performance **Lore** Circus Lore **Skill Feat** Fascinating Performance"
+ },
+ {
+  "id": "verdant-presence",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Verdant Presence",
+  "level": 20,
+  "traits": [
+   "druid"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per hour **Trigger** You take damage or cast a primal spell. --- The life-giving properties of the *aeon orbs* flourish within you. Small plants or fungi magically appear on all surfaces in a around you. This life withers after 1 day unless the environment can support it. You can choose one of the following options each time you use this feat. - You can cause any number of 5-foot squares in the area to be light undergrowth, which is difficult terrain and provides lesser cover. - You can cause a tree or giant mushroom to appear in any unoccupied location in the area; it occupies an entire 5-foot square and provides standard cover. The tree or mushroom has 5 Hardness and 50 Hit Points."
+ },
+ {
+  "id": "veteran",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Veteran",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You have seen more battles than you can remember and have managed to make it through them mostly intact. Nothing surprises you anymore, except maybe when things actually go as planned. You are always pleasantly surprised when you manage to survive another day. Choose two attribute boosts. One must be to **Constitution** or **Wisdom**, and one is a free attribute boost. You're trained in the Athletics skill and the Warfare Lore skill. You gain the Armor Assist skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Athletics **Lore** Warfare Lore **Skill Feat** Armor Assist"
+ },
+ {
+  "id": "victory-plate",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Victory Plate",
+  "level": 9,
+  "traits": [
+   "bulwark",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "The metal plates of this *+1 resilient full plate* are covered by a bright tabard featuring a distinctive coat of arms divided into four fields. This insignia magically records your recent victories, displaying one triumph in each field of the coat of arms, allowing you to call upon those victories for aid in future battles. --- **Activate** ⟨4⟩ envision **Trigger** You kill or destroy a creature of a level equal to or greater than your *victory plate* (adjusted as usual if you add fundamental runes to victory plate). This creature must have one of the traits listed in the second activation **Effect** You direct the armor to commemorate your victory. The coat of arms on the armor's tabard shifts to incorporate heraldry related to the slain creature, and the victory is recorded within the tabard. If you have already recorded four victories, choose one to replace with the new victory. --- **Activate** ⟨2⟩ envision, Interact **Frequency** once per hour **Effect** You touch one of the tabard's four fields representing one of your victories and recall your triumph over that creature. That creature vanishes from the tabard, and for 1 minute, you gain resistance 5 to a damage type based on the creature's trait (you gain resistance to only one type, even if the creature has more than one trait that could apply): - **Aberration or Fey** mental - **Celestial** good - **Construct** poison - **Dragon or Elemental** one energy type that matches one of the dragon's or elemental's traits - **Fiend** evil - **Ooze** precision, and the resistance is 10 - **Undead** void"
+ },
+ {
+  "id": "victory-plate-greater",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Victory Plate (Greater)",
+  "level": 15,
+  "traits": [
+   "bulwark",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "The metal plates of this *+2 greater resilient full plate* are covered by a bright tabard featuring a distinctive coat of arms divided into four fields. This insignia magically records your recent victories, displaying one triumph in each field of the coat of arms, allowing you to call upon those victories for aid in future battles. --- **Activate** ⟨4⟩ envision **Trigger** You kill or destroy a creature of a level equal to or greater than your *victory plate* (adjusted as usual if you add fundamental runes to victory plate). This creature must have one of the traits listed in the second activation **Effect** You direct the armor to commemorate your victory. The coat of arms on the armor's tabard shifts to incorporate heraldry related to the slain creature, and the victory is recorded within the tabard. If you have already recorded four victories, choose one to replace with the new victory. --- **Activate** ⟨2⟩ envision, Interact **Frequency** once per minute **Effect** You touch one of the tabard's four fields representing one of your victories and recall your triumph over that creature. That creature vanishes from the tabard, and for 1 minute, you gain resistance 10 to a damage type based on the creature's trait (you gain resistance to only one type, even if the creature has more than one trait that could apply): - **Aberration or Fey** mental - **Celestial** good - **Construct** poison - **Dragon or Elemental** one energy type that matches one of the dragon's or elemental's traits - **Fiend** evil - **Ooze** precision, and the resistance is 20 - **Undead** void"
+ },
+ {
+  "id": "vidrian-reformer",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Vidrian Reformer",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Mwangi Expanse --- You know that the only way your homeland of Vidrian can remain free from outside conquerors is by forging a strong and unified government. As such, you seek to bind your fellow citizens together through careful diplomacy and force of personality-or, if necessary, subterfuge and intrigue. Choose two attribute boosts. One must be to **Dexterity** or **Charisma**, and one is a free attribute boost. You're trained in the Diplomacy skill and the Politics Lore skill. You gain the Hobnobber skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Diplomacy **Lore** Politics Lore **Skill Feat** Hobnobber"
+ },
+ {
+  "id": "wand-of-chromatic-burst",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Wand of Chromatic Burst",
+  "level": 10,
+  "traits": [
+   "light",
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Wand of Chromatic Burst Source Treasure Vault (Remastered) pg. 138 Usage held in 1 hand Bulk L This intricately carved quartz wand changes color, cycling through the colors of the rainbow. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast chromatic armor of the indicated rank. Additionally, the target can use the Chromatic Armor Burst action. Chromatic Armor Burst (concentrate, light, magical) Requirements You're affected by chromatic armor created by the wand of chromatic burst; Effect Choose one color of the chromatic armor the wand created for you. The spell ends and light of that color flashes brightly in a 20-foot emanation. Creatures in the area take damage of the type associated with the color you chose, with a basic Reflex save against your spell DC; the amount of damage depends on the wand's type. This action has the trait corresponding to the damage type you chose. Craft Requirements Supply a casting of chromatic armor of the appropriate rank. Wand of Chromatic Burst (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 138 Price 1,000 gp Bulk L The damage is 4d6. Wand of Chromatic Burst (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 138 Price 10,000 gp Bulk L The damage is 8d6."
+ },
+ {
+  "id": "wand-of-chromatic-burst-4th-rank",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Wand of Chromatic Burst (4th-rank)",
+  "level": 10,
+  "traits": [
+   "concentrate",
+   "light",
+   "magical",
+   "manipulate",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells",
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This intricately carved quartz wand changes color, cycling through the colors of the rainbow. --- **Activate** Cast a Spell **Frequency** once per day, plus overcharge **Effect** You cast 4th-rank Chromatic Armor. Additionally, the target can use the Chromatic Armor Burst action. --- **Chromatic Armor Burst** ⟨1⟩ (concentrate, light, magical) **Requirements** You're affected by Chromatic Armor created by the *wand of chromatic burst* **Effect** Choose one color of the Chromatic Armor the wand created for you. The spell ends and light of that color flashes brightly in a . Creatures in the area take 4d6 damage of the type associated with the color you chose, with a save against your spell DC. This action has the trait corresponding to the damage type you chose. --- **Craft Requirements** Supply a casting of Chromatic Armor of the appropriate rank."
+ },
+ {
+  "id": "wand-of-chromatic-burst-4th-rank-spell",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Wand of Chromatic Burst (4th-Rank Spell)",
+  "level": 10,
+  "traits": [
+   "light",
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Wand of Chromatic Burst Source Treasure Vault (Remastered) pg. 138 Usage held in 1 hand Bulk L This intricately carved quartz wand changes color, cycling through the colors of the rainbow. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast chromatic armor of the indicated rank. Additionally, the target can use the Chromatic Armor Burst action. Chromatic Armor Burst (concentrate, light, magical) Requirements You're affected by chromatic armor created by the wand of chromatic burst; Effect Choose one color of the chromatic armor the wand created for you. The spell ends and light of that color flashes brightly in a 20-foot emanation. Creatures in the area take damage of the type associated with the color you chose, with a basic Reflex save against your spell DC; the amount of damage depends on the wand's type. This action has the trait corresponding to the damage type you chose. Craft Requirements Supply a casting of chromatic armor of the appropriate rank. Wand of Chromatic Burst (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 138 Price 1,000 gp Bulk L The damage is 4d6. Wand of Chromatic Burst (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 138 Price 10,000 gp Bulk L The damage is 8d6."
+ },
+ {
+  "id": "wand-of-chromatic-burst-7th-rank",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Wand of Chromatic Burst (7th-rank)",
+  "level": 16,
+  "traits": [
+   "concentrate",
+   "light",
+   "magical",
+   "manipulate",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells",
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This intricately carved quartz wand changes color, cycling through the colors of the rainbow. --- **Activate** Cast a Spell **Frequency** once per day, plus overcharge **Effect** You cast 7th-rank Chromatic Armor. Additionally, the target can use the Chromatic Armor Burst action. --- **Chromatic Armor Burst** ⟨1⟩ (concentrate, light, magical) **Requirements** You're affected by Chromatic Armor created by the *wand of chromatic burst* **Effect** Choose one color of the Chromatic Armor the wand created for you. The spell ends and light of that color flashes brightly in a . Creatures in the area take 8d6 damage of the type associated with the color you chose, with a save against your spell DC. This action has the trait corresponding to the damage type you chose. --- **Craft Requirements** Supply a casting of Chromatic Armor of the appropriate rank."
+ },
+ {
+  "id": "wand-of-chromatic-burst-7th-rank-spell",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Wand of Chromatic Burst (7th-Rank Spell)",
+  "level": 16,
+  "traits": [
+   "light",
+   "magical",
+   "wand"
+  ],
+  "engineFieldsPresent": [
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Wand of Chromatic Burst Source Treasure Vault (Remastered) pg. 138 Usage held in 1 hand Bulk L This intricately carved quartz wand changes color, cycling through the colors of the rainbow. Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast chromatic armor of the indicated rank. Additionally, the target can use the Chromatic Armor Burst action. Chromatic Armor Burst (concentrate, light, magical) Requirements You're affected by chromatic armor created by the wand of chromatic burst; Effect Choose one color of the chromatic armor the wand created for you. The spell ends and light of that color flashes brightly in a 20-foot emanation. Creatures in the area take damage of the type associated with the color you chose, with a basic Reflex save against your spell DC; the amount of damage depends on the wand's type. This action has the trait corresponding to the damage type you chose. Craft Requirements Supply a casting of chromatic armor of the appropriate rank. Wand of Chromatic Burst (4th-Rank Spell) Source Treasure Vault (Remastered) pg. 138 Price 1,000 gp Bulk L The damage is 4d6. Wand of Chromatic Burst (7th-Rank Spell) Source Treasure Vault (Remastered) pg. 138 Price 10,000 gp Bulk L The damage is 8d6."
+ },
+ {
+  "id": "wandering-libertine",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Wandering Libertine",
+  "traits": [
+   "persona-flirt"
+  ],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Receiving attention has always come easily to you, be it because of your good looks, your charming personality, your way with words, or something else entirely, yet you've never really settled down. You spent much of your life up to this point on the road or at sea, traveling from town to town and never staying long enough in one place to ever have a proper home. The reasons for this itinerant lifestyle aren't important, but what is important is that it never took you long to find someone to hold after arriving in a new town. Whether your inevitable departure was heralded by false promises to return or tearful goodbyes, you've left in your wake a mix of pining admirers and jilted lovers. One of these days, you might actually settle down. One of these days, you might find someone you'll want to spend the rest of your life with. One of these days, you might find a place to call home. But today is not that day. Choose two attribute boosts. One must be to **Dexterity** or **Charisma**, and one is a free attribute boost. You're trained in the Deception skill and the Shelyn Lore skill. You gain the Charming Liar skill feat. If you have the Flirt persona trait, you also become trained in the Sailing Lore skill. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Deception **Lore** Shelyn Lore **Skill Feat** Charming Liar"
+ },
+ {
+  "id": "wanted-witness",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Wanted Witness",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You saw something you shouldn't have, plain and simple. The shame is that you don't even know what it is, exactly, that you saw. After moving to Alkenstar, you swiftly fell in love with the City of Smog, but you found it difficult to get a foothold in the fast-paced metropolis. Luckily, a chance invitation promised good work for someone with your unique social talents. You went to an inconspicuous chamber in a humble tower somewhere in the Capital District. There, you met some clearly powerful, clearly corrupt members of the Alkenstar elite. Among the faces you recognized were the notorious mogul Ambrost Mugland and the steely-eyed shieldmarshal Anjelique Loveless. Before you were asked to leave, you made quite an impression-but not a good one. Not only did you not make the cut for whatever kinds of jobs were on offer that day, but you soon discovered that you couldn't get a room at any inn in the city, and there were wanted posters with your name on them plastered all over town. Friends and families turned their backs on you, afraid to get involved. Clearly, someone at that meeting-Mugland, maybe, or perhaps Loveless- believed you were a liability, and they had you excised from Alkenstar society. All you want is to be able to walk the streets without fearing for your life, and there's only one way to make that happen: find the villains responsible for your predicament and get them to undo the curse now attached to your name. Choose two attribute boosts. One must be to **Constitution** or **Charisma**, and one is a free attribute boost. You're trained in the Society skill and the Alkenstar Lore skill. You gain the Read Lips skill feat. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Society **Lore** Alkenstar Lore **Skill Feat** Read Lips"
+ },
+ {
+  "id": "war-blood-mutagen",
+  "lane": "choice",
+  "collection": "items",
+  "name": "War Blood Mutagen",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "War Blood Mutagen May contain spoilers from Outlaws of Alkenstar Source Pathfinder #178: Punks in a Powderkeg pg. 77 Usage held in 1 hand Bulk L Activate Interact Upon drinking this mutagen, you can feel your blood surge through your body and hear a low-pitched humming in your ears. These sensations subside as the flesh and muscles of your arm loosen and stretch, the fibers of your very being reaching out to combine with the base of one melee weapon you're holding. Benefit Choose one melee weapon you're holding in one or both hands. You gain the listed item bonus to your attack rolls with this weapon and to Will saves against fear effects. Any attempt to Disarm or otherwise remove the weapon from your hands must exceed the listed DC based on the type of war blood mutagen or the attempt fails. Drawback You can't voluntarily remove the weapon unless you succeed at an Athletics check at the listed DC, which ends the war blood mutagen's effects; this check takes a single action. If you perform an action with the concentrate trait, you must succeed at a DC 5 flat check or the action is lost. War Blood Mutagen (Lesser) Source Pathfinder #178: Punks in a Powderkeg pg. 77 Price 4 gp Bulk L The item bonus is +1, the DC to remove the weapon is 25, and the duration is 1 minute. War Blood Mutagen (Moderate) Source Pathfinder #178: Punks in a Powderkeg pg. 77 Price 12 gp Bulk L The item bonus is +2, the DC to remove the weapon is 30, and the duration is 10 minutes. War Blood Mutagen (Greater) Source Pathfinder #178: Punks in a Powderkeg pg. 77 Price 300 gp Bulk L The item bonus is +3, the DC to remove the weapon is 40, and the duration is 1 hour. War Blood Mutagen (Major) Source Pathfinder #178: Punks in a Powderkeg pg. 77 Price 3,000 gp Bulk L The item bonus is +4, the DC to remove the weapon is 50, and the duration is 1 hour."
+ },
+ {
+  "id": "war-blood-mutagen-greater",
+  "lane": "choice",
+  "collection": "items",
+  "name": "War Blood Mutagen (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "Upon drinking this mutagen, you can feel your blood surge through your body and hear a low-pitched humming in your ears. These sensations subside as the flesh and muscles of your arm loosen and stretch, the fibers of your very being reaching out to combine with the base of one melee weapon you're holding. **Benefit** Choose one melee weapon you're holding in one or both hands. You gain a +3 item bonus to your attack rolls with this weapon and to Will saves against fear effects for 1 hour. Any attempt to Disarm or otherwise remove the weapon from your hands must exceed DC 40 or the attempt fails. **Drawback** You can't voluntarily remove the weapon unless you succeed at a , which ends the war blood mutagen's effects; this check takes a single action. If you perform an action with the concentrate trait, you must succeed at a or the action is lost."
+ },
+ {
+  "id": "war-blood-mutagen-lesser",
+  "lane": "choice",
+  "collection": "items",
+  "name": "War Blood Mutagen (Lesser)",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "Upon drinking this mutagen, you can feel your blood surge through your body and hear a low-pitched humming in your ears. These sensations subside as the flesh and muscles of your arm loosen and stretch, the fibers of your very being reaching out to combine with the base of one melee weapon you're holding. **Benefit** Choose one melee weapon you're holding in one or both hands. You gain a +1 item bonus to your attack rolls with this weapon and to Will saves against fear effects for 1 minute. Any attempt to Disarm or otherwise remove the weapon from your hands must exceed DC 25 or the attempt fails. **Drawback** You can't voluntarily remove the weapon unless you succeed at a , which ends the war blood mutagen's effects; this check takes a single action. If you perform an action with the concentrate trait, you must succeed at a or the action is lost."
+ },
+ {
+  "id": "war-blood-mutagen-major",
+  "lane": "choice",
+  "collection": "items",
+  "name": "War Blood Mutagen (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "Upon drinking this mutagen, you can feel your blood surge through your body and hear a low-pitched humming in your ears. These sensations subside as the flesh and muscles of your arm loosen and stretch, the fibers of your very being reaching out to combine with the base of one melee weapon you're holding. **Benefit** Choose one melee weapon you're holding in one or both hands. You gain a +4 item bonus to your attack rolls with this weapon and to Will saves against fear effects for 1 hour. Any attempt to Disarm or otherwise remove the weapon from your hands must exceed DC 50 or the attempt fails. **Drawback** You can't voluntarily remove the weapon unless you succeed at a , which ends the war blood mutagen's effects; this check takes a single action. If you perform an action with the concentrate trait, you must succeed at a or the action is lost."
+ },
+ {
+  "id": "war-blood-mutagen-moderate",
+  "lane": "choice",
+  "collection": "items",
+  "name": "War Blood Mutagen (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "Upon drinking this mutagen, you can feel your blood surge through your body and hear a low-pitched humming in your ears. These sensations subside as the flesh and muscles of your arm loosen and stretch, the fibers of your very being reaching out to combine with the base of one melee weapon you're holding. **Benefit** Choose one melee weapon you're holding in one or both hands. You gain a +2 item bonus to your attack rolls with this weapon and to Will saves against fear effects for 10 minutes. Any attempt to Disarm or otherwise remove the weapon from your hands must exceed DC 30 or the attempt fails. **Drawback** You can't voluntarily remove the weapon unless you succeed at a , which ends the war blood mutagen's effects; this check takes a single action. If you perform an action with the concentrate trait, you must succeed at a or the action is lost."
+ },
+ {
+  "id": "war-orphan",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "War Orphan",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "The horrors of war have left you orphaned and alone, forcing you to fend for yourself until you were taught the ways of the world by a group of similarly affected youths. They were like a new family to you, but you had to live outside the law in order to survive. Those days are behind you now, but there are certain tricks you'll never forget. Choose two attribute boosts. One must be to **Dexterity** or **Constitution**, and one is a free attribute boost. You're trained in the Thievery skill and the Underworld Lore skill. You gain the Dirty Trick skill feat. --- ## Background details **Attribute Boosts** Constitution or Dexterity, one free **Trained Skill** Thievery **Lore** Underworld Lore **Skill Feat** Dirty Trick"
+ },
+ {
+  "id": "ward",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Ward",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "When you were young, you became the ward of another house—boarded, fed, and educated, but never quite a part of the family. Perhaps you had to tend to their needs in return for feeding and raising you, or perhaps you were provided for but disregarded. Now, adventuring is your chance to grow and roam free. Choose two attribute boosts. One must be to **Constitution** or **Charisma**, and one is a free attribute boost. You're trained in the Performance skill and the Genealogy Lore skill. You gain the Fascinating Performance skill feat. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Performance **Lore** Genealogy Lore **Skill Feat** Fascinating Performance"
+ },
+ {
+  "id": "warded-by-kami",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Warded by Kami",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "limitedUses",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You've lived among kami, gaining a wellspring of spiritual power found deep within the Forest of Spirits. You've heard many rumors of what lies beyond the safety of your home and, for better or worse, they intrigue you. Whatever your reasons for leaving, you're still bound to whatever entity serves as your ward. Whether you return to the place of your birth or find a new land to call home is up to you. Choose two attribute boosts. One must be to **Intelligence** or **Wisdom**, and one is a free attribute boost. You're trained in Occultism and Spirit Lore. You also gain a ward that binds you to a specific animal, plant, object, or location of your choice. Once per day, you can spend an Interact action to merge with your ward and heal Hit Points equal to your level. This action has the healing trait. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Occultism **Lore** Spirit Lore"
+ },
+ {
+  "id": "warrior",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "Warrior",
+  "level": 1,
+  "traits": [
+   "bard"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The battlefield is your stage, the clang of steel, your song. Your muse has seen countless battles, whether reveling in combat or resigned to its necessity. An individual soldier or general might inspire you, but so might a battlefield or weapon with a particularly profound history. If your muse is a creature, it might be an otherworldly soldier, such as an archon or devil soldier. If it's a deity, it might be Gorum. Art inspired by a warrior muse is triumphant and strident, often detailing epic battles. As a bard with a warrior muse, you train for battle in addition to performance, and you prepare your allies for the dangers of combat. You might even wade into the thick of things with them. **Muse Feat** Martial Performance **Muse Spell** Fear"
+ },
+ {
+  "id": "warshard-rune",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Warshard Rune",
+  "level": 14,
+  "traits": [
+   "mythic"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "When you choose a warshard weapon during your daily preparations, you can empower it with an additional magical effect. Choose one common weapon property rune that's of a level equal to or lower than your level. That rune is applied to your warshard weapon as if it were etched onto it normally, but this weapon property does not count against the normal maximum number of property runes a weapon can have. If you empower a weapon with a property rune of the same type, only the highest-level one applies. This additional rune functions only when you wield your warshard weapon and have at least 1 unspent Mythic Point; otherwise, the rune becomes dormant until these conditions are met."
+ },
+ {
+  "id": "warshard-warrior-dedication",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Warshard Warrior Dedication",
+  "level": 12,
+  "traits": [
+   "destiny",
+   "mythic"
+  ],
+  "engineFieldsPresent": [
+   "choice",
+   "grantsFeats"
+  ],
+  "inRegistries": [],
+  "text": "When you became infused with a shard of the god of war, you knew in your gut that your destiny would be one for the ages—yet you may not, at first, know the exact way such a destiny would play out. If you still carry the warshard that empowered you, you might carry it as a token or wear it as jewelry—if indeed it's not simply embedded into your body. Regardless, the warshard itself no longer has any intrinsic power of its own, and even if you toss the warshard aside, its gifts do not leave you, nor can another benefit from them. If you throw the warshard away or lose it, your destiny remains unaltered; you have, in effect, become the warshard itself. This power manifests through a weapon you wield. When you make your daily preparations, choose one weapon in your possession in which you have at least expert proficiency. That weapon becomes your warshard weapon until you choose a different weapon in your possession during another of your daily preparations. You can choose a mundane nonmagical weapon, a weapon with magical runes, one made of an unusual material, or even a specific magic weapon such as a storm flash or a bloodletting kukri, but not an intelligent weapon or an artifact like the bastard sword Serithtial or one of the seven swords of sin. While you don't lose access to your warshard warrior feats if your warshard weapon is taken from you or destroyed, note that several of this destiny's feats require you to be wielding your warshard weapon. You can etch or remove runes from a warshard weapon normally. You can have only one warshard weapon at a time. Your gain the Mythic Strike feat, but you can only use it with your warshard weapon. Whenever you make a Strike with your warshard weapon at mythic proficiency, you double the amount of additional damage you deal with the weapon specialization class feature. When you make Crafting checks to Repair your warshard weapon, your treat your proficiency rank in Crafting as legendary for determining how many Hit Points you restore to the item; in addition, if your Crafting result is a critical failure, you get a failure instead. You also gain the Call Warshard Weapon action."
+ },
+ {
+  "id": "weapon-infusion",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Weapon Infusion",
+  "level": 1,
+  "traits": [
+   "infusion",
+   "kineticist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "With a signature flair, you shape blasts of elemental power into the form of a weapon, such as a sword made of whirling wind or a bow that shoots flames. If your next action is an Elemental Blast, choose a weapon shape for it to take. You can choose to change the blast's damage type to bludgeoning, piercing, or slashing-whichever suits the weapon shape-and you can choose other alterations depending on whether you make a melee or ranged blast. - **Melee** Add one of the following traits of your choice: agile, backswing, forceful, reach, sweep. - **Ranged** Choose one of three options: range increment 100 feet and the volley 30 feet trait, range increment 50 feet and the propulsive trait, or range increment 20 feet and the thrown trait."
+ },
+ {
+  "id": "weapon-legend",
+  "lane": "choice",
+  "collection": "classFeatures",
+  "name": "Weapon Legend",
+  "level": 13,
+  "traits": [
+   "fighter"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've learned fighting techniques that apply to all armaments, and you've developed unparalleled skill with your favorite weapons. Your proficiency ranks for simple weapons, martial weapons, and unarmed attacks increase to master. Your proficiency rank for advanced weapons increases to expert. You can select one weapon group and increase your proficiency ranks to legendary for all simple weapons, martial weapons, and unarmed attacks in that weapon group, and to master for all advanced weapons in that weapon group."
+ },
+ {
+  "id": "westyrs-wayfinder-repository",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Westyr's Wayfinder Repository",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "**Requirements** You have at least one 1st-rank spell slot and a wayfinder. --- You can use your wayfinder to store a little extra magic for when you need it most. When making your daily preparations, you can choose one 1st-rank spell from your spellbook or spell repertoire and store it in your wayfinder. You can cast this spell from the wayfinder using the normal actions required. Once the spell has been cast, it is expended, and you must make your next daily preparations to store another spell in your wayfinder."
+ },
+ {
+  "id": "whelming-scrimshaw",
+  "lane": "choice",
+  "collection": "items",
+  "name": "Whelming Scrimshaw",
+  "level": 13,
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨2⟩ (manipulate) --- An etching of some aquatic beast dragging a figure beneath the waves adorns the ivory of a whelming scrimshaw. When you Activate this item, you break it and choose one creature within 30 feet. The target must attempt a save; amphibious and aquatic creatures are immune. --- **Critical Success** The creature is unaffected. **Success** The target becomes Sickened 1 and unable to breathe until this sickened condition ends. **Failure** As success, but Sickened 2. **Critical Failure** As success, but Sickened 3."
+ },
+ {
+  "id": "whispering-steps",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Whispering Steps",
+  "level": 8,
+  "traits": [
+   "amp",
+   "mental",
+   "occult",
+   "psychic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your spell leaves a lingering connection between you and a creature-one through which you can nudge the creature's mind this way or that. The amped cantrip must take 2 or more actions to cast, target one or more creatures, and either require a spell attack roll or have a saving throw. Use this amp in place of the psi cantrip's normal amp entry. --- **Amp** Choose one enemy who is a target of the spell. If that enemy fails its save or the spell hits it, you whisper in the creature's mind, forcing it to Stride up to half its Speed in a direction of your choosing; as this is forced movement, you can't force the creature to move into hazardous terrain, off a ledge, or the like. After it moves, the creature becomes temporarily immune to this amp for 24 hours."
+ },
+ {
+  "id": "whispering-way-scion",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Whispering Way Scion",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Eye of Dread --- Your family has long been associated with the enigmatic death cult known as the Whispering Way, which was recently responsible for the terrible devastation in the nation of Lastwall. Whether or not you have followed in their footsteps, you know many of the philosophy's secrets. Choose two attribute boosts. One must be to **Intelligence** or **Wisdom**, and one is a free attribute boost. You're trained in the Religion skill and the Undead Lore skill. You gain the Student of the Canon skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Religion **Lore** Undead Lore **Skill Feat** Student of the Canon"
+ },
+ {
+  "id": "wildborn-adept",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Wildborn Adept",
+  "level": 5,
+  "traits": [
+   "elf"
+  ],
+  "engineFieldsPresent": [
+   "innateSpells"
+  ],
+  "inRegistries": [],
+  "text": "The whispers of the jungle grant you more diverse access to simple primal magic. You can cast Light, Vitality Lash and Tangle Vine as innate primal spells at will. If you chose one of those spells with Wildborn Magic, you can select a new spell for Wildborn Magic."
+ },
+ {
+  "id": "wildwood-local",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Wildwood Local",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Shining Kingdoms --- You might have been born and raised among the druids of the Verduran Forest, or you may have spent time among them as an adult and come to know their ways. Choose two attribute boosts. One must be to **Dexterity** or **Wisdom**, and one is a free attribute boost. You're trained in the Nature skill as well as the Forest Lore skill. You gain the Natural Medicine skill feat. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Nature **Lore** Forest Lore **Skill Feat** Natural Medicine"
+ },
+ {
+  "id": "willing-host",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Willing Host",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "trainedLore"
+  ],
+  "inRegistries": [],
+  "text": "You speak to spirits only you can perceive: wispy shreds of lost souls, household guardians, ancestral spirits, and other entities. You can negotiate with these beings, allowing them into your body to impart knowledge or aid in a task for the price of a favor. Choose two attribute boosts. One must be to **Wisdom** or **Charisma**, and one is a free attribute boost. You're trained in the Spirit Lore skill. You gain the Host Spirit action. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Lore** Spirit Lore"
+ },
+ {
+  "id": "willowshore-urchin",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Willowshore Urchin",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "As with any settlement, not all of Willowshore's citizens are born into easy lives. You grew up on the town streets, either as an orphan or hardscrabble youth who was forced at a young age to help provide for your family. You might technically have had a home of your own, but for various reasons, you had, or preferred, to live most of your childhood outside of those walls. You might have run with a gang of kids (some of whom might even be fellow PCs), or you could've been a loner who managed to survive against all odds. Regardless, your childhood was one of forced ingenuity, desperation, and physicality. Hardly a week would've passed without you having to jury-rig a solution to some problem or to simply use your reflexes or brawn to solve a situation quickly before things escalated. While you might have left your old life behind you now that you're all grown up, the time you spent on Willowshore's streets have made you the person you are today. You might still be technically homeless, subsisting on the street and never sleeping in the same place twice in a row. You might keep a small shanty or hideout somewhere in town as well. It's also possible that, despite your childhood, you've been fortunate enough to find a family or home, in which case your home could be anywhere in Willowshore. During the Reenactment Festival, you likely enjoyed the revelry... perhaps a bit too much! Festivals were always times of excitement in your childhood, and this one is no exception. You were chosen to be an abductee during the Reenactment Festival simply by chance—maybe your name was selected by a blind draw, or perhaps someone dared you to take part, or you could simply have craved the attention. Choose two attribute boosts. One must be to **Dexterity** or **Strength**, and one is a free attribute boost. You're trained in the Athletics skill and the Engineering Lore skill. You gain the Charming Liar feat. Seasonal Boon (Willowshore Urchin) --- You can add one of the following two adjustments to any background to further modify your choice to match your vision for your PC. **Family:** You and one (or more) other PCs are close family members (siblings, parent/child, married, etc.) If you take this adjustment, the other PC(s) who are your family must also take this adjustment. Choose one of the following to replace the skill feat you otherwise would've gained from your background. (You and your sibling need not share the same choice—a sibling who wants to keep their background's skill feat can pick \"Typical\" from the list.) - **Bickering:** You have a long-standing feud with your sibling(s). Whenever your sibling(s) critically fail a significant skill check or attack roll and you witness their failure, you gain a +1 status bonus to your saving throws until the end of your next turn as you secretly (or perhaps not so secretly) delight in their failure. - **Close-Knit:** You and your sibling(s) work well together, and you go all-out to help them when they're badly hurt. When you provide Aid or Administer First Aid to your sibling(s), the DC is 5 lower than normal. - **Typical:** You have a standard relationship with your sibling(s); don't change your background's "
+ },
+ {
+  "id": "wing-buffet",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Wing Buffet",
+  "level": 9,
+  "traits": [
+   "attack",
+   "dragonblood"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You have a pair of draconic wings strong enough to batter your foes away and shove them away. Choose up to two creatures adjacent to you. Attempt an Athletics check and compare it to the Fortitude DC of each target. This counts as two attacks for your multiple attack penalty, but the penalty doesn't increase until after both attacks. --- **Critical Success** The target takes bludgeoning damage equal to double your level () and is pushed up to 10 feet away from you. **Success** The target takes bludgeoning damage equal to your level () and is pushed up to 5 feet away from you. **Failure** The target takes bludgeoning damage equal to half your level (). **Critical Failure** You fall prone at the end of this activity."
+ },
+ {
+  "id": "winters-child",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Winter's Child",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Saga Lands --- Your or one of your ancestors hails from Irrisen, and some spark of the icy region's magic has manifested itself within your bones. The blood of Baba Yaga's legacy runs in your veins, and you are at one with the mysteries and dangers of the frozen land. Choose two attribute boosts. One must be to **Constitution** or **Charisma**, and one is a free attribute boost. You're trained in the Arcana skill and the Weather Lore skill. You gain the Arcane Sense skill feat. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Arcana **Lore** Weather Lore **Skill Feat** Arcane Sense"
+ },
+ {
+  "id": "wished-alive",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Wished Alive",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "limitedUses",
+   "trainedSkill"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Once you were a simple construct or inanimate doll, but due to a deeply felt wish, either yours or another's, you came to life, and so you're now a living, breathing creature. Choose two attribute boosts. One must be to **Constitution** or **Charisma**, and one is a free attribute boost. You're trained in the Diplomacy skill. Once per day, you can fervently wish for something you could work towards achieving as a single action which has the concentrate trait. If you do, you gain a +2 circumstance bonus on the first skill check you attempt before the end of your turn to fulfill that wish. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Diplomacy"
+ },
+ {
+  "id": "witch-wary",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Witch Wary",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Saga Lands --- You have little love or trust for spellcraft and those who practice it, and have developed a paranoid knack for recognizing such tricks. You are constantly on guard for the magic of witches and have been trained to spot the signs of those with minds affected by magic. Choose two attribute boosts. One must be to **Dexterity** or **Intelligence**, and one is a free attribute boost. You're trained in the Occultism skill and the Curse Lore skill. You gain the Oddity Identification skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Occultism **Lore** Curse Lore **Skill Feat** Oddity Identification"
+ },
+ {
+  "id": "witchlight-follower",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Witchlight Follower",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "While in a dismal forest or remote swamp, you caught sight of a string of lights bobbing through the trees. You stepped forward for a closer look, and then still further when the lights retreated a few paces. Then you remembered the rumors. Will-o'-wisps, rushlights, corpse lanterns—whatever they're called—such evil creatures lead people to their doom. With a supreme effort of will, you broke free from the alluring enchantment, and you've resolved to never let the strange lights of remote wildernesses claim you again. Choose two attribute boosts. One must be to **Dexterity** or **Wisdom**, and one is a free attribute boost. You're trained in Survival and the Wisp Lore skill. You gain the Terrain Expertise skill feat with both swamp terrain and subterranean bodies of water. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Survival **Lore** Wisp Lore"
+ },
+ {
+  "id": "wither-away",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Wither Away",
+  "level": 16,
+  "traits": [
+   "concentrate",
+   "manipulate",
+   "mythic",
+   "void"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Frequency** once per 10 minutes --- You hasten the passage of time for a living creature, prematurely aging them into decrepitude. A living creature within 60 feet takes 14d6 damage and a part of its body you chose withers, taking the following penalties depending on the result of their a saving throw against your class DC or spell DC, whichever is higher. - **Arms** The target's arms grow weak. The target becomes Enfeebled 1. - **Head** The target has trouble thinking straight. The target becomes Stupefied 1. - **Legs** The target's legs buckle with every movement. The target takes a –10-foot status penalty to its Speeds. - **Torso** The target's skin becomes thin and papery. The target gains weakness 10 to slashing damage. --- **Critical Success** The target is unaffected. **Success** The target takes half damage and the withering penalty lasts until the end of your next turn. **Failure** The creature takes full damage and the withering penalty lasts for 1 minute. **Critical Failure** The creature takes double damage, and you can choose a second part of the body to wither. Both penalties last for 1 minute."
+ },
+ {
+  "id": "wonder-taster",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Wonder Taster",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Broken Lands --- Having once sampled Numerian fluids, you've tasted knowledge beyond comprehension. You are driven to recapture that astounding experience. Choose two attribute boosts. One must be to **Intelligence** or **Constitution**, and one is a free attribute boost. You're trained in the Crafting skill and the Alchemical Lore skill. You gain the Alchemical Crafting skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Crafting **Lore** Alchemical Lore **Skill Feat** Alchemical Crafting"
+ },
+ {
+  "id": "wonder-worker",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "Wonder Worker",
+  "level": 20,
+  "traits": [
+   "thaumaturge"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "The thaumaturge's path culminates with the working of wonders. Once per day, you can align your esoterica to cast a spell of 8th rank or lower that takes 1, 2, or 3 actions to cast. The spell must be common or one to which you have access. You can choose a spell of any tradition for which you're legendary in the associated skill (Arcana for arcane, Nature for primal, Occultism for occult, or Religion for divine). Use your thaumaturge class DC in place of any necessary spell DC and your thaumaturge class DC - 10 in place of any necessary counteract modifier or spell attack modifier."
+ },
+ {
+  "id": "wood-warden",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Wood Warden",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "For all their thorns, beasts, and hazards, the wilds aren't invulnerable. If the natural wonders of the Verduran Forest are to survive, they need guardians like you. You have learned to monitor and protect wildernesses, earning you the Verduran Lodge's respect even if you're not affiliated with any druidic organization. Perhaps you grew up in a community that revered and carefully managed its local ecosystem, learning millennia-old traditions. It could be you were an unlikely survivor who learned to live off the land out of necessity, gradually becoming its protector. Whatever the case, traveling to the Greenwood Gala is a great opportunity to share your knowledge, learn new tricks, and recruit allies who can help defend your home. Choose two attribute boosts. One must be to **Strength** or **Wisdom**, and one is a free attribute boost. You're trained in the Survival skill and the Scouting Lore skill. You gain the Survey Wildlife skill feat. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Survival **Lore** Scouting Lore **Skill Feat** Survey Wildlife"
+ },
+ {
+  "id": "writ-in-the-stars",
+  "lane": "choice",
+  "collection": "backgrounds",
+  "name": "Writ in the Stars",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore"
+  ],
+  "inRegistries": [],
+  "text": "Destiny has always intrigued you. Maybe you grew up in a family where fortune-telling and divinations were a day-to-day part of life, or perhaps you had your fortune told as a young adult and the results were so shockingly accurate that you became a believer. The mysteries of what might lie in store for us all have long intrigued you, and you're always eager to debate whether or not we have free will or if destiny is predetermined—be it for one side or the other. You may see the failure of prophecy that began with the onset of the Age of Lost Omens as a dire indication of some sort of horrible cosmic mistake. Conversely, you could view this age as new era of freedom where reality is finally admitting that each person is free to determine their own path to the future. You still own a small token from your childhood that you view as a lucky charm, but whatever your beliefs are today, many of your fortunes have foretold that great things lie in store for you in the future, and you can't wait to find out what they might be! This background is associated with the suit of Stars. Choose two attribute boosts. One must be to **Wisdom**, and one is a free attribute boost. You gain the Pilgrim's Token skill feat (this token need not be from a faith and could simply be a good luck charm) and are trained in the Fortune-Telling Lore skill. You also gain the A Quick Glimpse Beyond free action. --- ## Background details **Attribute Boosts** Wisdom, one free **Lore** Fortune Telling Lore **Skill Feat** Pilgrim's Token"
+ },
+ {
+  "id": "you-cant-kill-an-idea",
+  "lane": "choice",
+  "collection": "feats",
+  "name": "You Can't Kill an Idea",
+  "level": 20,
+  "traits": [
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Those who would destroy you instead transform you into a powerful yet formless entity. If you would be killed while you have an Ultimatum of Liberation active, you (along with your equipment) become an ideaform. As an ideaform, you are invisible and incorporeal. You have only 1 Hit Point and can't gain more, but you are immune to all damage; if your dying or doomed condition would increase to a high enough value to kill you, it does not increase, and you are immune to any effect that would instantly kill or destroy you. You are immune to the unconscious condition, yet can take only purely mental actions. You can communicate telepathically with your allies at unlimited range, and gain two extra reactions at the start of each of your turns. Additionally, you can Aid allies through nothing but telepathic advice, without having to spend an action to prepare first, and can spend a Mythic Point to do so at mythic proficiency. Any circumstance bonus you grant through Aiding is increased by 1. Before an hour passes while being an ideaform, you must choose a willing follower of your cause to fuse with and cease to be an ideaform. Use your level, their ancestry, heritage, and ancestry feats, and work with your GM to choose which combination of class, attribute modifiers, skills, and feats would make a good representation of this fusion. This new character has all your previous equipment. If you do not fuse with a follower after an hour of being an ideaform, you cease to be an ideaform and die; the equipment you had at the time of your original death also ceases to exist."
+ },
+ {
+  "id": "abidance-blinders",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Abidance Blinders",
+  "level": 2,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "While many skilled cavalry units have their own beloved mounts, troops often need to make do with whatever animals are available for mounted combat. These blinders, made of dark brown leather, nearly cover an animal's eyes and prevent it from seeing the dangers around them. It takes 1 minute to affix the blinders on an animal, whose attitude toward you must be indifferent or better. These blinders can be used only on a domesticated animal that doesn't have combat training or the minion trait. Animals with these blinders on do not suffer from the frightened condition due to being in combat, nor do they automatically flee combat, as would be normal for an animal without combat training. Unless mounted by a rider with the paired headband, which is braided from the same dark brown leather, the animal's speed is reduced to 10 feet. --- **Activate—It Can't Hurt You** ⟨5⟩ (concentrate) **Frequency** once per day **Trigger** An animal within 30 feet wearing the paired blinders attempts a saving throw against a fear effect but hasn't rolled yet --- **Effect** You grant a +1 status bonus to its saving throw against the triggering effect."
+ },
+ {
+  "id": "accolade-robe",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Accolade Robe",
+  "level": 10,
+  "traits": [
+   "arcane",
+   "focused",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Although not all wizards have gone through formal training, it's become tradition to enchant robes representing the arduous training required and festoon them with honors one has earned. Typically, an *accolade robe* is styled after a single wizard school, with appropriate colors and symbols. Wearing these robes grants a +2 item bonus to Arcana checks. The pockets of the robe tie to an extradimensional space that can hold 1 Bulk of items, none of which can have greater than light Bulk. The items must be related to spellcasting and academics—spellbooks, scrolls, wands, scholarly journals, and other academic supplies the GM allows. These items do not count against your Bulk limit. You can Interact to retrieve or stow items normally. --- **Activate—Review** ⟨1⟩ (concentrate, manipulate) **Effect** You retrieve an item of your choice from the robe's storage, then Recall Knowledge. --- **Activate—Extra Credit** ⟨4⟩ (concentrate) **Frequency** once per day **Effect** You gain 1 Focus Point, which you can spend only to cast a school spell. If you don't spend this Focus Point by the end of this turn, it is lost. --- **Craft Requirements** You are a wizard of the associated school."
+ },
+ {
+  "id": "accolade-robe-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Accolade Robe (Greater)",
+  "level": 17,
+  "traits": [
+   "arcane",
+   "focused",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Although not all wizards have gone through formal training, it's become tradition to enchant robes representing the arduous training required and festoon them with honors one has earned. Typically, an *accolade robe* is styled after a single wizard school, with appropriate colors and symbols. Wearing these robes grants a +3 item bonus to Arcana checks. The pockets of the robe tie to an extradimensional space that can hold 1 Bulk of items, none of which can have greater than light Bulk. The items must be related to spellcasting and academics—spellbooks, scrolls, wands, scholarly journals, and other academic supplies the GM allows. These items do not count against your Bulk limit. You can Interact to retrieve or stow items normally. --- **Activate—Review** ⟨1⟩ (concentrate, manipulate) **Effect** You retrieve an item of your choice from the robe's storage, then Recall Knowledge. You can activate the robe's Review once per minute as a free action. --- **Activate—Extra Credit** ⟨4⟩ (concentrate) **Frequency** once per day **Effect** You gain 1 Focus Point, which you can spend only to cast a school spell. If you don't spend this Focus Point by the end of this turn, it is lost. --- **Craft Requirements** You are a wizard of the associated school."
+ },
+ {
+  "id": "accompaniment-cloak",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Accompaniment Cloak",
+  "level": 11,
+  "traits": [
+   "focused",
+   "illusion",
+   "invested",
+   "occult"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This lush velvet capelet is embroidered with images of musicians playing a wide variety of instruments. The images animate when you make art, remaining embroidered, but smoothly unknitting and reknitting in time with your performance. The figures play music that perfectly accompanies your instrument, voice, or movements, granting you a +2 item bonus to Performance checks. --- **Activate** ⟨4⟩ (concentrate) **Frequency** once per day **Effect** You gain 1 Focus Point, which you can use only to cast a bard composition spell. If not used by the end of your turn, this Focus Point is lost. --- **Activate** ⟨2⟩ (concentrate, manipulate) **Frequency** once per day **Effect** You peel the musicians from the garment and fling them around you. The cloak casts a 4th-rank Phantom Crowd spell (DC 28); each of the 10-foot squares must be adjacent to you. The crowd looks like the musicians on the garment and continues to accompany your Performance checks. You can Sustain this effect as described in the spell. --- **Craft Requirements** You are a bard."
+ },
+ {
+  "id": "acid-flask",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Acid Flask",
+  "level": 1,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Acid Flask Source Player Core 2 pg. 283, GM Core pg. 244 Usage held in 1 hand Bulk L Activate Strike This flask filled with corrosive acid deals 1 acid damage, the listed persistent acid damage, and the listed acid splash damage. Many types grant an item bonus to attack rolls. Acid Flask (Lesser) Source Player Core 2 pg. 283, GM Core pg. 244, Core Rulebook pg. 544 Price 3 gp Bulk L The bomb deals 1d6 persistent acid damage and 1 acid splash damage. Acid Flask (Moderate) Source Player Core 2 pg. 283, GM Core pg. 244, Core Rulebook pg. 544 Price 10 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d6 persistent acid damage and 2 acid splash damage. Acid Flask (Greater) Source Player Core 2 pg. 283, GM Core pg. 244, Core Rulebook pg. 544 Price 250 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 3d6 persistent acid damage and 3 acid splash damage. Acid Flask (Major) Source Player Core 2 pg. 283, GM Core pg. 244, Core Rulebook pg. 544 Price 2,500 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 4d6 persistent acid damage and 4 acid splash damage."
+ },
+ {
+  "id": "acid-flask-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Acid Flask (Greater)",
+  "level": 11,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This flask filled with corrosive acid deals 1 acid damage, 3d6 persistent acid damage, and 3 acid splash damage. You gain a +2 item bonus to attack rolls."
+ },
+ {
+  "id": "acid-flask-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Acid Flask (Major)",
+  "level": 17,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This flask filled with corrosive acid deals 1 acid damage, 4d6 persistent acid damage, and 4 acid splash damage. You gain a +3 item bonus to attack rolls."
+ },
+ {
+  "id": "acid-flask-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Acid Flask (Moderate)",
+  "level": 3,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- This flask filled with corrosive acid deals 1 acid damage, 2d6 persistent acid damage, and 2 acid splash damage. You gain a +1 item bonus to attack rolls."
+ },
+ {
+  "id": "acupuncturist",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Acupuncturist",
+  "level": 1,
+  "traits": [
+   "downtime",
+   "manipulate"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Access** Tian Xia origin --- You've studied the routes by which qi flows through the body. The needles stored in your healer's tools can manipulate its flow and improve health when applied to specific meridian points. You spend a day studying an ally to attempt a Medicine check to improve their qi against a standard DC for your ally's level. The ally is then immune to all uses of Acupuncturist for 1 week. --- **Critical Success** You grant your ally the choice of a +2 circumstance bonus to one downtime activity skill check within the next week, or the ability to roll twice on their next saving throw within the next week against an affliction and take the higher result; this is a fortune effect. **Success** You grant your ally a +1 circumstance bonus to one downtime activity skill check within the next week. **Critical Failure** Your ally takes a –1 circumstance penalty to all downtime activity skill checks within the next week."
+ },
+ {
+  "id": "admirals-bicorne",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Admiral's Bicorne",
+  "level": 10,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This ostentatious hat is trimmed with gold thread and tiny jewels, all proclaiming your position of authority on the high seas. While wearing the bicorne, you gain a +2 item bonus to Intimidation and Sailing Lore checks. --- **Activate—Fight On** ⟨5⟩ (concentrate) **Frequency** once per day **Trigger** You take damage from an enemy's Strike or spell attack roll --- **Effect** Despite your wounds, your troops are inspired to fight on. For 1 minute, all allies in a gain a +2 status bonus to saving throws against fear effects."
+ },
+ {
+  "id": "aeon-stone",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Aeon Stone",
+  "level": 1,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Aeon Stone Source GM Core pg. 284 Usage worn Over millennia, these mysterious, intricately cut gemstones have been hoarded by mystics and fanatics hoping to discover their secrets. Despite their myriad forms and functions, these stones are purportedly all fragments of crystal tools used by otherworldly entities to construct the universe in primeval times. When you invest one of these precisely shaped crystals, the stone orbits your head instead of being worn on your body. You can stow an aeon stone with an Interact action, and an orbiting stone can be snatched out of the air with a successful Disarm action against you. A stowed or removed stone remains invested, but its effects are suppressed until you return it to orbit your head again. There are various types of aeon stones, each with a different appearance and magical effect. Each aeon stone also gains a resonant power when slotted into a special magical item called a wayfinder Aeon Stone (Amplifying) Source GM Core pg. 284 Price 9,750 gp An amplifying aeon stone must be activated to provide a benefit. The resonant power grants you a +2 item bonus to Arcana, Nature, Occultism, or Religion checks—whichever corresponds to the tradition of the last spell you enhanced with this aeon stone. Activate—Amplify (concentrate, spellshape) Effect If your next action is to Cast a Spell, that spell's rank is 1 higher (maximum 10th rank) for the purposes of counteracting and being counteracted. Aeon Stone (Consumed) Source GM Core pg. 284 Price 9 gp A consumed aeon stone is a dull lump that has lost its magical properties. It still rotates your head like any other aeon stone and can thus serve as a stylish, hand-free option for various spells that target an object. This aeon stone has no resonant power. Aeon Stone (Delaying) Source GM Core pg. 284 Price 350 gp When you would die from the dying condition (typically at dying 4), this smooth pink stone automatically activates and reduces your dying value to 1 less than would normally kill you (typically to dying 3). The stone then permanently turns into a consumed aeon stone. You can benefit from this ability only once per day, even if you have multiple such stones. The resonant power allows you to cast 1st-rank heal as a divine innate spell once per day. Aeon Stone (Envisioning) Source GM Core pg. 284 Price 425 gp This clear cube allows you to communicate with a limited form of telepathy to a range of 100 feet. The messages are transmitted as a simple image each round. These images are the quality of a hasty or childish sketch but can be roughly understood by creatures regardless of language. This provides no special ability to respond to your images. The resonant power allows you to cast translate as an occult innate spell once per day. Aeon Stone (Peering) Source GM Core pg. 284 Price 9,500 gp This faintly colored prism catches and transforms light. If the aeon stone is in an area of bright light, shades of purple light provide dim light in a 30-foot radius. In that radius, magical items and effects are tinged with purple, the depth of the color revealing their counteract rank. The GM also secretly rolls a counteract check against any darkness or illusio"
+ },
+ {
+  "id": "aether-marbles",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Aether Marbles",
+  "level": 4,
+  "traits": [
+   "bomb",
+   "consumable",
+   "force",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Aether Marbles May contain spoilers from Gatewalkers Source Gatewalkers (Hardcover) pg. 235 Usage held in 1 hand Bulk L Activate Strike Aether marbles create violent, lingering eddies of force that extend partially into unseen planes. When the bomb explodes, it deals the listed force damage and force splash damage. Many aether marbles grant an item bonus to attack rolls. Surfaces in the splash area are filled with twisting eddies of force, which are difficult terrain for incorporeal creatures but not for corporeal ones. The force eddies in a square disperse after an incorporeal creature enters the square. Lesser Aether Marbles Source Gatewalkers (Hardcover) pg. 235 Price 19 gp You gain a +1 item bonus to attack rolls. The bomb deals 2d6 force damage and 2 force splash damage. Moderate Aether Marbles Source Gatewalkers (Hardcover) pg. 235 Price 360 gp You gain a +2 item bonus to attack rolls. The bomb deals 3d6 force damage and 3 force splash damage. Greater Aether Marbles Source Gatewalkers (Hardcover) pg. 235 Price 3,400 gp You gain a +3 item bonus to attack rolls. The bomb deals 4d6 force damage and 4 force splash damage."
+ },
+ {
+  "id": "aether-marbles-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Aether Marbles (Greater)",
+  "level": 18,
+  "traits": [
+   "bomb",
+   "consumable",
+   "force",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Aether marbles create violent, lingering eddies of force that extend partially into unseen planes. You gain a +3 item bonus to attack rolls with the bomb. When the bomb explodes, it deals 4d6 force damage and 4 force splash damage. Surfaces in the splash area are filled with twisting eddies of force, which are difficult terrain for incorporeal creatures but not for corporeal ones. The force eddies in a square disperse after an incorporeal creature enters the square."
+ },
+ {
+  "id": "aether-marbles-lesser",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Aether Marbles (Lesser)",
+  "level": 4,
+  "traits": [
+   "bomb",
+   "consumable",
+   "force",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Aether marbles create violent, lingering eddies of force that extend partially into unseen planes. You gain a +1 item bonus to attack rolls with the bomb. When the bomb explodes, it deals 2d6 force damage and 2 force splash damage. Surfaces in the splash area are filled with twisting eddies of force, which are difficult terrain for incorporeal creatures but not for corporeal ones. The force eddies in a square disperse after an incorporeal creature enters the square."
+ },
+ {
+  "id": "aether-marbles-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Aether Marbles (Moderate)",
+  "level": 12,
+  "traits": [
+   "bomb",
+   "consumable",
+   "force",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Aether marbles create violent, lingering eddies of force that extend partially into unseen planes. You gain a +2 item bonus to attack rolls with the bomb. When the bomb explodes, it deals 3d6 force damage and 3 force splash damage. Surfaces in the splash area are filled with twisting eddies of force, which are difficult terrain for incorporeal creatures but not for corporeal ones. The force eddies in a square disperse after an incorporeal creature enters the square."
+ },
+ {
+  "id": "alacritous-action",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Alacritous Action",
+  "level": 2,
+  "traits": [
+   "evolution",
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your eidolon moves more quickly. It gains a +10-foot status bonus to its Speed."
+ },
+ {
+  "id": "alacritous-horsehoes",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Alacritous Horsehoes",
+  "level": 7,
+  "traits": [
+   "companion",
+   "invested",
+   "primal"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Alacritous Horsehoes Source GM Core pg. 272 Usage worn horseshoes Bulk 1 When you affix these simple iron horseshoes to the hooves of an ordinary horse or a quadrupedal animal companion and the animal companion invests them, that creature gains a +5-foot item bonus to its land Speed and a +2 circumstance bonus to Athletics checks to High Jump and Long Jump. In addition, when it Leaps, it can move 5 feet farther if jumping horizontally or 3 feet higher if jumping vertically. Alacritous Horseshoes Source GM Core pg. 272 Price 340 gp Alacritous Horseshoes (Greater) Source GM Core pg. 272 Price 4,250 gp The bonus to Speed is +10 feet, and the bonus to Athletics checks is +3."
+ },
+ {
+  "id": "alchemists-fire",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Alchemist's Fire",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "fire",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Alchemist's Fire Source Player Core 2 pg. 283, GM Core pg. 244 Usage held in 1 hand Bulk L Activate Strike Alchemist's fire is a combination of volatile liquids that ignite when exposed to air. Alchemist's fire deals the listed fire damage, persistent fire damage, and splash damage. Many types grant an item bonus to attack rolls. Alchemist's Fire (Lesser) Source Player Core 2 pg. 283, GM Core pg. 244, Core Rulebook pg. 545 Price 3 gp Bulk L The bomb deals 1d8 fire damage, 1 persistent fire damage, and 1 fire splash damage. Alchemist's Fire (Moderate) Source Player Core 2 pg. 283, GM Core pg. 244, Core Rulebook pg. 545 Price 10 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d8 fire damage, 2 persistent fire damage, and 2 fire splash damage. Alchemist's Fire (Greater) Source Player Core 2 pg. 283, GM Core pg. 244, Core Rulebook pg. 545 Price 250 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 3d8 fire damage, 3 persistent fire damage, and 3 fire splash damage. Alchemist's Fire (Major) Source Player Core 2 pg. 283, GM Core pg. 244, Core Rulebook pg. 545 Price 2,500 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 4d8 fire damage, 4 persistent fire damage, and 4 fire splash damage."
+ },
+ {
+  "id": "alchemists-fire-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Alchemist's Fire (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "fire",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Alchemist's fire is a combination of volatile liquids that ignite when exposed to air. Alchemist's fire deals 3d8 fire damage, 3 persistent fire damage, and 3 fire splash damage. You gain a +2 item bonus to attack rolls."
+ },
+ {
+  "id": "alchemists-fire-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Alchemist's Fire (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "fire",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Alchemist's fire is a combination of volatile liquids that ignite when exposed to air. Alchemist's fire deals 4d8 fire damage, 4 persistent fire damage, and 4 fire splash damage. You gain a +3 item bonus to attack rolls."
+ },
+ {
+  "id": "alchemists-fire-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Alchemist's Fire (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable",
+   "fire",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- Alchemist's fire is a combination of volatile liquids that ignite when exposed to air. Alchemist's fire deals 2d8 fire damage, 2 persistent fire damage, and 2 fire splash damage. You gain a +1 item bonus to attack rolls."
+ },
+ {
+  "id": "alicorn-lance",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Alicorn Lance",
+  "level": 5,
+  "traits": [
+   "deadly-d8",
+   "holy",
+   "jousting-d6",
+   "reach"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This white +1 striking lance is made from the horn of a unicorn, willingly granted at the end of its lifetime. Strikes made with this lance gain the holy trait and deal an additional 1 spirit damage. You can make the lance glow like a torch or suppress its light by using an action, which has the concentrate trait. **Activate** ⟨2⟩ (magical, manipulate) **Frequency** once per hour --- **Effect** You evoke the spirit of the unicorn that donated the alicorn lance's horn, which you ride in a shining charge. Move up to twice your Speed and make a Strike with the alicorn lance; you gain the effects of the lance's jousting trait on this Strike. If you were already mounted when you Activate the horn, the unicorn spirit takes shape around your steed, granting it a +10–foot status bonus to its Speed for the charge. --- **Craft Requirements** The initial raw materials must include a horn willingly gifted by a unicorn. In rare instances, an alicorn lance can be made with a forcibly taken horn. However, this heinous act pollutes the horn's magic, causing it to glow with a sickly red light; remove the holy trait, add the unholy trait to Strikes instead of the holy trait, and make the unicorn spirit evoked in the charge whinny visibly in pain."
+ },
+ {
+  "id": "alignment-ampoule",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Alignment Ampoule",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Alignment Ampoule Source PFS Guide pg. 38 PFS Note Players can gain access to faction-specific gear by taking the corresponding Faction Gear Access Game Reward, available when they reach 20 reputation with the respective faction. Usage held in 1 hand Bulk L Access Member of the Pathfinder Society. This glass sphere is divided into four quarters, each of which contains a different material aligned with good, evil, chaos, or law, such as shavings from a holy relic or dried flowers that grew near a planar rift to the Abyss. When an alignment ampoule strikes a creature with a weakness to good, evil, chaos, or law, it deals the listed damage, which matches the creature's highest weakness. This damage is always based on the weaknesses of the initial target of the attack. If a creature has multiple eligible weaknesses, randomly determine the damage type. An alignment ampoule has no effect against creatures that don't have a weakness to the ampoule's associated alignment types. Alignment Ampoule (Lesser) Source PFS Guide pg. 38 Price 4 gp Bulk L The ampoule deals 1 damage and 1 splash damage. Alignment Ampoule (Moderate) Source PFS Guide pg. 38 Price 12 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 1d4 damage and 2 splash damage. Alignment Ampoule (Greater) Source PFS Guide pg. 38 Price 300 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 2d4 damage and 3 splash damage. Alignment Ampoule (Major) Source PFS Guide pg. 38 Price 3,000 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 3d4 damage and 4 splash damage."
+ },
+ {
+  "id": "alignment-ampoule-greater",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Alignment Ampoule (Greater)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Alignment Ampoule Source PFS Guide pg. 38 PFS Note Players can gain access to faction-specific gear by taking the corresponding Faction Gear Access Game Reward, available when they reach 20 reputation with the respective faction. Usage held in 1 hand Bulk L Access Member of the Pathfinder Society. This glass sphere is divided into four quarters, each of which contains a different material aligned with good, evil, chaos, or law, such as shavings from a holy relic or dried flowers that grew near a planar rift to the Abyss. When an alignment ampoule strikes a creature with a weakness to good, evil, chaos, or law, it deals the listed damage, which matches the creature's highest weakness. This damage is always based on the weaknesses of the initial target of the attack. If a creature has multiple eligible weaknesses, randomly determine the damage type. An alignment ampoule has no effect against creatures that don't have a weakness to the ampoule's associated alignment types. Alignment Ampoule (Lesser) Source PFS Guide pg. 38 Price 4 gp Bulk L The ampoule deals 1 damage and 1 splash damage. Alignment Ampoule (Moderate) Source PFS Guide pg. 38 Price 12 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 1d4 damage and 2 splash damage. Alignment Ampoule (Greater) Source PFS Guide pg. 38 Price 300 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 2d4 damage and 3 splash damage. Alignment Ampoule (Major) Source PFS Guide pg. 38 Price 3,000 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 3d4 damage and 4 splash damage."
+ },
+ {
+  "id": "alignment-ampoule-lesser",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Alignment Ampoule (Lesser)",
+  "level": 1,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Alignment Ampoule Source PFS Guide pg. 38 PFS Note Players can gain access to faction-specific gear by taking the corresponding Faction Gear Access Game Reward, available when they reach 20 reputation with the respective faction. Usage held in 1 hand Bulk L Access Member of the Pathfinder Society. This glass sphere is divided into four quarters, each of which contains a different material aligned with good, evil, chaos, or law, such as shavings from a holy relic or dried flowers that grew near a planar rift to the Abyss. When an alignment ampoule strikes a creature with a weakness to good, evil, chaos, or law, it deals the listed damage, which matches the creature's highest weakness. This damage is always based on the weaknesses of the initial target of the attack. If a creature has multiple eligible weaknesses, randomly determine the damage type. An alignment ampoule has no effect against creatures that don't have a weakness to the ampoule's associated alignment types. Alignment Ampoule (Lesser) Source PFS Guide pg. 38 Price 4 gp Bulk L The ampoule deals 1 damage and 1 splash damage. Alignment Ampoule (Moderate) Source PFS Guide pg. 38 Price 12 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 1d4 damage and 2 splash damage. Alignment Ampoule (Greater) Source PFS Guide pg. 38 Price 300 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 2d4 damage and 3 splash damage. Alignment Ampoule (Major) Source PFS Guide pg. 38 Price 3,000 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 3d4 damage and 4 splash damage."
+ },
+ {
+  "id": "alignment-ampoule-major",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Alignment Ampoule (Major)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Alignment Ampoule Source PFS Guide pg. 38 PFS Note Players can gain access to faction-specific gear by taking the corresponding Faction Gear Access Game Reward, available when they reach 20 reputation with the respective faction. Usage held in 1 hand Bulk L Access Member of the Pathfinder Society. This glass sphere is divided into four quarters, each of which contains a different material aligned with good, evil, chaos, or law, such as shavings from a holy relic or dried flowers that grew near a planar rift to the Abyss. When an alignment ampoule strikes a creature with a weakness to good, evil, chaos, or law, it deals the listed damage, which matches the creature's highest weakness. This damage is always based on the weaknesses of the initial target of the attack. If a creature has multiple eligible weaknesses, randomly determine the damage type. An alignment ampoule has no effect against creatures that don't have a weakness to the ampoule's associated alignment types. Alignment Ampoule (Lesser) Source PFS Guide pg. 38 Price 4 gp Bulk L The ampoule deals 1 damage and 1 splash damage. Alignment Ampoule (Moderate) Source PFS Guide pg. 38 Price 12 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 1d4 damage and 2 splash damage. Alignment Ampoule (Greater) Source PFS Guide pg. 38 Price 300 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 2d4 damage and 3 splash damage. Alignment Ampoule (Major) Source PFS Guide pg. 38 Price 3,000 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 3d4 damage and 4 splash damage."
+ },
+ {
+  "id": "alignment-ampoule-moderate",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Alignment Ampoule (Moderate)",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "bomb",
+   "consumable"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Alignment Ampoule Source PFS Guide pg. 38 PFS Note Players can gain access to faction-specific gear by taking the corresponding Faction Gear Access Game Reward, available when they reach 20 reputation with the respective faction. Usage held in 1 hand Bulk L Access Member of the Pathfinder Society. This glass sphere is divided into four quarters, each of which contains a different material aligned with good, evil, chaos, or law, such as shavings from a holy relic or dried flowers that grew near a planar rift to the Abyss. When an alignment ampoule strikes a creature with a weakness to good, evil, chaos, or law, it deals the listed damage, which matches the creature's highest weakness. This damage is always based on the weaknesses of the initial target of the attack. If a creature has multiple eligible weaknesses, randomly determine the damage type. An alignment ampoule has no effect against creatures that don't have a weakness to the ampoule's associated alignment types. Alignment Ampoule (Lesser) Source PFS Guide pg. 38 Price 4 gp Bulk L The ampoule deals 1 damage and 1 splash damage. Alignment Ampoule (Moderate) Source PFS Guide pg. 38 Price 12 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 1d4 damage and 2 splash damage. Alignment Ampoule (Greater) Source PFS Guide pg. 38 Price 300 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 2d4 damage and 3 splash damage. Alignment Ampoule (Major) Source PFS Guide pg. 38 Price 3,000 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 3d4 damage and 4 splash damage."
+ },
+ {
+  "id": "amplifying-touch",
+  "lane": "situational",
+  "collection": "feats",
+  "name": "Amplifying Touch",
+  "level": 12,
+  "traits": [
+   "champion"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your healing energies empower attacks. An ally that recovers Hit Points from your Lay on Hands gains a +1 status bonus to their attack rolls and deals 1 additional spirit damage on all their Strikes until the end of their next turn. In addition, all their Strikes are holy until the end of their next turn."
+ },
+ {
+  "id": "amulet-of-the-third-eye",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Amulet of the Third Eye",
+  "level": 17,
+  "traits": [
+   "apex",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This large brass medallion hangs low on the torso. It's shaped in the form of an unblinking eye, with a ring of turquoise as the iris and an orb of jet serving as the pupil. The amulet grants you a +2 item bonus to Perception checks. When you invest the amulet, you either increase your Wisdom modifier by 1 or increase it to +4, whichever would give you a higher value. **Activate** ⟨2⟩ (concentrate) **Frequency** once per day --- **Effect** You cast Truesight."
+ },
+ {
+  "id": "angelic-opera-cloak",
+  "lane": "situational",
+  "collection": "items",
+  "name": "Angelic Opera Cloak",
+  "level": 19,
+  "traits": [
+   "apex",
+   "holy",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This luxurious cloak embodies an angel's swiftness. You gain a +3 item bonus to Acrobatics checks and never take falling damage, as your cloak billows like a pair of wings to soften any fall you take. When you invest in the cloak, you either increase your Dexterity score by 2 or increase it to 18, whichever would give you a higher score. If you are unholy, you are Slowed 1 while wearing this cloak. **Activate—On Angel's Wings** ⟨2⟩ (concentrate) **Frequency** once per hour --- **Effect** The opera cloak transforms into two pairs of brilliant, feathered wings that grant you a fly Speed of 40 feet for 10 minutes. During this time, you gain immunity to paralysis effects and ignore effects that would give you a circumstance penalty to speed."
+ }
+]

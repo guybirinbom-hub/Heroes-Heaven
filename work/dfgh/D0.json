@@ -1,0 +1,217 @@
+[
+ {
+  "id": "magic-hands",
+  "collection": "feats",
+  "name": "Magic Hands",
+  "level": 6,
+  "traits": [
+   "cleric"
+  ],
+  "text": "The blessing of your deity heightens your healing ability, integrating magical healing with the mundane. When you succeed at a Medicine check to Treat Wounds, you can roll d10s instead of d8s for the healing and add a status bonus to the healing equal to your level.",
+  "currentFlat": null,
+  "openQuestion": "Magic Hands improves the HEALING OUTPUT of Treat Wounds (d10s instead of d8s, plus a status bonus to healing equal to your level) but grants NO bonus to the Medicine check itself. Should healing-output modifiers like this be surfaced as a star on the Medicine skill (useful at the table, but the star currently reads as \"bonus to this check\"), or excluded from the situational registry entirely until a dedicated healing-output display exists?"
+ },
+ {
+  "id": "cardinal-guardians",
+  "collection": "feats",
+  "name": "Cardinal Guardians",
+  "level": 14,
+  "traits": [
+   "animist"
+  ],
+  "text": "You focus your divine magic to allow your apparitions to work in concert using the magic from one to weaken an enemy against the power of the next. Whenever you succeed at a spell attack with an apparition spell or vessel spell, or when a creature fails its save against such a spell, you gain a +2 status bonus to your spell attack modifier against that creature with spells granted by any of your other apparitions, and it takes a –2 status penalty to its saves against such spells. These benefits last until the end of your next turn.",
+  "currentFlat": null,
+  "openQuestion": "Does targetKind 'spell' mean spell attack roll, spell DC, or both? This feat needs attack-only."
+ },
+ {
+  "id": "black-powder-boost",
+  "collection": "feats",
+  "name": "Black Powder Boost",
+  "level": 4,
+  "traits": [
+   "gunslinger"
+  ],
+  "text": "**Requirements** You're wielding a loaded firearm. --- You fire your weapon as you jump, using the kickback to go farther. You Leap and discharge your firearm to add a +10-foot status bonus to the distance traveled. If you spend 2 actions for Black Powder Boost, you High Jump or Long Jump instead. --- **Special** An ability that allows you to High Jump or Long Jump as a single action (like the Quick Jump skill feat) lets you use Black Powder Boost as a single action for those jumps as well.",
+  "currentFlat": null,
+  "openQuestion": "Leap/jump distance is not one of the eleven target kinds. Should jump-distance bonuses map onto 'speed' with wording that says 'jump distance', gain a dedicated jump target, or be skipped entirely? (Same question applies to Reach for the Stars.)"
+ },
+ {
+  "id": "reach-for-the-stars",
+  "collection": "feats",
+  "name": "Reach for the Stars",
+  "level": 18,
+  "traits": [
+   "gunslinger"
+  ],
+  "text": "The sky's the limit, as long as you've got enough black powder. When you use Black Powder Boost, you can expend additional black powder or ammunition to boost yourself farther. For each dose of black powder or piece of firearm ammunition you spend in addition to your shot, you add another 10 feet to the height or distance of your Leap, to a maximum of 5 boosts (a +50-foot status bonus). You must be wearing a dose of black powder or piece of ammunition, or have it in hand, to detonate it for a boost. You can choose at which points in your Leap you detonate each boost, allowing you to change direction each time. You must then move in a straight line until you boost again or end your Leap.",
+  "currentFlat": null,
+  "openQuestion": "Same as Black Powder Boost: jump/Leap distance has no target kind. Map it onto 'speed' with explicit wording, add a jump target, or skip these entries?"
+ },
+ {
+  "id": "explosive-death-drop",
+  "collection": "feats",
+  "name": "Explosive Death Drop",
+  "level": 14,
+  "traits": [
+   "fire",
+   "monk"
+  ],
+  "text": "**Requirements** You are in Rain of Embers Stance and have a target grabbed or restrained. --- You lift your enemy into the air before bringing them crashing down with a fiery detonation. Roll an check against your target's Fortitude DC. You take a -1 circumstance penalty to your check if the target is one size larger than you and a -3 circumstance penalty if it's larger than that. You gain a +1 circumstance bonus to your check if the target is one size smaller than you and a +3 circumstance bonus if it's smaller than that. --- **Critical Success** The target takes 12d6 damage and falls prone in an unoccupied adjacent square of your choice. The target is no longer grabbed. The target and any creature adjacent to it also each take 1d6 damage. **Success** As critical success, but the target takes 6d6 damage instead of 12d6, and creatures don't take persistent fire damage. **Failure** The target is no longer grabbed. **Critical Failure** As failure, but you fall prone.",
+  "currentFlat": null,
+  "openQuestion": "core.json's text for explosive-death-drop reads \"Roll an check against your target's Fortitude DC\" — the skill name is missing (the printed feat says 'Roll an Athletics check'). Confirm the target is Athletics, and decide whether the dropped word should be fixed in the data (it is a display defect players will see, independent of this registry)."
+ },
+ {
+  "id": "mountain-stance",
+  "collection": "feats",
+  "name": "Mountain Stance",
+  "level": 1,
+  "traits": [
+   "monk",
+   "stance"
+  ],
+  "text": "**Requirements** You are unarmored and touching the ground --- You enter the stance of an implacable mountain—a technique created by dwarven monks—allowing you to strike with the weight of an avalanche and block blows with your garments. The only Strikes you can make are falling stone unarmed attacks. These deal 1d8 damage; are in the brawling group; and have the forceful, nonlethal, and unarmed traits. While in Mountain Stance, you gain a +4 item bonus to AC and a +2 circumstance bonus to any defenses against Reposition, Shove, Trip, and other forced movement effects. You have a Dexterity modifier cap to your AC of +0, meaning you don't add your Dexterity to your AC, and your Speeds are all reduced by 5 feet. The item bonus to AC from Mountain Stance is cumulative with armor potency runes on your explorer's clothing, mystic armor, and bands of force.",
+  "currentFlat": null,
+  "openQuestion": "For \"a +2 circumstance bonus to any defenses against Reposition, Shove, Trip and other forced movement\", should the marker sit on all three saves, on Fortitude only (the DC those maneuvers actually target), or on AC as well?"
+ },
+ {
+  "id": "field-propagandist-dedication",
+  "collection": "feats",
+  "name": "Field Propagandist Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "text": "Having devoted your life to crafting propaganda, you know that winning the hearts and minds of soldiers can be a deciding factor in securing the successful outcome of a war. You gain the Spread Propaganda exploration activity. While you are not immune to propaganda, you are resistant to it. You gain a +2 circumstance bonus to your Perception DC against attempts made by others to Lie to you. If you have the Lie to Me skill feat, you gain a +2 circumstance bonus to your Deception DC. You become trained in Society. If you were already trained, you become an expert instead.",
+  "currentFlat": null,
+  "openQuestion": "Should DC-only bonuses get their own target kind (e.g. perceptionDc / skillDc), or is a star on the check with a clarifying 'DC only' note acceptable?"
+ },
+ {
+  "id": "sixfingers-elixir",
+  "collection": "items",
+  "name": "Sixfingers Elixir",
+  "level": 5,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "polymorph"
+  ],
+  "text": "Sixfingers Elixir May contain spoilers from The Slithering Source The Slithering pg. 61 Usage held in 1 hand Bulk L Activate Interact This gritty, spicy fluid causes you to grow a sixth finger on each hand and gives you a spiderlike grip. You gain a +2 item bonus to your Reflex DC to keep from being Disarmed and a climb Speed of 20 feet for the listed duration. Sixfingers Elixir (Lesser) Source The Slithering pg. 61 Price 25 gp The duration is 10 minutes. Sixfingers Elixir (Moderate) Source The Slithering pg. 61 Price 250 gp The duration is 1 hour. Sixfingers Elixir (Greater) Source The Slithering pg. 61 Price 2,500 gp The duration is 8 hours.",
+  "currentFlat": null,
+  "openQuestion": "Should a bonus to a defence DC (Reflex DC vs. Disarm) be surfaced on the Reflex save row with an explanatory condition string, or does the sheet need a separate Reflex-DC readout before this record is registered?"
+ },
+ {
+  "id": "sixfingers-elixir-lesser",
+  "collection": "items",
+  "name": "Sixfingers Elixir (Lesser)",
+  "level": 5,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "polymorph"
+  ],
+  "text": "**Activation** ⟨1⟩ Interact This gritty, spicy fluid causes you to grow a sixth finger on each hand and gives you a spiderlike grip. You gain a +2 item bonus to your Reflex DC to keep from being Disarmed and a Climb Speed of 20 feet for the listed duration. --- **Duration** 10 minutes.",
+  "currentFlat": null,
+  "openQuestion": "Same as the parent record: does a defence-DC bonus belong on the Reflex save row?"
+ },
+ {
+  "id": "sixfingers-elixir-moderate",
+  "collection": "items",
+  "name": "Sixfingers Elixir (Moderate)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "polymorph"
+  ],
+  "text": "**Activation** ⟨1⟩ Interact This gritty, spicy fluid causes you to grow a sixth finger on each hand and gives you a spiderlike grip. You gain a +2 item bonus to your Reflex DC to keep from being Disarmed and a Climb Speed of 20 feet for the listed duration. --- **Duration** 1 hour.",
+  "currentFlat": null,
+  "openQuestion": "Same as the parent record: does a defence-DC bonus belong on the Reflex save row?"
+ },
+ {
+  "id": "sixfingers-elixir-greater",
+  "collection": "items",
+  "name": "Sixfingers Elixir (Greater)",
+  "level": 17,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "polymorph"
+  ],
+  "text": "**Activation** ⟨1⟩ Interact This gritty, spicy fluid causes you to grow a sixth finger on each hand and gives you a spiderlike grip. You gain a +2 item bonus to your Reflex DC to keep from being Disarmed and a Climb Speed of 20 feet for the listed duration. --- **Duration** 8 hours.",
+  "currentFlat": null,
+  "openQuestion": "Same as the parent record: does a defence-DC bonus belong on the Reflex save row?"
+ },
+ {
+  "id": "weapon-innovation",
+  "collection": "classFeatures",
+  "name": "Weapon Innovation",
+  "level": 1,
+  "traits": [
+   "inventor"
+  ],
+  "text": "Your innovation is a complex and impossible-looking weapon augmented by numerous mechanisms. It begins with the same statistics as a level 0 simple or martial weapon of your choice. The chosen weapon must be common or you must otherwise have access to it. An innovation weapon can have fundamental and property runes added to it in the same way as an ordinary weapon. Because of the unique features of your innovation, everyone except you is untrained in it, even if they would normally be trained (or better) in simple or martial weapons. If you use the Overdrive action, you can choose to change the additional damage from Overdrive to fire damage. Choose one initial weapon modification to apply to your innovation, either from the following or from other initial weapon modifications to which you have access. These modifications grant additional weapon traits, sometimes with extra abilities. A modification might give your weapon the versatile trait with a damage type that the weapon could already deal, either from its base damage type or from an existing versatile trait. In that case, if you select that modification, you can instead choose to give the weapon the versatile trait for a different damage type: bludgeoning, piercing, or slashing. - **Advanced Design:** Your weapon innovation uses the statistics of a level 0 advanced weapon of your choice. It must be common or you must have access to it. You treat this as a martial weapon for the purposes of proficiency. - **Blunt Shot (ranged only):** Your weapon innovation can file the edges off your ammunition and adjust the blunt force of the shot to deliver an attack that can batter as much as pierce, or even knock an opponent right off their feet. Your innovation gains the concussive and ranged trip traits. - **Complex Simplicity (simple weapon only):** Increase your innovation's weapon damage die by one step (d4 to d6, d6 to d8, d8 to d10, d10 to d12). In addition, it gains two of the following traits of your choice: versatile B, versatile P, versatile S, or razing. - **Dynamic Weighting (one-handed melee weapon only; can't have the agile, attached, or free-hand trait):** Your weapon is modified to be heavier and easier to manipulate or retrieve. Your innovation gains the two-hand trait, with a damage die one size higher than the weapon's normal weapon damage die size (for instance, a longsword would gain the two-hand d10 trait). Your innovation also gains the versatile B trait. If it was a thrown weapon, it gains the tethered trait. - **Entangling Form (melee only):** You've altered your weapon to including tangling wires or straps, or to have a flexible construction. Your innovation gains the disarm, grapple, and trip traits. - **Hampering Spikes (melee only):** You've added long, snagging spikes to your weapon, which you can use to impede your foes' movement. Your innovation gains the hampering, trip, and versatile P traits. - **Hefty Composition (melee only):** Blunt surfaces and sturdy construction make your weapon hefty and mace-like. Your innovation gains the shove, razing, and versatile B traits. - **Modular Head:** You've constructed a multi-purpose, adjustable striking surface for your weapon, or you've made special ammunition you can swiftly alter. Your innovation gains the modular trait for bludgeoning, piercing, and slashing. When you Interact to use the modular trait, you can also choose to give the weapon the nonlethal trait if it doesn't currently have it, or to remove that trait if it's currently nonlethal. - **Pacification Tools (melee only):** Softer materials make your weapon suited to knock out instead of kill, and special protrusions let you catch weapons and disarm your foes. Your innovation gains the disarm, hampering, and nonlethal traits. You can choose whether to apply the nonlethal trait on each attack with your innovation. - **Razor Prongs (melee only):** You can knock down and slash your foes with sharp, curved blades. Your innovation gains the tearing, trip, and versatile S traits. - **Segmented Frame:** Hinges, clamps, and telescoping parts make your innovation collapsible and adjustable. It gains the modular trait for bludgeoning, piercing, and slashing. You can Interact to collapse the item down to light Bulk or to return it to your normal form. When it's collapsed to light Bulk, it has the concealable trait, which grants you a +2 circumstance bonus to Stealth checks and DCs to hide or conceal the weapon.",
+  "currentFlat": null,
+  "openQuestion": "This bonus only exists if the inventor picked the specific weapon modification that grants the concealable trait, AND only while the weapon is collapsed. Should the marker show for every character with Weapon Innovation (over-reporting), or should it be keyed to the chosen modification once the app tracks weapon-modification selections? Note also that the bonus covers a Stealth DC as well as a Stealth check, which the display cannot distinguish."
+ },
+ {
+  "id": "elemental-blast",
+  "collection": "classFeatures",
+  "name": "Elemental Blast",
+  "level": 1,
+  "traits": [
+   "attack",
+   "impulse",
+   "kineticist",
+   "primal"
+  ],
+  "text": "⟨1⟩ or ⟨2⟩ --- With a wave of your hand, you collect elemental matter from your aura and swing or hurl it. Choose one of your kinetic elements and a damage type listed for that element, then make a melee or ranged impulse attack against the AC of one creature. Add your Strength modifier to the damage roll for a melee Elemental Blast. If you make a 2-action Elemental Blast, you gain a status bonus to the damage roll equal to your Constitution modifier. The element determines the damage die, damage type, and range (for a ranged blast). A damage type other than a physical damage type adds its trait to the blast. - **Air** 1d6 electricity or slashing, 60 feet - **Earth** 1d8 bludgeoning or piercing, 30 feet - **Fire** 1d6 fire, range 60 feet - **Metal** 1d8 piercing or slashing, 30 feet - **Water** 1d8 bludgeoning or cold, 30 feet - **Wood** 1d8 bludgeoning or vitality, 30 feet --- **Critical Success** The target takes double damage. **Success** The target takes full damage. --- **Level (+4)** The damage increases by one die.",
+  "currentFlat": null,
+  "openQuestion": "Elemental Blast is an impulse attack, not a weapon Strike, and the 2-action Constitution status bonus is part of the blast's own printed damage formula. Should this be computed inside the blast's damage entry (the way the app already computes Strike damage) rather than shown as a situational star on strikeDamage — which would visually attach it to the kineticist's weapon Strikes?"
+ },
+ {
+  "id": "commanders-banner",
+  "collection": "classFeatures",
+  "name": "Commander's Banner",
+  "level": 1,
+  "traits": [
+   "commander"
+  ],
+  "text": "A commander needs a battle standard to help guide their allies on the field. You start play with a custom banner that you can use to signal allies when using tactics (see below) or to deploy specific abilities. Your banner can be affixed to a weapon or shield you are wielding, attached to a simple pole or handle and held in one hand, or worn affixed to a pole alongside your backpack. Your banner might be a literal flag or pennant, a decorated fan, a personalized totem, or some other highly visible and item of negligible or light Bulk. Your banner requires customization and influences your allies' morale, so you can have only one banner at a time designated as your commander's banner; designating a new banner or standard as your commander's banner takes 1 minute. As long as your banner is visible and in your possession, it provides an aura that gives you and all allies in a a +1 status bonus to Will saves and DCs against fear effects. You can pause or resume this effect as part of any action you would typically use to stow or retrieve your banner. If your banner is destroyed or stolen, allies currently benefiting from its bonuses become Frightened 1. This effect has the aura, emotion, mental, and visual traits. Some abilities allow you to place your banner in a specialized manner, such as the Commander's Companion and Plant Banner feats. As long as you have placed your banner in this way, any banner abilities originate from your banner's space instead of your own, and you gain the same basic benefits as when it is in your possession. An unattended banner has the base Hardness and Hit Points of a standard item of its type (usually cloth, thin leather, or thin wood) or the Hardness and Hit Points of the object it is affixed to, whichever is greater.",
+  "currentFlat": null,
+  "openQuestion": "Should the 'and DCs against fear effects' half of this bonus be surfaced anywhere (there is no DC-versus-a-trait stat in the target list), or is the Will-save star alone sufficient?"
+ },
+ {
+  "id": "face-your-fears",
+  "collection": "feats",
+  "name": "Face Your Fears",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "emotion",
+   "mental"
+  ],
+  "text": "**Frequency** once per hour --- A lifetime of facing Nidal's terrors has taught you to fight through fear. Although you aren't immune to it, you can subdue the emotion to such an extent that many believe it doesn't affect you. Reduce the value of your frightened condition by 1. If this would reduce the value to 0, you are no longer frightened and gain a +1 circumstance bonus against fear effects for 1 minute.",
+  "currentFlat": null,
+  "openQuestion": "The text says '+1 circumstance bonus against fear effects' without naming a statistic. Register it on saving throws only, or also on AC and your Will DC against fear effects (e.g. an enemy Demoralizing you)?"
+ },
+ {
+  "id": "living-leaf-weave",
+  "collection": "items",
+  "name": "Living Leaf Weave",
+  "level": 5,
+  "traits": [
+   "alchemical",
+   "healing",
+   "laminar",
+   "plant"
+  ],
+  "text": "This suit of leaf weave armor is specially modified to metabolize the alchemical accelerants in medicinal compounds. A special receptacle in the armor can hold an Elixir of Life, which takes 3 Interact actions to install. **Activate** ⟨1⟩ (manipulate) **Requirements** An elixir of life is installed in the armor --- **Effect** Slithering vines grow from the armor, granting an item bonus to Athletics checks to Grapple, to your Fortitude DC to resist Grapple, Disarm, or Shove attempts, and to your Reflex DC to resist Trip attempts. The bonus is equal to the elixir's item bonus, and lasts for 3 rounds. The activation uses up the elixir, and the armor can't be activated again until a new one is installed.",
+  "currentFlat": null,
+  "openQuestion": "Is mapping a bonus to your Fortitude/Reflex DC-to-resist-maneuvers onto the save/fortitude and save/reflex stars acceptable, or should a distinct target kind (e.g. 'saveDc' / 'defenseDc') be added so it is not confused with a bonus to the saving throw you roll?"
+ }
+]

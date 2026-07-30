@@ -20,6 +20,11 @@
  * can be built independently against it.
  */
 
+// The conditional-bonus shape is defined next to the shipped registry that uses it. Re-exported here
+// so a player-authored entry is the SAME type as a shipped one — one display path, not two.
+import type { SituationalBonus } from './situationalBonuses';
+export type { SituationalBonus, SituationalTarget } from './situationalBonuses';
+
 /* =========================================================================
  * 1. Canonical vocabularies + primitive types
  * ========================================================================= */
@@ -1006,6 +1011,16 @@ interface ItemBase extends ContentBase {
    * description; this field is only for unconditional while-worn effects.
    */
   passiveEffects?: ItemPassiveEffects;
+  /**
+   * CONDITIONAL effects: a `*` on each stat named, with the trigger and the bonus spelled out when
+   * the player opens that stat. Nothing here changes a number — the whole point is the effects that
+   * only apply sometimes, which no computed total can honestly include.
+   *
+   * Shipped items get these from the situational registry, keyed by item id. This field is what the
+   * item editor's Advanced section writes, so a player can mark anything the data doesn't cover —
+   * or anything their table rules differently — without waiting for the app to model it.
+   */
+  situational?: SituationalBonus[];
   /** Extra prepared/spontaneous spell slots the item grants while invested (Endless Grimoire,
    *  Sin Reservoir). Same shape + application as a feat's spellSlotBonus. */
   spellSlotBonus?: SpellSlotBonus;
@@ -1367,6 +1382,25 @@ export interface ModeDef {
   /** Scope of a USER-created mode: a roster character id ⇒ only that character sees it; absent ⇒
    *  universal (every character on this device). Catalog/predefined modes never set this. */
   charId?: string;
+
+  /* ---- item-driven modes (consumables) ------------------------------------------------------ */
+  /**
+   * The consumable that switches this mode on. Set ⇒ the mode belongs to the ITEM, not to the
+   * player's own list: it is hidden from the Modes manager and search, and appears only by using
+   * the item.
+   */
+  fromItemId?: string;
+  /**
+   * The printed duration ("5 minutes", "until your next daily preparations"), shown on the pill.
+   * The app has no clock — this tells the player what they are tracking; they switch it off.
+   */
+  duration?: string;
+  /**
+   * Item modes clear at rest by default. Set true for the few whose printed duration outlasts a
+   * night, so a mutagen lasting "until your next daily preparations" is not wiped by the rest that
+   * is meant to end it.
+   */
+  survivesRest?: boolean;
 }
 
 /** An unarmed Strike a stance grants while active (e.g. Tiger Stance's claw). */
@@ -1501,6 +1535,9 @@ export interface ContentDatabase {
    *  the database (so a saved character that already picked one still resolves) but are omitted from
    *  user-facing LISTS. Computed at load time — see findDuplicateIds in src/data/index.ts. */
   duplicateIds?: Set<string>;
+  /** Item ids that are an AoN family SUMMARY, not an ownable item — hidden from every picker but
+   *  still resolvable by id, so a character who added one keeps it. See findUmbrellaIds. */
+  umbrellaIds?: Set<string>;
 }
 
 /** An etchable rune (a weapon/armor/shield enhancement). */

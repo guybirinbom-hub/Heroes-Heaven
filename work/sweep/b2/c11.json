@@ -1,0 +1,1230 @@
+[
+ {
+  "id": "starlight-armor",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Starlight Armor",
+  "level": 14,
+  "traits": [
+   "archetype",
+   "occult"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per day --- You armor yourself in the light of distant suns, shielding yourself from harm. The armor grants you resistance 7 to piercing, bludgeoning, and slashing damage. The armor also sheds bright light for 20 feet (and dim light for the next 20 feet). Whenever an adjacent creature attacks you, the attacker must attempt a save against your spell DC at the end of its action. On a failure, it becomes dazzled until the end of its next turn. Regardless of the result of the save, the attacker is temporarily immune until the end of its next turn. The dazzling effect has the light and visual traits. When you reach 17th level, the resistance increases to 10. --- *Note: A duration for this ability was not provided by Paizo. The effect linked here is set to 1 minute.*"
+ },
+ {
+  "id": "starsong-nectar",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Starsong Nectar",
+  "level": 20,
+  "traits": [
+   "consumable",
+   "fortune",
+   "magical",
+   "potion"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- A liquid with the appearance of an expressive night sky and a taste that's sheer pleasure, starsong nectar grants you cheerful confidence and incredible luck for 10 minutes after you drink it. However, if you show too much caution at any point during this time (GM's discretion), you must succeed at a or the potion's effects end. While the potion lasts, you gain a +3 status bonus to attack rolls, initiative rolls, Perception checks, saving throws, and skill checks, and you aren't off-guard to creatures due to them flanking you or being hidden from or undetected by you. You are temporarily immune to this potion for 24 hours once its effects end. While the potion lasts, though, if you take a moment to imagine the future, you choose the best courses of action. This aspect of the potion grants you the following activation. --- **Activate** ⟨1⟩ (concentrate) **Frequency** once per round --- **Effect** Until the start of your next turn, roll two d20s for any attack rolls, Perception checks, saving throws, and skill checks you make and take the higher result."
+ },
+ {
+  "id": "statue-skin-salve",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Statue Skin Salve",
+  "level": 5,
+  "traits": [
+   "consumable",
+   "magical",
+   "oil"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨3⟩ Interact --- This gritty salve can be applied to the skin of a creature to form a thin layer of smooth stone on its body for 20 minutes. During this time, it gains resistance 3 to piercing and slashing damage. Further, the creature gains a +2 item bonus to Impersonate a statue or creature made of stone for 8 hours, or until its body is fully submersed in water."
+ },
+ {
+  "id": "stoic-as-hell",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Stoic as Hell",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Trigger** You're targeted by an emotion effect or effect that would give you the controlled condition. --- Like the archdevil Dispater, you maintain an unshakable poise even under impossible stress. You gain a +2 circumstance bonus to the triggering saving throw or to your Will DC against the triggering effect. If you critically succeed at the saving throw (or if the source of the effect critically fails its skill check, such as to Demoralize you), you gain temporary Hit Points equal to half your level until the end of the effect's source's next turn. If the effect originated from a creature, you can demoralize that creature once as a free action on your next turn; if the creature was temporarily immune to your attempts to Demoralize it, it loses that immunity."
+ },
+ {
+  "id": "stone-body-mutagen",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Stone Body Mutagen",
+  "level": 5,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Stone Body Mutagen Source Treasure Vault (Remastered) pg. 61, The Fall of Plaguestone pg. 56 Usage held in 1 hand Bulk L Activate (manipulate) This mutagen calcifies your body, making it as hard as stone. Benefit You gain resistance to physical damage (except bludgeoning) equal to the listed amount. Drawback Your Speeds are reduced by 10 feet (to a minimum of 5 feet) and you take a –2 penalty to Reflex saves. Stone Body Mutagen (Lesser) Source Treasure Vault (Remastered) pg. 61, The Fall of Plaguestone pg. 56 Price 22 gp Bulk L You gain resistance 5 to physical damage (except bludgeoning) and the duration is 10 minutes. Stone Body Mutagen (Moderate) Source Treasure Vault (Remastered) pg. 61, The Fall of Plaguestone pg. 56 Price 300 gp Bulk L You gain resistance 5 to physical damage (except bludgeoning) and the duration is 1 hour. Stone Body Mutagen (Greater) Source Treasure Vault (Remastered) pg. 61, The Fall of Plaguestone pg. 56 Price 920 gp Bulk L You gain resistance 10 to physical damage (except bludgeoning) and the duration is 1 hour."
+ },
+ {
+  "id": "stone-body-mutagen-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Stone Body Mutagen (Lesser)",
+  "level": 5,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- This mutagen calcifies your body making it as hard as stone. **Benefit** You gain resistance 5 to physical damage (except bludgeoning). **Drawback** Your speeds are reduced by 10 feet (minimum 5 feet) and you take a -2 penalty to Reflex saves. **Duration** 10 minute."
+ },
+ {
+  "id": "stone-body-mutagen-moderate",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Stone Body Mutagen (Moderate)",
+  "level": 12,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "elixir",
+   "mutagen",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- This mutagen calcifies your body making it as hard as stone. **Benefit** You gain resistance 5 to physical damage (except bludgeoning). **Drawback** Your speeds are reduced by 10 feet (minimum 5 feet) and you take a -2 penalty to Reflex saves. **Duration** 1 hour."
+ },
+ {
+  "id": "stone-of-encouragement",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Stone of Encouragement",
+  "level": 2,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This smooth, round, gray stone fits neatly into the palm of your hand and feels comfortable to hold regardless of the size or shape of your hand. While you're holding the stone, it telepathically speaks to you at regular intervals in generic words of encouragement, such as \"You can do it!\" and \"Let's go!\" The encouraging words manifest in the voice of your internal monologue or take on the characteristics of the voice of someone you trust. Despite the similarity, you're aware that the stone is telepathically projecting its voice and can differentiate between the stone's voice and your internal monologue or the voice of the person you trust. **Activate** ⟨1⟩ Command **Frequency** once per day --- **Effect** You ask the stone for help with a task. It speaks a few motivating words related to the task at hand, which grants you a +1 item bonus to the first skill check you attempt within 1 minute. You become temporarily immune to the effects of all *stones of encouragement*, even ones other than the one you activated, for 1 day. You can still hear the encouraging words of different stones if you hold them, but they don't provide any benefits."
+ },
+ {
+  "id": "stone-of-encouragement-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Stone of Encouragement (Greater)",
+  "level": 8,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This smooth, round, gray stone fits neatly into the palm of your hand and feels comfortable to hold regardless of the size or shape of your hand. While you're holding the stone, it telepathically speaks to you at regular intervals in generic words of encouragement, such as \"You can do it!\" and \"Let's go!\" The encouraging words manifest in the voice of your internal monologue or take on the characteristics of the voice of someone you trust. Despite the similarity, you're aware that the stone is telepathically projecting its voice and can differentiate between the stone's voice and your internal monologue or the voice of the person you trust. **Activate** ⟨1⟩ Command **Frequency** once per day --- **Effect** You ask the stone for help with a task. It speaks a few motivating words related to the task at hand, which grants you a +2 item bonus to the first skill check you attempt within 1 minute. You become temporarily immune to the effects of all *stones of encouragement*, even ones other than the one you activated, for 1 day. You can still hear the encouraging words of different stones if you hold them, but they don't provide any benefits."
+ },
+ {
+  "id": "stoneraiser-javelin",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Stoneraiser Javelin",
+  "level": 11,
+  "traits": [
+   "earth",
+   "magical",
+   "thrown"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This stone-headed *+2 striking returning javelin* draws forth the power of the earth itself to strike at enemies. **Activate** ⟨1⟩ Interact **Frequency** once per day --- **Effect** You hurl the *stoneraiser javelin* at an unoccupied space within 30 feet. The javelin's power flows into the ground, which erupts in a 5-foot-radius burst of razor-sharp stalagmites. The stalagmites are 10 feet tall. Everything on each side of the stalagmites has cover from creatures on the opposite side, and the stalagmites' spaces are difficult terrain. A creature takes 4d4 damage for every move action it takes that enters at least one of the affected spaces. Each 5-foot-by-5-foot section has AC 10, Hardness 14, and 30 Hit Points. It's immune to critical hits and precision damage. A destroyed section can be moved through freely. The stalagmites crumble to dust after 1 minute. Any creature in the area when the stalagmites appear is pushed to the nearest unoccupied space of its choice; this movement is forced movement. Pushed creatures must attempt a DC 28 Reflex saving throw or take 4d4 damage. --- **Critical Success** The creature is unaffected. **Success** The creature takes half damage. **Failure** The creature takes full damage. **Critical Failure** The creature takes double damage and is knocked prone."
+ },
+ {
+  "id": "storm-breath",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Storm Breath",
+  "level": 9,
+  "traits": [
+   "air",
+   "bottled-breath",
+   "consumable",
+   "electricity",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "*Storm breaths* are bottles of temperamental lightning captured during storms on the Plane of Air, releasing small charges of static energy any time they're touched. The first *storm breaths* were created by Ranginori's faithful following the Elemental Lord's return from a long imprisonment, but the recipe has since been duplicated across the multiverse. After inhaling *storm breath*, you gain resistance 5 to both electricity and sonic. You can exhale the *storm breath* as a bolt of lightning, dealing damage to all creatures in a , with a save."
+ },
+ {
+  "id": "stormshard",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Stormshard",
+  "level": 6,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "These shards of coalesced necromantic essence are sometimes found in the wake of an ancestor storm. Howling spirits are faintly visible, trapped inside the jagged, dark-green glass. You can use the shard to cow the undead or briefly release the tormented souls from inside the glass. While you hold the stormshard, you gain a +1 item bonus to Intimidation checks to influence the undead. In addition, you can Demoralize undead creatures, even if those creatures are mindless or otherwise immune to emotion, fear, or mental effects. **Activate—Free the Spirits** ⟨2⟩ (concentrate, manipulate) **Frequency** once per day --- **Effect** You briefly release the spirits from the *stormshard* before drawing them back into the glass. Each creature in a takes 4d8 damage ( save). You treat the result of your saving throw as one degree of success better than its outcome."
+ },
+ {
+  "id": "stormshard-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Stormshard (Greater)",
+  "level": 12,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "These shards of coalesced necromantic essence are sometimes found in the wake of an ancestor storm. Howling spirits are faintly visible, trapped inside the jagged, dark-green glass. You can use the shard to cow the undead or briefly release the tormented souls from inside the glass. While you hold the stormshard, you gain a +2 item bonus to Intimidation checks to influence the undead. In addition, you can Demoralize undead creatures, even if those creatures are mindless or otherwise immune to emotion, fear, or mental effects. **Activate—Free the Spirits** ⟨2⟩ (concentrate, manipulate) **Frequency** once per day --- **Effect** You briefly release the spirits from the *stormshard* before drawing them back into the glass. Each creature in a takes 8d8 damage ( save). You treat the result of your saving throw as one degree of success better than its outcome. You can choose to increase the radius of the emanation by up to 10 feet."
+ },
+ {
+  "id": "stormshard-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Stormshard (Major)",
+  "level": 18,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "These shards of coalesced necromantic essence are sometimes found in the wake of an ancestor storm. Howling spirits are faintly visible, trapped inside the jagged, dark-green glass. You can use the shard to cow the undead or briefly release the tormented souls from inside the glass. While you hold the stormshard, you gain a +3 item bonus to Intimidation checks to influence the undead. In addition, you can Demoralize undead creatures, even if those creatures are mindless or otherwise immune to emotion, fear, or mental effects. **Activate—Free the Spirits** ⟨2⟩ (concentrate, manipulate) **Frequency** once per day --- **Effect** You briefly release the spirits from the *stormshard* before drawing them back into the glass. Each creature in a takes 13d8 damage ( save). You treat the result of your saving throw as one degree of success better than its outcome. You can choose to increase the radius of the emanation by up to 20 feet."
+ },
+ {
+  "id": "studious-spells",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Studious Spells",
+  "level": 7,
+  "traits": [
+   "magus"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your hybrid study grants you additional spells that can enhance your power in combat. You gain two special 2nd-rank studious spell slots, which can be used to prepare Gecko Grip, Sure Strike, Water Breathing, and an additional spell depending on your hybrid study. You add any spells from this class feature to your spellbook. At 11th level, the extra slots increase to 3rd-rank and you add Haste and an additional spell depending on your hybrid study. At 13th level, the extra slots increase to 4th-rank and you add Fly and an additional spell depending on your hybrid study. **Aloof Firmament** 7th: Water Walk; 11th: Wall of Wind; 13th: Variable Gravity **Inexorable Iron** 7th: Enlarge; 11th: Earthbind; 13th: Planar Tether **Laughing Shadow** 7th: Blur; 11th: Time Jump; 13th: Translocate **Sparkling Targe** 7th: Resist Energy; 11th: Warding Aggression; 13th: Mountain Resilience **Starlit Span** 7th: Darkvision; 11th: Wall of Wind; 13th: Unfettered Movement **Twisting Tree** 7th: Embed Message; 11th: Slow; 13th: Flicker **Unfurling Brocade** 7th: Web; 11th: Whirling Scarves; 13th: Planar Tether **Resurgent Maelstrom** 7th: Water Walk, 11th: Aqueous Orb, 13th: Unfettered Movement"
+ },
+ {
+  "id": "stunning-surprise",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Stunning Surprise",
+  "level": 14,
+  "traits": [
+   "archetype",
+   "incapacitation"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You must be undetected by the target creature. --- You quickly move in to bring your foe down with a single blow. You move up to your Speed then make a melee Strike. If you hit and deal damage, your foe must attempt a save against your class DC or spell DC, whichever is higher. Regardless of the save outcome, the creature then becomes immune to your Stunning Surprise for 24 hours. --- **Critical Success** The creature is unaffected. **Success** The creature is Stunned 1 and can't use reactions until its next turn. **Failure** The creature is Stunned 3 and can't use reactions until its next turn. **Critical Failure** The creature falls unconscious for 1 minute."
+ },
+ {
+  "id": "stunt-performer-stance",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Stunt Performer Stance",
+  "level": 10,
+  "traits": [
+   "archetype",
+   "stance"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.stances"
+  ],
+  "text": "**Requirements** You are unarmored. --- You clear your mind, regulate your breathing, and prepare your muscles in a stance inspired by Kemen Kayton, a graduate of Zimar's Monastery of the Seven Forms. Kemen controversially shunned monastic life and instead used his martial skills as a death-defying stunt performer, winning acclaim for exhibitions that saw him survive great falls and escape deadly traps. While in this stance, you gain a +2 circumstance bonus to Reflex saving throws and skill checks to Escape, as well as resistance 2 to all physical damage."
+ },
+ {
+  "id": "subjugation",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Subjugation",
+  "level": 16,
+  "traits": [
+   "concentrate",
+   "incapacitation",
+   "mental",
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You have managed to gain a degree of control over the runelord's ancient soul within your mind, enough that you can project this invasive influence into the minds of others. Spend a Mythic Point. You attempt to send your runelord's influence into the mind of a creature you can sense within 30 feet. The creature attempts a save against your class DC or spell DC, whichever is higher. Giants take a –2 status penalty to this saving throw. Regardless of the result, the target is temporarily immune to this ability for 24 hours once the Subjugation ends. --- **Critical Success** The creature is unaffected. **Success** The creature is Slowed 1 as it fights off your runelord's influence. You gain awareness of its abilities and weaknesses as if you achieved a critical success on a Recall Knowledge check to identify the creature. **Failure** The creature relinquishes control of its faculties and abilities. You gain awareness of its abilities and weaknesses as success. You control the creature until the end of its next turn. **Critical Failure** As failure, but you control the creature for 1 minute."
+ },
+ {
+  "id": "such-a-disgrace",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Such a Disgrace!",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "fortune"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** An ally within 30 feet fails a Will saving throw against a mental effect. --- You expect the same level of urbane sophistication from your allies as you possess, so whenever one of them succumbs to egregious behavior from a mental effect, you're immediately mortified. How dare they make you look bad! Whether you respond with noisy contempt or quiet distress, your reaction gives your ally a second chance to shake off the effect and save the moment, at least socially. Your ally rerolls the triggering Will saving throw with a +1 circumstance bonus and uses the higher result. Regardless of the result of the save, your ally is temporarily immune to Such a Disgrace! for 10 minutes."
+ },
+ {
+  "id": "sudden-terror",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Sudden Terror",
+  "level": 1,
+  "traits": [
+   "poppet"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You leverage your body's amorphous nature to spook others. Attempt to demoralize options=sudden-terror a creature within 30 feet. Demoralize loses the auditory trait and gains the visual trait, and you don't take a penalty if the creature doesn't understand your language. If you were hidden to the creature, you gain a +2 circumstance bonus to your check, and if you succeed, the creature is Frightened 2 instead of Frightened 1. All creatures that witnessed you use Sudden Terror are then temporarily immune to your Sudden Terror for 24 hours."
+ },
+ {
+  "id": "sulfur-bomb",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Sulfur Bomb",
+  "level": 1,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Sulfur Bomb Source Grand Bazaar pg. 15 Usage held in 1 hand Bulk L Activate Strike A thick, sulfurous, irritating gas fills this golden-yellow flask. A sulfur bomb deals the listed damage. On a hit, the target takes a –1 status penalty to Perception checks and attack rolls until the end of its next turn, or becomes sickened 1 on a critical hit. Creatures hit with this bomb are temporarily immune to the effects of the bomb for 1 minute. Sulfur Bomb (Lesser) Source Grand Bazaar pg. 15 Price 4 gp Bulk L The bomb deals 1d4 acid damage and 1 acid splash damage. Sulfur Bomb (Moderate) Source Grand Bazaar pg. 15 Price 12 gp Bulk L You gain a +1 item bonus to attack rolls. The bomb deals 2d4 acid damage and 2 acid splash damage. Sulfur Bomb (Greater) Source Grand Bazaar pg. 15 Price 275 gp Bulk L You gain a +2 item bonus to attack rolls. The bomb deals 3d4 acid damage and 3 acid splash damage. Sulfur Bomb (Major) Source Grand Bazaar pg. 15 Price 2,750 gp Bulk L You gain a +3 item bonus to attack rolls. The bomb deals 4d4 acid damage and 4 acid splash damage."
+ },
+ {
+  "id": "sulfur-bomb-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Sulfur Bomb (Greater)",
+  "level": 11,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Activate** ⟨1⟩ Strike --- A thick, sulfurous, irritating gas fills this golden-yellow flask. You gain a +2 item bonus to attack rolls. The bomb deals 3d4 acid damage and 3 acid splash damage. On a hit, the target takes a -1 status penalty to Perception checks and attack rolls until the end of its next turn, or becomes Sickened 1 on a critical hit. Creatures hit with this bomb are temporarily immune to the effects of the bomb for 1 minute."
+ },
+ {
+  "id": "sulfur-bomb-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Sulfur Bomb (Lesser)",
+  "level": 1,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Strike --- A thick, sulfurous, irritating gas fills this golden-yellow flask. The bomb deals 1d4 acid damage and 1 acid splash damage. On a hit, the target takes a -1 status penalty to Perception checks and attack rolls until the end of its next turn, or becomes Sickened 1 on a critical hit. Creatures hit with this bomb are temporarily immune to the effects of the bomb for 1 minute."
+ },
+ {
+  "id": "sulfur-bomb-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Sulfur Bomb (Major)",
+  "level": 17,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Activate** ⟨1⟩ Strike --- A thick, sulfurous, irritating gas fills this golden-yellow flask. You gain a +3 item bonus to attack rolls. The bomb deals 4d4 acid damage and 4 acid splash damage. On a hit, the target takes a -1 status penalty to Perception checks and attack rolls until the end of its next turn, or becomes Sickened 1 on a critical hit. Creatures hit with this bomb are temporarily immune to the effects of the bomb for 1 minute."
+ },
+ {
+  "id": "sulfur-bomb-moderate",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Sulfur Bomb (Moderate)",
+  "level": 3,
+  "traits": [
+   "acid",
+   "alchemical",
+   "bomb",
+   "consumable",
+   "olfactory",
+   "splash"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Activate** ⟨1⟩ Strike --- A thick, sulfurous, irritating gas fills this golden-yellow flask. You gain a +1 item bonus to attack rolls. The bomb deals 2d4 acid damage and 2 acid splash damage. On a hit, the target takes a -1 status penalty to Perception checks and attack rolls until the end of its next turn, or becomes Sickened 1 on a critical hit. Creatures hit with this bomb are temporarily immune to the effects of the bomb for 1 minute."
+ },
+ {
+  "id": "sun-slayer",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Sun Slayer",
+  "level": 10,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This lesser reinforced wooden shield (Hardness 6, HP 64, BT 32) is painted with intricate, pale-blue knots. The wood has been magically enhanced against solar energy and heat. While you have this shield raised, you gain fire resistance 5. **Activate—Sunset** ⟨1⟩ (darkness, manipulate) **Frequency** once per day **Requirements** You are in sunlight --- **Effect** You raise your shield in the air toward the sunlight, eclipsing it. The area in a becomes dim light for 1 minute."
+ },
+ {
+  "id": "sunbird-glare",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Sunbird Glare",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You're in bright light. --- By keeping your feathers clean and sleek, you can catch the light across your wings to create a startling glare in the eyes of a creature within 20 feet. The target must succeed at a save against your class DC or be dazzled for 1 round (1 minute on a critical failure). Regardless of their result, the target is temporarily immune to Sunbird Glare for 10 minutes."
+ },
+ {
+  "id": "sunder-spell",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Sunder Spell",
+  "level": 12,
+  "traits": [
+   "attack",
+   "barbarian",
+   "concentrate",
+   "rage"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You draw upon your superstitious fury to destroy a spell. Make a melee Strike with a weapon or unarmed attack against a creature, object, or a spell manifestation (such as the wall created by Wall of Fire or the guardian from Spiritual Guardian). If you're targeting something that doesn't have an AC listed, its AC against this Strike is usually 10 for targets that are very easy to hit, like a wall, or a different AC determined by the GM. If your Strike hits, you can attempt to counteract a single spell or magical effect on the target. Your counteract rank for this attempt is equal to half your level rounded up, and you use the result of your attack roll for the counteract check. Whether or not you succeed at your Strike, the target becomes temporarily immune to your Sunder Spell for 24 hours."
+ },
+ {
+  "id": "supernatural-senses",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Supernatural Senses",
+  "level": 4,
+  "traits": [
+   "barbarian",
+   "rage"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your scent is preternaturally sharp, and you can always rely on your sense of smell to help guide you when your vision is compromised. When you target a concealed or hidden opponent while you are raging, you reduce the DC of the flat check to 3 for a concealed target or to 9 for a hidden one."
+ },
+ {
+  "id": "surgical-shock",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Surgical Shock",
+  "level": 12,
+  "traits": [
+   "attack",
+   "investigator"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "With a few well-placed jabs with your fist or weapon, you render your opponent disoriented or ungainly. Attempt a Medicine check against the Fortitude DC of a target within your reach. The result of your check determines the severity of the condition you inflict. --- **Critical Success** The target is either Clumsy 3 or Stupefied 3 until the end of your next turn. The target is then immune to Surgical Shock for 1 hour. **Success** As critical success, but the target is either Clumsy 2 or Stupefied 2. **Failure** The target is minorly inconvenienced. You gain a +1 circumstance bonus to the next attack action you attempt against it before the end of your turn. **Critical Failure** The target is unaffected and you overextend yourself, triggering reactions as if you had used a manipulate action."
+ },
+ {
+  "id": "swarm-eidolon",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Swarm Eidolon",
+  "level": 1,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your eidolon is a collective of primal energy and nature spirits, gathered into a single fragmentary being. This collection of natural energy has neither form nor identity until bonded with a summoner. You give these spirits purpose, connecting with them and drawing them through to the physical realm. When manifesting, these nature spirits don a simple form, adopting the guise of many Tiny animals. Each of these animals is the same creature and is marked with your summoner's sigil. The act of manifesting in this swarm form temporarily binds the spirits together into one being, making the eidolon a single entity—one mind and personality speaking with a multitude of voices, and a multitude of bodies acting in concert with a singular purpose. **Tradition** primal **Traits** animal, eidolon, swarm **Home Plane** the Universe --- **Size** Medium (condensed) and Large (dispersed) **Suggested Attacks** beaks (piercing), claws (slashing), jaws (piercing), talons (slashing) **Brazen Swarm** *Str* +4, *Dex* +2, *Con* +3, *Int* +0, *Wis* +0, *Cha* +0; +2 AC (+3 Dex cap) **Slinking Swarm** *Str* +2, *Dex* +4, *Con* +3, *Int* +0, *Wis* +1, *Cha* –1; +1 AC (+4 Dex cap) **Skills** Nature, Survival **Senses** low-light vision **Languages** Common **Speed** 25 feet --- **Eidolon Abilities** *Initial *swarm form*; Symbiosis *sudden shift*; Transcendence *sickening swarm ## Swarm Form Your eidolon is an intelligent swarm composed of hundreds of Tiny creatures, and it's immune to the grabbed, prone, and restrained conditions. It can fit through tight spaces as though it were a Tiny creature. It has weakness to area damage equal to its level. Your eidolon has two forms: condensed and dispersed. When you Manifest Eidolon, it manifests condensed. It can switch between these two forms as a single action that has the concentrate trait. **Condensed Form:** When condensed, your eidolon draws all its component bodies into a single, condensed mound that functions as a Medium creature. It has a reach of 5 feet, can make Strikes, and can't occupy the same space as other creatures. While condensed, it can use the Haunting Visage action. **Dispersed Form:** When dispersed, your eidolon scatters its component bodies across a wider area, increasing its size by one category (to Large for most swarm eidolons). It has a reach of 0 feet, can't make Strikes, and can occupy the same space as other creatures. While dispersed, it can use the Swarming Assault activity. ## Sudden Shift 7th Once per round, your eidolon can switch forms between condensed and dispersed as a free action, rather than a single action. In addition, your eidolon gains the reaction. ## Sickening Form 17th Your eidolon is particularly good at distracting and hindering its foes while dispersed. While dispersed, spaces your eidolon occupies are difficult terrain for other creatures. In addition, your eidolon gains the Sickening Assault action."
+ },
+ {
+  "id": "swarmkeeper-dedication",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Swarmkeeper Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your body has become a symbiotic hive for a swarm of crawling insects. You can emit your swarm using the Swarm Forth action, and you can use the Bite and Sting action while your swarm is outside your body to command it to attack. Your deep connection to your swarm precludes you from also having an animal companion, though if an ability allows you to have more than one animal companion (such as the beastmaster archetype), you can count your swarm as one. You're immune to any damage from your swarm, and during your daily preparations you can anoint up to five willing creatures with a concoction made from your pheromones to grant them immunity as well. While outside your body, your swarm is Large and has a Speed of 15 feet and a climb Speed of 15 feet. It can occupy the same space as other creatures. While outside your body, the swarm can be attacked. It uses your statistics for defenses but is immune to grabbed, prone, restrained, and mental effects that target only a specific number of creatures. The swarm has resistance equal to your level to physical damage and weakness equal to your level to area and splash damage. Any damage that would be dealt to the swarm is dealt to you instead, though you take damage only once from any ability that includes both you and the swarm in the area of effect (though you take the greater amount of damage)."
+ },
+ {
+  "id": "swarmsuit",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Swarmsuit",
+  "level": 1,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "These thick, overlapping layers of clothing are coupled with a matching hat, outfitted with mesh netting around its wide brim to keep you safe from insects. You gain resistance 3 to physical damage from swarms. Explorer's clothing altered in this way has a Dexterity cap of +2, check penalty of -1, and Speed penalty of -5 feet regardless of your Strength."
+ },
+ {
+  "id": "tallowheart-mass",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Tallowheart Mass",
+  "level": 8,
+  "traits": [
+   "divine",
+   "healing"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This disgusting mass of magically-infused hardened tallow is often found divided into three portions, each attached to the other by a thin tangle of fibers and hair. While some create *tallowheart masses* that are connected via lengths of scented cord or even fine chain, the mass of tallow is always off-putting in texture, scent, and appearance. Despite the mass's unpleasant look, this magical item can be quite helpful. Each of the three portions can be activated in one of three ways, but once a portion is activated, it's consumed. Once you've consumed all three portions, you fully expend the *tallowheart mass*. --- **Activate** ⟨1⟩ Interact **Effect** If you rub a portion between your hands, the mass melts into your flesh and you gain the quickened condition for 1 minute. You can use the extra action each round only for Strike actions made with weapons you wield in your hands. --- **Activate** ⟨1⟩ Interact **Effect** If you consume a portion, you regain 4d8+12 Hit Points. --- **Activate** ⟨1⟩ Interact **Effect** If you rub a portion on your body, it melts into your worn gear and flesh and grants you resistance 10 to fire damage for 1 minute."
+ },
+ {
+  "id": "tame-animal",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Tame Animal",
+  "level": 1,
+  "traits": [
+   "exploration",
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Animals born and raised far from humanoid settlements rarely get along with two-legged beings, whom they assume to be dangerous predators. In spite of this, you know how to approach and entreat a wild animal so that it's more receptive to your presence and requests. To use this feat, choose a wild animal that isn't actively hostile to you and which isn't confined to an area smaller than its Speed in diameter (animals held in place or trapped are typically too scared to be tamed). Attempt a Nature check against a DC determined by the GM; this is usually the animal's Will DC, but circumstances might adjust the precise DC. This attempt usually takes an hour, but you can perform it in 10 minutes if you have expert proficiency in Nature, 1 minute if you have master proficiency, or as a three-action activity if you have legendary proficiency. --- **Critical Success** You form a friendly bond with the animal. As long as it isn't starving, the animal won't attack you or creatures obviously allied with you, even if they're creatures the animal would normally prey upon. This effect is permanent. **Success** As critical success, but the effect lasts for 1 month. If you or an ally teach the animal a basic action during that time with the Train Animal skill feat, the effect is permanent. **Failure** You fail to make any kind of meaningful impression on the animal. **Critical Failure** The animal does its best to attack you and is immune to Tame Animal for 1 month."
+ },
+ {
+  "id": "tangle-in-riddle",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Tangle in Riddle",
+  "level": 1,
+  "traits": [
+   "auditory",
+   "mental",
+   "transcendence"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You speak a bizarre koan that transcends language and is understood by only one creature within 30 feet. The target must attempt a save against your class DC. It's then immune to this ability for 1 hour. --- **Critical Success** The target is unaffected. **Success** The target is Stupefied 1 for 1 round. **Failure** The target is stupefied 1 for 1d4 rounds. **Critical Failure** The target is stupefied 1 and confused for 1d4 rounds."
+ },
+ {
+  "id": "taste-blood",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Taste Blood",
+  "level": 5,
+  "traits": [
+   "dhampir",
+   "void"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You retain not only your vampiric parent's taste for blood but their ability to gain vitality from it. You drink fresh blood from a living humanoid creature, gaining temporary Hit Points equal to the target's level that last for 10 minutes. The target must succeed at a save against the higher of your class or spell DC or become Drained 1. Regardless of the outcome of this save, the target is temporarily immune to your Taste Blood for 1 day; further uses of this ability against the target don't increase the drained condition or grant you more temporary Hit Points. To drink a creature's blood, either your last action must have been a fangs Strike that damaged the target, or the target must be restrained or unconscious and your last action must have been a Strike that dealt piercing or slashing damage to them. If the target is willing, they don't need to be restrained or unconscious for the latter. Draining the life force from an unwilling humanoid creature is a greater violation than just drinking their blood. Taste Blood has the evil trait unless the target is willing or is an active foe in combat."
+ },
+ {
+  "id": "tattletale-orb",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Tattletale Orb",
+  "level": 14,
+  "traits": [
+   "cursed",
+   "magical",
+   "scrying"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Tattletale Orb Source Treasure Vault (Remastered) pg. 193 Usage held in 1 hand Bulk 1 A tattletale orb is a polished crystal sphere that appears to function as a crystal ball. If those whom you use the orb to scry on roll better than a critical failure on their saving throw, they receive a telepathic message alerting them to the scrying. A success or better at the save allows the target to choose to allow you to scry anyway, knowing they can use an aspect of the orb against you, according to the orb's type. A creature that rolls a critical success on the saving throw also learns your name and location. Once you Activate a tattletale orb or use it to cast one of your scrying spells, it fuses to you. You must succeed at a Will save, using the scrying Will DC of a crystal ball of the orb's type, to use another such device. Tattletale orbs come in the same types as crystal balls, with the same activations and powers. However, your target must roll a critical failure on the saving throw for the orb to function as normal for that type of crystal ball. Tattletale Orb (Clear Quartz) Source Treasure Vault (Remastered) pg. 193 Bulk 1 Tattletale Orb (Selenite) Source Treasure Vault (Remastered) pg. 193 Bulk 1 The target is temporarily immune to the orb’s see the unseen for 24 hours and can choose to be invisible to the orb’s scrying during that time. Tattletale Orb (Moonstone) Source Treasure Vault (Remastered) pg. 193 Bulk 1 The target is temporarily immune to the orb's mind reading for 24 hours and can use mind reading against you instead, as if the target used the orb. Tattletale Orb (Peridot) Source Treasure Vault (Remastered) pg. 193 Bulk 1 The target can send you one telepathic demand. Tattletale Orb (Obsidian) Source Treasure Vault (Remastered) pg. 193 Bulk 1 The target is temporarily immune to the orb’s truesight for 24 hours. During that time, you see a false vision of the target’s choice if you scry on the target. Despite being higher rank than the spell, you can’t disbelieve this illusion if scrying through the orb."
+ },
+ {
+  "id": "tattletale-orb-moonstone",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Tattletale Orb (Moonstone)",
+  "level": 16,
+  "traits": [
+   "cursed",
+   "magical",
+   "scrying"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "A tattletale orb is a polished crystal sphere that appears to function as a Crystal Ball (Moonstone). If those whom you use the orb to scry on roll better than a critical failure on their saving throw, they receive a telepathic message alerting them to the scrying. A success or better at the save allows the target to choose to allow you to scry anyway, knowing they can use an aspect of the orb against you, according to the orb's type. A creature that rolls a critical success on the saving throw also learns your name and location. Once you Activate a tattletale orb or use it to cast one of your scrying spells, it fuses to you. You must succeed at a Will save, using the scrying Will DC of a crystal ball of the orb's type, to use another such device. Tattletale orbs come in the same types as crystal balls, with the same activations and powers. However, your target must roll a critical failure on the saving throw for the orb to function as normal for that type of crystal ball. The target is temporarily immune to the orb's mind reading for 24 hours and can use mind reading against you instead, as if the target used the orb."
+ },
+ {
+  "id": "tattletale-orb-obsidian",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Tattletale Orb (Obsidian)",
+  "level": 19,
+  "traits": [
+   "cursed",
+   "magical",
+   "scrying"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "A tattletale orb is a polished crystal sphere that appears to function as a Crystal Ball (Obsidian). If those whom you use the orb to scry on roll better than a critical failure on their saving throw, they receive a telepathic message alerting them to the scrying. A success or better at the save allows the target to choose to allow you to scry anyway, knowing they can use an aspect of the orb against you, according to the orb's type. A creature that rolls a critical success on the saving throw also learns your name and location. Once you Activate a tattletale orb or use it to cast one of your scrying spells, it fuses to you. You must succeed at a Will save, using the scrying Will DC of a crystal ball of the orb's type, to use another such device. Tattletale orbs come in the same types as crystal balls, with the same activations and powers. However, your target must roll a critical failure on the saving throw for the orb to function as normal for that type of crystal ball. The target is temporarily immune to the orb's true seeing for 24 hours. During that time, you see a false vision of the target's choice if you scry on the target. Despite being higher level than the spell, you can't disbelieve this illusion if scrying through the orb."
+ },
+ {
+  "id": "tattletale-orb-selenite",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Tattletale Orb (Selenite)",
+  "level": 15,
+  "traits": [
+   "cursed",
+   "magical",
+   "scrying"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "A tattletale orb is a polished crystal sphere that appears to function as a Crystal Ball (Selenite). If those whom you use the orb to scry on roll better than a critical failure on their saving throw, they receive a telepathic message alerting them to the scrying. A success or better at the save allows the target to choose to allow you to scry anyway, knowing they can use an aspect of the orb against you, according to the orb's type. A creature that rolls a critical success on the saving throw also learns your name and location. Once you Activate a tattletale orb or use it to cast one of your scrying spells, it fuses to you. You must succeed at a Will save, using the scrying Will DC of a crystal ball of the orb's type, to use another such device. Tattletale orbs come in the same types as crystal balls, with the same activations and powers. However, your target must roll a critical failure on the saving throw for the orb to function as normal for that type of crystal ball. The target is temporarily immune to the orb's see invisibility for 24 hours and can choose to be invisible to the orb's scrying during that time."
+ },
+ {
+  "id": "tectonic-stomp",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Tectonic Stomp",
+  "level": 10,
+  "traits": [
+   "deviant",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You cause minor tremors that topple your enemies. All creatures in a who are standing on the ground take 1d6 bludgeoning damage for every 2 levels you have, with a save. A creature that fails its save also falls prone. --- **Awakening** Your stomp also ejects large fragments from the ground. You raise up to three stone chunks from the ground in unoccupied squares in the emanation; the stones can't be adjacent to one another. The chunks are 5 feet tall, block movement, and are large enough to Take Cover behind. They have AC 10, Hardness 8, and Hit Points equal to your level. They are immune to critical hits and precision damage. A stone chunk crumbles away when it has 0 Hit Points, and all of them crumble after 1 minute or when you use Tectonic Stomp again. --- **Awakening** Your stomp rattles those who fail horribly. A creature that critically fails its save is also Stunned 1."
+ },
+ {
+  "id": "temperbrand",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Temperbrand",
+  "level": 20,
+  "traits": [
+   "fire",
+   "magical",
+   "shove"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "When the mighty fire-and-metal elemental *Temperbrand* is defeated, their corpse transforms into a *+3 major striking greater flaming grievous shifting maul* made of what appears to be molten steel, though it behaves as if it were made of solid metal. When a creature first picks up *Temperbrand*, they must succeed at a save to establish their dominance over the weapon. On a success, they become *Temperbrand's* only accepted wielder and may use the weapon normally. On a failure, the character takes 20d6 damage (40d6 damage on a critical failure) and drops the weapon as it melts away into slag and immediately reforms in an adjacent space. A new attempt to establish dominance can be made by picking the weapon up again and attempting a new Will save. Once *Temperbrand* has an accepted wielder, it can't be wielded by anyone else unless the accepted wielder intentionally permits it, declaring so in a loud voice; this permission can be rescinded in a similar manner. Anyone else trying to wield *Temperbrand* after it has accepted a wielder takes fire damage and causes the weapon to melt away as if they failed the Will save to wield it. The additional fire damage caused by *Temperbrand's* greater flaming property (but not its persistent fire damage) is splash damage. *Temperbrand's* wielder is immune to this splash damage. **Activate—Molten Smash** ⟨1⟩ (concentrate, manipulate) **Frequency** once per day --- **Effect** You smash *Temperbrand* against the ground or another solid adjacent surface, causing an explosion of molten metal and force to radiate outward in a . All creatures in this area take 10d6 damage and 6d6 damage ( save); those who critically fail this save are knocked prone. You are immune to the effects of Molten Smash, but your allies are not."
+ },
+ {
+  "id": "terrifying-countenance",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Terrifying Countenance",
+  "level": 18,
+  "traits": [
+   "archetype",
+   "vigilante"
+  ],
+  "engineFieldsPresent": [
+   "innateSpells"
+  ],
+  "inRegistries": [],
+  "text": "You can erect a magical cowl that terrorizes your enemies. Once per day, you can cast Mask of Terror as an innate occult spell, targeting yourself. If you critically hit a creature that's temporarily immune to the spell, the creature's temporary immunity ends."
+ },
+ {
+  "id": "terrifying-howl",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Terrifying Howl",
+  "level": 10,
+  "traits": [
+   "auditory",
+   "barbarian",
+   "rage"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You unleash a terrifying howl. Attempt Intimidation checks to Demoralize each enemy within 30 feet: you don't take a penalty if the creature doesn't understand your language. Regardless of the results of your checks, each target is then temporarily immune to Terrifying Howl for 1 minute."
+ },
+ {
+  "id": "terrifying-transformation",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Terrifying Transformation",
+  "level": 8,
+  "traits": [
+   "archetype",
+   "visual"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your flesh tears and warps as you transform. Attempt Intimidation checks to Demoralize each enemy within 30 feet. This Demoralize loses the auditory trait and gains the visual trait, and you don't take a penalty if a creature doesn't understand your language. Regardless of the results of your checks, each creature is temporarily immune to Terrifying Transformation for 1 minute."
+ },
+ {
+  "id": "testudo-shield",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Testudo Shield",
+  "level": 5,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This tower shield (Hardness 5, HP 20, BT 10) sports a bright red front with a gold inlay of an eagle. While it looks unassuming, this shield can protect not only yourself but also those behind you. **Activate—Tortoise Form** ⟨2⟩ (concentrate, force, manipulate) **Frequency** once per day --- **Effect** Your shield creates a magical barrier, consisting of translucent copies of the shield. The wall is 1 inch thick, 15 feet long, and 10 feet high. The barrier is conjured adjacent to you in a straight line on the border between squares and lasts for 1 minute. The barrier is created with the Hardness and Hit Points equal to those of the testudo shield and is immune to critical hits and precision damage."
+ },
+ {
+  "id": "testudo-shield-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Testudo Shield (Greater)",
+  "level": 13,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This tower shield (Hardness 5, HP 20, BT 10) sports a bright red front with a gold inlay of an eagle. While it looks unassuming, this shield can protect not only yourself but also those behind you. **Activate—Tortoise Form** ⟨2⟩ (concentrate, force, manipulate) **Frequency** once per day --- **Effect** Your shield creates a magical barrier, consisting of translucent copies of the shield. The wall is 1 inch thick, 25 feet long, and 10 feet high. The barrier is conjured adjacent to you in a straight line on the border between squares and lasts for 1 minute. The barrier is created with the Hardness and Hit Points equal to those of the testudo shield and is immune to critical hits and precision damage."
+ },
+ {
+  "id": "the-desert",
+  "lane": "defense",
+  "collection": "items",
+  "name": "The Desert",
+  "level": 20,
+  "traits": [
+   "artifact",
+   "harrow-court",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "**Suit** Shield (Con) **Alignment** chaotic good --- *The Desert* signifies enduring passage through trying circumstances. As long as *The Desert* is invested, you are immune to the effects of temperatures ranging from extreme cold to extreme heat, and can hold your breath and go without food and water for twice as long as normal. **Activate** ⟨2⟩ envision, Interact **Frequency** once per day --- **Effect** You wave the card in the air to create desert winds that blast sand so scouring it strips flesh from bone. The sand created by this effect vanishes an instant later, but the effects on those caught in the area linger. Creatures in a take 7d6 piercing damage and 7d6 fire damage (with a save equal to your class DC or spell DC). A creature who fails this save also becomes fatigued and enfeebled for 1 minute, and a creature who critically fails this save becomes Enfeebled 2 for 1 minute and fatigued until they get a night's rest (or the fatigue is removed by other means). The damage increases to 8d6 piercing damage and 8d6 fire if you're at least 15th level, to 9d6 piercing damage and 9d6 fire if you're at least 17th level, and to 10d6 piercing damage and 10d6 fire if you're at least 19th level."
+ },
+ {
+  "id": "the-eye-of-the-slumberer",
+  "lane": "defense",
+  "collection": "items",
+  "name": "The Eye of the Slumberer",
+  "level": 21,
+  "traits": [
+   "artifact",
+   "occult"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "The *Eye of the Slumberer* is an alghollthu relic resembling a tangle of barnacle-encrusted tentacles. Though the orb is too large to move easily, the artifact's owner (referred to as the bearer) can activate its powers by wearing the *Amulet of the Slumberer*, a companion item shaped like a barnacle-encrusted cephalopod eye; this is a worn item that has the invested and occult traits. Only one such amulet can exist at any given time, and the artifact can grow a new one in 10 minutes if the original is destroyed. The Eye's abilities that require a saving throw use the higher of the amulet wearer's spell DC or class DC. As one of the alghollthus' ancient contingencies to control their servitors, the *Eye* absorbs thoughts—especially those of pain and anguish—storing them like a battery. On command, it can unleash the stored energy, potentially stunning whole ecosystems. Each time a creature with the aquatic, amphibious, or water trait falls asleep or otherwise passes the night within 1 mile of the *Eye of the Slumberer*, it dreams fitfully of the artifact; creatures that don't dream are immune to this effect. When it awakens, the creature must succeed at a save or become friendly toward the bearer (or helpful on a critical failure) until the next time it rests; this is an emotion and mental effect. The *Amulet*'s bearer isn't automatically aware of creatures influenced in this fashion, but they can identify such creatures on sight. --- **Activate—Open the Eye** ⟨2⟩ (manipulate, occult) **Frequency** once per day **Requirements** You are wearing the *Amulet of the Slumberer* and are within 100 feet of the *Eye of the Slumberer* --- **Effect** The amulet's eye opens and absorbs fears from creatures within a , subjecting them to nightmare as if they'd spent a night under the influence of the spell. Additionally, each creature with the dream or incorporeal trait within 500 feet of the *Eye of the Slumberer* takes damage ( save). --- **Activate—Vortex** ⟨1⟩ (occult, water) **Requirements** You're wearing the *Amulet of the Slumberer*, you're within 100 feet of the *Eye of the Slumberer*, and the *Eye* is within water --- **Effect** The water around the *Eye* churns violently in a , becoming difficult terrain for swimming creatures that don't have the water trait. You can use this action again to Dismiss this effect. --- **Destruction** The *Eye of the Slumberer* is destroyed if it's brought to the Dreamlands and either fed to a Great Old One or encircled by joyful celebrants for 101 days, during which time none of the dancers can experiences despair."
+ },
+ {
+  "id": "the-fiend",
+  "lane": "defense",
+  "collection": "items",
+  "name": "The Fiend",
+  "level": 20,
+  "traits": [
+   "artifact",
+   "harrow-court",
+   "illusion",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Suit** Hammer (Str) **Alignment** lawful evil --- *The Fiend* represents the inevitability of great calamities and pervasive dangers. As long as you have *The Fiend* invested, when you repeat a non-Strike action you previously took in the same round, you gain a +2 item bonus to checks to perform that action. This increases to a +3 item bonus if you are at least 17th level. **Activate** ⟨2⟩ envision, Interact **Frequency** once per day --- **Effect** You wave the card to create a vision of destruction around you; you cast Phantasmal Calamity, except the area is a . The rank of the spell is one-half your level, rounded down (minimum 6th level), and the save DC is your class DC or spell DC (). You are immune to the effects of your own phantasmal calamity."
+ },
+ {
+  "id": "the-infinite-eye",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "The Infinite Eye",
+  "level": 1,
+  "traits": [
+   "psychic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "The true strength of the mind lies in the knowledge it contains, with each new observation contributing to the totality of its experiences. To grow your experiences—and with them, your power—you devote yourself to observing as much as possible, casting your senses through space and time with clairvoyance and precognition. **Granted Spells** - 1st: Sure Strike - 2nd: Augury - 3rd: Locate - 4th: - 5th: Scouting Eye - 6th: Truesight - 7th: True Target - 8th: Unrelenting Observation - 9th: Foresight **Standard Psi Cantrips** Detect Magic You have the kind of fine control over your magical senses that other spellcasters can only dream of. When you cast detect magic, you're aware of any creature in the emanation affected by a spell or carrying a magic item, and you determine the main location of magic within any magical hazard in the emanation (with the normal restrictions on detecting illusions). This typically manifests as an alteration to your vision, such as seeing a soft aura around the creature or hazard. Sensing these phenomena doesn't make it clear which spell is on a creature, nor which of its items are magical. Your detect magic also gains the following amp. **Amp** Your pulse of detection magic helps you gain a sense of nearby magic's strengths or weaknesses. When you detect the presence of magic on an enemy or hazard, you gain a +1 status bonus to saves against magic originating from that enemy or hazard for 3 rounds. If you find magic from multiple sources with a single casting of detect magic, you get the bonus against all of them. **Amp Heightened (7th)** The status bonus to saves against magic increases to +2. Guidance Your clairvoyant gaze extends further than most, allowing you to guide your allies from a greater distance. The range of guidance increases to 120 feet. It also gains the following amp. **Amp** You can project a flash of insight to your ally in the nick of time to save them from failure. Amped guidance doesn't cause a creature to become temporarily immune to guidance, and a creature can be targeted by amped guidance even if it is temporarily immune to guidance. You can cast an amped guidance spell as a reaction triggered when your ally fails or critically fails an attack roll, Perception check, saving throw, or skill check, and the bonus from guidance would change the failure to a success or the critical failure to a normal failure. The bonus from guidance applies retroactively to their check. **Amp Heightened (6th)** The bonus from the spell increases to +2. **Unique Psi Cantrips** surface: Glimpse Weakness **Amp** The additional precision damage is 1d4+1. **Amp Heightened (+2)** The additional precision damage increases by 1d4+1. deeper: Omnidirectional Scan **Amp** Your scans are so minute that you can project your foe's likely strengths and weaknesses. You learn which of the target enemy's saving throws is highest and which is lowest, and you and all allies within 30 feet gain a +1 circumstance bonus to attacks and damage against the creature. If you take the Aid reaction you prepared for and succeed at your roll, these bonuses increase to +2 on the attack you're Aiding. On a critical success, they increase to +3,"
+ },
+ {
+  "id": "the-lantern-king",
+  "lane": "defense",
+  "collection": "deities",
+  "name": "The Lantern King",
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Although the Lantern King most often appears as a floating ball of light surrounded by runes that form a delicate crown, the Eldest of laughter, mischief, and transformation has taken on a dizzying array of figures. He often adopts alternate shapes to play pranks, and even other Eldest are not immune to his mischievous scheming. Although he insists his pranks are intended only for levity and to bring down imperious snobs, the chaos he creates in the name of good-natured fun is, to his targets, embarrassing at best and sometimes outright lethal. The Lantern King wanders the First World more than other Eldest, and he can be encountered in crowded markets and lonely byways alike. He is frequently accompanied by the Witchmarket, a traveling caravan of entertainers and merchants that serves as his court. **Title** The Laughing Lie **Areas of Concern** Laughter, mischief, transformation **Edicts** Play pranks, seek new jokes, leave lit lanterns in unusual places **Anathema** Be completely honest, ruin or explain a good joke **Religious Symbol** golden lantern **Sacred Animal** firefly **Sacred Colors** black, gold --- ## Divine details **Divine Font** Harm or Heal **Divine Skill** Deception **Favored Weapon** Dagger **Domains** Change, Passion, Trickery, Delirium **Cleric Spells** 1st: Illusory Disguise, 2nd: Laughing Fit, 6th: Cursed Metamorphosis"
+ },
+ {
+  "id": "the-pale-horse",
+  "lane": "defense",
+  "collection": "deities",
+  "name": "The Pale Horse",
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The Pale Horse stalks the banks of the River of Souls. This has been true for eons, though few things are immune to change, and the story of the Pale Horse is no exception. Long ago, the stories say, a daemon traveled the pathways between the planes, consuming the souls of the dead before they reached the Lady of Graves. He appeared as a silent white stallion, and his name was the Pale Horse. Now, they speak of a psychopomp usher who guards mortal souls while they journey into the afterlife, hunting any who dare steal from the River of Souls. His name is the Pale Horse, and he serves the Gray Lady. **Title** The Lash and the Plough **Areas of Concern** Beasts of burden, duty, revenge **Edicts** Aid and be of service to friends and allies, fulfill your duties, seek vengeance **Anathema** Break an oath, cower from combat, damage or destroy a soul, show mercy to those who betray you **Religious Symbol** horizontal line with a circle and three dots at one end **Sacred Animal** horse **Sacred Colors** white --- ## Divine details **Divine Font** Harm **Divine Skill** Intimidation **Favored Weapon** Trident **Domains** Death, Duty, Pain, Repose (Alternate: Travel, Water) **Cleric Spells** 1st: Phantom Pain, 2nd: Feral Shades, 3rd: Ghostly Weapon"
+ },
+ {
+  "id": "the-rakshasa",
+  "lane": "defense",
+  "collection": "items",
+  "name": "The Rakshasa",
+  "level": 20,
+  "traits": [
+   "artifact",
+   "harrow-court",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "**Suit** Book (Int) **Alignment** lawful evil --- *The Rakshasa* represents domination of others to support your own schemes. When you invest *The Rakshasa*, identify a single willing creature within 30 feet as your pledged follower. If you're at least 15th level, you can have up to two pledged followers at once. At 18th level, you can have up to three pledged followers. If you have the maximum pledged followers active and select a new one, a previous pledged follower of your choice is no longer your pledged follower. You gain an item bonus equal to your current number of pledged followers to all Coerce attempts. **Activate** ⟨4⟩ **Frequency** once per minute --- **Effect** You regain Hit Points equal to twice your level, and a pledged follower of your choice loses Hit Points equal to your level (no effects apply that would decrease this Hit Point loss). If this loss kills your pledged follower, you also gain temporary Hit Points equal to your level. The pledged follower is temporarily immune to this activation for 24 hours."
+ },
+ {
+  "id": "the-silent-whisper",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "The Silent Whisper",
+  "level": 1,
+  "traits": [
+   "psychic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Every mind murmurs constantly, and the static from those nearby reverberates in your head like wind through leaves. What better focus for your magic then, than the very thoughts of those around you? Your versatile telepathic abilities let you soothe and communicate with your allies or control your enemies. **Granted Spells** - 1st: Mindlink - 2nd: Stupefy - 3rd: Heroism - 4th: Telepathy - 5th: Synaptic Pulse - 6th: Sending - 7th: Visions of Danger - 8th: Uncontrollable Dance - 9th: Telepathic Demand **Standard Psi Cantrips** Daze You can daze from a great distance, your thoughts resounding like a siren in your foes' minds. The range increases to 120 feet. Your daze also gains the following amp. **Amp** Your spell cracks the target's mental defenses, leaving it susceptible to further psychic attack. The spell's damage changes to 1d10. If the target fails its Will save, until the end of its next turn, it gains weakness 1 to mental damage and takes a –1 status penalty to Will saves. On a critical failure, the weakness is 3 (in addition to the target being Stunned 1). The weakness applies before daze deals damage. **Amp Heightened (+2)** The spell's damage increases by 2d10, and the weakness on a failure or critical failure increases by 1. Message Your message spell can travel up to 120 feet to reach the target, bending around walls and obstacles; this means you don't need a straight line of effect or line of sight to cast message as long as you know the target's space and there is an unblocked path of 120 feet or less that can reach them. You can cast message in a purely telepathic manner, causing the spell to lose the auditory trait. It also gains the following amp. **Amp** Your telepathic message allows you to coordinate your actions while you pass on information. The target of the message can immediately spend its reaction to Step or Stride. **Amp Heightened (4th)** The target of the message can choose to shove, Strike, or trip with its reaction instead. **Unique Psi Cantrips** surface: Forbidden Thought **Amp** Your telepathic push is particularly shocking to those who resist it. If the target fails its save, it's also Stunned 1. deeper: Shatter Mind **Amp** You increase the area of the spell to a or , and the damage dice for the spell change to d10s. Creatures that fail are Stupefied 1 until the start of your next turn (or Stupefied 2 on a critical failure). deepest: Contagious Idea **Amp** You can choose to spread the thought from the second target to a third target, in the same manner as spreading it from the first target to the second. A pleasant thought grants twice as many temporary Hit Points (10, plus an additional 2 for each rank heightened)."
+ },
+ {
+  "id": "thorn-of-milani",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Thorn of Milani",
+  "level": 3,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Thorn of Milani May contain spoilers from Hellbreakers Source Pathfinder #222: Hellbreakers pg. 210 Usage affixed to a weapon Activate (concentrate) Trigger You hit a creature with the affixed weapon. This pure white thorn glows bright with the spirit of justice. When you activate the thorn, you deal an additional 1d4 spirit damage with the holy trait. You then gain weakness 1 to unholy until the end of your next turn. Thorn of Milani (Lesser) Source Pathfinder #222: Hellbreakers pg. 210 Price 12 gp Thorn of Milani (Moderate) Source Pathfinder #222: Hellbreakers pg. 210 Price 60 gp You deal an additional 2d4 spirit damage and don’t gain weakness to unholy."
+ },
+ {
+  "id": "thorn-of-milani-lesser",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Thorn of Milani (Lesser)",
+  "level": 3,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨4⟩ (concentrate) **Trigger** You hit a creature with the affixed weapon. --- This pure white thorn glows bright with the spirit of justice. When you activate the thorn, you deal an additional 1d4 spirit damage with the holy trait. You then gain weakness 1 to unholy until the end of your next turn."
+ },
+ {
+  "id": "thorn-triad",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Thorn Triad",
+  "level": 4,
+  "traits": [
+   "magical",
+   "spellheart",
+   "wood"
+  ],
+  "engineFieldsPresent": [
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "From each corner of this carved, triangular badge extends a long, sharp thorn. The spell DC of any spell cast by activating this item is 18. - **Armor** After you cast a plant spell by activating the triad, you gain resistance 2 to bludgeoning and piercing damage and weakness 3 to fire until the end of your next turn, or double the resistance for a non-cantrip spell. - **Weapon** After you cast a plant spell by activating the triad, thorns erupt from the weapon. Your Strikes with the weapon deal an additional 1d4 persistent bleed damage until the end of your next turn. --- **Activate** Cast a Spell **Effect** You cast Timber."
+ },
+ {
+  "id": "thorn-triad-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Thorn Triad (Greater)",
+  "level": 8,
+  "traits": [
+   "magical",
+   "spellheart",
+   "wood"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "From each corner of this carved, triangular badge extends a long, sharp thorn. The spell DC of any spell cast by activating this item is 24. - **Armor** After you cast a plant spell by activating the triad, you gain resistance 4 to bludgeoning and piercing damage and weakness 3 to fire until the end of your next turn, or double the resistance for a non-cantrip spell. - **Weapon** After you cast a plant spell by activating the triad, thorns erupt from the weapon. Your Strikes with the weapon deal an additional 1d6 persistent bleed damage until the end of your next turn. --- **Activate** Cast a Spell **Effect** You cast Timber. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast Wall of Thorns."
+ },
+ {
+  "id": "thorn-triad-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Thorn Triad (Major)",
+  "level": 12,
+  "traits": [
+   "magical",
+   "spellheart",
+   "wood"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "From each corner of this carved, triangular badge extends a long, sharp thorn. The spell DC of any spell cast by activating this item is 29. - **Armor** After you cast a plant spell by activating the triad, you gain resistance 6 to bludgeoning and piercing damage and weakness 3 to fire until the end of your next turn, or double the resistance for a non-cantrip spell. - **Weapon** After you cast a plant spell by activating the triad, thorns erupt from the weapon. Your Strikes with the weapon deal an additional 1d8 persistent bleed damage until the end of your next turn. --- **Activate** Cast a Spell **Effect** You cast Timber. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast 4th-rank Wall of Thorns. --- **Activate** Cast a Spell **Frequency** once per day **Effect** You cast Petal Storm."
+ },
+ {
+  "id": "thoughtform-summoning",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Thoughtform Summoning",
+  "level": 4,
+  "traits": [
+   "psychic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can create a prototypical creature from the depths of your imagination instead of calling one from elsewhere. Whenever you summon a creature, you can choose to instead create a psychic construct of that creature. This grants it resistance to physical damage equal to half its level, weakness 5 to force and mental damage, and the ability to pass through enemies' spaces without needing to Tumble Through (though it can't end its turn in an occupied space)."
+ },
+ {
+  "id": "thousand-year-dragonroot",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Thousand-Year Dragonroot",
+  "level": 10,
+  "traits": [
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) Dragonroots are pale, golden-rooted plants that grow throughout Tian Xia. Just as mandrake roots or ginseng roots are sometimes regarded to have almost humanoid shapes, these roots appear as if they were dragons. They're commonly used in the formulation of healing potions, but the most sought-after have grown for centuries, for they're viable for enchantment into *thousand-year dragonroots*. When you activate a *thousand-year dragonroot*, your body shimmers with golden light, providing illumination as a torch. You gain a fly Speed of 40 feet and fire resistance 5 for 1 minute."
+ },
+ {
+  "id": "three-pillared-yang-na",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Three-Pillared Yang Na",
+  "level": 4,
+  "traits": [
+   "divine",
+   "invested",
+   "tattoo"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This tattoo represents an abstract tree whose trunk is made up of three lines of Tang text. Applied in a ritual involving jasmine, turmeric, and a blossom from a yang na tree, the tattoo provides three blessings. The first blessing keeps your mind still during negotiations, granting a +1 item bonus to Diplomacy checks. **Activate—Second Blessing** ⟨1⟩ (concentrate, detection) --- **Effect** You learn the direction of the yang na tree that gave the blossom used in creating your tattoo. Most such trees are in Tang Mai, far to the west of the Inner Sea. --- **Activate—Third Blessing** ⟨5⟩ (concentrate) **Trigger** You take spirit damage --- **Effect** You gain resistance 3 against that spirit damage."
+ },
+ {
+  "id": "thumper-snare",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Thumper Snare",
+  "level": 3,
+  "traits": [
+   "auditory",
+   "clockwork",
+   "consumable",
+   "mechanical",
+   "snare",
+   "trap"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This small box contains a clockwork mechanism that rhythmically thumps the ground, allowing creatures with tremorsense to detect it at up to double their usual range. The mechanism can be wound to thump anywhere from 1 round to 1 minute before falling into useless components."
+ },
+ {
+  "id": "thunder-helm",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Thunder Helm",
+  "level": 5,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "The creator of the original *thunder helm* tried and failed time and again to craft a reliable, helmet-mounted firearm that enabled hands-free gunplay, but even after resorting to magical enhancements, they were never quite able to realize their vision. The allure of the *thunder helm* continues to compel certain mindsets in the Mana Wastes, and these items continue to be crafted to this day. A *thunder helm* appears as a cylindrical iron helmet adorned with a crown-like display of gun barrels extending out in all directions. A slit in the front allows for limited visibility, while sound is muffled by the inner lining. As long as a creature wears a *thunder helm*, it takes a -1 circumstance penalty to auditory and visual Perception checks but also gain a +1 circumstance bonus to saving throws against auditory and visual effects. --- **Activate** ⟨2⟩ envision, Interact **Frequency** once per day --- **Effect** The helm's gun barrels swivel and aim randomly, then conjure enough gunpowder and bullets to fire in all directions around you. Every creature within a takes damage (). When determining a creature's resistance or immunity to this damage, use the weaker of the target's resistance or immunity to piercing or bludgeoning."
+ },
+ {
+  "id": "time-shield-potion",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Time Shield Potion",
+  "level": 13,
+  "traits": [
+   "consumable",
+   "magical",
+   "potion"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- This purple potion has a bitter taste and seems to blur with motion. When you drink a *time shield* potion, you are frozen in time for 2d4 rounds. You can't act or be targeted, you become immune to all effects, and you vanish from your space; as far as the universe is concerned, you simply don't exist as long as the potion lasts. The durations of any effects targeting you when you drink the potion are suspended until it wears off. Once the potion's duration expires, you return to the normal flow of time and your former space; if that space is now occupied, you get shunted to the nearest unoccupied space. Effects with durations immediately resume affecting you, elapsing as though no time has passed. If you are within the area of an effect created while you were outside of time, you immediately take those effects upon returning. The GM might determine that other changes that occurred while you were outside of time (such as the ground beneath you crumbling) also affect you upon your return."
+ },
+ {
+  "id": "timepiece-standard",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Timepiece Standard",
+  "level": 10,
+  "traits": [
+   "aura",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This magical banner seems to impossibly be made from many turning gears that encourage viewers to keep perfect time. Whenever you or an ally within the banner's aura uses the Delay or Ready action, you or the ally gain 5 temporary Hit Points that last for 1 minute and then become immune to this effect for 10 minutes."
+ },
+ {
+  "id": "timepiece-standard-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Timepiece Standard (Major)",
+  "level": 20,
+  "traits": [
+   "aura",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This magical banner seems to impossibly be made from many turning gears that encourage viewers to keep perfect time. Whenever you or an ally within the banner's aura uses the Delay or Ready action, you or the ally gain 10 temporary Hit Points that last for 1 minute and then become immune to this effect for 10 minutes."
+ },
+ {
+  "id": "titans-breaker",
+  "lane": "defense",
+  "collection": "classFeatures",
+  "name": "Titan's Breaker",
+  "level": 1,
+  "traits": [
+   "ikon"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Usage** any melee weapon in the club, hammer, or axe group, or any your melee unarmed Strikes that deals bludgeoning damage --- You wield a weapon whose blows shatter mountains with ease. **Immanence** The titan's breaker deals 2 additional spirit damage per weapon damage die to creatures it Strikes. Constructs and objects are not immune to this spirit damage, and this spirit damage automatically bypasses an amount of their Hardness equal to your level. **Transcendence—**Fracture Mountains ⟨2⟩ (spirit, transcendence)"
+ },
+ {
+  "id": "toadskin-salve",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Toadskin Salve",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "poison"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This thick, oily salve reacts with the air to exude a toxic mucus when applied to skin. Once it's applied, you can activate the salve in one of the two ways detailed below. After either reaction has been used, the remaining mucus loses its reactive properties and falls away as the effect ends. You can only have one dose applied at a time. If you don't use either reaction, after 10 minutes, the mucus flakes away and the effect ends. --- **Activate** ⟨5⟩ Interact **Trigger** You hit a creature with a melee Strike --- **Effect** You fling mucus on the creature, dealing 1d4. --- **Activate** ⟨5⟩ Interact **Trigger** You are hit with a melee attack that deals physical damage --- **Effect** The mucus dulls the blow, granting you resistance 3 to physical damage against the triggering attack."
+ },
+ {
+  "id": "toadskin-salve-greater",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Toadskin Salve (Greater)",
+  "level": 7,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "poison"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This thick, oily salve reacts with the air to exude a toxic mucus when applied to skin. Once it's applied, you can activate the salve in one of the two ways detailed below. After either reaction has been used, the remaining mucus loses its reactive properties and falls away as the effect ends. You can only have one dose applied at a time. If you don't use either reaction, after 10 minutes, the mucus flakes away and the effect ends. --- **Activate** ⟨5⟩ Interact **Trigger** You hit a creature with a melee Strike --- **Effect** You fling mucus on the creature, dealing 2d4. --- **Activate** ⟨5⟩ Interact **Trigger** You are hit with a melee attack that deals physical damage --- **Effect** The mucus dulls the blow, granting you resistance 5 to physical damage against the triggering attack."
+ },
+ {
+  "id": "toadskin-salve-major",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Toadskin Salve (Major)",
+  "level": 11,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "poison"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "This thick, oily salve reacts with the air to exude a toxic mucus when applied to skin. Once it's applied, you can activate the salve in one of the two ways detailed below. After either reaction has been used, the remaining mucus loses its reactive properties and falls away as the effect ends. You can only have one dose applied at a time. If you don't use either reaction, after 1 hour, the mucus flakes away and the effect ends. --- **Activate** ⟨5⟩ Interact **Trigger** You hit a creature with a melee Strike --- **Effect** You fling mucus on the creature, dealing 3d4. --- **Activate** ⟨5⟩ Interact **Trigger** You are hit with a melee attack that deals physical damage --- **Effect** The mucus dulls the blow, granting you resistance 8 to physical damage against the triggering attack."
+ },
+ {
+  "id": "torrent-in-the-blood",
+  "lane": "defense",
+  "collection": "feats",
+  "name": "Torrent in the Blood",
+  "level": 6,
+  "traits": [
+   "healing",
+   "impulse",
+   "kineticist",
+   "manipulate",
+   "overflow",
+   "primal",
+   "vitality",
+   "water"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "A healing wave splashes across creatures in a , its cleansing water driving afflictions from the body. Each creature in the area regains HP and can attempt a new save against one poison or disease affliction affecting it; on a failed save, the condition doesn't worsen. Each creature that benefited from this impulse becomes temporarily immune to Torrent in the Blood for 10 minutes. --- **Level (+2)** The healing increases by 1d8."
+ },
+ {
+  "id": "toshigami-blossom",
+  "lane": "defense",
+  "collection": "items",
+  "name": "Toshigami Blossom",
+  "level": 15,
+  "traits": [
+   "intelligent",
+   "invested",
+   "primal"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "**Perception** +30; precise vision (darkvision) 30 feet, imprecise hearing 30 feet **Communication** telepathy (Common and two other common languages; speak with plants) **Skills** Diplomacy +28, Medicine +32, Nature +32 **Int** +6, **Wis** +10, **Cha** +5 **Will** +32 --- An encounter with a toshigami, the enigmatic kami who protect cherry trees, is rare, though often sought after and treasured by those who achieve such an encounter. Only a handful of mortals can truthfully claim to have seen a toshigami, let alone met one, though many popular fireside tales tell of virtuous souls receiving a toshigami's blessing to fight for a worthy cause. Such stories have a basis in fact; every so often, a toshigami gives a worthy mortal a flower from their ward, time-locked in perfect bloom and granted sapience. Such *toshigami blossoms* are more sociable than their creators. Like toshigami, a blossom has a strong curiosity about the mortal world. If you wear a *toshigami blossom*, it can intercede for you, helping you make a good impression. A *toshigami blossom* has the following activations. --- **Activate** ⟨2⟩ (concentrate, manipulate) **Frequency** once per day **Effect** The blossom casts Nature's Pathway on you to your specifications. If you target only cherry trees, the spell is cast at 6th rank. --- **Activate** ⟨2⟩ (concentrate) **Frequency** once per hour **Effect** The blossom casts Soothing Blossoms to your specifications. --- **Activate** ⟨1⟩ (concentrate) **Frequency** once per minute **Effect** The blossom sends a flurry of cherry blossoms outward in a that lasts 1 round. You and your allies can see through these blossoms. To all other creatures, creatures within the cloud of blossoms become concealed, and creatures outside the cloud become concealed to creatures within it. When you or an ally succeeds with a Strike against a creature in the blossoms, the Strike deals an additional 1d6 and an additional 1d6 to living creatures, or an additional 1d6 to undead."
+ }
+]

@@ -1,0 +1,1286 @@
+[
+ {
+  "id": "addiction-suppressant-lesser",
+  "verdict": "modifiers",
+  "reason": "For 1 day it gives a +1 item bonus to the ongoing Fortitude save against that drug's addiction - a save number for a stated duration, conditional to that addiction.",
+  "quote": "You also gain a +1 item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant.",
+  "duration": "1 day",
+  "modeName": "Addiction Suppressed",
+  "survivesRest": true,
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "against the ongoing save for the suppressed drug's addiction"
+   }
+  ],
+  "note": "Addictions are afflictions whose ongoing save is a Fortitude save, so the bonus is targeted there. For the same day it also suppresses that addiction's effects as if you'd taken a dose, without the drug's effects and without raising the addiction DC."
+ },
+ {
+  "id": "addiction-suppressant-moderate",
+  "verdict": "modifiers",
+  "reason": "Same structure as its siblings but with its own printed value: a +2 item bonus for 1 day against that drug's addiction Fortitude save.",
+  "quote": "You also gain a +2 item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant.",
+  "duration": "1 day",
+  "modeName": "Addiction Suppressed",
+  "survivesRest": true,
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "against the ongoing save for the suppressed drug's addiction"
+   }
+  ],
+  "note": "Addictions are afflictions whose ongoing save is a Fortitude save. Also suppresses that addiction's effects for the day without increasing the addiction DC."
+ },
+ {
+  "id": "addiction-suppressant-greater",
+  "verdict": "modifiers",
+  "reason": "Same structure as its siblings but with its own printed value: a +3 item bonus for 1 day against that drug's addiction Fortitude save.",
+  "quote": "You also gain a +3 item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant.",
+  "duration": "1 day",
+  "modeName": "Addiction Suppressed",
+  "survivesRest": true,
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 3,
+    "appliesWhen": "against the ongoing save for the suppressed drug's addiction"
+   }
+  ],
+  "note": "Addictions are afflictions whose ongoing save is a Fortitude save. Also suppresses that addiction's effects for the day without increasing the addiction DC."
+ },
+ {
+  "id": "addiction-suppressant-major",
+  "verdict": "modifiers",
+  "reason": "Same structure as its siblings but with its own printed value: a +4 item bonus for 1 day against that drug's addiction Fortitude save.",
+  "quote": "You also gain a +4 item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant.",
+  "duration": "1 day",
+  "modeName": "Addiction Suppressed",
+  "survivesRest": true,
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 4,
+    "appliesWhen": "against the ongoing save for the suppressed drug's addiction"
+   }
+  ],
+  "note": "Addictions are afflictions whose ongoing save is a Fortitude save. Also suppresses that addiction's effects for the day without increasing the addiction DC."
+ },
+ {
+  "id": "fulu-of-the-drunken-monkey",
+  "verdict": "modifiers",
+  "reason": "Beyond the triggering save, the fulu keeps giving a +2 status bonus to Fortitude saves against that same poison for the next minute. The alcohol branch is a separate printed value (+4 status to saves against alcohol), mutually exclusive with the +2, so it is carried as its own conditional entry rather than as prose.",
+  "quote": "When you activate the fulu, you gain a +2 status bonus on the triggering Fortitude save and on Fortitude saves against the same poison for the next minute.",
+  "duration": "1 minute",
+  "modeName": "Fulu of the Drunken Monkey",
+  "survivesRest": false,
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "status",
+    "value": 2,
+    "appliesWhen": "against the same poison that triggered the fulu"
+   },
+   {
+    "target": "save",
+    "type": "status",
+    "value": 4,
+    "appliesWhen": "instead of the +2, if the triggering poison was ordinary alcohol: on saves against alcohol"
+   }
+  ],
+  "note": "The two entries are alternatives, not cumulative: if the triggering poison was normal alcohol you automatically succeed at the triggering save and get the +4 against alcohol instead of the +2 against that poison. The printed alcohol bonus says 'saves' without naming a save type, so it is left untargeted."
+ },
+ {
+  "id": "malleable-mixture-lesser",
+  "verdict": "modifiers",
+  "reason": "One minute of a +2 item bonus to two defense DCs against Grapple, Shove, and Trip. Grapple and Shove are rolled against your Fortitude DC and Trip against your Reflex DC, so the combined printed sentence is split across the two entries. The squeezing benefit changes no number and is noted.",
+  "quote": "You can fit into and through small or narrow spaces as though you were 1 size smaller than your normal size (minimum small), and you gain a +2 item bonus to your Fortitude and Reflex DCs against attempts to Grapple, Shove, or Trip you for 1 minute.",
+  "duration": "1 minute",
+  "modeName": "Malleable Mixture",
+  "survivesRest": false,
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "to your Fortitude DC against attempts to Grapple or Shove you"
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "to your Reflex DC against attempts to Trip you"
+   }
+  ],
+  "note": "The bonus is to your Fortitude and Reflex DCs (your defenses against those maneuvers), not to save rolls you make. Also, for the minute you can fit into and through small or narrow spaces as though you were 1 size smaller (minimum Small)."
+ },
+ {
+  "id": "malleable-mixture-greater",
+  "verdict": "modifiers",
+  "modeName": "Malleable Mixture (Greater)",
+  "duration": "10 minutes",
+  "survivesRest": false,
+  "modifiers": [
+   {
+    "value": 3,
+    "type": "item",
+    "target": "save",
+    "detail": "fortitude",
+    "appliesWhen": "against attempts to Grapple, Shove, or Trip you"
+   },
+   {
+    "value": 3,
+    "type": "item",
+    "target": "save",
+    "detail": "reflex",
+    "appliesWhen": "against attempts to Grapple, Shove, or Trip you"
+   }
+  ],
+  "note": "The bonus is printed against your Fortitude and Reflex DCs (the defense side of those saves), so it only matters when someone Grapples, Shoves, or Trips you. Also lets you fit into and through small or narrow spaces as though you were 2 sizes smaller than normal (minimum Tiny) - not a sheet number.",
+  "reason": "A +3 item bonus to two named defenses for a printed 10-minute duration, conditional on Grapple/Shove/Trip within that window; the size-squeezing benefit has no number and goes in the note.",
+  "quote": "You can fit into and through small or narrow spaces as though you were 2 sizes smaller than your normal size (minimum tiny), and you gain a +3 item bonus to your Fortitude and Reflex DCs against attempts to Grapple, Shove, or Trip you for 10 minutes."
+ },
+ {
+  "id": "dragons-blood-pudding-moderate",
+  "verdict": "modifiers",
+  "modeName": "Dragon's Blood Pudding (Moderate)",
+  "duration": "1 round (while quickened)",
+  "survivesRest": false,
+  "modifiers": [
+   {
+    "value": 2,
+    "type": "item",
+    "target": "skill",
+    "detail": "intimidation",
+    "appliesWhen": "a Demoralize made with the quickened action"
+   }
+  ],
+  "note": "You are quickened for 1 round and can spend the extra action only to Step, Stride, Strike, or Demoralize (you scream when you use it). The counteract check against slowed (+9 counteract modifier) resolves once on consumption and is not part of the mode.",
+  "reason": "The only sheet number is the +2 item bonus to Intimidation, and it lives inside the 1-round quickened window, so it is a conditional modifier; quickened itself and the one-shot counteract go in the note.",
+  "quote": "If you choose to Demoralize, you gain a +2 item bonus to the Intimidation check."
+ },
+ {
+  "id": "war-blood-mutagen-lesser",
+  "verdict": "modifiers",
+  "modeName": "War Blood Mutagen (Lesser)",
+  "duration": "1 minute",
+  "survivesRest": false,
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "item",
+    "target": "attack",
+    "appliesWhen": "attacks with the chosen melee weapon fused to your hands"
+   },
+   {
+    "value": 1,
+    "type": "item",
+    "target": "save",
+    "detail": "will",
+    "appliesWhen": "against fear effects"
+   }
+  ],
+  "note": "Drawback: the weapon is fused to you - you can't voluntarily release it without succeeding at an Athletics check (DC 25), which ends the mutagen and takes a single action, and any concentrate action requires a DC 5 flat check or the action is lost. Disarm or other removal attempts must exceed DC 25.",
+  "reason": "Two typed bonuses for a printed 1 minute - attack rolls with the bonded weapon and Will saves against fear - each conditional inside the duration; the drawback is a rules restriction with no sheet number.",
+  "quote": "You gain a +1 item bonus to your attack rolls with this weapon and to Will saves against fear effects for 1 minute."
+ },
+ {
+  "id": "feyfoul-lesser",
+  "verdict": "modifiers",
+  "modeName": "Feyfoul (Lesser)",
+  "duration": "1 minute",
+  "survivesRest": false,
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "item",
+    "target": "save",
+    "detail": "will",
+    "appliesWhen": "against mental effects generated by fey creatures"
+   }
+  ],
+  "note": "The dose is spritzed on a person like perfume; the mode belongs to whoever is wearing it.",
+  "reason": "A +1 item bonus to Will saves for a printed 1 minute, conditional within that window on mental effects from fey.",
+  "quote": "A single dose of feyfoul spritzed on a person in the manner of perfume grants the wearer a +1 item bonus to Will saving throws against mental effects generated by fey creatures for 1 minute."
+ },
+ {
+  "id": "auric-noodles",
+  "verdict": "modifiers",
+  "modeName": "Auric Noodles",
+  "duration": "24 hours or until your next daily preparations, whichever comes first",
+  "survivesRest": true,
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "item",
+    "target": "skill",
+    "detail": "arcana",
+    "appliesWhen": "checks to Identify Magic"
+   },
+   {
+    "value": 1,
+    "type": "item",
+    "target": "skill",
+    "detail": "nature",
+    "appliesWhen": "checks to Identify Magic"
+   },
+   {
+    "value": 1,
+    "type": "item",
+    "target": "skill",
+    "detail": "occultism",
+    "appliesWhen": "checks to Identify Magic"
+   },
+   {
+    "value": 1,
+    "type": "item",
+    "target": "skill",
+    "detail": "religion",
+    "appliesWhen": "checks to Identify Magic"
+   }
+  ],
+  "note": "Identify Magic is rolled with Arcana, Nature, Occultism, or Religion, so the bonus is listed on those four. For the same duration you can also move at full speed while using the Detect Magic exploration activity, which is not a sheet number.",
+  "reason": "A +1 item bonus for a long printed duration, conditional on Identify Magic checks. The duration runs until your next daily preparations, which ruling E treats as outlasting a rest, so survivesRest is true.",
+  "quote": "After you eat the noodles, they boost your ability to sense magic for 24 hours or until you make your next daily preparations, whichever comes first. You gain a +1 item bonus to checks to Identify Magic, and you can move at full speed while using the Detect Magic exploration activity."
+ },
+ {
+  "id": "cinnamon-seers",
+  "verdict": "modifiers",
+  "modeName": "Cinnamon Seers",
+  "duration": "1 hour",
+  "survivesRest": false,
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "item",
+    "target": "skill",
+    "appliesWhen": "checks to Recall Knowledge"
+   }
+  ],
+  "note": "Recall Knowledge can be attempted with many different skills, so no single skill is named. Secondary effect (reaction, fortune): when you gain no information from a Recall Knowledge check you can reroll it - the seer then becomes inert, ends the mode, and you're temporarily immune until your next daily preparations.",
+  "reason": "A +1 item bonus for the printed hour the candy stays in your mouth, conditional on Recall Knowledge checks; the reroll is a one-shot reaction that ends the item, so it stays in the note.",
+  "quote": "A cinnamon seer remains in your mouth for 1 hour, its stimulating flavor granting you a +1 item bonus to checks to Recall Knowledge."
+ },
+ {
+  "id": "egg-cream-fizz",
+  "verdict": "modifiers",
+  "reason": "The +5-foot Speed bonus cannot be a mode modifier — ModeTargetKind has no 'speed' member, and the app's own pure-Speed effects (Triple Time, Panache) carry an empty modifier list with the Speed described in prose. What IS expressible are the two syrup riders, each conditional on which syrup the fizz was created with.",
+  "quote": "Upon drinking, you feel lighter and more buoyant, gaining a +5-foot item bonus to your Speed for 10 minutes.",
+  "modeName": "Egg Cream Fizz",
+  "duration": "10 minutes",
+  "survivesRest": false,
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "item",
+    "target": "skill",
+    "detail": "acrobatics",
+    "appliesWhen": "Chocolate syrup only — Acrobatics checks to Balance, Maneuver in Flight, and Squeeze"
+   },
+   {
+    "value": 1,
+    "type": "item",
+    "target": "skill",
+    "detail": "athletics",
+    "appliesWhen": "Strawberry syrup only — Athletics checks to Climb, Leap, and Swim"
+   }
+  ],
+  "note": "+5-foot item bonus to your Speed for the full 10 minutes. Speed is not a mode-modifier target in this app, so track it from this note (same handling as Triple Time and Panache). Exactly ONE syrup rider applies, fixed when the drink was created; the third option, Vanilla, instead lets you Step into difficult terrain and has no number."
+ },
+ {
+  "id": "deadweight-mutagen-major",
+  "verdict": "modifiers",
+  "modeName": "Deadweight (Major)",
+  "duration": "1 hour",
+  "survivesRest": false,
+  "reason": "Timed +4 item bonuses to Athletics (Shove/Trip) and to saving throws against forced movement or being knocked prone. The Fortitude/Reflex DC clause is a defense DC, not a save the character rolls, so it stays in the note along with the size clause and the encumbered drawback.",
+  "quote": "You gain a +4 item bonus to Athletics checks to Shove and Trip, to your Fortitude and Reflex DCs against attempts to Shove or Trip you, and to saving throws against effects that attempt to force you to move or knock you prone.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "athletics",
+    "type": "item",
+    "value": 4,
+    "appliesWhen": "on Athletics checks to Shove or Trip"
+   },
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 4,
+    "appliesWhen": "against effects that attempt to force you to move or knock you prone"
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "item",
+    "value": 4,
+    "appliesWhen": "against effects that attempt to force you to move or knock you prone"
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "item",
+    "value": 4,
+    "appliesWhen": "against effects that attempt to force you to move or knock you prone"
+   }
+  ],
+  "note": "The same +4 item bonus applies to your Fortitude and Reflex DCs when a creature tries to Shove or Trip you (that is a DC, not a save you roll). You can attempt to Shove or Trip creatures up to three sizes larger than you. Drawback: you gain the encumbered condition and can't remove it while the mutagen lasts."
+ },
+ {
+  "id": "sanguine-mutagen-lesser",
+  "verdict": "modifiers",
+  "modeName": "Sanguine (Lesser)",
+  "duration": "1 minute",
+  "survivesRest": false,
+  "reason": "+1 item bonus to Fortitude and Reflex saves for a minute, rising to a total of +2 against disease, poison, or fatigue effects. The conditional entries state the replacement total explicitly so they aren't read as stacking on the folded-in +1. The 1d6 drawback is damage, not a modifier.",
+  "quote": "You gain a +1 item bonus to Fortitude and Reflex saves. This bonus improves to +2 when you attempt a save against an effect that has the disease trait, poison trait, or would give you the fatigued condition.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 1
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "item",
+    "value": 1
+   },
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "total instead of +1, against disease, poison, or effects that would make you fatigued"
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "total instead of +1, against disease, poison, or effects that would make you fatigued"
+   }
+  ],
+  "note": "Drawback: whenever you take piercing or slashing damage, you take an extra 1d6."
+ },
+ {
+  "id": "sanguine-mutagen-moderate",
+  "verdict": "modifiers",
+  "modeName": "Sanguine (Moderate)",
+  "duration": "10 minutes",
+  "survivesRest": false,
+  "reason": "Same shape as the lesser version graded up: +2 item bonus to Fortitude and Reflex saves for 10 minutes, a total of +3 against disease, poison, or fatigue effects (stated as a replacement, not an increment).",
+  "quote": "You gain a +2 item bonus to Fortitude and Reflex saves. This bonus improves to +3 when you attempt a save against an effect that has the disease trait, poison trait, or would give you the fatigued condition.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 2
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "item",
+    "value": 2
+   },
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 3,
+    "appliesWhen": "total instead of +2, against disease, poison, or effects that would make you fatigued"
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "item",
+    "value": 3,
+    "appliesWhen": "total instead of +2, against disease, poison, or effects that would make you fatigued"
+   }
+  ],
+  "note": "Drawback: whenever you take piercing or slashing damage, you take an extra 1d6."
+ },
+ {
+  "id": "sanguine-mutagen-greater",
+  "verdict": "modifiers",
+  "modeName": "Sanguine (Greater)",
+  "duration": "1 hour",
+  "survivesRest": false,
+  "reason": "+3 item bonus to Fortitude and Reflex saves for an hour, a total of +4 against disease, poison, or fatigue effects (stated as a replacement, not an increment). The success-to-critical-success upgrade is a degree-of-success change, not a number, so it lives in the note.",
+  "quote": "You gain a +3 item bonus to Fortitude and Reflex saves. This bonus improves to +4 when you attempt a save against an effect that has the disease trait, poison trait, or would give you the fatigued condition.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 3
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "item",
+    "value": 3
+   },
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 4,
+    "appliesWhen": "total instead of +3, against disease, poison, or effects that would make you fatigued"
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "item",
+    "value": 4,
+    "appliesWhen": "total instead of +3, against disease, poison, or effects that would make you fatigued"
+   }
+  ],
+  "note": "A success on a save against a disease, poison, or fatiguing effect becomes a critical success. Drawback: whenever you take piercing or slashing damage, you take an extra 1d6."
+ },
+ {
+  "id": "theatrical-mutagen-lesser",
+  "verdict": "modifiers",
+  "modeName": "Theatrical (Lesser)",
+  "duration": "1 minute",
+  "survivesRest": false,
+  "reason": "Timed +1 item bonus to three skills against an untyped -1 to Perception and Will saves; those are the only modelable sheet numbers. The +5-foot status bonus to Speed has no mode target in this app, so it goes in the note like every other Speed effect in the catalog.",
+  "quote": "You gain a +1 item bonus to Acrobatics checks, Crafting checks, and Performance checks. If you're untrained in any of these skills, your proficiency bonus is equal to your level instead of +0. You also gain a +5 feet status bonus to your Speed.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "acrobatics",
+    "type": "item",
+    "value": 1
+   },
+   {
+    "target": "skill",
+    "detail": "crafting",
+    "type": "item",
+    "value": 1
+   },
+   {
+    "target": "skill",
+    "detail": "performance",
+    "type": "item",
+    "value": 1
+   },
+   {
+    "target": "perception",
+    "type": "untyped",
+    "value": -1
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "untyped",
+    "value": -1
+   }
+  ],
+  "note": "You also gain a +5-foot status bonus to your Speed. If you're untrained in Acrobatics, Crafting, or Performance, your proficiency bonus for those checks equals your level instead of +0. Drawback: after any round in which you don't spend at least 1 action to Interact with an object, Perform, Step, or Stride, you're off-guard until the start of your next turn."
+ },
+ {
+  "id": "theatrical-mutagen-moderate",
+  "verdict": "modifiers",
+  "modeName": "Theatrical (Moderate)",
+  "duration": "1 minute",
+  "survivesRest": false,
+  "reason": "Same structure as the lesser mutagen with a +2 item bonus to the three skills and the same -1 untyped penalties; the +5-foot Speed bonus is not a modelable mode target, so it is noted.",
+  "quote": "You gain a +2 item bonus to Acrobatics checks, Crafting checks, and Performance checks. If you're untrained in any of these skills, your proficiency bonus is equal to your level instead of +0. You also gain a +5 feet status bonus to your Speed.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "acrobatics",
+    "type": "item",
+    "value": 2
+   },
+   {
+    "target": "skill",
+    "detail": "crafting",
+    "type": "item",
+    "value": 2
+   },
+   {
+    "target": "skill",
+    "detail": "performance",
+    "type": "item",
+    "value": 2
+   },
+   {
+    "target": "perception",
+    "type": "untyped",
+    "value": -1
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "untyped",
+    "value": -1
+   }
+  ],
+  "note": "You also gain a +5-foot status bonus to your Speed. If you're untrained in Acrobatics, Crafting, or Performance, your proficiency bonus for those checks equals your level instead of +0. Drawback: after any round in which you don't spend at least 1 action to Interact with an object, Perform, Step, or Stride, you're off-guard until the start of your next turn."
+ },
+ {
+  "id": "theatrical-mutagen-greater",
+  "verdict": "modifiers",
+  "modeName": "Theatrical (Greater)",
+  "duration": "10 minutes",
+  "survivesRest": false,
+  "reason": "+3 item bonus to the three skills for 10 minutes with the same -1 untyped Perception and Will drawback; the +10-foot Speed bonus has no mode target and is noted instead.",
+  "quote": "You gain a +3 item bonus to Acrobatics checks, Crafting checks, and Performance checks. If you're untrained in any of these skills, your proficiency bonus is equal to your level instead of +0. You also gain a +10 feet status bonus to your Speed.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "acrobatics",
+    "type": "item",
+    "value": 3
+   },
+   {
+    "target": "skill",
+    "detail": "crafting",
+    "type": "item",
+    "value": 3
+   },
+   {
+    "target": "skill",
+    "detail": "performance",
+    "type": "item",
+    "value": 3
+   },
+   {
+    "target": "perception",
+    "type": "untyped",
+    "value": -1
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "untyped",
+    "value": -1
+   }
+  ],
+  "note": "You also gain a +10-foot status bonus to your Speed. If you're untrained in Acrobatics, Crafting, or Performance, your proficiency bonus for those checks equals your level instead of +0. Drawback: after any round in which you don't spend at least 1 action to Interact with an object, Perform, Step, or Stride, you're off-guard until the start of your next turn."
+ },
+ {
+  "id": "theatrical-mutagen-major",
+  "verdict": "modifiers",
+  "modeName": "Theatrical (Major)",
+  "duration": "1 hour",
+  "survivesRest": false,
+  "reason": "+4 item bonus to the three skills for an hour with the same -1 untyped Perception and Will drawback; an hour ends well before a night's rest. The +10-foot Speed bonus has no mode target and is noted.",
+  "quote": "You gain a +4 item bonus to Acrobatics checks, Crafting checks, and Performance checks. If you're untrained in any of these skills, your proficiency bonus is equal to your level instead of +0. You also gain a +10 feet status bonus to your Speed.",
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "acrobatics",
+    "type": "item",
+    "value": 4
+   },
+   {
+    "target": "skill",
+    "detail": "crafting",
+    "type": "item",
+    "value": 4
+   },
+   {
+    "target": "skill",
+    "detail": "performance",
+    "type": "item",
+    "value": 4
+   },
+   {
+    "target": "perception",
+    "type": "untyped",
+    "value": -1
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "untyped",
+    "value": -1
+   }
+  ],
+  "note": "You also gain a +10-foot status bonus to your Speed. If you're untrained in Acrobatics, Crafting, or Performance, your proficiency bonus for those checks equals your level instead of +0. Drawback: after any round in which you don't spend at least 1 action to Interact with an object, Perform, Step, or Stride, you're off-guard until the start of your next turn."
+ },
+ {
+  "id": "caydens-brew-double",
+  "verdict": "modifiers",
+  "modeName": "Cayden's Brew (Double)",
+  "duration": "1 hour",
+  "survivesRest": false,
+  "reason": "Identical save benefit to the base brew at this grade: a one-hour +1 item bonus to saves against fear effects. Only the breath weapon's potency differs, and that is an action, not a sheet number.",
+  "quote": "For 1 hour after you drink it, you have a +1 item bonus to saving throws against fear effects.",
+  "modifiers": [
+   {
+    "target": "save",
+    "detail": "fortitude",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "against fear effects"
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "against fear effects"
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "item",
+    "value": 1,
+    "appliesWhen": "against fear effects"
+   }
+  ],
+  "note": "While the brew lasts you can spend a single action to breathe out intoxicating vapor audible for 100 feet; creatures in it save or become clumsy and stupefied. You can't use the breath weapon again for 1d4 rounds."
+ },
+ {
+  "id": "starsong-nectar",
+  "verdict": "modifiers",
+  "modeName": "Starsong Nectar",
+  "duration": "10 minutes",
+  "survivesRest": false,
+  "reason": "A blanket +3 status bonus to every check the character rolls for 10 minutes. This is the app's `all-checks` shape (the same one the predefined Heroism mode uses), which covers attacks INCLUDING spell attacks, Perception (and therefore Perception initiative), saves, and every skill (and therefore skill-based initiative). Not being off-guard to flanking/hidden creatures and the once-per-round double-d20 activation change no sheet number, so they stay in the note.",
+  "quote": "While the potion lasts, you gain a +3 status bonus to attack rolls, initiative rolls, Perception checks, saving throws, and skill checks, and you aren't off-guard to creatures due to them flanking you or being hidden from or undetected by you.",
+  "modifiers": [
+   {
+    "target": "all-checks",
+    "type": "status",
+    "value": 3
+   }
+  ],
+  "note": "The +3 covers attack rolls (including spell attacks), initiative, Perception, all saves, and all skills. You aren't off-guard from flanking or from hidden/undetected creatures. Once per round you may spend a 1-action concentrate activation to roll two d20s and take the higher on attacks, Perception, saves, and skill checks until the start of your next turn. If you show too much caution (GM's discretion) you must save or the effect ends; you are temporarily immune for 24 hours afterward."
+ },
+ {
+  "id": "grudgestone",
+  "verdict": "modifiers",
+  "modeName": "Grudgestone",
+  "duration": "1 minute or until the target dies",
+  "survivesRest": false,
+  "reason": "Status bonus to damage rolls for a 1-minute duration, conditional on the affixed weapon and the triggering creature.",
+  "quote": "When you Activate the *grudgestone*, your Strikes with the affixed weapon against the triggering creature gain a +3 status bonus to damage rolls for 1 minute or until the target dies, whichever comes first.",
+  "modifiers": [
+   {
+    "target": "damage",
+    "type": "status",
+    "value": 3,
+    "appliesWhen": "on Strikes with the affixed weapon against the creature that critically hit you"
+   }
+  ],
+  "note": "Free-action activation triggered when a creature critically hits you; the bonus ends early if that creature dies."
+ },
+ {
+  "id": "grudgestone-greater",
+  "verdict": "modifiers",
+  "modeName": "Grudgestone (Greater)",
+  "duration": "1 minute or until the target dies",
+  "survivesRest": false,
+  "reason": "Same shape as the base talisman but the printed value is +5, not +3.",
+  "quote": "When you Activate the *grudgestone*, your Strikes with the affixed weapon against the triggering creature gain a +5 status bonus to damage rolls for 1 minute or until the target dies, whichever comes first.",
+  "modifiers": [
+   {
+    "target": "damage",
+    "type": "status",
+    "value": 5,
+    "appliesWhen": "on Strikes with the affixed weapon against the creature that critically hit you"
+   }
+  ],
+  "note": "Free-action activation triggered when a creature critically hits you; the bonus ends early if that creature dies."
+ },
+ {
+  "id": "vital-earth",
+  "verdict": "display-only",
+  "modeName": "Vital Earth",
+  "duration": "24 hours",
+  "survivesRest": true,
+  "reason": "Nothing on your own sheet changes: not needing air or water is a state, and the +1 item bonus to Medicine goes to whoever is treating you, not to you. The 24-hour duration outlasts a night's rest, so the display-only mode must survive rest.",
+  "quote": "Life-infused soil from the Plane of Earth, *vital earth* is glittering dust you inhale that causes you to not need air or water for 24 hours.",
+  "note": "For 24 hours you don't need air or water. Anyone attempting to Administer First Aid or Treat Wounds on you doesn't need a healer's toolkit and gains a +1 item bonus to that Medicine check — that bonus applies to the healer's roll, not yours."
+ },
+ {
+  "id": "monkey-pin",
+  "verdict": "display-only",
+  "modeName": "Monkey Pin",
+  "duration": "until the end of your turn",
+  "survivesRest": false,
+  "reason": "The +1 item bonus lands on exactly one check — the Climb the activation grants — so it is instantaneous, not a durational sheet modifier. What actually lasts until the end of your turn (full Speed on a successful Climb, critical failure becomes a failure) changes no number, which is the display-only case.",
+  "quote": "On this check and until the end of your turn, if you succeed on an Athletics check to Climb, you move your full Speed during the Climb.",
+  "note": "Activating the talisman lets you Climb immediately with a +1 item bonus on that single check. On that check and until the end of your turn, a successful Athletics check to Climb moves you your full Speed, and a critical failure becomes a failure instead."
+ },
+ {
+  "id": "drakeheart-mutagen-lesser",
+  "modeName": "Drakeheart Mutagen",
+  "verdict": "modifiers",
+  "reason": "A 1-minute mutagen with a package of typed sheet changes: +4 item AC, +1 item Perception, and untyped -1 penalties to Will saves, Reflex saves, and Recall Knowledge skill checks.",
+  "quote": "**Benefit** You gain +4 item bonus to AC, a Dexterity cap of +2 (as usual, use your lowest Dexterity cap if you have more than one), and a +1 item bonus to Perception checks. If you're wearing armor, you still calculate your proficiency bonus to AC based on your proficiency in the armor you're wearing, even if the drakeheart mutagen has a higher item bonus. You also gain the Final Surge action. **Drawback** You take a -1 penalty to Will saves, Reflex saves, and all skill checks to Recall Knowledge. **Duration** 1 minute or until you use Final Surge, whichever comes first.",
+  "duration": "1 minute or until you use Final Surge, whichever comes first",
+  "survivesRest": false,
+  "modifiers": [
+   {
+    "target": "ac",
+    "type": "item",
+    "value": 4
+   },
+   {
+    "target": "perception",
+    "type": "item",
+    "value": 1
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "untyped",
+    "value": -1
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "untyped",
+    "value": -1
+   },
+   {
+    "target": "skill",
+    "type": "untyped",
+    "value": -1,
+    "appliesWhen": "on skill checks to Recall Knowledge"
+   }
+  ],
+  "note": "AC: the +4 item bonus REPLACES your worn armor's AC bonus (armor's is also an item bonus) - it does not add to it. You still use your proficiency in the armor you're wearing. Also imposes a Dexterity cap of +2 (use your lowest cap). The app cannot yet apply either of those two adjustments, so subtract them from the displayed AC by hand. Grants the Final Surge action, which also ends the mutagen."
+ },
+ {
+  "id": "drakeheart-mutagen-moderate",
+  "modeName": "Drakeheart Mutagen",
+  "verdict": "modifiers",
+  "reason": "A 10-minute mutagen granting +5 item AC and +2 item Perception with untyped -1 penalties to Will saves, Reflex saves, and Recall Knowledge checks.",
+  "quote": "**Benefit** You gain +5 item bonus to AC, a Dexterity cap of +2 (as usual, use your lowest Dexterity cap if you have more than one), and a +2 item bonus to Perception checks. If you're wearing armor, you still calculate your proficiency bonus to AC based on your proficiency in the armor you're wearing, even if the drakeheart mutagen has a higher item bonus. You also gain the Final Surge action. **Drawback** You take a -1 penalty to Will saves, Reflex saves, and all skill checks to Recall Knowledge. **Duration** 10 minutes or until you use Final Surge, whichever comes first.",
+  "duration": "10 minutes or until you use Final Surge, whichever comes first",
+  "survivesRest": false,
+  "modifiers": [
+   {
+    "target": "ac",
+    "type": "item",
+    "value": 5
+   },
+   {
+    "target": "perception",
+    "type": "item",
+    "value": 2
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "untyped",
+    "value": -1
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "untyped",
+    "value": -1
+   },
+   {
+    "target": "skill",
+    "type": "untyped",
+    "value": -1,
+    "appliesWhen": "on skill checks to Recall Knowledge"
+   }
+  ],
+  "note": "AC: the +5 item bonus REPLACES your worn armor's AC bonus (armor's is also an item bonus) - it does not add to it. You still use your proficiency in the armor you're wearing. Also imposes a Dexterity cap of +2 (use your lowest cap). The app cannot yet apply either of those two adjustments, so subtract them from the displayed AC by hand. Grants the Final Surge action, which also ends the mutagen."
+ },
+ {
+  "id": "drakeheart-mutagen-greater",
+  "modeName": "Drakeheart Mutagen",
+  "verdict": "modifiers",
+  "reason": "A 1-hour mutagen granting +6 item AC and +3 item Perception with untyped -1 penalties to Will saves, Reflex saves, and Recall Knowledge checks.",
+  "quote": "**Benefit** You gain +6 item bonus to AC, a Dexterity cap of +2 (as usual, use your lowest Dexterity cap if you have more than one), and a +3 item bonus to Perception checks. If you're wearing armor, you still calculate your proficiency bonus to AC based on your proficiency in the armor you're wearing, even if the drakeheart mutagen has a higher item bonus. You also gain the Final Surge action. **Drawback** You take a -1 penalty to Will saves, Reflex saves, and all skill checks to Recall Knowledge. **Duration** 1 hour or until you use Final Surge, whichever comes first.",
+  "duration": "1 hour or until you use Final Surge, whichever comes first",
+  "survivesRest": false,
+  "modifiers": [
+   {
+    "target": "ac",
+    "type": "item",
+    "value": 6
+   },
+   {
+    "target": "perception",
+    "type": "item",
+    "value": 3
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "untyped",
+    "value": -1
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "untyped",
+    "value": -1
+   },
+   {
+    "target": "skill",
+    "type": "untyped",
+    "value": -1,
+    "appliesWhen": "on skill checks to Recall Knowledge"
+   }
+  ],
+  "note": "AC: the +6 item bonus REPLACES your worn armor's AC bonus (armor's is also an item bonus) - it does not add to it. You still use your proficiency in the armor you're wearing. Also imposes a Dexterity cap of +2 (use your lowest cap). The app cannot yet apply either of those two adjustments, so subtract them from the displayed AC by hand. Grants the Final Surge action, which also ends the mutagen."
+ },
+ {
+  "id": "drakeheart-mutagen-major",
+  "modeName": "Drakeheart Mutagen",
+  "verdict": "modifiers",
+  "reason": "A 1-hour mutagen granting +7 item AC and +4 item Perception with untyped -1 penalties to Will saves, Reflex saves, and Recall Knowledge checks.",
+  "quote": "**Benefit** You gain +7 item bonus to AC, a Dexterity cap of +2 (as usual, use your lowest Dexterity cap if you have more than one), and a +4 item bonus to Perception checks. If you're wearing armor, you still calculate your proficiency bonus to AC based on your proficiency in the armor you're wearing, even if the drakeheart mutagen has a higher item bonus. You also gain the Final Surge action. **Drawback** You take a -1 penalty to Will saves, Reflex saves, and all skill checks to Recall Knowledge. **Duration** 1 hour or until you use Final Surge, whichever comes first.",
+  "duration": "1 hour or until you use Final Surge, whichever comes first",
+  "survivesRest": false,
+  "modifiers": [
+   {
+    "target": "ac",
+    "type": "item",
+    "value": 7
+   },
+   {
+    "target": "perception",
+    "type": "item",
+    "value": 4
+   },
+   {
+    "target": "save",
+    "detail": "will",
+    "type": "untyped",
+    "value": -1
+   },
+   {
+    "target": "save",
+    "detail": "reflex",
+    "type": "untyped",
+    "value": -1
+   },
+   {
+    "target": "skill",
+    "type": "untyped",
+    "value": -1,
+    "appliesWhen": "on skill checks to Recall Knowledge"
+   }
+  ],
+  "note": "AC: the +7 item bonus REPLACES your worn armor's AC bonus (armor's is also an item bonus) - it does not add to it. You still use your proficiency in the armor you're wearing. Also imposes a Dexterity cap of +2 (use your lowest cap). The app cannot yet apply either of those two adjustments, so subtract them from the displayed AC by hand. Grants the Final Surge action, which also ends the mutagen."
+ },
+ {
+  "id": "silvertongue-mutagen-lesser",
+  "modeName": "Silvertongue Mutagen",
+  "verdict": "modifiers",
+  "reason": "A 1-minute mutagen with per-skill item bonuses (+1 to four social skills) and -2 item penalties to four knowledge skills; the Lore penalty, the degree-of-success change and the untrained-skill effect are non-numeric or unencodable and are carried in the note.",
+  "quote": "**Benefit** You gain a +1 item bonus to Deception, Diplomacy, Intimidation and Performance checks. Your critical failures with any of these skills become failures instead. **Drawback** You take a -2 item penalty to Arcana, Crafting, Lore, Occultism, and Society checks. Choose one skill in which you are trained; for the duration, you become untrained in that skill. All your failures to Recall Knowledge become critical failures. **Duration** 1 minute.",
+  "duration": "1 minute",
+  "survivesRest": false,
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "deception",
+    "type": "item",
+    "value": 1
+   },
+   {
+    "target": "skill",
+    "detail": "diplomacy",
+    "type": "item",
+    "value": 1
+   },
+   {
+    "target": "skill",
+    "detail": "intimidation",
+    "type": "item",
+    "value": 1
+   },
+   {
+    "target": "skill",
+    "detail": "performance",
+    "type": "item",
+    "value": 1
+   },
+   {
+    "target": "skill",
+    "detail": "arcana",
+    "type": "item",
+    "value": -2
+   },
+   {
+    "target": "skill",
+    "detail": "crafting",
+    "type": "item",
+    "value": -2
+   },
+   {
+    "target": "skill",
+    "detail": "occultism",
+    "type": "item",
+    "value": -2
+   },
+   {
+    "target": "skill",
+    "detail": "society",
+    "type": "item",
+    "value": -2
+   }
+  ],
+  "note": "The -2 item penalty ALSO applies to every Lore skill - apply it by hand (skill modifiers are keyed per-Lore, e.g. lore:warfare, so a blanket Lore penalty cannot be encoded). Critical failures with Deception, Diplomacy, Intimidation, or Performance become failures instead. Choose one skill you are trained in; you become untrained in it for the duration. All your failures to Recall Knowledge become critical failures."
+ },
+ {
+  "id": "silvertongue-mutagen-moderate",
+  "modeName": "Silvertongue Mutagen",
+  "verdict": "modifiers",
+  "reason": "A 10-minute mutagen with +2 item bonuses to four social skills and -2 item penalties to four knowledge skills; the Lore penalty is unencodable and carried in the note.",
+  "quote": "**Benefit** You gain a +2 item bonus to Deception, Diplomacy, Intimidation and Performance checks. Your critical failures with any of these skills become failures instead. **Drawback** You take a -2 item penalty to Arcana, Crafting, Lore, Occultism, and Society checks. Choose one skill in which you are trained; for the duration, you become untrained in that skill. All your failures to Recall Knowledge become critical failures. **Duration** 10 minutes.",
+  "duration": "10 minutes",
+  "survivesRest": false,
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "deception",
+    "type": "item",
+    "value": 2
+   },
+   {
+    "target": "skill",
+    "detail": "diplomacy",
+    "type": "item",
+    "value": 2
+   },
+   {
+    "target": "skill",
+    "detail": "intimidation",
+    "type": "item",
+    "value": 2
+   },
+   {
+    "target": "skill",
+    "detail": "performance",
+    "type": "item",
+    "value": 2
+   },
+   {
+    "target": "skill",
+    "detail": "arcana",
+    "type": "item",
+    "value": -2
+   },
+   {
+    "target": "skill",
+    "detail": "crafting",
+    "type": "item",
+    "value": -2
+   },
+   {
+    "target": "skill",
+    "detail": "occultism",
+    "type": "item",
+    "value": -2
+   },
+   {
+    "target": "skill",
+    "detail": "society",
+    "type": "item",
+    "value": -2
+   }
+  ],
+  "note": "The -2 item penalty ALSO applies to every Lore skill - apply it by hand (skill modifiers are keyed per-Lore, e.g. lore:warfare, so a blanket Lore penalty cannot be encoded). Critical failures with Deception, Diplomacy, Intimidation, or Performance become failures instead. Choose one skill you are trained in; you become untrained in it for the duration. All your failures to Recall Knowledge become critical failures."
+ },
+ {
+  "id": "silvertongue-mutagen-greater",
+  "modeName": "Silvertongue Mutagen",
+  "verdict": "modifiers",
+  "reason": "A 1-hour mutagen with +3 item bonuses to four social skills and -2 item penalties to four knowledge skills; the Lore penalty is unencodable and carried in the note.",
+  "quote": "**Benefit** You gain a +3 item bonus to Deception, Diplomacy, Intimidation and Performance checks. Your critical failures with any of these skills become failures instead. **Drawback** You take a -2 item penalty to Arcana, Crafting, Lore, Occultism, and Society checks. Choose one skill in which you are trained; for the duration, you become untrained in that skill. All your failures to Recall Knowledge become critical failures. **Duration** 1 hour.",
+  "duration": "1 hour",
+  "survivesRest": false,
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "deception",
+    "type": "item",
+    "value": 3
+   },
+   {
+    "target": "skill",
+    "detail": "diplomacy",
+    "type": "item",
+    "value": 3
+   },
+   {
+    "target": "skill",
+    "detail": "intimidation",
+    "type": "item",
+    "value": 3
+   },
+   {
+    "target": "skill",
+    "detail": "performance",
+    "type": "item",
+    "value": 3
+   },
+   {
+    "target": "skill",
+    "detail": "arcana",
+    "type": "item",
+    "value": -2
+   },
+   {
+    "target": "skill",
+    "detail": "crafting",
+    "type": "item",
+    "value": -2
+   },
+   {
+    "target": "skill",
+    "detail": "occultism",
+    "type": "item",
+    "value": -2
+   },
+   {
+    "target": "skill",
+    "detail": "society",
+    "type": "item",
+    "value": -2
+   }
+  ],
+  "note": "The -2 item penalty ALSO applies to every Lore skill - apply it by hand (skill modifiers are keyed per-Lore, e.g. lore:warfare, so a blanket Lore penalty cannot be encoded). Critical failures with Deception, Diplomacy, Intimidation, or Performance become failures instead. Choose one skill you are trained in; you become untrained in it for the duration. All your failures to Recall Knowledge become critical failures."
+ },
+ {
+  "id": "silvertongue-mutagen-major",
+  "modeName": "Silvertongue Mutagen",
+  "verdict": "modifiers",
+  "reason": "A 1-hour mutagen with +4 item bonuses to four social skills and -2 item penalties to four knowledge skills; the Lore penalty is unencodable and carried in the note.",
+  "quote": "**Benefit** You gain a +4 item bonus to Deception, Diplomacy, Intimidation and Performance checks. Your critical failures with any of these skills become failures instead. **Drawback** You take a -2 item penalty to Arcana, Crafting, Lore, Occultism, and Society checks. Choose one skill in which you are trained; for the duration, you become untrained in that skill. All your failures to Recall Knowledge become critical failures. **Duration** 1 hour.",
+  "duration": "1 hour",
+  "survivesRest": false,
+  "modifiers": [
+   {
+    "target": "skill",
+    "detail": "deception",
+    "type": "item",
+    "value": 4
+   },
+   {
+    "target": "skill",
+    "detail": "diplomacy",
+    "type": "item",
+    "value": 4
+   },
+   {
+    "target": "skill",
+    "detail": "intimidation",
+    "type": "item",
+    "value": 4
+   },
+   {
+    "target": "skill",
+    "detail": "performance",
+    "type": "item",
+    "value": 4
+   },
+   {
+    "target": "skill",
+    "detail": "arcana",
+    "type": "item",
+    "value": -2
+   },
+   {
+    "target": "skill",
+    "detail": "crafting",
+    "type": "item",
+    "value": -2
+   },
+   {
+    "target": "skill",
+    "detail": "occultism",
+    "type": "item",
+    "value": -2
+   },
+   {
+    "target": "skill",
+    "detail": "society",
+    "type": "item",
+    "value": -2
+   }
+  ],
+  "note": "The -2 item penalty ALSO applies to every Lore skill - apply it by hand (skill modifiers are keyed per-Lore, e.g. lore:warfare, so a blanket Lore penalty cannot be encoded). Critical failures with Deception, Diplomacy, Intimidation, or Performance become failures instead. Choose one skill you are trained in; you become untrained in it for the duration. All your failures to Recall Knowledge become critical failures."
+ },
+ {
+  "id": "chilled-fire-noodles",
+  "verdict": "display-only",
+  "modeName": "Chilled Fire Noodles",
+  "reason": "The noodles suppress the fatigued condition's -1 status penalty to AC and saving throws; they grant no bonus of their own, and no bonus value or type is printed on this row. Modelling the suppression as a +1 status bonus is wrong under PF2e stacking (a larger status bonus would displace it and leave the penalty in place), so this is tracked as a timed state with no modifiers.",
+  "quote": "When you consume the noodles, you temporarily ignore the -1 status penalty to AC and saving throws caused by the fatigued condition for 1 hour.",
+  "duration": "1 hour",
+  "survivesRest": false,
+  "note": "For 1 hour you ignore the fatigued condition's -1 status penalty to AC and saving throws. The fatigued condition itself is not removed and its other effects still apply."
+ },
+ {
+  "id": "chilled-fire-noodles-greater",
+  "verdict": "display-only",
+  "modeName": "Chilled Fire Noodles (Greater)",
+  "reason": "The noodles suppress the fatigued condition's -1 status penalty to AC and saving throws for 4 hours; they grant no bonus of their own, and no bonus value or type is printed on this row. Modelling the suppression as a +1 status bonus is wrong under PF2e stacking, so this is tracked as a timed state with no modifiers.",
+  "quote": "When you consume the noodles, you temporarily ignore the -1 status penalty to AC and saving throws caused by the fatigued condition for 4 hours.",
+  "duration": "4 hours",
+  "survivesRest": false,
+  "note": "For 4 hours you ignore the fatigued condition's -1 status penalty to AC and saving throws. The fatigued condition itself is not removed and its other effects still apply."
+ },
+ {
+  "id": "crimson-godsblood-serum",
+  "verdict": "modifiers",
+  "modeName": "Godsblood Wrath",
+  "reason": "The potion gives a status bonus to physical damage rolls for 1 minute - a sheet number for a duration. This umbrella row prints no value of its own; the +2 is INFERRED from its level 6 matching the lesser grade. The Hit Point restoration is never a modifier.",
+  "quote": "While under the effect of the potion, you gain a status bonus to physical damage rolls for 1 minute.",
+  "duration": "1 minute",
+  "survivesRest": false,
+  "modifiers": [
+   {
+    "target": "damage",
+    "type": "status",
+    "value": 2,
+    "appliesWhen": "on physical damage rolls"
+   }
+  ],
+  "note": "Umbrella entry: the value is not printed in its own sentence - +2 is taken from the lesser grade because this row is level 6. It duplicates the separate lesser row, so consider dropping one. Separately, the first time in that minute you're reduced to 0 HP without being killed, you avoid being knocked out, regain 2d8+5 Hit Points, become confused for 1 round, and your wounded value increases by 1 - none of that is a modifier."
+ },
+ {
+  "id": "lesser-crimson-godsblood-serum",
+  "verdict": "modifiers",
+  "modeName": "Godsblood Wrath (Lesser)",
+  "reason": "A +2 status bonus to physical damage rolls lasting 1 minute is a durational sheet-number change. The 2d8+5 Hit Points and the confused/wounded rider are healing and conditions, never modifiers.",
+  "quote": "While under the effect of the potion, you gain a status bonus to physical damage rolls for 1 minute. ... The potion grants a +2 status bonus and restores 2d8+5 Hit Points.",
+  "duration": "1 minute",
+  "survivesRest": false,
+  "modifiers": [
+   {
+    "target": "damage",
+    "type": "status",
+    "value": 2,
+    "appliesWhen": "on physical damage rolls"
+   }
+  ],
+  "note": "The first time during the minute you're reduced to 0 HP but not killed, you avoid being knocked out, regain 2d8+5 Hit Points, become confused for 1 round, and your wounded condition increases by 1."
+ },
+ {
+  "id": "moderate-crimson-godsblood-serum",
+  "verdict": "modifiers",
+  "modeName": "Godsblood Wrath (Moderate)",
+  "reason": "The moderate grade gives a +3 status bonus to physical damage rolls for 1 minute - read from this row, not from its siblings. The 3d8+10 healing is not a modifier.",
+  "quote": "While under the effect of the potion, you gain a status bonus to physical damage rolls for 1 minute. ... The potion grants a +3 status bonus and restores 3d8+10 Hit Points.",
+  "duration": "1 minute",
+  "survivesRest": false,
+  "modifiers": [
+   {
+    "target": "damage",
+    "type": "status",
+    "value": 3,
+    "appliesWhen": "on physical damage rolls"
+   }
+  ],
+  "note": "The first time during the minute you're reduced to 0 HP but not killed, you avoid being knocked out, regain 3d8+10 Hit Points, become confused for 1 round, and your wounded condition increases by 1."
+ },
+ {
+  "id": "greater-crimson-godsblood-serum",
+  "verdict": "modifiers",
+  "modeName": "Godsblood Wrath (Greater)",
+  "reason": "The greater grade gives a +4 status bonus to physical damage rolls for 1 minute. The 6d8+20 restoration is Hit Points, which never becomes a modifier.",
+  "quote": "While under the effect of the potion, you gain a status bonus to physical damage rolls for 1 minute. ... The potion grants a +4 status bonus and restores 6d8+20 Hit Points.",
+  "duration": "1 minute",
+  "survivesRest": false,
+  "modifiers": [
+   {
+    "target": "damage",
+    "type": "status",
+    "value": 4,
+    "appliesWhen": "on physical damage rolls"
+   }
+  ],
+  "note": "The first time during the minute you're reduced to 0 HP but not killed, you avoid being knocked out, regain 6d8+20 Hit Points, become confused for 1 round, and your wounded condition increases by 1."
+ },
+ {
+  "id": "valorous-coin",
+  "modeName": "Valorous Coin",
+  "verdict": "modifiers",
+  "reason": "A 1-hour weapon effect that, once you drop below a quarter of your Hit Points, grants a +1 circumstance bonus to Strikes and damage with that weapon for 1 minute; the temporary Hit Points that come with it are not modifiers.",
+  "quote": "You gain temporary Hit Points equal to your level that last for 1 minute, and you gain a +1 circumstance bonus to Strikes and damage rolls with the affected weapon for 1 minute.",
+  "duration": "1 hour (the bonus itself runs for 1 minute once triggered, and that minute ends the coin)",
+  "survivesRest": false,
+  "modifiers": [
+   {
+    "target": "attack",
+    "type": "circumstance",
+    "value": 1,
+    "appliesWhen": "with the affected weapon, for 1 minute after you're reduced below a quarter of your Hit Points"
+   },
+   {
+    "target": "damage",
+    "type": "circumstance",
+    "value": 1,
+    "appliesWhen": "with the affected weapon, for 1 minute after you're reduced below a quarter of your Hit Points"
+   }
+  ],
+  "note": "The coin does nothing until you drop below a quarter of your Hit Points while wielding the affected weapon. That grants temporary Hit Points equal to your level for 1 minute (not a modifier) alongside the bonus. When the minute ends, so do all effects and the coin's remaining duration, and you're fatigued until you're healed to your maximum Hit Points."
+ },
+ {
+  "id": "champions-laurels",
+  "modeName": "Champion's Laurels",
+  "verdict": "no-mode",
+  "reason": "Umbrella/summary record, not a real item: it has no price and three graded twins at the same base name (Amateur 6 gp / Professional 160 gp / Renowned 3,200 gp) that carry the actual rules. Per work/rulings/DECISIONS.md ruling A these get no entries and are hidden from pickers, so no mode is created for it.",
+  "quote": "Champions Laurels (Amateur) ... Price 6 gp ... Champions Laurels (Professional) ... Price 160 gp ... Champions Laurels (Renowned) ... Price 3,200 gp",
+  "note": "The temporary-Hit-Point display-only mode belongs on the three graded records only, which already have it."
+ },
+ {
+  "id": "energizing-pill",
+  "modeName": "Energizing Pill",
+  "verdict": "modifiers",
+  "reason": "Held in the mouth for an hour, it gives a flat +2 item bonus to initiative rolls for that whole duration.",
+  "quote": "It heightens your reactions, granting you a +2 item bonus to initiative rolls with Perception.",
+  "duration": "1 hour",
+  "survivesRest": false,
+  "modifiers": [
+   {
+    "target": "perception",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "on initiative rolls"
+   }
+  ],
+  "note": "Duration comes from the preceding sentence: the pill \"remains for 1 hour\" in your mouth. The bonus is specifically to initiative rolled with Perception, not to Perception checks generally. Secondary Effect (reaction): when you would become clumsy, drained, enfeebled, frightened, sickened, slowed, or stupefied, reduce that condition's value by 1 (to 0 means you don't gain it) — a one-shot, not part of the ongoing bonus, and the printed text does not say it ends or expends the pill."
+ },
+ {
+  "id": "moon-blossom-tea",
+  "modeName": "Moon Blossom Tea",
+  "verdict": "modifiers",
+  "reason": "A +2 item bonus to initiative rolls that persists for an hour.",
+  "quote": "After consuming the tea, you gain a +2 item bonus to all initiative rolls for 1 hour and gain the following reaction.",
+  "duration": "1 hour (4 hours with the Tea Ceremony activation)",
+  "survivesRest": false,
+  "modifiers": [
+   {
+    "target": "all-checks",
+    "type": "item",
+    "value": 2,
+    "appliesWhen": "on initiative rolls"
+   }
+  ],
+  "note": "The text says \"all initiative rolls\", so it covers initiative rolled with Perception or with a skill (Stealth, Deception, …); `all-checks` plus the appliesWhen condition is the only encoding in ModeTargetKind that reaches both, and being conditional it stars those stats rather than folding into any number. It also grants the Evade Peril reaction: turn a failed Reflex save into a success, reducing the tea's remaining duration by 1 hour (ending it if that hits 0). Tea Ceremony extends the duration to 4 hours."
+ }
+]

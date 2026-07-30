@@ -1,0 +1,98 @@
+[
+ {
+  "id": "the-distant-grasp",
+  "collection": "classFeatures",
+  "name": "The Distant Grasp",
+  "level": 1,
+  "traits": [
+   "psychic"
+  ],
+  "text": "Motion characterizes the physical—a boulder falls, creatures move, the world turns. You believe the truest form of mind over matter is therefore to move things as well, wielding telekinesis as an arm that can grasp the furthest and finest of objects. **Granted Spells** - 1st: Kinetic Ram - 2nd: Telekinetic Maneuver - 3rd: Gravity Well - 4th: Fly - 5th: Telekinetic Haul - 6th: Poltergeist's Fury - 7th: Telekinetic Bombardment - 8th: Falling Sky - 9th: Implosion --- **Standard Psi Cantrips** Telekinetic Hand Your telekinetic hand can carry up to 1 Bulk instead of only light Bulk. If the spell is heightened to 3rd rank or higher, its maximum Bulk is 2. If the spell is heightened to 7th rank or higher, its maximum Bulk is 3. It also gains the following amp. **Amp** You create a multitude of telekinetic hands that grip onto a creature and move it about. Target a creature of Medium size or smaller with the amped spell instead of an object. You attempt to Shove the target in a direction of your choice, rolling a spell attack roll against its Fortitude DC instead of an Athletics check. The creature takes a –10-foot circumstance penalty to its Speeds until the spell ends. Starting the round after you Cast the Spell, the first time each round you Sustain the Spell, you can attempt to Shove the creature again. **Amp Heightened (4th)** You can attempt to Disarm the creature instead of attempting to Shove it. If you knock an item out of the creature's grasp in this way, the telekinetic hand immediately grabs it. Any effect of the telekinetic hand on the creature ends, and the spell now carries the item, just like you had picked it up with an unamped telekinetic hand. Telekinetic Projectile Your telekinetic projectiles can fly much further away. Increase the range of telekinetic projectile to 60 feet. It also gains the following amp. **Amp** You fling objects with even more force, driving your opponents backwards in a hail of objects. On a success, you push the target 5 feet away from you, and on a critical success, you push the target 10 feet away from you in addition to dealing double damage. **Amp Heightened (+1)** The damage increases by 2d6 instead of by 1d6. --- **Unique Psi Cantrips** surface: Telekinetic Rend **Amp** Your thoughts expand in scope and power. The bursts deal 1d6 bludgeoning damage and 1d6 slashing damage, instead of the usual damage. A creature that critically fails its save is also Stunned 1. **Amp Heightened (+2)** Both types of damage increase by 1d6 instead of just one. Add a third non-overlapping 5-foot burst to the area. deeper: Vector Screen **Amp** Your screen persists for longer, and you can detonate it in an explosive counterattack. The duration of the spell increases to 1 minute. You can Dismiss the spell. If there are any projectiles trapped in the screen, you can cast *telekinetic projectile* to fire them at one creature as part of Dismissing the spell. Measure the range for the telekinetic projectile from where the vector screen was, instead of from you. deepest: Dancing Blade **Amp** The weapon's attacks increase in strength, and your control is fine enough for advanced technique. The damage dice for the weapon's Strike change from d6s to d10s. When you Cast or Sustain the spell, you can choose from the following options in addition to the standard ones. - **Guard** Rather than attacking, the weapon grants a +2 circumstance bonus to AC against melee attacks to the creature it's following. The bonus lasts until the start of your next turn or until the weapon Changes Partners, whichever comes first. - **Push**(attack) The weapon attempts to Push its target, using your spell attack roll instead of an Athletics check to determine the results of the Push.",
+  "currentFlat": null,
+  "openQuestion": "Should bonuses that only exist inside an amped spell (dancing blade Guard here, warp step in The Unbound Step) be registered on the class feature, or left to the spell entry so the star only appears while the spell is up?"
+ },
+ {
+  "id": "seers-array",
+  "collection": "items",
+  "name": "Seer's Array",
+  "level": 0,
+  "traits": [
+   "relic"
+  ],
+  "text": "Seer's Array Source Treasure Vault (Remastered) pg. 202 Aspects Mind and Time Diviners through the ages have employed a variety of tools to glimpse the future, but one who assembles five pieces of a seer's array gains strong second sight. Seer's arrays can be found across Golarion, from the caravans of Varisian harrowers to the scale diviners at the court of the Dragon King of Xa Hoi. A diviner who wears the array is bound to be sought after for counsel, and those who consult such farsighted individuals do well to heed any advice given. Set Items: Pendant of the Occult (level 3), Staff of the Unblinking Eye (level 6), Clarity Goggles (Lesser) (level 8), Crystal Ball (Clear Quartz) (level 14), Amulet of the Third Eye (level 17) Gifts: The set grants the following gifts. - 1: Recalculate - 2: Borrow Time - 3: Time Jump - 4: Precognition - 5: Time Reversal Collective Features: The set grants the following features. Two Items: The circumstance bonus from recalculate increases by 1. Three Items: Creatures become temporarily immune to the relic's borrow time gift for 1 hour. Four Items: You can use the relic's time jump once per hour. For each use after the first in a given day, you must attempt a flat check with a DC of 9 + the number of times you've used the gift that day. If you fail, you can still complete the time jump, but after that the gift is no longer available until you next complete your daily preparations. You can roll the flat check before using the gift and decide not to do so after seeing the roll. However, any failure applies to the next use of the gift that day, making your next use your last that day. Five Items: You can use the relic's precognition once per hour. Each use after the first requires a flat check like for time jump at four items, but this flat check affects your use of precognition.",
+  "currentFlat": null,
+  "openQuestion": "When a relic set upgrades a gift's bonus (Seer's Array +1 to Recalculate, Monk's Attire's Overflowing Life change), should the set entry REPLACE the gift's own entry, or is displaying both acceptable?"
+ },
+ {
+  "id": "bootstrap-respirator",
+  "collection": "items",
+  "name": "Bootstrap Respirator",
+  "level": 8,
+  "traits": [
+   "mechanical"
+  ],
+  "text": "The city of Riddleport is notorious for its noxious air and water. While some inhabitants tolerate the haze, most wear bootstrap respirators to filter out as many of the pollutants as possible. Designed by dwarf smiths operating the Gas Forges, the flexible face mask of a bootstrap respirator fits snugly over your mouth and nose, fastened by two adjustable leather straps. A manual pump inserted into your footwear or under the arm circulates air through tubes and over filters fitted into the front of the mask. While wearing a bootstrap respirator, you gain a +1 item bonus to any saves that require you to smell or taste, such as inhaled poisons and airborne diseases.",
+  "currentFlat": null,
+  "openQuestion": "The respirator's wording is deliberately open (\"any saves that require you to smell or taste\") while both printed examples - inhaled poison and airborne disease - are Fortitude saves. Should this star Fortitude only, or all three saves with the smell/taste condition doing the filtering?"
+ },
+ {
+  "id": "demons-knot",
+  "collection": "items",
+  "name": "Demon's Knot",
+  "level": 15,
+  "traits": [
+   "artifact",
+   "cursed",
+   "evil",
+   "invested",
+   "magical",
+   "unholy"
+  ],
+  "text": "The demon Kaivirris is housed in the magnificent ruby that serves as the centerpiece of this beautiful, goldplated, cold iron pendant necklace. Creatures within 30 feet of the *demon's knot* feel a subtle urge to acquire the necklace and take a –1 status penalty to Will saves. Upon donning the *demon's knot*, it fuses to you. You are subject to a Geas that requires you to free Kaivirris from his prison. If you die without completing this task, you become a sulfur zombie that always remains within 100 feet of the demon's knot and is under the control of whoever is cursed by the *demon's knot*. The *demon's knot* sustains your physical form and protects your mind from mental control. You don't need to eat or drink. You become immune to the confused and controlled conditions. The *demon's knot* corrupts anyone wearing it. You gain weakness to cold iron 10 and holy 10. Whenever you're within 60 feet of a celestial, you're Frightened 2 and can't reduce the value of the frightened condition below 2. --- **Activate** ⟨1⟩ command **Frequency** once per day **Effect** You allow Kaivirris's corrupting influence over you to outwardly manifest. For 1 minute, your features adopt a cruel cast, and you radiate a palpable aura of evil. During this time, you gain a +2 status bonus to Intimidation checks, and your Strikes deal an additional 1d6 damage. --- **Activate** ⟨2⟩ command, Interact **Frequency** once per day **Effect** The demon's knot casts Chilling Darkness.",
+  "currentFlat": null,
+  "openQuestion": "Does the \"–1 status penalty to Will saves\" for \"creatures within 30 feet of the demon's knot\" include the WEARER (who is by definition within 30 feet), or only other creatures? The flavour (\"a subtle urge to acquire the necklace\") reads as aimed at others, but the wording is unrestricted. If the wearer is included, Will needs a –1 status row on this item."
+ },
+ {
+  "id": "trusty-helmet",
+  "collection": "items",
+  "name": "Trusty Helmet",
+  "level": 2,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "text": "You keep yourself protected from incoming projectiles with this sturdy steel helmet, painted brown. **Activate—Block Manipulation** ⟨5⟩ (concentrate) **Frequency** once per day **Trigger** You gain the stupefied condition --- **Effect** Your *trusty helmet* protects not only your head but your mind. The value of your stupefied condition is decreased by 1. --- **Activate—Hunker Down** ⟨1⟩ (manipulate) **Effect** You hunker down, protecting your head using your helmet. You gain a +1 circumstance bonus to your AC against ranged attacks.",
+  "currentFlat": null,
+  "openQuestion": "Hunker Down has no printed duration in this record — should the displayed condition say something like \"until the start of your next turn\", or stay verbatim (no duration) as I have it?"
+ },
+ {
+  "id": "aon-seer-s-array",
+  "collection": "items",
+  "name": "Seer's Array",
+  "level": 0,
+  "traits": [
+   "relic"
+  ],
+  "text": "Seer's Array Aspects Mind and Time Diviners through the ages have employed a variety of tools to glimpse the future, but one who assembles five pieces of a seer's array gains strong second sight. Seer's arrays can be found across Golarion, from the caravans of Varisian harrowers to the scale diviners at the court of the Dragon King of Xa Hoi. A diviner who wears the array is bound to be sought after for counsel, and those who consult such farsighted individuals do well to heed any advice given. Set Items : Pendant of the Occult (level 3), Staff of the Unblinking Eye (level 6), Clarity Goggles (Lesser) (level 8), Crystal Ball (Clear Quartz) (level 14), Amulet of the Third Eye (level 17) Gifts : The set grants the following gifts. - 1: Recalculate - 2: Borrow Time - 3: Time Jump - 4: Precognition - 5: Time Reversal Collective Features : The set grants the following features. Two Items : The circumstance bonus from recalculate increases by 1. Three Items : Creatures become temporarily immune to the relic's borrow time gift for 1 hour. Four Items : You can use the relic's time jump once per hour. For each use after the first in a given day, you must attempt a flat check with a DC of 9 + the number of times you've used the gift that day. If you fail, you can still complete the time jump, but after that the gift is no longer available until you next complete your daily preparations. You can roll the flat check before using the gift and decide not to do so after seeing the roll. However, any failure applies to the next use of the gift that day, making your next use your last that day. Five Items : You can use the relic's precognition once per hour. Each use after the first requires a flat check like for time jump at four items, but this flat check affects your use of precognition.",
+  "currentFlat": null,
+  "openQuestion": "Should a relic-set collective feature that only UPGRADES another gift's bonus (Seer's Array 2 items -> Recalculate becomes +2; Monk's Attire 2 items -> Overflowing Life scales differently) get its own registry entry, or should it be omitted and folded into the wording of the gift it modifies (aon-recalculate / aon-overflowing-life)?"
+ },
+ {
+  "id": "haunted",
+  "collection": "backgrounds",
+  "name": "Haunted",
+  "traits": [],
+  "text": "You are followed by a spirit or entity, either from childhood or since a momentous event. You and others may have seen this entity. You have studied esoteric subjects trying to understand your situation, but this presence in your life remains a mystery. Whatever this entity is or wants, it influences your life in subtle ways, and not always for the better. Sometimes the entity helps you, but at other times, its influence is malevolent or harmful. The entity is most likely to surface in stressful situations. Choose two attribute boosts. One must be to **Wisdom** or **Charisma**, and one is a free attribute boost. You are trained in Occultism and an additional skill in which the haunting entity is well-versed, determined by the GM. Any time you attempt a skill check for the entity's skill, the GM can offer you a +1 circumstance bonus to the check, as though the entity were Aiding you. If you accept but fail the check, you are Frightened 2 (Frightened 4 on a critical failure). The initial Frightened value can't be reduced by effects that would reduce or prevent the condition (such as a fighter's bravery). --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Occultism",
+  "currentFlat": null,
+  "openQuestion": "Until a 'haunting entity's skill' choice field exists, is starring ALL skills with the wording above acceptable, or should this record be left out rather than over-mark the sheet?"
+ },
+ {
+  "id": "runelord-researcher",
+  "collection": "backgrounds",
+  "name": "Runelord Researcher",
+  "traits": [],
+  "text": "For thousands of years, the looming monoliths found throughout the Saga Lands were a source of pride, fear, and curiosity, yet the dangers associated with them and the gulf of time itself kept their secrets mostly hidden. When Runelord Karzoug rose from his eons-long slumber in 4707 ar, these ancient secrets became thrust into the light, and Thassilon's legacy became a topic of modern discussion and exploration. The foundation of New Thassilon only strengthened this shift, and now you're one of many who have devoted your studies on the deep history of Thassilon and its runelords—a topic still shrouded in mystery. Whether the focus of your studies has been one of the more recently active runelords, like Karzoug, Alaznist, Belimarius, or Sorshen, or you're focused on one of the more obscure dozens of runelords who ruled during the centuries Thassilon existed, your knowledge has made you an invaluable asset on many adventures in the Saga Lands. It's also attracted Queen Sorshen's attention, and in her invitation to attend the opening ceremonies for the Circle of Open Hands, she made it clear she wants to engage you in several long discussions about the truths of ancient Thassilon, impressing upon you that while the runelords (including herself, she admits) of the ancient era were cruel and domineering, that many of the wonders they created could benefit the modern age–if people could trust that these wonders were safe! With your aid, she hopes to bring these innovations back. Choose two attribute boosts. One must be to **Dexterity** or **Intelligence**, and the other is a free attribute boost. You're trained in Arcana and Academia Lore. When you Recall Knowledge about runelords or ancient Thassilon, you gain a +2 circumstance bonus to the check. You automatically recognize the name and time of rule of any runelord you encounter or see an accurate representation of (such as a painting or statue). In addition, during your daily preparations, you can choose one of the following schools of Thassilonian rune magic to focus your mind on, gaining a +1 status bonus to saving throws against the listed effect for the next 8 hours. - **Envy** any effect that has the incapacitation trait (against foes who are higher level than you, the status bonus increases to +2) - **Gluttony** death effects and void - **Greed** polymorph and effects that can cause the following conditions: enfeebled, clumsy, or petrified - **Lust** emotion - **Pride** illusion - **Sloth** effects that cause paralysis, slow, stun, or that grant penalties to your Speed - **Wrath** effects that cause acid, cold, electricity, fire, or sonic damage (choose one) --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Arcana **Lore** Academia Lore",
+  "currentFlat": null,
+  "openQuestion": "Is a `when` string this long acceptable in the stat detail panel, or should the second bonus be trimmed to \"against the effect type of the school you chose during daily preparations\" with the table left to the background description?"
+ }
+]

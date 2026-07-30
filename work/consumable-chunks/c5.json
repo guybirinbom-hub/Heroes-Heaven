@@ -1,0 +1,146 @@
+[
+ {
+  "id": "empaths-cordial",
+  "name": "Empath's Cordial",
+  "level": 7,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- The pale liquid of *empath's cordial* changes color to reflect the mood of the creature nearest to it—turning blue for calm, red for anger, and green for envious, among other hues. For 1 hour after you drink this potion, you can sense the presence of general emotions, such as hostility toward you or the presence of an emotion effect impacting a creature's emotions, within 30 feet. A creature that failed a saving throw against Calm can't be detected. This potion doesn't allow you to automatically tell what emotions a specific creature is experiencing, but you can attempt a Perception check with a +2 item bonus (DC set by the GM) to discern that information. The potion also grants you a +1 item bonus to Perception checks to Sense Motive against creatures whose emotions you can sense."
+ },
+ {
+  "id": "rovagugs-mud",
+  "name": "Rovagug's Mud",
+  "level": 13,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Rovagug's mud smells and tastes like wet, sour earth. For 1 hour after you drink it, you have a +2 item bonus to saving throws against incapacitation effects. Also, you can use a single action to breathe out a of bitter vapor that causes an earth-shaking rumble that can be heard for 100 feet. Creatures and objects in the area take damage (), decreasing Hardness by 5. An object's Hardness remains lowered for 1d4 rounds, and you can't use this breath again for the same amount of time."
+ },
+ {
+  "id": "rovagugs-mud-greater",
+  "name": "Rovagug's Mud (Greater)",
+  "level": 18,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Rovagug's mud smells and tastes like wet, sour earth. For 1 hour after you drink it, you have a +2 item bonus to saving throws against incapacitation effects. Also, you can use a single action to breathe out a of bitter vapor that causes an earth-shaking rumble that can be heard for 100 feet. Creatures and objects in the area take damage (), decreasing Hardness by 10. An object's Hardness remains lowered for 1d4 rounds, and you can't use this breath again for the same amount of time."
+ },
+ {
+  "id": "starsong-nectar",
+  "name": "Starsong Nectar",
+  "level": 20,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- A liquid with the appearance of an expressive night sky and a taste that's sheer pleasure, starsong nectar grants you cheerful confidence and incredible luck for 10 minutes after you drink it. However, if you show too much caution at any point during this time (GM's discretion), you must succeed at a or the potion's effects end. While the potion lasts, you gain a +3 status bonus to attack rolls, initiative rolls, Perception checks, saving throws, and skill checks, and you aren't off-guard to creatures due to them flanking you or being hidden from or undetected by you. You are temporarily immune to this potion for 24 hours once its effects end. While the potion lasts, though, if you take a moment to imagine the future, you choose the best courses of action. This aspect of the potion grants you the following activation. --- **Activate** ⟨1⟩ (concentrate) **Frequency** once per round --- **Effect** Until the start of your next turn, roll two d20s for any attack rolls, Perception checks, saving throws, and skill checks you make and take the higher result."
+ },
+ {
+  "id": "sure-step-potion",
+  "name": "Sure-Step Potion",
+  "level": 4,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- The light-brown liquid of a sure-step potion helps you find your footing. After drinking it, you gain a +1 item bonus to Acrobatics checks to Balance for 1 hour. In addition, you can Step into difficult terrain, and you aren't off-guard on uneven ground."
+ },
+ {
+  "id": "grudgestone",
+  "name": "Grudgestone",
+  "level": 7,
+  "description": "**Activate** ⟨4⟩ (concentrate) **Trigger** A creature critically hits you. --- This dull black pebble, ominously cold to the touch and curiously heavy for its size, is typically bound to the affixed weapon inside a strip of cloth wrapped around its grip. When you Activate the *grudgestone*, your Strikes with the affixed weapon against the triggering creature gain a +3 status bonus to damage rolls for 1 minute or until the target dies, whichever comes first."
+ },
+ {
+  "id": "grudgestone-greater",
+  "name": "Grudgestone (Greater)",
+  "level": 15,
+  "description": "**Activate** ⟨4⟩ (concentrate) **Trigger** A creature critically hits you. --- This dull black pebble, ominously cold to the touch and curiously heavy for its size, is typically bound to the affixed weapon inside a strip of cloth wrapped around its grip. When you Activate the *grudgestone*, your Strikes with the affixed weapon against the triggering creature gain a +5 status bonus to damage rolls for 1 minute or until the target dies, whichever comes first."
+ },
+ {
+  "id": "heartblood-ring",
+  "name": "Heartblood Ring",
+  "level": 15,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Sealed inside the hidden compartment of a gold ring, *heartblood* has an unmistakable coppery taste, along with a thick mouth feel. A whiff of the concoction is pleasantly stimulating. --- **Stage 1 (1 Week)** The first time you enter this stage from a particular dose of *heartblood*, you are affected as if by regenerate. Each round this effect functions, it attempts to counteract one disease or poison affecting you with a bonus equal to your class DC – 10. *Heartblood* also reduces physical signs of aging, altering your appearance to that of vigorous adulthood for your ancestry. (Non-adults who drink *heartblood* change only in apparent vigor, not age.) You have fast healing equal to half your level, as well as resistance to void damage and poison damage equal to half your level. Also, you gain a +1 circumstance bonus to saving throws (or any other defense) against death effects, disease, paralysis, poison, and sleep. Treat the outcome of any saving throw you roll against death, paralyze, or sleep effects as one step better. --- **Stage 2 (1 Month)** You gain low-light vision, or you gain darkvision if your ancestry already has low-light vision. Reduce your current and maximum Hit Points by 2 × your level; you are Doomed 1. You develop a pallor and a dislike of bright light, especially sunlight. If suddenly exposed to bright light, you are dazzled until the end of your next turn. While in an area of sunlight, you remain dazzled until 1 round"
+ },
+ {
+  "id": "phoenix-cinder",
+  "name": "Phoenix Cinder",
+  "level": 16,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- An incandescent, multipronged crystal the color of dying fire, a phoenix cinder gives off pleasant warmth and a sense of peace. A low, soft chirruping around the crystal invokes the idea of using fire to cleanse and protect. The crystal offers this power to anyone who touches it. A partaker must be willing to gain the boon's effects. --- **Stage 1 (1 Week)** The first time you enter this stage from a particular phoenix cinder, you are affected as if by Regenerate. For 3 days after taking in the cinder, you are immune to fire. While in this stage or higher, you have fast healing equal to half your level, as well as resistance to fire damage equal to half your level. You gain a +1 circumstance bonus to saving throws (or any other defense) against fire. Treat the outcome of any saving throw you roll against fire effects as one step better. You can cast Ignition as an innate spell, and you have access to the following activation. **Activate** ⟨1⟩ (concentrate, fire) **Frequency** once per day **Effect** You wreathe yourself in flame for 1 minute. Adjacent creatures that hit you with a melee attack, as well as creatures that touch you or hit you with an unarmed attack, take 2d6. You can Dismiss the activation. --- **Stage 2 (1 Month)** You can use the activation once per hour. Always feverish and flushed, you feel as if temperatures lower than sweltering are cold. Reduce your current and maximum Hit Points by 2 × your level, and you have a weaknes"
+ },
+ {
+  "id": "statue-skin-salve",
+  "name": "Statue Skin Salve",
+  "level": 5,
+  "description": "**Activate** ⟨3⟩ Interact --- This gritty salve can be applied to the skin of a creature to form a thin layer of smooth stone on its body for 20 minutes. During this time, it gains resistance 3 to piercing and slashing damage. Further, the creature gains a +2 item bonus to Impersonate a statue or creature made of stone for 8 hours, or until its body is fully submersed in water."
+ },
+ {
+  "id": "vital-earth",
+  "name": "Vital Earth",
+  "level": 9,
+  "description": "Life-infused soil from the Plane of Earth, *vital earth* is glittering dust you inhale that causes you to not need air or water for 24 hours. Also, for this time, your wounds close easily, like molding clay, meaning someone attempting to Administer First Aid or Treat Wounds on you doesn't need a healer's toolkit and gains a +1 item bonus to the Medicine check."
+ },
+ {
+  "id": "candle-of-inflamed-passions",
+  "name": "Candle of Inflamed Passions",
+  "level": 3,
+  "description": "**Activate** ⟨1⟩ (manipulate) This blood-red candle is made from wax derived from oil shale found in certain parts of the Plane of Fire. The wick burns with a flame that flickers and dances even if there's no draft to stir it. You activate the candle by lighting it, which causes creatures within 10 feet of the candle to find their emotions running high. Creatures in the area take a -1 status penalty to saving throws against emotion effects. Once lit, the candle burns for 10 minutes. If extinguished, it can't be relit."
+ },
+ {
+  "id": "therapeutic-snap-peas",
+  "name": "Therapeutic Snap Peas",
+  "level": 8,
+  "description": "Affectionately called \"the healer's kit of the Plane of Wood,\" *therapeutic snap peas* are specially cultivated snap pea pods overflowing with restorative magic. --- **Activate—Healing Pod** ⟨2⟩ (concentrate, manipulate) **Effect** You break the snap pea pod in half, unleashing its restorative healing energy. Up to 5 creatures of your choice within 30 feet regain 4d8+10 Hit Points and gain a +2 item bonus to all saves against poisons or diseases for 1 minute. --- **Activate—Beanstalk** 10 minutes (manipulate) **Effect** You plant the *therapeutic snap peas* in a square of open ground, after which they rapidly grow into a 10-foot-tall beanstalk that remains in place for 8 hours. The beanstalk's enormous pea pods provide a full day's food for up to 8 living creatures of size Large or smaller, which must be eaten before the beanstalk expires. Any creature that eats the pea pods also immediately heals 30 Hit Points and can attempt a new saving throw against one poison or disease afflicting them."
+ },
+ {
+  "id": "gecko-potion",
+  "name": "Gecko Potion",
+  "level": 1,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- A *gecko potion* is a sticky, tawny brown liquid with flecks of sand suspended in it. For 5 minutes after drinking this potion, your fingertips sprout thousands of microscopic, bristled hairs that cling to objects, granting you gain a +1 item bonus to Climb and Palm an Object checks and to your Reflex DC against Disarm attempts."
+ },
+ {
+  "id": "shrinking-potion-greater",
+  "name": "Shrinking Potion (Greater)",
+  "level": 8,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- This fungus-flavored potion conveys the effects of the Shrink spell to make you and all your gear smaller. This potion has no onset, lasts for 1 hour, and grants the effects of a 4th-rank *shrink* spell. In addition, you gain a +2 item bonus to Stealth checks while shrunken."
+ },
+ {
+  "id": "iron-medallion",
+  "name": "Iron Medallion",
+  "level": 10,
+  "description": "**Activate** ⟨4⟩ (concentrate) **Trigger** You attempt a Will save against a fear effect but haven't rolled yet --- This small medallion is shaped like a shield. When you activate it, you gain a +2 status bonus to the triggering save and other saves against fear for 1 minute. On the triggering save, if the outcome of your roll is a failure, you get a success instead. If the outcome is a critical failure, you get a failure instead."
+ },
+ {
+  "id": "monkey-pin",
+  "name": "Monkey Pin",
+  "level": 2,
+  "description": "**Activate** ⟨1⟩ (concentrate) --- This small brass pin is shaped like a monkey climbing a tree. When you activate this talisman, use a Climb action with a +1 item bonus on the check. On this check and until the end of your turn, if you succeed on an Athletics check to Climb, you move your full Speed during the Climb. If you roll a critical failure, you get a failure instead."
+ },
+ {
+  "id": "potency-crystal",
+  "name": "Potency Crystal",
+  "level": 1,
+  "description": "**Activate** ⟨4⟩ (concentrate) **Trigger** You make an attack with the affixed weapon, but you haven't rolled yet --- This fluorite crystal glows with a strange phosphorescence. When you activate the crystal, the weapon becomes a *+1 striking weapon* on the Strike and until the end of this turn, gaining a +1 item bonus to the attack roll and increasing the damage to two weapon damage dice."
+ },
+ {
+  "id": "potency-crystal-greater",
+  "name": "Potency Crystal (Greater)",
+  "level": 9,
+  "description": "**Activate** ⟨4⟩ (concentrate) **Trigger** You make an attack with the affixed weapon, but you haven't rolled yet --- This fluorite crystal glows with a strange phosphorescence. When you activate the crystal, the weapon becomes a *+2 greater striking weapon* on the Strike and until the end of this turn, gaining a +2 item bonus to the attack roll and increasing the damage to three weapon damage dice."
+ },
+ {
+  "id": "potency-crystal-major",
+  "name": "Potency Crystal (Major)",
+  "level": 15,
+  "description": "**Activate** ⟨4⟩ (concentrate) **Trigger** You make an attack with the affixed weapon, but you haven't rolled yet --- This fluorite crystal glows with a strange phosphorescence. When you activate the crystal, the weapon becomes a *+3 major striking weapon* on the Strike and until the end of this turn, gaining a +3 item bonus to the attack roll and increasing the damage to four weapon damage dice."
+ },
+ {
+  "id": "sneaky-key",
+  "name": "Sneaky Key",
+  "level": 5,
+  "description": "**Activate** ⟨1⟩ (manipulate) **Requirements** You are trained in Thievery --- This small silver skeleton key can be pinned to armor or a sleeve. When you turn the key to activate it, you gain a +1 status bonus to Thievery checks to Pick a Lock for 1 minute. The first time you get a success or critical success on an attempt to Pick a Lock, you achieve one additional success toward opening a complex lock."
+ },
+ {
+  "id": "aroma-concealer",
+  "name": "Aroma Concealer",
+  "level": 1,
+  "description": "**Activate** 1 minute (Interact) --- This oily mix of herbs and natural detergents can be applied to a creature to reduce and cover any ordinary odors they produce. The creature receives a +2 item bonus to Stealth checks to Hide or Sneak against creatures using primarily smell. This bonus also applies to the DC to Track the creature by scent. The listed amount is enough to cover one Medium or smaller creature and takes 1 minute to apply. The effect lasts for 1 hour after applying."
+ },
+ {
+  "id": "hydra-mutagen",
+  "name": "Hydra Mutagen",
+  "level": 13,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- You sprout a second head, increasing your awareness, intuition, and cognitive ability but also causing your physical capabilities to be impaired as both minds struggle to control a single body. **Benefit** For 10 minutes, you gain all-around vision and a +3 item bonus to all Intelligence- and Wisdom-based skill checks. Once during the mutagen's effect, if you fail or critically fail a Will saving throw against a mental effect, you can treat the result as one degree of success better. **Drawback** You are Clumsy 1 for 10 minutes."
+ },
+ {
+  "id": "ommatophoric-mutagen",
+  "name": "Ommatophoric Mutagen",
+  "level": 7,
+  "description": "**Activate** ⟨1⟩ (manipulate) --- Your eyes bulge from their sockets and extend upwards from your head on long, prehensile stalks, greatly enhancing your eyesight and field of view but leaving you unable to close your eyes, increasing your vulnerability to harmful visual effects. **Benefit** You gain all-around vision, a +2 item bonus to visual Perception checks, and low-light vision if you don't already have it. These effects last for 1 minute. **Drawback** For 1 minute, you take a –2 penalty to saving throws against effects that have the visual trait."
+ }
+]
