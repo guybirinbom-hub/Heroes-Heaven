@@ -44842,35 +44842,6 @@
     }
   },
   {
-    "category": "classFeatures",
-    "id": "dragon-deviant-classification",
-    "field": "effectChoices",
-    "value": [
-      {
-        "id": "deviant-damage",
-        "prompt": "Choose your deviation's damage type",
-        "options": [
-          {
-            "value": "cold",
-            "label": "Cold"
-          },
-          {
-            "value": "electricity",
-            "label": "Electricity"
-          },
-          {
-            "value": "fire",
-            "label": "Fire"
-          },
-          {
-            "value": "sonic",
-            "label": "Sonic"
-          }
-        ]
-      }
-    ]
-  },
-  {
     "category": "feats",
     "id": "thaumaturges-demesne",
     "field": "choice",
@@ -45012,5 +44983,33 @@
     "id": "perpetual-potency-toxicologist",
     "field": "edition",
     "value": "superseded"
+  },
+  {
+    "category": "classFeatures",
+    "id": "dragon-deviant-classification",
+    "field": "choice",
+    "value": {
+      "flag": "deviantDamage",
+      "prompt": "Deviation's damage type",
+      "kind": "array",
+      "options": [
+        {
+          "value": "cold",
+          "label": "Cold"
+        },
+        {
+          "value": "electricity",
+          "label": "Electricity"
+        },
+        {
+          "value": "fire",
+          "label": "Fire"
+        },
+        {
+          "value": "sonic",
+          "label": "Sonic"
+        }
+      ]
+    }
   }
 ]
