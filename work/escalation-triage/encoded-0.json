@@ -1,0 +1,112 @@
+{"fixes":[
+ {"kind":"situational","id":"magnetic-pinions","entries":[
+  {"targets":[{"kind":"strikeAttack"}],"when":"on impulse attack rolls against a target wearing metal armor or made of metal","bonus":"+1 circumstance"}]},
+
+ {"id":"skull-creeper","kind":"none","why":"the +1 already lives on items/splendid-skull-mask.passiveEffects.skills.intimidation; a feat entry would grant it without the mask and read as a second +1"},
+
+ {"kind":"situational","id":"raise-a-tome","entries":[
+  {"targets":[{"kind":"ac"}],"when":"while you have a book raised","bonus":"+2 circumstance"},
+  {"targets":[{"kind":"skill","detail":"all"}],"when":"to Recall Knowledge to identify creatures with a skill tied to the raised book's subject","bonus":"+1 circumstance"}]},
+
+ {"id":"confabulator","kind":"none","why":"target-side bonus (the +4 the GM gives the creature you already tried to Lie to); the app models neither that creature nor that bonus"},
+
+ {"kind":"situational","id":"whirling-throw","entries":[
+  {"targets":[{"kind":"skill","detail":"athletics"}],"when":"on the Whirling Throw check, by the target's size relative to yours","bonus":"+2 circumstance one size smaller, +4 if smaller than that; -2 one size larger, -4 if larger than that"}]},
+
+ {"kind":"situational","id":"meddling-futures","entries":[
+  {"targets":[{"kind":"strikeAttack"},{"kind":"strikeDamage"}],"when":"Meddling Futures rolled 1 (Warrior) — your next action must be a Strike","bonus":"+1 status attack, +2 status damage (+6 damage at Cursebound 3)"},
+  {"targets":[{"kind":"perception"},{"kind":"skill","detail":"all"}],"when":"Meddling Futures rolled 2 (Adept) — next action is a Perception check or skill action","bonus":"+1 status (+2 at Cursebound 3)"},
+  {"targets":[{"kind":"spellDamage"}],"when":"Meddling Futures rolled 3 (Sage) — your next action must be Cast a Spell","bonus":"status bonus to the spell's damage or healing equal to the spell's rank (rank + 3 at Cursebound 3)"},
+  {"targets":[{"kind":"speed"}],"when":"Meddling Futures rolled 4 (Wanderer) — for that Stride, Fly, Climb or Burrow action","bonus":"+10-foot status (+20-foot at Cursebound 3)"}]},
+
+ {"kind":"situational","id":"derring-do","entries":[
+  {"targets":[{"kind":"skill","detail":"all"}],"when":"to Tumble Through or on any bravado skill action, while you have panache","bonus":"fortune: roll twice and use the higher result"}]},
+
+ {"kind":"situational","id":"swashbucklers-speed","entries":[
+  {"targets":[{"kind":"speed"}],"when":"while you have panache (without panache you still get a +5-foot status bonus)","bonus":"+10 status"}]},
+
+ {"id":"endemic-herbs","kind":"none","why":"crafting feat — the bonus belongs to whoever eats the herbal item and reaches the sheet through that consumable's own mode (ruling F case 1)"},
+
+ {"id":"tweak-appearances","kind":"none","why":"target-side item bonus; the decided surface is a display-only mode on the speaker, which is the modes lane, not the situational/field/marker lanes"},
+
+ {"id":"clans-edge","kind":"none","why":"grants no bonus of its own — it only reaches the clan dagger's parry bonus in fewer actions; the AC entry is registered on items/clan-dagger instead"},
+
+ {"kind":"situational","id":"clan-dagger","entries":[
+  {"targets":[{"kind":"ac"}],"when":"while you have used an Interact action to parry with your clan dagger","bonus":"+1 circumstance"}]},
+
+ {"id":"regional-specialty","kind":"none","why":"crafting feat — the +3/+4 item bonus reaches the eater's sheet through the alchemical food's consumable mode, never the cook's (ruling F case 1)"},
+
+ {"id":"prepare-elemental-medicine","kind":"none","why":"bonus goes to the recipient; the decided surface is a display-only mode on the preparer (modes lane), and the app cannot gate a real save on which affliction is active"},
+
+ {"id":"aegis-for-the-innocent","kind":"none","why":"ally-only (the exemplar cannot be the target); the decided surface is a display-only mode for the 1-minute barrier, which is the modes lane"},
+
+ {"id":"black-powder-boost","kind":"none","why":"already shipped — situationalBonuses.ts RECORD_MARKERS['black-powder-boost'] marks the Leap action '+10 feet', beside reach-for-the-stars"},
+
+ {"kind":"situational","id":"hydraulic-maneuvers","entries":[
+  {"targets":[{"kind":"skill","detail":"athletics"}],"when":"on the Disarm, Shove or Trip check made right after Hydraulic Maneuvers","bonus":"range 15 feet; you lose all item bonuses and all body-related circumstance bonuses; a critical failure becomes a failure"}]},
+
+ {"id":"gravelands-herbalist","kind":"none","why":"feat only adds Lastwall Soup to your herbal-item list; bonus lives on the soup's consumable mode. Follow-up (item lane, not one of these four): mode item-lastwall-soup-greater in scripts/data/consumable-modes.json and items/lastwall-soup-greater's text both say +3; the feat prints +4 for Greater"},
+
+ {"id":"uncanny-bombs","kind":"none","why":"cover reduction changes the TARGET's circumstance bonus to AC and the app models neither target AC nor cover; the concealed-creature auto-success is not a bonus to any stat this sheet holds"},
+
+ {"kind":"situational","id":"come-and-get-me","entries":[
+  {"targets":[{"kind":"ac"}],"when":"until your rage ends, after you use Come and Get Me","bonus":"-2 circumstance (you are off-guard); damage rolls against you also gain +2 circumstance"}]},
+
+ {"id":"incredible-scout","kind":"none","why":"upgrades only 'your allies'; a character is never their own ally, so the ranger's own initiative bonus is unchanged (ruling F case 1)"},
+
+ {"id":"signature-crafting","kind":"none","why":"the Skillful quirk is rolled randomly at craft time and names no skill; the player authors it on the item via the Advanced editor (ruling I) — nothing shippable on the feat"},
+
+ {"kind":"situational","id":"perfected-gamtu","entries":[
+  {"targets":[{"kind":"skill","detail":"stealth"}],"when":"while wearing your gamtu","bonus":"+1 item"}]},
+
+ {"kind":"situational","id":"unwavering-guide","entries":[
+  {"targets":[{"kind":"perception"}],"when":"on initiative rolls when you Scouted (your whole party gets it)","bonus":"+2 circumstance"}]},
+
+ {"id":"infiltrators-elixir","kind":"none","why":"already shipped — consumable-modes.json mode item-infiltrators-elixir carries the +4 status to the Deception DC for 10 minutes (ruling E)"},
+
+ {"id":"field-propagandist-dedication","kind":"none","why":"skill-DC bonus; ruling D put this exact record on the no-surface list, and dcOnly is scoped to save DCs only. Escape hatch is the Advanced editor (ruling I)"},
+
+ {"kind":"situational","id":"acrobats-staff","entries":[
+  {"targets":[{"kind":"save","detail":"reflex","dcOnly":true}],"when":"against checks to Disarm you of the staff, while you wield it","bonus":"+1 circumstance"},
+  {"targets":[{"kind":"skill","detail":"acrobatics"}],"when":"you fail or critically fail a check to Balance and would fall (command activation)","bonus":"fortune: reroll and take the better result"}]},
+
+ {"id":"addiction-suppressant","kind":"none","why":"umbrella record (no price, four graded twins) — stays inert per ruling A. The decided Fortitude scoping is applied to the four graded records below, which already ship consumable modes targeting Fortitude"},
+
+ {"kind":"situational","id":"addiction-suppressant-lesser","entries":[
+  {"targets":[{"kind":"save","detail":"fortitude"}],"when":"on the ongoing save against the addiction of the drug this suppressant was crafted for","bonus":"+1 item"}]},
+
+ {"kind":"situational","id":"addiction-suppressant-moderate","entries":[
+  {"targets":[{"kind":"save","detail":"fortitude"}],"when":"on the ongoing save against the addiction of the drug this suppressant was crafted for","bonus":"+2 item"}]},
+
+ {"kind":"situational","id":"addiction-suppressant-greater","entries":[
+  {"targets":[{"kind":"save","detail":"fortitude"}],"when":"on the ongoing save against the addiction of the drug this suppressant was crafted for","bonus":"+3 item"}]},
+
+ {"kind":"situational","id":"addiction-suppressant-major","entries":[
+  {"targets":[{"kind":"save","detail":"fortitude"}],"when":"on the ongoing save against the addiction of the drug this suppressant was crafted for","bonus":"+4 item"}]},
+
+ {"id":"sovereign-steel","kind":"none","why":"precious-material umbrella (no price, no usage, graded twins) — inert and hidden from pickers per ruling A; the +4 is registered on the four finished graded records below"},
+
+ {"kind":"situational","id":"sovereign-steel-weapon-standard-grade","entries":[
+  {"targets":[{"kind":"save","detail":"all"}],"when":"on a save made specifically to protect this sovereign steel item from magic","bonus":"+4 circumstance"}]},
+
+ {"kind":"situational","id":"sovereign-steel-weapon-high-grade","entries":[
+  {"targets":[{"kind":"save","detail":"all"}],"when":"on a save made specifically to protect this sovereign steel item from magic","bonus":"+4 circumstance"}]},
+
+ {"kind":"situational","id":"sovereign-steel-armor-standard-grade","entries":[
+  {"targets":[{"kind":"ac"}],"when":"to AC against spell attack rolls, while wearing sovereign steel armor","bonus":"+1 circumstance"},
+  {"targets":[{"kind":"save","detail":"all"}],"when":"on a save made specifically to protect this sovereign steel item from magic","bonus":"+4 circumstance"}]},
+
+ {"kind":"situational","id":"sovereign-steel-armor-high-grade","entries":[
+  {"targets":[{"kind":"ac"}],"when":"to AC against spell attack rolls, while wearing sovereign steel armor","bonus":"+1 circumstance"},
+  {"targets":[{"kind":"save","detail":"all"}],"when":"on a save made specifically to protect this sovereign steel item from magic","bonus":"+4 circumstance"}]},
+
+ {"id":"sovereign-steel-chunk","kind":"none","why":"raw crafting stock reprinting the material page's boilerplate; raw metal in a pack protects nobody (ruling I, noqual)"},
+
+ {"id":"sovereign-steel-ingot","kind":"none","why":"raw crafting stock, same boilerplate as the chunk; sovereign steel entries live only on the finished graded weapon/armor records"},
+
+ {"id":"gate-junction","kind":"none","why":"umbrella rules text describing the five junction types and naming no skill; the per-element gate records (fire-gate, metal-gate, earth-gate…) already carry the +1 status skill entries"},
+
+ {"id":"lantern","kind":"none","why":"current split is correct — the +1s ship on initiate-benefit-lantern; a key on 'lantern' would collide with items/lantern and implement/lantern, and the Intensify text is on the implement record already"},
+
+ {"id":"shield","kind":"none","why":"current split is correct — initiate-benefit-shield and adept-benefit-shield already ship the entries; the implement record's own Intensify text (shield HP/Hardness) is not a stat bonus"}
+]}

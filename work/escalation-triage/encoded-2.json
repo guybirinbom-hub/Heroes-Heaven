@@ -1,0 +1,48 @@
+{"fixes":[
+ {"id":"succubus-kiss","kind":"none","why":"needs the item-mode lane (ruling E case 2: a timed drug mode carrying +2 item to initiative — target perception, incredible-initiative wording — and to saves vs emotion/mental, 10 minutes, survivesRest false, hidden from the Modes manager); no 'initiative' StatRef exists and modes are not encodable as situational/field/marker."},
+ {"id":"dragonscale-bo-staff","kind":"field","collection":"items","field":"effectChoices","value":[{"id":"dragon-tradition","prompt":"Choose the tradition of the dragon whose scales cover the staff (resistance 5)","options":[{"value":"arcane","label":"Arcane (force)","grant":{"passive":{"resistances":[{"type":"force","value":5}]}}},{"value":"divine","label":"Divine (spirit)","grant":{"passive":{"resistances":[{"type":"spirit","value":5}]}}},{"value":"occult","label":"Occult (mental)","grant":{"passive":{"resistances":[{"type":"mental","value":5}]}}},{"value":"primal","label":"Primal (fire)","grant":{"passive":{"resistances":[{"type":"fire","value":5}]}}}]}]},
+ {"id":"azarim","kind":"situational","entries":[
+   {"targets":[{"kind":"skill","detail":"deception"}],"when":"when Azarim agrees to assist your Lie (once per hour, her choice)","bonus":"+2 circumstance"},
+   {"targets":[{"kind":"strikeDamage"}],"when":"against worshippers of Droskar or creatures allied with his faith","bonus":"+1d6"}]},
+ {"id":"briar","kind":"situational","entries":[
+   {"targets":[{"kind":"save","detail":"all"}],"when":"for 1 minute after you Strike Nyrissa with Briar (20 Sharpness Points), vs her spells","bonus":"+4 item"}]},
+ {"id":"admirers-bouquet","kind":"situational","entries":[
+   {"targets":[{"kind":"save","detail":"all"}],"when":"while carrying a bouquet an ally handed you, against emotion and mental effects","bonus":"+1 item"}]},
+ {"id":"open-mind","kind":"field","collection":"items","field":"passiveEffects","value":{"loreBonus":1}},
+ {"id":"beast-staff","kind":"situational","entries":[
+   {"targets":[{"kind":"skill","detail":"diplomacy"}],"when":"while wielding the prepared staff, on Animal Empathy checks to influence animals…","bonus":"+1 circumstance"}]},
+ {"id":"gamblers-staff","kind":"situational","entries":[
+   {"targets":[{"kind":"skill","detail":"all"}],"when":"to Earn Income from gambling while the staff is on you all downtime (typically Games Lore)","bonus":"+2 circumstance"}]},
+ {"id":"fury-cocktail","kind":"none","why":"Umbrella record (ruling A) — hidden from pickers; the three grades need the item-mode lane (benefit + the -1 AC / -2 Reflex drawback, survivesRest false), which is not encodable as situational/field/marker."},
+ {"id":"colorful-coating","kind":"none","why":"Umbrella record (ruling A) — hidden from every picker; the per-colour records already carry the entries."},
+ {"id":"emetic-paste","kind":"none","why":"Umbrella record (ruling A) — the three grades already carry their +2/+3/+4 item entries and their consumable modes."},
+ {"id":"healing-vapor","kind":"none","why":"Umbrella record (ruling A) — the four grades already carry their own numbers and modes."},
+ {"id":"sense-dulling-hood","kind":"none","why":"Umbrella record (ruling A) — lesser and greater already carry the +2/+4 bonus, the -1 Perception penalty and their modes."},
+ {"id":"affliction-suppressant","kind":"none","why":"Umbrella record (ruling A) — all four grades already registered (+1/+2/+3/+4 item vs afflictions) with modes."},
+ {"id":"bendy-arm-mutagen","kind":"none","why":"Umbrella record (ruling A) — the four grades carry the Acrobatics entries and hold benefit+drawback in their consumable modes (ruling E case 2)."},
+ {"id":"deadweight-mutagen","kind":"none","why":"Umbrella record (ruling A) — only the four grades carry entries, and they already do, with modes."},
+ {"id":"sanguine-mutagen","kind":"none","why":"Umbrella record (ruling A); the graded mutagens already live in the item-mode lane (ruling E case 2) — item-sanguine-mutagen-* modes ship in core.json."},
+ {"id":"poison-concentrator","kind":"none","why":"Umbrella record (ruling A); and the graded variants move the crafted poison's own DC — a target-side number the sheet has no surface for (ruling D leftovers)."},
+ {"id":"execution-powder","kind":"none","why":"Already ruled (DECISIONS.md D leftovers): no surface, no effect, no star; temporary HP never moves a sheet stat (ruling E)."},
+ {"id":"black-tendril-shot","kind":"none","why":"Umbrella record (ruling A); and the +2 circumstance to Escape lands on the creature you shot — ruling F puts nothing on your sheet."},
+ {"id":"magnetic-shot","kind":"none","why":"Umbrella record (ruling A) — magnetic-shot-lesser/moderate/greater already carry the strikeAttack entry."},
+ {"id":"disguise-kit-elite-cosmetics","kind":"none","why":"Ruling G — the bonus belongs to the elite kit (already registered); the cosmetics row is a refill supply and must not duplicate it."},
+ {"id":"musical-instrument","kind":"none","why":"Umbrella record (ruling A) — not ownable; the +1 item bonus sits on the two virtuoso records and already does."},
+ {"id":"steelscour","kind":"none","why":"Umbrella record (ruling A) — hidden, no entry; and steelscour-lesser's own text states no attack bonus, so there is nothing to register under its id either."},
+ {"id":"bewitching-bloom","kind":"none","why":"Umbrella record (ruling A) — the nine per-flower records carry the bonuses; a union would be a summary that is not a real item."},
+ {"id":"unifying-emblem-skoan-quah","kind":"situational","entries":[
+   {"targets":[{"kind":"skill","detail":"diplomacy"}],"when":"on Diplomacy checks you make while speaking Shoanti to someone who understands it - only…","bonus":"+1 item"}]},
+ {"id":"canary-tail-second-week","kind":"situational","entries":[
+   {"targets":[{"kind":"skill","detail":"diplomacy"}],"when":"on Gather Information checks about the movements and mannerisms of the individual being tailed","bonus":"+2 circumstance"}]},
+ {"id":"canary-tail-third-week","kind":"situational","entries":[
+   {"targets":[{"kind":"skill","detail":"diplomacy"}],"when":"on Gather Information checks about the movements and mannerisms of the individual being tailed","bonus":"+3 circumstance"}]},
+ {"id":"canary-tail-fourth-week","kind":"situational","entries":[
+   {"targets":[{"kind":"skill","detail":"diplomacy"}],"when":"on Gather Information checks about the movements and mannerisms of the individual being tailed","bonus":"+4 circumstance"}]},
+ {"id":"the-publican","kind":"marker","marks":[
+   {"on":"action","id":"aid","value":"crit fail → fail","note":"While invested: critically failed checks to Aid count as failures; from 14th level the circumstance bonus you provide increases by 1."}]},
+ {"id":"the-lens-of-the-outreaching-eye","kind":"situational","entries":[
+   {"targets":[{"kind":"spell","detail":"all"},{"kind":"skill","detail":"all"}],"when":"on any check made to resolve a divination effect","bonus":"+3 item"}]},
+ {"id":"globe-of-shrouds","kind":"none","why":"Ruling F — you are not your own ally, so the +2 status to Stealth lands on someone else; the holder's 'aura lit' pill is the display-only mode lane, not encodable here."},
+ {"id":"spiny-lodestone","kind":"none","why":"needs the affixed-spellheart lane — affixing sets worn/equipped/invested all false (play.ts:747), so derive (705) and explain (194) both ignore it; the armour-mode effectChoices passive and the weapon-mode strikeDamage entry are inert until that engine fix lands."},
+ {"id":"spiny-lodestone-greater","kind":"none","why":"needs the affixed-spellheart lane — same blocker as the base grade (worn/equipped/invested false while affixed); nothing written today would be read."}
+]}

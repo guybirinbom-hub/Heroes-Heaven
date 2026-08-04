@@ -44879,5 +44879,138 @@
       "kind": "text",
       "prompt": "Name your demesne (the area you have claimed)"
     }
+  },
+  {
+    "category": "feats",
+    "id": "open-mind",
+    "field": "passiveEffects",
+    "value": {
+      "loreBonus": 1
+    }
+  },
+  {
+    "category": "feats",
+    "id": "endless-memories",
+    "field": "choice",
+    "value": {
+      "flag": "endlessMemoriesSkill",
+      "prompt": "Endless Memories: a skill you're already trained in becomes expert",
+      "kind": "array",
+      "daily": true,
+      "options": [
+        {
+          "value": "acrobatics",
+          "label": "Acrobatics"
+        },
+        {
+          "value": "arcana",
+          "label": "Arcana"
+        },
+        {
+          "value": "athletics",
+          "label": "Athletics"
+        },
+        {
+          "value": "crafting",
+          "label": "Crafting"
+        },
+        {
+          "value": "deception",
+          "label": "Deception"
+        },
+        {
+          "value": "diplomacy",
+          "label": "Diplomacy"
+        },
+        {
+          "value": "intimidation",
+          "label": "Intimidation"
+        },
+        {
+          "value": "medicine",
+          "label": "Medicine"
+        },
+        {
+          "value": "nature",
+          "label": "Nature"
+        },
+        {
+          "value": "occultism",
+          "label": "Occultism"
+        },
+        {
+          "value": "performance",
+          "label": "Performance"
+        },
+        {
+          "value": "religion",
+          "label": "Religion"
+        },
+        {
+          "value": "society",
+          "label": "Society"
+        },
+        {
+          "value": "stealth",
+          "label": "Stealth"
+        },
+        {
+          "value": "survival",
+          "label": "Survival"
+        },
+        {
+          "value": "thievery",
+          "label": "Thievery"
+        }
+      ],
+      "note": "Pick one you are ALREADY trained in (the list is not filtered, and Lore skills are not enumerable here). Lasts until Ancient Memories expires. This temporary proficiency can't be used as a prerequisite for a skill increase or a permanent character option."
+    }
+  },
+  {
+    "category": "feats",
+    "id": "built-in-tools",
+    "field": "choice",
+    "value": {
+      "flag": "builtInTools",
+      "prompt": "Tools built into your innovation",
+      "kind": "open",
+      "from": {
+        "type": "own-item",
+        "itemType": "equipment"
+      },
+      "picks": 2,
+      "distinct": true,
+      "note": "Printed restriction the picker can't enforce: sets of tools you own (thieves' tools, healer's tools, …) totalling 2 Bulk or less. Their Bulk stops counting against the innovation, and they don't count against your worn-tools limit."
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "perpetual-infusions-bomber",
+    "field": "edition",
+    "value": "superseded"
+  },
+  {
+    "category": "classFeatures",
+    "id": "perpetual-perfection-bomber",
+    "field": "edition",
+    "value": "superseded"
+  },
+  {
+    "category": "classFeatures",
+    "id": "perpetual-perfection-chirurgeon",
+    "field": "edition",
+    "value": "superseded"
+  },
+  {
+    "category": "classFeatures",
+    "id": "perpetual-perfection-mutagenist",
+    "field": "edition",
+    "value": "superseded"
+  },
+  {
+    "category": "classFeatures",
+    "id": "perpetual-potency-toxicologist",
+    "field": "edition",
+    "value": "superseded"
   }
 ]

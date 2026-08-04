@@ -1,0 +1,95 @@
+{"fixes":[
+ {"kind":"none","id":"surprise-doll","why":"Plain 1 gp doll prints no bonus; the +1 item Stealth (Conceal an Item) already sits on surprise-doll-exquisite in the registry, and kin=1 keeps the plain doll visible."},
+
+ {"kind":"none","id":"antifungal-salve","why":"Family head prints no bonus size and the four grades already carry it; hiding it means adding the id to UMBRELLA_EXTRA_IDS in src/data/index.ts, which is not a registry/field/marker lane."},
+
+ {"kind":"none","id":"crimson-godsblood-serum","why":"Parent is already umbrella-hidden and gets nothing; the three graded ids are registered. Deleting the dead mode item-crimson-godsblood-serum is a consumable-modes.json edit, outside these lanes."},
+
+ {"kind":"situational","id":"essence-forge-lesser","note":"triage entry essence-forge; parent stays inert, graded records narrowed from skill 'all' to the four priming skills",
+  "entries":[{"targets":[{"kind":"skill","detail":"arcana"},{"kind":"skill","detail":"nature"},{"kind":"skill","detail":"occultism"},{"kind":"skill","detail":"religion"}],"when":"for 24 hours after you critically succeed at Priming the Forge, on the skill you used","bonus":"+1 item"}]},
+ {"kind":"situational","id":"essence-forge-moderate","note":"triage entry essence-forge",
+  "entries":[{"targets":[{"kind":"skill","detail":"arcana"},{"kind":"skill","detail":"nature"},{"kind":"skill","detail":"occultism"},{"kind":"skill","detail":"religion"}],"when":"for 24 hours after you critically succeed at Priming the Forge, on the skill you used","bonus":"+2 item"}]},
+ {"kind":"situational","id":"essence-forge-greater","note":"triage entry essence-forge",
+  "entries":[{"targets":[{"kind":"skill","detail":"arcana"},{"kind":"skill","detail":"nature"},{"kind":"skill","detail":"occultism"},{"kind":"skill","detail":"religion"}],"when":"for 24 hours after you critically succeed at Priming the Forge, on the skill you used","bonus":"+3 item"}]},
+
+ {"kind":"none","id":"potion-of-disguise","why":"Ruling D: skill-DC-only bonuses get no surface, and this parent is umbrella-hidden anyway (no price, 3 kin)."},
+ {"kind":"none","id":"potion-of-disguise-lesser","why":"Ruling D: the bonus moves only the DC of a Perception check others roll; dcOnly is save-only and the sheet renders no skill DCs."},
+ {"kind":"none","id":"potion-of-disguise-moderate","why":"Ruling D, same skill-DC decision as the lesser potion."},
+ {"kind":"none","id":"potion-of-disguise-greater","why":"Ruling D covers the DC; the added 'you still need to roll Deception' clause grants no bonus of its own."},
+
+ {"kind":"marker","id":"berserkers-cloak","marks":[{"on":"action","id":"rage","value":"jaws 1d10 P, claws 1d6 S (+1 potency, striking)","note":"While raging you grow jaws (1d10 piercing) and claws (1d6 slashing, agile) with a +1 weapon potency and striking rune; with animal instinct's bestial rage, those unarmed attacks gain +2 potency and greater striking instead."}]},
+ {"kind":"marker","id":"berserkers-cloak-greater","marks":[{"on":"action","id":"rage","value":"jaws 1d10 P, claws 1d6 S (+2 potency, greater striking)","note":"While raging you grow jaws (1d10 piercing) and claws (1d6 slashing, agile) with a +2 weapon potency and greater striking rune; with animal instinct's bestial rage, those unarmed attacks gain +3 potency and major striking instead."}]},
+
+ {"kind":"none","id":"psyche-salts","why":"Base id is the umbrella-hidden AoN stub; the three tiers already carry +1/+2/+3 item situational entries vs mental effects. Adding them as consumable modes is a consumable-modes.json edit, outside these lanes."},
+
+ {"kind":"situational","id":"greater-swift-standard",
+  "entries":[{"targets":[{"kind":"speed"}],"when":"to land Speeds for 1 round, if you start your turn in the banner's aura","bonus":"+10-foot status"},
+             {"targets":[{"kind":"speed"}],"when":"instead while traveling, if you start your turn in the banner's aura","bonus":"+20-foot status"}]},
+ {"kind":"situational","id":"major-swift-standard",
+  "entries":[{"targets":[{"kind":"speed"}],"when":"to land Speeds for 1 round, if you start your turn in the banner's aura","bonus":"+15-foot status"},
+             {"targets":[{"kind":"speed"}],"when":"instead while traveling, if you start your turn in the banner's aura","bonus":"+30-foot status"}]},
+
+ {"kind":"none","id":"privacy-ward-fulu","why":"Umbrella carries nothing and is already hidden; privacy-ward-fulu-hallway (+1), -room (+1) and -chamber (+2) already carry the Stealth entries."},
+
+ {"kind":"situational","id":"dragonscale-staff",
+  "entries":[{"targets":[{"kind":"strikeDamage"}],"when":"for 1 round after the staff's resistance prevents you from taking damage","bonus":"+1 damage of the resisted type"}]},
+
+ {"kind":"none","id":"olfactory-obfuscator-lesser","why":"Ruling D names it in the no-surface skill-DC list, and the ruling-E consumable pass already models it as mode item-olfactory-obfuscator-lesser."},
+
+ {"kind":"situational","id":"medics-armband",
+  "entries":[{"targets":[{"kind":"skill","detail":"diplomacy"}],"when":"to change the attitudes of diseased, poisoned, and wounded creatures","bonus":"+1 item"},
+             {"targets":[{"kind":"strikeDamage"}],"when":"until the end of your next turn after Do No Harm (once per day)","bonus":"-4 status"}]},
+ {"kind":"situational","id":"greater-medics-armband",
+  "entries":[{"targets":[{"kind":"skill","detail":"diplomacy"}],"when":"to change the attitudes of diseased, poisoned, and wounded creatures","bonus":"+1 item"},
+             {"targets":[{"kind":"skill","detail":"medicine"}],"when":"to Administer First Aid or Treat Wounds","bonus":"+2 item"},
+             {"targets":[{"kind":"strikeDamage"}],"when":"until the end of your next turn after Do No Harm (once per day)","bonus":"-8 status"}]},
+
+ {"kind":"none","id":"champions-laurels","why":"Container is unpriced with 3 kin and already hidden; the amateur/professional/renowned variants already carry the +1/+2/+3 status entries from the ruling-E pass."},
+
+ {"kind":"none","id":"strand-of-the-seven-births","why":"Ruling F case 1 — the +2 status vs auditory effects lands on allies in the light, so nothing on the activator's sheet. The 1-hour display-only mode is a modes-lane edit, not a registry/field/marker fix."},
+
+ {"kind":"none","id":"oil-of-corpse-restoration","why":"Ruling F case 1 — the bonus lands on the anointed undead creature or corpse, not on the carrier. A display-only mode or a player-authored Advanced item entry (ruling I) covers the rest."},
+
+ {"kind":"none","id":"paradigm-cube","why":"Ruling F case 1 — every colour reads 'Allies in the area gain…', so no stars on the holder. The six display-only 1-minute modes are a modes-lane edit, outside these lanes."},
+
+ {"kind":"situational","id":"overflowing-life","note":"the existing entry sits only on aon-overflowing-life, which is a hidden duplicate; the visible canonical record had none",
+  "entries":[{"targets":[{"kind":"hp"}],"when":"on the HP you recover from a vitality healing spell (first time per casting)","bonus":"+half the relic's level, minimum +1 (item)"}]},
+
+ {"kind":"situational","id":"conrasu-coin-arbiter","note":"triage entry conrasu-coin; the umbrella stays inert and conrasu-coin-bythos already carries its +2 circumstance AC entry. Second entry (aeon trait) was missing.",
+  "entries":[{"targets":[{"kind":"skill","detail":"diplomacy"}],"when":"on the triggering Diplomacy check to Make an Impression, when you activate the coin","bonus":"+2 circumstance"},
+             {"targets":[{"kind":"skill","detail":"diplomacy"}],"when":"instead, to Make an Impression on a creature with the aeon trait","bonus":"+3 circumstance"}]},
+
+ {"kind":"situational","id":"self-emptying-pocket",
+  "entries":[{"targets":[{"kind":"skill","detail":"performance"}],"when":"the entity holding your bargained contract influences your performance favorably","bonus":"+2 item"},
+             {"targets":[{"kind":"skill","detail":"performance"}],"when":"it influences your performance unfavorably","bonus":"-2 item"}]},
+
+ {"kind":"none","id":"aon-busine-of-divine-reinforcement","why":"Already modelled exactly as decided on the canonical twin busine-of-divine-reinforcement (+2 item Performance while playing the busine); the aon- id is a hidden duplicate scrape."},
+
+ {"kind":"situational","id":"sleuths-pipe","note":"triage entry aon-sleuth-s-pipe, which is a hidden duplicate; the canonical record is sleuths-pipe. Broadens the Pursue a Lead entry to Perception as well as skills.",
+  "entries":[{"targets":[{"kind":"perception"}],"when":"to Perception checks to Sense Motive, while holding the pipe","bonus":"+1 item"},
+             {"targets":[{"kind":"perception"},{"kind":"skill","detail":"all"}],"when":"investigator only: on checks to investigate the subject of your Pursue a Lead","bonus":"+1 item"}]},
+
+ {"kind":"situational","id":"doom-switch",
+  "entries":[{"targets":[{"kind":"strikeAttack"}],"when":"against the target for 1 minute after a successful Bragging Rights Strike","bonus":"+1 status"},
+             {"targets":[{"kind":"strikeAttack"}],"when":"against the target for 1 round if the Bragging Rights Strike fails","bonus":"-1 status"},
+             {"targets":[{"kind":"strikeAttack"}],"when":"against the target for 1 round on a critical failure","bonus":"-2 status"}]},
+
+ {"kind":"situational","id":"feather-of-the-unfounded-bravado",
+  "entries":[{"targets":[{"kind":"skill","detail":"intimidation"}],"when":"to Demoralize, for 1 hour after activating the feather (once per day)","bonus":"+1 item"},
+             {"targets":[{"kind":"skill","detail":"diplomacy"}],"when":"to Make an Impression, for 1 hour after activating the feather","bonus":"+1 item"},
+             {"targets":[{"kind":"skill","detail":"acrobatics"}],"when":"for 1 hour after activating the feather (once per day)","bonus":"-1 item"},
+             {"targets":[{"kind":"skill","detail":"athletics"}],"when":"for 1 hour after activating the feather (once per day)","bonus":"-1 item"}]},
+
+ {"kind":"none","id":"magical-medals","why":"The stub carries no mechanics of its own and the five medals exist as their own records; hiding it means adding the id to UMBRELLA_EXTRA_IDS in src/data/index.ts, which is not a registry/field/marker lane."},
+
+ {"kind":"situational","id":"thieves-tools-concealable",
+  "entries":[{"targets":[{"kind":"skill","detail":"stealth"}],"when":"on Stealth checks to Conceal these tools","bonus":"+1 item"}]},
+
+ {"kind":"none","id":"aon-fixer","why":"Already modelled: the four ownable records fixer-basic-informant / fixer-expert-informant / fixer-basic-councelor / fixer-expert-councelor each carry their +1 or +2 circumstance entries. `fixer` is umbrella-hidden and `aon-fixer` is a hidden duplicate."},
+
+ {"kind":"none","id":"hopeful-athamaru","why":"Ruling F case 1 — the 10-foot aura's +1 circumstance vs fear goes to allies, not to you. No star, no modifier, and it is permanent so no display-only mode either."},
+
+ {"kind":"situational","id":"harrow-chosen",
+  "entries":[{"targets":[{"kind":"save","detail":"fortitude"},{"kind":"save","detail":"reflex"},{"kind":"save","detail":"will"}],"when":"a saving throw of your choice, for 1 minute after a True Match","bonus":"+1 circumstance"},
+             {"targets":[{"kind":"speed"}],"when":"for 1 minute after a Misaligned draw when you empower your cantrip","bonus":"+5-foot circumstance"}]}
+]}

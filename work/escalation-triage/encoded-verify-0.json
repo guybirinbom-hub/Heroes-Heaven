@@ -1,0 +1,73 @@
+{"rulings":[
+ {"id":"magnetic-pinions","ok":true,"problem":"","correction":{},"note":"Text: '+1 circumstance bonus to your attack roll against any target wearing metal armor or made of metal'. strikeAttack is the shipped surface for impulse attack rolls (precedent: gate-attenuator, situationalBonuses.ts:2550)."},
+
+ {"id":"raise-a-tome","ok":true,"problem":"","correction":{},"note":"Both halves printed verbatim: '+2 circumstance bonus to AC and a +1 circumstance bonus to Recall Knowledge to identify creatures using a skill related to the subject of the book'."},
+
+ {"id":"whirling-throw","ok":true,"problem":"","correction":{},"note":"Athletics vs Fortitude DC; the -2/-4 penalties and +2/+4 bonuses by relative size are printed exactly as encoded. Multi-value bonus strings are shipped practice (brightsoul, silvertongue-mutagen)."},
+
+ {"id":"meddling-futures","ok":true,"problem":"","correction":{},"note":"All four 1d4 results match the printed numbers (+1/+2 or +6 dmg; +1/+2 check; spell rank or rank+3; +10/+20 ft). spellDamage is the only surface for 'damage or healing'."},
+
+ {"id":"derring-do","ok":true,"problem":"","correction":{},"note":"Printed: roll twice and use the higher result on the checks Stylish Combatant covers (Tumble Through + bravado skill actions), while you have panache."},
+
+ {"id":"swashbucklers-speed","ok":true,"problem":"","correction":{},"note":"+10-foot status with panache is printed; the no-panache +5 is carried in the trigger text rather than as a second entry, which is honest and does not over-grant."},
+
+ {"id":"clan-dagger","ok":false,"problem":"KILL — invents a value the record does not print. Clan Dagger's own description says nothing about parrying or AC; the +1 comes from the generic `parry` TRAIT, which src/rules/glossary.ts already explains for every parry weapon ('spend an action to raise the weapon, gaining a +1 circumstance bonus to AC'). Registering it on one of dozens of parry weapons is arbitrary and duplicates the trait gloss. The only record whose TEXT prints this number is clans-edge ('you use an Interact action to gain the +1 circumstance bonus to your AC from your clan dagger's parrying trait') — if a star is wanted at all it belongs there, not on the weapon.","correction":{"kind":"none","why":"the +1 AC is the parry trait, already glossed for every parry weapon; clan-dagger's own text prints no bonus"}},
+
+ {"id":"hydraulic-maneuvers","ok":true,"problem":"","correction":{},"note":"Grants no bonus, so no over-grant risk; the range 15 ft, the loss of item bonuses and body-related circumstance bonuses, and crit-fail-to-failure are all printed. Non-numeric bonus phrases never pool (poolSituationalLines)."},
+
+ {"id":"come-and-get-me","ok":false,"problem":"KILL — the text prints NO -2 to AC. It says 'you are off-guard, and damage rolls against you gain a +2 circumstance bonus'. The -2 is off-guard's own definition, which the sheet's off-guard condition already applies, so an AC entry would read as a second, stacking -2 beside the condition. The damage half is the attacker's roll (target-side). This is the condition-marker lane — precedent: uncanny-dodge marks condition off-guard (situationalBonuses.ts RECORD_MARKERS). 'off-guard' exists in core.json conditions.","correction":{"kind":"marker","id":"come-and-get-me","marks":[{"on":"condition","id":"off-guard","note":"Until your rage ends you are off-guard, and damage rolls against you gain a +2 circumstance bonus; a creature that hits you is off-guard to you until the end of your next turn."}]}},
+
+ {"id":"perfected-gamtu","ok":true,"problem":"","correction":{},"note":"Printed: 'Your gamtu now grants its wearer a +1 item bonus to Stealth checks when worn'. Feat-keyed entry with the 'while wearing your gamtu' gate is correct — the bonus does not exist without the hat."},
+
+ {"id":"unwavering-guide","ok":true,"problem":"","correction":{},"note":"'you grant your party a +2 circumstance bonus to initiative rolls instead of the normal +1' — party includes you, unlike incredible-scout's allies-only wording, so the none/entry split between the two records is right. Perception is the shipped initiative surface (ambush-awareness)."},
+
+ {"id":"acrobats-staff","ok":true,"problem":"","correction":{},"note":"dcOnly on Reflex is exactly right — the text says '+1 circumstance bonus to your Reflex DC against checks to Disarm you of it', a DC others roll against. The ⟨5⟩ command reroll on a failed Balance is printed."},
+
+ {"id":"addiction-suppressant-lesser","ok":true,"problem":"","correction":{},"note":"+1 item is printed. MUST REPLACE the shipped key at situationalBonuses.ts:2398 (currently save:'all') — appending would be a duplicate object key. Fortitude scoping matches mode item-addiction-suppressant-lesser, whose note already states addictions' ongoing save is Fortitude."},
+
+ {"id":"addiction-suppressant-moderate","ok":true,"problem":"","correction":{},"note":"+2 item printed; replaces the shipped save:'all' key. Matches mode item-addiction-suppressant-moderate (+2 item fortitude). Entry + mode dual registration is shipped practice (emetic-paste, silvertongue-mutagen)."},
+
+ {"id":"addiction-suppressant-greater","ok":true,"problem":"","correction":{},"note":"+3 item printed; replaces the shipped save:'all' key; matches mode item-addiction-suppressant-greater."},
+
+ {"id":"addiction-suppressant-major","ok":true,"problem":"","correction":{},"note":"+4 item printed; MUST REPLACE the shipped key at situationalBonuses.ts:2399; matches mode item-addiction-suppressant-major."},
+
+ {"id":"sovereign-steel-weapon-standard-grade","ok":true,"problem":"","correction":{},"note":"The +4 is printed on the sovereign-steel material page, which explicitly covers these rows: 'All sovereign steel items (including weapon and armor below) ... grant their bonus to saves the owner makes specifically to protect the item from magic'. That is the OWNER's save, so it is a real character-side entry; the umbrella stays inert, so the graded records are the only legal home."},
+
+ {"id":"sovereign-steel-weapon-high-grade","ok":true,"problem":"","correction":{},"note":"Same printed text, same +4; correctly NOT given the armor's +1 AC (that clause is armor-only)."},
+
+ {"id":"sovereign-steel-armor-standard-grade","ok":true,"problem":"","correction":{},"note":"'+1 circumstance bonus to AC against spell attack rolls' is printed on this record; the +4 save comes from the material page. MUST REPLACE the shipped key at situationalBonuses.ts:900 — the fix restates that AC entry verbatim, so replacement is lossless."},
+
+ {"id":"sovereign-steel-armor-high-grade","ok":true,"problem":"","correction":{},"note":"Same as standard grade; MUST REPLACE situationalBonuses.ts:901."},
+
+ {"id":"harrow-mat","ok":true,"problem":"","correction":{},"note":"Printed verbatim: '+1 item bonus to Deception, Diplomacy, and relevant Lore checks ... to convince a creature that a harrow reading was accurate'. Caveat (pre-existing, not this fix's fault): targetMatches does exact-string matching, so the 'lore:*' target never fires — it is inert in ~10 shipped entries too (brooch-of-inspiration, celebrity-dedication, silvertongue-mutagen)."},
+
+ {"id":"marked-playing-cards","ok":true,"problem":"","correction":{},"note":"'+1 item bonus to Games Lore checks or other relevant checks to gamble with the cards' — both entries printed. 'lore:games' is the shipped key spelling (loaded-dice, jabalis-dice, games-loaded-dice)."},
+
+ {"id":"leopards-armor","ok":true,"problem":"","correction":{},"note":"+2 item Stealth, +2 item Intimidation limited to Demoralize, -2 untyped Diplomacy and Society, 1 hour — all printed, and all four match mode item-leopards-armor exactly. The mode does the maths; the entry is the star, which is the shipped pattern for activated/consumable items."},
+
+ {"id":"dragonscale-bo-staff","ok":false,"problem":"KILL — OVER-GRANT. Both benefits are gated: 'When benefiting from the circumstance bonus to AC granted by the bo staff's parry trait, you also gain a +1 circumstance bonus to saving throws against magical effects of the tradition ... plus resistance 5 to a damage type determined by that tradition.' effectChoices.grant.passive.resistances resolves into resolvedItemPassives, which derive.ts reads for any worn/equipped/invested item with NO trigger, so this would hand out permanent resistance 5 to anyone merely holding the staff. It also silently drops the printed +1 circumstance to saves. (The field name and shape are legal — types.ts:1039 EffectChoice / EffectGrant.passive — the semantics are what fail.)","correction":{"kind":"situational","id":"dragonscale-bo-staff","entries":[{"targets":[{"kind":"save","detail":"all"}],"when":"while benefiting from the staff's parry AC bonus, vs magic of the dragon's tradition","bonus":"+1 circumstance, plus resistance 5 to that tradition's damage type (force/spirit/mental/fire)"}]}},
+
+ {"id":"azarim","ok":true,"problem":"","correction":{},"note":"Both printed: '...grant a +2 circumstance bonus to the Deception check' (⟨5⟩ activation, Frequency once per hour, her choice) and 'deals an additional 1d6 damage to worshippers of Droskar, to creatures allied with Droskar's faith...'. The 'under the influence of Droskar's faith' clause is trimmed from the trigger, which is a wording loss only."},
+
+ {"id":"briar","ok":true,"problem":"","correction":{},"note":"20 Sharpness Points block, printed verbatim: 'Briar's partner gains a +4 item bonus to all saving throws against Nyrissa's spells for 1 minute', triggered by Striking Nyrissa with Briar."},
+
+ {"id":"admirers-bouquet","ok":true,"problem":"","correction":{},"note":"Borderline but text-forced: 'they gain a +1 item bonus to saves against emotion and mental effects as long as they continue to carry the admirer's bouquet'. The encoding correctly words it from the RECIPIENT's side ('a bouquet an ally handed you'), so it is not an ally-side grant on the giver's sheet. If the group prefers strict ruling F this becomes {kind:none}."},
+
+ {"id":"open-mind","ok":true,"problem":"","correction":{},"note":"'This tattoo ... provides a +1 item bonus to Lore checks' — unconditional while invested. loreBonus is a real ItemPassiveEffects field (types.ts:489) and derive.ts:217/246 read it for lore:* skills on worn/invested/equipped items; the tattoo has the invested trait. items/open-mind currently has no passiveEffects, so nothing is clobbered. Shipped precedent: brooch-of-inspiration. Note the id collides with feats/open-mind and itemBonus/open-mind — collection:'items' is required and is correctly specified."},
+
+ {"id":"beast-staff","ok":true,"problem":"","correction":{},"note":"'While wielding the staff while you have it prepared ... If you have Animal Empathy, you gain a +1 circumstance bonus on checks using it.' Animal Empathy is Diplomacy-based, so the diplomacy target is right and the prepared/wielded gate is in the trigger."},
+
+ {"id":"gamblers-staff","ok":true,"problem":"","correction":{},"note":"Printed verbatim: '+2 circumstance bonus to checks to Earn Income from gambling (typically using Games Lore) ... the staff must be on your person during all the downtime you spend gambling'. skill:'all' is right because the text does not fix the skill."},
+
+ {"id":"unifying-emblem-skoan-quah","ok":true,"problem":"","correction":{},"note":"'+1 item bonus on Diplomacy checks you make when speaking Shoanti to someone who understands it' — the truncated tail should keep the gate: it applies only if you ALREADY knew Shoanti (otherwise the tattoo just grants the language). Suggest when: 'on Diplomacy while speaking Shoanti to someone who understands it — only if you already knew it'."},
+
+ {"id":"canary-tail-second-week","ok":true,"problem":"","correction":{},"note":"'For each week that they are hired, you gain a +1 circumstance bonus on your check to Gather Information on the movements and mannerisms of the individual, up to a maximum of four weeks for a +4 bonus' — cumulative +2 at week two is right, and Gather Information is Diplomacy. Trigger is 94 chars (guideline ~90); shorten to 'on Gather Information about the tailed individual's movements and mannerisms'."},
+
+ {"id":"canary-tail-third-week","ok":true,"problem":"","correction":{},"note":"+3 cumulative, printed. Same 94-char trigger nit as the second-week row."},
+
+ {"id":"canary-tail-fourth-week","ok":true,"problem":"","correction":{},"note":"+4 is the printed maximum ('up to a maximum of four weeks for a +4 bonus'). Same 94-char trigger nit."},
+
+ {"id":"the-publican","ok":true,"problem":"","correction":{},"note":"'aid' exists in core.json actions. Printed: 'As long as you have The Publican invested, treat critically failed checks made to Aid as regular failures instead.' The 14th-level clause raises the bonus you PROVIDE to others, so keeping it as note text rather than a stat entry is correct."},
+
+ {"id":"the-lens-of-the-outreaching-eye","ok":true,"problem":"","correction":{},"note":"Printed verbatim: 'you gain a +3 item bonus on all checks made to resolve divination effects', while invested. spell:'all' covers both the spell attack and DC rows; skill:'all' covers Recall-Knowledge-style divination checks."}
+]}

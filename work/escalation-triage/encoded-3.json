@@ -1,0 +1,65 @@
+{"fixes":[
+ {"kind":"none","id":"spiny-lodestone-major","why":"needs affix-aware passiveEffects gating (attachedTo host itemType) + item-mode lane — not built; an unconditional write would grant the Armor branch while affixed to a weapon"},
+
+ {"kind":"situational","id":"ursine-avenger-hood","entries":[
+  {"targets":[{"kind":"skill","detail":"nature"}],"when":"to Command an Animal (+2 if the animal is a bear)","bonus":"+1 item"},
+  {"targets":[{"kind":"skill","detail":"diplomacy"}],"when":"to Gather Information or Make an Impression after 5+ days in a city, no wilderness","bonus":"-1 item (penalty)"}
+ ]},
+
+ {"kind":"none","id":"heartblood-ring","why":"already modelled — staged item modes in consumable-modes.json; registry takes no entry"},
+ {"kind":"none","id":"void-fragment","why":"needs staged item-mode lane (exclusiveGroup) — not a registry/field/marker fix"},
+ {"kind":"none","id":"words-of-wisdom","why":"umbrella auto-hidden by findUmbrellaIds — ruling A gives it no entries"},
+ {"kind":"none","id":"words-of-wisdom-lesser","why":"needs item `choices` pick + item-mode lane — not a registry/field/marker fix"},
+ {"kind":"none","id":"words-of-wisdom-moderate","why":"needs item `choices` pick + item-mode lane — not a registry/field/marker fix"},
+ {"kind":"none","id":"words-of-wisdom-greater","why":"needs item `choices` pick + item-mode lane — not a registry/field/marker fix"},
+ {"kind":"none","id":"antidote","why":"umbrella hidden by findUmbrellaIds; the four grades already ship as item modes"},
+ {"kind":"none","id":"antiplague","why":"umbrella hidden by findUmbrellaIds; the four grades already ship as item modes"},
+ {"kind":"none","id":"madcap-top","why":"needs one item mode for the Skeletal Serenade result — mode lane, not a registry/field/marker fix"},
+ {"kind":"none","id":"therapeutic-snap-peas","why":"already modelled — item-therapeutic-snap-peas ships in consumable-modes.json"},
+ {"kind":"none","id":"prey-mutagen","why":"umbrella auto-hidden by findUmbrellaIds — ruling A gives it no entries"},
+ {"kind":"none","id":"prey-mutagen-lesser","why":"needs item-mode lane (drakeheart pattern) — a pack elixir must not star a stat"},
+ {"kind":"none","id":"prey-mutagen-moderate","why":"needs item-mode lane (drakeheart pattern) — a pack elixir must not star a stat"},
+ {"kind":"none","id":"prey-mutagen-greater","why":"needs item-mode lane (drakeheart pattern) — a pack elixir must not star a stat"},
+ {"kind":"none","id":"prey-mutagen-major","why":"needs item-mode lane (drakeheart pattern) — a pack elixir must not star a stat"},
+ {"kind":"none","id":"armor-polishing-kit","why":"needs item-mode lane (24h, survivesRest) — a kit in the pack must not star Diplomacy"},
+
+ {"kind":"situational","id":"sanitizing-pin","entries":[
+  {"targets":[{"kind":"save","detail":"fortitude"}],"when":"when you activate the pin, on your save against initial exposure to a disease or poison","bonus":"+2 status"}
+ ]},
+
+ {"kind":"situational","id":"fluid-form-staff","entries":[
+  {"targets":[{"kind":"perception"}],"when":"to identify morph and polymorph magic, while wielding the staff","bonus":"+2 circumstance"}
+ ]},
+ {"kind":"situational","id":"fluid-form-staff-greater","entries":[
+  {"targets":[{"kind":"perception"}],"when":"to identify morph and polymorph magic, while wielding the staff","bonus":"+2 circumstance"}
+ ]},
+ {"kind":"situational","id":"fluid-form-staff-major","entries":[
+  {"targets":[{"kind":"perception"}],"when":"to identify morph and polymorph magic, while wielding the staff","bonus":"+2 circumstance"}
+ ]},
+
+ {"kind":"situational","id":"staff-of-elemental-power-greater","entries":[
+  {"targets":[{"kind":"skill","detail":"arcana"},{"kind":"skill","detail":"nature"},{"kind":"skill","detail":"lore:*"}],"when":"to identify elemental creatures, while wielding the staff","bonus":"+2 circumstance"}
+ ]},
+ {"kind":"situational","id":"staff-of-elemental-power-major","entries":[
+  {"targets":[{"kind":"skill","detail":"arcana"},{"kind":"skill","detail":"nature"},{"kind":"skill","detail":"lore:*"}],"when":"to identify elemental creatures, while wielding the staff","bonus":"+2 circumstance"}
+ ]},
+ {"kind":"situational","id":"verdant-staff-greater","entries":[
+  {"targets":[{"kind":"skill","detail":"nature"},{"kind":"skill","detail":"lore:*"}],"when":"to identify plants and fungi, while wielding the staff","bonus":"+2 circumstance"}
+ ]},
+
+ {"kind":"none","id":"aeon-stone","why":"umbrella hidden by findUmbrellaIds; the per-variant records already carry their entries"},
+ {"kind":"none","id":"midnight-milk","why":"umbrella hidden by findUmbrellaIds; the three doses need the staged item-mode lane"},
+
+ {"kind":"situational","id":"assassins-skin","entries":[
+  {"targets":[{"kind":"skill","detail":"acrobatics"},{"kind":"skill","detail":"athletics"}],"when":"to Escape","bonus":"+3 item"}
+ ]},
+
+ {"kind":"none","id":"bombers-eye-elixir-lesser","why":"target-side bonus (the target's cover) — decided 2026-07-30: no surface, no star"},
+ {"kind":"none","id":"bombers-eye-elixir-greater","why":"target-side bonus (the target's cover) — decided 2026-07-30: no surface, no star"},
+ {"kind":"none","id":"bestial-mutagen","why":"umbrella auto-hidden by findUmbrellaIds — ruling A; the four grades need the item-mode lane"},
+ {"kind":"none","id":"drakeheart-mutagen","why":"umbrella hidden by findUmbrellaIds; all four grades already ship as item modes"},
+
+ {"kind":"situational","id":"freedoms-flame","entries":[
+  {"targets":[{"kind":"save","detail":"all"}],"when":"on the new save to break free of a compulsion or control effect, once activated","bonus":"+3 status"}
+ ]}
+]}

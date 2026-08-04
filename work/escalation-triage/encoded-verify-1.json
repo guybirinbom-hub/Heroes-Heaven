@@ -1,0 +1,53 @@
+{"rulings":[
+ {"id":"ursine-avenger-hood","ok":true,"problem":"","correction":{}},
+ {"id":"sanitizing-pin","ok":true,"problem":"","correction":{}},
+ {"id":"fluid-form-staff","ok":true,"problem":"","correction":{}},
+ {"id":"fluid-form-staff-greater","ok":true,"problem":"","correction":{}},
+ {"id":"fluid-form-staff-major","ok":true,"problem":"","correction":{}},
+ {"id":"staff-of-elemental-power-greater","ok":true,"problem":"","correction":{}},
+ {"id":"staff-of-elemental-power-major","ok":true,"problem":"","correction":{}},
+ {"id":"verdant-staff-greater","ok":true,"problem":"","correction":{}},
+ {"id":"assassins-skin","ok":true,"problem":"","correction":{}},
+ {"id":"freedoms-flame","ok":true,"problem":"","correction":{}},
+
+ {"id":"essence-forge-lesser","ok":true,"problem":"","correction":{}},
+ {"id":"essence-forge-moderate","ok":true,"problem":"","correction":{}},
+ {"id":"essence-forge-greater","ok":true,"problem":"","correction":{}},
+
+ {"id":"berserkers-cloak","ok":false,
+  "problem":"Right lane, right facts (core.json text confirms +1 weapon potency + striking on the granted jaws 1d10 P / claws 1d6 S agile, and +2 + greater striking with animal instinct's bestial rage), and actions/rage exists in core.json. But the marker is written far outside the registry's house shape: RecordMarker.value renders INLINE in parentheses on the Rage row and every shipped value is 2-20 chars (\"d10\", \"+10 feet\", \"+2 (+3 at 17th)\") - this one is 47. The note is 223 chars against a ~90-char one-line cap (scripts/cap-situational-notes.mjs CAP=90; every shipped marker note ends in an ellipsis with the full text a click away). As written it renders a paragraph inside the action row.",
+  "correction":{"kind":"marker","id":"berserkers-cloak","marks":[{"on":"action","id":"rage","value":"jaws 1d10 P, claws 1d6 S (agile)","note":"While raging you grow jaws and claws bearing a +1 potency and striking rune…"}]}},
+
+ {"id":"berserkers-cloak-greater","ok":false,
+  "problem":"Same as the base cloak - facts verified against the record text (+2 potency + greater striking; +3 and major striking with bestial rage), but value is 55 chars and note is 229 against the registry's 2-20 / ~90 house shape.",
+  "correction":{"kind":"marker","id":"berserkers-cloak-greater","marks":[{"on":"action","id":"rage","value":"jaws 1d10 P, claws 1d6 S (agile)","note":"While raging you grow jaws and claws bearing a +2 potency and greater striking rune…"}]}},
+
+ {"id":"greater-swift-standard","ok":true,"problem":"","correction":{}},
+ {"id":"major-swift-standard","ok":true,"problem":"","correction":{}},
+ {"id":"dragonscale-staff","ok":true,"problem":"","correction":{}},
+ {"id":"medics-armband","ok":true,"problem":"","correction":{}},
+ {"id":"greater-medics-armband","ok":true,"problem":"","correction":{}},
+ {"id":"overflowing-life","ok":true,"problem":"","correction":{}},
+ {"id":"conrasu-coin-arbiter","ok":true,"problem":"","correction":{}},
+ {"id":"self-emptying-pocket","ok":true,"problem":"","correction":{}},
+ {"id":"sleuths-pipe","ok":true,"problem":"","correction":{}},
+ {"id":"doom-switch","ok":true,"problem":"","correction":{}},
+ {"id":"feather-of-the-unfounded-bravado","ok":true,"problem":"","correction":{}},
+ {"id":"thieves-tools-concealable","ok":true,"problem":"","correction":{}},
+ {"id":"harrow-chosen","ok":true,"problem":"","correction":{}},
+
+ {"id":"endless-memories","ok":false,
+  "problem":"`choice` is a declared Feat field and every key used is legal, but kind:'skills' + daily:true is a combination that reaches NO surface, so the pick silently does nothing - the exact outcome the triage answer forbade. src/rules/dailyChoices.ts:60 drops it from the Rest sheet by name (\"'domains'/'skills' resolve against the BUILD, not the morning, so they never belong at rest\"; only 'array' | 'text' | 'open' are collected). Worse, feats have no !def.daily guard on the builder path (src/builder/Builder.tsx:1315 renders content.feats[picked].choice unconditionally; the guard exists only for classFeatures at :1131), so the answer would land in BuildState.featChoices and wrongly survive a rest - and the triage's whole 'cannot be used as a prerequisite' argument rests on keeping it OUT of BuildState. The triage answer itself said kind:'open'|'array'; 'open' cannot express skills (OpenChoiceFrom.type has no skill kind), so 'array' is the only shape that works today.",
+  "correction":{"kind":"field","collection":"feats","id":"endless-memories","field":"choice","value":{"flag":"endlessMemoriesSkill","prompt":"Endless Memories: a skill you're already trained in becomes expert","kind":"array","daily":true,"options":[{"value":"acrobatics","label":"Acrobatics"},{"value":"arcana","label":"Arcana"},{"value":"athletics","label":"Athletics"},{"value":"crafting","label":"Crafting"},{"value":"deception","label":"Deception"},{"value":"diplomacy","label":"Diplomacy"},{"value":"intimidation","label":"Intimidation"},{"value":"medicine","label":"Medicine"},{"value":"nature","label":"Nature"},{"value":"occultism","label":"Occultism"},{"value":"performance","label":"Performance"},{"value":"religion","label":"Religion"},{"value":"society","label":"Society"},{"value":"stealth","label":"Stealth"},{"value":"survival","label":"Survival"},{"value":"thievery","label":"Thievery"}],"note":"Pick one you are ALREADY trained in (the list is not filtered, and Lore skills are not enumerable here). Lasts until Ancient Memories expires. This temporary proficiency can't be used as a prerequisite for a skill increase or a permanent character option."}}},
+
+ {"id":"built-in-tools","ok":true,"problem":"","correction":{}},
+ {"id":"faith-tattoo","ok":true,"problem":"","correction":{}},
+ {"id":"faith-tattoo-greater","ok":true,"problem":"","correction":{}},
+ {"id":"faith-tattoo-major","ok":true,"problem":"","correction":{}},
+ {"id":"faith-tattoo-true","ok":true,"problem":"","correction":{}},
+ {"id":"perpetual-infusions-bomber","ok":true,"problem":"","correction":{}},
+ {"id":"perpetual-perfection-bomber","ok":true,"problem":"","correction":{}},
+ {"id":"perpetual-perfection-chirurgeon","ok":true,"problem":"","correction":{}},
+ {"id":"perpetual-perfection-mutagenist","ok":true,"problem":"","correction":{}},
+ {"id":"perpetual-potency-toxicologist","ok":true,"problem":"","correction":{}}
+]}
