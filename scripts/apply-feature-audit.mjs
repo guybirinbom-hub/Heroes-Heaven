@@ -79,10 +79,20 @@ const META = new Set([
 
 /* ---- load every verdict + the adversary's rulings ---- */
 const records = [];
-for (const f of readdirSync(DIR).filter((n) => /^judge-\d+\.json$/.test(n)).sort()) {
-  try { for (const r of JSON.parse(readFileSync(path.join(DIR, f), 'utf8')).records ?? []) records.push(r); }
+/**
+ * `judge-callings.json` too: the 18 mythic callings were re-judged on their own once ownedFeatureIds
+ * learned to include the chosen one, which made the original dismissal ground stale.
+ *
+ * A calling therefore appears in TWO judge files, and the re-judge must win. Files are read in sorted
+ * order and a later verdict replaces an earlier one for the same id — "callings" sorts after "c0-3",
+ * so the better-informed pass supersedes. Nothing else overlaps.
+ */
+const byId = new Map();
+for (const f of readdirSync(DIR).filter((n) => /^judge-(\d+|callings)\.json$/.test(n)).sort()) {
+  try { for (const r of JSON.parse(readFileSync(path.join(DIR, f), 'utf8')).records ?? []) if (r?.id) byId.set(r.id, r); }
   catch { console.log(`  (skipping ${f}: not valid JSON yet)`); }
 }
+records.push(...byId.values());
 /**
  * A correction is one of three things: {} (nothing to say), {verdict,reason} (a RECLASSIFICATION
  * carrying no fix), or {fix}/a bare fix. Reading the second as a fix once turned 27 correct overturns
@@ -96,12 +106,16 @@ const realFix = (c) => {
 };
 const overturned = new Map();
 const corrected = new Map();
-for (const f of readdirSync(DIR).filter((n) => /^refute-c\d+-\d+\.json$/.test(n)).sort()) {
+for (const f of readdirSync(DIR).filter((n) => /^refute-(c\d+-\d+|callings)\.json$/.test(n)).sort()) {
   try {
     for (const r of JSON.parse(readFileSync(path.join(DIR, f), 'utf8')).rulings ?? []) {
       const fix = realFix(r?.correction);
-      if (fix) corrected.set(r.id, fix);
-      else if (r?.upheld === false) overturned.set(r.id, r.why ?? 'overturned by the adversary');
+      if (fix) { corrected.set(r.id, fix); overturned.delete(r.id); }
+      else if (r?.upheld === false) { overturned.set(r.id, r.why ?? 'overturned by the adversary'); corrected.delete(r.id); }
+      // An UPHELD ruling in a later file CLEARS an earlier overturn. Several callings were dismissed
+      // on the ground that no character could own the record — true then, fixed since — and the
+      // re-run says keep them. Without this the stale overturn would outlive the fact behind it.
+      else overturned.delete(r.id);
     }
   } catch { console.log(`  (skipping ${f}: not valid JSON yet)`); }
 }

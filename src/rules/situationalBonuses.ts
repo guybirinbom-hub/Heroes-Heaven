@@ -2855,8 +2855,10 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "vow-of-mortal-defiance": [{ targets: [{ kind: 'strikeDamage' }], when: "first time each round you damage the creature you vowed to defeat", bonus: "+1d6 spirit" }],
   "weapon-improviser-dedication": [{ targets: [{ kind: 'strikeAttack' }], when: "attacking with an improvised weapon", bonus: "the -2 item penalty does not apply" }, { targets: [{ kind: 'strikeDamage' }], when: "wielding an improvised weapon", bonus: "minimum damage die 1d6 (1d4 if agile)" }],
 
+
   // ---- full feature audit (scripts/apply-feature-audit.mjs) ----
-  // 89 class features. Selected by what the record HAS, not by whether its text matched a pattern.
+  // 100 class features. Selected by what the record HAS, not by whether its text matched a pattern.
+  "acrobats-calling": [{ targets: [{ kind: 'skill', detail: 'acrobatics' }], when: "to Balance, Maneuver in Flight, or Tumble Through, spending a Mythic Point", bonus: "attempt the check at mythic proficiency" }, { targets: [{ kind: 'skill', detail: 'athletics' }], when: "to attempt a Long Jump, spending a Mythic Point", bonus: "attempt the check at mythic proficiency" }, { targets: [{ kind: 'skill', detail: 'acrobatics' }], when: "first daily crit success Balancing, Maneuvering, or Tumbling in combat", bonus: "regain 1 Mythic Point" }],
   "adamantine-strikes": [{ targets: [{ kind: 'strikeDamage' }], when: "with your unarmed attacks", bonus: "they are treated as adamantine (bypassing adamantine-gated resistances and Hardness)" }],
   "advanced-design": [{ targets: [{ kind: 'strikeAttack' }], when: "with your weapon innovation", bonus: "it uses the statistics of a level-0 advanced weapon of your choice, and you use your MARTIAL weapon proficiency with it" }],
   "advanced-rangefinder": [{ targets: [{ kind: 'strikeAttack' }], when: "with your ranged weapon innovation", bonus: "it gains the backstabber trait and its range increment increases by 20 feet" }],
@@ -2864,6 +2866,7 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "agile-mind": [{ targets: [{ kind: 'save', detail: 'will' }], when: "on any Will save", bonus: "a success is a critical success instead" }],
   "anvils-hardness": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "on any Fortitude save", bonus: "a success is a critical success instead" }],
   "armor-expertise": [{ targets: [{ kind: 'ac' }], when: "while wearing medium or heavy armour", bonus: "you gain that armour group's armor specialization effect" }],
+  "artisans-calling": [{ targets: [{ kind: 'skill', detail: 'crafting' }], when: "to Craft or Repair an object, vehicle, or structure, spending a Mythic Point", bonus: "attempt the check at mythic proficiency" }, { targets: [{ kind: 'skill', detail: 'crafting' }], when: "first critical success each day on a check to Repair an object", bonus: "regain 1 Mythic Point" }],
   "assured-evasion": [{ targets: [{ kind: 'save', detail: 'reflex' }], when: "on any Reflex save", bonus: "a critical failure is a failure instead, and on a failure against a damaging effect you take half damage" }],
   "attack-refiner": [{ targets: [{ kind: 'strikeAttack' }], when: "with your weapon innovation", bonus: "it gains the backswing trait and the forceful trait" }],
   "barrows-edge": [{ targets: [{ kind: 'strikeDamage' }], when: "while the barrow's edge is empowered (immanence), with that weapon", bonus: "+1 spirit damage per weapon damage die, or +3 per die against a foe below half its maximum HP" }],
@@ -2871,17 +2874,25 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "battlefield-intuition": [{ targets: [{ kind: 'save', detail: 'reflex' }], when: "on any Reflex save", bonus: "a success is a critical success instead" }],
   "blast-dodger": [{ targets: [{ kind: 'save', detail: 'reflex' }], when: "on any Reflex save", bonus: "a success is a critical success instead" }],
   "blunt-shot": [{ targets: [{ kind: 'strikeAttack' }], when: "with your ranged weapon innovation", bonus: "it gains the concussive trait and the ranged trip trait" }],
+  "bookkeepers-calling": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "to Recall Knowledge or Earn Income with a trained Lore, spending a Mythic Point", bonus: "attempt the check at mythic proficiency" }, { targets: [{ kind: 'skill', detail: 'all' }], when: "first daily crit success Recalling Knowledge researching in a library", bonus: "regain 1 Mythic Point" }],
+  "caretakers-calling": [{ targets: [{ kind: 'skill', detail: 'medicine' }], when: "to Treat Disease, Poison, or Wounds or use Battle Medicine, spending a Mythic Point", bonus: "attempt the check at mythic proficiency" }, { targets: [{ kind: 'skill', detail: 'medicine' }], when: "first critical success each day on a check to Treat Wounds", bonus: "regain 1 Mythic Point" }],
   "chemical-hardiness": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "whenever you roll a success on a Fortitude save", bonus: "the success upgrades to a critical success" }],
   "churning-mind": [{ targets: [{ kind: 'save', detail: 'will' }], when: "whenever you roll a success on a Will save", bonus: "the success upgrades to a critical success" }],
   "commanding-will": [{ targets: [{ kind: 'save', detail: 'will' }], when: "whenever you roll a success on a Will save", bonus: "the success upgrades to a critical success" }],
   "complex-simplicity": [{ targets: [{ kind: 'strikeDamage' }], when: "with your simple weapon innovation", bonus: "its weapon damage die increases one step, and it gains two traits of your choice from versatile B, versatile P, versatile S or razing" }],
   "confident-evasion": [{ targets: [{ kind: 'save', detail: 'reflex' }], when: "whenever you roll a success on a Reflex save", bonus: "the success upgrades to a critical success" }],
   "deadly-strike": [{ targets: [{ kind: 'strikeDamage' }], when: "with your weapon innovation", bonus: "it gains deadly d8 - or, if it was already deadly, its deadly die steps up by up to two sizes, to a maximum of deadly d12" }],
+  "demagogues-calling": [{ targets: [{ kind: 'skill', detail: 'intimidation' }, { kind: 'skill', detail: 'diplomacy' }], when: "to Coerce or Make an Impression, spending a Mythic Point", bonus: "attempt the check at mythic proficiency" }, { targets: [{ kind: 'skill', detail: 'intimidation' }, { kind: 'skill', detail: 'diplomacy' }, { kind: 'skill', detail: 'deception' }], when: "first daily crit success: Coerce a foe, verbal Diversion, or Impression", bonus: "regain 1 Mythic Point" }],
   "disciplined-mind": [{ targets: [{ kind: 'save', detail: 'will' }], when: "whenever you roll a success on a Will save", bonus: "the success upgrades to a critical success" }],
   "divine-will": [{ targets: [{ kind: 'save', detail: 'will' }], when: "on a successful Will save", bonus: "a success is a critical success instead" }],
   "dogged-will": [{ targets: [{ kind: 'save', detail: 'will' }], when: "on a successful Will save", bonus: "a success is a critical success instead" }],
+  "doomsayers-calling": [{ targets: [{ kind: 'skill', detail: 'crafting' }, { kind: 'skill', detail: 'medicine' }], when: "to Repair, Administer First Aid, or Treat Wounds, spending a Mythic Point", bonus: "attempt the check at mythic proficiency (never Battle Medicine)" }, { targets: [{ kind: 'skill', detail: 'crafting' }, { kind: 'skill', detail: 'medicine' }], when: "first daily critical success to Repair or Administer First Aid", bonus: "regain 1 Mythic Point" }],
+  "dreamers-calling": [{ targets: [{ kind: 'skill', detail: 'arcana' }, { kind: 'skill', detail: 'nature' }, { kind: 'skill', detail: 'religion' }, { kind: 'skill', detail: 'occultism' }], when: "to Recall Knowledge, spending a Mythic Point", bonus: "attempt the check at mythic proficiency" }, { targets: [{ kind: 'skill', detail: 'crafting' }], when: "to Craft any work of art, spending a Mythic Point", bonus: "attempt the check at mythic proficiency" }, { targets: [{ kind: 'skill', detail: 'all' }], when: "first daily crit success to Craft, or Recalling Knowledge about dreams", bonus: "regain 1 Mythic Point" }],
   "dynamic-weighting": [{ targets: [{ kind: 'strikeDamage' }], when: "with your weapon innovation", bonus: "gains two-hand with a damage die one size higher, plus versatile B (and tethered if it was thrown)" }],
   "earned-resilience": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "on a successful Fortitude save", bonus: "a success is a critical success instead" }],
+  "echoes-of-the-scrolls": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "to Decipher Writing, Gather Information, or Recall Knowledge, spending a Mythic Point", bonus: "attempt the check at mythic proficiency" }, { targets: [{ kind: 'skill', detail: 'all' }], when: "first critical success each day on one of those checks", bonus: "regain 1 Mythic Point" }],
+  "echoes-of-the-spells": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "to Identify Magic, Recall Knowledge, or Trick a Magic Item, spending a Mythic Point", bonus: "attempt the check at mythic proficiency" }, { targets: [{ kind: 'skill', detail: 'arcana' }, { kind: 'skill', detail: 'nature' }, { kind: 'skill', detail: 'occultism' }, { kind: 'skill', detail: 'religion' }], when: "first daily crit success doing one of those, with a tradition skill you have", bonus: "regain 1 Mythic Point" }],
+  "echoes-of-the-swords": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "to Climb, Force Open, High Jump, Long Jump, or Swim, spending a Mythic Point", bonus: "attempt the check at mythic proficiency" }, { targets: [{ kind: 'skill', detail: 'athletics' }], when: "first critical success each day on one of those Athletics checks", bonus: "regain 1 Mythic Point" }],
   "enhanced-damage": [{ targets: [{ kind: 'strikeDamage' }], when: "with your weapon innovation", bonus: "weapon damage die increases one step (not cumulative with Complex Simplicity)" }],
   "entangling-form": [{ targets: [{ kind: 'strikeAttack' }], when: "with your weapon innovation", bonus: "gains the disarm, grapple and trip traits" }],
   "eternal-confidence": [{ targets: [{ kind: 'strikeDamage' }], when: "a finisher or Opportune Riposte Strike that misses", bonus: "deal Confident Finisher's failure damage (half your Precise Strike damage, plus Precise Finisher if you have it)" }],
@@ -2901,6 +2912,7 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "greater-performers-heart": [{ targets: [{ kind: 'save', detail: 'will' }], when: "on every Will save", bonus: "a critical failure is a failure instead; on a failure against a damaging effect you take half damage" }],
   "greater-rogue-reflexes": [{ targets: [{ kind: 'save', detail: 'reflex' }], when: "on every Reflex save", bonus: "a critical failure is a failure instead; on a failure against a damaging effect you take half damage" }],
   "greater-unassailable-soul": [{ targets: [{ kind: 'save', detail: 'will' }], when: "on every Will save", bonus: "a success is a critical success and a critical failure is a failure; on a failure against a damaging effect you take half damage" }],
+  "guardians-calling": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "to Disarm, Reposition, or Shove an opponent, spending a Mythic Point", bonus: "attempt the check at mythic proficiency, and against a creature of any size" }, { targets: [{ kind: 'skill', detail: 'athletics' }], when: "first daily critical success to Disarm, Reposition, or Shove a foe", bonus: "regain 1 Mythic Point" }],
   "implements-empowerment": [{ targets: [{ kind: 'strikeDamage' }], when: "holding an implement and nothing but a one-handed weapon", bonus: "+2 per weapon damage die" }],
   "indomitable-will": [{ targets: [{ kind: 'save', detail: 'will' }], when: "on every Will save", bonus: "a success becomes a critical success" }],
   "juggernaut": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "on every Fortitude save", bonus: "a success becomes a critical success" }],
@@ -2937,7 +2949,7 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "starshot": [{ targets: [{ kind: 'strikeDamage' }], when: "with the starshot, while its immanence is active", bonus: "+1 spirit splash damage per weapon damage die" }],
   "strategic-strike": [{ targets: [{ kind: 'strikeDamage' }], when: "on a Strike that adds Int from Devise a Stratagem", bonus: "+1d6 precision (2d6 at 5th, 3d6 at 9th, 4d6 at 13th, 5d6 at 17th)" }],
   "tempered-reflexes": [{ targets: [{ kind: 'save', detail: 'reflex' }], when: "on any Reflex save", bonus: "a success is a critical success instead" }],
-  "thespians-calling": [{ targets: [{ kind: 'skill', detail: 'performance' }], when: "to Perform or Earn Income, spending a Mythic Point", bonus: "attempt the check at mythic proficiency" }, { targets: [{ kind: 'skill', detail: 'performance' }], when: "first critical success to Perform each day", bonus: "regain 1 Mythic Point" }],
+  "thiefs-calling": [{ targets: [{ kind: 'skill', detail: 'thievery' }], when: "to Pick a Lock or Steal an item, spending a Mythic Point", bonus: "attempt the check at mythic proficiency" }, { targets: [{ kind: 'skill', detail: 'thievery' }], when: "first daily crit success to Pick a Lock or Steal from a hostile creature", bonus: "regain 1 Mythic Point" }],
   "twin-juggernauts": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "on any Fortitude save (also your eidolon's)", bonus: "a success is a critical success instead" }],
   "unassailable-soul": [{ targets: [{ kind: 'save', detail: 'will' }], when: "on any Will save", bonus: "a success is a critical success instead" }],
   "unfailing-bow": [{ targets: [{ kind: 'strikeDamage' }], when: "while the unfailing bow is empowered (immanence), on Strikes with it", bonus: "+1 spirit damage per weapon damage die; +1d4 spirit per die on a critical hit" }],
@@ -2954,8 +2966,24 @@ type RefLike = { kind: string; skill?: string; save?: string; which?: string; ab
 /** Does a StatRef-like target match a registry target? `all` matches any of that kind. */
 function targetMatches(t: SituationalTarget, ref: RefLike): boolean {
   switch (t.kind) {
-    case 'skill':
-      return ref.kind === 'skill' && (t.detail === 'all' || t.detail === ref.skill);
+    case 'skill': {
+      if (ref.kind !== 'skill') return false;
+      if (t.detail === 'all') return true;
+      /*
+       * Lore keys are `lore:<subject>` where the SUBJECT IS TYPED BY THE PLAYER — "Warfare",
+       * "warfare", "Guild" — so an exact `===` against a registry entry authored as `lore:games` can
+       * miss on capitalisation alone, and the 20 entries written `lore:*` or bare `lore` (meaning
+       * "any Lore") could never match anything at all. Both were silently dead.
+       *
+       * A wildcard is the only shape that can work for "a Lore skill you're trained in": the registry
+       * cannot enumerate subjects it does not know.
+       */
+      const detail = String(t.detail ?? '');
+      const skill = String(ref.skill ?? '');
+      if (detail === 'lore' || detail === 'lore:*') return skill.startsWith('lore:');
+      if (detail.startsWith('lore:') && skill.startsWith('lore:')) return detail.toLowerCase() === skill.toLowerCase();
+      return detail === skill;
+    }
     case 'save':
       return ref.kind === 'save' && (t.detail === 'all' || t.detail === ref.save);
     case 'perception':
@@ -3151,6 +3179,7 @@ export const RECORD_MARKERS: Record<string, RecordMarker[]> = {
   'water-step': [{"on":"action","id":"stride","note":"You can Stride across liquid and surfaces that don't support your weight; the benefit lasts only during that movement, and you fall if you end on such a surface."}],
   'water-walker': [{"on":"action","id":"stride","value":"while cursebound","note":"While Cursebound 1 you can Stride across liquids that don't support your weight, but must end on a supporting surface or fall in. At cursebound 2 or worse you gain the effects of water walk."}],
   'weapon-supremacy': [{"on":"condition","id":"quickened","value":"always on","note":"Weapon Supremacy: you're permanently quickened; the extra action can be used only to Strike."}],
+
 
   // ---- full feature audit — action/condition marks ----
   // 36 records that change an ACTION or a CONDITION rather than a stat.

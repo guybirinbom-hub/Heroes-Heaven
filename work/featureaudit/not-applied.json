@@ -1,9 +1,7 @@
 {
  "skipped": [
-  "acrobats-calling: A mythic calling is pushed to grantedFeatures for DISPLAY ONLY (build.ts:3176-3189): it is not in cls.features, not a subclass option and not a classChoice, so ownedFeatureIds never contains it - and both stars and markers key off characterSituationalIds, which is built from ownedFeatureIds (explain.ts:189-194). The Balance / Maneuver in Flight / Tumble Through / Long Jump entries would render for nobody.",
   "adept-benefit-chalice: Nothing ownedFeatureIds reads can reach 'adept-benefit-chalice': thaumaturge implements are stored as the IMPLEMENT ids (amulet..weapon) and cls.features lists implement-adept, never adept-benefit-*, so the marker can never render; the upgraded healing also lands on whichever creature drinks, an ally as often as you.",
-  "artisans-calling: A mythic calling is pushed to grantedFeatures for DISPLAY ONLY (build.ts:3176-3189): it is not in cls.features, not a subclass option and not a classChoice, so ownedFeatureIds never contains it - and both stars and markers key off characterSituationalIds, which is built from ownedFeatureIds (explain.ts:189-194). The Craft and Repair entries would render for nobody.",
-  "caretakers-calling: A mythic calling is pushed to grantedFeatures for DISPLAY ONLY (build.ts:3176-3189): it is not in cls.features, not a subclass option and not a classChoice, so ownedFeatureIds never contains it - and both stars and markers key off characterSituationalIds, which is built from ownedFeatureIds (explain.ts:189-194). The the Medicine entries would render for nobody.",
+  "advanced-vials-mutagenist: mode \"field-vial-mutagenist\" already exists",
   "cascade-bearers: Doubly dead: spellListAdditions is read only from content.feats[fc.featId], so a classFeatures record carrying it does nothing and the applier's usedIn guard rejects it outright; and 'cascade-bearers' is not among the 14 wizard subclass options, so no character can hold the record at all.",
   "crash-against-me: A 1-action TRANSCENDENCE record (traits: ['transcendence']) that no character ever owns - the ikon skin-hard-as-horn is the classChoice and its own description already carries this text, so a fix here is invisible by construction.",
   "curse-of-ancestral-meddling: The oracle curse records are reachable by nothing: classes.oracle has no extraChoices, the curses are not subclass options, and no class JSON mentions them - so ownedFeatureIds never holds one and neither a marker nor a star can render. The judge noted this itself and filed the fix anyway; the shipped cat-cursebound-1..4 modes already tell the player to apply their mystery's curse by hand.",
@@ -11,7 +9,6 @@
   "curse-of-the-skys-call: The oracle curse records are reachable by nothing: classes.oracle has no extraChoices, the curses are not subclass options, and no class JSON mentions them - so ownedFeatureIds never holds one and neither a marker nor a star can render. The judge noted this itself and filed the fix anyway; the shipped cat-cursebound-1..4 modes already tell the player to apply their mystery's curse by hand.",
   "curse-of-torrential-knowledge: The oracle curse records are reachable by nothing: classes.oracle has no extraChoices, the curses are not subclass options, and no class JSON mentions them - so ownedFeatureIds never holds one and neither a marker nor a star can render. The judge noted this itself and filed the fix anyway; the shipped cat-cursebound-1..4 modes already tell the player to apply their mystery's curse by hand.",
   "curse-of-turbulent-moments: The oracle curse records are reachable by nothing: classes.oracle has no extraChoices, the curses are not subclass options, and no class JSON mentions them - so ownedFeatureIds never holds one and neither a marker nor a star can render. The judge noted this itself and filed the fix anyway; the shipped cat-cursebound-1..4 modes already tell the player to apply their mystery's curse by hand.",
-  "demagogues-calling: A mythic calling is pushed to grantedFeatures for DISPLAY ONLY (build.ts:3176-3189): it is not in cls.features, not a subclass option and not a classChoice, so ownedFeatureIds never contains it - and both stars and markers key off characterSituationalIds, which is built from ownedFeatureIds (explain.ts:189-194). The the Coerce and Make an Impression entries would render for nobody.",
   "caveclimber-kobold: FEAT_SITUATIONAL takes feats and class features only, not a heritages record",
   "cavernstalker-kobold: FEAT_SITUATIONAL takes feats and class features only, not a heritages record",
   "cliffscale-lizardfolk: FEAT_SITUATIONAL takes feats and class features only, not a heritages record",
@@ -39,6 +36,10 @@
   "warrenbred-hobgoblin: FEAT_SITUATIONAL takes feats and class features only, not a heritages record",
   "windweb-tripkee: FEAT_SITUATIONAL takes feats and class features only, not a heritages record",
   "wishborn-poppet: FEAT_SITUATIONAL takes feats and class features only, not a heritages record",
+  "guardians-armor: mode \"guardians-armor\" already exists",
+  "mountaineering-training: mode \"mode-mountaineering-training\" already exists",
+  "mutagenist: mode \"mode-mutagenist-field-vial\" already exists",
+  "naval-training: mode \"tactic-naval-training\" already exists",
   "one-shot-one-kill: A triggered free action, once per encounter, whose whole text — including the precision damage — already renders from core.actions \"one-shot-one-kill\". A situational entry keyed on this id could never fire anyway: the deed is referenced by the Way option as a descRef, so classFeatures[\"one-shot-one-kill\"] never enters ownedFeatureIds.",
   "paradox-of-opposites: Already delivered: classes.witch.subclass.options[\"paradox-of-opposites\"] carries focusSpells [\"trade-death-for-life\"] (and grants.skills [\"religion\"]), which build.ts folds into the focus repertoire through grantOptions.",
   "paragon-benefit-bell: Its entire content is raising the condition values inflicted on ENEMIES and widening whose Strike can trigger it — the same target-side ground on which the base ring-bell record was ruled NEEDS_NOTHING in this very pass.",
@@ -49,6 +50,7 @@
   "perpetual-potency-chirurgeon: Same legacy ground: classes.alchemist.features carries no perpetual-* entry, so the record is unreachable.",
   "perpetual-potency-mutagenist: Same legacy ground: classes.alchemist.features carries no perpetual-* entry, so the record is unreachable.",
   "polymath: Already delivered, and by the shape every other muse uses: classes.bard.subclass.options[\"polymath\"] carries grantedFeats [\"versatile-performance\"] AND grantedSpells [\"phantasmal-minion\"] — the muse spell is a repertoire spell there, exactly as enigma->sure-strike and maestro->soothe. The proposed focusSpells write would also have been inert, since classFeature focusSpells are read only from klass.features.",
+  "race-the-skies: mode \"race-the-skies\" already exists",
   "seething-frenzy: A 1-action activity whose every effect sits on the eidolon's block; the mode's only modifier stars the PLAYER's AC for a penalty the eidolon takes, and its feats gate names an id no character owns (the summoner owns anger-phantom-eidolon, not seething-frenzy), so the mode would never appear.",
   "selfish-shield: A reaction resolved at the table, and the registry key can never fire: the champion owns the cause `desecration` (which is what grants this), never the id `selfish-shield`, so nothing would ever look it up.",
   "shadows-in-the-moonlight: The tactic body is ally-facing; the Special clause substitutes Warfare Lore, a Lore the app has no rank lane for (see this batch's own warfare-expertise verdict), and tactic ids never enter characterSituationalIds (explain.ts:189) so the star could never appear anyway.",
@@ -237,7 +239,7 @@
    "id": "handlers-calling",
    "coll": "classFeatures",
    "name": "Handler's Calling",
-   "reason": "Mythic Points exist as a play resource but the calling is display-only (build.ts grantedFeatures). The Command an Animal option is a real, repeatable player choice and belongs on the action."
+   "reason": "Command an Animal is Nature. The regain clause also covers Make an Impression on a wild animal (Diplomacy), so Diplomacy appears on the regain entry only — the spend clause is Command an Animal alone and must not be widened."
   },
   {
    "id": "heavy-construction",
@@ -267,7 +269,7 @@
    "id": "hunters-calling",
    "coll": "classFeatures",
    "name": "Hunter's Calling",
-   "reason": "Mythic Points are tracked in play but the calling is display-only; the Seek/Track option never reaches the sheet."
+   "reason": "Seek is a Perception check and Track is Survival — both rolled by the player, both unmodelled. Perception needs the perception kind, not a skill target."
   },
   {
    "id": "inconspicuous-appearance",
@@ -501,19 +503,19 @@
    "id": "runelords-calling",
    "coll": "classFeatures",
    "name": "Runelord's Calling",
-   "reason": "The mythic point pool exists in play state, but the calling's actual grant — spend a Mythic Point to attempt Identify Magic / Learn a Spell / a ritual check at mythic proficiency, and regain a point on your first daily critical success at Identify Magic — reaches the player nowhere (the classFeature is pushed into grantedFeatures for display only, build.ts ~3178). situationalBonuses.ts already models \"roll at mythic proficiency\" riders (avoid-fates-gaze, become-shadow, binds-that-tie)."
+   "reason": "Identify Magic, Learn a Spell and casting a ritual are all player checks; the skill varies by tradition and by ritual, so the spend entry targets 'all' with the actions named. The regain clause names the four magic skills explicitly, so it is narrowed to those. Unmodelled."
   },
   {
    "id": "sagas-calling",
    "coll": "classFeatures",
    "name": "Saga's Calling",
-   "reason": "Same lane as the other callings: spending a Mythic Point to roll Performance or Gather Information at mythic proficiency, and regaining a point on your first daily critical Gather Information, reaches nothing — the calling is displayed only. Modelled elsewhere as \"roll at mythic proficiency\" situational entries."
+   "reason": "A Performance check or Gather Information (Diplomacy), at mythic proficiency for a Mythic Point. Unmodelled. The regain clause is Gather Information only, so it is narrowed to Diplomacy."
   },
   {
    "id": "sages-calling",
    "coll": "classFeatures",
    "name": "Sage's Calling",
-   "reason": "The Recall Knowledge grant — spend a Mythic Point to roll at mythic proficiency, regain one on your first daily critical success against an enemy — is delivered nowhere; the calling record carries no fields at all and is only rendered for display."
+   "reason": "Recall Knowledge with any skill, at mythic proficiency for a Mythic Point. Unmodelled. Unrestricted by skill, so 'all' is exact rather than a fallback."
   },
   {
    "id": "skin-hard-as-horn",

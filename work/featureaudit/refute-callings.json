@@ -1,0 +1,128 @@
+{
+  "rulings": [
+    {
+      "id": "echoes-of-the-scrolls",
+      "upheld": true,
+      "why": "Record is passive with no mechanical fields, id is absent from FEAT_SITUATIONAL, and derive.ts:1192 now puts the calling in ownedFeatureIds so a star would render; Decipher Writing/Gather Information/Recall Knowledge span many skills and the regain clause says 'any check', so skill 'all' is exact rather than a fallback.",
+      "correction": {}
+    },
+    {
+      "id": "echoes-of-the-spells",
+      "upheld": false,
+      "why": "Spend clause is right ('all', since Recall Knowledge is unrestricted), but the regain clause is printed as 'a check with a skill corresponding to any magical traditions you possess', so targeting every skill stars Athletics for a trigger only Arcana/Nature/Occultism/Religion can fire — the judge narrowed exactly this clause correctly on runelords-calling and should have here.",
+      "correction": {
+        "fix": {
+          "situational": [
+            {
+              "targets": [
+                { "kind": "skill", "detail": "all" }
+              ],
+              "when": "to Identify Magic, Recall Knowledge, or Trick a Magic Item, spending a Mythic Point",
+              "bonus": "attempt the check at mythic proficiency"
+            },
+            {
+              "targets": [
+                { "kind": "skill", "detail": "arcana" },
+                { "kind": "skill", "detail": "nature" },
+                { "kind": "skill", "detail": "occultism" },
+                { "kind": "skill", "detail": "religion" }
+              ],
+              "when": "first daily crit success doing one of those, with a tradition skill you have",
+              "bonus": "regain 1 Mythic Point"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "echoes-of-the-swords",
+      "upheld": true,
+      "why": "Climb, Force Open, High Jump, Long Jump and Swim are all Athletics and the regain clause names an Athletics check outright, so one skill target carries the whole calling with no widening.",
+      "correction": {}
+    },
+    {
+      "id": "acrobats-calling",
+      "upheld": true,
+      "why": "Balance/Maneuver in Flight/Tumble Through are Acrobatics and Long Jump is Athletics; splitting them into two entries keeps the Athletics note from claiming the Acrobatics actions, and the regain entry correctly stays Acrobatics-only and in-combat as printed.",
+      "correction": {}
+    },
+    {
+      "id": "artisans-calling",
+      "upheld": true,
+      "why": "Craft and Repair are both Crafting checks the player rolls, and the regain clause is Repair-only, which the separate second entry states rather than folding into the wider spend note.",
+      "correction": {}
+    },
+    {
+      "id": "bookkeepers-calling",
+      "upheld": true,
+      "why": "The text restricts the spend to a trained Lore, but targetMatches (situationalBonuses.ts:2955) has no Lore wildcard — 'lore:*' compares by equality against keys like 'lore:games' and never matches — so 'all' plus a `when` naming the Lore restriction is the only shape that actually reaches a Lore row, and it follows the shipped underground-network precedent.",
+      "correction": {}
+    },
+    {
+      "id": "caretakers-calling",
+      "upheld": true,
+      "why": "The healing lands on someone else but no ally stat is touched — the star sits on the player's own Medicine roll, which is what the lane marks — and Treat Disease/Poison/Wounds and Battle Medicine are all Medicine.",
+      "correction": {}
+    },
+    {
+      "id": "demagogues-calling",
+      "upheld": true,
+      "why": "Coerce is Intimidation and Make an Impression is Diplomacy; Deception appears only on the regain entry because 'Create a Diversion using your words' is printed in the regain clause and not in the spend clause, so nothing is over-granted.",
+      "correction": {}
+    },
+    {
+      "id": "guardians-calling",
+      "upheld": true,
+      "why": "Disarm, Reposition and Shove are Athletics, and the printed 'against a creature of any size' rider is conditioned on performing them at mythic proficiency, so folding it into that same bonus string is the accurate placement rather than a second unconditional grant.",
+      "correction": {}
+    },
+    {
+      "id": "handlers-calling",
+      "upheld": true,
+      "why": "Command an Animal is Nature and the spend clause names nothing else; Diplomacy is confined to the regain entry because only that clause prints 'Make an Impression on a wild animal'.",
+      "correction": {}
+    },
+    {
+      "id": "hunters-calling",
+      "upheld": true,
+      "why": "Seek is a Perception check and Track is Survival, and kind 'perception' is a legal target that targetMatches resolves without a detail, so both halves of the printed clause land on the right rows.",
+      "correction": {}
+    },
+    {
+      "id": "doomsayers-calling",
+      "upheld": true,
+      "why": "Repair is Crafting and Administer First Aid and Treat Wounds are Medicine; the parenthetical 'never Battle Medicine' is required, since Battle Medicine is a Medicine check and an unqualified Medicine star would over-grant against the printed exclusion.",
+      "correction": {}
+    },
+    {
+      "id": "dreamers-calling",
+      "upheld": true,
+      "why": "The spend clause names Arcana/Nature/Religion/Occultism for Recall Knowledge and Crafting for a work of art, and the regain clause imposes no skill restriction (it keys on the subject being dreams), so 'all' on the regain entry is textual rather than lazy.",
+      "correction": {}
+    },
+    {
+      "id": "runelords-calling",
+      "upheld": true,
+      "why": "'all' on the spend entry is verified, not a fallback — of 151 rituals in core.json the ritualPrimary skill includes Crafting (11), Performance (8), Diplomacy, Medicine, Society, Survival, Athletics, Deception and several Lores besides the four magic skills — while the regain clause names those four explicitly and is correctly narrowed to them.",
+      "correction": {}
+    },
+    {
+      "id": "sagas-calling",
+      "upheld": true,
+      "why": "Performance and Gather Information (Diplomacy) are both the player's own checks, and the regain entry is correctly cut back to Diplomacy because only Gather Information is printed there.",
+      "correction": {}
+    },
+    {
+      "id": "sages-calling",
+      "upheld": true,
+      "why": "Recall Knowledge is printed with no skill restriction on either clause, so skill 'all' is the exact target and neither entry over-grants.",
+      "correction": {}
+    },
+    {
+      "id": "thiefs-calling",
+      "upheld": true,
+      "why": "Pick a Lock and Steal are both Thievery; the regain clause narrows Steal to a hostile creature and the separate second entry says so rather than implying the wider spend condition.",
+      "correction": {}
+    }
+  ]
+}

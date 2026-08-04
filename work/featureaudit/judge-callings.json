@@ -1,0 +1,580 @@
+{
+  "records": [
+    {
+      "id": "echoes-of-the-scrolls",
+      "verdict": "MISS",
+      "reason": "Text lets the PLAYER spend a Mythic Point to roll Decipher Writing, Gather Information or Recall Knowledge at mythic proficiency, and regain a point on the first daily crit. Nothing in situationalBonuses.ts keys on this id, so the calling renders no star anywhere. Those actions span many skills, so 'all' + a precise `when` is the honest target.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "all"
+              }
+            ],
+            "when": "to Decipher Writing, Gather Information, or Recall Knowledge, spending a Mythic Point",
+            "bonus": "attempt the check at mythic proficiency"
+          },
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "all"
+              }
+            ],
+            "when": "first critical success each day on one of those checks",
+            "bonus": "regain 1 Mythic Point"
+          }
+        ]
+      }
+    },
+    {
+      "id": "echoes-of-the-spells",
+      "verdict": "MISS",
+      "reason": "Spend a Mythic Point on Identify Magic, Recall Knowledge or Trick Magic Item for mythic proficiency; regain on the first daily crit with a tradition skill you possess. No entry keys on this id. Trick Magic Item is a feat, not a core.actions id, so this stays a skill star rather than an action marker.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "all"
+              }
+            ],
+            "when": "to Identify Magic, Recall Knowledge, or Trick a Magic Item, spending a Mythic Point",
+            "bonus": "attempt the check at mythic proficiency"
+          },
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "all"
+              }
+            ],
+            "when": "first daily critical success on one, with a tradition skill you have",
+            "bonus": "regain 1 Mythic Point"
+          }
+        ]
+      }
+    },
+    {
+      "id": "echoes-of-the-swords",
+      "verdict": "MISS",
+      "reason": "Climb, Force Open, High Jump, Long Jump and Swim are all Athletics, so the whole calling lands on one skill the player rolls. Nothing keys on this id today.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "athletics"
+              }
+            ],
+            "when": "to Climb, Force Open, High Jump, Long Jump, or Swim, spending a Mythic Point",
+            "bonus": "attempt the check at mythic proficiency"
+          },
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "athletics"
+              }
+            ],
+            "when": "first critical success each day on one of those Athletics checks",
+            "bonus": "regain 1 Mythic Point"
+          }
+        ]
+      }
+    },
+    {
+      "id": "acrobats-calling",
+      "verdict": "MISS",
+      "reason": "Balance, Maneuver in Flight and Tumble Through are Acrobatics; the Long Jump clause is Athletics. Both are the player’s own checks and neither is modelled. The regain clause is restricted to combat, as printed.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "acrobatics"
+              }
+            ],
+            "when": "to Balance, Maneuver in Flight, or Tumble Through, spending a Mythic Point",
+            "bonus": "attempt the check at mythic proficiency"
+          },
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "athletics"
+              }
+            ],
+            "when": "to attempt a Long Jump, spending a Mythic Point",
+            "bonus": "attempt the check at mythic proficiency"
+          },
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "acrobatics"
+              }
+            ],
+            "when": "first daily crit success Balancing, Maneuvering, or Tumbling in combat",
+            "bonus": "regain 1 Mythic Point"
+          }
+        ]
+      }
+    },
+    {
+      "id": "artisans-calling",
+      "verdict": "MISS",
+      "reason": "Craft and Repair are both Crafting checks the player rolls. Unmodelled. The regain clause is narrower than the spend clause (Repair only), so it gets its own entry rather than being folded in.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "crafting"
+              }
+            ],
+            "when": "to Craft or Repair an object, vehicle, or structure, spending a Mythic Point",
+            "bonus": "attempt the check at mythic proficiency"
+          },
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "crafting"
+              }
+            ],
+            "when": "first critical success each day on a check to Repair an object",
+            "bonus": "regain 1 Mythic Point"
+          }
+        ]
+      }
+    },
+    {
+      "id": "bookkeepers-calling",
+      "verdict": "MISS",
+      "reason": "Recall Knowledge or Earn Income with a trained Lore, at mythic proficiency for a Mythic Point. Unmodelled. The Lore is whichever one the character trained, so no single lore:Name target fits; 'all' with the `when` naming the Lore restriction is the accurate shape.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "all"
+              }
+            ],
+            "when": "to Recall Knowledge or Earn Income with a trained Lore, spending a Mythic Point",
+            "bonus": "attempt the check at mythic proficiency"
+          },
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "all"
+              }
+            ],
+            "when": "first daily crit success Recalling Knowledge researching in a library",
+            "bonus": "regain 1 Mythic Point"
+          }
+        ]
+      }
+    },
+    {
+      "id": "caretakers-calling",
+      "verdict": "MISS",
+      "reason": "Treat Disease, Treat Poison, Treat Wounds and Battle Medicine are all Medicine checks the player rolls — the healing lands on someone else, but the CHECK is the player’s, which is what the star marks. Unmodelled.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "medicine"
+              }
+            ],
+            "when": "to Treat Disease, Poison, or Wounds or use Battle Medicine, spending a Mythic Point",
+            "bonus": "attempt the check at mythic proficiency"
+          },
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "medicine"
+              }
+            ],
+            "when": "first critical success each day on a check to Treat Wounds",
+            "bonus": "regain 1 Mythic Point"
+          }
+        ]
+      }
+    },
+    {
+      "id": "demagogues-calling",
+      "verdict": "MISS",
+      "reason": "Coerce is Intimidation and Make an Impression is Diplomacy; the regain clause additionally covers a verbal Create a Diversion (Deception). Unmodelled. Deception is on the regain entry only, because the spend clause does not list Create a Diversion.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "intimidation"
+              },
+              {
+                "kind": "skill",
+                "detail": "diplomacy"
+              }
+            ],
+            "when": "to Coerce or Make an Impression, spending a Mythic Point",
+            "bonus": "attempt the check at mythic proficiency"
+          },
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "intimidation"
+              },
+              {
+                "kind": "skill",
+                "detail": "diplomacy"
+              },
+              {
+                "kind": "skill",
+                "detail": "deception"
+              }
+            ],
+            "when": "first daily crit success: Coerce a foe, verbal Diversion, or Impression",
+            "bonus": "regain 1 Mythic Point"
+          }
+        ]
+      }
+    },
+    {
+      "id": "guardians-calling",
+      "verdict": "MISS",
+      "reason": "Disarm, Reposition and Shove are Athletics checks the player rolls. This calling also carries a second printed clause nothing delivers — at mythic proficiency the maneuvers work against a creature of ANY SIZE — which is folded into the bonus text rather than given its own grant.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "athletics"
+              }
+            ],
+            "when": "to Disarm, Reposition, or Shove an opponent, spending a Mythic Point",
+            "bonus": "attempt the check at mythic proficiency, and against a creature of any size"
+          },
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "athletics"
+              }
+            ],
+            "when": "first daily critical success to Disarm, Reposition, or Shove a foe",
+            "bonus": "regain 1 Mythic Point"
+          }
+        ]
+      }
+    },
+    {
+      "id": "handlers-calling",
+      "verdict": "MISS",
+      "reason": "Command an Animal is Nature. The regain clause also covers Make an Impression on a wild animal (Diplomacy), so Diplomacy appears on the regain entry only — the spend clause is Command an Animal alone and must not be widened.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "nature"
+              }
+            ],
+            "when": "to Command an Animal, spending a Mythic Point",
+            "bonus": "attempt the check at mythic proficiency"
+          },
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "nature"
+              },
+              {
+                "kind": "skill",
+                "detail": "diplomacy"
+              }
+            ],
+            "when": "first daily crit success: impress a wild animal or Command another's animal",
+            "bonus": "regain 1 Mythic Point"
+          }
+        ]
+      }
+    },
+    {
+      "id": "hunters-calling",
+      "verdict": "MISS",
+      "reason": "Seek is a Perception check and Track is Survival — both rolled by the player, both unmodelled. Perception needs the perception kind, not a skill target.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [
+              {
+                "kind": "perception"
+              },
+              {
+                "kind": "skill",
+                "detail": "survival"
+              }
+            ],
+            "when": "to Seek or Track, spending a Mythic Point",
+            "bonus": "attempt the check at mythic proficiency"
+          },
+          {
+            "targets": [
+              {
+                "kind": "perception"
+              },
+              {
+                "kind": "skill",
+                "detail": "survival"
+              }
+            ],
+            "when": "first daily crit success to Seek or Track a hostile or unfriendly creature",
+            "bonus": "regain 1 Mythic Point"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doomsayers-calling",
+      "verdict": "MISS",
+      "reason": "Repair is Crafting; Administer First Aid and Treat Wounds are Medicine. Unmodelled. The text explicitly EXCLUDES Battle Medicine, which the bonus text has to say or the star over-grants against the printed rule.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "crafting"
+              },
+              {
+                "kind": "skill",
+                "detail": "medicine"
+              }
+            ],
+            "when": "to Repair, Administer First Aid, or Treat Wounds, spending a Mythic Point",
+            "bonus": "attempt the check at mythic proficiency (never Battle Medicine)"
+          },
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "crafting"
+              },
+              {
+                "kind": "skill",
+                "detail": "medicine"
+              }
+            ],
+            "when": "first daily critical success to Repair or Administer First Aid",
+            "bonus": "regain 1 Mythic Point"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dreamers-calling",
+      "verdict": "MISS",
+      "reason": "Two distinct spend clauses: Recall Knowledge limited to Arcana, Nature, Religion or Occultism, and Craft restricted to a work of art. Both are player rolls and neither is modelled. The regain clause is not limited to those four skills, so it targets all.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "arcana"
+              },
+              {
+                "kind": "skill",
+                "detail": "nature"
+              },
+              {
+                "kind": "skill",
+                "detail": "religion"
+              },
+              {
+                "kind": "skill",
+                "detail": "occultism"
+              }
+            ],
+            "when": "to Recall Knowledge, spending a Mythic Point",
+            "bonus": "attempt the check at mythic proficiency"
+          },
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "crafting"
+              }
+            ],
+            "when": "to Craft any work of art, spending a Mythic Point",
+            "bonus": "attempt the check at mythic proficiency"
+          },
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "all"
+              }
+            ],
+            "when": "first daily crit success to Craft, or Recalling Knowledge about dreams",
+            "bonus": "regain 1 Mythic Point"
+          }
+        ]
+      }
+    },
+    {
+      "id": "runelords-calling",
+      "verdict": "MISS",
+      "reason": "Identify Magic, Learn a Spell and casting a ritual are all player checks; the skill varies by tradition and by ritual, so the spend entry targets 'all' with the actions named. The regain clause names the four magic skills explicitly, so it is narrowed to those. Unmodelled.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "all"
+              }
+            ],
+            "when": "to Identify Magic, Learn a Spell, or cast a ritual, spending a Mythic Point",
+            "bonus": "attempt the check at mythic proficiency"
+          },
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "arcana"
+              },
+              {
+                "kind": "skill",
+                "detail": "nature"
+              },
+              {
+                "kind": "skill",
+                "detail": "occultism"
+              },
+              {
+                "kind": "skill",
+                "detail": "religion"
+              }
+            ],
+            "when": "first critical success each day to Identify Magic",
+            "bonus": "regain 1 Mythic Point"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sagas-calling",
+      "verdict": "MISS",
+      "reason": "A Performance check or Gather Information (Diplomacy), at mythic proficiency for a Mythic Point. Unmodelled. The regain clause is Gather Information only, so it is narrowed to Diplomacy.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "performance"
+              },
+              {
+                "kind": "skill",
+                "detail": "diplomacy"
+              }
+            ],
+            "when": "on a Performance check or to Gather Information, spending a Mythic Point",
+            "bonus": "attempt the check at mythic proficiency"
+          },
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "diplomacy"
+              }
+            ],
+            "when": "first critical success each day on a check to Gather Information",
+            "bonus": "regain 1 Mythic Point"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sages-calling",
+      "verdict": "MISS",
+      "reason": "Recall Knowledge with any skill, at mythic proficiency for a Mythic Point. Unmodelled. Unrestricted by skill, so 'all' is exact rather than a fallback.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "all"
+              }
+            ],
+            "when": "to Recall Knowledge, spending a Mythic Point",
+            "bonus": "attempt the check at mythic proficiency"
+          },
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "all"
+              }
+            ],
+            "when": "first daily crit success on Recall Knowledge about an enemy creature",
+            "bonus": "regain 1 Mythic Point"
+          }
+        ]
+      }
+    },
+    {
+      "id": "thespians-calling",
+      "verdict": "ALREADY_OK",
+      "reason": "Already delivered: src/rules/situationalBonuses.ts:2940 carries both clauses — a Performance entry for spending a Mythic Point to Perform or Earn Income at mythic proficiency, and a second entry for regaining a point on the first daily critical success to Perform. This is the only one of the 18 already keyed, and it is the house precedent the other 17 fixes copy."
+    },
+    {
+      "id": "thiefs-calling",
+      "verdict": "MISS",
+      "reason": "Pick a Lock and Steal are both Thievery checks the player rolls. Unmodelled. The regain clause narrows Steal to a hostile creature, so it is worded separately.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "thievery"
+              }
+            ],
+            "when": "to Pick a Lock or Steal an item, spending a Mythic Point",
+            "bonus": "attempt the check at mythic proficiency"
+          },
+          {
+            "targets": [
+              {
+                "kind": "skill",
+                "detail": "thievery"
+              }
+            ],
+            "when": "first daily crit success to Pick a Lock or Steal from a hostile creature",
+            "bonus": "regain 1 Mythic Point"
+          }
+        ]
+      }
+    }
+  ]
+}
