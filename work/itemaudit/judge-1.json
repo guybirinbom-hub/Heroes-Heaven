@@ -1,0 +1,438 @@
+{
+ "records": [
+  {
+   "id": "air-bladder",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A free action that resets how long you can hold your breath; the app tracks no breath-holding clock and nothing about the character changes."
+  },
+  {
+   "id": "air-cartridge-firing-system",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An attachment that changes ONE host firearm's range increment (-10 ft) and lets it fire underwater; the engine has no attachment lane that rewrites a host weapon's range or traits, and firing conditions are GM adjudication."
+  },
+  {
+   "id": "alchemical-atomizer",
+   "verdict": "MISS",
+   "reason": "The atomizer holds a 10-use supply of reagents that is spent per activation and must be re-bought for 5 gp; that is a trackable owner-side pool and the item carries no counter. The spray effect itself is the loaded consumable's, so only the pool is missing.",
+   "fix": {
+    "counters": [
+     {
+      "id": "reagents",
+      "label": "Reagent uses",
+      "max": 10,
+      "startsFull": true,
+      "resetsOnRest": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "alchemical-bomb",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A category page for the bomb weapon family ('click here for a list of alchemical bombs'), not a buyable item; the individual bombs carry their own weapon records."
+  },
+  {
+   "id": "alchemical-chart-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "While held it extends how long Quick Alchemy items of 18th level or lower stay potent by 1 round; the app does not time-track consumable potency and no field expresses a duration extension."
+  },
+  {
+   "id": "alchemical-chart-lesser",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same duration-extension effect at 4th level and below; nothing on the sheet changes and there is no duration field for Quick Alchemy items."
+  },
+  {
+   "id": "alchemical-chart-moderate",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same duration-extension effect at 12th level and below; nothing on the sheet changes and there is no duration field for Quick Alchemy items."
+  },
+  {
+   "id": "alchemist-kit",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A class-kit shopping list (armour, weapons, gear and money left over); each listed piece is its own item record and is bought separately."
+  },
+  {
+   "id": "alchemists-fire-lesser",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered by its weapon record in core.json items: damage 1d8 fire, group bomb, martial, 20-ft range, 1 hand. The 1 persistent and 1 splash land on the target, exactly as for every other bomb in the corpus."
+  },
+  {
+   "id": "alchemists-flamethrower",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 2-action activation that deals fire damage in a line to creatures; all damage is target-side and its size is set by whichever alchemist's fires were loaded."
+  },
+  {
+   "id": "alchemists-lab",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Crafting/downtime prerequisite — its whole content is permission to Craft alchemical items."
+  },
+  {
+   "id": "alchemists-toolkit",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane tool: permission to attempt simple alchemical tasks plus an action-economy convenience when worn; no standing stat change."
+  },
+  {
+   "id": "ale",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A trade good with a price and nothing else — pure flavour."
+  },
+  {
+   "id": "aligned-oil",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Applies an alignment property rune's effect to a weapon for 1 minute, i.e. an extra 1d6 alignment damage die. Alignment damage and the anarchic/axiomatic runes were removed in the remaster (this record is edition 'legacy' and neither rune exists in core.runes), and a mode's modifiers carry flat numbers only, never an extra damage die — so no accurate lane exists."
+  },
+  {
+   "id": "all-will-decay",
+   "verdict": "MISS",
+   "reason": "'You can cast 5th-rank rust cloud at will as an innate spell' is a standing owner-side spell grant and the record carries no innateSpells. rust-cloud exists in core.spells (rank 4, arcane/primal); the relic aspect is elemental, so primal. The once-per-day aura is target-side and needs nothing.",
+   "fix": {
+    "innateSpells": [
+     {
+      "spellId": "rust-cloud",
+      "tradition": "primal",
+      "rank": 5,
+      "atWill": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "allys-kerchief",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The activation makes an identifying symbol glow to other kerchief wearers; pure recognition/social signalling with no stat effect."
+  },
+  {
+   "id": "alpaca",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A purchasable pet that explicitly 'cannot be combat trained or contribute to combat in any way' — no mechanics to deliver."
+  },
+  {
+   "id": "amulet-implement",
+   "verdict": "ALREADY_OK",
+   "reason": "An empty stub for the thaumaturge implement; the mechanics live in core.implement.amulet (the implement registry has all ten, including amulet) and the thaumaturge class features that pick it."
+  },
+  {
+   "id": "amulet-of-the-slumberer",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Companion piece to an artifact: it only sets which DC The Eye of the Slumberer's own abilities use, and those abilities are GM-run artifact effects aimed at targets."
+  },
+  {
+   "id": "anarchic",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Legacy alignment rune (edition 'legacy', not registered in core.runes). Its 1d6 chaotic damage is conditional on the TARGET being lawful and its enfeebled 2 clause is conditional on the wielder's alignment; the remaster removed alignment damage and the app tracks no alignment axis, so there is nothing to key either half to."
+  },
+  {
+   "id": "anchoring",
+   "verdict": "ALREADY_OK",
+   "reason": "Registered in core.runes as an etchable weapon property rune (slot weapon, kind property, level 10, 900 gp), so a player can buy and etch it; the crit effect casts Planar Tether on the TARGET, which is resolved at the table."
+  },
+  {
+   "id": "anchoring-greater",
+   "verdict": "ALREADY_OK",
+   "reason": "Registered in core.runes (weapon property, level 18, 22,000 gp) so it is etchable; the 8th-rank Planar Tether and the on-hit rider both land on the target."
+  },
+  {
+   "id": "angelic-vessel",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Once-per-day relic-gift activation. Its main effect is +50 TEMPORARY maximum and current HP: modes have no HP modifier target (targets are save/skill/attack/perception/damage/ac/all-checks) and the item's maxHpBonus field is permanent-while-invested, so using it would over-grant. The paired weakness 10 to unholy is a drawback of that same temporary state, and the HP is applied with the sheet's HP control."
+  },
+  {
+   "id": "animal-bed",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane furnishing with no rules text at all."
+  },
+  {
+   "id": "anointed-waterskin",
+   "verdict": "MISS",
+   "reason": "The waterskin holds ONE charge of blessed water that refills 'at the next dawn' — a real daily resource, and the record carries no frequency, so the owner gets no use counter (items with frequency build a 'per day' counter chip, e.g. vagabonds-teapot). All three activations share the single fill, so one daily use is the correct grant; the spells themselves are cast at the table.",
+   "fix": {
+    "frequency": {
+     "max": 1,
+     "per": "day"
+    }
+   }
+  },
+  {
+   "id": "antler-arrow",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "On a hit the antlers pin the TARGET, which saves against being stuck; everything happens on the target's side."
+  },
+  {
+   "id": "anylength-rope-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Utility item: the activations split and reassemble the rope, and its Hardness/HP belong to the rope, not the owner."
+  },
+  {
+   "id": "aon-apothecary-s-garden",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The relic grows herbs overnight that are harvested at daily preparations; the healing lands on whichever living creature eats one, and the herb count is a daily-prep resource the player tallies."
+  },
+  {
+   "id": "aon-archmage-s-regalia",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Relic-SET overview page: it lists the five member items and the gifts, whose mechanics live on those separate records; the collective features are gated on how many set pieces are owned."
+  },
+  {
+   "id": "aon-azata-s-grace",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same shape as angelic-vessel: a 1/day activation granting +50 temporary HP and a weakness. Modes carry no HP target and maxHpBonus would make the HP permanent, so no accurate lane exists; the scintillating pattern is target-side."
+  },
+  {
+   "id": "aon-beginner-s-luck",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A once-per-day reaction that rewrites the proficiency used for a SINGLE untrained d20 roll and rolls twice; resolved in the moment with no standing change to any statistic."
+  },
+  {
+   "id": "aon-duelist-s-blazon",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Relic-set overview page; the mechanics belong to the listed set items and gifts, and the collective features are gated on set membership."
+  },
+  {
+   "id": "aon-inventor-s-chair",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Descriptive relic entry that only names its minor/major/grand gifts; each gift is its own record, and the chair's wheel blades and built-in artisan's tools are separate equipment."
+  },
+  {
+   "id": "aon-pharasma-s-command",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Relic-set overview page listing member items and gifts; nothing here applies to a character on its own."
+  },
+  {
+   "id": "aon-sack-of-hyrdra-s-teeth",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Both activations cast summoning spells that create skeletons at a point; the daily limit is already carried as frequency {max:1, per:'day'} on the record."
+  },
+  {
+   "id": "aon-sleuth-s-pipe",
+   "verdict": "MISS",
+   "reason": "'Grants you a +1 item bonus to Perception checks to Sense Motive, and if you're an investigator, any checks you make to Pursue a Lead' is a conditional owner bonus and the record carries nothing. Conditional, so it belongs in situational (same shape as shrieking-key), not passiveEffects.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "perception"
+       }
+      ],
+      "when": "to Sense Motive",
+      "bonus": "+1 item"
+     },
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "all"
+       }
+      ],
+      "when": "on investigator checks to Pursue a Lead",
+      "bonus": "+1 item"
+     }
+    ]
+   }
+  },
+  {
+   "id": "apocalypse-seed",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mythic artifact whose only activation spends a Mythic Point to deal sonic damage in an area to creatures; entirely target-side."
+  },
+  {
+   "id": "apothecarys-garden",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Duplicate of aon-apothecary-s-garden: nightly herbs harvested at daily preparations, healing the creature that eats one."
+  },
+  {
+   "id": "apparition-gloves",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Projects a visual signed translation of what the wearer already says; it grants no new language (grantsLanguages would over-grant) and the illusion cannot act — pure communication flavour."
+  },
+  {
+   "id": "arboreal-wand-2nd-rank-spell",
+   "verdict": "MISS",
+   "reason": "'You cast heal at the indicated rank' once per day, but the record has no spell at all, so the wand never reaches the Spells page. The corpus lane for a wand holding a fixed spell is heldSpells keyed by rank plus the daily counter (see wand-of-shattering-images). The affliction counteract afterwards is target-side.",
+   "fix": {
+    "heldSpells": {
+     "2": [
+      "heal"
+     ]
+    }
+   }
+  },
+  {
+   "id": "arboreal-wand-3rd-rank-spell",
+   "verdict": "MISS",
+   "reason": "Same wand, 3rd-rank heal, no spell on the record; heldSpells is the established lane and frequency {1/day} is already present.",
+   "fix": {
+    "heldSpells": {
+     "3": [
+      "heal"
+     ]
+    }
+   }
+  },
+  {
+   "id": "arboreal-wand-4th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Same wand, 4th-rank heal, no spell on the record; heldSpells is the established lane and frequency {1/day} is already present.",
+   "fix": {
+    "heldSpells": {
+     "4": [
+      "heal"
+     ]
+    }
+   }
+  },
+  {
+   "id": "arboreal-wand-5th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Same wand, 5th-rank heal, no spell on the record; heldSpells is the established lane and frequency {1/day} is already present.",
+   "fix": {
+    "heldSpells": {
+     "5": [
+      "heal"
+     ]
+    }
+   }
+  },
+  {
+   "id": "arboreal-wand-6th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Same wand, 6th-rank heal, no spell on the record; heldSpells is the established lane and frequency {1/day} is already present.",
+   "fix": {
+    "heldSpells": {
+     "6": [
+      "heal"
+     ]
+    }
+   }
+  },
+  {
+   "id": "arboreal-wand-7th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Same wand, 7th-rank heal, no spell on the record; heldSpells is the established lane and frequency {1/day} is already present.",
+   "fix": {
+    "heldSpells": {
+     "7": [
+      "heal"
+     ]
+    }
+   }
+  },
+  {
+   "id": "archaic-wayfinder",
+   "verdict": "MISS",
+   "reason": "It is 'a repository for one cantrip cast into it' and activating it casts that cantrip, but the record carries no spell lane, so the owner's chosen cantrip never appears anywhere. An open cantrip pick is the spellFilter form of effectChoices (identical to the wayfinder-resonance-tinkerer feat); granted at 1/day rather than at will, because the wayfinder empties on use and must be re-charged by a spellcaster.",
+   "fix": {
+    "effectChoices": [
+     {
+      "id": "stored-cantrip",
+      "prompt": "Archaic wayfinder: choose the cantrip cast into it (re-chargeable by any spellcaster)",
+      "spellFilter": {
+       "traditions": [
+        "arcane",
+        "divine",
+        "occult",
+        "primal"
+       ],
+       "cantripsOnly": true,
+       "grantAs": "innate",
+       "innate": {
+        "usesPerDay": 1
+       }
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": "archmages-regalia",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Relic-set overview page (remastered duplicate of aon-archmage-s-regalia); its mechanics live on the five set items and the gift records."
+  },
+  {
+   "id": "armor-latches",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An adjustment that gives the HOST armour the noisy trait and shortens doffing to a 3-action activity. There is no lane for an attachment rewriting a host armour's traits, the noisy penalty is just that armour's own check penalty applied to Stealth (no fixed number to state), and doffing time is not tracked."
+  },
+  {
+   "id": "arrows",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane ammunition — the strike code reads the bow, and the arrow adds nothing of its own."
+  },
+  {
+   "id": "artisans-toolkit",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane tool whose whole content is permission to Craft, plus an action-economy convenience when worn."
+  },
+  {
+   "id": "ashen",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Registered in core.runes as an etchable weapon property rune (level 9, 700 gp). Its payload is 1d4 persistent fire damage and a confused save on the creature HIT — target-side; the rune damage lane models per-Strike direct damage (and crit persistent), not on-hit persistent damage inflicted on the target."
+  },
+  {
+   "id": "ashen-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Registered in core.runes (level 16, 9,000 gp) so it is etchable; the 1d8 persistent fire and the confused condition both land on the target."
+  },
+  {
+   "id": "assisting",
+   "verdict": "MISS",
+   "reason": "The armour rune states flat Bulk limits of 6 + Str (encumbered) and 11 + Str (maximum), i.e. +1 to both thresholds, and deriveBulk computes encumberedAt = 5 + strMod and max = 10 + strMod with a limitBonus that is summed from FEATS only (Feat.bulkLimitBonus, derive.ts ~line 2036). core.runes.assisting carries id/name/slot/kind/level/price and nothing else, so the printed numbers never reach the Bulk readout. Fix uses the existing bulkLimitBonus field; deriveBulk must also read it from etched armour runes.",
+   "fix": {
+    "bulkLimitBonus": 1
+   }
+  },
+  {
+   "id": "astral",
+   "verdict": "MISS",
+   "reason": "'Strikes with it deal an extra 1d6 spirit damage' is per-Strike damage for the OWNER, and core.runes.astral carries no damage block — the only rune payload lane there is `damage` (flaming/frost/corrosive/shock/thundering all have it, verified in core.json). AoN text confirms the die and type. The ghost touch and possession clauses are target-side.",
+   "fix": {
+    "rune": {
+     "damage": {
+      "dice": 1,
+      "die": "d6",
+      "type": "spirit"
+     }
+    }
+   }
+  },
+  {
+   "id": "astral-greater",
+   "verdict": "MISS",
+   "reason": "Same extra 1d6 spirit damage per Strike (the greater version only raises the save DC and ignores spirit resistance); core.runes.astral-greater has no damage block, so the rider is missing exactly as on the base rune.",
+   "fix": {
+    "rune": {
+     "damage": {
+      "dice": 1,
+      "die": "d6",
+      "type": "spirit"
+     }
+    }
+   }
+  },
+  {
+   "id": "astrolabe-of-falling-stars",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Once-per-day activation calling meteorites down on a point for damage to creatures in the burst; frequency {max:1, per:'day'} is already on the record, and it otherwise works as a mundane mariner's astrolabe."
+  },
+  {
+   "id": "atmospheric-breathing-suit",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets an aquatic wearer function out of water; this is permission to breathe/stay moist, plus a 24-hour refill upkeep the GM tracks — no numeric statistic and no sense, speed or resistance is granted."
+  },
+  {
+   "id": "atrophy-bomb-lesser",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The bomb's own weapon record (bomb group, martial, 20-ft range, void) is present; its 1d4 persistent void, 1 void splash and enfeebled 1 all land on the TARGET, matching how every other bomb in the corpus is modelled."
+  },
+  {
+   "id": "authorized",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Registered in core.runes as an etchable weapon property rune (level 3, 50 gp); its whole effect punishes creatures OTHER than the rightful owner who try to wield the weapon, so the owner gains no statistic."
+  },
+  {
+   "id": "avernal-cape",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "It functions as a Dueling Cape, whose own record carries nothing either (raising a cape is an action, not a standing bonus), and its fire resistance is doubly conditional: only while the cape is moved into a protective position, and equal to twice the relic's number of gifts — a count the app does not track, so no honest value can be written."
+  }
+ ]
+}

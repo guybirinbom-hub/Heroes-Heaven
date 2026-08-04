@@ -1,0 +1,121 @@
+{"records":[
+{"id":"inextinguishable","verdict":"MISS","reason":"Relic aspect: you die at dying 5 instead of dying 4. That threshold is a real sheet number the engine already models via dyingThresholdBonus (diehard, soul-well, spark-of-immortality all use it). The 'success becomes critical success vs death/void effects' half has no field and stays as prose.","fix":{"dyingThresholdBonus":1}},
+
+{"id":"infesting-shot","verdict":"NEEDS_NOTHING","reason":"Trebuchet ammunition; after it is Launched two hostile ant swarms appear and act on their own. Everything it does happens on the GM's side of the table."},
+
+{"id":"infiltrators-accessory","verdict":"NEEDS_NOTHING","reason":"Base sword-cane statistics (d6 piercing, agile/finesse/concealable, sword group) are carried in `damage`/`traits`; the built-in +1 striking is etched on the inventory instance (InvItem.runes) exactly as for every other specific magic weapon, since no catalogue rune field exists. Hide Magic disguises the item itself and changes nothing on the owner's sheet."},
+
+{"id":"infused-stone","verdict":"NEEDS_NOTHING","reason":"Raw crafting material sold per pound; the record has no rules text at all."},
+
+{"id":"injection-reservoir","verdict":"MISS","reason":"The adjustment worsens the owner's multiple attack penalty by one with the modified weapon (-6/-11, or -5/-10 agile) and nothing records that. A global mapReduction would wrongly hit every weapon, so the scoped conditional lane is correct.","fix":{"situational":[{"targets":[{"kind":"strikeAttack"}],"when":"on your 2nd or later attack with the adjusted weapon","bonus":"-1 untyped"}]}},
+
+{"id":"inquisitive-quill","verdict":"NEEDS_NOTHING","reason":"Intelligent item with its own stat block (its Perception, skills, mental modifiers, Will). Nothing in the text alters the owner's sheet; the copying/transcribing is downtime scribing."},
+
+{"id":"inspiring","verdict":"MISS","reason":"Relic aspect whose activation gives the owner an unlimited spell-like ability that 'otherwise works as the uplifting overture cantrip'. Granting a repeatable castable is the innateSpells lane (atWill, as with crown-of-the-master/figment); the ally-facing status bonus is then resolved by the spell itself.","fix":{"innateSpells":[{"spellId":"uplifting-overture","tradition":"occult","atWill":true}]}},
+
+{"id":"instant-fortress","verdict":"NEEDS_NOTHING","reason":"Activation unfolds a building onto the map with its own cover, doors and Force Open DC. Pure battlefield geometry the GM adjudicates; no standing change to the owner."},
+
+{"id":"instinct-crown","verdict":"MISS","reason":"Two once-per-day activations, neither tracked: an initiative-trigger Quick-Tempered boost (+10 temporary HP from Rage) and an instinct boon that lasts 'until the end of your rage' (quickened for Fury, Large + reach for Giant, extended raging resistance for Spirit/Superstition, and so on). A lasting activated effect is the mode lane, and the per-day limits are counters.","fix":{"counters":[{"id":"quick-tempered","label":"Quick-Tempered boost (per day)","max":1,"per":"day","resetsOnRest":true},{"id":"instinct-boon","label":"Instinct boon (per day)","max":1,"per":"day","resetsOnRest":true}],"mode":{"id":"item-instinct-crown","name":"Instinct Crown Boon","fromItemId":"instinct-crown","duration":"until the end of your rage","survivesRest":false,"modifiers":[],"note":"Once per day while raging, if the crown's instinct matches yours: Animal - Stride, +10 temporary HP, +3 damage and deadly d8 on your animal unarmed attacks. Dragon - adjacent attackers take 2d6 of your breath's damage type. Fury - quickened (Stride or Strike only). Giant - become Large, +5 ft reach, +2 damage with the larger weapon, your Strides leave difficult terrain. Spirit - raging resistance applies to all physical and poison damage, halved against magical attacks. Superstition - roll twice and take the higher on saves against magic, and raging resistance applies to all traditions. The separate once-per-day initiative activation adds 10 more temporary HP to Quick-Tempered's Rage."}}},
+
+{"id":"intelligent-relic","verdict":"NEEDS_NOTHING","reason":"Every number it grants (senses, Perception, three skills, mental modifiers, Will) belongs to the RELIC as an intelligent item, not to the owner's sheet."},
+
+{"id":"inubrix-chunk","verdict":"NEEDS_NOTHING","reason":"Raw precious material sold for Crafting; the Hardness/HP/BT table describes objects made from it, not the buyer."},
+
+{"id":"inubrix-ingot","verdict":"NEEDS_NOTHING","reason":"Raw precious material sold for Crafting; the Hardness/HP/BT table describes objects made from it, not the buyer."},
+
+{"id":"inubrix-object-high-grade","verdict":"NEEDS_NOTHING","reason":"Per-Bulk price entry for a non-weapon, non-armour object made of inubrix; a crafting cost line with no owner-facing rule."},
+
+{"id":"inubrix-object-standard-grade","verdict":"NEEDS_NOTHING","reason":"Per-Bulk price entry for a non-weapon, non-armour object made of inubrix; a crafting cost line with no owner-facing rule."},
+
+{"id":"inventors-chair","verdict":"MISS","reason":"Two concrete owner-facing things are promised and neither is carried: the frame contains sterling artisan's tools (a +1 item bonus when you Craft) and the chair is equipped with wheel blades (an attached agile d4 slashing weapon, sword group). The relic's listed gifts are chosen separately.","fix":{"situational":[{"targets":[{"kind":"skill","detail":"crafting"}],"when":"to Craft using its built-in sterling artisan's tools","bonus":"+1 item"}],"grantedStrikes":[{"name":"Wheel Blades","die":"1d4","damageType":"slashing","traits":["agile","attached","free-hand"],"group":"sword"}]}},
+
+{"id":"investigator-kit","verdict":"NEEDS_NOTHING","reason":"A starting-money shopping bundle. Every mechanical thing in it (studded leather, shortsword, sap, crossbow, crowbar) is bought as its own catalogue item, which is where the statistics live."},
+
+{"id":"iron-ingot","verdict":"NEEDS_NOTHING","reason":"Raw crafting material with a price and no rules text."},
+
+{"id":"item-cache-common-cache-level-1","verdict":"NEEDS_NOTHING","reason":"A downtime resupply service: the GM decides whether a supplier exists and what can be sourced. Whatever arrives is bought as its own item."},
+
+{"id":"item-cache-common-cache-level-2","verdict":"NEEDS_NOTHING","reason":"A downtime resupply service: the GM decides whether a supplier exists and what can be sourced. Whatever arrives is bought as its own item."},
+
+{"id":"item-cache-common-cache-level-3","verdict":"NEEDS_NOTHING","reason":"A downtime resupply service: the GM decides whether a supplier exists and what can be sourced. Whatever arrives is bought as its own item."},
+
+{"id":"item-cache-common-cache-level-4","verdict":"NEEDS_NOTHING","reason":"A downtime resupply service: the GM decides whether a supplier exists and what can be sourced. Whatever arrives is bought as its own item."},
+
+{"id":"item-cache-uncommon-cache-level-1","verdict":"NEEDS_NOTHING","reason":"A downtime resupply service: the GM decides whether a supplier exists and what can be sourced. Whatever arrives is bought as its own item."},
+
+{"id":"item-cache-uncommon-cache-level-2","verdict":"NEEDS_NOTHING","reason":"A downtime resupply service: the GM decides whether a supplier exists and what can be sourced. Whatever arrives is bought as its own item."},
+
+{"id":"item-cache-uncommon-cache-level-3","verdict":"NEEDS_NOTHING","reason":"A downtime resupply service: the GM decides whether a supplier exists and what can be sourced. Whatever arrives is bought as its own item."},
+
+{"id":"item-cache-uncommon-cache-level-4","verdict":"NEEDS_NOTHING","reason":"A downtime resupply service: the GM decides whether a supplier exists and what can be sourced. Whatever arrives is bought as its own item."},
+
+{"id":"jahan-waystone","verdict":"NEEDS_NOTHING","reason":"An enormous paired teleport gate; the 1-minute activation moves creatures between two GM-placed stones. Nothing standing, nothing on the owner's sheet."},
+
+{"id":"jar-of-shifting-sands","verdict":"NEEDS_NOTHING","reason":"Both activations only pour sand onto the map (a stream of sand, or one square of difficult terrain). Terrain the GM tracks; no owner statistic changes."},
+
+{"id":"jellyfish-lamp","verdict":"NEEDS_NOTHING","reason":"A living light source as bright as a candle. Illumination is not a sheet statistic and the upkeep is flavour."},
+
+{"id":"jistkan-colossus-crusher","verdict":"MISS","reason":"Beyond the maul baseline (d12 bludgeoning, shove, hammer group, which is carried) the text promises the owner +1d6 persistent force damage whenever they damage a construct, and nothing records it. It must stay conditional - an unconditional strikeDamage entry would add the die to every Strike. The crit-stun is target-side, and the +2 greater striking is etched on the inventory instance like every other specific magic weapon.","fix":{"situational":[{"targets":[{"kind":"strikeDamage"}],"when":"when you damage a construct with this maul","bonus":"1d6 persistent force"}]}},
+
+{"id":"jorngarls-harm","verdict":"NEEDS_NOTHING","reason":"Greataxe baseline (d12 slashing, sweep, axe group) is carried; the +3 major striking vorpal package is etched on the inventory instance (vorpal exists in core.runes) as with every specific magic weapon. The only remaining text - Final Blade soul trapping that blocks resurrection - is entirely GM adjudication about slain creatures."},
+
+{"id":"judgement-thurible","verdict":"MISS","reason":"A spellheart, and every other spellheart in the corpus delivers its spells through heldSpells plus per-day counters (flaming-star, grim-sandglass, five-feather-wreath). This one carries nothing, so the owner never sees divine lance or divine wrath on their Spells page. The armour/weapon rider (3rd-rank protection, or a temporary holy/unholy rune) is a one-round follow-on to the activation and stays as prose.","fix":{"heldSpells":{"0":["divine-lance"],"4":["divine-wrath"]},"counters":[{"id":"freq","label":"per day","max":1,"per":"day","resetsOnRest":true}]}},
+
+{"id":"judgement-thurible-greater","verdict":"MISS","reason":"Same spellheart gap at the greater tier: divine lance at will, 6th-rank divine wrath once per day and divine decree once per day are promised and nothing delivers them.","fix":{"heldSpells":{"0":["divine-lance"],"6":["divine-wrath"],"7":["divine-decree"]},"counters":[{"id":"freq","label":"per day","max":1,"per":"day","resetsOnRest":true},{"id":"freq2","label":"per day","max":1,"per":"day","resetsOnRest":true}]}},
+
+{"id":"judgement-thurible-major","verdict":"MISS","reason":"Same spellheart gap at the major tier: divine lance at will, 7th-rank divine decree once per day and summon deific herald once per day, none of it recorded.","fix":{"heldSpells":{"0":["divine-lance"],"7":["divine-decree"],"8":["summon-deific-herald"]},"counters":[{"id":"freq","label":"per day","max":1,"per":"day","resetsOnRest":true},{"id":"freq2","label":"per day","max":1,"per":"day","resetsOnRest":true}]}},
+
+{"id":"junk-bomb-lesser","verdict":"NEEDS_NOTHING","reason":"The bomb's dice are already carried in `damage` (1d8 slashing, bomb group, 20-foot range). Splash and persistent damage are resolved when the bomb is thrown and are not modelled for any bomb in the corpus (alchemist's fire is stored identically), so this record is consistent and inert by design."},
+
+{"id":"juxtaposition-ammunition","verdict":"NEEDS_NOTHING","reason":"Consumable ammunition that replaces its damage with a forced teleport of the TARGET on a failed save. Everything it does lands on the creature you shot."},
+
+{"id":"kayalini","verdict":"NEEDS_NOTHING","reason":"A pet the text explicitly bars from being combat trained or contributing to combat in any way. Purely a companion animal in flavour terms."},
+
+{"id":"keen","verdict":"ALREADY_OK","reason":"Delivered as a weapon property rune: core.runes.keen exists (slot 'weapon', kind 'property', level 13, 3000 gp), so it is etchable from the item editor and the strike code reads it. The catalogue equipment entry is only the shop listing."},
+
+{"id":"keep-stone-chunk","verdict":"NEEDS_NOTHING","reason":"Raw precious material for Crafting. The DC 5 flat check protects RAW keep stone and large keep-stone structures against spells - a property of the material lump and of buildings, not of a wearer."},
+
+{"id":"keep-stone-ingot","verdict":"NEEDS_NOTHING","reason":"Raw precious material for Crafting; the anti-magic flat check applies to the raw stone and to structures, not to a carrier's sheet."},
+
+{"id":"keep-stone-object-high-grade","verdict":"NEEDS_NOTHING","reason":"Per-Bulk price entry for a non-weapon, non-armour keep stone object; a crafting cost line with no owner-facing rule."},
+
+{"id":"kite","verdict":"NEEDS_NOTHING","reason":"A toy. Pure flavour."},
+
+{"id":"knapsack-of-halflingkind","verdict":"MISS","reason":"The extradimensional space IS delivered (capacity 50 Bulk, ignoredBulk 50, matching spacious-pouch-type-ii) and the cookware is flavour, but the third compartment is a real daily healing resource - four berry tarts per day, each healing 2d8+4 when eaten with an Interact action - and nothing tracks it. Charges are the counters lane.","fix":{"counters":[{"id":"tarts","label":"berry tarts (per day)","max":4,"per":"day","resetsOnRest":true}]}},
+
+{"id":"knaves-standard","verdict":"MISS","reason":"The banner's aura gives the OWNER (not only allies) +1d4 precision damage whenever they critically succeed at a Strike against an off-guard target, and nothing records it. It has to stay conditional - an unconditional strikeDamage entry would add the die to every Strike.","fix":{"situational":[{"targets":[{"kind":"strikeDamage"}],"when":"on a critical hit against an off-guard target in the aura","bonus":"1d4 precision"}]}},
+
+{"id":"knaves-standard-greater","verdict":"MISS","reason":"Same owner-facing aura at the greater tier: +1d6 precision damage on a critical Strike against an off-guard target, unrecorded.","fix":{"situational":[{"targets":[{"kind":"strikeDamage"}],"when":"on a critical hit against an off-guard target in the aura","bonus":"1d6 precision"}]}},
+
+{"id":"knaves-standard-major","verdict":"MISS","reason":"Same owner-facing aura at the major tier: +1d8 precision damage on a critical Strike against an off-guard target, unrecorded.","fix":{"situational":[{"targets":[{"kind":"strikeDamage"}],"when":"on a critical hit against an off-guard target in the aura","bonus":"1d8 precision"}]}},
+
+{"id":"knights-standard","verdict":"NEEDS_NOTHING","reason":"A mundane heraldic flag. Mounting it on a polearm is an Interact action, and 'some individuals are inspired or demoralized' is explicit GM colour with no numbers."},
+
+{"id":"ladder-10-foot","verdict":"NEEDS_NOTHING","reason":"Mundane gear with no rules text; its Bulk and hands are already on the record."},
+
+{"id":"ladder-10-ft","verdict":"NEEDS_NOTHING","reason":"Duplicate mundane ladder entry; price, Bulk and hands are the whole content."},
+
+{"id":"land-delvers-chair","verdict":"MISS","reason":"'You increase your Speed to 20 feet or your swim Speed, whichever is lower' is a literal change to the Speed line and nothing carries it. landSpeedMin is the existing field for a floor on land Speed (cecaelia-merfolk, flying-animal, quadruped all use it) and does not over-grant to a character who already moves faster. The swim-Speed cap for a slower swimmer remains prose.","fix":{"landSpeedMin":20}},
+
+{"id":"lantern-bulls-eye","verdict":"NEEDS_NOTHING","reason":"Mundane light source. Bright light in a 60-foot cone is map illumination, not a sheet statistic, and the oil consumption is bookkeeping."},
+
+{"id":"lantern-hooded","verdict":"NEEDS_NOTHING","reason":"Mundane light source; the 30-foot radius and the shutter Interact action are map illumination, not sheet statistics."},
+
+{"id":"lantern-implement","verdict":"ALREADY_OK","reason":"An empty catalogue placeholder for the thaumaturge implement of the same name; the implement lane is core.implement.lantern, chosen and delivered through the thaumaturge's Implement class feature rather than through the shop item."},
+
+{"id":"large-bore-modifications","verdict":"MISS","reason":"Attaching it raises the kickback trait's damage bonus from 1 to 2, i.e. the owner deals +1 more damage with that firearm, and nothing records it. It must be scoped to the modified weapon rather than a flat strikeDamage entry. The raised Strength requirement and the scatter radius/-2 clause are conditions the GM and the weapon's own traits handle.","fix":{"situational":[{"targets":[{"kind":"strikeDamage"}],"when":"with the modified kickback firearm (kickback bonus 1 to 2)","bonus":"+1 untyped"}]}},
+
+{"id":"lashing-currents","verdict":"MISS","reason":"The aspect gives the owner a whole new Strike - 1d4 bludgeoning, disarm/finesse/reach/trip/versatile S, flail group - and nothing puts it on the Strikes page. This is exactly the grantedStrikes lane (whip-tail, phantom-shroud, vengeful-arm). That the Strike inherits the relic's runes stays as prose.","fix":{"grantedStrikes":[{"name":"Lashing Currents","die":"1d4","damageType":"bludgeoning","traits":["disarm","finesse","reach","trip","versatile-s"],"group":"flail"}]}},
+
+{"id":"leash","verdict":"NEEDS_NOTHING","reason":"Mundane gear with no rules text at all."},
+
+{"id":"leather","verdict":"NEEDS_NOTHING","reason":"Raw crafting material priced per square yard; no rules text."},
+
+{"id":"legerdemain-handkerchief","verdict":"NEEDS_NOTHING","reason":"Holds exactly one item of negligible Bulk in an extradimensional space - no Bulk relief worth a capacity entry - and the activation is an immediate swap resolved at the table."},
+
+{"id":"lesser-aurochs-might-tattoo","verdict":"NEEDS_NOTHING","reason":"A once-per-day activation (Stride twice, Strike, target attempts a DC 24 Fortitude save) that is resolved and gone in the same moment; all of its consequences land on the target. The once-per-day limit is already on the record as `frequency`."},
+
+{"id":"lesser-banner-of-creeping-death","verdict":"NEEDS_NOTHING","reason":"A once-per-minute activation that deals 1d4+1 void damage with a basic Fortitude save to creatures in the aura - damage aimed at other creatures, resolved immediately, with no standing change to the owner. The frequency is already on the record."},
+
+{"id":"lesser-bougainvillea-blossom","verdict":"NEEDS_NOTHING","reason":"A consumable catalyst that changes the AREA an entangling flora spell creates (hazardous terrain dealing 1 piercing to enemies entering it). It modifies the spell's effect on other creatures, not the caster's sheet."}
+]}

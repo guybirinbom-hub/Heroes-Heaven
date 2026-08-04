@@ -1,0 +1,821 @@
+{
+ "rulings": [
+  {
+   "id": "twining-chains",
+   "upheld": true,
+   "why": "Real: the adjustment worsens the wearer’s armor check penalty by 2 and no armor-delta field exists, so a situational star is the only honest lane — but the judge’s wording calls a check PENALTY an 'untyped bonus' and drops the Strength-entry condition the same item changes; fix reworded.",
+   "correction": {
+    "fix": {
+     "situational": [
+      {
+       "targets": [
+        {
+         "kind": "skill",
+         "detail": "acrobatics"
+        },
+        {
+         "kind": "skill",
+         "detail": "athletics"
+        },
+        {
+         "kind": "skill",
+         "detail": "stealth"
+        },
+        {
+         "kind": "skill",
+         "detail": "thievery"
+        }
+       ],
+       "when": "wearing armor fitted with twining chains — its armor check penalty is 2 worse, and its Strength entry is 2 higher so you meet it less often",
+       "bonus": "-2 (worsened armor check penalty)"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "umbral-body",
+   "upheld": false,
+   "why": "Overturned: a relic ASPECT, not an ownable item (level 0, no price, no invested trait — build.ts only reads item.innateSpells for INVESTED inventory), and atWill over-grants a 1d4-round-recharge activation into unlimited casting while silently discarding the printed 6th rank (InnateSpellGrant ignores  when atWill is set).",
+   "correction": {
+    "verdict": "NEEDS_NOTHING"
+   }
+  },
+  {
+   "id": "venom-glands",
+   "upheld": true,
+   "why": "Real granted Strike on an invested implant, but the judge wrongly claimed grantedStrikes has no range key — GrantedStrike.range exists (spined-azarketi, venom-spit), so the fix as written turns a ranged spray into a melee attack.",
+   "correction": {
+    "fix": {
+     "grantedStrikes": [
+      {
+       "name": "Poison Spray",
+       "die": "1d4",
+       "damageType": "poison",
+       "traits": [
+        "magical",
+        "poison",
+        "unarmed"
+       ],
+       "group": "brawling",
+       "range": 10
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-choking-mist-2nd-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified mist exists in core.spells and the rank key 2 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-choking-mist-4th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified cinder-swarm exists in core.spells and the rank key 4 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-clinging-rime-7th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified frigid-flurry exists in core.spells and the rank key 7 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-clinging-rime-8th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified frigid-flurry exists in core.spells and the rank key 8 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-clinging-rime-9th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified frigid-flurry exists in core.spells and the rank key 9 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-dazzling-rays-3rd-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified holy-light exists in core.spells and the rank key 3 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-dazzling-rays-4th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified holy-light exists in core.spells and the rank key 4 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-dazzling-rays-5th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified holy-light exists in core.spells and the rank key 5 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-dazzling-rays-6th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified holy-light exists in core.spells and the rank key 6 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-dazzling-rays-7th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified holy-light exists in core.spells and the rank key 7 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-dazzling-rays-8th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified holy-light exists in core.spells and the rank key 8 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-dazzling-rays-9th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified holy-light exists in core.spells and the rank key 9 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-dumbfounding-doom-3rd-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified impending-doom exists in core.spells and the rank key 3 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-dumbfounding-doom-4th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified impending-doom exists in core.spells and the rank key 4 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-dumbfounding-doom-5th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified impending-doom exists in core.spells and the rank key 5 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-dumbfounding-doom-6th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified impending-doom exists in core.spells and the rank key 6 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-dumbfounding-doom-7th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified impending-doom exists in core.spells and the rank key 7 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-dumbfounding-doom-8th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified impending-doom exists in core.spells and the rank key 8 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-dumbfounding-doom-9th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified impending-doom exists in core.spells and the rank key 9 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-hawthorn-2nd-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified oaken-resilience exists in core.spells and the rank key 2 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-hawthorn-4th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified oaken-resilience exists in core.spells and the rank key 4 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-hawthorn-6th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified oaken-resilience exists in core.spells and the rank key 6 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-hawthorn-8th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified oaken-resilience exists in core.spells and the rank key 8 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-hybrid-form-2nd-rank-spell",
+   "upheld": true,
+   "why": "Upheld: a generic wand whose spell is supplied at crafting; spellSlot {rank:2} is the documented lane, ItemDetail already ships the per-instance heldSpell picker, and the parallel modelled copy uses the identical shape.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-hybrid-form-3rd-rank-spell",
+   "upheld": true,
+   "why": "Upheld: a generic wand whose spell is supplied at crafting; spellSlot {rank:3} is the documented lane, ItemDetail already ships the per-instance heldSpell picker, and the parallel modelled copy uses the identical shape.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-hybrid-form-4th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: a generic wand whose spell is supplied at crafting; spellSlot {rank:4} is the documented lane, ItemDetail already ships the per-instance heldSpell picker, and the parallel modelled copy uses the identical shape.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-hybrid-form-5th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: a generic wand whose spell is supplied at crafting; spellSlot {rank:5} is the documented lane, ItemDetail already ships the per-instance heldSpell picker, and the parallel modelled copy uses the identical shape.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-hybrid-form-6th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: a generic wand whose spell is supplied at crafting; spellSlot {rank:6} is the documented lane, ItemDetail already ships the per-instance heldSpell picker, and the parallel modelled copy uses the identical shape.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-hybrid-form-7th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: a generic wand whose spell is supplied at crafting; spellSlot {rank:7} is the documented lane, ItemDetail already ships the per-instance heldSpell picker, and the parallel modelled copy uses the identical shape.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-hybrid-form-8th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: a generic wand whose spell is supplied at crafting; spellSlot {rank:8} is the documented lane, ItemDetail already ships the per-instance heldSpell picker, and the parallel modelled copy uses the identical shape.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-hybrid-form-9th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: a generic wand whose spell is supplied at crafting; spellSlot {rank:9} is the documented lane, ItemDetail already ships the per-instance heldSpell picker, and the parallel modelled copy uses the identical shape.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-mental-purification-1st-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified soothe exists in core.spells and the rank key 1 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-mental-purification-2nd-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified soothe exists in core.spells and the rank key 2 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-mental-purification-3rd-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified soothe exists in core.spells and the rank key 3 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-mental-purification-4th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified soothe exists in core.spells and the rank key 4 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-mental-purification-5th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified soothe exists in core.spells and the rank key 5 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-mental-purification-6th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified soothe exists in core.spells and the rank key 6 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-mental-purification-7th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified soothe exists in core.spells and the rank key 7 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-mental-purification-8th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified soothe exists in core.spells and the rank key 8 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-mental-purification-9th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified soothe exists in core.spells and the rank key 9 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-mercy-1st-rank-spell",
+   "upheld": true,
+   "why": "Upheld: a generic wand whose spell is supplied at crafting; spellSlot {rank:1} is the documented lane, ItemDetail already ships the per-instance heldSpell picker, and the parallel modelled copy uses the identical shape.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-mercy-2nd-rank-spell",
+   "upheld": true,
+   "why": "Upheld: a generic wand whose spell is supplied at crafting; spellSlot {rank:2} is the documented lane, ItemDetail already ships the per-instance heldSpell picker, and the parallel modelled copy uses the identical shape.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-mercy-3rd-rank-spell",
+   "upheld": true,
+   "why": "Upheld: a generic wand whose spell is supplied at crafting; spellSlot {rank:3} is the documented lane, ItemDetail already ships the per-instance heldSpell picker, and the parallel modelled copy uses the identical shape.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-mercy-4th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: a generic wand whose spell is supplied at crafting; spellSlot {rank:4} is the documented lane, ItemDetail already ships the per-instance heldSpell picker, and the parallel modelled copy uses the identical shape.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-mercy-5th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: a generic wand whose spell is supplied at crafting; spellSlot {rank:5} is the documented lane, ItemDetail already ships the per-instance heldSpell picker, and the parallel modelled copy uses the identical shape.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-mercy-6th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: a generic wand whose spell is supplied at crafting; spellSlot {rank:6} is the documented lane, ItemDetail already ships the per-instance heldSpell picker, and the parallel modelled copy uses the identical shape.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-mercy-7th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: a generic wand whose spell is supplied at crafting; spellSlot {rank:7} is the documented lane, ItemDetail already ships the per-instance heldSpell picker, and the parallel modelled copy uses the identical shape.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-mercy-8th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: a generic wand whose spell is supplied at crafting; spellSlot {rank:8} is the documented lane, ItemDetail already ships the per-instance heldSpell picker, and the parallel modelled copy uses the identical shape.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-mercy-9th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: a generic wand whose spell is supplied at crafting; spellSlot {rank:9} is the documented lane, ItemDetail already ships the per-instance heldSpell picker, and the parallel modelled copy uses the identical shape.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-paralytic-shock-3rd-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified paralyze exists in core.spells and the rank key 3 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-paralytic-shock-7th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified paralyze exists in core.spells and the rank key 7 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-pernicious-poison-1st-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified spider-sting exists in core.spells and the rank key 1 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-pernicious-poison-6th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified spider-sting exists in core.spells and the rank key 6 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-reaching-1st-rank-spell",
+   "upheld": true,
+   "why": "Upheld: a generic wand whose spell is supplied at crafting; spellSlot {rank:1} is the documented lane, ItemDetail already ships the per-instance heldSpell picker, and the parallel modelled copy uses the identical shape.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-reaching-2nd-rank-spell",
+   "upheld": true,
+   "why": "Upheld: a generic wand whose spell is supplied at crafting; spellSlot {rank:2} is the documented lane, ItemDetail already ships the per-instance heldSpell picker, and the parallel modelled copy uses the identical shape.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-reaching-3rd-rank-spell",
+   "upheld": true,
+   "why": "Upheld: a generic wand whose spell is supplied at crafting; spellSlot {rank:3} is the documented lane, ItemDetail already ships the per-instance heldSpell picker, and the parallel modelled copy uses the identical shape.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-reaching-4th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: a generic wand whose spell is supplied at crafting; spellSlot {rank:4} is the documented lane, ItemDetail already ships the per-instance heldSpell picker, and the parallel modelled copy uses the identical shape.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-reaching-5th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: a generic wand whose spell is supplied at crafting; spellSlot {rank:5} is the documented lane, ItemDetail already ships the per-instance heldSpell picker, and the parallel modelled copy uses the identical shape.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-reaching-6th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: a generic wand whose spell is supplied at crafting; spellSlot {rank:6} is the documented lane, ItemDetail already ships the per-instance heldSpell picker, and the parallel modelled copy uses the identical shape.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-reaching-7th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: a generic wand whose spell is supplied at crafting; spellSlot {rank:7} is the documented lane, ItemDetail already ships the per-instance heldSpell picker, and the parallel modelled copy uses the identical shape.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-reaching-8th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: a generic wand whose spell is supplied at crafting; spellSlot {rank:8} is the documented lane, ItemDetail already ships the per-instance heldSpell picker, and the parallel modelled copy uses the identical shape.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-reaching-9th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: a generic wand whose spell is supplied at crafting; spellSlot {rank:9} is the documented lane, ItemDetail already ships the per-instance heldSpell picker, and the parallel modelled copy uses the identical shape.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-refracting-rays-4th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified chromatic-ray exists in core.spells and the rank key 4 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-refracting-rays-6th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified chromatic-ray exists in core.spells and the rank key 6 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-rolling-flames-2nd-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified floating-flame exists in core.spells and the rank key 2 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-rolling-flames-3rd-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified floating-flame exists in core.spells and the rank key 3 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-rolling-flames-4th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified floating-flame exists in core.spells and the rank key 4 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-rolling-flames-5th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified floating-flame exists in core.spells and the rank key 5 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-rolling-flames-6th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified floating-flame exists in core.spells and the rank key 6 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-rolling-flames-7th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified floating-flame exists in core.spells and the rank key 7 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-rolling-flames-8th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified floating-flame exists in core.spells and the rank key 8 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-rolling-flames-9th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified floating-flame exists in core.spells and the rank key 9 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-slaying-7th-level-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified execute exists in core.spells and the rank key 7 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-slaying-8th-level-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified execute exists in core.spells and the rank key 8 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-slaying-9th-level-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified execute exists in core.spells and the rank key 9 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-spiritual-warfare-2nd-level",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified spiritual-weapon exists in core.spells and the rank key 2 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-spiritual-warfare-4th-level",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified spiritual-weapon exists in core.spells and the rank key 4 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-spiritual-warfare-6th-level",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified spiritual-weapon exists in core.spells and the rank key 6 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-spiritual-warfare-8th-level",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified spiritual-weapon exists in core.spells and the rank key 8 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-splintered-sorrows-2nd-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified splinter-volley exists in core.spells and the rank key 2 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-splintered-sorrows-4th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified splinter-volley exists in core.spells and the rank key 4 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-splintered-sorrows-6th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified splinter-volley exists in core.spells and the rank key 6 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-splintered-sorrows-8th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified splinter-volley exists in core.spells and the rank key 8 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-teeming-ghosts-2nd-level-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified false-vitality exists in core.spells and the rank key 2 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-teeming-ghosts-2nd-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified false-vitality exists in core.spells and the rank key 2 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-teeming-ghosts-3rd-level-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified false-vitality exists in core.spells and the rank key 3 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-teeming-ghosts-3rd-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified false-vitality exists in core.spells and the rank key 3 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-teeming-ghosts-4th-level-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified false-vitality exists in core.spells and the rank key 4 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-teeming-ghosts-4th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified false-vitality exists in core.spells and the rank key 4 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-teeming-ghosts-5th-level-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified false-vitality exists in core.spells and the rank key 5 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-teeming-ghosts-5th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified false-vitality exists in core.spells and the rank key 5 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-teeming-ghosts-6th-level-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified false-vitality exists in core.spells and the rank key 6 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-teeming-ghosts-6th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified false-vitality exists in core.spells and the rank key 6 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-teeming-ghosts-7th-level-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified false-vitality exists in core.spells and the rank key 7 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-teeming-ghosts-7th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified false-vitality exists in core.spells and the rank key 7 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-teeming-ghosts-8th-level-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified false-vitality exists in core.spells and the rank key 8 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-teeming-ghosts-8th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified false-vitality exists in core.spells and the rank key 8 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-teeming-ghosts-9th-level-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified false-vitality exists in core.spells and the rank key 9 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-teeming-ghosts-9th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified false-vitality exists in core.spells and the rank key 9 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-thundering-echoes-3rd-level",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified noise-blast exists in core.spells and the rank key 3 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-thundering-echoes-4th-level",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified noise-blast exists in core.spells and the rank key 4 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-thundering-echoes-5th-level",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified noise-blast exists in core.spells and the rank key 5 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-thundering-echoes-6th-level",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified noise-blast exists in core.spells and the rank key 6 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-thundering-echoes-7th-level",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified noise-blast exists in core.spells and the rank key 7 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-thundering-echoes-8th-level",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified noise-blast exists in core.spells and the rank key 8 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-toxic-blades-6th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified blessed-boundary exists in core.spells and the rank key 6 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-toxic-blades-7th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified blessed-boundary exists in core.spells and the rank key 7 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "wand-of-toxic-blades-8th-rank-spell",
+   "upheld": true,
+   "why": "Upheld: the record carries no spell lane at all, the printed spell is cast by the OWNER, and build.ts exposes item.heldSpells with no worn/invested gate — verified blessed-boundary exists in core.spells and the rank key 8 matches this variant’s printed rank.",
+   "correction": {}
+  },
+  {
+   "id": "warcallers-chime-of-blasting",
+   "upheld": true,
+   "why": "Upheld: a named 3rd-rank noise blast the owner casts once per day, absent from the record; heldSpells already covers non-wand items (firestarter-pellets, noxious-incense) and the frequency counter is already present.",
+   "correction": {}
+  },
+  {
+   "id": "warcallers-chime-of-destruction",
+   "upheld": true,
+   "why": "Upheld: shatter (rank 2, verified) is a casting the owner gains and nothing on the record delivers it; the Hardness rider is object-side and correctly omitted.",
+   "correction": {}
+  },
+  {
+   "id": "warcallers-chime-of-refuge",
+   "upheld": true,
+   "why": "Real: neither the sanctuary casting nor any use limit is on the record. But limitedUses is a FEAT field — ItemBase has no such key; the item lane for 'five per day' is frequency, which itemUses.ts synthesizes into a counter chip.",
+   "correction": {
+    "fix": {
+     "heldSpells": {
+      "1": [
+       "sanctuary"
+      ]
+     },
+     "frequency": {
+      "max": 5,
+      "per": "day"
+     }
+    }
+   }
+  },
+  {
+   "id": "wayfinder",
+   "upheld": true,
+   "why": "Upheld: the Activate clause is a named spell the owner casts; ringmasters-staff ships the identical heldSpells {0:[light]} and light is rank 0 in core.spells.",
+   "correction": {}
+  },
+  {
+   "id": "weapon-siphon",
+   "upheld": false,
+   "why": "Overturned: the text worsens the MULTIPLE ATTACK PENALTY, not the attack roll — a strikeAttack star reading '-1 untyped' misstates the first attack of every turn; and the siphon is isAttachable (usage attached-to-melee-weapon), so once affixed its inv entry carries attachedTo and InventoryTab hides every carry-flag control, leaving explain.ts’s equipped/worn/invested gate permanently unsatisfiable.",
+   "correction": {
+    "verdict": "NEEDS_NOTHING"
+   }
+  },
+  {
+   "id": "wheel-chair-chair-storage",
+   "upheld": true,
+   "why": "Real encumbrance relief, but ignoredBulk alone is dead: derive.ts makeEffBulk reads it only when item.itemType === 'container' (all 46 shipped ignoredBulk items are containers, none otherwise). Capacity is left unset — the printed text names none and InventoryTab treats absent capacity as no limit.",
+   "correction": {
+    "fix": {
+     "itemType": "container",
+     "ignoredBulk": 2
+    }
+   }
+  },
+  {
+   "id": "wheelchair-land-delvers-chair",
+   "upheld": true,
+   "why": "Upheld: the stored text prints a standing Speed change and the fix reproduces items.supramarine-chair’s passiveEffects.speeds formula verbatim — verified character-for-character against core.json.",
+   "correction": {}
+  },
+  {
+   "id": "wig-of-holding",
+   "upheld": true,
+   "why": "Upheld: an extradimensional container whose bulk relief is unmodelled; itemType container + capacity {bulk:0.4} is exactly four L-Bulk items and knapsack-of-halflingkind ships the same invested-container shape.",
+   "correction": {}
+  },
+  {
+   "id": "winged-greater",
+   "upheld": true,
+   "why": "Upheld: the 35,000 gp rune delivers no Speed anywhere (core.runes.winged-greater carries only slot/kind/level/price); the mode has a fromItemId so it is not the invisible-mode trap, and the base item-winged mode ships the identical shape.",
+   "correction": {}
+  },
+  {
+   "id": "woe",
+   "upheld": true,
+   "why": "Upheld: 'functions as a Living Mantle' explicitly imports items.living-mantle’s passiveEffects, verified to be exactly {skills:{nature:2}, immunities:['severe cold','severe heat']}; Woe carries nothing.",
+   "correction": {}
+  },
+  {
+   "id": "wounding",
+   "upheld": false,
+   "why": "Overturned: the fix names needsEngineWork/note, which are not item fields at all, and the judge itself says no existing shape can hold it — rune.damage is per-hit direct, critPersistent is crit-only, and StrikeDamageRider has no persistent flag. Nothing legal on the ITEM record delivers this; it is an engine/core.runes change, not an item verdict.",
+   "correction": {
+    "verdict": "NEEDS_NOTHING"
+   }
+  },
+  {
+   "id": "wraithweave-patch-type-i",
+   "upheld": true,
+   "why": "Upheld: the wrapped object’s Bulk becoming negligible is real encumbrance relief; container + capacity/ignoredBulk 0.1 matches the printed light-Bulk ceiling and derive’s container-only bulk math.",
+   "correction": {}
+  },
+  {
+   "id": "wraithweave-patch-type-ii",
+   "upheld": true,
+   "why": "Upheld: same gap at the 1-Bulk tier; capacity and ignoredBulk both 1, matching the printed ceiling.",
+   "correction": {}
+  },
+  {
+   "id": "wraithweave-patch-type-iii",
+   "upheld": true,
+   "why": "Upheld: same gap at the 2-Bulk tier; capacity and ignoredBulk both 2, matching the printed ceiling.",
+   "correction": {}
+  }
+ ]
+}

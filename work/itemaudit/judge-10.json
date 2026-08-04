@@ -1,0 +1,516 @@
+{
+ "records": [
+  {
+   "id": "giant-killing",
+   "verdict": "MISS",
+   "reason": "Registered in core.runes as a weapon property rune, but the +1d6 vs giants is nowhere — the rune registry only carries unconditional damage (corrosive et al.), so a giant-killing weapon shows no trace of its extra damage. The crit enfeeblement is target-side.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "strikeDamage" }],
+      "when": "on a Strike against a giant with this weapon",
+      "bonus": "+1d6"
+     }
+    ]
+   }
+  },
+  {
+   "id": "giant-killing-greater",
+   "verdict": "MISS",
+   "reason": "Same as the lesser rune at 2d6: the conditional extra damage the owner deals is not carried anywhere. Ignoring mental resistance and the crit save are target-side.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "strikeDamage" }],
+      "when": "on a Strike against a giant with this weapon",
+      "bonus": "+2d6"
+     }
+    ]
+   }
+  },
+  {
+   "id": "gills",
+   "verdict": "MISS",
+   "reason": "An invested graft whose entire content is a permanent character capability — you can breathe underwater. The record carries nothing, and no item field can express it: passiveEffects covers senses/speeds/resistances/immunities but not breathing, and unlike every other water item this one grants no swim Speed to stand in for it.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "No lane exists for 'can breathe underwater' as a standing capability. Every other water item in core.json fakes it with passiveEffects.speeds.swim; gills grants no swim Speed, so it displays nothing. Needs either a breathing/special-ability line on the Defenses or Senses card, or a boolean on ItemPassiveEffects that derive surfaces."
+   }
+  },
+  {
+   "id": "gingerbread-house",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An activated structure: shelter, food, and doubled rest-day healing are downtime/GM adjudication, and its Hardness/HP are the object's own, not the owner's sheet.",
+   "fix": null
+  },
+  {
+   "id": "glacier-hammer",
+   "verdict": "MISS",
+   "reason": "\"Any hit with this maul deals 1 extra cold damage\" is an unconditional, always-on rider on the weapon's own Strike — exactly the intrinsic strikeDamage lane — and the record carries only category/group/damage. (The built-in +1 potency is a corpus-wide gap: item definitions never carry runes, the inventory entry does; not fixable from here. The Grow Icicles activation stays in the description because a mode modifier cannot express dice.)",
+   "fix": {
+    "strikeDamage": [
+     { "type": "cold", "flat": 1, "appliesTo": "all", "note": "Glacier Hammer" }
+    ]
+   }
+  },
+  {
+   "id": "gliding",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Present in core.runes as an armor property rune, so it can be etched. Its whole content is a 1-action activation that moves you through the air this turn — an action resolved at the table with no standing change.",
+   "fix": null
+  },
+  {
+   "id": "gliding-membranes-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The benefit only exists while the GM resolves a fall — the app computes no falling distance or fall damage, and the landing clause grants no bonus to any check.",
+   "fix": null
+  },
+  {
+   "id": "gliding-membranes-lesser",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same as the greater graft at 25 feet: falls are not a quantity the sheet carries, so there is nothing to change.",
+   "fix": null
+  },
+  {
+   "id": "glittering-scarab",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Pure flavour plus a social access token; the hidden-eye check is made by someone examining the pin, not by the owner.",
+   "fix": null
+  },
+  {
+   "id": "gloom-blade",
+   "verdict": "MISS",
+   "reason": "The blade's whole point is that its runes change with the light — +1 shortsword in bright light, +2 striking in dim light or darkness — plus 1d6 precision when undetected. The record is a plain martial d6 sword with nothing conditional on it, so a player sees no hint that any of it exists.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "strikeAttack" }, { "kind": "strikeDamage" }],
+      "when": "in dim light or darkness (it becomes a +2 striking shortsword)",
+      "bonus": "+1 item to attack and +1 damage die over its bright-light +1 form"
+     },
+     {
+      "targets": [{ "kind": "strikeDamage" }],
+      "when": "attacking a creature you are undetected by with the gloom blade",
+      "bonus": "+1d6 precision"
+     }
+    ]
+   }
+  },
+  {
+   "id": "gloves-of-carelessness",
+   "verdict": "MISS",
+   "reason": "A cursed item that fuses to the wearer the first time the curse fires — the app has a dedicated lane for exactly that (cursedItems.ts reads item.stuck to warn before deletion) and this record does not use it. The fling-and-flat-check curse itself is table adjudication, and the Gloves of Storing it imitates are not in the database, so disguisedAs has nothing to point at.",
+   "fix": { "stuck": true }
+  },
+  {
+   "id": "glue-bomb-lesser",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Every effect (Speed penalty, immobilized, Escape DC) lands on the creature hit, not the thrower.",
+   "fix": null
+  },
+  {
+   "id": "glue-bullet",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Ammunition whose entire effect is a penalty on the target it hits.",
+   "fix": null
+  },
+  {
+   "id": "gluttonous-spear",
+   "verdict": "MISS",
+   "reason": "On a critical hit the WIELDER gains 1d8 temporary Hit Points for 1 minute — an owner-side benefit that appears nowhere; the record is a bare martial spear. (Its printed +1 striking and returning runes are the corpus-wide item-definition rune gap, not fixable here.)",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "hp" }],
+      "when": "on a critical hit with the gluttonous spear",
+      "bonus": "+1d8 temporary Hit Points for 1 minute"
+     }
+    ]
+   }
+  },
+  {
+   "id": "godrending-ammunition",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition; the damage, save and death effect all resolve on the creature struck.",
+   "fix": null
+  },
+  {
+   "id": "godrending-ammunition-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "As the standard version at 15d8 — entirely target-side.",
+   "fix": null
+  },
+  {
+   "id": "gold-ingot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A trade good. Its price is its whole content and the inventory already carries price and Bulk.",
+   "fix": null
+  },
+  {
+   "id": "golden-cased-bullet-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A one-shot activation that ignores the target's cover bonus on that single Strike — cover is a battlefield circumstance the sheet never holds.",
+   "fix": null
+  },
+  {
+   "id": "golden-cased-bullet-major",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same as the other golden-cased bullets: a per-shot cover bypass, resolved and gone.",
+   "fix": null
+  },
+  {
+   "id": "golden-cased-bullet-standard",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same as the other golden-cased bullets: a per-shot cover bypass, resolved and gone.",
+   "fix": null
+  },
+  {
+   "id": "golden-chrysalis",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Replaces a Strike with an area effect that negates other creatures' invisibility; nothing touches the user's sheet.",
+   "fix": null
+  },
+  {
+   "id": "golden-wings",
+   "verdict": "MISS",
+   "reason": "Activating the wings imposes a –2 item penalty to Stealth to Hide and Sneak for 10 minutes and lights you up — a timed, owner-side penalty that no field carries. Item modes are the lane for exactly this, and the record has none (its 1/day frequency already gives a use tracker).",
+   "fix": {
+    "mode": {
+     "id": "item-golden-wings",
+     "name": "Assisted Flight",
+     "fromItemId": "golden-wings",
+     "duration": "10 minutes",
+     "survivesRest": false,
+     "modifiers": [
+      {
+       "value": -2,
+       "type": "item",
+       "target": "skill",
+       "detail": "stealth",
+       "appliesWhen": "to Hide and Sneak"
+      }
+     ],
+     "note": "Assisted Flight: you can Leap 20 feet and must land on solid ground. You shed bright light in a 20-foot radius and dim light 20 feet beyond, and take a -2 item penalty to Stealth to Hide and Sneak."
+    }
+   }
+  },
+  {
+   "id": "goo-grenade-lesser",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Bomb damage, persistent acid and a Speed penalty, all on the creature hit.",
+   "fix": null
+  },
+  {
+   "id": "goring-horn",
+   "verdict": "MISS",
+   "reason": "An invested graft that grants a new unarmed Strike (1d8 piercing, brawling group, forceful and shove). grantedStrikes is the exact lane for items conferring natural attacks and the record carries nothing, so the horn never appears among the character's Strikes.",
+   "fix": {
+    "grantedStrikes": [
+     {
+      "name": "Horn",
+      "die": "d8",
+      "damageType": "piercing",
+      "traits": ["forceful", "shove"],
+      "group": "brawling"
+     }
+    ]
+   }
+  },
+  {
+   "id": "grannys-hedge-trimmer",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered by the weapon statistics the strike code reads directly: the record already carries category 'simple', group 'polearm', damage 1d4 slashing.",
+   "fix": null
+  },
+  {
+   "id": "grappling-arrow",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane ammunition; the halved range increment applies to the shot the GM resolves, not to any stat on the sheet.",
+   "fix": null
+  },
+  {
+   "id": "grappling-bolt",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "As the grappling arrow — mundane ammunition with a per-shot range note.",
+   "fix": null
+  },
+  {
+   "id": "grappling-gun",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A mundane tool whose whole content is permission to fire a hook 100 feet and a reload time.",
+   "fix": null
+  },
+  {
+   "id": "grappling-gun-clockwork",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same mundane tool with a faster reload; nothing on the sheet changes.",
+   "fix": null
+  },
+  {
+   "id": "grappling-hook",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane gear: the anchoring attack uses the character's own simple-weapon proficiency and is a secret check the GM rolls.",
+   "fix": null
+  },
+  {
+   "id": "gravitational-flux",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Siege ammunition; the save, forced movement and falling all happen to creatures in the burst.",
+   "fix": null
+  },
+  {
+   "id": "greater-aurochs-might-tattoo",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A once-per-day activation (Stride twice, Strike, target saves) resolved in the moment; the 1/day frequency on the record already gives the use tracker.",
+   "fix": null
+  },
+  {
+   "id": "greater-banner-of-creeping-death",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Activation floods void damage onto living creatures in the aura — damage dealt to others, with no standing change to the bearer.",
+   "fix": null
+  },
+  {
+   "id": "greater-banner-of-piercing-shards",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The activation deals persistent bleed to enemies in the aura; nothing lands on the bearer's sheet.",
+   "fix": null
+  },
+  {
+   "id": "greater-black-ash",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A spell catalyst: it changes what wall of thorns does to creatures that touch it, resolved when the spell is cast.",
+   "fix": null
+  },
+  {
+   "id": "greater-blazing-banner",
+   "verdict": "MISS",
+   "reason": "A standing aura that benefits the bearer too — \"whenever you or an ally within the banner's aura critically succeeds with a Strike\" the Strike adds 1d6 persistent fire. That is an owner-side conditional damage rider and the record carries nothing.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "strikeDamage" }],
+      "when": "on a critical hit while within the blazing banner's aura",
+      "bonus": "+1d6 persistent fire"
+     }
+    ]
+   }
+  },
+  {
+   "id": "greater-boots-of-the-secret-blade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An activation that produces an ordinary +1 striking dagger and a Strike; the dagger is a normal weapon the player can add to inventory, and the once-per-hour frequency on the record already tracks the use.",
+   "fix": null
+  },
+  {
+   "id": "greater-bougainvillea-blossom",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A catalyst that makes the spell's area hazardous terrain damaging enemies who enter it.",
+   "fix": null
+  },
+  {
+   "id": "greater-burrowing-bolt",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Its whole effect is boring a hole through an object or structure — GM/environment side.",
+   "fix": null
+  },
+  {
+   "id": "greater-chainbreaker",
+   "verdict": "MISS",
+   "reason": "The text says \"Base Weapon Pick\" and \"this +2 striking pick\", but the record is itemType 'equipment' with no category, group or damage — buying it gives you a piece of gear you cannot Strike with at all. The Hardness-ignoring clause and the ally's Escape reaction are correctly table-side.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "Battlecry family-variant record imported as generic equipment. It must be itemType 'weapon', category 'martial', group 'pick', damage 1d6 piercing, hands 1 — but the applier refuses to overwrite itemType, and every Strike/AC path gates on itemType, so writing category/group/damage alone would be a silent no-op. Needs the importer or a re-type pass."
+   }
+  },
+  {
+   "id": "greater-dragons-tongue",
+   "verdict": "MISS",
+   "reason": "\"Base Weapon Longspear\" and \"+2 greater striking longspear\", yet the record is itemType 'equipment' with no weapon statistics — it cannot be wielded or Struck with. (The breath activation is target-side and correctly needs nothing.)",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "Same family-variant import defect as greater-chainbreaker: needs itemType 'weapon', category 'martial', group 'spear', damage 1d8 piercing, reach, hands 2. itemType cannot be overwritten by the audit applier and every Strike path gates on it."
+   }
+  },
+  {
+   "id": "greater-endless-quiver",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Ammunition stock bookkeeping plus a 1/day material swap; arrow counts are inventory, and the once-per-day frequency on the record already tracks Convert Arrows.",
+   "fix": null
+  },
+  {
+   "id": "greater-energized-shield",
+   "verdict": "MISS",
+   "reason": "The text gives explicit shield statistics — \"minor reinforcing steel shield (Hardness 8, HP 64, BT 32)\" — but the record is itemType 'equipment' with no acBonus, hardness, hp or brokenThreshold, so it can never be Raised or Shield Blocked. The energized blast itself is target-side.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "The whole Energized Shield family (lesser/moderate/greater/major and the base record) is typed 'equipment'. Each needs itemType 'shield' with acBonus 2, hardness 8, hp 64, brokenThreshold 32. derive.ts finds a shield by itemType === 'shield' and the audit applier will not overwrite itemType, so this cannot be fixed from a field write."
+   }
+  },
+  {
+   "id": "greater-ethereal-crescent",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A whetstone that gives a weapon the astral rune's effect for 1 minute — that rune adds no bonus or damage, only the ability to affect incorporeal creatures, which is resolved against the target.",
+   "fix": null
+  },
+  {
+   "id": "greater-godrending-ammunition",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition; damage, sickened and the death clause all apply to the creature struck.",
+   "fix": null
+  },
+  {
+   "id": "greater-golden-wings",
+   "verdict": "MISS",
+   "reason": "Like the base wings, activating them costs the wearer a –2 item penalty to Stealth to Hide and Sneak for 10 minutes (plus the light they shed and the added glide) and the record carries no mode for it.",
+   "fix": {
+    "mode": {
+     "id": "item-greater-golden-wings",
+     "name": "Assisted Flight",
+     "fromItemId": "greater-golden-wings",
+     "duration": "10 minutes",
+     "survivesRest": false,
+     "modifiers": [
+      {
+       "value": -2,
+       "type": "item",
+       "target": "skill",
+       "detail": "stealth",
+       "appliesWhen": "to Hide and Sneak"
+      }
+     ],
+     "note": "Assisted Flight: you can Leap 20 feet and must land on solid ground, and can spend an action to glide 5 feet down and 20 feet forward. You shed bright light in a 20-foot radius and dim light 20 feet beyond, and take a -2 item penalty to Stealth to Hide and Sneak."
+    }
+   }
+  },
+  {
+   "id": "greater-knaves-standard",
+   "verdict": "MISS",
+   "reason": "The aura adds 1d6 precision damage to a critical Strike against an off-guard target for \"you or an ally\" — an owner-side conditional damage rider that nothing on the record carries.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "strikeDamage" }],
+      "when": "on a critical hit vs an off-guard target within the standard's aura",
+      "bonus": "+1d6 precision"
+     }
+    ]
+   }
+  },
+  {
+   "id": "greater-mitigation-mail",
+   "verdict": "MISS",
+   "reason": "\"Base Armor Chain Mail\" and \"+2 resilient chain mail\", but the record is itemType 'equipment' with no acBonus, dexCap, checkPenalty, speedPenalty or strength — worn, it gives the character no AC at all. The once-per-day Salve heal is a momentary activation and correctly needs nothing.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "Family-variant import defect: needs itemType 'armor', category 'medium', group 'chain', acBonus 4, dexCap 1, checkPenalty -2, speedPenalty -5, strength 3. derive.ts selects worn armor by itemType === 'armor' and the applier will not overwrite itemType."
+   }
+  },
+  {
+   "id": "greater-moritype",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A consumable whose whole effect is a Will save that suppresses the TARGET's spellcasting.",
+   "fix": null
+  },
+  {
+   "id": "greater-necrotic-cap",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A catalyst that retypes acid grip's damage and adds conditions to the creature the spell hits.",
+   "fix": null
+  },
+  {
+   "id": "greater-quartz-coil-rail-transport",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A one-shot self-teleport plus a small electricity hit along the line; resolved and gone in the same moment, with no lasting change.",
+   "fix": null
+  },
+  {
+   "id": "greater-reactive-mail",
+   "verdict": "MISS",
+   "reason": "\"Base Armor Chain Mail\" and \"+1 resilient chain mail\", yet the record is itemType 'equipment' with no armor statistics — wearing it grants no AC. The Quick Spike reaction is target-side.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "Family-variant import defect, same as greater-mitigation-mail: needs itemType 'armor', category 'medium', group 'chain', acBonus 4, dexCap 1, checkPenalty -2, speedPenalty -5, strength 3. itemType is not overwritable by the applier."
+   }
+  },
+  {
+   "id": "greater-rending-gauntlets",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A once-per-hour finisher that deals extra piercing damage to the creature you just hit twice; the frequency on the record tracks the use and nothing standing changes.",
+   "fix": null
+  },
+  {
+   "id": "greater-roc-shaft-arrow",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Ammunition that forcibly moves the creature it hits — entirely target-side.",
+   "fix": null
+  },
+  {
+   "id": "greater-staff-of-arcane-might",
+   "verdict": "MISS",
+   "reason": "A staff whose entire purpose is its spell list, and the record carries no heldSpells and no charge counter — the owner gets a stick with a description and can cast nothing from it. The staff/wand charge lane (heldSpells + a 'pool' counter with max 'level') is what every other staff in core.json uses.",
+   "fix": {
+    "heldSpells": {
+     "0": ["detect-magic"],
+     "1": ["phantasmal-minion"],
+     "2": ["everlight"],
+     "3": ["force-barrage", "paralyze"],
+     "4": ["dispelling-globe", "mystic-armor", "translocate"],
+     "5": ["fireball", "force-barrage", "lightning-bolt"],
+     "6": ["disintegrate", "mystic-armor", "wall-of-force"],
+     "7": ["howling-blizzard", "fireball", "lightning-bolt"]
+    },
+    "counters": [
+     {
+      "id": "pool",
+      "label": "Charges",
+      "max": "level",
+      "resetsOnRest": true,
+      "startsFull": true
+     }
+    ],
+    "note": "The record is also typed 'equipment' rather than 'weapon', so the +2 greater striking staff cannot be Struck with; that part needs a re-type pass, but the spell list is fixable now."
+   }
+  },
+  {
+   "id": "greater-swapping-stone",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A consumable teleport, resolved in the moment; the resisting save belongs to the creature you hurl it at.",
+   "fix": null
+  },
+  {
+   "id": "greater-toothy-knife",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "It raises the flat-check DC for the TARGET to end persistent bleed the weapon inflicted; nothing on the wielder's sheet.",
+   "fix": null
+  },
+  {
+   "id": "greater-trident-of-the-azarketis",
+   "verdict": "MISS",
+   "reason": "The trident casts a 6th-rank hydraulic torrent once per day and the record carries no innateSpells, so the spell never reaches the Spells page — the owner has no way to cast it. (It is also typed 'equipment' rather than 'weapon', so the +2 greater striking trident cannot be Struck with; that part needs a re-type.)",
+   "fix": {
+    "innateSpells": [
+     {
+      "spellId": "hydraulic-torrent",
+      "tradition": "primal",
+      "rank": 6,
+      "usesPerDay": 1
+     }
+    ],
+    "note": "The 1/day frequency already on the record supplies the use tracker; the spell DC 31 is the item's own and stays in the description."
+   }
+  },
+  {
+   "id": "greater-vanishing-shocker",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 1-round emanation: the concealment it grants lasts a single round and concealment is not a sheet stat, while the Reflex save and off-guard land on other creatures.",
+   "fix": null
+  },
+  {
+   "id": "greater-wood-rotted-root",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A catalyst that makes the caster's oaken resilience spew spores at creatures around them — the damage and save are enemy-side.",
+   "fix": null
+  }
+ ]
+}

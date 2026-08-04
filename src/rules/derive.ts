@@ -781,8 +781,14 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
   for (const inv of c.inventory) {
     if (!(inv.worn || inv.invested || inv.equipped)) continue;
     for (const pe of [db.items[inv.itemId]?.passiveEffects, c.resolvedItemPassives?.[inv.itemId]]) {
-      if (pe && (pe.senses || pe.resistances || pe.immunities)) {
-        push(db.items[inv.itemId]?.name ?? inv.itemId, { senses: pe.senses, resistances: pe.resistances, immunities: pe.immunities });
+      if (pe && (pe.senses || pe.resistances || pe.immunities || pe.weaknesses)) {
+        push(db.items[inv.itemId]?.name ?? inv.itemId, {
+          senses: pe.senses,
+          resistances: pe.resistances,
+          // A cursed item can impose one (Demon's Knot). Was not read here, so it had no home at all.
+          weaknesses: pe.weaknesses,
+          immunities: pe.immunities,
+        });
       }
     }
   }

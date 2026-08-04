@@ -28,7 +28,10 @@ describe('consumable modes: the data', () => {
     // +10 for Emotion Surge: the relic's emotion decides which of ten skills gets the bonus, and the
     // item record never says which emotion a given relic has — so, like the siccatite shields, one
     // mode per emotion and the player switches on the true one.
-    expect(itemModes().length).toBe(310);
+    // +19 from the full item audit (2026-08-04): items that had never been examined at all, whose
+    // text pairs an activation with a stated span — the same shape as every entry above, found by
+    // selecting on what the record HAS rather than on whether its wording matched a pattern.
+    expect(itemModes().length).toBe(329);
   });
 
   it('every item mode points at an item that actually exists', () => {

@@ -1,0 +1,121 @@
+{"records":[
+{"id":"lesser-energized-shield","verdict":"MISS","reason":"Text prints a shield with Hardness 8, HP 64, BT 32 (a minor reinforcing steel shield), but the record is itemType \"equipment\" with no acBonus/hardness/hp/brokenThreshold, so raising it gives no AC and Shield Block has no hardness to spend. Real shields in core.json carry itemType \"shield\" + acBonus/hardness/hp/brokenThreshold/speedPenalty.","fix":{"itemType":"shield","acBonus":2,"hardness":8,"hp":64,"brokenThreshold":32,"speedPenalty":0}},
+
+{"id":"lesser-necrotic-cap","verdict":"NEEDS_NOTHING","reason":"Catalyst consumed on casting acid grip; every clause (damage type swap, enfeebled/sickened) lands on the spell's target."},
+
+{"id":"lesser-quartz-coil-rail-transport","verdict":"NEEDS_NOTHING","reason":"Instantaneous self-teleport 20 feet plus damage to creatures in the line; resolved and gone in the same moment, no standing change."},
+
+{"id":"lesser-rending-gauntlets","verdict":"NEEDS_NOTHING","reason":"Activation deals 2d6 piercing to a creature you already hit; instantaneous and entirely on the target's side."},
+
+{"id":"lesser-roc-shaft-arrow","verdict":"NEEDS_NOTHING","reason":"Ammunition; the Fortitude save and forced movement all apply to the creature struck."},
+
+{"id":"lesser-swapping-stone","verdict":"NEEDS_NOTHING","reason":"Consumable that teleports you or a target once and is destroyed; instantaneous."},
+
+{"id":"lesser-tangibility-resonator","verdict":"NEEDS_NOTHING","reason":"Activation forces one incorporeal creature to save; immobilized/off-guard land on that target."},
+
+{"id":"lesser-vanishing-shocker","verdict":"NEEDS_NOTHING","reason":"One-round emanation; the concealment it gives you and the off-guard/clumsy it inflicts are table-side conditions applied for a single round, with no owner-sheet field."},
+
+{"id":"lesser-wood-rotted-root","verdict":"NEEDS_NOTHING","reason":"Catalyst that modifies oaken resilience; the spore burst it adds damages other creatures in the emanation."},
+
+{"id":"liars-board","verdict":"NEEDS_NOTHING","reason":"Mundane clockwork container. Its whole content is permission for someone to attempt Thievery/Perception/Crafting checks the GM adjudicates; hidden compartments are storage."},
+
+{"id":"liars-gun","verdict":"ALREADY_OK","reason":"The record already carries full weapon statistics (itemType weapon, martial, group firearm, 1d4 piercing, range 60, reload 1) plus the capacity-4, fatal-d8 and concussive traits the strike code reads; the \"+1 striking\" is covered by the potency and striking entries in core.runes, and Everywhere Shot is a table-resolved four-Strike activation."},
+
+{"id":"lich-dust","verdict":"NEEDS_NOTHING","reason":"An ingested poison you apply to a victim; the save DC, onset and stages are the target's affliction track."},
+
+{"id":"life-everlasting","verdict":"NEEDS_NOTHING","reason":"Once-a-day relic activation: a 1-minute emanation that heals you and allied creatures 10 HP at end of turn. Healing is applied when it happens and the ally half is out of scope; there is no field for per-turn HP restoration."},
+
+{"id":"lifebloom","verdict":"ALREADY_OK","reason":"The record already carries itemType weapon with glaive statistics (martial, group polearm, 1d8 slashing, deadly-d8/forceful/reach traits). The \"+1 vitalizing striking\" is delivered by core.runes — potency, striking and the vitalizing property rune (core.runes.vitalizing, level 5, slot weapon) all exist and can be etched."},
+
+{"id":"light-writer","verdict":"NEEDS_NOTHING","reason":"Pure flavour: a clockwork camera that produces a picture over 20 minutes. No rules effect on the operator."},
+
+{"id":"lightning-rod-shot","verdict":"NEEDS_NOTHING","reason":"Ammunition; every clause (extra electricity damage per die, the -1 circumstance penalty to the save) applies to the creature the shot struck."},
+
+{"id":"lightning-storm","verdict":"NEEDS_NOTHING","reason":"Relic activation creating a 30-foot emanation that is difficult terrain and damages creatures other than you; entirely target-side."},
+
+{"id":"linguistic-nexus","verdict":"MISS","reason":"\"You learn an additional language of your choice for every 2 levels of the relic (minimum 1)\" is an owner-facing pick that nothing delivers — the record has no grantsLanguages and no chooser, so the extra language never reaches the character sheet. Fix offers the pick (minimum one language; the engine cannot scale it by relic level, so it grants the printed floor rather than over-granting).","fix":{"effectChoices":[{"id":"linguistic-nexus-language","prompt":"Linguistic Nexus: choose an additional language you learn","options":[{"value":"draconic","label":"Draconic","grant":{"passive":{"grantsLanguages":["draconic"]}}},{"value":"dwarven","label":"Dwarven","grant":{"passive":{"grantsLanguages":["dwarven"]}}},{"value":"elven","label":"Elven","grant":{"passive":{"grantsLanguages":["elven"]}}},{"value":"fey","label":"Fey","grant":{"passive":{"grantsLanguages":["fey"]}}},{"value":"gnomish","label":"Gnomish","grant":{"passive":{"grantsLanguages":["gnomish"]}}},{"value":"goblin","label":"Goblin","grant":{"passive":{"grantsLanguages":["goblin"]}}},{"value":"halfling","label":"Halfling","grant":{"passive":{"grantsLanguages":["halfling"]}}},{"value":"jotun","label":"Jotun","grant":{"passive":{"grantsLanguages":["jotun"]}}},{"value":"orcish","label":"Orcish","grant":{"passive":{"grantsLanguages":["orcish"]}}},{"value":"sakvroth","label":"Sakvroth","grant":{"passive":{"grantsLanguages":["sakvroth"]}}},{"value":"aklo","label":"Aklo","grant":{"passive":{"grantsLanguages":["aklo"]}}},{"value":"chthonian","label":"Chthonian","grant":{"passive":{"grantsLanguages":["chthonian"]}}},{"value":"diabolic","label":"Diabolic","grant":{"passive":{"grantsLanguages":["diabolic"]}}},{"value":"empyrean","label":"Empyrean","grant":{"passive":{"grantsLanguages":["empyrean"]}}},{"value":"necril","label":"Necril","grant":{"passive":{"grantsLanguages":["necril"]}}},{"value":"shadowtongue","label":"Shadowtongue","grant":{"passive":{"grantsLanguages":["shadowtongue"]}}},{"value":"thalassic","label":"Thalassic","grant":{"passive":{"grantsLanguages":["thalassic"]}}},{"value":"wildsong","label":"Wildsong","grant":{"passive":{"grantsLanguages":["wildsong"]}}}]}]}},
+
+{"id":"little-helper","verdict":"NEEDS_NOTHING","reason":"The relic itself becomes an intelligent object with its own senses, Lore and Perception/Will; the text explicitly says it has no actions or reactions. Nothing changes on the owner's sheet."},
+
+{"id":"living-death","verdict":"NEEDS_NOTHING","reason":"Correctly inert for want of a lane: the benefit is a degree-of-success shift on saves against void damage and a halving of vitality healing you receive. The engine has no field for adjusting a save's degree of success or scaling healing received — passiveEffects/situational only carry numeric bonuses — so no applicable fix exists; both are applied when the save or the healing is rolled."},
+
+{"id":"lizard","verdict":"NEEDS_NOTHING","reason":"A pet the text explicitly states cannot be combat trained or contribute to combat; the swallowed 1-Bulk purse is GM-side storage flavour."},
+
+{"id":"lizard-xs","verdict":"NEEDS_NOTHING","reason":"Same pet, priced variant; explicitly non-combat, and the stomach purse is storage flavour."},
+
+{"id":"lock-average","verdict":"NEEDS_NOTHING","reason":"An obstacle you install on a container or door; the successful checks it demands are rolled by whoever tries to pick it, adjudicated by the GM."},
+
+{"id":"lock-good","verdict":"NEEDS_NOTHING","reason":"An obstacle you install; the picking checks are made against it by others, not by the owner."},
+
+{"id":"lock-poor","verdict":"NEEDS_NOTHING","reason":"An obstacle you install; the picking checks are made against it by others, not by the owner."},
+
+{"id":"lock-simple","verdict":"NEEDS_NOTHING","reason":"An obstacle you install; the picking checks are made against it by others, not by the owner."},
+
+{"id":"lock-superior","verdict":"NEEDS_NOTHING","reason":"An obstacle you install; the picking checks are made against it by others, not by the owner."},
+
+{"id":"lodging-bed-for-1","verdict":"NEEDS_NOTHING","reason":"A per-day service purchase; buying a night's lodging changes nothing on the sheet beyond coin."},
+
+{"id":"lodging-extravagant-suite-for-6","verdict":"NEEDS_NOTHING","reason":"A per-day service purchase with no mechanical rider."},
+
+{"id":"lodging-floor-space","verdict":"NEEDS_NOTHING","reason":"A per-day service purchase with no mechanical rider."},
+
+{"id":"lodging-private-room-for-2","verdict":"NEEDS_NOTHING","reason":"A per-day service purchase with no mechanical rider."},
+
+{"id":"luckless-dice","verdict":"NEEDS_NOTHING","reason":"Cursed item that explicitly grants no bonus; the penalty is the GM rolling your gambling result secretly and taking the lower of two — a misfortune effect on a downtime activity with no standing sheet value."},
+
+{"id":"lucky-kitchen-witch","verdict":"NEEDS_NOTHING","reason":"Grants a reroll of a downtime Cooking Lore or Crafting check, and only while the doll has hung in your kitchen for a week; downtime/GM-adjudicated, no standing modifier."},
+
+{"id":"lumber","verdict":"NEEDS_NOTHING","reason":"Raw crafting material sold by the board foot; no rules text beyond price."},
+
+{"id":"magazine-air-repeater","verdict":"NEEDS_NOTHING","reason":"Ammunition. Its only content is how many pellets it holds; the weapon's capacity trait and reload are what the strike code reads."},
+
+{"id":"magazine-long-air-repeater","verdict":"NEEDS_NOTHING","reason":"Ammunition; capacity only, no effect on the wielder."},
+
+{"id":"magazine-with-6-pellets","verdict":"NEEDS_NOTHING","reason":"Ammunition; the text is general firearm-ammunition rules and a crafting requirement."},
+
+{"id":"magazine-with-8-pellets","verdict":"NEEDS_NOTHING","reason":"Ammunition; the text is general firearm-ammunition rules and a crafting requirement."},
+
+{"id":"magic-scroll","verdict":"NEEDS_NOTHING","reason":"Umbrella/template entry with no rank and no price of its own — the buyable records are 1st-rank-scroll through 10th-rank-scroll, which is where a spell picker would have to live. Nothing can be attached here without inventing a rank."},
+
+{"id":"magical-hearing-aid","verdict":"NEEDS_NOTHING","reason":"Assistive device with no printed bonus or penalty; switching it on or off is an Interact action resolved at the table."},
+
+{"id":"magnetic-construction-set","verdict":"NEEDS_NOTHING","reason":"A toy; the text explicitly says the structures are flimsy and the magnets too weak to move anything."},
+
+{"id":"major-astonishing-ink","verdict":"MISS","reason":"\"You can use a vial of astonishing ink to ask 5 questions before it's used up\" is a per-item use allowance the sheet cannot track — the record has no counters and no uses, so an owner has no way to know how many questions remain. (The Recall Knowledge result and the stupefied risk are correctly GM-side and are not part of the fix.)","fix":{"counters":[{"id":"astonishing-ink-questions","label":"Questions remaining","max":5}]}},
+
+{"id":"major-banner-of-creeping-death","verdict":"NEEDS_NOTHING","reason":"Once-a-minute activation that deals void damage to living creatures in the banner's aura; instantaneous and aimed outward."},
+
+{"id":"major-banner-of-piercing-shards","verdict":"NEEDS_NOTHING","reason":"Activation deals persistent bleed to enemies in the aura; entirely target-side."},
+
+{"id":"major-black-ash","verdict":"NEEDS_NOTHING","reason":"Catalyst that adds persistent poison damage to wall of thorns; the damage is dealt to creatures the wall hurts."},
+
+{"id":"major-blazing-banner","verdict":"NEEDS_NOTHING","reason":"Correctly inert for want of a lane: the benefit is 1d8 persistent fire added only on a critical Strike, and it applies to allies in the aura as much as to you. strikeDamage has no crit-only or persistent form — the identical case on iris-of-the-sky is deliberately left as prose in its strikeDamage note — so any fix would over-grant by adding the damage to every hit."},
+
+{"id":"major-bloodstone-doll","verdict":"NEEDS_NOTHING","reason":"Reactive consumable that counteracts another creature's summon spell and briefly commands the summoned creature; all effects are on the other side of the table."},
+
+{"id":"major-boots-of-the-secret-blade","verdict":"MISS","reason":"Draw Secret Blade conjures a +2 greater striking dagger that \"remains a physical object until the next time you use Draw Secret Blade\" — so the owner permanently has a magic dagger to Strike with, and nothing in the record delivers a weapon. The record is itemType \"equipment\" with no grantedStrikes. Fix models the persistent conjured blade with greater striking's three damage dice baked in, the way granted weapon strikes such as Retribution Axe already do.","fix":{"grantedStrikes":[{"name":"Secret Blade","die":"3d4","damageType":"piercing","traits":["agile","finesse","magical","thrown-10","versatile-s"],"group":"knife"}]}},
+
+{"id":"major-bougainvillea-blossom","verdict":"NEEDS_NOTHING","reason":"Catalyst that turns entangling flora's area into hazardous terrain damaging enemies that enter; target-side only."},
+
+{"id":"major-dragons-tongue","verdict":"MISS","reason":"This is a +3 major striking longspear, but the record is itemType \"equipment\" with no weapon block, so it carries no damage die, group, category, hands or reach — it cannot be wielded or used for a Strike at all. Comparable named weapons (lifebloom, liar's gun) do carry the block. Fix supplies the longspear statistics the strike code reads; the potency/striking runes are already available in core.runes and the breath activation only damages other creatures.","fix":{"itemType":"weapon","hands":2,"category":"martial","group":"spear","damage":{"dice":1,"die":"d8","type":"piercing"},"traits":["magical","reach"]}},
+
+{"id":"major-energized-shield","verdict":"MISS","reason":"Printed as a minor reinforcing steel shield (Hardness 8, HP 64, BT 32) but stored as itemType \"equipment\" with no acBonus/hardness/hp/brokenThreshold, so a 35,000 gp shield gives no AC and Shield Block has nothing to absorb with.","fix":{"itemType":"shield","acBonus":2,"hardness":8,"hp":64,"brokenThreshold":32,"speedPenalty":0}},
+
+{"id":"major-golden-wings","verdict":"MISS","reason":"Assisted Flight is a 10-minute activated effect that gives the owner a fly Speed of 20 feet and a -2 item penalty to Stealth checks to Hide and Sneak — a timed standing change, which is an item mode. The record has no mode, so the fly Speed and the Stealth penalty never reach the sheet.","fix":{"mode":{"id":"item-major-golden-wings","name":"Golden Wings (Assisted Flight)","fromItemId":"major-golden-wings","duration":"10 minutes","speeds":{"fly":20},"modifiers":[{"target":"skill","detail":"stealth","type":"item","value":-2,"appliesWhen":"to Hide or Sneak"}],"note":"Once per day. You can also Leap 20 feet and must land on solid ground. While active you shed bright light in a 20-foot radius and dim light for the next 20 feet."}}},
+
+{"id":"major-knaves-standard","verdict":"NEEDS_NOTHING","reason":"Correctly inert for want of a lane: 1d8 precision damage only on a critical Strike against an off-guard target, and it applies to allies in the aura too. There is no crit-conditional strikeDamage form, so any fix would add the damage to every hit and over-grant."},
+
+{"id":"major-mitigation-mail","verdict":"MISS","reason":"This is chain mail, but the record is itemType \"equipment\" with no armour block — no acBonus, dexCap, checkPenalty, speedPenalty or strength — so wearing a 14,000 gp suit gives the character no AC at all. Magic armours in core.json normally carry itemType \"armor\" plus those fields. The +2 greater resilient runes are already available in core.runes and the once-a-day Salve heal is an instantaneous activation.","fix":{"itemType":"armor","category":"medium","group":"chain","acBonus":4,"dexCap":1,"checkPenalty":-2,"speedPenalty":-5,"strength":3,"traits":["flexible","invested","magical","noisy"]}},
+
+{"id":"major-necrotic-cap","verdict":"NEEDS_NOTHING","reason":"Catalyst; the damage-type swap and the enfeebled/sickened it adds all land on acid grip's target."},
+
+{"id":"major-quartz-coil-rail-transport","verdict":"NEEDS_NOTHING","reason":"Instantaneous self-teleport plus line damage; resolved and gone, no standing change."},
+
+{"id":"major-reactive-mail","verdict":"MISS","reason":"Chain mail stored as itemType \"equipment\" with no armour block, so the wearer gets no AC, no Dex cap, no check or Speed penalty from a 14,000 gp suit. The Quick Spike activation is correctly target-side and the +2 greater resilient runes exist in core.runes; the gap is the base armour statistics.","fix":{"itemType":"armor","category":"medium","group":"chain","acBonus":4,"dexCap":1,"checkPenalty":-2,"speedPenalty":-5,"strength":3,"traits":["flexible","invested","magical","noisy"]}},
+
+{"id":"major-staff-of-arcane-might","verdict":"MISS","reason":"The staff's entire point is the spell list it holds, and the record carries no heldSpells at all (it ends at itemType \"equipment\"), so a 90,000 gp staff offers the owner nothing to cast. Other spell-holding items (flaming star, wands, staves) use heldSpells keyed by rank. Fix lists the cumulative major spell list exactly as printed; all spell ids verified present in core.json.","fix":{"heldSpells":{"0":["detect-magic"],"1":["phantasmal-minion"],"2":["everlight"],"3":["force-barrage","paralyze"],"4":["dispelling-globe","mystic-armor","translocate"],"5":["fireball","force-barrage","lightning-bolt"],"6":["disintegrate","mystic-armor","wall-of-force"],"7":["howling-blizzard","fireball","lightning-bolt"],"8":["mystic-armor","wall-of-force"],"9":["dispel-magic","falling-stars","howling-blizzard"]}}},
+
+{"id":"major-swapping-stone","verdict":"NEEDS_NOTHING","reason":"Consumable that teleports you or an unwilling target once and is destroyed; instantaneous."},
+
+{"id":"major-tangibility-resonator","verdict":"NEEDS_NOTHING","reason":"Activation forcing one incorporeal creature to save; immobilized/off-guard land on that target and the device shatters."}
+]}

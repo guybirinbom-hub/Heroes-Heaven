@@ -1,0 +1,802 @@
+{
+ "records": [
+  {
+   "id": "splinter-spear",
+   "verdict": "MISS",
+   "reason": "Every hit deals 1d6 persistent bleed and the Shatter activation is once per day; the record carries no rider and no use tracker. (The printed +2 greater striking is a separate systemic gap - specific magic weapons never ship built-in runes, and this one is even itemType equipment with no damage line.)",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "strikeDamage"
+       }
+      ],
+      "when": "when you hit with the splinter spear (persistent bleed)",
+      "bonus": "1d6 persistent bleed"
+     }
+    ],
+    "counters": [
+     {
+      "id": "freq",
+      "label": "per day",
+      "max": 1,
+      "per": "day",
+      "resetsOnRest": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "splinter-spear-greater",
+   "verdict": "MISS",
+   "reason": "Same as the base spear: 1d6 persistent bleed on every hit plus a once-per-day Shatter, neither surfaced.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "strikeDamage"
+       }
+      ],
+      "when": "when you hit with the splinter spear (persistent bleed)",
+      "bonus": "1d6 persistent bleed"
+     }
+    ],
+    "counters": [
+     {
+      "id": "freq",
+      "label": "per day",
+      "max": 1,
+      "per": "day",
+      "resetsOnRest": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "splinter-spear-major",
+   "verdict": "MISS",
+   "reason": "Same as the base spear: 1d6 persistent bleed on every hit plus a once-per-day Shatter, neither surfaced.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "strikeDamage"
+       }
+      ],
+      "when": "when you hit with the splinter spear (persistent bleed)",
+      "bonus": "1d6 persistent bleed"
+     }
+    ],
+    "counters": [
+     {
+      "id": "freq",
+      "label": "per day",
+      "max": 1,
+      "per": "day",
+      "resetsOnRest": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "spotless-spats",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Pure flavour - it cleans your outfit every 10 minutes; no check, bonus or resource changes."
+  },
+  {
+   "id": "spray-pellet",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane sling ammunition; the strike code reads the sling itself, and the crit-spec paragraph is generic rules boilerplate."
+  },
+  {
+   "id": "sprout-ally",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Relic gift activation that summons an ALLY creature, at a rank derived from the relic's level rather than a fixed one; nothing standing changes on the owner's sheet."
+  },
+  {
+   "id": "spry-sinews-greater",
+   "verdict": "MISS",
+   "reason": "An implanted graft that permanently extends every Leap (+10 ft horizontal, +6 ft vertical) and currently delivers nothing at all.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "speed"
+       }
+      ],
+      "when": "to the horizontal distance of your Leap",
+      "bonus": "+10 feet"
+     },
+     {
+      "targets": [
+       {
+        "kind": "speed"
+       }
+      ],
+      "when": "to the vertical distance of your Leap",
+      "bonus": "+6 feet"
+     }
+    ]
+   }
+  },
+  {
+   "id": "spry-sinews-lesser",
+   "verdict": "MISS",
+   "reason": "An implanted graft that permanently extends every Leap (+5 ft horizontal, +3 ft vertical) and currently delivers nothing at all.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "speed"
+       }
+      ],
+      "when": "to the horizontal distance of your Leap",
+      "bonus": "+5 feet"
+     },
+     {
+      "targets": [
+       {
+        "kind": "speed"
+       }
+      ],
+      "when": "to the vertical distance of your Leap",
+      "bonus": "+3 feet"
+     }
+    ]
+   }
+  },
+  {
+   "id": "spurned-lute",
+   "verdict": "MISS",
+   "reason": "It functions as a virtuoso instrument (+1 item bonus to Performance with it) and its curse imposes a printed -4 circumstance penalty to Performance with any other instrument; both are owner-side modifiers and neither is carried.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "performance"
+       }
+      ],
+      "when": "on Performance checks made using the spurned lute",
+      "bonus": "+1 item"
+     },
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "performance"
+       }
+      ],
+      "when": "on Performance checks using an instrument other than the lute",
+      "bonus": "-4 circumstance"
+     }
+    ]
+   }
+  },
+  {
+   "id": "spyglass",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane tool - seeing eight times farther is narrative distance, not a sheet value."
+  },
+  {
+   "id": "squirrel",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A pet; the entry states it cannot be combat trained or contribute to combat in any way."
+  },
+  {
+   "id": "st-alkitarems-eye",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A housing, exactly like the wayfinder record it copies: the mechanics live on the clear spindle aeon stone the owner slots and invests as its own item."
+  },
+  {
+   "id": "stabling",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A service price line (2 cp per day), not an item that touches the sheet."
+  },
+  {
+   "id": "stalwarts-ring",
+   "verdict": "MISS",
+   "reason": "A once-per-day meditation during daily preparations grants 5 temporary Hit Points lasting until the next preparations - a durable activated effect with nothing to represent or track it.",
+   "fix": {
+    "mode": {
+     "id": "item-stalwarts-ring",
+     "name": "Stalwart's Ring",
+     "fromItemId": "stalwarts-ring",
+     "duration": "until your next daily preparations",
+     "survivesRest": false,
+     "modifiers": [],
+     "note": "5 temporary Hit Points, gained by meditating on the ring during daily preparations. They last until your next daily preparations and only while you keep wearing the ring."
+    },
+    "counters": [
+     {
+      "id": "freq",
+      "label": "per day",
+      "max": 1,
+      "per": "day",
+      "resetsOnRest": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "stanching",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The rune record exists in core.runes (slot armor, kind property) so it can be etched; its only effect is the flat check to end persistent bleed, rolled at the table, and no legal field expresses a flat-check DC."
+  },
+  {
+   "id": "stanching-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Registered in core.runes and etchable; its only effect is the table-rolled flat check to end persistent bleed, which has no sheet value."
+  },
+  {
+   "id": "stanching-major",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Registered in core.runes and etchable; its only effect is the table-rolled flat check to end persistent bleed, which has no sheet value."
+  },
+  {
+   "id": "stanching-true",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Registered in core.runes and etchable; its only effect is the table-rolled flat check to end persistent bleed, which has no sheet value."
+  },
+  {
+   "id": "standard-book-of-translation-tien",
+   "verdict": "MISS",
+   "reason": "It is mostly permission to attempt Diplomacy in a language you do not speak, but it carries a printed -2 circumstance penalty - a real owner-side modifier that nothing delivers.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "diplomacy"
+       }
+      ],
+      "when": "to Gather Information or Make an Impression through the book",
+      "bonus": "-2 circumstance"
+     }
+    ]
+   }
+  },
+  {
+   "id": "star-grenade-lesser",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable bomb; its 1d8 fire damage is already on the record and the cross-shaped splash area is geometry resolved at the table against targets."
+  },
+  {
+   "id": "starless-scope-lens",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A spare part - the activation swaps a broken lens into another item; nothing about the owner changes."
+  },
+  {
+   "id": "starshot-arrow-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition whose whole effect (no range penalties, instant travel) is resolved on the single shot that consumes it."
+  },
+  {
+   "id": "starshot-arrow-lesser",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition whose whole effect is resolved on the single shot that consumes it."
+  },
+  {
+   "id": "steal-luck",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Relic contingency gift: it stores a d20 result rolled during play - a table-side number with no fixed value - and the substitution happens on a roll, not as a sheet modifier."
+  },
+  {
+   "id": "steam-winch",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Hauling equipment; what it lifts and how long the boiler lasts are GM/table logistics with no sheet value."
+  },
+  {
+   "id": "steamflight-pack",
+   "verdict": "MISS",
+   "reason": "Switched on, it gives the wearer a fly Speed of 20 feet until switched off (about 20 minutes of water) - a lasting activated movement type that nothing grants.",
+   "fix": {
+    "mode": {
+     "id": "item-steamflight-pack",
+     "name": "Steamflight Pack",
+     "fromItemId": "steamflight-pack",
+     "duration": "20 minutes",
+     "modifiers": [],
+     "speeds": {
+      "fly": 20
+     },
+     "note": "Fly Speed 20 feet while the pack is running. It carries enough water for 20 minutes of operation and refills in 5 minutes; the on/off switch is a 2-action activation."
+    }
+   }
+  },
+  {
+   "id": "steelscour-lesser",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable alchemical bomb; all of its effect (persistent acid, hardness bypass) lands on a target creature or an unattended object."
+  },
+  {
+   "id": "stepping-stone-shot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition that creates terrain on the battlefield; nothing about the shooter changes."
+  },
+  {
+   "id": "stepping-stone-shot-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition that creates terrain on the battlefield; nothing about the shooter changes."
+  },
+  {
+   "id": "sticky-algae-bomb-lesser",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable bomb; damage is already on the record, and the underwater allowance plus the glowing trail apply to that one throw and to the target."
+  },
+  {
+   "id": "stone-bullet",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition; the petrify effect lands entirely on the creature hit."
+  },
+  {
+   "id": "stone-object-low-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A precious-material price/hardness reference entry, not a wearable or usable item."
+  },
+  {
+   "id": "stone-of-weight",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A GM-planted cursed item with no price; its whole content is a curse-triggered Bulk change and an inability to discard it, both GM-adjudicated, and no legal field expresses a conditional Bulk swap."
+  },
+  {
+   "id": "stonethroat-ammunition",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition; every degree of the save result applies to the target creature."
+  },
+  {
+   "id": "storage",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An adjustment applied to a DIFFERENT item: it raises that armor's toolkit allowance and adds the noisy trait to it. Both are properties of the host armor, and no legal item field edits another item's traits."
+  },
+  {
+   "id": "storm-arrow",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition; the damage, wind buffeting and fly-Speed penalty all apply to the target."
+  },
+  {
+   "id": "storm-hammer",
+   "verdict": "MISS",
+   "reason": "Any hit with this warhammer deals 1 extra electricity damage - a standing rider on the weapon's own damage that nothing carries. (The Electrify activation swapping that 1 for 1d6 until end of turn stays prose so the two cannot double-count; the built-in +1 potency is the same systemic gap every specific magic weapon has.)",
+   "fix": {
+    "strikeDamage": [
+     {
+      "type": "electricity",
+      "flat": 1,
+      "appliesTo": "all",
+      "note": "Storm Hammer"
+     }
+    ]
+   }
+  },
+  {
+   "id": "striking",
+   "verdict": "ALREADY_OK",
+   "reason": "core.runes.striking exists with kind 'striking', value 1; the strike builder raises the weapon damage dice from it."
+  },
+  {
+   "id": "striking-greater",
+   "verdict": "ALREADY_OK",
+   "reason": "core.runes['striking-greater'] exists with kind 'striking', value 2 (three damage dice)."
+  },
+  {
+   "id": "striking-major",
+   "verdict": "ALREADY_OK",
+   "reason": "core.runes['striking-major'] exists with kind 'striking', value 3 (four damage dice)."
+  },
+  {
+   "id": "sun-dazzler",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An activation that fires a cone; dazzled/blinded land on creatures in the area, and the flash is over the moment it is used."
+  },
+  {
+   "id": "sun-shot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane sling ammunition; the sun sling record carries the damage."
+  },
+  {
+   "id": "support",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Pure flavour - a joint brace whose description explicitly gives no mechanical effect either way."
+  },
+  {
+   "id": "swap-luck",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Relic gift: it swaps your save result with a willing ALLY at the moment of the roll; no standing change and it needs the other creature's consent."
+  },
+  {
+   "id": "swashbuckler-kit",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A starting-gear shopping list; every piece it names is its own purchasable item record."
+  },
+  {
+   "id": "sweet-hags-eye",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The text says outright that the eye provides no direct benefit for the wearer - the scrying, Message and Meltaway Mint are all used by the hag against whoever carries it."
+  },
+  {
+   "id": "tablet-of-chained-souls",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A GM-plot artifact with no price; the clue and the geas it lays on you are narrative obligations the GM adjudicates, with no numeric effect."
+  },
+  {
+   "id": "tack",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane riding gear; its only mechanical datum is Bulk, which the record already carries."
+  },
+  {
+   "id": "talisman-cord",
+   "verdict": "MISS",
+   "reason": "The owner picks TWO magic schools when the cord is made and the cord permanently gains those traits - a pick the builder never offers, so nothing records which talismans it can preserve. (The preservation flat check itself is table-rolled.)",
+   "fix": {
+    "effectChoices": [
+     {
+      "id": "cord-school-1",
+      "prompt": "Choose magic school 1 the cord is attuned to (it gains that trait)",
+      "options": [
+       {
+        "value": "abjuration",
+        "label": "Abjuration"
+       },
+       {
+        "value": "conjuration",
+        "label": "Conjuration"
+       },
+       {
+        "value": "divination",
+        "label": "Divination"
+       },
+       {
+        "value": "enchantment",
+        "label": "Enchantment"
+       },
+       {
+        "value": "evocation",
+        "label": "Evocation"
+       },
+       {
+        "value": "illusion",
+        "label": "Illusion"
+       },
+       {
+        "value": "necromancy",
+        "label": "Necromancy"
+       },
+       {
+        "value": "transmutation",
+        "label": "Transmutation"
+       }
+      ]
+     },
+     {
+      "id": "cord-school-2",
+      "prompt": "Choose magic school 2 the cord is attuned to (it gains that trait)",
+      "options": [
+       {
+        "value": "abjuration",
+        "label": "Abjuration"
+       },
+       {
+        "value": "conjuration",
+        "label": "Conjuration"
+       },
+       {
+        "value": "divination",
+        "label": "Divination"
+       },
+       {
+        "value": "enchantment",
+        "label": "Enchantment"
+       },
+       {
+        "value": "evocation",
+        "label": "Evocation"
+       },
+       {
+        "value": "illusion",
+        "label": "Illusion"
+       },
+       {
+        "value": "necromancy",
+        "label": "Necromancy"
+       },
+       {
+        "value": "transmutation",
+        "label": "Transmutation"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "talisman-cord-greater",
+   "verdict": "MISS",
+   "reason": "The owner picks THREE magic schools when the cord is made and the cord permanently gains those traits - a pick the builder never offers.",
+   "fix": {
+    "effectChoices": [
+     {
+      "id": "cord-school-1",
+      "prompt": "Choose magic school 1 the cord is attuned to (it gains that trait)",
+      "options": [
+       {
+        "value": "abjuration",
+        "label": "Abjuration"
+       },
+       {
+        "value": "conjuration",
+        "label": "Conjuration"
+       },
+       {
+        "value": "divination",
+        "label": "Divination"
+       },
+       {
+        "value": "enchantment",
+        "label": "Enchantment"
+       },
+       {
+        "value": "evocation",
+        "label": "Evocation"
+       },
+       {
+        "value": "illusion",
+        "label": "Illusion"
+       },
+       {
+        "value": "necromancy",
+        "label": "Necromancy"
+       },
+       {
+        "value": "transmutation",
+        "label": "Transmutation"
+       }
+      ]
+     },
+     {
+      "id": "cord-school-2",
+      "prompt": "Choose magic school 2 the cord is attuned to (it gains that trait)",
+      "options": [
+       {
+        "value": "abjuration",
+        "label": "Abjuration"
+       },
+       {
+        "value": "conjuration",
+        "label": "Conjuration"
+       },
+       {
+        "value": "divination",
+        "label": "Divination"
+       },
+       {
+        "value": "enchantment",
+        "label": "Enchantment"
+       },
+       {
+        "value": "evocation",
+        "label": "Evocation"
+       },
+       {
+        "value": "illusion",
+        "label": "Illusion"
+       },
+       {
+        "value": "necromancy",
+        "label": "Necromancy"
+       },
+       {
+        "value": "transmutation",
+        "label": "Transmutation"
+       }
+      ]
+     },
+     {
+      "id": "cord-school-3",
+      "prompt": "Choose magic school 3 the cord is attuned to (it gains that trait)",
+      "options": [
+       {
+        "value": "abjuration",
+        "label": "Abjuration"
+       },
+       {
+        "value": "conjuration",
+        "label": "Conjuration"
+       },
+       {
+        "value": "divination",
+        "label": "Divination"
+       },
+       {
+        "value": "enchantment",
+        "label": "Enchantment"
+       },
+       {
+        "value": "evocation",
+        "label": "Evocation"
+       },
+       {
+        "value": "illusion",
+        "label": "Illusion"
+       },
+       {
+        "value": "necromancy",
+        "label": "Necromancy"
+       },
+       {
+        "value": "transmutation",
+        "label": "Transmutation"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "talisman-cord-lesser",
+   "verdict": "MISS",
+   "reason": "The owner picks ONE magic school when the cord is made and the cord permanently gains that trait - a pick the builder never offers, so nothing records which talismans it preserves.",
+   "fix": {
+    "effectChoices": [
+     {
+      "id": "cord-school-1",
+      "prompt": "Choose magic school 1 the cord is attuned to (it gains that trait)",
+      "options": [
+       {
+        "value": "abjuration",
+        "label": "Abjuration"
+       },
+       {
+        "value": "conjuration",
+        "label": "Conjuration"
+       },
+       {
+        "value": "divination",
+        "label": "Divination"
+       },
+       {
+        "value": "enchantment",
+        "label": "Enchantment"
+       },
+       {
+        "value": "evocation",
+        "label": "Evocation"
+       },
+       {
+        "value": "illusion",
+        "label": "Illusion"
+       },
+       {
+        "value": "necromancy",
+        "label": "Necromancy"
+       },
+       {
+        "value": "transmutation",
+        "label": "Transmutation"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "talisman-of-the-sphere",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "GM-only artifact with no price; its one number is a -10 to the DC of the check to control a sphere of annihilation, made at the table against another artifact, and the 8d6 backlash is GM-applied damage."
+  },
+  {
+   "id": "taljjaes-mask-the-beast",
+   "verdict": "MISS",
+   "reason": "The mask grants a claw unarmed Strike (1d4 slashing, agile), or upgrades an existing 1d4 claw to 1d6 - its sibling masks all received fixes (innateSpells/counters) and this one is completely bare.",
+   "fix": {
+    "grantedStrikes": [
+     {
+      "name": "Claw",
+      "die": "1d4",
+      "damageType": "slashing",
+      "traits": [
+       "agile",
+       "unarmed"
+      ],
+      "group": "brawling"
+     }
+    ]
+   }
+  },
+  {
+   "id": "tallow-bomb-lesser",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable bomb; persistent fire, splash and the sickened rider all land on the target, and the record's damage line already matches (no direct damage at lesser)."
+  },
+  {
+   "id": "tank-stationary",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A mundane liquid container with no rules text at all; Bulk and capacity are its whole content."
+  },
+  {
+   "id": "tank-traveling",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A mundane liquid container with no rules text at all; Bulk and capacity are its whole content."
+  },
+  {
+   "id": "tattletale-orb-clear-quartz",
+   "verdict": "MISS",
+   "reason": "It has the same activations and powers as Crystal Ball (Clear Quartz), which ships heldSpells clairvoyance/scrying plus hour and day counters - this 3,800 gp purchasable orb ships neither, so its owner gets no spells at all.",
+   "fix": {
+    "heldSpells": {
+     "4": [
+      "clairvoyance"
+     ],
+     "6": [
+      "scrying"
+     ]
+    },
+    "counters": [
+     {
+      "id": "freq",
+      "label": "per hour",
+      "max": 1,
+      "per": "hour",
+      "resetsOnRest": true
+     },
+     {
+      "id": "freq2",
+      "label": "per day",
+      "max": 2,
+      "per": "day",
+      "resetsOnRest": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "tattletale-orb-peridot",
+   "verdict": "MISS",
+   "reason": "Same as the clear quartz orb: it copies Crystal Ball (Peridot)'s activations and powers but ships none of that record's heldSpells or counters.",
+   "fix": {
+    "heldSpells": {
+     "4": [
+      "clairvoyance",
+      "telepathy"
+     ],
+     "6": [
+      "scrying"
+     ]
+    },
+    "counters": [
+     {
+      "id": "freq",
+      "label": "per hour",
+      "max": 1,
+      "per": "hour",
+      "resetsOnRest": true
+     },
+     {
+      "id": "freq2",
+      "label": "per day",
+      "max": 2,
+      "per": "day",
+      "resetsOnRest": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "tear-away-clothing",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane clothing; being removable with one Interact action is an action taken at the table, not a sheet value."
+  },
+  {
+   "id": "tears-of-the-last-azlanti",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A level-25 unique artifact with no price whose active bail is re-rolled randomly each dawn; the six powers are subsystem-level (property runes appearing on other gear, at-will casting, a degree-of-success shift) and pinning any to a standing field would over-grant five of the six every day."
+  }
+ ]
+}

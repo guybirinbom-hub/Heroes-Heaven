@@ -1,0 +1,672 @@
+{
+ "records": [
+  {
+   "id": "wand-of-hawthorn-4th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Hawthorn is a fixed-spell wand: Activate (Cast a Spell), once per day, casting oaken resilience at rank 4. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-hawthorn-4th-rank), which proves the lane; this separately-buyable id is inert.",
+   "fix": {
+    "heldSpells": {
+     "4": [
+      "oaken-resilience"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-hawthorn-6th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Hawthorn is a fixed-spell wand: Activate (Cast a Spell), once per day, casting oaken resilience at rank 6. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-hawthorn-6th-rank), which proves the lane; this separately-buyable id is inert.",
+   "fix": {
+    "heldSpells": {
+     "6": [
+      "oaken-resilience"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-hawthorn-8th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Hawthorn is a fixed-spell wand: Activate (Cast a Spell), once per day, casting oaken resilience at rank 8. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-hawthorn-8th-rank), which proves the lane; this separately-buyable id is inert.",
+   "fix": {
+    "heldSpells": {
+     "8": [
+      "oaken-resilience"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-hybrid-form-2nd-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Hybrid Form is a generic wand: the spell is supplied when it is crafted and the owner nominates it, then Activates to Cast the Spell once per day at rank 2. The record carries no spellSlot, so the player can never name the stored spell and nothing reaches the Spells page. This is the lane magic-wand-2nd-rank-spell already uses, and the parallel modelled copy (wand-of-hybrid-form-2nd-rank) carries it; this separately-buyable id does not.",
+   "fix": {
+    "spellSlot": {
+     "rank": 2
+    }
+   }
+  },
+  {
+   "id": "wand-of-hybrid-form-3rd-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Hybrid Form is a generic wand: the spell is supplied when it is crafted and the owner nominates it, then Activates to Cast the Spell once per day at rank 3. The record carries no spellSlot, so the player can never name the stored spell and nothing reaches the Spells page. This is the lane magic-wand-3rd-rank-spell already uses, and the parallel modelled copy (wand-of-hybrid-form-3rd-rank) carries it; this separately-buyable id does not.",
+   "fix": {
+    "spellSlot": {
+     "rank": 3
+    }
+   }
+  },
+  {
+   "id": "wand-of-hybrid-form-4th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Hybrid Form is a generic wand: the spell is supplied when it is crafted and the owner nominates it, then Activates to Cast the Spell once per day at rank 4. The record carries no spellSlot, so the player can never name the stored spell and nothing reaches the Spells page. This is the lane magic-wand-4th-rank-spell already uses, and the parallel modelled copy (wand-of-hybrid-form-4th-rank) carries it; this separately-buyable id does not.",
+   "fix": {
+    "spellSlot": {
+     "rank": 4
+    }
+   }
+  },
+  {
+   "id": "wand-of-hybrid-form-5th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Hybrid Form is a generic wand: the spell is supplied when it is crafted and the owner nominates it, then Activates to Cast the Spell once per day at rank 5. The record carries no spellSlot, so the player can never name the stored spell and nothing reaches the Spells page. This is the lane magic-wand-5th-rank-spell already uses, and the parallel modelled copy (wand-of-hybrid-form-5th-rank) carries it; this separately-buyable id does not.",
+   "fix": {
+    "spellSlot": {
+     "rank": 5
+    }
+   }
+  },
+  {
+   "id": "wand-of-hybrid-form-6th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Hybrid Form is a generic wand: the spell is supplied when it is crafted and the owner nominates it, then Activates to Cast the Spell once per day at rank 6. The record carries no spellSlot, so the player can never name the stored spell and nothing reaches the Spells page. This is the lane magic-wand-6th-rank-spell already uses, and the parallel modelled copy (wand-of-hybrid-form-6th-rank) carries it; this separately-buyable id does not.",
+   "fix": {
+    "spellSlot": {
+     "rank": 6
+    }
+   }
+  },
+  {
+   "id": "wand-of-hybrid-form-7th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Hybrid Form is a generic wand: the spell is supplied when it is crafted and the owner nominates it, then Activates to Cast the Spell once per day at rank 7. The record carries no spellSlot, so the player can never name the stored spell and nothing reaches the Spells page. This is the lane magic-wand-7th-rank-spell already uses, and the parallel modelled copy (wand-of-hybrid-form-7th-rank) carries it; this separately-buyable id does not.",
+   "fix": {
+    "spellSlot": {
+     "rank": 7
+    }
+   }
+  },
+  {
+   "id": "wand-of-hybrid-form-8th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Hybrid Form is a generic wand: the spell is supplied when it is crafted and the owner nominates it, then Activates to Cast the Spell once per day at rank 8. The record carries no spellSlot, so the player can never name the stored spell and nothing reaches the Spells page. This is the lane magic-wand-8th-rank-spell already uses, and the parallel modelled copy (wand-of-hybrid-form-8th-rank) carries it; this separately-buyable id does not.",
+   "fix": {
+    "spellSlot": {
+     "rank": 8
+    }
+   }
+  },
+  {
+   "id": "wand-of-hybrid-form-9th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Hybrid Form is a generic wand: the spell is supplied when it is crafted and the owner nominates it, then Activates to Cast the Spell once per day at rank 9. The record carries no spellSlot, so the player can never name the stored spell and nothing reaches the Spells page. This is the lane magic-wand-9th-rank-spell already uses, and the parallel modelled copy (wand-of-hybrid-form-9th-rank) carries it; this separately-buyable id does not.",
+   "fix": {
+    "spellSlot": {
+     "rank": 9
+    }
+   }
+  },
+  {
+   "id": "wand-of-mental-purification-1st-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Mental Purification is a fixed-spell wand: Activate (Cast a Spell), once per day, casting soothe at rank 1. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-mental-purification-1st-rank), which proves the lane; this separately-buyable id is inert.",
+   "fix": {
+    "heldSpells": {
+     "1": [
+      "soothe"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-mental-purification-2nd-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Mental Purification is a fixed-spell wand: Activate (Cast a Spell), once per day, casting soothe at rank 2. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-mental-purification-2nd-rank), which proves the lane; this separately-buyable id is inert.",
+   "fix": {
+    "heldSpells": {
+     "2": [
+      "soothe"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-mental-purification-3rd-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Mental Purification is a fixed-spell wand: Activate (Cast a Spell), once per day, casting soothe at rank 3. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-mental-purification-3rd-rank), which proves the lane; this separately-buyable id is inert.",
+   "fix": {
+    "heldSpells": {
+     "3": [
+      "soothe"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-mental-purification-4th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Mental Purification is a fixed-spell wand: Activate (Cast a Spell), once per day, casting soothe at rank 4. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-mental-purification-4th-rank), which proves the lane; this separately-buyable id is inert.",
+   "fix": {
+    "heldSpells": {
+     "4": [
+      "soothe"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-mental-purification-5th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Mental Purification is a fixed-spell wand: Activate (Cast a Spell), once per day, casting soothe at rank 5. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-mental-purification-5th-rank), which proves the lane; this separately-buyable id is inert.",
+   "fix": {
+    "heldSpells": {
+     "5": [
+      "soothe"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-mental-purification-6th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Mental Purification is a fixed-spell wand: Activate (Cast a Spell), once per day, casting soothe at rank 6. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-mental-purification-6th-rank), which proves the lane; this separately-buyable id is inert.",
+   "fix": {
+    "heldSpells": {
+     "6": [
+      "soothe"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-mental-purification-7th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Mental Purification is a fixed-spell wand: Activate (Cast a Spell), once per day, casting soothe at rank 7. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-mental-purification-7th-rank), which proves the lane; this separately-buyable id is inert.",
+   "fix": {
+    "heldSpells": {
+     "7": [
+      "soothe"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-mental-purification-8th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Mental Purification is a fixed-spell wand: Activate (Cast a Spell), once per day, casting soothe at rank 8. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-mental-purification-8th-rank), which proves the lane; this separately-buyable id is inert.",
+   "fix": {
+    "heldSpells": {
+     "8": [
+      "soothe"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-mental-purification-9th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Mental Purification is a fixed-spell wand: Activate (Cast a Spell), once per day, casting soothe at rank 9. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-mental-purification-9th-rank), which proves the lane; this separately-buyable id is inert.",
+   "fix": {
+    "heldSpells": {
+     "9": [
+      "soothe"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-mercy-1st-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Mercy is a generic wand: the spell is supplied when it is crafted and the owner nominates it, then Activates to Cast the Spell once per day at rank 1. The record carries no spellSlot, so the player can never name the stored spell and nothing reaches the Spells page. This is the lane magic-wand-1st-rank-spell already uses, and the parallel modelled copy (wand-of-mercy-1st-rank) carries it; this separately-buyable id does not.",
+   "fix": {
+    "spellSlot": {
+     "rank": 1
+    }
+   }
+  },
+  {
+   "id": "wand-of-mercy-2nd-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Mercy is a generic wand: the spell is supplied when it is crafted and the owner nominates it, then Activates to Cast the Spell once per day at rank 2. The record carries no spellSlot, so the player can never name the stored spell and nothing reaches the Spells page. This is the lane magic-wand-2nd-rank-spell already uses, and the parallel modelled copy (wand-of-mercy-2nd-rank) carries it; this separately-buyable id does not.",
+   "fix": {
+    "spellSlot": {
+     "rank": 2
+    }
+   }
+  },
+  {
+   "id": "wand-of-mercy-3rd-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Mercy is a generic wand: the spell is supplied when it is crafted and the owner nominates it, then Activates to Cast the Spell once per day at rank 3. The record carries no spellSlot, so the player can never name the stored spell and nothing reaches the Spells page. This is the lane magic-wand-3rd-rank-spell already uses, and the parallel modelled copy (wand-of-mercy-3rd-rank) carries it; this separately-buyable id does not.",
+   "fix": {
+    "spellSlot": {
+     "rank": 3
+    }
+   }
+  },
+  {
+   "id": "wand-of-mercy-4th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Mercy is a generic wand: the spell is supplied when it is crafted and the owner nominates it, then Activates to Cast the Spell once per day at rank 4. The record carries no spellSlot, so the player can never name the stored spell and nothing reaches the Spells page. This is the lane magic-wand-4th-rank-spell already uses, and the parallel modelled copy (wand-of-mercy-4th-rank) carries it; this separately-buyable id does not.",
+   "fix": {
+    "spellSlot": {
+     "rank": 4
+    }
+   }
+  },
+  {
+   "id": "wand-of-mercy-5th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Mercy is a generic wand: the spell is supplied when it is crafted and the owner nominates it, then Activates to Cast the Spell once per day at rank 5. The record carries no spellSlot, so the player can never name the stored spell and nothing reaches the Spells page. This is the lane magic-wand-5th-rank-spell already uses, and the parallel modelled copy (wand-of-mercy-5th-rank) carries it; this separately-buyable id does not.",
+   "fix": {
+    "spellSlot": {
+     "rank": 5
+    }
+   }
+  },
+  {
+   "id": "wand-of-mercy-6th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Mercy is a generic wand: the spell is supplied when it is crafted and the owner nominates it, then Activates to Cast the Spell once per day at rank 6. The record carries no spellSlot, so the player can never name the stored spell and nothing reaches the Spells page. This is the lane magic-wand-6th-rank-spell already uses, and the parallel modelled copy (wand-of-mercy-6th-rank) carries it; this separately-buyable id does not.",
+   "fix": {
+    "spellSlot": {
+     "rank": 6
+    }
+   }
+  },
+  {
+   "id": "wand-of-mercy-7th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Mercy is a generic wand: the spell is supplied when it is crafted and the owner nominates it, then Activates to Cast the Spell once per day at rank 7. The record carries no spellSlot, so the player can never name the stored spell and nothing reaches the Spells page. This is the lane magic-wand-7th-rank-spell already uses, and the parallel modelled copy (wand-of-mercy-7th-rank) carries it; this separately-buyable id does not.",
+   "fix": {
+    "spellSlot": {
+     "rank": 7
+    }
+   }
+  },
+  {
+   "id": "wand-of-mercy-8th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Mercy is a generic wand: the spell is supplied when it is crafted and the owner nominates it, then Activates to Cast the Spell once per day at rank 8. The record carries no spellSlot, so the player can never name the stored spell and nothing reaches the Spells page. This is the lane magic-wand-8th-rank-spell already uses, and the parallel modelled copy (wand-of-mercy-8th-rank) carries it; this separately-buyable id does not.",
+   "fix": {
+    "spellSlot": {
+     "rank": 8
+    }
+   }
+  },
+  {
+   "id": "wand-of-mercy-9th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Mercy is a generic wand: the spell is supplied when it is crafted and the owner nominates it, then Activates to Cast the Spell once per day at rank 9. The record carries no spellSlot, so the player can never name the stored spell and nothing reaches the Spells page. This is the lane magic-wand-9th-rank-spell already uses, and the parallel modelled copy (wand-of-mercy-9th-rank) carries it; this separately-buyable id does not.",
+   "fix": {
+    "spellSlot": {
+     "rank": 9
+    }
+   }
+  },
+  {
+   "id": "wand-of-paralytic-shock-3rd-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Paralytic Shock is a fixed-spell wand: Activate (Cast a Spell), once per day, casting paralyze at rank 3. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-paralytic-shock-3rd-rank), which proves the lane; this separately-buyable id is inert.",
+   "fix": {
+    "heldSpells": {
+     "3": [
+      "paralyze"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-paralytic-shock-7th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Paralytic Shock is a fixed-spell wand: Activate (Cast a Spell), once per day, casting paralyze at rank 7. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-paralytic-shock-7th-rank), which proves the lane; this separately-buyable id is inert.",
+   "fix": {
+    "heldSpells": {
+     "7": [
+      "paralyze"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-pernicious-poison-1st-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Pernicious Poison is a fixed-spell wand: Activate (Cast a Spell), once per day, casting spider sting at rank 1. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-pernicious-poison-1st-rank), which proves the lane; this separately-buyable id is inert.",
+   "fix": {
+    "heldSpells": {
+     "1": [
+      "spider-sting"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-pernicious-poison-6th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Pernicious Poison is a fixed-spell wand: Activate (Cast a Spell), once per day, casting spider sting at rank 6. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-pernicious-poison-6th-rank), which proves the lane; this separately-buyable id is inert.",
+   "fix": {
+    "heldSpells": {
+     "6": [
+      "spider-sting"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-reaching-1st-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Reaching is a generic wand: the spell is supplied when it is crafted and the owner nominates it, then Activates to Cast the Spell once per day at rank 1. The record carries no spellSlot, so the player can never name the stored spell and nothing reaches the Spells page. This is the lane magic-wand-1st-rank-spell already uses, and the parallel modelled copy (wand-of-reaching-1st-rank) carries it; this separately-buyable id does not.",
+   "fix": {
+    "spellSlot": {
+     "rank": 1
+    }
+   }
+  },
+  {
+   "id": "wand-of-reaching-2nd-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Reaching is a generic wand: the spell is supplied when it is crafted and the owner nominates it, then Activates to Cast the Spell once per day at rank 2. The record carries no spellSlot, so the player can never name the stored spell and nothing reaches the Spells page. This is the lane magic-wand-2nd-rank-spell already uses, and the parallel modelled copy (wand-of-reaching-2nd-rank) carries it; this separately-buyable id does not.",
+   "fix": {
+    "spellSlot": {
+     "rank": 2
+    }
+   }
+  },
+  {
+   "id": "wand-of-reaching-3rd-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Reaching is a generic wand: the spell is supplied when it is crafted and the owner nominates it, then Activates to Cast the Spell once per day at rank 3. The record carries no spellSlot, so the player can never name the stored spell and nothing reaches the Spells page. This is the lane magic-wand-3rd-rank-spell already uses, and the parallel modelled copy (wand-of-reaching-3rd-rank) carries it; this separately-buyable id does not.",
+   "fix": {
+    "spellSlot": {
+     "rank": 3
+    }
+   }
+  },
+  {
+   "id": "wand-of-reaching-4th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Reaching is a generic wand: the spell is supplied when it is crafted and the owner nominates it, then Activates to Cast the Spell once per day at rank 4. The record carries no spellSlot, so the player can never name the stored spell and nothing reaches the Spells page. This is the lane magic-wand-4th-rank-spell already uses, and the parallel modelled copy (wand-of-reaching-4th-rank) carries it; this separately-buyable id does not.",
+   "fix": {
+    "spellSlot": {
+     "rank": 4
+    }
+   }
+  },
+  {
+   "id": "wand-of-reaching-5th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Reaching is a generic wand: the spell is supplied when it is crafted and the owner nominates it, then Activates to Cast the Spell once per day at rank 5. The record carries no spellSlot, so the player can never name the stored spell and nothing reaches the Spells page. This is the lane magic-wand-5th-rank-spell already uses, and the parallel modelled copy (wand-of-reaching-5th-rank) carries it; this separately-buyable id does not.",
+   "fix": {
+    "spellSlot": {
+     "rank": 5
+    }
+   }
+  },
+  {
+   "id": "wand-of-reaching-6th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Reaching is a generic wand: the spell is supplied when it is crafted and the owner nominates it, then Activates to Cast the Spell once per day at rank 6. The record carries no spellSlot, so the player can never name the stored spell and nothing reaches the Spells page. This is the lane magic-wand-6th-rank-spell already uses, and the parallel modelled copy (wand-of-reaching-6th-rank) carries it; this separately-buyable id does not.",
+   "fix": {
+    "spellSlot": {
+     "rank": 6
+    }
+   }
+  },
+  {
+   "id": "wand-of-reaching-7th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Reaching is a generic wand: the spell is supplied when it is crafted and the owner nominates it, then Activates to Cast the Spell once per day at rank 7. The record carries no spellSlot, so the player can never name the stored spell and nothing reaches the Spells page. This is the lane magic-wand-7th-rank-spell already uses, and the parallel modelled copy (wand-of-reaching-7th-rank) carries it; this separately-buyable id does not.",
+   "fix": {
+    "spellSlot": {
+     "rank": 7
+    }
+   }
+  },
+  {
+   "id": "wand-of-reaching-8th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Reaching is a generic wand: the spell is supplied when it is crafted and the owner nominates it, then Activates to Cast the Spell once per day at rank 8. The record carries no spellSlot, so the player can never name the stored spell and nothing reaches the Spells page. This is the lane magic-wand-8th-rank-spell already uses, and the parallel modelled copy (wand-of-reaching-8th-rank) carries it; this separately-buyable id does not.",
+   "fix": {
+    "spellSlot": {
+     "rank": 8
+    }
+   }
+  },
+  {
+   "id": "wand-of-reaching-9th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Reaching is a generic wand: the spell is supplied when it is crafted and the owner nominates it, then Activates to Cast the Spell once per day at rank 9. The record carries no spellSlot, so the player can never name the stored spell and nothing reaches the Spells page. This is the lane magic-wand-9th-rank-spell already uses, and the parallel modelled copy (wand-of-reaching-9th-rank) carries it; this separately-buyable id does not.",
+   "fix": {
+    "spellSlot": {
+     "rank": 9
+    }
+   }
+  },
+  {
+   "id": "wand-of-refracting-rays-4th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Refracting Rays is a fixed-spell wand: Activate (Cast a Spell), once per day, casting chromatic ray at rank 4. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-refracting-rays-4th-rank), which proves the lane; this separately-buyable id is inert.",
+   "fix": {
+    "heldSpells": {
+     "4": [
+      "chromatic-ray"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-refracting-rays-6th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Refracting Rays is a fixed-spell wand: Activate (Cast a Spell), once per day, casting chromatic ray at rank 6. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-refracting-rays-6th-rank), which proves the lane; this separately-buyable id is inert.",
+   "fix": {
+    "heldSpells": {
+     "6": [
+      "chromatic-ray"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-rolling-flames-2nd-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Rolling Flames is a fixed-spell wand: Activate (Cast a Spell), once per day, casting floating flame at rank 2. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-rolling-flames-2nd-rank), which proves the lane; this separately-buyable id is inert.",
+   "fix": {
+    "heldSpells": {
+     "2": [
+      "floating-flame"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-rolling-flames-3rd-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Rolling Flames is a fixed-spell wand: Activate (Cast a Spell), once per day, casting floating flame at rank 3. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-rolling-flames-3rd-rank), which proves the lane; this separately-buyable id is inert.",
+   "fix": {
+    "heldSpells": {
+     "3": [
+      "floating-flame"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-rolling-flames-4th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Rolling Flames is a fixed-spell wand: Activate (Cast a Spell), once per day, casting floating flame at rank 4. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-rolling-flames-4th-rank), which proves the lane; this separately-buyable id is inert.",
+   "fix": {
+    "heldSpells": {
+     "4": [
+      "floating-flame"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-rolling-flames-5th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Rolling Flames is a fixed-spell wand: Activate (Cast a Spell), once per day, casting floating flame at rank 5. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-rolling-flames-5th-rank), which proves the lane; this separately-buyable id is inert.",
+   "fix": {
+    "heldSpells": {
+     "5": [
+      "floating-flame"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-rolling-flames-6th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Rolling Flames is a fixed-spell wand: Activate (Cast a Spell), once per day, casting floating flame at rank 6. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-rolling-flames-6th-rank), which proves the lane; this separately-buyable id is inert.",
+   "fix": {
+    "heldSpells": {
+     "6": [
+      "floating-flame"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-rolling-flames-7th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Rolling Flames is a fixed-spell wand: Activate (Cast a Spell), once per day, casting floating flame at rank 7. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-rolling-flames-7th-rank), which proves the lane; this separately-buyable id is inert.",
+   "fix": {
+    "heldSpells": {
+     "7": [
+      "floating-flame"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-rolling-flames-8th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Rolling Flames is a fixed-spell wand: Activate (Cast a Spell), once per day, casting floating flame at rank 8. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-rolling-flames-8th-rank), which proves the lane; this separately-buyable id is inert.",
+   "fix": {
+    "heldSpells": {
+     "8": [
+      "floating-flame"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-rolling-flames-9th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Rolling Flames is a fixed-spell wand: Activate (Cast a Spell), once per day, casting floating flame at rank 9. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-rolling-flames-9th-rank), which proves the lane; this separately-buyable id is inert.",
+   "fix": {
+    "heldSpells": {
+     "9": [
+      "floating-flame"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-slaying-7th-level-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Slaying is a fixed-spell wand: Activate (Cast a Spell), once per day, casting finger of death at rank 7. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-slaughter-7th-rank-spell (the remastered reprint)), which proves the lane; this separately-buyable id is inert. finger of death does not exist in content under that id — its remastered name is execute, exactly what the modelled Wand of Slaughter records use.",
+   "fix": {
+    "heldSpells": {
+     "7": [
+      "execute"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-slaying-8th-level-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Slaying is a fixed-spell wand: Activate (Cast a Spell), once per day, casting finger of death at rank 8. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-slaughter-8th-rank-spell (the remastered reprint)), which proves the lane; this separately-buyable id is inert. finger of death does not exist in content under that id — its remastered name is execute, exactly what the modelled Wand of Slaughter records use.",
+   "fix": {
+    "heldSpells": {
+     "8": [
+      "execute"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-slaying-9th-level-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Slaying is a fixed-spell wand: Activate (Cast a Spell), once per day, casting finger of death at rank 9. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-slaughter-9th-rank-spell (the remastered reprint)), which proves the lane; this separately-buyable id is inert. finger of death does not exist in content under that id — its remastered name is execute, exactly what the modelled Wand of Slaughter records use.",
+   "fix": {
+    "heldSpells": {
+     "9": [
+      "execute"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-spiritual-warfare-2nd-level",
+   "verdict": "MISS",
+   "reason": "Wand of Spiritual Warfare is a fixed-spell wand: Activate (Cast a Spell), once per day, casting spiritual weapon at rank 2. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-spiritual-warfare-2nd-rank-spell), which proves the lane; this separately-buyable id is inert.",
+   "fix": {
+    "heldSpells": {
+     "2": [
+      "spiritual-weapon"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-spiritual-warfare-4th-level",
+   "verdict": "MISS",
+   "reason": "Wand of Spiritual Warfare is a fixed-spell wand: Activate (Cast a Spell), once per day, casting spiritual weapon at rank 4. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-spiritual-warfare-4th-rank-spell), which proves the lane; this separately-buyable id is inert.",
+   "fix": {
+    "heldSpells": {
+     "4": [
+      "spiritual-weapon"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-spiritual-warfare-6th-level",
+   "verdict": "MISS",
+   "reason": "Wand of Spiritual Warfare is a fixed-spell wand: Activate (Cast a Spell), once per day, casting spiritual weapon at rank 6. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-spiritual-warfare-6th-rank-spell), which proves the lane; this separately-buyable id is inert.",
+   "fix": {
+    "heldSpells": {
+     "6": [
+      "spiritual-weapon"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-spiritual-warfare-8th-level",
+   "verdict": "MISS",
+   "reason": "Wand of Spiritual Warfare is a fixed-spell wand: Activate (Cast a Spell), once per day, casting spiritual weapon at rank 8. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-spiritual-warfare-8th-rank-spell), which proves the lane; this separately-buyable id is inert.",
+   "fix": {
+    "heldSpells": {
+     "8": [
+      "spiritual-weapon"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-splintered-sorrows-2nd-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand of Splintered Sorrows is a fixed-spell wand: Activate (Cast a Spell), once per day, casting splinter volley at rank 2. The record carries no heldSpells and no spellSlot, so an owner who buys it gets nothing on the Spells page and no castable spell at all. The same wand also ships as a correctly-modelled parallel record (wand-of-splintered-sorrows-rank-2), which proves the lane; this separately-buyable id is inert.",
+   "fix": {
+    "heldSpells": {
+     "2": [
+      "splinter-volley"
+     ]
+    }
+   }
+  }
+ ]
+}

@@ -6467,6 +6467,9 @@
           "type": "poison",
           "value": 20
         }
+      ],
+      "immunities": [
+        "deafened"
       ]
     }
   },
@@ -52615,5 +52618,5118 @@
       "max": 2,
       "per": "day"
     }
+  },
+  {
+    "category": "items",
+    "id": "redsand-hourglass",
+    "field": "passiveEffects",
+    "value": {
+      "immunities": [
+        "paralyzed",
+        "slowed",
+        "stunned"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "demons-knot",
+    "field": "passiveEffects",
+    "value": {
+      "weaknesses": [
+        {
+          "type": "cold-iron",
+          "value": 10
+        },
+        {
+          "type": "holy",
+          "value": 10
+        }
+      ],
+      "immunities": [
+        "confused",
+        "controlled"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "ghoul-hide",
+    "field": "passiveEffects",
+    "value": {
+      "immunities": [
+        "ghoul stench"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "navaratna-of-the-solar-ruby",
+    "field": "passiveEffects",
+    "value": {
+      "immunities": [
+        "starvation"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "pickled-demon-tongue",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "acid",
+          "value": 2
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "greater-pickled-demon-tongue",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "acid",
+          "value": 5
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "major-pickled-demon-tongue",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "acid",
+          "value": 10
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "polished-demon-horn",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "unholy",
+          "value": 2
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "greater-polished-demon-horn",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "unholy",
+          "value": 5
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "major-polished-demon-horn",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "unholy",
+          "value": 10
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "sihedron-ring",
+    "field": "passiveEffects",
+    "value": {
+      "immunities": [
+        "severe cold",
+        "severe heat"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "greater-sihedron-ring",
+    "field": "passiveEffects",
+    "value": {
+      "immunities": [
+        "severe cold",
+        "severe heat"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "sihedron-ring-greater",
+    "field": "passiveEffects",
+    "value": {
+      "immunities": [
+        "severe cold",
+        "severe heat"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "sorshens-scintillating-garment",
+    "field": "passiveEffects",
+    "value": {
+      "immunities": [
+        "mental"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "1st-rank-scroll",
+    "field": "spellSlot",
+    "value": {
+      "rank": 1
+    }
+  },
+  {
+    "category": "items",
+    "id": "2nd-rank-scroll",
+    "field": "spellSlot",
+    "value": {
+      "rank": 2
+    }
+  },
+  {
+    "category": "items",
+    "id": "3rd-rank-scroll",
+    "field": "spellSlot",
+    "value": {
+      "rank": 3
+    }
+  },
+  {
+    "category": "items",
+    "id": "4th-rank-scroll",
+    "field": "spellSlot",
+    "value": {
+      "rank": 4
+    }
+  },
+  {
+    "category": "items",
+    "id": "5th-rank-scroll",
+    "field": "spellSlot",
+    "value": {
+      "rank": 5
+    }
+  },
+  {
+    "category": "items",
+    "id": "6th-rank-scroll",
+    "field": "spellSlot",
+    "value": {
+      "rank": 6
+    }
+  },
+  {
+    "category": "items",
+    "id": "7th-rank-scroll",
+    "field": "spellSlot",
+    "value": {
+      "rank": 7
+    }
+  },
+  {
+    "category": "items",
+    "id": "8th-rank-scroll",
+    "field": "spellSlot",
+    "value": {
+      "rank": 8
+    }
+  },
+  {
+    "category": "items",
+    "id": "9th-rank-scroll",
+    "field": "spellSlot",
+    "value": {
+      "rank": 9
+    }
+  },
+  {
+    "category": "items",
+    "id": "10th-rank-scroll",
+    "field": "spellSlot",
+    "value": {
+      "rank": 10
+    }
+  },
+  {
+    "category": "items",
+    "id": "abysium-buckler-standard-grade",
+    "field": "itemType",
+    "value": "shield"
+  },
+  {
+    "category": "items",
+    "id": "abysium-buckler-standard-grade",
+    "field": "acBonus",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "abysium-buckler-standard-grade",
+    "field": "hardness",
+    "value": 4
+  },
+  {
+    "category": "items",
+    "id": "abysium-buckler-standard-grade",
+    "field": "hp",
+    "value": 16
+  },
+  {
+    "category": "items",
+    "id": "abysium-buckler-standard-grade",
+    "field": "brokenThreshold",
+    "value": 8
+  },
+  {
+    "category": "items",
+    "id": "abysium-buckler-standard-grade",
+    "field": "speedPenalty",
+    "value": 0
+  },
+  {
+    "category": "items",
+    "id": "abysium-buckler-standard-grade",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "abysium-buckler-high-grade",
+    "field": "itemType",
+    "value": "shield"
+  },
+  {
+    "category": "items",
+    "id": "abysium-buckler-high-grade",
+    "field": "acBonus",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "abysium-buckler-high-grade",
+    "field": "hardness",
+    "value": 7
+  },
+  {
+    "category": "items",
+    "id": "abysium-buckler-high-grade",
+    "field": "hp",
+    "value": 28
+  },
+  {
+    "category": "items",
+    "id": "abysium-buckler-high-grade",
+    "field": "brokenThreshold",
+    "value": 14
+  },
+  {
+    "category": "items",
+    "id": "abysium-buckler-high-grade",
+    "field": "speedPenalty",
+    "value": 0
+  },
+  {
+    "category": "items",
+    "id": "abysium-buckler-high-grade",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "abysium-shield-standard-grade",
+    "field": "itemType",
+    "value": "shield"
+  },
+  {
+    "category": "items",
+    "id": "abysium-shield-standard-grade",
+    "field": "acBonus",
+    "value": 2
+  },
+  {
+    "category": "items",
+    "id": "abysium-shield-standard-grade",
+    "field": "hardness",
+    "value": 6
+  },
+  {
+    "category": "items",
+    "id": "abysium-shield-standard-grade",
+    "field": "hp",
+    "value": 24
+  },
+  {
+    "category": "items",
+    "id": "abysium-shield-standard-grade",
+    "field": "brokenThreshold",
+    "value": 12
+  },
+  {
+    "category": "items",
+    "id": "abysium-shield-standard-grade",
+    "field": "speedPenalty",
+    "value": 0
+  },
+  {
+    "category": "items",
+    "id": "abysium-shield-standard-grade",
+    "field": "bulk",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "abysium-shield-high-grade",
+    "field": "itemType",
+    "value": "shield"
+  },
+  {
+    "category": "items",
+    "id": "abysium-shield-high-grade",
+    "field": "acBonus",
+    "value": 2
+  },
+  {
+    "category": "items",
+    "id": "abysium-shield-high-grade",
+    "field": "hardness",
+    "value": 10
+  },
+  {
+    "category": "items",
+    "id": "abysium-shield-high-grade",
+    "field": "hp",
+    "value": 40
+  },
+  {
+    "category": "items",
+    "id": "abysium-shield-high-grade",
+    "field": "brokenThreshold",
+    "value": 20
+  },
+  {
+    "category": "items",
+    "id": "abysium-shield-high-grade",
+    "field": "speedPenalty",
+    "value": 0
+  },
+  {
+    "category": "items",
+    "id": "abysium-shield-high-grade",
+    "field": "bulk",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "adamantine-buckler-standard-grade",
+    "field": "itemType",
+    "value": "shield"
+  },
+  {
+    "category": "items",
+    "id": "adamantine-buckler-standard-grade",
+    "field": "acBonus",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "adamantine-buckler-standard-grade",
+    "field": "hardness",
+    "value": 8
+  },
+  {
+    "category": "items",
+    "id": "adamantine-buckler-standard-grade",
+    "field": "hp",
+    "value": 32
+  },
+  {
+    "category": "items",
+    "id": "adamantine-buckler-standard-grade",
+    "field": "brokenThreshold",
+    "value": 16
+  },
+  {
+    "category": "items",
+    "id": "adamantine-buckler-standard-grade",
+    "field": "speedPenalty",
+    "value": 0
+  },
+  {
+    "category": "items",
+    "id": "adamantine-buckler-standard-grade",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "adamantine-buckler-high-grade",
+    "field": "itemType",
+    "value": "shield"
+  },
+  {
+    "category": "items",
+    "id": "adamantine-buckler-high-grade",
+    "field": "acBonus",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "adamantine-buckler-high-grade",
+    "field": "hardness",
+    "value": 11
+  },
+  {
+    "category": "items",
+    "id": "adamantine-buckler-high-grade",
+    "field": "hp",
+    "value": 44
+  },
+  {
+    "category": "items",
+    "id": "adamantine-buckler-high-grade",
+    "field": "brokenThreshold",
+    "value": 22
+  },
+  {
+    "category": "items",
+    "id": "adamantine-buckler-high-grade",
+    "field": "speedPenalty",
+    "value": 0
+  },
+  {
+    "category": "items",
+    "id": "adamantine-buckler-high-grade",
+    "field": "bulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "adamantine-shield-standard-grade",
+    "field": "itemType",
+    "value": "shield"
+  },
+  {
+    "category": "items",
+    "id": "adamantine-shield-standard-grade",
+    "field": "acBonus",
+    "value": 2
+  },
+  {
+    "category": "items",
+    "id": "adamantine-shield-standard-grade",
+    "field": "hardness",
+    "value": 10
+  },
+  {
+    "category": "items",
+    "id": "adamantine-shield-standard-grade",
+    "field": "hp",
+    "value": 40
+  },
+  {
+    "category": "items",
+    "id": "adamantine-shield-standard-grade",
+    "field": "brokenThreshold",
+    "value": 20
+  },
+  {
+    "category": "items",
+    "id": "adamantine-shield-standard-grade",
+    "field": "speedPenalty",
+    "value": 0
+  },
+  {
+    "category": "items",
+    "id": "adamantine-shield-standard-grade",
+    "field": "bulk",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "adamantine-shield-high-grade",
+    "field": "itemType",
+    "value": "shield"
+  },
+  {
+    "category": "items",
+    "id": "adamantine-shield-high-grade",
+    "field": "acBonus",
+    "value": 2
+  },
+  {
+    "category": "items",
+    "id": "adamantine-shield-high-grade",
+    "field": "hardness",
+    "value": 13
+  },
+  {
+    "category": "items",
+    "id": "adamantine-shield-high-grade",
+    "field": "hp",
+    "value": 52
+  },
+  {
+    "category": "items",
+    "id": "adamantine-shield-high-grade",
+    "field": "brokenThreshold",
+    "value": 26
+  },
+  {
+    "category": "items",
+    "id": "adamantine-shield-high-grade",
+    "field": "speedPenalty",
+    "value": 0
+  },
+  {
+    "category": "items",
+    "id": "adamantine-shield-high-grade",
+    "field": "bulk",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "aeon-stone-agate-ellipsoid",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "augury",
+        "tradition": "divine",
+        "rank": 2,
+        "usesPerDay": 1
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "aeon-stone-dusty-rose-prism",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "shield",
+        "tradition": "arcane",
+        "atWill": true
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "aeon-stone-mottled-ellipsoid",
+    "field": "negativeHealing",
+    "value": true
+  },
+  {
+    "category": "items",
+    "id": "aeon-stone-mottled-ellipsoid",
+    "field": "passiveEffects",
+    "value": {
+      "immunities": [
+        "void"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "aeon-stone-pink-rhomboid",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "hp"
+          }
+        ],
+        "when": "while this aeon stone is invested and orbiting your head",
+        "bonus": "15 temporary HP, refreshed at daily preparations (lost while suppressed)"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "aeon-stone-smoothing",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "skill",
+            "detail": "all"
+          }
+        ],
+        "when": "you are clumsy 1, enfeebled 1, frightened 1, sickened 1, or stupefied 1",
+        "bonus": "ignore that condition's status penalty to skill checks (value 1 only)"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "aeon-stone-western-star",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "illusory-disguise",
+        "rank": 1,
+        "atWill": true
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "alchemical-atomizer",
+    "field": "counters",
+    "value": [
+      {
+        "id": "reagents",
+        "label": "Reagent uses",
+        "max": 10,
+        "startsFull": true,
+        "resetsOnRest": false
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "all-will-decay",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "rust-cloud",
+        "tradition": "primal",
+        "rank": 5,
+        "atWill": true
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "anointed-waterskin",
+    "field": "frequency",
+    "value": {
+      "max": 1,
+      "per": "day"
+    }
+  },
+  {
+    "category": "items",
+    "id": "arboreal-wand-2nd-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "2": [
+        "heal"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "arboreal-wand-3rd-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "3": [
+        "heal"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "arboreal-wand-4th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "4": [
+        "heal"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "arboreal-wand-5th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "5": [
+        "heal"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "arboreal-wand-6th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "6": [
+        "heal"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "arboreal-wand-7th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "7": [
+        "heal"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "archaic-wayfinder",
+    "field": "spellSlot",
+    "value": {
+      "rank": 0
+    }
+  },
+  {
+    "category": "items",
+    "id": "glacier-hammer",
+    "field": "strikeDamage",
+    "value": [
+      {
+        "type": "cold",
+        "flat": 1,
+        "appliesTo": "all",
+        "note": "Glacier Hammer"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "gloom-blade",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "strikeAttack"
+          },
+          {
+            "kind": "strikeDamage"
+          }
+        ],
+        "when": "in dim light or darkness (it becomes a +2 striking shortsword)",
+        "bonus": "+1 item to attack and +1 damage die over its bright-light +1 form"
+      },
+      {
+        "targets": [
+          {
+            "kind": "strikeDamage"
+          }
+        ],
+        "when": "attacking a creature you are undetected by with the gloom blade",
+        "bonus": "+1d6 precision"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "gloves-of-carelessness",
+    "field": "stuck",
+    "value": true
+  },
+  {
+    "category": "items",
+    "id": "gluttonous-spear",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "hp"
+          }
+        ],
+        "when": "on a critical hit with the gluttonous spear",
+        "bonus": "+1d8 temporary Hit Points for 1 minute"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "goring-horn",
+    "field": "grantedStrikes",
+    "value": [
+      {
+        "name": "Horn",
+        "die": "d8",
+        "damageType": "piercing",
+        "traits": [
+          "forceful",
+          "shove",
+          "unarmed",
+          "magical"
+        ],
+        "group": "brawling"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "greater-blazing-banner",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "strikeDamage"
+          }
+        ],
+        "when": "on a critical hit while within the blazing banner's aura",
+        "bonus": "+1d6 persistent fire"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "greater-knaves-standard",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "strikeDamage"
+          }
+        ],
+        "when": "on a critical hit vs an off-guard target within the standard's aura",
+        "bonus": "+1d6 precision"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "greater-staff-of-arcane-might",
+    "field": "heldSpells",
+    "value": {
+      "0": [
+        "detect-magic"
+      ],
+      "1": [
+        "phantasmal-minion"
+      ],
+      "2": [
+        "everlight"
+      ],
+      "3": [
+        "force-barrage",
+        "paralyze"
+      ],
+      "4": [
+        "dispelling-globe",
+        "mystic-armor",
+        "translocate"
+      ],
+      "5": [
+        "fireball",
+        "force-barrage",
+        "lightning-bolt"
+      ],
+      "6": [
+        "disintegrate",
+        "mystic-armor",
+        "wall-of-force"
+      ],
+      "7": [
+        "howling-blizzard",
+        "fireball",
+        "lightning-bolt"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "greater-staff-of-arcane-might",
+    "field": "counters",
+    "value": [
+      {
+        "id": "pool",
+        "label": "Charges",
+        "max": "level",
+        "resetsOnRest": true,
+        "startsFull": true
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "greater-trident-of-the-azarketis",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "hydraulic-torrent",
+        "tradition": "primal",
+        "rank": 6,
+        "usesPerDay": 1
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "handkerchief-of-disagreeable-disguise-greater",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "illusory-disguise",
+        "tradition": "arcane",
+        "rank": 2,
+        "atWill": true
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "heckling-tools",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "skill",
+            "detail": "all"
+          }
+        ],
+        "when": "on checks that use the heckling tools (replaces their usual bonus)",
+        "bonus": "-2 circumstance"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "hidden-pocket-outfit",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "skill",
+            "detail": "stealth"
+          }
+        ],
+        "when": "to Conceal an Object of light or negligible Bulk while worn",
+        "bonus": "automatic success"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "hunters-bow",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "strikeDamage"
+          }
+        ],
+        "when": "on a critical hit with this bow vs a target that can't see you",
+        "bonus": "+1d6 extra damage"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "hunters-hagbook",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "save",
+            "detail": "all"
+          }
+        ],
+        "when": "vs a coven spell, if you end a spell you prepared from this book",
+        "bonus": "one degree of success better"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "hydration-cloak",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "water-walk",
+        "tradition": "arcane",
+        "rank": 2,
+        "usesPerDay": 1
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "immaculate-instrument",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "skill",
+            "detail": "performance"
+          },
+          {
+            "kind": "skill",
+            "detail": "crafting"
+          }
+        ],
+        "when": "while you possess the immaculate instrument",
+        "bonus": "critical failures become failures"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "injection-reservoir",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "strikeAttack"
+          }
+        ],
+        "when": "on your 2nd or later attack with the adjusted weapon",
+        "bonus": "-1 untyped"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "instinct-crown",
+    "field": "counters",
+    "value": [
+      {
+        "id": "quick-tempered",
+        "label": "Quick-Tempered boost (per day)",
+        "max": 1,
+        "per": "day",
+        "resetsOnRest": true
+      },
+      {
+        "id": "instinct-boon",
+        "label": "Instinct boon (per day)",
+        "max": 1,
+        "per": "day",
+        "resetsOnRest": true
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "inventors-chair",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "skill",
+            "detail": "crafting"
+          }
+        ],
+        "when": "to Craft using the chair's built-in sterling artisan's tools",
+        "bonus": "+1 item"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "jistkan-colossus-crusher",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "strikeDamage"
+          }
+        ],
+        "when": "when you damage a construct with this maul",
+        "bonus": "1d6 persistent force"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "judgement-thurible",
+    "field": "heldSpells",
+    "value": {
+      "0": [
+        "divine-lance"
+      ],
+      "4": [
+        "divine-wrath"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "judgement-thurible",
+    "field": "counters",
+    "value": [
+      {
+        "id": "freq",
+        "label": "per day",
+        "max": 1,
+        "per": "day",
+        "resetsOnRest": true
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "judgement-thurible-greater",
+    "field": "heldSpells",
+    "value": {
+      "0": [
+        "divine-lance"
+      ],
+      "6": [
+        "divine-wrath"
+      ],
+      "7": [
+        "divine-decree"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "judgement-thurible-greater",
+    "field": "counters",
+    "value": [
+      {
+        "id": "freq",
+        "label": "per day",
+        "max": 1,
+        "per": "day",
+        "resetsOnRest": true
+      },
+      {
+        "id": "freq2",
+        "label": "per day",
+        "max": 1,
+        "per": "day",
+        "resetsOnRest": true
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "judgement-thurible-major",
+    "field": "heldSpells",
+    "value": {
+      "0": [
+        "divine-lance"
+      ],
+      "7": [
+        "divine-decree"
+      ],
+      "8": [
+        "summon-deific-herald"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "judgement-thurible-major",
+    "field": "counters",
+    "value": [
+      {
+        "id": "freq",
+        "label": "per day",
+        "max": 1,
+        "per": "day",
+        "resetsOnRest": true
+      },
+      {
+        "id": "freq2",
+        "label": "per day",
+        "max": 1,
+        "per": "day",
+        "resetsOnRest": true
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "knapsack-of-halflingkind",
+    "field": "counters",
+    "value": [
+      {
+        "id": "tarts",
+        "label": "berry tarts (per day)",
+        "max": 4,
+        "per": "day",
+        "resetsOnRest": true
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "knaves-standard",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "strikeDamage"
+          }
+        ],
+        "when": "on a critical hit against an off-guard target in the aura",
+        "bonus": "1d4 precision"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "knaves-standard-greater",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "strikeDamage"
+          }
+        ],
+        "when": "on a critical hit against an off-guard target in the aura",
+        "bonus": "1d6 precision"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "knaves-standard-major",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "strikeDamage"
+          }
+        ],
+        "when": "on a critical hit against an off-guard target in the aura",
+        "bonus": "1d8 precision"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "land-delvers-chair",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "speed"
+          }
+        ],
+        "when": "while using the land-delver's chair",
+        "bonus": "your Speed becomes 20 feet, or your swim Speed if that is lower"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "large-bore-modifications",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "strikeDamage"
+          }
+        ],
+        "when": "with the modified kickback firearm (kickback bonus 1 to 2)",
+        "bonus": "+1 untyped"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "lesser-energized-shield",
+    "field": "itemType",
+    "value": "shield"
+  },
+  {
+    "category": "items",
+    "id": "lesser-energized-shield",
+    "field": "acBonus",
+    "value": 2
+  },
+  {
+    "category": "items",
+    "id": "lesser-energized-shield",
+    "field": "hardness",
+    "value": 8
+  },
+  {
+    "category": "items",
+    "id": "lesser-energized-shield",
+    "field": "hp",
+    "value": 64
+  },
+  {
+    "category": "items",
+    "id": "lesser-energized-shield",
+    "field": "brokenThreshold",
+    "value": 32
+  },
+  {
+    "category": "items",
+    "id": "lesser-energized-shield",
+    "field": "speedPenalty",
+    "value": 0
+  },
+  {
+    "category": "items",
+    "id": "major-astonishing-ink",
+    "field": "counters",
+    "value": [
+      {
+        "id": "astonishing-ink-questions",
+        "label": "Questions remaining",
+        "max": 5
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "major-boots-of-the-secret-blade",
+    "field": "grantedStrikes",
+    "value": [
+      {
+        "name": "Secret Blade",
+        "die": "3d4",
+        "damageType": "piercing",
+        "traits": [
+          "agile",
+          "finesse",
+          "magical",
+          "thrown-10",
+          "versatile-s"
+        ],
+        "group": "knife"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "major-energized-shield",
+    "field": "itemType",
+    "value": "shield"
+  },
+  {
+    "category": "items",
+    "id": "major-energized-shield",
+    "field": "acBonus",
+    "value": 2
+  },
+  {
+    "category": "items",
+    "id": "major-energized-shield",
+    "field": "hardness",
+    "value": 8
+  },
+  {
+    "category": "items",
+    "id": "major-energized-shield",
+    "field": "hp",
+    "value": 64
+  },
+  {
+    "category": "items",
+    "id": "major-energized-shield",
+    "field": "brokenThreshold",
+    "value": 32
+  },
+  {
+    "category": "items",
+    "id": "major-energized-shield",
+    "field": "speedPenalty",
+    "value": 0
+  },
+  {
+    "category": "items",
+    "id": "major-staff-of-arcane-might",
+    "field": "heldSpells",
+    "value": {
+      "0": [
+        "detect-magic"
+      ],
+      "1": [
+        "phantasmal-minion"
+      ],
+      "2": [
+        "everlight"
+      ],
+      "3": [
+        "force-barrage",
+        "paralyze"
+      ],
+      "4": [
+        "dispelling-globe",
+        "mystic-armor",
+        "translocate"
+      ],
+      "5": [
+        "fireball",
+        "force-barrage",
+        "lightning-bolt"
+      ],
+      "6": [
+        "disintegrate",
+        "mystic-armor",
+        "wall-of-force"
+      ],
+      "7": [
+        "howling-blizzard",
+        "fireball",
+        "lightning-bolt"
+      ],
+      "8": [
+        "mystic-armor",
+        "wall-of-force"
+      ],
+      "9": [
+        "dispel-magic",
+        "falling-stars",
+        "howling-blizzard"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "major-staff-of-arcane-might",
+    "field": "counters",
+    "value": [
+      {
+        "id": "pool",
+        "label": "Charges",
+        "max": "level",
+        "resetsOnRest": true,
+        "startsFull": true
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "malefic-mirror",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "scrying",
+        "tradition": "occult",
+        "atWill": true
+      },
+      {
+        "spellId": "illusory-disguise",
+        "tradition": "occult",
+        "rank": 3,
+        "atWill": true
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "mammoth-bow",
+    "field": "strikeDamage",
+    "value": [
+      {
+        "type": "piercing",
+        "dice": {
+          "n": 2,
+          "die": "d6"
+        },
+        "appliesTo": "all",
+        "note": "Mammoth Bow"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "man-feller",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "strikeDamage"
+          }
+        ],
+        "when": "on Man-Feller Strikes against a human (not one disguised as another creature)",
+        "bonus": "+1d6 slashing"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "masquerade-scarf-greater",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "illusory-disguise",
+        "tradition": "arcane",
+        "rank": 2,
+        "atWill": true
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "minor-astonishing-ink",
+    "field": "counters",
+    "value": [
+      {
+        "id": "uses",
+        "label": "Questions",
+        "max": 5
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "mirror-of-sleeping-vigil",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "perception"
+          }
+        ],
+        "when": "while asleep, watching your body from the Dreamlands",
+        "bonus": "no –4 status penalty and not blinded from being unconscious"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "moderate-astonishing-ink",
+    "field": "counters",
+    "value": [
+      {
+        "id": "uses",
+        "label": "Questions",
+        "max": 5
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "moderate-energized-shield",
+    "field": "itemType",
+    "value": "shield"
+  },
+  {
+    "category": "items",
+    "id": "moderate-energized-shield",
+    "field": "acBonus",
+    "value": 2
+  },
+  {
+    "category": "items",
+    "id": "moderate-energized-shield",
+    "field": "hardness",
+    "value": 8
+  },
+  {
+    "category": "items",
+    "id": "moderate-energized-shield",
+    "field": "hp",
+    "value": 64
+  },
+  {
+    "category": "items",
+    "id": "moderate-energized-shield",
+    "field": "brokenThreshold",
+    "value": 32
+  },
+  {
+    "category": "items",
+    "id": "moderate-energized-shield",
+    "field": "speedPenalty",
+    "value": 0
+  },
+  {
+    "category": "items",
+    "id": "moonsilver-necklace",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "strikeAttack"
+          },
+          {
+            "kind": "strikeDamage"
+          }
+        ],
+        "when": "with unarmed melee Strikes while the necklace is invested",
+        "bonus": "they count as silver and have the Ghost Touch rune"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "musket-staff-of-the-void",
+    "field": "heldSpells",
+    "value": {
+      "0": [
+        "void-warp"
+      ],
+      "1": [
+        "grim-tendrils"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "musket-staff-of-the-void",
+    "field": "counters",
+    "value": [
+      {
+        "id": "pool",
+        "label": "Charges",
+        "max": "level",
+        "resetsOnRest": true,
+        "startsFull": true
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "necrotic-bomb-greater",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "strikeAttack"
+          }
+        ],
+        "when": "on Strikes with this bomb",
+        "bonus": "+2 item"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "necrotic-bomb-major",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "strikeAttack"
+          }
+        ],
+        "when": "on Strikes with this bomb",
+        "bonus": "+3 item"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "orb-shard",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "strikeDamage"
+          }
+        ],
+        "when": "on Strikes with the shard against a dragon",
+        "bonus": "+2d6"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "orichalcum-buckler-high-grade",
+    "field": "itemType",
+    "value": "shield"
+  },
+  {
+    "category": "items",
+    "id": "orichalcum-buckler-high-grade",
+    "field": "acBonus",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "orichalcum-buckler-high-grade",
+    "field": "hardness",
+    "value": 14
+  },
+  {
+    "category": "items",
+    "id": "orichalcum-buckler-high-grade",
+    "field": "hp",
+    "value": 56
+  },
+  {
+    "category": "items",
+    "id": "orichalcum-buckler-high-grade",
+    "field": "brokenThreshold",
+    "value": 28
+  },
+  {
+    "category": "items",
+    "id": "orichalcum-buckler-high-grade",
+    "field": "material",
+    "value": {
+      "type": "orichalcum",
+      "grade": "high"
+    }
+  },
+  {
+    "category": "items",
+    "id": "orichalcum-shield-high-grade",
+    "field": "itemType",
+    "value": "shield"
+  },
+  {
+    "category": "items",
+    "id": "orichalcum-shield-high-grade",
+    "field": "acBonus",
+    "value": 2
+  },
+  {
+    "category": "items",
+    "id": "orichalcum-shield-high-grade",
+    "field": "hardness",
+    "value": 16
+  },
+  {
+    "category": "items",
+    "id": "orichalcum-shield-high-grade",
+    "field": "hp",
+    "value": 64
+  },
+  {
+    "category": "items",
+    "id": "orichalcum-shield-high-grade",
+    "field": "brokenThreshold",
+    "value": 32
+  },
+  {
+    "category": "items",
+    "id": "orichalcum-shield-high-grade",
+    "field": "material",
+    "value": {
+      "type": "orichalcum",
+      "grade": "high"
+    }
+  },
+  {
+    "category": "items",
+    "id": "pact-of-blood-taking",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "strikeDamage"
+          }
+        ],
+        "when": "your slashing or piercing melee Strike hits",
+        "bonus": "1 persistent bleed; half your level on a crit"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "phistophilus-fiddle",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "skill",
+            "detail": "performance"
+          }
+        ],
+        "when": "on Performance checks played on this fiddle",
+        "bonus": "+1 item"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "piercing-horn",
+    "field": "grantedStrikes",
+    "value": [
+      {
+        "name": "Horn",
+        "die": "1d8",
+        "damageType": "piercing",
+        "traits": [
+          "unarmed"
+        ],
+        "group": "brawling"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-graveknight-plate",
+    "field": "itemType",
+    "value": "armor"
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-graveknight-plate",
+    "field": "category",
+    "value": "heavy"
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-graveknight-plate",
+    "field": "group",
+    "value": "plate"
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-graveknight-plate",
+    "field": "acBonus",
+    "value": 6
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-graveknight-plate",
+    "field": "dexCap",
+    "value": 0
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-graveknight-plate",
+    "field": "checkPenalty",
+    "value": -3
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-graveknight-plate",
+    "field": "speedPenalty",
+    "value": -10
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-graveknight-plate",
+    "field": "strength",
+    "value": 4
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-greater-graveknight-plate",
+    "field": "itemType",
+    "value": "armor"
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-greater-graveknight-plate",
+    "field": "category",
+    "value": "heavy"
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-greater-graveknight-plate",
+    "field": "group",
+    "value": "plate"
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-greater-graveknight-plate",
+    "field": "acBonus",
+    "value": 6
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-greater-graveknight-plate",
+    "field": "dexCap",
+    "value": 0
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-greater-graveknight-plate",
+    "field": "checkPenalty",
+    "value": -3
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-greater-graveknight-plate",
+    "field": "speedPenalty",
+    "value": -10
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-greater-graveknight-plate",
+    "field": "strength",
+    "value": 4
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-major-graveknight-plate",
+    "field": "itemType",
+    "value": "armor"
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-major-graveknight-plate",
+    "field": "category",
+    "value": "heavy"
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-major-graveknight-plate",
+    "field": "group",
+    "value": "plate"
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-major-graveknight-plate",
+    "field": "acBonus",
+    "value": 6
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-major-graveknight-plate",
+    "field": "dexCap",
+    "value": 0
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-major-graveknight-plate",
+    "field": "checkPenalty",
+    "value": -3
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-major-graveknight-plate",
+    "field": "speedPenalty",
+    "value": -10
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-major-graveknight-plate",
+    "field": "strength",
+    "value": 4
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-true-graveknight-plate",
+    "field": "itemType",
+    "value": "armor"
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-true-graveknight-plate",
+    "field": "category",
+    "value": "heavy"
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-true-graveknight-plate",
+    "field": "group",
+    "value": "plate"
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-true-graveknight-plate",
+    "field": "acBonus",
+    "value": 6
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-true-graveknight-plate",
+    "field": "dexCap",
+    "value": 0
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-true-graveknight-plate",
+    "field": "checkPenalty",
+    "value": -3
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-true-graveknight-plate",
+    "field": "speedPenalty",
+    "value": -10
+  },
+  {
+    "category": "items",
+    "id": "plate-of-yled-true-graveknight-plate",
+    "field": "strength",
+    "value": 4
+  },
+  {
+    "category": "items",
+    "id": "propelling-winds",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "fly",
+        "tradition": "primal",
+        "rank": 4,
+        "usesPerDay": 1,
+        "usesPer": "hour"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "raise-ramparts",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "wall-of-stone",
+        "tradition": "primal",
+        "rank": 5,
+        "usesPerDay": 1
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "red-thread-knot",
+    "field": "counters",
+    "value": [
+      {
+        "id": "knots",
+        "label": "Knots",
+        "max": 6,
+        "resetsOnRest": false
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "restorative-handwraps",
+    "field": "counters",
+    "value": [
+      {
+        "id": "restorative-heal",
+        "label": "4 HP heal (once every 10 minutes)",
+        "max": 1,
+        "resetsOnRest": true
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "revenant-blade",
+    "field": "strikeDamage",
+    "value": [
+      {
+        "type": "void",
+        "dice": {
+          "n": 1,
+          "die": "d4"
+        },
+        "note": "Decaying rune (while invested)"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "ring-of-minor-arcana",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "detect-magic",
+        "tradition": "arcane",
+        "atWill": true
+      },
+      {
+        "spellId": "telekinetic-hand",
+        "tradition": "arcane",
+        "atWill": true
+      },
+      {
+        "spellId": "prestidigitation",
+        "tradition": "arcane",
+        "atWill": true
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "ring-of-spell-turning",
+    "field": "counters",
+    "value": [
+      {
+        "id": "spell-turning-ranks",
+        "label": "Ranks of spells reflected per day",
+        "max": 9,
+        "per": "day",
+        "resetsOnRest": true
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "rustbringer",
+    "field": "strikeDamage",
+    "value": [
+      {
+        "type": "acid",
+        "dice": {
+          "n": 1,
+          "die": "d6"
+        },
+        "appliesTo": "all",
+        "note": "Corrosive"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "rustbringer-greater",
+    "field": "strikeDamage",
+    "value": [
+      {
+        "type": "acid",
+        "dice": {
+          "n": 1,
+          "die": "d6"
+        },
+        "appliesTo": "all",
+        "note": "Greater Corrosive"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "sack-of-hyrdras-teeth",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "phantasmal-minion",
+        "tradition": "occult",
+        "rank": 1,
+        "usesPerDay": 1,
+        "usesPer": "hour"
+      },
+      {
+        "spellId": "rouse-skeletons",
+        "tradition": "occult",
+        "rank": 5,
+        "usesPerDay": 1
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "sharpened-canines",
+    "field": "grantedStrikes",
+    "value": [
+      {
+        "name": "Jaws",
+        "die": "1d6",
+        "damageType": "piercing",
+        "traits": [
+          "unarmed"
+        ],
+        "group": "brawling"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "axiomatic",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "strikeDamage"
+          }
+        ],
+        "when": "with the etched weapon against a chaotic creature",
+        "bonus": "+1d6 lawful (on a crit, weapon dice count as average damage)"
+      },
+      {
+        "targets": [
+          {
+            "kind": "strikeAttack"
+          },
+          {
+            "kind": "strikeDamage"
+          }
+        ],
+        "when": "while carrying or wielding it if you are chaotic (enfeebled 2)",
+        "bonus": "-2 status to Strength-based rolls"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "beacon-of-the-wilds",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "speed"
+          }
+        ],
+        "when": "while carrying the banner or standing in its aura",
+        "bonus": "you and your allies ignore difficult terrain"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "beginners-luck",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "skill",
+            "detail": "all"
+          }
+        ],
+        "when": "once per day, on a d20 roll you are untrained in",
+        "bonus": "proficiency = half your level (your level if the relic is 7th+), then roll twice and take the better"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "bellicose-dagger",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "skill",
+            "detail": "diplomacy"
+          }
+        ],
+        "when": "while the cursed dagger is in your possession",
+        "bonus": "-2 circumstance"
+      },
+      {
+        "targets": [
+          {
+            "kind": "skill",
+            "detail": "all"
+          }
+        ],
+        "when": "on skill checks to avoid fighting (Deception to talk your way out, Stealth to slip past), while you possess the dagger",
+        "bonus": "-2 circumstance"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "belt-of-good-health",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "hp"
+          }
+        ],
+        "when": "while wearing the belt; lost the moment you take it off",
+        "bonus": "+4 maximum and current Hit Points"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "blazing-banner",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "strikeDamage"
+          }
+        ],
+        "when": "on a Strike that critically succeeds, while in the banner's aura",
+        "bonus": "+1d4 damage"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "blazing-banner-greater",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "strikeDamage"
+          }
+        ],
+        "when": "on a Strike that critically succeeds, while in the banner's aura",
+        "bonus": "+1d6 persistent fire"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "blazing-banner-major",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "strikeDamage"
+          }
+        ],
+        "when": "on a Strike that critically succeeds, while in the banner's aura",
+        "bonus": "+1d8 persistent fire"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "signifers-mask",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "skill",
+            "detail": "deception"
+          }
+        ],
+        "when": "to Lie, and to your Deception DC against Sense Motive",
+        "bonus": "+1 circumstance"
+      },
+      {
+        "targets": [
+          {
+            "kind": "skill",
+            "detail": "intimidation"
+          }
+        ],
+        "when": "to Coerce",
+        "bonus": "+1 circumstance"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "slashing-claws",
+    "field": "grantedStrikes",
+    "value": [
+      {
+        "name": "Claw",
+        "die": "1d4",
+        "damageType": "slashing",
+        "traits": [
+          "agile",
+          "finesse",
+          "unarmed"
+        ],
+        "group": "brawling"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "smoked-goggles",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "save",
+            "detail": "all"
+          }
+        ],
+        "when": "against visual abilities, as you always Avert Your Gaze",
+        "bonus": "+2 circumstance"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "smoking-sword",
+    "field": "strikeDamage",
+    "value": [
+      {
+        "type": "fire",
+        "flat": 1,
+        "note": "Smoking Sword"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "snowshoes",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "speed"
+          }
+        ],
+        "when": "while walking on any surface other than snow",
+        "bonus": "-10 item"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "splinter-spear",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "strikeDamage"
+          }
+        ],
+        "when": "when you hit with the splinter spear (persistent bleed)",
+        "bonus": "1d6 persistent bleed"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "splinter-spear-greater",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "strikeDamage"
+          }
+        ],
+        "when": "when you hit with the splinter spear (persistent bleed)",
+        "bonus": "1d6 persistent bleed"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "splinter-spear-major",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "strikeDamage"
+          }
+        ],
+        "when": "when you hit with the splinter spear (persistent bleed)",
+        "bonus": "1d6 persistent bleed"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "spry-sinews-greater",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "speed"
+          }
+        ],
+        "when": "to the horizontal distance of your Leap",
+        "bonus": "+10 feet"
+      },
+      {
+        "targets": [
+          {
+            "kind": "speed"
+          }
+        ],
+        "when": "to the vertical distance of your Leap",
+        "bonus": "+6 feet"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "spry-sinews-lesser",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "speed"
+          }
+        ],
+        "when": "to the horizontal distance of your Leap",
+        "bonus": "+5 feet"
+      },
+      {
+        "targets": [
+          {
+            "kind": "speed"
+          }
+        ],
+        "when": "to the vertical distance of your Leap",
+        "bonus": "+3 feet"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "spurned-lute",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "skill",
+            "detail": "performance"
+          }
+        ],
+        "when": "on Performance checks made using the spurned lute",
+        "bonus": "+1 item"
+      },
+      {
+        "targets": [
+          {
+            "kind": "skill",
+            "detail": "performance"
+          }
+        ],
+        "when": "on Performance checks using an instrument other than the lute",
+        "bonus": "-4 circumstance"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "storm-hammer",
+    "field": "strikeDamage",
+    "value": [
+      {
+        "type": "electricity",
+        "flat": 1,
+        "appliesTo": "all",
+        "note": "Storm Hammer"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "talisman-cord",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "cord-school-1",
+        "prompt": "Choose magic school 1 the cord is attuned to (it gains that trait)",
+        "options": [
+          {
+            "value": "abjuration",
+            "label": "Abjuration"
+          },
+          {
+            "value": "conjuration",
+            "label": "Conjuration"
+          },
+          {
+            "value": "divination",
+            "label": "Divination"
+          },
+          {
+            "value": "enchantment",
+            "label": "Enchantment"
+          },
+          {
+            "value": "evocation",
+            "label": "Evocation"
+          },
+          {
+            "value": "illusion",
+            "label": "Illusion"
+          },
+          {
+            "value": "necromancy",
+            "label": "Necromancy"
+          },
+          {
+            "value": "transmutation",
+            "label": "Transmutation"
+          }
+        ]
+      },
+      {
+        "id": "cord-school-2",
+        "prompt": "Choose magic school 2 the cord is attuned to (it gains that trait)",
+        "options": [
+          {
+            "value": "abjuration",
+            "label": "Abjuration"
+          },
+          {
+            "value": "conjuration",
+            "label": "Conjuration"
+          },
+          {
+            "value": "divination",
+            "label": "Divination"
+          },
+          {
+            "value": "enchantment",
+            "label": "Enchantment"
+          },
+          {
+            "value": "evocation",
+            "label": "Evocation"
+          },
+          {
+            "value": "illusion",
+            "label": "Illusion"
+          },
+          {
+            "value": "necromancy",
+            "label": "Necromancy"
+          },
+          {
+            "value": "transmutation",
+            "label": "Transmutation"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "talisman-cord",
+    "field": "dataWarning",
+    "value": "The cord's magic-school attunement is legacy content: the Remaster removed school traits, so the app records your pick but cannot run the talisman-preservation flat check for you."
+  },
+  {
+    "category": "items",
+    "id": "talisman-cord-greater",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "cord-school-1",
+        "prompt": "Choose magic school 1 the cord is attuned to (it gains that trait)",
+        "options": [
+          {
+            "value": "abjuration",
+            "label": "Abjuration"
+          },
+          {
+            "value": "conjuration",
+            "label": "Conjuration"
+          },
+          {
+            "value": "divination",
+            "label": "Divination"
+          },
+          {
+            "value": "enchantment",
+            "label": "Enchantment"
+          },
+          {
+            "value": "evocation",
+            "label": "Evocation"
+          },
+          {
+            "value": "illusion",
+            "label": "Illusion"
+          },
+          {
+            "value": "necromancy",
+            "label": "Necromancy"
+          },
+          {
+            "value": "transmutation",
+            "label": "Transmutation"
+          }
+        ]
+      },
+      {
+        "id": "cord-school-2",
+        "prompt": "Choose magic school 2 the cord is attuned to (it gains that trait)",
+        "options": [
+          {
+            "value": "abjuration",
+            "label": "Abjuration"
+          },
+          {
+            "value": "conjuration",
+            "label": "Conjuration"
+          },
+          {
+            "value": "divination",
+            "label": "Divination"
+          },
+          {
+            "value": "enchantment",
+            "label": "Enchantment"
+          },
+          {
+            "value": "evocation",
+            "label": "Evocation"
+          },
+          {
+            "value": "illusion",
+            "label": "Illusion"
+          },
+          {
+            "value": "necromancy",
+            "label": "Necromancy"
+          },
+          {
+            "value": "transmutation",
+            "label": "Transmutation"
+          }
+        ]
+      },
+      {
+        "id": "cord-school-3",
+        "prompt": "Choose magic school 3 the cord is attuned to (it gains that trait)",
+        "options": [
+          {
+            "value": "abjuration",
+            "label": "Abjuration"
+          },
+          {
+            "value": "conjuration",
+            "label": "Conjuration"
+          },
+          {
+            "value": "divination",
+            "label": "Divination"
+          },
+          {
+            "value": "enchantment",
+            "label": "Enchantment"
+          },
+          {
+            "value": "evocation",
+            "label": "Evocation"
+          },
+          {
+            "value": "illusion",
+            "label": "Illusion"
+          },
+          {
+            "value": "necromancy",
+            "label": "Necromancy"
+          },
+          {
+            "value": "transmutation",
+            "label": "Transmutation"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "talisman-cord-greater",
+    "field": "dataWarning",
+    "value": "The cord's magic-school attunement is legacy content: the Remaster removed school traits, so the app records your pick but cannot run the talisman-preservation flat check for you."
+  },
+  {
+    "category": "items",
+    "id": "talisman-cord-lesser",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "cord-school-1",
+        "prompt": "Choose magic school 1 the cord is attuned to (it gains that trait)",
+        "options": [
+          {
+            "value": "abjuration",
+            "label": "Abjuration"
+          },
+          {
+            "value": "conjuration",
+            "label": "Conjuration"
+          },
+          {
+            "value": "divination",
+            "label": "Divination"
+          },
+          {
+            "value": "enchantment",
+            "label": "Enchantment"
+          },
+          {
+            "value": "evocation",
+            "label": "Evocation"
+          },
+          {
+            "value": "illusion",
+            "label": "Illusion"
+          },
+          {
+            "value": "necromancy",
+            "label": "Necromancy"
+          },
+          {
+            "value": "transmutation",
+            "label": "Transmutation"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "talisman-cord-lesser",
+    "field": "dataWarning",
+    "value": "The cord's magic-school attunement is legacy content: the Remaster removed school traits, so the app records your pick but cannot run the talisman-preservation flat check for you."
+  },
+  {
+    "category": "items",
+    "id": "taljjaes-mask-the-beast",
+    "field": "grantedStrikes",
+    "value": [
+      {
+        "name": "Claw",
+        "die": "1d4",
+        "damageType": "slashing",
+        "traits": [
+          "agile",
+          "unarmed"
+        ],
+        "group": "brawling"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "tattletale-orb-clear-quartz",
+    "field": "heldSpells",
+    "value": {
+      "4": [
+        "clairvoyance"
+      ],
+      "6": [
+        "scrying"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "tattletale-orb-clear-quartz",
+    "field": "counters",
+    "value": [
+      {
+        "id": "freq",
+        "label": "per hour",
+        "max": 1,
+        "per": "hour",
+        "resetsOnRest": true
+      },
+      {
+        "id": "freq2",
+        "label": "per day",
+        "max": 2,
+        "per": "day",
+        "resetsOnRest": true
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "tattletale-orb-peridot",
+    "field": "heldSpells",
+    "value": {
+      "4": [
+        "clairvoyance",
+        "telepathy"
+      ],
+      "6": [
+        "scrying"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "tattletale-orb-peridot",
+    "field": "counters",
+    "value": [
+      {
+        "id": "freq",
+        "label": "per hour",
+        "max": 1,
+        "per": "hour",
+        "resetsOnRest": true
+      },
+      {
+        "id": "freq2",
+        "label": "per day",
+        "max": 2,
+        "per": "day",
+        "resetsOnRest": true
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "toolkit-of-bronze-whispers",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "skill",
+            "detail": "crafting"
+          }
+        ],
+        "when": "to Craft an item from raw materials with this toolkit",
+        "bonus": "+1 item"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "tooth-and-claw-tattoo",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "animal-form",
+        "tradition": "primal",
+        "rank": 3,
+        "atWill": true
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "tooth-and-claw-tattoo-greater",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "animal-form",
+        "tradition": "primal",
+        "rank": 4,
+        "atWill": true
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "tooth-and-claw-tattoo-major",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "animal-form",
+        "tradition": "primal",
+        "rank": 5,
+        "atWill": true
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "trackers-goggles",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "skill",
+            "detail": "survival"
+          }
+        ],
+        "when": "to Sense Direction or to Track",
+        "bonus": "+1 item"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "trackers-goggles-greater",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "skill",
+            "detail": "survival"
+          }
+        ],
+        "when": "to Sense Direction or to Track",
+        "bonus": "+2 item"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "trident-of-the-azarketis",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "hydraulic-torrent",
+        "tradition": "primal",
+        "rank": 5,
+        "usesPerDay": 1
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "twining-chains",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "skill",
+            "detail": "acrobatics"
+          },
+          {
+            "kind": "skill",
+            "detail": "athletics"
+          },
+          {
+            "kind": "skill",
+            "detail": "stealth"
+          },
+          {
+            "kind": "skill",
+            "detail": "thievery"
+          }
+        ],
+        "when": "wearing armor fitted with twining chains — its armor check penalty is 2 worse, and its Strength entry is 2 higher so you meet it less often",
+        "bonus": "-2 (worsened armor check penalty)"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "venom-glands",
+    "field": "grantedStrikes",
+    "value": [
+      {
+        "name": "Poison Spray",
+        "die": "1d4",
+        "damageType": "poison",
+        "traits": [
+          "magical",
+          "poison",
+          "unarmed"
+        ],
+        "group": "brawling",
+        "range": 10
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "wand-of-choking-mist-2nd-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "2": [
+        "mist"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-choking-mist-4th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "4": [
+        "cinder-swarm"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-clinging-rime-7th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "7": [
+        "frigid-flurry"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-clinging-rime-8th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "8": [
+        "frigid-flurry"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-clinging-rime-9th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "9": [
+        "frigid-flurry"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-dazzling-rays-3rd-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "3": [
+        "holy-light"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-dazzling-rays-4th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "4": [
+        "holy-light"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-dazzling-rays-5th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "5": [
+        "holy-light"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-dazzling-rays-6th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "6": [
+        "holy-light"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-dazzling-rays-7th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "7": [
+        "holy-light"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-dazzling-rays-8th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "8": [
+        "holy-light"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-dazzling-rays-9th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "9": [
+        "holy-light"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-dumbfounding-doom-3rd-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "3": [
+        "impending-doom"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-dumbfounding-doom-4th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "4": [
+        "impending-doom"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-dumbfounding-doom-5th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "5": [
+        "impending-doom"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-dumbfounding-doom-6th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "6": [
+        "impending-doom"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-dumbfounding-doom-7th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "7": [
+        "impending-doom"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-dumbfounding-doom-8th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "8": [
+        "impending-doom"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-dumbfounding-doom-9th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "9": [
+        "impending-doom"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-hawthorn-2nd-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "2": [
+        "oaken-resilience"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-hawthorn-4th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "4": [
+        "oaken-resilience"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-hawthorn-6th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "6": [
+        "oaken-resilience"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-hawthorn-8th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "8": [
+        "oaken-resilience"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-hybrid-form-2nd-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 2
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-hybrid-form-3rd-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 3
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-hybrid-form-4th-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 4
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-hybrid-form-5th-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 5
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-hybrid-form-6th-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 6
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-hybrid-form-7th-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 7
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-hybrid-form-8th-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 8
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-hybrid-form-9th-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 9
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-mental-purification-1st-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "1": [
+        "soothe"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-mental-purification-2nd-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "2": [
+        "soothe"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-mental-purification-3rd-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "3": [
+        "soothe"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-mental-purification-4th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "4": [
+        "soothe"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-mental-purification-5th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "5": [
+        "soothe"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-mental-purification-6th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "6": [
+        "soothe"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-mental-purification-7th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "7": [
+        "soothe"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-mental-purification-8th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "8": [
+        "soothe"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-mental-purification-9th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "9": [
+        "soothe"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-mercy-1st-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 1
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-mercy-2nd-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 2
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-mercy-3rd-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 3
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-mercy-4th-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 4
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-mercy-5th-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 5
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-mercy-6th-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 6
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-mercy-7th-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 7
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-mercy-8th-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 8
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-mercy-9th-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 9
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-paralytic-shock-3rd-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "3": [
+        "paralyze"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-paralytic-shock-7th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "7": [
+        "paralyze"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-pernicious-poison-1st-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "1": [
+        "spider-sting"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-pernicious-poison-6th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "6": [
+        "spider-sting"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-reaching-1st-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 1
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-reaching-2nd-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 2
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-reaching-3rd-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 3
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-reaching-4th-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 4
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-reaching-5th-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 5
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-reaching-6th-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 6
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-reaching-7th-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 7
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-reaching-8th-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 8
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-reaching-9th-rank-spell",
+    "field": "spellSlot",
+    "value": {
+      "rank": 9
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-refracting-rays-4th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "4": [
+        "chromatic-ray"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-refracting-rays-6th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "6": [
+        "chromatic-ray"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-rolling-flames-2nd-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "2": [
+        "floating-flame"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-rolling-flames-3rd-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "3": [
+        "floating-flame"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-rolling-flames-4th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "4": [
+        "floating-flame"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-rolling-flames-5th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "5": [
+        "floating-flame"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-rolling-flames-6th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "6": [
+        "floating-flame"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-rolling-flames-7th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "7": [
+        "floating-flame"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-rolling-flames-8th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "8": [
+        "floating-flame"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-rolling-flames-9th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "9": [
+        "floating-flame"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-slaying-7th-level-spell",
+    "field": "heldSpells",
+    "value": {
+      "7": [
+        "execute"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-slaying-8th-level-spell",
+    "field": "heldSpells",
+    "value": {
+      "8": [
+        "execute"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-slaying-9th-level-spell",
+    "field": "heldSpells",
+    "value": {
+      "9": [
+        "execute"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-spiritual-warfare-2nd-level",
+    "field": "heldSpells",
+    "value": {
+      "2": [
+        "spiritual-weapon"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-spiritual-warfare-4th-level",
+    "field": "heldSpells",
+    "value": {
+      "4": [
+        "spiritual-weapon"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-spiritual-warfare-6th-level",
+    "field": "heldSpells",
+    "value": {
+      "6": [
+        "spiritual-weapon"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-spiritual-warfare-8th-level",
+    "field": "heldSpells",
+    "value": {
+      "8": [
+        "spiritual-weapon"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-splintered-sorrows-2nd-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "2": [
+        "splinter-volley"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-splintered-sorrows-4th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "4": [
+        "splinter-volley"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-splintered-sorrows-6th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "6": [
+        "splinter-volley"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-splintered-sorrows-8th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "8": [
+        "splinter-volley"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-teeming-ghosts-2nd-level-spell",
+    "field": "heldSpells",
+    "value": {
+      "2": [
+        "false-vitality"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-teeming-ghosts-2nd-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "2": [
+        "false-vitality"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-teeming-ghosts-3rd-level-spell",
+    "field": "heldSpells",
+    "value": {
+      "3": [
+        "false-vitality"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-teeming-ghosts-3rd-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "3": [
+        "false-vitality"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-teeming-ghosts-4th-level-spell",
+    "field": "heldSpells",
+    "value": {
+      "4": [
+        "false-vitality"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-teeming-ghosts-4th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "4": [
+        "false-vitality"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-teeming-ghosts-5th-level-spell",
+    "field": "heldSpells",
+    "value": {
+      "5": [
+        "false-vitality"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-teeming-ghosts-5th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "5": [
+        "false-vitality"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-teeming-ghosts-6th-level-spell",
+    "field": "heldSpells",
+    "value": {
+      "6": [
+        "false-vitality"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-teeming-ghosts-6th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "6": [
+        "false-vitality"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-teeming-ghosts-7th-level-spell",
+    "field": "heldSpells",
+    "value": {
+      "7": [
+        "false-vitality"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-teeming-ghosts-7th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "7": [
+        "false-vitality"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-teeming-ghosts-8th-level-spell",
+    "field": "heldSpells",
+    "value": {
+      "8": [
+        "false-vitality"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-teeming-ghosts-8th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "8": [
+        "false-vitality"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-teeming-ghosts-9th-level-spell",
+    "field": "heldSpells",
+    "value": {
+      "9": [
+        "false-vitality"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-teeming-ghosts-9th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "9": [
+        "false-vitality"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-thundering-echoes-3rd-level",
+    "field": "heldSpells",
+    "value": {
+      "3": [
+        "noise-blast"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-thundering-echoes-4th-level",
+    "field": "heldSpells",
+    "value": {
+      "4": [
+        "noise-blast"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-thundering-echoes-5th-level",
+    "field": "heldSpells",
+    "value": {
+      "5": [
+        "noise-blast"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-thundering-echoes-6th-level",
+    "field": "heldSpells",
+    "value": {
+      "6": [
+        "noise-blast"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-thundering-echoes-7th-level",
+    "field": "heldSpells",
+    "value": {
+      "7": [
+        "noise-blast"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-thundering-echoes-8th-level",
+    "field": "heldSpells",
+    "value": {
+      "8": [
+        "noise-blast"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-toxic-blades-6th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "6": [
+        "blessed-boundary"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-toxic-blades-7th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "7": [
+        "blessed-boundary"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wand-of-toxic-blades-8th-rank-spell",
+    "field": "heldSpells",
+    "value": {
+      "8": [
+        "blessed-boundary"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "warcallers-chime-of-blasting",
+    "field": "heldSpells",
+    "value": {
+      "3": [
+        "noise-blast"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "warcallers-chime-of-destruction",
+    "field": "heldSpells",
+    "value": {
+      "2": [
+        "shatter"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "warcallers-chime-of-refuge",
+    "field": "heldSpells",
+    "value": {
+      "1": [
+        "sanctuary"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "warcallers-chime-of-refuge",
+    "field": "frequency",
+    "value": {
+      "max": 5,
+      "per": "day"
+    }
+  },
+  {
+    "category": "items",
+    "id": "wayfinder",
+    "field": "heldSpells",
+    "value": {
+      "0": [
+        "light"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wheel-chair-chair-storage",
+    "field": "itemType",
+    "value": "container"
+  },
+  {
+    "category": "items",
+    "id": "wheel-chair-chair-storage",
+    "field": "ignoredBulk",
+    "value": 2
+  },
+  {
+    "category": "items",
+    "id": "wheelchair-land-delvers-chair",
+    "field": "passiveEffects",
+    "value": {
+      "speeds": {
+        "land": "min(20,@actor.speed.swim)-@actor.speed.land"
+      }
+    }
+  },
+  {
+    "category": "items",
+    "id": "wig-of-holding",
+    "field": "itemType",
+    "value": "container"
+  },
+  {
+    "category": "items",
+    "id": "wig-of-holding",
+    "field": "capacity",
+    "value": {
+      "bulk": 0.4
+    }
+  },
+  {
+    "category": "items",
+    "id": "wig-of-holding",
+    "field": "ignoredBulk",
+    "value": 0.4
+  },
+  {
+    "category": "items",
+    "id": "woe",
+    "field": "passiveEffects",
+    "value": {
+      "skills": {
+        "nature": 2
+      },
+      "immunities": [
+        "severe cold",
+        "severe heat"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "wraithweave-patch-type-i",
+    "field": "itemType",
+    "value": "container"
+  },
+  {
+    "category": "items",
+    "id": "wraithweave-patch-type-i",
+    "field": "capacity",
+    "value": {
+      "bulk": 0.1
+    }
+  },
+  {
+    "category": "items",
+    "id": "wraithweave-patch-type-i",
+    "field": "ignoredBulk",
+    "value": 0.1
+  },
+  {
+    "category": "items",
+    "id": "wraithweave-patch-type-ii",
+    "field": "itemType",
+    "value": "container"
+  },
+  {
+    "category": "items",
+    "id": "wraithweave-patch-type-ii",
+    "field": "capacity",
+    "value": {
+      "bulk": 1
+    }
+  },
+  {
+    "category": "items",
+    "id": "wraithweave-patch-type-ii",
+    "field": "ignoredBulk",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "wraithweave-patch-type-iii",
+    "field": "itemType",
+    "value": "container"
+  },
+  {
+    "category": "items",
+    "id": "wraithweave-patch-type-iii",
+    "field": "capacity",
+    "value": {
+      "bulk": 2
+    }
+  },
+  {
+    "category": "items",
+    "id": "wraithweave-patch-type-iii",
+    "field": "ignoredBulk",
+    "value": 2
+  },
+  {
+    "category": "items",
+    "id": "bleeding-canines",
+    "field": "grantedStrikes",
+    "value": [
+      {
+        "name": "Jaws",
+        "die": "d8",
+        "damageType": "piercing",
+        "traits": [
+          "unarmed"
+        ],
+        "group": "brawling"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "bleeding-canines",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "strikeDamage"
+          }
+        ],
+        "when": "on a critical hit with these jaws",
+        "bonus": "+1 persistent bleed per weapon damage die"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "blightburn-necklace",
+    "field": "passiveEffects",
+    "value": {
+      "immunities": [
+        "blightburn sickness"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "blightburn-ward",
+    "field": "passiveEffects",
+    "value": {
+      "immunities": [
+        "blightburn sickness"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "bloodbane",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "strikeDamage"
+          }
+        ],
+        "when": "against the clan's ancestral enemy (drow, duergar, giant, or orc)",
+        "bonus": "+1 persistent bleed damage"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "bloodbane-greater",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "strikeDamage"
+          }
+        ],
+        "when": "against the clan's ancestral enemy (drow, duergar, giant, or orc)",
+        "bonus": "+1d4 persistent bleed damage"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "bloodletting-kukri",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "strikeDamage"
+          }
+        ],
+        "when": "on a critical hit with this kukri",
+        "bonus": "+1d8 persistent bleed damage"
+      },
+      {
+        "targets": [
+          {
+            "kind": "hp"
+          }
+        ],
+        "when": "on a crit if the target had no persistent bleed damage",
+        "bonus": "1d8 temporary Hit Points for 1 minute"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "bloodthirsty",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "hp"
+          }
+        ],
+        "when": "after you reduce a creature to 0 Hit Points with the etched weapon and spend the 5-action envision activation",
+        "bonus": "temporary Hit Points equal to twice that creature's level, for 1 minute"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "boastful-hunter",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "strikeDamage"
+          }
+        ],
+        "when": "on Strikes with the boastful hunter against an animal",
+        "bonus": "+1d6 damage (plus 1d6 persistent bleed on a critical hit)"
+      },
+      {
+        "targets": [
+          {
+            "kind": "strikeAttack"
+          }
+        ],
+        "when": "while the boastful hunter is bored, against non-animal targets",
+        "bonus": "-1 item penalty"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "boots-of-dancing",
+    "field": "passiveEffects",
+    "value": {
+      "skills": {
+        "acrobatics": 2
+      }
+    }
+  },
+  {
+    "category": "items",
+    "id": "brooch-of-shielding",
+    "field": "counters",
+    "value": [
+      {
+        "id": "missiles",
+        "label": "magic missiles absorbed",
+        "max": 30,
+        "resetsOnRest": false
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "burnished-plating",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "skill",
+            "detail": "stealth"
+          }
+        ],
+        "when": "while wearing armor with burnished plating, except in darkness",
+        "bonus": "-4 circumstance"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "chime-of-opening",
+    "field": "counters",
+    "value": [
+      {
+        "id": "charges",
+        "label": "Activations",
+        "max": 10,
+        "resetsOnRest": false,
+        "startsFull": true
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "cloak-of-feline-rest",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "perception"
+          }
+        ],
+        "when": "on auditory Perception checks while asleep (-2 instead of -4)",
+        "bonus": "+2 status"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "dawnsilver-buckler-standard-grade",
+    "field": "itemType",
+    "value": "shield"
+  },
+  {
+    "category": "items",
+    "id": "dawnsilver-buckler-standard-grade",
+    "field": "acBonus",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "dawnsilver-buckler-standard-grade",
+    "field": "hardness",
+    "value": 3
+  },
+  {
+    "category": "items",
+    "id": "dawnsilver-buckler-standard-grade",
+    "field": "hp",
+    "value": 12
+  },
+  {
+    "category": "items",
+    "id": "dawnsilver-buckler-standard-grade",
+    "field": "brokenThreshold",
+    "value": 6
+  },
+  {
+    "category": "items",
+    "id": "dawnsilver-buckler-standard-grade",
+    "field": "speedPenalty",
+    "value": 0
+  },
+  {
+    "category": "items",
+    "id": "dawnsilver-shield-high-grade",
+    "field": "itemType",
+    "value": "shield"
+  },
+  {
+    "category": "items",
+    "id": "dawnsilver-shield-high-grade",
+    "field": "acBonus",
+    "value": 2
+  },
+  {
+    "category": "items",
+    "id": "dawnsilver-shield-high-grade",
+    "field": "hardness",
+    "value": 8
+  },
+  {
+    "category": "items",
+    "id": "dawnsilver-shield-high-grade",
+    "field": "hp",
+    "value": 32
+  },
+  {
+    "category": "items",
+    "id": "dawnsilver-shield-high-grade",
+    "field": "brokenThreshold",
+    "value": 16
+  },
+  {
+    "category": "items",
+    "id": "dawnsilver-shield-high-grade",
+    "field": "speedPenalty",
+    "value": 0
+  },
+  {
+    "category": "items",
+    "id": "dawnsilver-shield-standard-grade",
+    "field": "itemType",
+    "value": "shield"
+  },
+  {
+    "category": "items",
+    "id": "dawnsilver-shield-standard-grade",
+    "field": "acBonus",
+    "value": 2
+  },
+  {
+    "category": "items",
+    "id": "dawnsilver-shield-standard-grade",
+    "field": "hardness",
+    "value": 5
+  },
+  {
+    "category": "items",
+    "id": "dawnsilver-shield-standard-grade",
+    "field": "hp",
+    "value": 20
+  },
+  {
+    "category": "items",
+    "id": "dawnsilver-shield-standard-grade",
+    "field": "brokenThreshold",
+    "value": 10
+  },
+  {
+    "category": "items",
+    "id": "dawnsilver-shield-standard-grade",
+    "field": "speedPenalty",
+    "value": 0
+  },
+  {
+    "category": "items",
+    "id": "deadly-slashing-claws",
+    "field": "grantedStrikes",
+    "value": [
+      {
+        "name": "Claw",
+        "die": "1d6",
+        "damageType": "slashing",
+        "traits": [
+          "agile",
+          "deadly-d8",
+          "finesse",
+          "unarmed"
+        ],
+        "group": "brawling"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "deepdread-claw",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "darkness",
+        "tradition": "arcane",
+        "rank": 4,
+        "atWill": true
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "djezet-buckler-high-grade",
+    "field": "itemType",
+    "value": "shield"
+  },
+  {
+    "category": "items",
+    "id": "djezet-buckler-high-grade",
+    "field": "acBonus",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "djezet-buckler-high-grade",
+    "field": "hardness",
+    "value": 6
+  },
+  {
+    "category": "items",
+    "id": "djezet-buckler-high-grade",
+    "field": "hp",
+    "value": 24
+  },
+  {
+    "category": "items",
+    "id": "djezet-buckler-high-grade",
+    "field": "brokenThreshold",
+    "value": 12
+  },
+  {
+    "category": "items",
+    "id": "djezet-buckler-high-grade",
+    "field": "speedPenalty",
+    "value": 0
+  },
+  {
+    "category": "items",
+    "id": "djezet-buckler-standard-grade",
+    "field": "itemType",
+    "value": "shield"
+  },
+  {
+    "category": "items",
+    "id": "djezet-buckler-standard-grade",
+    "field": "acBonus",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "djezet-buckler-standard-grade",
+    "field": "hardness",
+    "value": 3
+  },
+  {
+    "category": "items",
+    "id": "djezet-buckler-standard-grade",
+    "field": "hp",
+    "value": 12
+  },
+  {
+    "category": "items",
+    "id": "djezet-buckler-standard-grade",
+    "field": "brokenThreshold",
+    "value": 6
+  },
+  {
+    "category": "items",
+    "id": "djezet-buckler-standard-grade",
+    "field": "speedPenalty",
+    "value": 0
+  },
+  {
+    "category": "items",
+    "id": "djezet-shield-high-grade",
+    "field": "itemType",
+    "value": "shield"
+  },
+  {
+    "category": "items",
+    "id": "djezet-shield-high-grade",
+    "field": "acBonus",
+    "value": 2
+  },
+  {
+    "category": "items",
+    "id": "djezet-shield-high-grade",
+    "field": "hardness",
+    "value": 8
+  },
+  {
+    "category": "items",
+    "id": "djezet-shield-high-grade",
+    "field": "hp",
+    "value": 32
+  },
+  {
+    "category": "items",
+    "id": "djezet-shield-high-grade",
+    "field": "brokenThreshold",
+    "value": 16
+  },
+  {
+    "category": "items",
+    "id": "djezet-shield-high-grade",
+    "field": "speedPenalty",
+    "value": 0
+  },
+  {
+    "category": "items",
+    "id": "djezet-shield-standard-grade",
+    "field": "itemType",
+    "value": "shield"
+  },
+  {
+    "category": "items",
+    "id": "djezet-shield-standard-grade",
+    "field": "acBonus",
+    "value": 2
+  },
+  {
+    "category": "items",
+    "id": "djezet-shield-standard-grade",
+    "field": "hardness",
+    "value": 5
+  },
+  {
+    "category": "items",
+    "id": "djezet-shield-standard-grade",
+    "field": "hp",
+    "value": 20
+  },
+  {
+    "category": "items",
+    "id": "djezet-shield-standard-grade",
+    "field": "brokenThreshold",
+    "value": 10
+  },
+  {
+    "category": "items",
+    "id": "djezet-shield-standard-grade",
+    "field": "speedPenalty",
+    "value": 0
+  },
+  {
+    "category": "items",
+    "id": "drake-rifle",
+    "field": "itemType",
+    "value": "weapon"
+  },
+  {
+    "category": "items",
+    "id": "drake-rifle",
+    "field": "category",
+    "value": "martial"
+  },
+  {
+    "category": "items",
+    "id": "drake-rifle",
+    "field": "group",
+    "value": "firearm"
+  },
+  {
+    "category": "items",
+    "id": "drake-rifle",
+    "field": "hands",
+    "value": 2
+  },
+  {
+    "category": "items",
+    "id": "drake-rifle",
+    "field": "usage",
+    "value": "held-in-two-hands"
+  },
+  {
+    "category": "items",
+    "id": "drake-rifle",
+    "field": "range",
+    "value": 150
+  },
+  {
+    "category": "items",
+    "id": "drake-rifle",
+    "field": "reload",
+    "value": 1
+  },
+  {
+    "category": "items",
+    "id": "drake-rifle",
+    "field": "damage",
+    "value": {
+      "dice": 1,
+      "die": "d10",
+      "type": "acid"
+    }
+  },
+  {
+    "category": "items",
+    "id": "dust-goggles",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "perception"
+          }
+        ],
+        "when": "on Perception checks that rely on sight, while worn",
+        "bonus": "+1 item"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "encompassing-lockpick",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [
+          {
+            "kind": "skill",
+            "detail": "thievery"
+          }
+        ],
+        "when": "to Pick a Lock or Disable a Device with its infiltrator picks",
+        "bonus": "+1 item"
+      },
+      {
+        "targets": [
+          {
+            "kind": "skill",
+            "detail": "deception"
+          }
+        ],
+        "when": "to Impersonate using a disguise set up with its elite kit",
+        "bonus": "+1 item"
+      },
+      {
+        "targets": [
+          {
+            "kind": "skill",
+            "detail": "athletics"
+          }
+        ],
+        "when": "to Climb while using its extreme climbing kit",
+        "bonus": "+1 item"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "energy-absorbing",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "energy-absorbing-type",
+        "prompt": "Choose the energy type this energy-absorbing rune resists (resistance 5)",
+        "options": [
+          {
+            "value": "acid",
+            "label": "Acid",
+            "grant": {
+              "passive": {
+                "resistances": [
+                  {
+                    "type": "acid",
+                    "value": 5
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "value": "cold",
+            "label": "Cold",
+            "grant": {
+              "passive": {
+                "resistances": [
+                  {
+                    "type": "cold",
+                    "value": 5
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "value": "electricity",
+            "label": "Electricity",
+            "grant": {
+              "passive": {
+                "resistances": [
+                  {
+                    "type": "electricity",
+                    "value": 5
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "value": "fire",
+            "label": "Fire",
+            "grant": {
+              "passive": {
+                "resistances": [
+                  {
+                    "type": "fire",
+                    "value": 5
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "energy-absorbing-greater",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "energy-absorbing-greater-type",
+        "prompt": "Choose the energy type this greater energy-absorbing rune resists (resistance 10)",
+        "options": [
+          {
+            "value": "acid",
+            "label": "Acid",
+            "grant": {
+              "passive": {
+                "resistances": [
+                  {
+                    "type": "acid",
+                    "value": 10
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "value": "cold",
+            "label": "Cold",
+            "grant": {
+              "passive": {
+                "resistances": [
+                  {
+                    "type": "cold",
+                    "value": 10
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "value": "electricity",
+            "label": "Electricity",
+            "grant": {
+              "passive": {
+                "resistances": [
+                  {
+                    "type": "electricity",
+                    "value": 10
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "value": "fire",
+            "label": "Fire",
+            "grant": {
+              "passive": {
+                "resistances": [
+                  {
+                    "type": "fire",
+                    "value": 10
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "ethersight-ring",
+    "field": "passiveEffects",
+    "value": {
+      "senses": [
+        {
+          "name": "see into the Ethereal Plane",
+          "range": 60,
+          "acuity": "precise"
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "eyes-of-the-moonwarden",
+    "field": "passiveEffects",
+    "value": {
+      "senses": [
+        {
+          "name": "moonstone warning of hostile creatures",
+          "range": 30,
+          "acuity": "vague"
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "flag-of-the-stronghold-major",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "damage from siege weapons",
+          "value": 10
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "fleshgem-combat",
+    "field": "grantedStrikes",
+    "value": [
+      {
+        "name": "Fleshgem Fist",
+        "die": "d6",
+        "damageType": "bludgeoning",
+        "traits": [
+          "magical",
+          "unarmed"
+        ],
+        "group": "brawling"
+      }
+    ]
   }
 ]

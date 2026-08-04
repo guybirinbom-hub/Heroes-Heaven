@@ -497,6 +497,10 @@ export interface ItemPassiveEffects {
   /** Feet, or a formula relative to the character ("floor(@actor.speed.land/2)"). */
   speeds?: SpeedGrants;
   resistances?: IwrEntry[];
+  /** A weakness the item imposes while worn — a cursed one (Demon's Knot: cold iron 10, holy 10).
+   *  Rarer than resistances, and the only home for it: a top-level `weaknesses` on an item record is
+   *  read by nothing at all. */
+  weaknesses?: IwrEntry[];
   immunities?: string[];
   speedPenalty?: number;
   /** A flat bonus to land Speed while invested/worn (Alacritous Horseshoes: +5 ft). Additive, unlike

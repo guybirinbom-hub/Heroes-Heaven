@@ -139,6 +139,10 @@ for (const rec of records) {
     else if (core.modes?.[m.id] || newModes.has(m.id)) skipped.push(`${id}: mode "${m.id}" already exists`);
     else if (m.fromItemId && !core.items[m.fromItemId]) skipped.push(`${id}: mode fromItemId "${m.fromItemId}" is not an item`);
     else if (!m.fromItemId && !(m.feats ?? []).length) skipped.push(`${id}: mode with no gate — nothing would show it`);
+    // Every shipped item mode says how long it lasts, and a test pins that. A span is not required —
+    // the corpus already uses condition wordings like "While affixed to your armor" — but SOMETHING
+    // must tell the player when to switch it off.
+    else if (!String(m.duration ?? '').trim()) skipped.push(`${id}: mode "${m.id}" does not say how long it lasts`);
     else newModes.set(m.id, { ...m, modifiers: m.modifiers ?? [] });
   }
 
@@ -161,7 +165,17 @@ for (const rec of records) {
   const bad = pairs.some(({ field, value }) => {
     if (!LEGAL_FIELDS.has(field)) return reject(`"${field}" is not a field on any record type`);
     if (!usedIn(field)) return reject(`no item carries "${field}" and nothing reads it off an item`);
-    if (r[field] != null && !(Array.isArray(r[field]) && !r[field].length)) return reject(`already has ${field} — not overwriting`);
+    // Restating a value the record already has is a no-op, not an overwrite. Rejecting the whole fix
+    // for it blocked eight precious-material shields whose only collision was `bulk: 0.1` twice.
+    if (JSON.stringify(r[field]) === JSON.stringify(value)) return false;
+    // `equipment` is the importer's catch-all bucket. A record printing "Price 400 gp, Bulk L, the
+    // shield has Hardness 8, HP 32, BT 16" is a buckler filed under it, and derive.ts only finds a
+    // shield when itemType === 'shield' — so buying one gave the player nothing. Correcting away
+    // from the fallback is allowed; changing one real type into another real type is not.
+    const correctingFallback = field === 'itemType' && r.itemType === 'equipment' && value !== 'equipment';
+    if (r[field] != null && !(Array.isArray(r[field]) && !r[field].length) && !correctingFallback) {
+      return reject(`already has ${field} — not overwriting`);
+    }
 
     if (field === 'passiveEffects') {
       if (!value || typeof value !== 'object') return reject('passiveEffects is not an object');

@@ -1,0 +1,268 @@
+{
+  "records": [
+    {
+      "id": "wheelchair-land-delvers-chair",
+      "verdict": "MISS",
+      "reason": "The stored description ends with the Land-Delver's Chair paragraph: 'The heavier-duty land-delver's chair functions as a traveler's chair. You increase your Speed to 20 feet or your swim Speed, whichever is lower.' That is a standing owner-side Speed change and the record carries nothing (nor does its non-duplicate twin items.land-delvers-chair, so there is nowhere else it is delivered). The engine already ships this exact formula on its sibling items.supramarine-chair. NOTE for the applier: AoN's land-delver's paragraph repeats the supramarine wording verbatim (same 'swim Speed' clause and the same opening sentence about a water-filled tank), which looks like a source copy error - re-check Howl of the Wild pg. 113 before committing the swim reference.",
+      "fix": {
+        "passiveEffects": {
+          "speeds": {
+            "land": "min(20,@actor.speed.swim)-@actor.speed.land"
+          }
+        }
+      }
+    },
+    {
+      "id": "wheelchair-supramarine-chair",
+      "verdict": "ALREADY_OK",
+      "reason": "Duplicate catalogue record of the Howl of the Wild supramarine chair. The mechanical clause ('You increase your Speed to 20 feet or your swim Speed, whichever is lower') is already delivered by items.supramarine-chair, which ships passiveEffects.speeds.land = 'min(20,@actor.speed.swim)-@actor.speed.land'."
+    },
+    {
+      "id": "wheelchair-travelers-chair",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Duplicate of items.travelers-chair. Its whole content is terrain permission - it traverses stairs, ladders and uneven ground without additional difficulty, and stairs remain difficult terrain like everyone else. No Speed, bonus or penalty is printed; the GM adjudicates the terrain."
+    },
+    {
+      "id": "whip-of-compliance",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "The weapon chassis is carried (1d4 slashing, martial, flail group, disarm/finesse/nonlethal/reach/trip) and the +1 striking is the corpus-wide inventory-rune lane, not this record. The activation's entire content lands on the TARGET: animals you Strike must save, and on a failure the whip casts a 4th-rank suggestion on them. Nothing standing changes on the wielder."
+    },
+    {
+      "id": "wig-of-holding",
+      "verdict": "MISS",
+      "reason": "An invested extradimensional container: 'They can hold up to four items of light Bulk inside them, and Bulk held within the wig of holding doesn't increase the Bulk of the wig itself.' The record is itemType equipment with no capacity and no ignoredBulk, so the encumbrance relief - the entire point of the item - never reaches the sheet. The container lane already exists (knapsack-of-halflingkind, chair-storage, and the smuggler's sack / box of unspoiling fixes use exactly these fields).",
+      "fix": {
+        "itemType": "container",
+        "capacity": {
+          "bulk": 0.4
+        },
+        "ignoredBulk": 0.4
+      }
+    },
+    {
+      "id": "wind-up-wings-flutterback",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "The wings fly the thrown weapon back to your hand after the Strike, then wind down - the same content as the returning rune, which was judged as conferring no owner statistic. Attaching, winding (three Interact actions) and the weapon dropping when it winds down are all table bookkeeping with no standing sheet change."
+    },
+    {
+      "id": "wind-up-wings-homing",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Both benefits are target-side visibility effects on a single thrown Strike: you ignore the target's concealed condition (a flat check the table rolls) and reduce the target's cover by one step (cover is a circumstance bonus to the TARGET's AC). Neither is a modifier on the owner's sheet, and both are spent by the Strike."
+    },
+    {
+      "id": "windborne-platform",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A piece of stage scenery: securing it is a 1-minute activity and the Adjust Height activation raises or lowers the platform 10 feet, failing over 50 Bulk. Positional movement resolved and gone in the same moment, with no standing change to anyone's statistics."
+    },
+    {
+      "id": "windlass-bolas",
+      "verdict": "ALREADY_OK",
+      "reason": "Duplicate catalogue record. The playable version is items.windlass-bola, which carries the full weapon chassis (itemType weapon, 1d6 bludgeoning, martial, sling group, thrown range 20, nonlethal and ranged-trip traits, 1-action activation) plus counters {id:'freq', max:1, per:'day'} for the once-per-day burst. The burst Trip itself resolves against enemy targets."
+    },
+    {
+      "id": "wine-fine",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A trade good. The entry is a price per bottle and nothing else - pure flavour, same as the other Travel Guide commodity rows."
+    },
+    {
+      "id": "winged-greater",
+      "verdict": "MISS",
+      "reason": "The Take to the Skies activation gives the WEARER 'a fly Speed of 25 feet or your land Speed, whichever is slower', and unlike the base winged rune it lasts indefinitely until Dismissed. Neither core.runes['winged-greater'] (which carries only slot/kind/level/price) nor the item record delivers any Speed, so the whole 35,000 gp rune is inert. A durable activated effect is the item-mode lane; this is the same shape already approved for skyrider-sword-greater.",
+      "fix": {
+        "mode": {
+          "id": "item-winged-greater",
+          "name": "Take to the Skies",
+          "fromItemId": "winged-greater",
+          "duration": "until you Dismiss it",
+          "survivesRest": true,
+          "modifiers": [],
+          "speeds": {
+            "fly": "min(25,@actor.speed.land)"
+          },
+          "note": "Greater winged rune: a fly Speed of 25 feet or your land Speed, whichever is slower. Once activated the wings stay tangible indefinitely; you can Dismiss it and reactivate without waiting an hour."
+        }
+      }
+    },
+    {
+      "id": "witch-kit",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A class-kit shopping list (explorer's clothing, sickle, sling and bullets, staff, adventurer's pack, optional cookware and healer's toolkit). Every listed piece is its own catalogue record bought separately; the kit itself states no rule and there is no bundle-contents field."
+    },
+    {
+      "id": "witch-token",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A GM-granted unique NPC token (no price, an uniila can only have one in existence, and the uniila can destroy it as a free action for 9d8 damage). Its owner-side clause - your spells count as one rank higher for counteracting - has no field in the item schema; the worsened saves apply only against one specific NPC's spells and the direction/distance tracking is entirely on the GM's side; and the 1/day spell is picked by the uniila from their own spontaneous list when the token is made, so there is no fixed spell to record."
+    },
+    {
+      "id": "wizard-kit",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A starting-money shopping bundle (explorer's clothing, staff, writing set, adventurer's pack, optional crossbow). Its contents are separate purchasable items and the kit confers nothing itself."
+    },
+    {
+      "id": "wizards-tower",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A 10-minute activation that turns a gaming piece into a six-floor stone tower and back. It creates scenery - storage, a great hall, guest rooms, an alchemy lab - with no numeric or standing change to the owner's sheet; the lab and lodging are downtime facilities the GM adjudicates."
+    },
+    {
+      "id": "woe",
+      "verdict": "MISS",
+      "reason": "The record's entire text is 'functions as a Living Mantle but with snow instead of plants', and items.living-mantle carries passiveEffects {skills:{nature:2}, immunities:['severe cold','severe heat']}. Woe carries nothing at all, so the +2 item bonus to Nature and the severe-cold/severe-heat immunity that the text explicitly imports are both undelivered. (Living Mantle's once-per-day Druidic Secrets Focus Point activation - frequency + counters + a 4-action activationCost on the sibling - is also absent here and would want the same treatment.)",
+      "fix": {
+        "passiveEffects": {
+          "skills": {
+            "nature": 2
+          },
+          "immunities": [
+            "severe cold",
+            "severe heat"
+          ]
+        }
+      }
+    },
+    {
+      "id": "wondrous-figurine-bismuth-leopards",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "The activation summons two SEPARATE creatures (Leopards) run at the table or in the tracker. The dazzling aura is a save imposed on creatures near the leopards, not a change to the owner, and the once-per-day limit is already carried as frequency {max:1, per:'day'} on the record."
+    },
+    {
+      "id": "wondrous-figurine-candy-constrictor",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Summons a separate Ball Python (minus its Stealth) for 20 minutes. A summoned minion with its own stat block; nothing standing changes on the owner and the daily limit is already on the record as frequency."
+    },
+    {
+      "id": "wondrous-figurine-golden-lions",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Summons a pair of adult Lions with the minion trait for up to an hour. The summoned creatures are run from their own stat blocks; the owner gains no statistic, and the once-per-day limit is already carried as frequency."
+    },
+    {
+      "id": "wondrous-figurine-jade-serpent",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Summons a Giant Viper minion for 10 minutes. Same summon lane as pyrite-rat - a separate creature at the table, no owner-side change; the daily limit is already recorded as frequency."
+    },
+    {
+      "id": "wondrous-figurine-marble-elephant",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Summons an Elephant used as a beast of burden or transport, four times per month, reverting if it fights. A separate creature with its own carrying capacity, run at the table; nothing on the owner's sheet changes."
+    },
+    {
+      "id": "wondrous-figurine-obsidian-steed",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Summons a Nightmare mount once per week. Every clause is about the summoned creature (which abilities it declines to use) or a GM-run hazard for a good rider being teleported to the Abyss - no standing owner statistic."
+    },
+    {
+      "id": "wondrous-figurine-rubber-bear",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Summons a Grizzly Bear minion for an hour. Its listed drawbacks (can't Climb or Swim, -10-foot circumstance penalty to ITS Speed, always off-guard) all modify the summoned creature's own stat block, not the owner's; the daily limit is already carried as frequency."
+    },
+    {
+      "id": "wondrous-figurine-ruby-hippopotamus",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Summons a hippopotamus that ignores your commands and attacks everyone else in a 30-foot area for a minute. Purely a creature placed on the battlefield against other targets; the owner gains nothing and the once-per-day limit is already on the record."
+    },
+    {
+      "id": "wondrous-figurine-stuffed-fox",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Summons a Riding Dog-statted mount for an hour. The Knockdown on its jaws is the summoned creature's own Strike, and the rider clause only cancels the -2 Reflex penalty for being mounted - a penalty the sheet never applies, so encoding a +2 here would be a pure over-grant."
+    },
+    {
+      "id": "wooden-taws",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Mundane consumable ammunition for a taw launcher; the entry is a price and nothing else. Ammunition damage comes from the launcher's own weapon record."
+    },
+    {
+      "id": "wool-1-bulk",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Raw trade good priced by Bulk; no rules text of any kind, and the inventory already carries price and Bulk."
+    },
+    {
+      "id": "wool-sack",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Raw trade good sold by the sack; a price row with no mechanical clause."
+    },
+    {
+      "id": "word-of-faith",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A relic Aspect gift (level 0, no price) rather than a purchasable item - the GM confers it, and its healing scales off the relic's item level, which the GM sets. The activation heals yourself or an ally and reduces their frightened by 1: a hit-point change and a condition tick applied by hand at the table, resolved and gone, with no standing sheet effect."
+    },
+    {
+      "id": "world-forge",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A mythic artifact whose only activation is downtime Crafting. The DC, the raw materials and the final cost are all 'determined by the GM', it requires mythic Crafting proficiency, and the cost is Mythic Points or drained. Crafting/downtime with GM-set numbers - no owner statistic to carry."
+    },
+    {
+      "id": "worldforge",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Duplicate record of world-forge with the same text: a downtime, GM-adjudicated Crafting activation (GM-set DC, GM-set materials, Mythic Point or drained per day, days counting as ten). Nothing standing on the sheet."
+    },
+    {
+      "id": "wounding",
+      "verdict": "MISS",
+      "reason": "The rune id does exist in core.runes ({id:'wounding', slot:'weapon', kind:'property', level:7, price 340 gp}), so it can be etched - but the entry carries no damage payload, so the printed effect ('When you hit a creature with a wounding weapon, you deal an extra 1d6 persistent bleed damage') never appears in the Strike damage line. Every other damage rune that works - flaming, corrosive, frost, shock, thundering, decaying, astral, serrating - carries rune.damage, and derive.ts builds the 'plus ...' terms from exactly that. The current shape cannot express it: rune.damage is per-hit DIRECT damage and critPersistent fires only on a critical hit, whereas wounding is persistent on every hit. Adding {dice:1,die:'d6',type:'bleed'} would render 'plus 1d6 bleed' as direct damage, an over-grant, so the shape must grow first.",
+      "fix": {
+        "needsEngineWork": true,
+        "note": "Grow the rune-damage shape (types.ts WeaponRune.damage / RUNE_DAMAGE in scripts/import-core.mjs and the runeDamage assembly in src/rules/derive.ts ~line 1485) with an always-persistent rider alongside critPersistent, then give core.runes.wounding {damage:{dice:1,die:'d6',type:'bleed',persistent:true}} so the Strike line reads 'plus 1d6 persistent bleed'. Same missing lane flagged for brilliant/brilliant-greater."
+      }
+    },
+    {
+      "id": "wraithweave-patch-type-i",
+      "verdict": "MISS",
+      "reason": "The patch's standing, non-activated function is storage: wrap an object of up to light Bulk and 'its Bulk becomes negligible'. That is a real encumbrance change for the owner and the record is itemType equipment with no capacity and no ignoredBulk, so nothing delivers it. The container lane (capacity + ignoredBulk) is the established fix - the same one applied to the smuggler's sacks and the boxes of unspoiling. The incorporeality activation is correctly left as prose (it is Sustained and gated on the owner already being incorporeal).",
+      "fix": {
+        "itemType": "container",
+        "capacity": {
+          "bulk": 0.1
+        },
+        "ignoredBulk": 0.1
+      }
+    },
+    {
+      "id": "wraithweave-patch-type-ii",
+      "verdict": "MISS",
+      "reason": "Same gap one tier up: wraps an object or container of up to 1 Bulk and reduces its Bulk to negligible, with no capacity or ignoredBulk on the record so the owner's encumbrance never changes.",
+      "fix": {
+        "itemType": "container",
+        "capacity": {
+          "bulk": 1
+        },
+        "ignoredBulk": 1
+      }
+    },
+    {
+      "id": "wraithweave-patch-type-iii",
+      "verdict": "MISS",
+      "reason": "Same gap at the 2 Bulk tier: the wrapped object's Bulk becomes negligible and nothing on the record carries it.",
+      "fix": {
+        "itemType": "container",
+        "capacity": {
+          "bulk": 2
+        },
+        "ignoredBulk": 2
+      }
+    },
+    {
+      "id": "wrist-grappler",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A mundane wrist-mounted version of the grappling gun: its whole content is permission and handling (deploy or stow with an Interact action, conceal it under a jacket, reload in 1 minute). No bonus, no standing statistic - the grapple attempt itself uses the base grappling gun's rules."
+    },
+    {
+      "id": "wrist-grappler-clockwork",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Same mundane tool with the clockwork gun's 3-action reload instead of 1 minute. Handling permission only; nothing on the owner's sheet changes."
+    },
+    {
+      "id": "writing-set",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Mundane tool whose entire content is permission to draft correspondence and scribe scrolls; it grants no bonus and is simply a prerequisite for those activities."
+    },
+    {
+      "id": "writing-set-extra-ink-and-paper",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A refill for the writing set - a consumable price row with no rule of its own."
+    },
+    {
+      "id": "yellow-musk-vial",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "An inhaled poison consumable. Every printed clause - DC 16 Will, maximum duration 2 rounds, fascinated stages that drag the victim toward the cloud - resolves against the creature exposed to it, not the person carrying the vial."
+    }
+  ]
+}

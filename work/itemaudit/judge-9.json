@@ -1,0 +1,351 @@
+{
+ "records": [
+  {
+   "id": "final-stand",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Everything the artifact adds is a triggered survival rider — on being reduced to 0 HP you roll a flat check to stay at 1 HP, then can't heal for the encounter. This codebase deliberately keeps 'avoid being knocked out at 0 HP' as prose, not a modifier (see the note on mode 'item-crimson-godsblood-serum'), and no legal field expresses it. Its rapier statistics (d6 piercing, sword group, deadly d8, finesse, disarm) are already on the record; the printed +3 greater striking is the etchable rune lane (InventoryItem.runes), not an item field."
+  },
+  {
+   "id": "fingerprint-kit",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A mundane investigative tool whose entire content is permission to attempt a GM-rolled secret Thievery check against other creatures' DCs. No owner statistic changes."
+  },
+  {
+   "id": "fingerprinting-kit",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Duplicate record of the same mundane kit; same reason — GM-rolled secret checks against other creatures, no owner statistic."
+  },
+  {
+   "id": "firearm-ammunition-10-rounds",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Plain ammunition. Its text is loading/crafting flavour plus a pasted copy of the generic Critical Specialization rules; it grants the owner nothing."
+  },
+  {
+   "id": "firearm-ammunition-5-rounds",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Plain ammunition, identical content to the 10-round row; grants the owner nothing."
+  },
+  {
+   "id": "firearm-cleaning-kit",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A maintenance prerequisite — without it you can't do the daily upkeep that keeps a firearm from misfiring. It confers no bonus; the misfire rule itself is GM-run."
+  },
+  {
+   "id": "fireworks-display",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "No printed numbers at all: 'distinctive effects ... to make onlookers marvel and even to gain an advantage in combat', plus a note that it exists for the Firework Technician archetype. There is nothing quantified to deliver."
+  },
+  {
+   "id": "fish",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A pet. The record itself says it cannot be combat trained or contribute to combat in any way."
+  },
+  {
+   "id": "fishing-lure",
+   "verdict": "ALREADY_OK",
+   "reason": "The promise ('range increment of 20 feet' and the ranged trip / tethered / thrown / versatile P traits when thrown) is already delivered on the host weapon: items['combat-fishing-pole'] has range 20 and traits ranged-trip, tethered, thrown-20, versatile-p."
+  },
+  {
+   "id": "fishing-tackle",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A mundane kit (pole, hooks, line, lures, net). Pure equipment description with no rule attached."
+  },
+  {
+   "id": "flag-of-the-stronghold-major",
+   "verdict": "MISS",
+   "reason": "Text gives YOU (and allies) resistance 10 to damage from siege weapons while under the banner's aura, but the record carries no passiveEffects at all. The duplicate record major-flag-of-the-stronghold already ships exactly this shape, and flag-of-the-stronghold (base) ships value 5 — this row was simply missed.",
+   "fix": {
+    "passiveEffects": {
+     "resistances": [
+      {
+       "type": "damage from siege weapons",
+       "value": 10
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "flaming",
+   "verdict": "ALREADY_OK",
+   "reason": "Registered in core.runes.flaming as a weapon property rune with damage {dice:1,die:'d6',type:'fire',critPersistent:{dice:1,die:'d10'}} — exactly the printed text. Etched via InventoryItem.runes."
+  },
+  {
+   "id": "flaming-greater",
+   "verdict": "ALREADY_OK",
+   "reason": "core.runes['flaming-greater'] carries damage 1d6 fire with critPersistent 2d10, matching the text. 'Ignores the target's fire resistance' is a target-side clause with nothing to put on the owner's sheet."
+  },
+  {
+   "id": "flare-bolt",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A relic gift (Aspect Fire), not a purchasable item — the GM grants it and its damage scales off the relic's level, which is GM-set. The activation is a spell attack resolved and gone in the same moment, and all the damage lands on the target."
+  },
+  {
+   "id": "flawless-celestial-shawl",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A unique artifact that 'functions only for a specific tennin' — an NPC monster, not a player. Its content is Crafting/Repair downtime with a degree-of-success shift, which is a crafting-lane/GM adjudication with no legal field."
+  },
+  {
+   "id": "flaying-knife",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Every clause the text adds beyond the plain dagger statistics (already on the record: d4 piercing, knife group, agile, finesse, thrown-10, versatile-s) lands on the TARGET — the wounding rune's persistent bleed upgraded to 1d8, and the -2 status penalty to the victim's saves against disease. The printed +1 striking wounding is the etchable rune lane; core.runes.wounding exists."
+  },
+  {
+   "id": "fleshgem-combat",
+   "verdict": "MISS",
+   "reason": "Text: 'grant you a fist Strike that deals 1d6 damage, is in the brawling group, and has the magical and unarmed traits'. That is a new unarmed attack on the owner's sheet, and the record has no grantedStrikes — the Strikes card never learns about it. Damage type is not printed, so the fist default (bludgeoning) is used.",
+   "fix": {
+    "grantedStrikes": [
+     {
+      "name": "Fleshgem Fist",
+      "die": "1d6",
+      "damageType": "bludgeoning",
+      "traits": [
+       "magical",
+       "unarmed"
+      ],
+      "group": "brawling"
+     }
+    ]
+   }
+  },
+  {
+   "id": "fleshrender",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The unique text is conditional on wielding another unique artifact (Blood-Drinker) and then sets a flat printed attack modifier (+32) and a fly Speed for the ANIMATED weapon itself, not for the wielder. Its saber statistics and the dawnsilver material are already on the record; the printed +3 greater striking animated is the rune lane (core.runes has animated)."
+  },
+  {
+   "id": "flint-and-steel",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane fire-starting gear; the text exists only to say it takes at least 3 actions and usually far longer. Nothing on the sheet."
+  },
+  {
+   "id": "floating-tent-four-person",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Camping gear for zero-gravity planes. Capacity and anchoring are narrative; no owner statistic."
+  },
+  {
+   "id": "floating-tent-pup",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same camping gear, one-person size. Narrative only."
+  },
+  {
+   "id": "flooding-bolt",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Siege ammunition whose entire effect is on a ship's hull — it lodges in the wall and floods the hold. An object/vehicle effect resolved by the GM, nothing on the shooter's sheet."
+  },
+  {
+   "id": "floorbell",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An activated alarm tile placed on the ground: you set a weight threshold and it wails when tripped. It is battlefield furniture, not a modifier on the owner."
+  },
+  {
+   "id": "flower-press",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane preservation tool for pressing plants. Pure flavour/downtime."
+  },
+  {
+   "id": "flying-broomstick",
+   "verdict": "MISS",
+   "reason": "Text: 'The broom moves at a fly Speed of 20 feet' while you ride it, and the 2-action Lift Off activation raises that to 40 feet for up to 4 hours. That is a lasting, toggleable movement change with no record on the sheet. Modelled as an item mode (precedent: mode 'klingegeist' uses speeds.fly with a 'while ...' duration). The standing value is kept at 20 so simply owning the broom cannot over-grant the Lift Off speed.",
+   "fix": {
+    "mode": {
+     "id": "item-flying-broomstick",
+     "name": "Riding the Flying Broomstick",
+     "fromItemId": "flying-broomstick",
+     "duration": "while riding the broom",
+     "modifiers": [],
+     "speeds": {
+      "fly": 20
+     },
+     "note": "Guiding the broom with one hand gives a fly Speed of 20 feet; it can carry one passenger besides you. Activate—Lift Off (2 actions, concentrate, manipulate) toward a named destination on the same plane raises the fly Speed to 40 feet for up to 4 hours (about 16 miles) or until you Dismiss it — raise the speed to 40 by hand while that runs. Laden with more than 20 Bulk the broom takes a -10-foot penalty; above 30 Bulk it crashes. After the activation ends the broom can't be activated again for 1 hour."
+    }
+   }
+  },
+  {
+   "id": "folding-ladder",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane 10-foot ladder; the only rule is that folding or unfolding costs two Interact actions. Its two Bulk values are already the record's business."
+  },
+  {
+   "id": "follypops-hotpops",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The whole effect is an area attack against other creatures — three declining 15-foot cones of fire damage with a basic Reflex save. Nothing is added to the eater's own statistics, and per the audit rules a target-only effect gets no fix."
+  },
+  {
+   "id": "follypops-rotters",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same structure as Hotpops with poison damage in a 15-foot cone against other creatures — target-only, nothing on the owner's sheet."
+  },
+  {
+   "id": "follypops-sizzlers",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same structure as the other Follypops rows (the pasted text does not even reach the Sizzlers paragraph); the effect is an area attack on other creatures."
+  },
+  {
+   "id": "force-blast",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A relic gift (Aspect Soul). GM-granted, damage scales with character level, and the activation is a single burst of force damage against a target — resolved and gone."
+  },
+  {
+   "id": "forge-weld",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A relic gift (Aspect Forge) that repairs a non-magical metal OBJECT once per day. Object repair is downtime/GM territory and touches no owner statistic."
+  },
+  {
+   "id": "forgotten-signet",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A rare artifact whose two effects are (a) a constant Hidden Mind with a +32 counteract bonus — a narrative protection with no owner statistic and no field for a permanent spell effect — and (b) a save that OTHER creatures roll to forget you, which is entirely target-side."
+  },
+  {
+   "id": "form-of-fury",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A GM Core relic gift, not a purchasable item. The spell rank is 'half the item's level' and a relic's level is set by the GM as it grows, so there is no fixed rank to put in innateSpells; the chosen animal is agreed with the GM when the gift is gained."
+  },
+  {
+   "id": "form-of-vengeance",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A relic gift that only widens which polymorph spell the form of fury gift casts. Same reason: GM-granted, GM-scaled relic subsystem with no fixed rank."
+  },
+  {
+   "id": "formula-book-blank",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A blank book that stores formulas. Storage capacity only — the formulas themselves are the crafting lane, and the text explicitly says no specific book is required."
+  },
+  {
+   "id": "fortification",
+   "verdict": "ALREADY_OK",
+   "reason": "core.runes.fortification exists (armor property, level 12, 2000 gp). The crit-to-normal-hit conversion is a flat check rolled at the table, and RuneDef has no field for the +1 Bulk / +1 Strength side effect — no legal lane exists for it, so the rune record is as complete as the schema allows."
+  },
+  {
+   "id": "fortification-greater",
+   "verdict": "ALREADY_OK",
+   "reason": "core.runes['fortification-greater'] exists (armor property, level 18, 24000 gp). Same as the base rune: the crit negation is a table flat check, and the +1 Bulk / +1 Strength rider has no RuneDef field."
+  },
+  {
+   "id": "four-ways-dogslicer",
+   "verdict": "ALREADY_OK",
+   "reason": "The three swappable gems ARE the flaming, frost and shock property runes, and all three ids exist in core.runes with their damage blocks; only one may be active at a time, which is precisely what the rune lane models (InventoryItem.runes holds one property rune, re-set when you Gem Twist). The +2 striking is the standard potency/striking lane. The 1d6 self-damage for twisting is resolved in the moment."
+  },
+  {
+   "id": "fox",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A pet; the record states it cannot be combat trained or contribute to combat in any way."
+  },
+  {
+   "id": "freeze-ammunition",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable alchemical ammunition. It changes the damage type dealt to the TARGET, adds 2 cold splash, and can ice a 5-foot square that other creatures must save against. All of it is target/battlefield-side."
+  },
+  {
+   "id": "freezing-ammunition",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition whose only effect is Slowed 1 (or 1 minute on a critical failure) imposed on the TARGET."
+  },
+  {
+   "id": "frog",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A pet; the record states it cannot be combat trained or contribute to combat in any way."
+  },
+  {
+   "id": "frost",
+   "verdict": "ALREADY_OK",
+   "reason": "core.runes.frost carries damage {dice:1,die:'d6',type:'cold'}. The crit rider (target Slowed 1 on a failed save) is a condition imposed on the TARGET."
+  },
+  {
+   "id": "frost-greater",
+   "verdict": "ALREADY_OK",
+   "reason": "core.runes['frost-greater'] carries damage 1d6 cold. The crit slow and the 'ignores the target's cold resistance' clause are both target-side."
+  },
+  {
+   "id": "frost-vial-lesser",
+   "verdict": "ALREADY_OK",
+   "reason": "The bomb's own numbers are on the record: damage {dice:1,die:'d6',type:'cold'}, range 20, bomb group, splash trait. The 1 cold splash and the target's -5-foot status penalty to Speeds both land on the TARGET."
+  },
+  {
+   "id": "fulcrum-lattice",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A unique adventure-path frame that holds the four fulcrum lenses. Everything it does depends on which lenses the GM has given you and on those lenses' own activations; the 'highest melee spell attack modifier of any lens' is a comparison between other records, not a standing owner bonus."
+  },
+  {
+   "id": "furnace-of-endings-lesser",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "It destroys parchment placed inside and lets you re-read the last message destroyed. A narrative/utility trick with no owner statistic."
+  },
+  {
+   "id": "ganjay-book",
+   "verdict": "ALREADY_OK",
+   "reason": "The only mechanical content is the folded Bulk, and the record's own bulk field (0.1 = light) is the folded value. The variant rows carry the two printed cases."
+  },
+  {
+   "id": "ganjay-book-1-bulk-book",
+   "verdict": "ALREADY_OK",
+   "reason": "The folded Bulk is baked into the record: bulk 0.1 (light), i.e. the 1-Bulk book already reduced by 1. Folding/unfolding is a 1-minute Interact with nothing else on the sheet."
+  },
+  {
+   "id": "ganjay-book-light-bulk-book",
+   "verdict": "ALREADY_OK",
+   "reason": "The folded Bulk is baked into the record: bulk 0 (negligible), i.e. the light-Bulk book already reduced by 1."
+  },
+  {
+   "id": "garrote-bolt",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition. The extra 2d12 and the can't-breathe rider on a critical hit are applied to the TARGET."
+  },
+  {
+   "id": "garrote-shot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition; identical target-side content — extra 2d12, can't breathe on a crit, severs an appendage if the persistent damage kills it."
+  },
+  {
+   "id": "gauntlight",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The record carries no rules text at all (empty description), so the item promises nothing that could be delivered. It is a unique adventure artifact run by the GM."
+  },
+  {
+   "id": "gerbil-or-hamster",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A pet; the record states it cannot be combat trained or contribute to combat in any way."
+  },
+  {
+   "id": "ghost-ammunition",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition. It borrows the ghost touch property for the shot and ignores cover on that one attack — resolved in the moment on a single Strike, and the flat check for concealment explicitly still applies. Nothing standing on the sheet."
+  },
+  {
+   "id": "ghost-charge-lesser",
+   "verdict": "ALREADY_OK",
+   "reason": "The bomb's numbers are on the record: damage {dice:1,die:'d8',type:'vitality'}, range 20, bomb group, splash + vitality traits. The 1 vitality splash and the Enfeebled 1 rider apply to the TARGET."
+  },
+  {
+   "id": "ghost-stone",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The record carries no rules text at all (empty description) — there is nothing promised to deliver. Its 18 Bulk is already recorded."
+  },
+  {
+   "id": "ghost-touch",
+   "verdict": "ALREADY_OK",
+   "reason": "core.runes['ghost-touch'] exists as a level 4 weapon property rune. Its whole effect is how the weapon interacts with incorporeal TARGETS — no owner statistic to move."
+  },
+  {
+   "id": "ghosthands-comet",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The artifact's numbers are already on the record: 5d8 force damage, 300-foot range, advanced firearm group, backstabber/concussive/fatal-d12/kickback traits, inubrix material. Both activations are momentary — one swaps the damage type for the triggering Strike, the other makes the next shot ignore cover — and the printed +4 major striking beast-bane greater impactful is the etchable rune lane."
+  },
+  {
+   "id": "giant-catch-pole",
+   "verdict": "MISS",
+   "reason": "Text: 'the implement is so ungainly that you are Clumsy 1 while wielding it' — a standing condition on the OWNER while the pole is wielded, plus the permission to Grapple with no free hand. Nothing on the record says so. Clumsy is carried in a mode note in this codebase rather than as modifiers (precedent: modes 'giants-stature', 'dire-form', 'item-hydra-mutagen' all note clumsy 1 instead of encoding it). The -2 circumstance penalty to the grabbed creature's unarmed Strikes is target-side and is left out.",
+   "fix": {
+    "mode": {
+     "id": "item-giant-catch-pole",
+     "name": "Wielding the Giant Catch Pole",
+     "fromItemId": "giant-catch-pole",
+     "duration": "while wielding the giant catch pole",
+     "modifiers": [],
+     "note": "You are Clumsy 1 while wielding it (apply as a condition). The rope loop lets you Grapple without having a free hand, and the giant version can Grapple creatures up to your normal size limit rather than only Medium or smaller."
+    }
+   }
+  }
+ ]
+}

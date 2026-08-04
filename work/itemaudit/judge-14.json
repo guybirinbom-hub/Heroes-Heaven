@@ -1,0 +1,347 @@
+{
+ "records": [
+  {
+   "id": "major-vanishing-shocker",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Single activation: a 1-round emanation whose saves, off-guard and clumsy all land on other creatures; the owner's own concealment lasts 1 round and there is no concealed-condition lane worth a mode."
+  },
+  {
+   "id": "major-wood-rotted-root",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Spell catalyst: it alters oaken resilience so the spell damages creatures around you — the change is to a spell's area effect on other creatures, not a standing owner stat."
+  },
+  {
+   "id": "malefic-mirror",
+   "verdict": "MISS",
+   "reason": "Both activations are owner-side spell effects (a DC 28 Scrying for the activator; a 3rd-rank Illusory Disguise on the owner for 4 hours) and the record carries no innateSpells, so the mirror casts nothing on the sheet.",
+   "fix": {
+    "innateSpells": [
+     {"spellId": "scrying", "tradition": "occult", "atWill": true},
+     {"spellId": "illusory-disguise", "tradition": "occult", "rank": 3, "atWill": true}
+    ]
+   }
+  },
+  {
+   "id": "malleable",
+   "verdict": "ALREADY_OK",
+   "reason": "Registered as an armor property rune in core.runes ('malleable', slot armor, kind property, level 9, 650 gp), so it can be etched and priced; its activation only swaps the armor's specialization group, which carries no number the rune schema can hold."
+  },
+  {
+   "id": "malyass-root-paste",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A contact poison: the Fortitude DC, onset and clumsy/Speed-penalty stages all apply to the creature it is used on, never to the owner."
+  },
+  {
+   "id": "mammoth-bow",
+   "verdict": "MISS",
+   "reason": "The bow's printed '2d6 additional piercing damage because of its magically enhanced draw power' is delivered by nothing — the record has damage/range 180/volley-50/deadly-d10 but no strikeDamage rider. (A weapon's own strikeDamage is scoped to that weapon only, per derive.ts strikeDamageRiders.)",
+   "fix": {
+    "strikeDamage": [
+     {"type": "piercing", "dice": {"n": 2, "die": "d6"}, "appliesTo": "all", "note": "Mammoth Bow"}
+    ]
+   }
+  },
+  {
+   "id": "man-feller",
+   "verdict": "MISS",
+   "reason": "The axe's '+1d6 slashing damage to any human it wounds' reaches the sheet nowhere. It is target-type conditional, so it belongs in the situational reference lane (same shape as mountain-strategy's 'against creatures with the giant, goblin…'), not as an unconditional strikeDamage rider.",
+   "fix": {
+    "situational": [
+     {"targets": [{"kind": "strikeDamage"}], "when": "on Man-Feller Strikes against a human (not one disguised as another creature)", "bonus": "+1d6 slashing"}
+    ]
+   }
+  },
+  {
+   "id": "manacles-average",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane restraint: the Speed penalty, manipulate-action failure and immobilization all sit on the bound creature, and freeing it is a GM-run check count."
+  },
+  {
+   "id": "manacles-good",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane restraint applied to another creature; every penalty is on the prisoner and the escape checks are GM-adjudicated."
+  },
+  {
+   "id": "manacles-of-persuasion",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Locked onto an immobilized captive, it deals 2 nonlethal void damage per hour to that captive — entirely target-side torture, with no owner-side statistic."
+  },
+  {
+   "id": "manacles-poor",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane restraint applied to another creature; all effects and escape checks belong to the prisoner and the GM."
+  },
+  {
+   "id": "manacles-simple",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane restraint applied to another creature; nothing about it changes the owner's sheet."
+  },
+  {
+   "id": "manacles-superior",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane restraint applied to another creature; the only variable is how many successful checks the prisoner needs, which the GM runs."
+  },
+  {
+   "id": "map-geographical-map",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reference object with no printed mechanical benefit — pure flavour/GM prop."
+  },
+  {
+   "id": "map-geologic-map",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reference object with no printed mechanical benefit — pure flavour/GM prop."
+  },
+  {
+   "id": "map-local-map",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reference object with no printed mechanical benefit — pure flavour/GM prop."
+  },
+  {
+   "id": "map-nautical-chart",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reference object with no printed mechanical benefit — pure flavour/GM prop."
+  },
+  {
+   "id": "map-pictorial-map",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reference object with no printed mechanical benefit — pure flavour/GM prop."
+  },
+  {
+   "id": "map-political-map",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reference object with no printed mechanical benefit — pure flavour/GM prop."
+  },
+  {
+   "id": "map-treasure-map",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A plot object: it leads to a treasure the GM places; no printed mechanical benefit."
+  },
+  {
+   "id": "map-weather-map",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reference object with no printed mechanical benefit — pure flavour/GM prop."
+  },
+  {
+   "id": "marble",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A building material sold per slab; the entry is a price listing with no rules text at all."
+  },
+  {
+   "id": "marbles",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Poured into a square with an Interact; the save-or-fall-prone lands on the first creature that moves in, never on the owner."
+  },
+  {
+   "id": "mask-fine",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane disguise aid — the text grants permission to help with Impersonate but prints no numeric bonus, so there is nothing to model."
+  },
+  {
+   "id": "mask-of-the-cursed-eye",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Automatic, no activation: the save, sickened, dazzled and spell disruption all fall on the diviner targeting you; the owner only learns they were scried, which is table information."
+  },
+  {
+   "id": "mask-ordinary",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane disguise aid with no printed numeric bonus."
+  },
+  {
+   "id": "mask-plague",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The mask itself attempts counteract checks against inhaled poisons/airborne disease using the filter's own modifier; it grants no immunity and no standing owner-side number."
+  },
+  {
+   "id": "mask-rubber",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane disguise aid — it lowers the GM-set difficulty of Impersonating a specific creature, with no printed bonus."
+  },
+  {
+   "id": "masquerade-scarf-greater",
+   "verdict": "MISS",
+   "reason": "The activation casts a 2nd-rank Illusory Disguise on the OWNER (no frequency limit on the greater version) and the record carries no innateSpells, so the scarf's whole function is invisible to the sheet. The base masquerade-scarf at least carries its 1/day counter; this one carries nothing.",
+   "fix": {
+    "innateSpells": [
+     {"spellId": "illusory-disguise", "tradition": "arcane", "rank": 2, "atWill": true}
+    ]
+   }
+  },
+  {
+   "id": "material-component-pouch",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Permission item: it satisfies material components and refills during daily preparations; no number and no choice."
+  },
+  {
+   "id": "meal-fine-dining",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A purchased meal with no rules effect — price/flavour only."
+  },
+  {
+   "id": "meal-poor",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A purchased meal with no rules effect — price/flavour only."
+  },
+  {
+   "id": "meal-square",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A purchased meal with no rules effect — price/flavour only."
+  },
+  {
+   "id": "meals",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella price-table entry for the three meal grades; no rules effect of its own."
+  },
+  {
+   "id": "mechanical-torch",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A light source: bright light in a 20-foot radius or 40-foot cone, toggled and recharged with Interacts. Illumination is a map/GM concern and changes no statistic on the sheet."
+  },
+  {
+   "id": "membership-cords",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Pure flavour: a woven token that identifies you to a secret society in dim light; no mechanical benefit is printed."
+  },
+  {
+   "id": "memoir-map",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Pure flavour tattoo: it records where you have been and what you have done, with no printed mechanical effect despite the invested trait."
+  },
+  {
+   "id": "mental-bastion",
+   "verdict": "MISS",
+   "reason": "This relic gift's grants are entirely owner-side and nothing delivers them: 'You gain telepathy', reduce incoming stupefied by 1, and permanently quickened. The senses lane covers the telepathy (via passiveEffects.senses, which is what deriveDefenses actually reads for worn/invested items — the bare top-level senses field is display-only). Stupefied reduction and permanent quickened have no legal field and stay prose.",
+   "fix": {
+    "passiveEffects": {"senses": [{"name": "telepathy"}]}
+   }
+  },
+  {
+   "id": "merchants-scale",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane tool with no rules text in the record at all; it is permission to weigh goods."
+  },
+  {
+   "id": "merciful",
+   "verdict": "ALREADY_OK",
+   "reason": "Registered as a weapon property rune in core.runes ('merciful', slot weapon, kind property, level 4, 70 gp), so it can be etched and priced. Its residual text — the weapon gaining the nonlethal trait and a crit-only fascinated on the target — has no rune field (the rune schema holds only value/damage) and is target-side anyway."
+  },
+  {
+   "id": "meteor-shot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Ammunition: the fire damage, splash area and difficult terrain all land around the target; the misfire is a table event with no standing owner change."
+  },
+  {
+   "id": "meteor-shot-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Ammunition whose fire/splash damage and difficult terrain affect the target's square, not the owner."
+  },
+  {
+   "id": "meteor-shot-major",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Ammunition whose fire/splash damage and difficult terrain affect the target's square, not the owner."
+  },
+  {
+   "id": "mindlance",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Its statistics already carry the mechanics: damage is recorded as 1d8 mental (not piercing) with the nonlethal, concussive, fatal-d12 and kickback traits, range 150, reload 1. The only rider is a crit-only frightened 2 on the target; the built-in +1 striking has no item-side rune field anywhere in the corpus and the reinforced stock's die is not printed, so inventing one would over-grant."
+  },
+  {
+   "id": "mindsponge",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Both activations act on another creature — erasing a target's memory via Rewrite Memory, or harvesting memories from a prepared dying victim after GM-run surgery. Nothing standing changes on the owner."
+  },
+  {
+   "id": "minor-astonishing-ink",
+   "verdict": "MISS",
+   "reason": "'You can use a vial of astonishing ink to ask 5 questions before it's used up' is a real owner-side resource and the record has no counters/uses at all. A bare `uses` field would not render: itemUses.ts only synthesizes a uses counter when itemType === 'consumable', and this record is itemType 'equipment'. The +10 Recall Knowledge answer and the Will DC 18 on readers stay GM-side.",
+   "fix": {
+    "counters": [{"id": "uses", "label": "Questions", "max": 5}]
+   }
+  },
+  {
+   "id": "minor-bloodstone-doll",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reaction consumable whose counteract check, seized control and –2 status penalty all apply to another creature's summon; the doll shatters when the spell ends."
+  },
+  {
+   "id": "miring-round",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Siege ammunition that turns ground into difficult terrain and mires heavy objects — battlefield/GM state, with the extra Aim action falling on siege weapons rather than the owner's sheet."
+  },
+  {
+   "id": "mirror",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane object with no rules text in the record; nothing to deliver."
+  },
+  {
+   "id": "mirror-implement",
+   "verdict": "ALREADY_OK",
+   "reason": "The item entry is only the physical prop; the Mirror implement's mechanics live in core.implement under the 'mirror' key and are driven by the thaumaturge's implement class features, not by this equipment record."
+  },
+  {
+   "id": "mirror-of-sleeping-vigil",
+   "verdict": "MISS",
+   "reason": "While invested it removes two penalties the owner would otherwise take — the –4 status penalty to visual Perception in the watched area and the blinded condition from being unconscious — plus automatic waking. Nothing carries this. It is conditional on being asleep, so the situational reference lane is the honest home for it (same shape as point-blank-stance's 'ignore the volley trait's attack penalty').",
+   "fix": {
+    "situational": [
+     {"targets": [{"kind": "perception"}], "when": "while asleep, watching your body from the Dreamlands", "bonus": "no –4 status penalty and not blinded from being unconscious"}
+    ]
+   }
+  },
+  {
+   "id": "misdirecting-haversack",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Its container capacity (1 Bulk) is already carried as itemType 'container' with capacity/ignoredBulk; both activations only disguise documents and are resolved by GM Perception/Decipher Writing checks."
+  },
+  {
+   "id": "moderate-astonishing-ink",
+   "verdict": "MISS",
+   "reason": "Same defect as the minor version: the vial's 5 questions are an owner-side resource and the record carries no counters or uses. A `uses` field would not render because itemUses.ts synthesizes one only for itemType 'consumable' and this is 'equipment'.",
+   "fix": {
+    "counters": [{"id": "uses", "label": "Questions", "max": 5}]
+   }
+  },
+  {
+   "id": "moderate-aurochs-might-tattoo",
+   "verdict": "ALREADY_OK",
+   "reason": "The only owner-side thing here is the once-per-day limit, and the record carries frequency {max:1, per:'day'} — itemUses.ts counterDefs synthesizes a resets-on-rest 'freq' counter from that. The Stride-twice-and-Strike activation is resolved at the table and the DC 30 Fortitude save, prone and 4d6 bludgeoning land on the target."
+  },
+  {
+   "id": "moderate-banner-of-creeping-death",
+   "verdict": "ALREADY_OK",
+   "reason": "frequency {max:1, per:'minute'} is carried and synthesizes the use counter; the 2d4+2 void damage and DC 26 basic Fortitude save apply to every living creature in the aura, not to the owner's sheet."
+  },
+  {
+   "id": "moderate-bloodstone-doll",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Reaction consumable: the +17/rank-5 counteract and the seized control of a summon act on another creature's spell; the doll is destroyed afterwards."
+  },
+  {
+   "id": "moderate-bougainvillea-blossom",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Spell catalyst that makes entangling flora's area hazardous terrain dealing 2 piercing to enemies entering it — a change to a spell's effect on other creatures."
+  },
+  {
+   "id": "moderate-energized-shield",
+   "verdict": "MISS",
+   "reason": "It is a shield and the record does not say so: itemType is 'equipment' with only level/price/bulk, so there is no acBonus, hardness, hp or brokenThreshold. The text prints them exactly ('minor reinforcing steel shield (Hardness 8, HP 64, BT 32)', Base Shield: Steel Shield), so a player who buys it cannot Raise a Shield or Shield Block on the sheet at all. Compare steel-shield, which ships itemType 'shield' with acBonus 2 / hardness 5 / hp 20 / brokenThreshold 10. The Energized Blast activation itself is target-side.",
+   "fix": {
+    "itemType": "shield",
+    "acBonus": 2,
+    "hardness": 8,
+    "hp": 64,
+    "brokenThreshold": 32,
+    "speedPenalty": 0
+   }
+  },
+  {
+   "id": "moderate-necrotic-cap",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Spell catalyst: it retypes acid grip's damage and adds enfeebled 2 / sickened 2 to that spell's target — all of it lands on the creature you hit."
+  },
+  {
+   "id": "moderate-quartz-coil-rail-transport",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "One-shot activation: a 40-foot teleport resolved instantly at the table, with 4 electricity damage applied in the line as a one-time hit; no lasting owner-side change."
+  }
+ ]
+}

@@ -1,0 +1,366 @@
+{
+ "records": [
+  {
+   "id": "researcher-level-1-trained",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A hireling service: the researcher is an NPC the GM runs, and everything they produce (research findings, Aid on your own research) is downtime the GM adjudicates. No standing change to the buyer's sheet."
+  },
+  {
+   "id": "researcher-level-2",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A hireling service: the researcher is an NPC the GM runs, and everything they produce (research findings, Aid on your own research) is downtime the GM adjudicates. No standing change to the buyer's sheet."
+  },
+  {
+   "id": "researcher-level-3-expert",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A hireling service: the researcher is an NPC the GM runs, and everything they produce (research findings, Aid on your own research) is downtime the GM adjudicates. No standing change to the buyer's sheet."
+  },
+  {
+   "id": "researcher-level-4",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A hireling service: the researcher is an NPC the GM runs, and everything they produce (research findings, Aid on your own research) is downtime the GM adjudicates. No standing change to the buyer's sheet."
+  },
+  {
+   "id": "researcher-level-5",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A hireling service: the researcher is an NPC the GM runs, and everything they produce (research findings, Aid on your own research) is downtime the GM adjudicates. No standing change to the buyer's sheet."
+  },
+  {
+   "id": "researcher-level-6",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A hireling service: the researcher is an NPC the GM runs, and everything they produce (research findings, Aid on your own research) is downtime the GM adjudicates. No standing change to the buyer's sheet."
+  },
+  {
+   "id": "researcher-level-7-master",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A hireling service: the researcher is an NPC the GM runs, and everything they produce (research findings, Aid on your own research) is downtime the GM adjudicates. No standing change to the buyer's sheet."
+  },
+  {
+   "id": "resonating-ammunition",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition whose whole effect is 5d10 sonic damage to the TARGET and creatures within 10 feet of it; nothing lands on the owner."
+  },
+  {
+   "id": "restful-tent",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Camping utility - comfortable climate, insects avoid it, only you can move it, it camouflages. All of it is GM-adjudicated environment and exploration; no owner-side statistic changes."
+  },
+  {
+   "id": "restorative-handwraps",
+   "verdict": "MISS",
+   "reason": "Text gives the OWNER a triggered heal - regain 4 Hit Points on a critical hit during a Flurry of Blows, usable only once every 10 minutes - and the record carries no way to track that charge, so a player has nothing to click. Sibling handwraps (amphisbaena-handwraps, dragon-handwraps) already ship a counter for exactly this kind of limit. The '+1 striking' is the fundamental-rune lane and is out of scope; the 10-minute cadence has no exact `per` value, so it is carried in the label the way bloodstride-boots does.",
+   "fix": {
+    "counters": [
+     {
+      "id": "restorative-heal",
+      "label": "4 HP heal (once every 10 minutes)",
+      "max": 1,
+      "resetsOnRest": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "retrieval-belt",
+   "verdict": "ALREADY_OK",
+   "reason": "The single 1-Bulk extradimensional slot is already delivered: the record ships capacity {\"bulk\":1} and ignoredBulk 1. Store Item / Retrieve Item are Interact activations resolved at the table."
+  },
+  {
+   "id": "retrieval-belt-greater",
+   "verdict": "ALREADY_OK",
+   "reason": "Three 1-Bulk items are already delivered by capacity {\"bulk\":3} and ignoredBulk 3 on the record."
+  },
+  {
+   "id": "retrieval-belt-major",
+   "verdict": "ALREADY_OK",
+   "reason": "Ten 1-Bulk items are already delivered by capacity {\"bulk\":10} and ignoredBulk 10 on the record."
+  },
+  {
+   "id": "returning",
+   "verdict": "ALREADY_OK",
+   "reason": "Registered in core.runes as a weapon property rune (id \"returning\", level 3, 55 gp), so it can be etched onto a thrown weapon. The weapon flying back to your hand is table narration with no sheet statistic."
+  },
+  {
+   "id": "revenant-blade",
+   "verdict": "MISS",
+   "reason": "While invested the blade \"grants the weapon the effects of the Decaying rune\", and Decaying adds 1d4 void damage to the damage dealt on every hit. Nothing on the record delivers that: property runes carry no mechanics in core.runes, and the blade cannot be handed a rune it already has built in. A weapon's own strikeDamage is scoped to that weapon's Strike (derive.ts passes w.strikeDamage as the per-weapon rider), which is the correct scope here. The 2d4 persistent void on a critical hit stays as prose, matching hyldarfs-fang.",
+   "fix": {
+    "strikeDamage": [
+     {
+      "type": "void",
+      "dice": {
+       "n": 1,
+       "die": "d4"
+      },
+      "note": "Decaying rune (while invested)"
+     }
+    ]
+   }
+  },
+  {
+   "id": "rhino-shot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition: the extra 2d6 force damage and the knock-prone save all land on the TARGET."
+  },
+  {
+   "id": "rhinoceros-mask",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The only benefit is ignoring Hardness 5 or less on OBJECTS after a 10-foot Stride. Object hardness is GM-adjudicated and no statistic of the owner's changes - there is no numeric bonus for situational to carry."
+  },
+  {
+   "id": "rhinoceros-mask-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same as the base mask at Hardness 10 - an object-breaking permission the GM adjudicates, with no owner-side statistic to change."
+  },
+  {
+   "id": "rhythm-bone",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Both activations only record and replay ambient sound. Pure utility - no statistic, and no lasting state on the owner."
+  },
+  {
+   "id": "rhythm-bone-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same recording and replaying utility at a longer duration and higher DC; nothing touches the owner's sheet."
+  },
+  {
+   "id": "rime-jar",
+   "verdict": "MISS",
+   "reason": "Siphon Chill leaves the OWNER in a timed state - \"For 8 hours after applying the rime, you treat extreme cold as severe cold\" - and an activated effect with a duration is the mode lane. Nothing on the record represents it, so a player has no way to see or track that they are currently cold-proofed. Note-only modes are established (animal-turning-fulu, chilled-fire-noodles); the fatigued removal is a condition the player clears themselves.",
+   "fix": {
+    "mode": {
+     "id": "item-rime-jar",
+     "name": "Siphon Chill",
+     "fromItemId": "rime-jar",
+     "duration": "8 hours",
+     "survivesRest": false,
+     "note": "For 8 hours you treat extreme cold as severe cold. The activation also removes the fatigued condition if it was caused by exposure to environmental cold."
+    }
+   }
+  },
+  {
+   "id": "ring-of-counterspells",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The stored spell is cast INTO the ring by a spellcaster and the payoff is a reaction counteract against a triggering spell, resolved in the moment. The only persistent datum is which spell is stored, and the field for that (spellSlot) demands a fixed rank while the ring accepts a spell of any rank - no legal shape fits, so there is no applicable fix."
+  },
+  {
+   "id": "ring-of-discretion",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "It conceals your armour and sheathed weapons from ONLOOKERS, who Seek against DC 15 to disbelieve. Everything happens on the observer's side; the wearer's own statistics are untouched."
+  },
+  {
+   "id": "ring-of-minor-arcana",
+   "verdict": "MISS",
+   "reason": "The ring grants three at-will innate arcane cantrips and the record carries no innateSpells, so an owner never sees them on the Spells page. The third cantrip is blank in the scraped text; the AoN source (Equipment 478) reads detect magic, mage hand and prestidigitation, whose ids here are detect-magic, telekinetic-hand and prestidigitation. At-will grants auto-heighten, which is exactly the printed \"heightened to the rank of your cantrips\", so no rank is set.",
+   "fix": {
+    "innateSpells": [
+     {
+      "spellId": "detect-magic",
+      "tradition": "arcane",
+      "atWill": true
+     },
+     {
+      "spellId": "telekinetic-hand",
+      "tradition": "arcane",
+      "atWill": true
+     },
+     {
+      "spellId": "prestidigitation",
+      "tradition": "arcane",
+      "atWill": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "ring-of-ravenousness",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A curse whose whole content is needing twice the normal food and drink - starvation and thirst bookkeeping the GM runs. No statistic changes."
+  },
+  {
+   "id": "ring-of-recalcitrant-wishes",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A one-shot, GM-gated Wish: the GM decides whether the wish is selfless enough, and once it fires the ring is spent forever. Drained 3 is a condition the player applies at the table. Nothing standing to model."
+  },
+  {
+   "id": "ring-of-sneering-charity",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Pure roleplay curse - a compulsion to spend 10% of your wealth on insulting charity. No statistic and no check modifier."
+  },
+  {
+   "id": "ring-of-spell-turning",
+   "verdict": "MISS",
+   "reason": "\"The ring can reflect no more than 9 total ranks of spells per day\" is a per-day pool the OWNER spends and must track, and the record carries nothing for it, so a player cannot tell how much of the ring is left. counters is the charge lane and the value is printed exactly. The reflection itself is a reaction resolved at the table and stays prose.",
+   "fix": {
+    "counters": [
+     {
+      "id": "spell-turning-ranks",
+      "label": "Ranks of spells reflected per day",
+      "max": 9,
+      "per": "day",
+      "resetsOnRest": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "ring-of-sustenance",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "No need to eat or drink and only 2 hours of sleep. Food, water and sleep are downtime bookkeeping - there is no statistic on the sheet for them and no legal field expresses it."
+  },
+  {
+   "id": "ring-of-truth",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A roleplay curse: you cannot deliberately lie, and the ring blurts the truth on a failed save. No statistic and nothing the owner picks."
+  },
+  {
+   "id": "robe-of-feathers-fall",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "April Fools joke item. The 1d6 feather type (crow, duck, ostrich...) is purely cosmetic, so an effectChoices would grant nothing, and being concealed both ways is a condition applied at the table with no numeric field."
+  },
+  {
+   "id": "rod-of-cancellation",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Its whole content is an Interact activation that counteracts another effect or ITEM, plus a random 2d6-hour recharge. Everything lands on the counteract's target and on the GM's side."
+  },
+  {
+   "id": "rod-of-negation",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An activation casting 6th-rank Dispel Magic at a target effect or item, with a random 2d6-hour recharge. Target-side and resolved in the moment."
+  },
+  {
+   "id": "rogue-kit",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A starting-gear bundle: the leather armour, rapier, dagger and adventurer's pack are bought as their own inventory entries. No legal field expresses a bundle, and the kit itself confers no mechanic."
+  },
+  {
+   "id": "rooting",
+   "verdict": "ALREADY_OK",
+   "reason": "Registered in core.runes as a melee weapon property rune, so it can be etched. Its effect - immobilized (escape DC 23) and clumsy 1 on a critical hit - lands entirely on the TARGET."
+  },
+  {
+   "id": "rooting-greater",
+   "verdict": "ALREADY_OK",
+   "reason": "Registered in core.runes as a melee weapon property rune, so it can be etched. Its effect - immobilized (escape DC 28) and clumsy 1 on a critical hit - lands entirely on the TARGET."
+  },
+  {
+   "id": "rooting-major",
+   "verdict": "ALREADY_OK",
+   "reason": "Registered in core.runes as a melee weapon property rune, so it can be etched. Its effect - immobilized (escape DC 34) and clumsy 1 on a critical hit - lands entirely on the TARGET."
+  },
+  {
+   "id": "rooting-true",
+   "verdict": "ALREADY_OK",
+   "reason": "Registered in core.runes as a melee weapon property rune, so it can be etched. Its effect - immobilized (escape DC 41) and clumsy 1 on a critical hit - lands entirely on the TARGET."
+  },
+  {
+   "id": "rope",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane 50 feet of rope; its bulk and price are the whole item."
+  },
+  {
+   "id": "rope-of-climbing-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The rope animates and crawls to a destination on its own for 1 minute. It is an independent object the GM narrates - it grants the owner no bonus, sense or speed."
+  },
+  {
+   "id": "rounds-arquebus",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane firearm ammunition: a projectile and black powder with no mechanical rider. The firearm it feeds carries the reload and damage statistics."
+  },
+  {
+   "id": "rounds-axe-musket",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane firearm ammunition: a projectile and black powder with no mechanical rider. The firearm it feeds carries the reload and damage statistics."
+  },
+  {
+   "id": "rounds-black-powder-knuckle-dusters",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane firearm ammunition: a projectile and black powder with no mechanical rider. The firearm it feeds carries the reload and damage statistics."
+  },
+  {
+   "id": "rounds-blunderbuss",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane firearm ammunition: a projectile and black powder with no mechanical rider. The firearm it feeds carries the reload and damage statistics."
+  },
+  {
+   "id": "rounds-cane-pistol",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane firearm ammunition: a projectile and black powder with no mechanical rider. The firearm it feeds carries the reload and damage statistics."
+  },
+  {
+   "id": "rounds-clan-pistol",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane firearm ammunition: a projectile and black powder with no mechanical rider. The firearm it feeds carries the reload and damage statistics."
+  },
+  {
+   "id": "rounds-coat-pistol",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane firearm ammunition: a projectile and black powder with no mechanical rider. The firearm it feeds carries the reload and damage statistics."
+  },
+  {
+   "id": "rounds-dagger-pistol",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane firearm ammunition: a projectile and black powder with no mechanical rider. The firearm it feeds carries the reload and damage statistics."
+  },
+  {
+   "id": "rounds-dawnsilver-tree",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane firearm ammunition: a projectile and black powder with no mechanical rider. The firearm it feeds carries the reload and damage statistics."
+  },
+  {
+   "id": "rounds-double-barreled-musket",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane firearm ammunition: a projectile and black powder with no mechanical rider. The firearm it feeds carries the reload and damage statistics."
+  },
+  {
+   "id": "rounds-double-barreled-pistol",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane firearm ammunition: a projectile and black powder with no mechanical rider. The firearm it feeds carries the reload and damage statistics."
+  },
+  {
+   "id": "rounds-dragon-mouth-pistol",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane firearm ammunition: a projectile and black powder with no mechanical rider. The firearm it feeds carries the reload and damage statistics."
+  },
+  {
+   "id": "rounds-dueling-pistol",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane firearm ammunition: a projectile and black powder with no mechanical rider. The firearm it feeds carries the reload and damage statistics."
+  },
+  {
+   "id": "rounds-dwarven-scattergun",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane firearm ammunition: a projectile and black powder with no mechanical rider. The firearm it feeds carries the reload and damage statistics."
+  },
+  {
+   "id": "rounds-explosive-dogslicer",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane firearm ammunition: a projectile and black powder with no mechanical rider. The firearm it feeds carries the reload and damage statistics."
+  },
+  {
+   "id": "rounds-fire-lance",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane firearm ammunition: a projectile and black powder with no mechanical rider. The firearm it feeds carries the reload and damage statistics."
+  },
+  {
+   "id": "rounds-flingflenser",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane firearm ammunition: a projectile and black powder with no mechanical rider. The firearm it feeds carries the reload and damage statistics."
+  },
+  {
+   "id": "rounds-flintlock-musket",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane firearm ammunition: a projectile and black powder with no mechanical rider. The firearm it feeds carries the reload and damage statistics."
+  },
+  {
+   "id": "rounds-flintlock-pistol",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane firearm ammunition: a projectile and black powder with no mechanical rider. The firearm it feeds carries the reload and damage statistics."
+  },
+  {
+   "id": "rounds-gnome-amalgam-musket",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane firearm ammunition: a projectile and black powder with no mechanical rider. The firearm it feeds carries the reload and damage statistics."
+  }
+ ]
+}

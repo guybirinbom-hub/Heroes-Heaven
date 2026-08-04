@@ -2880,5 +2880,254 @@
       }
     ],
     "note": "Immanence: you're affected by a 4th-rank Enlarge — you become Huge, your reach increases by 10 feet, you gain a +4 status bonus to melee damage and are clumsy 1. You can forgo this effect when your body ikon becomes empowered."
+  },
+  "item-abysium-chunk": {
+    "id": "item-abysium-chunk",
+    "name": "Carrying Abysium (Sickened 1)",
+    "fromItemId": "abysium-chunk",
+    "survivesRest": true,
+    "modifiers": [
+      {
+        "value": -1,
+        "type": "status",
+        "target": "all-checks"
+      }
+    ],
+    "note": "A creature carrying this standard-grade, light-Bulk abysium chunk is sickened 1 (a poison effect). Switch off when the chunk is not carried. The chunk also sheds dim light in a 10-foot radius.",
+    "duration": "While you carry it"
+  },
+  "item-abysium-ingot": {
+    "id": "item-abysium-ingot",
+    "name": "Carrying Abysium (Sickened 2)",
+    "fromItemId": "abysium-ingot",
+    "survivesRest": true,
+    "modifiers": [
+      {
+        "value": -2,
+        "type": "status",
+        "target": "all-checks"
+      }
+    ],
+    "note": "A creature carrying this standard-grade, 1-Bulk abysium ingot is sickened 2 (a poison effect). Switch off when the ingot is not carried. It also sheds dim light in a 10-foot radius.",
+    "duration": "While you carry it"
+  },
+  "item-golden-wings": {
+    "id": "item-golden-wings",
+    "name": "Assisted Flight",
+    "fromItemId": "golden-wings",
+    "duration": "10 minutes",
+    "survivesRest": false,
+    "modifiers": [
+      {
+        "value": -2,
+        "type": "item",
+        "target": "skill",
+        "detail": "stealth",
+        "appliesWhen": "to Hide and Sneak"
+      }
+    ],
+    "note": "Assisted Flight: you can Leap 20 feet and must land on solid ground. You shed bright light in a 20-foot radius and dim light 20 feet beyond, and take a -2 item penalty to Stealth to Hide and Sneak."
+  },
+  "item-greater-golden-wings": {
+    "id": "item-greater-golden-wings",
+    "name": "Assisted Flight",
+    "fromItemId": "greater-golden-wings",
+    "duration": "10 minutes",
+    "survivesRest": false,
+    "modifiers": [
+      {
+        "value": -2,
+        "type": "item",
+        "target": "skill",
+        "detail": "stealth",
+        "appliesWhen": "to Hide and Sneak"
+      }
+    ],
+    "note": "Assisted Flight: you can Leap 20 feet and must land on solid ground, and can spend an action to glide 5 feet down and 20 feet forward. You shed bright light in a 20-foot radius and dim light 20 feet beyond, and take a -2 item penalty to Stealth to Hide and Sneak."
+  },
+  "item-incandescent-sight": {
+    "id": "item-incandescent-sight",
+    "name": "Incandescent Sight",
+    "fromItemId": "incandescent-sight",
+    "duration": "1 minute",
+    "senses": [
+      {
+        "name": "heatsight",
+        "range": 30,
+        "acuity": "precise"
+      }
+    ],
+    "note": "Detects temperature gradients out to 30 feet, so you can spot living creatures and warm objects in the dark. Warm objects block it even when transparent (e.g. hot water).",
+    "modifiers": []
+  },
+  "item-instinct-crown": {
+    "id": "item-instinct-crown",
+    "name": "Instinct Crown Boon",
+    "fromItemId": "instinct-crown",
+    "duration": "until the end of your rage",
+    "survivesRest": false,
+    "modifiers": [],
+    "note": "Once per day while raging, if the crown's instinct matches yours: Animal - Stride, +10 temporary HP, +3 damage and deadly d8 on your animal unarmed attacks. Dragon - adjacent attackers take 2d6 of your breath's damage type. Fury - quickened (Stride or Strike only). Giant - become Large, +5 ft reach, +2 damage with the larger weapon, your Strides leave difficult terrain. Spirit - raging resistance applies to all physical and poison damage, halved against magical attacks. Superstition - roll twice and take the higher on saves against magic, and raging resistance applies to all traditions. The separate once-per-day initiative activation adds 10 more temporary HP to Quick-Tempered's Rage."
+  },
+  "item-major-golden-wings": {
+    "id": "item-major-golden-wings",
+    "name": "Golden Wings (Assisted Flight)",
+    "fromItemId": "major-golden-wings",
+    "duration": "10 minutes",
+    "speeds": {
+      "fly": 20
+    },
+    "modifiers": [
+      {
+        "target": "skill",
+        "detail": "stealth",
+        "type": "item",
+        "value": -2,
+        "appliesWhen": "to Hide or Sneak"
+      }
+    ],
+    "note": "Once per day. You can also Leap 20 feet and must land on solid ground. While active you shed bright light in a 20-foot radius and dim light for the next 20 feet."
+  },
+  "item-rime-jar": {
+    "id": "item-rime-jar",
+    "name": "Siphon Chill",
+    "fromItemId": "rime-jar",
+    "duration": "8 hours",
+    "survivesRest": false,
+    "note": "For 8 hours you treat extreme cold as severe cold. The activation also removes the fatigued condition if it was caused by exposure to environmental cold.",
+    "modifiers": []
+  },
+  "item-azatas-grace": {
+    "id": "item-azatas-grace",
+    "name": "Azata's Grace",
+    "fromItemId": "azatas-grace",
+    "duration": "until Dismissed",
+    "survivesRest": true,
+    "modifiers": [],
+    "weaknesses": [
+      {
+        "type": "lawful",
+        "value": 10
+      }
+    ],
+    "note": "+50 maximum and current Hit Points while active. You also gain the effects of the righteous call gift without expending that gift's daily use. Dismissing it casts scintillating pattern (your allies are unaffected)."
+  },
+  "item-skyrider-sword-greater": {
+    "id": "item-skyrider-sword-greater",
+    "name": "Ride the Skyrider Sword",
+    "fromItemId": "skyrider-sword-greater",
+    "duration": "until you Dismiss it or stop holding the sword in at least one hand",
+    "survivesRest": false,
+    "modifiers": [],
+    "speeds": {
+      "fly": "min(25,@actor.speed.land)"
+    },
+    "note": "Fly Speed of 25 feet or your land Speed, whichever is slower. While riding the sword you can't Strike with it except via its 2-action Fly-and-Strike activation."
+  },
+  "item-stalwarts-ring": {
+    "id": "item-stalwarts-ring",
+    "name": "Stalwart's Ring",
+    "fromItemId": "stalwarts-ring",
+    "duration": "until your next daily preparations",
+    "survivesRest": false,
+    "modifiers": [],
+    "note": "5 temporary Hit Points, gained by meditating on the ring during daily preparations. They last until your next daily preparations and only while you keep wearing the ring."
+  },
+  "item-steamflight-pack": {
+    "id": "item-steamflight-pack",
+    "name": "Steamflight Pack",
+    "fromItemId": "steamflight-pack",
+    "duration": "20 minutes",
+    "modifiers": [],
+    "speeds": {
+      "fly": 20
+    },
+    "note": "Fly Speed 20 feet while the pack is running. It carries enough water for 20 minutes of operation and refills in 5 minutes; the on/off switch is a 2-action activation."
+  },
+  "item-true-golden-wings": {
+    "id": "item-true-golden-wings",
+    "name": "Assisted Flight",
+    "fromItemId": "true-golden-wings",
+    "duration": "10 minutes",
+    "modifiers": [
+      {
+        "target": "skill",
+        "detail": "stealth",
+        "type": "item",
+        "value": -2,
+        "appliesWhen": "to Hide or Sneak"
+      }
+    ],
+    "speeds": {
+      "fly": "max(25,@actor.speed.land)"
+    },
+    "note": "Once per day. For 10 minutes you can Leap 20 feet and gain a fly Speed equal to your Speed or 25 feet, whichever is greater. You emit bright light in a 20-foot radius (dim light 20 feet beyond), which is why Stealth suffers."
+  },
+  "item-winged-greater": {
+    "id": "item-winged-greater",
+    "name": "Take to the Skies",
+    "fromItemId": "winged-greater",
+    "duration": "until you Dismiss it",
+    "survivesRest": true,
+    "modifiers": [],
+    "speeds": {
+      "fly": "min(25,@actor.speed.land)"
+    },
+    "note": "Greater winged rune: a fly Speed of 25 feet or your land Speed, whichever is slower. Once activated the wings stay tangible indefinitely; you can Dismiss it and reactivate without waiting an hour."
+  },
+  "item-cloak-of-waves-clouds": {
+    "id": "item-cloak-of-waves-clouds",
+    "name": "Cut Air and Sea",
+    "fromItemId": "cloak-of-waves-clouds",
+    "duration": "until you next Activate the cloak",
+    "survivesRest": true,
+    "modifiers": [],
+    "speeds": {
+      "fly": 40
+    },
+    "note": "Feathers form: fly Speed 40 feet. Activating for the scale form instead gives a swim Speed of 60 feet and the ability to breathe underwater - leave this mode off and use the swim form at the table."
+  },
+  "item-cursed-dreamstone": {
+    "id": "item-cursed-dreamstone",
+    "name": "Cursed Dreamstone",
+    "fromItemId": "cursed-dreamstone",
+    "duration": "as long as you possess the stone",
+    "survivesRest": true,
+    "note": "Switch this on only if you failed the save against the curse. You are also fatigued whenever you wake from sleep, natural or magical, and you gain no bonus from the dreamstone. On a critical failure you additionally get one degree worse on every saving throw against sleep effects.",
+    "modifiers": [
+      {
+        "target": "save",
+        "type": "item",
+        "value": -2,
+        "appliesWhen": "against sleep effects"
+      }
+    ]
+  },
+  "item-energy-breath-potion-greater": {
+    "id": "item-energy-breath-potion-greater",
+    "name": "Energy Breath (Greater)",
+    "fromItemId": "energy-breath-potion-greater",
+    "duration": "1 hour",
+    "modifiers": [],
+    "note": "You have the Energy Breath action for 1 hour: 10d6 damage of the potion's energy type, basic save DC 37. Area/save by type — acid or electricity 30-foot line (Reflex), cold or fire 15-foot cone (Reflex), sonic 15-foot cone (Fortitude). After using it you can't do so again for 1d4 rounds."
+  },
+  "item-flying-broomstick": {
+    "id": "item-flying-broomstick",
+    "name": "Riding the Flying Broomstick",
+    "fromItemId": "flying-broomstick",
+    "duration": "while riding the broom",
+    "modifiers": [],
+    "speeds": {
+      "fly": 20
+    },
+    "note": "Guiding the broom with one hand gives a fly Speed of 20 feet; it can carry one passenger besides you. Activate—Lift Off (2 actions, concentrate, manipulate) toward a named destination on the same plane raises the fly Speed to 40 feet for up to 4 hours (about 16 miles) or until you Dismiss it — raise the speed to 40 by hand while that runs. Laden with more than 20 Bulk the broom takes a -10-foot penalty; above 30 Bulk it crashes. After the activation ends the broom can't be activated again for 1 hour."
+  },
+  "item-giant-catch-pole": {
+    "id": "item-giant-catch-pole",
+    "name": "Wielding the Giant Catch Pole",
+    "fromItemId": "giant-catch-pole",
+    "duration": "while wielding the giant catch pole",
+    "modifiers": [],
+    "note": "You are Clumsy 1 while wielding it (apply as a condition). The rope loop lets you Grapple without having a free hand, and the giant version can Grapple creatures up to your normal size limit rather than only Medium or smaller."
   }
 }

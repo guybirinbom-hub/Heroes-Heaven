@@ -1,0 +1,357 @@
+{
+ "records": [
+  {
+   "id": "siccatite-armor-standard-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Precious-material catalogue entry (price/craft-requirement + Hardness/HP/BT reference), not a wearable or wieldable item; the mechanical material tag is set on the player's own weapon or armor via the item editor Material field. Its two printed effects are GM-side: protection from severe/extreme environmental heat or cold is exploration adjudication, and the 4 energy damage hits the OPPONENT that has grabbed you."
+  },
+  {
+   "id": "siccatite-chunk",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Raw crafting material. The 1 energy damage on contact applies to whatever creature touches it (GM-side); the rest is Hardness/HP/BT table data."
+  },
+  {
+   "id": "siccatite-ingot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Raw crafting material; text identical to the chunk. Contact damage is GM-side, the rest is Hardness/HP/BT table data."
+  },
+  {
+   "id": "siccatite-object-high-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Generic per-Bulk object price entry for the material. No wearer or wielder effect at all."
+  },
+  {
+   "id": "siccatite-object-standard-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Generic per-Bulk object price entry for the material. No wearer or wielder effect at all."
+  },
+  {
+   "id": "siccatite-weapon-high-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Precious-material catalogue entry (price/craft-requirement + Hardness/HP/BT reference), not a wearable or wieldable item; the mechanical material tag is set on the player's own weapon or armor via the item editor Material field. The automatic greater flaming / greater frost is delivered by etching the existing core.runes ids flaming-greater / frost-greater onto the actual weapon; strikeDamage on this catalogue record would wrongly add fire or cold to EVERY strike the character makes."
+  },
+  {
+   "id": "siccatite-weapon-standard-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Precious-material catalogue entry (price/craft-requirement + Hardness/HP/BT reference), not a wearable or wieldable item; the mechanical material tag is set on the player's own weapon or armor via the item editor Material field. The automatic flaming / frost is delivered by etching the existing core.runes ids flaming / frost onto the actual weapon; strikeDamage here would wrongly apply to every strike the character makes."
+  },
+  {
+   "id": "sifting-pan",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane tool whose whole content is permission to attempt to sift dirt or mud for materials; no printed modifier."
+  },
+  {
+   "id": "sight-theft-grit",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Ingested poison; the entire stat block (save DC, onset, stages, blinded) resolves on the TARGET."
+  },
+  {
+   "id": "sighting-shot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Activated ammunition. The light and the transient images of the shot's path are resolved in the moment it is fired; no standing change to the owner."
+  },
+  {
+   "id": "signal-whistle",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane noisemaker; audible range is pure GM adjudication with no printed modifier."
+  },
+  {
+   "id": "signifers-mask",
+   "verdict": "MISS",
+   "reason": "Text grants the WEARER a flat +1 circumstance bonus to Deception checks to Lie, Intimidation checks to Coerce, and their Deception DC against Sense Motive. The record carries no situational and no passiveEffects, so nothing delivers it.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "deception"
+       }
+      ],
+      "when": "to Lie, and to your Deception DC against Sense Motive",
+      "bonus": "+1 circumstance"
+     },
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "intimidation"
+       }
+      ],
+      "when": "to Coerce",
+      "bonus": "+1 circumstance"
+     }
+    ]
+   }
+  },
+  {
+   "id": "silencer",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane firearm attachment; muffling the report is a GM-side detection call with no printed modifier, and it is consumed on the first shot."
+  },
+  {
+   "id": "silencing-ammunition",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Activated ammunition; the 2nd-rank silence effect, its save and the -2 circumstance penalty all land on the TARGET."
+  },
+  {
+   "id": "silencing-shot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Activated ammunition; the 4th-rank silence effect and its save land on the TARGET."
+  },
+  {
+   "id": "silver-armor-high-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Precious-material catalogue entry (price/craft-requirement + Hardness/HP/BT reference), not a wearable or wieldable item; the mechanical material tag is set on the player's own weapon or armor via the item editor Material field. Both printed effects are other-creature-side: an attacker with weakness to silver that critically fails an unarmed attack becomes sickened, and the sickened-wearer clause only fires for a wearer that itself has weakness to silver (a GM call)."
+  },
+  {
+   "id": "silver-armor-low-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Precious-material catalogue entry (price/craft-requirement + Hardness/HP/BT reference), not a wearable or wieldable item; the mechanical material tag is set on the player's own weapon or armor via the item editor Material field. Both printed effects fire on a creature with weakness to silver, not on a normal wearer."
+  },
+  {
+   "id": "silver-armor-standard-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Precious-material catalogue entry (price/craft-requirement + Hardness/HP/BT reference), not a wearable or wieldable item; the mechanical material tag is set on the player's own weapon or armor via the item editor Material field. Both printed effects fire on a creature with weakness to silver, not on a normal wearer."
+  },
+  {
+   "id": "silver-buckler-high-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Material catalogue entry; the text states outright that silver shields have no additional effect. Hardness 6 / HP 24 / BT 12 are shield statistics the player sets on their own shield in the item editor."
+  },
+  {
+   "id": "silver-buckler-low-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Material catalogue entry; silver shields have no additional effect. Hardness 1 / HP 4 / BT 2 are shield statistics set on the player's own shield in the item editor."
+  },
+  {
+   "id": "silver-buckler-standard-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Material catalogue entry; silver shields have no additional effect. Hardness 3 / HP 12 / BT 6 are shield statistics set on the player's own shield in the item editor."
+  },
+  {
+   "id": "silver-chunk",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Raw crafting material; content is the Hardness/HP/BT table plus flavour about silver's effect on the creatures you hit."
+  },
+  {
+   "id": "silver-ingot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Raw crafting material; content is the Hardness/HP/BT table plus flavour about silver's effect on the creatures you hit."
+  },
+  {
+   "id": "silver-object-high-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Generic per-Bulk object price entry for the material; no wearer or wielder effect."
+  },
+  {
+   "id": "silver-object-low-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Generic per-Bulk object price entry for the material; no wearer or wielder effect."
+  },
+  {
+   "id": "silver-object-standard-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Generic per-Bulk object price entry for the material; no wearer or wielder effect."
+  },
+  {
+   "id": "silver-orb-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Thrown alchemical bomb; the slashing damage, the silver coating, the concealing cloud and the 5d6 area damage all resolve on TARGETS and the area."
+  },
+  {
+   "id": "silver-orb-lesser",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Thrown alchemical bomb; all effects (1 slashing, silver coating, cloud, 1d6 area damage) land on targets and the area."
+  },
+  {
+   "id": "silver-orb-powder",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Thrown alchemical bomb; all effects (3d6 cloud damage, concealment, silver coating) land on targets and the area."
+  },
+  {
+   "id": "silver-powder-orb",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Duplicate catalogue record of the Silver Orb line; every effect lands on targets and the area, nothing on the thrower."
+  },
+  {
+   "id": "silver-shield-high-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Material catalogue entry; silver shields have no additional effect. Hardness 8 / HP 32 / BT 16 are shield statistics set on the player's own shield in the item editor."
+  },
+  {
+   "id": "silver-shield-low-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Material catalogue entry; silver shields have no additional effect. Hardness 3 / HP 12 / BT 6 are shield statistics set on the player's own shield in the item editor."
+  },
+  {
+   "id": "silver-shield-standard-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Material catalogue entry; silver shields have no additional effect. Hardness 5 / HP 20 / BT 10 are shield statistics set on the player's own shield in the item editor."
+  },
+  {
+   "id": "silver-transmuting-ingot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable whetstone: for 1 minute the weapon counts as silver for physical damage. Counting as a precious material only matters against the TARGET's weakness or resistance, which is the GM's side; it gives the owner no bonus."
+  },
+  {
+   "id": "silver-weapon-high-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Precious-material catalogue entry (price/craft-requirement + Hardness/HP/BT reference), not a wearable or wieldable item; the mechanical material tag is set on the player's own weapon or armor via the item editor Material field. The printed effect is entirely target-side (extra damage to creatures with weakness to silver, bypassing devil resistances)."
+  },
+  {
+   "id": "silver-weapon-low-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Precious-material catalogue entry (price/craft-requirement + Hardness/HP/BT reference), not a wearable or wieldable item; the mechanical material tag is set on the player's own weapon or armor via the item editor Material field. The printed effect is entirely target-side."
+  },
+  {
+   "id": "silver-weapon-standard-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Precious-material catalogue entry (price/craft-requirement + Hardness/HP/BT reference), not a wearable or wieldable item; the mechanical material tag is set on the player's own weapon or armor via the item editor Material field. The printed effect is entirely target-side."
+  },
+  {
+   "id": "singularity-ammunition",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Activated ammunition; the forced 5-foot pull, the saves and the burst damage all resolve on TARGETS."
+  },
+  {
+   "id": "sisterstone-chunk",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Raw crafting material, and the text explicitly says unworked chunks and ingots do NOT create a reciprocal field, so it is correctly inert."
+  },
+  {
+   "id": "sisterstone-ingot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Raw crafting material; the text explicitly says unworked ingots do NOT create a reciprocal field."
+  },
+  {
+   "id": "sisterstone-object-high-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The reciprocal field enfeebles adjacent UNDEAD creatures on a failed save: entirely target-side, and it requires a second object of the paired ore placed in the scene."
+  },
+  {
+   "id": "sisterstone-object-low-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The reciprocal field enfeebles adjacent UNDEAD creatures: target-side, and it needs a paired object of the other ore in play."
+  },
+  {
+   "id": "sisterstone-object-standard-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The reciprocal field enfeebles adjacent UNDEAD creatures: target-side, and it needs a paired object of the other ore in play."
+  },
+  {
+   "id": "sisterstone-weapon-high-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A triggered command activation (an ally is critically hit by an undead) that resolves as one retaliatory Strike with 6 extra positive damage; an activation resolved and gone in the moment, gated on an ally's sisterstone gear."
+  },
+  {
+   "id": "sisterstone-weapon-low-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A triggered command activation resolving as one retaliatory Strike with 2 extra positive damage; resolved at the table, gated on an ally's sisterstone gear, no standing change."
+  },
+  {
+   "id": "sisterstone-weapon-standard-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A triggered command activation resolving as one retaliatory Strike with 4 extra positive damage; resolved at the table, gated on an ally's sisterstone gear, no standing change."
+  },
+  {
+   "id": "skittering-mask",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Automatic once-per-day movement that fires only while you begin your turn UNCONSCIOUS; it repositions your body at the table and changes no statistic on the sheet."
+  },
+  {
+   "id": "skittering-mask-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The same automatic while-unconscious repositioning (15 feet, repeating for 1 minute, ally-signalled); table movement with no standing sheet change."
+  },
+  {
+   "id": "sky-serpent-bolt",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Activated ammunition; the lightning line, its save and its damage all resolve on TARGETS in the area."
+  },
+  {
+   "id": "skyrider-sword-greater",
+   "verdict": "MISS",
+   "reason": "The 1-action command activation gives the WIELDER a fly Speed of 25 feet or their land Speed, whichever is slower, lasting until Dismissed. That is a durable activated effect, i.e. the item-mode lane, and no mode with fromItemId skyrider-sword-greater exists. (The built-in +3 greater striking greater shock runes are the corpus-wide inventory-rune lane, exactly as for dwarven-thrower, not a per-item gap.)",
+   "fix": {
+    "mode": {
+     "id": "item-skyrider-sword-greater",
+     "name": "Ride the Skyrider Sword",
+     "fromItemId": "skyrider-sword-greater",
+     "duration": "until you Dismiss it or stop holding the sword in at least one hand",
+     "survivesRest": false,
+     "modifiers": [],
+     "speeds": {
+      "fly": "min(25,@actor.speed.land)"
+     },
+     "note": "Fly Speed of 25 feet or your land Speed, whichever is slower. While riding the sword you can't Strike with it except via its 2-action Fly-and-Strike activation."
+    }
+   }
+  },
+  {
+   "id": "skysunder",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A unique relic whose entire text is the built-in +1 striking clan dagger line. No specific magic weapon in core.json carries a rune field (dwarven-thrower is identical); potency and striking live on the inventory entry (inv.runes), set in the item editor's rune section. Nothing item-specific to add."
+  },
+  {
+   "id": "slashing-claws",
+   "verdict": "MISS",
+   "reason": "An implanted, invested graft that gives the OWNER a new claw unarmed attack (1d4 slashing, brawling group, agile and finesse). The record has no grantedStrikes, so the strike never reaches the Strikes tab.",
+   "fix": {
+    "grantedStrikes": [
+     {
+      "name": "Claw",
+      "die": "1d4",
+      "damageType": "slashing",
+      "traits": [
+       "agile",
+       "finesse",
+       "unarmed"
+      ],
+      "group": "brawling"
+     }
+    ]
+   }
+  },
+  {
+   "id": "sleep-arrow",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Activated ammunition; the sleep effect and its DC 17 save resolve on the TARGET."
+  },
+  {
+   "id": "sleeves-of-storage",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered on the record itself: itemType container with capacity {bulk:10} and ignoredBulk 10, i.e. the two Type-I spaces of 5 Bulk each. The familiar-lodging clause is table narration."
+  },
+  {
+   "id": "sleeves-of-storage-greater",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered on the record itself: itemType container with capacity {bulk:40} and ignoredBulk 40. The familiar-lodging clause is table narration."
+  },
+  {
+   "id": "sling-bullets",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane ammunition; the sling weapon record supplies all damage statistics."
+  },
+  {
+   "id": "sloughstone-chunk",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Raw crafting material; its only rule is a +4 to the DC to Craft with it, which is downtime/crafting, plus a Hardness/HP/BT table."
+  },
+  {
+   "id": "sloughstone-ingot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Raw crafting material; its only rule is the +4 crafting DC (downtime) plus the Hardness/HP/BT table."
+  },
+  {
+   "id": "sloughstone-object-high-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Generic per-Bulk object price entry for the material; the only rule is the +4 crafting DC (downtime)."
+  },
+  {
+   "id": "sloughstone-object-standard-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Generic per-Bulk object price entry for the material; the only rule is the +4 crafting DC (downtime)."
+  }
+ ]
+}

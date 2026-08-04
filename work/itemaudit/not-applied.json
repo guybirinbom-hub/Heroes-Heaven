@@ -1,0 +1,174 @@
+{
+ "skipped": [
+  "abysium-object-standard-grade: This is the generic material PRICE line ('Price 450 gp per Bulk', bulk 0) — the printed penalty is 1 or 2 depending on a Bulk the record does not have, and the judge's own note tells the player to raise it by hand; the concrete cases already ship as abysium-chunk and abysium-ingot.",
+  "abysium-object-high-grade: Same generic per-Bulk material price entry with bulk 0; the sickened value is undeterminable from the record and the fix admits it under-models.",
+  "abysium-weapon-standard-grade: A material PRICE entry, not a weapon; strikeDamage on it (derive.ts:1338 fires for any invested non-weapon item) would add 1d4 poison to EVERY Strike the owner makes with any weapon — the judge's own note concedes it belongs on the host weapon via a material-attach step that does not exist.",
+  "abysium-weapon-high-grade: Same over-grant: strikeDamage on a material price entry applies to all of the owner's Strikes, not the abysium weapon's.",
+  "aerekostes-item: already has traits — not overwriting",
+  "aon-sleuth-s-pipe: This is the aon- duplicate of `sleuths-pipe`, and situationalBonuses.ts:1502 ALREADY ships those exact entries (+1 item to Sense Motive, +1 item on investigator Pursue-a-Lead checks) for the canonical record.",
+  "inextinguishable: dyingThresholdBonus is read only from content.feats (build.ts:2655) - nothing reads it off an item, and it is a relic ASPECT that can never be worn or invested, so the fix writes dead data.",
+  "inspiring: Uplifting Overture's benefit lands on an ALLY, the tradition 'occult' is invented (the spell has no tradition list), and innateSpells is read only from INVESTED items (build.ts:2957) while this record has no 'invested' trait and no equip control, so it could never fire.",
+  "lashing-currents: grantedStrikes is collected only from INVESTED items (build.ts:1024) and every shipped grantedStrikes sits on an 'invested' record; this relic aspect has no such trait and no equip control, so the Strike would never reach the Strikes page.",
+  "major-dragons-tongue: already has traits — not overwriting",
+  "major-mitigation-mail: already has traits — not overwriting",
+  "major-reactive-mail: already has traits — not overwriting",
+  "mental-bastion: A relic aspect with no 'invested' trait and itemType 'equipment' can never be worn, equipped or invested (equipControl returns null, isEquippable is false), so passiveEffects never applies; and no record in the corpus models telepathy as a SenseEntry.",
+  "ranger-kit: The fix names 'kitContents' plus a 'where' note, neither of which is a legal item field, and the backfill applier has no lane for code tables (its categories are feats/classFeatures/items/heritages/backgrounds/classes/spells/actions/deities) — applied as written it would add junk to the record and deliver nothing; the real remedy is KIT_CONTENTS in src/rules/play.ts, a code change, not an item field.",
+  "reinforced-surcoat: OVER-GRANT: passiveEffects.speedPenalty is applied by deriveSpeeds unconditionally to EVERY movement type for any worn/equipped/invested item, but the surcoat's text only increases the Speed penalty OF YOUR ARMOR — it does nothing without medium/heavy armor and should interact with the armor's Strength threshold (derive.ts:1956-1967). No legal item field expresses a conditional armor-penalty increase, so the record cannot carry this correctly.",
+  "sawtooth-reaper: already has traits — not overwriting",
+  "serrating: The gap is real (Foundry mis-tags its usage as 'held-in-one-hand', so import-core's parseRune never registers it) but the fix is a `rune` object, which is not a legal item field and has no applier lane — effect-backfill.json has no 'runes' category, so nothing would land. The real remedy is a code change in scripts/import-core.mjs (rune registration + a RUNE_DAMAGE entry), not a field on this record.",
+  "shard-of-self-destruction: already has damage — not overwriting",
+  "shield-augmentation: The judge's own reason concedes nothing can write weapon traits from one item onto another, so a 17-option effectChoices would record a preference and deliver no mechanic — it fails the 'would actually deliver it' test, and the traits only ever matter on a shield Strike, which the augmentation explicitly does not otherwise alter.",
+  "black-scorpion-stingmace: The whole fix restates the weapon's printed +2 greater striking fearsome runes, which the player sets on the inventory instance (inv.runes) — a display-only star cannot change the number and would read as a second, additional bonus. The venom is target-side.",
+  "blade-of-fallen-stars: Same: the entire fix is the printed +4 major striking greater frost runes, which belong on the inventory instance; both activations resolve in the moment.",
+  "blast-lance: Same: the only content is the printed +1 potency, carried by inv.runes, and the fire blast is target-side.",
+  "blast-lance-greater: Same: the only content is the printed +1 striking, carried by inv.runes.",
+  "smugglers-sack-type-i: already has capacity — not overwriting",
+  "smugglers-sack-type-ii: already has capacity — not overwriting",
+  "smugglers-sack-type-iii: already has capacity — not overwriting",
+  "smugglers-sack-type-iv: already has capacity — not overwriting",
+  "smugglers-sack-type-v: already has capacity — not overwriting",
+  "standard-book-of-translation-tien: A mundane tool whose whole content is PERMISSION to attempt Diplomacy across a language barrier; the -2 circumstance exists only inside that unmodelled permission, and all six book-of-translation records in core.json are deliberately bare, so singling this one out is inconsistent as well as inert.",
+  "throwers-bandolier: The printed benefit is a +1 weapon POTENCY rune - a fundamental rune, which this app models on the weapon instance (InventoryItem.runes.potency), not as an item effect; Foundry ships no rule element for it either. A display-only +1 item star on top of whatever the player etched duplicates the statistic rather than adding one.",
+  "throwing-shield: The fix cannot fire: item grantedStrikes are collected only for INVESTED items (build.ts collectGrantedNaturals) and this adjustment carries only the adjustment trait, so the app never offers investing it. It is also the wrong lane - Foundry's Strike element is category MARTIAL with range increment 20, while grantedStrikes renders through deriveUnarmedStrike (unarmed proficiency, buffed by handwraps runes) and would misstate the attack.",
+  "time-jump: A relic GIFT, not a worn item: its traits are empty, so the Invest button never renders (InventoryTab gates it on the invested trait) and build.ts reads item innateSpells only for invested items - the spell could never reach the Spells page. All 176 relic-gift records in core.json are deliberately unmodelled reference entries, and the once-per-day tracker it does carry is what the record is for.",
+  "time-reversal: Same as time-jump: with no invested trait the innateSpells lane can never fire, and no relic gift in the corpus carries one.",
+  "umbral-body: Overturned: a relic ASPECT, not an ownable item (level 0, no price, no invested trait — build.ts only reads item.innateSpells for INVESTED inventory), and atWill over-grants a 1d4-round-recharge activation into unlimited casting while silently discarding the printed 6th rank (InnateSpellGrant ignores  when atWill is set).",
+  "weapon-siphon: Overturned: the text worsens the MULTIPLE ATTACK PENALTY, not the attack roll — a strikeAttack star reading '-1 untyped' misstates the first attack of every turn; and the siphon is isAttachable (usage attached-to-melee-weapon), so once affixed its inv entry carries attachedTo and InventoryTab hides every carry-flag control, leaving explain.ts’s equipped/worn/invested gate permanently unsatisfiable.",
+  "wounding: Overturned: the fix names needsEngineWork/note, which are not item fields at all, and the judge itself says no existing shape can hold it — rune.damage is per-hit direct, critPersistent is crit-only, and StrikeDamageRider has no persistent flag. Nothing legal on the ITEM record delivers this; it is an engine/core.runes change, not an item verdict.",
+  "book-of-translation-standard: A mundane 25 gp tool whose content IS permission — it lets you attempt Gather Information / Make an Impression in a language you don't speak; the −2 exists only inside that permission (and those checks take ten times as long), so a standing star on Diplomacy would promise a penalty on rolls the app never routes through the book.",
+  "box-of-unspoiling-type-ii: already has capacity — not overwriting",
+  "box-of-unspoiling-type-iii: already has capacity — not overwriting",
+  "box-of-unspoiling-type-iv: already has capacity — not overwriting",
+  "brass-ear: A 1 gp level-0 mundane tool that halves an increase the GM applies to a DC — it moves no number the sheet holds, and starring Perception with 'the barrier's DC increase is halved' points at the GM's side of the screen.",
+  "crimson-brand: This is the fundamental-rune lane: the record already carries the correct bastard-sword statistics (martial, sword, 1d8 slashing, two-hand-d12) and potency/striking are set per-instance in the item editor (InventoryItem.runes), which is how every one of the hundreds of printed '+1 striking' specific weapons is handled — vine-whip is the single one-off exception in situationalBonuses.ts, not a lane.",
+  "decaying: \"rune\" is not a field on any record type",
+  "decaying-greater: \"rune\" is not a field on any record type",
+  "draconic-ascendance: innateSpells is read ONLY for inventory entries with inv.invested, and the Invest button renders only when the record has the `invested` trait — this relic gift has traits ['transmutation'], no usage, no price and no bulk, so the granted dragon-form could never fire. Relic gifts are an unmodelled record class, not an item gap.",
+  "dragon-strike: Same non-item relic gift: it already carries frequency {1,hour} (which auto-generates its uses tracker), and the proposed fix is a mode with modifiers:[] whose entire content is prose — it moves nothing. The honest numeric lane (item strikeDamage) is gated on inv.invested, which this record can never be.",
+  "dragons-tongue: already has hands — not overwriting",
+  "dragons-tongue-greater: already has hands — not overwriting",
+  "dragons-tongue-major: already has damage — not overwriting",
+  "dwarven-thrower: The proposed mode carries modifiers:[] and a note that instructs the player to set the greater striking rune and thrown range themselves — that is the fundamental-rune lane (same call already made against crimson-brand), and the 1d8-vs-giants rider is target-conditioned. Nothing mechanical is delivered by the fix.",
+  "energizing: The fix is a mode with modifiers:[] and no resistances/senses/speeds — pure prose relocated to a pill, unlike the cited precedents (item-energy-adaptive carries resistances, item-winged carries speeds). The rune's real payload is conditional 1d8 of a triggering type, which RuneDef.damage cannot express, so there is no well-formed fix that delivers anything.",
+  "fighters-fork: OVERTURNED. The '+1' is the fundamental-rune lane, which every sibling verdict correctly ruled needs nothing (final-blade, flaying-knife, gut-ripper, hells-judgement, hunters-bow, glacier-hammer, gluttonous-spear all say the potency lives on the inventory instance's runes). The proposed entry is not situational at all — its 'when' is an instruction to the player, and starring strikeAttack with '+1 item' double-reports the potency the owner etches. The weapon statistics (1d8 piercing, spear, thrown 20) are already on the record."
+ ],
+ "engineWork": [
+  {
+   "id": "adamantine-echo",
+   "name": "Adamantine Echo",
+   "reason": "The text says it 'functions as a +1 armor potency rune', but its core.runes entry is {slot:'armor', kind:'property'} — property runes carry no value, so the wearer never gets the +1 item bonus to AC that a potency rune gives. The registry already supports the right shape (armor-potency-1 is kind 'potency', value 1). Note the item form carries no passiveEffects either, but as an etched rune the registry entry is the lane that actually fires."
+  },
+  {
+   "id": "assisting",
+   "name": "Assisting",
+   "reason": "The armour rune states flat Bulk limits of 6 + Str (encumbered) and 11 + Str (maximum), i.e. +1 to both thresholds, and deriveBulk computes encumberedAt = 5 + strMod and max = 10 + strMod with a limitBonus that is summed from FEATS only (Feat.bulkLimitBonus, derive.ts ~line 2036). core.runes.assisting carries id/name/slot/kind/level/price and nothing else, so the printed numbers never reach the Bulk readout. Fix uses the existing bulkLimitBonus field; deriveBulk must also read it from etched armour runes."
+  },
+  {
+   "id": "astral",
+   "name": "Astral",
+   "reason": "'Strikes with it deal an extra 1d6 spirit damage' is per-Strike damage for the OWNER, and core.runes.astral carries no damage block — the only rune payload lane there is `damage` (flaming/frost/corrosive/shock/thundering all have it, verified in core.json). AoN text confirms the die and type. The ghost touch and possession clauses are target-side."
+  },
+  {
+   "id": "astral-greater",
+   "name": "Astral (Greater)",
+   "reason": "Same extra 1d6 spirit damage per Strike (the greater version only raises the save DC and ignores spirit resistance); core.runes.astral-greater has no damage block, so the rider is missing exactly as on the base rune."
+  },
+  {
+   "id": "giant-killing",
+   "name": "Giant-Killing",
+   "reason": "Registered in core.runes as a weapon property rune, but the +1d6 vs giants is nowhere — the rune registry only carries unconditional damage (corrosive et al.), so a giant-killing weapon shows no trace of its extra damage. The crit enfeeblement is target-side."
+  },
+  {
+   "id": "giant-killing-greater",
+   "name": "Giant-Killing (Greater)",
+   "reason": "Same as the lesser rune at 2d6: the conditional extra damage the owner deals is not carried anywhere. Ignoring mental resistance and the crit save are target-side."
+  },
+  {
+   "id": "gills",
+   "name": "Gills",
+   "reason": "An invested graft whose entire content is a permanent character capability — you can breathe underwater. The record carries nothing, and no item field can express it: passiveEffects covers senses/speeds/resistances/immunities but not breathing, and unlike every other water item this one grants no swim Speed to stand in for it."
+  },
+  {
+   "id": "greater-chainbreaker",
+   "name": "Greater Chainbreaker",
+   "reason": "The text says \"Base Weapon Pick\" and \"this +2 striking pick\", but the record is itemType 'equipment' with no category, group or damage — buying it gives you a piece of gear you cannot Strike with at all. The Hardness-ignoring clause and the ally's Escape reaction are correctly table-side."
+  },
+  {
+   "id": "greater-dragons-tongue",
+   "name": "Greater Dragon's Tongue",
+   "reason": "\"Base Weapon Longspear\" and \"+2 greater striking longspear\", yet the record is itemType 'equipment' with no weapon statistics — it cannot be wielded or Struck with. (The breath activation is target-side and correctly needs nothing.)"
+  },
+  {
+   "id": "greater-energized-shield",
+   "name": "Greater Energized Shield",
+   "reason": "The text gives explicit shield statistics — \"minor reinforcing steel shield (Hardness 8, HP 64, BT 32)\" — but the record is itemType 'equipment' with no acBonus, hardness, hp or brokenThreshold, so it can never be Raised or Shield Blocked. The energized blast itself is target-side."
+  },
+  {
+   "id": "greater-mitigation-mail",
+   "name": "Greater Mitigation Mail",
+   "reason": "\"Base Armor Chain Mail\" and \"+2 resilient chain mail\", but the record is itemType 'equipment' with no acBonus, dexCap, checkPenalty, speedPenalty or strength — worn, it gives the character no AC at all. The once-per-day Salve heal is a momentary activation and correctly needs nothing."
+  },
+  {
+   "id": "greater-reactive-mail",
+   "name": "Greater Reactive Mail",
+   "reason": "\"Base Armor Chain Mail\" and \"+1 resilient chain mail\", yet the record is itemType 'equipment' with no armor statistics — wearing it grants no AC. The Quick Spike reaction is target-side."
+  },
+  {
+   "id": "impactful",
+   "name": "Impactful",
+   "reason": "Property rune present in core.runes but with NO `damage` field, so the promised additional 1d6 force damage on a successful Strike never reaches the strike breakdown (derive.ts:1486/1694 read db.runes[p]?.damage — flaming ships this shape, impactful does not). The crit push-5-feet rider is target-side and is deliberately not modelled. FIX TARGET: core.runes['impactful'].damage."
+  },
+  {
+   "id": "impactful-greater",
+   "name": "Impactful (Greater)",
+   "reason": "Same defect as impactful: the rune exists in core.runes with no `damage` field, so its additional 1d6 force damage on a successful Strike is never added. The greater version differs from the base only in the crit push distance (10 feet instead of 5), which is target-side, so the damage rider is identical. FIX TARGET: core.runes['impactful-greater'].damage."
+  },
+  {
+   "id": "linguistic-nexus",
+   "name": "Linguistic Nexus",
+   "reason": "\"You learn an additional language of your choice for every 2 levels of the relic (minimum 1)\" is an owner-facing pick that nothing delivers — the record has no grantsLanguages and no chooser, so the extra language never reaches the character sheet. Fix offers the pick (minimum one language; the engine cannot scale it by relic level, so it grants the printed floor rather than over-granting)."
+  },
+  {
+   "id": "mythic-striking",
+   "name": "Mythic Striking",
+   "reason": "Registered in core.runes as kind 'property', so etching it adds no damage dice at all. It is a FUNDAMENTAL striking rune ('the weapon deals five weapon damage dice'); attachments.ts maps a striking rune of value 4 to the 'mythic' tier and derive's STRIKING_DICE gives mythic 4 extra dice = 5 total, so the tier already exists and only the registry entry is wrong."
+  },
+  {
+   "id": "blazons-of-shared-power",
+   "name": "Blazons of Shared Power",
+   "reason": "The secondary weapon gains the primary weapon's fundamental runes while both are wielded. The engine HAS this lane (inv.copyRunesFrom + effectiveWeaponRunes in derive.ts) but it is gated behind DOUBLING_RINGS, a hardcoded set of two ids, so the blazons deliver nothing."
+  },
+  {
+   "id": "blazons-of-shared-power-greater",
+   "name": "Blazons of Shared Power (Greater)",
+   "reason": "As the base blazons, plus property runes are copied too (and the secondary's own runes are suppressed entirely). Nothing reads it — the rune-copy path only fires for doubling-rings/doubling-rings-greater."
+  },
+  {
+   "id": "bomb-launcher",
+   "name": "Bomb Launcher",
+   "reason": "\"Bombs fired with a bomb launcher have a range increment of 60 feet\" — that overrides the range increment shown on every bomb Strike the owner makes, and no field on an item can reach another item's range."
+  },
+  {
+   "id": "branch-attendants-mask",
+   "name": "Branch Attendant's Mask",
+   "reason": "\"While you wear the mask... add the associated cantrip to your prepared cantrips\", chosen by Magaambya branch. The player is never asked which branch and gains no cantrip; the record has no effectChoices."
+  },
+  {
+   "id": "brilliant",
+   "name": "Brilliant",
+   "reason": "The rune is registered in core.runes but with no `damage` entry, so its per-Strike riders (1d4 fire always, plus 1d4 spirit vs fiends and 1d4 vitality vs undead) never reach a Strike. derive.ts reads db.runes[p].damage, which is populated only from the hardcoded RUNE_DAMAGE table in scripts/import-core.mjs."
+  },
+  {
+   "id": "brilliant-greater",
+   "name": "Brilliant (Greater)",
+   "reason": "Same as brilliant: registered as a weapon property rune with no `damage`, so the 1d4 fire / 1d4 spirit vs fiends / 1d4 vitality vs undead riders are inert. The greater version additionally ignores the target's resistances to those three types, which has no lane at all."
+  },
+  {
+   "id": "fan-buckler",
+   "name": "Fan Buckler",
+   "reason": "The activation turns the fan into a real wooden buckler (Hardness 3, HP 6, BT 3) and back, but the record is plain 'equipment' with no shield statistics and no toggle, so an owner can never wield it as a shield or Raise it. The unfurled state persists until you collapse it again, which is exactly an item mode."
+  }
+ ],
+ "unresolved": []
+}

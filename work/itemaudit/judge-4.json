@@ -1,0 +1,342 @@
+{
+ "records": [
+  {
+   "id": "called-lastwall",
+   "verdict": "ALREADY_OK",
+   "reason": "Registered in core.runes as an etchable weapon rune, so a player can attach it; both of its activations (imprint ownership, teleport the weapon to your hand) are momentary and change no statistic."
+  },
+  {
+   "id": "called-weapon-rune",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Duplicate catalogue entry of the same rune already registered as called-lastwall in core.runes; the rune's whole content is two momentary activations with no standing change to the owner."
+  },
+  {
+   "id": "calling-stone",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable catapult ammunition; it lights an area so that siege-weapon Aim actions taken there cost one action less. Action-cost reduction on siege crews is table-resolved and there is no field for it."
+  },
+  {
+   "id": "caltrops",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Deployed hazard: everything it does (damage, bleed, Speed penalty) happens to the creature that walks into the square, not the owner."
+  },
+  {
+   "id": "canary-tail-first-week",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A hired informant service — downtime reconnaissance the GM narrates; no statistic on the buyer's sheet."
+  },
+  {
+   "id": "candlecap",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Its only effect is emitting dim light in a 20-foot radius that can't be smothered. Light emission has no sheet representation and confers no modifier, sense, or resistance on the wearer."
+  },
+  {
+   "id": "cane",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane mobility aid; the text is pure description and grants no check, Speed, or balance bonus."
+  },
+  {
+   "id": "cartographers-kit",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A bundle listing its component tools (writing set, compass, astrolabe, ruler, survey map); it states no bonus of its own and the components are separate items."
+  },
+  {
+   "id": "cat",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A pet purchase; the text explicitly says it cannot be combat trained or contribute to combat in any way, so it deliberately has no mechanical effect."
+  },
+  {
+   "id": "cat-galtan-orange",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Pedigree pet variant of the same entry — flavour and price only, and the shared text bars any combat contribution."
+  },
+  {
+   "id": "catch-pole",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane tool whose content is permission (Grapple without a free hand); the -2 circumstance penalty it imposes lands on the grabbed creature, not the owner."
+  },
+  {
+   "id": "cave-worm-repellent",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Alters how cave worms behave and suppresses random encounters — entirely the GM's side of the table; nothing on the coated character's sheet changes."
+  },
+  {
+   "id": "chain",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane 10-foot chain; the record is price/Bulk/Hands only and the text promises nothing further."
+  },
+  {
+   "id": "chain-10-feet",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane rope-equivalent with no rules text beyond its length; a duplicate of the chain entry."
+  },
+  {
+   "id": "chain-of-the-stilled-spirit",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Everything it does happens to a ghost's Rejuvenation ability, and the text hands the edge cases to the GM's discretion; the wielder gains no statistic."
+  },
+  {
+   "id": "chalice-implement",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A zero-price catalogue stub with an empty description; the chalice's actual rules are the thaumaturge implement lane (core.implement.chalice and the class feature), not this item record, so its text promises nothing."
+  },
+  {
+   "id": "champion-kit",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A starting-money shopping list — buying it means buying the listed armour, weapons and gear, each of which is its own item; the kit itself has no effect."
+  },
+  {
+   "id": "chaos-collar",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The text says outright that the transformation 'doesn't change the animal's statistics' — it is a cosmetic, GM-timed appearance change on the companion."
+  },
+  {
+   "id": "charming",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A relic Aspect gift, not a purchasable item (level 0, no price): it is conferred by a GM-awarded relic, and its spell rank is 'half the relic's own' so there is no fixed rank to record as an innate spell. All twelve relic gifts in the corpus are inert for the same reason."
+  },
+  {
+   "id": "chatterer-of-follies",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The -1 status penalty to Will saves lands on the chosen adjacent creature, not the owner; the owner-facing half grants the concealed condition during move actions, and a granted condition has no field. Its printed +1 striking follows the corpus-wide convention that specific magic weapons carry no baked-in runes (132 such weapons, none carry them)."
+  },
+  {
+   "id": "chime-of-opening",
+   "verdict": "MISS",
+   "reason": "The text gives the owner a finite stock — 'the chime can be activated 10 times before it cracks and becomes useless' — and nothing tracks those 10 activations, so the sheet never shows the chime running out.",
+   "fix": {
+    "counters": [
+     {
+      "id": "charges",
+      "label": "Activations",
+      "max": 10,
+      "resetsOnRest": false,
+      "startsFull": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "chronicler-wayfinder",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The activation resolves a single Recall Knowledge check at a flat +12 and is over in the moment; it grants no standing bonus, and the base Wayfinder it builds on likewise carries only an activation (its record has no passiveEffects either)."
+  },
+  {
+   "id": "cinderclaw-gauntlet",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Versatile S is already in traits and the damage/group are read directly. The extra 1d6 fire is critical-hit-only, and strikeDamage's appliesTo accepts only all/melee/ranged/unarmed — the corpus precedent (Hyldarf's Fang) leaves crit-only riders as prose. The reaction sickens the creature you hit."
+  },
+  {
+   "id": "cipher-of-elemental-planes",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Viewing and planar-key travel are GM-side. The language comprehension applies to 'anyone holding the cipher' and only while it is aligned by the activation; the item is held, not invested, and passiveEffects.grantsLanguages is only read for invested items (build.ts filters on inv.invested), so nothing would apply."
+  },
+  {
+   "id": "cipher-of-the-elemental-planes",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Duplicate record of the same cipher; same reasoning — GM-side planar travel plus a held-only, activation-scoped comprehension that the invested-gated language lane cannot carry."
+  },
+  {
+   "id": "clay",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Raw craft material; four ounces of modelling clay with no rules text."
+  },
+  {
+   "id": "clean-luck",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A relic Aspect gift rather than a purchasable item, and its content is a triggered, momentary negation of a misfortune effect on one d20 roll — resolved and gone in the same instant."
+  },
+  {
+   "id": "cleric-kit",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Starting-money shopping list; the armour, gear and options are separate items and the kit confers nothing itself."
+  },
+  {
+   "id": "climbing-bolt",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition that leaves a fastened rope behind; it produces a piece of scenery, not a change to the shooter's statistics."
+  },
+  {
+   "id": "climbing-kit",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane kit whose whole content is permission — attach yourself while Climbing, move at half Speed, and get a save on a critical failure. No standing modifier, and the trade-off is chosen per Climb at the table."
+  },
+  {
+   "id": "cloak-of-feline-rest",
+   "verdict": "MISS",
+   "reason": "An invested worn cloak that says you take only a -2 status penalty to auditory Perception checks while sleeping instead of the usual -4 — a real +2 swing for the owner that nothing on the record delivers.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "perception"
+       }
+      ],
+      "when": "on auditory Perception checks while asleep (-2 instead of -4)",
+      "bonus": "+2 status"
+     }
+    ]
+   }
+  },
+  {
+   "id": "cloak-of-immolation",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The curse deals 1d10 persistent fire damage when you take fire damage and reflects that damage to unarmed attackers. Damage-on-a-trigger and retaliation damage have no representable field (weaknesses would model a different thing and would over-grant), and both resolve as damage rolls at the table."
+  },
+  {
+   "id": "cloak-of-waves-clouds",
+   "verdict": "MISS",
+   "reason": "An activation that lasts until you next activate the cloak — a textbook item mode — granting either fly Speed 40 or swim Speed 60 with water breathing, and the record carries no mode at all.",
+   "fix": {
+    "mode": {
+     "id": "item-cloak-of-waves-clouds",
+     "name": "Cut Air and Sea",
+     "fromItemId": "cloak-of-waves-clouds",
+     "duration": "until you next Activate the cloak",
+     "survivesRest": true,
+     "modifiers": [],
+     "speeds": {
+      "fly": 40
+     },
+     "note": "Feathers form: fly Speed 40 feet. Activating for the scale form instead gives a swim Speed of 60 feet and the ability to breathe underwater - leave this mode off and use the swim form at the table."
+    }
+   }
+  },
+  {
+   "id": "clockwork-bookshelf",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Furniture; it doubles book storage on a wall and hides volumes. No character statistic is involved."
+  },
+  {
+   "id": "clockwork-box-packer",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A labour-saving warehouse device — downtime/narrative throughput, with no check, bonus, or sheet value attached."
+  },
+  {
+   "id": "clockwork-dial",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A timepiece; tracking elapsed minutes is table bookkeeping and the text explicitly says it can't track spell durations."
+  },
+  {
+   "id": "clockwork-megaphone",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Adjusts the volume and spread of your voice; the text grants no bonus to Performance, Diplomacy, or any other check."
+  },
+  {
+   "id": "clockwork-recorder",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Records and plays back sound on a timer — a plot device with no statistic; the activation is a single Interact resolved at the table."
+  },
+  {
+   "id": "clockwork-sun",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An elephant-sized artifact fixed to a cavern ceiling; its AC/Hardness/HP/immunities are OBJECT statistics for attacking it, and its light affects creatures below. It is not worn, invested or wielded, so there is nothing to put on an owner's sheet."
+  },
+  {
+   "id": "cloth-cotton",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Raw trade good priced by the bolt; no rules text."
+  },
+  {
+   "id": "cloth-linen",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Raw trade good priced by the bolt; no rules text."
+  },
+  {
+   "id": "cloth-of-nullification",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Its activation makes a counteract check against another item or effect and then locks out for 2d6 hours; everything it does targets someone else's magic and the random recharge is table-tracked."
+  },
+  {
+   "id": "cloth-wool-cloth-1-bulk",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Raw trade good; price and Bulk only."
+  },
+  {
+   "id": "cloth-wool-cloth-1-square-yard",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Raw trade good sold by the square yard; no rules text."
+  },
+  {
+   "id": "clothing-cold-weather",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The record carries no description at all, so nothing is promised; cold-weather clothing's benefit is protection from environmental cold, which the GM adjudicates as an environmental hazard and which has no field."
+  },
+  {
+   "id": "clothing-desert",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "It negates severe environmental heat damage and downgrades extreme heat. Environmental hazard damage is applied by the GM (and the benefit is voided by wearing armour), with no resistance/immunity type to hang it on."
+  },
+  {
+   "id": "clothing-explorers",
+   "verdict": "ALREADY_OK",
+   "reason": "This is the equipment-catalogue price entry; the mechanical version is the armor record explorers-clothing (itemType armor, category unarmored, acBonus 0, dexCap 5, checkPenalty 0), which the AC code reads directly. Its own text even points to the armor entry."
+  },
+  {
+   "id": "clothing-fine",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Pure flavour — expensive fabrics and patterns; PF2e fine clothing grants no bonus to social checks or anything else."
+  },
+  {
+   "id": "clothing-ordinary",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Pure flavour; ordinary clothing has no mechanical effect."
+  },
+  {
+   "id": "coating",
+   "verdict": "ALREADY_OK",
+   "reason": "Registered in core.runes, so it is etchable onto a weapon. Its content is a 1-Bulk extradimensional pocket that holds only oils and poisons plus an activation that saves you a free hand — an action-economy convenience resolved at the table, not a standing statistic."
+  },
+  {
+   "id": "codebreakers-parchment",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The DC 20 Decipher Writing check is rolled by whoever tries to read it, and both activations (unscramble, burn the text off) are momentary Interacts; the owner gains no statistic."
+  },
+  {
+   "id": "codebreakers-parchment-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same item at DC 30 with master proficiency required — still a DC other readers face, plus two momentary activations."
+  },
+  {
+   "id": "codebreakers-parchment-major",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same item at DC 40 with legendary proficiency required — the check belongs to the reader, not the owner."
+  },
+  {
+   "id": "coded-signal-monument",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A piece of society signage; the only roll is a Society check made by an outsider trying to spot it, at a DC the GM sets."
+  },
+  {
+   "id": "coded-signal-permanent",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Graffiti or similar permanent marking; the recognition check and its DC are entirely the GM's side."
+  },
+  {
+   "id": "coded-signal-temporary",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A newspaper advertisement or short-lived illusion carrying a society message; nothing touches the buyer's sheet."
+  },
+  {
+   "id": "cold-iron-armor-high-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A precious-material price entry, not a wearable suit: the material is applied to a base armour (the `material` field), and the printed rider — a creature with cold iron weakness that critically fails an unarmed attack becomes sickened 1 — lands on the attacker."
+  },
+  {
+   "id": "cold-iron-armor-low-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Material/price entry for cold iron armour; its sicken rider affects the creature striking you, and the wearer clause only bites on a creature that itself has cold iron weakness."
+  },
+  {
+   "id": "cold-iron-armor-standard-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Material/price entry; identical rider that applies to the attacking creature. The AC, dex cap and check penalty come from the base armour the material is applied to."
+  },
+  {
+   "id": "cold-iron-buckler-high-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A precious-material price entry (itemType equipment) rather than a wieldable shield — the corpus models material shields this way throughout (compare silver-buckler-standard-grade). Its Hardness 8 / HP 32 / BT 16 are only read off itemType 'shield' records, and the applier will not overwrite an existing itemType, so there is no applicable fix here; the playable route is the base Buckler with the cold-iron material."
+  }
+ ]
+}

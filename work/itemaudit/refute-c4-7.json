@@ -1,0 +1,197 @@
+{
+  "rulings": [
+    {
+      "id": "chime-of-opening",
+      "upheld": true,
+      "why": "The 10-activation stock is owner-side and finite; the record has no `frequency` so no tracker is auto-generated, and `counters` is the declared lane for exactly this ('multi-use stock'), shape matching ItemCounter.",
+      "correction": {}
+    },
+    {
+      "id": "cloak-of-feline-rest",
+      "upheld": true,
+      "why": "Real owner-side swing, and a +2 STATUS bonus is arithmetically exact (status bonus and status penalty both apply: -4 + 2 = -2); situational is display-only so it cannot over-grant, and the cloak has the invested trait so authoredSituational reaches it.",
+      "correction": {}
+    },
+    {
+      "id": "cloak-of-waves-clouds",
+      "upheld": true,
+      "why": "Activation with a duration granting a fly Speed — ModeDef.speeds is the declared lane (precedent item-winged, also a fromItemId mode on a non-consumable), the id is free and the scale form is honestly left in the note since one fix carries one mode.",
+      "correction": {}
+    },
+    {
+      "id": "crimson-brand",
+      "upheld": false,
+      "why": "This is the fundamental-rune lane: the record already carries the correct bastard-sword statistics (martial, sword, 1d8 slashing, two-hand-d12) and potency/striking are set per-instance in the item editor (InventoryItem.runes), which is how every one of the hundreds of printed '+1 striking' specific weapons is handled — vine-whip is the single one-off exception in situationalBonuses.ts, not a lane.",
+      "correction": { "verdict": "NEEDS_NOTHING" }
+    },
+    {
+      "id": "cursed-dreamstone",
+      "upheld": true,
+      "why": "The -2 item penalty to saves vs sleep is a real ongoing owner-side change and the mode lane fits, but the judge's modifier uses detail:'all' — modeMatches() only matches a save when detail is ABSENT or equals the save id, so 'all' matches nothing and the penalty would be silently inert (no shipped mode uses it). Fix reissued with detail omitted.",
+      "correction": {
+        "fix": {
+          "mode": {
+            "id": "item-cursed-dreamstone",
+            "name": "Cursed Dreamstone",
+            "fromItemId": "cursed-dreamstone",
+            "duration": "as long as you possess the stone",
+            "survivesRest": true,
+            "note": "Switch this on only if you failed the save against the curse. You are also fatigued whenever you wake from sleep, natural or magical, and you gain no bonus from the dreamstone. On a critical failure you additionally get one degree worse on every saving throw against sleep effects.",
+            "modifiers": [
+              {
+                "target": "save",
+                "type": "item",
+                "value": -2,
+                "appliesWhen": "against sleep effects"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "dawnsilver-buckler-standard-grade",
+      "upheld": true,
+      "why": "A 400 gp buyable buckler stored as itemType 'equipment' gives its owner no AC and no Shield Block; the fix is the exact shape base `buckler` ships (acBonus/hardness/hp/brokenThreshold/speedPenalty), and derive's shield lookup keys on itemType === 'shield'.",
+      "correction": {}
+    },
+    {
+      "id": "dawnsilver-shield-high-grade",
+      "upheld": true,
+      "why": "Same defect and same well-formed shape as base `steel-shield`; Hardness 8 / HP 32 / BT 16 are read straight off the printed entry.",
+      "correction": {}
+    },
+    {
+      "id": "dawnsilver-shield-standard-grade",
+      "upheld": true,
+      "why": "Same defect; Hardness 5 / HP 20 / BT 10 are printed, and AC +2 is the standard shield value the base record uses.",
+      "correction": {}
+    },
+    {
+      "id": "deadly-slashing-claws",
+      "upheld": true,
+      "why": "Unconditional grant of a claw unarmed Strike on an item with the `invested` trait — collectGrantedNaturals reads items[id].grantedStrikes for invested items, and the shape (die '1d6', group 'brawling', trait id 'deadly-d8') matches shipped entries like phantom-shroud.",
+      "correction": {}
+    },
+    {
+      "id": "decaying",
+      "upheld": true,
+      "why": "derive's ONLY rune-effect lane is db.runes[p].damage, the rune stub carries none, and the fix is byte-for-byte the flaming shape including critPersistent — mechanically correct, but note apply-item-audit.mjs has no core.runes write surface, so it will land in not-applied as '\"rune\" is not a field' and needs a hand edit.",
+      "correction": {}
+    },
+    {
+      "id": "decaying-greater",
+      "upheld": true,
+      "why": "Same missing damage payload at greater grade; 1d4 void per hit and 4d4 persistent on a crit are printed and the shape matches RuneDef.damage exactly (same applier caveat as `decaying`: core.runes is outside the script's write surface).",
+      "correction": {}
+    },
+    {
+      "id": "deepdread-claw",
+      "upheld": true,
+      "why": "Item has the `invested` trait, the darkness spell exists, and castRank() honours `rank` even with atWill (atWill only zeroes the daily-use count), so the 4th-rank at-will casting genuinely reaches the Spells page.",
+      "correction": {}
+    },
+    {
+      "id": "djezet-buckler-high-grade",
+      "upheld": true,
+      "why": "8,000 gp buyable buckler with no shield statistics; fix mirrors base `buckler` and the Hardness 6 / HP 24 / BT 12 are printed.",
+      "correction": {}
+    },
+    {
+      "id": "djezet-buckler-standard-grade",
+      "upheld": true,
+      "why": "600 gp buckler stored as 'equipment'; the energy-trigger ruling is left out and only the printed base numbers are written.",
+      "correction": {}
+    },
+    {
+      "id": "djezet-shield-high-grade",
+      "upheld": true,
+      "why": "8,800 gp shield with no acBonus/hardness/hp/BT — an owner gets nothing today; shape matches the shipped shield records.",
+      "correction": {}
+    },
+    {
+      "id": "djezet-shield-standard-grade",
+      "upheld": true,
+      "why": "660 gp shield stored as 'equipment'; Hardness 5 / HP 20 / BT 10 printed, bulk 1 already correct on the record.",
+      "correction": {}
+    },
+    {
+      "id": "draconic-ascendance",
+      "upheld": false,
+      "why": "innateSpells is read ONLY for inventory entries with inv.invested, and the Invest button renders only when the record has the `invested` trait — this relic gift has traits ['transmutation'], no usage, no price and no bulk, so the granted dragon-form could never fire. Relic gifts are an unmodelled record class, not an item gap.",
+      "correction": { "verdict": "NEEDS_NOTHING" }
+    },
+    {
+      "id": "dragon-strike",
+      "upheld": false,
+      "why": "Same non-item relic gift: it already carries frequency {1,hour} (which auto-generates its uses tracker), and the proposed fix is a mode with modifiers:[] whose entire content is prose — it moves nothing. The honest numeric lane (item strikeDamage) is gated on inv.invested, which this record can never be.",
+      "correction": { "verdict": "NEEDS_NOTHING" }
+    },
+    {
+      "id": "dragons-tongue",
+      "upheld": true,
+      "why": "The statistics do not carry it — they carry the WRONG thing: stored 1d6 slashing / hands 1 / bulk 0.1 / no traits against a printed longspear, and the strike code reads those fields directly. The fix reproduces the shipped `longspear` record exactly (2 hands, bulk 2, 1d8 piercing, reach).",
+      "correction": {}
+    },
+    {
+      "id": "dragons-tongue-greater",
+      "upheld": true,
+      "why": "Identical botched base statistics at greater grade; same longspear-matching correction.",
+      "correction": {}
+    },
+    {
+      "id": "dragons-tongue-major",
+      "upheld": true,
+      "why": "Same wrong base statistics; the judge correctly leaves +3 major striking to the rune lane and the breath activation to the foe's side, fixing only the printed weapon profile.",
+      "correction": {}
+    },
+    {
+      "id": "drake-rifle",
+      "upheld": true,
+      "why": "A 100 gp buyable firearm with itemType 'equipment' and no category/group/damage/range/reload produces no Strike at all; the fix matches the shipped `arquebus` shape (martial, firearm, 1d10, range 150, reload 1, 2 hands) and the +1 potency is correctly left to the rune lane.",
+      "correction": {}
+    },
+    {
+      "id": "dust-goggles",
+      "upheld": true,
+      "why": "Printed '+1 bonus to Perception checks involving sight' while worn — sight-only, so a flat passiveEffects.perception would over-grant and situational is right; '+1 item' is the registry's standard type for a worn magic item and situational entries are display-only anyway.",
+      "correction": {}
+    },
+    {
+      "id": "dwarven-thrower",
+      "upheld": false,
+      "why": "The proposed mode carries modifiers:[] and a note that instructs the player to set the greater striking rune and thrown range themselves — that is the fundamental-rune lane (same call already made against crimson-brand), and the 1d8-vs-giants rider is target-conditioned. Nothing mechanical is delivered by the fix.",
+      "correction": { "verdict": "NEEDS_NOTHING" }
+    },
+    {
+      "id": "encompassing-lockpick",
+      "upheld": true,
+      "why": "Verified: thieves-toolkit-infiltrator, disguise-kit-elite and climbing-kit-extreme each ship exactly '+1 item' in situationalBonuses.ts for Thievery/Deception/Athletics, so the item that IS all three is the only one delivering nothing; skills and bonus type match the precedents verbatim.",
+      "correction": {}
+    },
+    {
+      "id": "energizing",
+      "upheld": false,
+      "why": "The fix is a mode with modifiers:[] and no resistances/senses/speeds — pure prose relocated to a pill, unlike the cited precedents (item-energy-adaptive carries resistances, item-winged carries speeds). The rune's real payload is conditional 1d8 of a triggering type, which RuneDef.damage cannot express, so there is no well-formed fix that delivers anything.",
+      "correction": { "verdict": "NEEDS_NOTHING" }
+    },
+    {
+      "id": "energy-absorbing",
+      "upheld": true,
+      "why": "Direct precedent found: the sibling rune items energy-resistant / energy-resistant-greater already ship this EXACT effectChoices-with-passive-resistances shape, options are non-empty, and the reaction damage is correctly excluded.",
+      "correction": {}
+    },
+    {
+      "id": "energy-absorbing-greater",
+      "upheld": true,
+      "why": "Same lane at resistance 10, matching energy-resistant-greater's shipped effectChoices option-for-option.",
+      "correction": {}
+    },
+    {
+      "id": "energy-breath-potion-greater",
+      "upheld": true,
+      "why": "A consumable, so the mode is genuinely reachable — useConsumable() switches on the fromItemId mode from the 'Use one' button, which renders only for itemType 'consumable'. A printed 1-hour granted action with a damage/DC table is what the 211-entry consumable-mode lane exists for, and the id is free.",
+      "correction": {}
+    }
+  ]
+}

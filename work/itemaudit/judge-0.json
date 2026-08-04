@@ -1,0 +1,404 @@
+{
+ "records": [
+  {
+   "id": "1st-rank-scroll",
+   "verdict": "MISS",
+   "reason": "A generic scroll's whole content is 'this holds one spell, Activate to Cast it'. The record has no spellSlot, so the buyer cannot record which spell the scroll holds and it never reaches the Spells page. The app already ships this exact lane for generic wands (wand-of-legerdemain-1st-rank-spell carries spellSlot {rank:1}).",
+   "fix": { "spellSlot": { "rank": 1 } }
+  },
+  {
+   "id": "2nd-rank-scroll",
+   "verdict": "MISS",
+   "reason": "Generic scroll with no spellSlot: the player-chosen held spell has nowhere to live and cannot be cast from the sheet. Same lane the generic wands already use.",
+   "fix": { "spellSlot": { "rank": 2 } }
+  },
+  {
+   "id": "3rd-rank-scroll",
+   "verdict": "MISS",
+   "reason": "Generic scroll with no spellSlot: the player-chosen held spell has nowhere to live and cannot be cast from the sheet.",
+   "fix": { "spellSlot": { "rank": 3 } }
+  },
+  {
+   "id": "4th-rank-scroll",
+   "verdict": "MISS",
+   "reason": "Generic scroll with no spellSlot: the player-chosen held spell has nowhere to live and cannot be cast from the sheet.",
+   "fix": { "spellSlot": { "rank": 4 } }
+  },
+  {
+   "id": "5th-rank-scroll",
+   "verdict": "MISS",
+   "reason": "Generic scroll with no spellSlot: the player-chosen held spell has nowhere to live and cannot be cast from the sheet.",
+   "fix": { "spellSlot": { "rank": 5 } }
+  },
+  {
+   "id": "6th-rank-scroll",
+   "verdict": "MISS",
+   "reason": "Generic scroll with no spellSlot: the player-chosen held spell has nowhere to live and cannot be cast from the sheet.",
+   "fix": { "spellSlot": { "rank": 6 } }
+  },
+  {
+   "id": "7th-rank-scroll",
+   "verdict": "MISS",
+   "reason": "Generic scroll with no spellSlot: the player-chosen held spell has nowhere to live and cannot be cast from the sheet.",
+   "fix": { "spellSlot": { "rank": 7 } }
+  },
+  {
+   "id": "8th-rank-scroll",
+   "verdict": "MISS",
+   "reason": "Generic scroll with no spellSlot: the player-chosen held spell has nowhere to live and cannot be cast from the sheet.",
+   "fix": { "spellSlot": { "rank": 8 } }
+  },
+  {
+   "id": "9th-rank-scroll",
+   "verdict": "MISS",
+   "reason": "Generic scroll with no spellSlot: the player-chosen held spell has nowhere to live and cannot be cast from the sheet.",
+   "fix": { "spellSlot": { "rank": 9 } }
+  },
+  {
+   "id": "10th-rank-scroll",
+   "verdict": "MISS",
+   "reason": "Generic scroll with no spellSlot: the player-chosen held spell has nowhere to live and cannot be cast from the sheet.",
+   "fix": { "spellSlot": { "rank": 10 } }
+  },
+
+  {
+   "id": "8-round-magazine",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane ammunition/magazine — its text promises no bonus or standing change to the owner; it is inventory bookkeeping only."
+  },
+  {
+   "id": "abadars-flawless-scale",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "It appraises the gp value of an object placed on it — the GM supplies the value; no owner-facing stat changes."
+  },
+  {
+   "id": "abrogail-i-script",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Downtime activity that awards campaign Uprising Points, an AP-side subsystem the GM tracks; nothing on the character sheet changes."
+  },
+  {
+   "id": "absorb-injury",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A triggered reaction that redirects an ally's damage to you — resolved and gone in the moment, with the amount decided at the table; no standing change. The printed once-per-day frequency is already on the record."
+  },
+
+  {
+   "id": "abysium-buckler-standard-grade",
+   "verdict": "MISS",
+   "reason": "This is a complete buckler (400 gp), not an upgrade, and its text prints Hardness 4, HP 16, BT 8 — but the record is itemType 'equipment', so it carries no acBonus, no hardness and no HP. A player who buys it gets no AC when they Raise a Shield and nothing for Shield Block. The app's ShieldItem shape (acBonus/hardness/hp/brokenThreshold) is what ordinary shields use.",
+   "fix": { "itemType": "shield", "acBonus": 1, "hardness": 4, "hp": 16, "brokenThreshold": 8, "speedPenalty": 0, "bulk": 0.1 }
+  },
+  {
+   "id": "abysium-buckler-high-grade",
+   "verdict": "MISS",
+   "reason": "Complete buckler printing Hardness 7, HP 28, BT 14, but stored as itemType 'equipment' with no shield statistics — no Raise a Shield AC, no Shield Block hardness.",
+   "fix": { "itemType": "shield", "acBonus": 1, "hardness": 7, "hp": 28, "brokenThreshold": 14, "speedPenalty": 0, "bulk": 0.1 }
+  },
+  {
+   "id": "abysium-shield-standard-grade",
+   "verdict": "MISS",
+   "reason": "Complete steel shield printing Hardness 6, HP 24, BT 12, but stored as itemType 'equipment' with no shield statistics — no Raise a Shield AC, no Shield Block hardness.",
+   "fix": { "itemType": "shield", "acBonus": 2, "hardness": 6, "hp": 24, "brokenThreshold": 12, "speedPenalty": 0, "bulk": 1 }
+  },
+  {
+   "id": "abysium-shield-high-grade",
+   "verdict": "MISS",
+   "reason": "Complete steel shield printing Hardness 10, HP 40, BT 20, but stored as itemType 'equipment' with no shield statistics — no Raise a Shield AC, no Shield Block hardness.",
+   "fix": { "itemType": "shield", "acBonus": 2, "hardness": 10, "hp": 40, "brokenThreshold": 20, "speedPenalty": 0, "bulk": 1 }
+  },
+
+  {
+   "id": "abysium-chunk",
+   "verdict": "MISS",
+   "reason": "The text applies a condition to the OWNER, not a target: 'A creature carrying an abysium object is sickened 1 for a standard-grade object of light Bulk'. The chunk is standard-grade, Bulk L, so carrying it is a standing sickened 1 — a -1 status penalty to every check and DC — and nothing on the record delivers it.",
+   "fix": {
+    "mode": {
+     "id": "item-abysium-chunk",
+     "name": "Carrying Abysium (Sickened 1)",
+     "fromItemId": "abysium-chunk",
+     "survivesRest": true,
+     "modifiers": [{ "value": -1, "type": "status", "target": "all-checks" }],
+     "note": "A creature carrying this standard-grade, light-Bulk abysium chunk is sickened 1 (a poison effect). Switch off when the chunk is not carried. The chunk also sheds dim light in a 10-foot radius."
+    }
+   }
+  },
+  {
+   "id": "abysium-ingot",
+   "verdict": "MISS",
+   "reason": "Same owner-facing poison clause, at 1 Bulk: 'sickened 2 for a standard-grade object of 1 Bulk or more'. Carrying the ingot is a standing -2 status penalty to every check and DC that nothing delivers.",
+   "fix": {
+    "mode": {
+     "id": "item-abysium-ingot",
+     "name": "Carrying Abysium (Sickened 2)",
+     "fromItemId": "abysium-ingot",
+     "survivesRest": true,
+     "modifiers": [{ "value": -2, "type": "status", "target": "all-checks" }],
+     "note": "A creature carrying this standard-grade, 1-Bulk abysium ingot is sickened 2 (a poison effect). Switch off when the ingot is not carried. It also sheds dim light in a 10-foot radius."
+    }
+   }
+  },
+  {
+   "id": "abysium-object-standard-grade",
+   "verdict": "MISS",
+   "reason": "A buyable abysium object sickens its own carrier — sickened 1 at light Bulk, sickened 2 at 1 Bulk or more for standard grade. Nothing on the record applies any of it. Modelled at the lower printed value so it can never over-grant; the note names the heavier case.",
+   "fix": {
+    "mode": {
+     "id": "item-abysium-object-standard-grade",
+     "name": "Carrying Abysium (Sickened 1)",
+     "fromItemId": "abysium-object-standard-grade",
+     "survivesRest": true,
+     "modifiers": [{ "value": -1, "type": "status", "target": "all-checks" }],
+     "note": "Standard-grade abysium: sickened 1 while carrying an object of light Bulk, sickened 2 instead if it is 1 Bulk or more (raise the penalty by hand in that case). Poison effect. Also sheds dim light in a 10-foot radius."
+    }
+   }
+  },
+  {
+   "id": "abysium-object-high-grade",
+   "verdict": "MISS",
+   "reason": "High-grade abysium sickens its carrier — sickened 2 at light Bulk, sickened 3 at 1 Bulk or more. Nothing on the record applies it. Modelled at the lower printed value so it can never over-grant; the note names the heavier case.",
+   "fix": {
+    "mode": {
+     "id": "item-abysium-object-high-grade",
+     "name": "Carrying Abysium (Sickened 2)",
+     "fromItemId": "abysium-object-high-grade",
+     "survivesRest": true,
+     "modifiers": [{ "value": -2, "type": "status", "target": "all-checks" }],
+     "note": "High-grade abysium: sickened 2 while carrying an object of light Bulk, sickened 3 instead if it is 1 Bulk or more (raise the penalty by hand in that case). Poison effect. Also sheds dim light in a 10-foot radius."
+    }
+   }
+  },
+
+  {
+   "id": "abysium-weapon-standard-grade",
+   "verdict": "MISS",
+   "reason": "'They deal 1d4 poison damage on a successful Strike' is extra damage the OWNER deals, and the record carries no strikeDamage at all. (The critical-hit sickened rider lands on the target and stays at the table.) strikeDamage is the designated lane; on a non-weapon record it applies to the owner's Strikes generally, so it should be moved onto the weapon the material is applied to when the app gains a material-attach step.",
+   "fix": { "strikeDamage": [{ "type": "poison", "dice": { "n": 1, "die": "d4" }, "appliesTo": "all" }] }
+  },
+  {
+   "id": "abysium-weapon-high-grade",
+   "verdict": "MISS",
+   "reason": "Same printed 1d4 poison damage on a successful Strike, with no strikeDamage on the record. The crit sickened 2 rider is target-side.",
+   "fix": { "strikeDamage": [{ "type": "poison", "dice": { "n": 1, "die": "d4" }, "appliesTo": "all" }] }
+  },
+
+  {
+   "id": "acid-flask-lesser",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered by the weapon record itself: itemType 'weapon', category martial, group bomb, damage {dice:1, type:'acid'}, range 20 — the strike code reads those directly. The 1d6 persistent acid and 1 splash land on the target and are rolled at the table."
+  },
+
+  {
+   "id": "adamantine-armor-standard-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Its entire content is 'shiny, black appearance and amazingly durable' — armour material durability, which is object Hardness/HP, not a wearer-facing stat. No AC, save or check change is printed."
+  },
+  {
+   "id": "adamantine-armor-high-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Flavour plus object durability only; the text promises the wearer no AC, save or check change."
+  },
+  {
+   "id": "adamantine-buckler-standard-grade",
+   "verdict": "MISS",
+   "reason": "A complete buckler (400 gp) printing Hardness 8, HP 32, BT 16, but stored as itemType 'equipment' — no acBonus, no hardness, no HP. Buying it gives the player nothing when they Raise a Shield or Shield Block.",
+   "fix": { "itemType": "shield", "acBonus": 1, "hardness": 8, "hp": 32, "brokenThreshold": 16, "speedPenalty": 0, "bulk": 0.1 }
+  },
+  {
+   "id": "adamantine-buckler-high-grade",
+   "verdict": "MISS",
+   "reason": "Complete buckler printing Hardness 11, HP 44, BT 22, stored as itemType 'equipment' with no shield statistics.",
+   "fix": { "itemType": "shield", "acBonus": 1, "hardness": 11, "hp": 44, "brokenThreshold": 22, "speedPenalty": 0, "bulk": 0.1 }
+  },
+  {
+   "id": "adamantine-shield-standard-grade",
+   "verdict": "MISS",
+   "reason": "Complete steel shield printing Hardness 10, HP 40, BT 20, stored as itemType 'equipment' with no acBonus/hardness/hp — no Raise a Shield AC and no Shield Block hardness.",
+   "fix": { "itemType": "shield", "acBonus": 2, "hardness": 10, "hp": 40, "brokenThreshold": 20, "speedPenalty": 0, "bulk": 1 }
+  },
+  {
+   "id": "adamantine-shield-high-grade",
+   "verdict": "MISS",
+   "reason": "Complete steel shield printing Hardness 13, HP 52, BT 26, stored as itemType 'equipment' with no shield statistics.",
+   "fix": { "itemType": "shield", "acBonus": 2, "hardness": 13, "hp": 52, "brokenThreshold": 26, "speedPenalty": 0, "bulk": 1 }
+  },
+  {
+   "id": "adamantine-chunk",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Raw crafting material — the whole entry is a price, a Bulk and a Hardness/HP table for things made from it; it gives its carrier nothing."
+  },
+  {
+   "id": "adamantine-ingot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Raw crafting material; no owner-facing effect is printed."
+  },
+  {
+   "id": "adamantine-object-standard-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A priced generic object made of adamantine — object durability only, unlike abysium it has no carrier clause."
+  },
+  {
+   "id": "adamantine-object-high-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A priced generic object made of adamantine — object durability only, no carrier-facing effect."
+  },
+  {
+   "id": "adamantine-weapon-standard-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Its only mechanic is 'treat any object they hit as if it had half as much Hardness' — that is the struck OBJECT's stat, resolved on the GM's side; no change to the wielder's numbers."
+  },
+  {
+   "id": "adamantine-weapon-high-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Halves a struck object's Hardness — object/GM-side; the wielder's attack and damage are unchanged."
+  },
+  {
+   "id": "adamantine-transmuting-ingot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable whetstone: for 1 minute the weapon counts as adamantine for physical damage. The only thing that changes is whether a TARGET's material resistance applies — target-side adjudication, no number on the owner's sheet."
+  },
+
+  {
+   "id": "advanced-book-of-translation-tien",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A mundane tool whose content is permission to attempt Diplomacy in a language you don't speak (at 10x the time); the 'advanced' grade only means the default penalty of the basic book doesn't apply, so there is no bonus or penalty to carry."
+  },
+  {
+   "id": "advancing",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Already registered in core.runes as an armor property rune. Its effect is an activation — Stride up to 15 feet after a kill — resolved and gone in the same moment, with no standing change."
+  },
+  {
+   "id": "advancing-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Registered in core.runes as an armor property rune; the activated Stride is resolved in the moment and leaves no standing change to any stat."
+  },
+  {
+   "id": "adventurers-pack",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A mundane starter bundle; its contents are inventory bookkeeping and the app has no grant-items field, so there is nothing mechanical to deliver."
+  },
+
+  {
+   "id": "adamantine-echo",
+   "verdict": "MISS",
+   "reason": "The text says it 'functions as a +1 armor potency rune', but its core.runes entry is {slot:'armor', kind:'property'} — property runes carry no value, so the wearer never gets the +1 item bonus to AC that a potency rune gives. The registry already supports the right shape (armor-potency-1 is kind 'potency', value 1). Note the item form carries no passiveEffects either, but as an etched rune the registry entry is the lane that actually fires.",
+   "fix": { "rune": { "id": "adamantine-echo", "slot": "armor", "kind": "potency", "value": 1 } }
+  },
+
+  {
+   "id": "aeon-stone-agate-ellipsoid",
+   "verdict": "MISS",
+   "reason": "'This aeon stone allows you to cast 2nd-rank Augury as a divine innate spell once per day' — a spell the owner gains while invested, and the record has no innateSpells, so it never reaches the Spells page. (The always-succeeds clause is the wayfinder-gated resonant power and stays in the text.)",
+   "fix": { "innateSpells": [{ "spellId": "augury", "tradition": "divine", "rank": 2, "usesPerDay": 1 }] }
+  },
+  {
+   "id": "aeon-stone-clear-quartz-octagon",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Its power restores a non-magical OBJECT's Hit Points to stop it breaking, then consumes the stone — object-side, resolved at the table. The Mending casting is a resonant power that only works slotted into a wayfinder."
+  },
+  {
+   "id": "aeon-stone-consumed",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Explicitly inert by design: 'a dull lump that has lost its magical properties... no resonant power'. Pure flavour."
+  },
+  {
+   "id": "aeon-stone-delaying",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A once-per-day triggered save from death that reduces your dying value and consumes the stone — a table event with no standing sheet change; the Heal casting is wayfinder-gated resonance. The 1/day frequency is already on the record."
+  },
+  {
+   "id": "aeon-stone-dusty-rose-prism",
+   "verdict": "MISS",
+   "reason": "'Allows you to cast the Shield cantrip as an arcane innate spell' while invested, and the record (verified in core.json) has only description/descRefs/source/usage — no innateSpells — so the owner never gets the spell. The resonant 5-to-10 damage increase is wayfinder-gated and stays in the text.",
+   "fix": { "innateSpells": [{ "spellId": "shield", "tradition": "arcane", "atWill": true }] }
+  },
+  {
+   "id": "aeon-stone-envisioning",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants image-only telepathy to 100 feet — a communication channel adjudicated in play, not a sense or a number the sheet carries; the Translate casting is wayfinder-gated resonance."
+  },
+  {
+   "id": "aeon-stone-lavender-and-green-ellipsoid",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Its power is an automatic counteract (8th-rank dispel magic at +31) against spells that hit you — the GM rolls it against the incoming effect; nothing standing changes on the sheet. Detect Magic / Read Aura at will are the wayfinder-gated resonant power."
+  },
+  {
+   "id": "aeon-stone-mottled-ellipsoid",
+   "verdict": "MISS",
+   "reason": "'You gain void healing... You don't take void damage, and you are healed by void effects that heal undead' is a standing change to how the owner takes damage and healing while invested. The app has a dedicated item flag for exactly this (negativeHealing, used by the Emerald Fulcrum Lens) and this record carries none. Verified bare in core.json.",
+   "fix": { "negativeHealing": true, "immunities": ["void"] }
+  },
+  {
+   "id": "aeon-stone-nourishing",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Removes the need to eat and drink after a week of continuous investment — the sheet does not track food or water, so there is no number to change."
+  },
+  {
+   "id": "aeon-stone-pale-orange-rhomboid",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A once-per-day return-from-death: after you die you spend a minute to come back at 1 HP with doomed 3 and wounded 3. It is a table event applied by hand when it happens, not a standing effect."
+  },
+  {
+   "id": "aeon-stone-peering",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Sheds purple dim light and makes the GM secretly roll a +25 counteract against darkness and illusions the light touches — explicitly GM-side; the owner's own stats are untouched."
+  },
+  {
+   "id": "aeon-stone-pink-rhomboid",
+   "verdict": "MISS",
+   "reason": "'When you invest this stone, you gain 15 temporary Hit Points', refreshed at daily preparations — a real change to the owner's HP line that nothing delivers. The app has no item field that sets temporary HP (tempHp is manual play-state, and maxHpBonus would be the wrong quantity — temp HP are not max HP), so the honest lane is a starred note on HP telling the player the amount and the refresh rule.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "hp" }],
+      "when": "while this aeon stone is invested and orbiting your head",
+      "bonus": "15 temporary HP, refreshed at daily preparations (lost while suppressed)"
+     }
+    ]
+   }
+  },
+  {
+   "id": "aeon-stone-smoothing",
+   "verdict": "MISS",
+   "reason": "'You can ignore status penalties to skill checks from Clumsy 1, Enfeebled 1, Frightened 1, Sickened 1, and Stupefied 1' changes what the owner's skill totals should read, and nothing on the record says so. No field can subtract a condition penalty, so the conditional lane is the honest one: it stars every skill and spells the suppression out.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "skill", "detail": "all" }],
+      "when": "you are clumsy 1, enfeebled 1, frightened 1, sickened 1, or stupefied 1",
+      "bonus": "ignore that condition's status penalty to skill checks (value 1 only)"
+     }
+    ]
+   }
+  },
+  {
+   "id": "aeon-stone-western-star",
+   "verdict": "MISS",
+   "reason": "The activation gives the owner the effects of a 1st-rank Illusory Disguise, an effect with a duration, and the record has no innateSpells, so the spell never appears anywhere on the sheet. No frequency is printed, so it is at will. Tradition is left unset because the text does not name one. (Making the stones invisible is the wayfinder-gated resonant power.)",
+   "fix": { "innateSpells": [{ "spellId": "illusory-disguise", "rank": 1, "atWill": true }] }
+  },
+  {
+   "id": "aerekostes-item",
+   "verdict": "MISS",
+   "reason": "'Aerekostes is a +1 striking shifting falcata' — a held weapon the owner attacks with — but the record is itemType 'equipment' with no category, group, damage or hands, so it produces no Strike at all. The +1 striking and shifting runes go on the inventory instance; the base falcata profile has to be on the item first. (The Mythic Point pool, telepathy and Forward Planning fortune are the item's own resources and a one-shot activation — table-side.)",
+   "fix": {
+    "itemType": "weapon",
+    "category": "martial",
+    "group": "sword",
+    "hands": 1,
+    "damage": { "dice": 1, "die": "d8", "type": "slashing" },
+    "traits": ["divine", "forceful", "intelligent", "mythic", "sweep"]
+   }
+  },
+  {
+   "id": "against-all-odds",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A triggered fortune activation — roll a long-odds skill check twice and take the better — resolved in the same moment as the roll, with no standing change. The once-per-10-minutes frequency is already on the record."
+  },
+  {
+   "id": "aim-aiding",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Already registered in core.runes as an armor property rune, and its only effect is that YOU stop providing enemies cover against your ALLIES' ranged attacks — an ally-side, positional adjudication with no change to the wearer's own numbers."
+  }
+ ]
+}

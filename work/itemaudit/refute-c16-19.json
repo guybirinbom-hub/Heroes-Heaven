@@ -1,0 +1,160 @@
+{
+  "rulings": [
+    {
+      "id": "phistophilus-fiddle",
+      "upheld": true,
+      "why": "Text plainly makes it a virtuoso instrument (+1 item bonus to Performance with it); nothing on the record delivers that, and `situational` is a legal item field consumed by explain.ts authoredSituational for equipped items, shape identical to shrieking-key.",
+      "correction": {}
+    },
+    {
+      "id": "piercing-horn",
+      "upheld": true,
+      "why": "Invested graft granting an owner-side 1d8 piercing horn Strike; grantedStrikes is the exact lane and the shape matches whip-tail field for field.",
+      "correction": {}
+    },
+    {
+      "id": "plate-of-yled-graveknight-plate",
+      "upheld": true,
+      "why": "Usage 'worn armor', Base Armor Full Plate, yet itemType 'equipment' with no acBonus at all — the wearer gets zero AC; the fix copies full-plate's legal armor fields verbatim.",
+      "correction": {}
+    },
+    {
+      "id": "plate-of-yled-greater-graveknight-plate",
+      "upheld": true,
+      "why": "Same defect and same well-formed armor-statistics fix; the built-in resilient rune correctly stays prose like the other 130+ named magic armors.",
+      "correction": {}
+    },
+    {
+      "id": "plate-of-yled-major-graveknight-plate",
+      "upheld": true,
+      "why": "Typed 'equipment' with no armor statistics, so equipping delivers nothing; acBonus/dexCap/checkPenalty/speedPenalty/strength are all legal item fields and are copied from full-plate.",
+      "correction": {}
+    },
+    {
+      "id": "plate-of-yled-true-graveknight-plate",
+      "upheld": true,
+      "why": "Same missing-armor-statistics defect; fix is the base full-plate block and does not over-grant (the +2 greater resilient stays prose).",
+      "correction": {}
+    },
+    {
+      "id": "propelling-winds",
+      "upheld": true,
+      "why": "Relic gift that casts fly ON the owner once per hour; spellId 'fly' exists, usesPer:'hour' is the shape elemental-wayfinder-air already ships, and sibling relic gifts living-storm/living-statue already use innateSpells.",
+      "correction": {}
+    },
+    {
+      "id": "raise-ramparts",
+      "upheld": true,
+      "why": "Owner casts 5th-rank wall of stone once per day and nothing grants it; 'wall-of-stone' exists with a primal tradition and the innateSpells shape matches living-statue.",
+      "correction": {}
+    },
+    {
+      "id": "ranger-kit",
+      "upheld": false,
+      "why": "The fix names 'kitContents' plus a 'where' note, neither of which is a legal item field, and the backfill applier has no lane for code tables (its categories are feats/classFeatures/items/heritages/backgrounds/classes/spells/actions/deities) — applied as written it would add junk to the record and deliver nothing; the real remedy is KIT_CONTENTS in src/rules/play.ts, a code change, not an item field.",
+      "correction": { "verdict": "NEEDS_NOTHING" }
+    },
+    {
+      "id": "red-thread-knot",
+      "upheld": true,
+      "why": "Six knots is a finite owner-side pool that never refills, the record has no frequency so itemUses.ts synthesizes nothing, and a bespoke counter with resetsOnRest:false is the established shape (miter-of-communion, bloodstride-boots).",
+      "correction": {}
+    },
+    {
+      "id": "reinforced-surcoat",
+      "upheld": false,
+      "why": "OVER-GRANT: passiveEffects.speedPenalty is applied by deriveSpeeds unconditionally to EVERY movement type for any worn/equipped/invested item, but the surcoat's text only increases the Speed penalty OF YOUR ARMOR — it does nothing without medium/heavy armor and should interact with the armor's Strength threshold (derive.ts:1956-1967). No legal item field expresses a conditional armor-penalty increase, so the record cannot carry this correctly.",
+      "correction": { "verdict": "NEEDS_NOTHING" }
+    },
+    {
+      "id": "restorative-handwraps",
+      "upheld": true,
+      "why": "A once-per-10-minutes owner-side heal with no frequency field, so nothing synthesizes a charge; a bespoke counter carrying the cadence in the label is exactly the bloodstride-boots shape and the sibling handwraps all ship counters.",
+      "correction": {}
+    },
+    {
+      "id": "rime-jar",
+      "upheld": true,
+      "why": "Genuine 8-hour owner-side state with a fromItemId (so it is visible), matching the note-only mode precedent — but the judge's object omits `modifiers`, which all 398 shipped modes carry; corrected fix adds it.",
+      "correction": {
+        "fix": {
+          "mode": {
+            "id": "item-rime-jar",
+            "name": "Siphon Chill",
+            "fromItemId": "rime-jar",
+            "duration": "8 hours",
+            "survivesRest": false,
+            "note": "For 8 hours you treat extreme cold as severe cold. The activation also removes the fatigued condition if it was caused by exposure to environmental cold.",
+            "modifiers": []
+          }
+        }
+      }
+    },
+    {
+      "id": "revenant-blade",
+      "upheld": true,
+      "why": "AoN confirms Decaying adds 1d4 void on every hit, the `decaying` entry in core.runes carries no damage, and the blade grants the effect without an etched rune — a weapon's own strikeDamage is the documented intrinsic lane (types.ts:1137-1140, Hyldarf's Fang).",
+      "correction": {}
+    },
+    {
+      "id": "ring-of-minor-arcana",
+      "upheld": true,
+      "why": "Three at-will innate arcane cantrips and no innateSpells on the record; the AoN mirror (equipment-478) confirms detect magic / mage hand / prestidigitation, all three ids resolve here (detect-magic, telekinetic-hand, prestidigitation), and atWill with no rank is the precedented auto-heighten shape.",
+      "correction": {}
+    },
+    {
+      "id": "ring-of-spell-turning",
+      "upheld": true,
+      "why": "A printed 9-ranks-per-day pool the owner spends across activations; the record has no frequency so nothing is synthesized, and {id,label,max,per,resetsOnRest} is the standard counter shape.",
+      "correction": {}
+    },
+    {
+      "id": "rustbringer",
+      "upheld": true,
+      "why": "Built-in corrosive rune delivers nothing: runes live on the inventory instance (types.ts:1912), not the item definition, so the 1d6 acid has no route except the weapon's own strikeDamage; appliesTo defaults to 'all' in strikeDamageRiders, so the shape is correct.",
+      "correction": {}
+    },
+    {
+      "id": "rustbringer-greater",
+      "upheld": true,
+      "why": "Same defect; corrosive-greater in core.runes also carries 1d6 acid, so the per-hit rider is the right magnitude and the resistance-ignoring rightly stays prose.",
+      "correction": {}
+    },
+    {
+      "id": "sack-of-hyrdras-teeth",
+      "upheld": true,
+      "why": "Two activations hand the OWNER castable spells and the record has no innateSpells; both ids exist, occult is a legal tradition for each, and a heightened rank above the spell's base is already precedented (living-statue casts rank-2 sure-footing at rank 6).",
+      "correction": {}
+    },
+    {
+      "id": "sawtooth-reaper",
+      "upheld": true,
+      "why": "A 6,000 gp weapon stored as itemType 'equipment' with no hands, category, group or damage, so it cannot be wielded or Struck with; the fix is the base kusarigama block verbatim (martial, knife, 1d8 slashing, held-in-two-hands, disarm/monk/reach/trip/versatile-b) and keeps the existing magical trait.",
+      "correction": {}
+    },
+    {
+      "id": "serrating",
+      "upheld": false,
+      "why": "The gap is real (Foundry mis-tags its usage as 'held-in-one-hand', so import-core's parseRune never registers it) but the fix is a `rune` object, which is not a legal item field and has no applier lane — effect-backfill.json has no 'runes' category, so nothing would land. The real remedy is a code change in scripts/import-core.mjs (rune registration + a RUNE_DAMAGE entry), not a field on this record.",
+      "correction": { "verdict": "NEEDS_NOTHING" }
+    },
+    {
+      "id": "shard-of-self-destruction",
+      "upheld": true,
+      "why": "Text says it functions as a dagger but the record carries 1d6 slashing and no agile/finesse/thrown/versatile traits; the fix restores the dagger's real statistics, preserves the existing cursed/magical traits, and corrects an over-grant rather than creating one.",
+      "correction": {}
+    },
+    {
+      "id": "sharpened-canines",
+      "upheld": true,
+      "why": "Invested graft granting a 1d6 piercing jaws Strike and the record carries no fields at all; grantedStrikes shape is identical to whip-tail's shipped entry.",
+      "correction": {}
+    },
+    {
+      "id": "shield-augmentation",
+      "upheld": false,
+      "why": "The judge's own reason concedes nothing can write weapon traits from one item onto another, so a 17-option effectChoices would record a preference and deliver no mechanic — it fails the 'would actually deliver it' test, and the traits only ever matter on a shield Strike, which the augmentation explicitly does not otherwise alter.",
+      "correction": { "verdict": "NEEDS_NOTHING" }
+    }
+  ]
+}

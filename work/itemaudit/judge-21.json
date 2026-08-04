@@ -1,0 +1,370 @@
+{
+ "records": [
+  {
+   "id": "slumber-arrow",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable arrow; the whole effect (no damage, Speed penalty, slowed) lands on the creature struck and is resolved by its save at the table."
+  },
+  {
+   "id": "smoked-goggles",
+   "verdict": "MISS",
+   "reason": "Worn eyepiece: while you wear them you are ALWAYS considered to be Averting Your Gaze, which is a standing +2 circumstance bonus to saves against visual abilities. Nothing on the record delivers it. The concealment drawback is a target-side flat check left to the table.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "all"
+       }
+      ],
+      "when": "against visual abilities, as you always Avert Your Gaze",
+      "bonus": "+2 circumstance"
+     }
+    ]
+   }
+  },
+  {
+   "id": "smoking-sword",
+   "verdict": "MISS",
+   "reason": "Text: \"Any successful Strike with this sword deals 1 extra fire damage.\" The record carries the 1d8 slashing longsword profile but nothing adds the extra fire damage. (The printed +1 potency is inventory-instance rune data the owner etches, per src/rules/attachments.ts, so it is out of scope for the item record; the Stoke Flames 1d6 upgrade is a once-per-10-minutes activation lasting only to end of turn.)",
+   "fix": {
+    "strikeDamage": [
+     {
+      "type": "fire",
+      "flat": 1,
+      "note": "Smoking Sword"
+     }
+    ]
+   }
+  },
+  {
+   "id": "smoky-hag-eye",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The text says outright it \"produces no direct benefit for the wearer\" - the scrying serves the hag who made it, and the activation forces a save on a creature within 30 feet."
+  },
+  {
+   "id": "smugglers-sack-type-i",
+   "verdict": "MISS",
+   "reason": "Container shipped with capacity {bulk:0} and ignoredBulk 0, so it holds nothing at all. Text: a 5-Bulk mundane space plus a 1-Bulk extradimensional pocket whose contents are weightless.",
+   "fix": {
+    "capacity": {
+     "bulk": 6
+    },
+    "ignoredBulk": 1
+   }
+  },
+  {
+   "id": "smugglers-sack-type-ii",
+   "verdict": "MISS",
+   "reason": "Container shipped with capacity {bulk:0} and ignoredBulk 0, so it holds nothing at all. Text: a 5-Bulk mundane space plus a 5-Bulk extradimensional pocket whose contents are weightless.",
+   "fix": {
+    "capacity": {
+     "bulk": 10
+    },
+    "ignoredBulk": 5
+   }
+  },
+  {
+   "id": "smugglers-sack-type-iii",
+   "verdict": "MISS",
+   "reason": "Container shipped with capacity {bulk:0} and ignoredBulk 0, so it holds nothing at all. Text: a 5-Bulk mundane space plus a 10-Bulk extradimensional pocket whose contents are weightless.",
+   "fix": {
+    "capacity": {
+     "bulk": 15
+    },
+    "ignoredBulk": 10
+   }
+  },
+  {
+   "id": "smugglers-sack-type-iv",
+   "verdict": "MISS",
+   "reason": "Container shipped with capacity {bulk:0} and ignoredBulk 0, so it holds nothing at all. Text: a 5-Bulk mundane space plus a 25-Bulk extradimensional pocket whose contents are weightless.",
+   "fix": {
+    "capacity": {
+     "bulk": 30
+    },
+    "ignoredBulk": 25
+   }
+  },
+  {
+   "id": "smugglers-sack-type-v",
+   "verdict": "MISS",
+   "reason": "Container shipped with capacity {bulk:0} and ignoredBulk 0, so it holds nothing at all. Text: a 5-Bulk mundane space plus a 50-Bulk extradimensional pocket whose contents are weightless.",
+   "fix": {
+    "capacity": {
+     "bulk": 55
+    },
+    "ignoredBulk": 50
+   }
+  },
+  {
+   "id": "smuggling-level-1",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A purchased downtime service (discreet transport of goods or people); availability, capacity and outcome are explicitly GM discretion. Nothing touches the buyer sheet."
+  },
+  {
+   "id": "smuggling-level-2",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A purchased downtime service (discreet transport of goods or people); availability, capacity and outcome are explicitly GM discretion. Nothing touches the buyer sheet."
+  },
+  {
+   "id": "smuggling-level-3",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A purchased downtime service (discreet transport of goods or people); availability, capacity and outcome are explicitly GM discretion. Nothing touches the buyer sheet."
+  },
+  {
+   "id": "smuggling-level-4",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A purchased downtime service (discreet transport of goods or people); availability, capacity and outcome are explicitly GM discretion. Nothing touches the buyer sheet."
+  },
+  {
+   "id": "smuggling-level-5",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A purchased downtime service (discreet transport of goods or people); availability, capacity and outcome are explicitly GM discretion. Nothing touches the buyer sheet."
+  },
+  {
+   "id": "snagging",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Its entire content is permission: you may attempt to Grab an Edge with your hands restrained or without a free hand. No number and no standing change - the attempt is rolled at the table."
+  },
+  {
+   "id": "snake",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A pet. The record itself notes it cannot be combat trained or contribute to combat in any way."
+  },
+  {
+   "id": "snowshoes",
+   "verdict": "MISS",
+   "reason": "Text prints a -10-foot ITEM penalty to Speed whenever you walk on any surface other than snow (the snow difficult-terrain waiver is terrain the GM sets). The record has no speedPenalty and no situational entry, so the penalty never appears anywhere. Modelled conditionally rather than as a flat speedPenalty so it is not wrongly applied while on snow.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "speed"
+       }
+      ],
+      "when": "while walking on any surface other than snow",
+      "bonus": "-10 item"
+     }
+    ]
+   }
+  },
+  {
+   "id": "soap",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane gear; a bar of soap has no rules text."
+  },
+  {
+   "id": "society-portrait",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The portrait is the society object, not the owner: it changes its OWN image to out a traitor, and the save and the counteract are adjudicated by the GM. No mechanic reaches the holder sheet."
+  },
+  {
+   "id": "sorcerer-kit",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A starting-money shopping bundle - a list of items to buy, each of which is its own record. It has no mechanic of its own and there is no contents field."
+  },
+  {
+   "id": "soul-cage",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A lich phylactery: it rebuilds your body over 1d10 days after you are destroyed. Purely narrative, GM-run resurrection with no standing change while you live; its Hardness 9 / 36 HP are object stats."
+  },
+  {
+   "id": "soul-chain",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The base spiked-chain profile it needs (1d8 slashing, martial, two-handed, disarm/finesse/trip) is already on the record; the printed fundamental runes are inventory-instance data the owner etches. The extra 1d6 applies only in a forge-spurned hands (a monster, not the owner), and the death curse is a GM-side save."
+  },
+  {
+   "id": "soul-magic",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A soul-seed ASPECT listing, not a purchasable item (no price, no usage, level 0). The once-a-day divine inspiration effect belongs to the parent soul seed, whose level sets the values, so nothing can be pinned to this record."
+  },
+  {
+   "id": "soul-puppet",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A soul-seed ASPECT listing, not a purchasable item (no price, no usage, level 0). It casts animate dead at half the SOUL SEED level - a value this record does not know - and the animated undead is a table-side creature."
+  },
+  {
+   "id": "spacious-pouch-type-i",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered: the record carries capacity {bulk:25} and ignoredBulk 25, exactly the printed 25 Bulk extradimensional capacity."
+  },
+  {
+   "id": "spacious-pouch-type-ii",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered: capacity {bulk:50} and ignoredBulk 50 on the record, matching the printed 50 Bulk."
+  },
+  {
+   "id": "spacious-pouch-type-iii",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered: capacity {bulk:100} and ignoredBulk 100 on the record, matching the printed 100 Bulk."
+  },
+  {
+   "id": "spacious-pouch-type-iv",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered: capacity {bulk:150} and ignoredBulk 150 on the record, matching the printed 150 Bulk."
+  },
+  {
+   "id": "spare-wax-cylinder",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A blank consumable part for the Clockwork Recorder. It has no rules text of its own."
+  },
+  {
+   "id": "sparkblade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The cold-iron material and the 1d6 piercing agile/finesse shortsword profile are already on the record, and frequency 1/day is recorded. The once-a-day lightning arc is an instantaneous activation that damages two foes - nothing standing. (Its printed +1 potency is inventory-instance rune data the owner etches.)"
+  },
+  {
+   "id": "spell-bastion",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Every line is an activation: a caster spends a minute to store a spell, you envision to arm it, and a 4-action command unleashes the stored spell at the foe who hit you. All of it resolves against a target at the table, and heldSpells cannot express an arbitrary user-cast spell. Separate registry note (not an item field): it is a shield property rune with no core.runes entry - only the six reinforcing runes fill the shield slot."
+  },
+  {
+   "id": "spell-echo-shot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition whose whole effect is duplicating an area spell aimed at foes; which spell, and whether the shot sticks to the target, are decided in play by the GM."
+  },
+  {
+   "id": "spell-reservoir",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered as a rune: core.runes has {id:\"spell-reservoir\", slot:\"weapon\", kind:\"property\", level:13}, so an owner can etch it onto a melee weapon. Storing and releasing the spell is an activation resolved at the table against a target."
+  },
+  {
+   "id": "spellbook-blank",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane book. Its 100-spell capacity is bookkeeping for the wizard spellbook the class already manages; the item itself grants nothing."
+  },
+  {
+   "id": "spellcasting-1st-rank",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A purchased service: paying an NPC spellcaster to cast a spell for you. The buyer gains no ability and nothing lands on the sheet."
+  },
+  {
+   "id": "spellcasting-2nd-rank",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A purchased service: paying an NPC spellcaster to cast a spell for you. The buyer gains no ability and nothing lands on the sheet."
+  },
+  {
+   "id": "spellcasting-3rd-rank",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A purchased service: paying an NPC spellcaster to cast a spell for you. The buyer gains no ability and nothing lands on the sheet."
+  },
+  {
+   "id": "spellcasting-4th-rank",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A purchased service: paying an NPC spellcaster to cast a spell for you. The buyer gains no ability and nothing lands on the sheet."
+  },
+  {
+   "id": "spellcasting-5th-rank",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A purchased service: paying an NPC spellcaster to cast a spell for you. The buyer gains no ability and nothing lands on the sheet."
+  },
+  {
+   "id": "spellcasting-6th-rank",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A purchased service: paying an NPC spellcaster to cast a spell for you. The buyer gains no ability and nothing lands on the sheet."
+  },
+  {
+   "id": "spellcasting-7th-rank",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A purchased service: paying an NPC spellcaster to cast a spell for you. The buyer gains no ability and nothing lands on the sheet."
+  },
+  {
+   "id": "spellcasting-8th-rank",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A purchased service: paying an NPC spellcaster to cast a spell for you. The buyer gains no ability and nothing lands on the sheet."
+  },
+  {
+   "id": "spellcasting-9th-rank",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A purchased service: paying an NPC spellcaster to cast a spell for you. The buyer gains no ability and nothing lands on the sheet."
+  },
+  {
+   "id": "spellstrike-ammunition-type-i",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition activated by Casting a Spell into it; the stored spell then targets the creature hit. The spell comes from the caster own repertoire and is chosen in play, and every consequence lands on the target."
+  },
+  {
+   "id": "spellstrike-ammunition-type-ii",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition activated by Casting a Spell into it; the stored spell then targets the creature hit. The spell comes from the caster own repertoire and is chosen in play, and every consequence lands on the target."
+  },
+  {
+   "id": "spellstrike-ammunition-type-iii",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition activated by Casting a Spell into it; the stored spell then targets the creature hit. The spell comes from the caster own repertoire and is chosen in play, and every consequence lands on the target."
+  },
+  {
+   "id": "spellstrike-ammunition-type-iv",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition activated by Casting a Spell into it; the stored spell then targets the creature hit. The spell comes from the caster own repertoire and is chosen in play, and every consequence lands on the target."
+  },
+  {
+   "id": "spellstrike-ammunition-type-v",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition activated by Casting a Spell into it; the stored spell then targets the creature hit. The spell comes from the caster own repertoire and is chosen in play, and every consequence lands on the target."
+  },
+  {
+   "id": "spellstrike-ammunition-type-vi",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition activated by Casting a Spell into it; the stored spell then targets the creature hit. The spell comes from the caster own repertoire and is chosen in play, and every consequence lands on the target."
+  },
+  {
+   "id": "spellstrike-ammunition-type-vii",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition activated by Casting a Spell into it; the stored spell then targets the creature hit. The spell comes from the caster own repertoire and is chosen in play, and every consequence lands on the target."
+  },
+  {
+   "id": "spellstrike-ammunition-type-viii",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition activated by Casting a Spell into it; the stored spell then targets the creature hit. The spell comes from the caster own repertoire and is chosen in play, and every consequence lands on the target."
+  },
+  {
+   "id": "spellstrike-ammunition-type-ix",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition activated by Casting a Spell into it; the stored spell then targets the creature hit. The spell comes from the caster own repertoire and is chosen in play, and every consequence lands on the target."
+  },
+  {
+   "id": "spellwatch",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered as a rune: core.runes has {id:\"spellwatch\", slot:\"armor\", kind:\"property\", level:13}, so an owner can etch it onto armor. The benefit itself is an extra saving throw attempted at the start of each turn against a hostile spell already on you - rolled at the table, with no standing modifier."
+  },
+  {
+   "id": "sphere-of-annihilation",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An artifact that is neither worn nor invested: you spend actions attempting checks to control a free-floating sphere that destroys what it touches. Control, movement and destruction are all GM-adjudicated; nothing modifies the wielder."
+  },
+  {
+   "id": "spider",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A pet. The record itself notes it cannot be combat trained or contribute to combat in any way."
+  },
+  {
+   "id": "spider-satchel-lesser",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Thrown alchemical bomb. Its 1d6 persistent poison, 1 poison splash and the fascinated condition all land on the target, and the LESSER grade is the one bomb tier that grants no item bonus to the attack - its moderate/greater/major siblings correctly carry +1/+2/+3 in src/rules/situationalBonuses.ts and this one correctly does not."
+  },
+  {
+   "id": "spirit-blink",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A soul-seed ASPECT listing, not a purchasable item (no price, no usage, level 0). Its resistance equals the parent SOUL SEED level, a value this record does not know, so no rank or value can be pinned to it."
+  },
+  {
+   "id": "splatrope-extruder",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A crafting nozzle: it converts an installed glue bomb into a rope, whip or net object that lasts an hour. The created object is table-side equipment and its Escape DC comes from the consumed bomb; the wielder gains no standing change."
+  },
+  {
+   "id": "splendid-pyschopomp-mask",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The record has no rules text at all - a worn mask that is pure costume and flavour."
+  },
+  {
+   "id": "splint",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane medical support. The text explicitly says you keep full use of the limb and full mobility; it states no bonus, no penalty and no permission."
+  }
+ ]
+}

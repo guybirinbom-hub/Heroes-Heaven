@@ -1,0 +1,548 @@
+{
+ "records": [
+  {
+   "id": "wand-of-splintered-sorrows-4th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand grants the owner a once-per-day casting of splinter volley at rank 4, but the record carries no heldSpells, so the casting never reaches the Spells page. 106 other wands (e.g. wand-of-fey-flames, wand-of-shardstorm-1st-rank) deliver exactly this via heldSpells. The rider effects (stupefied / frightened / poison / echoing damage) all land on targets and stay out of scope.",
+   "fix": {
+    "heldSpells": {
+     "4": [
+      "splinter-volley"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-splintered-sorrows-6th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand grants the owner a once-per-day casting of splinter volley at rank 6, but the record carries no heldSpells, so the casting never reaches the Spells page. 106 other wands (e.g. wand-of-fey-flames, wand-of-shardstorm-1st-rank) deliver exactly this via heldSpells. The rider effects (stupefied / frightened / poison / echoing damage) all land on targets and stay out of scope.",
+   "fix": {
+    "heldSpells": {
+     "6": [
+      "splinter-volley"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-splintered-sorrows-8th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand grants the owner a once-per-day casting of splinter volley at rank 8, but the record carries no heldSpells, so the casting never reaches the Spells page. 106 other wands (e.g. wand-of-fey-flames, wand-of-shardstorm-1st-rank) deliver exactly this via heldSpells. The rider effects (stupefied / frightened / poison / echoing damage) all land on targets and stay out of scope.",
+   "fix": {
+    "heldSpells": {
+     "8": [
+      "splinter-volley"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-teeming-ghosts-2nd-level-spell",
+   "verdict": "MISS",
+   "reason": "Wand grants the owner a once-per-day casting of false life / false vitality (no false-life record exists; false-vitality is the same spell renamed) at rank 2, but the record carries no heldSpells, so the casting never reaches the Spells page. 106 other wands (e.g. wand-of-fey-flames, wand-of-shardstorm-1st-rank) deliver exactly this via heldSpells. The rider effects (stupefied / frightened / poison / echoing damage) all land on targets and stay out of scope.",
+   "fix": {
+    "heldSpells": {
+     "2": [
+      "false-vitality"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-teeming-ghosts-2nd-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand grants the owner a once-per-day casting of false vitality at rank 2, but the record carries no heldSpells, so the casting never reaches the Spells page. 106 other wands (e.g. wand-of-fey-flames, wand-of-shardstorm-1st-rank) deliver exactly this via heldSpells. The rider effects (stupefied / frightened / poison / echoing damage) all land on targets and stay out of scope.",
+   "fix": {
+    "heldSpells": {
+     "2": [
+      "false-vitality"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-teeming-ghosts-3rd-level-spell",
+   "verdict": "MISS",
+   "reason": "Wand grants the owner a once-per-day casting of false life / false vitality (no false-life record exists; false-vitality is the same spell renamed) at rank 3, but the record carries no heldSpells, so the casting never reaches the Spells page. 106 other wands (e.g. wand-of-fey-flames, wand-of-shardstorm-1st-rank) deliver exactly this via heldSpells. The rider effects (stupefied / frightened / poison / echoing damage) all land on targets and stay out of scope.",
+   "fix": {
+    "heldSpells": {
+     "3": [
+      "false-vitality"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-teeming-ghosts-3rd-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand grants the owner a once-per-day casting of false vitality at rank 3, but the record carries no heldSpells, so the casting never reaches the Spells page. 106 other wands (e.g. wand-of-fey-flames, wand-of-shardstorm-1st-rank) deliver exactly this via heldSpells. The rider effects (stupefied / frightened / poison / echoing damage) all land on targets and stay out of scope.",
+   "fix": {
+    "heldSpells": {
+     "3": [
+      "false-vitality"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-teeming-ghosts-4th-level-spell",
+   "verdict": "MISS",
+   "reason": "Wand grants the owner a once-per-day casting of false life / false vitality (no false-life record exists; false-vitality is the same spell renamed) at rank 4, but the record carries no heldSpells, so the casting never reaches the Spells page. 106 other wands (e.g. wand-of-fey-flames, wand-of-shardstorm-1st-rank) deliver exactly this via heldSpells. The rider effects (stupefied / frightened / poison / echoing damage) all land on targets and stay out of scope.",
+   "fix": {
+    "heldSpells": {
+     "4": [
+      "false-vitality"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-teeming-ghosts-4th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand grants the owner a once-per-day casting of false vitality at rank 4, but the record carries no heldSpells, so the casting never reaches the Spells page. 106 other wands (e.g. wand-of-fey-flames, wand-of-shardstorm-1st-rank) deliver exactly this via heldSpells. The rider effects (stupefied / frightened / poison / echoing damage) all land on targets and stay out of scope.",
+   "fix": {
+    "heldSpells": {
+     "4": [
+      "false-vitality"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-teeming-ghosts-5th-level-spell",
+   "verdict": "MISS",
+   "reason": "Wand grants the owner a once-per-day casting of false life / false vitality (no false-life record exists; false-vitality is the same spell renamed) at rank 5, but the record carries no heldSpells, so the casting never reaches the Spells page. 106 other wands (e.g. wand-of-fey-flames, wand-of-shardstorm-1st-rank) deliver exactly this via heldSpells. The rider effects (stupefied / frightened / poison / echoing damage) all land on targets and stay out of scope.",
+   "fix": {
+    "heldSpells": {
+     "5": [
+      "false-vitality"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-teeming-ghosts-5th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand grants the owner a once-per-day casting of false vitality at rank 5, but the record carries no heldSpells, so the casting never reaches the Spells page. 106 other wands (e.g. wand-of-fey-flames, wand-of-shardstorm-1st-rank) deliver exactly this via heldSpells. The rider effects (stupefied / frightened / poison / echoing damage) all land on targets and stay out of scope.",
+   "fix": {
+    "heldSpells": {
+     "5": [
+      "false-vitality"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-teeming-ghosts-6th-level-spell",
+   "verdict": "MISS",
+   "reason": "Wand grants the owner a once-per-day casting of false life / false vitality (no false-life record exists; false-vitality is the same spell renamed) at rank 6, but the record carries no heldSpells, so the casting never reaches the Spells page. 106 other wands (e.g. wand-of-fey-flames, wand-of-shardstorm-1st-rank) deliver exactly this via heldSpells. The rider effects (stupefied / frightened / poison / echoing damage) all land on targets and stay out of scope.",
+   "fix": {
+    "heldSpells": {
+     "6": [
+      "false-vitality"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-teeming-ghosts-6th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand grants the owner a once-per-day casting of false vitality at rank 6, but the record carries no heldSpells, so the casting never reaches the Spells page. 106 other wands (e.g. wand-of-fey-flames, wand-of-shardstorm-1st-rank) deliver exactly this via heldSpells. The rider effects (stupefied / frightened / poison / echoing damage) all land on targets and stay out of scope.",
+   "fix": {
+    "heldSpells": {
+     "6": [
+      "false-vitality"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-teeming-ghosts-7th-level-spell",
+   "verdict": "MISS",
+   "reason": "Wand grants the owner a once-per-day casting of false life / false vitality (no false-life record exists; false-vitality is the same spell renamed) at rank 7, but the record carries no heldSpells, so the casting never reaches the Spells page. 106 other wands (e.g. wand-of-fey-flames, wand-of-shardstorm-1st-rank) deliver exactly this via heldSpells. The rider effects (stupefied / frightened / poison / echoing damage) all land on targets and stay out of scope.",
+   "fix": {
+    "heldSpells": {
+     "7": [
+      "false-vitality"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-teeming-ghosts-7th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand grants the owner a once-per-day casting of false vitality at rank 7, but the record carries no heldSpells, so the casting never reaches the Spells page. 106 other wands (e.g. wand-of-fey-flames, wand-of-shardstorm-1st-rank) deliver exactly this via heldSpells. The rider effects (stupefied / frightened / poison / echoing damage) all land on targets and stay out of scope.",
+   "fix": {
+    "heldSpells": {
+     "7": [
+      "false-vitality"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-teeming-ghosts-8th-level-spell",
+   "verdict": "MISS",
+   "reason": "Wand grants the owner a once-per-day casting of false life / false vitality (no false-life record exists; false-vitality is the same spell renamed) at rank 8, but the record carries no heldSpells, so the casting never reaches the Spells page. 106 other wands (e.g. wand-of-fey-flames, wand-of-shardstorm-1st-rank) deliver exactly this via heldSpells. The rider effects (stupefied / frightened / poison / echoing damage) all land on targets and stay out of scope.",
+   "fix": {
+    "heldSpells": {
+     "8": [
+      "false-vitality"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-teeming-ghosts-8th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand grants the owner a once-per-day casting of false vitality at rank 8, but the record carries no heldSpells, so the casting never reaches the Spells page. 106 other wands (e.g. wand-of-fey-flames, wand-of-shardstorm-1st-rank) deliver exactly this via heldSpells. The rider effects (stupefied / frightened / poison / echoing damage) all land on targets and stay out of scope.",
+   "fix": {
+    "heldSpells": {
+     "8": [
+      "false-vitality"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-teeming-ghosts-9th-level-spell",
+   "verdict": "MISS",
+   "reason": "Wand grants the owner a once-per-day casting of false life / false vitality (no false-life record exists; false-vitality is the same spell renamed) at rank 9, but the record carries no heldSpells, so the casting never reaches the Spells page. 106 other wands (e.g. wand-of-fey-flames, wand-of-shardstorm-1st-rank) deliver exactly this via heldSpells. The rider effects (stupefied / frightened / poison / echoing damage) all land on targets and stay out of scope.",
+   "fix": {
+    "heldSpells": {
+     "9": [
+      "false-vitality"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-teeming-ghosts-9th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand grants the owner a once-per-day casting of false vitality at rank 9, but the record carries no heldSpells, so the casting never reaches the Spells page. 106 other wands (e.g. wand-of-fey-flames, wand-of-shardstorm-1st-rank) deliver exactly this via heldSpells. The rider effects (stupefied / frightened / poison / echoing damage) all land on targets and stay out of scope.",
+   "fix": {
+    "heldSpells": {
+     "9": [
+      "false-vitality"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-thundering-echoes-3rd-level",
+   "verdict": "MISS",
+   "reason": "Wand grants the owner a once-per-day casting of sound burst (no sound-burst record exists; noise-blast is its remaster replacement) at rank 3, but the record carries no heldSpells, so the casting never reaches the Spells page. 106 other wands (e.g. wand-of-fey-flames, wand-of-shardstorm-1st-rank) deliver exactly this via heldSpells. The rider effects (stupefied / frightened / poison / echoing damage) all land on targets and stay out of scope.",
+   "fix": {
+    "heldSpells": {
+     "3": [
+      "noise-blast"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-thundering-echoes-4th-level",
+   "verdict": "MISS",
+   "reason": "Wand grants the owner a once-per-day casting of sound burst (no sound-burst record exists; noise-blast is its remaster replacement) at rank 4, but the record carries no heldSpells, so the casting never reaches the Spells page. 106 other wands (e.g. wand-of-fey-flames, wand-of-shardstorm-1st-rank) deliver exactly this via heldSpells. The rider effects (stupefied / frightened / poison / echoing damage) all land on targets and stay out of scope.",
+   "fix": {
+    "heldSpells": {
+     "4": [
+      "noise-blast"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-thundering-echoes-5th-level",
+   "verdict": "MISS",
+   "reason": "Wand grants the owner a once-per-day casting of sound burst (no sound-burst record exists; noise-blast is its remaster replacement) at rank 5, but the record carries no heldSpells, so the casting never reaches the Spells page. 106 other wands (e.g. wand-of-fey-flames, wand-of-shardstorm-1st-rank) deliver exactly this via heldSpells. The rider effects (stupefied / frightened / poison / echoing damage) all land on targets and stay out of scope.",
+   "fix": {
+    "heldSpells": {
+     "5": [
+      "noise-blast"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-thundering-echoes-6th-level",
+   "verdict": "MISS",
+   "reason": "Wand grants the owner a once-per-day casting of sound burst (no sound-burst record exists; noise-blast is its remaster replacement) at rank 6, but the record carries no heldSpells, so the casting never reaches the Spells page. 106 other wands (e.g. wand-of-fey-flames, wand-of-shardstorm-1st-rank) deliver exactly this via heldSpells. The rider effects (stupefied / frightened / poison / echoing damage) all land on targets and stay out of scope.",
+   "fix": {
+    "heldSpells": {
+     "6": [
+      "noise-blast"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-thundering-echoes-7th-level",
+   "verdict": "MISS",
+   "reason": "Wand grants the owner a once-per-day casting of sound burst (no sound-burst record exists; noise-blast is its remaster replacement) at rank 7, but the record carries no heldSpells, so the casting never reaches the Spells page. 106 other wands (e.g. wand-of-fey-flames, wand-of-shardstorm-1st-rank) deliver exactly this via heldSpells. The rider effects (stupefied / frightened / poison / echoing damage) all land on targets and stay out of scope.",
+   "fix": {
+    "heldSpells": {
+     "7": [
+      "noise-blast"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-thundering-echoes-8th-level",
+   "verdict": "MISS",
+   "reason": "Wand grants the owner a once-per-day casting of sound burst (no sound-burst record exists; noise-blast is its remaster replacement) at rank 8, but the record carries no heldSpells, so the casting never reaches the Spells page. 106 other wands (e.g. wand-of-fey-flames, wand-of-shardstorm-1st-rank) deliver exactly this via heldSpells. The rider effects (stupefied / frightened / poison / echoing damage) all land on targets and stay out of scope.",
+   "fix": {
+    "heldSpells": {
+     "8": [
+      "noise-blast"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-toxic-blades-6th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand grants the owner a once-per-day casting of blessed boundary at rank 6, but the record carries no heldSpells, so the casting never reaches the Spells page. 106 other wands (e.g. wand-of-fey-flames, wand-of-shardstorm-1st-rank) deliver exactly this via heldSpells. The rider effects (stupefied / frightened / poison / echoing damage) all land on targets and stay out of scope.",
+   "fix": {
+    "heldSpells": {
+     "6": [
+      "blessed-boundary"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-toxic-blades-7th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand grants the owner a once-per-day casting of blessed boundary at rank 7, but the record carries no heldSpells, so the casting never reaches the Spells page. 106 other wands (e.g. wand-of-fey-flames, wand-of-shardstorm-1st-rank) deliver exactly this via heldSpells. The rider effects (stupefied / frightened / poison / echoing damage) all land on targets and stay out of scope.",
+   "fix": {
+    "heldSpells": {
+     "7": [
+      "blessed-boundary"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-toxic-blades-8th-rank-spell",
+   "verdict": "MISS",
+   "reason": "Wand grants the owner a once-per-day casting of blessed boundary at rank 8, but the record carries no heldSpells, so the casting never reaches the Spells page. 106 other wands (e.g. wand-of-fey-flames, wand-of-shardstorm-1st-rank) deliver exactly this via heldSpells. The rider effects (stupefied / frightened / poison / echoing damage) all land on targets and stay out of scope.",
+   "fix": {
+    "heldSpells": {
+     "8": [
+      "blessed-boundary"
+     ]
+    }
+   }
+  },
+  {
+   "id": "war-saddle",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Straps keep you mounted while unconscious and set a DC 20 threshold to tear you free: a GM/table adjudication about the mount, with no standing change to the rider sheet."
+  },
+  {
+   "id": "warcallers-chime-of-blasting",
+   "verdict": "MISS",
+   "reason": "Activation produces a named spell (3rd-rank noise blast) once per day, but nothing carries the spell, so an owner never sees it. The heldSpells lane already covers non-wand items of exactly this kind (firestarter-pellets holds fireball, noxious-incense holds wall-of-fire). Rank 3 is printed explicitly; the knocked-prone rider is target-side.",
+   "fix": {
+    "heldSpells": {
+     "3": [
+      "noise-blast"
+     ]
+    }
+   }
+  },
+  {
+   "id": "warcallers-chime-of-destruction",
+   "verdict": "MISS",
+   "reason": "Activation casts shatter on an unattended object once per day; the record holds no spell, so the casting is invisible on the sheet. shatter is rank 2 in core.spells. The Hardness-ignoring rider is object/GM side.",
+   "fix": {
+    "heldSpells": {
+     "2": [
+      "shatter"
+     ]
+    }
+   }
+  },
+  {
+   "id": "warcallers-chime-of-dread",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The activation is a bespoke frightened aura (frightened 1, or 2 on a critical failure, floor of 1 while ringing) landing only on other creatures. It is not the fear spell (different degrees of success) and no rank is printed, so there is no spell to hold and no owner-side number to change."
+  },
+  {
+   "id": "warcallers-chime-of-refuge",
+   "verdict": "MISS",
+   "reason": "Touching the chime grants the target, which may be you, the effects of sanctuary (rank 1), and it has five uses per day; the record carries neither the spell nor any use limit, so the item is wholly inert. heldSpells is the established lane for touch items conferring a named spell (healers-gel-lesser holds heal).",
+   "fix": {
+    "heldSpells": {
+     "1": [
+      "sanctuary"
+     ]
+    },
+    "limitedUses": {
+     "max": 5,
+     "per": "day"
+    }
+   }
+  },
+  {
+   "id": "warcallers-chime-of-restoration",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A once-per-week activated aura granting fast healing 15 to creatures in an area for 3 rounds. Fast healing has no field in the item schema and the effect is an area resolved in play, so there is nothing expressible to attach."
+  },
+  {
+   "id": "warpglass-chunk",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Raw crafting material: price and Bulk only, nothing an owner wears or activates."
+  },
+  {
+   "id": "warpglass-ingot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Raw crafting material: price and Bulk only, nothing an owner wears or activates."
+  },
+  {
+   "id": "warpglass-item-high-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Generic precious-material entry whose whole content is the Hardness/HP/BT table for an object made of warpglass, i.e. object durability rather than a character-sheet effect."
+  },
+  {
+   "id": "warpglass-weapon",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The single mechanical clause fires on a critical hit and resolves on the target (it suffers a warpwave and automatically fails its save); damage and traits come from the base weapon the material is applied to."
+  },
+  {
+   "id": "warpglass-weapon-high-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same as the base warpglass weapon entry: a critical-hit rider that resolves entirely on the target, plus material price and Craft data."
+  },
+  {
+   "id": "warpriests-cascade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A dispenser that spreads one stored potion over an entire troop, trading duration for area. It confers nothing on the holder; the effect is a potion applied to a troop, which is other-creature/GM territory."
+  },
+  {
+   "id": "warpriests-cascade-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A dispenser that spreads one stored potion over an entire troop, trading duration for area. It confers nothing on the holder; the effect is a potion applied to a troop, which is other-creature/GM territory."
+  },
+  {
+   "id": "warpriests-cascade-major",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A dispenser that spreads one stored potion over an entire troop, trading duration for area. It confers nothing on the holder; the effect is a potion applied to a troop, which is other-creature/GM territory."
+  },
+  {
+   "id": "water-bomb-lesser",
+   "verdict": "ALREADY_OK",
+   "reason": "Its 1 nonlethal bludgeoning damage is already carried by the record damage field ({\"dice\":1,\"die\":\"\",\"type\":\"bludgeoning\"}) that the strike code reads; the persistent-damage flat-check reduction and dousing unattended fires resolve on the target/GM side."
+  },
+  {
+   "id": "water-purifier",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A mundane tool: it counteracts toxins in liquids poured into it and ruins potions. Nothing about the owner changes; the counteract modifiers belong to the filter acting on a liquid."
+  },
+  {
+   "id": "waterproof-carrying-case",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Pure protection flavour: it keeps a firearm and ammunition dry, with no owner-side statistic."
+  },
+  {
+   "id": "waterproof-journal",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Flavour item: a lockable, water-resistant book with no mechanical clause."
+  },
+  {
+   "id": "waterskin",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Provisions container holding a day of water; a Bulk and price entry only."
+  },
+  {
+   "id": "wax-key-blank",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane tool whose entire content is permission to take Interact actions to impress and reuse a key mould; no sheet effect."
+  },
+  {
+   "id": "wayfinder",
+   "verdict": "MISS",
+   "reason": "The Activate clause targets the wayfinder with a 1st-rank light spell, an owner-usable named spell that nothing delivers. The ringmasters-staff precedent stores light as heldSpells {\"0\":[\"light\"]} (light is rank 0 in core.spells). The aeon-stone indentation and its shared investiture slot have no expressible field and are left unmodelled.",
+   "fix": {
+    "heldSpells": {
+     "0": [
+      "light"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wayfinderfinder",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "April Fools joke item: it points at other wayfinders and shouts a slogan, and explicitly states that a stored wayfinder provides no benefits."
+  },
+  {
+   "id": "weapon-shot-lesser",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition whose fundamental runes apply to exactly one Strike and are then spent: an activation resolved and gone in the same moment, with no standing change to any equipped weapon."
+  },
+  {
+   "id": "weapon-shot-moderate",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition whose fundamental runes apply to exactly one Strike and are then spent: an activation resolved and gone in the same moment, with no standing change to any equipped weapon."
+  },
+  {
+   "id": "weapon-shot-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition whose fundamental runes apply to exactly one Strike and are then spent: an activation resolved and gone in the same moment, with no standing change to any equipped weapon."
+  },
+  {
+   "id": "weapon-shot-major",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition whose fundamental runes apply to exactly one Strike and are then spent: an activation resolved and gone in the same moment, with no standing change to any equipped weapon."
+  },
+  {
+   "id": "weapon-siphon",
+   "verdict": "MISS",
+   "reason": "While the siphon is attached, the multiple attack penalty with that weapon is one greater than usual (-6/-11, or -5/-10 with an agile weapon). That is a standing penalty on the owner sheet and nothing carries it; shrieking-key shows situational entries already work on items. The transient 1d4 energy damage on the next three attacks is a spent-bomb effect and is deliberately left out.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "strikeAttack"
+       }
+      ],
+      "when": "on 2nd/3rd attacks with the siphoned weapon (MAP is 1 worse)",
+      "bonus": "-1 untyped"
+     }
+    ]
+   }
+  },
+  {
+   "id": "whammy",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Relic aspect activation forcing an enemy who succeeded to reroll and take the worse result: the whole effect lands on an enemy roll, and the once-per-day limit is already on the record frequency field."
+  },
+  {
+   "id": "wheat",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A commodity price entry (6 sp per bushel) with no rules text at all."
+  },
+  {
+   "id": "wheel-chair-chair-storage",
+   "verdict": "MISS",
+   "reason": "The first 2 Bulk of items stowed in the chair not counting against your Bulk limit is the backpack effect, and the record carries no storage data at all, so the encumbrance relief never happens. backpack ships capacity {\"bulk\":4} plus ignoredBulk 2, and all 46 storage items in core.json use ignoredBulk, so 2 is the exact printed value.",
+   "fix": {
+    "ignoredBulk": 2
+   }
+  },
+  {
+   "id": "wheelbarrow",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Its clauses are a GM-adjudicated carrying capacity, Interact actions to raise or place it, and a tip-over check on Release; the encumbered condition while pushing is applied by the player in play, not a standing item effect."
+  },
+  {
+   "id": "wheelchair",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The base wheelchair entry is descriptive: it prints no Speed, no bonus and no penalty. The mechanical variants (travelers, supramarine, land-delvers chairs) are separate records."
+  }
+ ]
+}

@@ -1,0 +1,518 @@
+{
+ "records": [
+  {
+   "id": "blazons-of-shared-power",
+   "verdict": "MISS",
+   "reason": "The secondary weapon gains the primary weapon's fundamental runes while both are wielded. The engine HAS this lane (inv.copyRunesFrom + effectiveWeaponRunes in derive.ts) but it is gated behind DOUBLING_RINGS, a hardcoded set of two ids, so the blazons deliver nothing.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "Extend derive.ts DOUBLING_RINGS / investedDoublingRings to recognise blazons-of-shared-power (invested, worn) so a weapon marked copyRunesFrom picks up the primary's FUNDAMENTAL runes only. Unlike the rings there is no same-group requirement, and the secondary's own runes are suppressed rather than max'd. No item field can express this."
+   }
+  },
+  {
+   "id": "blazons-of-shared-power-greater",
+   "verdict": "MISS",
+   "reason": "As the base blazons, plus property runes are copied too (and the secondary's own runes are suppressed entirely). Nothing reads it — the rune-copy path only fires for doubling-rings/doubling-rings-greater.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "Same lane as blazons-of-shared-power: teach investedDoublingRings/effectiveWeaponRunes about blazons-of-shared-power-greater, copying fundamental AND property runes, suppressing the secondary's own runes, with an invest-time toggle for fundamental-only. Not expressible as an item field."
+   }
+  },
+  {
+   "id": "bleeding-canines",
+   "verdict": "MISS",
+   "reason": "An invested graft that grants a jaws unarmed attack (1d8 piercing, brawling group). The record carries no grantedStrikes, so the Strikes tab never shows the attack — even though build.ts already pushes grantedStrikes from invested items.",
+   "fix": {
+    "grantedStrikes": [
+     { "name": "Jaws", "die": "d8", "damageType": "piercing", "traits": ["unarmed"], "group": "brawling" }
+    ],
+    "situational": [
+     {
+      "targets": [{ "kind": "strikeDamage" }],
+      "when": "on a critical hit with these jaws",
+      "bonus": "+1 persistent bleed per weapon damage die"
+     }
+    ]
+   }
+  },
+  {
+   "id": "blight-bomb-lesser",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A thrown consumable bomb; its Strike damage (1d4 poison) is already on the weapon record, and the persistent poison and splash land on the TARGET, resolved at the table.",
+   "fix": null
+  },
+  {
+   "id": "blightburn-necklace",
+   "verdict": "MISS",
+   "reason": "While invested you cannot contract blightburn sickness — a standing immunity on the owner, and nothing on the record says so.",
+   "fix": {
+    "passiveEffects": { "immunities": ["blightburn sickness"] }
+   }
+  },
+  {
+   "id": "blightburn-ward",
+   "verdict": "MISS",
+   "reason": "Duplicate record of the blightburn necklace with the same text: invested, you cannot contract blightburn sickness. No immunity is carried.",
+   "fix": {
+    "passiveEffects": { "immunities": ["blightburn sickness"] }
+   }
+  },
+  {
+   "id": "blindpepper-bolt",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition whose entire content is a save the TARGET attempts (dazzled/blinded). Nothing changes on the owner's sheet.",
+   "fix": null
+  },
+  {
+   "id": "blister-ammunition-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition; the itching, dazzled and flat-check-to-act effects all apply to the creature hit, not to the owner.",
+   "fix": null
+  },
+  {
+   "id": "blister-ammunition-lesser",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition; every effect is on the TARGET (itching for 3 rounds, dazzled, concentrate flat check).",
+   "fix": null
+  },
+  {
+   "id": "blister-ammunition-moderate",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition; every effect is on the TARGET (itching for 6 rounds, dazzled, concentrate flat check).",
+   "fix": null
+  },
+  {
+   "id": "blocks",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane toy: 12 wooden blocks in a sack. Pure flavour, no mechanics.",
+   "fix": null
+  },
+  {
+   "id": "blood-bomb-lesser",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Thrown consumable bomb; its Strike damage is on the weapon record and the persistent bleed and splash are applied to the TARGET at the table.",
+   "fix": null
+  },
+  {
+   "id": "bloodbane",
+   "verdict": "MISS",
+   "reason": "The dagger adds 1 persistent bleed damage whenever you damage the clan's ancestral enemy — an owner-side conditional damage rider (verified against the AoN mirror). Nothing carries it; the sickened rider is a target save and needs nothing.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "strikeDamage" }],
+      "when": "against the clan's ancestral enemy (drow, duergar, giant, or orc)",
+      "bonus": "+1 persistent bleed damage"
+     }
+    ]
+   }
+  },
+  {
+   "id": "bloodbane-greater",
+   "verdict": "MISS",
+   "reason": "As bloodbane but 1d4 persistent bleed against the clan's ancestral enemy. No conditional damage rider is recorded.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "strikeDamage" }],
+      "when": "against the clan's ancestral enemy (drow, duergar, giant, or orc)",
+      "bonus": "+1d4 persistent bleed damage"
+     }
+    ]
+   }
+  },
+  {
+   "id": "bloodgorger-scythe",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Its fundamental +1 striking is modelled through the inventory rune editor; both activations (Root in Blood, Sapling Slash) put persistent bleed on the TARGET and make an attack with a fixed printed bonus, resolved entirely at the table with no standing change to the owner.",
+   "fix": null
+  },
+  {
+   "id": "bloodletting-kukri",
+   "verdict": "MISS",
+   "reason": "On a critical hit it adds 1d8 persistent bleed, and — the owner-side half — gives YOU 1d8 temporary Hit Points for 1 minute if the target wasn't already bleeding. Nothing marks the Strike or the HP row.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "strikeDamage" }],
+      "when": "on a critical hit with this kukri",
+      "bonus": "+1d8 persistent bleed damage"
+     },
+     {
+      "targets": [{ "kind": "hp" }],
+      "when": "on a crit if the target had no persistent bleed damage",
+      "bonus": "1d8 temporary Hit Points for 1 minute"
+     }
+    ]
+   }
+  },
+  {
+   "id": "bloodthirsty",
+   "verdict": "MISS",
+   "reason": "Registered in core.runes (weapon property, level 16) but carries no damage or effect. Its crit rider (drained 1) is target-side, but the 5-action activation gives the OWNER temporary HP equal to twice the creature's level for 1 minute — a timed effect the sheet never shows.",
+   "fix": {
+    "mode": {
+     "id": "item-bloodthirsty",
+     "name": "Bloodthirsty (temporary HP)",
+     "fromItemId": "bloodthirsty",
+     "duration": "1 minute",
+     "modifiers": [],
+     "note": "After you reduce a creature to 0 Hit Points with the weapon, Activate (envision) to gain temporary Hit Points equal to twice that creature's level, for 1 minute. Enter the amount in the temporary HP box. (The rune's other effect — a critical hit against a bleeding target makes it Drained 1 — applies to the target.)"
+    }
+   }
+  },
+  {
+   "id": "blowgun-darts",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane ammunition; the hollow shaft is permission to apply poison, which is its own item.",
+   "fix": null
+  },
+  {
+   "id": "boastful-hunter",
+   "verdict": "MISS",
+   "reason": "An intelligent +1 jezail with two owner-side conditional modifiers: +1d6 damage against animals (plus 1d6 persistent bleed on a crit) and, once bored, a -1 item penalty to attack rolls against non-animal targets. Neither is recorded anywhere.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "strikeDamage" }],
+      "when": "on Strikes with the boastful hunter against an animal",
+      "bonus": "+1d6 damage (plus 1d6 persistent bleed on a critical hit)"
+     },
+     {
+      "targets": [{ "kind": "strikeAttack" }],
+      "when": "while the boastful hunter is bored, against non-animal targets",
+      "bonus": "-1 item penalty"
+     }
+    ]
+   }
+  },
+  {
+   "id": "bola-shot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition; prone/stunned are compared against the TARGET's Reflex DC. No owner-side change.",
+   "fix": null
+  },
+  {
+   "id": "bolts",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane crossbow ammunition — pure flavour text, no mechanics of its own.",
+   "fix": null
+  },
+  {
+   "id": "bolts-phalanx-piercer",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane ammunition; the text is a stat listing plus the generic critical-specialization rules blurb, which the Strikes surface already handles from the weapon's group.",
+   "fix": null
+  },
+  {
+   "id": "bomb-coagulant-alembic",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 10-minute alchemical activity that rewrites another consumable's splash into persistent damage. Crafting/downtime apparatus — the changed bomb is resolved when it is thrown.",
+   "fix": null
+  },
+  {
+   "id": "bomb-launcher",
+   "verdict": "MISS",
+   "reason": "\"Bombs fired with a bomb launcher have a range increment of 60 feet\" — that overrides the range increment shown on every bomb Strike the owner makes, and no field on an item can reach another item's range.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "Needs a range-override lane: while a bomb-launcher is held in two hands, thrown-bomb Strikes should show range 60 instead of the bomb's own 20. There is no item field for modifying another item's range increment, and no situational kind covers range."
+   }
+  },
+  {
+   "id": "bombers-saddle",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Both activations are immediate — drop a bomb and make a ranged Strike, or drop the payload and roll once against AC 10 — with no standing change to the rider. The compartment holds a COUNT of six bombs, not a Bulk allowance, so the container capacity field has nothing correct to say.",
+   "fix": null
+  },
+  {
+   "id": "bone-object",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A raw material entry: Hardness/HP/BT tables for objects made of bone. Object statistics the GM uses, not anything on a character sheet.",
+   "fix": null
+  },
+  {
+   "id": "bone-specimen",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The same material entry sold by Bulk. Crafting stock — no mechanical effect on the owner.",
+   "fix": null
+  },
+  {
+   "id": "book-of-lost-days",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 1-hour activation whose whole content is a GM-adjudicated Recall Knowledge result and a narrative cost (a lost memory, a shortened lifespan); its only mechanical price is the Drained 2 condition, which the sheet already tracks as a condition.",
+   "fix": null
+  },
+  {
+   "id": "book-of-translation-advanced",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Its entire content is permission — you may attempt Diplomacy with speakers of a language you don't know — and the advanced version explicitly REMOVES the penalty, so it leaves no modifier to carry.",
+   "fix": null
+  },
+  {
+   "id": "book-of-translation-standard",
+   "verdict": "MISS",
+   "reason": "Unlike the advanced book, the standard one imposes a -2 circumstance penalty on the Diplomacy checks it enables. That is a conditional modifier on the owner's own roll and nothing records it.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "skill", "detail": "diplomacy" }],
+      "when": "to Gather Information or Make an Impression using this book's language",
+      "bonus": "-2 circumstance"
+     }
+    ]
+   }
+  },
+  {
+   "id": "boots-of-dancing",
+   "verdict": "MISS",
+   "reason": "\"These boots act as Boots of Elvenkind (Greater)\" — that item ships passiveEffects {skills:{acrobatics:2}}, and this cursed copy carries nothing, so the wearer loses the +2 item bonus to Acrobatics. (The curse itself is a GM-run Uncontrollable Dance and needs nothing.)",
+   "fix": {
+    "passiveEffects": { "skills": { "acrobatics": 2 } }
+   }
+  },
+  {
+   "id": "bottled-lightning-lesser",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Thrown consumable bomb; damage is on the weapon record and off-guard applies to the TARGET.",
+   "fix": null
+  },
+  {
+   "id": "bottled-sunlight-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Thrown consumable bomb; its damage is on the weapon record and the light it sheds is an environment effect resolved at the table.",
+   "fix": null
+  },
+  {
+   "id": "bottled-sunlight-lesser",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Thrown consumable bomb; damage on the record, light is table-side, and the vitality rules apply to the target.",
+   "fix": null
+  },
+  {
+   "id": "bottled-sunlight-major",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Thrown consumable bomb; damage on the record, light and the anti-undead maximum are resolved against the target.",
+   "fix": null
+  },
+  {
+   "id": "bottled-sunlight-moderate",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Thrown consumable bomb; damage on the record, the rest is target- and table-side.",
+   "fix": null
+  },
+  {
+   "id": "bottomless-reservoir",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A relic ASPECT gift, not a purchasable item (no level, no price): storing and releasing water, and a counteract attempt against an acid/water effect. GM-granted and resolved at the table with no standing change.",
+   "fix": null
+  },
+  {
+   "id": "bottomless-stein",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Endlessly refilling ale that cannot be decanted or sold. Pure flavour — it confers no bonus and no resource the sheet tracks.",
+   "fix": null
+  },
+  {
+   "id": "box-of-unspoiling-type-i",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered: the record carries capacity {bulk:25} and ignoredBulk 25, matching \"holding 25 Bulk\". Keeping food fresh for a year is flavour.",
+   "fix": null
+  },
+  {
+   "id": "box-of-unspoiling-type-ii",
+   "verdict": "MISS",
+   "reason": "The text says it holds 50 Bulk, but the record was imported with Type I's numbers — capacity {bulk:25} and ignoredBulk 25 — so a player using it loses half the storage the item promises.",
+   "fix": {
+    "capacity": { "bulk": 50 },
+    "ignoredBulk": 50
+   }
+  },
+  {
+   "id": "box-of-unspoiling-type-iii",
+   "verdict": "MISS",
+   "reason": "The text says 100 Bulk; the record carries capacity {bulk:25} / ignoredBulk 25 copied from Type I.",
+   "fix": {
+    "capacity": { "bulk": 100 },
+    "ignoredBulk": 100
+   }
+  },
+  {
+   "id": "box-of-unspoiling-type-iv",
+   "verdict": "MISS",
+   "reason": "The text says 150 Bulk; the record carries capacity {bulk:25} / ignoredBulk 25 copied from Type I.",
+   "fix": {
+    "capacity": { "bulk": 150 },
+    "ignoredBulk": 150
+   }
+  },
+  {
+   "id": "brain-cylinder",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The whole entry is a stat block for the preserved brain inside it (its own Perception, AC, saves, HP, IWR) — a creature/object the GM runs. None of it belongs to the character holding the cylinder.",
+   "fix": null
+  },
+  {
+   "id": "branch-attendants-mask",
+   "verdict": "MISS",
+   "reason": "\"While you wear the mask... add the associated cantrip to your prepared cantrips\", chosen by Magaambya branch. The player is never asked which branch and gains no cantrip; the record has no effectChoices.",
+   "fix": {
+    "effectChoices": [
+     {
+      "id": "branch",
+      "prompt": "Which branch of the Magaambya does this mask belong to?",
+      "options": [
+       {
+        "value": "cascade-bearers",
+        "label": "Cascade Bearers — Read Aura",
+        "grant": { "innateSpells": [{ "spellId": "read-aura", "tradition": "arcane", "atWill": true }] }
+       },
+       {
+        "value": "emerald-boughs",
+        "label": "Emerald Boughs — Root Reading",
+        "grant": { "innateSpells": [{ "spellId": "root-reading", "tradition": "primal", "atWill": true }] }
+       },
+       {
+        "value": "rain-scribes",
+        "label": "Rain-Scribes — Deep Breath",
+        "grant": { "innateSpells": [{ "spellId": "deep-breath", "tradition": "primal", "atWill": true }] }
+       },
+       {
+        "value": "tempest-sun-mages",
+        "label": "Tempest-Sun Mages — Electric Arc",
+        "grant": { "innateSpells": [{ "spellId": "electric-arc", "tradition": "arcane", "atWill": true }] }
+       },
+       {
+        "value": "uzunjati",
+        "label": "Uzunjati",
+        "note": "The imported text is truncated and does not name the Uzunjati cantrip; record the branch only."
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "brass-ear",
+   "verdict": "MISS",
+   "reason": "It halves the DC increase a barrier imposes on the owner's own Perception check to hear through it — a conditional change to a roll the sheet shows, and nothing flags it.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "perception" }],
+      "when": "listening through a door, window, or thin wall with the brass ear",
+      "bonus": "the barrier's DC increase is halved"
+     }
+    ]
+   }
+  },
+  {
+   "id": "breath-of-dragons",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A relic/soul-seed ASPECT gift with no level and no price — not a purchasable item. Its once-a-day breath deals damage to creatures in an area with a basic Reflex save, scaling off the seed's level; entirely target-side.",
+   "fix": null
+  },
+  {
+   "id": "brick",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A bulk construction commodity priced per 1,000. No mechanics.",
+   "fix": null
+  },
+  {
+   "id": "brilliant",
+   "verdict": "MISS",
+   "reason": "The rune is registered in core.runes but with no `damage` entry, so its per-Strike riders (1d4 fire always, plus 1d4 spirit vs fiends and 1d4 vitality vs undead) never reach a Strike. derive.ts reads db.runes[p].damage, which is populated only from the hardcoded RUNE_DAMAGE table in scripts/import-core.mjs.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "Add brilliant to RUNE_DAMAGE in scripts/import-core.mjs — but the shape must first grow a target-conditional rider: 1d4 fire on every successful Strike, +1d4 spirit only against fiends, +1d4 vitality only against undead. The existing RuneDamage shape carries a single unconditional type, so this cannot be expressed today. (Crit-blind and the Shine Bright! counteract activation need nothing.)"
+   }
+  },
+  {
+   "id": "brilliant-greater",
+   "verdict": "MISS",
+   "reason": "Same as brilliant: registered as a weapon property rune with no `damage`, so the 1d4 fire / 1d4 spirit vs fiends / 1d4 vitality vs undead riders are inert. The greater version additionally ignores the target's resistances to those three types, which has no lane at all.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "Same RUNE_DAMAGE gap as brilliant, plus a resistance-bypass flag (damage from this weapon ignores fire, spirit and vitality resistance). Neither is expressible with the current rune-damage shape."
+   }
+  },
+  {
+   "id": "brimorak-bone-tiles",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A consumable catalyst added to a Shield casting; its whole effect is persistent bleed on creatures ADJACENT TO YOU that fail a Reflex save when you Shield Block. Target-side and consumed in the moment.",
+   "fix": null
+  },
+  {
+   "id": "brooch-of-shielding",
+   "verdict": "MISS",
+   "reason": "It automatically absorbs magic missiles targeting the wearer, with a hard stock of 30 before it melts — an owner-side defensive resource with a count. The record carries no counter, so nothing tracks how many are left (and the text says a found brooch may already be partly spent).",
+   "fix": {
+    "counters": [
+     { "id": "missiles", "label": "magic missiles absorbed", "max": 30, "resetsOnRest": false }
+    ]
+   }
+  },
+  {
+   "id": "buoyancy-vest",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Its content is a flat check to avoid sinking whose DC the GM sets and adjusts for weather and water conditions. No standing modifier on the wearer.",
+   "fix": null
+  },
+  {
+   "id": "buoyant-shot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Bombard ammunition: the reduced Bulk is a stat on the ammunition itself and the forced movement is applied to creatures that fail their Reflex save. Nothing on the owner's sheet.",
+   "fix": null
+  },
+  {
+   "id": "burnished-plating",
+   "verdict": "MISS",
+   "reason": "An armor adjustment with a standing owner-side cost: a -4 circumstance penalty to Stealth except in darkness (which applies even if you meet the raised Strength entry), and the armor's Strength entry goes up by 2. Nothing on the record says so. The Sunshine! reaction itself is table-resolved.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "skill", "detail": "stealth" }],
+      "when": "while wearing armor with burnished plating, except in darkness",
+      "bonus": "-4 circumstance"
+     }
+    ]
+   }
+  },
+  {
+   "id": "burrowing-bolt",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition that tunnels through a structure or object of Hardness 14 or less. It affects terrain and objects, which the GM adjudicates; nothing on the shooter's sheet changes.",
+   "fix": null
+  },
+  {
+   "id": "burrowing-bolt-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same as the base bolt at Hardness 18 / 10 feet — an object-and-terrain effect the GM adjudicates.",
+   "fix": null
+  },
+  {
+   "id": "butterfly-or-moth",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A pet with an explicit note that it cannot be combat trained or contribute to combat in any way. Pure flavour.",
+   "fix": null
+  },
+  {
+   "id": "cage",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane gear with no rules text at all in the record — nothing is promised, so nothing is missing.",
+   "fix": null
+  },
+  {
+   "id": "call-of-the-wild",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A relic ASPECT gift, not a purchasable item (no level, no price, no usage): once a day the relic casts Summon Animal at a rank derived from the relic's own level, which the GM builds. The summon and its Sustain are run at the table.",
+   "fix": null
+  },
+  {
+   "id": "called-accessory-rune",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An activation resolved and gone in the same moment — the marked item teleports to a free hand. Its once-per-hour frequency is already on the record and no standing change results.",
+   "fix": null
+  }
+ ]
+}

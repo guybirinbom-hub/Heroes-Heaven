@@ -1,0 +1,336 @@
+{
+ "records": [
+  {
+   "id": "cold-iron-buckler-low-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Precious-material catalogue row (itemType equipment, no acBonus/hardness), not a wearable shield record; the text says cold iron shields give the owner no additional effect, and Hardness/HP/BT are not fields in the legal item-effect set."
+  },
+  {
+   "id": "cold-iron-buckler-standard-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same material catalogue row as the low grade; only Hardness/HP/BT differ, which are shield-record stats and not part of the legal item-effect set. Cold iron itself only matters against a target's weakness."
+  },
+  {
+   "id": "cold-iron-chunk",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Raw crafting material sold by weight; the whole entry is a hardness table for crafted objects, nothing touches the owner's sheet."
+  },
+  {
+   "id": "cold-iron-ingot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Raw crafting material; price/Bulk only, no owner-facing mechanic."
+  },
+  {
+   "id": "cold-iron-object-high-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Trade good priced per Bulk (a lump of cold iron worked into an object); its content is object Hardness/HP/BT for the GM, not a character statistic."
+  },
+  {
+   "id": "cold-iron-object-low-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Trade good priced per Bulk; object durability only, no owner-facing mechanic."
+  },
+  {
+   "id": "cold-iron-object-standard-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Trade good priced per Bulk; object durability only, no owner-facing mechanic."
+  },
+  {
+   "id": "cold-iron-shield-high-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Material catalogue row, not a shield record; the printed benefit is only that a shield bash counts as cold iron, which is resolved against the target's weakness."
+  },
+  {
+   "id": "cold-iron-shield-low-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Material catalogue row; cold iron shields explicitly have no additional effect for the wielder."
+  },
+  {
+   "id": "cold-iron-shield-standard-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Material catalogue row; cold iron shields explicitly have no additional effect for the wielder."
+  },
+  {
+   "id": "cold-iron-transmuting-ingot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable whetstone: for 1 minute the weapon's physical damage counts as cold iron. Material typing only matters against a target's weakness/resistance, which is resolved on the GM's side."
+  },
+  {
+   "id": "cold-iron-weapon-high-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Material catalogue row; the only printed effect is extra damage to creatures with cold iron weakness, which is target-side."
+  },
+  {
+   "id": "cold-iron-weapon-low-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Material catalogue row; the printed effect is target-side weakness damage only."
+  },
+  {
+   "id": "cold-iron-weapon-standard-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Material catalogue row; the printed effect is target-side weakness damage only."
+  },
+  {
+   "id": "collar",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane 1 sp animal collar with no printed text or mechanic."
+  },
+  {
+   "id": "collar-of-empathy",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Everything it gives is companion-facing: shared emotional awareness (flavour) plus a Sustained activation to perceive through the animal companion's senses. No standing change to the wearer's statistics."
+  },
+  {
+   "id": "collar-of-the-shifting-spider",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Delivery device: it injects a mutagen already loaded into it, applying that mutagen's own effect (at half duration). The mechanical payload belongs to the mutagen record, not the collar."
+  },
+  {
+   "id": "comealong",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane winch; permission to drag a heavy load, adjudicated by the GM, with no printed bonus."
+  },
+  {
+   "id": "command-legion",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Relic gift (no price, GM-granted) whose activation summons fiends and commands them. Summoned creatures are ally/GM-side; nothing on the owner's sheet changes, and giving it an unlimited innate summon fiend would over-grant."
+  },
+  {
+   "id": "communication-bangle",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane coded-message trinket; the only checks are made by someone else inspecting it (Society vs the coder's Deception DC)."
+  },
+  {
+   "id": "communication-pendants",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Activation projects your voice to the paired pendant's wearer. Pure communication, no statistic or sense granted."
+  },
+  {
+   "id": "compass",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Owning it is the baseline: the -2 item penalty applies only when you lack a compass, so having one grants no bonus."
+  },
+  {
+   "id": "compound-eyes",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Once/day fortune reroll on a flat check against a concealed creature. The engine rolls no flat checks, and the 1/day frequency is already recorded on the record (501 well-modelled items carry frequency without a counter)."
+  },
+  {
+   "id": "concealment-coin",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane hollow coin; the checks it prompts are made by the creature searching it, against the owner's existing Thievery DC."
+  },
+  {
+   "id": "conducting",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The rune exists in core.runes (slot weapon, kind property) so it can be etched. Its 1d8 rider only applies while the Conduct Energy activation is running, with a type chosen at activation; mode modifiers carry flat numeric values only and an unconditional strikeDamage entry would over-grant, so no legal field expresses it."
+  },
+  {
+   "id": "conduit-shot-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition that enlarges a spell's AREA (burst radius / cone or line length). Area is not a sheet statistic and the whole effect is measured on the map."
+  },
+  {
+   "id": "conduit-shot-lesser",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same as the greater grade: it changes a spell's area on the map, which the sheet does not track."
+  },
+  {
+   "id": "conduit-shot-moderate",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same as the other grades: spell-area enlargement resolved on the map, no owner statistic."
+  },
+  {
+   "id": "cookware",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane camp gear with no printed text or mechanic."
+  },
+  {
+   "id": "copper-ingot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Trade good; the entire entry is a price."
+  },
+  {
+   "id": "corrective-lenses",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane worn accessory; the text only describes donning/removing them as an Interact action, with no printed bonus or penalty."
+  },
+  {
+   "id": "corrosive",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered by core.runes['corrosive'], which carries damage {dice:1,die:'d6',type:'acid'}; the crit rider (3d6 acid to the target's armour or raised shield) is target-side."
+  },
+  {
+   "id": "corrosive-ammunition",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The entire effect damages the TARGET's armour (or the target itself), and the target ends it with an Interact action. Nothing touches the shooter's sheet."
+  },
+  {
+   "id": "corrosive-greater",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered by core.runes['corrosive-greater'] with damage {dice:1,die:'d6',type:'acid'}; the 6d6 armour damage and the acid-resistance bypass are both resolved on the target."
+  },
+  {
+   "id": "cotton-1-bulk",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Trade good; the entire entry is a price."
+  },
+  {
+   "id": "cotton-bale",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Trade good; the entire entry is a price."
+  },
+  {
+   "id": "counterfeit-item-high-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A service you hire (a forged copy of some other item). It explicitly has no magical powers of its own and functions as the mundane base item; detection is a GM/opposed-check matter."
+  },
+  {
+   "id": "counterfeit-item-low-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Hired forgery service; the counterfeit acts only as the mundane base item, which the base item's own record already provides."
+  },
+  {
+   "id": "counterfeit-item-medium-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Hired forgery service; no powers of its own, detection adjudicated by the GM."
+  },
+  {
+   "id": "countering-charm",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Reaction activation resolved at the table: counteract the triggering spell with a printed flat +20 modifier. The stored spell is never cast by the owner, so encoding it as a spellSlot would over-grant a free casting; the analogous ring-of-counterspells is likewise inert."
+  },
+  {
+   "id": "countering-charm-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "As the base charm, with a printed +25 counteract modifier used at the table; no owner statistic changes and the held spell is only spent to counteract."
+  },
+  {
+   "id": "countering-charm-major",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "As the base charm, with a printed +30 counteract modifier used at the table; no owner statistic changes."
+  },
+  {
+   "id": "cow",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Livestock/pet; the entry explicitly states it cannot be combat trained or contribute to combat in any way."
+  },
+  {
+   "id": "cradle-minder",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Pet; explicitly cannot be combat trained or contribute to combat. Its croaking alarm is flavour the GM narrates."
+  },
+  {
+   "id": "crimson-brand",
+   "verdict": "MISS",
+   "reason": "Printed as a '+1 striking Wounding bastard sword', but the record carries only the base d8 slashing bastard-sword statistics, no potency/striking data and no registry entry, so a character wielding it attacks and damages as a mundane bastard sword. The engine has no built-in-rune field for items, so the potency is delivered the way vine-whip's is - a situational item bonus on Strikes with the weapon (the striking die and the Wounding bleed, which is target-side, stay as prose).",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "strikeAttack"
+       }
+      ],
+      "when": "on Strikes with the crimson brand, printed as a +1 striking weapon",
+      "bonus": "+1 item"
+     }
+    ]
+   }
+  },
+  {
+   "id": "crowbar",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Owning it is the baseline: the -2 item penalty to Force Open applies only when you lack a crowbar, so having one grants no bonus."
+  },
+  {
+   "id": "crushing",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The rune is present in core.runes (slot weapon, kind property) so it can be etched; its entire effect is Clumsy 1 and Enfeebled 1 imposed on the TARGET after a critical hit."
+  },
+  {
+   "id": "crushing-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Present in core.runes and etchable; the effect is Clumsy 2 / Enfeebled 2 on the TARGET after a critical hit."
+  },
+  {
+   "id": "crutch",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane mobility aid; the text is purely descriptive with no printed bonus, penalty, or Speed change."
+  },
+  {
+   "id": "curse-wound",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Relic gift whose whole effect is on the TARGET: it attempts a Will save or cannot recover the Hit Points lost to the triggering Strike."
+  },
+  {
+   "id": "cursed-dreamstone",
+   "verdict": "MISS",
+   "reason": "On a Failure the bearer takes a standing -2 item penalty to saving throws against sleep effects and is fatigued whenever they wake, for as long as they carry the stone - a real, ongoing change to the owner's sheet that nothing delivers. Because it only lands after a failed save, it is encoded as an item mode the player switches on rather than an always-on passive.",
+   "fix": {
+    "mode": {
+     "id": "item-cursed-dreamstone",
+     "name": "Cursed Dreamstone",
+     "fromItemId": "cursed-dreamstone",
+     "duration": "as long as you possess the stone",
+     "survivesRest": true,
+     "note": "Switch this on only if you failed the save against the curse. You are also fatigued whenever you wake from sleep, natural or magical, and you gain no bonus from the dreamstone. On a critical failure you additionally get one degree worse on every saving throw against sleep effects.",
+     "modifiers": [
+      {
+       "target": "save",
+       "detail": "all",
+       "type": "item",
+       "value": -2,
+       "appliesWhen": "against sleep effects"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "cursed-immaculate-instrument",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Its effect is a flat check each time the holder produces a work (crafting/downtime) with an escalating DC, then a GM-narrated compulsion. No sheet statistic changes and the holder cannot even perceive the curse."
+  },
+  {
+   "id": "cutlery",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Ammunition for the Spoon Gun; the weapon record supplies the Strike, and the cutlery itself grants nothing."
+  },
+  {
+   "id": "cytillesh-toolkit",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A mundane healer's toolkit (no printed Medicine bonus) that inflicts the Sickened 1 condition on a non-dero user; Sickened is applied through the sheet's existing condition tracker, and duplicating it as a mode would double-count it. The dim light it sheds is not a tracked statistic."
+  },
+  {
+   "id": "dancing-shadow",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Relic gift activation: a detached shadow flies out and makes Strikes for a flat 5d8 (double on a crit) using your existing attack bonus and multiple attack penalty. Encoding it as a grantedStrike would make it permanently available, an over-grant; the activation is resolved at the table."
+  },
+  {
+   "id": "dark-roads",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Relic gift activation that teleports you up to 30 (or 60) feet and is over the moment it resolves; no duration, no standing change."
+  },
+  {
+   "id": "dawnfire-beacon",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Its only printed effect is bright light in the banner's aura and dim light at twice that radius. Illumination is not a tracked statistic and the effect is suppressed when not held."
+  },
+  {
+   "id": "dawnsilver-armor-high-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Material catalogue row priced per Bulk (itemType equipment, no acBonus/dexCap/strength/speedPenalty), not a wearable armour record - the app models materials via the `material` field on a concrete item. Its benefits are adjustments to a real armour's Bulk, Strength value, and Speed penalty, none of which are fields in the legal item-effect set, and a passiveEffects speedBonus would over-grant on armour with no penalty."
+  },
+  {
+   "id": "dawnsilver-armor-standard-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same material catalogue row at a lower grade; identical benefits belong on a concrete armour record's own bulk/strength/speedPenalty, which are outside the legal item-effect set."
+  },
+  {
+   "id": "dawnsilver-buckler-high-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Material catalogue row, not a shield record; it only changes Bulk and Hardness/HP/BT and makes a shield bash count as silver, which is resolved against the target's weakness."
+  }
+ ]
+}

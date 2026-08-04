@@ -1,0 +1,548 @@
+{
+ "rulings": [
+  {
+   "id": "signifers-mask",
+   "upheld": true,
+   "why": "Foundry pf2e ships exactly this: +1 circumstance on deception predicated on lie/sense-motive and +1 circumstance on intimidation predicated on coerce; the record carries nothing, and the situational shape and the bonus TYPE both match.",
+   "correction": {}
+  },
+  {
+   "id": "skyrider-sword-greater",
+   "upheld": true,
+   "why": "A command activation lasting until Dismissed that gives the wielder a fly Speed is the item-mode lane; no mode with this fromItemId exists, and min(25,@actor.speed.land) is a formula resolveFormula actually parses.",
+   "correction": {}
+  },
+  {
+   "id": "slashing-claws",
+   "upheld": true,
+   "why": "Invested graft (invested trait present, so item grantedStrikes are collected); Foundry ships a Strike rule element with the identical 1d4 slashing brawling agile/finesse unarmed claw, and the record has no grantedStrikes.",
+   "correction": {}
+  },
+  {
+   "id": "smoked-goggles",
+   "upheld": true,
+   "why": "Avert Gaze in this corpus is +2 circumstance to saves against visual abilities, and the goggles make that permanent for the wearer; nothing on the record delivers it and the conditional lane is the honest one.",
+   "correction": {}
+  },
+  {
+   "id": "smoking-sword",
+   "upheld": true,
+   "why": "Foundry models the same thing as a flat +1 fire FlatModifier on the weapon damage when not stoked; strikeDamage on a WEAPON is intrinsic to that weapon, so it cannot leak to other Strikes.",
+   "correction": {}
+  },
+  {
+   "id": "smugglers-sack-type-i",
+   "upheld": true,
+   "why": "Ships capacity {bulk:0} with ignoredBulk 0, i.e. a container that holds nothing; the text gives 5 Bulk of mundane space plus a 1-Bulk weightless pocket, and the capacity/ignoredBulk pair matches the spacious-pouch and knapsack-of-halflingkind convention already in core.json.",
+   "correction": {}
+  },
+  {
+   "id": "smugglers-sack-type-ii",
+   "upheld": true,
+   "why": "Ships capacity {bulk:0} with ignoredBulk 0, i.e. a container that holds nothing; the text gives 5 Bulk of mundane space plus a 5-Bulk weightless pocket, and the capacity/ignoredBulk pair matches the spacious-pouch and knapsack-of-halflingkind convention already in core.json.",
+   "correction": {}
+  },
+  {
+   "id": "smugglers-sack-type-iii",
+   "upheld": true,
+   "why": "Ships capacity {bulk:0} with ignoredBulk 0, i.e. a container that holds nothing; the text gives 5 Bulk of mundane space plus a 10-Bulk weightless pocket, and the capacity/ignoredBulk pair matches the spacious-pouch and knapsack-of-halflingkind convention already in core.json.",
+   "correction": {}
+  },
+  {
+   "id": "smugglers-sack-type-iv",
+   "upheld": true,
+   "why": "Ships capacity {bulk:0} with ignoredBulk 0, i.e. a container that holds nothing; the text gives 5 Bulk of mundane space plus a 25-Bulk weightless pocket, and the capacity/ignoredBulk pair matches the spacious-pouch and knapsack-of-halflingkind convention already in core.json.",
+   "correction": {}
+  },
+  {
+   "id": "smugglers-sack-type-v",
+   "upheld": true,
+   "why": "Ships capacity {bulk:0} with ignoredBulk 0, i.e. a container that holds nothing; the text gives 5 Bulk of mundane space plus a 50-Bulk weightless pocket, and the capacity/ignoredBulk pair matches the spacious-pouch and knapsack-of-halflingkind convention already in core.json.",
+   "correction": {}
+  },
+  {
+   "id": "snowshoes",
+   "upheld": true,
+   "why": "The -10-foot penalty is printed as an ITEM penalty and applies only off snow, so a flat passiveEffects.speedPenalty would be wrong while on snow; the conditional lane names the right type, and kind speed has 120 shipped precedents.",
+   "correction": {}
+  },
+  {
+   "id": "splinter-spear",
+   "upheld": true,
+   "why": "Every hit deals 1d6 persistent bleed and nothing carries it; the strikeDamage-star shape matches the shipped artery-map entry. Counters dropped from the fix: the record already carries frequency {max:1,per:day} and counterDefs synthesizes the identical freq counter, so that block was a no-op second source of truth.",
+   "correction": {
+    "fix": {
+     "situational": [
+      {
+       "targets": [
+        {
+         "kind": "strikeDamage"
+        }
+       ],
+       "when": "when you hit with the splinter spear (persistent bleed)",
+       "bonus": "1d6 persistent bleed"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "splinter-spear-greater",
+   "upheld": true,
+   "why": "Every hit deals 1d6 persistent bleed and nothing carries it; the strikeDamage-star shape matches the shipped artery-map entry. Counters dropped from the fix: the record already carries frequency {max:1,per:day} and counterDefs synthesizes the identical freq counter, so that block was a no-op second source of truth.",
+   "correction": {
+    "fix": {
+     "situational": [
+      {
+       "targets": [
+        {
+         "kind": "strikeDamage"
+        }
+       ],
+       "when": "when you hit with the splinter spear (persistent bleed)",
+       "bonus": "1d6 persistent bleed"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "splinter-spear-major",
+   "upheld": true,
+   "why": "Every hit deals 1d6 persistent bleed and nothing carries it; the strikeDamage-star shape matches the shipped artery-map entry. Counters dropped from the fix: the record already carries frequency {max:1,per:day} and counterDefs synthesizes the identical freq counter, so that block was a no-op second source of truth.",
+   "correction": {
+    "fix": {
+     "situational": [
+      {
+       "targets": [
+        {
+         "kind": "strikeDamage"
+        }
+       ],
+       "when": "when you hit with the splinter spear (persistent bleed)",
+       "bonus": "1d6 persistent bleed"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "spry-sinews-lesser",
+   "upheld": true,
+   "why": "Invested graft that permanently extends every Leap; no engine field computes Leap distance, so the conditional star on Speed is the only honest lane and the record carries nothing at all.",
+   "correction": {}
+  },
+  {
+   "id": "spry-sinews-greater",
+   "upheld": true,
+   "why": "Same as the lesser graft at +10/+6 feet; the record carries nothing.",
+   "correction": {}
+  },
+  {
+   "id": "spurned-lute",
+   "upheld": true,
+   "why": "Foundry ships both halves verbatim: +1 ITEM bonus to Performance while playing this instrument, -4 CIRCUMSTANCE with any other; the judge named both types correctly and the record carries neither.",
+   "correction": {}
+  },
+  {
+   "id": "stalwarts-ring",
+   "upheld": true,
+   "why": "A daily-preparations meditation whose 5 temporary Hit Points last until the next preparations is a durable state, and note-only item modes for temp HP are the shipped lane (champions-laurels x3, lastwall-soup, sun-orchid-poultice). Counters dropped: the record already has frequency {max:1,per:day}, which synthesizes the same counter.",
+   "correction": {
+    "fix": {
+     "mode": {
+      "id": "item-stalwarts-ring",
+      "name": "Stalwart's Ring",
+      "fromItemId": "stalwarts-ring",
+      "duration": "until your next daily preparations",
+      "survivesRest": false,
+      "modifiers": [],
+      "note": "5 temporary Hit Points, gained by meditating on the ring during daily preparations. They last until your next daily preparations and only while you keep wearing the ring."
+     }
+    }
+   }
+  },
+  {
+   "id": "steamflight-pack",
+   "upheld": true,
+   "why": "A switched-on fly Speed of 20 feet running for 20 minutes is a lasting self-affecting movement type; the mode carries fromItemId and a concrete speeds.fly, which deriveSpeeds reads from activeModes.",
+   "correction": {}
+  },
+  {
+   "id": "storm-hammer",
+   "upheld": true,
+   "why": "Foundry ships the same flat +1 electricity FlatModifier predicated on NOT being electrified; the judge left the 1d6 Electrify upgrade in prose so the two cannot double-count.",
+   "correction": {}
+  },
+  {
+   "id": "talisman-cord-lesser",
+   "upheld": true,
+   "why": "The owner's choice-lane ruling covers exactly this case (legacy school-of-magic picks): still let the player choose, but TELL them it will not grant the benefit - never show a pick that silently does nothing. The judge's picker was silent, so the fix now carries dataWarning too.",
+   "correction": {
+    "fix": {
+     "effectChoices": [
+      {
+       "id": "cord-school-1",
+       "prompt": "Choose magic school 1 the cord is attuned to (it gains that trait)",
+       "options": [
+        {
+         "value": "abjuration",
+         "label": "Abjuration"
+        },
+        {
+         "value": "conjuration",
+         "label": "Conjuration"
+        },
+        {
+         "value": "divination",
+         "label": "Divination"
+        },
+        {
+         "value": "enchantment",
+         "label": "Enchantment"
+        },
+        {
+         "value": "evocation",
+         "label": "Evocation"
+        },
+        {
+         "value": "illusion",
+         "label": "Illusion"
+        },
+        {
+         "value": "necromancy",
+         "label": "Necromancy"
+        },
+        {
+         "value": "transmutation",
+         "label": "Transmutation"
+        }
+       ]
+      }
+     ],
+     "dataWarning": "The cord's magic-school attunement is legacy content: the Remaster removed school traits, so the app records your pick but cannot run the talisman-preservation flat check for you."
+    }
+   }
+  },
+  {
+   "id": "talisman-cord",
+   "upheld": true,
+   "why": "The owner's choice-lane ruling covers exactly this case (legacy school-of-magic picks): still let the player choose, but TELL them it will not grant the benefit - never show a pick that silently does nothing. The judge's picker was silent, so the fix now carries dataWarning too.",
+   "correction": {
+    "fix": {
+     "effectChoices": [
+      {
+       "id": "cord-school-1",
+       "prompt": "Choose magic school 1 the cord is attuned to (it gains that trait)",
+       "options": [
+        {
+         "value": "abjuration",
+         "label": "Abjuration"
+        },
+        {
+         "value": "conjuration",
+         "label": "Conjuration"
+        },
+        {
+         "value": "divination",
+         "label": "Divination"
+        },
+        {
+         "value": "enchantment",
+         "label": "Enchantment"
+        },
+        {
+         "value": "evocation",
+         "label": "Evocation"
+        },
+        {
+         "value": "illusion",
+         "label": "Illusion"
+        },
+        {
+         "value": "necromancy",
+         "label": "Necromancy"
+        },
+        {
+         "value": "transmutation",
+         "label": "Transmutation"
+        }
+       ]
+      },
+      {
+       "id": "cord-school-2",
+       "prompt": "Choose magic school 2 the cord is attuned to (it gains that trait)",
+       "options": [
+        {
+         "value": "abjuration",
+         "label": "Abjuration"
+        },
+        {
+         "value": "conjuration",
+         "label": "Conjuration"
+        },
+        {
+         "value": "divination",
+         "label": "Divination"
+        },
+        {
+         "value": "enchantment",
+         "label": "Enchantment"
+        },
+        {
+         "value": "evocation",
+         "label": "Evocation"
+        },
+        {
+         "value": "illusion",
+         "label": "Illusion"
+        },
+        {
+         "value": "necromancy",
+         "label": "Necromancy"
+        },
+        {
+         "value": "transmutation",
+         "label": "Transmutation"
+        }
+       ]
+      }
+     ],
+     "dataWarning": "The cord's magic-school attunement is legacy content: the Remaster removed school traits, so the app records your pick but cannot run the talisman-preservation flat check for you."
+    }
+   }
+  },
+  {
+   "id": "talisman-cord-greater",
+   "upheld": true,
+   "why": "The owner's choice-lane ruling covers exactly this case (legacy school-of-magic picks): still let the player choose, but TELL them it will not grant the benefit - never show a pick that silently does nothing. The judge's picker was silent, so the fix now carries dataWarning too.",
+   "correction": {
+    "fix": {
+     "effectChoices": [
+      {
+       "id": "cord-school-1",
+       "prompt": "Choose magic school 1 the cord is attuned to (it gains that trait)",
+       "options": [
+        {
+         "value": "abjuration",
+         "label": "Abjuration"
+        },
+        {
+         "value": "conjuration",
+         "label": "Conjuration"
+        },
+        {
+         "value": "divination",
+         "label": "Divination"
+        },
+        {
+         "value": "enchantment",
+         "label": "Enchantment"
+        },
+        {
+         "value": "evocation",
+         "label": "Evocation"
+        },
+        {
+         "value": "illusion",
+         "label": "Illusion"
+        },
+        {
+         "value": "necromancy",
+         "label": "Necromancy"
+        },
+        {
+         "value": "transmutation",
+         "label": "Transmutation"
+        }
+       ]
+      },
+      {
+       "id": "cord-school-2",
+       "prompt": "Choose magic school 2 the cord is attuned to (it gains that trait)",
+       "options": [
+        {
+         "value": "abjuration",
+         "label": "Abjuration"
+        },
+        {
+         "value": "conjuration",
+         "label": "Conjuration"
+        },
+        {
+         "value": "divination",
+         "label": "Divination"
+        },
+        {
+         "value": "enchantment",
+         "label": "Enchantment"
+        },
+        {
+         "value": "evocation",
+         "label": "Evocation"
+        },
+        {
+         "value": "illusion",
+         "label": "Illusion"
+        },
+        {
+         "value": "necromancy",
+         "label": "Necromancy"
+        },
+        {
+         "value": "transmutation",
+         "label": "Transmutation"
+        }
+       ]
+      },
+      {
+       "id": "cord-school-3",
+       "prompt": "Choose magic school 3 the cord is attuned to (it gains that trait)",
+       "options": [
+        {
+         "value": "abjuration",
+         "label": "Abjuration"
+        },
+        {
+         "value": "conjuration",
+         "label": "Conjuration"
+        },
+        {
+         "value": "divination",
+         "label": "Divination"
+        },
+        {
+         "value": "enchantment",
+         "label": "Enchantment"
+        },
+        {
+         "value": "evocation",
+         "label": "Evocation"
+        },
+        {
+         "value": "illusion",
+         "label": "Illusion"
+        },
+        {
+         "value": "necromancy",
+         "label": "Necromancy"
+        },
+        {
+         "value": "transmutation",
+         "label": "Transmutation"
+        }
+       ]
+      }
+     ],
+     "dataWarning": "The cord's magic-school attunement is legacy content: the Remaster removed school traits, so the app records your pick but cannot run the talisman-preservation flat check for you."
+    }
+   }
+  },
+  {
+   "id": "taljjaes-mask-the-beast",
+   "upheld": true,
+   "why": "Every sibling mask carries its mechanics (innateSpells or counters) and this one is completely bare, while its text grants an agile 1d4 slashing claw unarmed attack; the mask has the invested trait, so item grantedStrikes are actually collected.",
+   "correction": {}
+  },
+  {
+   "id": "tattletale-orb-clear-quartz",
+   "upheld": true,
+   "why": "It copies Crystal Ball (Clear Quartz), whose record ships heldSpells clairvoyance/scrying plus the hour and day counters; the orb ships neither, and heldSpells is read for any carried item (no invest gate), so the fix reaches the sheet.",
+   "correction": {}
+  },
+  {
+   "id": "tattletale-orb-peridot",
+   "upheld": true,
+   "why": "Same as the clear-quartz orb; the heldSpells and counters mirror crystal-ball-peridot exactly and all three spell ids exist in core.json.",
+   "correction": {}
+  },
+  {
+   "id": "toolkit-of-bronze-whispers",
+   "upheld": true,
+   "why": "It functions as Artisan's Tools (Sterling), and both Foundry and this app's own situational registry give that toolkit a +1 ITEM bonus to Craft; the toolkit of bronze whispers is a separate id that inherits none of it.",
+   "correction": {}
+  },
+  {
+   "id": "tooth-and-claw-tattoo",
+   "upheld": true,
+   "why": "Invested tattoo whose 2-action activation casts 3th-rank Animal Form with no printed frequency; build.ts reads item innateSpells for invested items and castRank honours the explicit rank even when atWill is set, so it lands at rank 3 instead of auto-heightening.",
+   "correction": {}
+  },
+  {
+   "id": "tooth-and-claw-tattoo-greater",
+   "upheld": true,
+   "why": "Invested tattoo whose 2-action activation casts 4th-rank Animal Form with no printed frequency; build.ts reads item innateSpells for invested items and castRank honours the explicit rank even when atWill is set, so it lands at rank 4 instead of auto-heightening.",
+   "correction": {}
+  },
+  {
+   "id": "tooth-and-claw-tattoo-major",
+   "upheld": true,
+   "why": "Invested tattoo whose 2-action activation casts 5th-rank Animal Form with no printed frequency; build.ts reads item innateSpells for invested items and castRank honours the explicit rank even when atWill is set, so it lands at rank 5 instead of auto-heightening.",
+   "correction": {}
+  },
+  {
+   "id": "trackers-goggles",
+   "upheld": true,
+   "why": "Foundry ships a +1 ITEM FlatModifier on survival predicated on sense-direction/track, so the untyped printed wording resolves to an item bonus and the judge typed it correctly; the record carries no effect field.",
+   "correction": {}
+  },
+  {
+   "id": "trackers-goggles-greater",
+   "upheld": true,
+   "why": "Same Foundry entry at +2 item; the record carries nothing.",
+   "correction": {}
+  },
+  {
+   "id": "trident-of-the-azarketis",
+   "upheld": true,
+   "why": "Invested item whose once-per-day activation casts 5th-rank hydraulic torrent; the spell id exists, castRank takes the max of base 4 and the granted 5, and nothing else puts it on the Spells page.",
+   "correction": {}
+  },
+  {
+   "id": "true-golden-wings",
+   "upheld": true,
+   "why": "A 10-minute activation granting fly = max(25, your Speed) plus the printed -2 ITEM penalty to Stealth to Hide/Sneak; the mode carries fromItemId, a parseable speeds formula and the penalty as a conditional modifier, and the once-per-day tracker already exists.",
+   "correction": {}
+  },
+  {
+   "id": "standard-book-of-translation-tien",
+   "upheld": false,
+   "why": "A mundane tool whose whole content is PERMISSION to attempt Diplomacy across a language barrier; the -2 circumstance exists only inside that unmodelled permission, and all six book-of-translation records in core.json are deliberately bare, so singling this one out is inconsistent as well as inert.",
+   "correction": {
+    "verdict": "NEEDS_NOTHING"
+   }
+  },
+  {
+   "id": "throwers-bandolier",
+   "upheld": false,
+   "why": "The printed benefit is a +1 weapon POTENCY rune - a fundamental rune, which this app models on the weapon instance (InventoryItem.runes.potency), not as an item effect; Foundry ships no rule element for it either. A display-only +1 item star on top of whatever the player etched duplicates the statistic rather than adding one.",
+   "correction": {
+    "verdict": "NEEDS_NOTHING"
+   }
+  },
+  {
+   "id": "throwing-shield",
+   "upheld": false,
+   "why": "The fix cannot fire: item grantedStrikes are collected only for INVESTED items (build.ts collectGrantedNaturals) and this adjustment carries only the adjustment trait, so the app never offers investing it. It is also the wrong lane - Foundry's Strike element is category MARTIAL with range increment 20, while grantedStrikes renders through deriveUnarmedStrike (unarmed proficiency, buffed by handwraps runes) and would misstate the attack.",
+   "correction": {
+    "verdict": "NEEDS_NOTHING"
+   }
+  },
+  {
+   "id": "time-jump",
+   "upheld": false,
+   "why": "A relic GIFT, not a worn item: its traits are empty, so the Invest button never renders (InventoryTab gates it on the invested trait) and build.ts reads item innateSpells only for invested items - the spell could never reach the Spells page. All 176 relic-gift records in core.json are deliberately unmodelled reference entries, and the once-per-day tracker it does carry is what the record is for.",
+   "correction": {
+    "verdict": "NEEDS_NOTHING"
+   }
+  },
+  {
+   "id": "time-reversal",
+   "upheld": false,
+   "why": "Same as time-jump: with no invested trait the innateSpells lane can never fire, and no relic gift in the corpus carries one.",
+   "correction": {
+    "verdict": "NEEDS_NOTHING"
+   }
+  }
+ ]
+}

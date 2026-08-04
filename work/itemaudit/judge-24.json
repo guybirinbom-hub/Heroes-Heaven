@@ -1,0 +1,495 @@
+{
+ "records": [
+  {
+   "id": "true-name-amulet-lesser",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Both halves are target-side or table-resolved: the named creature suffers invoke true name against YOUR spells (an effect on it, not a number on your sheet), and the counteract attempt is a reaction rolled with a skill you already have, at a rank read off the item level. Nothing standing changes for the owner."
+  },
+  {
+   "id": "true-name-amulet-major",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Both halves are target-side or table-resolved: the named creature suffers invoke true name against YOUR spells (an effect on it, not a number on your sheet), and the counteract attempt is a reaction rolled with a skill you already have, at a rank read off the item level. Nothing standing changes for the owner."
+  },
+  {
+   "id": "true-name-amulet-moderate",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Both halves are target-side or table-resolved: the named creature suffers invoke true name against YOUR spells (an effect on it, not a number on your sheet), and the counteract attempt is a reaction rolled with a skill you already have, at a rank read off the item level. Nothing standing changes for the owner."
+  },
+  {
+   "id": "trundle-wheel",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane tool: it measures distance by clicking once per rotation. Pure exploration utility with no owner-side value."
+  },
+  {
+   "id": "trustworthy-round",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Consumable ammunition whose entire content is how it behaves against the declared TARGET (it hits only that target, otherwise dissolves midair). Resolved at the table on the shot; nothing standing for the owner."
+  },
+  {
+   "id": "turtle",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A pet that explicitly cannot be combat trained or contribute to combat in any way. Pure flavour purchase."
+  },
+  {
+   "id": "twigjack-sack-lesser",
+   "verdict": "ALREADY_OK",
+   "reason": "The owner-side part is the bomb Strike, and the record already carries damage {dice:1, die:\"d6\", type:\"piercing\"}, itemType weapon, category martial, group bomb, range 20 - the same shape as alchemists-fire-lesser. The persistent bleed and the piercing splash land on the target."
+  },
+  {
+   "id": "twining-chains",
+   "verdict": "MISS",
+   "reason": "Two owner-side sheet changes are printed: the adjustment worsens the wearer’s armor check penalty by 2 (and Bulk by 1, the Strength entry by 2). No adjustment item in the corpus carries any of this and there is no armor-delta field, so the -2 check penalty is delivered as an explicit conditional penalty on exactly the four check-penalty skills. Bulk +1 and the Strength-entry change have no legal field and stay prose. The Thorns reaction is an activation resolved at the table and its damage lands on the attacker.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "acrobatics"
+       },
+       {
+        "kind": "skill",
+        "detail": "athletics"
+       },
+       {
+        "kind": "skill",
+        "detail": "stealth"
+       },
+       {
+        "kind": "skill",
+        "detail": "thievery"
+       }
+      ],
+      "when": "armor check penalty from twining chains",
+      "bonus": "-2 untyped"
+     }
+    ]
+   }
+  },
+  {
+   "id": "twining-staff",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The form change is a 1-action activation and the Athletics flat check (1d20+15) is rolled at the table during it. Its base weapon statistics (1d4 B, club group, two-hand-d8) are already on the record. The printed built-in \"+1 striking\" is a corpus-wide gap rather than this item’s: NO item in core.json carries intrinsic runes (dwarven-thrower, likewise a built-in-rune weapon, is equally bare) and there is no runes field on items, so there is no applicable per-item fix."
+  },
+  {
+   "id": "twisting-twine-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 1-action activation in which the twine Disarms or Trips a CREATURE with its own +15 Athletics and then returns. Entirely target-side and resolved in the moment."
+  },
+  {
+   "id": "umbral-body",
+   "verdict": "MISS",
+   "reason": "The Shadow relic aspect gives the owner a repeatable magical attack - \"has the effect of a 6th-rank shadow blast\" - and the record carries no spell lane at all, so it never reaches the Spells page. shadow-blast exists in core.spells (rank 5, divine/occult); occult suits the shadow aspect. The limit is a 1d4-round recharge rather than a daily cap, so atWill is the closest honest encoding (same lane as the all-will-decay relic aspect).",
+   "fix": {
+    "innateSpells": [
+     {
+      "spellId": "shadow-blast",
+      "tradition": "occult",
+      "rank": 6,
+      "atWill": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "unarmored",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The \"Unarmored\" armor-category stub: AC Bonus +0, no Dex cap, no check or speed penalty. Unarmored defense is computed from class proficiency; there is literally nothing to carry."
+  },
+  {
+   "id": "underground-bounty",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The Earth relic aspect coats a weapon in a material sheen so it \"interacts with weaknesses, resistances, and the like as if it were made of\" that material - resolved entirely against the TARGET’s weaknesses by the GM. No owner-side number changes."
+  },
+  {
+   "id": "underwater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Weapon property rune already present in core.runes (id underwater, slot weapon, kind property, level 3, 50 gp). Its whole content is removing the environmental penalties and restrictions for fighting in water, which the engine does not model - an environment the GM adjudicates, not a sheet value."
+  },
+  {
+   "id": "underwater-firing-mechanism",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same environmental lane: it lets the attached firearm fire underwater or where black powder would not ignite. The app models no underwater or misfire rules, so there is nothing to change."
+  },
+  {
+   "id": "unexceptional",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An illusion rune that makes the item look mundane to OBSERVERS, with a save for the observer. Entirely other-side perception; nothing about the owner changes."
+  },
+  {
+   "id": "unholy-water",
+   "verdict": "ALREADY_OK",
+   "reason": "The owner-side content is the thrown Strike, and the record already carries damage {dice:1, die:\"d6\", type:\"spirit\"}, itemType weapon, category simple, range 20 - the same shape as holy-water. The spirit splash and the holy-only restriction are target-side."
+  },
+  {
+   "id": "universal-solvent-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A one-shot consumable whose whole content is a counteract attempt against an adhesive, made with the item’s own printed modifier (+9 / +19 / +28). Resolved at the table on use; no standing owner value."
+  },
+  {
+   "id": "universal-solvent-major",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A one-shot consumable whose whole content is a counteract attempt against an adhesive, made with the item’s own printed modifier (+9 / +19 / +28). Resolved at the table on use; no standing owner value."
+  },
+  {
+   "id": "universal-solvent-moderate",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A one-shot consumable whose whole content is a counteract attempt against an adhesive, made with the item’s own printed modifier (+9 / +19 / +28). Resolved at the table on use; no standing owner value."
+  },
+  {
+   "id": "vandals-banner",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The aura makes Strikes by you or allies ignore the first 2 points of an OBJECT’s Hardness. Object Hardness lives on the GM’s side of the table and is not a character-sheet quantity."
+  },
+  {
+   "id": "venom-glands",
+   "verdict": "MISS",
+   "reason": "\"You gain a poison spray unarmed ranged attack ... that deals 1d4 poison damage\" is a new Strike on the owner’s sheet, and the record carries nothing, so the attack never appears. grantedStrikes is the established lane for implanted/worn items that add an attack (whip-tail, phantom-shroud). The 10-foot range increment has no key in the observed grantedStrikes shape and stays prose; the critical-hit sickened is target-side.",
+   "fix": {
+    "grantedStrikes": [
+     {
+      "name": "Poison Spray",
+      "die": "1d4",
+      "damageType": "poison",
+      "traits": [
+       "magical",
+       "poison",
+       "unarmed"
+      ],
+      "group": "brawling"
+     }
+    ]
+   }
+  },
+  {
+   "id": "versatile-tinderbox",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane-plus-flavour: it colours the flames and smoke of a fire you light and never runs out of tinder. No mechanical grant."
+  },
+  {
+   "id": "vexing-vapor-lesser",
+   "verdict": "ALREADY_OK",
+   "reason": "The record already carries damage {dice:1, die:\"d6\", type:\"mental\"}, itemType weapon, category martial, group bomb, range 20, so the owner’s bomb Strike works. The concentrate-check rider and the mental splash land on the target."
+  },
+  {
+   "id": "vine-arrow",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A consumable arrow whose entire effect (-10-foot Speed penalty, immobilized, Escape DC 19) is applied to the TARGET it hits."
+  },
+  {
+   "id": "viper-arrow",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A consumable arrow that becomes a GM-controlled summoned Viper attacking the target; the poison and the summon are both on the other side of the table."
+  },
+  {
+   "id": "vitality-siphon",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The Life relic aspect is a triggered activation whose healing amount is computed at the table from another creature’s overflow heal, and the recipient may be an adjacent ally. No standing change."
+  },
+  {
+   "id": "vitalizing",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Weapon property rune already present in core.runes (id vitalizing, level 5, 150 gp). Its extra 1d6 persistent vitality damage applies only when the TARGET is undead, and the enfeebled rider is a target condition. The rune damage lane holds unconditional damage only (flaming, frost and corrosive carry damage; every target-gated rune - holy, unholy, ghost-touch, brilliant - is deliberately bare), so encoding it would over-grant against everything that is not undead."
+  },
+  {
+   "id": "vitalizing-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same rune at greater grade (core.runes id vitalizing-greater, level 14, 4300 gp). 2d6 persistent vitality against undead only, plus enfeebled/stupefied on the target - target-gated, so it stays out of the unconditional rune damage lane for the same reason as the base rune."
+  },
+  {
+   "id": "vocal-shells",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A clockwork gadget that transmits sound from one shell to another within 20 feet. Pure utility flavour with no owner-side value."
+  },
+  {
+   "id": "voicebox",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets a non-verbal character speak, in languages you already understand. It grants no new language and no bonus - accessibility flavour."
+  },
+  {
+   "id": "void-shackles",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Everything printed happens to the CREATURE or soul that is manacled: escape DCs, the 10d6 on a failed removal, the teleport counteract, the incorporeal restraint. The owner merely affixes them with a 2-action activation."
+  },
+  {
+   "id": "vorpal",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Weapon property rune already present in core.runes (id vorpal, level 17, 15000 gp). Its only content is a triggered reaction that forces a save-or-decapitate on the TARGET; nothing standing is added to the wielder."
+  },
+  {
+   "id": "waffle-iron",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane cookware. The imprint and the dawnsilver / high-grade dawnsilver variants change only price, rarity and how well batter sticks - pure flavour, no mechanical grant."
+  },
+  {
+   "id": "waffle-iron-high-grade-mithral",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane cookware. The imprint and the dawnsilver / high-grade dawnsilver variants change only price, rarity and how well batter sticks - pure flavour, no mechanical grant."
+  },
+  {
+   "id": "waffle-iron-imprint",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane cookware. The imprint and the dawnsilver / high-grade dawnsilver variants change only price, rarity and how well batter sticks - pure flavour, no mechanical grant."
+  },
+  {
+   "id": "waffle-iron-mithral",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Mundane cookware. The imprint and the dawnsilver / high-grade dawnsilver variants change only price, rarity and how well batter sticks - pure flavour, no mechanical grant."
+  },
+  {
+   "id": "walking-cauldron",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The 25-foot land Speed belongs to the CAULDRON, not the owner; commanding it is a 1-action activation and the text says its movement cannot be usefully directed in an encounter. Carrying 2 Bulk of ingredients is ordinary container capacity, which the Bulk code already reads."
+  },
+  {
+   "id": "wand-cane",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "It holds a wand and lets that wand be used through the cane after a 1-minute attunement. It confers nothing itself - the wand it holds carries the spell."
+  },
+  {
+   "id": "wand-implement",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Empty record: no description, no price, no printed effect. The thaumaturge wand implement’s mechanics live in the class features, not on this stub."
+  },
+  {
+   "id": "wand-of-choking-mist-2nd-rank-spell",
+   "verdict": "MISS",
+   "reason": "\"Activate Cast a Spell ... You cast mist of the indicated rank\" is a standing owner-side spell the wand grants, but the record carries no spell lane, so the wand never reaches the Spells page. heldSpells keyed by rank is the established lane for a wand holding one fixed spell (wand-of-fey-flames, wand-of-tormented-slumber, the arboreal wands); mist exists in core.spells and frequency {max:1, per:\"day\"} is already on the record. The wand’s extra rider (the added condition or persistent damage) lands on the target and needs nothing.",
+   "fix": {
+    "heldSpells": {
+     "2": [
+      "mist"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-choking-mist-4th-rank-spell",
+   "verdict": "MISS",
+   "reason": "\"Activate Cast a Spell ... You cast cinder swarm of the indicated rank\" is a standing owner-side spell the wand grants, but the record carries no spell lane, so the wand never reaches the Spells page. heldSpells keyed by rank is the established lane for a wand holding one fixed spell (wand-of-fey-flames, wand-of-tormented-slumber, the arboreal wands); cinder-swarm exists in core.spells and frequency {max:1, per:\"day\"} is already on the record. The wand’s extra rider (the added condition or persistent damage) lands on the target and needs nothing.",
+   "fix": {
+    "heldSpells": {
+     "4": [
+      "cinder-swarm"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-clinging-rime-7th-rank-spell",
+   "verdict": "MISS",
+   "reason": "\"Activate Cast a Spell ... You cast frigid flurry of the indicated rank\" is a standing owner-side spell the wand grants, but the record carries no spell lane, so the wand never reaches the Spells page. heldSpells keyed by rank is the established lane for a wand holding one fixed spell (wand-of-fey-flames, wand-of-tormented-slumber, the arboreal wands); frigid-flurry exists in core.spells and frequency {max:1, per:\"day\"} is already on the record. The wand’s extra rider (the added condition or persistent damage) lands on the target and needs nothing.",
+   "fix": {
+    "heldSpells": {
+     "7": [
+      "frigid-flurry"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-clinging-rime-8th-rank-spell",
+   "verdict": "MISS",
+   "reason": "\"Activate Cast a Spell ... You cast frigid flurry of the indicated rank\" is a standing owner-side spell the wand grants, but the record carries no spell lane, so the wand never reaches the Spells page. heldSpells keyed by rank is the established lane for a wand holding one fixed spell (wand-of-fey-flames, wand-of-tormented-slumber, the arboreal wands); frigid-flurry exists in core.spells and frequency {max:1, per:\"day\"} is already on the record. The wand’s extra rider (the added condition or persistent damage) lands on the target and needs nothing.",
+   "fix": {
+    "heldSpells": {
+     "8": [
+      "frigid-flurry"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-clinging-rime-9th-rank-spell",
+   "verdict": "MISS",
+   "reason": "\"Activate Cast a Spell ... You cast frigid flurry of the indicated rank\" is a standing owner-side spell the wand grants, but the record carries no spell lane, so the wand never reaches the Spells page. heldSpells keyed by rank is the established lane for a wand holding one fixed spell (wand-of-fey-flames, wand-of-tormented-slumber, the arboreal wands); frigid-flurry exists in core.spells and frequency {max:1, per:\"day\"} is already on the record. The wand’s extra rider (the added condition or persistent damage) lands on the target and needs nothing.",
+   "fix": {
+    "heldSpells": {
+     "9": [
+      "frigid-flurry"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-dazzling-rays-3rd-rank-spell",
+   "verdict": "MISS",
+   "reason": "\"Activate Cast a Spell ... You cast holy light of the indicated rank\" is a standing owner-side spell the wand grants, but the record carries no spell lane, so the wand never reaches the Spells page. heldSpells keyed by rank is the established lane for a wand holding one fixed spell (wand-of-fey-flames, wand-of-tormented-slumber, the arboreal wands); holy-light exists in core.spells and frequency {max:1, per:\"day\"} is already on the record. The wand’s extra rider (the added condition or persistent damage) lands on the target and needs nothing.",
+   "fix": {
+    "heldSpells": {
+     "3": [
+      "holy-light"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-dazzling-rays-4th-rank-spell",
+   "verdict": "MISS",
+   "reason": "\"Activate Cast a Spell ... You cast holy light of the indicated rank\" is a standing owner-side spell the wand grants, but the record carries no spell lane, so the wand never reaches the Spells page. heldSpells keyed by rank is the established lane for a wand holding one fixed spell (wand-of-fey-flames, wand-of-tormented-slumber, the arboreal wands); holy-light exists in core.spells and frequency {max:1, per:\"day\"} is already on the record. The wand’s extra rider (the added condition or persistent damage) lands on the target and needs nothing.",
+   "fix": {
+    "heldSpells": {
+     "4": [
+      "holy-light"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-dazzling-rays-5th-rank-spell",
+   "verdict": "MISS",
+   "reason": "\"Activate Cast a Spell ... You cast holy light of the indicated rank\" is a standing owner-side spell the wand grants, but the record carries no spell lane, so the wand never reaches the Spells page. heldSpells keyed by rank is the established lane for a wand holding one fixed spell (wand-of-fey-flames, wand-of-tormented-slumber, the arboreal wands); holy-light exists in core.spells and frequency {max:1, per:\"day\"} is already on the record. The wand’s extra rider (the added condition or persistent damage) lands on the target and needs nothing.",
+   "fix": {
+    "heldSpells": {
+     "5": [
+      "holy-light"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-dazzling-rays-6th-rank-spell",
+   "verdict": "MISS",
+   "reason": "\"Activate Cast a Spell ... You cast holy light of the indicated rank\" is a standing owner-side spell the wand grants, but the record carries no spell lane, so the wand never reaches the Spells page. heldSpells keyed by rank is the established lane for a wand holding one fixed spell (wand-of-fey-flames, wand-of-tormented-slumber, the arboreal wands); holy-light exists in core.spells and frequency {max:1, per:\"day\"} is already on the record. The wand’s extra rider (the added condition or persistent damage) lands on the target and needs nothing.",
+   "fix": {
+    "heldSpells": {
+     "6": [
+      "holy-light"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-dazzling-rays-7th-rank-spell",
+   "verdict": "MISS",
+   "reason": "\"Activate Cast a Spell ... You cast holy light of the indicated rank\" is a standing owner-side spell the wand grants, but the record carries no spell lane, so the wand never reaches the Spells page. heldSpells keyed by rank is the established lane for a wand holding one fixed spell (wand-of-fey-flames, wand-of-tormented-slumber, the arboreal wands); holy-light exists in core.spells and frequency {max:1, per:\"day\"} is already on the record. The wand’s extra rider (the added condition or persistent damage) lands on the target and needs nothing.",
+   "fix": {
+    "heldSpells": {
+     "7": [
+      "holy-light"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-dazzling-rays-8th-rank-spell",
+   "verdict": "MISS",
+   "reason": "\"Activate Cast a Spell ... You cast holy light of the indicated rank\" is a standing owner-side spell the wand grants, but the record carries no spell lane, so the wand never reaches the Spells page. heldSpells keyed by rank is the established lane for a wand holding one fixed spell (wand-of-fey-flames, wand-of-tormented-slumber, the arboreal wands); holy-light exists in core.spells and frequency {max:1, per:\"day\"} is already on the record. The wand’s extra rider (the added condition or persistent damage) lands on the target and needs nothing.",
+   "fix": {
+    "heldSpells": {
+     "8": [
+      "holy-light"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-dazzling-rays-9th-rank-spell",
+   "verdict": "MISS",
+   "reason": "\"Activate Cast a Spell ... You cast holy light of the indicated rank\" is a standing owner-side spell the wand grants, but the record carries no spell lane, so the wand never reaches the Spells page. heldSpells keyed by rank is the established lane for a wand holding one fixed spell (wand-of-fey-flames, wand-of-tormented-slumber, the arboreal wands); holy-light exists in core.spells and frequency {max:1, per:\"day\"} is already on the record. The wand’s extra rider (the added condition or persistent damage) lands on the target and needs nothing.",
+   "fix": {
+    "heldSpells": {
+     "9": [
+      "holy-light"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-dumbfounding-doom-3rd-rank-spell",
+   "verdict": "MISS",
+   "reason": "\"Activate Cast a Spell ... You cast impending doom of the indicated rank\" is a standing owner-side spell the wand grants, but the record carries no spell lane, so the wand never reaches the Spells page. heldSpells keyed by rank is the established lane for a wand holding one fixed spell (wand-of-fey-flames, wand-of-tormented-slumber, the arboreal wands); impending-doom exists in core.spells and frequency {max:1, per:\"day\"} is already on the record. The wand’s extra rider (the added condition or persistent damage) lands on the target and needs nothing.",
+   "fix": {
+    "heldSpells": {
+     "3": [
+      "impending-doom"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-dumbfounding-doom-4th-rank-spell",
+   "verdict": "MISS",
+   "reason": "\"Activate Cast a Spell ... You cast impending doom of the indicated rank\" is a standing owner-side spell the wand grants, but the record carries no spell lane, so the wand never reaches the Spells page. heldSpells keyed by rank is the established lane for a wand holding one fixed spell (wand-of-fey-flames, wand-of-tormented-slumber, the arboreal wands); impending-doom exists in core.spells and frequency {max:1, per:\"day\"} is already on the record. The wand’s extra rider (the added condition or persistent damage) lands on the target and needs nothing.",
+   "fix": {
+    "heldSpells": {
+     "4": [
+      "impending-doom"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-dumbfounding-doom-5th-rank-spell",
+   "verdict": "MISS",
+   "reason": "\"Activate Cast a Spell ... You cast impending doom of the indicated rank\" is a standing owner-side spell the wand grants, but the record carries no spell lane, so the wand never reaches the Spells page. heldSpells keyed by rank is the established lane for a wand holding one fixed spell (wand-of-fey-flames, wand-of-tormented-slumber, the arboreal wands); impending-doom exists in core.spells and frequency {max:1, per:\"day\"} is already on the record. The wand’s extra rider (the added condition or persistent damage) lands on the target and needs nothing.",
+   "fix": {
+    "heldSpells": {
+     "5": [
+      "impending-doom"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-dumbfounding-doom-6th-rank-spell",
+   "verdict": "MISS",
+   "reason": "\"Activate Cast a Spell ... You cast impending doom of the indicated rank\" is a standing owner-side spell the wand grants, but the record carries no spell lane, so the wand never reaches the Spells page. heldSpells keyed by rank is the established lane for a wand holding one fixed spell (wand-of-fey-flames, wand-of-tormented-slumber, the arboreal wands); impending-doom exists in core.spells and frequency {max:1, per:\"day\"} is already on the record. The wand’s extra rider (the added condition or persistent damage) lands on the target and needs nothing.",
+   "fix": {
+    "heldSpells": {
+     "6": [
+      "impending-doom"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-dumbfounding-doom-7th-rank-spell",
+   "verdict": "MISS",
+   "reason": "\"Activate Cast a Spell ... You cast impending doom of the indicated rank\" is a standing owner-side spell the wand grants, but the record carries no spell lane, so the wand never reaches the Spells page. heldSpells keyed by rank is the established lane for a wand holding one fixed spell (wand-of-fey-flames, wand-of-tormented-slumber, the arboreal wands); impending-doom exists in core.spells and frequency {max:1, per:\"day\"} is already on the record. The wand’s extra rider (the added condition or persistent damage) lands on the target and needs nothing.",
+   "fix": {
+    "heldSpells": {
+     "7": [
+      "impending-doom"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-dumbfounding-doom-8th-rank-spell",
+   "verdict": "MISS",
+   "reason": "\"Activate Cast a Spell ... You cast impending doom of the indicated rank\" is a standing owner-side spell the wand grants, but the record carries no spell lane, so the wand never reaches the Spells page. heldSpells keyed by rank is the established lane for a wand holding one fixed spell (wand-of-fey-flames, wand-of-tormented-slumber, the arboreal wands); impending-doom exists in core.spells and frequency {max:1, per:\"day\"} is already on the record. The wand’s extra rider (the added condition or persistent damage) lands on the target and needs nothing.",
+   "fix": {
+    "heldSpells": {
+     "8": [
+      "impending-doom"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-dumbfounding-doom-9th-rank-spell",
+   "verdict": "MISS",
+   "reason": "\"Activate Cast a Spell ... You cast impending doom of the indicated rank\" is a standing owner-side spell the wand grants, but the record carries no spell lane, so the wand never reaches the Spells page. heldSpells keyed by rank is the established lane for a wand holding one fixed spell (wand-of-fey-flames, wand-of-tormented-slumber, the arboreal wands); impending-doom exists in core.spells and frequency {max:1, per:\"day\"} is already on the record. The wand’s extra rider (the added condition or persistent damage) lands on the target and needs nothing.",
+   "fix": {
+    "heldSpells": {
+     "9": [
+      "impending-doom"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wand-of-hawthorn-2nd-rank-spell",
+   "verdict": "MISS",
+   "reason": "\"Activate Cast a Spell ... You cast oaken resilience of the indicated rank\" is a standing owner-side spell the wand grants, but the record carries no spell lane, so the wand never reaches the Spells page. heldSpells keyed by rank is the established lane for a wand holding one fixed spell (wand-of-fey-flames, wand-of-tormented-slumber, the arboreal wands); oaken-resilience exists in core.spells and frequency {max:1, per:\"day\"} is already on the record. The wand’s extra rider (the added condition or persistent damage) lands on the target and needs nothing.",
+   "fix": {
+    "heldSpells": {
+     "2": [
+      "oaken-resilience"
+     ]
+    }
+   }
+  }
+ ]
+}
