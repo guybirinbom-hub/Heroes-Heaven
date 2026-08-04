@@ -1,0 +1,369 @@
+{
+ "rulings": [
+  {
+   "id": "soaring-wings-major",
+   "upheld": true,
+   "why": "Fly Speed from an activated tattoo reaches nothing; stances already carry speeds:{fly:...} (wings-of-air), so a toggle is deliverable."
+  },
+  {
+   "id": "stone-body",
+   "upheld": true,
+   "why": "Resistance 10 to all damage is a real numeric defense and no field or registry carries it."
+  },
+  {
+   "id": "stone-brawler-dedication",
+   "upheld": true,
+   "why": "stonestrike-stance exists in core.actions but not in core.stances (129 entries incl. tenacious-stance), so the dedication delivers nothing."
+  },
+  {
+   "id": "stone-communion",
+   "upheld": true,
+   "why": "grantsLanguages IS read for feats (build.ts:3026) and the record has none; apply as [\"petran\"] - core.languages has no \"terran\" id."
+  },
+  {
+   "id": "stoutheart-centaur",
+   "upheld": true,
+   "why": "The +2 ancestry HP is real and maxHpBonus exists only on FEATS ({flat}/{perLevel}/{perArchetypeFeat}); no heritage carries it."
+  },
+  {
+   "id": "twisting-tree",
+   "upheld": true,
+   "why": "A wielded staff gaining agile + d6 (or parry/reach/trip) changes Strike numbers and no field modifies an already-owned weapon."
+  },
+  {
+   "id": "unfurling-brocade",
+   "upheld": true,
+   "why": "The one-handed d4 form does not exist: core.items[bladed-scarf] is hands:2, damage d6. grantedStrikes is the right lane (use die:\"d4\", not \"1d4\")."
+  },
+  {
+   "id": "unshaken-in-iron",
+   "upheld": true,
+   "why": "Armor specialization is implemented nowhere in src (grepped src/rules + src/sheet); the resistance the rules grant never appears."
+  },
+  {
+   "id": "upset-balance",
+   "upheld": true,
+   "why": "The +2 circumstance is on the character’s OWN Athletics check; sibling Tenacious-Stance feats are all in situationalBonuses."
+  },
+  {
+   "id": "wayfinder-of-rescue",
+   "upheld": true,
+   "why": "heldSpells is a shipped item lane (620 items carry it, e.g. sun-wheel {\"0\":[\"shield\"]}) and this wayfinder has none, so the Heal is uncastable."
+  },
+  {
+   "id": "wayfinder-resonance-infiltrator",
+   "upheld": true,
+   "why": "294 feats carry innateSpells; this one has only limitedUses, so Illusory Disguise never reaches the Spells page."
+  },
+  {
+   "id": "winged",
+   "upheld": true,
+   "why": "Activated fly Speed (25 ft or land Speed, whichever is slower) reaches no field; counters/frequency only track the cadence."
+  },
+  {
+   "id": "wyrms-flight",
+   "upheld": true,
+   "why": "Activated fly Speed reaches no field; frequency only tracks once/day."
+  },
+  {
+   "id": "adept-storyteller",
+   "upheld": true,
+   "why": "Two bonus Performance skill feats reach nothing. FEAT_PICK_GRANTS (featPickGrants.ts) is the real lane - note the fix’s \"featFilter\" key does not exist on EffectChoice."
+  },
+  {
+   "id": "ageless-spirit",
+   "upheld": true,
+   "why": "Daily trained-skill pick reaches nothing and the choice.daily lane exists. Encode as choice.daily, not trainedSkillChoice:\"any\" (that field is background-only and takes an array)."
+  },
+  {
+   "id": "alchemical-discoveries",
+   "upheld": true,
+   "why": "CLASS_RESOURCES has versatile-vials only under alchemist; the investigator has only devise-stratagem, so the +1/2/3 has nothing to modify."
+  },
+  {
+   "id": "alchemical-sciences-methodology",
+   "upheld": false,
+   "why": "ALREADY MODELLED: classes.investigator.subclass.options[alchemical-sciences-methodology].grants.skills=[\"crafting\"] already trains Crafting."
+  },
+  {
+   "id": "ancestral-echoing",
+   "upheld": true,
+   "why": "A per-item proficiency step-up from a rune has no lane; weaponFamiliarity is feat-keyed and category-wide."
+  },
+  {
+   "id": "ancestral-longevity",
+   "upheld": true,
+   "why": "Same as ageless-spirit: no choice on the record. Encode via choice.daily, not trainedSkillChoice:\"any\"."
+  },
+  {
+   "id": "ant-kholo",
+   "upheld": true,
+   "why": "situationalBonuses covers the +1s but nothing trains Deception; zero heritages carry any skill-training field and build.ts reads trainedSkill only from backgrounds."
+  },
+  {
+   "id": "armored-exercise",
+   "upheld": true,
+   "why": "FeatGrant.armor only ever RAISES a flat rank and has no \"only where already trained\" form, so needsEngineWork is right; no featGrantsAuto/featGrantsLane entry exists."
+  },
+  {
+   "id": "armored-stealth",
+   "upheld": true,
+   "why": "The armor check penalty IS modelled (derive.ts:402) and nothing reduces it for Stealth; the situational lane already stores signed adjustments."
+  },
+  {
+   "id": "artery-map",
+   "upheld": true,
+   "why": "Recurring 1d6 persistent bleed on knife Strikes against off-guard targets; conditional, so situational is the right lane, and the record carries nothing."
+  },
+  {
+   "id": "avenger",
+   "upheld": false,
+   "why": "ALREADY MODELLED: classes.rogue.subclass.options[avenger] carries grants.skills=[intimidation,religion], grants.armor=[medium], keyAbilityOptions and requiresDeity; the proposed classArchetype block restates data that already ships."
+  },
+  {
+   "id": "azarketi-weapon-expertise",
+   "upheld": true,
+   "why": "No featGrantsAuto entry (only azarketi-weapon-familiarity). The fix is over-cautious: weaponFamiliarity.mirrorBestCategory DOES follow the class rank, so this is a data entry, not engine work."
+  },
+  {
+   "id": "banished-celestial",
+   "upheld": true,
+   "why": "Backgrounds are exactly where trainedSkillChoice/trainedLoreChoice/grantedFeatId work (421/500 carry trainedSkill); this one has only abilityBoosts."
+  },
+  {
+   "id": "battle-creed",
+   "upheld": false,
+   "why": "ALREADY MODELLED: classes.cleric.subclass.options[battle-creed] carries slotProgression:\"two-rank\", suppressedFeatures:[resolute-faith,miraculous-spell] and grantedFeats; the judge asserted none of it reaches the sheet and that no lane can replace a spells-per-day table."
+  },
+  {
+   "id": "battledancer",
+   "upheld": false,
+   "why": "ALREADY MODELLED: classes.swashbuckler.subclass.options[battledancer].grants.skills=[\"performance\"] trains it; the claim that swashbuckler has no style-skill lane is false."
+  },
+  {
+   "id": "braggart",
+   "upheld": false,
+   "why": "ALREADY MODELLED: classes.swashbuckler.subclass.options[braggart].grants.skills=[\"intimidation\"] already trains Intimidation."
+  },
+  {
+   "id": "brawling-focus",
+   "upheld": true,
+   "why": "critSpec.ts has a brawling entry but the feat carries no critSpec/critSpecWeapons, so the monk never sees it; both fields are real (student-of-the-staff precedent)."
+  },
+  {
+   "id": "consult-the-stars",
+   "upheld": true,
+   "why": "Well-formed choice.daily; the lane is live (quick-study, environmental-adaptability) and the record has only limitedUses."
+  },
+  {
+   "id": "crystal-ward-spells",
+   "upheld": true,
+   "why": "The full description confirms \"trained in arcane spell attack rolls and spell DCs... spellcasting ability is Intelligence\"; spellcastingGrant is a shipped Feat field and is absent here."
+  },
+  {
+   "id": "dragon-turtle-scale",
+   "upheld": true,
+   "why": "Swim Speed from a talisman reaches nothing; mode modifiers are numeric only (targets: save/skill/attack/perception/damage/ac/all-checks), which the fix honestly flags."
+  },
+  {
+   "id": "dragon-turtle-scale-greater",
+   "upheld": true,
+   "why": "Same confirmed gap at full land Speed; a distinct priced item, not an umbrella record."
+  },
+  {
+   "id": "dwarven-weapon-expertise",
+   "upheld": true,
+   "why": "Absent from featGrantsAuto; dwarf advanced weapons (dwarven war axe, scattergun, dorn dergar) and limited-expertise classes make mirrorBestCategory a real delta."
+  },
+  {
+   "id": "eclipseborn",
+   "upheld": true,
+   "why": "47 backgrounds carry trainedLoreChoice:true; this one has abilityBoosts + innateSpells and no lore field at all."
+  },
+  {
+   "id": "elven-weapon-expertise",
+   "upheld": true,
+   "why": "Absent from featGrantsAuto; real for any class whose best category outruns martial (an elf wizard gets expert elven weapons while martial stays trained)."
+  },
+  {
+   "id": "empiricism-methodology",
+   "upheld": false,
+   "why": "ALREADY MODELLED: the subclass option carries skillChoice=[\"arcana\",\"crafting\",\"occultism\",\"society\"] - literally the proposed fix; grants is null BECAUSE the pick lives in skillChoice."
+  },
+  {
+   "id": "gnome-weapon-expertise",
+   "upheld": true,
+   "why": "Absent from featGrantsAuto; gnome flickmace and switchscythe are advanced, so the mirror is a real delta."
+  },
+  {
+   "id": "goblin-weapon-expertise",
+   "upheld": true,
+   "why": "Absent from featGrantsAuto (only hobgoblin- is present); explosive dogslicer and flingflenser are advanced."
+  },
+  {
+   "id": "halfling-weapon-expertise",
+   "upheld": true,
+   "why": "Absent from featGrantsAuto; real for limited-expertise classes even though every halfling weapon is simple/martial."
+  },
+  {
+   "id": "haunting-memories",
+   "upheld": true,
+   "why": "Real daily expert/master skill grant with nothing on the record; choice.daily is the right lane, but use kind:\"array\" - kind:\"open\" with no `from` is dropped by dailyChoicesFor."
+  },
+  {
+   "id": "impossible-polymath",
+   "upheld": false,
+   "why": "PREMISE FALSE: esoteric-polymath’s daily choice is kind:\"text\" (free-typed spell name; its own note says the occult book is not modelled), so there is no tradition filter to widen and the player can already record a cross-tradition pick."
+  },
+  {
+   "id": "keeper-jotunborn",
+   "upheld": true,
+   "why": "situationalBonuses covers Track animals and featFeatGrants the feat, but nothing trains Survival; the record’s dataWarning is about the missing feat id, not this."
+  },
+  {
+   "id": "klingegeist",
+   "upheld": true,
+   "why": "A full alternate form (AC 18+level, fly 30, weapon proficiency, action lockout) with no stance/mode entry, while 20+ form:true stances already ship."
+  },
+  {
+   "id": "mature-trained-companion",
+   "upheld": true,
+   "why": "COMPANION_MODS carries maturityFloor + skillGrants for its siblings (specialized-companion-animal-trainer, chorus-companion) and has no entry for this Animal Trainer rung."
+  },
+  {
+   "id": "multilingual",
+   "upheld": true,
+   "why": "bonusLanguageSlots (build.ts:824) is max(0,Int mod) + ancestry.languages.additional and never reads feats; grantsLanguages is documented as fixed grants only."
+  },
+  {
+   "id": "orc-weapon-expertise",
+   "upheld": true,
+   "why": "Absent from featGrantsAuto; butchering axe, barricade buster and orc necksplitter are advanced. Re-derive the weapon ids from core.items before applying."
+  },
+  {
+   "id": "perfections-path",
+   "upheld": true,
+   "why": "The record’s choice values are exactly fortitude/reflex/will and FeatGrant.choiceGrants keys verbatim on them, so the fix is well-formed and nothing applies the pick today."
+  },
+  {
+   "id": "raging-stories",
+   "upheld": true,
+   "why": "+2/+4/+6 fire on the character’s own melee Strikes; \"damage\" is a live mode modifier target and no mode/stance entry exists."
+  },
+  {
+   "id": "repository-of-knowledge",
+   "upheld": true,
+   "why": "Item-borne proficiency RANK has no lane - ItemPassiveEffects.skills is numeric and loreChoices is heritage-only; the ranks land on the player’s own sheet."
+  },
+  {
+   "id": "respite-of-a-thousand-roofs",
+   "upheld": true,
+   "why": "Crafting + Cooking Lore reach nothing; build.ts:2273 iterates c.feats so heritage ids never hit FEAT_GRANTS, and the record’s dataWarning confirms the grant was authored but unreachable."
+  },
+  {
+   "id": "revolutionary-innovation",
+   "upheld": true,
+   "why": "Level-15 choose-one-of-N with concrete resistances and no effectChoices; EffectGrant.resistances is exactly the right shape and classFeatures already carry effectChoices."
+  },
+  {
+   "id": "runelord",
+   "upheld": true,
+   "why": "runelord-dedication ships with NO classArchetype while war-mage-, vindicator- and warrior-of-legend-dedication all carry one; the polearm/spear training and Thassilonian are lost."
+  },
+  {
+   "id": "sage-jotunborn",
+   "upheld": true,
+   "why": "Society training reaches nothing - same heritage/FEAT_GRANTS reach problem, confirmed by the record’s dataWarning."
+  },
+  {
+   "id": "sages-bloom",
+   "upheld": true,
+   "why": "Critical-failure-to-failure on the player’s own Nature check; situationalBonuses stores exactly this form and the item has only `uses`."
+  },
+  {
+   "id": "shootists-edge",
+   "upheld": true,
+   "why": "advancement.ts covers the class DC only; the range-increment waiver has an exact precedent at situationalBonuses.ts:2188 (masterful-hunter) and no entry here."
+  },
+  {
+   "id": "snare-specialist",
+   "upheld": true,
+   "why": "Confirmed: SNARE_CRAFTING_SOURCES = {snare-crafting, snarecrafter-dedication, snare-expert, snare-setter}; this feat is absent, so the formula book and prepared snares are zero."
+  },
+  {
+   "id": "specialized-companion",
+   "upheld": false,
+   "why": "DUPLICATE: the untagged AoN twin of specialized-companion-animal-trainer, which COMPANION_MODS:172 already covers with the identical entry - a dedup/suppression issue, not a mechanics gap."
+  },
+  {
+   "id": "splendid-companion",
+   "upheld": true,
+   "why": "Master Performance in place of Athletics/Acrobatics is exactly COMPANION_MODS.skillGrants (chorus-companion, fell-rider precedent) and there is no entry."
+  },
+  {
+   "id": "stealthy-companion",
+   "upheld": false,
+   "why": "FIX WOULD BE WRONG: master Stealth applies only to a specialized AMBUSHER but companionGrants.skillGrants is unconditional, so the entry would hand every companion a rank the rules do not grant; the Camouflage half is a terrain permission, not a number."
+  },
+  {
+   "id": "stone-of-unrivaled-skill",
+   "upheld": true,
+   "why": "choice + counters + the +3 status are present, but the headline expert/master/legendary step-up has no item-borne rank lane."
+  },
+  {
+   "id": "travelers-fulu",
+   "upheld": true,
+   "why": "Degree-of-success improvement on the player’s own Survival check; sibling navigators-feather is at situationalBonuses.ts:1748 and this item has only `uses`."
+  },
+  {
+   "id": "tsukumogami-poppet",
+   "upheld": true,
+   "why": "loreChoices IS read for heritages (build.ts:1315) and this record has only effectChoices, so the Lore the existing situational entry points at is never trained."
+  },
+  {
+   "id": "unmistakable-lore",
+   "upheld": true,
+   "why": "Critical-failure-to-failure across trained Lores; the lore:* target shape already exists (silvertongue-mutagen) and there is no entry."
+  },
+  {
+   "id": "vigilant-goloma",
+   "upheld": true,
+   "why": "The one-rank-better Perception for magical traps has precedent at memory-of-skill:2564 / pilferers-gloves:2583 and no entry here."
+  },
+  {
+   "id": "viking-weapon-specialist",
+   "upheld": true,
+   "why": "Not in FEAT_GRANTS. The crit-spec half is the real gap (critSpec + critSpecWeapons.bases); the weaponFamiliarity half is near-inert since all four weapons are simple/martial."
+  },
+  {
+   "id": "warden-human-bb",
+   "upheld": true,
+   "why": "The choice is recorded but EffectGrant has no hp / save-rank / armor-rank track, so none of +4 HP, expert Fortitude or trained medium armor lands."
+  },
+  {
+   "id": "warrior-android",
+   "upheld": true,
+   "why": "\"Trained in all simple and martial weapons\" reaches nothing; heritage ids are never looked up in FEAT_GRANTS and the record’s dataWarning confirms it."
+  },
+  {
+   "id": "weapon-weird-oil",
+   "upheld": true,
+   "why": "Re-keying a weapon’s GROUP per inventory item drives both the group-proficiency lookup and critSpec.ts and has no lane; modes are numeric only."
+  },
+  {
+   "id": "weaver-jotunborn",
+   "upheld": true,
+   "why": "situationalBonuses covers the Seek bonus but nothing trains Crafting - same heritage/FEAT_GRANTS reach problem, confirmed by the dataWarning."
+  },
+  {
+   "id": "wisp-fetchling",
+   "upheld": true,
+   "why": "situationalBonuses + featFeatGrants cover the other halves; nothing trains Acrobatics, and no heritage carries any skill-training field."
+  },
+  {
+   "id": "wit",
+   "upheld": false,
+   "why": "ALREADY MODELLED: classes.swashbuckler.subclass.options[wit].grants.skills=[\"diplomacy\"] already trains Diplomacy; featFeatGrants covers Bon Mot."
+  }
+ ]
+}

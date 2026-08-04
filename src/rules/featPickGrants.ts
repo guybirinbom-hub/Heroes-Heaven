@@ -38,6 +38,32 @@ export interface FeatPickSpec {
 
 export const FEAT_PICK_GRANTS: Record<string, FeatPickSpec> = {
   'advanced-general-training': { prompt: "Choose a general feat", category: 'general', maxLevel: 7 },
+  /* ---- pick-a-feat grants found by the coverage sweep ---------------------------------------
+   * Each offers exactly what its own text offers, and no more. Where the text names the options,
+   * they are listed by id rather than approximated with a category+level filter — every id below
+   * was checked against core.json.
+   */
+  // HERITAGE-keyed (kashrishi): 'a 1st-level kashrishi ancestry feat'. 8 qualify.
+  nascent: { prompt: 'Choose a 1st-level kashrishi ancestry feat', category: 'ancestry', maxLevel: 1, traits: ['kashrishi'] },
+  // 'one 1st-level Performance skill feat' — the three that exist, by id, since no trait marks a
+  // feat as belonging to a skill (the tie is a 'trained in Performance' prerequisite).
+  'natural-performer': { prompt: 'Choose a Performance skill feat', maxLevel: 1, ids: ['fascinating-performance', 'impressive-performance', 'virtuosic-performer'] },
+  // 'any one general feat that you meet the prerequisites for'
+  'officers-education': { prompt: 'Choose a general feat', category: 'general', maxLevel: 'self' },
+  // HERITAGE-keyed: 'your choice of the Courtly Graces or Streetwise feat'
+  'old-blood-vishkanya': { prompt: 'Choose Courtly Graces or Streetwise', maxLevel: 1, ids: ['courtly-graces', 'streetwise'] },
+  // 'either the Combat Climber or Underwater Marauder skill feat, even if you do not meet its prerequisites'
+  'pirate-combat-training': { prompt: 'Choose Combat Climber or Underwater Marauder', maxLevel: 1, ids: ['combat-climber', 'underwater-marauder'] },
+  // 'Choose one nephilim lineage feat that you do not already possess'
+  'scion-of-many-planes': { prompt: 'Choose a nephilim lineage feat', category: 'ancestry', maxLevel: 'self', traits: ['lineage', 'nephilim'] },
+  // 'one evolution feat from the following list' — the four named.
+  'signature-synergy': { prompt: 'Choose an evolution feat', maxLevel: 'self', ids: ['airborne-form', 'burrowing-form', 'ever-vigilant-senses', 'hulking-size'] },
+  // 'a skill feat associated with one of the skills you chose'. The app cannot know which skills were
+  // chosen, so it offers the skill-feat pick and records the answer rather than guessing a subset.
+  'skill-mastery': { prompt: 'Choose a skill feat', category: 'skill', maxLevel: 'self' },
+  'skill-mastery-rogue': { prompt: 'Choose a skill feat', category: 'skill', maxLevel: 'self' },
+  // HERITAGE-keyed (tanuki): 'your choice of Everyday Form or Teakettle Form as a bonus ancestry feat'
+  'steadfast-tanuki': { prompt: 'Choose Everyday Form or Teakettle Form', maxLevel: 1, ids: ['everyday-form', 'teakettle-form'] },
   'ancestral-paragon': { prompt: "Choose a ancestry feat", category: 'ancestry', maxLevel: 1, dynamicTrait: 'ancestry', excludeTraits: ['lineage'] },
   // HERITAGE-keyed, not a feat: Ancient Elf grants a multiclass dedication at 1st level "even though
   // you don't meet its level prerequisite", so maxLevel 2 offers the normally-2nd-level dedications.

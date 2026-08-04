@@ -1,0 +1,497 @@
+=========== shattered-sacrament  [spellGrant / feats / L14]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: When Vigil fell to Tar-Baphon's Radiant Fire, that lost innocence brought you a deeper understanding of what faith means in the context of your own magic. When you cast a halcyon spell, you can choose for it to be a divine spell instead of arcane or primal. You gain a halcyon cantrip and a 1st-rank halcyon spell.
+JUDGE REASON: Grants a halcyon cantrip and a 1st-rank halcyon spell (extra spells KNOWN in the halcyon repertoire, which casterArchetypes.ts models as repertoire:true) and lets halcyon spells be cast as divine. No legal field adds repertoire spells to an archetype casting entry.
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== sign-bound  [spellGrant / backgrounds / Lundefined]
+TRAITS: 
+ENGINE FIELDS: ["abilityBoosts","trainedLore"]  REG: []
+TEXT: You were born under a powerful manifestation of a specific constellation, and its connection to you is obvious. You tend to feel most at ease while your constellation is prominent and can draw upon your sign's influence from time to time. When you gain this background, choose a specific constellation, such as the Thrush or the Wagon. Your associated constellation determines one of the ability boosts you gain and an innate spell. The list includes benefits for the constellations of the Cosmic Caravan, but you might have been born under a different constellation and gain different benefits as determined by the GM. Choose two attribute boosts. One must be to the ability tied to your sign, and one is a free attribute boost. You're trained in Astrology Lore. You also gain the ability to cast an occult innate spell, as determined by your sign. The frequency with which you can cast this spell is listed below; cantrips can be used as often as you wish. As normal, you cast non-cantrip innate spells at the lowest level available to that spell, such as 2nd level for speak with animals, and cantrips are heightened to half your level. Additionally, once during the prominent time for your sign (such as 12 Pharast-18 Gozran for the Bridge), you can cast your sign's spell without expending its normal use. --- **The Thrush** (Dexterity): Ghost Sound; at will **The Lantern Bearer** (Wisdom): Light; at will **The Newlyweds** (Charisma): Charm; once per day **The Bridge** (Constitution): Environmental Endurance; once per week **The Daughter** (Charisma): Guidance; at will **The Rider** (Streng
+JUDGE REASON: The background grants an occult innate spell set by the chosen constellation, but the record has only abilityBoosts + trainedLore: no constellation is picked and no spell reaches the sheet.
+JUDGE FIX: {"effectChoices":[{"id":"constellation","prompt":"Constellation (sets your sign’s occult innate spell)","options":[{"value":"thrush","label":"The Thrush (Dexterity) — ghost sound, at will","grant":{"innateSpells":[{"spellId":"ghost-sound","tradition":"occult","atWill":true}]}},{"value":"lantern-bearer","label":"The Lantern Bearer (Wisdom) — light, at will","grant":{"innateSpells":[{"spellId":"light","tradition":"occult","atWill":true}]}},{"value":"newlyweds","label":"The Newlyweds (Charisma) — charm, once per day","grant":{"innateSpells":[{"spellId":"charm","tradition":"occult","usesPerDay":1}]}},{"value":"bridge","label":"The Bridge (Constitution) — environmental endurance, once per week","grant":{"innateSpells":[{"spellId":"environmental-endurance","tradition":"occult","usesPerDay":1,"usesPer":"week"}]}},{"value":"daughter","label":"The Daughter (Charisma) — guidance, at will","grant":{"innateSpells":[{"spellId":"guidance","tradition":"occult","atWill":true}]}},{"value":"rider","label":"The Rider (Strength) — marvelous mount, once per week","grant":{"innateSpells":[{"spellId":"marvelous-mount","tradition":"occult","usesPerDay":1,"usesPer":"week"}]}},{"value":"patriarch","label":"
+
+=========== sin-reservoir  [spellGrant / feats / L8]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: During your daily preparations, you can indulge in your associated sin or meditate on its values (and risks). When you do, you gain one additional spell slot of any spell level up to two levels below the highest-level wizard spell you can cast. You can prepare only one of your curriculum spells in this slot.
+JUDGE REASON: Grants one extra prepared slot per day at a rank the player chooses (up to two below the highest wizard rank). SpellSlotBonus only expresses per-rank grants (perRank/exceptHighest), so it cannot express one choose-the-rank slot, and nothing else delivers it.
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== snowcaster  [spellGrant / feats / L4]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: Your magical power grows as the shard's icy influence spreads ever deeper into your being. You gain the basic spellcasting benefits. Each time you gain a spell slot of a new level from this archetype, add a spell of the appropriate spell rank (including heightened versions of lower-rank spells) to your repertoire, either a common spell of the arcane tradition that has the cold trait or another cold spell you have access to.
+JUDGE REASON: "You gain the basic spellcasting benefits", but the Gelid Shard archetype has no entry in src/rules/casterArchetypes.ts, so its cantrips, spell slots and trained spell attack/DC never appear (expert-snowcasting and master-snowcasting are dead for the same reason).
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== staff-nexus  [spellGrant / classFeatures / L1]
+TRAITS: wizard
+ENGINE FIELDS: []  REG: []
+TEXT: Your thesis maintains that early and intense adoption of staves from the first days of study can create a symbiotic bond between spellcaster and staff, allowing them to create remarkable magic together. You've formed such a connection with a makeshift staff you built, and you are ready to infuse any staff you encounter with greater power. You begin play with a makeshift staff of your own invention. It has the magical trait and contains one cantrip and one 1st-rank spell, both from your spellbook. During your daily preparations, you can expend one spell to grant the staff a number of charges equal to that spell's rank, which dissipate after 24 hours. While you are holding the staff, you can Cast the Spells it contains. The 1st-rank spell consumes 1 charge but the cantrip doesn't require charges. If your staff is destroyed, you can create a new one over the course of 1 hour, though it has no charges. During your daily preparations, you can merge your makeshift staff with another staff in your possession, adding the two chosen spells to it. This staff gains charges from preparing it and from expending spells. At 8th level, you can expend two spells instead of one when preparing any staff, adding additional charges equal to the combined ranks of the expended spells. At 16th level, you can expend up to a total of three spells to add charges to the staff, adding additional charges equal to the combined ranks of all three spells.
+JUDGE REASON: The thesis gives the wizard a makeshift staff holding one cantrip and one 1st-rank spell with a daily charge pool fed by expending spells (two at 8th, three at 16th). Nothing grants the item or the pool, and no data field grants an inventory item.
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== studious-capacity  [spellGrant / feats / L16]
+TRAITS: bard
+ENGINE FIELDS: []  REG: []
+TEXT: Your continued study of occult magic has increased your magical capacity, allowing you to cast spells even when it seems impossible. You can cast one spell each day even after you've run out of spell slots of the appropriate spell rank, but you can't use this ability to cast a spell of your highest spell rank.
+JUDGE REASON: Grants one extra casting per day once slots of that rank are gone — a real per-day resource — and the feat carries no fields at all.
+JUDGE FIX: {"field":"limitedUses","value":"{\"max\":1,\"per\":\"day\"}"}
+
+=========== the-deck-of-destiny  [spellGrant / items / L25]
+TRAITS: artifact,invested,magical
+ENGINE FIELDS: ["immunities"]  REG: ["situationalBonuses"]
+TEXT: Composed of 54 cards that are powerful in their own right, the Deck of Destiny epitomizes the powers of the harrow and divination. The deck only has its full suite of abilities while complete. Completing the deck requires all 54 cards to be placed together and shuffled into their complete state over the span of 1 minute; the cards merely being in proximity of each other is not enough to complete the deck. Once complete, the deck can be invested normally. While the complete deck is on your person or in hand and invested, you gain a natural insight into events to be. Any divination effects you create become heightened to 10th level for the purpose of determining their counteract rank. Additionally, divination effects you create gain a +4 item bonus to their DC and to spell attack rolls. The deck also helps you maintain control of your own fate, granting you immunity to fortune and misfortune effects, though you can be affected by such effects if you wish. --- **Activate** envision (daily preparations) When you perform your daily preparations, you can share the Deck of Destiny with your companions, allowing them to invest a hand of up to 5 cards each as if they carried the cards. When one of your companions activates one of their invested cards, an illusory image of the card appears in their hand, but the card's effects are otherwise unaltered. This lasts until the next time you perform your daily preparations. --- **Activate** ⟨5⟩ envision **Trigger** A creature you can see within 60 feet is about to attempt a check **Effect** You quickly draw a card to alter the triggering c
+JUDGE REASON: The fortune/misfortune immunity sits as a TOP-LEVEL immunities array on an item, but derive.ts only reads passiveEffects.immunities from worn/invested items, so it never reaches the sheet.
+JUDGE FIX: {"field":"passiveEffects","value":"{\"immunities\":[\"fortune\",\"misfortune\"]}"}
+
+=========== true-channel-spell  [spellGrant / feats / L20]
+TRAITS: animist
+ENGINE FIELDS: []  REG: []
+TEXT: You are a true conduit for spiritual power, able to unleash the greatest spells. You gain a single 10th-rank spell slot and can prepare a spell in that slot using animist spellcasting. You can't use 10th-rank slots with abilities that give you more spell slots or that let you cast spells without expending spell slots.
+JUDGE REASON: Grants a single 10th-rank animist prepared slot, but animistPreparedSlots() caps at rank 9 and the spellSlotBonus the builder reads has no single-rank form, so the slot never appears.
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== wellspring-magic  [spellGrant / classFeatures / L1]
+TRAITS: 
+ENGINE FIELDS: []  REG: []
+TEXT: You regain magic power quickly, but it can be difficult for you to control. You must select Wellspring Mage Dedication as your 2nd-level class feat. **Wellspring Mage Adjustments** You learn spells as normal for your class, but change your spontaneous spellcasting in the following ways. You can cast fewer spells each day unless you gain more spells thanks to your wellspring. Reduce your number of spell slots of each spell rank by 1. Reduce the number of cantrips you gain from your class by 1. A wellspring of magic fills you with power that's not fully under your control. When you roll initiative for a non-trivial combat encounter, as well as in other high-stress situations of the GM's choice, magic wells up within you. Attempt a DC 6 flat check. --- **Critical Success** You temporarily recover an expended spell slot of any rank of your choice. The temporary spell slot lasts for 1 minute, and if you don't use it by then, you experience an immediate Wellspring Surges. **Success** As critical success, except you randomly determine the rank of spell slot from among your top three spell ranks (or all your ranks of spell slots if you have fewer than three). The slot lasts 3 rounds instead of 1 minute. **Failure** You generate a *wellspring surge*, with a spell rank chosen randomly among your top three ranks of spell slots (or all your ranks if you have fewer than three). You can gain a temporary spell slot no more than twice per day. If you would gain a temporary spell slot for a rank that has no expended spell slots, there's no effect. If you use a temporary slot to cast a spell
+JUDGE REASON: The Wellspring Mage adjustment REDUCES spell slots of each rank by 1 (and cantrips by 1), but the class feature carries no fields, so a wellspring mage keeps the full spontaneous progression. build.ts applies spellSlotBonus additively, so a negative perRank removes the slots; the cantrip reduction still needs engine work.
+JUDGE FIX: {"field":"spellSlotBonus","value":"{\"perRank\":-1}"}
+
+=========== zodiac-bound  [spellGrant / backgrounds / Lundefined]
+TRAITS: 
+ENGINE FIELDS: ["abilityBoosts","choice","trainedLore"]  REG: []
+TEXT: Fortune tellers and oracles claim that a person's zodiac sign influences their personality and fate, and while it might not be true for all, it seems true for you. You were born under a powerful manifestation of a specific constellation, corresponding to a symbol of the zodiac. When you gain this background, choose a specific constellation from those listed below. Your associated constellation determines one of the attribute boosts you gain and an innate spell. The list includes benefits for the constellations of the Dragon Empires Zodiac, but you might have been born under a different constellation and gain different benefits as determined by the GM. Choose two attribute boosts. One must be to the attribute tied to your sign, and one is a free attribute boost. You're trained in Astrology Lore. You also gain the ability to cast a divine innate spell, as determined by your sign. The frequency with which you can cast this spell is listed below; cantrips can be used as often as you wish. As normal, you cast non-cantrip innate spells at the lowest rank available to that spell, such as 2nd rank for *water breathing*, and cantrips are heightened to half your level. Additionally, once during the prominent time for your sign (typically once per year), you can cast your sign's spell without expending its normal use. **The Underworld Dragon (Intelligence)**: Ignition; at will **The Swordswoman (Dexterity)**: Gale Blast; at will **The Sea Dragon (Constitution)**: Water Breathing; once per week **The Swallow (Dexterity)**: Jump; once per day **The Ox (Strength)**: Ant Haul; once per da
+JUDGE REASON: The constellation choice is recorded only (kind:array, options carry no grants), so the divine innate spell every sign confers never reaches the sheet. Replace the inert choice with a granting effectChoices.
+JUDGE FIX: {"effectChoices":[{"id":"constellation","prompt":"Constellation (sets your sign’s divine innate spell)","options":[{"value":"underworld-dragon","label":"The Underworld Dragon (Intelligence) — ignition, at will","grant":{"innateSpells":[{"spellId":"ignition","tradition":"divine","atWill":true}]}},{"value":"swordswoman","label":"The Swordswoman (Dexterity) — gale blast, at will","grant":{"innateSpells":[{"spellId":"gale-blast","tradition":"divine","atWill":true}]}},{"value":"sea-dragon","label":"The Sea Dragon (Constitution) — water breathing, once per week","grant":{"innateSpells":[{"spellId":"water-breathing","tradition":"divine","usesPerDay":1,"usesPer":"week"}]}},{"value":"swallow","label":"The Swallow (Dexterity) — jump, once per day","grant":{"innateSpells":[{"spellId":"jump","tradition":"divine","usesPerDay":1}]}},{"value":"ox","label":"The Ox (Strength) — ant haul, once per day","grant":{"innateSpells":[{"spellId":"ant-haul","tradition":"divine","usesPerDay":1}]}},{"value":"sovereign-dragon","label":"The Sovereign Dragon (Charisma) — command, once per day","grant":{"innateSpells":[{"spellId":"command","tradition":"divine","usesPerDay":1}]}},{"value":"ogre","label":"The Ogre (
+
+=========== able-carter  [grantsFeat / backgrounds / Lundefined]
+TRAITS: 
+ENGINE FIELDS: ["abilityBoosts","choice","trainedLoreChoice","trainedSkillChoice"]  REG: []
+TEXT: You worked for many years as a hauler within Geb, either on your own or with a larger operation that shipped goods across Geb's ancient roads. In either case, you were loosely affiliated with the Carters Consortium, and you might have even been part of that faction when allegations of Pharasma worship among its leaders caused the faction's sharp drop in significance. Yet the goods still need to be moved from ports to warehouses or from town to town, and that was your business. You've seen a lot of Geb in your time, and you're good at interacting with the quick and the dead alike, but you've given up the shipping business for more lucrative opportunities. The Carters Consortium values your past work, especially because so few people are sticking by them today. Your party gains 1 Reputation Point with the Carters Consortium at the start of the campaign. Choose two attribute boosts. One must be to **Strength** or **Charisma**, and one is a free attribute boost. You're trained in your choice of the Deception or Diplomacy skill. You gain a skill feat: Charming Liar if you chose Deception or Hobnobber if you chose Diplomacy. You're also trained in a Lore skill with one of Geb's cities: Graydirge, Mechitar, or Yled. --- ## Background details **Attribute Boosts** Charisma or Strength, one free
+JUDGE REASON: The background gives Charming Liar with Deception or Hobnobber with Diplomacy; the skill pick exists (trainedSkillChoice) but no feat is granted. grantedFeatByChoice is the established field for exactly this (animal-wrangler, blow-in, conservator, ...).
+JUDGE FIX: {"field":"grantedFeatByChoice","value":"{\"deception\":\"charming-liar\",\"diplomacy\":\"hobnobber\"}"}
+
+=========== add-element  [grantsFeat / feats / L10]
+TRAITS: archetype
+ENGINE FIELDS: ["choice"]  REG: []
+TEXT: Choose a second kinetic element to add to the one you already have. You gain an impulse feat for that element. For the purpose of meeting its prerequisites, your kineticist level is equal to half your level. If you gain more kineticist feats, you can select hybrid impulses that have both your elements, as normal for a kineticist.
+JUDGE REASON: The choice records the second kinetic element, but "You gain an impulse feat for that element" is never offered. FEAT_PICK_GRANTS cannot express "an impulse feat carrying the element I just chose" (no dynamic trait sourced from a sibling choice, and maxLevel has no half-character-level form).
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== advanced-arcana  [grantsFeat / feats / L6]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: You gain one wizard feat. For the purpose of meeting its prerequisites, your wizard level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another wizard feat.
+JUDGE REASON: Grants one wizard feat, but unlike its basic-tier twin basic-arcana (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null).
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== advanced-blood-potency  [grantsFeat / feats / L6]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: You gain one sorcerer feat. For the purpose of prerequisites, your sorcerer level is half your character level. --- **Special** You can select this feat more than once. Each time you do, you gain another sorcerer feat.
+JUDGE REASON: Grants one sorcerer feat, but unlike its basic-tier twin basic-blood-potency (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null).
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== advanced-breakthrough  [grantsFeat / feats / L6]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: You gain one inventor feat. For the purpose of meeting its prerequisites, your inventor level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another inventor feat.
+JUDGE REASON: Grants one inventor feat, but unlike its basic-tier twin basic-breakthrough (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null).
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== advanced-concoction  [grantsFeat / feats / L6]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: You gain one alchemist feat. For the purpose of meeting its prerequisites, your alchemist level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another alchemist feat.
+JUDGE REASON: Grants one alchemist feat, but unlike its basic-tier twin basic-concoction (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null).
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== advanced-deduction  [grantsFeat / feats / L6]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: You gain one investigator feat. For the purpose of meeting its prerequisites, your investigator level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another investigator feat.
+JUDGE REASON: Grants one investigator feat, but unlike its basic-tier twin basic-deduction (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null).
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== advanced-defender  [grantsFeat / feats / L6]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: You gain one guardian feat. For the purpose of meeting its prerequisites, your guardian level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another guardian feat.
+JUDGE REASON: Grants one guardian feat, but unlike its basic-tier twin basic-defender (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null).
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== advanced-devotion  [grantsFeat / feats / L6]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: You gain one champion feat. For the purpose of meeting its prerequisites, your champion level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another champion feat.
+JUDGE REASON: Grants one champion feat, but unlike its basic-tier twin basic-devotion (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null).
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== advanced-dogma  [grantsFeat / feats / L6]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: You gain one cleric feat. For the purpose of meeting its prerequisites, your cleric level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another cleric feat.
+JUDGE REASON: Grants one cleric feat, but unlike its basic-tier twin basic-dogma (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null).
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== advanced-element-control  [grantsFeat / feats / L6]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: You gain one kineticist feat. For the purpose of meeting its prerequisites, your kineticist level is equal to half your level. Your options include impulse feats for your kinetic element, as normal for a kineticist. --- **Special** You can select this feat more than once. Each time you select it, you gain another kineticist feat.
+JUDGE REASON: "You gain one kineticist feat" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['kineticist']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== advanced-field-training  [grantsFeat / feats / L6]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: You gain a commander feat. For the purpose of meeting its prerequisites, your commander level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another commander feat.
+JUDGE REASON: "You gain one commander feat" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['commander']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== advanced-flair  [grantsFeat / feats / L6]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: You gain one swashbuckler feat. For the purpose of meeting its prerequisites, your swashbuckler level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another swashbuckler feat.
+JUDGE REASON: "You gain one swashbuckler feat" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['swashbuckler']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== advanced-fury  [grantsFeat / feats / L6]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: You gain one barbarian feat. For the purpose of meeting its prerequisites, your barbarian level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another barbarian feat.
+JUDGE REASON: "You gain one barbarian feat" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['barbarian']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== advanced-glory  [grantsFeat / feats / L6]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: You gain an exemplar feat. For the purpose of meeting its prerequisites, your exemplar level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another exemplar feat.
+JUDGE REASON: "You gain one exemplar feat" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['exemplar']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== advanced-hunters-trick  [grantsFeat / feats / L6]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: You gain one ranger feat. For the purpose of meeting its prerequisites, your ranger level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another ranger feat.
+JUDGE REASON: "You gain one ranger feat" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['ranger']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== advanced-kata  [grantsFeat / feats / L6]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: You gain one monk feat. For the purpose of meeting its prerequisites, your monk level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another monk feat.
+JUDGE REASON: "You gain one monk feat" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['monk']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== advanced-maneuver  [grantsFeat / feats / L6]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: You gain a fighter feat. For the purpose of meeting its prerequisites, your fighter level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another fighter feat.
+JUDGE REASON: "You gain one fighter feat" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['fighter']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== advanced-martial-magic  [grantsFeat / feats / L6]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: You gain one magus feat. For the purpose of meeting its prerequisites, your magus level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another magus feat.
+JUDGE REASON: "You gain one magus feat" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['magus']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== advanced-muses-whispers  [grantsFeat / feats / L6]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: You gain one bard feat. For the purpose of meeting its prerequisites, your bard level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another bard feat.
+JUDGE REASON: "You gain one bard feat" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['bard']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== advanced-mysteries  [grantsFeat / feats / L6]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: You gain one oracle feat. For meeting its prerequisites, your oracle level is equal to half your level. --- **Special** You can select this feat more than once. Each time, you gain another oracle feat.
+JUDGE REASON: "You gain one oracle feat" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['oracle']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== advanced-shooting  [grantsFeat / feats / L6]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: You gain one gunslinger feat. For the purpose of meeting its prerequisites, your gunslinger level is equal to half your level. --- **Special** You can select this feat more than once. Each time you select it, you gain another gunslinger feat.
+JUDGE REASON: "You gain one gunslinger feat" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['gunslinger']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== advanced-synergy  [grantsFeat / feats / L6]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: You gain one summoner feat. For the purpose of meeting its prerequisites, your summoner level is equal to half your character level. **Special** You can select this feat more than once. Each time you select it, you gain another summoner feat.
+JUDGE REASON: "You gain one summoner feat" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['summoner']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== advanced-thaumaturgy  [grantsFeat / feats / L6]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: You gain one thaumaturge feat. For the purpose of meeting its prerequisites, your thaumaturge level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another thaumaturge feat.
+JUDGE REASON: "You gain one thaumaturge feat" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['thaumaturge']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== advanced-thoughtform  [grantsFeat / feats / L6]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: You gain one psychic feat. For the purpose of meeting its prerequisites, your psychic level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another psychic feat.
+JUDGE REASON: "You gain one psychic feat" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['psychic']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== advanced-trickery  [grantsFeat / feats / L6]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: You gain one rogue feat. For the purpose of meeting its prerequisites, your rogue level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another rogue feat.
+JUDGE REASON: "You gain one rogue feat" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['rogue']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== advanced-wilding  [grantsFeat / feats / L6]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: You gain one druid feat. For the purpose of meeting its prerequisites, your druid level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another druid feat.
+JUDGE REASON: "You gain one druid feat" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['druid']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== advanced-witchcraft  [grantsFeat / feats / L6]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: You gain one witch feat. For the purpose of meeting its prerequisites, your witch level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another witch feat.
+JUDGE REASON: "You gain one witch feat" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['witch']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== affinity-stones  [grantsFeat / items / L9]
+TRAITS: artifact,invested,magical
+ENGINE FIELDS: []  REG: []
+TEXT: Dwarven tales state that the first set of these stones was created by a dwarven lapidary for his elven sweetheart. The gem he chose was amber—to show his clan that a union between stone and leaf was possible. His family remained hesitant, despite the unmistakable love that the men shared. The tales then say that it was Folgrit who grew impatient and transformed the stones as a sign of her approval. Since then, more sets of these have been created, but doing so is an unsure process. Some of the stones are seemingly given their magical abilities at random, which most attribute as further blessings from Folgrit. Each set of affinity stones typically comes as a pair of gems set into worn items such as hilts, necklaces, or rings, though some sets of affinity stones feature additional gems. The full set of stones must be invested together across multiple creatures, or else their magic fails to function. To invest these items, one person must be a dwarf and everyone must perform a one-hour ceremony that includes divulging their innermost feelings. Their love need not be romantic, but it must be genuine and deep. If they pass this test, they receive the following benefits. - You are always aware of each other and permanently gain the effects of the Status spell. - Non-dwarves gain the benefits of a 1st- or 5th-level ancestry feat with the dwarf trait, and dwarves gain the benefits one 1st- or 5th-level ancestry feat with a trait corresponding to the ancestry of another person with which the affinity stones are invested. For example, if you share investment in the stones with a half
+JUDGE REASON: The stones grant the benefits of a 1st- or 5th-level dwarf ancestry feat (or, for a dwarf, a co-investor's ancestry feat). The item record has no `choice`, so the player cannot even record which feat they took. The sibling artifact ancestral-embrace solves exactly this with a recorded-only open feat picker; mirror it. (The permanent status-spell link between investors is mutual awareness with no sheet statistic, and the physical changes are explicitly non-mechanical.)
+JUDGE FIX: {"field":"choice","value":"{\"flag\":\"affinityStonesFeat\",\"prompt\":\"Ancestry feat gained from the invested affinity stones (recorded only — not applied to your sheet)\",\"kind\":\"open\",\"from\":{\"type\":\"feat\",\"featCategory\":\"ancestry\",\"maxLevel\":5},\"inert\":\"Recorded only: nothing in Heroes Heaven applies a feat granted by an ITEM. A non-dwarf picks a 1st- or 5th-level DWARF feat; a dwarf picks one matching a co-investor's ancestry.\"}"}
+
+=========== aiuvarin  [grantsFeat / heritages / Lundefined]
+TRAITS: aiuvarin
+ENGINE FIELDS: ["senses"]  REG: []
+TEXT: You have elves, or possibly other aiuvarins, in your family tree. You have pointed ears and other telltale signs of elf heritage. You gain the elf trait, the aiuvarin trait, and low-light vision. In addition, when you gain an ancestry feat, you can choose from aiuvarin and elf feats in addition to those from your ancestry.
+JUDGE REASON: Low-light vision IS modelled (senses:[low-light-vision]). Not modelled: "you gain the elf trait ... you can choose from aiuvarin and elf feats in addition to those from your ancestry" — e.g. round-ears/sociable/earned-glory (traits:["aiuvarin"]) can never be picked. src/rules/featSlots.ts:56 gates an ancestry-feat slot on f.traits.includes(build.ancestryId) alone and never consults the chosen heritage, so the widened feat pool this heritage grants is unreachable. Engine fix: eligibleFeatsForSlot must also accept feats carrying the heritage trait (and the heritage record needs a field listing the extra allowed traits).
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== animists-power  [grantsFeat / feats / L6]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: You gain one animist feat. For the purpose of meeting its prerequisites, your animist level is equal to half your character level. You can't use this feat to gain animist feats with the wandering trait. --- **Special** You can select this feat more than once. Each time you select it, you gain another animist feat.
+JUDGE REASON: "You gain one animist feat" (class level = half your character level) — the pick-a-feat analogue of spiritual-awakening, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['animist']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== aon-aasimar  [grantsFeat / heritages / Lundefined]
+TRAITS: aasimar
+ENGINE FIELDS: ["senses"]  REG: []
+TEXT: You descend from celestials or were touched by the celestial realms, gaining an air of awe and grace, as well as features distinctive to your celestial forebears. You gain the aasimar trait, in addition to the traits from your ancestry. You also gain low-light vision, or you gain darkvision if your ancestry already has low-light vision. You can choose from aasimar feats and feats from your ancestry whenever you gain an ancestry feat.
+JUDGE REASON: Vision is modelled (senses + darkvisionIfAncestryLowLight, both from effect-backfill.json). Not modelled: "you can choose from aasimar feats ... whenever you gain an ancestry feat". src/rules/featSlots.ts:56 gates an ancestry-feat slot on f.traits.includes(build.ancestryId) alone and never consults the chosen heritage, so the widened feat pool this heritage grants is unreachable. Engine fix: eligibleFeatsForSlot must also accept feats carrying the heritage trait (and the heritage record needs a field listing the extra allowed traits).
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== aon-aphorite  [grantsFeat / heritages / Lundefined]
+TRAITS: aphorite
+ENGINE FIELDS: ["senses"]  REG: []
+TEXT: You were born with a connection to Axis, the Plane of Law. You gain the aphorite trait, in addition to the traits from your ancestry. You also gain low-light vision, or you gain darkvision if your ancestry already has low-light vision. You can choose from aphorite feats and feats from your ancestry whenever you gain an ancestry feat.
+JUDGE REASON: Vision is modelled (senses + darkvisionIfAncestryLowLight in effect-backfill.json). Not modelled: access to aphorite feats. src/rules/featSlots.ts:56 gates an ancestry-feat slot on f.traits.includes(build.ancestryId) alone and never consults the chosen heritage, so the widened feat pool this heritage grants is unreachable. Engine fix: eligibleFeatsForSlot must also accept feats carrying the heritage trait (and the heritage record needs a field listing the extra allowed traits).
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== aon-ganzi  [grantsFeat / heritages / Lundefined]
+TRAITS: ganzi
+ENGINE FIELDS: []  REG: ["situationalBonuses"]
+TEXT: Your blood is touched by primal chaos. You gain the ganzi trait in addition to the traits from your ancestry. You gain resistance to a single damage type equal to half your level; at the beginning of each day, determine randomly whether this resistance applies to acid, electricity, or sonic damage. You also gain a +1 circumstance bonus to saving throws against effects that would cause you to gain the controlled condition. You can choose from ganzi feats and feats from your ancestry whenever you gain an ancestry feat.
+JUDGE REASON: situationalBonuses.ts:2128 covers the +1 circumstance bonus vs becoming controlled, but the resistance equal to half your level (type randomized daily among acid/electricity/sonic) is delivered by nothing — the heritage record has no `resistances` and no `effectChoices`. Model it as a daily effect choice; build.ts mergeEffect already accepts grant.resistances, and sibling heritages use the same max(1,floor(@actor.level/2)) formula. Access to ganzi feats is a separate systemic gap: src/rules/featSlots.ts:56 gates an ancestry-feat slot on f.traits.includes(build.ancestryId) alone and never consults the chosen heritage, so the widened feat pool this heritage grants is unreachable. Engine fix: eligibleFeatsForSlot must also accept feats carrying the heritage trait (and the heritage record needs a field listing the extra allowed traits).
+JUDGE FIX: {"effectChoices":[{"id":"chaos-resistance","prompt":"Resistance type for today (randomly determined each day)","options":[{"value":"acid","label":"Acid resistance (half your level)","grant":{"resistances":[{"type":"acid","value":"max(1,floor(@actor.level/2))"}]}},{"value":"electricity","label":"Electricity resistance (half your level)","grant":{"resistances":[{"type":"electricity","value":"max(1,floor(@actor.level/2))"}]}},{"value":"sonic","label":"Sonic resistance (half your level)","grant":{"resistances":[{"type":"sonic","value":"max(1,floor(@actor.level/2))"}]}}]}]}
+
+=========== aon-half-elf  [grantsFeat / heritages / Lundefined]
+TRAITS: 
+ENGINE FIELDS: ["senses"]  REG: []
+TEXT: Either one of your parents was an elf, or one or both were half-elves. You have pointed ears and other telltale signs of elf heritage. You gain the elf trait, the half-elf trait, and low-light vision. In addition, you can select elf, half-elf, and human feats whenever you gain an ancestry feat.
+JUDGE REASON: Low-light vision is modelled and ancestryId is elf, so elf feats are reachable. Not modelled: "you can select elf, half-elf, and human feats" — the human/half-elf half of that pool is unreachable. src/rules/featSlots.ts:56 gates an ancestry-feat slot on f.traits.includes(build.ancestryId) alone and never consults the chosen heritage, so the widened feat pool this heritage grants is unreachable. Engine fix: eligibleFeatsForSlot must also accept feats carrying the heritage trait (and the heritage record needs a field listing the extra allowed traits).
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== aon-half-orc  [grantsFeat / heritages / Lundefined]
+TRAITS: 
+ENGINE FIELDS: ["senses"]  REG: []
+TEXT: One of your parents was an orc, or one or both were half-orcs. You have a green tinge to your skin and other indicators of orc heritage. You gain the orc trait, the half-orc trait, and low-light vision. In addition, you can select orc, half-orc, and human feats whenever you gain an ancestry feat.
+JUDGE REASON: Low-light vision is modelled and ancestryId is orc, so orc feats are reachable. Not modelled: "you can select orc, half-orc, and human feats" — the human/half-orc half of that pool is unreachable. src/rules/featSlots.ts:56 gates an ancestry-feat slot on f.traits.includes(build.ancestryId) alone and never consults the chosen heritage, so the widened feat pool this heritage grants is unreachable. Engine fix: eligibleFeatsForSlot must also accept feats carrying the heritage trait (and the heritage record needs a field listing the extra allowed traits).
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== aon-ifrit  [grantsFeat / heritages / Lundefined]
+TRAITS: ifrit
+ENGINE FIELDS: []  REG: []
+TEXT: You descend from fire elementals or bear the mark of the Inner Spheres, and your features illustrate the influence that elemental fire has over you. You gain the ifrit trait, in addition to the traits from your ancestry. You gain resistance to fire equal to half your level (minimum 1), and you treat environmental heat effects as if they were one step less severe (incredible heat becomes extreme, extreme heat becomes severe, and so on). You can choose from ifrit feats and feats from your ancestry whenever you gain an ancestry feat.
+JUDGE REASON: The heritage record carries NO engine fields at all: the fire resistance equal to half your level (minimum 1) never reaches the Defenses card. Sibling heritages already ship exactly this shape (desert-elf, wintertouched-human, vivacious-gnome). Also missing on the same record: senses:[{"name":"low-light-vision"}] + darkvisionIfAncestryLowLight:true, which every other geniekin heritage has. (Treating environmental heat as one step less severe has no sheet statistic; ifrit feats are category general, so they remain reachable through general slots.)
+JUDGE FIX: {"field":"resistances","value":"[{\"type\":\"fire\",\"value\":\"max(1,floor(@actor.level/2))\"}]"}
+
+=========== aon-tiefling  [grantsFeat / heritages / Lundefined]
+TRAITS: tiefling
+ENGINE FIELDS: ["senses"]  REG: []
+TEXT: You descend from fiends or bear the mark of the fiendish realms, manifesting as some unusual feature that belies your heritage, such as horns or a tail. You gain the tiefling trait, in addition to the traits from your ancestry. You also gain low-light vision, or you gain darkvision if your ancestry already has low-light vision. You can choose from tiefling feats and feats from your ancestry whenever you gain an ancestry feat.
+JUDGE REASON: Vision is modelled (senses + darkvisionIfAncestryLowLight in effect-backfill.json). Not modelled: access to tiefling feats. src/rules/featSlots.ts:56 gates an ancestry-feat slot on f.traits.includes(build.ancestryId) alone and never consults the chosen heritage, so the widened feat pool this heritage grants is unreachable. Engine fix: eligibleFeatsForSlot must also accept feats carrying the heritage trait (and the heritage record needs a field listing the extra allowed traits).
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== ardande  [grantsFeat / heritages / Lundefined]
+TRAITS: ardande
+ENGINE FIELDS: ["senses"]  REG: []
+TEXT: You descend from wood elementals or have some other heritage influenced by the elemental Plane of Wood. You might have green, mossy skin, vines that grow from your head instead of hair, or thin appendages that resemble twigs. You gain the ardande trait, in addition to the traits from your ancestry. You also gain low-light vision, or you gain darkvision if your ancestry already has low-light vision. You can choose from ardande feats, geniekin feats, and feats from your ancestry whenever you gain an ancestry feat.
+JUDGE REASON: Vision is modelled (senses + darkvisionIfAncestryLowLight). Not modelled: access to ardande AND geniekin feats. src/rules/featSlots.ts:56 gates an ancestry-feat slot on f.traits.includes(build.ancestryId) alone and never consults the chosen heritage, so the widened feat pool this heritage grants is unreachable. Engine fix: eligibleFeatsForSlot must also accept feats carrying the heritage trait (and the heritage record needs a field listing the extra allowed traits).
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== azarketi-weapon-expertise  [grantsFeat / feats / L13]
+TRAITS: azarketi
+ENGINE FIELDS: []  REG: []
+TEXT: Your mastery with weapons both above and below water is unmatched. Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency in Crossbows, Hand Crossbows, Longspears, Spears, Tridents, and all azarketi weapons in which you are trained.
+JUDGE REASON: "Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency in Crossbows, Hand Crossbows, Longspears, Spears, Tridents, and all azarketi weapons" is delivered by nothing. featGrantsAuto.ts has the trained half (azarketi-weapon-familiarity, line 47) and has the mirrorBestCategory expertise twin for every comparable ancestry (catfolk-, conrasu-, genie-, ghoran-, grippli-, hobgoblin-, kobold-, vanara-, vishkanya-weapon-expertise) — azarketi alone is absent. weaponFamiliarity is NOT a record field (0 feats in core.json carry it), so the fix is a registry line in featGrantsAuto.ts: "azarketi-weapon-expertise": { weaponFamiliarity: { weapons: ["crossbow","hand-crossbow","longspear","spear","trident","boarding-axe","gill-hook"], mirrorBestCategory: true } }
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== born-of-the-bones-of-the-earth  [grantsFeat / classFeatures / L7]
+TRAITS: exemplar
+ENGINE FIELDS: []  REG: []
+TEXT: Your dominion is over stone and soil, the pillars holding up the stage of history's great legends. You gain the Energized Spark feat for your choice of earth or fire. When you critically succeed on a Strike and the target of the critical hit is standing on a surface of earth or stone, the target is driven down and mired in the ground. The target is immobilized and must succeed at an Escape attempt against your class DC to end the immobilization. The creature doesn't become stuck if it is incorporeal, is liquid (like a water elemental or some oozes), has a burrow speed, or could otherwise escape without effort. When you Spark Transcendence while standing on a surface of earth or stone, you can choose to shatter the surface in a , making it difficult terrain. You are not affected by this difficult terrain.
+JUDGE REASON: The epithet grants the Energized Spark feat (earth or fire) and nothing on the record delivers it — no grantsFeats/grantedFeatId, and it is absent from featFeatGrants/featPickGrants. energized-spark exists in core.json and carries its own element choice, so granting it wires up the element pick too. (The immobilize-on-crit and difficult-terrain riders are play-time and correctly inert.)
+JUDGE FIX: {"field":"grantsFeats","value":"[\"energized-spark\"]"}
+
+=========== brevic-noble  [grantsFeat / backgrounds / Lundefined]
+TRAITS: 
+ENGINE FIELDS: ["abilityBoosts","grantedFeatId","trainedLore","trainedSkill"]  REG: []
+TEXT: You claim a tangential but legitimate connection to one of Brevoy's noble families. If you aren't human, you were adopted by one of Brevoy's nobles or were perhaps a favored servant or even a childhood friend of a noble scion. Whatever the case, you've had a comfortable life, though still a far cry from the one your distant cousins or close associates know. An expedition into the storied Stolen Lands seems like just the test to see if you really are worthy of the "noble" title. Choose two attribute boosts. One must be to **Constitution** or **Wisdom**, and one is a free attribute boost. Choose one of the Brevic lineages below. **Garess**: Family ties to the Golushkin Mountain dwarves left its mark. Your family motto is "Strong as the Mountains." You're trained in the Crafting skill and the Architecture Lore skill. You gain the Specialty Crafting skill feat. **Lebeda**: Your family's history of trading along the shores of Lake Reykal pervades your blood. Your family motto is "Success through Grace." You're trained in the Society skill and the Mercantile Lore skill. You gain the skill feat. **Lodovka**: Your family has made a living off the coasts of the Lake of Mists and Veils since before Brevoy existed. Your family motto is "The Waters, Our Fields." You're trained in the Athletics skill and the Fishing Lore skill. You gain the Underwater Marauder skill feat. **Medvyed**: Your family has a deep respect for the wilderness and is skilled at hunting and surviving off the and. Your family motto is "Endurance Overcomes All." You're trained in the Survival skill and the Hunting L
+JUDGE REASON: Six lineages each grant a different trained skill + Lore + skill feat, but the record hardcodes the Garess branch only (trainedSkill crafting, trainedLore architecture, grantedFeatId specialty-crafting). A Lodovka or Surtova character silently receives Crafting and Specialty Crafting. Same lane already used on beast-seeker/blow-in/conservator; the skill list should also become trainedSkillChoice [crafting,society,athletics,survival,diplomacy,deception].
+JUDGE FIX: {"field":"grantedFeatByChoice","value":"{\"crafting\":\"specialty-crafting\",\"society\":\"bargain-hunter\",\"athletics\":\"underwater-marauder\",\"survival\":\"terrain-expertise\",\"diplomacy\":\"group-impression\",\"deception\":\"charming-liar\"}"}
+
+=========== butterflys-sting  [grantsFeat / feats / L6]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: You gain the Sneak Attack class feature. You don't increase the number of dice as you gain levels.
+JUDGE REASON: "You gain the Sneak Attack class feature" — derive.ts:1073 emits the precision rider only when ownedFeatureIds() contains 'sneak-attack', and ownedFeatureIds (derive.ts:1025) is built solely from the class's own feature list, subclass variants and classChoices; no feat-grant path reaches it. Taking this archetype feat therefore adds nothing to any Strike. Also needs the archetype's non-scaling 1d6 (derive.ts scales by character level).
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== captain-dedication  [grantsFeat / feats / L2]
+TRAITS: archetype,dedication
+ENGINE FIELDS: ["choice"]  REG: ["featGrantsAuto"]
+TEXT: You become trained in your choice of Diplomacy or Intimidation; if you are already trained in both of these skills, you become trained in a skill of your choice. You also gain your choice of the Group Impression or the Group Coercion skill feat. If you already have both of these skill feats, you gain another 1st-level skill feat for which you qualify. You also gain the assistance of a dedicated follower, who has agreed to accompany you on your journeys. They have the minion trait and begin as a novice follower. --- **Special** Once you have a follower, you can never take a feat or class feature that grants an animal companion or another companion that prevents you from having an animal companion.
+JUDGE REASON: featGrantsAuto.ts:63 covers only the Diplomacy/Intimidation training. The dedication also grants a Group Impression / Group Coercion pick and, more importantly, a novice dedicated follower minion — captain-dedication is absent from companionGrants.ts, so the follower never appears in the Companions tab. Needs a companionGrants entry plus a two-option feat pick (grantedFeatByChoice is Background-only, types.ts:601).
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== champion-dedication  [grantsFeat / feats / L2]
+TRAITS: archetype,dedication,multiclass
+ENGINE FIELDS: ["choice"]  REG: ["featGrantsAuto"]
+TEXT: Choose a deity. You are bound by your deity's anathema and gain the champion's aura and sanctification as described in the champion class. Choose a cause as you would if you were a champion, with the same options a champion must abide by. You gain its edicts and anathema but don't gain the other abilities. You become trained in Religion and your deity's associated skill; for each of these skills in which you were already trained, you instead become trained in a skill of your choice. You become trained in champion class DC. If you later gain a devotion spell, you become trained in spell attack modifier and spell DC. You become trained in light armor and medium armor. If you already were trained in light armor and medium armor, you gain training in heavy armor as well. Whenever you gain a class feature that grants you expert or greater proficiency in any type of armor (but not unarmored defense), you also gain that proficiency in the armor types granted to you by this feat. If you have a class feature that grants you expert proficiency in unarmored defense and you're 13th level or higher, you also become an expert in the armor types granted to you by this feat.
+JUDGE REASON: featGrantsAuto.ts:71 gives Religion + light/medium armor, but the printed "You become trained in champion class DC" is not delivered — classDcGrant is absent, while fighter/rogue/ranger/alchemist dedications all carry it in core.json.
+JUDGE FIX: {"field":"classDcGrant","value":"{\"classId\":\"champion\"}"}
+
+=========== child-of-notoriety  [grantsFeat / backgrounds / Lundefined]
+TRAITS: 
+ENGINE FIELDS: ["abilityBoosts","choice","grantedFeatId","trainedLore","trainedSkill"]  REG: []
+TEXT: One or more of your ancestors committed a grave atrocity, and even though you've tried to live your own life, your family's grim past looms over you like a relentless shadow. You might have traveled a thousand miles to escape the legends, learned how to ingratiate yourself to others, just tried to ignore the everyday accusing glances, or even accepted the notoriety just to be left alone. You didn't commit the crime, yet it haunts you. Whether you're proving the world wrong, proving to yourself that you're no monster, earning wealth to pay reparations, or just driven to do some good with your life, it's time to break free of the past. That journey begins with understanding. Clan Tolorr preserves the deeds and misdeeds of dwarven legend. With their help, you might not only understand dwarven crimes and reparations, but also learn how to accept your past and leave the world a little better than when you found it. You've corresponded with Clan Tolorr, but your most recent message came instead from one of the clan's guests: a lizardfolk mystic named Valahask who studies the dead and is eager to meet you. He has lobbied on your behalf, earning you an invitation to Clan Tolorr's upcoming Family Festival. Choose two attribute boosts. One must be to **Constitution** or **Charisma**, and one is a free attribute boost. Choose whether you've navigated your past through kindness or notoriety thus far. For the former, you're trained in the Diplomacy skill and the Genealogy Lore skill, and you gain the Group Impression skill feat. For the latter, you're trained in the Intimidation skill a
+JUDGE REASON: The choice flag pastApproach records kindness vs notoriety but changes nothing: trainedSkill is hardcoded diplomacy, trainedLore genealogy and grantedFeatId group-impression, so picking notoriety silently still trains Diplomacy and grants Group Impression instead of Intimidation / Underworld Lore / Intimidating Glare. Needs trainedSkillChoice [diplomacy,intimidation] alongside the fix below.
+JUDGE FIX: {"field":"grantedFeatByChoice","value":"{\"diplomacy\":\"group-impression\",\"intimidation\":\"intimidating-glare\"}"}
+
+=========== child-of-the-polis  [grantsFeat / backgrounds / Lundefined]
+TRAITS: 
+ENGINE FIELDS: ["abilityBoosts","grantedFeatId","trainedSkillChoice"]  REG: []
+TEXT: You're a longtime Kardaji Bay resident. Rather than explore distant lands, you've strengthened your connection to Iblydos, learning its little-known secrets and making friends in every port. You know the cadence and body language needed to set strangers at ease and communicate belonging, making it easy to track down deals and leads. Who needs wealth and glory when they can revel in Iblydos's eclectic culture? That said, if anything threatens the isles, you'll be ready to rally your neighbors and fight back. Choose two attribute boosts. One must be to **Constitution** or **Wisdom**, and one is a free attribute boost. You're trained in either the Diplomacy or Society skill, as well as the Lore skill associated with one Iblydan city-state (Pol-Bailax or Pol-Dhuraxilis is recommended). If you choose Diplomacy, you gain the Bargain Hunter skill feat. If you choose Society, you gain the Streetwise skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free
+JUDGE REASON: trainedSkillChoice offers diplomacy or society, but grantedFeatId is the flat "bargain-hunter", so a Society pick hands out Bargain Hunter instead of Streetwise. Identical to the grantedFeatByChoice fix already applied to beast-seeker and blow-in. (The city-state Lore should also become trainedLoreChoice.)
+JUDGE FIX: {"field":"grantedFeatByChoice","value":"{\"diplomacy\":\"bargain-hunter\",\"society\":\"streetwise\"}"}
+
+=========== combat-flexibility  [grantsFeat / classFeatures / L9]
+TRAITS: fighter
+ENGINE FIELDS: []  REG: []
+TEXT: You can prepare your tactics to suit different situations. When you make your daily preparations, you gain one fighter feat of 8th level or lower that you meet the prerequisites for and don't already have. You can use that feat until your next daily preparations.
+JUDGE REASON: The 9th-level fighter feature hands you an 8th-or-lower fighter feat at every daily preparation, and the record carries no field at all — no choice, no registry entry, so the feat is never picked or applied. featPickGrants is keyed by granting FEAT id (build.pickFeatChoices), so a class feature needs the open daily-prep pick lane (as construct-eidolon uses for its evolution feat).
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== commander-dedication  [grantsFeat / feats / L2]
+TRAITS: archetype,dedication,multiclass
+ENGINE FIELDS: []  REG: ["featGrantsAuto"]
+TEXT: You gain the tactics class feature like a commander and gain your own folio; this folio contains two common mobility or offensive tactics of your choosing. You can prepare one of these tactics whenever a commander would be able to prepare tactics. You gain a commander's banner that grants you a 30-foot aura for the purposes of using your tactics, but the banner does not grant the commander's banner bonus to Will saves and DCs against fear effects. You become trained in commander class DC and Warfare Lore; if you were already trained in Warfare Lore, you become trained in another Lore skill of your choice.
+JUDGE REASON: featGrantsAuto.ts:77 trains Warfare Lore, but the printed "trained in commander class DC" is missing — classDcGrant absent, unlike the other multiclass dedications in core.json.
+JUDGE FIX: {"field":"classDcGrant","value":"{\"classId\":\"commander\"}"}
+
+=========== dancer-in-the-seasons  [grantsFeat / classFeatures / L7]
+TRAITS: exemplar
+ENGINE FIELDS: []  REG: []
+TEXT: You flourish in spring and idle in summer, give in fall and take in winter. You gain the Energized Spark feat for your choice of cold, fire, void, or wood. When you critically succeed on a Strike, you can Step as a free action in a whirl of leaves, snow, blossoms, or shimmering heat. The season changes, rotating each time you use this ability. When you Spark Transcendence, you gain temporary Hit Points equal to half your level as you are reinvigorated by the changing of the seasons; these temporary Hit Points last until the start of your next turn.
+JUDGE REASON: Grants the Energized Spark feat (cold, fire, void or wood) and nothing delivers it — no grantsFeats on the record and no registry entry. energized-spark exists and carries its own element choice. (Step-on-crit and the temp HP on Spark Transcendence are play-time and correctly inert.)
+JUDGE FIX: {"field":"grantsFeats","value":"[\"energized-spark\"]"}
+
+=========== determined-lore-seeker  [grantsFeat / feats / L12]
+TRAITS: archetype
+ENGINE FIELDS: ["choice"]  REG: []
+TEXT: You've mastered useful spells that let you find hidden truths others might miss, and a preferred spell comes naturally to you. When you gain this feat, choose one of the innate spells granted by the Lore Seeker feat: comprehend language, restore senses, or see invisibility. You can cast this spell three times per day instead of once per day. When you cast any of the spells granted by Lore Seeker as innate spells, they gain additional effects. When you cast comprehend language, the spell is heightened to 4th level. When you cast restore senses,the spell is heightened to half your level, rounded up. When you cast see invisibility, for the duration of the spell you can use an action, which has the concentrate trait, to see invisible creatures normally (instead of seeing them as translucent shapes that are concealed to you) until the end of your next turn.
+JUDGE REASON: The choice flag determinedLoreSeekerSpell only records which Lore Seeker spell you favour; nothing raises it from lore-seeker's usesPerDay 1 to 3, and nothing applies the printed heightening (Translate to rank 4, Sound Body to half level). build.ts:2780 keys innateUses by spellId, so an effectChoices grant supersedes the 1/day entry.
+JUDGE FIX: {"effectChoices":[{"id":"determined-spell","prompt":"Determined Lore Seeker: which Lore Seeker spell do you cast three times per day?","options":[{"value":"translate","label":"Translate","grant":{"innateSpells":[{"spellId":"translate","tradition":"arcane","rank":4,"usesPerDay":3}]}},{"value":"sound-body","label":"Sound Body","grant":{"innateSpells":[{"spellId":"sound-body","tradition":"arcane","rank":2,"usesPerDay":3,"heightenHalfLevel":true}]}},{"value":"see-the-unseen","label":"See the Unseen","grant":{"innateSpells":[{"spellId":"see-the-unseen","tradition":"arcane","rank":2,"usesPerDay":3}]}}]}]}
+
+=========== devout-magic  [grantsFeat / feats / L4]
+TRAITS: archetype
+ENGINE FIELDS: []  REG: []
+TEXT: You gain a devotion spell of your choice listed in the devotion spells class feature, following the same restrictions listed there.
+JUDGE REASON: focusPoolBonus 1 is on the record but no devotion spell is ever granted or picked — focusSpells absent and there is no picker, so the player gains a Focus Point with nothing to spend it on. The champion devotion-spells feature offers exactly three options, which is the documented EffectGrant.focusSpells use case.
+JUDGE FIX: {"effectChoices":[{"id":"devotion-spell","prompt":"Choose your devotion spell","options":[{"value":"shields-of-the-spirit","label":"Shields of the Spirit","grant":{"focusSpells":["shields-of-the-spirit"]}},{"value":"lay-on-hands","label":"Lay on Hands (deity allows heal)","grant":{"focusSpells":["lay-on-hands"]}},{"value":"touch-of-the-void","label":"Touch of the Void (deity allows harm)","grant":{"focusSpells":["touch-of-the-void"]}}]}]}
+
+=========== draconic-paragon  [grantsFeat / feats / L9]
+TRAITS: kobold
+ENGINE FIELDS: []  REG: []
+TEXT: Your connection to your draconic benefactor becomes especially pronounced. You gain additional effects for the prerequisite kobold feat. If you have more than one of the prerequisite feats, you gain the appropriate additional effects. - **Benefactor's Strike** Your unarmed strikes made with your jaws, claws, or tail gain the deadly d6 trait. - **Dracomancer** Increase the number of times per day you can cast each of the granted 1st- and 2nd-rank innate spells by 1. - **Kobold Breath** Creatures that critically fail their save against your Kobold Breath take 3d4 persistent damage of the type dealt by your draconic benefactor.
+JUDGE REASON: Nothing on the record (no fields at all) delivers any of the three upgrades. Two are real sheet changes: your jaws/claws/tail unarmed Strikes gain the deadly d6 trait, and each Dracomancer 1st/2nd-rank innate spell gains +1 use per day. There is no lane for adding a trait to an already-granted Strike or for incrementing another feat's innate-spell uses, and the branch that applies depends on which prerequisite feat you own.
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== dragonblood  [grantsFeat / heritages / Lundefined]
+TRAITS: dragonblood
+ENGINE FIELDS: []  REG: []
+TEXT: You're descended in some way from a dragon. Your physical features might show this outwardly, with a pair of draconic horns, patches of scaly skin, or even a tail, or you might develop an internal reserve of draconic power. You gain the dragonblood trait, in addition to the traits from your ancestry. Add Draconic to your ancestry's list of additional languages (allowing you to choose it as a language if your Intelligence modifier is positive). When you roll a success on a saving throw against a fear effect, you get a critical success instead. You can choose from dragonblood feats and feats from your ancestry whenever you gain an ancestry feat.
+JUDGE REASON: The record carries only versatile:true. The heritage's one mechanical benefit — a success on a save against a fear effect becomes a critical success — is nowhere on the sheet. situationalBonuses already carries free-text degree-of-success entries (see steadying-stone, "success becomes a critical success").
+JUDGE FIX: {"situational":[{"targets":[{"kind":"save","detail":"all"}],"when":"against fear effects","bonus":"success becomes a critical success"}]}
+
+=========== dwarven-weapon-expertise  [grantsFeat / feats / L13]
+TRAITS: dwarf
+ENGINE FIELDS: []  REG: []
+TEXT: Dwarven Weapon Expertise Source Core Rulebook pg. 37 Prerequisites Dwarven Weapon Familiarity Your dwarven affinity blends with your training, granting you great skill with dwarven weapons. Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency for battle axes, picks, warhammers, and all dwarven weapons in which you are trained.
+JUDGE REASON: Grep of src/ finds no 'dwarven-weapon-expertise' or 'dwarven-weapon-familiarity' anywhere — not in featGrantsAuto, featGrants, featFeatGrants or the backfill, and core.json carries only level/category. A dwarf with this feat never gets expert-or-better in battle axes, picks, warhammers and dwarven weapons. The lane exists (featGrantsAuto weaponFamiliarity with mirrorBestCategory:true, as used for catfolk/conrasu/hobgoblin) but is registry-only — there is no weaponFamiliarity data field on any core.json feat.
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== elemental-overlap  [grantsFeat / feats / L8]
+TRAITS: kineticist
+ENGINE FIELDS: []  REG: []
+TEXT: Though you've dedicated yourself to one element, you learn to mix that element with another. Gain a composite impulse feat that includes your kinetic element. You can use that impulse even though you can't channel all its elements. The feat's level must be lower than the level at which you selected Elemental Overlap. --- **Special** You can select this feat more than once, choosing a different impulse feat each time.
+JUDGE REASON: "Gain a composite impulse feat that includes your kinetic element" is a filtered feat pick and the record has no fields and no registry entry, so the feat is never chosen or applied. It belongs in featPickGrants.ts (class category, traits ['impulse','composite'], maxLevel below the level taken) — a registry lane with no data-field equivalent.
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== elven-weapon-expertise  [grantsFeat / feats / L13]
+TRAITS: elf
+ENGINE FIELDS: []  REG: []
+TEXT: Elven Weapon Expertise Source Core Rulebook pg. 41 Prerequisites Elven Weapon Familiarity Your elven affinity blends with your class training, granting you great skill with elven weapons. Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency in longbows, composite longbows, longswords, rapiers, shortbows, composite shortbows, and all elf weapons in which you are trained.
+JUDGE REASON: Same gap as the dwarven feat — grep of src/ finds no 'elven-weapon-expertise' or 'elven-weapon-familiarity' entry in any registry or the backfill, and core.json carries only level/category. Longbows, composite longbows, longswords, rapiers, shortbows and elf weapons never mirror the class's expert-or-better weapon proficiency. Needs a featGrantsAuto weaponFamiliarity entry with mirrorBestCategory:true (registry-only lane).
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== evolution-feat  [grantsFeat / classFeatures / L1]
+TRAITS: summoner
+ENGINE FIELDS: []  REG: []
+TEXT: Evolution feats are a special type of summoner class feat that allow you to customize your eidolon through your shared link. You gain an evolution feat for your eidolon at 1st level, representing the differences that make it unique from other eidolons of its type. If you retrain this feat, the feat you replace it with must also be an evolution feat.
+JUDGE REASON: The summoner class lists evolution-feat at level 1, but core.json's summoner featProgression.class is [2,4,...,20] — there is no 1st-level class-feat slot, so a summoner is never offered the evolution feat the class grants at level 1. Needs a level-1 evolution-restricted class feat slot in the summoner's feat progression (a class-level structure, no per-record field).
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== experimental-spellshaping  [grantsFeat / classFeatures / L1]
+TRAITS: wizard
+ENGINE FIELDS: []  REG: []
+TEXT: Your thesis posits that the magical practice of spellshaping can be realized more efficiently by altering variables and parameters as you cast, imitating the wizards of long ago who had to work out their own spells themselves. This allows you efficient access to various spellshape effects. You gain one 1st-level spellshape wizard feat of your choice. Starting at 4th level, during your daily preparations, you can gain a spellshape wizard feat of your choice that has a level requirement of no more than half your level, which you can use until your next daily preparations.
+JUDGE REASON: The wizard thesis has no fields at all. Neither half is delivered: the permanent 1st-level spellshape wizard feat, nor the 4th-level daily-preparations spellshape feat. featPickGrants is keyed by granting FEAT id (build.pickFeatChoices), so this class feature needs the filtered/daily-prep pick lane construct-eidolon uses.
+JUDGE FIX: {"needsEngineWork":true}
+
+=========== fated-rival  [grantsFeat / backgrounds / Lundefined]
+TRAITS: 
+ENGINE FIELDS: ["abilityBoosts","trainedLoreChoice"]  REG: ["situationalBonuses"]
+TEXT: You are bound in an adversarial relationship with another person or creature. You might have been close once, before everything went wrong, or they might have drastically altered your life at a crucial moment. Perhaps you are mystically bound by the red string of destiny, or perhaps your clash was preordained by the oracles of Po Li. Whatever the case, either fate or your own will keeps you driving forward to fight with them once more. You and your GM work out who your rival is and how they fit in to your story. You become trained in two Lore skills related to your rival, which you and your GM choose. You gain two free attribute boosts; you choose one, and the GM chooses one to complement your rival. So long as you are not in the presence of your rival, you gain the Diehard general feat and a +1 circumstance bonus to saving throws against the doomed condition. When in the presence of your rival, you lose these benefits but gain a +1 circumstance bonus to attack rolls and damage. If your rival becomes your ally or a member of your party, you gain the Diehard and save bonus benefits, as long as that's the case. --- ## Background details **Attribute Boosts** two free
+JUDGE REASON: situationalBonuses.ts:2148 carries all three conditional bonuses (doomed saves, attack, damage), but the background also grants the Diehard general feat outright while you're away from your rival, and the record has no grantedFeatId — so Diehard never reaches the sheet. Diehard exists in core.json and grantedFeatId is the Background lane (types.ts:594).
+JUDGE FIX: {"field":"grantedFeatId","value":"\"diehard\""}
+
+=========== favored-prey  [grantsFeat / feats / L4]
+TRAITS: ranger
+ENGINE FIELDS: []  REG: []
+TEXT: You have studied a specific type of wild creature and can hunt it more easily. When you gain this feat, choose animals, beasts, dragons, or both fungi and plants as your favored prey. When you roll initiative and can see an enemy that belongs to the chosen category, you can Hunt Prey as a free action, designating that enemy. You can use this free action even if you haven't identified the creature yet with Recall Knowledge. The benefit doesn't apply against favored enemies disguised as other creatures, and the GM determines whether it applies against a creature disguised as a favored prey.
+JUDGE REASON: "Choose animals, beasts, dragons, or both fungi and plants as your favored prey" is a permanent player choice, and the record carries no field of any kind — the pick is never made or stored, so the sheet cannot even show which category was taken. Sibling records with the same shape (entwined-energy-ki, debilitating-venom) all record their pick.
+JUDGE FIX: {"effectChoices":[{"id":"favored-prey","prompt":"Choose your favored prey","options":[{"value":"animals","label":"Animals"},{"value":"beasts","label":"Beasts"},{"value":"dragons","label":"Dragons"},{"value":"fungi-and-plants","label":"Fungi and plants"}]}]}
+

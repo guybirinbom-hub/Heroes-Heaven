@@ -360,6 +360,16 @@ export interface SpellSlotBonus {
   perRank?: number;
   /** Exclude the top N ranks (PF2e's usual "except your two highest ranks"). */
   exceptHighest?: number;
+  /**
+   * Slots added at SPECIFIC ranks — `{ "3": 1, "4": 2 }` is Ring of Wizardry (Type IV): "two
+   * additional 4th-rank and one additional 3rd-rank arcane spell slot".
+   *
+   * All four Ring of Wizardry records already carried this and the engine did not read it, so the
+   * code fell through to `perRank ?? 1` with no `exceptHighest` — granting +1 slot at EVERY rank
+   * instead of the printed handful. A level-20 wizard got ten extra slots instead of two.
+   * When present, this wins: `perRank` is ignored.
+   */
+  byRank?: Record<string, number>;
   /** Restrict to a specific entry id (defaults to the character's main slot caster). */
   entryId?: string;
 }
@@ -1379,6 +1389,28 @@ export interface ModeDef {
   feats?: string[];
   /** Short note describing effects that aren't captured as numeric modifiers (shown in the list). */
   note?: string;
+
+  /* ---- grants, not just numbers -------------------------------------------------------------- */
+  /**
+   * A mode may grant the same DEFENCES a feat or item can, not only numeric check bonuses.
+   *
+   * Before this, `modifiers` could express "+2 Stealth" but nothing else, so a potion that grants
+   * "tremorsense 30 feet for 1 minute" or "resistance 5 to fire until the start of your next turn"
+   * had nowhere to live — 92 of the 108 toggles found by the coverage sweep needed exactly these.
+   * The proof it was missing: Triple Time (+10 ft Speed to allies) shipped as `modifiers: []` with a
+   * note, because there was no field for it.
+   *
+   * Consumed by deriveDefenses alongside feats, heritages, items and stances, so the sheet's
+   * resistance list is the same list whether the source is permanent or a potion — and the breakdown
+   * names the mode, so a player can see which of their resistances vanishes when it wears off.
+   */
+  resistances?: IwrEntry[];
+  weaknesses?: IwrEntry[];
+  immunities?: string[];
+  senses?: SenseEntry[];
+  /** Speeds granted while the mode is on — "a fly Speed of 40 feet for 1 minute". Consumed by
+   *  deriveSpeeds alongside the heritage/feat/item grant sources. */
+  speeds?: SpeedGrants;
   /** Scope of a USER-created mode: a roster character id ⇒ only that character sees it; absent ⇒
    *  universal (every character on this device). Catalog/predefined modes never set this. */
   charId?: string;
@@ -2176,6 +2208,11 @@ export interface Customization {
   /** Subtract the shield's Hardness from damage entered in the rail's shield box, so you type the hit
    *  you took instead of doing the math yourself (default true). Your own HP is never touched. */
   shieldAutoHardness?: boolean;
+  /** Offer one-tap resistance/weakness buttons in the HP entry pad, so you type the damage you took
+   *  and tap "Resistance fire 5" instead of doing the arithmetic (default true). Only appears while
+   *  entering DAMAGE, and only for a character that actually has a resistance or weakness.
+   *  Immunity is deliberately absent — immune damage is 0, so there is nothing to type. */
+  hpIwrButtons?: boolean;
   /**
    * How Daily preparations handles choices that are re-made each morning (Environmental Adaptability's
    * cold-or-heat, and so on):

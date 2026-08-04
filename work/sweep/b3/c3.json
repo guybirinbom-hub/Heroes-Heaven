@@ -1,0 +1,1163 @@
+[
+ {
+  "id": "noqual-armor",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Noqual Armor",
+  "level": 12,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Noqual Armor Source Grand Bazaar pg. 100 Usage worn armor Bulk varies by armor Base Material Noqual The mere sight of a suit of noqual armor is enough to make some opposing spellcasters withdraw from the battlefield. While wearing noqual armor, you gain a +1 circumstance bonus to AC against spell attack rolls. If you Cast a Spell while wearing noqual armor, you must succeed at a DC 5 flat check or the spell fails. Noqual Armor (Standard-Grade) Source Grand Bazaar pg. 100 Price 1,600 gp (+160 gp per Bulk) Craft Requirements The initial raw materials must include at least 200 gp of noqual + 20 gp per Bulk. Noqual Armor (High-Grade) Source Grand Bazaar pg. 100 Price 32,000 gp (+3,200 gp per Bulk) Craft Requirements The initial raw materials must include at least 16,000 gp of noqual + 1,600 gp per Bulk."
+ },
+ {
+  "id": "noqual-armor-high-grade",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Noqual Armor (High-Grade)",
+  "level": 19,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Noqual Armor Source Grand Bazaar pg. 100 Usage worn armor Bulk varies by armor Base Material Noqual The mere sight of a suit of noqual armor is enough to make some opposing spellcasters withdraw from the battlefield. While wearing noqual armor, you gain a +1 circumstance bonus to AC against spell attack rolls. If you Cast a Spell while wearing noqual armor, you must succeed at a DC 5 flat check or the spell fails. Noqual Armor (Standard-Grade) Source Grand Bazaar pg. 100 Price 1,600 gp (+160 gp per Bulk) Craft Requirements The initial raw materials must include at least 200 gp of noqual + 20 gp per Bulk. Noqual Armor (High-Grade) Source Grand Bazaar pg. 100 Price 32,000 gp (+3,200 gp per Bulk) Craft Requirements The initial raw materials must include at least 16,000 gp of noqual + 1,600 gp per Bulk."
+ },
+ {
+  "id": "noqual-armor-standard-grade",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Noqual Armor (Standard-Grade)",
+  "level": 12,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Noqual Armor Source Grand Bazaar pg. 100 Usage worn armor Bulk varies by armor Base Material Noqual The mere sight of a suit of noqual armor is enough to make some opposing spellcasters withdraw from the battlefield. While wearing noqual armor, you gain a +1 circumstance bonus to AC against spell attack rolls. If you Cast a Spell while wearing noqual armor, you must succeed at a DC 5 flat check or the spell fails. Noqual Armor (Standard-Grade) Source Grand Bazaar pg. 100 Price 1,600 gp (+160 gp per Bulk) Craft Requirements The initial raw materials must include at least 200 gp of noqual + 20 gp per Bulk. Noqual Armor (High-Grade) Source Grand Bazaar pg. 100 Price 32,000 gp (+3,200 gp per Bulk) Craft Requirements The initial raw materials must include at least 16,000 gp of noqual + 1,600 gp per Bulk."
+ },
+ {
+  "id": "oatia-skysage-dedication",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Oatia Skysage Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices",
+   "spellcastingGrant"
+  ],
+  "inRegistries": [
+   "featGrantsLane"
+  ],
+  "text": "Your study of the stars unlocks supernatural insights and magic. You either become trained in Astronomy Lore or an expert in Occultism. You learn to cast spontaneous spells and gain the Cast a Spell activity. You gain a spell repertoire with two of the following cantrips of your choice: Detect Magic, Guidance, Know the Way, or Read Aura. You cast these spells as occult spells as you draw on the stars and night sky. You're trained in occult spell attack rolls and spell DCs. Your key spellcasting ability for these spells is Intelligence."
+ },
+ {
+  "id": "occult-breadth",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Occult Breadth",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "spellSlotBonus"
+  ],
+  "inRegistries": [],
+  "text": "Your repertoire expands, and you can cast more occult spells each day. Increase the number of spells in your repertoire and the number of spell slots you gain from bard archetype feats by 1 for each spell rank other than your two highest spell slots."
+ },
+ {
+  "id": "occult-spellcasting",
+  "lane": "spellGrant",
+  "collection": "classFeatures",
+  "name": "Occult Spellcasting",
+  "level": 1,
+  "traits": [
+   "bard"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You draw upon magic from esoteric knowledge. You are a spellcaster and can cast spells of the occult tradition using the Cast a Spell activity. As a bard, when you cast spells, your incantations might be musical riffs or clever limericks, your gestures might incorporate dance and dramatic pantomiming, and you might accompany your spellcasting by playing a musical instrument. Each day, you can cast up to two 1st-rank spells. You must know spells to cast them, and you learn them via the spell repertoire class feature. The number of spells you can cast each day is called your spell slots. As you increase in level as a bard, your number of spells per day increases, as does the highest rank of spells you can cast. Some of your spells require you to attempt a spell attack roll to see how effective they are, or have your enemies roll against your spell DC (typically by attempting a saving throw). Since your key ability is Charisma, your spell attack rolls and spell DCs use your Charisma modifier."
+ },
+ {
+  "id": "open-the-blazing-eye",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Open the Blazing Eye",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per day --- Thanks to your diligence in the study of divine and occult mysteries, you can focus to temporarily attain a perception beyond the ordinary. A lightless flame appears in the center of your forehead. For 1 minute, you gain the benefits of a See the Unseen spell. In addition, when you attempt a Strike during this time against a creature about which you could Recall Knowledge using Occultism or Religion, the attack ignores circumstance penalties to the attack roll and any flat check required due to the target being concealed or hidden."
+ },
+ {
+  "id": "oracle-dedication",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Oracle Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication",
+   "multiclass"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [
+   "featGrantsAuto"
+  ],
+  "text": "Choose a Mystery.You become trained in Religion and the mystery's skill; if you were already trained, you become trained in a skill of your choice. You gain the curse associated with your mystery, which follows the normal rules for an oracular curse. You cast spells like an oracle and gain the Cast a Spell activity. You gain a spell repertoire with two cantrips, either common divine cantrips or other divine cantrips you learn or discover. You're trained in the spell attack modifier and spell DC statistics. Your key spellcasting attribute for oracle archetype spells is Charisma, and they are divine oracle spells."
+ },
+ {
+  "id": "oracle-spellcasting",
+  "lane": "spellGrant",
+  "collection": "classFeatures",
+  "name": "Oracle Spellcasting",
+  "level": 1,
+  "traits": [
+   "oracle"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You have an unfiltered connection to the great powers of the universe and the planes beyond, and you can let this power spill forth in the form of divine magic. You are a spellcaster, and you can cast spells of the divine tradition using the Cast a Spell activity. As an oracle, when you cast spells, your incantations may spill from your lips rapidly as you speak in tongues or intone in a voice not quite your own, and your gestures might be wild and unrestrained as religious ecstasy briefly touches your mind. Each day, you can cast up to three 1st-rank spells. You must know spells to cast them, and you learn them via the spell repertoire class feature. The number of spells you can cast each day is called your spell slots. As you increase in level as an oracle, your number of spells per day increases, as does the highest rank of spells you can cast, as shown on the Oracle Spells per Day table (shown below). Some of your spells require you to attempt a spell attack to see how effective they are, or have your enemies roll against your spell DC (typically by attempting a saving throw). Since your key attribute is Charisma, your spell attack modifiers and spell DCs use your Charisma modifier. ### Heightening Spells When you get spell slots of 2nd rank and higher, you can fill those slots with stronger versions of lower-rank spells. This increases the spell's rank, heightening it to match the spell slot. You must have a spell in your spell repertoire at the rank you want to cast in order to heighten it to that rank. Many spells have specific improvements when they are heightened to certain ranks. The signature spells class feature lets you heighten certain spells freely. ### Cantrips Some of your spells are cantrips. A cantrip is a special type of spell that doesn't use spell slots. You can cast a cantrip at will, any number of times per day. A cantrip is automatically heightened to half your level rounded up—this is usually equal to the highest rank of oracle spell slot you have. For example, as a 1st-level oracle, your cantrips are 1st-rank spells, and as a 5th-level oracle, your cantrips are 3rd-rank spells."
+ },
+ {
+  "id": "oracular-clarity",
+  "lane": "spellGrant",
+  "collection": "classFeatures",
+  "name": "Oracular Clarity",
+  "level": 19,
+  "traits": [
+   "oracle"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You now fully grasp the nature of the divine power behind your mystery, allowing you to work magic akin to miracles. Add two common 10th-rank divine spells to your repertoire. You gain a single 10th-rank spell slot you can use to cast one of those two spells using oracle spellcasting. You don't gain more 10th-rank spells as you level up, unlike other spell slots, and you can't use 10th-rank slots with abilities that give you more spell slots or that let you cast spells without expending spell slots. You can take the Oracular Providence feat to gain a second slot."
+ },
+ {
+  "id": "oracular-providence",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Oracular Providence",
+  "level": 20,
+  "traits": [
+   "oracle"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your mystery grants you access to deep reserves of truly miraculous divine power. You gain an additional 10th-rank spell slot."
+ },
+ {
+  "id": "oracular-samsaran",
+  "lane": "spellGrant",
+  "collection": "heritages",
+  "name": "Oracular Samsaran",
+  "traits": [
+   "samsaran"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "Your past lives have provided heightened insight to the spiritual world and current and future events, as history repeats itself. Choose arcane, divine, or occult. You gain one cantrip from that magical tradition's spell list. You can Cast this Spell as an innate spell at will, as a spell of your chosen tradition. A cantrip is heightened to a spell rank equal to half your level rounded up."
+ },
+ {
+  "id": "order-magic",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Order Magic",
+  "level": 4,
+  "traits": [
+   "druid"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "You have delved deeper into the teaching of a new order, gaining access to a coveted order spell. Choose an order you have selected with Order Explorer. You gain the initial order spell from that order. --- **Special** You can take this feat multiple times. Each time you do, you must choose a different order you have selected with Order Explorer."
+ },
+ {
+  "id": "order-spell",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Order Spell",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You gain the initial order spell from your order. This is a focus spell, granting you a focus pool or expanding that pool. You can Refocus by being one with nature."
+ },
+ {
+  "id": "ornate-tattoo",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Ornate Tattoo",
+  "level": 5,
+  "traits": [
+   "human"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You expand your tattoos to encompass greater magic. Choose a 1st-rank arcane spell from the same school as your Arcane Tattoos, either a common spell or another to which you have access. You can cast that spell once per day as an innate arcane spell."
+ },
+ {
+  "id": "otherworldly-acumen",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Otherworldly Acumen",
+  "level": 9,
+  "traits": [
+   "elf"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "The arcane magic you possess grows in power and complexity. Choose one common 2nd-rank spell from the same tradition as an innate spell you previously gained from another elf ancestry feat (from the arcane list if you have Otherworldly Magic, for example). You can cast that spell as an innate spell once per day, using the same tradition as the list you chose the spell from. Your magic is adaptable. By spending 1 day of downtime, you can change the spell you chose to a different common 2nd-rank spell from the same tradition."
+ },
+ {
+  "id": "pact-of-infernal-prowess",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Pact of Infernal Prowess",
+  "level": 8,
+  "traits": [
+   "archetype",
+   "divine"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "You've sworn a pact with devils, granting you success in life in exchange for your soul in the afterlife. Once per hour, when you critically fail a check, you can reroll the check as a free action; this is a fortune effect. Additionally, you can choose to automatically succeed at checks to Earn Income for tasks below your level, without rolling. However, when you die, your soul is consigned to Hell. You can't be returned to life except by powerful magic such as the Wish ritual, and even then, the devils responsible for the contract can track your every move for 1 year. The devils gain the effects of a Pinpoint spell. They can also use 10th-rank Scrying on you at will, and you automatically critically fail your saving throw. --- **Special** You can't retrain out of a Pact of Infernal Prowess without journeying to Hell and destroying the devil's written contract spelling out the terms of your pact."
+ },
+ {
+  "id": "paradoxical-mystery",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Paradoxical Mystery",
+  "level": 20,
+  "traits": [
+   "oracle"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "The truest depths of your divine mystery are fathomless and contradictory, granting you changing powers that even you can barely begin to fathom. Each day during your daily preparations, choose one basic or advanced domain spell from any domain from *Player Core*, one of the domains granted by your mystery, another domain to which you have access, or any initial or advanced revelation spell from another mystery. You gain that spell as a revelation spell until your next daily preparations."
+ },
+ {
+  "id": "patrons-breadth",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Patron's Breadth",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "spellSlotBonus"
+  ],
+  "inRegistries": [],
+  "text": "You can cast more spells each day. Increase the spell slots you gain from witch archetype feats by 1 for each spell rank other than your two highest spell ranks."
+ },
+ {
+  "id": "patrons-gift",
+  "lane": "spellGrant",
+  "collection": "classFeatures",
+  "name": "Patron's Gift",
+  "level": 19,
+  "traits": [
+   "witch"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your patron grants you the power to command incredible works of magic. You gain a single 10th-rank spell slot and can prepare a spell in that slot using witch spellcasting. Unlike with other spell slots, you can't use 10th-rank slots with abilities that give you more spell slots or that let you cast spells without expending spell slots. You don't gain more 10th-rank spells as you level up, but you can take the Patron's Truth feat to gain a second slot."
+ },
+ {
+  "id": "patrons-truth",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Patron's Truth",
+  "level": 20,
+  "traits": [
+   "witch"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You have mastered the greatest secrets of your patron's magic and learned a fundamental truth about your patron, even if their identity still remains a mystery. You gain an additional 10th-rank spell slot."
+ },
+ {
+  "id": "peacemaker",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Peacemaker",
+  "level": 6,
+  "traits": [
+   "consumable",
+   "magical",
+   "talisman"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Usage** affixed to a weapon **Activate** ⟨1⟩ (concentrate, manipulate) **Requirements** Your last action was an Interact action to stow the affixed firearm or crossbow. --- This ragged piece of white cloth is wrapped around the grip, stock, or haft of the affixed weapon. When you activate the talisman, you gain the effects of a Sanctuary spell (DC 20) lasting for 1 minute. If you draw the affixed firearm, the effect ends immediately and the talisman crumbles."
+ },
+ {
+  "id": "peerless-warden",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Peerless Warden",
+  "level": 10,
+  "traits": [
+   "ranger"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your mastery of primal magic has given you access to the greatest secrets of warden magic. You gain your choice of one warden spell from the peerless warden spells. Hunter's Vision Terrain Transposition --- **Special** You can take this feat multiple times, choosing a different peerless warden spell each time."
+ },
+ {
+  "id": "perfect-encore",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Perfect Encore",
+  "level": 20,
+  "traits": [
+   "bard"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You develop another incredible creation. You gain an additional 10th-rank spell slot."
+ },
+ {
+  "id": "perfect-ki-adept",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Perfect Ki Adept",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You gain the appropriate qi spell for your School of Perfection: Unblinking Flame Revelation for Unblinking Flame, Unbreaking Wave Advance for Unbreaking Waves, Unfolding Wind Rush for Unfolding Wind, or Untwisting Iron Buffer for Untwisting Iron. Increase the number of Focus Points in your focus pool by 1."
+ },
+ {
+  "id": "perfect-ki-exemplar",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Perfect Ki Exemplar",
+  "level": 14,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices",
+   "spellcastingGrant"
+  ],
+  "inRegistries": [],
+  "text": "You gain an appropriate qi spell for your School of Perfection: Unblinking Flame Emblem for Unblinking Flame, Unbreaking Wave Barrier for Unbreaking Waves, Unfolding Wind Blitz for Unfolding Wind, or Untwisting Iron Augmentation for Untwisting Iron. Increase the number of Focus Points in your focus pool by 1. You become an expert in occult spell DCs and occult spell attack rolls."
+ },
+ {
+  "id": "perfect-ki-expert",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Perfect Ki Expert",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices",
+   "spellcastingGrant"
+  ],
+  "inRegistries": [],
+  "text": "You gain an appropriate qi spell for your School of Perfection: Unblinking Flame Aura for Unblinking Flame, Unbreaking Wave Vapor for Unbreaking Waves, Unfolding Wind Buffet for Unfolding Wind, or Untwisting Iron Roots for Untwisting Iron. Increase the number of Focus Points in your focus pool by 1. You become an expert in occult spell DCs and occult spell attack rolls."
+ },
+ {
+  "id": "perfect-ki-grandmaster",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Perfect Ki Grandmaster",
+  "level": 18,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices",
+   "spellcastingGrant"
+  ],
+  "inRegistries": [],
+  "text": "You gain an appropriate qi spell for your School of Perfection: Unblinking Flame Ignition for Unblinking Flame, Unbreaking Wave Containment for Unbreaking Waves, Unfolding Wind Crash for Unfolding Wind, or Untwisting Iron Pillar for Untwisting Iron. Increase the number of Focus Points in your focus pool by 1. You become a master in occult spell DCs and occult spell attack rolls."
+ },
+ {
+  "id": "phoenix-cinder",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Phoenix Cinder",
+  "level": 16,
+  "traits": [
+   "consumable",
+   "fire",
+   "primal"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- An incandescent, multipronged crystal the color of dying fire, a phoenix cinder gives off pleasant warmth and a sense of peace. A low, soft chirruping around the crystal invokes the idea of using fire to cleanse and protect. The crystal offers this power to anyone who touches it. A partaker must be willing to gain the boon's effects. --- **Stage 1 (1 Week)** The first time you enter this stage from a particular phoenix cinder, you are affected as if by Regenerate. For 3 days after taking in the cinder, you are immune to fire. While in this stage or higher, you have fast healing equal to half your level, as well as resistance to fire damage equal to half your level. You gain a +1 circumstance bonus to saving throws (or any other defense) against fire. Treat the outcome of any saving throw you roll against fire effects as one step better. You can cast Ignition as an innate spell, and you have access to the following activation. **Activate** ⟨1⟩ (concentrate, fire) **Frequency** once per day **Effect** You wreathe yourself in flame for 1 minute. Adjacent creatures that hit you with a melee attack, as well as creatures that touch you or hit you with an unarmed attack, take 2d6. You can Dismiss the activation. --- **Stage 2 (1 Month)** You can use the activation once per hour. Always feverish and flushed, you feel as if temperatures lower than sweltering are cold. Reduce your current and maximum Hit Points by 2 × your level, and you have a weakness to cold damage equal to half your level. You have urges to burn and use fire when you can. When confronted with the opportunity to do so, you must succeed at a Will save to avoid it. Doing so once after each time you roll initiative is enough. If you die at this stage or higher, your body burns from the inside out over 1d4 rounds, reducing you to fine ash. Anything flammable on you is destroyed. A phoenix emerges from your remains, but doesn't have the holy trait and is interested more in selfish pursuits and spreading fire than kindness. You also attempt a ; on a failure, the phoenix gains the unholy trait, and also thirsts for vengeance against the little beings like the one who dared to use its power for a time. --- **Stage 3 (1 Month)** You now have fast healing equal to your level but reduce your current and maximum Hit Points by 4 × your level, rounded up, instead of 2 × your level. Also, you have a weakness to cold damage equal to your level and a weakness to holy equal to half your level. You can use the activation you previously gained once per minute, but you can no longer Dismiss it. Whenever you drop to 0 Hit Points, a flame strike erupts from a randomly chosen point on the edge of your space. --- **Stage 4** You die. --- **Purging** You must collect the remains of a phoenix of your level or higher who has been unable to self-resurrect, compressing the remains with powdered diamonds, opals, and rubies worth 75 gp × your level into an egg. You can then use Divine Immolation as if you dropped to 0 Hit Points during this boon's stage 3. If you do so, the phoenix whose remains you collected is reborn as if it used its Self-Resurrection, and the phoenix cinder's "
+ },
+ {
+  "id": "pirates-pet",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Pirate's Pet",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices",
+   "grantsFeats"
+  ],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Pirate's Pet Source High Seas pg. 92 Archetype Pirate Prerequisites Pirate Dedication Access You're from the Shackles An animal has become your loyal ally, perhaps after you liberated it from another ship or found it on a remote island. You gain the Pet general feat. Your pet gains an additional pet Shackles Options ability, which you can choose from the standard pet abilities or the following familiar abilities: accompanist, damage avoidance, independent, partner in crime, speech, and valet. In addition, you learn a common 1st- or 2nd-rank spell that targets your familiar, and can cast it once per day as a primal innate spell. You can instead learn phase familiar and can cast it once per hour as a primal innate spell; it’s not a focus spell for you. When you cast the chosen spell, you target your pirate’s pet instead of a familiar."
+ },
+ {
+  "id": "pistol-of-wonder",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Pistol of Wonder",
+  "level": 13,
+  "traits": [
+   "concussive",
+   "fatal-d8",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This *+2 greater striking flintlock pistol* bears strange, jagged markings of erratic design and has an oddly squishy grip. It can be activated to produce a variety of unusual effects --- **Activation—Wonder Shot** ⟨2⟩ (manipulate) **Effect** Choose a creature within 60 feet and roll a percentile die on the table below to determine the pistol's effect. If an entry lists a spell, the pistol Casts that Spell at the indicated level (or at its lowest level, if no level is listed). You make any decisions for a spell cast by the pistol unless otherwise indicated, except that it must only target the creature you chose, or the creature you chose must be the center of the spell's area, if it has an area but no targets. The only exception to the limitation on targeting is if the effect specifically states it targets you. If the spell's range is less than 60 feet, increase the range to 60 feet. Any spell DC required is DC 29, and any spell attack modifier required is +21. If the pistol casts a spell on you, you don't get a saving throw or any other defense against it. Once activated, the pistol can't be activated again for 1d4 hours. | d% | Wondrous Effect | | --- | --- | | 1-2 | The pistol casts Summon Animal (3rd rank) to produce a Hippogriff adjacent to you; only you can ride it. | | 3 | The target becomes a shiny metal color (bronze, copper, or iron) and any sound or speech becomes tinny and robotic in nature; this effect lasts 1 month. | | 4-5 | The pistol casts Planar Tether. | | 6 | Rewrite Memory (6th rank) causes the target to forget you ever existed; you can't Sustain the Spell. | | 7-13 | A short rod protrudes from the pistol and unfurls a small flag that reads \"Bang!\". The pistol can't be fired until the flag is removed, which requires a single Interact action. | | 14-16 | You are pushed 30 feet directly away from the target; if you hit an object or creature, you stop, but take falling damage equal to the distance you moved (if you hit a creature, it takes the same amount of falling damage). | | 17-19 | The target is pushed 30 feet directly away from you; if it hits an object or creature, it stops, but takes falling damage equal to the distance it moved (if it hits another creature, the other creature takes the same amount of falling damage). | | 20 | You don't need to eat or drink for 1 week. | | 21-25 | The pistol casts Toxic Cloud. | | 26-30 | The pistol casts Heroism on you. | | 31 | The pistol casts One with Plants on you, except you appear as a Medium wooden grave marker bearing your name and the current date; you can't Dismiss the spell for 1 round. | | 32 | The pistol casts Mask of Terror, except the target appears as a more fearsome and violent version of itself to all observers. | | 33-35 | The target knows you have a bullet with its name on it; the first time you Strike the target with the pistol before the end of your next turn, roll the attack roll twice and take the highest result (this is a fortune effect). | | 36-37 | The pistol casts Cloak of Colors on you with a duration of 1d10 rounds. | | 38-47 | The pistol casts Hydraulic Push (4th rank) as water streams from the pistol. | | 48-50 | The pistol casts Translocate on you, t"
+ },
+ {
+  "id": "planar-ribbon",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Planar Ribbon",
+  "level": 20,
+  "traits": [
+   "occult"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "By twisting and twirling this ordinary-looking leather ribbon, you can temporarily bend a rift in space. --- **Activate** 1 minute (command, envision, Interact) --- **Effect** The ribbon spins and swirls, creating a circular loop in the air through which you can spy on a creature on another plane. This has the effects of a Scrying spell (DC 40) against the creature but functions more as a mundane -albeit interplanar-window; a similar loop appears before the target, and for the duration, both sides can clearly see and hear each other through the created portal, but nothing can pass through. You can Sustain the Activation to gain the effects of Sustaining the Spell. This activation has the scrying trait. --- **Activate** ⟨1⟩ Interact **Frequency** once per round --- **Effect** You extend the ribbon to brush against a foe up to 60 feet away. If that creature fails a save, you exchange positions with the target and all of that creature's allies are off-guard to you until the end of your turn. This activation has the teleportation trait."
+ },
+ {
+  "id": "plane-hopper-jotunborn",
+  "lane": "spellGrant",
+  "collection": "heritages",
+  "name": "Plane-Hopper Jotunborn",
+  "traits": [],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You were chosen for your smaller size that allows you to move between planar thresholds with ease. You generally serve as a messenger or scout, and planar exposure has granted you a spark of magical power. Instead of Large, your size is Medium. You gain one cantrip from the occult spell list. You can cast this spell as an occult innate spell at will. A cantrip is heightened to a spell rank equal to half your level rounded up."
+ },
+ {
+  "id": "potion-of-leaping",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Potion of Leaping",
+  "level": 5,
+  "traits": [
+   "consumable",
+   "magical",
+   "potion"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- For 1 minute after you drink this fizzy potion, whenever you Leap, you gain the effect of the 1st-rank Jump spell."
+ },
+ {
+  "id": "potion-of-undetectability",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Potion of Undetectability",
+  "level": 18,
+  "traits": [
+   "consumable",
+   "illusion",
+   "magical",
+   "potion"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Drinking this dull-black liquid makes you undetectable to detection effects. This grants the same effects as Hidden Mind but without the bonus against mental effects. You also gain the effects of a 4th-rank spell, which protects against See the Unseen spells of 8th rank and lower and has a DC of 36 against Truesight. The potion's effects last for 10 minutes."
+ },
+ {
+  "id": "primal-evolution",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Primal Evolution",
+  "level": 4,
+  "traits": [
+   "primal",
+   "sorcerer"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You can call upon the creatures of the wild for aid. You gain an additional spell slot of your highest rank, which you can use only to cast Summon Animal or Summon Plant or Fungus. You can cast either of these spells using that spell slot, even if it they aren't in your spell repertoire."
+ },
+ {
+  "id": "primal-hierophant",
+  "lane": "spellGrant",
+  "collection": "classFeatures",
+  "name": "Primal Hierophant",
+  "level": 19,
+  "traits": [
+   "druid"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You command the most potent forces of primal magic and can cast a spell of truly incredible power. You gain a single 10th-rank spell slot and can prepare a spell in that slot using druid spellcasting. Unlike with other spell slots, you can't use 10-rank slots with abilities that give you more spell slots or that let you cast spells without expending spell slots. You don't gain more 10th-rank spells as you level up, but you can take the Hierophant's Power feat to gain a second slot."
+ },
+ {
+  "id": "prophet-of-kalistrade-dedication",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Prophet of Kalistrade Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featGrantsAuto"
+  ],
+  "text": "**Access** You're from Druma --- After induction into the ranks of the Kalistocrats, you learned the skills necessary to succeed in business and rise above others by following a set of detailed strictures. Unless you take measures to hide your affiliation, anyone who has heard of the Prophets of Kalistrade will know you're one of them when they see you. You become an expert in Society and can use Society instead of Diplomacy to Make an Impression on merchants and traders. Additionally, if you don't already cast spells from spell slots, you learn to cast spontaneous spells and gain the Cast a Spell activity. You gain a spell repertoire with two common occult cantrips, plus either or Read Aura. You're trained in the spell attack modifier and spell DC statistics. Your key spellcasting attribute for these spells is Charisma, and they're occult spells."
+ },
+ {
+  "id": "psi-development",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Psi Development",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've found a new mental form. You gain another psi cantrip from your conscious mind: either the standard cantrip you didn't take with Psychic Dedication, or the unique surface psi cantrip. You gain the psychic benefits for this second psi cantrip. You gain the ability to amp your psi cantrips. If you don't have one, you gain a focus pool of 1 Focus Point, which you can use to amp your psi cantrips, and you can Refocus by meditating on your new powers."
+ },
+ {
+  "id": "psyche-salts",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Psyche Salts",
+  "level": 5,
+  "traits": [
+   "consumable",
+   "magical",
+   "potion"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Psyche Salts May contain spoilers from Shades of Blood Source Pathfinder #214: The Broken Palace pg. 81 Usage held in 1 hand Bulk L Activate (manipulate) A dose of psyche salts is kept in a small, corked vial. When you activate psyche salts, you uncork and pass the open end of the vial near the head of an adjacent creature. The salts within fizz and evaporate, creating a sour-smelling cloud that envelops the creature’s head before fading. As they do, the vapors attempt to clear harmful influences from the creature’s mind. The creature gains the effect of a clear mind spell and a +1 item bonus to saving throws against mental effects for 10 minutes. Psyche Salts (Lesser) Source Pathfinder #214: The Broken Palace pg. 81 Price 30 gp The psyche salts grants the effects of a 2nd-rank clear mind spell, with a +11 counteract check modifier. Psyche Salts (Moderate) Source Pathfinder #214: The Broken Palace pg. 81 Price 150 gp The psyche salts grants the effects of a 4th-rank clear mind spell, with a +17 counteract check modifier. The item bonus increases to +2. Psyche Salts (Greater) Source Pathfinder #214: The Broken Palace pg. 81 Price 3,000 gp The psyche salts grants the effects of an 8th-rank clear mind spell, with a +27 counteract check modifier. The item bonus increases to +3."
+ },
+ {
+  "id": "psyche-salts-greater",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Psyche Salts (Greater)",
+  "level": 17,
+  "traits": [
+   "consumable",
+   "magical",
+   "potion"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- A dose of psyche salts is kept in a small, corked vial. When you activate psyche salts, you uncork and pass the open end of the vial near the head of an adjacent creature. The salts within fizz and evaporate, creating a sour-smelling cloud that envelops the creature's head before fading. As they do, the vapors attempt to clear harmful influences from the creature's mind. The creature gains the effect of a 8th-rank Clear Mind spell with a +27 counteract check modifier and a +3 item bonus to saving throws against mental effects for 10 minutes."
+ },
+ {
+  "id": "psyche-salts-lesser",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Psyche Salts (Lesser)",
+  "level": 5,
+  "traits": [
+   "consumable",
+   "magical",
+   "potion"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- A dose of psyche salts is kept in a small, corked vial. When you activate psyche salts, you uncork and pass the open end of the vial near the head of an adjacent creature. The salts within fizz and evaporate, creating a sour-smelling cloud that envelops the creature's head before fading. As they do, the vapors attempt to clear harmful influences from the creature's mind. The creature gains the effect of a 2nd-rank Clear Mind spell with a +11 counteract check modifier and a +1 item bonus to saving throws against mental effects for 10 minutes."
+ },
+ {
+  "id": "psyche-salts-moderate",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Psyche Salts (Moderate)",
+  "level": 9,
+  "traits": [
+   "consumable",
+   "magical",
+   "potion"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.modes(fromItemId)"
+  ],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- A dose of psyche salts is kept in a small, corked vial. When you activate psyche salts, you uncork and pass the open end of the vial near the head of an adjacent creature. The salts within fizz and evaporate, creating a sour-smelling cloud that envelops the creature's head before fading. As they do, the vapors attempt to clear harmful influences from the creature's mind. The creature gains the effect of a 4th-rank Clear Mind spell with a +17 counteract check modifier and a +2 item bonus to saving throws against mental effects for 10 minutes."
+ },
+ {
+  "id": "psychic-dedication",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Psychic Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication",
+   "multiclass"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [
+   "featGrantsAuto"
+  ],
+  "text": "You feel something awaken within your mind. You become trained in Occultism; if you were already trained in Occultism, you become trained in a skill of your choice. You cast spells like a psychic and gain the Cast a Spell activity; as you don't have a subconscious mind class feature, your thoughtforms are simple intentions. Choose a conscious mind. You gain a spell repertoire with one standard psi cantrip of your choice from your conscious mind, which you cast as a psi cantrip. You gain the normal benefits for this psi cantrip, but not any other benefits from the conscious mind. You're trained in the spell attack modifier and spell DC statistics. Your key spellcasting attribute for psychic archetype spells is the attribute you used to qualify for the archetype, and they are occult psychic spells."
+ },
+ {
+  "id": "psychic-spellcasting",
+  "lane": "spellGrant",
+  "collection": "classFeatures",
+  "name": "Psychic Spellcasting",
+  "level": 1,
+  "traits": [
+   "psychic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You access the vast well of power that resides within your own mind, calling forth psychic magic with nothing but thought and will. You are a spellcaster and can cast occult spells using the Cast a Spell activity. You don't need to utter incantations to cast your spells, instead exerting your mind toward your intended effect as described in your subconscious mind class feature. Your spells still have clear and noticeable visual and auditory manifestations, as normal for a spellcaster. Each day, you can cast one 1st-rank spell. You must know spells to cast them, and you learn them via the spell repertoire class feature. The number of spells you can cast each day is called your spell slots. As you increase in level as a psychic, your number of spells per day increases, as does the highest rank of spells you can cast. Some of your spells require you to attempt a spell attack roll to see how effective they are, or have your enemies roll against your spell DC (typically by attempting a saving throw). Since your key attribute is determined by your subconscious mind, your spell attack rolls and spell DCs use the modifier for the attribute stated in your subconscious mind. ### **Heightening Spells** When you get spell slots of 2nd rank and higher, you can fill those slots with stronger versions of lower-rank spells. This increases the spell's rank, heightening it to match the spell slot. You must have a spell in your spell repertoire at the rank you want to cast in order to heighten it to that rank. Many spells have specific improvements when they are heightened to certain ranks. The signature spells class feature lets you heighten certain spells freely. ### **Cantrips** Some of your spells are cantrips. A cantrip is a special type of spell that doesn't use spell slots. You can cast a cantrip at will, any number of times per day. A cantrip is automatically heightened to half your level rounded up—this is usually equal to the highest rank of psychic spell slot you have. For example, as a 1st-level psychic, your cantrips are 1st-rank spells, and as a 5th-level psychic, your cantrips are 3rd-rank spells. As a psychic, you get the ability to improve some of your cantrips with special benefits and psi amps. Over the course of your career, your choice of conscious mind class feature gives you extra cantrips, benefits and psi amps for cantrips, and a collection of unique psi cantrips."
+ },
+ {
+  "id": "pure-legion-enforcer-dedication",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Pure Legion Enforcer Dedication",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses",
+   "featGrantsAuto",
+   "featFeatGrants"
+  ],
+  "text": "You are sworn to uphold the Laws of Mortality within the borders of Rahadoum. As part of your commissioning, you learned about the different types of worship and divine magic that you might encounter. You become trained in Intimidation and Religion. If you are already trained in one or both of these skills, you become an expert in that skill. If you are already an expert in both skills, you become trained in a skill of your choice. You also gain the Recognize Spell skill feat. Whenever you attempt to recognize a divine spell, you always learn it is divine and gain a +2 circumstance bonus to the Religion skill check. Finally, you gain the following edicts and anathema. Knowingly committing acts that violate the anathema result in you losing access to abilities granted by this archetype, as determined by your GM. You can regain these lost abilities by spending an appropriate amount of time rededicating yourself to the Pure Legion, typically by donating an amount equal to 20 gp × your level to appropriate causes and eschewing all divine magic (including spells cast by others) for at least 1 day. **Edicts** confiscate, contain, or destroy all divine objects in Rahadoum; drive out divine casters from Rahadoum **Anathema** use divine abilities, items, or spells; permit proselytizing of religion in Rahadoum; worship a deity"
+ },
+ {
+  "id": "ragdyan-vanara",
+  "lane": "spellGrant",
+  "collection": "heritages",
+  "name": "Ragdyan Vanara",
+  "traits": [],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "Keepers of traditions and tellers of ancient tales, your family traces its lineage to those born directly from Ragdya's whims. When you speak, others are inclined to listen to you, perhaps due to the divine spark of your connection to Ragdya. You gain one cantrip from the divine spell list; this cantrip can't deal damage or otherwise cause direct harm. You can cast this spell as a divine innate spell at will. A cantrip is heightened to a spell rank equal to half your level rounded up."
+ },
+ {
+  "id": "ranger-dedication",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Ranger Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication",
+   "multiclass"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [
+   "featGrantsAuto"
+  ],
+  "text": "You become trained in Survival; if you were already trained in Survival, you instead become trained in another skill of your choice. You become trained in ranger class DC. If you gain a warden spell through this archetype, you become trained in spell attacks and spell DCs. Your spellcasting attribute is Wisdom. You can use the Hunt Prey action."
+ },
+ {
+  "id": "rat-form",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Rat Form",
+  "level": 9,
+  "traits": [
+   "concentrate",
+   "polymorph",
+   "primal",
+   "ratfolk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "core.stances"
+  ],
+  "text": "You can transform into an innocuous-looking rat. You gain the effects of a 1st-rank Pest Form spell, but you must assume the battle form of a Tiny rat."
+ },
+ {
+  "id": "reliable-magic",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Reliable Magic",
+  "level": 14,
+  "traits": [
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Magic stored in written form or within wands is more reliable in your capable hands. Whenever you overcharge a wand, reduce the DC of the flat check to avoid destroying the wand by 4. It still gains the broken condition on a success. When you Cast a Spell from a scroll you can spend a Mythic Point as a free action. The spell is cast at mythic proficiency. Once you cast the spell using this ability, attempt a . If this check is successful, the scroll is not destroyed, and instead glows with light equivalent to that of a candle for 10 minutes. You can Cast a Spell from this scroll again, but if you do so you cannot enhance it in any way (such as by using this feat), and the scroll is destroyed. If not used before the end of the 10 minutes, the scroll is destroyed."
+ },
+ {
+  "id": "respite-of-loam-and-leaf",
+  "lane": "spellGrant",
+  "collection": "heritages",
+  "name": "Respite of Loam and Leaf",
+  "traits": [
+   "plant",
+   "yaksha"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You swore a vow to preserve the very foundation of sanctuary: the great earth and all that grows upon it. Your vow grants you the land's spiritual power; you gain one cantrip from the primal spell list. You can cast this spell as an innate primal spell at will. A cantrip is heightened to a spell rank equal to half your level rounded up. Your roots in the world grant you the plant trait. --- **Additional Edict** cure or remove blight and pollution from the plants and soil you encounter"
+ },
+ {
+  "id": "retain-absorbed-spell",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Retain Absorbed Spell",
+  "level": 18,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "When you absorb a spell using the Absorb Spell reaction, you utilize secret, techniques that allow you to retain the power and knowledge necessary to cast the spell repeatedly-potentially for a greater period of time. If you're a spontaneous caster, you can cast the triggering spell up to three times instead of once. If you're a prepared spellcaster, you can replace up to three of your prepared spells of the same rank with the absorbed spell instead of one. Either way, you can choose to retain the absorbed spell for the next hour instead of the next 10 minutes; if you choose to extend the absorption to an hour, you can't use Absorb Spell again until one hour after the spell is absorbed."
+ },
+ {
+  "id": "return-to-the-sea",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Return to the Sea",
+  "level": 4,
+  "traits": [
+   "impulse",
+   "kineticist",
+   "morph",
+   "primal",
+   "water"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You adapt a creature to living and moving in water. Target a willing creature within 30 feet. For 10 minutes, it gains the effects of a Feet to Fins spell, can breathe water, and gets a +1 status bonus to AC and saves against any creature with the amphibious, aquatic, or water trait. In addition, its attacks ignore the effects water normally has on bludgeoning and slashing attacks. If you use Return to the Sea again, any existing one ends. --- **Level (6th)** You can target up to 5 willing creatures."
+ },
+ {
+  "id": "revelation-spells",
+  "lane": "spellGrant",
+  "collection": "classFeatures",
+  "name": "Revelation Spells",
+  "level": 1,
+  "traits": [
+   "oracle"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The powers of your mystery manifest in the form of revelation spells. Revelation spells are a type of focus spell. It costs 1 Focus Point to cast a focus spell. You refill your focus pool during your daily preparations, and you can regain 1 Focus Point by spending 10 minutes using the Refocus activity to search for omens in a way befitting your mystery, like gazing into a fire, throwing bones and seeing how they fall, or meditating to hear the voices of those who came before you. Focus spells are automatically heightened to half your level rounded up, much like cantrips. Focus spells don't require spell slots, and you can't cast them using spell slots. Certain feats give you more focus spells. The maximum Focus Points your focus pool can hold is equal to the number of focus spells you have, but it can never be more than 3 points. You learn a revelation spell at 1st level and start with a focus pool of 1 Focus Point. This spell is an initial revelation spell determined by your mystery. You can learn additional revelation spells through oracle feats."
+ },
+ {
+  "id": "ring-of-wizardry",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Ring of Wizardry",
+  "level": 7,
+  "traits": [
+   "arcane",
+   "divination",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Ring of Wizardry Source Core Rulebook pg. 615 Usage worn This ring is made from the purest platinum and is covered in esoteric arcane symbols. It does nothing unless you have a spellcasting class feature with the arcane tradition. While wearing the ring of wizardry, you gain a +1 item bonus to Arcana checks and have two additional 1st-level arcane spell slots each day. You prepare spells in these slots or cast from them spontaneously, just as you normally cast your spells. If you take off the ring for any reason, you lose the additional spell slots. You can’t gain spell slots from more than one ring of wizardry per day, nor can a single ring of wizardry grant spell slots more than once per day. If you can cast arcane spells in a variety of different ways (such as if you are a draconic bloodline sorcerer with the wizard multiclass archetype), you can divide the spell slots as you wish among your various sources of arcane spells. Craft Requirements You have a spellcasting class feature with the arcane tradition. Ring of Wizardry (Type I) Source Core Rulebook pg. 615 Price 360 gp Ring of Wizardry (Type II) Source Core Rulebook pg. 615 Price 1,000 gp The bonus is +2, and the ring grants two 2nd-level spell slots and one 1st-level spell slot. Ring of Wizardry (Type III) Source Core Rulebook pg. 615 Price 2,000 gp The bonus is +2, and the ring grants two 3rd-level spell slots and one 2nd-level spell slot. Ring of Wizardry (Type IV) Source Core Rulebook pg. 615 Price 4,500 gp The bonus is +2, and the ring grants two 4th-level spell slots and one 3rd-level spell slot."
+ },
+ {
+  "id": "ring-of-wizardry-type-i",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Ring of Wizardry (Type I)",
+  "level": 7,
+  "traits": [
+   "arcane",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects",
+   "spellSlotBonus"
+  ],
+  "inRegistries": [],
+  "text": "This ring is made from the purest platinum and is covered in esoteric arcane symbols. It does nothing unless you have a spellcasting class feature with the arcane tradition. While wearing the ring of wizardry, you gain a +1 item bonus to Arcana checks and have two additional 1st-rank arcane spell slots each day. You prepare spells in these slots or cast from them spontaneously, just as you normally cast your spells. If you take off the ring for any reason, you lose the additional spell slots. You can't gain spell slots from more than one ring of wizardry per day, nor can a single ring of wizardry grant spell slots more than once per day. If you can cast arcane spells in a variety of different ways (such as if you are a draconic bloodline sorcerer with the wizard multiclass archetype), you can divide the spell slots as you wish among your various sources of arcane spells. **Craft Requirements** You have a spellcasting class feature with the arcane tradition."
+ },
+ {
+  "id": "ring-of-wizardry-type-ii",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Ring of Wizardry (Type II)",
+  "level": 10,
+  "traits": [
+   "arcane",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects",
+   "spellSlotBonus"
+  ],
+  "inRegistries": [],
+  "text": "This ring is made from the purest platinum and is covered in esoteric arcane symbols. It does nothing unless you have a spellcasting class feature with the arcane tradition. While wearing the ring of wizardry, you gain a +2 item bonus to Arcana checks and have two additional 2nd-rank and one additional 1st-rank arcane spell slot each day. You prepare spells in these slots or cast from them spontaneously, just as you normally cast your spells. If you take off the ring for any reason, you lose the additional spell slots. You can't gain spell slots from more than one ring of wizardry per day, nor can a single ring of wizardry grant spell slots more than once per day. If you can cast arcane spells in a variety of different ways (such as if you are a draconic bloodline sorcerer with the wizard multiclass archetype), you can divide the spell slots as you wish among your various sources of arcane spells. **Craft Requirements** You have a spellcasting class feature with the arcane tradition."
+ },
+ {
+  "id": "ring-of-wizardry-type-iii",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Ring of Wizardry (Type III)",
+  "level": 12,
+  "traits": [
+   "arcane",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects",
+   "spellSlotBonus"
+  ],
+  "inRegistries": [],
+  "text": "This ring is made from the purest platinum and is covered in esoteric arcane symbols. It does nothing unless you have a spellcasting class feature with the arcane tradition. While wearing the ring of wizardry, you gain a +2 item bonus to Arcana checks and have two additional 3rd-rank and one additional 2nd-rank arcane spell slot each day. You prepare spells in these slots or cast from them spontaneously, just as you normally cast your spells. If you take off the ring for any reason, you lose the additional spell slots. You can't gain spell slots from more than one ring of wizardry per day, nor can a single ring of wizardry grant spell slots more than once per day. If you can cast arcane spells in a variety of different ways (such as if you are a draconic bloodline sorcerer with the wizard multiclass archetype), you can divide the spell slots as you wish among your various sources of arcane spells. **Craft Requirements** You have a spellcasting class feature with the arcane tradition."
+ },
+ {
+  "id": "ring-of-wizardry-type-iv",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Ring of Wizardry (Type IV)",
+  "level": 14,
+  "traits": [
+   "arcane",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects",
+   "spellSlotBonus"
+  ],
+  "inRegistries": [],
+  "text": "This ring is made from the purest platinum and is covered in esoteric arcane symbols. It does nothing unless you have a spellcasting class feature with the arcane tradition. While wearing the ring of wizardry, you gain a +2 item bonus to Arcana checks and have two additional 4th-rank and one additional 3rd-rank arcane spell slot each day. You prepare spells in these slots or cast from them spontaneously, just as you normally cast your spells. If you take off the ring for any reason, you lose the additional spell slots. You can't gain spell slots from more than one ring of wizardry per day, nor can a single ring of wizardry grant spell slots more than once per day. If you can cast arcane spells in a variety of different ways (such as if you are a draconic bloodline sorcerer with the wizard multiclass archetype), you can divide the spell slots as you wish among your various sources of arcane spells. **Craft Requirements** You have a spellcasting class feature with the arcane tradition."
+ },
+ {
+  "id": "rising-blood-magic",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Rising Blood Magic",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The power within your blood grows. You gain the benefits. Each time you gain a spell slot of a new rank from the bloodrager archetype, add a common spell of the appropriate tradition and rank to your repertoire. In addition, when you Cast a Spell from your repertoire and you are at least Drained 1, increase the extra damage dealt by that spell from Rage by 1."
+ },
+ {
+  "id": "rite-of-invocation",
+  "lane": "spellGrant",
+  "collection": "heritages",
+  "name": "Rite of Invocation",
+  "traits": [],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You augmented your exoskeleton with magic. You gain one cantrip from the arcane or occult spell list. You can cast this spell as an innate spell at will. A cantrip is heightened to a spell rank equal to half your level rounded up."
+ },
+ {
+  "id": "rivethun-adherent",
+  "lane": "spellGrant",
+  "collection": "backgrounds",
+  "name": "Rivethun Adherent",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Shining Kingdoms --- You have spent time learning the practices and traditions of the ancient Rivethun dwarven shamans and can recognize all sorts of magic. You may have chosen your own road since then, or you may remain an adherent of the philosophy. Choose two attribute boosts. One must be to **Constitution** or **Wisdom**, and one is a free attribute boost. You're trained in the Occultism skill and the Spirit Lore skill. You gain the Recognize Spell skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Occultism **Lore** Spirit Lore **Skill Feat** Recognize Spell"
+ },
+ {
+  "id": "rivethun-involutionist-dedication",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Rivethun Involutionist Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featGrantsAuto"
+  ],
+  "text": "**Access** Followers of Rivethun have access to this feat. --- You're a practicing Rivethun involutionist, with a deep well of inner power. You become an expert in Nature and Religion. You cast spells and gain the Cast a Spell activity. You gain a spell repertoire with two common cantrips from the divine spell list or any other divine cantrips you've learned or discovered. You're trained in the spell attack modifier and spell DC statistics. Your key spellcasting attribute for Rivethun involutionist archetype spells is Wisdom."
+ },
+ {
+  "id": "roaring-potion",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Roaring Potion",
+  "level": 8,
+  "traits": [
+   "consumable",
+   "magical",
+   "potion",
+   "sonic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Roaring Potion Source Treasure Vault (Remastered) pg. 90 Usage held in 1 hand Bulk L Activate (manipulate) Ripples move constantly through a roaring potion, a cloudy liquid that growls when you open its container. Drinking it gives you access to two other activations for 1 hour. Activate (concentrate) Effect You gain the effects of a bullhorn spell. You can Dismiss the activation. Activate (concentrate) Frequency once every 1d4 rounds; Effect You emit a scream in a 15-foot cone that deals 4d4 sonic damage. Each creature in the area can attempt a DC 24 Fortitude saving throw. Critical Success The creature is unaffected. Success The creature takes half damage. Failure The creature takes full damage and is frightened 1. Critical Failure The creature takes double damage and is frightened 2. Roaring Potion (Lesser) Source Treasure Vault (Remastered) pg. 90 Price 90 gp Bulk L Roaring Potion (Moderate) Source Treasure Vault (Remastered) pg. 90 Price 550 gp Bulk L You gain the effects of a 5th-rank bullhorn spell. The damage is 6d4 and the save DC is 30. Roaring Potion (Greater) Source Treasure Vault (Remastered) pg. 90 Price 3,600 gp Bulk L You gain the effects of a 7th-rank bullhorn spell. The damage is 10d4 and the save DC is 38."
+ },
+ {
+  "id": "roaring-potion-greater",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Roaring Potion (Greater)",
+  "level": 18,
+  "traits": [
+   "consumable",
+   "magical",
+   "potion",
+   "sonic"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) Ripples move constantly through a roaring potion, a cloudy liquid that growls when you open its container. Drinking it gives you access to two other activations for 1 hour. --- **Activate** ⟨1⟩ (concentrate) **Effect** You gain the effects of a 7th-rank Bullhorn spell. You can Dismiss the activation. --- **Activate** ⟨1⟩ (concentrate) **Frequency** once every 1d4 rounds **Effect** You emit a scream in a that deals . Each creature in the area can attempt a saving throw. --- **Critical Success** The creature is unaffected. **Success** The creature takes half damage. **Failure** The creature takes full damage and is Frightened 1. **Critical Failure** The creature takes double damage and is Frightened 2."
+ },
+ {
+  "id": "roaring-potion-lesser",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Roaring Potion (Lesser)",
+  "level": 8,
+  "traits": [
+   "consumable",
+   "magical",
+   "potion",
+   "sonic"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) Ripples move constantly through a roaring potion, a cloudy liquid that growls when you open its container. Drinking it gives you access to two other activations for 1 hour. --- **Activate** ⟨1⟩ (concentrate) **Effect** You gain the effects of a Bullhorn spell. You can Dismiss the activation. --- **Activate** ⟨1⟩ (concentrate) **Frequency** once every 1d4 rounds **Effect** You emit a scream in a that deals . Each creature in the area can attempt a saving throw. --- **Critical Success** The creature is unaffected. **Success** The creature takes half damage. **Failure** The creature takes full damage and is Frightened 1. **Critical Failure** The creature takes double damage and is Frightened 2."
+ },
+ {
+  "id": "roaring-potion-moderate",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Roaring Potion (Moderate)",
+  "level": 13,
+  "traits": [
+   "consumable",
+   "magical",
+   "potion",
+   "sonic"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) Ripples move constantly through a roaring potion, a cloudy liquid that growls when you open its container. Drinking it gives you access to two other activations for 1 hour. --- **Activate** ⟨1⟩ (concentrate) **Effect** You gain the effects of a 5th-rank Bullhorn spell. You can Dismiss the activation. --- **Activate** ⟨1⟩ (concentrate) **Frequency** once every 1d4 rounds **Effect** You emit a scream in a that deals . Each creature in the area can attempt a saving throw. --- **Critical Success** The creature is unaffected. **Success** The creature takes half damage. **Failure** The creature takes full damage and is Frightened 1. **Critical Failure** The creature takes double damage and is Frightened 2."
+ },
+ {
+  "id": "runelord",
+  "lane": "spellGrant",
+  "collection": "classFeatures",
+  "name": "Runelord",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You draw untold power from runes, sometimes called sin magic. You associate with one of the seven sins, also known as the seven rewards of rule: envy, gluttony, greed, lust, pride, sloth, and wrath. If you choose this class archetype, you must select Runelord Dedication as your 2nd-level class feat. **Prerequisites:** You must be a wizard. **Runelord Adjustments:** You become trained in martial polearms and spears. When your proficiency for simple weapons increases, your proficiencies in these weapons increases as well. You learn the Thassilonian language. Instead of an arcane thesis, you gain a personal rune. Your personal rune also affects your arcane bond. You must select the School of Thassilonian Rune Magic as your arcane school, and you must choose one sin to specialize in. When you cast any curriculum spell or school spell from the School of Thassilonian Rune Magic, you do so simply by tracing runes of power in the air. This removes the need to speak incantations aloud. When you Refocus, you do so by contemplating or indulging in your sin. Each sin is opposed by two others. The incompatibility of these sins means that casting magic philosophically appropriate to those opposing sins, as represented by each school's anathema, interrupts your connection to your own sin and personal rune. If you violate your sin's anathema, you lose the benefits of your personal rune, and whenever you attempt to cast a curriculum spell or school spell, you must succeed at a or the spell is lost. This disruption lasts until you complete an Atone ritual; unlike a normal atone ritual, Arcana can be used for both the primary and secondary checks. Your curriculum spells (including spells of your own sin) never violate this anathema, sometimes providing alternatives to prohibited magic. You gain Advanced School Spell as a bonus feat at 8th level, gaining the advanced school spell for the School of Thassilonian Rune Magic; once you've begun your studies of sin magic, there is no turning back from its allure. ### School of Thassilonian Rune Magic ### **Arcane Bond and Personal Rune** Runelords hail from an era where even a scholar was expected to be able to defend themself with arms if necessary, leading to the practice of attaching a blade to the typical wizard's staff. You must choose a polearm or spear as your arcane bond. In place of an arcane thesis, you have a personal rune, which appears on your bonded weapon. The weapon functions as a staff only you can prepare and contains the sin spells from your sin up to the highest rank of spell you can cast (including your cantrips). Your personal rune isn't a property rune and doesn't count against the weapon's limit of such runes. When you prepare your bonded weapon as a staff, you can physically merge one other staff in your possession into it, adding the staff's spells to your bonded weapon until your next daily preparations. While merged, the weapons haft takes on aesthetic aspects of the staff."
+ },
+ {
+  "id": "scrap-shot",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Scrap Shot",
+  "level": 0,
+  "traits": [
+   "metal"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Scrap Shot Source Rage of Elements pg. 148 Aspect Metal Activate (concentrate, manipulate) Effect Magnetic repulsion sends a sharp chunk of metal scrap flying from your relic. Make a spell attack roll with your relic against a target within 30 feet. The chunk deals 1d6 piercing damage for every 2 levels the relic has (minimum 1d6). If the target is wearing metal armor or is made of metal, you gain a +1 circumstance bonus to your spell attack roll, and the target becomes clumsy 1 until the start of your next turn as the scrap adheres to the target. If your relic is made of a precious metal, the shot is also made of or coated in that metal, bypassing resistances and the like accordingly. The scrap left behind by the shot rusts or crumbles quickly and isn't worth anything if sold."
+ },
+ {
+  "id": "scrollstaff",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Scrollstaff",
+  "level": 1,
+  "traits": [
+   "magical",
+   "two-hand-d8"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "A band of pliant wood encircles the head of this slender mahogany staff. The Magaambya created the first *scrollstaves* millennia ago, and even the few *scrollstaves* found beyond the organization often incorporate Magaambyan iconography as an homage to their source. A *scrollstaff* serves as a weapon just like an ordinary staff and can be improved via runes like any other staff. In addition, if you are capable of creating magical scrolls, you can inscribe a single scroll onto the staff's head for the same cost as normal for Crafting the scroll. If necessary, you can embed a required material focus into the staff as part of the same Craft activity. As long as you are holding the staff, you can cast the spell from the staff's head. Casting the written spell works just like casting from a scroll, but you can perform the necessary material component with the staff, even if you don't have a free hand. Once you cast the inscribed spell, any material focus remains embedded in the staff until removed as an Interact action. The staff can hold only a single scroll at a time. If you inscribe a new scroll before casting the previous spell, you replace the existing spell and remove any previous material focus as part of the Craft activity to write the new scroll."
+ },
+ {
+  "id": "second-thoughts",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Second Thoughts",
+  "level": 18,
+  "traits": [
+   "concentrate",
+   "mental",
+   "wizard"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** You cast a mental spell that targets one creature, and it critically succeeds at its Will save. --- When your target proves resilient to your magical deceptions, you can try them again on someone else. You can Cast the triggering Spell a second time, targeting a different creature, without expanding an additional spell slot. You can do so only until the end of your next turn, and you can't use Second Thoughts on it after the second casting of the spell."
+ },
+ {
+  "id": "secrets-of-shadow",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Secrets of Shadow",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "Your shadow's voice grows ever clearer; it whispers secrets of true power to you and shields your flesh from harm. Your shadow reservoir gains an additional spell 1 rank below the highest rank spell you can cast, in addition to the spells it already contains for all the levels below that. In addition, the tattoos generated by casting shadow spells protect your body against harmful energies. You gain void resistance equal to the highest rank of spell you can cast from spell slots; if you have void healing (or are otherwise harmed by vitality damage and not void damage), you instead gain vitality resistance in the same amount."
+ },
+ {
+  "id": "seer-of-the-dead",
+  "lane": "spellGrant",
+  "collection": "backgrounds",
+  "name": "Seer of the Dead",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You have long been gifted with the ability to see and speak with the departed. This could have manifested at your birth or when a chance encounter linked you inextricably to the spirits of the dead. Their constant presence might feel like a curse, or it might provide you with welcome companionship. You gain one ability boost. It must be to **Constitution** or **Wisdom**. You're trained in Religion and Undead Lore. You gain the effects of the Spirit Sense spell at all times. --- ## Background details **Attribute Boosts** Constitution or Wisdom **Trained Skill** Religion **Lore** Undead Lore"
+ },
+ {
+  "id": "seneschal",
+  "lane": "spellGrant",
+  "collection": "classFeatures",
+  "name": "Seneschal",
+  "level": 1,
+  "traits": [
+   "witch"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your witch patron has gone mysteriously silent. You still have access to your abilities, and your familiar is still funneling your patron's power to you. As you learn how to tap into that power, you influence your familiar to mold the power by itself, continuing to learn new spells and provide you with other witch class features. Without your patron watching over your power, you gain more control but also miss important lessons. You must select Seneschal Witch Dedication as your 2nd-level class feat. **Prerequisites:** You must be a witch who has lost contact with your patron. **Adjustments:** Instead of your patron's lesson, you gain the Manifest Will hex cantrip and your familiar learns one common 1st-rank spell of your choice from your spell list."
+ },
+ {
+  "id": "sequestered-spell",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Sequestered Spell",
+  "level": 1,
+  "traits": [
+   "surki"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You consumed so much of a type of magic as a larva that you can now cast it purely on instinct. Choose one cantrip from the spell list of your magiphage ability. You can cast this cantrip as an innate spell at will. A cantrip is heightened to a spell rank equal to half your level rounded up."
+ }
+]

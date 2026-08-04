@@ -1,0 +1,509 @@
+{
+ "records": [
+  {
+   "id": "claim-cardinal-domains",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "core.json carries the authored `choice` {flag:'activeDomain', daily:true} (written deliberately in effect-backfill.json with a note explaining why it is free text) plus focusPoolBonus:1 — the daily-preparation 'which claimed domain is active' pick is exactly the player-side decision this mythic feat creates; the domains themselves come from the godling archetype's claims."
+  },
+  {
+   "id": "cleric-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "featGrantsAuto.ts:76 grants trained Religion plus an any-skill replacement choice; CASTER_ARCHETYPES['cleric-dedication'] in src/rules/casterArchetypes.ts:54 grants the divine tradition, Wis key, 2 cantrips and trained spell attack/DC; `choice` records the archetype deity."
+  },
+  {
+   "id": "cleric-spellcasting",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The cleric class record's spellcasting config {type:'prepared', tradition:'divine', keyAbility:'wis'} drives slots, cantrips, heightening and spell DC/attack; this feature id is just the class's level-1 hook."
+  },
+  {
+   "id": "cloak-of-social-graces",
+   "verdict": "MISS",
+   "reason": "passiveEffects carries the +1 item bonus to Diplomacy and frequency carries the once-per-day pip, but nothing puts the activation's Heroism on the Spells page — an invested worn item that casts a named spell is exactly the item innateSpells lane (Nosoi Charm, Hunter's Dawn).",
+   "fix": {
+    "field": "innateSpells",
+    "value": [
+     { "spellId": "heroism", "tradition": "divine", "rank": 3, "usesPerDay": 1 }
+    ]
+   }
+  },
+  {
+   "id": "combat-chaplain",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "abilityBoosts [{choice cha/wis},{free}], trainedSkill 'religion', trainedLoreChoice (the deity Lore is typed in) and grantedFeatId 'recognize-spell' cover every printed grant."
+  },
+  {
+   "id": "composition-spells",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The bard class record carries focusSpells ['counter-performance','courageous-anthem'], and build.ts derives the focus pool size from the granted focus spells."
+  },
+  {
+   "id": "conflux-spells",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Each magus Hybrid Study subclass option carries its own focusSpells (aloof-firmament → sky-laughs-at-waves, inexorable-iron → thunderous-strike), which build.ts folds into the focus repertoire and pool."
+  },
+  {
+   "id": "conscious-mind",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Each psychic Conscious Mind subclass option carries `tradition` and `grantedSpells` (the ranked repertoire additions plus the standard and unique psi cantrips); build.ts adds subclass grants to the repertoire."
+  },
+  {
+   "id": "conscious-spell-specialization",
+   "verdict": "MISS",
+   "reason": "Four extra spell slots (1st–4th, plus 5th at 18th) usable only for conscious-mind-granted spells. spellSlotBonus only expresses {perRank, exceptHighest, entryId} — it cannot express a fixed rank set nor a content restriction, and the eligible spell list depends on the subclass, so no legal data field delivers it.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "cosmic-cocktail",
+   "verdict": "MISS",
+   "reason": "limitedUses carries the once-per-day cadence, but nothing puts Truesight on the sheet. This is the same shape as wayfinder-resonance-infiltrator (fixed with innateSpells in batch 2): a feat that lets you gain a named spell's effects once per day.",
+   "fix": {
+    "field": "innateSpells",
+    "value": [
+     { "spellId": "truesight", "usesPerDay": 1 }
+    ]
+   }
+  },
+  {
+   "id": "courageous-advance",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The only effect is that a chosen ALLY may spend a reaction to Stride; nothing changes the caster's own sheet."
+  },
+  {
+   "id": "courageous-assault",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The only effect is that a chosen ALLY may spend a reaction to Strike; nothing changes the caster's own sheet."
+  },
+  {
+   "id": "courageous-onslaught",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The only effect is that a chosen ALLY may spend a reaction to Stride and Strike; nothing changes the caster's own sheet."
+  },
+  {
+   "id": "creed-magic",
+   "verdict": "MISS",
+   "reason": "Two extra 2nd-rank 'creed' slots restricted to a named spell list (Resist Energy / See the Unseen / Sure Strike / Water Breathing), which grow to 3rd rank at 10th (+Haste, Heroism) and 4th at 14th (+Fly, Unfettered Movement). spellSlotBonus has no content restriction and no rank ladder, and innateSpells cannot express 'two slots, prepared daily from a growing list'.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "cryptic-spell",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Adds the subtle trait to the next spell cast; a play-time trait change with no persistent statistic."
+  },
+  {
+   "id": "curse-of-the-mortal-warrior",
+   "verdict": "MISS",
+   "reason": "The cursebound stages impose real self-side penalties — a -1 status penalty to saves against spells at Cursebound 2, -2 at Cursebound 4 — and the record carries no fields and no registry entry. situationalBonuses already carries exactly this shape for 'diverse-mystery' (cursebound-conditional -1 status). (The Cursebound 1/3 weakness to spell damage has no legal lane.)",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "save", "detail": "all" }],
+      "when": "against spells while Cursebound 2 or higher (-2 at Cursebound 4)",
+      "bonus": "-1 status"
+     }
+    ]
+   }
+  },
+  {
+   "id": "dangerous-sorcery",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses.ts:137 carries the spellDamage entry: \"+status equal to the spell's rank\" when you cast a damaging slot spell with no duration."
+  },
+  {
+   "id": "dark-personas-presence",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The aura frightens creatures that enter it — a target-side condition — and the 'you may only cast harmful spells' clause is a play-time restriction, not a sheet statistic."
+  },
+  {
+   "id": "deathly-secrets",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices 'deathly-secrets-spell' offers Eyes of the Dead / Subjugate Undead, each granting focusSpells, alongside focusPoolBonus:1."
+  },
+  {
+   "id": "dedication-to-the-five",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "featFeatGrants.ts:50 grants 'domain-initiate', and the record's own effectChoices restricts the pick to the four Godclaw domains (duty/might/perfection/protection), each granting the domain's focus spell."
+  },
+  {
+   "id": "defensive-coordination",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "You may Raise a Shield (an action you already have) and an ALLY may react to Raise a Shield; no persistent statistic changes."
+  },
+  {
+   "id": "deitys-domain",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`choice` {kind:'domains'} plus focusPoolBonus:1 — build.ts:1481 maps the picked domain through DOMAIN_SPELLS and pushes the initial domain spell into the focus repertoire."
+  },
+  {
+   "id": "demon-slayer",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "limitedUses {max:1, per:'day'} carries the only player-side bookkeeping; the 10d6 damage, dazzled and blinded all land on the demon and creatures in the burst."
+  },
+  {
+   "id": "determined-lore-seeker",
+   "verdict": "MISS",
+   "reason": "The existing `choice` only RECORDS which Lore Seeker spell you favour — it grants nothing. The feat raises that spell from once to three times per day and heightens it (Translate to 4th rank, Sound Body to half your level), and lore-seeker's own innateSpells stay at usesPerDay:1, so the upgrade never reaches the sheet.",
+   "fix": {
+    "effectChoices": [
+     {
+      "id": "determined-lore-seeker-spell",
+      "prompt": "Choose the Lore Seeker spell you can cast three times per day",
+      "options": [
+       {
+        "value": "translate",
+        "label": "Translate (heightened to 4th rank)",
+        "grant": { "innateSpells": [{ "spellId": "translate", "tradition": "arcane", "rank": 4, "usesPerDay": 3 }] }
+       },
+       {
+        "value": "sound-body",
+        "label": "Sound Body (heightened to half your level)",
+        "grant": { "innateSpells": [{ "spellId": "sound-body", "tradition": "arcane", "usesPerDay": 3, "heightenHalfLevel": true }] }
+       },
+       {
+        "value": "see-the-unseen",
+        "label": "See the Unseen (see invisible creatures normally)",
+        "grant": { "innateSpells": [{ "spellId": "see-the-unseen", "tradition": "arcane", "rank": 2, "usesPerDay": 3 }] }
+       }
+      ]
+     }
+    ],
+    "note": "Replaces the inert `choice`; the upgraded entry should supersede lore-seeker's usesPerDay:1 grant for the same spell id rather than stack next to it."
+   }
+  },
+  {
+   "id": "devotion-spells",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "build.ts championDevotionSpell/championDevotionOptions derive the legal picks from the deity's divine font, shared.tsx:3022 renders the Devotion spell picker, and build.ts:3361 resolves the chosen spell into the focus repertoire."
+  },
+  {
+   "id": "devout-magic",
+   "verdict": "MISS",
+   "reason": "The record carries focusPoolBonus:1 but no spell grant and no picker — the champion-archetype character never gets the devotion spell itself. The class feature's picker is gated on the CLASS having the devotion-spells feature, so an archetype character sees nothing.",
+   "fix": {
+    "effectChoices": [
+     {
+      "id": "devout-magic-spell",
+      "prompt": "Choose your devotion spell (Lay on Hands and Touch of the Void follow your deity's divine font)",
+      "options": [
+       { "value": "shields-of-the-spirit", "label": "Shields of the Spirit", "grant": { "focusSpells": ["shields-of-the-spirit"] } },
+       { "value": "lay-on-hands", "label": "Lay on Hands (deity allows heal)", "grant": { "focusSpells": ["lay-on-hands"] } },
+       { "value": "touch-of-the-void", "label": "Touch of the Void (deity allows harm)", "grant": { "focusSpells": ["touch-of-the-void"] } }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "divine-effusion",
+   "verdict": "MISS",
+   "reason": "Twice per day you cast a spell after your slots of that rank are gone — a real, trackable per-day resource, and the record carries no fields at all, so the player gets no pips and no reminder.",
+   "fix": {
+    "field": "limitedUses",
+    "value": { "max": 2, "per": "day" },
+    "note": "The 'two spells must be different ranks' constraint is play-time; the pips are the deliverable part."
+   }
+  },
+  {
+   "id": "divine-evolution",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices 'divine-evolution-spell' offers Heal / Harm, each granting an innateSpell with heightenHalfLevel — the app's established way of expressing a restricted extra highest-rank slot."
+  },
+  {
+   "id": "divine-font",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "build.ts:1749-1764 adds the 4/5/6 extra highest-rank font slots from build.divineFont, constrained to the deity's divineFont list, and Builder.tsx:574-579 renders the heal/harm toggle."
+  },
+  {
+   "id": "domain-acumen",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`choice` {kind:'domains'} plus focusPoolBonus:1 and maxTakable — build.ts:1481 resolves the domain through DOMAIN_SPELLS into the initial domain spell as a revelation spell."
+  },
+  {
+   "id": "domain-fluency",
+   "verdict": "MISS",
+   "reason": "This feat grants the ADVANCED domain spell, but its `choice` is {kind:'domains'}, and build.ts:1481 resolves every domains-choice through DOMAIN_SPELLS (src/rules/domains.ts), which holds only INITIAL domain spells — so the character is handed the wrong spell (and, for an oracle who already took Domain Acumen on that domain, a duplicate).",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "Needs an ADVANCED_DOMAIN_SPELLS map beside DOMAIN_SPELLS in src/rules/domains.ts plus a per-feat flag (like ADV_SPELL in build.ts:1462) so a domains-choice feat can ask for the advanced spell."
+   }
+  },
+  {
+   "id": "domain-initiate",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`choice` {kind:'domains'} + focusPoolBonus:1; build.ts:1481 pushes DOMAIN_SPELLS[pick] into featFocusSpells and the pool point is attributed to the spell."
+  },
+  {
+   "id": "domain-spirit",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices 'domain' lists every legal spirit domain (healing/soul plus the creature and terrain sets), each option granting that domain's initial focus spell, alongside focusPoolBonus:1."
+  },
+  {
+   "id": "double-spellstrike",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A stored free recast of a Spellstrike spell — in-play action/resource economy with no persistent sheet statistic and no legal field."
+  },
+  {
+   "id": "dracomancer",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "spellcastingGrant {tradition:'arcane', keyAbility:'cha', proficiency:'trained'} plus two effectChoices with spellFilters (rank 1 and rank 2, grantAs innate, usesPerDay 1)."
+  },
+  {
+   "id": "dragonclaw-scutcheon",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "`uses` {current:1,max:1} tracks the consumable talisman. Its effect is a one-turn immunity granted at activation (a temporary state with no persistent lane, and toggles are not a legal fix), and the bonus Dragon Breath cast requires two other matching talismans also attached."
+  },
+  {
+   "id": "dragons-breath",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Modifies another feat's action (Kobold Breath dice size and area) at the cost of an hour lockout — a play-time modification with no persistent statistic."
+  },
+  {
+   "id": "dragons-breath-1st-level-spell",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Rune activation that gives your next area spell the Widen Spell effect; a play-time spellshape with no persistent sheet statistic."
+  },
+  {
+   "id": "dragons-breath-2nd-level-spell",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Rune activation that gives your next area spell the Widen Spell effect; a play-time spellshape with no persistent sheet statistic."
+  },
+  {
+   "id": "dragons-breath-3rd-level-spell",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Rune activation that gives your next area spell the Widen Spell effect; a play-time spellshape with no persistent sheet statistic."
+  },
+  {
+   "id": "dragons-breath-4th-level-spell",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Rune activation that gives your next area spell the Widen Spell effect; a play-time spellshape with no persistent sheet statistic."
+  },
+  {
+   "id": "dragons-breath-5th-level-spell",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Rune activation that gives your next area spell the Widen Spell effect; a play-time spellshape with no persistent sheet statistic."
+  },
+  {
+   "id": "dragons-breath-6th-level-spell",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Rune activation that gives your next area spell the Widen Spell effect; a play-time spellshape with no persistent sheet statistic."
+  },
+  {
+   "id": "dragons-breath-7th-level-spell",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Rune activation that gives your next area spell the Widen Spell effect; a play-time spellshape with no persistent sheet statistic."
+  },
+  {
+   "id": "dragons-breath-8th-level-spell",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Rune activation that gives your next area spell the Widen Spell effect; a play-time spellshape with no persistent sheet statistic."
+  },
+  {
+   "id": "dragons-breath-9th-level-spell",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Rune activation that gives your next area spell the Widen Spell effect; a play-time spellshape with no persistent sheet statistic."
+  },
+  {
+   "id": "drain-bonded-item",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "limitedUses {max:1, per:'day'} gives the once-per-day pip; recasting an already-cast prepared spell without a slot is play-time resource use."
+  },
+  {
+   "id": "druid-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "featGrantsAuto.ts:94 grants trained Nature plus an any-skill replacement choice, CASTER_ARCHETYPES['druid-dedication'] (casterArchetypes.ts:55) grants primal/Wis/2 cantrips/trained spell DC, and `choice` records the druidic order."
+  },
+  {
+   "id": "druid-spellcasting",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The druid class record's spellcasting config {type:'prepared', tradition:'primal', keyAbility:'wis'} drives slots, cantrips, heightening and spell DC/attack."
+  },
+  {
+   "id": "druidic-order",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Every druid Order subclass option carries grantedFeats (e.g. animal-companion), grants.skills (the order skill) and focusSpells (the order spell) — all three printed grants."
+  },
+  {
+   "id": "dualistic-synergy",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses.ts:549 carries the Recall Knowledge entry (+1 status, +2 for 7th rank or higher) after casting an arcane slot spell; the primal branch's temporary Hit Points are a play-time resource."
+  },
+  {
+   "id": "duel-spell-advantage",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Adds a third 'natural psychic spell' inside a psychic duel — an encounter subsystem the app does not model at all, and nothing persists on the sheet outside a duel."
+  },
+  {
+   "id": "echoing-spell",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A free second casting of a spell already cast; in-play resource economy with no persistent statistic."
+  },
+  {
+   "id": "effortless-captivation",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A free Sustain a Spell at the start of your turn; action economy only, no sheet statistic."
+  },
+  {
+   "id": "eldritch-archer-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "CASTER_ARCHETYPES['eldritch-archer-dedication'] (casterArchetypes.ts:76) grants a spontaneous repertoire with 1 cantrip, a player-chosen tradition, Cha key and trained spell attack/DC; it is also listed in the spontaneous-archetype set."
+  },
+  {
+   "id": "elemental-apotheosis",
+   "verdict": "MISS",
+   "reason": "`senses` [{darkvision}] is present, but 'you gain any Speeds listed in the Elemental Form spell for your element' delivers nothing — a level-18 kineticist gets no fly/burrow/swim/climb speed. Feat extends DefenseGrants, and EffectGrant supports `speeds`, so an element pick can grant them.",
+   "fix": {
+    "effectChoices": [
+     {
+      "id": "elemental-apotheosis-element",
+      "prompt": "Elemental Apotheosis — your element (Speeds from Elemental Form)",
+      "options": [
+       { "value": "air", "label": "Air — fly 80 feet", "grant": { "speeds": { "fly": 80 } } },
+       { "value": "earth", "label": "Earth — burrow 20 feet", "grant": { "speeds": { "burrow": 20 } } },
+       { "value": "fire", "label": "Fire — no non-land Speed", "note": "Elemental Form (fire) lists only a 50-foot land Speed." },
+       { "value": "metal", "label": "Metal — fly 20 feet", "grant": { "speeds": { "fly": 20 } } },
+       { "value": "water", "label": "Water — swim 60 feet", "grant": { "speeds": { "swim": 60 } } },
+       { "value": "wood", "label": "Wood — climb 30 feet", "grant": { "speeds": { "climb": 30 } } }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "elemental-wayfinder-air",
+   "verdict": "MISS",
+   "reason": "counters/frequency carry the once-per-day pip, but neither granted spell reaches the Spells page: the wayfinder casts 4th-rank Lightning Bolt once per day and Gentle Landing as a primal innate spell every 10 minutes. This is the item innateSpells lane (invested item, named spells).",
+   "fix": {
+    "field": "innateSpells",
+    "value": [
+     { "spellId": "lightning-bolt", "tradition": "primal", "rank": 4, "usesPerDay": 1 },
+     { "spellId": "gentle-landing", "tradition": "primal", "usesPerDay": 1, "usesPer": "hour" }
+    ],
+    "note": "usesPer:'hour' is the closest supported cadence for 'once every 10 minutes'."
+   }
+  },
+  {
+   "id": "elementally-infused",
+   "verdict": "MISS",
+   "reason": "abilityBoosts and trainedLoreChoice are wired and `choice` records the elemental plane, but the at-will primal cantrip tied to that plane (Gale Blast / Scatter Scree / Ignition / Needle Darts / Spout / Root Reading) is never granted. Background supports only an UNCONDITIONAL innateSpells array, and build.ts resolves effectChoices for feats, heritages, class features, subclass options and items — never backgrounds.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "Either add backgrounds to the resolvePick sweep in build.ts:2458-2465 so Background.effectChoices works, or add a choice-keyed spell grant to Background alongside grantedFeatByChoice."
+   }
+  },
+  {
+   "id": "emergency-regeneration",
+   "verdict": "MISS",
+   "reason": "limitedUses carries the once-per-day trigger, but the granted 7th-rank Regenerate (9th at 20th level) never appears on the sheet — the same shape as wayfinder-resonance-infiltrator, fixed with innateSpells in batch 2. heightenAt expresses the level-20 upgrade exactly.",
+   "fix": {
+    "field": "innateSpells",
+    "value": [
+     { "spellId": "regenerate", "tradition": "primal", "rank": 7, "usesPerDay": 1, "heightenAt": [{ "level": 20, "rank": 9 }] }
+    ]
+   }
+  },
+  {
+   "id": "empty-sky-kitsune",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "featFeatGrants.ts:210 grants 'kitsune-spell-familiarity'; the tailless alternate form is descriptive."
+  },
+  {
+   "id": "endurance-of-the-rooted-tree",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "No need to eat/drink/breathe is a survival note with no sheet statistic, and the rest only changes the action cost of Wholeness of Body (a legacy ki spell that is not even in content.spells)."
+  },
+  {
+   "id": "epiphany-at-the-crossroads",
+   "verdict": "MISS",
+   "reason": "limitedUses carries the once-per-day trigger, but the granted Augury is on no spell list for the character. The record has the divine trait, so the tradition is unambiguous.",
+   "fix": {
+    "field": "innateSpells",
+    "value": [
+     { "spellId": "augury", "tradition": "divine", "usesPerDay": 1 }
+    ],
+    "note": "Losing the dying condition, gaining Wounded and Standing are play-time and stay unmodelled."
+   }
+  },
+  {
+   "id": "esoteric-spellcasting",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices carries three spellFilter picks (1st rank, 2nd at 6th level, 3rd at 8th) restricted to occult/divine with grantAs 'innate' and usesPerDay 1."
+  },
+  {
+   "id": "ethereal",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "frequency {max:1,per:'day'} and counters give the once-per-day activation pip — the same treatment as its sibling activated armour runes (winged, antimagic); the Ethereal Jaunt state is a 10-minute temporary form with no persistent lane."
+  },
+  {
+   "id": "expert-captivator-spellcasting",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "casterArchetypes.ts mk(...,'captivator') derives expertId = 'expert-captivator-spellcasting', so taking it raises the archetype tier (unlocking the 4th/5th/6th-rank casting at 10th/12th/14th) and archetypeProficiency() returns 'expert' for occult spell attack/DC."
+  },
+  {
+   "id": "exultant-blood-magic",
+   "verdict": "MISS",
+   "reason": "'Increase the spell slots you gain from the bloodrager archetype feats by 1 for each spell rank' delivers nothing: CASTER_ARCHETYPES['bloodrager-dedication'] is deliberately cantripsOnly with no ranked slots, so there is no entry for a spellSlotBonus to target and no entryId to name.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "The bloodrager archetype needs a ranked-slot progression in casterArchetypes.ts before spellSlotBonus {perRank:1, entryId:'bloodrager-dedication-casting'} can mean anything. The doubled Rage damage while Drained 2+ has no legal lane either."
+   }
+  },
+  {
+   "id": "fan-of-soothing-winds",
+   "verdict": "MISS",
+   "reason": "counters/frequency carry a single per-day pip, but the item explicitly 'casts a 3-action Heal spell' at 2nd, 3rd or 4th rank depending on the bead — none of which reaches the Spells page. heldSpells is the item-casts-a-spell lane (621 items use it).",
+   "fix": {
+    "field": "heldSpells",
+    "value": { "2": ["heal"], "3": ["heal"], "4": ["heal"] },
+    "note": "The frequency is once per day PER BEAD (six beads), so the counter max should be 6, not 1."
+   }
+  },
+  {
+   "id": "fan-of-soothing-winds-greater",
+   "verdict": "MISS",
+   "reason": "Same as the base fan: counters/frequency carry one per-day pip, but the 4th/5th/6th-rank Heal casts are on no spell list.",
+   "fix": {
+    "field": "heldSpells",
+    "value": { "4": ["heal"], "5": ["heal"], "6": ["heal"] },
+    "note": "The frequency is once per day PER BEAD (six beads), so the counter max should be 6, not 1."
+   }
+  },
+  {
+   "id": "feral-linguist-greater",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "heldSpells {2:['animal-form']} names the catalysed spell and uses {current:1,max:1} tracks the consumable; retaining speech and casting one spell inside the battle form are play-time."
+  },
+  {
+   "id": "fervent-spell",
+   "verdict": "MISS",
+   "reason": "The relic gift gives the bearer access to a spell they can cast from their own slots, plus an activation that casts it — a real spell grant with no fields on the record. It cannot be written as data because the spell is determined by the relic's fervor emotional state, which lives on a separate aspect record the app does not model.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "Needs a fervor-emotional-state → spell table (like DOMAIN_SPELLS) plus a way for a relic gift to read the relic's chosen aspect; without it no heldSpells/innateSpells value can be authored."
+   }
+  },
+  {
+   "id": "fey-ascension",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices 'fey-ascension-branch' covers all eight options (Slow, Pest Form, Charm/Sleep/Triple Time, Mad Monkeys as innateSpells; notes for the rest), grantedStrikes carries the dryad leaves attack, and situationalBonuses.ts:2406 carries the unicorn +2 status to saves vs poison and charm."
+  },
+  {
+   "id": "fey-touched-gnome",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices 'primalCantrip' lists the primal cantrips, each granting an innateSpell with atWill:true and heightenHalfLevel:true; the daily swap is play-time re-picking."
+  },
+  {
+   "id": "final-scalecloak",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "passiveEffects carries resistance 15 physical/precision, immunity to electricity and fly 60; situationalBonuses.ts:1728 carries the +4 status AC against metal ranged projectiles; counters carry both the per-day and per-hour activations. The kaiju-sensing and the 3d10 reactive damage are GM/target side."
+  },
+  {
+   "id": "first-revelation",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices 'mystery' maps every oracle mystery to its initial revelation focus spell, alongside focusPoolBonus:1."
+  },
+  {
+   "id": "flexible-halcyon-spellcasting",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "spellSlotBonus {perRank:1, exceptHighest:1, entryId:'halcyon-speaker-dedication-casting'} is exactly the printed grant (one extra slot of every rank but the highest)."
+  }
+ ]
+}

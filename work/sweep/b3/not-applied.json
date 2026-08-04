@@ -1,0 +1,598 @@
+{
+ "skipped": [
+  "brevic-noble: grantedFeatByChoice is inert without trainedSkillChoice (build.ts:339 keys off it)",
+  "child-of-notoriety: grantedFeatByChoice is inert without trainedSkillChoice (build.ts:339 keys off it)",
+  "forge-days-rest: no feats record carries \"grantedFeatId\" — the engine probably does not read it there",
+  "foxfire: already has grantedStrikes — not overwriting",
+  "gnoll-weapon-expertise: \"weaponFamiliarity\" is not a field on any record type — needs engine work",
+  "gnome-weapon-expertise: \"weaponFamiliarity\" is not a field on any record type — needs engine work",
+  "goblin-weapon-expertise: \"weaponFamiliarity\" is not a field on any record type — needs engine work",
+  "halfling-weapon-expertise: \"weaponFamiliarity\" is not a field on any record type — needs engine work",
+  "lions-might: \"weaponFamiliarity\" is not a field on any record type — needs engine work",
+  "nascent: \"featPickGrants\" is not a field on any record type — needs engine work",
+  "natural-performer: \"FEAT_PICK_GRANTS\" is not a field on any record type — needs engine work",
+  "officers-education: \"FEAT_PICK_GRANTS\" is not a field on any record type — needs engine work",
+  "old-blood-vishkanya: \"FEAT_PICK_GRANTS\" is not a field on any record type — needs engine work",
+  "orc-weapon-expertise: \"weaponFamiliarity\" is not a field on any record type — needs engine work",
+  "pirate-combat-training: \"FEAT_PICK_GRANTS\" is not a field on any record type — needs engine work",
+  "sap-life: \"SPELL_MARKERS\" is not a field on any record type — needs engine work",
+  "scion-of-many-planes: \"FEAT_PICK_GRANTS\" is not a field on any record type — needs engine work",
+  "signature-synergy: \"FEAT_PICK_GRANTS\" is not a field on any record type — needs engine work",
+  "skill-mastery: \"FEAT_PICK_GRANTS\" is not a field on any record type — needs engine work",
+  "skill-mastery-rogue: \"FEAT_PICK_GRANTS\" is not a field on any record type — needs engine work",
+  "specialized-companion: \"COMPANION_MODS\" is not a field on any record type — needs engine work",
+  "steadfast-tanuki: \"FEAT_PICK_GRANTS\" is not a field on any record type — needs engine work",
+  "stealthy-companion: \"COMPANION_MODS\" is not a field on any record type — needs engine work",
+  "the-harder-they-fall-ranger: \"RECORD_MARKERS\" is not a field on any record type — needs engine work",
+  "uncanny-dodge: \"RECORD_MARKERS\" is not a field on any record type — needs engine work",
+  "vanths-weapon-expertise: \"weaponFamiliarity\" is not a field on any record type — needs engine work",
+  "viking-weapon-specialist: critSpec:true with no critSpecWeapons would grant crit spec with EVERY weapon"
+ ],
+ "deferredToggles": [],
+ "engineWork": [
+  {
+   "id": "advanced-red-mantis-magic",
+   "name": "Advanced Red Mantis Magic",
+   "lane": "spellGrant",
+   "reason": "Grants a 2nd/3rd/4th-rank Red Mantis spell slot at levels 6/8/10 plus spellbook additions. The Red Mantis archetype is absent from CASTER_ARCHETYPES (src/rules/casterArchetypes.ts) and no spellSlotBonus shape can express a level-gated per-rank unlock, so no slot ever appears."
+  },
+  {
+   "id": "advanced-school-spell",
+   "name": "Advanced School Spell",
+   "lane": "spellGrant",
+   "reason": "focusPoolBonus:1 only. The wizard arcane-school subOptions in core.json already carry advancedFocusSpell (e.g. red-mantis-magic-school -> shroud-of-the-mantis), but build.ts ADV_SPELL only maps advanced/greater-bloodline and advanced/greater-revelation, so the wizard never receives the spell. One-line map addition."
+  },
+  {
+   "id": "archwizards-might",
+   "name": "Archwizard's Might",
+   "lane": "spellGrant",
+   "reason": "Grants a SECOND 10th-rank slot. spellcasting.ts hardcodes slots[10]=1 at level 19+, and spellSlotBonus has no rank targeting ({perRank,exceptHighest,entryId}), so this level-20 feat currently does nothing."
+  },
+  {
+   "id": "basic-cathartic-spellcasting",
+   "name": "Basic Cathartic Spellcasting",
+   "lane": "spellGrant",
+   "reason": "cathartic-mage-dedication is NOT in CASTER_ARCHETYPES, so this feat unlocks no spell slots at all - the dedication only grants a cantrip via spellFilter. The archetype needs an entry (chosen tradition, cha key, repertoire) for the basic/expert/master progression to fire."
+  },
+  {
+   "id": "bloodline-perfection",
+   "name": "Bloodline Perfection",
+   "lane": "spellGrant",
+   "reason": "Grants a SECOND 10th-rank slot; spellcasting.ts hardcodes a single slots[10]=1 and spellSlotBonus cannot target a specific rank, so the level-20 feat does nothing."
+  },
+  {
+   "id": "candle-of-invocation",
+   "name": "Candle of Invocation",
+   "lane": "spellGrant",
+   "reason": "Grants two extra spell slots at half your highest rank to a divine caster of the matching deity during daily preparations. Only \"uses\" is present; spellSlotBonus ({perRank,exceptHighest,entryId}) cannot express \"2 slots at half your highest rank\" and the item is not in consumable-modes.json, so the benefit never reaches the sheet."
+  },
+  {
+   "id": "captivating-intensity",
+   "name": "Captivating Intensity",
+   "lane": "spellGrant",
+   "reason": "Adds one extra daily casting to every captivator innate spell (and a second casting of the Heightened Captivation spell). No field raises the usesPerDay of previously granted innate spells, so the feat is inert."
+  },
+  {
+   "id": "cascade-bearers-spellcasting",
+   "name": "Cascade Bearer's Spellcasting",
+   "lane": "spellGrant",
+   "reason": "Grants an additional halcyon cantrip and an additional 1st-rank halcyon spell, and widens halcyon selection to the divine/occult lists. The halcyon-speaker CASTER_ARCHETYPES entry has a fixed cantrip count and customUnlocks that this feat is not part of, so nothing is added."
+  },
+  {
+   "id": "conscious-spell-specialization",
+   "name": "Conscious Spell Specialization",
+   "lane": "spellGrant",
+   "reason": "Four extra spell slots (1st–4th, plus 5th at 18th) usable only for conscious-mind-granted spells. spellSlotBonus only expresses {perRank, exceptHighest, entryId} — it cannot express a fixed rank set nor a content restriction, and the eligible spell list depends on the subclass, so no legal data field delivers it."
+  },
+  {
+   "id": "creed-magic",
+   "name": "Creed Magic",
+   "lane": "spellGrant",
+   "reason": "Two extra 2nd-rank 'creed' slots restricted to a named spell list (Resist Energy / See the Unseen / Sure Strike / Water Breathing), which grow to 3rd rank at 10th (+Haste, Heroism) and 4th at 14th (+Fly, Unfettered Movement). spellSlotBonus has no content restriction and no rank ladder, and innateSpells cannot express 'two slots, prepared daily from a growing list'."
+  },
+  {
+   "id": "domain-fluency",
+   "name": "Domain Fluency",
+   "lane": "spellGrant",
+   "reason": "This feat grants the ADVANCED domain spell, but its `choice` is {kind:'domains'}, and build.ts:1481 resolves every domains-choice through DOMAIN_SPELLS (src/rules/domains.ts), which holds only INITIAL domain spells — so the character is handed the wrong spell (and, for an oracle who already took Domain Acumen on that domain, a duplicate)."
+  },
+  {
+   "id": "elementally-infused",
+   "name": "Elementally Infused",
+   "lane": "spellGrant",
+   "reason": "abilityBoosts and trainedLoreChoice are wired and `choice` records the elemental plane, but the at-will primal cantrip tied to that plane (Gale Blast / Scatter Scree / Ignition / Needle Darts / Spout / Root Reading) is never granted. Background supports only an UNCONDITIONAL innateSpells array, and build.ts resolves effectChoices for feats, heritages, class features, subclass options and items — never backgrounds."
+  },
+  {
+   "id": "exultant-blood-magic",
+   "name": "Exultant Blood Magic",
+   "lane": "spellGrant",
+   "reason": "'Increase the spell slots you gain from the bloodrager archetype feats by 1 for each spell rank' delivers nothing: CASTER_ARCHETYPES['bloodrager-dedication'] is deliberately cantripsOnly with no ranked slots, so there is no entry for a spellSlotBonus to target and no entryId to name."
+  },
+  {
+   "id": "future-spell-learning",
+   "name": "Future Spell Learning",
+   "lane": "grantsFeat",
+   "reason": "Adds seven named spells (Behold the Weave, Cast into Time, Haste, Loose Time's Arrow, Quicken Time, Slow, Stagnate Time) to your spell list / spellbook / repertoire. Nothing on the record does this and no field in the schema expresses 'expand the spell list you may prepare or learn from'."
+  },
+  {
+   "id": "hierophants-power",
+   "name": "Hierophant's Power",
+   "lane": "spellGrant",
+   "reason": "Grants a SECOND 10th-rank spell slot on top of the druid capstone. spellSlotBonus only supports perRank across all ranks or exceptHighest; there is no way to add a slot at one specific rank, so this cannot be expressed with a legal field."
+  },
+  {
+   "id": "infinite-mind",
+   "name": "Infinite Mind",
+   "lane": "spellGrant",
+   "reason": "The psychic capstone grants a 10th-rank spell slot, but psychicSlots() in src/rules/spellcasting.ts deliberately stops at rank 9 ('does NOT get a 10th-rank slot') and this feature carries no field, so a level-19 psychic never gets the slot. spellSlotBonus cannot target one rank."
+  },
+  {
+   "id": "loaner-spell",
+   "name": "Loaner Spell",
+   "lane": "spellGrant",
+   "reason": "During daily preparations you gain the ability to cast one ally-prepared spell of up to 3rd rank once that day, using your class DC and class DC - 10 as the spell attack. Nothing on the record delivers this. It belongs to the daily-preparations lane (a re-pickable spell choice) and needs a cast-with-class-DC path, neither of which any legal field expresses."
+  },
+  {
+   "id": "magical-understudy",
+   "name": "Magical Understudy",
+   "lane": "spellGrant",
+   "reason": "The eidolon gains the Cast a Spell activity and two innate cantrips of its tradition, and the record carries no fields at all - not even the recorded-only pick that its sibling Magical Adept ships. The eidolon's own spellcasting is not tracked by the engine, so the honest fix is a recorded 2-cantrip pick plus eidolon innate-spell support."
+  },
+  {
+   "id": "maker-of-miracles",
+   "name": "Maker of Miracles",
+   "lane": "spellGrant",
+   "reason": "Grants a SECOND 10th-rank spell slot beyond the cleric capstone. spellSlotBonus can only add slots at every rank or exclude the top N ranks, so a single-rank slot addition has no legal field."
+  },
+  {
+   "id": "mind-over-matter",
+   "name": "Mind over Matter",
+   "lane": "spellGrant",
+   "reason": "Grants an additional 10th-rank spell slot to a psychic who has none from the slot table. spellSlotBonus cannot target one specific rank, so no legal field expresses it."
+  },
+  {
+   "id": "oracular-providence",
+   "name": "Oracular Providence",
+   "lane": "spellGrant",
+   "reason": "A SECOND 10th-rank slot. SpellSlotBonus only exposes perRank/exceptHighest, which spread slots across every rank — there is no way to say 'one more slot at rank 10 only', so no legal field expresses this."
+  },
+  {
+   "id": "patrons-truth",
+   "name": "Patron's Truth",
+   "lane": "spellGrant",
+   "reason": "A second 10th-rank slot. SpellSlotBonus has no per-rank targeting (only perRank/exceptHighest, which touch every rank), so no legal field expresses a single extra rank-10 slot."
+  },
+  {
+   "id": "perfect-encore",
+   "name": "Perfect Encore",
+   "lane": "spellGrant",
+   "reason": "An additional 10th-rank spell slot; SpellSlotBonus cannot target one specific rank (perRank/exceptHighest apply across all castable ranks)."
+  },
+  {
+   "id": "plane-hopper-jotunborn",
+   "name": "Plane-Hopper Jotunborn",
+   "lane": "spellGrant",
+   "reason": "The cantrip is covered by effectChoices, but 'instead of Large, your size is Medium' is not. Jotunborn's ancestry size is 'large' and build.ts line 3051 only raises size ('SIZE_ORDER.indexOf(g.sizeOverride) > indexOf(size)'), so sizeOverride:'medium' would be silently ignored — a size LOWERING lane does not exist."
+  },
+  {
+   "id": "ring-of-wizardry-type-i",
+   "name": "Ring of Wizardry (Type I)",
+   "lane": "resource",
+   "reason": "The record carries spellSlotBonus {\"byRank\":{\"1\":2}}, but SpellSlotBonus (src/rules/types.ts:358) only defines perRank/exceptHighest/entryId and build.ts:2548 never reads byRank — so it falls through to perRank=1 with no exceptHighest and adds +1 slot at EVERY rank instead of two 1st-rank slots. The byRank lane needs implementing (and it should be capped to arcane casters)."
+  },
+  {
+   "id": "ring-of-wizardry-type-ii",
+   "name": "Ring of Wizardry (Type II)",
+   "lane": "resource",
+   "reason": "spellSlotBonus {\"byRank\":{\"1\":1,\"2\":2}} is ignored by the engine (no byRank branch in build.ts:2548); the ring instead grants +1 slot at every rank the character can cast."
+  },
+  {
+   "id": "ring-of-wizardry-type-iii",
+   "name": "Ring of Wizardry (Type III)",
+   "lane": "resource",
+   "reason": "Its spellSlotBonus byRank map (two 3rd-rank + one 2nd-rank) is never read; SpellSlotBonus has no per-rank lane, so the applied result is +1 slot at every rank."
+  },
+  {
+   "id": "ring-of-wizardry-type-iv",
+   "name": "Ring of Wizardry (Type IV)",
+   "lane": "resource",
+   "reason": "Its spellSlotBonus byRank map (two 4th-rank + one 3rd-rank) is never read; SpellSlotBonus has no per-rank lane, so the applied result is +1 slot at every rank."
+  },
+  {
+   "id": "shattered-sacrament",
+   "name": "Shattered Sacrament",
+   "lane": "spellGrant",
+   "reason": "Grants a halcyon cantrip and a 1st-rank halcyon spell (extra spells KNOWN in the halcyon repertoire, which casterArchetypes.ts models as repertoire:true) and lets halcyon spells be cast as divine. No legal field adds repertoire spells to an archetype casting entry."
+  },
+  {
+   "id": "sin-reservoir",
+   "name": "Sin Reservoir",
+   "lane": "spellGrant",
+   "reason": "Grants one extra prepared slot per day at a rank the player chooses (up to two below the highest wizard rank). SpellSlotBonus only expresses per-rank grants (perRank/exceptHighest), so it cannot express one choose-the-rank slot, and nothing else delivers it."
+  },
+  {
+   "id": "snowcaster",
+   "name": "Snowcaster",
+   "lane": "spellGrant",
+   "reason": "\"You gain the basic spellcasting benefits\", but the Gelid Shard archetype has no entry in src/rules/casterArchetypes.ts, so its cantrips, spell slots and trained spell attack/DC never appear (expert-snowcasting and master-snowcasting are dead for the same reason)."
+  },
+  {
+   "id": "staff-nexus",
+   "name": "Staff Nexus",
+   "lane": "spellGrant",
+   "reason": "The thesis gives the wizard a makeshift staff holding one cantrip and one 1st-rank spell with a daily charge pool fed by expending spells (two at 8th, three at 16th). Nothing grants the item or the pool, and no data field grants an inventory item."
+  },
+  {
+   "id": "true-channel-spell",
+   "name": "True Channel Spell",
+   "lane": "spellGrant",
+   "reason": "Grants a single 10th-rank animist prepared slot, but animistPreparedSlots() caps at rank 9 and the spellSlotBonus the builder reads has no single-rank form, so the slot never appears."
+  },
+  {
+   "id": "add-element",
+   "name": "Add Element",
+   "lane": "grantsFeat",
+   "reason": "The choice records the second kinetic element, but \"You gain an impulse feat for that element\" is never offered. FEAT_PICK_GRANTS cannot express \"an impulse feat carrying the element I just chose\" (no dynamic trait sourced from a sibling choice, and maxLevel has no half-character-level form)."
+  },
+  {
+   "id": "advanced-arcana",
+   "name": "Advanced Arcana",
+   "lane": "grantsFeat",
+   "reason": "Grants one wizard feat, but unlike its basic-tier twin basic-arcana (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null)."
+  },
+  {
+   "id": "advanced-blood-potency",
+   "name": "Advanced Blood Potency",
+   "lane": "grantsFeat",
+   "reason": "Grants one sorcerer feat, but unlike its basic-tier twin basic-blood-potency (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null)."
+  },
+  {
+   "id": "advanced-breakthrough",
+   "name": "Advanced Breakthrough",
+   "lane": "grantsFeat",
+   "reason": "Grants one inventor feat, but unlike its basic-tier twin basic-breakthrough (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null)."
+  },
+  {
+   "id": "advanced-concoction",
+   "name": "Advanced Concoction",
+   "lane": "grantsFeat",
+   "reason": "Grants one alchemist feat, but unlike its basic-tier twin basic-concoction (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null)."
+  },
+  {
+   "id": "advanced-deduction",
+   "name": "Advanced Deduction",
+   "lane": "grantsFeat",
+   "reason": "Grants one investigator feat, but unlike its basic-tier twin basic-deduction (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null)."
+  },
+  {
+   "id": "advanced-defender",
+   "name": "Advanced Defender",
+   "lane": "grantsFeat",
+   "reason": "Grants one guardian feat, but unlike its basic-tier twin basic-defender (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null)."
+  },
+  {
+   "id": "advanced-devotion",
+   "name": "Advanced Devotion",
+   "lane": "grantsFeat",
+   "reason": "Grants one champion feat, but unlike its basic-tier twin basic-devotion (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null)."
+  },
+  {
+   "id": "advanced-dogma",
+   "name": "Advanced Dogma",
+   "lane": "grantsFeat",
+   "reason": "Grants one cleric feat, but unlike its basic-tier twin basic-dogma (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null)."
+  },
+  {
+   "id": "advanced-element-control",
+   "name": "Advanced Element Control",
+   "lane": "grantsFeat",
+   "reason": "\"You gain one kineticist feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['kineticist']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone."
+  },
+  {
+   "id": "advanced-field-training",
+   "name": "Advanced Field Training",
+   "lane": "grantsFeat",
+   "reason": "\"You gain one commander feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['commander']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone."
+  },
+  {
+   "id": "advanced-flair",
+   "name": "Advanced Flair",
+   "lane": "grantsFeat",
+   "reason": "\"You gain one swashbuckler feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['swashbuckler']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone."
+  },
+  {
+   "id": "advanced-fury",
+   "name": "Advanced Fury",
+   "lane": "grantsFeat",
+   "reason": "\"You gain one barbarian feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['barbarian']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone."
+  },
+  {
+   "id": "advanced-glory",
+   "name": "Advanced Glory",
+   "lane": "grantsFeat",
+   "reason": "\"You gain one exemplar feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['exemplar']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone."
+  },
+  {
+   "id": "advanced-hunters-trick",
+   "name": "Advanced Hunter's Trick",
+   "lane": "grantsFeat",
+   "reason": "\"You gain one ranger feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['ranger']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone."
+  },
+  {
+   "id": "advanced-kata",
+   "name": "Advanced Kata",
+   "lane": "grantsFeat",
+   "reason": "\"You gain one monk feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['monk']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone."
+  },
+  {
+   "id": "advanced-maneuver",
+   "name": "Advanced Maneuver",
+   "lane": "grantsFeat",
+   "reason": "\"You gain one fighter feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['fighter']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone."
+  },
+  {
+   "id": "advanced-martial-magic",
+   "name": "Advanced Martial Magic",
+   "lane": "grantsFeat",
+   "reason": "\"You gain one magus feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['magus']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone."
+  },
+  {
+   "id": "advanced-muses-whispers",
+   "name": "Advanced Muse's Whispers",
+   "lane": "grantsFeat",
+   "reason": "\"You gain one bard feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['bard']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone."
+  },
+  {
+   "id": "advanced-mysteries",
+   "name": "Advanced Mysteries",
+   "lane": "grantsFeat",
+   "reason": "\"You gain one oracle feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['oracle']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone."
+  },
+  {
+   "id": "advanced-shooting",
+   "name": "Advanced Shooting",
+   "lane": "grantsFeat",
+   "reason": "\"You gain one gunslinger feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['gunslinger']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone."
+  },
+  {
+   "id": "advanced-synergy",
+   "name": "Advanced Synergy",
+   "lane": "grantsFeat",
+   "reason": "\"You gain one summoner feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['summoner']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone."
+  },
+  {
+   "id": "advanced-thaumaturgy",
+   "name": "Advanced Thaumaturgy",
+   "lane": "grantsFeat",
+   "reason": "\"You gain one thaumaturge feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['thaumaturge']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone."
+  },
+  {
+   "id": "advanced-thoughtform",
+   "name": "Advanced Thoughtform",
+   "lane": "grantsFeat",
+   "reason": "\"You gain one psychic feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['psychic']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone."
+  },
+  {
+   "id": "advanced-trickery",
+   "name": "Advanced Trickery",
+   "lane": "grantsFeat",
+   "reason": "\"You gain one rogue feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['rogue']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone."
+  },
+  {
+   "id": "advanced-wilding",
+   "name": "Advanced Wilding",
+   "lane": "grantsFeat",
+   "reason": "\"You gain one druid feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['druid']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone."
+  },
+  {
+   "id": "advanced-witchcraft",
+   "name": "Advanced Witchcraft",
+   "lane": "grantsFeat",
+   "reason": "\"You gain one witch feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['witch']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone."
+  },
+  {
+   "id": "aiuvarin",
+   "name": "Aiuvarin",
+   "lane": "grantsFeat",
+   "reason": "Low-light vision IS modelled (senses:[low-light-vision]). Not modelled: \"you gain the elf trait ... you can choose from aiuvarin and elf feats in addition to those from your ancestry\" — e.g. round-ears/sociable/earned-glory (traits:[\"aiuvarin\"]) can never be picked. src/rules/featSlots.ts:56 gates an ancestry-feat slot on f.traits.includes(build.ancestryId) alone and never consults the chosen heritage, so the widened feat pool this heritage grants is unreachable. Engine fix: eligibleFeatsForSlot must also accept feats carrying the heritage trait (and the heritage record needs a field listing the extra allowed traits)."
+  },
+  {
+   "id": "animists-power",
+   "name": "Animist's Power",
+   "lane": "grantsFeat",
+   "reason": "\"You gain one animist feat\" (class level = half your character level) — the pick-a-feat analogue of spiritual-awakening, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['animist']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone."
+  },
+  {
+   "id": "aon-half-elf",
+   "name": "Half-Elf",
+   "lane": "grantsFeat",
+   "reason": "Low-light vision is modelled and ancestryId is elf, so elf feats are reachable. Not modelled: \"you can select elf, half-elf, and human feats\" — the human/half-elf half of that pool is unreachable. src/rules/featSlots.ts:56 gates an ancestry-feat slot on f.traits.includes(build.ancestryId) alone and never consults the chosen heritage, so the widened feat pool this heritage grants is unreachable. Engine fix: eligibleFeatsForSlot must also accept feats carrying the heritage trait (and the heritage record needs a field listing the extra allowed traits)."
+  },
+  {
+   "id": "aon-half-orc",
+   "name": "Half-Orc",
+   "lane": "grantsFeat",
+   "reason": "Low-light vision is modelled and ancestryId is orc, so orc feats are reachable. Not modelled: \"you can select orc, half-orc, and human feats\" — the human/half-orc half of that pool is unreachable. src/rules/featSlots.ts:56 gates an ancestry-feat slot on f.traits.includes(build.ancestryId) alone and never consults the chosen heritage, so the widened feat pool this heritage grants is unreachable. Engine fix: eligibleFeatsForSlot must also accept feats carrying the heritage trait (and the heritage record needs a field listing the extra allowed traits)."
+  },
+  {
+   "id": "ardande",
+   "name": "Ardande",
+   "lane": "grantsFeat",
+   "reason": "Vision is modelled (senses + darkvisionIfAncestryLowLight). Not modelled: access to ardande AND geniekin feats. src/rules/featSlots.ts:56 gates an ancestry-feat slot on f.traits.includes(build.ancestryId) alone and never consults the chosen heritage, so the widened feat pool this heritage grants is unreachable. Engine fix: eligibleFeatsForSlot must also accept feats carrying the heritage trait (and the heritage record needs a field listing the extra allowed traits)."
+  },
+  {
+   "id": "azarketi-weapon-expertise",
+   "name": "Azarketi Weapon Expertise",
+   "lane": "grantsFeat",
+   "reason": "\"Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency in Crossbows, Hand Crossbows, Longspears, Spears, Tridents, and all azarketi weapons\" is delivered by nothing. featGrantsAuto.ts has the trained half (azarketi-weapon-familiarity, line 47) and has the mirrorBestCategory expertise twin for every comparable ancestry (catfolk-, conrasu-, genie-, ghoran-, grippli-, hobgoblin-, kobold-, vanara-, vishkanya-weapon-expertise) — azarketi alone is absent. weaponFamiliarity is NOT a record field (0 feats in core.json carry it), so the fix is a registry line in featGrantsAuto.ts: \"azarketi-weapon-expertise\": { weaponFamiliarity: { weapons: [\"crossbow\",\"hand-crossbow\",\"longspear\",\"spear\",\"trident\",\"boarding-axe\",\"gill-hook\"], mirrorBestCategory: true } }"
+  },
+  {
+   "id": "butterflys-sting",
+   "name": "Butterfly's Sting",
+   "lane": "grantsFeat",
+   "reason": "\"You gain the Sneak Attack class feature\" — derive.ts:1073 emits the precision rider only when ownedFeatureIds() contains 'sneak-attack', and ownedFeatureIds (derive.ts:1025) is built solely from the class's own feature list, subclass variants and classChoices; no feat-grant path reaches it. Taking this archetype feat therefore adds nothing to any Strike. Also needs the archetype's non-scaling 1d6 (derive.ts scales by character level)."
+  },
+  {
+   "id": "captain-dedication",
+   "name": "Captain Dedication",
+   "lane": "grantsFeat",
+   "reason": "featGrantsAuto.ts:63 covers only the Diplomacy/Intimidation training. The dedication also grants a Group Impression / Group Coercion pick and, more importantly, a novice dedicated follower minion — captain-dedication is absent from companionGrants.ts, so the follower never appears in the Companions tab. Needs a companionGrants entry plus a two-option feat pick (grantedFeatByChoice is Background-only, types.ts:601)."
+  },
+  {
+   "id": "combat-flexibility",
+   "name": "Combat Flexibility",
+   "lane": "grantsFeat",
+   "reason": "The 9th-level fighter feature hands you an 8th-or-lower fighter feat at every daily preparation, and the record carries no field at all — no choice, no registry entry, so the feat is never picked or applied. featPickGrants is keyed by granting FEAT id (build.pickFeatChoices), so a class feature needs the open daily-prep pick lane (as construct-eidolon uses for its evolution feat)."
+  },
+  {
+   "id": "draconic-paragon",
+   "name": "Draconic Paragon",
+   "lane": "grantsFeat",
+   "reason": "Nothing on the record (no fields at all) delivers any of the three upgrades. Two are real sheet changes: your jaws/claws/tail unarmed Strikes gain the deadly d6 trait, and each Dracomancer 1st/2nd-rank innate spell gains +1 use per day. There is no lane for adding a trait to an already-granted Strike or for incrementing another feat's innate-spell uses, and the branch that applies depends on which prerequisite feat you own."
+  },
+  {
+   "id": "dwarven-weapon-expertise",
+   "name": "Dwarven Weapon Expertise",
+   "lane": "grantsFeat",
+   "reason": "Grep of src/ finds no 'dwarven-weapon-expertise' or 'dwarven-weapon-familiarity' anywhere — not in featGrantsAuto, featGrants, featFeatGrants or the backfill, and core.json carries only level/category. A dwarf with this feat never gets expert-or-better in battle axes, picks, warhammers and dwarven weapons. The lane exists (featGrantsAuto weaponFamiliarity with mirrorBestCategory:true, as used for catfolk/conrasu/hobgoblin) but is registry-only — there is no weaponFamiliarity data field on any core.json feat."
+  },
+  {
+   "id": "elemental-overlap",
+   "name": "Elemental Overlap",
+   "lane": "grantsFeat",
+   "reason": "\"Gain a composite impulse feat that includes your kinetic element\" is a filtered feat pick and the record has no fields and no registry entry, so the feat is never chosen or applied. It belongs in featPickGrants.ts (class category, traits ['impulse','composite'], maxLevel below the level taken) — a registry lane with no data-field equivalent."
+  },
+  {
+   "id": "elven-weapon-expertise",
+   "name": "Elven Weapon Expertise",
+   "lane": "grantsFeat",
+   "reason": "Same gap as the dwarven feat — grep of src/ finds no 'elven-weapon-expertise' or 'elven-weapon-familiarity' entry in any registry or the backfill, and core.json carries only level/category. Longbows, composite longbows, longswords, rapiers, shortbows and elf weapons never mirror the class's expert-or-better weapon proficiency. Needs a featGrantsAuto weaponFamiliarity entry with mirrorBestCategory:true (registry-only lane)."
+  },
+  {
+   "id": "evolution-feat",
+   "name": "Evolution Feat",
+   "lane": "grantsFeat",
+   "reason": "The summoner class lists evolution-feat at level 1, but core.json's summoner featProgression.class is [2,4,...,20] — there is no 1st-level class-feat slot, so a summoner is never offered the evolution feat the class grants at level 1. Needs a level-1 evolution-restricted class feat slot in the summoner's feat progression (a class-level structure, no per-record field)."
+  },
+  {
+   "id": "experimental-spellshaping",
+   "name": "Experimental Spellshaping",
+   "lane": "grantsFeat",
+   "reason": "The wizard thesis has no fields at all. Neither half is delivered: the permanent 1st-level spellshape wizard feat, nor the 4th-level daily-preparations spellshape feat. featPickGrants is keyed by granting FEAT id (build.pickFeatChoices), so this class feature needs the filtered/daily-prep pick lane construct-eidolon uses."
+  },
+  {
+   "id": "fury-instinct",
+   "name": "Fury Instinct",
+   "lane": "grantsFeat",
+   "reason": "The rage-damage tiers ARE modelled (derive.ts:1100 RAGE_DAMAGE 'fury-instinct': [3,7,13]), but \"You gain a bonus 1st-level barbarian feat\" is delivered by nothing: FEAT_PICK_GRANTS is consulted only for taken FEATS (build.ts:2177) and build.heritageId (2188), never for a class feature or subclass id, and no other bonus-feat lane exists for class features."
+  },
+  {
+   "id": "haunting-memories",
+   "name": "Haunting Memories",
+   "lane": "grantsFeat",
+   "reason": "Daily preparations grant expert in an untrained skill OR master in a trained one, plus a matching skill feat. Nothing is on the record. skillChoices.conditionalRank can express only ONE base→upgraded pair, so neither branch pair (untrained→expert, trained→master) is representable, and bonusSkillFeat has no rank gate."
+  },
+  {
+   "id": "kaiju-stalker",
+   "name": "Kaiju Stalker",
+   "lane": "grantsFeat",
+   "reason": "trainedSkill 'athletics', trainedLore 'kaiju' and the +1 Kaiju Lore star (situationalBonuses.ts:2149) are all wired, but \"gain one Athletics skill feat of your choice\" is not: backgrounds support only grantedFeatId / grantedFeatByChoice (build.ts:333-345), and FEAT_PICK_GRANTS is keyed off taken feats and heritageId only — it is never consulted for a background."
+  },
+  {
+   "id": "order-explorer",
+   "name": "Order Explorer",
+   "lane": "grantsFeat",
+   "reason": "The record's `choice` records WHICH order you explored, but the printed grant — 'you gain a 1st-level feat that lists that order as a prerequisite' — reaches nothing: no FEAT_PICK_GRANTS key, and FeatPickSpec can only filter by category/level/traits, not by a prerequisite string, and the legal set changes with the order just picked. Needs a pick-spec whose pool is derived from another answer."
+  },
+  {
+   "id": "potent-nectar",
+   "name": "Potent Nectar",
+   "lane": "grantsFeat",
+   "reason": "The `choice` records splash vs persistent and nothing more. Both branches add damage to the nectar ranged unarmed Strike — but core.feats['caustic-nectar'] has no grantedStrikes either, so the Strike doesn't exist on the sheet and there is no field that attaches a damage rider to another record's granted Strike."
+  },
+  {
+   "id": "professional-letter-writer",
+   "name": "Professional Letter Writer",
+   "lane": "grantsFeat",
+   "reason": "core.backgrounds has abilityBoosts + trainedLore 'scribing' + a `choice` (flag 'skillFeat') that only RECORDS Specialty Crafting vs Multilingual. The feat is never granted: grantedFeatId is unset, grantedFeatByChoice is keyed by trainedSkillChoice (build.ts:336) and this background has no trainedSkillChoice, and FEAT_PICK_GRANTS is resolved for feat and heritage ids only — backgrounds have no feat-pick lane."
+  },
+  {
+   "id": "sacred-spells",
+   "name": "Sacred Spells",
+   "lane": "grantsFeat",
+   "reason": "The `choice` (flag 'sacredSpellsBenefit') records prepared-swap vs spontaneous-signature, but the feat's primary grant — adding seven named spells to your spell list so they can be prepared or added to a repertoire — reaches nothing. grantedSpells (types.ts:804) exists only on subclass options, not on feats, and no feat field widens a tradition's spell list."
+  },
+  {
+   "id": "shadow-sneak-attack",
+   "name": "Shadow Sneak Attack",
+   "lane": "grantsFeat",
+   "reason": "Sneak attack is computed in strikePrecisionRiders (derive.ts:1073) purely from ownedFeatureIds having the rogue class feature 'sneak-attack', with dice scaling off character level. This feat grants a FLAT 1d6 that never scales; nothing adds it (grep: 'shadow-sneak-attack' appears nowhere in src/), so an archetype shadowdancer shows no precision damage at all. No data field can express a fixed-die sneak attack."
+  },
+  {
+   "id": "skilled-partner",
+   "name": "Skilled Partner",
+   "lane": "grantsFeat",
+   "reason": "No fields, no registry key. It gives the eidolon three skill feats (1st-level, ≤2nd-level, and a ≤7th-level one at 7th). CompanionMod (companionGrants.ts) can grant senses, speeds, HP, ability boosts, maturity and skillGrants — but has no feat lane at all, so an eidolon can never hold a skill feat."
+  },
+  {
+   "id": "sneak-attacker",
+   "name": "Sneak Attacker",
+   "lane": "grantsFeat",
+   "reason": "Identical to Shadow Sneak Attack: derive.ts:1073 only fires for owners of the 'sneak-attack' class feature and scales dice off level, whereas this grants 1d4 rising to 1d6 at 6th and never further. 'sneak-attacker' appears nowhere in src/, so an archetype rogue's Strikes show no precision rider."
+  },
+  {
+   "id": "sponsored-by-a-stranger",
+   "name": "Sponsored by a Stranger",
+   "lane": "grantsFeat",
+   "reason": "The `choice` (flag 'bgFeat') only RECORDS Dubious Knowledge vs Quick Identification; no grantedFeatId is set. grantedFeatByChoice can't express it either — build.ts:336 indexes it by the trainedSkillChoice answer, and here the feat pick is independent of the Occultism/Nature choice. Backgrounds have no feat-PICK lane (FEAT_PICK_GRANTS is resolved for feat and heritage ids only)."
+  },
+  {
+   "id": "stylish-tricks",
+   "name": "Stylish Tricks",
+   "lane": "grantsFeat",
+   "reason": "Half-delivered. The extra skill FEATS are in the class table — core.classes.swashbuckler.featProgression.skill includes the odd levels 3, 7 and 15. The extra skill INCREASES are not: skillIncreaseLevels is [3,5,7,…,19] (the standard set) and build.skillIncreases is keyed by LEVEL (build.ts:1355-1362), one increase per level, so a second increase at 3/7/15 cannot be represented — the swashbuckler is short three proficiency steps."
+  },
+  {
+   "id": "ultimate-flexibility",
+   "name": "Ultimate Flexibility",
+   "lane": "grantsFeat",
+   "reason": "Combat/Improved Flexibility is hardcoded in build.ts:3806 — exactly two 'bonus' slots, at levels 9 and 15, with featSlots.ts:78 capping each at a fighter feat of level ≤ slotLevel-1. 'ultimate-flexibility' appears nowhere in src/, so the third feat (up to 18th level) is never offered and the second slot's ceiling never rises to 14."
+  },
+  {
+   "id": "unconventional-expertise",
+   "name": "Unconventional Expertise",
+   "lane": "grantsFeat",
+   "reason": "Nothing keys 'unconventional-expertise' (grep: zero hits in src/ and in effect-backfill.json), so the expert-and-better mirror never happens. It also can't be authored as a static weaponFamiliarity list because the weapon comes from Unconventional Weaponry — whose own backfilled `choice` is marked inert ('the treat-as-simple proficiency is not applied to your sheet'), so the pick isn't even readable by a proficiency lane yet."
+  },
+  {
+   "id": "verduran-city-folk",
+   "name": "Verduran City Folk",
+   "lane": "grantsFeat",
+   "reason": "The background grants a skill feat (a choice of two; the first name was lost in the AoN export, descRefs preserves Streetwise) and the record has abilityBoosts/trainedSkill/trainedLore but no feat grant at all. grantedFeatId takes only one id and grantedFeatByChoice keys off a skill pick that this background doesn't offer, and EffectGrant has no feat lane — a two-way background feat choice has no lane."
+  },
+  {
+   "id": "enhanced-psychopomp-familiar",
+   "name": "Enhanced Psychopomp Familiar",
+   "lane": "resource",
+   "reason": "Raises the familiar's daily ability budget from 2 to 4 (with two locked to Psychopomp Familiar's list plus the Augury master ability) — a genuine 'let the player pick what the rules give them' gap. companionGrants.ts keys 'psychopomp-familiar' (abilityBudget 3) but has no entry for the enhanced feat; a budget upgrade lives in that registry, not in a record field."
+  },
+  {
+   "id": "inner-fire-monk",
+   "name": "Inner Fire (Monk)",
+   "lane": "resource",
+   "reason": "Grants cold and fire resistance equal to half your level (and a touch-damage rider) WHILE in Stoked Flame Stance. The feat has no fields; putting resistances on the feat would make them permanent, and core.stances['stoked-flame-stance'] has no way to gate its resistances on owning this feat (whileActive only supports rage/panache/hunt-prey/unleash-psyche)."
+  },
+  {
+   "id": "inner-fire-som",
+   "name": "Inner Fire (SoM)",
+   "lane": "resource",
+   "reason": "Legacy Secrets of Magic printing of the same feat, equally unwired: half-level cold and fire resistance conditional on Stoked Flame Stance, with no stance-gated resistance lane (whileActive covers only rage/panache/hunt-prey/unleash-psyche)."
+  },
+  {
+   "id": "primal-howl",
+   "name": "Primal Howl",
+   "lane": "resource",
+   "reason": "The animal companion gains an ADDITIONAL advanced maneuver, but animalCompanions records carry a single `maneuver` string and there is no lane (no companionGrants shape, no companionAdvanced entry) for adding one — so the companion sheet never shows it."
+  }
+ ]
+}

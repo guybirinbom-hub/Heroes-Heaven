@@ -1,0 +1,1437 @@
+{
+ "records": [
+  {
+   "id": "absorb-spell",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Triggered once-per-10-minutes ability that lets you re-cast a spell you just saved against; nothing persistent changes on the sheet and a 10-minute cadence is not a representable limitedUses period."
+  },
+  {
+   "id": "adapted-cantrip",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "choice {flag:adaptedCantrip, kind:open, from:{type:spell,cantripsOnly}} records the picked cantrip and carries an inert note explaining the player adds it to their own list."
+  },
+  {
+   "id": "adaptive-adept",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "choice {flag:adaptiveSpell, kind:open, from:{type:spell,maxRank:1}} records the pick with the same inert note."
+  },
+  {
+   "id": "advanced-bloodline",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "build.ts ADV_SPELL maps advanced-bloodline to the chosen sorcerer bloodline's subOption.advancedFocusSpell (bloodline options in core.json carry advancedFocusSpell)."
+  },
+  {
+   "id": "advanced-deitys-domain",
+   "verdict": "MISS",
+   "reason": "Only focusPoolBonus:1 is present - the pool point is granted but no advanced domain spell ever reaches the Spells page. Same pattern as the already-fixed advanced-seeker-of-truths / greater-sun-blessing.",
+   "fix": {
+    "field": "effectChoices",
+    "value": [
+     {
+      "id": "advanced-domain",
+      "prompt": "Choose the domain you took with Deity's Domain - you gain its advanced domain spell",
+      "options": [
+       {
+        "value": "air",
+        "label": "Air — Disperse into Air",
+        "grant": {
+         "focusSpells": [
+          "disperse-into-air"
+         ]
+        }
+       },
+       {
+        "value": "ambition",
+        "label": "Ambition — Competitive Edge",
+        "grant": {
+         "focusSpells": [
+          "competitive-edge"
+         ]
+        }
+       },
+       {
+        "value": "cities",
+        "label": "Cities — Pulse of Civilization",
+        "grant": {
+         "focusSpells": [
+          "pulse-of-civilization"
+         ]
+        }
+       },
+       {
+        "value": "confidence",
+        "label": "Confidence — Delusional Pride",
+        "grant": {
+         "focusSpells": [
+          "delusional-pride"
+         ]
+        }
+       },
+       {
+        "value": "creation",
+        "label": "Creation — Artistic Flourish",
+        "grant": {
+         "focusSpells": [
+          "artistic-flourish"
+         ]
+        }
+       },
+       {
+        "value": "darkness",
+        "label": "Darkness — Darkened Eyes",
+        "grant": {
+         "focusSpells": [
+          "darkened-eyes"
+         ]
+        }
+       },
+       {
+        "value": "death",
+        "label": "Death — Eradicate Undeath",
+        "grant": {
+         "focusSpells": [
+          "eradicate-undeath"
+         ]
+        }
+       },
+       {
+        "value": "destruction",
+        "label": "Destruction — Destructive Aura",
+        "grant": {
+         "focusSpells": [
+          "destructive-aura"
+         ]
+        }
+       },
+       {
+        "value": "dreams",
+        "label": "Dreams — Dreamer's Call",
+        "grant": {
+         "focusSpells": [
+          "dreamers-call"
+         ]
+        }
+       },
+       {
+        "value": "earth",
+        "label": "Earth — Localized Quake",
+        "grant": {
+         "focusSpells": [
+          "localized-quake"
+         ]
+        }
+       },
+       {
+        "value": "family",
+        "label": "Family — Unity",
+        "grant": {
+         "focusSpells": [
+          "unity"
+         ]
+        }
+       },
+       {
+        "value": "fate",
+        "label": "Fate — Tempt Fate",
+        "grant": {
+         "focusSpells": [
+          "tempt-fate"
+         ]
+        }
+       },
+       {
+        "value": "fire",
+        "label": "Fire — Flame Barrier",
+        "grant": {
+         "focusSpells": [
+          "flame-barrier"
+         ]
+        }
+       },
+       {
+        "value": "freedom",
+        "label": "Freedom — Word of Freedom",
+        "grant": {
+         "focusSpells": [
+          "word-of-freedom"
+         ]
+        }
+       },
+       {
+        "value": "healing",
+        "label": "Healing — Rebuke Death",
+        "grant": {
+         "focusSpells": [
+          "rebuke-death"
+         ]
+        }
+       },
+       {
+        "value": "indulgence",
+        "label": "Indulgence — Take its Course",
+        "grant": {
+         "focusSpells": [
+          "take-its-course"
+         ]
+        }
+       },
+       {
+        "value": "knowledge",
+        "label": "Knowledge — Know the Enemy",
+        "grant": {
+         "focusSpells": [
+          "know-the-enemy"
+         ]
+        }
+       },
+       {
+        "value": "luck",
+        "label": "Luck — Lucky Break",
+        "grant": {
+         "focusSpells": [
+          "lucky-break"
+         ]
+        }
+       },
+       {
+        "value": "magic",
+        "label": "Magic — Mystic Beacon",
+        "grant": {
+         "focusSpells": [
+          "mystic-beacon"
+         ]
+        }
+       },
+       {
+        "value": "might",
+        "label": "Might — Enduring Might",
+        "grant": {
+         "focusSpells": [
+          "enduring-might"
+         ]
+        }
+       },
+       {
+        "value": "moon",
+        "label": "Moon — Touch of the Moon",
+        "grant": {
+         "focusSpells": [
+          "touch-of-the-moon"
+         ]
+        }
+       },
+       {
+        "value": "nature",
+        "label": "Nature — Nature's Bounty",
+        "grant": {
+         "focusSpells": [
+          "natures-bounty"
+         ]
+        }
+       },
+       {
+        "value": "nightmares",
+        "label": "Nightmares — Shared Nightmare",
+        "grant": {
+         "focusSpells": [
+          "shared-nightmare"
+         ]
+        }
+       },
+       {
+        "value": "pain",
+        "label": "Pain — Retributive Pain",
+        "grant": {
+         "focusSpells": [
+          "retributive-pain"
+         ]
+        }
+       },
+       {
+        "value": "passion",
+        "label": "Passion — Captivating Adoration",
+        "grant": {
+         "focusSpells": [
+          "captivating-adoration"
+         ]
+        }
+       },
+       {
+        "value": "protection",
+        "label": "Protection — Protector's Sphere",
+        "grant": {
+         "focusSpells": [
+          "protectors-sphere"
+         ]
+        }
+       },
+       {
+        "value": "secrecy",
+        "label": "Secrecy — Safeguard Secret",
+        "grant": {
+         "focusSpells": [
+          "safeguard-secret"
+         ]
+        }
+       },
+       {
+        "value": "travel",
+        "label": "Travel — Traveler's Transit",
+        "grant": {
+         "focusSpells": [
+          "travelers-transit"
+         ]
+        }
+       },
+       {
+        "value": "trickery",
+        "label": "Trickery — Trickster's Twin",
+        "grant": {
+         "focusSpells": [
+          "tricksters-twin"
+         ]
+        }
+       },
+       {
+        "value": "truth",
+        "label": "Truth — Glimpse the Truth",
+        "grant": {
+         "focusSpells": [
+          "glimpse-the-truth"
+         ]
+        }
+       },
+       {
+        "value": "tyranny",
+        "label": "Tyranny — Commanding Lash",
+        "grant": {
+         "focusSpells": [
+          "commanding-lash"
+         ]
+        }
+       },
+       {
+        "value": "undeath",
+        "label": "Undeath — Malignant Sustenance",
+        "grant": {
+         "focusSpells": [
+          "malignant-sustenance"
+         ]
+        }
+       },
+       {
+        "value": "water",
+        "label": "Water — Downpour",
+        "grant": {
+         "focusSpells": [
+          "downpour"
+         ]
+        }
+       },
+       {
+        "value": "wealth",
+        "label": "Wealth — Precious Metals",
+        "grant": {
+         "focusSpells": [
+          "precious-metals"
+         ]
+        }
+       },
+       {
+        "value": "zeal",
+        "label": "Zeal — Zeal for Battle",
+        "grant": {
+         "focusSpells": [
+          "zeal-for-battle"
+         ]
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "advanced-domain",
+   "verdict": "MISS",
+   "reason": "Its choice is kind:domains, and build.ts applyFeatFocus turns a domains choice into DOMAIN_SPELLS[value] - the INITIAL domain spell. Advanced Domain therefore grants the wrong focus spell. Replace with an effectChoices list of ADVANCED domain spells (the kind:domains choice must be dropped so it stops granting the initial spell).",
+   "fix": {
+    "field": "effectChoices",
+    "value": [
+     {
+      "id": "advanced-domain",
+      "prompt": "Choose one of your domains - you gain its ADVANCED domain spell",
+      "options": [
+       {
+        "value": "air",
+        "label": "Air — Disperse into Air",
+        "grant": {
+         "focusSpells": [
+          "disperse-into-air"
+         ]
+        }
+       },
+       {
+        "value": "ambition",
+        "label": "Ambition — Competitive Edge",
+        "grant": {
+         "focusSpells": [
+          "competitive-edge"
+         ]
+        }
+       },
+       {
+        "value": "cities",
+        "label": "Cities — Pulse of Civilization",
+        "grant": {
+         "focusSpells": [
+          "pulse-of-civilization"
+         ]
+        }
+       },
+       {
+        "value": "confidence",
+        "label": "Confidence — Delusional Pride",
+        "grant": {
+         "focusSpells": [
+          "delusional-pride"
+         ]
+        }
+       },
+       {
+        "value": "creation",
+        "label": "Creation — Artistic Flourish",
+        "grant": {
+         "focusSpells": [
+          "artistic-flourish"
+         ]
+        }
+       },
+       {
+        "value": "darkness",
+        "label": "Darkness — Darkened Eyes",
+        "grant": {
+         "focusSpells": [
+          "darkened-eyes"
+         ]
+        }
+       },
+       {
+        "value": "death",
+        "label": "Death — Eradicate Undeath",
+        "grant": {
+         "focusSpells": [
+          "eradicate-undeath"
+         ]
+        }
+       },
+       {
+        "value": "destruction",
+        "label": "Destruction — Destructive Aura",
+        "grant": {
+         "focusSpells": [
+          "destructive-aura"
+         ]
+        }
+       },
+       {
+        "value": "dreams",
+        "label": "Dreams — Dreamer's Call",
+        "grant": {
+         "focusSpells": [
+          "dreamers-call"
+         ]
+        }
+       },
+       {
+        "value": "earth",
+        "label": "Earth — Localized Quake",
+        "grant": {
+         "focusSpells": [
+          "localized-quake"
+         ]
+        }
+       },
+       {
+        "value": "family",
+        "label": "Family — Unity",
+        "grant": {
+         "focusSpells": [
+          "unity"
+         ]
+        }
+       },
+       {
+        "value": "fate",
+        "label": "Fate — Tempt Fate",
+        "grant": {
+         "focusSpells": [
+          "tempt-fate"
+         ]
+        }
+       },
+       {
+        "value": "fire",
+        "label": "Fire — Flame Barrier",
+        "grant": {
+         "focusSpells": [
+          "flame-barrier"
+         ]
+        }
+       },
+       {
+        "value": "freedom",
+        "label": "Freedom — Word of Freedom",
+        "grant": {
+         "focusSpells": [
+          "word-of-freedom"
+         ]
+        }
+       },
+       {
+        "value": "healing",
+        "label": "Healing — Rebuke Death",
+        "grant": {
+         "focusSpells": [
+          "rebuke-death"
+         ]
+        }
+       },
+       {
+        "value": "indulgence",
+        "label": "Indulgence — Take its Course",
+        "grant": {
+         "focusSpells": [
+          "take-its-course"
+         ]
+        }
+       },
+       {
+        "value": "knowledge",
+        "label": "Knowledge — Know the Enemy",
+        "grant": {
+         "focusSpells": [
+          "know-the-enemy"
+         ]
+        }
+       },
+       {
+        "value": "luck",
+        "label": "Luck — Lucky Break",
+        "grant": {
+         "focusSpells": [
+          "lucky-break"
+         ]
+        }
+       },
+       {
+        "value": "magic",
+        "label": "Magic — Mystic Beacon",
+        "grant": {
+         "focusSpells": [
+          "mystic-beacon"
+         ]
+        }
+       },
+       {
+        "value": "might",
+        "label": "Might — Enduring Might",
+        "grant": {
+         "focusSpells": [
+          "enduring-might"
+         ]
+        }
+       },
+       {
+        "value": "moon",
+        "label": "Moon — Touch of the Moon",
+        "grant": {
+         "focusSpells": [
+          "touch-of-the-moon"
+         ]
+        }
+       },
+       {
+        "value": "nature",
+        "label": "Nature — Nature's Bounty",
+        "grant": {
+         "focusSpells": [
+          "natures-bounty"
+         ]
+        }
+       },
+       {
+        "value": "nightmares",
+        "label": "Nightmares — Shared Nightmare",
+        "grant": {
+         "focusSpells": [
+          "shared-nightmare"
+         ]
+        }
+       },
+       {
+        "value": "pain",
+        "label": "Pain — Retributive Pain",
+        "grant": {
+         "focusSpells": [
+          "retributive-pain"
+         ]
+        }
+       },
+       {
+        "value": "passion",
+        "label": "Passion — Captivating Adoration",
+        "grant": {
+         "focusSpells": [
+          "captivating-adoration"
+         ]
+        }
+       },
+       {
+        "value": "protection",
+        "label": "Protection — Protector's Sphere",
+        "grant": {
+         "focusSpells": [
+          "protectors-sphere"
+         ]
+        }
+       },
+       {
+        "value": "secrecy",
+        "label": "Secrecy — Safeguard Secret",
+        "grant": {
+         "focusSpells": [
+          "safeguard-secret"
+         ]
+        }
+       },
+       {
+        "value": "travel",
+        "label": "Travel — Traveler's Transit",
+        "grant": {
+         "focusSpells": [
+          "travelers-transit"
+         ]
+        }
+       },
+       {
+        "value": "trickery",
+        "label": "Trickery — Trickster's Twin",
+        "grant": {
+         "focusSpells": [
+          "tricksters-twin"
+         ]
+        }
+       },
+       {
+        "value": "truth",
+        "label": "Truth — Glimpse the Truth",
+        "grant": {
+         "focusSpells": [
+          "glimpse-the-truth"
+         ]
+        }
+       },
+       {
+        "value": "tyranny",
+        "label": "Tyranny — Commanding Lash",
+        "grant": {
+         "focusSpells": [
+          "commanding-lash"
+         ]
+        }
+       },
+       {
+        "value": "undeath",
+        "label": "Undeath — Malignant Sustenance",
+        "grant": {
+         "focusSpells": [
+          "malignant-sustenance"
+         ]
+        }
+       },
+       {
+        "value": "water",
+        "label": "Water — Downpour",
+        "grant": {
+         "focusSpells": [
+          "downpour"
+         ]
+        }
+       },
+       {
+        "value": "wealth",
+        "label": "Wealth — Precious Metals",
+        "grant": {
+         "focusSpells": [
+          "precious-metals"
+         ]
+        }
+       },
+       {
+        "value": "zeal",
+        "label": "Zeal — Zeal for Battle",
+        "grant": {
+         "focusSpells": [
+          "zeal-for-battle"
+         ]
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "advanced-domain-spirit",
+   "verdict": "MISS",
+   "reason": "focusPoolBonus:1 only; the advanced domain spell of the spirit's domain is never granted. Needs a domain picker that resolves to the advanced spell.",
+   "fix": {
+    "field": "effectChoices",
+    "value": [
+     {
+      "id": "advanced-domain",
+      "prompt": "Choose your domain spirit's domain - you gain its advanced domain spell",
+      "options": [
+       {
+        "value": "air",
+        "label": "Air — Disperse into Air",
+        "grant": {
+         "focusSpells": [
+          "disperse-into-air"
+         ]
+        }
+       },
+       {
+        "value": "ambition",
+        "label": "Ambition — Competitive Edge",
+        "grant": {
+         "focusSpells": [
+          "competitive-edge"
+         ]
+        }
+       },
+       {
+        "value": "cities",
+        "label": "Cities — Pulse of Civilization",
+        "grant": {
+         "focusSpells": [
+          "pulse-of-civilization"
+         ]
+        }
+       },
+       {
+        "value": "confidence",
+        "label": "Confidence — Delusional Pride",
+        "grant": {
+         "focusSpells": [
+          "delusional-pride"
+         ]
+        }
+       },
+       {
+        "value": "creation",
+        "label": "Creation — Artistic Flourish",
+        "grant": {
+         "focusSpells": [
+          "artistic-flourish"
+         ]
+        }
+       },
+       {
+        "value": "darkness",
+        "label": "Darkness — Darkened Eyes",
+        "grant": {
+         "focusSpells": [
+          "darkened-eyes"
+         ]
+        }
+       },
+       {
+        "value": "death",
+        "label": "Death — Eradicate Undeath",
+        "grant": {
+         "focusSpells": [
+          "eradicate-undeath"
+         ]
+        }
+       },
+       {
+        "value": "destruction",
+        "label": "Destruction — Destructive Aura",
+        "grant": {
+         "focusSpells": [
+          "destructive-aura"
+         ]
+        }
+       },
+       {
+        "value": "dreams",
+        "label": "Dreams — Dreamer's Call",
+        "grant": {
+         "focusSpells": [
+          "dreamers-call"
+         ]
+        }
+       },
+       {
+        "value": "earth",
+        "label": "Earth — Localized Quake",
+        "grant": {
+         "focusSpells": [
+          "localized-quake"
+         ]
+        }
+       },
+       {
+        "value": "family",
+        "label": "Family — Unity",
+        "grant": {
+         "focusSpells": [
+          "unity"
+         ]
+        }
+       },
+       {
+        "value": "fate",
+        "label": "Fate — Tempt Fate",
+        "grant": {
+         "focusSpells": [
+          "tempt-fate"
+         ]
+        }
+       },
+       {
+        "value": "fire",
+        "label": "Fire — Flame Barrier",
+        "grant": {
+         "focusSpells": [
+          "flame-barrier"
+         ]
+        }
+       },
+       {
+        "value": "freedom",
+        "label": "Freedom — Word of Freedom",
+        "grant": {
+         "focusSpells": [
+          "word-of-freedom"
+         ]
+        }
+       },
+       {
+        "value": "healing",
+        "label": "Healing — Rebuke Death",
+        "grant": {
+         "focusSpells": [
+          "rebuke-death"
+         ]
+        }
+       },
+       {
+        "value": "indulgence",
+        "label": "Indulgence — Take its Course",
+        "grant": {
+         "focusSpells": [
+          "take-its-course"
+         ]
+        }
+       },
+       {
+        "value": "knowledge",
+        "label": "Knowledge — Know the Enemy",
+        "grant": {
+         "focusSpells": [
+          "know-the-enemy"
+         ]
+        }
+       },
+       {
+        "value": "luck",
+        "label": "Luck — Lucky Break",
+        "grant": {
+         "focusSpells": [
+          "lucky-break"
+         ]
+        }
+       },
+       {
+        "value": "magic",
+        "label": "Magic — Mystic Beacon",
+        "grant": {
+         "focusSpells": [
+          "mystic-beacon"
+         ]
+        }
+       },
+       {
+        "value": "might",
+        "label": "Might — Enduring Might",
+        "grant": {
+         "focusSpells": [
+          "enduring-might"
+         ]
+        }
+       },
+       {
+        "value": "moon",
+        "label": "Moon — Touch of the Moon",
+        "grant": {
+         "focusSpells": [
+          "touch-of-the-moon"
+         ]
+        }
+       },
+       {
+        "value": "nature",
+        "label": "Nature — Nature's Bounty",
+        "grant": {
+         "focusSpells": [
+          "natures-bounty"
+         ]
+        }
+       },
+       {
+        "value": "nightmares",
+        "label": "Nightmares — Shared Nightmare",
+        "grant": {
+         "focusSpells": [
+          "shared-nightmare"
+         ]
+        }
+       },
+       {
+        "value": "pain",
+        "label": "Pain — Retributive Pain",
+        "grant": {
+         "focusSpells": [
+          "retributive-pain"
+         ]
+        }
+       },
+       {
+        "value": "passion",
+        "label": "Passion — Captivating Adoration",
+        "grant": {
+         "focusSpells": [
+          "captivating-adoration"
+         ]
+        }
+       },
+       {
+        "value": "protection",
+        "label": "Protection — Protector's Sphere",
+        "grant": {
+         "focusSpells": [
+          "protectors-sphere"
+         ]
+        }
+       },
+       {
+        "value": "secrecy",
+        "label": "Secrecy — Safeguard Secret",
+        "grant": {
+         "focusSpells": [
+          "safeguard-secret"
+         ]
+        }
+       },
+       {
+        "value": "travel",
+        "label": "Travel — Traveler's Transit",
+        "grant": {
+         "focusSpells": [
+          "travelers-transit"
+         ]
+        }
+       },
+       {
+        "value": "trickery",
+        "label": "Trickery — Trickster's Twin",
+        "grant": {
+         "focusSpells": [
+          "tricksters-twin"
+         ]
+        }
+       },
+       {
+        "value": "truth",
+        "label": "Truth — Glimpse the Truth",
+        "grant": {
+         "focusSpells": [
+          "glimpse-the-truth"
+         ]
+        }
+       },
+       {
+        "value": "tyranny",
+        "label": "Tyranny — Commanding Lash",
+        "grant": {
+         "focusSpells": [
+          "commanding-lash"
+         ]
+        }
+       },
+       {
+        "value": "undeath",
+        "label": "Undeath — Malignant Sustenance",
+        "grant": {
+         "focusSpells": [
+          "malignant-sustenance"
+         ]
+        }
+       },
+       {
+        "value": "water",
+        "label": "Water — Downpour",
+        "grant": {
+         "focusSpells": [
+          "downpour"
+         ]
+        }
+       },
+       {
+        "value": "wealth",
+        "label": "Wealth — Precious Metals",
+        "grant": {
+         "focusSpells": [
+          "precious-metals"
+         ]
+        }
+       },
+       {
+        "value": "zeal",
+        "label": "Zeal — Zeal for Battle",
+        "grant": {
+         "focusSpells": [
+          "zeal-for-battle"
+         ]
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "advanced-elemental-spell",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices id \"order\" grants combustion / stone-lance / powerful-inhalation / pulverizing-cascade, plus focusPoolBonus:1."
+  },
+  {
+   "id": "advanced-hallowed-spell",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices offers life-siphon vs eradicate-undeath with focusSpells grants, plus focusPoolBonus:1."
+  },
+  {
+   "id": "advanced-red-mantis-magic",
+   "verdict": "MISS",
+   "reason": "Grants a 2nd/3rd/4th-rank Red Mantis spell slot at levels 6/8/10 plus spellbook additions. The Red Mantis archetype is absent from CASTER_ARCHETYPES (src/rules/casterArchetypes.ts) and no spellSlotBonus shape can express a level-gated per-rank unlock, so no slot ever appears.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "advanced-revelation",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "build.ts ADV_SPELL maps advanced-revelation to the chosen mystery's advancedFocusSpell."
+  },
+  {
+   "id": "advanced-school-spell",
+   "verdict": "MISS",
+   "reason": "focusPoolBonus:1 only. The wizard arcane-school subOptions in core.json already carry advancedFocusSpell (e.g. red-mantis-magic-school -> shroud-of-the-mantis), but build.ts ADV_SPELL only maps advanced/greater-bloodline and advanced/greater-revelation, so the wizard never receives the spell. One-line map addition.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "advanced-seeker-of-truths",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effect-backfill.json gives it effectChoices id \"advanced-domain\" with the knowledge/secrecy/truth advanced-domain focusSpells grants."
+  },
+  {
+   "id": "advanced-warden",
+   "verdict": "MISS",
+   "reason": "No engine fields at all - the four advanced warden spells (animal-feature, enlarge-companion, hunters-luck, soothing-mist, all present in core.json spells) are never granted.",
+   "fix": {
+    "field": "effectChoices",
+    "value": [
+     {
+      "id": "advanced-warden-spell",
+      "prompt": "Choose an advanced warden spell",
+      "options": [
+       {
+        "value": "animal-feature",
+        "label": "Animal Feature",
+        "grant": {
+         "focusSpells": [
+          "animal-feature"
+         ]
+        }
+       },
+       {
+        "value": "enlarge-companion",
+        "label": "Enlarge Companion",
+        "grant": {
+         "focusSpells": [
+          "enlarge-companion"
+         ]
+        }
+       },
+       {
+        "value": "hunters-luck",
+        "label": "Hunter's Luck",
+        "grant": {
+         "focusSpells": [
+          "hunters-luck"
+         ]
+        }
+       },
+       {
+        "value": "soothing-mist",
+        "label": "Soothing Mist",
+        "grant": {
+         "focusSpells": [
+          "soothing-mist"
+         ]
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "aeon-stone-azure-briolette",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "heldSpells {0:[void-warp]} plus counters/frequency (1/day, resetsOnRest) already deliver the item's cantrip activation and its use tracking."
+  },
+  {
+   "id": "affinity-stones",
+   "verdict": "MISS",
+   "reason": "The stones grant the bearer the benefits of a 1st- or 5th-level ancestry feat of another bearer's ancestry (plus a permanent Status effect). Nothing on the record delivers it; there is no featFilter for effectChoices and featPickGrants.ts is keyed by feat id, not item id, so an item-driven open feat pick needs engine support.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "alloy-flesh-and-steel",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Registered in core.stances, so the exclusive-stance manager surfaces this kineticist impulse form."
+  },
+  {
+   "id": "ancestral-mage",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Only changes HOW existing ancestry/heritage innate spells may be cast (adding them to the repertoire); it grants no new spell, no slot and no numeric change to the sheet."
+  },
+  {
+   "id": "animal-rage",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Registered in core.stances - the polymorph rage form is surfaced by the stance manager."
+  },
+  {
+   "id": "animist-apparition-spellcasting",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "classes.animist.spellcasting = {type:prepared, tradition:divine, keyAbility:wis, progression:\"animist\"} - the dual animist/apparition slot table is driven from the class record."
+  },
+  {
+   "id": "animist-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices id \"apparition\" grants each apparition's two Lore skills, and animist-dedication is keyed in CASTER_ARCHETYPES (divine/wis/2 cantrips) for the archetype slot progression."
+  },
+  {
+   "id": "aon-empty-body",
+   "verdict": "MISS",
+   "reason": "focusPoolBonus:1 grows the pool but the granted focus spell never appears: the legacy monk ki spell \"empty body\" is absent from core.json spells (only empty-inside / empty-pack exist), so no focusSpells value can be authored until the spell is imported.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "aon-fervent-spell",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Relic gift whose spell is whichever one the current emotional fervor supplies, cast from your own slots for 3 rounds - transient, state-dependent access with no fixed grant to attach."
+  },
+  {
+   "id": "aon-flowing-footsteps",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "passiveEffects.speeds {swim: max(@actor.speed.land,15)} delivers the only numeric grant; water walk / water breathing have no numeric sheet effect."
+  },
+  {
+   "id": "aon-noqual-armor",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in situationalBonuses.ts (the +1 circumstance AC vs spell attack rolls star)."
+  },
+  {
+   "id": "aon-scrap-shot",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in situationalBonuses.ts (+1 circumstance to the relic spell attack roll vs metal targets)."
+  },
+  {
+   "id": "apparition-magic",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "spellSlotBonus {perRank:1, exceptHighest:2} is exactly the feat's grant."
+  },
+  {
+   "id": "arcane-school",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Delivered by classes.wizard.subclass (\"Arcane School\") whose options carry focusSpells/advancedFocusSpell and the curriculum; the feature record itself is the descriptor."
+  },
+  {
+   "id": "arcane-school-spell",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices id \"arcane-school-initial-spell\" grants each school's initial focus spell."
+  },
+  {
+   "id": "arcane-spellcasting-magus",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "classes.magus.spellcasting = {type:prepared, tradition:arcane, keyAbility:int, progression:\"two-rank\"} drives the magus slot table."
+  },
+  {
+   "id": "archwizards-might",
+   "verdict": "MISS",
+   "reason": "Grants a SECOND 10th-rank slot. spellcasting.ts hardcodes slots[10]=1 at level 19+, and spellSlotBonus has no rank targeting ({perRank,exceptHighest,entryId}), so this level-20 feat currently does nothing.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "archwizards-spellcraft",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "src/rules/spellcasting.ts line 33: \"if (level >= 19) slots[10] = 1\" - the capstone 10th-rank slot is automatic."
+  },
+  {
+   "id": "assume-godhood",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Everything it grants operates on OTHER creatures (serving as a deity for followers, granting them cleric spells, post-death divine existence); the app models only the player's own sheet, and the referenced Intercession Spell ability exists as no record."
+  },
+  {
+   "id": "avenging-runelord-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices id \"avenging-runelord-innate-spell\" grants the chosen arcane innate spell (1/day, heightenHalfLevel), and the feat is keyed in featGrantsLane for the Arcana/weapon-familiarity grants."
+  },
+  {
+   "id": "bard-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "choice \"archetypeMuse\", a featGrantsAuto entry for Occultism/Performance, and CASTER_ARCHETYPES[bard-dedication] (occult/cha/2 cantrips) for spellcasting."
+  },
+  {
+   "id": "basic-bard-spellcasting",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "casterArchetypes.ts derives basicId \"basic-bard-spellcasting\" from bard-dedication; archetypeSlots() unlocks ranks 1-3 at levels 4/6/8."
+  },
+  {
+   "id": "basic-beast-gunner-spellcasting",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "casterArchetypes.ts basicId for beast-gunner-dedication (arcane/primal choice, repertoire) drives the slot unlocks."
+  },
+  {
+   "id": "basic-bloodline-spell",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices id \"bloodline\" grants the chosen bloodline's initial focus spell plus focusPoolBonus:1."
+  },
+  {
+   "id": "basic-captivator-spellcasting",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "casterArchetypes.ts basicId for captivator-dedication (occult/cha) unlocks the archetype spell slots."
+  },
+  {
+   "id": "basic-cathartic-spellcasting",
+   "verdict": "MISS",
+   "reason": "cathartic-mage-dedication is NOT in CASTER_ARCHETYPES, so this feat unlocks no spell slots at all - the dedication only grants a cantrip via spellFilter. The archetype needs an entry (chosen tradition, cha key, repertoire) for the basic/expert/master progression to fire.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "basic-eldritch-archer-spellcasting",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "casterArchetypes.ts basicId for eldritch-archer-dedication."
+  },
+  {
+   "id": "basic-oracle-spellcasting",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "casterArchetypes.ts basicId for oracle-dedication (divine/cha, spontaneous)."
+  },
+  {
+   "id": "basic-prophet-spellcasting",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "casterArchetypes.ts basicId for prophet-of-kalistrade-dedication (slug \"prophet\")."
+  },
+  {
+   "id": "basic-psychic-spellcasting",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "casterArchetypes.ts basicId for psychic-dedication (occult, Int/Cha choice, spontaneous)."
+  },
+  {
+   "id": "basic-red-mantis-magic",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "spellcastingGrant {divine, cha, trained} plus two effectChoices spellFilter cantrip pickers granted as at-will innate divine cantrips."
+  },
+  {
+   "id": "basic-rivethun-spellcasting",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "casterArchetypes.ts basicId for rivethun-involutionist-dedication (slug \"rivethun\")."
+  },
+  {
+   "id": "basic-sorcerer-spellcasting",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "casterArchetypes.ts basicId for sorcerer-dedication (choiceTradition, spontaneous)."
+  },
+  {
+   "id": "basic-spellcasting",
+   "verdict": "MISS",
+   "reason": "The Pervasive Magic variant feat grants a spellcasting-archetype repertoire and slot progression keyed off the character's magic trait. No pervasive-magic entry exists in CASTER_ARCHETYPES and there is no dedication feat to key one to, so nothing is granted.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "basic-summoner-spellcasting",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "casterArchetypes.ts basicId for summoner-dedication (eidolonTradition, repertoire)."
+  },
+  {
+   "id": "basic-witch-spellcasting",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "casterArchetypes.ts basicId for witch-dedication (choiceTradition, prepared)."
+  },
+  {
+   "id": "basic-wizard-spellcasting",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "casterArchetypes.ts basicId for wizard-dedication (arcane/int, prepared)."
+  },
+  {
+   "id": "bat-form",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "limitedUses {max:1, per:\"hour\"} tracks the frequency and the feat is registered in core.stances for the form toggle."
+  },
+  {
+   "id": "battle-creed",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "classes.cleric.subclass option battle-creed carries slotProgression:\"two-rank\" and suppressedFeatures [resolute-faith, miraculous-spell] - the reduced slot table and the lost features are applied from the doctrine record."
+  },
+  {
+   "id": "beast-gunner-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "choice \"bondedBeastGun\" (daily) plus CASTER_ARCHETYPES[beast-gunner-dedication] with traditionOptions [arcane,primal] and 1 cantrip."
+  },
+  {
+   "id": "beastmaster-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in companionGrants.ts (young animal companion) and carries focusPoolBonus:1 for the archetype focus spells."
+  },
+  {
+   "id": "blaze-of-revelation",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A one-minute activation that waives Focus Point costs and then imposes a save-driven drained condition; no persistent statistic changes and it has no daily frequency to track."
+  },
+  {
+   "id": "blessing-of-the-sun-gods",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices id \"domain\" grants the chosen Old Sun Gods domain's initial focus spell, plus focusPoolBonus:1 and spellcastingGrant."
+  },
+  {
+   "id": "bloodline-paragon",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "spellcasting.ts grants slots[10]=1 automatically at level 19+, which is exactly this feature."
+  },
+  {
+   "id": "bloodline-perfection",
+   "verdict": "MISS",
+   "reason": "Grants a SECOND 10th-rank slot; spellcasting.ts hardcodes a single slots[10]=1 and spellSlotBonus cannot target a specific rank, so the level-20 feat does nothing.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "bloodline-spells",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The sorcerer subclass options carry focusSpells (the initial bloodline spell) and the focus pool is derived from the granted spells in build.ts (featFocusSpells / applyFeatFocus)."
+  },
+  {
+   "id": "bloodrager-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "choice \"skill\" (arcane/divine) plus a featGrantsAuto entry for the Arcana/Religion grant, and CASTER_ARCHETYPES[bloodrager-dedication] (cantripsOnly repertoire, cha key)."
+  },
+  {
+   "id": "born-of-celestial",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices supplies the Yaoguai-form divine cantrip picker and the record is keyed in situationalBonuses for the +1 circumstance to Religion."
+  },
+  {
+   "id": "born-of-elements",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices supplies the primal cantrip picker and situationalBonuses carries the +1 circumstance Survival (Sense Direction) star."
+  },
+  {
+   "id": "budding-speaker-centaur",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices lets the player pick divine or primal and the resulting at-will innate cantrip."
+  },
+  {
+   "id": "candle-of-invocation",
+   "verdict": "MISS",
+   "reason": "Grants two extra spell slots at half your highest rank to a divine caster of the matching deity during daily preparations. Only \"uses\" is present; spellSlotBonus ({perRank,exceptHighest,entryId}) cannot express \"2 slots at half your highest rank\" and the item is not in consumable-modes.json, so the benefit never reaches the sheet.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "captivating-intensity",
+   "verdict": "MISS",
+   "reason": "Adds one extra daily casting to every captivator innate spell (and a second casting of the Heightened Captivation spell). No field raises the usesPerDay of previously granted innate spells, so the feat is inert.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "captivator-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in featGrantsAuto for the Deception/Diplomacy training and in CASTER_ARCHETYPES[captivator-dedication] (occult/cha, 2 cantrips, trained spell attack/DC)."
+  },
+  {
+   "id": "cardinal-guardians",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in situationalBonuses.ts - the +2 status to spell attacks against a creature that failed an apparition/vessel spell."
+  },
+  {
+   "id": "cascade-bearers-spellcasting",
+   "verdict": "MISS",
+   "reason": "Grants an additional halcyon cantrip and an additional 1st-rank halcyon spell, and widens halcyon selection to the divine/occult lists. The halcyon-speaker CASTER_ARCHETYPES entry has a fixed cantrip count and customUnlocks that this feat is not part of, so nothing is added.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "catharsis-emotion",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A rules-explainer record describing what a catharsis emotion entry contains; the actual grants live on cathartic-mage-dedication and cathartic-focus-spell."
+  },
+  {
+   "id": "cathartic-focus-spell",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices id \"catharsis-emotion\" grants the matching focus spell for each of the ten emotions, plus focusPoolBonus:1."
+  },
+  {
+   "id": "cathartic-mage-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "choice \"catharsisEmotion\", an effectChoices spellFilter cantrip picker, and spellcastingGrant {occult, cha, trained}."
+  },
+  {
+   "id": "champion-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "choice (light-and-medium vs heavy armor) plus a featGrantsAuto entry for Religion / the deity skill and the champion class DC."
+  },
+  {
+   "id": "channelers-stance",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in both situationalBonuses.ts (the rank-scaled spell damage / healing bonus) and core.stances."
+  },
+  {
+   "id": "chronomancers-secrets",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices id \"focus-spell\" offers stasis vs path-of-least-resistance with focusSpells grants, plus focusPoolBonus:1."
+  }
+ ]
+}

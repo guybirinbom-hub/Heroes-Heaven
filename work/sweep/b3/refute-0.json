@@ -1,0 +1,309 @@
+{
+ "rulings": [
+  {
+   "id": "advanced-deitys-domain",
+   "upheld": true,
+   "why": "Verified: record has only focusPoolBonus:1, no choice and no focusSpells; the 35 advanced-domain spell ids in the fix all exist in core.json and feat effectChoices ARE resolved (build.ts:2458) with grantsFocusViaEffectChoice suppressing the double pool point."
+  },
+  {
+   "id": "advanced-domain",
+   "upheld": true,
+   "why": "Real bug confirmed at build.ts:1481 - choice.kind==\"domains\" resolves through DOMAIN_SPELLS which holds only INITIAL spells. NOTE FOR APPLY: the existing choice{flag:advancedDomain,kind:domains} must be REMOVED at the same time, or the feat grants BOTH the initial and the advanced spell."
+  },
+  {
+   "id": "advanced-domain-spirit",
+   "upheld": true,
+   "why": "Verified: focusPoolBonus:1 only, no choice, no focusSpells, not in any registry or effect-backfill. effectChoices/focusSpells is the shipped lane (holy-bloom, order-spell)."
+  },
+  {
+   "id": "advanced-red-mantis-magic",
+   "upheld": true,
+   "why": "Verified: CASTER_ARCHETYPES (src/rules/casterArchetypes.ts) has no red-mantis entry and SpellSlotBonus has no rank-ladder lane, so the 2nd/3rd/4th-rank slots never appear. needsEngineWork is honest."
+  },
+  {
+   "id": "advanced-school-spell",
+   "upheld": true,
+   "why": "Verified: 13 of the 14 wizard subclass options carry advancedFocusSpell, but ADV_SPELL (build.ts:1462) maps only advanced/greater-bloodline and advanced/greater-revelation. Real one-line engine gap."
+  },
+  {
+   "id": "advanced-warden",
+   "upheld": true,
+   "why": "Verified: no fields, no registry, no backfill; all four spell ids (animal-feature, enlarge-companion, hunters-luck, soothing-mist) exist in core.json with ranger+focus traits. NOTE: maxTakable>1 but an effectChoices pick is keyed once per record, so repeat takings share one pick."
+  },
+  {
+   "id": "affinity-stones",
+   "upheld": true,
+   "why": "Not an umbrella (no kin) and not a duplicate, so it is a visible ownable artifact; the ancestry-feat benefit is player-facing and featPickGrants.ts is feat-keyed, so an item-driven open feat pick genuinely has no lane."
+  },
+  {
+   "id": "aon-empty-body",
+   "upheld": false,
+   "why": "Unobtainable aon- duplicate scrape: canonical feat empty-body exists with the same name (and already carries focusSpells:[\"embrace-nothingness\"]), so findDuplicateIds in src/data/index.ts hides aon-empty-body from every picker."
+  },
+  {
+   "id": "archwizards-might",
+   "upheld": true,
+   "why": "Verified: fullCasterSlots sets slots[10]=1 at level 19+ (spellcasting.ts:33) and SpellSlotBonus exposes only perRank/exceptHighest/entryId (types.ts:358), so a second rank-10 slot cannot be expressed. Same engine lane as the ring-of-wizardry byRank gap."
+  },
+  {
+   "id": "basic-cathartic-spellcasting",
+   "upheld": true,
+   "why": "Verified: cathartic-mage is absent from CASTER_ARCHETYPES, so the basic/expert/master ladder unlocks nothing."
+  },
+  {
+   "id": "basic-spellcasting",
+   "upheld": false,
+   "why": "Unobtainable: its only trait is \"pervasive-magic\" and its category is \"class\", so featSlots.eligibleFor (src/rules/featSlots.ts:59-66) never offers it in a class slot (no class trait, not archetype) nor in any other slot category. No player can take it."
+  },
+  {
+   "id": "bloodline-perfection",
+   "upheld": true,
+   "why": "Same verified gap as archwizards-might: slots[10] is hardcoded to 1 and SpellSlotBonus cannot target a single rank."
+  },
+  {
+   "id": "candle-of-invocation",
+   "upheld": true,
+   "why": "Verified: only uses{current:1,max:1}; \"two additional slots at half your highest rank\" is expressible by neither spellSlotBonus nor the consumable-modes lane. Player-facing (the buyer is the divine caster)."
+  },
+  {
+   "id": "captivating-intensity",
+   "upheld": true,
+   "why": "captivator-dedication IS in CASTER_ARCHETYPES, but nothing raises the usesPerDay of already-granted innate spells - there is no such field. Gap is real."
+  },
+  {
+   "id": "cascade-bearers-spellcasting",
+   "upheld": true,
+   "why": "Verified against casterArchetypes.ts:94-110: halcyon-speaker-dedication has a fixed cantrip count and a customUnlocks list that does not include this feat, so the extra cantrip and 1st-rank spell never arrive."
+  },
+  {
+   "id": "cloak-of-social-graces",
+   "upheld": true,
+   "why": "Verified: record carries frequency{1,day} + passiveEffects{diplomacy:1} only. Item innateSpells is the shipped lane and heroism is rank 3 divine/occult, so the value is correct."
+  },
+  {
+   "id": "conscious-spell-specialization",
+   "upheld": true,
+   "why": "Verified: SpellSlotBonus has no fixed-rank-set and no content restriction, and the eligible spells depend on the conscious-mind subclass."
+  },
+  {
+   "id": "cosmic-cocktail",
+   "upheld": true,
+   "why": "Correct and well-shaped: the batch-2 precedent wayfinder-resonance-infiltrator carries BOTH limitedUses{1,day} and innateSpells, so adding innateSpells beside the existing limitedUses is the shipped pattern. truesight exists (rank 6, all four traditions)."
+  },
+  {
+   "id": "creed-magic",
+   "upheld": true,
+   "why": "Verified: battle-harbinger is absent from CASTER_ARCHETYPES and no field expresses rank-laddered slots restricted to a named spell list."
+  },
+  {
+   "id": "curse-of-the-mortal-warrior",
+   "upheld": false,
+   "why": "Unreachable record: the classFeature has 0 \"featureId\" references anywhere in core.json and the oracle subclass options carry no curse link, so ownedFeatureIds (build.ts:2443) can never contain it. All 11 curse-of-* features are orphaned; a situationalBonuses entry keyed to this id would never display."
+  },
+  {
+   "id": "determined-lore-seeker",
+   "upheld": true,
+   "why": "Real: lore-seeker ships innateSpells at rank 2 / usesPerDay 1 and the existing choice only records the pick. NOTE FOR APPLY: the granted entries duplicate lore-seeker own spellIds - confirm the innate lane merges by spellId, or the Spells page will show Translate twice."
+  },
+  {
+   "id": "devout-magic",
+   "upheld": true,
+   "why": "Verified: championDevotionSpell (build.ts:860) returns undefined unless the CLASS carries the devotion-spells feature, so a Champion Dedication archetype gets the focusPoolBonus and no spell. All three spell ids exist."
+  },
+  {
+   "id": "divine-effusion",
+   "upheld": true,
+   "why": "limitedUses{max:2,per:\"day\"} is the legal, shipped feat-resource lane (featUses.ts) and the record carries no fields at all."
+  },
+  {
+   "id": "domain-fluency",
+   "upheld": true,
+   "why": "Same verified DOMAIN_SPELLS defect as advanced-domain (build.ts:1481) - the oracle is handed the INITIAL spell. needsEngineWork (an ADVANCED_DOMAIN_SPELLS map) is an honest alternative to a per-record option list."
+  },
+  {
+   "id": "elemental-apotheosis",
+   "upheld": true,
+   "why": "Verified: backfill supplies only senses[darkvision]; EffectGrant.speeds is legal on a feat effectChoice. NOTE: verify the per-element Elemental Form speeds before applying, and the element is already known from the kinetic gate so the picker is a duplicate ask."
+  },
+  {
+   "id": "elemental-wayfinder-air",
+   "upheld": true,
+   "why": "Verified: counters/frequency only. Item innateSpells is legal and usesPer:\"hour\" is a real InnateSpellGrant field (types.ts:532, display-only)."
+  },
+  {
+   "id": "elementally-infused",
+   "upheld": true,
+   "why": "Verified: Background (types.ts:567) has no effectChoices field and build.ts:2458-2465 resolves picks for feats/heritage/classFeatures/grantOptions/items only - never backgrounds. needsEngineWork is the correct call."
+  },
+  {
+   "id": "emergency-regeneration",
+   "upheld": true,
+   "why": "Correct shape: limitedUses + innateSpells is the shipped pattern (5 feats ship both); regenerate is rank 7 divine/primal and heightenAt expresses the level-20 upgrade exactly."
+  },
+  {
+   "id": "epiphany-at-the-crossroads",
+   "upheld": true,
+   "why": "Correct: augury is rank 2 divine/occult and the feat carries the divine trait, so the tradition is unambiguous; limitedUses+innateSpells is the shipped pairing."
+  },
+  {
+   "id": "exultant-blood-magic",
+   "upheld": true,
+   "why": "Verified: CASTER_ARCHETYPES[bloodrager-dedication] is the cantrips-only entry with no ranked slots, so there is no entry for spellSlotBonus to target."
+  },
+  {
+   "id": "fan-of-soothing-winds",
+   "upheld": true,
+   "why": "heldSpells Record<number,string[]> is the correct shape (holy-prayer-beads-greater ships the same multi-rank map with a per-day frequency) and heal exists."
+  },
+  {
+   "id": "fan-of-soothing-winds-greater",
+   "upheld": true,
+   "why": "Same as the base fan; shape and ranks correct."
+  },
+  {
+   "id": "fervent-spell",
+   "upheld": false,
+   "why": "No authorable fix: the granted spell is defined by the relic fervor EMOTIONAL STATE, which lives on an aspect record type the app has no collection for. Only 4 relic-gift records exist (2 of them aon- dupes); this is a whole unmodelled subsystem, not a per-record miss, and no field or bounded engine change delivers it."
+  },
+  {
+   "id": "flexible-spell-preparation",
+   "upheld": false,
+   "why": "Unreachable record: 0 \"featureId\" references in core.json and flexible-spellcaster-dedication carries no classArchetype (only 4 feats do: vindicator, warrior-of-legend, palatine-detective, war-mage), so ownedFeatureIds can never contain it."
+  },
+  {
+   "id": "future-spell-learning",
+   "upheld": true,
+   "why": "Real: \"add these seven spells to your spell list / spellbook / repertoire\" has no field in the schema and no registry covers it."
+  },
+  {
+   "id": "gamtu-hat",
+   "upheld": false,
+   "why": "Not an actionable MISS: the AoN import stripped the spell name (\"the effects of a 2nd-rank spell\"), so no heldSpells/innateSpells value can be authored and no ENGINE change would deliver it either - this belongs to the known AoN text-defect bucket (a source-data repair), not to the effect lanes."
+  },
+  {
+   "id": "greater-spell-runes",
+   "upheld": true,
+   "why": "Verified against the sibling: spell-runes ships exactly this spellFilter+minLevel effectChoices shape, and minLevel is a real SpellChoiceFilter field (types.ts:458). greater-spell-runes has no fields at all."
+  },
+  {
+   "id": "greater-vital-evolution",
+   "upheld": true,
+   "why": "Real gap; limitedUses is the right lane. NOTE FOR APPLY: the fix value was emitted as a JSON STRING - it must be written as the object {\"max\":2,\"per\":\"day\"}."
+  },
+  {
+   "id": "hierophants-power",
+   "upheld": true,
+   "why": "Same verified single-rank slot gap; druid is a full caster so slots[10] is already 1."
+  },
+  {
+   "id": "holy-flower",
+   "upheld": true,
+   "why": "Verified: holy-bloom ships the identical freedom/zeal effectChoices shape with the INITIAL spells, and word-of-freedom / zeal-for-battle are the correct advanced spells and both exist."
+  },
+  {
+   "id": "infinite-mind",
+   "upheld": true,
+   "why": "Verified: psychicSlots (spellcasting.ts:70-77) stops at rank 9, and the feature IS reachable (psychic features list level 19 infinite-mind), so a level-19 psychic really gets no 10th-rank slot."
+  },
+  {
+   "id": "initiate-warden",
+   "upheld": true,
+   "why": "Verified: no fields, no registry, no backfill, and no warden machinery in src/rules; gravity-weapon / heal-companion / magic-hide all exist as ranger focus spells."
+  },
+  {
+   "id": "loaner-spell",
+   "upheld": true,
+   "why": "Real: nothing delivers the daily-prep spell pick. NOTE: the pick half could be data (a choice{daily:true,kind:\"open\"} over spells, the shipped dailyChoices lane); only the cast-with-class-DC half is engine work."
+  },
+  {
+   "id": "local-savior",
+   "upheld": true,
+   "why": "Gap is real - the choice only records the hometown and the divine at-will cantrip never reaches the Spells page. SHAPE WRONG: Background has no effectChoices field (types.ts:567) and build.ts:2458-2465 never resolves background picks, so this must be applied as needsEngineWork exactly like elementally-infused, NOT as an effectChoices patch."
+  },
+  {
+   "id": "luck-blade-wishing",
+   "upheld": true,
+   "why": "Correct lane: counters/frequency cover only the reroll reaction; item innateSpells puts the held wish (rank 10) on the Spells page. NOTE: value was emitted as a JSON string - write it as an array."
+  },
+  {
+   "id": "magical-understudy",
+   "upheld": true,
+   "why": "Real: the record has no fields at all and eidolon innate spellcasting is not tracked; needsEngineWork is honest."
+  },
+  {
+   "id": "maker-of-miracles",
+   "upheld": true,
+   "why": "Same verified single-rank slot gap."
+  },
+  {
+   "id": "masterful-warden",
+   "upheld": true,
+   "why": "Verified: no fields/registry/backfill; ephemeral-tracking and rangers-bramble both exist as ranger focus spells."
+  },
+  {
+   "id": "mind-over-matter",
+   "upheld": true,
+   "why": "Verified: psychicSlots never produces a rank-10 entry, so there is nothing for perRank to increment."
+  },
+  {
+   "id": "oracular-providence",
+   "upheld": true,
+   "why": "Same verified single-rank slot gap (oracle is a full caster, slots[10]=1 at 19)."
+  },
+  {
+   "id": "order-magic",
+   "upheld": true,
+   "why": "Verified: order-spell ships the identical effectChoices/focusSpells shape; order-magic has only an inert kind:\"array\" choice plus focusPoolBonus:1, and grantsFocusViaEffectChoice (build.ts:1509) will correctly suppress the duplicate pool point once the grants exist."
+  },
+  {
+   "id": "patrons-truth",
+   "upheld": true,
+   "why": "Same verified single-rank slot gap."
+  },
+  {
+   "id": "peerless-warden",
+   "upheld": true,
+   "why": "Verified: no fields; hunters-vision and terrain-transposition both exist as ranger focus spells."
+  },
+  {
+   "id": "perfect-encore",
+   "upheld": true,
+   "why": "Same verified single-rank slot gap (bard is a full caster)."
+  },
+  {
+   "id": "plane-hopper-jotunborn",
+   "upheld": true,
+   "why": "Verified at build.ts:3051 - sizeOverride only ever RAISES size (indexOf comparison) and the jotunborn ancestry is Large, so \"instead of Large, your size is Medium\" cannot be expressed. The cantrip half is already backfilled; the size half is not."
+  },
+  {
+   "id": "ring-of-wizardry-type-i",
+   "upheld": true,
+   "why": "Confirmed defect: the backfill writes spellSlotBonus{byRank:{1:2}} but SpellSlotBonus (types.ts:358) has no byRank and build.ts:2548-2558 falls through to perRank=1, adding +1 slot at EVERY rank. Actively wrong, not merely missing."
+  },
+  {
+   "id": "ring-of-wizardry-type-ii",
+   "upheld": true,
+   "why": "Same confirmed byRank defect ({1:1,2:2} ignored, +1 at every rank instead)."
+  },
+  {
+   "id": "ring-of-wizardry-type-iii",
+   "upheld": true,
+   "why": "Same confirmed byRank defect ({2:1,3:2} ignored, +1 at every rank instead)."
+  },
+  {
+   "id": "ring-of-wizardry-type-iv",
+   "upheld": true,
+   "why": "Same confirmed byRank defect ({3:1,4:2} ignored, +1 at every rank instead)."
+  },
+  {
+   "id": "seer-of-the-dead",
+   "upheld": true,
+   "why": "Correct lane: Background.innateSpells exists and buildCharacter reads it (types.ts:571); spirit-sense is rank 2, divine/occult. NOTE: value was emitted as a JSON string - write it as an array."
+  },
+  {
+   "id": "seneschal",
+   "upheld": false,
+   "why": "Unreachable record: 0 \"featureId\" references in core.json, seneschal-witch-dedication carries no classArchetype, and it is not a witch subclass option - so ownedFeatureIds can never contain it and focusSpells on this record would grant nothing to anyone."
+  }
+ ]
+}

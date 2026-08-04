@@ -1,0 +1,929 @@
+{
+ "records": [
+  {
+   "id": "skim-scroll",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Pure action-economy compression - draw the scroll and Trick Magic Item in one activity. No statistic on the sheet changes."
+  },
+  {
+   "id": "skinstitch-salve",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In the situationalBonuses registry (the +2 item bonus to the Medicine check for Administer First Aid / Treat Wounds / Battle Medicine), and `uses` delivers the consumable charge. The alternative fixed 1d20+13 Medicine modifier and the success-to-critical-success upgrade are roll-time substitutions."
+  },
+  {
+   "id": "sky-piercing-bow",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`counters` + `frequency` deliver the once-per-day / once-per-hour / once-per-week activation pips. The teleport, storm rift and Control Weather effects are narrative activations, and the built-in +3 greater striking ghost touch runes are set on the inventory instance's `runes` (no content item in the app carries baked runes)."
+  },
+  {
+   "id": "skyseeker",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A self-contained activity: Leap, Strike, repeat. The +10-foot status bonus to leap distance exists only for the Leaps made inside this activity, so there is no persistent value to place on the sheet."
+  },
+  {
+   "id": "sluggish-bracelet",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`passiveEffects` carries the cursed item's numbers - the apparent +1 item bonus to Acrobatics and, once the curse fires, the -5-foot status Speed penalty."
+  },
+  {
+   "id": "snakebirds-shadow",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A flourish that makes one Strike against each enemy in an area with a deferred multiple attack penalty; nothing about the character's own statistics changes."
+  },
+  {
+   "id": "soaring-wings-major",
+   "verdict": "MISS",
+   "reason": "engineFieldsPresent is empty. The tattoo's whole purpose is an activated fly Speed equal to your land Speed or 20 feet (whichever is greater), lasting until Dismissed, and nothing puts a fly Speed on the sheet. Comparable activated flight is delivered elsewhere as a toggle (the `wings-of-air` stance).",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Soaring Wings (Major)",
+     "effects": "While active: gain a fly Speed equal to your land Speed or 20 feet, whichever is greater. No frequency limit; lasts until you Dismiss it. No other statistic changes."
+    }
+   }
+  },
+  {
+   "id": "soldiers-syrup",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella AoN family record - the text is the family page listing Minor/Lesser/Moderate/Greater/Major with their prices. The five priced variants are separate records; the umbrella is deliberately inert."
+  },
+  {
+   "id": "soldiers-syrup-greater",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`uses` gives the dose its consumable charge. The syrup itself changes no statistic - it only defers when another potion's benefit fires, which is table timing (and the enfeebled 1 penalty for forgetting is a condition the player applies)."
+  },
+  {
+   "id": "soldiers-syrup-lesser",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`uses` gives the dose its consumable charge; the syrup only defers another potion's activation window and changes no statistic of its own."
+  },
+  {
+   "id": "soldiers-syrup-major",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`uses` gives the dose its consumable charge; the syrup only defers another potion's activation window and changes no statistic of its own."
+  },
+  {
+   "id": "soldiers-syrup-minor",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`uses` gives the dose its consumable charge; the syrup only defers another potion's activation window and changes no statistic of its own."
+  },
+  {
+   "id": "soldiers-syrup-moderate",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`uses` gives the dose its consumable charge; the syrup only defers another potion's activation window and changes no statistic of its own."
+  },
+  {
+   "id": "sparkling-targe",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "featFeatGrants delivers the Shield Block general feat, situationalBonuses carries the shield's circumstance bonus applying to saves against spells while in Arcane Cascade, and the hybrid study's conflux spell (Shielding Strike) comes from classes.magus.subclass.options['sparkling-targe'].focusSpells."
+  },
+  {
+   "id": "spinning-stand",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An activity that enters talon stance (already in core.stances), Strikes and Stands. Ignoring the prone attack penalty and reaction triggers is resolved at the table inside the action."
+  },
+  {
+   "id": "staff-of-sun-wukong",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses carries the +4 circumstance bonus to Stealth to hide the shrunken staff, and `counters` + `frequency` deliver the once-per-day Meteor Slam pip. The remaining activations are damage/teleport effects resolved at the table."
+  },
+  {
+   "id": "stalwart-defender-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The only grant is the Tenacious Stance action, and `tenacious-stance` is an entry in the core.stances registry with its full effect (temporary HP equal to half your level, +2 circumstance to DCs against Shove and Trip, armour requirement)."
+  },
+  {
+   "id": "stalwart-song",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In the situationalBonuses registry - the +2 circumstance bonus to the saving throw against a fear effect while in Tenacious Stance."
+  },
+  {
+   "id": "starlit-eyes",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "It only lowers the flat-check DC for attacking a concealed or hidden creature (5 to 3, 11 to 9). A flat check is not a statistic the sheet carries - there is no flat-check DC anywhere on the character - so this is a roll-time rule the player applies."
+  },
+  {
+   "id": "stone-body",
+   "verdict": "MISS",
+   "reason": "engineFieldsPresent is empty and the feat is in no registry, yet it grants resistance 10 to ALL damage - a large, explicitly numeric defense. It is temporary (ends at the end of your next turn or on a critical hit) and gated on Tenacious Stance, so it belongs in the toggle lane rather than as a flat `resistances` entry.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Stone Body",
+     "effects": "While active: resistance 10 to all damage. Requires Tenacious Stance; ends at the end of your next turn or immediately when you are critically hit."
+    }
+   }
+  },
+  {
+   "id": "stone-brawler-dedication",
+   "verdict": "MISS",
+   "reason": "The dedication's only grant is the Stonestrike Stance action. `stonestrike-stance` exists in core.actions as descriptive text but is NOT in the core.stances registry (unlike tenacious-stance, talon-stance, etc.), so entering it gives the character nothing - in particular no stonestrike attack on the Strikes page - even though the sibling feat Stoney Deflection is already wired into situationalBonuses for the same stance.",
+   "fix": {
+    "toggle": {
+     "registry": "stances",
+     "name": "Stonestrike Stance",
+     "effects": "While in the stance you can make stonestrike attacks: 1d8 bludgeoning, brawling group, traits forceful, magical, unarmed. Requires that you are standing on the ground. (Text verified against core.actions['stonestrike-stance'].)"
+    }
+   }
+  },
+  {
+   "id": "stone-communion",
+   "verdict": "MISS",
+   "reason": "engineFieldsPresent is empty. The feat grants the Terran language outright - a sheet-visible item the app does model (core.languages, and heritages carry `grantsLanguages`, e.g. tidepool-dragonet = ['thalassic']) - and nothing delivers it. The Speak with Stones activation is a 10-minute item activation and needs nothing.",
+   "fix": {
+    "field": "grantsLanguages",
+    "value": ["terran"],
+    "note": "Same shape as heritages/tidepool-dragonet in effect-backfill.json; the field is currently only used on heritages, so the feat lane may need to read it."
+   }
+  },
+  {
+   "id": "stoney-deflection",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In the situationalBonuses registry - the +2 circumstance bonus to AC and to defenses against Shove and Trip while in Stonestrike Stance."
+  },
+  {
+   "id": "storm-of-claws",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Three Strikes with the normal multiple attack penalty plus an optional Step after each hit. Nothing modifies the character's own statistics."
+  },
+  {
+   "id": "stoutheart-centaur",
+   "verdict": "MISS",
+   "reason": "situationalBonuses already carries the +1 circumstance bonus to Balance and to the Reflex DC against being tripped, but the heritage also raises the ancestry Hit Points from 8 to 10 and nothing delivers that - engineFieldsPresent is empty and no heritage in core.json carries a maxHpBonus. The character's maximum HP is 2 too low at every level.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "Wants a +2 ancestry-HP grant on the heritage. `maxHpBonus` exists in effect-backfill.json but only ever on feats (barbarian-resiliency etc.), and zero heritages carry it, so the heritage pipeline has to learn to read it."
+   }
+  },
+  {
+   "id": "strafing-breath",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The mount Strides/Flies and the War Rider Stance aura damages creatures it passes. Everything it changes belongs to the companion's movement or to enemies in the emanation, not to the character's sheet."
+  },
+  {
+   "id": "student-of-the-dueling-arts",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Build flexibility, not a statistic: it lets you swap duelist archetype feats during daily preparations (the player just re-picks their feats in the builder) and enter a duelist stance you lack for one extra action."
+  },
+  {
+   "id": "student-of-the-staff",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The record already carries critSpec: true and critSpecWeapons: {bases:['staff']} in core.json, which is what delivers the club-group critical specialization with a staff. (The chunk's engineFieldsPresent list simply does not enumerate critSpec.) The deadly d6 while in Arcane Cascade and the spellbook rune-inscription rule are stance-conditional weapon text applied at the table."
+  },
+  {
+   "id": "stumbling-feint",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Adds a free-action Feint to Flurry of Blows; the whole benefit is the target gaining off-guard against both Strikes, which is the target's condition, not the character's statistics."
+  },
+  {
+   "id": "summon-ensemble",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`limitedUses` carries the once-per-turn cadence. Everything else - the modified Summon Instrument duration and the enemy's save to avoid becoming off-guard - happens on the target's side of the table."
+  },
+  {
+   "id": "sustaining-steel",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A triggered heal (Hit Points equal to double the spell's rank) plus ending persistent void damage. The player applies the healing to the HP tracker when it fires; no persistent value on the sheet changes."
+  },
+  {
+   "id": "talon-sweep",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reaction that shifts you into talon stance (already in core.stances) and grants a conditional Strike. No statistic changes."
+  },
+  {
+   "id": "tangled-forest-rake",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A Strike followed by a Reposition of the target - forced movement of an enemy, which the app does not model."
+  },
+  {
+   "id": "tear-tendons",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Two Strikes; the only outcome is the target becoming enfeebled on a failed save. Target-only effect."
+  },
+  {
+   "id": "thats-odd",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Explicitly GM-adjudicated - the GM decides what is out of the ordinary in each new location, and the Pursue a Lead relaxation is a timing rule between GM and player."
+  },
+  {
+   "id": "the-tangible-dream",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "This classFeature record duplicates the psychic conscious mind, and the live copy - classes.psychic.subclass.options['the-tangible-dream'] - carries `tradition` and `grantedSpells`, which is how every conscious mind's spell list reaches the sheet (same pattern as magus hybrid studies' focusSpells)."
+  },
+  {
+   "id": "the-thousand-lashes-of-the-weeping-willow",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A kineticist impulse that conjures a tree and damages/slows enemies in an emanation. It explicitly does not target you or your allies - purely enemy-facing."
+  },
+  {
+   "id": "tide-of-death",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A relic gift that reshapes the death gaze activation into an area effect against living creatures. It changes the targets affected, not any statistic on the wielder's sheet."
+  },
+  {
+   "id": "tiger-fork",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In the situationalBonuses registry - the +1 circumstance bonus to saves against forced movement while you have a creature Grabbed with the fork. The Fork Grip activation is a Grapple attempt against a target."
+  },
+  {
+   "id": "tiger-slash",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A single Strike with extra weapon damage dice and a Shove rider, resolved entirely inside the action; no persistent sheet value."
+  },
+  {
+   "id": "toadskin-salve",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`uses` delivers the applied dose. Both activations are one-shot reactions - splash damage onto a creature you hit, or resistance 3 against a single triggering attack - which are resolved at the moment they fire rather than sitting on the sheet."
+  },
+  {
+   "id": "toadskin-salve-greater",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`uses` delivers the applied dose; the two reactions (2d4 to a target, resistance 5 against one triggering attack) resolve at the instant they fire."
+  },
+  {
+   "id": "toadskin-salve-major",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`uses` delivers the applied dose; the two reactions (3d4 to a target, resistance 8 against one triggering attack) resolve at the instant they fire."
+  },
+  {
+   "id": "tornado-trompo",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`counters` + `frequency` deliver the once-per-day tornado pip. The other activation confers 'the effects of fly' - the spell, which the player runs as the spell - and the tornado itself is an area effect against creatures in its path."
+  },
+  {
+   "id": "toxicologist",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`resistances` carries the Field Discovery poison resistance equal to half your level. The rest of the field (poison-trait vials, injury-poison activation, spray-on-failure) is damage-typing and target-facing rules applied at the table."
+  },
+  {
+   "id": "trample",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A Stride that deals your existing horns damage to smaller creatures you move through. Everything it produces lands on the trampled creatures."
+  },
+  {
+   "id": "trample-centaur",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A Stride that deals your existing hoof damage to smaller creatures you move through - entirely target-facing."
+  },
+  {
+   "id": "trample-mimicry",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A Stride that damages smaller creatures you move through, scaling by level. Target-facing only; your own statistics are unchanged."
+  },
+  {
+   "id": "trample-sarangay",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Duplicate of the Trample (sarangay) action - a Stride dealing your horns damage to trampled creatures. Target-facing only."
+  },
+  {
+   "id": "triangle-shot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Three ranged Strikes with a stated extra -2 penalty and combined damage; all of it is resolved inside the single action and none of it is a persistent sheet value."
+  },
+  {
+   "id": "tunnel-wall",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In the situationalBonuses registry - the +4 circumstance bonus to the DC to Tumble Through your space while anchored."
+  },
+  {
+   "id": "twisting-tree",
+   "verdict": "MISS",
+   "reason": "The conflux spell (Spinning Staff) is delivered by classes.magus.subclass.options['twisting-tree'].focusSpells, but the hybrid study's central benefit is not: a staff you wield gains the agile trait and a 1d6 damage die in one hand, and parry, reach and trip in two hands. Those are strike statistics shown on the Strikes page and nothing changes them - engineFieldsPresent is empty and the classFeature record carries no mechanical field.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "Wants a wielded-weapon override lane: while this feature is owned, a staff gets die d6 + agile one-handed, or parry/reach/trip two-handed. No existing field modifies an already-owned weapon's die or traits (grantedStrikes only creates NEW strikes)."
+   }
+  },
+  {
+   "id": "twisting-twine",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella AoN family record - the text is the family page listing Lesser/Moderate/Greater with their prices and differing Athletics modifiers. The activation rolls a fixed item modifier to Disarm or Trip a target, so nothing lands on the character's sheet either way."
+  },
+  {
+   "id": "unfurling-brocade",
+   "verdict": "MISS",
+   "reason": "The conflux spell comes from classes.magus.subclass.options['unfurling-brocade'].focusSpells, but the hybrid study's core grant - a qi-infused fabric weapon usable as a Bladed Scarf, uniquely wieldable in ONE hand at a d4 die - never reaches the Strikes page. engineFieldsPresent is empty; core.items['bladed-scarf'] is held-in-two-hands only, so the one-handed d4 form does not exist anywhere.",
+   "fix": {
+    "field": "grantedStrikes",
+    "value": [
+     {
+      "name": "Qi-Infused Fabric",
+      "die": "1d4",
+      "damageType": "slashing",
+      "traits": ["disarm", "finesse", "reach", "sweep", "trip"],
+      "group": "flail"
+     }
+    ],
+    "note": "The one-handed d4 form; two-handed it is simply a Bladed Scarf (1d6). Runes come from Handwraps of Mighty Blows, and while in Arcane Cascade it also gains the grapple trait - that conditional trait has no field."
+   }
+  },
+  {
+   "id": "unleash-yaoguai-might",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`limitedUses` carries the once-per-day cadence and situationalBonuses carries the per-heritage riders (the +1 circumstance bonus to AC, the +1 status bonus to attack rolls, the resistance 5 and the fast healing 5)."
+  },
+  {
+   "id": "unshaken-in-iron",
+   "verdict": "MISS",
+   "reason": "engineFieldsPresent is empty and the feat is in no registry, yet it grants armour specialization effects for light armour (and medium/heavy if trained) plus, in Tenacious Stance, an increase to those effects equal to your armour check penalty. Armour specialization is a damage resistance keyed to the armour group and nothing in src/rules implements it at all (no 'armorSpecialization' anywhere).",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "Needs an armour-specialization lane: resistance by worn armour group (e.g. plate = resistance to slashing/bludgeoning), plus a Tenacious-Stance mode that adds the armour check penalty's value to that resistance."
+   }
+  },
+  {
+   "id": "unstoppable-force",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Ignoring difficult terrain is not a sheet statistic, and the Dismiss explosion is area damage against enemies. The Immovable Object stance it depends on is already in core.stances."
+  },
+  {
+   "id": "upset-balance",
+   "verdict": "MISS",
+   "reason": "The feat's outcome (target becomes clumsy) is target-facing and needs nothing, but it also grants the character a +2 circumstance bonus to its own Athletics check when anchored, and neither engineFieldsPresent nor situationalBonuses carries it. Sibling stalwart-defender feats with exactly this shape (Stalwart Song, Tunnel Wall, Stoney Deflection) are all in the registry.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "skill", "detail": "athletics" }],
+      "when": "on the Upset Balance check while you are anchored",
+      "bonus": "+2 circumstance"
+     }
+    ]
+   }
+  },
+  {
+   "id": "veiled-figurehead",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`counters` + `frequency` deliver the once-per-day activation pip. The effect changes a ship's appearance, not any statistic of the character."
+  },
+  {
+   "id": "veiled-figurehead-greater",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`counters` + `frequency` deliver the once-per-day activation pip. The illusion covers the vessel and everyone aboard - a shared cosmetic disguise, not a statistic on the wielder's sheet."
+  },
+  {
+   "id": "vexing-tumble",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A bravado action: Stride and compare one Acrobatics roll to each enemy's Reflex DC. Every outcome (reactions suppressed, enemy off-guard, movement stopped) sits on the enemy's side or inside the action."
+  },
+  {
+   "id": "vine-baton",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses carries the +2 status bonus to initiative rolls, and `counters` + `frequency` deliver the once-per-day activation pip. The extra hour of Hustle is exploration-mode travel."
+  },
+  {
+   "id": "vipers-fang",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`uses` delivers the talisman's single activation. Everything it does - a free Strike outside the multiple attack penalty and exposing the target to viper fang venom - resolves on the target."
+  },
+  {
+   "id": "void-fragment",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`counters`, `frequency` and `uses` cover the dose and the once-per-hour teleport activation. The staged benefits (telepathy, mental resistance, Perception penalties) belong to a multi-week affliction whose current stage the GM tracks over days - no single static field can say which stage you are in, and stages 2-4 are death/reincarnation outcomes the GM runs."
+  },
+  {
+   "id": "wake-of-devastation",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Adds the razing trait to an existing attack and converts ground to difficult terrain / immobilizes a critically-hit foe. All of it is terrain and target state, not the character's statistics."
+  },
+  {
+   "id": "warding-tattoo-wave",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses carries the +1 status bonus to AC and saving throws and the resistance 2 against the triggering effect, and `counters` + `frequency` deliver the once-per-day pip."
+  },
+  {
+   "id": "wardrobe-stone",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella AoN family record - the text is the family page listing Lesser/Moderate/Greater with their prices and escalating bonuses. The three priced variants are separate records and carry the mechanics."
+  },
+  {
+   "id": "wardrobe-stone-greater",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses and `passiveEffects` carry the +3 item bonus to sight-based Perception and to the outfit's Lore skill; `heldSpells` puts Scouting Eye on the Spells page and `counters`/`frequency` give it its daily pip."
+  },
+  {
+   "id": "wardrobe-stone-lesser",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The lesser tier grants no numeric benefit at all - only an Illusory Disguise that changes what your clothes look like. Purely cosmetic."
+  },
+  {
+   "id": "wardrobe-stone-moderate",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses carries the +2 item bonus to the outfit's Lore skill, `heldSpells` puts Scouting Eye on the Spells page, and `counters` + `frequency` give it the once-per-day pip."
+  },
+  {
+   "id": "wave-spiral",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`limitedUses` carries the once-per-minute frequency. The rest is a batch of Athletics checks to Trip enemies with a deferred multiple attack penalty - target-facing."
+  },
+  {
+   "id": "wayfinder-of-rescue",
+   "verdict": "MISS",
+   "reason": "`frequency` gives the once-per-day pip, but the spell itself never reaches the character's Spells page. This is exactly the item-spell lane the app already ships - core.items['sun-wheel'] carries heldSpells {0:['shield']} and the wardrobe stones carry heldSpells for Scouting Eye - and this wayfinder has no heldSpells entry, so the player has no way to cast the Heal it grants.",
+   "fix": {
+    "field": "heldSpells",
+    "value": { "1": ["heal"] },
+    "note": "1st-rank Heal, one- or two-action version, cast on a creature other than yourself; `frequency` already caps it at once per day."
+   }
+  },
+  {
+   "id": "wayfinder-resonance-infiltrator",
+   "verdict": "MISS",
+   "reason": "`limitedUses` carries the once-per-day cadence, but the granted spell is missing: nothing puts Illusory Disguise (heightened to 2nd rank, arcane) on the Spells page. Sibling feats that grant a once-per-day innate spell all carry `innateSpells` (e.g. shory-aeromancer, share-thoughts in effect-backfill.json).",
+   "fix": {
+    "field": "innateSpells",
+    "value": [{ "spellId": "illusory-disguise", "tradition": "arcane", "rank": 2, "usesPerDay": 1 }],
+    "note": "The second activation (transform the wayfinder into a replica badge for 1 hour) is cosmetic and needs nothing."
+   }
+  },
+  {
+   "id": "wayfinder-resonance-tinkerer",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`effectChoices` delivers the picker for the at-will cantrip from any of the four traditions (the same shape as minor-magic's spellFilter choice). The disguise-the-wayfinder activation is cosmetic."
+  },
+  {
+   "id": "wheeling-grab",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An activity that shifts you into claw stance (already in core.stances) and Tumbles Through with an optional Grapple. No statistic changes."
+  },
+  {
+   "id": "whip-tongue-sling",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`counters` + `frequency` deliver the once-per-day Bolstering Croak pip. That activation's +1 status bonus to saves against fear goes to ALLIES within 25 feet, not to you, and Tongue Twister moves a creature - both target-side effects."
+  },
+  {
+   "id": "whirling-in-the-summer-storm",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Step, force Will saves on adjacent enemies, then Shove up to three of them. Every effect lands on the enemies."
+  },
+  {
+   "id": "wild-winds-gust",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "One wind crash Strike against each creature in an area with a deferred multiple attack penalty - the whole feat resolves inside the action."
+  },
+  {
+   "id": "wild-winds-initiate",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`focusSpells` carries the Wild Winds Stance qi spell, which is how the stance (and the wind crash Strikes it grants) reaches the character."
+  },
+  {
+   "id": "winged",
+   "verdict": "MISS",
+   "reason": "`counters` + `frequency` give the once-per-hour pip, but the rune's entire benefit - a fly Speed of 25 feet or your land Speed, whichever is slower, for 5 minutes - never appears anywhere. engineFieldsPresent has no `speeds`, and there is no mode for it.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Winged (Take to the Skies)",
+     "effects": "While active: gain a fly Speed equal to 25 feet or your land Speed, whichever is SLOWER. Lasts 5 minutes or until Dismissed; once per hour (the existing counters/frequency already track that)."
+    }
+   }
+  },
+  {
+   "id": "wish-alchemy",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`limitedUses` carries the once-per-day cadence. The wish vial's content is an open-ended pick of any common arcane spell of 8th rank or lower made during daily preparations, and activating it just runs that spell."
+  },
+  {
+   "id": "witchs-bottle",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Creates a one-off potion at the table containing a hex you already have, at the cost of a Focus Point that is unavailable until it is drunk. No statistic on the sheet changes, and the hex's effect lands on whoever drinks it."
+  },
+  {
+   "id": "wolf-drag",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A single Strike where the wolf jaw temporarily gains fatal d12 and knocks the target prone - resolved inside the action, target-facing."
+  },
+  {
+   "id": "world-breaking-footfall",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Converts ground to difficult terrain and damages other creatures in the emanation; the cooldown is a 1d4-round at-the-table timer. Nothing touches the character's own statistics."
+  },
+  {
+   "id": "wrathful-presence",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In the situationalBonuses registry - the +3 status bonus to damage with Strikes from your own aura. The frightened floor applies to enemies ending their turn in the aura."
+  },
+  {
+   "id": "wyrms-flight",
+   "verdict": "MISS",
+   "reason": "`frequency` gives the once-per-day pip, but the relic gift's whole effect - a fly Speed equal to your Speed or 20 feet, whichever is greater, for 10 minutes (unlimited at 17th level) - is delivered by nothing. There is no `speeds` field and no mode.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Wyrm's Flight",
+     "effects": "While active: gain a fly Speed equal to your land Speed or 20 feet, whichever is greater. Lasts 10 minutes or until Dismissed, once per day; at 17th level the duration is unlimited and there is no frequency limit."
+    }
+   }
+  },
+  {
+   "id": "accursed-magic",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`innateSpells` carries Claim Curse / Seal Fate / Inevitable Disaster with their level gates, and `spellcastingGrant` gives the trained spell attack modifier and spell DC with Wisdom for a non-caster."
+  },
+  {
+   "id": "acrobatic-performer",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In the situationalBonuses registry - the +1 circumstance bonus to Acrobatics checks made to Perform. Rolling Acrobatics in place of Performance is a roll-time substitution the player makes."
+  },
+  {
+   "id": "adept-benefit-regalia",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In the situationalBonuses registry, which is where the thaumaturge implement benefits were wired: the +2 circumstance bonus to Deception/Diplomacy/Intimidation, the +1 status bonus to saves against mental effects and the scaling status bonus to damage rolls. The Follow the Expert upgrade is a bonus granted to somebody else."
+  },
+  {
+   "id": "adept-storyteller",
+   "verdict": "MISS",
+   "reason": "engineFieldsPresent is empty and the feat is in no registry, yet it hands out TWO Performance skill feats of 7th level or lower - real feat picks that should occupy real slots on the character. The app already ships pick-a-feat pickers (effectChoices / grantedFeatByChoice), so this is a data gap, not a missing capability.",
+   "fix": {
+    "field": "effectChoices",
+    "value": [
+     { "id": "perf-feat-1", "prompt": "Adept Storyteller: choose a Performance skill feat of 7th level or lower", "featFilter": { "skill": "performance", "maxLevel": 7, "category": "skill" } },
+     { "id": "perf-feat-2", "prompt": "Adept Storyteller: choose a second Performance skill feat of 7th level or lower", "featFilter": { "skill": "performance", "maxLevel": 7, "category": "skill" } }
+    ],
+    "note": "Copy the exact filter key names from an existing pick-a-feat effectChoices record; the shape shown here mirrors minor-magic's spellFilter. The 'use any Recall Knowledge skill's rank to meet Performance prerequisites' clause is a prerequisite substitution and needs nothing."
+   }
+  },
+  {
+   "id": "admonishing-band",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`uses` delivers the talisman's single activation; the effect is a Warning Shot against a target and a temporary-immunity waiver, both target-facing."
+  },
+  {
+   "id": "aerobatics-mastery",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In the situationalBonuses registry - the +2 circumstance bonus to Acrobatics checks to Maneuver in Flight. Combining manoeuvres into one action is an action-economy rule with a GM-set DC."
+  },
+  {
+   "id": "ageless-spirit",
+   "verdict": "MISS",
+   "reason": "engineFieldsPresent is empty and the feat is in no registry. It gives the leshy the trained proficiency rank in any one skill of their choice, refreshed each daily preparation - a visible change to the skills page that the character never gets. The FEAT_GRANTS lane already expresses exactly this (featGrantsLane.ts 'free-heart' = skillChoices:[{options:'any',rank:'trained'}]), so nothing new is needed to hold it.",
+   "fix": {
+    "field": "trainedSkillChoice",
+    "value": "any",
+    "note": "Daily-preparation pick, one skill, trained until the next preparations; encode as skillChoices:[{options:'any',rank:'trained'}] in the FEAT_GRANTS lane with daily:true. The rules bar using it as a prerequisite, so it must not unlock skill increases or feats."
+   }
+  },
+  {
+   "id": "alchemical-discoveries",
+   "verdict": "MISS",
+   "reason": "engineFieldsPresent is empty. The feat raises the number of versatile vials you create each day by 1/2/3 with your Crafting rank. Versatile vials ARE a tracked resource in the app (CLASS_RESOURCES 'versatile-vials'), but only for the alchemist class - the investigator has no such resource at all - so this feat's core benefit is invisible.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "Wants (a) a versatile-vials resource for the investigator methodology (Int modifier per day) and (b) a proficiency-scaled bonus to its max from this feat (+1 expert / +2 master / +3 legendary in Crafting). Learning two formulas per level instead of one is inventory bookkeeping and needs nothing."
+   }
+  },
+  {
+   "id": "alchemical-expertise",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The class DC increase to expert is already in the class progression - src/rules/advancement.ts has {level: 9, track: 'classDc', rank: 'expert', source: 'alchemical-expertise'}. Regaining three vials rather than two during exploration is a refill rate the player applies to the resource tracker."
+  },
+  {
+   "id": "alchemical-mastery",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Its only effect is the alchemist class DC rising to master, which the class progression table in src/rules/advancement.ts already delivers."
+  },
+  {
+   "id": "alchemical-sciences-methodology",
+   "verdict": "MISS",
+   "reason": "featFeatGrants already delivers the Alchemical Crafting skill feat, but nothing makes the investigator trained in Crafting - engineFieldsPresent is empty, no classFeature in core.json carries trainedSkill, and the investigator class record's trainedSkills.fixed is ['society'] only. Same shape as the swashbuckler styles judged MISS in earlier batches.",
+   "fix": {
+    "field": "trainedSkill",
+    "value": "crafting",
+    "note": "The versatile vials (Int modifier per day) and Quick Tincture this methodology also grants have no resource on the investigator side - see alchemical-discoveries - but the Crafting training is the cleanly fixable half."
+   }
+  },
+  {
+   "id": "ambush-tactics",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets you roll a terrain-appropriate Lore for initiative when an enemy rolls Stealth for initiative. Which Lore is appropriate is the GM's call and initiative is rolled at the table; the Lore modifier itself is already on the sheet."
+  },
+  {
+   "id": "ancestral-echoing",
+   "verdict": "MISS",
+   "reason": "engineFieldsPresent is empty. The rune raises your proficiency rank with the etched weapon by one step (capped at your best weapon rank), which directly moves the attack bonus shown on the Strikes page, and nothing delivers it. The 'expert in one Lore' half is GM-determined and needs nothing.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "Wants a per-weapon-instance proficiency bump on an etched rune: rank(this weapon) = min(normal rank + 1 step, best weapon rank the character has). The FEAT_GRANTS weapon lane only handles whole categories and is keyed to feats, not inventory instances."
+   }
+  },
+  {
+   "id": "ancestral-longevity",
+   "verdict": "MISS",
+   "reason": "engineFieldsPresent is empty and the feat is in no registry. It gives the elf the trained proficiency rank in one skill of their choice each daily preparation, and the skills page never shows it. The FEAT_GRANTS lane already holds exactly this shape for 'free-heart'.",
+   "fix": {
+    "field": "trainedSkillChoice",
+    "value": "any",
+    "note": "Daily-preparation pick, one skill, trained until the next preparations; encode as skillChoices:[{options:'any',rank:'trained'}] with daily:true. Must not count as a prerequisite for skill increases or feats."
+   }
+  },
+  {
+   "id": "animist-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`effectChoices` carries the apparition pick, and the spellcasting half is handled by the caster-archetype engine - casterArchetypes.ts line 58 has 'animist-dedication': mk('divine','wis',2,'animist'), which supplies the Cast a Spell activity, the two divine cantrips and the trained spell attack modifier and spell DC."
+  },
+  {
+   "id": "ant-kholo",
+   "verdict": "MISS",
+   "reason": "situationalBonuses covers the +1 circumstance bonuses (Lie claiming innocence, the Deception DC against Sense Motive, Deception initiative), but nothing makes the character trained in Deception - engineFieldsPresent is empty and no heritage in core.json carries a skill-training field. Identical to the wisp-fetchling MISS from batch 1.",
+   "fix": {
+    "field": "trainedSkill",
+    "value": "deception",
+    "note": "Must fall back to another skill of the player's choice if Deception is already trained (the generic already-trained fallback). The heritage also sets size to Small, for which there is no legal field; that half needs engine work."
+   }
+  },
+  {
+   "id": "aon-barding",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A rules blurb plus the barding price/AC table. Barding is armour worn by an animal, not by the character, and this record is the explanatory page rather than a purchasable suit."
+  },
+  {
+   "id": "aon-repository-of-knowledge",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The three Lore skills it trains are explicitly 'of the GM's choice that fit the relic's history, decided at the time of gaining this gift' - the subjects do not exist until the GM invents them, so there is nothing fixed for a field to hold."
+  },
+  {
+   "id": "arcane-sense",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`innateSpells` carries the at-will arcane Detect Magic, including the rank scaling with Arcana proficiency."
+  },
+  {
+   "id": "armor-potency",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella AoN family record - the text is the family page listing Armor Potency (+1), (+2) and (+3) with their prices. The individual runes are separate records and armour potency is applied through the app's rune-etching system on the inventory instance, not by this page."
+  },
+  {
+   "id": "armored-exercise",
+   "verdict": "MISS",
+   "reason": "engineFieldsPresent is empty and the feat is in no registry. It raises your light, medium and heavy armour proficiency to expert for whichever you were already trained in - directly moving AC - and neither featGrantsAuto.ts nor featGrants.ts contains an entry for it, so it does nothing.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "The FEAT_GRANTS `armor` lane (featGrantsAuto.ts) can express {light:'expert',medium:'expert',heavy:'expert'} but has no way to say 'only for the categories you are ALREADY trained in', which is what makes this conditional. Needs that conditional-upgrade shape."
+   }
+  },
+  {
+   "id": "armored-stealth",
+   "verdict": "MISS",
+   "reason": "engineFieldsPresent is empty and the feat is in no registry. It reduces the armour check penalty applied to Stealth by 1/2/3 with your Stealth proficiency - a change to a number the sheet actually prints. The registry does hold signed adjustments to skills already (e.g. firebrand-braggart-dedication stores a '-1 circumstance (penalty)').",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "skill", "detail": "stealth" }],
+      "when": "wearing non-noisy armor you're trained in (reduces the armor check penalty)",
+      "bonus": "+1 (+2 if master in Stealth, +3 if legendary; never above 0 penalty)"
+     }
+    ],
+    "note": "If the armour has the noisy trait the feat instead ignores that trait outright, which the situational row cannot express - note it in the star text."
+   }
+  },
+  {
+   "id": "artery-map",
+   "verdict": "MISS",
+   "reason": "engineFieldsPresent is empty and the feat is in no registry, yet it adds 1d6 (1d10 at legendary Medicine) persistent bleed to every knife-group Strike against an off-guard creature. That is recurring Strike damage the Strikes page should show and nothing carries it.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "strikeDamage" }],
+      "when": "Strike an off-guard creature with a knife-group weapon",
+      "bonus": "1d6 persistent bleed (1d10 if legendary in Medicine)"
+     }
+    ]
+   }
+  },
+  {
+   "id": "as-on-the-board-so-on-the-battlefield",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`limitedUses` carries the once-per-day Games Lore initiative roll. Using Games Lore in place of Warfare Lore is a roll-time substitution between two Lore modifiers already on the sheet, and the Earn Income / Make an Impression openings are downtime opportunities the GM grants."
+  },
+  {
+   "id": "assume-godhood",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Narrative apotheosis: you become a deity other characters can worship, grant spells to followers, and continue existing after death. Everything it produces lands on followers or on the campaign, not on this character's statistics."
+  },
+  {
+   "id": "assurance",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`choice` carries the 'choose a skill you're trained in' pick (and the feat is repeatable, which the choice lane handles). Taking the fixed 10 + proficiency bonus result instead of rolling is a roll-time option."
+  },
+  {
+   "id": "auspicious-mount",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In the companionGrants registry - the 'auspicious-mount' entry spells out the whole auspice specialization: maturityFloor 'specialized', abilityBoosts {int:2,wis:1}, skillGrants [{religion, expert}], maxHpBonus 20, speeds {fly:'land'} plus a note covering the trait, language and weakness. `choice` carries the specialization pick."
+  },
+  {
+   "id": "avenger",
+   "verdict": "MISS",
+   "reason": "The record carries critSpec and `choice`, but this is a rogue CLASS ARCHETYPE and its substitutions are missing: it retrains the starting skills (Intimidation, Religion, Stealth, the deity's divine skill), trains you in medium armour and your deity's favoured weapon, removes the Surprise Attack class feature and adds Hunt Prey. None of that happens - avenger-dedication has no classArchetype entry in core.json, and the classArchetype lane already exists and is used (war-mage-dedication, vindicator-dedication, warrior-of-legend-dedication, palatine-detective-dedication).",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "Author a classArchetype block on avenger-dedication: {classId:'rogue', suppressFeatures:['surprise-attack'], skills:{intimidation:'trained',religion:'trained',stealth:'trained'}, armor:{medium:'trained'}, note: deity's favoured weapon + divine skill + Strength as key attribute + medium-armour rank tracking light-armour rank}. Only the multi-skill/armour substitution is beyond the existing shape."
+   }
+  },
+  {
+   "id": "azarketi-weapon-expertise",
+   "verdict": "MISS",
+   "reason": "engineFieldsPresent is empty and the feat is in no registry. Its whole job is to carry expert-or-better weapon proficiency across to crossbows, hand crossbows, longspears, spears, tridents and azarketi weapons whenever a class feature grants it - directly changing attack bonuses. featGrantsAuto.ts wires 'azarketi-weapon-familiarity' but there is no entry for any ancestry *-weapon-expertise feat (elven, dwarven and the rest are equally bare).",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "Systemic: every ancestry weapon-expertise feat needs a rule of the form 'the named weapons track your best category rank'. The FEAT_GRANTS weaponFamiliarity lane pins a fixed rank and cannot follow the class's advancing rank."
+   }
+  },
+  {
+   "id": "backup-disguise",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Only compresses how many actions it takes to Impersonate with a pre-prepared disguise. No statistic changes, and whether a search reveals it is the GM's call."
+  },
+  {
+   "id": "banished-celestial",
+   "verdict": "MISS",
+   "reason": "`abilityBoosts` covers the two free boosts, but the rest of the background is missing: it trains you in any one skill of your choice AND any one Lore skill of your choice, and grants the Enlightenment in Adversity ability. Backgrounds are precisely where trainedSkillChoice / trainedLoreChoice / grantedFeatId DO work (494 of 500 backgrounds carry a skill field), so this is a plain data hole.",
+   "fix": {
+    "field": "trainedLoreChoice",
+    "value": true,
+    "note": "Also needs the free-skill choice (trainedSkillChoice covering every skill, since the background says 'any one skill of your choice') and grantedFeatId 'enlightenment-in-adversity'."
+   }
+  },
+  {
+   "id": "barding",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella AoN family record - the family page with the barding table and the four priced sizes listed beneath it. Barding is worn by an animal, not the character."
+  },
+  {
+   "id": "barding-heavy-large",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Armour for a Large animal. It changes the animal's AC, Dex cap, check penalty and Speed - never the character's own statistics."
+  },
+  {
+   "id": "barding-heavy-small-or-medium",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Armour for a Small or Medium animal; every number in it applies to the animal, not the character."
+  },
+  {
+   "id": "barding-light-large",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Armour for a Large animal; the AC bonus and penalties belong to the animal, not the character."
+  },
+  {
+   "id": "barding-light-small-or-medium",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Armour for a Small or Medium animal; the AC bonus and penalties belong to the animal, not the character."
+  },
+  {
+   "id": "basic-summoner-spellcasting",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Handled by the caster-archetype engine, not by a field: casterArchetypes.ts builds basicId `basic-${slug}-spellcasting` for each dedication and summoner-dedication is in SPONTANEOUS_DEDICATIONS, so this feat is what flips the basic tier on and grants the repertoire, cantrips and slots. Every other basic-*-spellcasting record in core.json is equally field-free."
+  },
+  {
+   "id": "battle-creed",
+   "verdict": "MISS",
+   "reason": "engineFieldsPresent is empty. This is the cleric Battle Harbinger class archetype and it replaces the class wholesale: a different spells-per-day table (max two slots at your highest rank plus two one rank lower), no Resolute Faith, no Miraculous Spell, and the divine font replaced by a battle font of four Bane/Bless slots. None of that reaches the sheet, and battle-harbinger-dedication carries no classArchetype block even though four other dedications do.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "The existing classArchetype shape can suppress features (resolute-faith, miraculous-spell) but cannot replace a class's spells-per-day table or swap the divine font for a restricted Bane/Bless font - both need new capability."
+   }
+  },
+  {
+   "id": "battle-cry",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Pure action economy - Demoralize as a free action on initiative, or as a reaction on a critical hit at legendary. The Intimidation modifier it uses is already on the sheet and the effect lands on the foe."
+  },
+  {
+   "id": "battle-medicine",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An activity that rolls the Medicine check already on the sheet and restores Hit Points to a creature; the player applies the healing and the once-per-day immunity is tracked per target, not on the healer."
+  },
+  {
+   "id": "battledancer",
+   "verdict": "MISS",
+   "reason": "featFeatGrants already delivers the Fascinating Performance skill feat, but nothing makes the swashbuckler trained in Performance - engineFieldsPresent is empty, the classFeature carries no trainedSkill, and swashbuckler's trainedSkills.fixed is ['acrobatics'] only, with no style-skill choice. Same defect as the 'wit' style judged MISS in batch 1.",
+   "fix": {
+    "field": "trainedSkill",
+    "value": "performance",
+    "note": "The bravado trait added to Perform is a table-facing tag on the action and needs nothing."
+   }
+  },
+  {
+   "id": "beast-gunner-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`choice` carries the Charisma-or-Intelligence key attribute pick, and the spellcasting half comes from the caster-archetype engine - 'beast-gunner-dedication' is listed in SPONTANEOUS_DEDICATIONS in casterArchetypes.ts, which grants the repertoire, cantrip and trained spell attack modifier and spell DC."
+  },
+  {
+   "id": "beastmaster-bond",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Telepathic communication with your animal companions at 100 feet (or planetary at legendary Nature). It changes how you talk to a companion, not any statistic on either sheet."
+  },
+  {
+   "id": "beastmaster-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In the companionGrants registry, which is what delivers the young animal companion (and the archetype's allowance for more than one). The focus-spell trained spell attack modifier and spell DC arrive with the first beastmaster focus feat, and Refocus by tending an animal is flavour."
+  },
+  {
+   "id": "beneath-notice",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In the featFeatGrants registry, which grants both Quick Disguise and Slippery Secrets. Impersonating a crowd member in fewer actions is action economy."
+  },
+  {
+   "id": "bless-tonic",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Changes items you Craft: whoever drinks the blessed healing item gains void resistance 5 (or 10). The resistance lands on the drinker - usually an ally - and the vitality trait is a tag on the item, not a statistic of yours."
+  },
+  {
+   "id": "bless-toxin",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Changes poisons you Craft so that the afflicted creature heals less from vitality effects. Entirely an effect on the poisoned target."
+  },
+  {
+   "id": "bloodline-spells",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The live sorcerer subclass options carry it - classes.sorcerer.subclass.options[*] have tradition, grantedSpells, grants, focusSpells, advancedFocusSpell and greaterFocusSpell - and the focus pool is a tracked class resource. This classFeature record is the explanatory 'how to read a bloodline entry' page."
+  },
+  {
+   "id": "boasters-challenge",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In the situationalBonuses registry - the +2/+4/+6 status bonus to damage rolls against the challenged foe, scaling with your proficiency in the skill used. The +4 circumstance bonus witnesses gain to their Will DCs is on their side."
+  },
+  {
+   "id": "bonded-animal",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Seven days of downtime and a GM-set Will DC to befriend an ordinary animal that is not a companion. The animal gaining the minion trait is a GM-facing command rule; the character gains no statistic."
+  },
+  {
+   "id": "bookkeepers-calling",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Spend a Mythic Point to roll one Recall Knowledge or Earn Income Lore check at mythic proficiency, and regain a point on a critical success while researching. It is a resource spend made at the table, not a standing modifier; the edicts and anathema are roleplay."
+  },
+  {
+   "id": "borrowed-ability",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In the situationalBonuses registry, which carries the awakening's +1 circumstance bonus to a saving throw. Borrowing the target's skill proficiency depends on statistics of a creature the app does not model, and the second awakening copies whatever special senses that creature happens to have."
+  },
+  {
+   "id": "braggart",
+   "verdict": "MISS",
+   "reason": "engineFieldsPresent is empty and the record is in no registry, yet the style trains you in Intimidation. The swashbuckler class record's trainedSkills.fixed is ['acrobatics'] with no choice entry, so the style skill is simply lost - identical to the 'wit' and 'battledancer' styles.",
+   "fix": {
+    "field": "trainedSkill",
+    "value": "intimidation",
+    "note": "The bravado trait added to Demoralize is a table-facing tag on the action and needs nothing."
+   }
+  },
+  {
+   "id": "brawling-focus",
+   "verdict": "MISS",
+   "reason": "engineFieldsPresent is empty and core.json's record for this feat carries no critSpec at all, even though the critical-specialization lane exists and is used by comparable records (student-of-the-staff has critSpec:true + critSpecWeapons:{bases:['staff']}; avenger has critSpec:true). The monk therefore never sees the brawling critical specialization effect on the Strikes page.",
+   "fix": {
+    "field": "critSpec",
+    "value": true,
+    "note": "Also needs the companion field limiting it to the brawling group - shape it like student-of-the-staff's critSpecWeapons, e.g. {groups:['brawling']}, plus the Monastic Weaponry extension to monk weapons you're trained in."
+   }
+  },
+  {
+   "id": "break-curse",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An 8-hour (or 10-minute) exploration activity that attempts a counteract check against a curse using a skill modifier already on the sheet. Whether the curse exists and whether it is counteracted is entirely GM-adjudicated."
+  },
+  {
+   "id": "breakthrough-innovation",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The inventor modification picker is built in the engine, not on this record: build.ts has innovationType() and selects modifications from class features tagged `<type>-innovation-modification` filtered by tier level, so each breakthrough modification is chosen as its own class-feature record carrying its own effects."
+  },
+  {
+   "id": "cat-fall",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Treats falls as shorter for falling-damage purposes. Fall distance and falling damage are resolved at the table; the sheet carries no falling statistic."
+  },
+  {
+   "id": "cataphract-fleshwarp",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`grantsFeats` is present and the heritage is in effect-backfill.json as grantsFeats:['armor-proficiency'], which is the mechanical grant. The alternative branch (trained in Athletics + Armor Assist if your class already trains you in all armour) is a conditional the note covers."
+  },
+  {
+   "id": "cautious-delver",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`innateSpells` carries the three once-per-day innate spells (Dispel Magic, Knock, Resist Energy) including the fallback to arcane with Intelligence and trained spell attack modifier and spell DC for a non-caster."
+  },
+  {
+   "id": "champions-laurels",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella AoN family record - the family page listing Amateur/Professional/Renowned with their prices and bonuses. The three priced variants are separate records and each carries the mechanics."
+  },
+  {
+   "id": "champions-laurels-amateur",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In situationalBonuses (the +1 status bonus to the triggering Acrobatics or Athletics check) and in core.modes via fromItemId (the 2 temporary Hit Points on a critical success), with `uses` for the talisman charge."
+  },
+  {
+   "id": "champions-laurels-professional",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In situationalBonuses (the +2 status bonus to the triggering check) and in core.modes via fromItemId (the 10 temporary Hit Points), with `uses` for the talisman charge."
+  },
+  {
+   "id": "champions-laurels-renowned",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In situationalBonuses (the +3 status bonus to the triggering check) and in core.modes via fromItemId (the 18 temporary Hit Points), with `uses` for the talisman charge."
+  },
+  {
+   "id": "chirurgeon",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Every benefit resolves at roll time or on somebody else: the field benefit substitutes your Crafting modifier (already printed on the sheet) for Medicine when you roll, and the field vials, field discovery temporary Hit Points, advanced vials and greater field discovery all apply healing to the creature drinking or being hit by the vial."
+  }
+ ]
+}

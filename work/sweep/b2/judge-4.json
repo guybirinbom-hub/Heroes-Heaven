@@ -1,0 +1,1045 @@
+{
+ "records": [
+  {
+   "id": "moon-radish-soup",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "One-shot counteract that reduces an existing stupefied value; the player edits the condition tracker directly and nothing persists on the sheet."
+  },
+  {
+   "id": "moonlit-chain",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "counters tracks the once-per-day Dim Sight activation; the armour's +1 silver chain shirt statistics are item/rune data, and 'see in moonlight as low-light vision' is an environmental circumstance, not a persistent sense."
+  },
+  {
+   "id": "mummys-despair",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "limitedUses tracks the once-per-hour frequency; the aura itself only forces saves on creatures around you, which is target-side."
+  },
+  {
+   "id": "mutable-familiar",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Only changes WHEN you may re-pick familiar abilities; the builder already lets you choose familiar abilities, and no statistic changes."
+  },
+  {
+   "id": "mutagenic-renovator",
+   "verdict": "MISS",
+   "reason": "Grants resistance 5 to a chosen energy type for 1 hour (shifting on damage). Only `uses` is present and the item is not in core.modes, so nothing puts the resistance on the sheet.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Mutagenic Renovator",
+     "effects": "For 1 hour you have resistance 5 to one chosen energy type (acid, cold, electricity, fire or sonic). Each time you take damage of a different listed energy type the resistance moves to that type and the duration drops by 10 minutes."
+    },
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "natural-senses",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "choice + effectChoices already present the sense pick (darkvision / echolocation / low-light / scent / tremorsense) and grant it."
+  },
+  {
+   "id": "necrologist-dedication",
+   "verdict": "MISS",
+   "reason": "Grants an undead horde 'companion' (Huge, Speed 20, uses your AC/saves, immune to grabbed/prone/restrained, resistance = your level to physical, weakness = your level to area and splash, damage routed to you) plus the Raise the Horde and Mobbing Assault activities. It is not in companionGrants and carries no fields, so nothing delivers it.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "The horde is a companion-shaped entity with no matching companion type; companionGrants has no horde entry and the resistance/weakness/immunity set belongs to the horde, not the player, so a new companion kind is required."
+   }
+  },
+  {
+   "id": "necromancers-visage",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Only constrains what attacking undead may do, resolved by their Will saves against your spell DC; nothing on your own sheet changes."
+  },
+  {
+   "id": "nephilim-resistance",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices carries one option per energy type, each with grant.resistances [{type, value: 5}]."
+  },
+  {
+   "id": "netherwalk-incense",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Overland travel through the Netherworld — pure exploration narrative, GM-adjudicated; no statistic moves."
+  },
+  {
+   "id": "nevercold",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "heldSpells {\"4\":[\"fire-shield\"]} records the catalyst's affected spell; the rest is duration text for a spell effect the app does not time."
+  },
+  {
+   "id": "nevercold-compressed",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "heldSpells records the fire shield the catalyst affects; the extended durations and cold immunity are spell-effect timing the app does not track."
+  },
+  {
+   "id": "nevercold-refined",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "heldSpells records the fire shield the catalyst affects; the extended durations and cold immunity are spell-effect timing the app does not track."
+  },
+  {
+   "id": "nightmares-lament",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "counters + frequency track the once-per-day Fuming Cloak activation; the smoke's sickened effect and concealment apply to other creatures, not to your statistics."
+  },
+  {
+   "id": "nimbus-breath",
+   "verdict": "MISS",
+   "reason": "Grants resistance 5 to electricity and a fly Speed for as long as you hold your breath. Only `uses` is present and the item is not in core.modes, so neither the resistance nor the fly Speed reaches the sheet.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Nimbus Breath",
+     "effects": "While you hold your breath after inhaling: resistance 5 to electricity and a fly Speed as the Fly spell. On expiry you float down 60 feet per round and take no fall damage."
+    },
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "nivi-rhombodazzle",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The deity record carries its own structured fields — domains, divineFont [harm, heal], favoredWeapons [light-hammer], skill 'stealth' — which drive the cleric builder; defense-lane fields do not apply to deities."
+  },
+  {
+   "id": "nocturnal-senses",
+   "verdict": "MISS",
+   "reason": "While raging, low-light vision upgrades to darkvision and imprecise scent extends to 60 feet. No conditionalSenses/senses field is present and the feat is in no registry, so the sense upgrade never appears.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Nocturnal Senses (Raging)",
+     "effects": "While raging: if you have low-light vision you have darkvision instead; if you have scent, its imprecise range becomes 60 feet."
+    },
+    "needsEngineWork": true,
+    "note": "The conditionalSenses shape [{ifPresent:'low-light-vision', base:{name:'low-light-vision'}, upgraded:{name:'darkvision'}}] (see superior-sight) fits the upgrade but is unconditional — the rage gate is what needs engine work."
+   }
+  },
+  {
+   "id": "noxious-jerkin",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The activation only forces a save on the creature that grabbed or punched you; the +2 resilient padded armour statistics are ordinary item/rune data."
+  },
+  {
+   "id": "nudging-whisper",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Applies the effects of Shameless Request / the lying feat to a single social action; no numeric change to any statistic, and the critical-failure clause is GM narration."
+  },
+  {
+   "id": "nyctessas-staff",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "heldSpells lists the staff's spell list and counters tracks its charges; the void weakness it inflicts lands on the struck creature."
+  },
+  {
+   "id": "oath-of-the-defender",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The resistance is granted to allies in your champion's aura and explicitly 'not including you'; the app models only the player's own sheet."
+  },
+  {
+   "id": "obfuscation-oil",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Wards an object against divination magic — an object property the GM adjudicates; the character's statistics are untouched."
+  },
+  {
+   "id": "obscure",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants permission to attempt Hide in dim light without concealment; a permission, not a number, and the situation is GM-adjudicated."
+  },
+  {
+   "id": "obsidian-goggles",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "passiveEffects carries the +1 item bonus and the record is in situationalBonuses for the sight-only restriction; the darkvision is a once-per-day, 1-hour activation tracked by counters/frequency."
+  },
+  {
+   "id": "obsidian-goggles-greater",
+   "verdict": "MISS",
+   "reason": "Activation is 'any number of times per day' and lasts until you deactivate it or uninvest the item, so the darkvision is effectively a permanent worn sense. passiveEffects only carries the +2 Perception bonus and no senses field exists (12 items do carry `senses`).",
+   "fix": {
+    "field": "senses",
+    "value": [{ "name": "darkvision" }],
+    "note": "Same shape as belt-of-the-five-kings / oculus-of-abaddon."
+   }
+  },
+  {
+   "id": "obsidian-goggles-major",
+   "verdict": "MISS",
+   "reason": "Unlimited-use, persists-until-deactivated greater darkvision while invested; passiveEffects covers only the +3 Perception bonus and there is no senses field.",
+   "fix": {
+    "field": "senses",
+    "value": [{ "name": "greater-darkvision" }],
+    "note": "Same shape as horns-of-naraga."
+   }
+  },
+  {
+   "id": "oceans-balm",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An impulse that touches a willing creature; the healing and fire resistance 2 go to that target, applied ad hoc in play."
+  },
+  {
+   "id": "olfactory-obfuscator",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella AoN family record (its text lists both the base and Greater prices); the Lesser and Greater kin records carry the modes and situational entries."
+  },
+  {
+   "id": "olfactory-obfuscator-greater",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In situationalBonuses (the +4 item bonus vs scent-only Seek) and in core.modes via fromItemId."
+  },
+  {
+   "id": "olfactory-obfuscator-lesser",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In core.modes via fromItemId, which carries the 10-minute scent-masking effect."
+  },
+  {
+   "id": "olfactory-stimulators",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants an ordinary sense of smell (and scent only if the wearer's species already has it) — nothing changes for a standard PC, who already smells normally."
+  },
+  {
+   "id": "olfactory-stimulators-bloodhound",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "frequency tracks the once-per-day activation; the imprecise scent it grants lasts 1 minute and is resolved in play like any activated item effect."
+  },
+  {
+   "id": "ommatophoric-mutagen",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In situationalBonuses (+2 visual Perception, -2 saves vs visual) and in core.modes via fromItemId."
+  },
+  {
+   "id": "one-hour-flower",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A decaying light source; light radius is scene dressing the GM tracks, not a character statistic."
+  },
+  {
+   "id": "opportune-trickster",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The outcome makes the ENEMY off-guard against an ally's Strike; only the target's statistics change."
+  },
+  {
+   "id": "oppurtune-trickster",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Duplicate/misspelled record of Opportune Trickster; the effect makes the target off-guard, which is target-side only."
+  },
+  {
+   "id": "orators-filibuster",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Fascinates listening creatures via their saves against your DC; nothing on your own sheet changes."
+  },
+  {
+   "id": "orators-fillibuster",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Duplicate/misspelled record of Orator's Filibuster; the fascination lands on other creatures only."
+  },
+  {
+   "id": "orb-of-dragonkind",
+   "verdict": "MISS",
+   "reason": "Each orb grants an at-will 10th-rank innate arcane spell (per dragon type) and immunity to that dragon variety's breath weapon. The existing effectChoices only RECORDS which orb you hold — its options carry no `grant` blocks — so the innate spell never reaches the Spells page.",
+   "fix": {
+    "field": "effectChoices",
+    "note": "Extend the existing 'orb-variety' options with grant blocks the way nephilim-resistance does (option.grant), each granting the listed at-will innate arcane spell (darkness / hallucinatory terrain / speak with animals / control water / hideous laughter / entangle / wall of fire / detect alignment / wall of ice) at rank 10, DC 40.",
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "orchards-endurance",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "resistances field is present and the impulse is registered in core.stances."
+  },
+  {
+   "id": "ouroboros-buckles",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "counters + frequency track both activations; the passive defences come from the armour's own runes (+3 greater resilient greater acid-resistant), and the snake-swarm battle form is an in-play polymorph."
+  },
+  {
+   "id": "overclock-senses",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In situationalBonuses (+2 circumstance to AC vs ranged attacks and to Reflex saves after Seeking)."
+  },
+  {
+   "id": "owl-screech-egg",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Frightens creatures in the area via their saves; entirely target-facing."
+  },
+  {
+   "id": "pack-of-the-beast-lord",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 1-minute mythic buff applied to your united companion (size, immunity, resistance, weakness, a new action) — a companion-side, in-play transformation, not a change to your sheet."
+  },
+  {
+   "id": "pact-bound-pistol",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A story curse the GM tracks: soul-consignment, scarring, and the eventual fire immunity only arrive after a nine-soul narrative milestone."
+  },
+  {
+   "id": "pale-fade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An injury poison applied to a victim; all stages affect the target's statistics."
+  },
+  {
+   "id": "pallesthetic-mutagen",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In situationalBonuses (+2 item to Perception with the granted senses) and in core.modes via fromItemId."
+  },
+  {
+   "id": "pallid-crystal",
+   "verdict": "MISS",
+   "reason": "While invested it grants void resistance 5 (if you are healed by vitality) or vitality resistance 5 (if you are healed by void). The record has no fields and is in no registry, so the resistance never appears.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Pallid Crystal",
+     "effects": "After you are healed by a vitality effect you have resistance 5 to void damage; after you are healed by a void effect you instead have resistance 5 to vitality damage (only one at a time)."
+    },
+    "needsEngineWork": true,
+    "note": "A plain resistances field would be wrong because which resistance applies flips with the last healing type received."
+   }
+  },
+  {
+   "id": "panic-the-dead",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Adds frightened/fleeing to undead that fail against your Heal spell; only the targets' statistics change."
+  },
+  {
+   "id": "paralyzing-slash",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Paralyses the struck creature on a failed save; entirely target-facing."
+  },
+  {
+   "id": "patronize-the-arts",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "All three benefits (Eagerness, Persistence, Validation) are granted to the triggering ally; the app models only the player's own sheet."
+  },
+  {
+   "id": "peerless-under-heaven",
+   "verdict": "MISS",
+   "reason": "Grants the critical specialization effect for the weapon group on every critical Strike (and the Grievous rune's effect when you already had it). The record carries no fields; the engine has critSpec / critSpecWeapons fields that nothing here sets.",
+   "fix": {
+    "field": "critSpec",
+    "value": true,
+    "note": "Unrestricted — all weapon groups, so no critSpecWeapons filter. The Grievous upgrade when you already had access needs separate engine work."
+   }
+  },
+  {
+   "id": "peonys-flourish",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Stuns and dazzles creatures you move past via their Will DCs; target-facing only."
+  },
+  {
+   "id": "perfect-droplet",
+   "verdict": "MISS",
+   "reason": "The spellheart's Armor benefit is resistance 2 to water effects and attacks by water creatures. attachments.ts only handles affixing the spellheart — it never applies the armour/weapon benefit — and the record has only heldSpells, so the resistance is lost.",
+   "fix": {
+    "field": "resistances",
+    "value": [{ "type": "water", "value": 2 }],
+    "note": "Applies only while the spellheart is affixed to armour; 49 items already carry a resistances field."
+   }
+  },
+  {
+   "id": "perfect-droplet-greater",
+   "verdict": "MISS",
+   "reason": "Armor benefit resistance 5 to water effects and attacks by water creatures; the record carries only counters/frequency/heldSpells and attachments.ts does not apply spellheart armour benefits.",
+   "fix": {
+    "field": "resistances",
+    "value": [{ "type": "water", "value": 5 }],
+    "note": "Applies only while affixed to armour."
+   }
+  },
+  {
+   "id": "perfect-fortification",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "resistances field is present, carrying the 2 + half level precision-damage resistance."
+  },
+  {
+   "id": "perfections-first-step",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "heldSpells carries the Unbreaking Wave Advance it casts and uses tracks the consumable."
+  },
+  {
+   "id": "perfume-cloud",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "limitedUses tracks the once-per-hour frequency; the dazzling/blinding effects land on creatures in the area."
+  },
+  {
+   "id": "perpetual-infusions-chirurgeon",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "choice field presents the two 1st-level healing elixirs you select for perpetual infusion."
+  },
+  {
+   "id": "perplex",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Stupefies and confuses a target via its Will DC; target-facing only."
+  },
+  {
+   "id": "pet",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In companionGrants; the pet and its two chosen pet abilities are built as a companion."
+  },
+  {
+   "id": "petal-dance",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "frequency tracks the once-per-hour activation; the swarm battle form suspends your Strikes, spells and item use, so it is an in-play transformation rather than a sheet statistic."
+  },
+  {
+   "id": "petrifying-gaze-mimicry",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Slows and immobilises the creature you stare at; entirely target-facing."
+  },
+  {
+   "id": "phantasmal-doorknob-greater",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In situationalBonuses for the +2 item bonus to Thievery to Pick a Lock; the weapon benefit blinds the struck creature."
+  },
+  {
+   "id": "phantasmal-doorknob-major",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In situationalBonuses for the +2 item bonus to Thievery to Pick a Lock; the weapon benefit is target-facing."
+  },
+  {
+   "id": "pharasmin-visor",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In situationalBonuses for the +2 item bonus to saves against death effects; the other three visor positions are in-play activations tracked by counters/frequency."
+  },
+  {
+   "id": "philosophers-extractor",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In situationalBonuses for the +4 item bonus to alchemy Crafting checks; the rest is GM-adjudicated crafting output."
+  },
+  {
+   "id": "phoenix-cinder",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "core.modes carries 'item-phoenix-cinder' (Stage 1, with the fast healing / fire resistance / immunity note) and the record is also in situationalBonuses."
+  },
+  {
+   "id": "pickled-demon-tongue-greater",
+   "verdict": "MISS",
+   "reason": "Armor benefit is resistance 5 to acid and to attacks by demons; the record carries only counters/frequency/heldSpells and spellheart armour benefits are not applied anywhere.",
+   "fix": {
+    "field": "resistances",
+    "value": [{ "type": "acid", "value": 5 }],
+    "note": "Applies while affixed to armour; the 'attacks by demons' half has no matching resistance type and can stay prose."
+   }
+  },
+  {
+   "id": "pierce-the-veil",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In situationalBonuses for the +2 item bonus (+3 at 13th) to saves against death effects."
+  },
+  {
+   "id": "pistoleros-challenge",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In situationalBonuses for the +2/+3/+4 status bonus to damage against the challenged foe."
+  },
+  {
+   "id": "plague-sniffer",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets you notice disease on a creature you smell — a GM-adjudicated perception permission with no statistic change."
+  },
+  {
+   "id": "plant-eidolon",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In companionGrants; the eidolon build carries its ability scores, senses, speed and the three evolution abilities."
+  },
+  {
+   "id": "plant-shape",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "innateSpells carries the once-per-day Plant Form; the poison resistance 5 applies only while inside an untamed-form battle form, which the app does not track."
+  },
+  {
+   "id": "poison-fizz",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella AoN family record — its text lists the Lesser/Moderate/Greater prices and bonuses; those three kin records carry the modes and situational entries."
+  },
+  {
+   "id": "poison-fizz-greater",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In situationalBonuses (+3 item to saves vs poison and being petrified) and in core.modes via fromItemId."
+  },
+  {
+   "id": "poison-fizz-lesser",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In situationalBonuses (+2 item to saves vs poison and being petrified) and in core.modes via fromItemId."
+  },
+  {
+   "id": "poison-fizz-moderate",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In situationalBonuses (+2 item to saves vs poison and being petrified) and in core.modes via fromItemId."
+  },
+  {
+   "id": "polished-demon-horn-greater",
+   "verdict": "MISS",
+   "reason": "Armor benefit grants resistance 5 to unholy damage. Only counters/frequency/heldSpells are present, and spellheart armour benefits are never applied by attachments.ts.",
+   "fix": {
+    "field": "resistances",
+    "value": [{ "type": "unholy", "value": 5 }],
+    "note": "Applies while affixed to armour."
+   }
+  },
+  {
+   "id": "portable-seal",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella AoN family record (lists Lesser/Moderate/Major prices and DCs), and the effect only disrupts summoned creatures' movement and Strikes."
+  },
+  {
+   "id": "portable-seal-lesser",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A deployed device that forces Will saves on summoned creatures entering its area; nothing on the player's sheet changes."
+  },
+  {
+   "id": "portable-seal-major",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A deployed device that forces Will saves on summoned creatures entering its area; entirely target-facing."
+  },
+  {
+   "id": "portable-seal-moderate",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A deployed device that forces Will saves on summoned creatures entering its area; entirely target-facing."
+  },
+  {
+   "id": "potion-of-acid-resistance-lesser",
+   "verdict": "MISS",
+   "reason": "Grants resistance 5 to acid damage for 1 hour. Only `uses` (the consumable quantity) is present and the potion is not in core.modes, so the resistance never reaches the sheet.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Potion of Acid Resistance (Lesser)",
+     "effects": "For 1 hour you have resistance 5 to acid damage."
+    },
+    "needsEngineWork": true,
+    "note": "ModeTargetKind has no resistance target — modes currently carry resistances only as prose notes."
+   }
+  },
+  {
+   "id": "potion-of-cold-resistance-lesser",
+   "verdict": "MISS",
+   "reason": "Grants resistance 5 to cold damage for 1 hour; only `uses` is present and the potion is not in core.modes.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Potion of Cold Resistance (Lesser)",
+     "effects": "For 1 hour you have resistance 5 to cold damage."
+    },
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "potion-of-electricity-resistance-lesser",
+   "verdict": "MISS",
+   "reason": "Grants resistance 5 to electricity damage for 1 hour; only `uses` is present and the potion is not in core.modes.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Potion of Electricity Resistance (Lesser)",
+     "effects": "For 1 hour you have resistance 5 to electricity damage."
+    },
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "potion-of-fire-resistance-lesser",
+   "verdict": "MISS",
+   "reason": "Grants resistance 5 to fire damage for 1 hour; only `uses` is present and the potion is not in core.modes.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Potion of Fire Resistance (Lesser)",
+     "effects": "For 1 hour you have resistance 5 to fire damage."
+    },
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "potion-of-resistance",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella AoN family record — it lists the Lesser/Moderate/Greater prices and resistance values; the per-energy kin records are the real items."
+  },
+  {
+   "id": "potion-of-sonic-resistance-lesser",
+   "verdict": "MISS",
+   "reason": "Grants resistance 5 to sonic damage for 1 hour; only `uses` is present and the potion is not in core.modes.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Potion of Sonic Resistance (Lesser)",
+     "effects": "For 1 hour you have resistance 5 to sonic damage."
+    },
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "practiced-opposition",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Treats the TARGET undead's resistances as 5 lower for one Strike; only the target's statistics are altered."
+  },
+  {
+   "id": "preternatural-polish",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 10-minute exploration activity that gives the wearer of the polished armour a temporary counteract reaction; resolved in play and usually applied to an ally."
+  },
+  {
+   "id": "prey-mutagen",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella AoN family record — it lists the Lesser/Moderate/Greater/Major prices, Speed bonuses and AC bonuses; the four kin records are the real items."
+  },
+  {
+   "id": "prey-mutagen-greater",
+   "verdict": "MISS",
+   "reason": "Grants a +30 status bonus to Speed for 1 hour, the Timely Dodge reaction (+3 circumstance to AC), and a drawback (+2 circumstance to animals' and beasts' attacks against you). Only `uses` is present and it is not in core.modes.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Prey Mutagen (Greater)",
+     "effects": "For 1 hour: +30 status bonus to every Speed; you gain the Timely Dodge reaction (+3 circumstance bonus to AC against the triggering Strike, then Step). Drawback: scent/tremorsense ranges against you double and animals and beasts get a +2 circumstance bonus to attack rolls against you."
+    },
+    "needsEngineWork": true,
+    "note": "MODE_TARGETS has no speed target, so the Speed bonus cannot be encoded as a mode modifier today."
+   }
+  },
+  {
+   "id": "prey-mutagen-lesser",
+   "verdict": "MISS",
+   "reason": "Grants a +10 status bonus to Speed for 1 minute plus the Timely Dodge reaction (+1 circumstance to AC) and the predator drawback. Only `uses` is present and it is not in core.modes.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Prey Mutagen (Lesser)",
+     "effects": "For 1 minute: +10 status bonus to every Speed; Timely Dodge reaction gives +1 circumstance bonus to AC against the triggering Strike, then Step. Drawback: scent/tremorsense ranges against you double and animals and beasts get +2 circumstance to attack rolls against you."
+    },
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "prey-mutagen-major",
+   "verdict": "MISS",
+   "reason": "Grants a +40 status bonus to Speed for 1 hour plus the Timely Dodge reaction (+4 circumstance to AC) and the predator drawback. Only `uses` is present and it is not in core.modes.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Prey Mutagen (Major)",
+     "effects": "For 1 hour: +40 status bonus to every Speed; Timely Dodge reaction gives +4 circumstance bonus to AC against the triggering Strike, then Step. Drawback: scent/tremorsense ranges against you double and animals and beasts get +2 circumstance to attack rolls against you."
+    },
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "prey-mutagen-moderate",
+   "verdict": "MISS",
+   "reason": "Grants a +20 status bonus to Speed for 10 minutes plus the Timely Dodge reaction (+2 circumstance to AC) and the predator drawback. Only `uses` is present and it is not in core.modes.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Prey Mutagen (Moderate)",
+     "effects": "For 10 minutes: +20 status bonus to every Speed; Timely Dodge reaction gives +2 circumstance bonus to AC against the triggering Strike, then Step. Drawback: scent/tremorsense ranges against you double and animals and beasts get +2 circumstance to attack rolls against you."
+    },
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "psychopomp-eidolon",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In companionGrants; the eidolon build carries its ability arrays, darkvision, speed and the initial/symbiosis/transcendence abilities."
+  },
+  {
+   "id": "psychopomp-mask",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A one-shot rescue that replaces a recovery check when dying 3+ and destroys the mask; resolved entirely in play, with no persistent statistic."
+  },
+  {
+   "id": "public-execution",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Forces saves on creatures within 30 feet to stop them acting against you; entirely target-facing."
+  },
+  {
+   "id": "purple-pepper-powder",
+   "verdict": "MISS",
+   "reason": "Grants resistance 10 to fire and resistance 5 to poison for 1 hour. Only `uses` is present and the item is not in core.modes, so neither resistance reaches the sheet.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Purple Pepper Powder",
+     "effects": "For 1 hour you have resistance 10 to fire and resistance 5 to poison."
+    },
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "pyrefeather-cloak",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In situationalBonuses for the +1 circumstance bonus to saves against the triggering fire effect; counters/frequency track the once-per-day activation."
+  },
+  {
+   "id": "pyrophilic-recovery",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Triggered healing (half your level, capped at half the fire damage taken) resolved at the start of your next turn in play; no statistic on the sheet changes."
+  },
+  {
+   "id": "quickening-emotion",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A relic reaction that counteracts an incoming emotion effect and may leave you quickened for a moment; a per-encounter reaction, not a sheet value."
+  },
+  {
+   "id": "radiant-spark",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In situationalBonuses for the +2 item bonus to saves against divine spells and effects; the activations are dominate/binding rituals aimed at other creatures."
+  },
+  {
+   "id": "radiate-glory",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Whether you are concealed or hidden is decided per creature by their save, and the text bars using it to Hide or Sneak; nothing changes on your sheet."
+  },
+  {
+   "id": "rainbow-vinegar",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella AoN family record — its text lists the base and Greater prices and values; the Moderate and Greater kin records are the real items."
+  },
+  {
+   "id": "rainbow-vinegar-greater",
+   "verdict": "MISS",
+   "reason": "For 10 minutes your unarmed attacks deal an extra 1d8 acid damage and you have resistance 15 to electricity (plus a self-inflicted weakness 5 to acid on a second dose). Only `uses` is present and it is not in core.modes.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Rainbow Vinegar (Greater)",
+     "effects": "For 10 minutes: resistance 15 to electricity, and your unarmed Strikes deal an extra 1d8 acid damage (2d8 against vampires). Taking a second dose in one day gives you weakness 5 to acid until your next daily preparations."
+    },
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "rainbow-vinegar-moderate",
+   "verdict": "MISS",
+   "reason": "For 10 minutes your unarmed attacks deal an extra 1d4 acid damage and you have resistance 10 to electricity. Only `uses` is present and it is not in core.modes.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Rainbow Vinegar (Moderate)",
+     "effects": "For 10 minutes: resistance 10 to electricity, and your unarmed Strikes deal an extra 1d4 acid damage (2d4 against vampires). Taking a second dose in one day gives you weakness 5 to acid until your next daily preparations."
+    },
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "rampart-shield",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The shield's Hardness/HP/BT are ordinary shield item data and counters/frequency track the once-per-day activation, which creates a piece of terrain."
+  },
+  {
+   "id": "ration-tonic",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Replaces a day's food and water — an exploration/logistics convenience with no statistic."
+  },
+  {
+   "id": "ration-tonic-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Replaces a week's food and water — an exploration/logistics convenience with no statistic."
+  },
+  {
+   "id": "reach-for-the-sky",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Demoralises enemies within 30 feet and restricts what those frightened creatures may do; entirely target-facing."
+  },
+  {
+   "id": "read-the-roots",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Substitutes tremorsense for one Seek at a specific moment; it grants no persistent sense on the sheet and the plant-rooted requirement is GM-adjudicated."
+  },
+  {
+   "id": "reapers-grasp",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "counters tracks the stored souls (up to 10) that both activations spend; the +2 striking arquebus statistics are ordinary weapon/rune data."
+  },
+  {
+   "id": "reassuring-presence",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Reduces an ALLY's frightened value; the app models only the player's own sheet."
+  },
+  {
+   "id": "rebirth-in-living-stone",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Registered in core.stances, which carries the temporary HP, crit/precision immunity and blast bonus."
+  },
+  {
+   "id": "reincarnated-ridiculer",
+   "verdict": "MISS",
+   "reason": "Reduces the DC of your Demoralize check by 4 when the target critically hit you on its previous turn (and removes the normal temporary immunity). The feat carries no fields and is not in situationalBonuses, so the conditional bonus never shows.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "skill", "detail": "intimidation" }],
+      "when": "Demoralizing a foe that critically hit you last turn",
+      "bonus": "+4 (the check's DC is reduced by 4)"
+     }
+    ],
+    "note": "The 'no temporary immunity unless you critically fail' clause is a rules permission and needs no field."
+   }
+  },
+  {
+   "id": "remember-their-names",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Deals damage and persistent damage to a target of your Ultimatum of Liberation; entirely target-facing."
+  },
+  {
+   "id": "remember-thy-names",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Duplicate/variant spelling of Remember Their Names; the damage and curse land on the target only."
+  },
+  {
+   "id": "resonating-fork",
+   "verdict": "MISS",
+   "reason": "situationalBonuses covers only the +1 item bonus to saves against auditory/sonic effects — the Armor benefit's resistance 2 to sonic damage is not delivered by any field, and attachments.ts never applies spellheart armour benefits.",
+   "fix": {
+    "field": "resistances",
+    "value": [{ "type": "sonic", "value": 2 }],
+    "note": "Applies while affixed to armour; the save bonus already in situationalBonuses stays as-is."
+   }
+  },
+  {
+   "id": "resonating-fork-greater",
+   "verdict": "MISS",
+   "reason": "situationalBonuses covers only the +2 item bonus to saves against auditory/sonic effects; the Armor benefit's resistance 5 to sonic damage has no field.",
+   "fix": {
+    "field": "resistances",
+    "value": [{ "type": "sonic", "value": 5 }],
+    "note": "Applies while affixed to armour."
+   }
+  },
+  {
+   "id": "resuscitate",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A Medicine check that revives another dead creature; nothing changes on the healer's own sheet."
+  },
+  {
+   "id": "revolutionary-innovation",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "build.ts resolves the inventor's tiered modification picks (initial@1, breakthrough@7, revolutionary@15) filtered by the `<type>-innovation-modification` tags, and each modification is its own classFeature record carrying the mechanics (e.g. perfect-fortification's resistances)."
+  },
+  {
+   "id": "rhino-hide-brooch",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A one-shot talisman whose resistance 5 to physical damage lasts only until the end of the current creature's turn — resolved in play as the triggering damage is applied."
+  },
+  {
+   "id": "rime-crystal",
+   "verdict": "MISS",
+   "reason": "Armor benefit grants resistance 2 to cold. The record carries only heldSpells, and attachments.ts handles affixing but never applies the spellheart's armour benefit.",
+   "fix": {
+    "field": "resistances",
+    "value": [{ "type": "cold", "value": 2 }],
+    "note": "Applies while affixed to armour."
+   }
+  },
+  {
+   "id": "rime-crystal-greater",
+   "verdict": "MISS",
+   "reason": "Armor benefit grants resistance 5 to cold; only counters/frequency/heldSpells are present and spellheart armour benefits are never applied.",
+   "fix": {
+    "field": "resistances",
+    "value": [{ "type": "cold", "value": 5 }],
+    "note": "Applies while affixed to armour."
+   }
+  },
+  {
+   "id": "ring-of-bestial-friendship",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "heldSpells carries the heightened Charm and counters/frequency track the once-per-day activation; the enraged-animal backlash is target-side."
+  },
+  {
+   "id": "ring-of-torag",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In situationalBonuses for the +1 status bonus to AC or the save against the triggering fire effect; counters/frequency track both activations."
+  },
+  {
+   "id": "rite-of-light",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Redirects your Sunlight Healing to an adjacent ALLY instead of yourself; the app models only the player's own sheet."
+  },
+  {
+   "id": "robe-of-the-archmagi",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In situationalBonuses for the +1 circumstance bonus to saves against arcane spells; the robe's +2 greater resilient explorer's clothing statistics are rune data and counters/frequency track the once-per-day auto-success."
+  },
+  {
+   "id": "robust-health",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In situationalBonuses for the circumstance bonus equal to your level to HP regained from Treat Wounds / Battle Medicine."
+  },
+  {
+   "id": "rolling-geode",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "frequency tracks the once-per-hour activation; the geode is a summoned object that damages foes and has its own AC/Hardness/HP, not a player statistic."
+  },
+  {
+   "id": "rune-of-sin",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella family record describing all seven sins at once; the seven per-sin kin records (envy, gluttony, greed, lust, pride, sloth, wrath) are the real items."
+  },
+  {
+   "id": "rune-of-sin-envy",
+   "verdict": "MISS",
+   "reason": "Casting an abjuration spell gives you resistance 5 to damage from spells (7 against abjuration spells) until the start of your next turn. The record has no fields and is in no registry.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Rune of Sin (Envy)",
+     "effects": "After you Cast an abjuration Spell, until the start of your next turn you have resistance 5 to damage from spells, increased to 7 against abjuration spells."
+    },
+    "needsEngineWork": true,
+    "note": "'Damage from spells' is not a damage type, so a plain resistances entry cannot express it."
+   }
+  },
+  {
+   "id": "rune-of-sin-gluttony",
+   "verdict": "MISS",
+   "reason": "Casting a necromancy spell gives you resistance 5 to damage from spells (7 against necromancy spells) until the start of your next turn; no fields, no registry.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Rune of Sin (Gluttony)",
+     "effects": "After you Cast a necromancy Spell, until the start of your next turn you have resistance 5 to damage from spells, increased to 7 against necromancy spells."
+    },
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "rune-of-sin-greed",
+   "verdict": "MISS",
+   "reason": "Casting a transmutation spell gives you resistance 5 to damage from spells (7 against transmutation spells) until the start of your next turn; no fields, no registry.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Rune of Sin (Greed)",
+     "effects": "After you Cast a transmutation Spell, until the start of your next turn you have resistance 5 to damage from spells, increased to 7 against transmutation spells."
+    },
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "rune-of-sin-lust",
+   "verdict": "MISS",
+   "reason": "Casting an enchantment spell gives you resistance 5 to damage from spells (7 against enchantment spells) until the start of your next turn; no fields, no registry.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Rune of Sin (Lust)",
+     "effects": "After you Cast an enchantment Spell, until the start of your next turn you have resistance 5 to damage from spells, increased to 7 against enchantment spells."
+    },
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "rune-of-sin-pride",
+   "verdict": "MISS",
+   "reason": "Casting an illusion spell gives you resistance 5 to damage from spells (7 against illusion spells) until the start of your next turn; no fields, no registry.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Rune of Sin (Pride)",
+     "effects": "After you Cast an illusion Spell, until the start of your next turn you have resistance 5 to damage from spells, increased to 7 against illusion spells."
+    },
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "rune-of-sin-sloth",
+   "verdict": "MISS",
+   "reason": "Casting a conjuration spell gives you resistance 5 to damage from spells (7 against conjuration spells) until the start of your next turn; no fields, no registry.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Rune of Sin (Sloth)",
+     "effects": "After you Cast a conjuration Spell, until the start of your next turn you have resistance 5 to damage from spells, increased to 7 against conjuration spells."
+    },
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "rune-of-sin-wrath",
+   "verdict": "MISS",
+   "reason": "Casting an evocation spell gives you resistance 5 to damage from spells (7 against evocation spells) until the start of your next turn; no fields, no registry.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Rune of Sin (Wrath)",
+     "effects": "After you Cast an evocation Spell, until the start of your next turn you have resistance 5 to damage from spells, increased to 7 against evocation spells."
+    },
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "sabotage",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Damages an item another creature carries; the item's Broken Threshold and HP are the GM's to track."
+  },
+  {
+   "id": "safe-elements",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Designates which other creatures your kinetic aura affects and grants an in-play action (Pacifying Infusion); your own statistics are unchanged."
+  },
+  {
+   "id": "sages-bloom",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A talisman that lets you Recall Knowledge three times instead of once and softens a critical failure; a per-use action permission, not a statistic."
+  },
+  {
+   "id": "sairazul-blue",
+   "verdict": "MISS",
+   "reason": "Grants resistance 5 to poison and to void damage for 8 hours (ending if it heals you at 0 HP). Only `uses` is present and the potion is not in core.modes.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Sairazul Blue",
+     "effects": "For 8 hours you have resistance 5 to poison damage and resistance 5 to void damage. If you drop to 0 HP from poison or void damage you are healed 8d8 and both resistances end."
+    },
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "sandcastle",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "counters + frequency track the once-per-day Shape the Castle activation; the resulting structure has its own AC/Hardness/HP that the GM tracks."
+  },
+  {
+   "id": "sanguine-fang",
+   "verdict": "MISS",
+   "reason": "situationalBonuses covers only the +2 item bonus to saves against void effects; the Armor benefit's resistance 3 to persistent bleed damage has no field, and spellheart armour benefits are never applied.",
+   "fix": {
+    "field": "resistances",
+    "value": [{ "type": "bleed", "value": 3 }],
+    "note": "Applies while affixed to armour; the save bonus already in situationalBonuses stays as-is."
+   }
+  },
+  {
+   "id": "sanguine-fang-greater",
+   "verdict": "MISS",
+   "reason": "situationalBonuses covers only the +2 item bonus to saves against void effects; the Armor benefit's resistance 5 to persistent bleed damage has no field.",
+   "fix": {
+    "field": "resistances",
+    "value": [{ "type": "bleed", "value": 5 }],
+    "note": "Applies while affixed to armour."
+   }
+  },
+  {
+   "id": "sanguine-revitalization",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "limitedUses tracks the once-per-day tactic; every effect (the free Strides, the reaction Strikes, the bleed, the 10d6 healing) lands on squadmates and the designated enemy, not on your own sheet."
+  },
+  {
+   "id": "saurian-spike",
+   "verdict": "MISS",
+   "reason": "Armor benefit grants imprecise scent with a range of 30 feet — a persistent sense while affixed. Only counters/frequency/heldSpells are present and no senses field exists.",
+   "fix": {
+    "field": "senses",
+    "value": [{ "name": "scent", "range": 30, "acuity": "imprecise" }],
+    "note": "Same shape as diviners-nose-chain; applies while affixed to armour."
+   }
+  },
+  {
+   "id": "saurian-spike-greater",
+   "verdict": "MISS",
+   "reason": "Armor benefit grants imprecise scent with a range of 60 feet; only counters/frequency/heldSpells are present and no senses field exists.",
+   "fix": {
+    "field": "senses",
+    "value": [{ "name": "scent", "range": 60, "acuity": "imprecise" }],
+    "note": "Same shape as diviners-nose-chain; applies while affixed to armour."
+   }
+  }
+ ]
+}

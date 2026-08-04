@@ -1,0 +1,1082 @@
+[
+ {
+  "id": "basic-shooting",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Basic Shooting",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featPickGrants"
+  ],
+  "text": "You gain a 1st- or 2nd-level gunslinger feat of your choice."
+ },
+ {
+  "id": "basic-synergy",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Basic Synergy",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featPickGrants"
+  ],
+  "text": "You gain a 1st- or 2nd-level summoner feat of your choice."
+ },
+ {
+  "id": "basic-thaumaturgy",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Basic Thaumaturgy",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featPickGrants"
+  ],
+  "text": "You gain a 1st- or 2nd-level thaumaturge feat of your choice."
+ },
+ {
+  "id": "basic-thoughtform",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Basic Thoughtform",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featPickGrants"
+  ],
+  "text": "You gain a 1st- or 2nd-level psychic feat of your choice."
+ },
+ {
+  "id": "basic-trickery",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Basic Trickery",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featPickGrants"
+  ],
+  "text": "You gain a 1st- or 2nd-level rogue feat."
+ },
+ {
+  "id": "basic-wilding",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Basic Wilding",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featPickGrants"
+  ],
+  "text": "You gain a 1st- or 2nd-level druid feat."
+ },
+ {
+  "id": "basic-witchcraft",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Basic Witchcraft",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featPickGrants"
+  ],
+  "text": "You gain a 1st- or 2nd-level witch feat of your choice. You can select three familiar abilities for your familiar each day, instead of two."
+ },
+ {
+  "id": "battle-creed",
+  "lane": "grantsFeat",
+  "collection": "classFeatures",
+  "name": "Battle Creed",
+  "level": 1,
+  "traits": [
+   "cleric"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've undergone a special training to focus your body toward combat. While you still adhere to the teachings of your faith, you also know that you serve as an instrument of your church. More so than any warpriest, the physical rigors that come with battle are key to your training. You've dedicated yourself to the battle creed, a specific approach that puts combat prowess first, even at the expense of a cleric's typical spellcasting and restorative abilities. Defeating one's enemies is more important than healing an ally in the heat of battle; the time for healing comes after. As you abide by the battle creed, your physical and martial capabilities grow stronger. You must select Battle Harbinger Dedication as your 2nd- level class feat. **Prerequisites:** - You must be a cleric. - You don't gain the Resolute Faith class feature. - You don't gain the Miraculous Spell class feature. **Spellcasting Adjustment**: Your spellcasting capabilities are more restricted. At 1st level, you can prepare one 1st-rank spell and five cantrips. As you increase in level, your number of spell slots and the highest rank of spells you can cast from spell slots increases, shown in Battle Harbinger Spells per Day. Because of your focus on your physical training at the expense of magical aptitude, you have no more than two spell slots of your highest rank and, if you can cast 2nd-rank spells or higher, two spell slots of 1 rank lower than your highest spell rank. For anything that requires the ability to cast spells of a certain rank that's lower than the highest slots you have, you still qualify even if you no longer have spell slots at those ranks. | Your Level | Cantrips | 1st | 2nd | 3rd | 4th | 5th | 6th | 7th | 8th | 9th | | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | | 1 | 5 | 1 | - | - | - | - | - | - | - | - | | 2 | 5 | 2 | - | - | - | - | - | - | - | - | | 3 | 5 | 2 | 1 | - | - | - | - | - | - | - | | 4 | 5 | 2 | 2 | - | - | - | - | - | - | - | | 5 | 5 | - | 2 | 2 | - | - | - | - | - | - | | 6 | 5 | - | 2 | 2 | - | - | - | - | - | - | | 7 | 5 | - | - | 2 | 2 | - | - | - | - | - | | 8 | 5 | - | - | 2 | 2 | - | - | - | - | - | | 9 | 5 | - | - | - | 2 | 2 | - | - | - | - | | 10 | 5 | - | - | - | 2 | 2 | - | - | - | - | | 11 | 5 | - | - | - | - | 2 | 2 | - | - | - | | 12 | 5 | - | - | - | - | 2 | 2 | - | - | - | | 13 | 5 | - | - | - | - | - | 2 | 2 | - | - | | 14 | 5 | - | - | - | - | - | 2 | 2 | - | - | | 15 | 5 | - | - | - | - | - | - | 2 | 2 | - | | 16 | 5 | - | - | - | - | - | - | 2 | 2 | - | | 17 | 5 | - | - | - | - | - | - | - | 2 | 2 | | 18 | 5 | - | - | - | - | - | - | - | 2 | 2 | | 19 | 5 | - | - | - | - | - | - | - | 2 | 2 | | 20 | 5 | - | - | - | - | - | - | - | 2 | 2 | **Divine Font Adjustment:** Instead of preparing Heal or Harm spells with your divine font, you instead gain the battle font, which allows you to prepare battle aura spells. You gain 4 additional spell slots each day at your highest rank of cleric spell slots. You can prepare only Bane or Bless in these slots. Any feats and effects that refer to a battle aura refers to these spells, regardless of whether they were cast with your standard spell slots or your divin"
+ },
+ {
+  "id": "beast-seeker",
+  "lane": "grantsFeat",
+  "collection": "backgrounds",
+  "name": "Beast Seeker",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkillChoice"
+  ],
+  "inRegistries": [],
+  "text": "From jagged reefs to trackless forests to volcanoes dusted by snow even at this low latitude, Iblydos is home to fearsome creatures willing to eat civilians and snap ships in half. There might be no greater place to test one's monster-hunting credentials than this archipelago, much as countless hero-gods have done over the millennia. Perhaps you traveled here to learn how to slay leviathans and better defend your homeland from some bestial threat. You might instead value the esoteric properties of the slain creatures, knowing the alchemical potential of a hydra's eye or a medusa's venom. Whatever your motivation, you have honed tactics to trip and even tackle massive monsters. Choose two attribute boosts. One must be to **Strength** or **Dexterity**, and one is a free attribute boost. You're trained in either the Athletics or Thievery skill, as well as the Legendary Beast Lore skill. If you choose Athletics, you gain the Titan Wrestler skill feat. If you choose Thievery, you gain the Dirty Trick skill feat. --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Lore** Legendary Beast Lore"
+ },
+ {
+  "id": "beastkin",
+  "lane": "grantsFeat",
+  "collection": "heritages",
+  "name": "Beastkin",
+  "traits": [
+   "beastkin"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "The blood of a beast flows through your veins, granting you the ferocity and might of animals. Only creatures with the humanoid trait can take the beastkin versatile heritage. Choose a type of animal such as bat, eagle, shark, spider, tyrannosaurus, wasp, or wolf. This is the type of animal tied to your heritage and is known as your inherent animal. A beastkin's hybrid form is their natural shape. You gain the beast and beastkin traits, in addition to the traits from your ancestry. You gain the Change Shape ability. You can choose from beastkin feats and feats from your ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "bestiary-scholar",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Bestiary Scholar",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You learn how to apply your extensive knowledge of certain creatures using the lore you know. When you gain this feat, choose one of the following skills in which you have attained master proficiency: Arcana, Crafting, Nature, Occultism, or Religion. You can use the chosen skill to Recall Knowledge to identify any creature normally identifiable by any of the above skills. In addition, when you critically succeed at identifying a creature, you gain a +1 circumstance bonus to your next attack roll or saving throw against that creature."
+ },
+ {
+  "id": "blow-in",
+  "lane": "grantsFeat",
+  "collection": "backgrounds",
+  "name": "Blow-In",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "trainedLore",
+   "trainedSkillChoice"
+  ],
+  "inRegistries": [],
+  "text": "You never expected to join a circus, but you were looking for a good place to lie low for reasons of your own. The Circus of Wayward Wonders came together with several different workers and performers a few months ago. Many came from a circus in Escadar called the Celestial Menagerie, but not all of them. It was easy to slip in among the roustabouts. Although you'd planned to move on quickly, the circus folk have adopted you as one of their own, and they don't ask questions about your past. Choose two attribute boosts. One must be to **Dexterity** or **Charisma**, and one is a free attribute boost. You're trained in your choice of the Deception or Thievery skills. You gain a skill feat: Lengthy Diversion if you chose Deception, or Subtle Theft if you chose Thievery. You are also trained in the Underworld Lore skill. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Lore** Underworld Lore"
+ },
+ {
+  "id": "bone-magic",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Bone Magic",
+  "level": 1,
+  "traits": [
+   "lizardfolk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featCantripGrants"
+  ],
+  "text": "Your connection to your iruxi ancestors manifests as a simple primal spell that you cast using a fragment of an ancestor's bones. Choose one cantrip from either the occult spell list or the primal spell list. You can cast this cantrip as an innate spell at will, and it's heightened to a spell rank equal to half your level rounded up. --- **Special** Choose when you gain this feat whether your innate spells are primal or occult; this choice applies to all innate spells you gain from lizardfolk ancestry feats that have Bone Magic as a prerequisite."
+ },
+ {
+  "id": "born-of-celestial",
+  "lane": "grantsFeat",
+  "collection": "heritages",
+  "name": "Born of Celestial",
+  "traits": [
+   "yaoguai"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You were once a powerful celestial before an escape or great punishment left you trapped in a mortal shell, with only vague memories and limited power. Due to your residual divine power, the tradition of any spells or magical abilities you gain from a yaoguai heritage or ancestry feat is divine instead of its normal tradition (usually occult). - **Humanoid Form** Fragments of divine memory still litter your mind. You gain a +1 circumstance bonus to Religion checks. - **Yaoguai Form** Celestial power flows through you. Choose one cantrip from the divine spell list. You can cast this spell as an innate divine cantrip at will. A cantrip is heightened to a spell rank equal to half your level rounded up."
+ },
+ {
+  "id": "born-of-elements",
+  "lane": "grantsFeat",
+  "collection": "heritages",
+  "name": "Born of Elements",
+  "traits": [
+   "yaoguai"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You were an aspect of nature—the rain, the wind, a ray of light—until the wild essences gave you a soul. Due to your natural connection, the tradition of any spells or magical abilities you gain from a yaoguai heritage or ancestry feat is primal instead of its normal tradition (usually occult). - **Humanoid Form** You remain attuned to the natural world. You gain a +1 circumstance bonus to Survival checks to Sense Direction, and you don't take a penalty if you don't have a compass. - **Yaoguai Form** The power of nature flows through you, ready to lash out. Choose Electric Arc, Frostbite, Ignition, Needle Darts, Timber, Scatter Scree, Slashing Gust, or Spout. You can cast this spell as an innate primal cantrip at will. A cantrip is heightened to a spell rank equal to half your level rounded up."
+ },
+ {
+  "id": "born-of-the-bones-of-the-earth",
+  "lane": "grantsFeat",
+  "collection": "classFeatures",
+  "name": "Born of the Bones of the Earth",
+  "level": 7,
+  "traits": [
+   "exemplar"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your dominion is over stone and soil, the pillars holding up the stage of history's great legends. You gain the Energized Spark feat for your choice of earth or fire. When you critically succeed on a Strike and the target of the critical hit is standing on a surface of earth or stone, the target is driven down and mired in the ground. The target is immobilized and must succeed at an Escape attempt against your class DC to end the immobilization. The creature doesn't become stuck if it is incorporeal, is liquid (like a water elemental or some oozes), has a burrow speed, or could otherwise escape without effort. When you Spark Transcendence while standing on a surface of earth or stone, you can choose to shatter the surface in a , making it difficult terrain. You are not affected by this difficult terrain."
+ },
+ {
+  "id": "boundless-reprisals",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Boundless Reprisals",
+  "level": 20,
+  "traits": [
+   "fighter",
+   "guardian"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Fighter** With a sixth sense for the flow of combat, you can quickly react to any situation as required. At the start of each enemy's turn, you gain a reaction you can use only during that turn for any reaction from a fighter feat or class feature. **Guardian** With a sixth sense for the flow of combat, you can quickly react to any situation as required. At the start of each enemy's turn, you gain a reaction you can use only during that turn for any reaction from a guardian feat or class feature."
+ },
+ {
+  "id": "bounty-hunter-dedication",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Bounty Hunter Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "When focused on finding your quarry, you're relentless. You gain the Hunt Prey action. You can use Hunt Prey to designate a creature that you've observed, heard about, or learned about through some other means, such as a bounty board or wanted poster. In addition to the other benefits of Hunt Prey, you can designate a target as your prey while Gathering Information about them, in addition to designating them as your prey when Tracking them as normal. If you have already identified your target and selected them as your prey, you gain a +2 circumstance bonus to checks to Gather Information about them. If you already have Hunt Prey, you gain the Monster Hunter feat in addition to the other benefits of this feat."
+ },
+ {
+  "id": "brevic-noble",
+  "lane": "grantsFeat",
+  "collection": "backgrounds",
+  "name": "Brevic Noble",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You claim a tangential but legitimate connection to one of Brevoy's noble families. If you aren't human, you were adopted by one of Brevoy's nobles or were perhaps a favored servant or even a childhood friend of a noble scion. Whatever the case, you've had a comfortable life, though still a far cry from the one your distant cousins or close associates know. An expedition into the storied Stolen Lands seems like just the test to see if you really are worthy of the \"noble\" title. Choose two attribute boosts. One must be to **Constitution** or **Wisdom**, and one is a free attribute boost. Choose one of the Brevic lineages below. **Garess**: Family ties to the Golushkin Mountain dwarves left its mark. Your family motto is \"Strong as the Mountains.\" You're trained in the Crafting skill and the Architecture Lore skill. You gain the Specialty Crafting skill feat. **Lebeda**: Your family's history of trading along the shores of Lake Reykal pervades your blood. Your family motto is \"Success through Grace.\" You're trained in the Society skill and the Mercantile Lore skill. You gain the skill feat. **Lodovka**: Your family has made a living off the coasts of the Lake of Mists and Veils since before Brevoy existed. Your family motto is \"The Waters, Our Fields.\" You're trained in the Athletics skill and the Fishing Lore skill. You gain the Underwater Marauder skill feat. **Medvyed**: Your family has a deep respect for the wilderness and is skilled at hunting and surviving off the and. Your family motto is \"Endurance Overcomes All.\" You're trained in the Survival skill and the Hunting Lore skill. You gain the Terrain Expertise skill feat.(choose your terrain from aquatic, forest, mountain, plains, or swamp). **Orlovsky**: Your family has a reputation for avoiding conflicts. Your family motto is \"High Above.\" You're trained in the Diplomacy skill and the Brevoy Lore skill. You gain the Group Impression skill feat. **Surtova**: Your family is well known for their political agility and scheming nature. Your family motto is Ours Is the Right.\" You're trained in the Deception skill and the Politics Lore skill. You gain the Charming Liar skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free"
+ },
+ {
+  "id": "butterflys-sting",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Butterfly's Sting",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain the Sneak Attack class feature. You don't increase the number of dice as you gain levels."
+ },
+ {
+  "id": "captain-dedication",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Captain Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [
+   "featGrantsAuto"
+  ],
+  "text": "You become trained in your choice of Diplomacy or Intimidation; if you are already trained in both of these skills, you become trained in a skill of your choice. You also gain your choice of the Group Impression or the Group Coercion skill feat. If you already have both of these skill feats, you gain another 1st-level skill feat for which you qualify. You also gain the assistance of a dedicated follower, who has agreed to accompany you on your journeys. They have the minion trait and begin as a novice follower. --- **Special** Once you have a follower, you can never take a feat or class feature that grants an animal companion or another companion that prevents you from having an animal companion."
+ },
+ {
+  "id": "cascade-bearers-flexibility",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Cascade Bearer's Flexibility",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "spellshape"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per day **Requirements** You haven't yet acted on your turn. --- You call upon your Cascade Bearer training to help you adjust a spell for the current situation. Until the end of your turn, you gain a single spellshape feat from the druid class or the wizard class that has a level requirement of no more than half your level."
+ },
+ {
+  "id": "cataphract-fleshwarp",
+  "lane": "grantsFeat",
+  "collection": "heritages",
+  "name": "Cataphract Fleshwarp",
+  "traits": [],
+  "engineFieldsPresent": [
+   "grantsFeats"
+  ],
+  "inRegistries": [],
+  "text": "Your battle-hardened skeleton is laced with additional cartilage and muscle to help bear armor across vast areas of operation, and your skin is bedecked with tiny spurs of pliable, resilient keratin to optimize the grip and weight distribution of your armor. You gain the Armor Proficiency feat. If your class makes you trained in all types of armor, you instead become trained in Athletics (or a skill of your choice if you're already trained in Athletics) and gain the Armor Assist skill feat."
+ },
+ {
+  "id": "catfolk-weapon-expertise",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Catfolk Weapon Expertise",
+  "level": 13,
+  "traits": [
+   "catfolk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featGrantsAuto"
+  ],
+  "text": "Catfolk Weapon Expertise Source Advanced Player's Guide pg. 11 Prerequisites Catfolk Weapon Familiarity Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency rank in all weapons you are trained in from Catfolk Weapon Familiarity."
+ },
+ {
+  "id": "catharsis-emotion",
+  "lane": "grantsFeat",
+  "collection": "classFeatures",
+  "name": "Catharsis Emotion",
+  "level": 2,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Catharsis Trigger** The event or conditions you must meet to take your Catharsis reaction. **Catharsis Activation** The benefit when you use Catharsis. **Emotional Fervor** **Benefits** you gain for 3 rounds after you use Catharsis. This entry also lists a spell you're able to cast while in your emotional fervor. You must expend a spell slot to cast it. This slot most be of at least the spell's rank, and the spell is automatically heightened to the rank of slot you expended. **Emotional Fallout** The effect you experience when your emotional fervor ends. **Focus Spell** The focus spell you gain if you select the Cathartic Focus Spell archetype feat."
+ },
+ {
+  "id": "champion-dedication",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Champion Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication",
+   "multiclass"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [
+   "featGrantsAuto"
+  ],
+  "text": "Choose a deity. You are bound by your deity's anathema and gain the champion's aura and sanctification as described in the champion class. Choose a cause as you would if you were a champion, with the same options a champion must abide by. You gain its edicts and anathema but don't gain the other abilities. You become trained in Religion and your deity's associated skill; for each of these skills in which you were already trained, you instead become trained in a skill of your choice. You become trained in champion class DC. If you later gain a devotion spell, you become trained in spell attack modifier and spell DC. You become trained in light armor and medium armor. If you already were trained in light armor and medium armor, you gain training in heavy armor as well. Whenever you gain a class feature that grants you expert or greater proficiency in any type of armor (but not unarmored defense), you also gain that proficiency in the armor types granted to you by this feat. If you have a class feature that grants you expert proficiency in unarmored defense and you're 13th level or higher, you also become an expert in the armor types granted to you by this feat."
+ },
+ {
+  "id": "changeling",
+  "lane": "grantsFeat",
+  "collection": "heritages",
+  "name": "Changeling",
+  "traits": [
+   "changeling"
+  ],
+  "engineFieldsPresent": [
+   "senses"
+  ],
+  "inRegistries": [],
+  "text": "Your mother was a hag. Your eyes' heterochromia is the most obvious signifier of this parentage, but you likely also have a slighter build, paler skin, and darker hair than most members of your other parent's ancestry. You gain the changeling trait. You also gain low-light vision, or you gain darkvision if your ancestry already has low-light vision. You can select from changeling feats and feats from your other parent's ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "child-of-notoriety",
+  "lane": "grantsFeat",
+  "collection": "backgrounds",
+  "name": "Child of Notoriety",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "choice",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "One or more of your ancestors committed a grave atrocity, and even though you've tried to live your own life, your family's grim past looms over you like a relentless shadow. You might have traveled a thousand miles to escape the legends, learned how to ingratiate yourself to others, just tried to ignore the everyday accusing glances, or even accepted the notoriety just to be left alone. You didn't commit the crime, yet it haunts you. Whether you're proving the world wrong, proving to yourself that you're no monster, earning wealth to pay reparations, or just driven to do some good with your life, it's time to break free of the past. That journey begins with understanding. Clan Tolorr preserves the deeds and misdeeds of dwarven legend. With their help, you might not only understand dwarven crimes and reparations, but also learn how to accept your past and leave the world a little better than when you found it. You've corresponded with Clan Tolorr, but your most recent message came instead from one of the clan's guests: a lizardfolk mystic named Valahask who studies the dead and is eager to meet you. He has lobbied on your behalf, earning you an invitation to Clan Tolorr's upcoming Family Festival. Choose two attribute boosts. One must be to **Constitution** or **Charisma**, and one is a free attribute boost. Choose whether you've navigated your past through kindness or notoriety thus far. For the former, you're trained in the Diplomacy skill and the Genealogy Lore skill, and you gain the Group Impression skill feat. For the latter, you're trained in the Intimidation skill and the Underworld Lore skill, and you gain the Intimidating Glare skill feat. **Connection:** Valahask, an iruxi mystic **Reputation Points:** –1 --- ## Background details **Attribute Boosts** Charisma or Constitution, one free"
+ },
+ {
+  "id": "child-of-the-polis",
+  "lane": "grantsFeat",
+  "collection": "backgrounds",
+  "name": "Child of the Polis",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedSkillChoice"
+  ],
+  "inRegistries": [],
+  "text": "You're a longtime Kardaji Bay resident. Rather than explore distant lands, you've strengthened your connection to Iblydos, learning its little-known secrets and making friends in every port. You know the cadence and body language needed to set strangers at ease and communicate belonging, making it easy to track down deals and leads. Who needs wealth and glory when they can revel in Iblydos's eclectic culture? That said, if anything threatens the isles, you'll be ready to rally your neighbors and fight back. Choose two attribute boosts. One must be to **Constitution** or **Wisdom**, and one is a free attribute boost. You're trained in either the Diplomacy or Society skill, as well as the Lore skill associated with one Iblydan city-state (Pol-Bailax or Pol-Dhuraxilis is recommended). If you choose Diplomacy, you gain the Bargain Hunter skill feat. If you choose Society, you gain the Streetwise skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free"
+ },
+ {
+  "id": "claim-cardinal-domains",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Claim Cardinal Domains",
+  "level": 14,
+  "traits": [
+   "mythic"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "Your dominion over the divine truths of the world increases. You can lay claim to up to three additional domains, to a total maximum of four. Your mortal form cannot easily contain such power, however—each day during your daily preparations, decide which of your domains you are currently drawing power from; you gain access to this domain for the day and can cast its domain spells as normal, while your ability to access the power of your other domains lies dormant. You learn the advanced domain spell for any domain that you have claimed with your godling abilities. When you gain this feat, you can choose not to lay claim to one or more domains immediately, instead leaving the space open until later in your story. As long as you have one or more domains unclaimed, you can spend a Mythic Point as a single action to claim a domain, even in the heat of battle, immediately making this your active domain. This domain remains a part of your portfolio forever and cannot be changed after this point. You can also spend a Mythic Point to overcharge your divine power, gaining access to all the domains you have claimed for the next minute and passing this access on to your hierophant as normal. After the minute ends, you can choose which of the four domains you retain access to until your next daily preparations."
+ },
+ {
+  "id": "combat-flexibility",
+  "lane": "grantsFeat",
+  "collection": "classFeatures",
+  "name": "Combat Flexibility",
+  "level": 9,
+  "traits": [
+   "fighter"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You can prepare your tactics to suit different situations. When you make your daily preparations, you gain one fighter feat of 8th level or lower that you meet the prerequisites for and don't already have. You can use that feat until your next daily preparations."
+ },
+ {
+  "id": "commander-dedication",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Commander Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication",
+   "multiclass"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featGrantsAuto"
+  ],
+  "text": "You gain the tactics class feature like a commander and gain your own folio; this folio contains two common mobility or offensive tactics of your choosing. You can prepare one of these tactics whenever a commander would be able to prepare tactics. You gain a commander's banner that grants you a 30-foot aura for the purposes of using your tactics, but the banner does not grant the commander's banner bonus to Will saves and DCs against fear effects. You become trained in commander class DC and Warfare Lore; if you were already trained in Warfare Lore, you become trained in another Lore skill of your choice."
+ },
+ {
+  "id": "conrasu-weapon-expertise",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Conrasu Weapon Expertise",
+  "level": 13,
+  "traits": [
+   "conrasu"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featGrantsAuto"
+  ],
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency for Composite Shortbow, Glaive, Longspear, Longsword, Shortbow, Spear, and all conrasu weapons(Buugeng) in which you are trained."
+ },
+ {
+  "id": "conservator",
+  "lane": "grantsFeat",
+  "collection": "backgrounds",
+  "name": "Conservator",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "choice",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkillChoice"
+  ],
+  "inRegistries": [],
+  "text": "Some history survives only so long as its physical remains do. You've developed robust museum skills to identify relics, preserve artifacts, recreate ancient technologies, and even rebuild shattered treasures—often with painstaking patience, a steady hand, and even a little magic. Your contributions don't end there, as whether you've mastered diligent recordkeeping or helped uncover smuggling rings that are looting archaeological sites, you've made an impression. Hearing of your promising abilities, representatives from Clan Tolorr contacted you, inviting you to study with their museum masters and share your own techniques, all while helping preserve over 10,000 years of history! Choose two attribute boosts. One must be to **Dexterity** or **Intelligence**, and one is a free attribute boost. You're trained in either the Crafting skill or the Thievery skill, and you're trained in either the Accounting Lore or the Underworld Lore skill. If you selected Crafting, you gain the Quick Repair skill feat. If you chose Thievery, you gain the Assurance (Thievery) skill feat. **Connection:** Ria, an oread gnome curator who studies rivethun traditions **Reputation Points:** +1 --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free"
+ },
+ {
+  "id": "construct-eidolon",
+  "lane": "grantsFeat",
+  "collection": "classFeatures",
+  "name": "Construct Eidolon",
+  "level": 1,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [
+   "situationalBonuses",
+   "companionGrants"
+  ],
+  "text": "Your eidolon is a mental construct based on an astral thoughtform and given physical presence and life by its connection to you, its shape limited only by your imagination. Your eidolon's appearance and physical form vary based on your shared vision for its construction, from clockworks to stuffed dolls and everything between, and it's not uncommon for that appearance to change greatly as your construct gains evolutions. Because it arises from an astral entity, your construct is no mindless servitor, but a fully thinking being with its own ideas, goals, and even emotions. These entities are extremely diverse; while many construct eidolons come from a powerful symbiotic connection with astral denizens, just as many arise from the forgotten memories of ancient empires and craftworks drifting across the Silver Sea of the Astral Plane. **Tradition** arcane **Traits** astral, construct, eidolon **Home Plane** Astral Plane --- **Size** Medium **Suggested Attacks** fist (bludgeoning) **Warrior Construct** Str 18, Dex 14, Con 16, Int 12, Wis 10, Cha 8; +2 AC (+3 Dex cap) **Scout Construct** Str 14, Dex 18, Con 16, Int 12, Wis 10, Cha 8; +1 AC (+4 Dex cap) **Skills** Arcana, Crafting **Senses** darkvision **Language** one common mortal language **Speed** 25 feet --- **Eidolon Abilities** *Initial* construct heart; *Symbiosis* reconfigured evolution; *Transcendence* ultimate reconfiguration ## Construct Heart Your construct eidolon has a link directly to your life force, which renders it a living creature and therefore susceptible to many ailments that bother only the living, though it does possess some resistances to these effects. It doesn't have a construct's normal immunities, but does gain a +2 circumstance bonus to saving throws against death effects, disease, necromancy, and poison effects, as well as effects causing the fatigued or sickened conditions. Additionally, its astral essence bleeds off slowly, and it only needs to succeed at a to remove persistent bleed damage (or DC 5 after receiving particularly effective aid). ## Reconfigured Evolution 7th Your construct eidolon is particularly easy to reconfigure, gaining an additional evolution that suits both of your whims. Choose one additional evolution feat of 6th level or lower. Your eidolon gains that feat. You can Retrain this feat for any other evolution feat of 6th level or lower with only a single day of downtime if you succeed at a Crafting check, with a standard DC of your eidolon's level. If you fail, you can try again on a later day. Many summoners choose Eidolon's Wrath for this ability. ## Ultimate Reconfiguration 17th Your construct eidolon becomes even more customizable. Choose an evolution feat of 16th level or lower. Your eidolon gains that feat. You can spend downtime to adjust it using Crafting, just like the feat from reconfigured evolution. Many summoners select Ever-Vigilant Senses for this ability."
+ },
+ {
+  "id": "construction-occultist",
+  "lane": "grantsFeat",
+  "collection": "backgrounds",
+  "name": "Construction Occultist",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "trainedLore",
+   "trainedSkillChoice"
+  ],
+  "inRegistries": [],
+  "text": "You helped to build and design buildings and public works on behalf of Geb's architectural faction, the Builders League. You've been taught that creating bridges, gatehouses, roads, walls, and more is as much about planning as it is about brute labor. You learned that the Builders League has plans of occult significance for many of its construction projects and might have even aided them in the way you laid stones or designed walls (although you never learned the great design behind those secret plans). Although you've left construction behind, the skills in long-term planning and leveraging effort remain with you. You are still well-regarded by the Builders League. Your party gains 1 Reputation Point with the Builders League at the start of the campaign. Choose two attribute boosts. One must be to **Intelligence** or **Strength**, and one is a free attribute boost. You're trained in your choice of the Athletics or Occultism skill. You gain a skill feat: Hefty Hauler if you chose Athletics or Oddity Identification if you chose Occultism. You're also trained in Architecture Lore. --- ## Background details **Attribute Boosts** Intelligence or Strength, one free **Lore** Architecture Lore"
+ },
+ {
+  "id": "dancer-in-the-seasons",
+  "lane": "grantsFeat",
+  "collection": "classFeatures",
+  "name": "Dancer in the Seasons",
+  "level": 7,
+  "traits": [
+   "exemplar"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You flourish in spring and idle in summer, give in fall and take in winter. You gain the Energized Spark feat for your choice of cold, fire, void, or wood. When you critically succeed on a Strike, you can Step as a free action in a whirl of leaves, snow, blossoms, or shimmering heat. The season changes, rotating each time you use this ability. When you Spark Transcendence, you gain temporary Hit Points equal to half your level as you are reinvigorated by the changing of the seasons; these temporary Hit Points last until the start of your next turn."
+ },
+ {
+  "id": "debilitating-venom",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Debilitating Venom",
+  "level": 5,
+  "traits": [
+   "vishkanya"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "Your venom is particularly potent, affecting targets in different ways. When you gain this feat, select one of the following debilitations. When you use Envenom, you can choose to apply a debilitation to your venom to adjust its effects. The changes to each stage of the venom are listed. You can apply only one debilitation to your venom. - **Hampering** (level 5) **Stage 1** –5-foot status penalty to Speed **Stage 2** –5-foot status penalty to Speed **Stage 3** –10-foot status penalty to Speed - **Stumbling** (level 5) **Stage 1** no adjustment **Stage 2** off-guard **Stage 3** off-guard and a –5-foot penalty to Speed **Special** You can select this feat a second time to gain the other debilitation."
+ },
+ {
+  "id": "dedicated-delver",
+  "lane": "grantsFeat",
+  "collection": "backgrounds",
+  "name": "Dedicated Delver",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "choice",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkillChoice"
+  ],
+  "inRegistries": [],
+  "text": "Filled with predators, pitfalls, and other perils, the Darklands rightfully scares off most travelers. Not you! Whether you're a veteran Darklands caravanner, a cartographer seeking safer paths through dangerous territory, or just a spelunker who loves to escape the surface and hear the caverns sing, you're adept at navigating underground obstacles and finding your way back to civilization. Clan Tolorr specializes more in studying the past than extracting it from dangerous areas. Its leader, Arghan Tolorr, was an avid explorer in his youth, and he's begun an initiative to befriend, recruit, and train subterranean daredevils who can extract relics responsibly. You're one of his candidates for this pilot program. Helping administrate recruits is Ria, a gnome curator and close Tolorr confidante who helped arrange your travel to Highhelm. Choose two attribute boosts. One must be to **Strength** or **Dexterity**, and one is a free attribute boost. You're trained in either the Athletics skill or the Survival skill, and you're trained in the Cave Lore skill. If you selected Athletics, you gain the Combat Climber skill feat. If you chose Survival, you gain the Terrain Expertise (Underground) skill feat. **Connection:** Ria, an oread gnome curator who studies rivethun traditions **Reputation Points:** +0 --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Lore** Cave Lore"
+ },
+ {
+  "id": "determined-lore-seeker",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Determined Lore Seeker",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "You've mastered useful spells that let you find hidden truths others might miss, and a preferred spell comes naturally to you. When you gain this feat, choose one of the innate spells granted by the Lore Seeker feat: comprehend language, restore senses, or see invisibility. You can cast this spell three times per day instead of once per day. When you cast any of the spells granted by Lore Seeker as innate spells, they gain additional effects. When you cast comprehend language, the spell is heightened to 4th level. When you cast restore senses,the spell is heightened to half your level, rounded up. When you cast see invisibility, for the duration of the spell you can use an action, which has the concentrate trait, to see invisible creatures normally (instead of seeing them as translucent shapes that are concealed to you) until the end of your next turn."
+ },
+ {
+  "id": "devout-blessing",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Devout Blessing",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "You gain the blessing of the devoted class feature, choosing from the listed blessings or any other to which you have access."
+ },
+ {
+  "id": "devout-magic",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Devout Magic",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain a devotion spell of your choice listed in the devotion spells class feature, following the same restrictions listed there."
+ },
+ {
+  "id": "dhampir",
+  "lane": "grantsFeat",
+  "collection": "heritages",
+  "name": "Dhampir",
+  "traits": [
+   "dhampir"
+  ],
+  "engineFieldsPresent": [
+   "senses"
+  ],
+  "inRegistries": [],
+  "text": "You are the scion of a vampire, half living and half undead, gifted with uncanny charm and grace, a bloodless pallor, and elongated incisors. You gain the dhampir trait, in addition to the traits from your ancestry. You have the void healing ability, which means you are harmed by vitality damage and healed by void effects as if you were undead. You also gain low-light vision, or you gain darkvision if your ancestry already has low-light vision. You can select from dhampir feats and feats from your ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "draconic-paragon",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Draconic Paragon",
+  "level": 9,
+  "traits": [
+   "kobold"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your connection to your draconic benefactor becomes especially pronounced. You gain additional effects for the prerequisite kobold feat. If you have more than one of the prerequisite feats, you gain the appropriate additional effects. - **Benefactor's Strike** Your unarmed strikes made with your jaws, claws, or tail gain the deadly d6 trait. - **Dracomancer** Increase the number of times per day you can cast each of the granted 1st- and 2nd-rank innate spells by 1. - **Kobold Breath** Creatures that critically fail their save against your Kobold Breath take 3d4 persistent damage of the type dealt by your draconic benefactor."
+ },
+ {
+  "id": "dragonblood",
+  "lane": "grantsFeat",
+  "collection": "heritages",
+  "name": "Dragonblood",
+  "traits": [
+   "dragonblood"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You're descended in some way from a dragon. Your physical features might show this outwardly, with a pair of draconic horns, patches of scaly skin, or even a tail, or you might develop an internal reserve of draconic power. You gain the dragonblood trait, in addition to the traits from your ancestry. Add Draconic to your ancestry's list of additional languages (allowing you to choose it as a language if your Intelligence modifier is positive). When you roll a success on a saving throw against a fear effect, you get a critical success instead. You can choose from dragonblood feats and feats from your ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "dragons-breath",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Dragon's Breath",
+  "level": 9,
+  "traits": [
+   "kobold"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Dragon's Breath Source Advanced Player's Guide pg. 15 Prerequisites Kobold Breath You can put more effort into your Kobold Breath to channel greater draconic power, though it takes more out of you. When you use Kobold Breath, you can increase the damage dice to d8s and increase the area to 60 feet for a line breath weapon or 30 feet for a cone. If you do, you can't use Kobold Breath again for 1 hour."
+ },
+ {
+  "id": "dragons-breath-1st-level-spell",
+  "lane": "grantsFeat",
+  "collection": "items",
+  "name": "Dragon's Breath (1st-Level Spell)",
+  "level": 4,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This rune depicts a specific type of dragon, resizing after application to fit the surface of the item. --- **Activate** ⟨4⟩ envision (spellshape) **Requirements** You're receiving a bonus to AC from your *dragon's breath* cape or shield --- **Effect** If your next action is to Cast a Spell with an area of effect that deals the same type of damage as the depicted dragon's breath weapon, the spell gains the effects of the Widen Spell feat. The rune can only affect spells of 1st level."
+ },
+ {
+  "id": "dragons-breath-2nd-level-spell",
+  "lane": "grantsFeat",
+  "collection": "items",
+  "name": "Dragon's Breath (2nd-Level Spell)",
+  "level": 6,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This rune depicts a specific type of dragon, resizing after application to fit the surface of the item. --- **Activate** ⟨4⟩ envision (spellshape) **Requirements** You're receiving a bonus to AC from your *dragon's breath* cape or shield --- **Effect** If your next action is to Cast a Spell with an area of effect that deals the same type of damage as the depicted dragon's breath weapon, the spell gains the effects of the Widen Spell feat. The rune can only affect spells of 2nd level or lower."
+ },
+ {
+  "id": "dragons-breath-3rd-level-spell",
+  "lane": "grantsFeat",
+  "collection": "items",
+  "name": "Dragon's Breath (3rd-Level Spell)",
+  "level": 8,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This rune depicts a specific type of dragon, resizing after application to fit the surface of the item. --- **Activate** ⟨4⟩ envision (spellshape) **Requirements** You're receiving a bonus to AC from your *dragon's breath* cape or shield --- **Effect** If your next action is to Cast a Spell with an area of effect that deals the same type of damage as the depicted dragon's breath weapon, the spell gains the effects of the Widen Spell feat. The rune can only affect spells of 3rd level or lower."
+ },
+ {
+  "id": "dragons-breath-4th-level-spell",
+  "lane": "grantsFeat",
+  "collection": "items",
+  "name": "Dragon's Breath (4th-Level Spell)",
+  "level": 10,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This rune depicts a specific type of dragon, resizing after application to fit the surface of the item. --- **Activate** ⟨4⟩ envision (spellshape) **Requirements** You're receiving a bonus to AC from your *dragon's breath* cape or shield --- **Effect** If your next action is to Cast a Spell with an area of effect that deals the same type of damage as the depicted dragon's breath weapon, the spell gains the effects of the Widen Spell feat. The rune can only affect spells of 4th level or lower."
+ },
+ {
+  "id": "dragons-breath-5th-level-spell",
+  "lane": "grantsFeat",
+  "collection": "items",
+  "name": "Dragon's Breath (5th-Level Spell)",
+  "level": 12,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This rune depicts a specific type of dragon, resizing after application to fit the surface of the item. --- **Activate** ⟨4⟩ envision (spellshape) **Requirements** You're receiving a bonus to AC from your *dragon's breath* cape or shield --- **Effect** If your next action is to Cast a Spell with an area of effect that deals the same type of damage as the depicted dragon's breath weapon, the spell gains the effects of the Widen Spell feat. The rune can only affect spells of 5th level or lower."
+ },
+ {
+  "id": "dragons-breath-6th-level-spell",
+  "lane": "grantsFeat",
+  "collection": "items",
+  "name": "Dragon's Breath (6th-Level Spell)",
+  "level": 14,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This rune depicts a specific type of dragon, resizing after application to fit the surface of the item. --- **Activate** ⟨4⟩ envision (spellshape) **Requirements** You're receiving a bonus to AC from your *dragon's breath* cape or shield --- **Effect** If your next action is to Cast a Spell with an area of effect that deals the same type of damage as the depicted dragon's breath weapon, the spell gains the effects of the Widen Spell feat. The rune can only affect spells of 6th level or lower."
+ },
+ {
+  "id": "dragons-breath-7th-level-spell",
+  "lane": "grantsFeat",
+  "collection": "items",
+  "name": "Dragon's Breath (7th-Level Spell)",
+  "level": 16,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This rune depicts a specific type of dragon, resizing after application to fit the surface of the item. --- **Activate** ⟨4⟩ envision (spellshape) **Requirements** You're receiving a bonus to AC from your *dragon's breath* cape or shield --- **Effect** If your next action is to Cast a Spell with an area of effect that deals the same type of damage as the depicted dragon's breath weapon, the spell gains the effects of the Widen Spell feat. The rune can only affect spells of 7th level or lower."
+ },
+ {
+  "id": "dragons-breath-8th-level-spell",
+  "lane": "grantsFeat",
+  "collection": "items",
+  "name": "Dragon's Breath (8th-Level Spell)",
+  "level": 18,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This rune depicts a specific type of dragon, resizing after application to fit the surface of the item. --- **Activate** ⟨4⟩ envision (spellshape) **Requirements** You're receiving a bonus to AC from your *dragon's breath* cape or shield --- **Effect** If your next action is to Cast a Spell with an area of effect that deals the same type of damage as the depicted dragon's breath weapon, the spell gains the effects of the Widen Spell feat. The rune can only affect spells of 8th level or lower."
+ },
+ {
+  "id": "dragons-breath-9th-level-spell",
+  "lane": "grantsFeat",
+  "collection": "items",
+  "name": "Dragon's Breath (9th-Level Spell)",
+  "level": 20,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This rune depicts a specific type of dragon, resizing after application to fit the surface of the item. --- **Activate** ⟨4⟩ envision (spellshape) **Requirements** You're receiving a bonus to AC from your *dragon's breath* cape or shield --- **Effect** If your next action is to Cast a Spell with an area of effect that deals the same type of damage as the depicted dragon's breath weapon, the spell gains the effects of the Widen Spell feat. The rune can only affect spells of 9th rank or lower."
+ },
+ {
+  "id": "dromaar",
+  "lane": "grantsFeat",
+  "collection": "heritages",
+  "name": "Dromaar",
+  "traits": [
+   "dromaar"
+  ],
+  "engineFieldsPresent": [
+   "senses"
+  ],
+  "inRegistries": [],
+  "text": "Orcish strength emboldens your bloodline. You have a green tinge to your skin and other indicators of orc heritage. You gain the orc trait, the dromaar trait, and low-light vision. When you gain an ancestry feat, you can choose from dromaar and orc feats in addition to those from your ancestry."
+ },
+ {
+  "id": "druidic-order",
+  "lane": "grantsFeat",
+  "collection": "classFeatures",
+  "name": "Druidic Order",
+  "level": 1,
+  "traits": [
+   "druid"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Upon becoming a druid, you align yourself with a druidic order, which grants you a class feat, an order spell (see below), and an additional trained skill tied to your order While you'll always be a member of your initial order, it's not unheard of for a druid to request to study with other orders in search of greater understanding of the natural world, and PC druids are among the most likely to blend the powers of different orders. Order spells are a type of focus spell. It costs 1 Focus Point to cast a focus spell, and you start with a focus pool of 1 Focus Point. You refill your focus pool during your daily preparations, and you can regain 1 Focus Point by spending 10 minutes using the Refocus activity to commune with local nature spirits or otherwise tend to the wilderness in a way befitting your order. Focus spells are automatically heightened to half your level rounded up, much like cantrips. Focus spells don't require spell slots, and you can't cast them using spell slots. Certain feats give you more focus spells. The maximum Focus Points your focus pool can hold is equal to the number of focus spells you have, but can never be more than 3 points. **Order Skill** You become trained in the listed skill. If you're already trained in that skill, you become trained in a different skill of your choice. **Druid Feat** You gain this 1st-level druid feat. **Order Spell** You automatically gain the listed order spell at 1st level. **Anathema** Add this anathema to those for all druids. --- Animal Order Flame Order Leaf Order Stone Order Storm Order Untamed Order Wave Order"
+ },
+ {
+  "id": "duskwalker",
+  "lane": "grantsFeat",
+  "collection": "heritages",
+  "name": "Duskwalker",
+  "traits": [
+   "duskwalker"
+  ],
+  "engineFieldsPresent": [
+   "senses"
+  ],
+  "inRegistries": [],
+  "text": "Thanks to an ancient bargain, your soul has been reborn as a duskwalker, a planar scion with a connection to psychopomps and the Boneyard. You gain the duskwalker trait. You also gain low-light vision, or you gain darkvision if your ancestry already has low-light vision. Neither your body nor your spirit can ever become undead. You can select from duskwalker feats and feats from your ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "dwarven-weapon-expertise",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Dwarven Weapon Expertise",
+  "level": 13,
+  "traits": [
+   "dwarf"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Dwarven Weapon Expertise Source Core Rulebook pg. 37 Prerequisites Dwarven Weapon Familiarity Your dwarven affinity blends with your training, granting you great skill with dwarven weapons. Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency for battle axes, picks, warhammers, and all dwarven weapons in which you are trained."
+ },
+ {
+  "id": "eidolons-wrath",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Eidolon's Wrath",
+  "level": 6,
+  "traits": [
+   "evolution",
+   "summoner"
+  ],
+  "engineFieldsPresent": [
+   "choice",
+   "focusSpells"
+  ],
+  "inRegistries": [],
+  "text": "Your eidolon gains the Eidolon's Wrath focus spell, which it casts, instead of you. You determine the damage type when you gain the feat: acid, cold, electricity, fire, sonic, vitality, or void. If your eidolon is a celestial, fiend, or monitor with an alignment other than true neutral, you can choose a damage type in its alignment. Increase the number of Focus Points in your focus pool by 1. As normal, your eidolon shares your Focus Points."
+ },
+ {
+  "id": "eldritch-trickster",
+  "lane": "grantsFeat",
+  "collection": "classFeatures",
+  "name": "Eldritch Trickster",
+  "level": 1,
+  "traits": [
+   "rogue"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "When it comes to a big heist, every rogue worth their salt knows that magic can throw meticulous plans into chaos, whether in the form of arcane wards or pesky divinations. You dabble in magic just enough to help handle these problems by jury-rigging spells and throwing a bit of your own magic into the mix. You might be a solitary thief, performing burglaries that can't be explained by skill alone, or a specialist called in by other rogues to deal with magical security measures. You might even be on the up-and-up, hired to test magical defenses or even build them yourself. Choose a multiclass archetype that has a basic, expert, and master spellcasting feat. You gain that archetype's dedication feat as a bonus feat even though you don't meet its level prerequisite, though you must meet its other prerequisites. For you, the Magical Trickster rogue feat has a prerequisite of 2nd level instead of 4th level. You can choose the spellcasting ability score for the multiclass archetype you chose as your key ability score."
+ },
+ {
+  "id": "elemental-overlap",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Elemental Overlap",
+  "level": 8,
+  "traits": [
+   "kineticist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Though you've dedicated yourself to one element, you learn to mix that element with another. Gain a composite impulse feat that includes your kinetic element. You can use that impulse even though you can't channel all its elements. The feat's level must be lower than the level at which you selected Elemental Overlap. --- **Special** You can select this feat more than once, choosing a different impulse feat each time."
+ },
+ {
+  "id": "elemental-wrath",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Elemental Wrath",
+  "level": 1,
+  "traits": [
+   "elf"
+  ],
+  "engineFieldsPresent": [
+   "choice",
+   "effectChoices",
+   "innateSpells"
+  ],
+  "inRegistries": [],
+  "text": "You are so attuned to the land that you can call forth a bolt of energy from your surroundings. When you gain this feat, select acid, cold, electricity, or fire. You can call to the land to cast the Acid Splash cantrip as an innate primal spell at will, except the spell has only verbal components and deals the type of damage you chose instead of acid damage; the spell gains the trait appropriate to its damage instead of the acid trait. A cantrip is heightened to a spell rank equal to half your level rounded up."
+ },
+ {
+  "id": "elven-weapon-expertise",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Elven Weapon Expertise",
+  "level": 13,
+  "traits": [
+   "elf"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Elven Weapon Expertise Source Core Rulebook pg. 41 Prerequisites Elven Weapon Familiarity Your elven affinity blends with your class training, granting you great skill with elven weapons. Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency in longbows, composite longbows, longswords, rapiers, shortbows, composite shortbows, and all elf weapons in which you are trained."
+ },
+ {
+  "id": "emissary-familiar",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Emissary Familiar",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "You forge a mystical bond with a spirit or create a spirit from a fragment of your own soul. You gain a familiar. If you already have a familiar, you gain the Enhanced Familiar feat. Your familiar gains two additional familiar abilities each day, one of which must be used to select Synchronize Spirit."
+ },
+ {
+  "id": "empiricists-eye",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Empiricist's Eye",
+  "level": 12,
+  "traits": [
+   "investigator"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Sharp and piercing, your eyes see all and convey more. Your Point Out actions lose the auditory trait, and you don't need to be heard to convey the information to your allies. In addition, a creature you Point Out is off-guard to your allies until the start of your next turn. --- **Special** If you have the Blind-Fight feat, your allies gain that feat's benefits against any creature that's off-guard due to Empiricist's Eye."
+ },
+ {
+  "id": "entwined-energy-ki",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Entwined Energy Ki",
+  "level": 10,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "You can transform your inner power into a type of energy to empower your qi abilities. When you gain this feat, choose either acid, cold, electricity, fire, or sonic damage. When you cast qi blast, you can choose to have the spell deal the type of damage you chose instead of force damage. When you cast qi form or inner upheaval, add the type of damage you chose to the list of damage types you can select for the spell. **Special** At the GM's discretion, this feat can alter other qi spells."
+ },
+ {
+  "id": "evolution-feat",
+  "lane": "grantsFeat",
+  "collection": "classFeatures",
+  "name": "Evolution Feat",
+  "level": 1,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Evolution feats are a special type of summoner class feat that allow you to customize your eidolon through your shared link. You gain an evolution feat for your eidolon at 1st level, representing the differences that make it unique from other eidolons of its type. If you retrain this feat, the feat you replace it with must also be an evolution feat."
+ },
+ {
+  "id": "executioner-weapon-training",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Executioner Weapon Training",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featGrantsAuto"
+  ],
+  "text": "Your Gray Gardener training has made you deeply skilled with the weapons that execute with a swift chop to the neck. You become trained with the following weapons: Battle Axe, Falchion, Greataxe, and Scimitar. Whenever you gain a class feature that grants you expert or greater proficiency with a given weapon or weapons, you also gain that proficiency for these weapons."
+ },
+ {
+  "id": "experimental-spellshaping",
+  "lane": "grantsFeat",
+  "collection": "classFeatures",
+  "name": "Experimental Spellshaping",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your thesis posits that the magical practice of spellshaping can be realized more efficiently by altering variables and parameters as you cast, imitating the wizards of long ago who had to work out their own spells themselves. This allows you efficient access to various spellshape effects. You gain one 1st-level spellshape wizard feat of your choice. Starting at 4th level, during your daily preparations, you can gain a spellshape wizard feat of your choice that has a level requirement of no more than half your level, which you can use until your next daily preparations."
+ },
+ {
+  "id": "extract-vow-of-nonviolence",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Extract Vow of Nonviolence",
+  "level": 12,
+  "traits": [
+   "auditory",
+   "concentrate",
+   "exemplar"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You entice or threaten a weapon, making it swear not to harm you. Attempt a Diplomacy check to Request or an Intimidation check to Demoralize against one weapon within 60 feet—even though most weapons are inanimate and mindless, your words somehow still can affect it as if it were living and you shared a language. The DC for this check is the Will DC of the creature wielding the weapon or a moderate DC for the weapon's level if it's unattended. If the weapon is an intelligent item, use its Will DC. Regardless of the result of the save, the weapon is then temporarily immune to Extract Vow of Nonviolence for 1 day. --- **Critical Success** The object swears not to hurt you. You gain resistance to all damage dealt by that specific weapon as the weapon attempts to mitigate harm to you. The resistance is equal to half your level and lasts for 10 minutes. **Success** As critical success, but the remaining duration decreases by 1 minute each time the weapon hits you (even if it deals no damage). --- **Special** When you gain this feat, choose cold iron, duskwood, dawnsilver, or silver. For some reason—perhaps because you underestimate this material, or because you think it a friend—you are forever unable to use Extract Vow of Nonviolence on objects composed of the chosen material."
+ },
+ {
+  "id": "familiar-master-dedication",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Familiar Master Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "You have forged a mystical bond with a creature. This might have involved complex rituals and invocations, such as meditating under the moon until something crept out of the forest. Or maybe you just did each other a good turn, such as rescuing the beast from a trap or a foe, and then being rescued in turn. Whatever the details, you are now comrades until the end. You gain a familiar. If you already have a familiar, you gain the Enhanced Familiar feat."
+ },
+ {
+  "id": "fated-rival",
+  "lane": "grantsFeat",
+  "collection": "backgrounds",
+  "name": "Fated Rival",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "trainedLoreChoice"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You are bound in an adversarial relationship with another person or creature. You might have been close once, before everything went wrong, or they might have drastically altered your life at a crucial moment. Perhaps you are mystically bound by the red string of destiny, or perhaps your clash was preordained by the oracles of Po Li. Whatever the case, either fate or your own will keeps you driving forward to fight with them once more. You and your GM work out who your rival is and how they fit in to your story. You become trained in two Lore skills related to your rival, which you and your GM choose. You gain two free attribute boosts; you choose one, and the GM chooses one to complement your rival. So long as you are not in the presence of your rival, you gain the Diehard general feat and a +1 circumstance bonus to saving throws against the doomed condition. When in the presence of your rival, you lose these benefits but gain a +1 circumstance bonus to attack rolls and damage. If your rival becomes your ally or a member of your party, you gain the Diehard and save bonus benefits, as long as that's the case. --- ## Background details **Attribute Boosts** two free"
+ },
+ {
+  "id": "favored-prey",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Favored Prey",
+  "level": 4,
+  "traits": [
+   "ranger"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You have studied a specific type of wild creature and can hunt it more easily. When you gain this feat, choose animals, beasts, dragons, or both fungi and plants as your favored prey. When you roll initiative and can see an enemy that belongs to the chosen category, you can Hunt Prey as a free action, designating that enemy. You can use this free action even if you haven't identified the creature yet with Recall Knowledge. The benefit doesn't apply against favored enemies disguised as other creatures, and the GM determines whether it applies against a creature disguised as a favored prey."
+ },
+ {
+  "id": "ferocious-beasts",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Ferocious Beasts",
+  "level": 13,
+  "traits": [
+   "orc"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Since ancient times, the mightiest orc beast tamers would draw out the true fighting spirit of their companion beasts by feeding the creatures a draft incorporating the orc's own blood. All animal companions, pets, familiars, and bonded animals you have gain the Orc Ferocity feat, and gain one reaction per round they can use only for Orc Ferocity. If you have the Undying Ferocity ancestry feat, all animal companions, pets, familiars, and bonded animals you have also gain the benefits of that feat when using the Orc Ferocity reaction."
+ }
+]

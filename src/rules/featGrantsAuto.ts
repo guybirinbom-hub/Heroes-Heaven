@@ -32,6 +32,22 @@ export const FEAT_SKILL_GRANTS: Record<string, FeatGrant> = {
   'animal-actor': { conditionalSkills: { nature: { base: 'trained', upgraded: 'expert' } }, loreChoices: 1 },
   'aon-grippli-lore': { skills: { nature: 'trained', stealth: 'trained', 'lore:grippli': 'trained' } },
   'aquatic-elf-warrior': { weaponFamiliarity: {'weapons':['crossbow','heavy-crossbow','dagger','longspear','spear','trident'],'rank':'trained'} },
+  /* ---- ancestry weapon EXPERTISE ------------------------------------------------------------
+   * "Whenever you gain a class feature that grants you expert or greater proficiency in a given
+   * weapon or weapons, you also gain that proficiency in <list>."
+   *
+   * These MIRROR the character's own best weapon-category rank rather than granting a fixed one, so
+   * a 1st-level holder gains nothing extra and a fighter's weapon mastery carries through by itself.
+   * A flat `rank: 'expert'` would hand expert proficiency to a character who has not earned it, so
+   * `mirrorBestCategory` is the only correct shape here. Every weapon id checked against core.json.
+   */
+  'gnoll-weapon-expertise': { weaponFamiliarity: { weapons: ['flail', 'khopesh', 'mambele', 'spear', 'war-flail'], mirrorBestCategory: true } },
+  'gnome-weapon-expertise': { weaponFamiliarity: { weapons: ['glaive', 'kukri'], mirrorBestCategory: true } },
+  'goblin-weapon-expertise': { weaponFamiliarity: { weapons: ['dogslicer', 'horsechopper'], mirrorBestCategory: true } },
+  'halfling-weapon-expertise': { weaponFamiliarity: { weapons: ['sling', 'halfling-sling-staff', 'shortsword'], mirrorBestCategory: true } },
+  'orc-weapon-expertise': { weaponFamiliarity: { weapons: ['falchion', 'greataxe'], mirrorBestCategory: true } },
+  'vanths-weapon-expertise': { weaponFamiliarity: { weapons: ['bo-staff', 'longbow', 'composite-longbow', 'scythe', 'staff'], mirrorBestCategory: true } },
+  'lions-might': { weaponFamiliarity: { weapons: ['lion-scythe', 'sun-sling'], mirrorBestCategory: true } },
   'arcana-of-iron': { weapon: { advanced: 'trained' } },
   'arcane-dragonblood': { skills: { arcana: 'trained' } },
   'arcane-evolution': { skillChoices: [{ options: 'any', rank: 'trained' }] },

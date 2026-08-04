@@ -1,0 +1,539 @@
+{
+ "records": [
+  {
+   "id": "fey-eidolon",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "companionGrants.ts:164 'fey-eidolon': {kinds:['eidolon'],senses:['low-light vision']} — the eidolon and its senses are delivered. Magical Understudy / Magical Adept are EIDOLON feats, not player feats."
+  },
+  {
+   "id": "finishing-precision",
+   "verdict": "MISS",
+   "reason": "Grants Precise Strike (flat 1 damage, 1d6 on a finisher). 'precise-strike' exists only as a description-only classFeature; grep of src/ finds no code or field referencing it, so nothing adds the damage. A situational rider is the only lane that shows it.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "strikeDamage" }],
+      "when": "Precise Strike, agile or finesse melee (1d6 instead on a finisher)",
+      "bonus": "+1 precision"
+     }
+    ]
+   }
+  },
+  {
+   "id": "fisheye",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "limitedUses {max:1,per:'day'} tracks the once-per-day activation. The benefit is a one-hour temporary grant of Breath Control; a permanent grantedFeatId would be wrong and a temporary buff has no lane other than a toggle (forbidden)."
+  },
+  {
+   "id": "flame-navette",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "uses {current:1,max:1} tracks the talisman's single activation. Its effect is a play-time counteract (the Determination benefit) with fixed rank 8 / +22 — no persistent sheet statistic changes."
+  },
+  {
+   "id": "flexible-transmogrification",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "choice {flag:'eidolonEvolutionFeat', kind:'open', daily:true, from:{type:'feat',maxLevel:6,traits:['evolution']}} — the daily evolution-feat pick is offered exactly as written."
+  },
+  {
+   "id": "food-trader",
+   "verdict": "MISS",
+   "reason": "Background grants Seasoned (Crafting) or Streetwise (Society); the record has trainedSkillChoice ['crafting','society'] but no grantedFeatId/grantedFeatByChoice, so no skill feat is ever handed out. backgroundGrantedFeats (build.ts:336) reads grantedFeatByChoice keyed by the trainedSkillChoice pick — same shape as martial-disciple.",
+   "fix": {
+    "field": "grantedFeatByChoice",
+    "value": "{\"crafting\":\"seasoned\",\"society\":\"streetwise\"}"
+   }
+  },
+  {
+   "id": "for-love-for-lightning",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "focusSpells ['for-love-for-lightning'] + spellcastingGrant {divine, cha, trained}. build.ts:1498 documents that each granted focus spell carries its own pool point, so the +1 Focus Point is delivered without a separate focusPoolBonus."
+  },
+  {
+   "id": "forge-days-rest",
+   "verdict": "MISS",
+   "reason": "\"you gain the effects of the Fast Recovery general feat\" — 'fast-recovery' is a real feat id in core.json and other feats grant it via the feat-grant lane (featFeatGrants.ts 'shackleborn', 'three-clear-breaths'), but this record has no field and is in no registry.",
+   "fix": { "field": "grantedFeatId", "value": "\"fast-recovery\"" }
+  },
+  {
+   "id": "formation-master",
+   "verdict": "MISS",
+   "reason": "Extends Formation Training's bonuses to any two adjacent humanoid allies. situationalBonuses.ts:542 already carries the exact bonuses for 'formation-training', but there is no entry for 'formation-master', so a character who takes only this feat shows nothing.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "ac" }],
+      "when": "while adjacent to at least two humanoid allies",
+      "bonus": "+1 circumstance"
+     },
+     {
+      "targets": [{ "kind": "save", "detail": "all" }],
+      "when": "while adjacent to at least two humanoid allies",
+      "bonus": "+1 circumstance"
+     },
+     {
+      "targets": [{ "kind": "save", "detail": "reflex" }],
+      "when": "adjacent to two humanoid allies, against area effects",
+      "bonus": "+2 circumstance"
+     }
+    ]
+   }
+  },
+  {
+   "id": "fourth-gates-threshold",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "choice (Expand the Portal / Fork the Path) + effectChoices 'gate-junction' with per-element resistance grants; build.ts:2133-2134 resolves build.gateForks/gateExpands per level and injects the bonus impulse feat."
+  },
+  {
+   "id": "foxfire",
+   "verdict": "MISS",
+   "reason": "grantedStrikes exists but its damageType is the raw Foundry template \"{item|flags.system.rulesSelections.damage}\" (no code in src/ resolves 'rulesSelections'), so the Foxfire strike renders with a garbage damage type and the electricity/fire/cold choice does nothing. collectGrantedNaturals (build.ts:1002) filters entries by choiceValue against the feat's own choice — the shape living-weapon uses.",
+   "fix": {
+    "field": "grantedStrikes",
+    "value": "[{\"name\":\"Foxfire\",\"die\":\"d4\",\"damageType\":\"electricity\",\"traits\":[\"unarmed\",\"magical\"],\"group\":\"sling\",\"range\":20,\"choiceValue\":\"electricity\"},{\"name\":\"Foxfire\",\"die\":\"d4\",\"damageType\":\"fire\",\"traits\":[\"unarmed\",\"magical\"],\"group\":\"sling\",\"range\":20,\"choiceValue\":\"fire\"},{\"name\":\"Foxfire\",\"die\":\"d4\",\"damageType\":\"cold\",\"traits\":[\"unarmed\",\"magical\"],\"group\":\"sling\",\"range\":20,\"choiceValue\":\"cold\"}]"
+   }
+  },
+  {
+   "id": "free-heart",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "featGrantsLane.ts:18 'free-heart': skillChoices [{options:'any',rank:'trained'}] + loreChoices 1, plus a choice carrying an explicit inert note that the background's skill feat isn't granted — the documented legacy-pick decision."
+  },
+  {
+   "id": "fury-instinct",
+   "verdict": "MISS",
+   "reason": "The rage-damage tiers ARE modelled (derive.ts:1100 RAGE_DAMAGE 'fury-instinct': [3,7,13]), but \"You gain a bonus 1st-level barbarian feat\" is delivered by nothing: FEAT_PICK_GRANTS is consulted only for taken FEATS (build.ts:2177) and build.heritageId (2188), never for a class feature or subclass id, and no other bonus-feat lane exists for class features.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "future-spell-learning",
+   "verdict": "MISS",
+   "reason": "Adds seven named spells to your spell list / repertoire / spellbook (Behold the Weave, Cast into Time, Haste, Loose Time's Arrow, Quicken Time, Slow, Stagnate Time). They are not innate spells, not focus spells and not extra slots, so no legal field expresses them — there is no \"add to your spell list\" lane.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "gandharva",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "innateSpells [{summon-instrument, divine}] plus effectChoices 'skill' whose every option grants the trained skill AND summon-instrument atWill — the Performance-or-replacement rule and the divine cantrip are both delivered."
+  },
+  {
+   "id": "garden-path",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The whole benefit lands on a chosen member of your crop (an ALLY gains Quiet Allies while Avoiding Notice); the app models only the player's own sheet."
+  },
+  {
+   "id": "gates-threshold",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices 'gate-junction' with per-element resistance grants, and the expand/fork branch plus its bonus impulse feat are engine-resolved through build.gateForks / build.gateExpands (build.ts:933, 1079-1080, 2133-2134)."
+  },
+  {
+   "id": "general-training",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "featPickGrants.ts:72 'general-training': {category:'general', maxLevel:1} — the builder shows the 1st-level general-feat picker and buildCharacter grants the pick."
+  },
+  {
+   "id": "genie-weapon-expertise",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "featGrantsAuto.ts:126 weaponFamiliarity {falchion, ranseur, scimitar, trident, wish-blade, wish-knife, mirrorBestCategory:true} — exactly the printed mirror clause."
+  },
+  {
+   "id": "ghoran-weapon-expertise",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "featGrantsAuto.ts:129 weaponFamiliarity {glaive, greatclub, hatchet, scythe, sickle, thorn-whip, mirrorBestCategory:true}."
+  },
+  {
+   "id": "gildedsoul",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "featGrantsLane.ts:27 skillChoices [{options:['diplomacy','society'],rank:'trained'}] plus effectChoices 'gildedsoul-skill'. (The Society-only Courtly Graces rider is not granted — EffectGrant has no feat lane and FeatGrant has no choice-keyed feat grant — but the record's proficiency effect is wired.)"
+  },
+  {
+   "id": "gird-champion",
+   "verdict": "MISS",
+   "reason": "critSpec:true is present but critSpecWeapons points at the unresolved Foundry flag \"{actor|flags.system.godlingWeapon}\", and the \"+1d6 spirit damage with Strikes made with your favored weapon\" is delivered by nothing.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "strikeDamage" }],
+      "when": "Strikes with your chosen favored weapon",
+      "bonus": "+1d6 spirit (or your domain's damage type)"
+     }
+    ]
+   }
+  },
+  {
+   "id": "glory-hound",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "grantedFeatByChoice {intimidation:'intimidating-glare', performance:'impressive-performance'} + trainedSkillChoice + trainedLore 'games'; backgroundGrantedFeats (build.ts:333) resolves it off the skill pick."
+  },
+  {
+   "id": "gnoll-weapon-expertise",
+   "verdict": "MISS",
+   "reason": "The mirror-proficiency clause is delivered by featGrantsAuto weaponFamiliarity + mirrorBestCategory (14 sibling ancestry expertise feats ship it), but gnoll/kholo has no entry in any registry and no field. All weapon ids verified present in core.json.",
+   "fix": {
+    "field": "weaponFamiliarity",
+    "value": "{\"weapons\":[\"flail\",\"khopesh\",\"mambele\",\"spear\",\"war-flail\",\"spirit-thresher\"],\"mirrorBestCategory\":true}"
+   }
+  },
+  {
+   "id": "gnome-weapon-expertise",
+   "verdict": "MISS",
+   "reason": "No featGrantsAuto entry (the file has hobgoblin/kobold/genie/ghoran/grippli/catfolk/conrasu/vanara/vishkanya but not gnome), so the glaive, kukri and gnome weapons never track your best weapon-category rank. Registry entry in featGrantsAuto.ts; ids verified in core.json.",
+   "fix": {
+    "field": "weaponFamiliarity",
+    "value": "{\"weapons\":[\"glaive\",\"kukri\",\"gnome-flickmace\",\"gnome-hooked-hammer\",\"metronomic-hammer\",\"switchscythe\"],\"mirrorBestCategory\":true}"
+   }
+  },
+  {
+   "id": "goblin-weapon-expertise",
+   "verdict": "MISS",
+   "reason": "Same gap as the other core-ancestry expertise feats: no entry in featGrantsAuto.ts / featGrantsLane.ts / effect-backfill.json, so nothing raises dogslicer / horsechopper / goblin weapons with your class weapon rank.",
+   "fix": {
+    "field": "weaponFamiliarity",
+    "value": "{\"weapons\":[\"dogslicer\",\"horsechopper\",\"four-ways-dogslicer\",\"flingflenser\",\"spoon-gun\",\"big-boom-gun\"],\"mirrorBestCategory\":true}"
+   }
+  },
+  {
+   "id": "godling-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "focusPoolBonus 1 + effectChoices 'domain' (every domain option grants its initial domain spell via focusSpells) + spellcastingGrant. The hierophant half is entirely an ALLY's sheet."
+  },
+  {
+   "id": "greater-animal-senses",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices 'sense' grants senses [{echolocation,30,imprecise}] or [{tremorsense,30,imprecise}]; the choice field also records the precise-upgrade variants."
+  },
+  {
+   "id": "greater-augmentation",
+   "verdict": "MISS",
+   "reason": "\"You gain the enhancement benefits of one of your 1st-, 5th-, 9th- or 13th-level automaton ancestry feats\" — the record has no field and no registry entry, so the player is never asked which enhancement they take. Its sibling greater-awakened-power ships exactly this picker (an inert-noted choice), so the omission is inconsistent.",
+   "fix": {
+    "effectChoices": [
+     {
+      "id": "enhancement",
+      "prompt": "Which automaton ancestry feat's enhancement do you gain? (prose benefit — read that feat's Enhancement entry)",
+      "options": [
+       { "value": "automaton-armament", "label": "Automaton Armament (1st)" },
+       { "value": "arcane-communication", "label": "Arcane Communication (1st)" },
+       { "value": "arcane-eye", "label": "Arcane Eye (1st)" },
+       { "value": "automaton-lore", "label": "Automaton Lore (1st)" },
+       { "value": "energy-beam", "label": "Energy Beam (1st)" },
+       { "value": "reinforced-chassis", "label": "Reinforced Chassis (1st)" },
+       { "value": "arcane-safeguards", "label": "Arcane Safeguards (5th)" },
+       { "value": "integrated-armament", "label": "Integrated Armament (5th)" },
+       { "value": "magical-resistance", "label": "Magical Resistance (5th)" },
+       { "value": "arcane-camouflage", "label": "Arcane Camouflage (9th)" },
+       { "value": "arcane-propulsion", "label": "Arcane Propulsion (9th)" },
+       { "value": "arcane-slam", "label": "Arcane Slam (9th)" },
+       { "value": "core-attunement", "label": "Core Attunement (9th)" },
+       { "value": "rain-of-bolts", "label": "Rain of Bolts (9th)" },
+       { "value": "arcane-locomotion", "label": "Arcane Locomotion (13th)" },
+       { "value": "astral-blink", "label": "Astral Blink (13th)" },
+       { "value": "core-rejuvenation", "label": "Core Rejuvenation (13th)" },
+       { "value": "enlarged-chassis", "label": "Enlarged Chassis (13th)" }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "greater-awakened-power",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "choice {flag:'greaterAwakenedPowerFeat', kind:'open', from:{type:'feat',traits:['deviant'],maxLevel:10}} with an inert note explaining that an awakening is a prose upgrade; also present in scripts/data/effect-backfill.json."
+  },
+  {
+   "id": "grippli-weapon-expertise",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "featGrantsAuto.ts:139 weaponFamiliarity {blowgun, hatchet, scythe, shortbow, composite-shortbow, mirrorBestCategory:true}."
+  },
+  {
+   "id": "guardian-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "featGrantsAuto.ts:140 {skills:{athletics:'trained'}, redundantFallback:true, armor:{light:'trained',medium:'trained'}} plus the light/heavy choice field. Taunt is an action, not a sheet statistic."
+  },
+  {
+   "id": "hag-claws",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "grantedStrikes [{Claw, d4 slashing, agile/finesse/unarmed, brawling}] — collectGrantedNaturals surfaces it as a natural attack."
+  },
+  {
+   "id": "halfling-weapon-expertise",
+   "verdict": "MISS",
+   "reason": "No entry in featGrantsAuto.ts, featGrantsLane.ts or effect-backfill.json, so the sling, halfling sling staff, shortsword and halfling weapons never mirror your best weapon-category rank. Ids verified in core.json.",
+   "fix": {
+    "field": "weaponFamiliarity",
+    "value": "{\"weapons\":[\"sling\",\"halfling-sling-staff\",\"shortsword\",\"filchers-fork\",\"fighting-stick\",\"spraysling\"],\"mirrorBestCategory\":true}"
+   }
+  },
+  {
+   "id": "haunting-memories",
+   "verdict": "MISS",
+   "reason": "Daily preparations grant expert in an untrained skill OR master in a trained one, plus a matching skill feat. Nothing is on the record. skillChoices.conditionalRank can express only ONE base→upgraded pair, so neither branch pair (untrained→expert, trained→master) is representable, and bonusSkillFeat has no rank gate.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "hermean-heritor",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "abilityBoosts + trainedSkill 'society' + trainedLore 'legal' + grantedFeatId 'multilingual', with a choice offering the Assurance (Society) alternative. The background's package is delivered."
+  },
+  {
+   "id": "hero-gods-bond",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses.ts:2827 registers the +2 recovery-check bonus on the dying condition. The shared doomed value, telepathy and mutual dying-awareness are the partner's/GM's side."
+  },
+  {
+   "id": "heros-wings",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "speeds {fly:25} + situationalBonuses.ts:213 (+2 circumstance to Diplomacy and Intimidation against sprites)."
+  },
+  {
+   "id": "historical-reenactor",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "grantedFeatByChoice {performance:'impressive-performance', society:'dubious-knowledge'} + trainedSkillChoice + trainedLore 'dwarf' + abilityBoosts."
+  },
+  {
+   "id": "hobgoblin-weapon-expertise",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "featGrantsAuto.ts:154 weaponFamiliarity over the nine Hobgoblin Weapon Familiarity weapons with mirrorBestCategory:true."
+  },
+  {
+   "id": "hungerseed",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Heritage record carries grantedStrikes [{Horns, d6 piercing, brawling}] and versatile:true (ancestryId null), which is how the app models a versatile heritage's dual feat access."
+  },
+  {
+   "id": "inherit-the-dreaming-heirloom",
+   "verdict": "MISS",
+   "reason": "limitedUses + the inert Lore/pusaka note cover Ancestral Recollection, but the second activation — \"You cast Guidance as an occult cantrip\", heightened to half your level — grants a spell the character does not otherwise have, and no innateSpells field is present.",
+   "fix": {
+    "field": "innateSpells",
+    "value": "[{\"spellId\":\"guidance\",\"tradition\":\"occult\",\"atWill\":true,\"heightenHalfLevel\":true}]"
+   }
+  },
+  {
+   "id": "initial-creed",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "advancement.ts:77-80 ('battle-creed' ladder) grants light+medium armor trained, martial weapons trained and expert Fortitude at level 1 with source 'initial-creed'; Divine Defense's 13th-level armor expertise is in the same ladder, and Deadly Simplicity is auto-granted with the favored-weapon guard at build.ts:2094."
+  },
+  {
+   "id": "inscribed-with-elders-deeds",
+   "verdict": "MISS",
+   "reason": "Daily preparations grant a 1st-level orc ancestry feat (5th-level from 13th). No field, no registry entry — the player is never offered the pick. flexible-transmogrification ships the identical daily open-feat picker shape.",
+   "fix": {
+    "field": "choice",
+    "value": "{\"flag\":\"eldersDeedsFeat\",\"prompt\":\"Orc ancestry feat your storied skin depicts today\",\"kind\":\"open\",\"daily\":true,\"from\":{\"type\":\"feat\",\"maxLevel\":1,\"traits\":[\"orc\"]},\"note\":\"From 13th level you may instead choose a 5th-level orc ancestry feat. Temporary, so it can't be a prerequisite for anything permanent.\"}"
+   }
+  },
+  {
+   "id": "investigator-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "featGrantsAuto.ts:162 {skills:{society:'trained'}, skillChoices:[{options:'any',rank:'trained'}], redundantFallback:true}. Pursue a Lead / Clue In are actions, and class DC is chassis."
+  },
+  {
+   "id": "invoke-the-crimson-oath",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "focusSpells ['invoke-the-crimson-oath'] + spellcastingGrant {divine, cha, trained}; the granted focus spell carries its own Focus Point (build.ts:1498)."
+  },
+  {
+   "id": "invulnerable-rager",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "featGrantsAuto.ts:163 {armor:{heavy:'trained'}} — the feat's actual proficiency grant. The medium→heavy mirror clause rides on the same heavy rank never being lower."
+  },
+  {
+   "id": "kaiju-stalker",
+   "verdict": "MISS",
+   "reason": "trainedSkill 'athletics', trainedLore 'kaiju' and the +1 Kaiju Lore star (situationalBonuses.ts:2149) are all wired, but \"gain one Athletics skill feat of your choice\" is not: backgrounds support only grantedFeatId / grantedFeatByChoice (build.ts:333-345), and FEAT_PICK_GRANTS is keyed off taken feats and heritageId only — it is never consulted for a background.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "keen-recollection",
+   "verdict": "MISS",
+   "reason": "Grants the investigator's Keen Recollection (count as trained in every skill for Recall Knowledge). grep of src/ finds no reference to 'precise'/'keen-recollection' logic and the classFeature record is description-only, so nothing changes on the sheet.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "skill", "detail": "all" }],
+      "when": "Recall Knowledge with a skill you're untrained in",
+      "bonus": "counts as trained (add your level)"
+     }
+    ]
+   }
+  },
+  {
+   "id": "kingdom-assurance",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "choice {flag:'kingdomAssuranceSkill', kind:'text'} with the standard inert note — the recorded-kingdom-pick decision (there is no Kingdom sheet, so nothing on this character can change)."
+  },
+  {
+   "id": "kobold-weapon-expertise",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "featGrantsAuto.ts:175 weaponFamiliarity {crossbow, greatpick, light-pick, pick, spear, fangwire, flying-talon, tricky-pick, mirrorBestCategory:true}."
+  },
+  {
+   "id": "kreightons-cognitive-crossover",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "choice {kind:'array', picks:2, distinct:true} over the eight listed skills records both picks; the benefit itself is a reaction that rerolls a failed Recall Knowledge — pure play-time, no statistic changes."
+  },
+  {
+   "id": "lesser-augmentation",
+   "verdict": "MISS",
+   "reason": "\"You gain the enhancement benefits of one of your 1st- or 5th-level automaton ancestry feats\" — no field, no registry entry, so the pick is never offered (unlike greater-awakened-power, which ships the same style of recorded picker).",
+   "fix": {
+    "effectChoices": [
+     {
+      "id": "enhancement",
+      "prompt": "Which automaton ancestry feat's enhancement do you gain? (prose benefit — read that feat's Enhancement entry)",
+      "options": [
+       { "value": "automaton-armament", "label": "Automaton Armament (1st)" },
+       { "value": "arcane-communication", "label": "Arcane Communication (1st)" },
+       { "value": "arcane-eye", "label": "Arcane Eye (1st)" },
+       { "value": "automaton-lore", "label": "Automaton Lore (1st)" },
+       { "value": "energy-beam", "label": "Energy Beam (1st)" },
+       { "value": "reinforced-chassis", "label": "Reinforced Chassis (1st)" },
+       { "value": "arcane-safeguards", "label": "Arcane Safeguards (5th)" },
+       { "value": "integrated-armament", "label": "Integrated Armament (5th)" },
+       { "value": "magical-resistance", "label": "Magical Resistance (5th)" }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "light-mortar-innovation",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "choice {flag:'lightMortarModification'} lists all three initial modifications with an explicit inert note stating the light mortar isn't modelled as a strike — the documented record-the-pick decision."
+  },
+  {
+   "id": "lions-might",
+   "verdict": "MISS",
+   "reason": "\"Whenever you gain a class feature that grants expert or greater proficiency in certain weapons, you also gain that proficiency with lion scythes and sun slings\" — the exact mirrorBestCategory clause, but no registry entry exists. Both ids ('lion-scythe', 'sun-sling', martial) verified in core.json.",
+   "fix": {
+    "field": "weaponFamiliarity",
+    "value": "{\"weapons\":[\"lion-scythe\",\"sun-sling\"],\"mirrorBestCategory\":true}"
+   }
+  },
+  {
+   "id": "magaambyan-attendant-dedication",
+   "verdict": "MISS",
+   "reason": "featGrantsAuto.ts:188 covers only the Arcana/Nature training. The dedication's headline grant — a single arcane or primal cantrip of your choice, cast at half your level — is delivered by nothing: the feat is absent from featCantripGrants.ts and has no innateSpells / effectChoices / spellcastingGrant.",
+   "fix": {
+    "effectChoices": [
+     {
+      "id": "halcyon-cantrip",
+      "prompt": "Choose your halcyon cantrip — arcane (Intelligence) or primal (Wisdom); heightened to half your level",
+      "spellFilter": {
+       "traditions": ["arcane", "primal"],
+       "cantripsOnly": true,
+       "grantAs": "innate",
+       "innate": { "atWill": true, "heightenHalfLevel": true }
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": "magical-knowledge",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "featGrantsLane.ts:30 skillChoices [{arcana/nature/occultism/religion → master}, {same → expert}] delivers the proficiency increases, which are the feat's substance."
+  },
+  {
+   "id": "makari-lizardfolk",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices 'cantrip' grants Divine Lance or Forbidding Ward as an at-will divine innate spell."
+  },
+  {
+   "id": "martial-disciple",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "grantedFeatByChoice {acrobatics:'cat-fall', athletics:'quick-jump'} + trainedSkillChoice + trainedLore 'warfare' + abilityBoosts."
+  },
+  {
+   "id": "masterful-obfuscation",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "choice {flag:'obfuscationSkill', kind:'skills'} records the master skill you substitute for Deception; the substitution itself happens on a Lie check at the table and changes no stored statistic."
+  },
+  {
+   "id": "molten-wit",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "featGrantsLane.ts:26 skillChoices [{options:['deception','diplomacy'],rank:'trained'}] plus effectChoices 'molten-wit-skill'. (The choice-linked Charming Liar / Group Impression rider has no lane — EffectGrant carries no feats and FeatGrant has no choice-keyed feat grant — but the skill training is wired.)"
+  },
+  {
+   "id": "monastic-archer-stance",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "featGrantsAuto.ts:198 weaponFamiliarity over longbow/shortbow/monk bows with mirrorBestCategory:true, and the feat is in core.stances so the exclusive-stance manager shows it."
+  },
+  {
+   "id": "money-counter",
+   "verdict": "MISS",
+   "reason": "\"Eye for Numbers if you chose Society or Subtle Theft if you chose Thievery\" — trainedSkillChoice ['society','thievery'] is present but there is no grantedFeatId/grantedFeatByChoice, so no skill feat is granted. Both feat ids exist in core.json.",
+   "fix": {
+    "field": "grantedFeatByChoice",
+    "value": "{\"society\":\"eye-for-numbers\",\"thievery\":\"subtle-theft\"}"
+   }
+  },
+  {
+   "id": "monk-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "featGrantsAuto.ts:200 skillChoices [{options:'any',rank:'trained'}] plus the Str/Dex class-DC choice; unarmed proficiency is chassis and Powerful Fist is a damage-die feature of the class pipeline."
+  },
+  {
+   "id": "morphic-strike",
+   "verdict": "MISS",
+   "reason": "grantedStrikes lists all twelve heritage variants with NO choiceValue, so collectGrantedNaturals (build.ts:1002) grants every one of them at once — and the name-dedup keeps only the first 'ElementalCurrent' — while Striking Surface's damageType is the raw Foundry template \"{item|flags.system.rulesSelections.objectDamageType}\". A yaoguai gets 5 unarmed attacks they shouldn't have plus a garbage damage type.",
+   "fix": {
+    "field": "grantedStrikes",
+    "value": "[{\"name\":\"Claw\",\"die\":\"d6\",\"damageType\":\"slashing\",\"traits\":[\"unarmed\",\"agile\",\"finesse\"],\"group\":\"brawling\",\"choiceValue\":\"animal\"},{\"name\":\"Spirit Touch\",\"die\":\"d4\",\"damageType\":\"spirit\",\"traits\":[\"unarmed\",\"magical\",\"sanctified\",\"spirit\"],\"group\":\"brawling\",\"choiceValue\":\"celestial\"},{\"name\":\"Elemental Current\",\"die\":\"d4\",\"damageType\":\"electricity\",\"traits\":[\"unarmed\",\"magical\",\"electricity\"],\"group\":\"brawling\",\"choiceValue\":\"elements-electricity\"},{\"name\":\"Elemental Current\",\"die\":\"d4\",\"damageType\":\"cold\",\"traits\":[\"unarmed\",\"magical\",\"cold\"],\"group\":\"brawling\",\"choiceValue\":\"elements-cold\"},{\"name\":\"Elemental Current\",\"die\":\"d4\",\"damageType\":\"fire\",\"traits\":[\"unarmed\",\"magical\",\"fire\"],\"group\":\"brawling\",\"choiceValue\":\"elements-fire\"},{\"name\":\"Elemental Current\",\"die\":\"d4\",\"damageType\":\"piercing\",\"traits\":[\"unarmed\",\"magical\",\"metal\"],\"group\":\"brawling\",\"choiceValue\":\"elements-metal\"},{\"name\":\"Elemental Current\",\"die\":\"d4\",\"damageType\":\"bludgeoning\",\"traits\":[\"unarmed\",\"magical\",\"wood\"],\"group\":\"brawling\",\"choiceValue\":\"elements-wood\"},{\"name\":\"Elemental Current\",\"die\":\"d4\",\"damageType\":\"bludgeoning\",\"traits\":[\"unarmed\",\"magical\",\"earth\"],\"group\":\"brawling\",\"choiceValue\":\"elements-earth\"},{\"name\":\"Elemental Current\",\"die\":\"d4\",\"damageType\":\"slashing\",\"traits\":[\"unarmed\",\"magical\",\"air\"],\"group\":\"brawling\",\"choiceValue\":\"elements-air\"},{\"name\":\"Elemental Current\",\"die\":\"d4\",\"damageType\":\"bludgeoning\",\"traits\":[\"unarmed\",\"magical\",\"water\"],\"group\":\"brawling\",\"choiceValue\":\"elements-water\"},{\"name\":\"Striking Surface\",\"die\":\"d8\",\"damageType\":\"bludgeoning\",\"traits\":[\"unarmed\",\"sweep\"],\"group\":\"brawling\",\"choiceValue\":\"object-bludgeoning\"},{\"name\":\"Striking Surface\",\"die\":\"d8\",\"damageType\":\"slashing\",\"traits\":[\"unarmed\",\"sweep\"],\"group\":\"brawling\",\"choiceValue\":\"object-slashing\"},{\"name\":\"Root\",\"die\":\"d6\",\"damageType\":\"bludgeoning\",\"traits\":[\"unarmed\",\"reach\"],\"group\":\"brawling\",\"choiceValue\":\"vegetation\"}]"
+   }
+  },
+  {
+   "id": "mortal-possibility",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "featGrantsAuto.ts:201 skillChoices [{options:'any',rank:'legendary'}] plus situationalBonuses.ts:776 (+3 status to your next skill check within the hour)."
+  },
+  {
+   "id": "mountain-skin",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "featGrantsAuto.ts:202 {armor:{medium:'trained',heavy:'trained'}} — the whole of the feat's grant."
+  },
+  {
+   "id": "multifarious-muse",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "featPickGrants.ts:73 {category:'class', maxLevel:1, traits:['bard']}; maxTakable 3 on the record allows the repeat takes."
+  },
+  {
+   "id": "multitalented",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "featPickGrants.ts:74 {category:'class', maxLevel:2, traits:['dedication','multiclass']} — the 2nd-level multiclass dedication picker."
+  },
+  {
+   "id": "mystery",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella description of the oracle's subclass feature; the actual grants live on the eleven mystery options under classes.oracle.subclass, which the builder renders as the subclass picker."
+  },
+  {
+   "id": "mythic-magic",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Three effectChoices with spellFilter {traditions: all four, minRank 1, maxRank 2, grantAs 'innate', innate:{atWill:true, heightenHalfLevel:true}} — the three spell picks are offered and granted."
+  },
+  {
+   "id": "naari",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "resistances [{fire, \"max(1,floor(@actor.level/2))\"}] on the heritage plus versatile:true for the dual feat access; the environmental-heat step-down is a GM-adjudicated environment rule with no sheet statistic."
+  },
+  {
+   "id": "nascent",
+   "verdict": "MISS",
+   "reason": "\"You gain a 1st-level kashrishi ancestry feat for which you meet the prerequisites\" — the heritage carries no field and no registry entry, so the bonus feat is never offered. FEAT_PICK_GRANTS is consulted for build.heritageId (build.ts:2188, shared.tsx:2403), which is exactly how 'ancient-elf' works, so this is a pure registry addition in featPickGrants.ts.",
+   "fix": {
+    "field": "featPickGrants",
+    "value": "{\"prompt\":\"Choose a kashrishi ancestry feat\",\"category\":\"ancestry\",\"maxLevel\":1,\"traits\":[\"kashrishi\"]}"
+   }
+  },
+  {
+   "id": "natural-ambition",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "featPickGrants.ts:75 {category:'class', maxLevel:1, dynamicTrait:'class'} with the hand-curated exclusion list."
+  },
+  {
+   "id": "natural-mutagen",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "choice {flag:'naturalMutagen'} lists all twelve 1st-level mutagens with an inert note explaining that the daily temporary vial isn't auto-added to inventory — the documented record-the-pick decision."
+  }
+ ]
+}

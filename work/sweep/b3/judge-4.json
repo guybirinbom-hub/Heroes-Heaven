@@ -1,0 +1,790 @@
+{
+ "records": [
+  {
+   "id": "shadow-magic",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices offers Dance of Darkness / Shadow Jump, each granting focusSpells; the record also carries focusPoolBonus:1 and spellcastingGrant {occult, cha, trained}."
+  },
+  {
+   "id": "shadow-of-the-hermit",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices \"cantrip\" lists the occult cantrips, each option granting innateSpells with atWill:true."
+  },
+  {
+   "id": "shadow-reservoir",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "choice flag reservoirSource (kind:text) records the chosen spell source and carries an explicit inert note that the reservoir itself is not tracked."
+  },
+  {
+   "id": "shattered-sacrament",
+   "verdict": "MISS",
+   "reason": "Grants a halcyon cantrip and a 1st-rank halcyon spell (extra spells KNOWN in the halcyon repertoire, which casterArchetypes.ts models as repertoire:true) and lets halcyon spells be cast as divine. No legal field adds repertoire spells to an archetype casting entry.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "shield-spell-reinforcement",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Spellshape that changes how one casting of Shield resolves and can redirect it to an ally; no persistent statistic on the caster sheet."
+  },
+  {
+   "id": "sign-bound",
+   "verdict": "MISS",
+   "reason": "The background grants an occult innate spell set by the chosen constellation, but the record has only abilityBoosts + trainedLore: no constellation is picked and no spell reaches the sheet.",
+   "fix": {
+    "effectChoices": [
+     {
+      "id": "constellation",
+      "prompt": "Constellation (sets your sign’s occult innate spell)",
+      "options": [
+       {
+        "value": "thrush",
+        "label": "The Thrush (Dexterity) — ghost sound, at will",
+        "grant": {
+         "innateSpells": [
+          {
+           "spellId": "ghost-sound",
+           "tradition": "occult",
+           "atWill": true
+          }
+         ]
+        }
+       },
+       {
+        "value": "lantern-bearer",
+        "label": "The Lantern Bearer (Wisdom) — light, at will",
+        "grant": {
+         "innateSpells": [
+          {
+           "spellId": "light",
+           "tradition": "occult",
+           "atWill": true
+          }
+         ]
+        }
+       },
+       {
+        "value": "newlyweds",
+        "label": "The Newlyweds (Charisma) — charm, once per day",
+        "grant": {
+         "innateSpells": [
+          {
+           "spellId": "charm",
+           "tradition": "occult",
+           "usesPerDay": 1
+          }
+         ]
+        }
+       },
+       {
+        "value": "bridge",
+        "label": "The Bridge (Constitution) — environmental endurance, once per week",
+        "grant": {
+         "innateSpells": [
+          {
+           "spellId": "environmental-endurance",
+           "tradition": "occult",
+           "usesPerDay": 1,
+           "usesPer": "week"
+          }
+         ]
+        }
+       },
+       {
+        "value": "daughter",
+        "label": "The Daughter (Charisma) — guidance, at will",
+        "grant": {
+         "innateSpells": [
+          {
+           "spellId": "guidance",
+           "tradition": "occult",
+           "atWill": true
+          }
+         ]
+        }
+       },
+       {
+        "value": "rider",
+        "label": "The Rider (Strength) — marvelous mount, once per week",
+        "grant": {
+         "innateSpells": [
+          {
+           "spellId": "marvelous-mount",
+           "tradition": "occult",
+           "usesPerDay": 1,
+           "usesPer": "week"
+          }
+         ]
+        }
+       },
+       {
+        "value": "patriarch",
+        "label": "The Patriarch (Strength) — know the way, at will",
+        "grant": {
+         "innateSpells": [
+          {
+           "spellId": "know-the-way",
+           "tradition": "occult",
+           "atWill": true
+          }
+         ]
+        }
+       },
+       {
+        "value": "wagon",
+        "label": "The Wagon (Constitution) — tailwind, once per week",
+        "grant": {
+         "innateSpells": [
+          {
+           "spellId": "tailwind",
+           "tradition": "occult",
+           "usesPerDay": 1,
+           "usesPer": "week"
+          }
+         ]
+        }
+       },
+       {
+        "value": "pack",
+        "label": "The Pack (Dexterity) — speak with animals, once per week",
+        "grant": {
+         "innateSpells": [
+          {
+           "spellId": "speak-with-animals",
+           "tradition": "occult",
+           "usesPerDay": 1,
+           "usesPer": "week"
+          }
+         ]
+        }
+       },
+       {
+        "value": "mother",
+        "label": "The Mother (Wisdom) — clear mind, once per week",
+        "grant": {
+         "innateSpells": [
+          {
+           "spellId": "clear-mind",
+           "tradition": "occult",
+           "usesPerDay": 1,
+           "usesPer": "week"
+          }
+         ]
+        }
+       },
+       {
+        "value": "star-gazer",
+        "label": "The Star Gazer (Intelligence) — sure strike, once per week",
+        "grant": {
+         "innateSpells": [
+          {
+           "spellId": "sure-strike",
+           "tradition": "occult",
+           "usesPerDay": 1,
+           "usesPer": "week"
+          }
+         ]
+        }
+       },
+       {
+        "value": "stranger",
+        "label": "The Stranger (Charisma) — message, at will",
+        "grant": {
+         "innateSpells": [
+          {
+           "spellId": "message",
+           "tradition": "occult",
+           "atWill": true
+          }
+         ]
+        }
+       },
+       {
+        "value": "follower",
+        "label": "The Follower (Intelligence) — stabilize, at will",
+        "grant": {
+         "innateSpells": [
+          {
+           "spellId": "stabilize",
+           "tradition": "occult",
+           "atWill": true
+          }
+         ]
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "silent-spell",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Metamagic that removes a spell’s verbal component at play time; nothing on the sheet changes."
+  },
+  {
+   "id": "sin-reservoir",
+   "verdict": "MISS",
+   "reason": "Grants one extra prepared slot per day at a rank the player chooses (up to two below the highest wizard rank). SpellSlotBonus only expresses per-rank grants (perRank/exceptHighest), so it cannot express one choose-the-rank slot, and nothing else delivers it.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "siphon-power",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "limitedUses {max:1, per:\"day\"} tracks the once-per-day use; the free cast is a play-time action on a familiar-known spell."
+  },
+  {
+   "id": "snowcaster",
+   "verdict": "MISS",
+   "reason": "\"You gain the basic spellcasting benefits\", but the Gelid Shard archetype has no entry in src/rules/casterArchetypes.ts, so its cantrips, spell slots and trained spell attack/DC never appear (expert-snowcasting and master-snowcasting are dead for the same reason).",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "sorcerer-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "CASTER_ARCHETYPES[\"sorcerer-dedication\"] grants 2 cantrips, Cha key, choiceTradition + repertoire; featGrantsAuto handles the bloodline skills; the bloodline is the recorded choice."
+  },
+  {
+   "id": "sorcerer-spellcasting",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Class chassis: the sorcerer class record’s spellcasting block drives casterSlots(\"full\") and the repertoire builder in build.ts."
+  },
+  {
+   "id": "sorcerous-potency",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in situationalBonuses.ts (status bonus to spell damage/healing equal to the spell’s rank)."
+  },
+  {
+   "id": "soulforger-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "choice flag essencePower offers every essence power, and situationalBonuses.ts carries the conditional bonuses they confer."
+  },
+  {
+   "id": "spell-mastery",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "choice flag masteredSpells (kind:text) with an explicit inert note that the four spells are recorded only and the extra slots are not added."
+  },
+  {
+   "id": "spell-repertoire",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella record concatenating the bard/oracle/psychic/sorcerer/summoner texts; the five per-class Spell Repertoire records plus the class chassis carry the mechanics."
+  },
+  {
+   "id": "spell-repertoire-bard",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Class chassis: build.ts builds the occult repertoire and cantrip list from the bard class spellcasting block."
+  },
+  {
+   "id": "spell-repertoire-oracle",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Class chassis: build.ts builds the divine repertoire and cantrip list from the oracle class spellcasting block."
+  },
+  {
+   "id": "spell-repertoire-psychic",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Class chassis plus the psychic Conscious Mind subclass options’ grantedSpells, which add the extra spell and psi cantrips to the repertoire."
+  },
+  {
+   "id": "spell-repertoire-sorcerer",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Class chassis: build.ts builds the repertoire in the bloodline’s tradition; the bloodline option’s grantedSpells supply the extra spell and cantrip."
+  },
+  {
+   "id": "spell-repertoire-summoner",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Class chassis: summoner slot and repertoire progression is built by build.ts from the class spellcasting block."
+  },
+  {
+   "id": "spell-runes",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Three effectChoices with spellFilter (arcane rank 1/2/3, grantAs innate, usesPerDay 1, minLevel 6 and 8 gates)."
+  },
+  {
+   "id": "spell-seeker",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "grantedFeatId \"recognize-spell\", trainedSkillChoice [arcana, occultism], trainedLore \"library\", abilityBoosts."
+  },
+  {
+   "id": "spell-woven-shot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants only an activity; no statistic, resource or option to pick."
+  },
+  {
+   "id": "spelldrinker",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "limitedUses {max:1, per:\"hour\"} tracks the frequency; the added spell is transient (24 h) and determined at play time by the creature whose blood was drunk."
+  },
+  {
+   "id": "spellhorn-kobold",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices lists the common arcane cantrips granting innateSpells {atWill, heightenHalfLevel}, plus spellcastingGrant {arcane, cha, trained}."
+  },
+  {
+   "id": "spellkeeper-shisk",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices lists occult and primal cantrips, each option granting the innate spell in its own tradition, at will and heightened by half level."
+  },
+  {
+   "id": "spellshot-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "spellcastingGrant {arcane, int, trained}, two effectChoices spellFilter cantrip picks, and featGrantsAuto for the Arcana training."
+  },
+  {
+   "id": "spellstriker-staff",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "heldSpells (cantrip/1st/2nd), a Charges counter (max \"level\", startsFull) and a once-per-hour counter deliver the staff. The \"+1 striking shifting\" is a systemic gap — no item definition anywhere in core.json encodes built-in runes — not something this record can express."
+  },
+  {
+   "id": "spellstriker-staff-greater",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Same as the base staff: heldSpells through 4th rank, plus the charge counter and once-per-hour counter."
+  },
+  {
+   "id": "spellstriker-staff-major",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Same as the base staff: heldSpells through 7th rank, plus the charge counter and once-per-hour counter."
+  },
+  {
+   "id": "spirit-spells",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Three effectChoices with spellFilter (occult rank 1/2/3, innate, once per day, minLevel 6 and 8)."
+  },
+  {
+   "id": "staff-nexus",
+   "verdict": "MISS",
+   "reason": "The thesis gives the wizard a makeshift staff holding one cantrip and one 1st-rank spell with a daily charge pool fed by expending spells (two at 8th, three at 16th). Nothing grants the item or the pool, and no data field grants an inventory item.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "standby-spell",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "choice flag standbySpell (kind:text) with an explicit inert note that unprepared casting is not tracked."
+  },
+  {
+   "id": "steal-spell",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Takes a spell from a foe for 1d4 rounds during play; nothing about the character sheet changes."
+  },
+  {
+   "id": "strikers-scroll",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Changes how an affixed scroll may be used with Spellstrike; no statistic or granted option."
+  },
+  {
+   "id": "student-of-magic",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "grantedFeatId \"recognize-spell\", trainedSkillChoice [arcana, nature, occultism, religion], trainedLore \"academia\", abilityBoosts."
+  },
+  {
+   "id": "studious-capacity",
+   "verdict": "MISS",
+   "reason": "Grants one extra casting per day once slots of that rank are gone — a real per-day resource — and the feat carries no fields at all.",
+   "fix": {
+    "field": "limitedUses",
+    "value": "{\"max\":1,\"per\":\"day\"}"
+   }
+  },
+  {
+   "id": "studious-spells",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "magusStudiousSpells() in src/rules/spellcasting.ts builds the two bonus slots and their tier rank (2nd at 7, 3rd at 11, 4th at 13) with the curated spells."
+  },
+  {
+   "id": "summoner-spellcasting",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Class chassis: the summoner class spellcasting block drives slot progression and the repertoire builder."
+  },
+  {
+   "id": "supreme-incarnation",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "APPARITION_SLOTS in src/rules/spellcasting.ts already grants rank 10:1 at character levels 19-20."
+  },
+  {
+   "id": "surreptitious-spellcaster",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "featFeatGrants.ts grants conceal-spell; situationalBonuses.ts carries both +2 circumstance bonuses."
+  },
+  {
+   "id": "synergistic-spell",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Pure action economy — a second halcyon spell as a free action; no sheet statistic."
+  },
+  {
+   "id": "the-deck-of-destiny",
+   "verdict": "MISS",
+   "reason": "The fortune/misfortune immunity sits as a TOP-LEVEL immunities array on an item, but derive.ts only reads passiveEffects.immunities from worn/invested items, so it never reaches the sheet.",
+   "fix": {
+    "field": "passiveEffects",
+    "value": "{\"immunities\":[\"fortune\",\"misfortune\"]}"
+   }
+  },
+  {
+   "id": "the-hollow-star",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "passiveEffects.skills {occultism:1}, heldSpells for both activations, two per-day counters, and situationalBonuses.ts for the +1 item spell attack."
+  },
+  {
+   "id": "the-infinite-eye",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The psychic class record’s Conscious Mind option \"the-infinite-eye\" carries grantedSpells (all nine granted spells plus its psi cantrips); situationalBonuses.ts carries the amp bonuses."
+  },
+  {
+   "id": "the-tangible-dream",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The psychic Conscious Mind option \"the-tangible-dream\" carries grantedSpells (all nine granted spells plus its psi cantrips)."
+  },
+  {
+   "id": "third-eye",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "passiveEffects {perception:3, senses:[detect magic 30 ft]}, heldSpells {8: truesight} and a once-per-day counter."
+  },
+  {
+   "id": "true-channel-spell",
+   "verdict": "MISS",
+   "reason": "Grants a single 10th-rank animist prepared slot, but animistPreparedSlots() caps at rank 9 and the spellSlotBonus the builder reads has no single-rank form, so the slot never appears.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "true-gaze",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "limitedUses {max:1, per:\"hour\"} tracks the frequency; the truesight effect is a temporary play-time state."
+  },
+  {
+   "id": "true-senses",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "limitedUses {max:1, per:\"day\"} tracks the frequency; the 10-minute truesight is a temporary play-time state."
+  },
+  {
+   "id": "truesight-potion",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "uses {current:1, max:1} — a one-shot consumable whose effect is a temporary play-time state."
+  },
+  {
+   "id": "virtue-forged-tattoos",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices spellFilter: any arcane spell up to rank 3, granted as a once-per-day innate arcane spell cast at rank 3."
+  },
+  {
+   "id": "wand-of-fey-flames",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "heldSpells {2: faerie-fire} plus a once-per-day counter; the Will-save rider only affects targets."
+  },
+  {
+   "id": "warden-spells",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Chassis: FOCUS_CASTING.ranger in build.ts sets the focus entry to primal/Wis at trained, and the focus point comes automatically with the first feat-granted focusSpells."
+  },
+  {
+   "id": "wellspring-gnome",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices spellFilter over arcane/divine/occult cantrips, granted at will as innate spells."
+  },
+  {
+   "id": "wellspring-magic",
+   "verdict": "MISS",
+   "reason": "The Wellspring Mage adjustment REDUCES spell slots of each rank by 1 (and cantrips by 1), but the class feature carries no fields, so a wellspring mage keeps the full spontaneous progression. build.ts applies spellSlotBonus additively, so a negative perRank removes the slots; the cantrip reduction still needs engine work.",
+   "fix": {
+    "field": "spellSlotBonus",
+    "value": "{\"perRank\":-1}"
+   }
+  },
+  {
+   "id": "westyrs-wayfinder-repository",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "choice flag storedSpell (kind:open, daily:true, from {type:\"own-spell\", rank:1}) — a daily-preparations pick from the character’s own spells."
+  },
+  {
+   "id": "witch-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "CASTER_ARCHETYPES[\"witch-dedication\"] (2 cantrips, Int, choiceTradition), companionGrants.ts for the familiar, featGrantsAuto for the trained skill, and a recorded patron choice with an explanatory note."
+  },
+  {
+   "id": "witch-lessons",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Descriptive index of every lesson; the Basic/Greater/Major Lesson feats carry the actual pick (basic-lesson holds the lesson choice list)."
+  },
+  {
+   "id": "witch-spellcasting",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Class chassis: the witch class spellcasting block drives prepared slots, cantrips and the Int-keyed spell DC."
+  },
+  {
+   "id": "wizard-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "CASTER_ARCHETYPES[\"wizard-dedication\"] grants 4 arcane cantrips, Int key and trained spell attack/DC; featGrantsAuto handles the Arcana training; the school is the recorded choice."
+  },
+  {
+   "id": "wizard-spellcasting",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Class chassis: the wizard class spellcasting block drives prepared slots, curriculum extras and the spellbook."
+  },
+  {
+   "id": "wylderheart-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "grantsFeats for the Additional Lore grant, featGrantsAuto for the training, and situationalBonuses.ts for the +1 circumstance initiative bonus against fiends."
+  },
+  {
+   "id": "zodiac-bound",
+   "verdict": "MISS",
+   "reason": "The constellation choice is recorded only (kind:array, options carry no grants), so the divine innate spell every sign confers never reaches the sheet. Replace the inert choice with a granting effectChoices.",
+   "fix": {
+    "effectChoices": [
+     {
+      "id": "constellation",
+      "prompt": "Constellation (sets your sign’s divine innate spell)",
+      "options": [
+       {
+        "value": "underworld-dragon",
+        "label": "The Underworld Dragon (Intelligence) — ignition, at will",
+        "grant": {
+         "innateSpells": [
+          {
+           "spellId": "ignition",
+           "tradition": "divine",
+           "atWill": true
+          }
+         ]
+        }
+       },
+       {
+        "value": "swordswoman",
+        "label": "The Swordswoman (Dexterity) — gale blast, at will",
+        "grant": {
+         "innateSpells": [
+          {
+           "spellId": "gale-blast",
+           "tradition": "divine",
+           "atWill": true
+          }
+         ]
+        }
+       },
+       {
+        "value": "sea-dragon",
+        "label": "The Sea Dragon (Constitution) — water breathing, once per week",
+        "grant": {
+         "innateSpells": [
+          {
+           "spellId": "water-breathing",
+           "tradition": "divine",
+           "usesPerDay": 1,
+           "usesPer": "week"
+          }
+         ]
+        }
+       },
+       {
+        "value": "swallow",
+        "label": "The Swallow (Dexterity) — jump, once per day",
+        "grant": {
+         "innateSpells": [
+          {
+           "spellId": "jump",
+           "tradition": "divine",
+           "usesPerDay": 1
+          }
+         ]
+        }
+       },
+       {
+        "value": "ox",
+        "label": "The Ox (Strength) — ant haul, once per day",
+        "grant": {
+         "innateSpells": [
+          {
+           "spellId": "ant-haul",
+           "tradition": "divine",
+           "usesPerDay": 1
+          }
+         ]
+        }
+       },
+       {
+        "value": "sovereign-dragon",
+        "label": "The Sovereign Dragon (Charisma) — command, once per day",
+        "grant": {
+         "innateSpells": [
+          {
+           "spellId": "command",
+           "tradition": "divine",
+           "usesPerDay": 1
+          }
+         ]
+        }
+       },
+       {
+        "value": "ogre",
+        "label": "The Ogre (Strength) — fear, once per day",
+        "grant": {
+         "innateSpells": [
+          {
+           "spellId": "fear",
+           "tradition": "divine",
+           "usesPerDay": 1
+          }
+         ]
+        }
+       },
+       {
+        "value": "forest-dragon",
+        "label": "The Forest Dragon (Wisdom) — tangle vine, at will",
+        "grant": {
+         "innateSpells": [
+          {
+           "spellId": "tangle-vine",
+           "tradition": "divine",
+           "atWill": true
+          }
+         ]
+        }
+       },
+       {
+        "value": "blossom",
+        "label": "The Blossom (Charisma) — dizzying colors, once per day",
+        "grant": {
+         "innateSpells": [
+          {
+           "spellId": "dizzying-colors",
+           "tradition": "divine",
+           "usesPerDay": 1
+          }
+         ]
+        }
+       },
+       {
+        "value": "dog",
+        "label": "The Dog (Constitution) — clear mind, once per week",
+        "grant": {
+         "innateSpells": [
+          {
+           "spellId": "clear-mind",
+           "tradition": "divine",
+           "usesPerDay": 1,
+           "usesPer": "week"
+          }
+         ]
+        }
+       },
+       {
+        "value": "sky-dragon",
+        "label": "The Sky Dragon (Intelligence) — bless, once per day",
+        "grant": {
+         "innateSpells": [
+          {
+           "spellId": "bless",
+           "tradition": "divine",
+           "usesPerDay": 1
+          }
+         ]
+        }
+       },
+       {
+        "value": "archer",
+        "label": "The Archer (Dexterity) — sure strike, once per day",
+        "grant": {
+         "innateSpells": [
+          {
+           "spellId": "sure-strike",
+           "tradition": "divine",
+           "usesPerDay": 1
+          }
+         ]
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "able-carter",
+   "verdict": "MISS",
+   "reason": "The background gives Charming Liar with Deception or Hobnobber with Diplomacy; the skill pick exists (trainedSkillChoice) but no feat is granted. grantedFeatByChoice is the established field for exactly this (animal-wrangler, blow-in, conservator, ...).",
+   "fix": {
+    "field": "grantedFeatByChoice",
+    "value": "{\"deception\":\"charming-liar\",\"diplomacy\":\"hobnobber\"}"
+   }
+  },
+  {
+   "id": "add-element",
+   "verdict": "MISS",
+   "reason": "The choice records the second kinetic element, but \"You gain an impulse feat for that element\" is never offered. FEAT_PICK_GRANTS cannot express \"an impulse feat carrying the element I just chose\" (no dynamic trait sourced from a sibling choice, and maxLevel has no half-character-level form).",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "advanced-arcana",
+   "verdict": "MISS",
+   "reason": "Grants one wizard feat, but unlike its basic-tier twin basic-arcana (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null).",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "advanced-blood-potency",
+   "verdict": "MISS",
+   "reason": "Grants one sorcerer feat, but unlike its basic-tier twin basic-blood-potency (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null).",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "advanced-breakthrough",
+   "verdict": "MISS",
+   "reason": "Grants one inventor feat, but unlike its basic-tier twin basic-breakthrough (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null).",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "advanced-concoction",
+   "verdict": "MISS",
+   "reason": "Grants one alchemist feat, but unlike its basic-tier twin basic-concoction (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null).",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "advanced-deduction",
+   "verdict": "MISS",
+   "reason": "Grants one investigator feat, but unlike its basic-tier twin basic-deduction (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null).",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "advanced-defender",
+   "verdict": "MISS",
+   "reason": "Grants one guardian feat, but unlike its basic-tier twin basic-defender (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null).",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "advanced-devotion",
+   "verdict": "MISS",
+   "reason": "Grants one champion feat, but unlike its basic-tier twin basic-devotion (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null).",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "advanced-dogma",
+   "verdict": "MISS",
+   "reason": "Grants one cleric feat, but unlike its basic-tier twin basic-dogma (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null).",
+   "fix": {
+    "needsEngineWork": true
+   }
+  }
+ ]
+}

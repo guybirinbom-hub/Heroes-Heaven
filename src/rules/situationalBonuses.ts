@@ -2652,6 +2652,48 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "wind-catcher": [{ targets: [{ kind: 'speed' }], when: "to the wind-powered vehicle's Speed, while its captain or pilot has this rune invested", bonus: "+5-foot item" }],
   "wind-catcher-greater": [{ targets: [{ kind: 'speed' }], when: "to the wind-powered vehicle's Speed, while its captain or pilot has this rune invested", bonus: "+10-foot item" }],
   "zombie-horde": [{ targets: [{ kind: 'strikeAttack' }], when: "your reanimated construct COMPANION's attack rolls on the horde Strikes…", bonus: "+2 circumstance" }],
+
+  // ---- coverage sweep batch 2 (scripts/apply-sweep-b2.mjs) — do not hand-edit below ----
+  // 28 records from the defense/proficiency/toggle sweep with a printed conditional bonus.
+  // Judged then adversarially refuted; every target and skill id validated against types.ts.
+  "armored-stealth": [{ targets: [{ kind: 'skill', detail: 'stealth' }], when: "wearing non-noisy armor you're trained in (reduces the armor check penalty)", bonus: "+1 (+2 if master in Stealth, +3 if legendary; never above 0 penalty)" }],
+  "artery-map": [{ targets: [{ kind: 'strikeDamage' }], when: "Strike an off-guard creature with a knife-group weapon", bonus: "1d6 persistent bleed (1d10 if legendary in Medicine)" }],
+  "bullet-dancer-burn": [{ targets: [{ kind: 'strikeDamage' }], when: "in Bullet Dancer Stance, on your next melee Strike after a ranged Strike at a foe in reach", bonus: "+1 fire and +1 persistent fire per firearm damage die" }],
+  "chain-of-command": [{ targets: [{ kind: 'strikeDamage' }], when: "on a critical hit with the chain of command", bonus: "+1d6 mental" }],
+  "creative-spark": [{ targets: [{ kind: 'skill', detail: 'crafting' }], when: "blacksmithing or metalworking, while the summoned fire wisp assists", bonus: "+1 (+2 at 9th level, +3 at 17th)" }],
+  "elements-of-creation": [{ targets: [{ kind: 'skill', detail: 'crafting' }], when: "while all four creative-spark wisps assist you", bonus: "creative spark's bonus is doubled; blacksmithing Crafting outcomes one degree better" }],
+  "exsanguinate": [{ targets: [{ kind: 'hp' }], when: "after a piercing or slashing Strike damages an active foe within 10 feet", bonus: "temporary Hit Points equal to half your level (until the end of your next turn)" }],
+  "frost-fair-yanyuedao": [{ targets: [{ kind: 'strikeAttack' }, { kind: 'strikeDamage' }], when: "while in an area of severe cold or colder, wielding the Frost Fair Yanyuedao", bonus: "the weapon becomes +3 major striking instead of +2 greater striking (+1 more to attack, one more damage die)" }],
+  "fury-cocktail-lesser": [{ targets: [{ kind: 'strikeAttack' }], when: "on MELEE Strikes only, for 10 minutes after drinking", bonus: "+2 item" }, { targets: [{ kind: 'ac' }], when: "for the 10 minutes the mutagen lasts (drawback - always applies)", bonus: "-1 untyped penalty" }, { targets: [{ kind: 'save', detail: 'reflex' }], when: "for the 10 minutes the mutagen lasts (drawback - always applies)", bonus: "-2 untyped penalty" }, { targets: [{ kind: 'save', detail: 'all' }], when: "on saves against magic - only if the cocktail was mixed with the Skeptical additive", bonus: "+1 item" }],
+  "godless-healing": [{ targets: [{ kind: 'hp' }], when: "when you Treat Wounds on yourself or an ally uses Battle Medicine on you", bonus: "+5 Hit Points recovered" }],
+  "hands-of-the-wildling": [{ targets: [{ kind: 'strikeDamage' }], when: "with hands of the wildling while its immanence is empowered", bonus: "+1 spirit splash damage per weapon damage die" }],
+  "ladys-blessing-oil": [{ targets: [{ kind: 'skill', detail: 'medicine' }], when: "Administering First Aid to stabilize, using Lady's blessing oil", bonus: "DC drops to the creature's recovery DC; a failure becomes a critical failure" }],
+  "lumber-lords-axe": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "to Lie while holding or carrying the lumber lord's axe", bonus: "-4 status" }, { targets: [{ kind: 'strikeDamage' }], when: "with this axe against undisguised fungus or plant creatures", bonus: "+1d6 slashing" }],
+  "major-timepiece-standard": [{ targets: [{ kind: 'hp' }], when: "when you Delay or Ready, then immune to this effect for 10 minutes", bonus: "+10 temporary Hit Points for 1 minute" }],
+  "reincarnated-ridiculer": [{ targets: [{ kind: 'skill', detail: 'intimidation' }], when: "Demoralizing a foe that critically hit you last turn", bonus: "+4 (the check's DC is reduced by 4)" }],
+  "resurgent-maelstrom": [{ targets: [{ kind: 'strikeAttack' }], when: "attacking with an improvised weapon", bonus: "the -2 item penalty does not apply" }, { targets: [{ kind: 'strikeDamage' }], when: "wielding an improvised weapon", bonus: "minimum damage die 1d6 (1d4 if agile); gains water plus backstabber (1H) or forceful (2H); unarmed runes apply" }],
+  "shockwave": [{ targets: [{ kind: 'strikeDamage' }], when: "on Strikes with the etched weapon", bonus: "bludgeoning splash damage equal to the number of weapon damage dice (you are immune to it)" }],
+  "shootists-edge": [{ targets: [{ kind: 'strikeAttack' }], when: "with a ranged weapon you have master or greater proficiency in…", bonus: "ignore the range increment penalty" }],
+  "skunk-bomb-moderate": [{ targets: [{ kind: 'skill', detail: 'survival' }], when: "to Track a creature this bomb sickened, while its odor lasts", bonus: "+1 item" }],
+  "supernatural-senses": [{ targets: [{ kind: 'strikeAttack' }], when: "while raging, targeting a concealed or hidden creature", bonus: "flat check DC is 3 (concealed) or 9 (hidden) instead of 5 or 11" }],
+  "titans-breaker": [{ targets: [{ kind: 'strikeDamage' }], when: "while the titan's breaker is empowered (immanence), with the chosen weapon", bonus: "+2 spirit damage per weapon damage die; bypasses Hardness equal to your level" }],
+  "travelers-fulu": [{ targets: [{ kind: 'skill', detail: 'survival' }], when: "on the Sense Direction check you activated the fulu for (also counts as having a compass)", bonus: "one degree of success better (two if you are a master in Survival)" }],
+  "trinity-geode": [{ targets: [{ kind: 'strikeDamage' }], when: "on Strikes with the affixed weapon after casting an earth spell via the geode", bonus: "+1d4 bludgeoning" }],
+  "trinity-geode-greater": [{ targets: [{ kind: 'strikeDamage' }], when: "on Strikes with the affixed weapon after casting an earth spell via the geode", bonus: "+1d6 bludgeoning" }],
+  "trinity-geode-major": [{ targets: [{ kind: 'strikeDamage' }], when: "on Strikes with the affixed weapon after casting an earth spell via the geode", bonus: "+1d8 bludgeoning" }],
+  "unmistakable-lore": [{ targets: [{ kind: 'skill', detail: 'lore:*' }], when: "to Recall Knowledge with a Lore subcategory you are trained in", bonus: "critical failure becomes failure" }],
+  "upset-balance": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "on the Upset Balance check while you are anchored", bonus: "+2 circumstance" }],
+  "vigilant-goloma": [{ targets: [{ kind: 'perception' }], when: "when attempting to detect a magical trap", bonus: "one proficiency rank higher (untyped)" }],
+
+  // ---- coverage sweep b3 (scripts/apply-sweep.mjs) — do not hand-edit below ----
+  // 6 records with a printed conditional bonus and no star.
+  // Judged then adversarially refuted; every target and skill id validated against types.ts.
+  "dragonblood": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against fear effects", bonus: "success becomes a critical success" }],
+  "finishing-precision": [{ targets: [{ kind: 'strikeDamage' }], when: "Precise Strike, agile or finesse melee (1d6 instead on a finisher)", bonus: "+1 precision" }],
+  "formation-master": [{ targets: [{ kind: 'ac' }], when: "while adjacent to at least two humanoid allies", bonus: "+1 circumstance" }, { targets: [{ kind: 'save', detail: 'all' }], when: "while adjacent to at least two humanoid allies", bonus: "+1 circumstance" }, { targets: [{ kind: 'save', detail: 'reflex' }], when: "adjacent to two humanoid allies, against area effects", bonus: "+2 circumstance" }],
+  "gird-champion": [{ targets: [{ kind: 'strikeDamage' }], when: "Strikes with your chosen favored weapon", bonus: "+1d6 spirit (or your domain's damage type)" }],
+  "ignite-the-sun": [{ targets: [{ kind: 'strikeDamage' }, { kind: 'spellDamage' }], when: "while you're in your Ignite the Sun's light (not Ignite the Sun itself)", bonus: "+1d6 fire" }],
+  "keen-recollection": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "Recall Knowledge with a skill you're untrained in", bonus: "counts as trained (add your level)" }],
 };
 
 /** A StatRef, loosened so callers outside explain.ts can pass a plain object. */
@@ -2780,6 +2822,10 @@ export interface RecordMarker {
 /** Source record id → the action/condition marks it carries. Keyed the same way as FEAT_SITUATIONAL
  *  so the character's owned-ids lookup finds both by the same route. */
 export const RECORD_MARKERS: Record<string, RecordMarker[]> = {
+  // Coverage sweep: registry-lane records the field applier could not write (they are registry
+  // entries, not record fields). Values quoted from each record's own text.
+  "the-harder-they-fall-ranger": [{ on: 'action', id: 'trip', value: "+1d8 bludgeoning", note: "a foe larger than you takes 1d8 bludgeoning (2d8 on a critical success)" }],
+  "uncanny-dodge": [{ on: 'condition', id: 'off-guard', note: "Deny Advantage: you are not off-guard to hidden, undetected or flanking foes of your level or lower" }],
 "black-powder-boost": [{ on: 'action', id: 'leap', value: "+10 feet", note: "Discharging a loaded firearm as you Leap adds a +10-foot status bonus to the distance…" }],
   "elemental-blast": [{ on: 'action', id: 'elemental-blast', value: "2 actions: +Con to damage", note: "Spending 2 actions adds a status bonus to the blast's damage equal to your Constitution…" }],
   "face-your-fears": [{ on: 'condition', id: 'frightened', value: "-1", note: "Once per hour you can reduce your frightened value by 1…" }],
@@ -2818,6 +2864,7 @@ export interface SpellMarker {
   bonus: string;
 }
 export const SPELL_MARKERS: Record<string, SpellMarker[]> = {
+  "harm": [{ source: 'sap-life', when: "when your harm damages at least one living creature, and you are living", bonus: "regain HP equal to the spell rank" }],
   "dancing-blade": [{ source: 'the-distant-grasp', when: "while an amped dancing blade Guards you — vs melee attacks…", bonus: "+2 circumstance" }],
 };
 

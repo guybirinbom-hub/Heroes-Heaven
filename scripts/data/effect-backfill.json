@@ -5761,7 +5761,12 @@
     "id": "obsidian-goggles-greater",
     "field": "passiveEffects",
     "value": {
-      "perception": 2
+      "perception": 2,
+      "senses": [
+        {
+          "name": "darkvision"
+        }
+      ]
     }
   },
   {
@@ -5769,7 +5774,12 @@
     "id": "obsidian-goggles-major",
     "field": "passiveEffects",
     "value": {
-      "perception": 3
+      "perception": 3,
+      "senses": [
+        {
+          "name": "greater-darkvision"
+        }
+      ]
     }
   },
   {
@@ -41967,5 +41977,2798 @@
       "max": 1,
       "per": "week"
     }
+  },
+  {
+    "category": "feats",
+    "id": "explosive-expert",
+    "field": "immunities",
+    "value": [
+      "splash damage from your own Strikes with bombs and firearms"
+    ]
+  },
+  {
+    "category": "items",
+    "id": "five-feather-wreath",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "falling",
+          "value": 2
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "five-feather-wreath-greater",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "falling",
+          "value": 5
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "flaming-star",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "fire",
+          "value": 2
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "flaming-star-greater",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "fire",
+          "value": 5
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "foxglove-token",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "poison",
+          "value": 2
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "foxglove-token-greater",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "poison",
+          "value": 5
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "greater-clay-sphere",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "precision",
+          "value": 5
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "greater-foxglove-token",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "poison",
+          "value": 5
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "greater-heartmoss",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "mental",
+          "value": 5
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "grim-sandglass",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "void",
+          "value": 2
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "grim-sandglass-greater",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "void",
+          "value": 5
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "heartmoss",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "mental",
+          "value": 2
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "heartmoss-greater",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "mental",
+          "value": 5
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "heartmoss-major",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "mental",
+          "value": 10
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "jolt-coil",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "electricity",
+          "value": 2
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "jolt-coil-greater",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "electricity",
+          "value": 3
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "jolt-coil-major",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "electricity",
+          "value": 5
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "major-clay-sphere",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "precision",
+          "value": 10
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "major-foxglove-token",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "poison",
+          "value": 10
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "major-heartmoss",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "mental",
+          "value": 10
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "perfect-droplet",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "water",
+          "value": 2
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "perfect-droplet-greater",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "water",
+          "value": 5
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "resonating-fork",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "sonic",
+          "value": 2
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "resonating-fork-greater",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "sonic",
+          "value": 5
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "rime-crystal",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "cold",
+          "value": 2
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "rime-crystal-greater",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "cold",
+          "value": 5
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "sanguine-fang",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "bleed",
+          "value": 3
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "sanguine-fang-greater",
+    "field": "passiveEffects",
+    "value": {
+      "resistances": [
+        {
+          "type": "bleed",
+          "value": 5
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "saurian-spike",
+    "field": "passiveEffects",
+    "value": {
+      "senses": [
+        {
+          "name": "scent",
+          "range": 30,
+          "acuity": "imprecise"
+        }
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "saurian-spike-greater",
+    "field": "passiveEffects",
+    "value": {
+      "senses": [
+        {
+          "name": "scent",
+          "range": 60,
+          "acuity": "imprecise"
+        }
+      ]
+    }
+  },
+  {
+    "category": "heritages",
+    "id": "flying-animal",
+    "field": "landSpeedMin",
+    "value": 20
+  },
+  {
+    "category": "classFeatures",
+    "id": "unfurling-brocade",
+    "field": "grantedStrikes",
+    "value": [
+      {
+        "name": "Qi-Infused Fabric",
+        "die": "1d4",
+        "damageType": "slashing",
+        "traits": [
+          "disarm",
+          "finesse",
+          "reach",
+          "sweep",
+          "trip"
+        ],
+        "group": "flail"
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "wayfinder-of-rescue",
+    "field": "heldSpells",
+    "value": {
+      "1": [
+        "heal"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "wayfinder-resonance-infiltrator",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "illusory-disguise",
+        "tradition": "arcane",
+        "rank": 2,
+        "usesPerDay": 1
+      }
+    ]
+  },
+  {
+    "category": "backgrounds",
+    "id": "banished-celestial",
+    "field": "trainedLoreChoice",
+    "value": true
+  },
+  {
+    "category": "feats",
+    "id": "brawling-focus",
+    "field": "critSpec",
+    "value": true
+  },
+  {
+    "category": "feats",
+    "id": "consult-the-stars",
+    "field": "choice",
+    "value": {
+      "flag": "consultTheStarsSkill",
+      "prompt": "Today's Consult the Stars skill",
+      "kind": "array",
+      "daily": true,
+      "options": [
+        {
+          "value": "arcana",
+          "label": "Arcana"
+        },
+        {
+          "value": "crafting",
+          "label": "Crafting"
+        },
+        {
+          "value": "deception",
+          "label": "Deception"
+        },
+        {
+          "value": "diplomacy",
+          "label": "Diplomacy"
+        },
+        {
+          "value": "intimidation",
+          "label": "Intimidation"
+        },
+        {
+          "value": "medicine",
+          "label": "Medicine"
+        },
+        {
+          "value": "nature",
+          "label": "Nature"
+        },
+        {
+          "value": "occultism",
+          "label": "Occultism"
+        },
+        {
+          "value": "performance",
+          "label": "Performance"
+        },
+        {
+          "value": "religion",
+          "label": "Religion"
+        },
+        {
+          "value": "society",
+          "label": "Society"
+        },
+        {
+          "value": "survival",
+          "label": "Survival"
+        }
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "crystal-ward-spells",
+    "field": "spellcastingGrant",
+    "value": {
+      "tradition": "arcane",
+      "keyAbility": "int",
+      "proficiency": "trained"
+    }
+  },
+  {
+    "category": "backgrounds",
+    "id": "eclipseborn",
+    "field": "trainedLoreChoice",
+    "value": true
+  },
+  {
+    "category": "heritages",
+    "id": "tsukumogami-poppet",
+    "field": "loreChoices",
+    "value": 1
+  },
+  {
+    "category": "feats",
+    "id": "advanced-deitys-domain",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "advanced-domain",
+        "prompt": "Choose the domain you took with Deity's Domain - you gain its advanced domain spell",
+        "options": [
+          {
+            "value": "air",
+            "label": "Air — Disperse into Air",
+            "grant": {
+              "focusSpells": [
+                "disperse-into-air"
+              ]
+            }
+          },
+          {
+            "value": "ambition",
+            "label": "Ambition — Competitive Edge",
+            "grant": {
+              "focusSpells": [
+                "competitive-edge"
+              ]
+            }
+          },
+          {
+            "value": "cities",
+            "label": "Cities — Pulse of Civilization",
+            "grant": {
+              "focusSpells": [
+                "pulse-of-civilization"
+              ]
+            }
+          },
+          {
+            "value": "confidence",
+            "label": "Confidence — Delusional Pride",
+            "grant": {
+              "focusSpells": [
+                "delusional-pride"
+              ]
+            }
+          },
+          {
+            "value": "creation",
+            "label": "Creation — Artistic Flourish",
+            "grant": {
+              "focusSpells": [
+                "artistic-flourish"
+              ]
+            }
+          },
+          {
+            "value": "darkness",
+            "label": "Darkness — Darkened Eyes",
+            "grant": {
+              "focusSpells": [
+                "darkened-eyes"
+              ]
+            }
+          },
+          {
+            "value": "death",
+            "label": "Death — Eradicate Undeath",
+            "grant": {
+              "focusSpells": [
+                "eradicate-undeath"
+              ]
+            }
+          },
+          {
+            "value": "destruction",
+            "label": "Destruction — Destructive Aura",
+            "grant": {
+              "focusSpells": [
+                "destructive-aura"
+              ]
+            }
+          },
+          {
+            "value": "dreams",
+            "label": "Dreams — Dreamer's Call",
+            "grant": {
+              "focusSpells": [
+                "dreamers-call"
+              ]
+            }
+          },
+          {
+            "value": "earth",
+            "label": "Earth — Localized Quake",
+            "grant": {
+              "focusSpells": [
+                "localized-quake"
+              ]
+            }
+          },
+          {
+            "value": "family",
+            "label": "Family — Unity",
+            "grant": {
+              "focusSpells": [
+                "unity"
+              ]
+            }
+          },
+          {
+            "value": "fate",
+            "label": "Fate — Tempt Fate",
+            "grant": {
+              "focusSpells": [
+                "tempt-fate"
+              ]
+            }
+          },
+          {
+            "value": "fire",
+            "label": "Fire — Flame Barrier",
+            "grant": {
+              "focusSpells": [
+                "flame-barrier"
+              ]
+            }
+          },
+          {
+            "value": "freedom",
+            "label": "Freedom — Word of Freedom",
+            "grant": {
+              "focusSpells": [
+                "word-of-freedom"
+              ]
+            }
+          },
+          {
+            "value": "healing",
+            "label": "Healing — Rebuke Death",
+            "grant": {
+              "focusSpells": [
+                "rebuke-death"
+              ]
+            }
+          },
+          {
+            "value": "indulgence",
+            "label": "Indulgence — Take its Course",
+            "grant": {
+              "focusSpells": [
+                "take-its-course"
+              ]
+            }
+          },
+          {
+            "value": "knowledge",
+            "label": "Knowledge — Know the Enemy",
+            "grant": {
+              "focusSpells": [
+                "know-the-enemy"
+              ]
+            }
+          },
+          {
+            "value": "luck",
+            "label": "Luck — Lucky Break",
+            "grant": {
+              "focusSpells": [
+                "lucky-break"
+              ]
+            }
+          },
+          {
+            "value": "magic",
+            "label": "Magic — Mystic Beacon",
+            "grant": {
+              "focusSpells": [
+                "mystic-beacon"
+              ]
+            }
+          },
+          {
+            "value": "might",
+            "label": "Might — Enduring Might",
+            "grant": {
+              "focusSpells": [
+                "enduring-might"
+              ]
+            }
+          },
+          {
+            "value": "moon",
+            "label": "Moon — Touch of the Moon",
+            "grant": {
+              "focusSpells": [
+                "touch-of-the-moon"
+              ]
+            }
+          },
+          {
+            "value": "nature",
+            "label": "Nature — Nature's Bounty",
+            "grant": {
+              "focusSpells": [
+                "natures-bounty"
+              ]
+            }
+          },
+          {
+            "value": "nightmares",
+            "label": "Nightmares — Shared Nightmare",
+            "grant": {
+              "focusSpells": [
+                "shared-nightmare"
+              ]
+            }
+          },
+          {
+            "value": "pain",
+            "label": "Pain — Retributive Pain",
+            "grant": {
+              "focusSpells": [
+                "retributive-pain"
+              ]
+            }
+          },
+          {
+            "value": "passion",
+            "label": "Passion — Captivating Adoration",
+            "grant": {
+              "focusSpells": [
+                "captivating-adoration"
+              ]
+            }
+          },
+          {
+            "value": "protection",
+            "label": "Protection — Protector's Sphere",
+            "grant": {
+              "focusSpells": [
+                "protectors-sphere"
+              ]
+            }
+          },
+          {
+            "value": "secrecy",
+            "label": "Secrecy — Safeguard Secret",
+            "grant": {
+              "focusSpells": [
+                "safeguard-secret"
+              ]
+            }
+          },
+          {
+            "value": "travel",
+            "label": "Travel — Traveler's Transit",
+            "grant": {
+              "focusSpells": [
+                "travelers-transit"
+              ]
+            }
+          },
+          {
+            "value": "trickery",
+            "label": "Trickery — Trickster's Twin",
+            "grant": {
+              "focusSpells": [
+                "tricksters-twin"
+              ]
+            }
+          },
+          {
+            "value": "truth",
+            "label": "Truth — Glimpse the Truth",
+            "grant": {
+              "focusSpells": [
+                "glimpse-the-truth"
+              ]
+            }
+          },
+          {
+            "value": "tyranny",
+            "label": "Tyranny — Commanding Lash",
+            "grant": {
+              "focusSpells": [
+                "commanding-lash"
+              ]
+            }
+          },
+          {
+            "value": "undeath",
+            "label": "Undeath — Malignant Sustenance",
+            "grant": {
+              "focusSpells": [
+                "malignant-sustenance"
+              ]
+            }
+          },
+          {
+            "value": "water",
+            "label": "Water — Downpour",
+            "grant": {
+              "focusSpells": [
+                "downpour"
+              ]
+            }
+          },
+          {
+            "value": "wealth",
+            "label": "Wealth — Precious Metals",
+            "grant": {
+              "focusSpells": [
+                "precious-metals"
+              ]
+            }
+          },
+          {
+            "value": "zeal",
+            "label": "Zeal — Zeal for Battle",
+            "grant": {
+              "focusSpells": [
+                "zeal-for-battle"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "advanced-domain",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "advanced-domain",
+        "prompt": "Choose one of your domains - you gain its ADVANCED domain spell",
+        "options": [
+          {
+            "value": "air",
+            "label": "Air — Disperse into Air",
+            "grant": {
+              "focusSpells": [
+                "disperse-into-air"
+              ]
+            }
+          },
+          {
+            "value": "ambition",
+            "label": "Ambition — Competitive Edge",
+            "grant": {
+              "focusSpells": [
+                "competitive-edge"
+              ]
+            }
+          },
+          {
+            "value": "cities",
+            "label": "Cities — Pulse of Civilization",
+            "grant": {
+              "focusSpells": [
+                "pulse-of-civilization"
+              ]
+            }
+          },
+          {
+            "value": "confidence",
+            "label": "Confidence — Delusional Pride",
+            "grant": {
+              "focusSpells": [
+                "delusional-pride"
+              ]
+            }
+          },
+          {
+            "value": "creation",
+            "label": "Creation — Artistic Flourish",
+            "grant": {
+              "focusSpells": [
+                "artistic-flourish"
+              ]
+            }
+          },
+          {
+            "value": "darkness",
+            "label": "Darkness — Darkened Eyes",
+            "grant": {
+              "focusSpells": [
+                "darkened-eyes"
+              ]
+            }
+          },
+          {
+            "value": "death",
+            "label": "Death — Eradicate Undeath",
+            "grant": {
+              "focusSpells": [
+                "eradicate-undeath"
+              ]
+            }
+          },
+          {
+            "value": "destruction",
+            "label": "Destruction — Destructive Aura",
+            "grant": {
+              "focusSpells": [
+                "destructive-aura"
+              ]
+            }
+          },
+          {
+            "value": "dreams",
+            "label": "Dreams — Dreamer's Call",
+            "grant": {
+              "focusSpells": [
+                "dreamers-call"
+              ]
+            }
+          },
+          {
+            "value": "earth",
+            "label": "Earth — Localized Quake",
+            "grant": {
+              "focusSpells": [
+                "localized-quake"
+              ]
+            }
+          },
+          {
+            "value": "family",
+            "label": "Family — Unity",
+            "grant": {
+              "focusSpells": [
+                "unity"
+              ]
+            }
+          },
+          {
+            "value": "fate",
+            "label": "Fate — Tempt Fate",
+            "grant": {
+              "focusSpells": [
+                "tempt-fate"
+              ]
+            }
+          },
+          {
+            "value": "fire",
+            "label": "Fire — Flame Barrier",
+            "grant": {
+              "focusSpells": [
+                "flame-barrier"
+              ]
+            }
+          },
+          {
+            "value": "freedom",
+            "label": "Freedom — Word of Freedom",
+            "grant": {
+              "focusSpells": [
+                "word-of-freedom"
+              ]
+            }
+          },
+          {
+            "value": "healing",
+            "label": "Healing — Rebuke Death",
+            "grant": {
+              "focusSpells": [
+                "rebuke-death"
+              ]
+            }
+          },
+          {
+            "value": "indulgence",
+            "label": "Indulgence — Take its Course",
+            "grant": {
+              "focusSpells": [
+                "take-its-course"
+              ]
+            }
+          },
+          {
+            "value": "knowledge",
+            "label": "Knowledge — Know the Enemy",
+            "grant": {
+              "focusSpells": [
+                "know-the-enemy"
+              ]
+            }
+          },
+          {
+            "value": "luck",
+            "label": "Luck — Lucky Break",
+            "grant": {
+              "focusSpells": [
+                "lucky-break"
+              ]
+            }
+          },
+          {
+            "value": "magic",
+            "label": "Magic — Mystic Beacon",
+            "grant": {
+              "focusSpells": [
+                "mystic-beacon"
+              ]
+            }
+          },
+          {
+            "value": "might",
+            "label": "Might — Enduring Might",
+            "grant": {
+              "focusSpells": [
+                "enduring-might"
+              ]
+            }
+          },
+          {
+            "value": "moon",
+            "label": "Moon — Touch of the Moon",
+            "grant": {
+              "focusSpells": [
+                "touch-of-the-moon"
+              ]
+            }
+          },
+          {
+            "value": "nature",
+            "label": "Nature — Nature's Bounty",
+            "grant": {
+              "focusSpells": [
+                "natures-bounty"
+              ]
+            }
+          },
+          {
+            "value": "nightmares",
+            "label": "Nightmares — Shared Nightmare",
+            "grant": {
+              "focusSpells": [
+                "shared-nightmare"
+              ]
+            }
+          },
+          {
+            "value": "pain",
+            "label": "Pain — Retributive Pain",
+            "grant": {
+              "focusSpells": [
+                "retributive-pain"
+              ]
+            }
+          },
+          {
+            "value": "passion",
+            "label": "Passion — Captivating Adoration",
+            "grant": {
+              "focusSpells": [
+                "captivating-adoration"
+              ]
+            }
+          },
+          {
+            "value": "protection",
+            "label": "Protection — Protector's Sphere",
+            "grant": {
+              "focusSpells": [
+                "protectors-sphere"
+              ]
+            }
+          },
+          {
+            "value": "secrecy",
+            "label": "Secrecy — Safeguard Secret",
+            "grant": {
+              "focusSpells": [
+                "safeguard-secret"
+              ]
+            }
+          },
+          {
+            "value": "travel",
+            "label": "Travel — Traveler's Transit",
+            "grant": {
+              "focusSpells": [
+                "travelers-transit"
+              ]
+            }
+          },
+          {
+            "value": "trickery",
+            "label": "Trickery — Trickster's Twin",
+            "grant": {
+              "focusSpells": [
+                "tricksters-twin"
+              ]
+            }
+          },
+          {
+            "value": "truth",
+            "label": "Truth — Glimpse the Truth",
+            "grant": {
+              "focusSpells": [
+                "glimpse-the-truth"
+              ]
+            }
+          },
+          {
+            "value": "tyranny",
+            "label": "Tyranny — Commanding Lash",
+            "grant": {
+              "focusSpells": [
+                "commanding-lash"
+              ]
+            }
+          },
+          {
+            "value": "undeath",
+            "label": "Undeath — Malignant Sustenance",
+            "grant": {
+              "focusSpells": [
+                "malignant-sustenance"
+              ]
+            }
+          },
+          {
+            "value": "water",
+            "label": "Water — Downpour",
+            "grant": {
+              "focusSpells": [
+                "downpour"
+              ]
+            }
+          },
+          {
+            "value": "wealth",
+            "label": "Wealth — Precious Metals",
+            "grant": {
+              "focusSpells": [
+                "precious-metals"
+              ]
+            }
+          },
+          {
+            "value": "zeal",
+            "label": "Zeal — Zeal for Battle",
+            "grant": {
+              "focusSpells": [
+                "zeal-for-battle"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "advanced-domain-spirit",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "advanced-domain",
+        "prompt": "Choose your domain spirit's domain - you gain its advanced domain spell",
+        "options": [
+          {
+            "value": "air",
+            "label": "Air — Disperse into Air",
+            "grant": {
+              "focusSpells": [
+                "disperse-into-air"
+              ]
+            }
+          },
+          {
+            "value": "ambition",
+            "label": "Ambition — Competitive Edge",
+            "grant": {
+              "focusSpells": [
+                "competitive-edge"
+              ]
+            }
+          },
+          {
+            "value": "cities",
+            "label": "Cities — Pulse of Civilization",
+            "grant": {
+              "focusSpells": [
+                "pulse-of-civilization"
+              ]
+            }
+          },
+          {
+            "value": "confidence",
+            "label": "Confidence — Delusional Pride",
+            "grant": {
+              "focusSpells": [
+                "delusional-pride"
+              ]
+            }
+          },
+          {
+            "value": "creation",
+            "label": "Creation — Artistic Flourish",
+            "grant": {
+              "focusSpells": [
+                "artistic-flourish"
+              ]
+            }
+          },
+          {
+            "value": "darkness",
+            "label": "Darkness — Darkened Eyes",
+            "grant": {
+              "focusSpells": [
+                "darkened-eyes"
+              ]
+            }
+          },
+          {
+            "value": "death",
+            "label": "Death — Eradicate Undeath",
+            "grant": {
+              "focusSpells": [
+                "eradicate-undeath"
+              ]
+            }
+          },
+          {
+            "value": "destruction",
+            "label": "Destruction — Destructive Aura",
+            "grant": {
+              "focusSpells": [
+                "destructive-aura"
+              ]
+            }
+          },
+          {
+            "value": "dreams",
+            "label": "Dreams — Dreamer's Call",
+            "grant": {
+              "focusSpells": [
+                "dreamers-call"
+              ]
+            }
+          },
+          {
+            "value": "earth",
+            "label": "Earth — Localized Quake",
+            "grant": {
+              "focusSpells": [
+                "localized-quake"
+              ]
+            }
+          },
+          {
+            "value": "family",
+            "label": "Family — Unity",
+            "grant": {
+              "focusSpells": [
+                "unity"
+              ]
+            }
+          },
+          {
+            "value": "fate",
+            "label": "Fate — Tempt Fate",
+            "grant": {
+              "focusSpells": [
+                "tempt-fate"
+              ]
+            }
+          },
+          {
+            "value": "fire",
+            "label": "Fire — Flame Barrier",
+            "grant": {
+              "focusSpells": [
+                "flame-barrier"
+              ]
+            }
+          },
+          {
+            "value": "freedom",
+            "label": "Freedom — Word of Freedom",
+            "grant": {
+              "focusSpells": [
+                "word-of-freedom"
+              ]
+            }
+          },
+          {
+            "value": "healing",
+            "label": "Healing — Rebuke Death",
+            "grant": {
+              "focusSpells": [
+                "rebuke-death"
+              ]
+            }
+          },
+          {
+            "value": "indulgence",
+            "label": "Indulgence — Take its Course",
+            "grant": {
+              "focusSpells": [
+                "take-its-course"
+              ]
+            }
+          },
+          {
+            "value": "knowledge",
+            "label": "Knowledge — Know the Enemy",
+            "grant": {
+              "focusSpells": [
+                "know-the-enemy"
+              ]
+            }
+          },
+          {
+            "value": "luck",
+            "label": "Luck — Lucky Break",
+            "grant": {
+              "focusSpells": [
+                "lucky-break"
+              ]
+            }
+          },
+          {
+            "value": "magic",
+            "label": "Magic — Mystic Beacon",
+            "grant": {
+              "focusSpells": [
+                "mystic-beacon"
+              ]
+            }
+          },
+          {
+            "value": "might",
+            "label": "Might — Enduring Might",
+            "grant": {
+              "focusSpells": [
+                "enduring-might"
+              ]
+            }
+          },
+          {
+            "value": "moon",
+            "label": "Moon — Touch of the Moon",
+            "grant": {
+              "focusSpells": [
+                "touch-of-the-moon"
+              ]
+            }
+          },
+          {
+            "value": "nature",
+            "label": "Nature — Nature's Bounty",
+            "grant": {
+              "focusSpells": [
+                "natures-bounty"
+              ]
+            }
+          },
+          {
+            "value": "nightmares",
+            "label": "Nightmares — Shared Nightmare",
+            "grant": {
+              "focusSpells": [
+                "shared-nightmare"
+              ]
+            }
+          },
+          {
+            "value": "pain",
+            "label": "Pain — Retributive Pain",
+            "grant": {
+              "focusSpells": [
+                "retributive-pain"
+              ]
+            }
+          },
+          {
+            "value": "passion",
+            "label": "Passion — Captivating Adoration",
+            "grant": {
+              "focusSpells": [
+                "captivating-adoration"
+              ]
+            }
+          },
+          {
+            "value": "protection",
+            "label": "Protection — Protector's Sphere",
+            "grant": {
+              "focusSpells": [
+                "protectors-sphere"
+              ]
+            }
+          },
+          {
+            "value": "secrecy",
+            "label": "Secrecy — Safeguard Secret",
+            "grant": {
+              "focusSpells": [
+                "safeguard-secret"
+              ]
+            }
+          },
+          {
+            "value": "travel",
+            "label": "Travel — Traveler's Transit",
+            "grant": {
+              "focusSpells": [
+                "travelers-transit"
+              ]
+            }
+          },
+          {
+            "value": "trickery",
+            "label": "Trickery — Trickster's Twin",
+            "grant": {
+              "focusSpells": [
+                "tricksters-twin"
+              ]
+            }
+          },
+          {
+            "value": "truth",
+            "label": "Truth — Glimpse the Truth",
+            "grant": {
+              "focusSpells": [
+                "glimpse-the-truth"
+              ]
+            }
+          },
+          {
+            "value": "tyranny",
+            "label": "Tyranny — Commanding Lash",
+            "grant": {
+              "focusSpells": [
+                "commanding-lash"
+              ]
+            }
+          },
+          {
+            "value": "undeath",
+            "label": "Undeath — Malignant Sustenance",
+            "grant": {
+              "focusSpells": [
+                "malignant-sustenance"
+              ]
+            }
+          },
+          {
+            "value": "water",
+            "label": "Water — Downpour",
+            "grant": {
+              "focusSpells": [
+                "downpour"
+              ]
+            }
+          },
+          {
+            "value": "wealth",
+            "label": "Wealth — Precious Metals",
+            "grant": {
+              "focusSpells": [
+                "precious-metals"
+              ]
+            }
+          },
+          {
+            "value": "zeal",
+            "label": "Zeal — Zeal for Battle",
+            "grant": {
+              "focusSpells": [
+                "zeal-for-battle"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "advanced-warden",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "advanced-warden-spell",
+        "prompt": "Choose an advanced warden spell",
+        "options": [
+          {
+            "value": "animal-feature",
+            "label": "Animal Feature",
+            "grant": {
+              "focusSpells": [
+                "animal-feature"
+              ]
+            }
+          },
+          {
+            "value": "enlarge-companion",
+            "label": "Enlarge Companion",
+            "grant": {
+              "focusSpells": [
+                "enlarge-companion"
+              ]
+            }
+          },
+          {
+            "value": "hunters-luck",
+            "label": "Hunter's Luck",
+            "grant": {
+              "focusSpells": [
+                "hunters-luck"
+              ]
+            }
+          },
+          {
+            "value": "soothing-mist",
+            "label": "Soothing Mist",
+            "grant": {
+              "focusSpells": [
+                "soothing-mist"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "cloak-of-social-graces",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "heroism",
+        "tradition": "divine",
+        "rank": 3,
+        "usesPerDay": 1
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "cosmic-cocktail",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "truesight",
+        "usesPerDay": 1
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "determined-lore-seeker",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "determined-lore-seeker-spell",
+        "prompt": "Choose the Lore Seeker spell you can cast three times per day",
+        "options": [
+          {
+            "value": "translate",
+            "label": "Translate (heightened to 4th rank)",
+            "grant": {
+              "innateSpells": [
+                {
+                  "spellId": "translate",
+                  "tradition": "arcane",
+                  "rank": 4,
+                  "usesPerDay": 3
+                }
+              ]
+            }
+          },
+          {
+            "value": "sound-body",
+            "label": "Sound Body (heightened to half your level)",
+            "grant": {
+              "innateSpells": [
+                {
+                  "spellId": "sound-body",
+                  "tradition": "arcane",
+                  "usesPerDay": 3,
+                  "heightenHalfLevel": true
+                }
+              ]
+            }
+          },
+          {
+            "value": "see-the-unseen",
+            "label": "See the Unseen (see invisible creatures normally)",
+            "grant": {
+              "innateSpells": [
+                {
+                  "spellId": "see-the-unseen",
+                  "tradition": "arcane",
+                  "rank": 2,
+                  "usesPerDay": 3
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "devout-magic",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "devout-magic-spell",
+        "prompt": "Choose your devotion spell (Lay on Hands and Touch of the Void follow your deity's divine font)",
+        "options": [
+          {
+            "value": "shields-of-the-spirit",
+            "label": "Shields of the Spirit",
+            "grant": {
+              "focusSpells": [
+                "shields-of-the-spirit"
+              ]
+            }
+          },
+          {
+            "value": "lay-on-hands",
+            "label": "Lay on Hands (deity allows heal)",
+            "grant": {
+              "focusSpells": [
+                "lay-on-hands"
+              ]
+            }
+          },
+          {
+            "value": "touch-of-the-void",
+            "label": "Touch of the Void (deity allows harm)",
+            "grant": {
+              "focusSpells": [
+                "touch-of-the-void"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "divine-effusion",
+    "field": "limitedUses",
+    "value": {
+      "max": 2,
+      "per": "day"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "elemental-apotheosis",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "elemental-apotheosis-element",
+        "prompt": "Elemental Apotheosis — your element (Speeds from Elemental Form)",
+        "options": [
+          {
+            "value": "air",
+            "label": "Air — fly 80 feet",
+            "grant": {
+              "speeds": {
+                "fly": 80
+              }
+            }
+          },
+          {
+            "value": "earth",
+            "label": "Earth — burrow 20 feet",
+            "grant": {
+              "speeds": {
+                "burrow": 20
+              }
+            }
+          },
+          {
+            "value": "fire",
+            "label": "Fire — no non-land Speed",
+            "note": "Elemental Form (fire) lists only a 50-foot land Speed."
+          },
+          {
+            "value": "metal",
+            "label": "Metal — fly 20 feet",
+            "grant": {
+              "speeds": {
+                "fly": 20
+              }
+            }
+          },
+          {
+            "value": "water",
+            "label": "Water — swim 60 feet",
+            "grant": {
+              "speeds": {
+                "swim": 60
+              }
+            }
+          },
+          {
+            "value": "wood",
+            "label": "Wood — climb 30 feet",
+            "grant": {
+              "speeds": {
+                "climb": 30
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "elemental-wayfinder-air",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "lightning-bolt",
+        "tradition": "primal",
+        "rank": 4,
+        "usesPerDay": 1
+      },
+      {
+        "spellId": "gentle-landing",
+        "tradition": "primal",
+        "usesPerDay": 1,
+        "usesPer": "hour"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "emergency-regeneration",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "regenerate",
+        "tradition": "primal",
+        "rank": 7,
+        "usesPerDay": 1,
+        "heightenAt": [
+          {
+            "level": 20,
+            "rank": 9
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "epiphany-at-the-crossroads",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "augury",
+        "tradition": "divine",
+        "usesPerDay": 1
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "fan-of-soothing-winds",
+    "field": "heldSpells",
+    "value": {
+      "2": [
+        "heal"
+      ],
+      "3": [
+        "heal"
+      ],
+      "4": [
+        "heal"
+      ]
+    }
+  },
+  {
+    "category": "items",
+    "id": "fan-of-soothing-winds-greater",
+    "field": "heldSpells",
+    "value": {
+      "4": [
+        "heal"
+      ],
+      "5": [
+        "heal"
+      ],
+      "6": [
+        "heal"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "greater-spell-runes",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "rune-4",
+        "prompt": "Spell rune: choose a 4th-rank arcane spell (cast once per day as an innate spell)",
+        "spellFilter": {
+          "traditions": [
+            "arcane"
+          ],
+          "rank": 4,
+          "cantripsOnly": false,
+          "grantAs": "innate",
+          "innate": {
+            "tradition": "arcane",
+            "usesPerDay": 1
+          }
+        }
+      },
+      {
+        "id": "rune-5",
+        "prompt": "Spell rune (12th level): choose a 5th-rank arcane spell (cast once per day as an innate spell)",
+        "spellFilter": {
+          "traditions": [
+            "arcane"
+          ],
+          "rank": 5,
+          "cantripsOnly": false,
+          "grantAs": "innate",
+          "innate": {
+            "tradition": "arcane",
+            "usesPerDay": 1
+          },
+          "minLevel": 12
+        }
+      },
+      {
+        "id": "rune-6",
+        "prompt": "Spell rune (14th level): choose a 6th-rank arcane spell (cast once per day as an innate spell)",
+        "spellFilter": {
+          "traditions": [
+            "arcane"
+          ],
+          "rank": 6,
+          "cantripsOnly": false,
+          "grantAs": "innate",
+          "innate": {
+            "tradition": "arcane",
+            "usesPerDay": 1
+          },
+          "minLevel": 14
+        }
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "greater-vital-evolution",
+    "field": "limitedUses",
+    "value": {
+      "max": 2,
+      "per": "day"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "holy-flower",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "advanced-domain",
+        "prompt": "Choose the advanced domain spell (from the domain you took with Holy Bloom)",
+        "options": [
+          {
+            "value": "freedom",
+            "label": "Freedom - Word of Freedom",
+            "grant": {
+              "focusSpells": [
+                "word-of-freedom"
+              ]
+            }
+          },
+          {
+            "value": "zeal",
+            "label": "Zeal - Zeal for Battle",
+            "grant": {
+              "focusSpells": [
+                "zeal-for-battle"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "initiate-warden",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "warden-spell",
+        "prompt": "Choose an initial warden spell",
+        "options": [
+          {
+            "value": "gravity-weapon",
+            "label": "Gravity Weapon",
+            "grant": {
+              "focusSpells": [
+                "gravity-weapon"
+              ]
+            }
+          },
+          {
+            "value": "heal-companion",
+            "label": "Heal Companion",
+            "grant": {
+              "focusSpells": [
+                "heal-companion"
+              ]
+            }
+          },
+          {
+            "value": "magic-hide",
+            "label": "Magic Hide",
+            "grant": {
+              "focusSpells": [
+                "magic-hide"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "backgrounds",
+    "id": "local-savior",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "hometownCantrip",
+        "prompt": "Hometown - choose your divine innate cantrip (at will, heightened to half your level)",
+        "options": [
+          {
+            "value": "ilsurian-shield",
+            "label": "Ilsurian - Shield",
+            "grant": {
+              "innateSpells": [
+                {
+                  "spellId": "shield",
+                  "tradition": "divine",
+                  "atWill": true,
+                  "heightenHalfLevel": true
+                }
+              ]
+            }
+          },
+          {
+            "value": "ilsurian-stabilize",
+            "label": "Ilsurian - Stabilize",
+            "grant": {
+              "innateSpells": [
+                {
+                  "spellId": "stabilize",
+                  "tradition": "divine",
+                  "atWill": true,
+                  "heightenHalfLevel": true
+                }
+              ]
+            }
+          },
+          {
+            "value": "osprey-cove-message",
+            "label": "Osprey Cove - Message",
+            "grant": {
+              "innateSpells": [
+                {
+                  "spellId": "message",
+                  "tradition": "divine",
+                  "atWill": true,
+                  "heightenHalfLevel": true
+                }
+              ]
+            }
+          },
+          {
+            "value": "osprey-cove-read-aura",
+            "label": "Osprey Cove - Read Aura",
+            "grant": {
+              "innateSpells": [
+                {
+                  "spellId": "read-aura",
+                  "tradition": "divine",
+                  "atWill": true,
+                  "heightenHalfLevel": true
+                }
+              ]
+            }
+          },
+          {
+            "value": "rodericscove-forbidding-ward",
+            "label": "Roderic's Cove - Forbidding Ward",
+            "grant": {
+              "innateSpells": [
+                {
+                  "spellId": "forbidding-ward",
+                  "tradition": "divine",
+                  "atWill": true,
+                  "heightenHalfLevel": true
+                }
+              ]
+            }
+          },
+          {
+            "value": "rodericscove-guidance",
+            "label": "Roderic's Cove - Guidance",
+            "grant": {
+              "innateSpells": [
+                {
+                  "spellId": "guidance",
+                  "tradition": "divine",
+                  "atWill": true,
+                  "heightenHalfLevel": true
+                }
+              ]
+            }
+          },
+          {
+            "value": "sandpoint-haunting-hymn",
+            "label": "Sandpoint - Haunting Hymn",
+            "grant": {
+              "innateSpells": [
+                {
+                  "spellId": "haunting-hymn",
+                  "tradition": "divine",
+                  "atWill": true,
+                  "heightenHalfLevel": true
+                }
+              ]
+            }
+          },
+          {
+            "value": "sandpoint-summon-instrument",
+            "label": "Sandpoint - Summon Instrument",
+            "grant": {
+              "innateSpells": [
+                {
+                  "spellId": "summon-instrument",
+                  "tradition": "divine",
+                  "atWill": true,
+                  "heightenHalfLevel": true
+                }
+              ]
+            }
+          },
+          {
+            "value": "turtleback-ferry-daze",
+            "label": "Turtleback Ferry - Daze",
+            "grant": {
+              "innateSpells": [
+                {
+                  "spellId": "daze",
+                  "tradition": "divine",
+                  "atWill": true,
+                  "heightenHalfLevel": true
+                }
+              ]
+            }
+          },
+          {
+            "value": "turtleback-ferry-prestidigitation",
+            "label": "Turtleback Ferry - Prestidigitation",
+            "grant": {
+              "innateSpells": [
+                {
+                  "spellId": "prestidigitation",
+                  "tradition": "divine",
+                  "atWill": true,
+                  "heightenHalfLevel": true
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "luck-blade-wishing",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "wish",
+        "tradition": "arcane",
+        "rank": 10,
+        "usesPerDay": 1
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "masterful-warden",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "warden-spell",
+        "prompt": "Choose a master warden spell",
+        "options": [
+          {
+            "value": "ephemeral-tracking",
+            "label": "Ephemeral Tracking",
+            "grant": {
+              "focusSpells": [
+                "ephemeral-tracking"
+              ]
+            }
+          },
+          {
+            "value": "rangers-bramble",
+            "label": "Ranger's Bramble",
+            "grant": {
+              "focusSpells": [
+                "rangers-bramble"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "order-magic",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "order-magic-order",
+        "prompt": "Choose an order you selected with Order Explorer — you gain its initial order spell",
+        "options": [
+          {
+            "value": "animal-order",
+            "label": "Animal Order — Heal Animal",
+            "grant": {
+              "focusSpells": [
+                "heal-animal"
+              ]
+            }
+          },
+          {
+            "value": "cultivation-order",
+            "label": "Cultivation Order — Cornucopia",
+            "grant": {
+              "focusSpells": [
+                "cornucopia"
+              ]
+            }
+          },
+          {
+            "value": "flame-order",
+            "label": "Flame Order — Wildfire",
+            "grant": {
+              "focusSpells": [
+                "wildfire"
+              ]
+            }
+          },
+          {
+            "value": "leaf-order",
+            "label": "Leaf Order — Cornucopia",
+            "grant": {
+              "focusSpells": [
+                "cornucopia"
+              ]
+            }
+          },
+          {
+            "value": "spore-order",
+            "label": "Spore Order — Mushroom Patch",
+            "grant": {
+              "focusSpells": [
+                "mushroom-patch"
+              ]
+            }
+          },
+          {
+            "value": "stone-order",
+            "label": "Stone Order — Crushing Ground",
+            "grant": {
+              "focusSpells": [
+                "crushing-ground"
+              ]
+            }
+          },
+          {
+            "value": "storm-order",
+            "label": "Storm Order — Tempest Surge",
+            "grant": {
+              "focusSpells": [
+                "tempest-surge"
+              ]
+            }
+          },
+          {
+            "value": "untamed-order",
+            "label": "Untamed Order — Untamed Shift",
+            "grant": {
+              "focusSpells": [
+                "untamed-shift"
+              ]
+            }
+          },
+          {
+            "value": "wave-order",
+            "label": "Wave Order — Rising Surf",
+            "grant": {
+              "focusSpells": [
+                "rising-surf"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "peerless-warden",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "peerless-warden-spell",
+        "prompt": "Choose a peerless warden spell",
+        "options": [
+          {
+            "value": "hunters-vision",
+            "label": "Hunter's Vision",
+            "grant": {
+              "focusSpells": [
+                "hunters-vision"
+              ]
+            }
+          },
+          {
+            "value": "terrain-transposition",
+            "label": "Terrain Transposition",
+            "grant": {
+              "focusSpells": [
+                "terrain-transposition"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "backgrounds",
+    "id": "seer-of-the-dead",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "spirit-sense",
+        "tradition": "divine",
+        "rank": 2,
+        "atWill": true
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "studious-capacity",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "day"
+    }
+  },
+  {
+    "category": "items",
+    "id": "the-deck-of-destiny",
+    "field": "passiveEffects",
+    "value": {
+      "immunities": [
+        "fortune",
+        "misfortune"
+      ]
+    }
+  },
+  {
+    "category": "backgrounds",
+    "id": "able-carter",
+    "field": "grantedFeatByChoice",
+    "value": {
+      "deception": "charming-liar",
+      "diplomacy": "hobnobber"
+    }
+  },
+  {
+    "category": "heritages",
+    "id": "aon-ganzi",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "chaos-resistance",
+        "prompt": "Resistance type for today (randomly determined each day)",
+        "options": [
+          {
+            "value": "acid",
+            "label": "Acid resistance (half your level)",
+            "grant": {
+              "resistances": [
+                {
+                  "type": "acid",
+                  "value": "max(1,floor(@actor.level/2))"
+                }
+              ]
+            }
+          },
+          {
+            "value": "electricity",
+            "label": "Electricity resistance (half your level)",
+            "grant": {
+              "resistances": [
+                {
+                  "type": "electricity",
+                  "value": "max(1,floor(@actor.level/2))"
+                }
+              ]
+            }
+          },
+          {
+            "value": "sonic",
+            "label": "Sonic resistance (half your level)",
+            "grant": {
+              "resistances": [
+                {
+                  "type": "sonic",
+                  "value": "max(1,floor(@actor.level/2))"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "heritages",
+    "id": "aon-ifrit",
+    "field": "resistances",
+    "value": [
+      {
+        "type": "fire",
+        "value": "max(1,floor(@actor.level/2))"
+      }
+    ]
+  },
+  {
+    "category": "backgrounds",
+    "id": "child-of-the-polis",
+    "field": "grantedFeatByChoice",
+    "value": {
+      "diplomacy": "bargain-hunter",
+      "society": "streetwise"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "commander-dedication",
+    "field": "classDcGrant",
+    "value": {
+      "classId": "commander"
+    }
+  },
+  {
+    "category": "backgrounds",
+    "id": "fated-rival",
+    "field": "grantedFeatId",
+    "value": "diehard"
+  },
+  {
+    "category": "feats",
+    "id": "favored-prey",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "favored-prey",
+        "prompt": "Choose your favored prey",
+        "options": [
+          {
+            "value": "animals",
+            "label": "Animals"
+          },
+          {
+            "value": "beasts",
+            "label": "Beasts"
+          },
+          {
+            "value": "dragons",
+            "label": "Dragons"
+          },
+          {
+            "value": "fungi-and-plants",
+            "label": "Fungi and plants"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "backgrounds",
+    "id": "food-trader",
+    "field": "grantedFeatByChoice",
+    "value": {
+      "crafting": "seasoned",
+      "society": "streetwise"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "greater-augmentation",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "enhancement",
+        "prompt": "Which automaton ancestry feat's enhancement do you gain? (prose benefit — read that feat's Enhancement entry)",
+        "options": [
+          {
+            "value": "automaton-armament",
+            "label": "Automaton Armament (1st)"
+          },
+          {
+            "value": "arcane-communication",
+            "label": "Arcane Communication (1st)"
+          },
+          {
+            "value": "arcane-eye",
+            "label": "Arcane Eye (1st)"
+          },
+          {
+            "value": "automaton-lore",
+            "label": "Automaton Lore (1st)"
+          },
+          {
+            "value": "energy-beam",
+            "label": "Energy Beam (1st)"
+          },
+          {
+            "value": "reinforced-chassis",
+            "label": "Reinforced Chassis (1st)"
+          },
+          {
+            "value": "arcane-safeguards",
+            "label": "Arcane Safeguards (5th)"
+          },
+          {
+            "value": "integrated-armament",
+            "label": "Integrated Armament (5th)"
+          },
+          {
+            "value": "magical-resistance",
+            "label": "Magical Resistance (5th)"
+          },
+          {
+            "value": "arcane-camouflage",
+            "label": "Arcane Camouflage (9th)"
+          },
+          {
+            "value": "arcane-propulsion",
+            "label": "Arcane Propulsion (9th)"
+          },
+          {
+            "value": "arcane-slam",
+            "label": "Arcane Slam (9th)"
+          },
+          {
+            "value": "core-attunement",
+            "label": "Core Attunement (9th)"
+          },
+          {
+            "value": "rain-of-bolts",
+            "label": "Rain of Bolts (9th)"
+          },
+          {
+            "value": "arcane-locomotion",
+            "label": "Arcane Locomotion (13th)"
+          },
+          {
+            "value": "astral-blink",
+            "label": "Astral Blink (13th)"
+          },
+          {
+            "value": "core-rejuvenation",
+            "label": "Core Rejuvenation (13th)"
+          },
+          {
+            "value": "enlarged-chassis",
+            "label": "Enlarged Chassis (13th)"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "inherit-the-dreaming-heirloom",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "guidance",
+        "tradition": "occult",
+        "atWill": true,
+        "heightenHalfLevel": true
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "inscribed-with-elders-deeds",
+    "field": "choice",
+    "value": {
+      "flag": "eldersDeedsFeat",
+      "prompt": "Orc ancestry feat your storied skin depicts today",
+      "kind": "open",
+      "daily": true,
+      "from": {
+        "type": "feat",
+        "maxLevel": 1,
+        "traits": [
+          "orc"
+        ]
+      },
+      "note": "From 13th level you may instead choose a 5th-level orc ancestry feat. Temporary, so it can't be a prerequisite for anything permanent."
+    }
+  },
+  {
+    "category": "feats",
+    "id": "lesser-augmentation",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "enhancement",
+        "prompt": "Which automaton ancestry feat's enhancement do you gain? (prose benefit — read that feat's Enhancement entry)",
+        "options": [
+          {
+            "value": "automaton-armament",
+            "label": "Automaton Armament (1st)"
+          },
+          {
+            "value": "arcane-communication",
+            "label": "Arcane Communication (1st)"
+          },
+          {
+            "value": "arcane-eye",
+            "label": "Arcane Eye (1st)"
+          },
+          {
+            "value": "automaton-lore",
+            "label": "Automaton Lore (1st)"
+          },
+          {
+            "value": "energy-beam",
+            "label": "Energy Beam (1st)"
+          },
+          {
+            "value": "reinforced-chassis",
+            "label": "Reinforced Chassis (1st)"
+          },
+          {
+            "value": "arcane-safeguards",
+            "label": "Arcane Safeguards (5th)"
+          },
+          {
+            "value": "integrated-armament",
+            "label": "Integrated Armament (5th)"
+          },
+          {
+            "value": "magical-resistance",
+            "label": "Magical Resistance (5th)"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "backgrounds",
+    "id": "money-counter",
+    "field": "grantedFeatByChoice",
+    "value": {
+      "society": "eye-for-numbers",
+      "thievery": "subtle-theft"
+    }
+  },
+  {
+    "category": "backgrounds",
+    "id": "obari-wanderer",
+    "field": "grantedFeatByChoice",
+    "value": {
+      "acrobatics": "cat-fall",
+      "survival": "terrain-expertise"
+    }
+  },
+  {
+    "category": "backgrounds",
+    "id": "propaganda-promoter",
+    "field": "grantedFeatByChoice",
+    "value": {
+      "acrobatics": "steady-balance",
+      "performance": "impressive-performance"
+    }
+  },
+  {
+    "category": "backgrounds",
+    "id": "sponsored-by-a-village",
+    "field": "grantedFeatByChoice",
+    "value": {
+      "crafting": "crafters-appraisal",
+      "survival": "forager"
+    }
+  },
+  {
+    "category": "backgrounds",
+    "id": "sponsored-by-family",
+    "field": "grantedFeatByChoice",
+    "value": {
+      "diplomacy": "hobnobber",
+      "society": "eye-for-numbers"
+    }
+  },
+  {
+    "category": "backgrounds",
+    "id": "sponsored-by-teacher-ot",
+    "field": "grantedFeatByChoice",
+    "value": {
+      "survival": "survey-wildlife",
+      "performance": "impressive-performance"
+    }
+  },
+  {
+    "category": "backgrounds",
+    "id": "unsponsored",
+    "field": "grantedFeatByChoice",
+    "value": {
+      "diplomacy": "group-impression",
+      "intimidation": "intimidating-glare"
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "warrior-of-legend",
+    "field": "grantsFeats",
+    "value": [
+      "diehard"
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "wild-strider",
+    "field": "grantsFeats",
+    "value": [
+      "wild-stride"
+    ]
+  },
+  {
+    "category": "items",
+    "id": "living-statue",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "petrify",
+        "tradition": "primal",
+        "rank": 6,
+        "usesPerDay": 1
+      },
+      {
+        "spellId": "sure-footing",
+        "tradition": "primal",
+        "rank": 6,
+        "usesPerDay": 1
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "taljjaes-mask-the-grandmother",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "heal",
+        "tradition": "divine",
+        "rank": 8,
+        "usesPerDay": 1
+      },
+      {
+        "spellId": "breath-of-life",
+        "tradition": "divine",
+        "rank": 7,
+        "usesPerDay": 1
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "taljjaes-mask-the-hermit",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "spirit-blast",
+        "tradition": "divine",
+        "rank": 8,
+        "usesPerDay": 1
+      },
+      {
+        "spellId": "flame-strike",
+        "tradition": "divine",
+        "rank": 7,
+        "usesPerDay": 1
+      }
+    ]
+  },
+  {
+    "category": "items",
+    "id": "taljjaes-mask-the-wanderer",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "air-walk",
+        "tradition": "divine",
+        "rank": 7,
+        "usesPerDay": 1
+      },
+      {
+        "spellId": "unfettered-movement",
+        "tradition": "divine",
+        "rank": 8,
+        "usesPerDay": 1
+      }
+    ]
   }
 ]

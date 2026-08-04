@@ -1,0 +1,38 @@
+{
+  "records": [
+    {
+      "id": "wisp-fetchling",
+      "verdict": "MISS",
+      "reason": "situationalBonuses covers the +1 circumstance tumble-through bonus and featFeatGrants covers the Quick Squeeze grant, but engineFieldsPresent is empty - nothing makes the character trained in Acrobatics. (The Small size change also has no legal field; the trained-proficiency half is the fixable part.)",
+      "fix": {
+        "field": "trainedSkill",
+        "value": "acrobatics",
+        "note": "Heritage also sets size to Small, for which there is no legal field; that half needs engine work."
+      }
+    },
+    {
+      "id": "wit",
+      "verdict": "MISS",
+      "reason": "featFeatGrants already delivers the Bon Mot skill feat, but the record carries no proficiency field, so the 'trained in Diplomacy' half of this swashbuckler style does nothing. The bravado trait on Bon Mot is GM/table-facing and needs nothing.",
+      "fix": {
+        "field": "trainedSkill",
+        "value": "diplomacy"
+      }
+    },
+    {
+      "id": "wonder-worker",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "The record already carries limitedUses, which gives the once-per-day tracking pip; the remainder (choose any common spell of 8th rank or lower from a tradition you are legendary in, substituting class DC) is an open-ended at-the-table choice with substitute DCs the player reads off the sheet, not a fixed grant."
+    },
+    {
+      "id": "worm-form",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "Listed in the core.stances registry - the battle form is an exclusive toggle there, which is how every other polymorph battle form (AC = 20 + level, temp HP, fixed attack modifier, darkvision, speeds) is delivered."
+    },
+    {
+      "id": "youre-next",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "In the situationalBonuses registry, which carries the +2 circumstance bonus to the Intimidation check to Demoralize; the free-action upgrade at legendary Intimidation is an action-economy note the player applies at the table."
+    }
+  ]
+}

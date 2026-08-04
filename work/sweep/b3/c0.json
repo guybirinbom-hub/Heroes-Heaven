@@ -1,0 +1,1091 @@
+[
+ {
+  "id": "absorb-spell",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Absorb Spell",
+  "level": 14,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Frequency** once per 10 minutes **Trigger** You critically succeed at a saving throw against a foe's spell, and that spell is of a level you can normally cast. --- You absorb a spell and store it in your body. If you are a spontaneous spellcaster, you can cast the triggering spell once during the next 10 minutes, even if it's not on your spell list as if it were in your repertoire. If you are a prepared spellcaster, you can replace one of your prepared spells of the same rank with the absorbed spell, but you must cast the absorbed spell within 10 minutes or you lose that spell slot for the day. You cast the spell at the same spell rank as the spell you absorbed, but the spell is of your magical tradition and uses your spell DC, spell attack roll, and other statistics to determine its effects."
+ },
+ {
+  "id": "adapted-cantrip",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Adapted Cantrip",
+  "level": 1,
+  "traits": [
+   "human"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "Through study of multiple magical traditions, you've altered a spell to suit your spellcasting style. Choose one cantrip from a magical tradition other than your own. If you prepare spells, you can choose this spell when you prepare your cantrips, in addition to your other options. If you have a spell repertoire, replace one of your cantrips known with the chosen spell. You can cast this cantrip as a spell of your class's tradition. If you swap or retrain this cantrip later, you can choose its replacement from the same alternate tradition or a different one."
+ },
+ {
+  "id": "adaptive-adept",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Adaptive Adept",
+  "level": 5,
+  "traits": [
+   "human"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "You've continued adapting your magic to blend your class's tradition with your adapted tradition. Choose a cantrip or 1st-rank spell from the same magical tradition as your cantrip from Adapted Cantrip. You gain that spell, adding it to your spell options just like the cantrip from Adapted Cantrip. You can cast this spell as a spell of your class's magical tradition. If you choose a 1st-rank spell, you don't gain access to the heightened versions of that spell, meaning you can't prepare them if you prepare spells and you can't learn them or select the spell as a signature spell if you have a spell repertoire."
+ },
+ {
+  "id": "advanced-bloodline",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Advanced Bloodline",
+  "level": 6,
+  "traits": [
+   "sorcerer"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You draw more power from your bloodline. You gain the advanced bloodline spell associated with your bloodline."
+ },
+ {
+  "id": "advanced-deitys-domain",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Advanced Deity's Domain",
+  "level": 8,
+  "traits": [
+   "champion"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Through your conviction, you have glimpsed the deeper secrets of your deity's domain. You gain an advanced domain spell from the domain you chose with Deity's Domain as a devotion spell."
+ },
+ {
+  "id": "advanced-domain",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Advanced Domain",
+  "level": 8,
+  "traits": [
+   "cleric"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "Your prayers have unlocked deeper secrets of your deity's domain. You gain an advanced domain spell from one of your domains for which you have an initial domain spell. --- **Special** You can select this feat multiple times. Each time, you must select a different advanced domain spell."
+ },
+ {
+  "id": "advanced-domain-spirit",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Advanced Domain Spirit",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your connection with your domain spirit has deepened. You gain the advanced domain spell from the domain granted by your domain spirit."
+ },
+ {
+  "id": "advanced-elemental-spell",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Advanced Elemental Spell",
+  "level": 6,
+  "traits": [
+   "druid"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "Your connection to one of the great elemental aspects of nature deepens, allowing you further control over its powers. You gain an advanced order spell associated with your order: - if you're a member of the flame order, you gain Combustion; - if you're a member of the stone order, you gain Stone Lance; - if you're a member of the storm order, you gain Powerful Inhalation; - if you're a member of the wave order, you gain Pulverizing Cascade. Increase the number of Focus Points in your focus pool by 1."
+ },
+ {
+  "id": "advanced-hallowed-spell",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Advanced Hallowed Spell",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You dig deeper into the magical tools found in wizard schools and divine domains. You gain an advanced focus spell, either the necromancer advanced school spell Life Siphon or the advanced domain spell of the death domain, Eradicate Undeath. Increase the number of Focus Points in your focus pool by 1. If you choose *life siphon*, it triggers when you expend spell slots from your class even if they aren't wizard spell slots. **Special** You can select this feat a second time, choosing the other advanced focus spell."
+ },
+ {
+  "id": "advanced-red-mantis-magic",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Advanced Red Mantis Magic",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Advanced Red Mantis Magic Source World Guide pg. 71 Archetype Red Mantis Assassin Prerequisites Basic Red Mantis Magic Your Red Mantis magical training has improved. Add two 2nd-level spells to your Red Mantis assassin spellbook. You gain a 2nd-level spell slot that you can use to prepare a spell from your Red Mantis assassin spellbook. At 8th level, add two 3rd-level spells to your Red Mantis assassin spellbook. You gain a 3rd-level spell slot that you can use to prepare a spell from your Red Mantis assassin spellbook. At 10th level, add two 4th-level spells to your Red Mantis assassin spellbook. You gain a 4th-level spell slot that you can use to prepare a spell from your Red Mantis assassin spellbook. Advanced Red Mantis Magic leads to... Vernai Training"
+ },
+ {
+  "id": "advanced-revelation",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Advanced Revelation",
+  "level": 6,
+  "traits": [
+   "oracle"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Divine power reveals greater mysteries to you. You learn the advanced revelation spell associated with your mystery."
+ },
+ {
+  "id": "advanced-school-spell",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Advanced School Spell",
+  "level": 8,
+  "traits": [
+   "wizard"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain access to the advanced teachings of your arcane institution, learning a powerful new school spell. You gain the advanced school spell for your arcane school."
+ },
+ {
+  "id": "advanced-seeker-of-truths",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Advanced Seeker of Truths",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You have unlocked deeper secrets to uncovering and hoarding lore. You gain an advanced domain spell from one domain you selected with Seeker of Truths. Increase the number of Focus Points in your focus pool by 1. --- **Special** You can take this feat up to three times, each time selecting a different advanced domain spell from a domain you selected with Seeker of Truths."
+ },
+ {
+  "id": "advanced-warden",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Advanced Warden",
+  "level": 4,
+  "traits": [
+   "ranger"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You unlock more powerful primal spells. You gain your choice of one warden spell from the advanced warden spells. Animal Feature Enlarge Companion Hunter's Luck Soothing Mist --- **Special** You can take this feat multiple times, choosing a different advanced warden spell each time."
+ },
+ {
+  "id": "aeon-stone-azure-briolette",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Aeon Stone (Azure Briolette)",
+  "level": 4,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "This aeon stone must be activated to provide a benefit. --- **Activate** ⟨5⟩ envision **Trigger** An enemy fails its save against a mental spell you cast using one of your spell slots --- **Effect** You gain temporary Hit Points equal to twice the spell's rank until your next turn. The resonant power grants a separate activation. --- **Activate** ⟨2⟩ command, Interact **Frequency** once per day --- **Effect** You gain the effect of a Void Warp arcane cantrip."
+ },
+ {
+  "id": "affinity-stones",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Affinity Stones",
+  "level": 9,
+  "traits": [
+   "artifact",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Dwarven tales state that the first set of these stones was created by a dwarven lapidary for his elven sweetheart. The gem he chose was amber—to show his clan that a union between stone and leaf was possible. His family remained hesitant, despite the unmistakable love that the men shared. The tales then say that it was Folgrit who grew impatient and transformed the stones as a sign of her approval. Since then, more sets of these have been created, but doing so is an unsure process. Some of the stones are seemingly given their magical abilities at random, which most attribute as further blessings from Folgrit. Each set of affinity stones typically comes as a pair of gems set into worn items such as hilts, necklaces, or rings, though some sets of affinity stones feature additional gems. The full set of stones must be invested together across multiple creatures, or else their magic fails to function. To invest these items, one person must be a dwarf and everyone must perform a one-hour ceremony that includes divulging their innermost feelings. Their love need not be romantic, but it must be genuine and deep. If they pass this test, they receive the following benefits. - You are always aware of each other and permanently gain the effects of the Status spell. - Non-dwarves gain the benefits of a 1st- or 5th-level ancestry feat with the dwarf trait, and dwarves gain the benefits one 1st- or 5th-level ancestry feat with a trait corresponding to the ancestry of another person with which the affinity stones are invested. For example, if you share investment in the stones with a halfling, you can take halfling ancestry feats. You can't use these feats to meet prerequisites, but the benefits of the feats otherwise function as if you had taken the feat. - You gradually take on some of the physical characteristics of your counterparts. An elf may begin to grow a beard, while their dwarven counterpart may develop pointed ears. These changes have no mechanical effect. --- **Destruction** If one of the people who had invested in the *affinity stones* commits an act of true and regretless betrayal against someone else invested in the *affinity stones*, all of the stones shatter to dust."
+ },
+ {
+  "id": "alloy-flesh-and-steel",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Alloy Flesh and Steel",
+  "level": 14,
+  "traits": [
+   "impulse",
+   "kineticist",
+   "manipulate",
+   "metal",
+   "polymorph",
+   "primal"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "core.stances"
+  ],
+  "text": "Elemental energy replaces every cell of your body with raw metal. You gain the benefits of the Ferrous Form spell (except you can't cast *needle darts*) until the end of your next turn. You can Sustain the impulse up to 1 minute, and when you do, you can Raise a metal Shield if you're wielding one. Your metal Elemental Blasts deal an additional die of damage. If you suspend any conditions with Alloy Flesh and Steel, when it ends, you're temporarily immune to Alloy Flesh and Steel for 1 hour. --- **Level (16th)** The resistance is 15."
+ },
+ {
+  "id": "ancestral-mage",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Ancestral Mage",
+  "level": 10,
+  "traits": [
+   "sorcerer"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The magic of your ancestry and bloodline are one and the same. Add any innate spells you have from a heritage or an ancestry feat to your spell repertoire, meaning you can cast them using your spell slots."
+ },
+ {
+  "id": "animal-rage",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Animal Rage",
+  "level": 8,
+  "traits": [
+   "barbarian",
+   "concentrate",
+   "polymorph",
+   "primal",
+   "rage"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "core.stances"
+  ],
+  "text": "You transform into your animal. You gain the effects of the 3rd-rank Animal Form spell except you use your own statistics, temporary Hit Points, and unarmed attacks instead of those granted by animal form. You also retain the constant abilities of your gear. If your animal is a frog, your tongue's reach increases to 15 feet. Dismissing the transformation gains the rage trait."
+ },
+ {
+  "id": "animist-apparition-spellcasting",
+  "lane": "spellGrant",
+  "collection": "classFeatures",
+  "name": "Animist & Apparition Spellcasting",
+  "level": 1,
+  "traits": [
+   "animist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your role as a spiritual medium connecting the mortal Universe to the realms beyond lets you cast your magic in two distinct ways: you both learn and prepare spells from the divine tradition yourself, and you also channel the knowledge and power of your attuned apparitions, gaining spell slots and a repertoire of spells from them that you can cast spontaneously. Regardless of which source you're drawing on, you are a spellcaster and can cast spells of the divine tradition using the Cast a Spell activity. As an animist, your incantations might take the form of reciting relevant snippets of legends—stories passed down orally—or they might see you calling nearby spirits to honor ancient vows. Your gestures could be elegant dances or full-body convulsions as generations of memories and otherworldly energies inherited from your spiritual allies surge through you. Some of your spells require you to attempt a spell attack to see how effective they are, or have your enemies roll against your spell DC (typically by attempting a saving throw). Since your key attribute is Wisdom, your spell attack modifiers and spell DC use your Wisdom modifier. The clearly delineated partnership between an animist and their apparitions means you can't cast your animist spells using your apparition spell slots or vice versa—your magics remain complementary and harmonious, yet as distinct as the two worlds from which they come. ### Animist Spellcasting As a keeper of knowledge, you are constantly learning new techniques and spells. Each day, you can prepare one 1st-rank spell and 2 cantrips from among the common spells on the divine spell list or from other divine spells you've gained access to and learned via Learn a Spell. Prepared spells remain available to you until you cast them or until you prepare your spells again. The number of spells you can prepare is called your spell slots. As you increase in level as an animist, the number of spells you can prepare each day increases, as does the highest rank of spell you can cast, as shown in Animist Spells Per Day. You are a prepared spellcaster for the purposes of determining how you interact with staves and other items or effects that differentiate between prepared and spontaneous spellcasters. ### Apparition Spellcasting You can draw upon your attuned apparitions as a second source of magical knowledge and power. You gain additional spontaneous spell slots and a spell repertoire from your attuned apparitions. At first level, you can cast two apparition cantrips and one 1st-rank apparition spell per day. You must have the spell in your apparition spell repertoire to cast it; this is a collection of spells granted to you by all your attuned apparitions. You can cast any spell in your apparition spell repertoire by using an apparition spell slot of an appropriate spell rank. Any of these spells that aren't normally on the divine list are still divine spells if you cast them this way. As you increase in level, you gain further apparition spell slots, and your apparitions grant you higher-rank apparition spells, as detailed in each apparition entry. ### Heightening Spells When you gain spell slots of 2nd rank and higher, yo"
+ },
+ {
+  "id": "animist-dedication",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Animist Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication",
+   "multiclass"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You have formed a bond with an apparition and can cast divine spells. Choose a single apparition from those available to the animist. You become bound to that apparition and can attune to it each day during your daily preparations to become trained in its apparition skills. If you are 8th level, you are expert in its apparition skills while attuned to it, and if you are 16th level, you are a master in its apparition skills while attuned to it. You can spend 1 day of downtime ending your relationship with this apparition and bonding to a new one. You gain the Cast a Spell activity. You can prepare two common cantrips each day from the divine spell list or any other divine cantrips you have access to, including the cantrip listed in your apparition's apparition spells. You're trained in the spell attack modifier and spell DC statistics. Your key spellcasting attribute for animist archetype spells is Wisdom, and they are divine animist spells."
+ },
+ {
+  "id": "aon-empty-body",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Empty Body",
+  "level": 18,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You transmute your body into an ethereal form. You gain the empty body ki spell. Increase the number of Focus Points in your focus pool by 1."
+ },
+ {
+  "id": "aon-fervent-spell",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Fervent Spell",
+  "level": 0,
+  "traits": [
+   "emotion",
+   "mental"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Fervent Spell Aspect Emotion Prerequisite fervor gift While the relic's fervor gift lasts, you have access to the spell provided by the emotional state, which you can cast using your own spell slots. You also have access to the following activation. Activate Single Action (concentrate, manipulate) Effect The relic Casts the Spell associated with its emotional fervor at the spell's lowest rank."
+ },
+ {
+  "id": "aon-flowing-footsteps",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Flowing Footsteps",
+  "level": 0,
+  "traits": [
+   "water"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Flowing Footsteps Aspect Water Your relic ensures no water impedes your movement. You gain the effects of the water walk spell, and the ability to breathe water. You also gain a swim Speed equal to your Speed or 15 feet, whichever is higher."
+ },
+ {
+  "id": "aon-noqual-armor",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Noqual Armor",
+  "level": 12,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "The mere sight of a suit of noqual armor is enough to make some opposing spellcasters withdraw from the battlefield. While wearing noqual armor, you gain a +1 circumstance bonus to AC against spell attack rolls. If you Cast a Spell while wearing noqual armor, you must succeed at a DC 5 flat check or the spell fails."
+ },
+ {
+  "id": "aon-scrap-shot",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Scrap Shot",
+  "level": 0,
+  "traits": [
+   "metal"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Scrap Shot Aspect Metal Activate Two Actions (concentrate, manipulate) Effect Magnetic repulsion sends a sharp chunk of metal scrap flying from your relic. Make a spell attack roll with your relic against a target within 30 feet. The chunk deals 1d6 piercing damage for every 2 levels the relic has (minimum 1d6). If the target is wearing metal armor or is made of metal, you gain a +1 circumstance bonus to your spell attack roll, and the target becomes clumsy 1 until the start of your next turn as the scrap adheres to the target. If your relic is made of a precious metal, the shot is also made of or coated in that metal, bypassing resistances and the like accordingly. The scrap left behind by the shot rusts or crumbles quickly and isn't worth anything if sold."
+ },
+ {
+  "id": "apparition-magic",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Apparition Magic",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "spellSlotBonus"
+  ],
+  "inRegistries": [],
+  "text": "You can cast more divine spells each day. You gain 1 additional spell slot from animist archetype feats for each spell rank other than your two highest animist spell slots. These additional slots can only be used to prepare spells from your apparition's apparition spells."
+ },
+ {
+  "id": "arcane-school",
+  "lane": "spellGrant",
+  "collection": "classFeatures",
+  "name": "Arcane School",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Most wizards acquire their knowledge of spells from a formal educational institution, such as the Arcanamirium or the Magaambya. At 1st level, you choose your , which grants you magical abilities. You gain additional spells and spell slots from the curriculum taught at the school you attended. Some wizards follow the school of unified magical theory, which attempts to forge a new school by studying independently and drawing information from a multitude of texts and tutors. Though a wizard with this approach lacks the focus of formal training, they have greater flexibility."
+ },
+ {
+  "id": "arcane-school-spell",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Arcane School Spell",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You gain your school's initial school spell. If you don't already have one, you gain a focus pool of 1 Focus Point, which you can Refocus by studying."
+ },
+ {
+  "id": "arcane-spellcasting-magus",
+  "lane": "spellGrant",
+  "collection": "classFeatures",
+  "name": "Arcane Spellcasting (Magus)",
+  "level": 1,
+  "traits": [
+   "magus"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You study spells so you can combine them with your attacks or solve problems that strength of arms alone can't handle. You can cast arcane spells using the Cast a Spell activity, and you can supply material, somatic, and verbal components when casting spells. Because you're a magus, you can draw replacement sigils with the tip of your weapon or your free hand for spells requiring material components, replacing them with somatic components instead of needing a material component pouch. At 1st level, you can prepare one 1st-rank spell and five cantrips each morning from the spells in your spellbook. Prepared spells remain available to you until you cast them or until you prepare your spells again. The number of spells you can prepare is called your spell slots. As you increase in level as a magus, your number of spell slots and the highest rank of spells you can cast from spell slots increase. Because you split your focus between physical training and magical scholarship, you have no more than two spell slots of your highest rank and, if you can cast 2nd-rank spells or higher, two spell slots of 1 rank lower than your highest spell rank. For anything that requires the ability to cast spells of a certain rank that's lower than the highest slots you have, you still qualify even if you no longer have spell slots at those ranks. Some of your spells require you to attempt a spell attack roll to see how effective they are, or have your enemies roll against your spell DC (typically by attempting a saving throw). Your spell attack rolls and spell DCs use your Intelligence modifier. ### Heightening Spells When you get spell slots of 2nd rank and higher, you can fill those slots with stronger versions of lower-rank spells. This increases the spell's rank, heightening it to match the spell slot. Many spells have specific improvements when they're heightened to certain ranks. ### Cantrips A cantrip is a special type of spell that doesn't use spell slots. You can cast a cantrip at will, any number of times per day. A cantrip is always automatically heightened to half your level rounded up—this is usually equal to the highest rank of spell you can cast as a magus. For example, as a 1st-level magus, your cantrips are 1st-rank spells, and as a 5th-level magus, your cantrips are 3rd-rank spells. ### Spellbook Every arcane spell has a written version, usually recorded in a spellbook. You start with a spellbook worth 10 sp or less, which you receive for free and must study to prepare your spells each day. The spellbook contains your choice of eight arcane cantrips and four 1st-rank arcane spells. You choose these from the common spells on the arcane spell list or from other arcane spells you gain access to. Your spellbook's form and name are up to you. It might be anything from a sturdy book with a secure latch entitled Theses on the Stratagems of Supernatural Warfare to a tattered collection of training pamphlets with your name scrawled on the cover. Each time you gain a level, you add two more arcane spells to your spellbook, of any rank of spell you can cast. You can also use the Arcana skill to add other spells that you find in your adventures. Though you los"
+ },
+ {
+  "id": "archwizards-might",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Archwizard's Might",
+  "level": 20,
+  "traits": [
+   "wizard"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You have mastered the greatest secrets of arcane magic. You gain an additional 10th-rank spell slot."
+ },
+ {
+  "id": "archwizards-spellcraft",
+  "lane": "spellGrant",
+  "collection": "classFeatures",
+  "name": "Archwizard's Spellcraft",
+  "level": 19,
+  "traits": [
+   "wizard"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You command the most potent arcane magic and can cast a spell of truly incredible power. You gain a single 10th-rank spell slot and can prepare a spell in that slot using wizard spellcasting. Unlike with other spell slots, you can't use 10th-rank slots with abilities that give you more spell slots or that let you cast spells without expending spell slots. You don't gain more 10th-rank spells as you level up, but you can take the Archwizard's Might feat to gain a second slot."
+ },
+ {
+  "id": "assume-godhood",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Assume Godhood",
+  "level": 20,
+  "traits": [
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You complete your apotheosis into living godhood, allowing you to empower more followers. You can serve as the deity for classes with a deity feature, such as clerics, empowering them to cast divine spells with their class features. When you serve as the deity in this way, you can provide any aspect of a deity stat block (such as domains or a favored weapon) that you yourself have acquired from a godling feat. In addition, you can choose one skill you are legendary in to act as your divine skill, and your divine attributes include your key attribute and one other attribute of your choosing. When you Assume Godhood, choose three spells from any list other than the divine list; one must be 1st rank, one must be 2nd or 3rd rank, and one can be of any rank. These spells become additional cleric spells you can grant to your followers. You gain the Intercession Spell ability, allowing you to directly provide the magic that your hierophant uses to enact your miracles. If you die after Assuming Godhood, only your mortal body perishes, and you continue your existence as a deity, watching over the Universe from afar. In this deific form, you cannot move, act, or speak normally, though you still grant spells to your followers and can perceive and affect them using your godling abilities like Receive Prayers or Intercession Spell, regardless of range. If you need to take more direct action in creation, you can descend to the Universe and incarnate yourself into a mortal body of your choosing within 1 mile of one of your followers or a holy site relevant to your faith, which has the same statistics and abilities that you had before you died. This new body can have any appearance you wish, but typically retains at least one feature important to your divine iconography, such as eye color, a scar, or a unique birthmark. You can incarnate yourself as often as you like, but repeated direct intercessions in the affairs of mortals typically attract the attention and sanction of older and more established deities."
+ },
+ {
+  "id": "avenging-runelord-dedication",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Avenging Runelord Dedication",
+  "level": 12,
+  "traits": [
+   "destiny",
+   "mythic"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [
+   "featGrantsLane"
+  ],
+  "text": "The call of a long dead runelord has infected your soul and transformed your fate. Choose one of the following sins: envy, gluttony, greed, sloth, or wrath. You become trained in Arcana. If you are already trained in Arcana, you become trained in the skill of your choice. At 14th level, you gain expert proficiency in Arcana. At 16th level, if you gain master proficiency in Arcana. You have familiarity with weapons in the polearm and spear weapon groups—for the purposes of proficiency, you treat any of these that are martial weapons as simple weapons and any that are advanced weapons as martial weapons. You learn the Thassilonian language. You gain the ability to cast an arcane spell as an innate spell. This spell must be chosen from the following list: Darkvision, Mystic Armor, Runic Body, Runic Weapon, See the Unseen, Sending, or Truesight; alternatively, you can choose any spell of 6th rank or lower from the sin spells listed for your chosen sin. You can cast this spell as an arcane innate spell once per day. The spell is automatically heightened to a spell rank equal to half your level rounded up. Use mythic proficiency to determine any attack rolls or spell DCs. Your obsession with revenge allows you to reflexively lash out at those who harm you with blasts of arcane magic. You gain the Runelord's Response reaction."
+ },
+ {
+  "id": "bard-dedication",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Bard Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication",
+   "multiclass"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [
+   "featGrantsAuto"
+  ],
+  "text": "You cast spells like a bard and gain the Cast a Spell activity. You gain a spell repertoire with two common cantrips from the occult spell list or any other occult cantrips you've learned or discovered. You're trained in the spell attack modifier and spell DC statistics. Your key spellcasting attribute for bard archetype spells is Charisma, and they are occult bard spells. You become trained in Occultism and Performance; for each of these skills in which you were already trained, you instead become trained in a skill of your choice. Choose a muse as you would if you were a bard. You can take that muse's feats, but you don't gain the starting feat, spell or any other abilities the choice of muse grants."
+ },
+ {
+  "id": "basic-bard-spellcasting",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Basic Bard Spellcasting",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain the benefits. Each time you gain a spell slot of a new rank from the bard archetype, add a common occult spell of the appropriate rank, or another appropriate occult spell you learned or discovered, to your repertoire."
+ },
+ {
+  "id": "basic-beast-gunner-spellcasting",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Basic Beast Gunner Spellcasting",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've unlocked the first secrets of beast guns, granting you your own pool of magical might through the amplifying power of their synergistic magic. You gain the . Each time you gain a spell slot of a new rank from this archetype, add a spell of the appropriate spell rank to your repertoire, either a common spell of your chosen tradition or another spell of that tradition you've learned or discovered."
+ },
+ {
+  "id": "basic-bloodline-spell",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Basic Bloodline Spell",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You gain your bloodline's initial bloodline spell. If you don't already have one, you also gain a focus pool of 1 Focus Point, which you can Refocus without any special effort."
+ },
+ {
+  "id": "basic-captivator-spellcasting",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Basic Captivator Spellcasting",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your innate ability to fascinate others develops into full-fledged spellcasting. This spellcasting comes naturally and instinctively to you, rather than as a product of training. Choose a 1st-rank occult spell from either the enchantment or illusion school. You can Cast this Spell as an occult innate spell. At 6th level, you gain a 2nd-rank spell, and at 8th level, you gain a 3rd-rank spell. Each of these spells must be from either the enchantment or illusion school."
+ },
+ {
+  "id": "basic-cathartic-spellcasting",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Basic Cathartic Spellcasting",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain the benefits. Each time you gain a spell slot of a new rank from this archetype, add a spell of that spell rank from your chosen tradition to your repertoire-either a common spell or another spell you've learned or discovered."
+ },
+ {
+  "id": "basic-eldritch-archer-spellcasting",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Basic Eldritch Archer Spellcasting",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain the benefits. Each time you gain a spell slot of a new level from this archetype, add a spell of the appropriate spell rank to your repertoire, either a common spell of your chosen tradition or another spell of that tradition you have learned or discovered."
+ },
+ {
+  "id": "basic-oracle-spellcasting",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Basic Oracle Spellcasting",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain the benefits. When you gain a spell slot of a new rank from the oracle archetype, add a common divine spell or another divine spell you have learned or discovered (including the granted spells associated with your mystery) to your repertoire, of that spell rank."
+ },
+ {
+  "id": "basic-prophet-spellcasting",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Basic Prophet Spellcasting",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain the . Each time you gain a spell slot of a new rank from the prophet of Kalistrade archetype, add a common occult spell of the appropriate rank, or another appropriate occult spell you've learned or discovered, to your repertoire."
+ },
+ {
+  "id": "basic-psychic-spellcasting",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Basic Psychic Spellcasting",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain the benefits. When you gain a spell slot of a new rank from the psychic archetype, add a spell of the appropriate spell rank to your repertoire: a common occult spell, one of the granted spells from your conscious mind, or another spell you've learned or discovered."
+ },
+ {
+  "id": "basic-red-mantis-magic",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Basic Red Mantis Magic",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices",
+   "spellcastingGrant"
+  ],
+  "inRegistries": [],
+  "text": "You have learned limited divine magic from your Red Mantis training. You gain the Cast a Spell activity. You can prepare two common cantrips each day from the divine spell list or any other divine cantrips you have access to. You also gain the basic spellcasting benefits. You're trained in the spell attack modifier and spell DC statistics. Your key spellcasting attribute for the Red Mantis archetype spells is Charisma, and they are divine Red Mantis spells. If you gain a Focus Pool from any Red Mantis Assassin class feats, you can Refocus by praying to Achaekek or researching your assigned kill. You also have access to the Red Mantis Magic School. In addition to preparing spells from the divine spell list, you can prepare spells from this school. Regardless of their usual magic tradition, when you prepare spells from this school, they are divine spells, as are any Red Mantis focus spells you gain."
+ },
+ {
+  "id": "basic-rivethun-spellcasting",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Basic Rivethun Spellcasting",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain the . Each time you gain a spell slot of a new rank from the Rivethun involutionist archetype, add a common divine spell of the appropriate rank, another appropriate divine spell you learned or discovered, or any other divine spell to which you have access, to your repertoire."
+ },
+ {
+  "id": "basic-sorcerer-spellcasting",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Basic Sorcerer Spellcasting",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain the benefits. Each time you gain a spell slot of a new level from the sorcerer archetype, add a spell of the appropriate spell rank to your repertoire: a common spell of your bloodline's tradition, one of your bloodline's granted spells, or another spell you have learned or discovered."
+ },
+ {
+  "id": "basic-spellcasting",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Basic Spellcasting",
+  "level": 4,
+  "traits": [
+   "pervasive-magic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You increase your ability to cast spells. You gain the benefits granted by spellcasting archetypes, gaining a spell repertoire. Each time you gain a spell slot of a new level from the basic, expert, and master spellcasting benefits from pervasive magic feats, add a spell of the appropriate spell rank to your repertoire: a common spell of the magical tradition matching your trait, or another spell of that tradition that you have learned or discovered."
+ },
+ {
+  "id": "basic-summoner-spellcasting",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Basic Summoner Spellcasting",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain the benefits. You gain the Cast a Spell activity. Your key spellcasting ability for summoner archetype spells is Charisma, and they are summoner spells of your eidolon's tradition. You become trained in spell attack rolls and spell DCs of that tradition. You gain a spell repertoire and two cantrips. Each time you gain a spell slot of a new rank from the summoner archetype, add a spell of that rank or lower to your repertoire. Each time you lose spell slots of a particular rank, remove those spells from your repertoire."
+ },
+ {
+  "id": "basic-witch-spellcasting",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Basic Witch Spellcasting",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain the benefits. Each time you gain a spell slot of a new rank from the witch archetype, add two common spells of that rank to your familiar."
+ },
+ {
+  "id": "basic-wizard-spellcasting",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Basic Wizard Spellcasting",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain the benefits. Each time you gain a spell slot of a new rank from the wizard archetype, add two common spells of that rank to your spellbook."
+ },
+ {
+  "id": "bat-form",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Bat Form",
+  "level": 10,
+  "traits": [
+   "archetype",
+   "concentrate",
+   "divine",
+   "polymorph"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [
+   "core.stances"
+  ],
+  "text": "**Frequency** once per hour --- You can transform into a bat. You gain the effects of a 4th-rank Pest Form spell. At 14th level, you can choose to spend two actions instead of one to gain the effects of a 4th- or 5th-rank Aerial Form spell instead (bat form only)."
+ },
+ {
+  "id": "battle-creed",
+  "lane": "spellGrant",
+  "collection": "classFeatures",
+  "name": "Battle Creed",
+  "level": 1,
+  "traits": [
+   "cleric"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've undergone a special training to focus your body toward combat. While you still adhere to the teachings of your faith, you also know that you serve as an instrument of your church. More so than any warpriest, the physical rigors that come with battle are key to your training. You've dedicated yourself to the battle creed, a specific approach that puts combat prowess first, even at the expense of a cleric's typical spellcasting and restorative abilities. Defeating one's enemies is more important than healing an ally in the heat of battle; the time for healing comes after. As you abide by the battle creed, your physical and martial capabilities grow stronger. You must select Battle Harbinger Dedication as your 2nd- level class feat. **Prerequisites:** - You must be a cleric. - You don't gain the Resolute Faith class feature. - You don't gain the Miraculous Spell class feature. **Spellcasting Adjustment**: Your spellcasting capabilities are more restricted. At 1st level, you can prepare one 1st-rank spell and five cantrips. As you increase in level, your number of spell slots and the highest rank of spells you can cast from spell slots increases, shown in Battle Harbinger Spells per Day. Because of your focus on your physical training at the expense of magical aptitude, you have no more than two spell slots of your highest rank and, if you can cast 2nd-rank spells or higher, two spell slots of 1 rank lower than your highest spell rank. For anything that requires the ability to cast spells of a certain rank that's lower than the highest slots you have, you still qualify even if you no longer have spell slots at those ranks. | Your Level | Cantrips | 1st | 2nd | 3rd | 4th | 5th | 6th | 7th | 8th | 9th | | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | | 1 | 5 | 1 | - | - | - | - | - | - | - | - | | 2 | 5 | 2 | - | - | - | - | - | - | - | - | | 3 | 5 | 2 | 1 | - | - | - | - | - | - | - | | 4 | 5 | 2 | 2 | - | - | - | - | - | - | - | | 5 | 5 | - | 2 | 2 | - | - | - | - | - | - | | 6 | 5 | - | 2 | 2 | - | - | - | - | - | - | | 7 | 5 | - | - | 2 | 2 | - | - | - | - | - | | 8 | 5 | - | - | 2 | 2 | - | - | - | - | - | | 9 | 5 | - | - | - | 2 | 2 | - | - | - | - | | 10 | 5 | - | - | - | 2 | 2 | - | - | - | - | | 11 | 5 | - | - | - | - | 2 | 2 | - | - | - | | 12 | 5 | - | - | - | - | 2 | 2 | - | - | - | | 13 | 5 | - | - | - | - | - | 2 | 2 | - | - | | 14 | 5 | - | - | - | - | - | 2 | 2 | - | - | | 15 | 5 | - | - | - | - | - | - | 2 | 2 | - | | 16 | 5 | - | - | - | - | - | - | 2 | 2 | - | | 17 | 5 | - | - | - | - | - | - | - | 2 | 2 | | 18 | 5 | - | - | - | - | - | - | - | 2 | 2 | | 19 | 5 | - | - | - | - | - | - | - | 2 | 2 | | 20 | 5 | - | - | - | - | - | - | - | 2 | 2 | **Divine Font Adjustment:** Instead of preparing Heal or Harm spells with your divine font, you instead gain the battle font, which allows you to prepare battle aura spells. You gain 4 additional spell slots each day at your highest rank of cleric spell slots. You can prepare only Bane or Bless in these slots. Any feats and effects that refer to a battle aura refers to these spells, regardless of whether they were cast with your standard spell slots or your divin"
+ },
+ {
+  "id": "beast-gunner-dedication",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Beast Gunner Dedication",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "dedication",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "You've unlocked the first hints of your weapon's hidden potential. You treat all beast guns as martial firearms when determining your proficiency with them, even beast guns that are normally advanced weapons. You can change your bonded beast gun to another beast gun you own each day during your daily preparations, as long as you've previously performed a ritual hunt associated with the new beast gun. The beast gun also acts as a conduit, amplifying any latent or active magic power you have. Unlocking this ability allows you to master it with other magical firearms. You learn to cast spontaneous spells and gain the Cast a Spell activity. You gain a spell repertoire with one cantrip of your choice, from either the arcane or primal spell list. You choose this cantrip from the common spells on your chosen spell list or from other spells you have access to on the list. This cantrip must require a spell attack roll. You're trained in the spell attack modifier and spell DC statistics. Your key spellcasting ability for these spells is either Charisma or Intelligence, chosen when you take this feat. If you already cast arcane or primal spells from spell slots, you learn one additional cantrip from that tradition. If you're a prepared caster, you can prepare this spell in addition to your usual cantrips per day; if you're a spontaneous caster, you add this cantrip to your spell repertoire. You also gain Spellsling. **Spellsling** ⟨3⟩"
+ },
+ {
+  "id": "beastmaster-dedication",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Beastmaster Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "You gain the service of a young animal companion that travels with you and obeys your commands. Contrary to the usual rules for animal companions, this feat can grant you a second animal companion. If you ever have more than one animal companion, you gain the Call Companion action. See the Beastmaster Animal Companions sidebar for details on this action. Certain beastmaster feats give you focus spells. When you gain your first beastmaster focus spell, you become trained in the spell attack modifier and spell DC statistics. Your key spellcasting attribute for beastmaster archetype spells is Charisma, and they are primal spells. You can Refocus by feeding, playing with, or otherwise tending to an animal companion. --- **BEASTMASTER ANIMAL COMPANIONS** If you're playing a beastmaster, you determine the statistics and abilities of your animal companions. As a beastmaster, it's possible for you to have more than one animal companion at one time—up to four companions—but only one of those companions, your \"active companion,\" follows you during exploration and in encounters; the rest are nearby, usually foraging or hunting for food. As soon as you gain a second animal companion from the Beastmaster archetype, you also gain Call Companion to switch your active companion. These rules apply to all your companions, regardless of whether you got the animal companion from the beastmaster archetype or from another source."
+ },
+ {
+  "id": "blaze-of-revelation",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Blaze of Revelation",
+  "level": 18,
+  "traits": [
+   "oracle"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Requirements** You are Cursebound 4. --- Your mind and body can, for a short time and with great peril, surpass the final limits of your curse. For 1 minute, you shed torrential flames, become surrounded by spirits, or otherwise overflow with divine power in a way that suits your mystery. On each of your turns during that time, you can cast one revelation spell without spending Focus Points. At the end of the minute, the durations of any revelation spells you cast during that time end, and you must attempt a save. --- **Critical Success** You aren't otherwise affected. **Success** You are Drained 2 and can't reduce or remove this condition until your next preparations. **Failure** You are Drained 4 and can't reduce or remove this condition until your next preparations. **Critical Failure** You die."
+ },
+ {
+  "id": "blessing-of-the-sun-gods",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Blessing of the Sun Gods",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices",
+   "spellcastingGrant"
+  ],
+  "inRegistries": [],
+  "text": "The Old Sun Gods share their power with you. Select the ambition, cities, darkness, dreams, family, fire, freedom, healing, moon, passion, or sun domain. You gain an initial domain spell for that domain. If you don't already have one, you gain a focus pool of 1 Focus Point, which you can regain using the Refocus activity to pray to the Old Sun Gods; if you already have a focus pool, increase the number of Focus Points in your focus pool by 1. Your Bright Lion focus spells are divine spells; you become trained in divine spell attacks and spell DCs, using Charisma as your spellcasting ability score. **Special** You can select this feat multiple times, selecting a different domain each time and gaining its domain spell."
+ },
+ {
+  "id": "bloodline-paragon",
+  "lane": "spellGrant",
+  "collection": "classFeatures",
+  "name": "Bloodline Paragon",
+  "level": 19,
+  "traits": [
+   "sorcerer"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You have perfected the magic in your bloodline. Add two common 10th-rank spells of your tradition to your repertoire. You gain a single 10th-rank spell slot you can use to cast these spells, using sorcerer spellcasting. Unlike other spell slots, you don't gain more 10th-rank spells as you level up, and they can't be used for abilities that let you cast spells without expending spell slots or abilities that give you more spell slots. You can take the Bloodline Perfection sorcerer feat to gain a second slot."
+ },
+ {
+  "id": "bloodline-perfection",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Bloodline Perfection",
+  "level": 20,
+  "traits": [
+   "sorcerer"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You command the ultimate powers of your bloodline and tradition. You gain an additional 10th-rank spell slot."
+ },
+ {
+  "id": "bloodline-spells",
+  "lane": "spellGrant",
+  "collection": "classFeatures",
+  "name": "Bloodline Spells",
+  "level": 1,
+  "traits": [
+   "sorcerer"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your bloodline grants you bloodline spells, special spells unique to your lineage. Bloodline spells are a type of focus spell. It costs 1 Focus Point to cast a focus spell, and you start with a focus pool of 1 Focus Point. You refill your focus pool during your daily preparations, and you can regain 1 Focus Point by spending 10 minutes using the Refocus activity. Unlike other characters, you don't need to do anything specific to Refocus, as the power flowing through your veins naturally replenishes your focus pool. Focus spells are automatically heightened to half your level rounded up, much like cantrips. Focus spells don't require spell slots; you can't cast them using spell slots. The maximum Focus Points your focus pool can hold is equal to the number of focus spells you have, but can never be more than 3 points. You learn the initial bloodline spell, which is unique to your bloodline. ### Reading a Bloodline Entry A bloodline entry contains the following information. **Tradition** You use this magical tradition and spell list **Bloodline Skills** You become trained in the listed skills. **Sorcerous Gifts** You automatically add the spells listed here to your spell repertoire, as described in the Spell Repertoire feature. At 1st level, you gain a cantrip and a 1st-rank spell. You learn the other spells on the list as soon as you gain the ability to cast sorcerer spells of that rank. **Bloodline Spells** You automatically gain the initial bloodline spell at 1st level and can gain more by selecting the Advanced Bloodline and Greater Bloodline feats. **Blood Magic** Whenever you cast a bloodline spell using a Focus Point or a sorcerous gift spell using a spell slot, you choose one blood magic effect you know to benefit from. You begin play with the benefit listed in your bloodline and can gain others through sorcerer feats. If the blood magic effect offers a choice, make it before resolving the spell. The blood magic effect occurs after resolving any checks for the spell's initial effects and, against a foe, applies only if the spell is a successful attack or the foe fails its saving throw. If the spell has an area, you must designate yourself or one target in the area when you cast the spell to be the target of the blood magic effect. All references to spell rank refer to the rank of the spell you cast."
+ },
+ {
+  "id": "bloodrager-dedication",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Bloodrager Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "class",
+   "dedication"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [
+   "featGrantsAuto"
+  ],
+  "text": "Drinking powerful blood has awakened magical potential within you. You gain a spell repertoire with two cantrips of your choice, from either the arcane or divine spell list. You choose these cantrips from the common spells for your tradition or from other spells you have access to on that tradition's spell list. At least one cantrip must require a spell attack roll. You're trained in spell attack modifier and spell DC. Your key spellcasting attribute for these spells is Charisma. Spells in your repertoire gain the rage trait while you are raging, and when you Cast a Spell from your repertoire, you become Drained 1 (or increase the value of your drained condition by 1); you can reduce the value of this condition only by Harvesting Blood (see below). You become trained in Arcana if you chose arcane cantrips or Religion if you chose divine cantrips. If you were already trained in this skill, you become trained in a skill of your choice. You also gain the Harvest Blood action."
+ },
+ {
+  "id": "born-of-celestial",
+  "lane": "spellGrant",
+  "collection": "heritages",
+  "name": "Born of Celestial",
+  "traits": [
+   "yaoguai"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You were once a powerful celestial before an escape or great punishment left you trapped in a mortal shell, with only vague memories and limited power. Due to your residual divine power, the tradition of any spells or magical abilities you gain from a yaoguai heritage or ancestry feat is divine instead of its normal tradition (usually occult). - **Humanoid Form** Fragments of divine memory still litter your mind. You gain a +1 circumstance bonus to Religion checks. - **Yaoguai Form** Celestial power flows through you. Choose one cantrip from the divine spell list. You can cast this spell as an innate divine cantrip at will. A cantrip is heightened to a spell rank equal to half your level rounded up."
+ },
+ {
+  "id": "born-of-elements",
+  "lane": "spellGrant",
+  "collection": "heritages",
+  "name": "Born of Elements",
+  "traits": [
+   "yaoguai"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You were an aspect of nature—the rain, the wind, a ray of light—until the wild essences gave you a soul. Due to your natural connection, the tradition of any spells or magical abilities you gain from a yaoguai heritage or ancestry feat is primal instead of its normal tradition (usually occult). - **Humanoid Form** You remain attuned to the natural world. You gain a +1 circumstance bonus to Survival checks to Sense Direction, and you don't take a penalty if you don't have a compass. - **Yaoguai Form** The power of nature flows through you, ready to lash out. Choose Electric Arc, Frostbite, Ignition, Needle Darts, Timber, Scatter Scree, Slashing Gust, or Spout. You can cast this spell as an innate primal cantrip at will. A cantrip is heightened to a spell rank equal to half your level rounded up."
+ },
+ {
+  "id": "budding-speaker-centaur",
+  "lane": "spellGrant",
+  "collection": "heritages",
+  "name": "Budding Speaker Centaur",
+  "traits": [],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You were born with a spark of magic that could set you on the path to becoming a Greenspeaker or Faithspeaker. Select divine or primal. If you selected divine, you're a Faithspeaker. If you selected primal, you're a Greenspeaker. This choice can't be changed. You gain one cantrip from the chosen spell list. You can cast this spell as an innate spell at will. A cantrip is heightened to a spell rank equal to half your level rounded up."
+ },
+ {
+  "id": "candle-of-invocation",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Candle of Invocation",
+  "level": 16,
+  "traits": [
+   "consumable",
+   "divine"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ Interact This golden candle bears the symbol of a specific deity emblazoned on its surface, surrounded by the iconography of that deity's faith. Once lit, this candle burns for 1 hour, and it can't be extinguished. Characters who cast divine spells and worship the deity emblazoned on the candle can perform their daily preparations within 10 feet of the lit candle to gain two additional spell slots for the day, each at half the highest spell slot they possess (for example, 4th rank slots if the caster can cast 8th-rank spells). Prepared casters must prepare spells in these spell slots as they do for all their other spell slots. A caster's additional spell slots from the candle are lost the next time that caster performs their daily preparations. No one can benefit from more than one candle of invocation in a day, but multiple characters can benefit from a single candle's effects."
+ },
+ {
+  "id": "captivating-intensity",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Captivating Intensity",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your ability to captivate others has grown, and you can use your captivator abilities more often. You seem to never run out of the ability to fascinate or distract. You can cast each occult innate spell granted by captivator archetype feats one additional time per day. You can do this for spells of all levels granted, other than your two highest spell ranks from non-cantrip captivator spells. If you have Heightened Captivation, you can Cast the chosen Spell a second time each day, though one of the two times you cast it, it's heightened two levels lower than your highest level of non-cantrip captivator spells, as long as the spell can be cast at that spell rank."
+ },
+ {
+  "id": "captivator-dedication",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Captivator Dedication",
+  "level": 4,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featGrantsAuto"
+  ],
+  "text": "Your ability to captivate others borders on the preternatural. You are seldom at a loss in social situations, and you can create minor enchantments or illusions. Choose Deception or Diplomacy. You become trained in that skill, or become an expert if you were already trained. Choose two cantrips from the occult list; each cantrip must be from either the enchantment or illusion school. You gain access to the Cast a Spell activity and can cast these spells as occult innate spells. You're trained in occult spell attack rolls and spell DCs. If you have a hand free, you can usually replace material components with somatic components, so you don't need to use a spell component pouch. Your key spellcasting ability for these spells is Charisma."
+ },
+ {
+  "id": "cardinal-guardians",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Cardinal Guardians",
+  "level": 14,
+  "traits": [
+   "animist"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You focus your divine magic to allow your apparitions to work in concert using the magic from one to weaken an enemy against the power of the next. Whenever you succeed at a spell attack with an apparition spell or vessel spell, or when a creature fails its save against such a spell, you gain a +2 status bonus to your spell attack modifier against that creature with spells granted by any of your other apparitions, and it takes a –2 status penalty to its saves against such spells. These benefits last until the end of your next turn."
+ },
+ {
+  "id": "cascade-bearers-spellcasting",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Cascade Bearer's Spellcasting",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your Cascade Bearer training allows you to broaden the horizons of your halcyon spells further than most Magaambyans, weaving in spiritual magic. You can select halcyon spells from the divine or occult spell lists in additional to the arcane or primal spell lists, though they are still halcyon spells (so you choose when casting if they are arcane or primal spells). You gain a halcyon cantrip and a halcyon 1st-rank spell."
+ },
+ {
+  "id": "catharsis-emotion",
+  "lane": "spellGrant",
+  "collection": "classFeatures",
+  "name": "Catharsis Emotion",
+  "level": 2,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Catharsis Trigger** The event or conditions you must meet to take your Catharsis reaction. **Catharsis Activation** The benefit when you use Catharsis. **Emotional Fervor** **Benefits** you gain for 3 rounds after you use Catharsis. This entry also lists a spell you're able to cast while in your emotional fervor. You must expend a spell slot to cast it. This slot most be of at least the spell's rank, and the spell is automatically heightened to the rank of slot you expended. **Emotional Fallout** The effect you experience when your emotional fervor ends. **Focus Spell** The focus spell you gain if you select the Cathartic Focus Spell archetype feat."
+ },
+ {
+  "id": "cathartic-focus-spell",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Cathartic Focus Spell",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You learn the focus spell listed under your emotion's entry. You can cast it only while in emotional fervor. If you don't already have one, you gain a focus pool of 1 Focus Point, which you can Refocus while you use Settle Emotions."
+ },
+ {
+  "id": "cathartic-mage-dedication",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Cathartic Mage Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [
+   "choice",
+   "effectChoices",
+   "spellcastingGrant"
+  ],
+  "inRegistries": [],
+  "text": "You've learned to harness a particular emotion and mix it into your magic. Choose an emotion to be your catharsis emotion. If you don't already cast spells from spell slots, you learn to cast spontaneous spells and gain the Cast a Spell activity. You gain a spell repertoire with one cantrip of your choice, from a spell list of your choice. You choose this cantrip from the common spells on your chosen spell list or from other spells to which you have access on that list. You're trained in spell attack rolls and spell DCs for that tradition. Your key spellcasting ability for these spells is Charisma. If you can already cast spells from spell slots, you learn one additional cantrip from your spellcasting tradition. If you're a prepared caster, you can prepare this spell in addition to your usual cantrips per day; if you're a spontaneous caster, you add this cantrip to your spell repertoire. You gain the Catharsis reaction and the Settle Emotions activity. **Emotional States:**"
+ },
+ {
+  "id": "champion-dedication",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Champion Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication",
+   "multiclass"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [
+   "featGrantsAuto"
+  ],
+  "text": "Choose a deity. You are bound by your deity's anathema and gain the champion's aura and sanctification as described in the champion class. Choose a cause as you would if you were a champion, with the same options a champion must abide by. You gain its edicts and anathema but don't gain the other abilities. You become trained in Religion and your deity's associated skill; for each of these skills in which you were already trained, you instead become trained in a skill of your choice. You become trained in champion class DC. If you later gain a devotion spell, you become trained in spell attack modifier and spell DC. You become trained in light armor and medium armor. If you already were trained in light armor and medium armor, you gain training in heavy armor as well. Whenever you gain a class feature that grants you expert or greater proficiency in any type of armor (but not unarmored defense), you also gain that proficiency in the armor types granted to you by this feat. If you have a class feature that grants you expert proficiency in unarmored defense and you're 13th level or higher, you also become an expert in the armor types granted to you by this feat."
+ },
+ {
+  "id": "channelers-stance",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Channeler's Stance",
+  "level": 1,
+  "traits": [
+   "animist",
+   "stance"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.stances"
+  ],
+  "text": "You enter a stance that allows power to flow through you. While in this stance, whenever you cast or Sustain an apparition spell or vessel spell that deals energy damage, you gain a status bonus to the spell's damage equal to the spell's rank. Each time you Cast a Spell that has the vitality or void traits and that restores Hit Points while in this stance, the spells' targets gain a status bonus to the initial amount of healing received equal to the spell's rank. This bonus healing does not apply to healing over time effects (such as fast healing or regeneration)."
+ },
+ {
+  "id": "chronomancers-secrets",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Chronomancer's Secrets",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "The secrets of time peel back, revealing deeper truths. You gain either the Stasis domain spell or the Path of Least Resistance focus spell. --- **Special** You can take this feat a second time, gaining the focus spell that you didn't gain the first time."
+ }
+]

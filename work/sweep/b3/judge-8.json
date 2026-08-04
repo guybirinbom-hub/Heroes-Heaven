@@ -1,0 +1,480 @@
+{
+ "records": [
+  {
+   "id": "natural-performer",
+   "verdict": "MISS",
+   "reason": "FEAT_SKILL_GRANTS['natural-performer'] (featGrantsAuto.ts:206) delivers only { performance: 'trained' }. The second half — 'gain one 1st-level Performance skill feat' — is in no registry (grepped featFeatGrants/featPickGrants/featCantripGrants: absent) and the record carries no grantedFeatId/grantsFeats. Exactly three 1st-level Performance skill feats exist in core.feats, so an explicit `ids` pick-spec (the Pitborn pattern) resolves it.",
+   "fix": {
+    "field": "FEAT_PICK_GRANTS",
+    "value": "{\"natural-performer\":{\"prompt\":\"Choose a 1st-level Performance skill feat\",\"maxLevel\":1,\"ids\":[\"fascinating-performance\",\"impressive-performance\",\"virtuosic-performer\"]}}"
+   }
+  },
+  {
+   "id": "natural-senses",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effect-backfill.json sets effectChoices id 'sense' with all five options (darkvision / echolocation 10 precise / low-light / scent 30 imprecise / tremorsense 30 imprecise), each carrying a senses grant. The picker delivers the sense to the sheet."
+  },
+  {
+   "id": "nephilim",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "core.heritages.nephilim carries senses:[{name:'low-light-vision'}] plus darkvisionIfAncestryLowLight:true — the exact 'low-light, or darkvision if your ancestry already has low-light' lane. The nephilim trait is already in the record's traits, which is what gates nephilim feats."
+  },
+  {
+   "id": "nudging-whisper",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "It confers 'the effects of the Shameless Request feat' on a Request or a Lie — Shameless Request itself grants no bonus and changes no computed value, only which requests are legal and a success-degree shift. Nothing the sheet holds moves."
+  },
+  {
+   "id": "obari-wanderer",
+   "verdict": "MISS",
+   "reason": "core.backgrounds.obari-wanderer has trainedSkillChoice ['acrobatics','survival'] but a FLAT grantedFeatId 'cat-fall', so a player who takes Survival is still handed Cat Fall and never gets Terrain Expertise. backgroundGrantedFeats (build.ts:336) reads grantedFeatByChoice first and eleven backgrounds already use it (dedicated-delver keys exactly these two skills); both feat ids exist in core.feats.",
+   "fix": {
+    "field": "grantedFeatByChoice",
+    "value": "{\"acrobatics\":\"cat-fall\",\"survival\":\"terrain-expertise\"}"
+   }
+  },
+  {
+   "id": "of-verse-unbroken",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The exemplar class record's epithet option carries grantedChoiceFeats:[{featId:'energized-spark',restrictTo:['sonic','vitality']}] — the Energized Spark grant with its damage-type sub-choice already restricted to the printed pair. The classFeatures copy also has critSpec:true."
+  },
+  {
+   "id": "officers-education",
+   "verdict": "MISS",
+   "reason": "FEAT_SKILL_GRANTS['officers-education'] (featGrantsAuto.ts:212) covers the three skill ranks only. 'gain any one general feat that you meet the prerequisites for' reaches nothing — no FEAT_PICK_GRANTS key, no grantedFeatId — and the language grant is likewise unmodelled. FEAT_PICK_GRANTS category 'general' with maxLevel 'self' is the built lane (advanced-general-training uses it).",
+   "fix": {
+    "field": "FEAT_PICK_GRANTS",
+    "value": "{\"officers-education\":{\"prompt\":\"Choose a general feat\",\"category\":\"general\",\"maxLevel\":\"self\"}}"
+   }
+  },
+  {
+   "id": "old-blood-vishkanya",
+   "verdict": "MISS",
+   "reason": "The backfilled effectChoices delivers the Society/replacement-skill half only. 'you gain your choice of the Courtly Graces or Streetwise feat' is undelivered: EffectGrant (types.ts:369) has no feat lane, and FEAT_PICK_GRANTS — which shared.tsx:2403 resolves for HERITAGE ids too (see 'ancient-elf') — has no key for it. Both feat ids exist in core.feats.",
+   "fix": {
+    "field": "FEAT_PICK_GRANTS",
+    "value": "{\"old-blood-vishkanya\":{\"prompt\":\"Choose a skill feat\",\"maxLevel\":1,\"ids\":[\"courtly-graces\",\"streetwise\"]}}"
+   }
+  },
+  {
+   "id": "oracular-curse",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "It defines the cursebound condition and its Refocus interaction; the actual cursebound feat is granted by the oracle's Mystery record, and the per-curse penalties live on the individual cursebound feats. This record itself changes no stat."
+  },
+  {
+   "id": "orc-weapon-expertise",
+   "verdict": "MISS",
+   "reason": "Nothing anywhere keys 'orc-weapon-expertise' (grepped all of src/ and effect-backfill.json: zero hits, and 'orc-weapon-familiarity' is absent too). FEAT_SKILL_GRANTS.weaponFamiliarity with mirrorBestCategory:true is the built lane for exactly this sentence and 20 sibling ancestries use it (vanara-weapon-expertise, catfolk-weapon-expertise…).",
+   "fix": {
+    "field": "weaponFamiliarity",
+    "value": "{\"weapons\":[\"falchion\",\"greataxe\",\"orc-knuckle-dagger\",\"orc-necksplitter\",\"butchering-axe\",\"battle-axe\"],\"mirrorBestCategory\":true}"
+   }
+  },
+  {
+   "id": "order-explorer",
+   "verdict": "MISS",
+   "reason": "The record's `choice` records WHICH order you explored, but the printed grant — 'you gain a 1st-level feat that lists that order as a prerequisite' — reaches nothing: no FEAT_PICK_GRANTS key, and FeatPickSpec can only filter by category/level/traits, not by a prerequisite string, and the legal set changes with the order just picked. Needs a pick-spec whose pool is derived from another answer.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "oread",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "core.heritages.oread has senses:[{name:'low-light-vision'}] + darkvisionIfAncestryLowLight:true, and the oread trait is on the record (which is what FEAT_PICK_GRANTS['elemental-existence'] filters on)."
+  },
+  {
+   "id": "patron-reborn",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effect-backfill.json sets senses:[{name:'darkvision'},{name:'truesight'}] on the feat. The remaining clauses are all other-creature side (an allied witch counts as your charge; rolling a charge's Wish check)."
+  },
+  {
+   "id": "peerless-mascot-companion",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "COMPANION_MODS['peerless-mascot-companion'] (companionGrants.ts:169) applies kinds ['animal'], abilityBoosts {int:+2,wis:+1}, maxHpBonus 20 and climb/swim = land Speed, with the banner-aura/beast/Warfare-Lore/language riders in its note."
+  },
+  {
+   "id": "pet",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "FEAT_COMPANION_GRANTS['pet'] (companionGrants.ts:80) materialises a familiar-kind companion with abilityBudget 2, and five other feats supersede it. The pet's stats/HP/senses come from the Companions tab card."
+  },
+  {
+   "id": "pirate-combat-training",
+   "verdict": "MISS",
+   "reason": "The record's choice has flag 'feat' with options combat-climber/underwater-marauder — and Builder.tsx:1313 only renders a granted feat when `choice.flag === 'feat' && FEAT_PICK_GRANTS[id]`, which is absent here, so the pick is recorded and nothing is granted (Pitborn has the matching entry; this doesn't). The four-weapon familiarity and the 5th-level crit-spec clause are also unmodelled.",
+   "fix": {
+    "field": "FEAT_PICK_GRANTS",
+    "value": "{\"pirate-combat-training\":{\"prompt\":\"Choose a skill feat\",\"maxLevel\":1,\"ids\":[\"combat-climber\",\"underwater-marauder\"]}}"
+   }
+  },
+  {
+   "id": "pitborn",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "FEAT_SKILL_GRANTS['pitborn'] gives athletics trained with redundantFallback, and FEAT_PICK_GRANTS['pitborn'] (featPickGrants.ts:78) offers the exact six Athletics skill feats; the backfilled `choice` (flag 'feat') is the surface the picker renders on."
+  },
+  {
+   "id": "plunderer-of-the-hives-riches",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The exemplar class record's epithet option carries grantedChoiceFeats:[{featId:'energized-spark',restrictTo:['poison','sonic']}] — the feat grant plus its restricted damage-type sub-choice."
+  },
+  {
+   "id": "poisoned-sticks-and-stones",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "It is a permission (apply injury poisons to sling bullets/blowgun darts) plus a daily allowance of consumable poisons the player adds as inventory items. No proficiency, bonus, spell or resource the sheet computes changes."
+  },
+  {
+   "id": "potent-nectar",
+   "verdict": "MISS",
+   "reason": "The `choice` records splash vs persistent and nothing more. Both branches add damage to the nectar ranged unarmed Strike — but core.feats['caustic-nectar'] has no grantedStrikes either, so the Strike doesn't exist on the sheet and there is no field that attaches a damage rider to another record's granted Strike.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "professional-letter-writer",
+   "verdict": "MISS",
+   "reason": "core.backgrounds has abilityBoosts + trainedLore 'scribing' + a `choice` (flag 'skillFeat') that only RECORDS Specialty Crafting vs Multilingual. The feat is never granted: grantedFeatId is unset, grantedFeatByChoice is keyed by trainedSkillChoice (build.ts:336) and this background has no trainedSkillChoice, and FEAT_PICK_GRANTS is resolved for feat and heritage ids only — backgrounds have no feat-pick lane.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "propaganda-promoter",
+   "verdict": "MISS",
+   "reason": "core.backgrounds.propaganda-promoter has trainedSkillChoice ['acrobatics','performance'] but NO grantedFeatId and no grantedFeatByChoice, so the printed skill feat is never granted on either branch (the `choice` flag 'promoterSkill' is kind 'skills' and only records). Both feat ids exist in core.feats.",
+   "fix": {
+    "field": "grantedFeatByChoice",
+    "value": "{\"acrobatics\":\"steady-balance\",\"performance\":\"impressive-performance\"}"
+   }
+  },
+  {
+   "id": "reflection",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The heritage grants the reflection trait (already in the record's traits, which gates reflection feats) and a GM-adjudicated waiver on Deception checks to Impersonate one specific creature. No number, sense or proficiency changes."
+  },
+  {
+   "id": "restless-as-the-tide",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The exemplar class record's epithet option carries grantedChoiceFeats:[{featId:'energized-spark',restrictTo:['cold','water']}]. The crit-splash and Step riders are per-Strike play text with no stat row."
+  },
+  {
+   "id": "rivethun-emissary-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "focusSpells:['entreat-spirit'] from effect-backfill.json (which also carries the focus point) plus FEAT_SKILL_GRANTS['rivethun-emissary-dedication'] = { diplomacy:'expert', religion:'expert' } (featGrantsAuto.ts:245)."
+  },
+  {
+   "id": "rogue-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "HAND_AUTHORED_GRANTS['rogue-dedication'] (featGrants.ts:198) gives light armor trained, the Stealth/Thievery + free skill choices and bonusSkillFeat:true; effect-backfill adds classDcGrant {classId:'rogue'} and the `choice`. Surprise Attack only makes the ENEMY off-guard on the first round — target side."
+  },
+  {
+   "id": "roll-with-it-ranger",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A triggered reaction resolved entirely at the table (roll a Reflex save against the giant's attack, then Stride/Fly/Swim). It grants no persistent bonus, sense, resource or proficiency the sheet holds."
+  },
+  {
+   "id": "runelord",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The record carries effectChoices id 'sin' with all seven sins, each granting its initial school focus spell (cutting-eye, all-encompassing-hunger, …) plus its anathema in the note — the mechanical core. The class-restructure half belongs to the dedication record: classArchetype is authored on the *-dedication feats (war-mage-dedication, warrior-of-legend-dedication…), not on this description feature."
+  },
+  {
+   "id": "sacred-spells",
+   "verdict": "MISS",
+   "reason": "The `choice` (flag 'sacredSpellsBenefit') records prepared-swap vs spontaneous-signature, but the feat's primary grant — adding seven named spells to your spell list so they can be prepared or added to a repertoire — reaches nothing. grantedSpells (types.ts:804) exists only on subclass options, not on feats, and no feat field widens a tradition's spell list.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "sap-life",
+   "verdict": "MISS",
+   "reason": "No fields, and grepping the registries finds no 'sap-life' key. Healing equal to the spell's rank whenever your Harm damages a living creature is a rider the player only meets on the Harm row — SPELL_MARKERS (situationalBonuses.ts:2852) is the built lane for exactly that (Ruling G), keyed by spell id with the granting record named.",
+   "fix": {
+    "field": "SPELL_MARKERS",
+    "value": "{\"harm\":[{\"source\":\"sap-life\",\"when\":\"when your harm damages at least one living creature (and you're living)\",\"bonus\":\"you regain HP equal to the spell's rank\"}]}"
+   }
+  },
+  {
+   "id": "school-of-unified-magical-theory",
+   "verdict": "MISS",
+   "reason": "The wizard class record's subclass option delivers focusSpells:['hand-of-the-apprentice'] + advancedFocusSpell, so the school spells are fine. The No-Curriculum compensation is not: 'an additional 1st-level wizard class feat' has no lane (subclass options support only fixed grantedFeats/grantedChoiceFeats, and bonus feat slots are hardcoded to fighter levels 9/15 in build.ts:3806), nor does the extra spellbook spell or the per-rank Drain Bonded Item.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "scion-of-many-planes",
+   "verdict": "MISS",
+   "reason": "The backfilled `choice` is explicitly inert — its own text reads 'Recorded only — the chosen feat and its benefits are not added to your sheet yet'. FEAT_PICK_GRANTS has no key for it, even though the identical oread feat does (featPickGrants.ts:71 'elemental-existence': category 'ancestry', maxLevel 1, traits ['oread']).",
+   "fix": {
+    "field": "FEAT_PICK_GRANTS",
+    "value": "{\"scion-of-many-planes\":{\"prompt\":\"Choose a nephilim lineage feat\",\"category\":\"ancestry\",\"maxLevel\":1,\"traits\":[\"nephilim\",\"lineage\"]}}"
+   }
+  },
+  {
+   "id": "second-gates-threshold",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Fully wired in build.ts: GATE_THRESHOLD_LEVELS (925), kineticistElements() folds build.gateForks into the element list (930) so Fork the Path really adds the element, and the Expand-the-Portal branch pushes build.gateExpands[level] as a real bonus impulse feat (build.ts:2128-2140). The record's effectChoices supplies the gate junction."
+  },
+  {
+   "id": "sentinel-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "HAND_AUTHORED_GRANTS['sentinel-dedication'] (featGrants.ts:193) grants light + medium armor trained. featGrants.ts's scope note deliberately excludes the conditional 'whenever you gain a class feature that grants expert armor' mirror clause; the heavy-armor branch is recorded by the record's own `choice`."
+  },
+  {
+   "id": "shadow-sneak-attack",
+   "verdict": "MISS",
+   "reason": "Sneak attack is computed in strikePrecisionRiders (derive.ts:1073) purely from ownedFeatureIds having the rogue class feature 'sneak-attack', with dice scaling off character level. This feat grants a FLAT 1d6 that never scales; nothing adds it (grep: 'shadow-sneak-attack' appears nowhere in src/), so an archetype shadowdancer shows no precision damage at all. No data field can express a fixed-die sneak attack.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "shall-not-falter-shall-not-rout",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "focusSpells carries the focus spell (and its focus point) and effect-backfill sets spellcastingGrant {tradition:'divine',keyAbility:'cha',proficiency:'trained'}."
+  },
+  {
+   "id": "signature-synergy",
+   "verdict": "MISS",
+   "reason": "No fields and no registry key (grepped all seven). It grants one of exactly four evolution feats — all four exist in core.feats (airborne-form, burrowing-form, ever-vigilant-senses, hulking-size) and three of them already carry COMPANION_MODS entries, so the grant would land. FeatPickSpec.ids is the built shape for an exact menu.",
+   "fix": {
+    "field": "FEAT_PICK_GRANTS",
+    "value": "{\"signature-synergy\":{\"prompt\":\"Choose an evolution feat\",\"maxLevel\":16,\"ids\":[\"airborne-form\",\"burrowing-form\",\"ever-vigilant-senses\",\"hulking-size\"]}}"
+   }
+  },
+  {
+   "id": "skill-mastery",
+   "verdict": "MISS",
+   "reason": "FEAT_SKILL_GRANTS['skill-mastery'] (featGrantsAuto.ts:266) delivers the two rank increases (master + expert) only. 'You gain a skill feat associated with one of the skills you chose' has no key in FEAT_PICK_GRANTS or featFeatGrants, and the record carries no grantedFeatId — a repeatable feat taken up to five times therefore silently owes the player up to five skill feats.",
+   "fix": {
+    "field": "FEAT_PICK_GRANTS",
+    "value": "{\"skill-mastery\":{\"prompt\":\"Choose a skill feat\",\"category\":\"general\",\"maxLevel\":\"self\"}}"
+   }
+  },
+  {
+   "id": "skill-mastery-rogue",
+   "verdict": "MISS",
+   "reason": "Same gap as its sibling: FEAT_SKILL_GRANTS['skill-mastery-rogue'] (featGrantsAuto.ts:267) covers only the master/expert increases; the granted skill feat reaches nothing (no FEAT_PICK_GRANTS key, no grantedFeatId).",
+   "fix": {
+    "field": "FEAT_PICK_GRANTS",
+    "value": "{\"skill-mastery-rogue\":{\"prompt\":\"Choose a skill feat\",\"category\":\"general\",\"maxLevel\":\"self\"}}"
+   }
+  },
+  {
+   "id": "skilled-partner",
+   "verdict": "MISS",
+   "reason": "No fields, no registry key. It gives the eidolon three skill feats (1st-level, ≤2nd-level, and a ≤7th-level one at 7th). CompanionMod (companionGrants.ts) can grant senses, speeds, HP, ability boosts, maturity and skillGrants — but has no feat lane at all, so an eidolon can never hold a skill feat.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "skillful-lessons",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "core.classes.investigator.featProgression.skill is [2,3,4,5,…,20] — every level from 2 up, i.e. the odd-level skill feats this feature adds are already baked into the progression the builder hands out."
+  },
+  {
+   "id": "sneak-attacker",
+   "verdict": "MISS",
+   "reason": "Identical to Shadow Sneak Attack: derive.ts:1073 only fires for owners of the 'sneak-attack' class feature and scales dice off level, whereas this grants 1d4 rising to 1d6 at 6th and never further. 'sneak-attacker' appears nowhere in src/, so an archetype rogue's Strikes show no precision rider.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "social-purview",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "FEAT_PICK_GRANTS['social-purview'] (featPickGrants.ts:79) offers a class feat with the dedication trait at maxLevel 'self' — the archetype dedication the feat grants."
+  },
+  {
+   "id": "special-sentinel-technique",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effect-backfill.json gives it effectChoices 'technique' whose two options grant focusSpells ['luminous-stardust-healing'] / ['shining-starlight-attack'], plus spellcastingGrant {arcane, cha, trained}."
+  },
+  {
+   "id": "specialized-companion",
+   "verdict": "MISS",
+   "reason": "This is the legacy-import twin of specialized-companion-animal-trainer, which IS keyed in COMPANION_MODS (companionGrants.ts:172, maturityFloor 'specialized'). This id is in no registry (grep: zero hits in src/), so a player who picks this copy — a selectable level-18 archetype feat in core.feats — gets nothing.",
+   "fix": {
+    "field": "COMPANION_MODS",
+    "value": "{\"specialized-companion\":{\"kinds\":[\"animal\"],\"maturityFloor\":\"specialized\",\"note\":\"Animal Trainer companion: gains one specialization of your choice, and its Performance proficiency is legendary in place of one of the specialization's skill increases.\"}}"
+   }
+  },
+  {
+   "id": "specialized-companion-animal-trainer",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "COMPANION_MODS['specialized-companion-animal-trainer'] (companionGrants.ts:172) sets kinds ['animal'] and maturityFloor 'specialized', with the legendary-Performance swap in its note."
+  },
+  {
+   "id": "spellshield",
+   "verdict": "MISS",
+   "reason": "'spellshield' appears nowhere in src/. It grants the Arcane Bond class feature and Drain Bonded Item to a War Mage — and war-mage-dedication's classArchetype explicitly SUPPRESSES 'arcane-bond', so this feat's whole job is to put it back. No field grants a class FEATURE to a character (addFeatures lives only inside ClassArchetype, types.ts:337).",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "spiritual-awakening",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "FEAT_PICK_GRANTS['spiritual-awakening'] (featPickGrants.ts:80) offers a class feat with the animist trait at maxLevel 2 — exactly the printed grant."
+  },
+  {
+   "id": "sponsored-by-a-stranger",
+   "verdict": "MISS",
+   "reason": "The `choice` (flag 'bgFeat') only RECORDS Dubious Knowledge vs Quick Identification; no grantedFeatId is set. grantedFeatByChoice can't express it either — build.ts:336 indexes it by the trainedSkillChoice answer, and here the feat pick is independent of the Occultism/Nature choice. Backgrounds have no feat-PICK lane (FEAT_PICK_GRANTS is resolved for feat and heritage ids only).",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "sponsored-by-a-village",
+   "verdict": "MISS",
+   "reason": "core.backgrounds has trainedSkillChoice ['crafting','survival'] and trainedLoreChoice, but NO grantedFeatId and no grantedFeatByChoice, so the printed skill feat is never granted on either branch — the `choice` (flag 'bgSkill') labels even say '(grants Crafter's Appraisal)' while granting nothing. Both feat ids exist in core.feats.",
+   "fix": {
+    "field": "grantedFeatByChoice",
+    "value": "{\"crafting\":\"crafters-appraisal\",\"survival\":\"forager\"}"
+   }
+  },
+  {
+   "id": "sponsored-by-family",
+   "verdict": "MISS",
+   "reason": "trainedSkillChoice ['diplomacy','society'] and trainedLore 'magaambya' are set, but grantedFeatId/grantedFeatByChoice are both absent, so neither Hobnobber nor Eye for Numbers ever reaches the sheet. backgroundGrantedFeats (build.ts:336) reads grantedFeatByChoice first; both ids exist in core.feats.",
+   "fix": {
+    "field": "grantedFeatByChoice",
+    "value": "{\"diplomacy\":\"hobnobber\",\"society\":\"eye-for-numbers\"}"
+   }
+  },
+  {
+   "id": "sponsored-by-teacher-ot",
+   "verdict": "MISS",
+   "reason": "Same shape as its four Strength-of-Thousands siblings: trainedSkillChoice ['survival','performance'] plus a recording-only `choice`, with no grantedFeatId and no grantedFeatByChoice, so the skill feat is never granted. Both ids exist in core.feats.",
+   "fix": {
+    "field": "grantedFeatByChoice",
+    "value": "{\"survival\":\"survey-wildlife\",\"performance\":\"impressive-performance\"}"
+   }
+  },
+  {
+   "id": "steadfast-tanuki",
+   "verdict": "MISS",
+   "reason": "core.heritages.steadfast-tanuki has no engine fields at all — its only mechanical content is 'you gain your choice of Everyday Form or Teakettle Form as a bonus ancestry feat', and it is in no registry. Heritage-keyed pick specs are supported (shared.tsx:2403 resolves FEAT_PICK_GRANTS[build.heritageId], as for 'ancient-elf'); both feat ids exist in core.feats at level 1.",
+   "fix": {
+    "field": "FEAT_PICK_GRANTS",
+    "value": "{\"steadfast-tanuki\":{\"prompt\":\"Choose a bonus ancestry feat\",\"category\":\"ancestry\",\"maxLevel\":1,\"ids\":[\"everyday-form\",\"teakettle-form\"]}}"
+   }
+  },
+  {
+   "id": "stealthy-companion",
+   "verdict": "MISS",
+   "reason": "No fields and no key in COMPANION_MODS (grep: 'stealthy-companion' appears nowhere in src/), so the companion's Stealth rank never rises. COMPANION_MODS.skillGrants is the built lane for raising a companion's skill rank (Chorus Companion → Performance, Fell Rider → Intimidation) and note carries the Camouflage rider.",
+   "fix": {
+    "field": "COMPANION_MODS",
+    "value": "{\"stealthy-companion\":{\"kinds\":[\"animal\"],\"skillGrants\":[{\"skill\":\"stealth\",\"rank\":\"master\"}],\"note\":\"Stealthy Companion: your animal companion gains the benefit of the Camouflage feat, and if it is a specialized ambusher its Stealth is legendary instead of master.\"}}"
+   }
+  },
+  {
+   "id": "stonemasons-eye",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "FEAT_SKILL_GRANTS['stonemasons-eye'] (featGrantsAuto.ts:279) = { crafting:'trained' } with redundantFallback:true for the already-trained branch, and FEAT_SITUATIONAL (situationalBonuses.ts:350) stars Perception with '+2 circumstance … to notice unusual stonework, or stone/hidden-in-stone traps'."
+  },
+  {
+   "id": "stylish-tricks",
+   "verdict": "MISS",
+   "reason": "Half-delivered. The extra skill FEATS are in the class table — core.classes.swashbuckler.featProgression.skill includes the odd levels 3, 7 and 15. The extra skill INCREASES are not: skillIncreaseLevels is [3,5,7,…,19] (the standard set) and build.skillIncreases is keyed by LEVEL (build.ts:1355-1362), one increase per level, so a second increase at 3/7/15 cannot be represented — the swashbuckler is short three proficiency steps.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "suli",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "core.heritages.suli carries senses:[{name:'low-light-vision'}] + darkvisionIfAncestryLowLight:true, and the suli/geniekin traits are on the record."
+  },
+  {
+   "id": "suns-fury",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "focusSpells holds the Sun's Fury focus spell (and its focus point), and effect-backfill sets spellcastingGrant {tradition:'divine',keyAbility:'cha',proficiency:'trained'}."
+  },
+  {
+   "id": "sylph",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "core.heritages.sylph has senses:[{name:'low-light-vision'}] + darkvisionIfAncestryLowLight:true — the whole printed benefit besides the sylph trait, which the record already carries."
+  },
+  {
+   "id": "tactics",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The commander folio is a real subsystem: BuildState.tactics (build.ts:129), folio capacity 5 +2 per Expert/Master/Legendary Tactician (build.ts:900), tier-gated selection filtered on the 'tactic' trait + TACTIC_TIER_RANK (890, 2885-2894) against the 37 records in core.tactic, and the record itself carries limitedUses {max:1,per:'day'}."
+  },
+  {
+   "id": "talos",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The record carries resistances (electricity, half level) and effect-backfill sets innateSpells:[{spellId:'detect-metal',tradition:'arcane',atWill:true}]."
+  },
+  {
+   "id": "tattooed-historian-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "FEAT_SKILL_GRANTS['tattooed-historian-dedication'] (featGrantsAuto.ts:290) gives the Diplomacy-or-Performance trained choice. The rest is item access, a free tattoo the player adds to inventory, and an invested-item allowance — no field or registry models item grants."
+  },
+  {
+   "id": "the-harder-they-fall-ranger",
+   "verdict": "MISS",
+   "reason": "No fields, no registry key. A successful Trip deals 1d8 bludgeoning (2d8 on a crit, doubling again at master Athletics) — damage the PLAYER deals through a skill action the sheet renders. RECORD_MARKERS (situationalBonuses.ts:2814) is the built lane for a rider on an action row, and it already carries damage riders of exactly this kind ('vicious-vengeance'). core.actions.trip exists.",
+   "fix": {
+    "field": "RECORD_MARKERS",
+    "value": "{\"the-harder-they-fall-ranger\":[{\"on\":\"action\",\"id\":\"trip\",\"value\":\"+1d8 (2d8 at master)\",\"note\":\"A successful Trip against a foe larger than you deals 1d8 bludgeoning (2d8 on a critical success); at master in Athletics that becomes 2d8 / 4d8.\"}]}"
+   }
+  },
+  {
+   "id": "third-gates-threshold",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Same wiring as the second gate: GATE_THRESHOLD_LEVELS includes 13, kineticistElements() folds build.gateForks into the element list (build.ts:930) and the Expand branch grants build.gateExpands[13] as a real bonus impulse feat (build.ts:2128-2140); the record's effectChoices supplies the gate junction."
+  },
+  {
+   "id": "this-is-what-its-like-to-die",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effect-backfill.json sets innateSpells:[{spellId:'phantasmagoria',tradition:'occult',rank:9,usesPerDay:1}]. The two chosen damage types only re-skin that spell's damage at the table."
+  },
+  {
+   "id": "through-the-gate",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "FEAT_PICK_GRANTS['through-the-gate'] (featPickGrants.ts:81) offers a class feat with the kineticist trait at maxLevel 2, and featSlots.ts filters impulse feats to the character's own elements."
+  },
+  {
+   "id": "trespasser-in-deaths-realm",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The exemplar class record's epithet option carries grantedChoiceFeats:[{featId:'energized-spark',restrictTo:['vitality','void']}] — the feat plus its restricted damage-type sub-choice."
+  },
+  {
+   "id": "ultimate-flexibility",
+   "verdict": "MISS",
+   "reason": "Combat/Improved Flexibility is hardcoded in build.ts:3806 — exactly two 'bonus' slots, at levels 9 and 15, with featSlots.ts:78 capping each at a fighter feat of level ≤ slotLevel-1. 'ultimate-flexibility' appears nowhere in src/, so the third feat (up to 18th level) is never offered and the second slot's ceiling never rises to 14.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "uncanny-dodge",
+   "verdict": "MISS",
+   "reason": "'uncanny-dodge' and 'deny-advantage' both appear nowhere in src/. Deny Advantage stops lower-level hidden/undetected/flanking creatures from making you off-guard — a player-side protection with no stat row, which is precisely what RECORD_MARKERS' condition marks exist for (see 'the-fool' on stupefied, 'face-your-fears' on frightened). core.conditions['off-guard'] exists.",
+   "fix": {
+    "field": "RECORD_MARKERS",
+    "value": "{\"uncanny-dodge\":[{\"on\":\"condition\",\"id\":\"off-guard\",\"note\":\"Deny Advantage: you aren't off-guard to hidden, undetected or flanking creatures of your level or lower, unless they have an ability that specifically denies it.\"}]}"
+   }
+  },
+  {
+   "id": "unconventional-expertise",
+   "verdict": "MISS",
+   "reason": "Nothing keys 'unconventional-expertise' (grep: zero hits in src/ and in effect-backfill.json), so the expert-and-better mirror never happens. It also can't be authored as a static weaponFamiliarity list because the weapon comes from Unconventional Weaponry — whose own backfilled `choice` is marked inert ('the treat-as-simple proficiency is not applied to your sheet'), so the pick isn't even readable by a proficiency lane yet.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "undine",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "core.heritages.undine carries speeds {swim:10} and the amphibious trait is in the record's traits, which is the whole printed benefit."
+  },
+  {
+   "id": "unfettered-growth",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effect-backfill.json gives it effectChoices 'unfettered-growth-enlarge' whose two options grant innateSpells enlarge (primal, rank 2 twice/day) or enlarge (primal, rank 4 once/day)."
+  },
+  {
+   "id": "unsponsored",
+   "verdict": "MISS",
+   "reason": "trainedSkillChoice ['diplomacy','intimidation'] and trainedLore 'academia' are set, but there is no grantedFeatId and no grantedFeatByChoice, so neither Group Impression nor Intimidating Glare is ever granted — the `choice` (flag 'backgroundSkill') only records the skill. Both ids exist in core.feats.",
+   "fix": {
+    "field": "grantedFeatByChoice",
+    "value": "{\"diplomacy\":\"group-impression\",\"intimidation\":\"intimidating-glare\"}"
+   }
+  },
+  {
+   "id": "vanara-weapon-expertise",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "FEAT_SKILL_GRANTS['vanara-weapon-expertise'] (featGrantsAuto.ts:307) carries weaponFamiliarity {weapons:['bo-staff','chakram','katar','panabas','urumi','gada'], mirrorBestCategory:true} — the 'mirror your best category' lane this feat's text describes."
+  },
+  {
+   "id": "vanths-weapon-expertise",
+   "verdict": "MISS",
+   "reason": "'vanths-weapon' matches nothing in src/ or effect-backfill.json, so the duskwalker's expert-and-better mirror never applies. FEAT_SKILL_GRANTS.weaponFamiliarity with mirrorBestCategory:true is the exact built lane and 20 sibling ancestry feats already use it.",
+   "fix": {
+    "field": "weaponFamiliarity",
+    "value": "{\"weapons\":[\"bo-staff\",\"longbow\",\"composite-longbow\",\"scythe\",\"staff\"],\"mirrorBestCategory\":true}"
+   }
+  }
+ ]
+}

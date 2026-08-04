@@ -1,0 +1,1057 @@
+{
+ "records": [
+  {
+   "id": "grisantian-pelt-armor",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses registry key \"grisantian-pelt-armor\" already carries the +1 circumstance to AC and to all saves against fire attacks/spells. The fire immunity and doubled Hardness belong to the armour object, not the wearer."
+  },
+  {
+   "id": "grisantian-pelt-armor-high-grade",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses registry key \"grisantian-pelt-armor-high-grade\" carries the +1 circumstance AC / all-saves entries against fire."
+  },
+  {
+   "id": "grisantian-pelt-armor-standard-grade",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses registry key \"grisantian-pelt-armor-standard-grade\" carries the +1 circumstance AC / all-saves entries against fire."
+  },
+  {
+   "id": "grolna",
+   "verdict": "MISS",
+   "reason": "situationalBonuses already carries the +3 item bonus to Survival to follow tracks, but nothing delivers the Stage 1 grant of scent (imprecise) 30 feet - the drug has no consumable mode and no sense grant.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Grolna (Stage 1)",
+     "effects": "For 1 hour after a 1-minute onset: gain scent (imprecise) 30 feet as a new sense, and you are Stupefied 1. Stage 2 replaces it with Stupefied 2 for 6 hours."
+    }
+   }
+  },
+  {
+   "id": "growing-eel-friend",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Changes only the statistics of an athamaru eel pet (a minor pet, not a modelled animal companion or familiar) - size, Scent and Tough pet abilities all live on the pet, which the app does not put on the sheet."
+  },
+  {
+   "id": "grudging-compliment",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A Diplomacy check that makes the enemy off-guard; every result lands on the target's statistics, none on yours."
+  },
+  {
+   "id": "gruesome-strike",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An activity that doubles the reaction damage the target takes and can Drain it - target-only effects."
+  },
+  {
+   "id": "guiding-star-orb-artifact",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Intelligent artifact: the listed Perception, skills and attributes are the orb's own, and every activation is narrative or targets other creatures (blinding, teleport anchoring). Nothing changes the wielder's own numbers."
+  },
+  {
+   "id": "guiding-star-orb-heroic",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same intelligent-artifact statistics block: the Int/Wis/Cha and skill numbers are the orb's, not a wielder boost, and the three activations target other creatures or the world. Frequency/counters already track the once-per-day use."
+  },
+  {
+   "id": "guiding-words",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants a chosen ALLY a fortune effect on their next attack roll; the app models only the player's own sheet."
+  },
+  {
+   "id": "hamstringing-strike",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The -5/-10-foot status penalty to Speed lands on your hunted prey, not on you."
+  },
+  {
+   "id": "hands-of-the-wildling",
+   "verdict": "MISS",
+   "reason": "The Immanence clause adds 1 spirit splash damage per weapon damage die to your own Strikes with this ikon, and nothing on the record or in any registry delivers it (all 21 ikon class features carry no engine fields at all).",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "strikeDamage"
+       }
+      ],
+      "when": "with hands of the wildling while its immanence is empowered",
+      "bonus": "+1 spirit splash damage per weapon damage die"
+     }
+    ]
+   }
+  },
+  {
+   "id": "harden-flesh",
+   "verdict": "MISS",
+   "reason": "Grants YOU resistance 3 to physical damage (except adamantine), scaling to 6 by 20th level. No resistances field, no mode, no registry entry - the resistance never reaches the sheet.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Harden Flesh",
+     "effects": "Until the beginning of your next turn you have resistance to physical damage (except adamantine) equal to 3, +1 at 12th level and every 4 levels thereafter, to a maximum of 6 at 20th. Requires standing on earthen or stone ground."
+    }
+   }
+  },
+  {
+   "id": "headshot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A Strike that can kill the target on a critical success - purely target-facing, and the death save is GM-resolved."
+  },
+  {
+   "id": "healers-halo",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Adds 1d6 to the Hit Points that you or nearby allies recover from a healing effect. The app does not model a 'healing received' modifier, and the reaction is resolved at the table when the healing is rolled."
+  },
+  {
+   "id": "heart-of-the-kaiju",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The record's choice field (flag damageType, options acid/cold/electricity/fire/sonic) records the permanent breath-weapon pick. The kaiju battle form itself is a temporary Monstrosity Shape statblock the app presents rather than merges."
+  },
+  {
+   "id": "heartblood-ring",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "core.modes carries item-heartblood-ring 'Heartblood (Stage 1)' (fromItemId heartblood-ring) with the fast healing, void/poison resistance and save bonuses; the uses field tracks the dose."
+  },
+  {
+   "id": "heartening-missive",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella AoN family record (no price, four priced kin: bull/butterfly/rabbit/turtle) - deliberately inert."
+  },
+  {
+   "id": "heartening-missive-bull",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "core.modes entry item-heartening-missive-bull (fromItemId heartening-missive-bull) already records that the +1 item bonus to Fortitude goes to the addressed recipient and your own Fortitude is unchanged; situationalBonuses also has the key."
+  },
+  {
+   "id": "heartening-missive-butterfly",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The fortune reroll on a failed Diplomacy or Performance check goes to the distant recipient you addressed the missive to, not to you."
+  },
+  {
+   "id": "heartening-missive-rabbit",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "core.modes entry item-heartening-missive-rabbit records the recipient-only +1 item bonus to Reflex saves; situationalBonuses also has the key."
+  },
+  {
+   "id": "heartening-missive-turtle",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "core.modes entry item-heartening-missive-turtle records the recipient-only +1 item bonus to Will saves; situationalBonuses also has the key."
+  },
+  {
+   "id": "heartless-debilitations",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Adds two Debilitating Strike options; both (weakness 5 to bleed and poison, frightened 1) are applied to the struck enemy."
+  },
+  {
+   "id": "heartmoss",
+   "verdict": "MISS",
+   "reason": "The Armor mode grants YOU resistance 2 to mental damage. situationalBonuses covers only the +1 item bonus to saves vs emotion; the record carries just heldSpells. 8 other spellhearts already use passiveEffects.resistances, so the lane exists and this one is simply unfilled.",
+   "fix": {
+    "field": "resistances",
+    "value": [
+     {
+      "type": "mental",
+      "value": 2
+     }
+    ],
+    "note": "Applies while the heartmoss is affixed to armour, not to a weapon."
+   }
+  },
+  {
+   "id": "heartmoss-greater",
+   "verdict": "MISS",
+   "reason": "Armor mode grants resistance 5 to mental damage; only the emotion-save bonus is in situationalBonuses (key heartmoss-greater). No resistances field.",
+   "fix": {
+    "field": "resistances",
+    "value": [
+     {
+      "type": "mental",
+      "value": 5
+     }
+    ],
+    "note": "Applies while affixed to armour."
+   }
+  },
+  {
+   "id": "heartmoss-major",
+   "verdict": "MISS",
+   "reason": "Armor mode grants resistance 10 to mental damage; only the emotion-save bonus is in situationalBonuses (key heartmoss-major). No resistances field.",
+   "fix": {
+    "field": "resistances",
+    "value": [
+     {
+      "type": "mental",
+      "value": 10
+     }
+    ],
+    "note": "Applies while affixed to armour."
+   }
+  },
+  {
+   "id": "heavens-step-offense",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reaction that makes the triggering Strike nonlethal and lets you Stride without provoking - movement and damage-type narration, no sheet number changes."
+  },
+  {
+   "id": "hell-staff",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The record carries heldSpells (the full cantrip-through-7th list), a charges counter and full weapon data (club group, two-hand-d8). The Drained 1 for a holy preparer is a condition the player applies."
+  },
+  {
+   "id": "hellhusk-shroud",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "passiveEffects.grantsLanguages already delivers Diabolic, counters/frequency track the two once-per-day activations, and situationalBonuses carries the +1 status bonus to Lie while disguised as a devil."
+  },
+  {
+   "id": "helts-spelldance",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A Performance check plus movement; the only lasting number is a -1 circumstance penalty to the OBSERVERS' saving throws."
+  },
+  {
+   "id": "hematocritical",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A one-roll fortune/misfortune effect on your next spell attack or the target's save. Rerolls are not a sheet modifier."
+  },
+  {
+   "id": "heralds-strike",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "All four degrees of success apply damage and conditions to the struck creature."
+  },
+  {
+   "id": "hexwise-banner",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "passiveEffects.resistances already carries [{type: 'spells', value: 5}] on the record."
+  },
+  {
+   "id": "horn-of-rust",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "heldSpells plus a staff-style charge counter are on the record, and situationalBonuses key \"horn-of-rust\" carries the +1 item bonus to AC for the 1-minute shard aura. The tetanus affliction and aura damage hit other creatures."
+  },
+  {
+   "id": "horned-lion-amulet",
+   "verdict": "MISS",
+   "reason": "Activating this talisman gives YOU fire resistance 5 for 1 minute (plus fire resistance 10 against the triggering damage), and nothing delivers it - no mode entry, no registry key, only a uses field. 19 other talismans already have core.modes entries, so the lane exists.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Horned Lion Amulet",
+     "effects": "For 1 minute you have fire resistance 5. The triggering instance of fire damage is instead reduced by fire resistance 10, and if it was persistent fire damage you immediately attempt a flat check to end it (DC stays 10 until the persistent damage ends)."
+    }
+   }
+  },
+  {
+   "id": "horrid-figurine",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Both activations sicken or frighten creatures in an emanation and explicitly exclude you; the third-use Sickened 3 backlash is a condition the player applies by hand."
+  },
+  {
+   "id": "idol-threat",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses key \"idol-threat\" carries the +2 circumstance bonus to Intimidation to Demoralize; the off-guard and stupefied riders land on the target."
+  },
+  {
+   "id": "illuminated-folio",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Changes the resistances, weaknesses and squeezing ability of creatures you summon - summoned creature statistics, not your sheet."
+  },
+  {
+   "id": "illusory-identity",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The record's choice field (flag investedIdentityItem, kind text, daily: true) already records the blank item you invest at daily preparations; the four degrees of success are GM-adjudicated social outcomes."
+  },
+  {
+   "id": "immovable-object",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "core.stances already contains id immovable-object with the note covering immunity to forced movement and the free-Step-instead-of-prone clause."
+  },
+  {
+   "id": "impossible",
+   "verdict": "MISS",
+   "reason": "This etched rune doubles the range increment of the affixed ranged or thrown weapon, a number the app prints on the Strikes page, and nothing on the record changes it (only a per-hour counter for the teleport Strike). Immunity to Dispel Magic is inert.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "No legal field expresses 'double the affixed weapon's range increment'. The rune-attachment lane (planAttach) needs a range-increment multiplier so an etched Impossible rune doubles the displayed range of the host ranged/thrown weapon."
+   }
+  },
+  {
+   "id": "imprison-foe",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Spends a Mythic Point to stun or extradimensionally imprison the damaged creature - entirely target-facing."
+  },
+  {
+   "id": "improvise-strategy",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A Warfare Lore check that imposes conditions on a foe (or swaps a troop's skirmish bond); the only self-facing result is being off-guard on a critical failure, a condition the player applies."
+  },
+  {
+   "id": "in-lightning-life",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants 2d4 (scaling) temporary Hit Points to a willing or unconscious ALLY within reach - the app models only your own sheet."
+  },
+  {
+   "id": "inexorable",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses key \"inexorable\" carries the +2 circumstance bonus to your Fortitude and Reflex DCs (dcOnly) against Shove/Trip while in Worm Form. The flat check to ignore paralyzed/slowed/stunned and the Worm Form immunities are resolved when the condition is applied."
+  },
+  {
+   "id": "infiltrate-dream",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 10-minute exploration activity that yields narrative information from a sleeping creature's dream; no statistic changes."
+  },
+  {
+   "id": "inflamation-flask",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella AoN family record (misspelled id, no price, four priced kin lesser/moderate/greater/major) - deliberately inert."
+  },
+  {
+   "id": "inflammation-flask-greater",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses key \"inflammation-flask-greater\" carries the +2 item bonus to strikeAttack, and the record is a proper bomb weapon (martial, bomb group, 3d6 acid, range 20). The weakness lands on the target."
+  },
+  {
+   "id": "inflammation-flask-lesser",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The lesser grade grants no item bonus to attack rolls, and its weakness 1 to acid/fire/slashing is applied to the struck creature."
+  },
+  {
+   "id": "inflammation-flask-major",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses key \"inflammation-flask-major\" carries the +3 item bonus to strikeAttack; the record is a proper bomb weapon (4d6 acid, range 20)."
+  },
+  {
+   "id": "inflammation-flask-moderate",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses key \"inflammation-flask-moderate\" carries the +1 item bonus to strikeAttack; the record is a proper bomb weapon (2d6 acid, range 20)."
+  },
+  {
+   "id": "injigos-loving-embrace",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses key \"injigos-loving-embrace\" carries both the +1 item bonus to Athletics to Grapple with the net and the +1 item bonus to all saves against mental effects for 8 hours after A Night of Melancholic Dreams; counters track both activations."
+  },
+  {
+   "id": "inspired-stratagem",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Enables a reaction that advises up to five ALLIES; the benefit lands on their rolls, not yours."
+  },
+  {
+   "id": "instinctive-strike",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Removes the flat check for a concealed or hidden target you detect by scent. Flat checks against concealment are not a sheet statistic the app tracks."
+  },
+  {
+   "id": "invented-vulnerability",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The weakness it creates is placed on the enemy; the limitedUses field already handles the once-per-round frequency, and nothing else touches your sheet."
+  },
+  {
+   "id": "invigorating-elixir",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An alchemist additive that adds a counteract attempt to an elixir for whoever imbibes it (normally an ally), using a GM-resolved counteract check."
+  },
+  {
+   "id": "invincible-army",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants resistance 5 to a chosen damage type to a chosen ALLY; the app models only the player's own sheet, and limitedUses already tracks the once-per-round frequency."
+  },
+  {
+   "id": "iron-wine",
+   "verdict": "MISS",
+   "reason": "Drinking it makes YOUR unarmed attacks deal an extra 1d4 fire damage for 10 minutes, and a second cup gives you weakness 5 to fire until your next daily preparations. The record has only a uses field - no mode, no registry entry, so neither number reaches the sheet.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Iron Wine",
+     "effects": "For 10 minutes your unarmed Strikes deal an additional 1d4 fire damage. A separate toggle for a second cup in one day: you gain weakness 5 to fire until your next daily preparations."
+    }
+   }
+  },
+  {
+   "id": "ironblood-stance",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "core.stances id ironblood-stance already carries the iron sweep strike definition, the unarmored requirement, and resistances [{type: 'all', value: '2 + floor((@actor.level - 8) / 4)'}]."
+  },
+  {
+   "id": "irradiate",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An emanation that sickens, fatigues and damages other creatures; the text states you are immune to your own radiation, so nothing lands on your sheet."
+  },
+  {
+   "id": "irritating-seedpod",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A catalyst that adds a Fortitude save and Slowed 1 for creatures in the mist spell's area - target-facing, and heldSpells/uses already tie it to the spell it modifies."
+  },
+  {
+   "id": "irritating-seedpod-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same catalyst, longer slowed duration on creatures in the area; nothing touches the caster's sheet."
+  },
+  {
+   "id": "irritating-seedpod-lesser",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same catalyst at a lower DC and shorter pollen duration; all effects land on creatures in the area."
+  },
+  {
+   "id": "irritating-seedpod-major",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same catalyst with a stronger slowed result on creatures in the area; nothing touches the caster's sheet."
+  },
+  {
+   "id": "jaathooms-scarf",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses key \"jaathooms-scarf\" carries the +2 item bonus to Performance to dance and to Acrobatics to Escape; counters/frequency track the two activations, whose effects (vanish, forced movement) are narrative or target-facing."
+  },
+  {
+   "id": "jabalis-dice",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses key \"jabalis-dice\" carries the +2 item bonus to lore:games checks; Jabali's Gamble is a random GM-chosen spell effect tracked by the once-per-day counter."
+  },
+  {
+   "id": "jagged-berms",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A kineticist impulse that creates cover-granting mounds and stakes in the terrain; the AC/Hardness/HP belong to the conjured mounds and the piercing damage hits creatures entering them."
+  },
+  {
+   "id": "janns-prism",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses key \"janns-prism\" carries the +2 item bonus to visual Perception while holding it to your eye; the once-per-day Jann's Light resistance pair is chosen by the jann (GM) and tracked by the frequency counter."
+  },
+  {
+   "id": "jolt-coil",
+   "verdict": "MISS",
+   "reason": "The Armor mode grants YOU resistance 2 to electricity and nothing delivers it - the record carries only heldSpells and is in no registry. passiveEffects.resistances is the established spellheart pattern (8 spellhearts already use it).",
+   "fix": {
+    "field": "resistances",
+    "value": [
+     {
+      "type": "electricity",
+      "value": 2
+     }
+    ],
+    "note": "Applies while the jolt coil is affixed to armour, not to a weapon."
+   }
+  },
+  {
+   "id": "jolt-coil-greater",
+   "verdict": "MISS",
+   "reason": "Armor mode grants resistance 3 to electricity; record carries only heldSpells/counters/frequency and is in no registry.",
+   "fix": {
+    "field": "resistances",
+    "value": [
+     {
+      "type": "electricity",
+      "value": 3
+     }
+    ],
+    "note": "Applies while affixed to armour."
+   }
+  },
+  {
+   "id": "jolt-coil-major",
+   "verdict": "MISS",
+   "reason": "Armor mode grants resistance 5 to electricity; record carries only heldSpells/counters/frequency and is in no registry.",
+   "fix": {
+    "field": "resistances",
+    "value": [
+     {
+      "type": "electricity",
+      "value": 5
+     }
+    ],
+    "note": "Applies while affixed to armour."
+   }
+  },
+  {
+   "id": "journeybread",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Provides a day's food and water - subsistence bookkeeping the GM handles; the uses field already tracks the ration itself."
+  },
+  {
+   "id": "journeybread-power",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "core.modes entry item-journeybread-power (fromItemId journeybread-power) carries the 4-hour buff and the Hustle change, and situationalBonuses carries the +1 item bonuses to Climb/Force Open/Swim and to Fortitude vs sickened."
+  },
+  {
+   "id": "just-one-more-thing",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A one-roll fortune reroll of a failed Feint/Request/Demoralize or social check; rerolls are not a sheet modifier, and the doubled Pursue a Lead bonus applies only to that single reroll."
+  },
+  {
+   "id": "kinetic-dampening",
+   "verdict": "MISS",
+   "reason": "Grants YOU resistance 5 to physical damage (increasing by 5 at 10th level and every 4 levels thereafter), plus an awakening that adds a chosen energy resistance. The record has no resistances field, no mode and no registry entry.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Kinetic Dampening",
+     "effects": "Until the beginning of your next turn you have resistance to physical damage equal to 5, +5 at 10th level and every 4 levels thereafter. With the second Awakening, also resistance of the same value to your choice of fire, electricity or sonic (player picks the type)."
+    }
+   }
+  },
+  {
+   "id": "kneel-before-the-rightful-heir",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "All enemies within 40 feet save or take damage and gain Clumsy 2 - entirely target-facing."
+  },
+  {
+   "id": "knockout-dram",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An ingested poison slipped into a victim's drink; both stages (unconscious, then normal sleep) apply to that victim. The uses field already tracks the dose."
+  },
+  {
+   "id": "kraken-bottle",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Releases a kraken that grabs and repositions other creatures and lays down an ink cloud with a poison; nothing modifies your own statistics. The uses field tracks the ampoule."
+  },
+  {
+   "id": "lambent-perfume",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The aura lets creatures ending their turn in it attempt a new save against one affliction. An extra saving-throw attempt is a table action, not a sheet modifier; counters/frequency already track the once-per-day activation."
+  },
+  {
+   "id": "lamentation-of-the-faithless",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A level-25 unique GM artifact: the light-counteracting aura, the Lo and Behold save and the destruction clause all target other creatures or the world. Its weapon record already carries damage, hands, group and the per-day counter; the 1d12 Hit Points regained on a damaging hit is applied when the hit is rolled."
+  },
+  {
+   "id": "leader-of-all",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Widens the ancestries your NPC followers can come from and describes their traits; followers are GM-run NPCs the app does not model."
+  },
+  {
+   "id": "lesser-aetheric-irritant",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A placed gadget that makes an area difficult terrain for fey, spirit and undead creatures that fail a Will save - purely target-facing."
+  },
+  {
+   "id": "lesser-dragon-scute",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A catalyst that replaces the effect of a Mountain Resilience spell with a tradition-dependent resistance set for whoever the spell targets. The app does not model spell-granted buffs from catalysts - no catalyst in the data has a core.modes entry - and which resistance list applies depends on the caster's tradition."
+  },
+  {
+   "id": "lesser-durian-bomb",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The lesser grade grants no item bonus to attack rolls; the sickened/dazzled results land on the struck creature and those in the splash."
+  },
+  {
+   "id": "lesser-inflammation-flask",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The lesser grade grants no item bonus to attack rolls, and the weakness 1 to acid/fire/slashing is applied to the target."
+  },
+  {
+   "id": "lesser-irritating-seedpod",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Catalyst whose Fortitude save and Slowed 1 apply to creatures in the mist spell's area, not to the caster."
+  },
+  {
+   "id": "lesser-maelstromic-destabilizer",
+   "verdict": "MISS",
+   "reason": "While active, THE HOLDER (you) gains resistance 2 to spirit damage for 1 minute. The record carries no fields and is in no registry, so that self-resistance is lost; only the enemies' weakness is target-facing.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Maelstromic Destabilizer (Lesser)",
+     "effects": "For 1 minute the holder has resistance 2 to spirit damage. (Creatures in the 10-foot emanation that are not immune gain weakness 2 to spirit damage - target side, not modelled.)"
+    }
+   }
+  },
+  {
+   "id": "lesser-portable-seal",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A placed gadget that disrupts movement and Strikes by creatures with the summoned trait; every clause resolves on those creatures."
+  },
+  {
+   "id": "liberty-or-death",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Spends a Mythic Point to make a Strike that can kill the target; nothing changes on your own sheet (mythic proficiency for that one Strike is resolved at the roll)."
+  },
+  {
+   "id": "lifes-blood",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "You take unpreventable damage and an adjacent ally regains that many Hit Points. The healing goes to the ally, and your own HP loss is entered by hand like any damage."
+  },
+  {
+   "id": "limestone-shield",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The record is a proper shield: acBonus 2, hardness 7, hp 28, brokenThreshold 14, speedPenalty -5, plus two once-per-day counters for Limestone Wall and Block Elements (whose effects are a conjured wall and cover, not sheet numbers)."
+  },
+  {
+   "id": "live-off-borrowed-time",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The limitedUses field already tracks the once-per-minute frequency; quickened and the follow-up Slowed 1 are conditions the player toggles on the sheet."
+  },
+  {
+   "id": "living-forge",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A relic gift that puts you into a 7th-level elemental battle form with its own Speed, resistances, weakness and forgestrike. Battle forms replace your statistics wholesale for the duration and are presented as a statblock rather than merged into the sheet; the frequency field tracks the once-per-day use."
+  },
+  {
+   "id": "living-statue",
+   "verdict": "MISS",
+   "reason": "Two distinct grants to YOU are entirely unwired - 6th-rank petrify and sure footing as once-per-day innate spells, and resistance 5 to physical damage (except adamantine, 8 underground) while standing on the earth. The record carries no fields at all and is in no registry.",
+   "fix": {
+    "field": "innateSpells",
+    "value": [
+     {
+      "spell": "petrify",
+      "rank": 6,
+      "uses": 1,
+      "per": "day",
+      "tradition": "primal"
+     },
+     {
+      "spell": "sure-footing",
+      "uses": 1,
+      "per": "day",
+      "tradition": "primal",
+      "note": "Usable only to remove petrification."
+     }
+    ],
+    "toggle": {
+     "registry": "modes",
+     "name": "Living Statue (Standing on Earth)",
+     "effects": "While standing on the earth you have resistance 5 to physical damage except adamantine; this becomes resistance 8 in caves or subterranean environments."
+    }
+   }
+  },
+  {
+   "id": "lucky-coin",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella AoN family record (no price, three priced kin: copper/silver/gold) - deliberately inert."
+  },
+  {
+   "id": "lucky-coin-lucky-copper",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Guarded Fortune is a coin-flip reroll of one failed check with the fortune trait; a reroll is not a sheet modifier and no statistic changes."
+  },
+  {
+   "id": "lucky-coin-lucky-gold",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same coin-flip reroll, merely widened to attack rolls and saves; still a one-roll fortune effect with no sheet modifier."
+  },
+  {
+   "id": "lucky-coin-lucky-silver",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same coin-flip reroll, widened to saving throws; a one-roll fortune effect with no sheet modifier."
+  },
+  {
+   "id": "lucky-copper",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Guarded Fortune is a fortune reroll of one failed skill check; rerolls carry no sheet modifier. The activationCost field already records the 4-action activation."
+  },
+  {
+   "id": "lucky-gold",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Fortune reroll of one failed skill check, save or attack roll - a one-roll effect, no statistic changes."
+  },
+  {
+   "id": "lucky-silver",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Fortune reroll of one failed skill check or saving throw - a one-roll effect, no statistic changes."
+  },
+  {
+   "id": "lumber-lords-axe",
+   "verdict": "MISS",
+   "reason": "Two self-facing numbers are unwired: a -4 status penalty to your Lie checks while you hold or carry the axe, and +1d6 slashing damage against fungus and plant creatures. The record has only a weapon block and a per-day counter, and it is in no registry.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "deception"
+       }
+      ],
+      "when": "to Lie while holding or carrying the lumber lord's axe",
+      "bonus": "-4 status"
+     },
+     {
+      "targets": [
+       {
+        "kind": "strikeDamage"
+       }
+      ],
+      "when": "with this axe against undisguised fungus or plant creatures",
+      "bonus": "+1d6 slashing"
+     }
+    ]
+   }
+  },
+  {
+   "id": "maelstromic-destabilizer",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella AoN family record (no price, three priced kin: lesser/moderate/major) - deliberately inert."
+  },
+  {
+   "id": "maelstromic-destabilizer-lesser",
+   "verdict": "MISS",
+   "reason": "The holder gains resistance 2 to spirit damage for 1 minute. The record carries only a uses field and is in no registry, so the self-resistance never reaches the sheet.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Maelstromic Destabilizer (Lesser)",
+     "effects": "For 1 minute the holder has resistance 2 to spirit damage."
+    }
+   }
+  },
+  {
+   "id": "maelstromic-destabilizer-major",
+   "verdict": "MISS",
+   "reason": "The holder gains resistance 10 to spirit damage for 1 minute; only a uses field is present and the record is in no registry.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Maelstromic Destabilizer (Major)",
+     "effects": "For 1 minute the holder has resistance 10 to spirit damage."
+    }
+   }
+  },
+  {
+   "id": "maelstromic-destabilizer-moderate",
+   "verdict": "MISS",
+   "reason": "The holder gains resistance 5 to spirit damage for 1 minute; only a uses field is present and the record is in no registry.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Maelstromic Destabilizer (Moderate)",
+     "effects": "For 1 minute the holder has resistance 5 to spirit damage."
+    }
+   }
+  },
+  {
+   "id": "mageslayer",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "passiveEffects.resistances already carries [{type: 'arcane spells', value: 5}]; the extra 1d6 spirit damage lands on arcane-casting targets."
+  },
+  {
+   "id": "magical-adaptation",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The record's innateSpells field already grants Darkvision, Gecko Grip and 4th-rank Water Breathing as once-per-day innate primal spells."
+  },
+  {
+   "id": "magical-experiment",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "abilityBoosts (Con), trainedSkill (occultism) and trainedLore (Academia) are present, and effectChoices offers the experiment ability with real grants - senses for Enhanced Senses (low-light/darkvision plus a second picker for the imprecise 30-foot sense) and resistance options for Resistant Skin; Touch Telepathy is correctly noted as having no sheet effect."
+  },
+  {
+   "id": "magical-prosthetic-eye",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Explicitly matches the vision your ancestry already has, so it grants nothing beyond your existing senses; removing and replacing it is an Interact action."
+  },
+  {
+   "id": "magical-resistance",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices id energy-type already grants resistances [{type: cold|electricity|sonic, value: 5}] from the player's pick, and the choice field records it; the Enhancement upgrade arrives through the automaton enhancement lane."
+  },
+  {
+   "id": "maguss-analysis",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses key \"maguss-analysis\" carries the +1 circumstance bonus to Recall Knowledge about a creature you hit this turn; recharging Spellstrike is a combat-state action."
+  },
+  {
+   "id": "majestic-presence",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Every degree of success applies a Frightened value to the creatures in the emanation - target-facing only."
+  },
+  {
+   "id": "major-aetheric-irritant",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A placed gadget whose difficult-terrain effect applies only to fey, spirit and undead creatures in the emanation."
+  },
+  {
+   "id": "major-clay-sphere",
+   "verdict": "MISS",
+   "reason": "situationalBonuses key \"major-clay-sphere\" already covers the +3 item bonus to saves vs morph/polymorph and the weapon damage-step increase, but the Armor mode's resistance 10 to precision damage is delivered by nothing - the record carries only counters.",
+   "fix": {
+    "field": "resistances",
+    "value": [
+     {
+      "type": "precision",
+      "value": 10
+     }
+    ],
+    "note": "Applies while the clay sphere is affixed to armour, not to a weapon."
+   }
+  },
+  {
+   "id": "major-durian-bomb",
+   "verdict": "MISS",
+   "reason": "This grade grants YOU a +3 item bonus to attack rolls. The sibling id durian-bomb-major has that entry in situationalBonuses, but this record (itemType equipment, no weapon block, in no registry) delivers nothing.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "strikeAttack"
+       }
+      ],
+      "when": "on attack rolls with this bomb",
+      "bonus": "+3 item"
+     }
+    ]
+   }
+  },
+  {
+   "id": "major-flag-of-the-stronghold",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "passiveEffects.resistances already carries [{type: 'damage from siege weapons', value: 10}]."
+  },
+  {
+   "id": "major-foxglove-token",
+   "verdict": "MISS",
+   "reason": "The Armor mode grants YOU resistance 10 to poison damage and nothing delivers it - the record carries only counters and is in no registry.",
+   "fix": {
+    "field": "resistances",
+    "value": [
+     {
+      "type": "poison",
+      "value": 10
+     }
+    ],
+    "note": "Applies while the foxglove token is affixed to armour, not to a weapon."
+   }
+  },
+  {
+   "id": "major-heartmoss",
+   "verdict": "MISS",
+   "reason": "situationalBonuses key \"major-heartmoss\" already carries the +1 item bonus to saves vs emotion, but the Armor mode's resistance 10 to mental damage is delivered by nothing (record has only counters).",
+   "fix": {
+    "field": "resistances",
+    "value": [
+     {
+      "type": "mental",
+      "value": 10
+     }
+    ],
+    "note": "Applies while affixed to armour."
+   }
+  },
+  {
+   "id": "major-hexwise-banner",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "passiveEffects.resistances already carries [{type: 'spells', value: 10}]."
+  },
+  {
+   "id": "major-inflammation-flask",
+   "verdict": "MISS",
+   "reason": "This grade grants YOU a +3 item bonus to attack rolls. The sibling id inflammation-flask-major carries that entry in situationalBonuses, but this record (itemType equipment, no weapon block, in no registry) delivers nothing.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "strikeAttack"
+       }
+      ],
+      "when": "on Strikes made with this bomb",
+      "bonus": "+3 item"
+     }
+    ]
+   }
+  },
+  {
+   "id": "major-irritating-seedpod",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Catalyst whose slowed results apply to creatures in the mist spell's area, not to the caster."
+  },
+  {
+   "id": "major-maelstromic-destabilizer",
+   "verdict": "MISS",
+   "reason": "The holder gains resistance 10 to spirit damage for 1 minute; this record carries no fields and is in no registry.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Maelstromic Destabilizer (Major)",
+     "effects": "For 1 minute the holder has resistance 10 to spirit damage."
+    }
+   }
+  },
+  {
+   "id": "major-portable-seal",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A placed gadget that disrupts movement and Strikes by creatures with the summoned trait; all clauses resolve on those creatures."
+  },
+  {
+   "id": "major-stalk-goggles",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses key \"major-stalk-goggles\" carries the +2 item bonus to Perception checks involving sight while Looksee is active, and the frequency field tracks the once-per-day activation."
+  },
+  {
+   "id": "major-stormshard",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses key \"major-stormshard\" carries the +3 item bonus to Intimidation to influence undead; the Free the Spirits emanation damages other creatures and the frequency field tracks it."
+  },
+  {
+   "id": "major-timepiece-standard",
+   "verdict": "MISS",
+   "reason": "Whenever YOU use Delay or Ready you gain 10 temporary Hit Points. The record carries no fields and is in no registry, unlike its sibling banners (flag-of-the-stronghold, hexwise-banner) which do use passiveEffects.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "hp"
+       }
+      ],
+      "when": "when you Delay or Ready, then immune to this effect for 10 minutes",
+      "bonus": "+10 temporary Hit Points for 1 minute"
+     }
+    ]
+   }
+  },
+  {
+   "id": "make-em-sweat",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Adds Frightened 1 or 2 to the target of a successful Pointed Question - target-facing only."
+  },
+  {
+   "id": "mantle-of-amazing-health",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "apexAttribute already delivers the Constitution apex boost, counters track both activations, and situationalBonuses carries the +2 status bonus to Fortitude saves against disease and poison."
+  },
+  {
+   "id": "marked-for-rebuke",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The weakness 10 to all damage is placed on the enemy struck by your spell."
+  },
+  {
+   "id": "marking-snare",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses carries the +2 circumstance bonus to Track a marked creature and core.modes has item-marking-snare 'Marked Quarry' (fromItemId marking-snare) with that modifier and the wash-off condition."
+  },
+  {
+   "id": "mask-of-pain",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Deals 2d6 or 4d6 damage to the creature you Demoralized - target-facing only."
+  },
+  {
+   "id": "mask-of-the-mantis",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "passiveEffects.perception already delivers the +1 item bonus to Perception, heldSpells covers Enhance Vision, and situationalBonuses carries the +1 item bonus to Intimidation while Vernai's Ire is lit."
+  },
+  {
+   "id": "mask-of-the-mantis-greater",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "passiveEffects.perception carries the +2 item bonus to Perception, heldSpells/counters cover Enhance Vision, and situationalBonuses carries the +2 item bonus to Intimidation under Vernai's Ire."
+  },
+  {
+   "id": "mask-of-the-mantis-major",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "passiveEffects.perception carries the +3 item bonus to Perception, heldSpells/counters cover Enhance Vision and Locate Target, and situationalBonuses carries the +3 item bonus to Intimidation under Vernai's Ire."
+  },
+  {
+   "id": "masquerade-of-seasons-stance",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "core.stances holds masquerade-of-seasons-stance and effectChoices id season-resistance grants resistances [{type: water|fire|void|cold, value: 'max(5,floor(@actor.level/2))'}] from the player's pick, including the 12th-level scaling."
+  },
+  {
+   "id": "megaflora",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grows a plant with its own HP, AC and saves that sickens, damages or heals creatures around it; the frequency field tracks the once-per-day use and none of the numbers are yours."
+  },
+  {
+   "id": "mercenary-reversal",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The target is stunned or switches sides and gains the controlled condition - all effects land on an enemy NPC the GM runs."
+  },
+  {
+   "id": "mesmerizing-gaze",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The record's choice field (flag mesmerizingGaze) records the arcane/occult tradition pick that sets the DC; the fascinated condition lands on the target."
+  },
+  {
+   "id": "mimic-protections",
+   "verdict": "MISS",
+   "reason": "Grants YOU resistance 10 to every damage type your hunted prey resists or is immune to while it stays within 100 feet. The record carries no fields and is in no registry, so the resistance never reaches the sheet.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Mimic Protections",
+     "effects": "While your hunted prey is within 100 feet you have resistance 10 to each damage type that prey resists or is immune to. The player names the damage types when enabling the mode (they come from the GM's statblock) and the mode grants resistance 10 to each."
+    }
+   }
+  },
+  {
+   "id": "mindrender-baton",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A GM-owned Numerian tech item whose two activations damage, stun or dominate a target creature; the counters/frequency fields already track its charges and per-day limits."
+  },
+  {
+   "id": "miraculous-repair",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Temporarily restores a broken mundane mechanism to working order - an object-and-scene effect the GM adjudicates, with no statistic on your sheet."
+  },
+  {
+   "id": "mirror-of-sorshen",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A level-25 unique GM artifact: the fascination, Second Glance and Irresistible Desire all target creatures who look into the mirror, and the bond/destruction clauses are narrative."
+  },
+  {
+   "id": "moderate-aetheric-irritant",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A placed gadget whose difficult-terrain effect applies only to fey, spirit and undead creatures in the emanation."
+  },
+  {
+   "id": "moderate-dragon-scute",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A catalyst that replaces the effect of a Mountain Resilience spell with a tradition-dependent resistance set for the spell's target; no catalyst in the data carries a mode, and which resistance list applies depends on the caster's tradition."
+  },
+  {
+   "id": "moderate-durian-bomb",
+   "verdict": "MISS",
+   "reason": "This grade grants YOU a +1 item bonus to attack rolls. The sibling id durian-bomb-moderate has that entry in situationalBonuses, but this record (itemType equipment, no weapon block, in no registry) delivers nothing.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "strikeAttack"
+       }
+      ],
+      "when": "on attack rolls with this bomb",
+      "bonus": "+1 item"
+     }
+    ]
+   }
+  },
+  {
+   "id": "moderate-inflammation-flask",
+   "verdict": "MISS",
+   "reason": "This grade grants YOU a +1 item bonus to attack rolls. The sibling id inflammation-flask-moderate carries that entry in situationalBonuses, but this record (itemType equipment, no weapon block, in no registry) delivers nothing.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "strikeAttack"
+       }
+      ],
+      "when": "on Strikes made with this bomb",
+      "bonus": "+1 item"
+     }
+    ]
+   }
+  },
+  {
+   "id": "moderate-maelstromic-destabilizer",
+   "verdict": "MISS",
+   "reason": "The holder gains resistance 5 to spirit damage for 1 minute; this record carries no fields and is in no registry.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Maelstromic Destabilizer (Moderate)",
+     "effects": "For 1 minute the holder has resistance 5 to spirit damage."
+    }
+   }
+  },
+  {
+   "id": "moderate-portable-seal",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A placed gadget that disrupts movement and Strikes by creatures with the summoned trait; all clauses resolve on those creatures."
+  },
+  {
+   "id": "momentary-respite",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The limitedUses field already tracks the once-per-day frequency; the 8d8 healing, removal of persistent damage and the one-turn immunity to persistent damage are applied at the table when triggered."
+  }
+ ]
+}

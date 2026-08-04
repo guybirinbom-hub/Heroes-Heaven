@@ -1,0 +1,909 @@
+{
+ "records": [
+  {
+   "id": "megafauna-veterinarian",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Substitutes Nature for Medicine when the patient is a megafauna. Both modifiers already sit on the sheet; which one you roll (and whether the subject qualifies) is a table/GM call, and the success-to-critical-success upgrade lands on your companion, not your own statistics."
+  },
+  {
+   "id": "memory-of-skill",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "limitedUses gives the once-per-day pip, and situationalBonuses.ts:2564 carries the entry on skill:all with bonus 'one proficiency rank higher, maximum master' for the chosen skill."
+  },
+  {
+   "id": "menacing-prowess",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Only changes how MANY creatures a single Demoralize can target (2 / 4 at master / 8 at legendary). No number on your own sheet moves."
+  },
+  {
+   "id": "mending-lattice",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Negates damage to and repairs the affixed ITEM. Item HP and Repair are table bookkeeping the app does not track; the consumable itself is already counted by the uses field."
+  },
+  {
+   "id": "merciful-charm",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Gives the affixed weapon the nonlethal trait for 1 minute. Nonlethal changes only how the target is dropped, not any number on your sheet; uses already tracks the consumable."
+  },
+  {
+   "id": "mighty-rage",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "advancement.ts:263 applies { level: 11, track: 'classDc', rank: 'expert', source: 'mighty-rage' } on the barbarian ladder. The Quick-Tempered rider is extra damage on one Strike on your first turn only, applied at the table."
+  },
+  {
+   "id": "minor-magic",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices carries two cantrip picks with a spellFilter over arcane/divine/occult/primal and grantAs 'innate'. The printed casting profile (trained spell attack/DC, Charisma) is exactly the innate-entry default build.ts:2797-2798 already applies, so no separate spellcastingGrant is needed."
+  },
+  {
+   "id": "multilingual",
+   "verdict": "MISS",
+   "reason": "Nothing grants the extra language slots. bonusLanguageSlots (build.ts:824) is only max(0, Int mod) + ancestry.languages.additional and never reads feats, and grantsLanguages is documented as FIXED grants ('Multilingual picks are separate'). A Multilingual character can therefore record no additional languages at all, nor the extra one at master/legendary Society.",
+   "fix": {
+    "field": "choice",
+    "needsEngineWork": true,
+    "note": "OpenChoiceFrom.type already includes 'language', so an open multi-pick choice is the closest existing shape, but bonusLanguageSlots must also count feat-granted slots. No current field expresses 'N extra player-chosen languages'."
+   }
+  },
+  {
+   "id": "mycoweave-shield",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "AoN family/umbrella record: itemType 'equipment', no price, and the priced Lesser/Greater/Major kin carry the real statistics. Deliberately inert."
+  },
+  {
+   "id": "mycoweave-shield-greater",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The item record already carries itemType 'shield' with acBonus 2, hardness 4, hp 64, brokenThreshold 32 and speedPenalty 0. The hardness doubling vs bludgeoning/electricity/sonic, the fast healing atop organic matter and the on-break spore burst are item-damage bookkeeping resolved at the table."
+  },
+  {
+   "id": "mycoweave-shield-lesser",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Already carries itemType 'shield' with acBonus 2, hardness 2, hp 12, brokenThreshold 6 and speedPenalty 0. The conditional hardness doubling and the on-break spore reaction are table-resolved item damage."
+  },
+  {
+   "id": "mycoweave-shield-major",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Already carries itemType 'shield' with acBonus 2, hardness 6, hp 110, brokenThreshold 55 and speedPenalty 0. The conditional hardness doubling and the on-break spore reaction are table-resolved item damage."
+  },
+  {
+   "id": "navigators-feather",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "uses tracks the consumable, situationalBonuses.ts:1748 holds both +1 circumstance Survival lines (Sense Direction and Track), and it has a core.modes entry keyed fromItemId so the player can switch the 24-hour effect on."
+  },
+  {
+   "id": "nimble-crawl",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Changes how far you Crawl and, at legendary Acrobatics, removes the off-guard you take while prone. The app tracks neither Crawl distance nor the prone condition, so there is no stat to move."
+  },
+  {
+   "id": "orc-weapon-expertise",
+   "verdict": "MISS",
+   "reason": "Absent from FEAT_GRANTS. Every other ancestry Weapon Expertise feat is registered in featGrantsAuto.ts with weaponFamiliarity/mirrorBestCategory (catfolk-, conrasu-, genie-, ghoran-, grippli-, hobgoblin-, kobold-, vanara-, vishkanya-weapon-expertise), so an orc character never gets the mirrored expert/master rank on the falchion, greataxe or orc weapons.",
+   "fix": {
+    "field": "FEAT_GRANTS",
+    "value": "{\"weaponFamiliarity\":{\"weapons\":[\"falchion\",\"greataxe\",\"orc-knuckle-dagger\",\"orc-necksplitter\",\"butchering-axe\",\"horsechopper\",\"dogslicer\"],\"mirrorBestCategory\":true}}",
+    "note": "Shape copied from catfolk-weapon-expertise. The weapon-id list must be re-derived from core.items for the weapons actually carrying the orc trait before applying."
+   }
+  },
+  {
+   "id": "pactmasters-grace",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "passiveEffects {\"skills\":{\"lore:mercantile\":3}} delivers the +3 item bonus to Mercantile Lore, and situationalBonuses.ts:839 carries the +2/+3 item bonus to all saving throws in an urban setting."
+  },
+  {
+   "id": "paragon-battle-medicine",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Every clause reduces a condition value on the TARGET of your Battle Medicine (sickened/enfeebled/clumsy, then frightened/stunned, stupefied/drained). The app models only the player's own sheet."
+  },
+  {
+   "id": "paragon-benefit-regalia",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses.ts:877 carries the critical-failure-becomes-failure lines for Coerce (Intimidation) and Make an Impression / Request (Diplomacy). Everything else is the Follow the Expert bonus you grant OTHERS and condition relief for ALLIES in your aura."
+  },
+  {
+   "id": "paragon-benefit-tome",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses.ts:2219 carries all three self-facing lines: +2 circumstance to Recall Knowledge while holding the tome, +1 circumstance to attack rolls after the tome's Recall Knowledge, and +3 circumstance on Esoteric Lore initiative."
+  },
+  {
+   "id": "patron-theme",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The witch patron is a subclass option: the tradition/spell list, patron skill, initial lesson and familiar ability all come from the chosen patron record in core.patron, and limitedUses on this record carries the printed once-per-round cadence of the familiar ability. This record is the explanatory chassis."
+  },
+  {
+   "id": "pei-zing-adept",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Only raises how many recipients you can administer elemental medicines to during daily preparations (2 / 4 at master / 8 at legendary). The benefit lands on other creatures, not on your sheet."
+  },
+  {
+   "id": "perfections-path",
+   "verdict": "MISS",
+   "reason": "The record has a choice (fortitude/reflex/will) that RECORDS the pick, but nothing applies it: perfections-path is absent from FEAT_GRANTS, so the chosen saving throw never reaches master. FeatGrant.choiceGrants exists for exactly this 'grants selected by the feat's own choice dropdown' case.",
+   "fix": {
+    "field": "FEAT_GRANTS",
+    "value": "{\"choiceGrants\":{\"fortitude\":{\"save\":{\"fortitude\":\"master\"}},\"reflex\":{\"save\":{\"reflex\":\"master\"}},\"will\":{\"save\":{\"will\":\"master\"}}}}"
+   }
+  },
+  {
+   "id": "perpetual-scout",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets you keep the Scout exploration activity's benefit while performing a different exploration activity. The app models no exploration-activity slots, so this is purely which activity you declare to the GM."
+  },
+  {
+   "id": "phantom-piano",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "counters + frequency track the once-per-day Focus Point activation, heldSpells puts the composition list on the Spells page keyed by proficiency rank, and situationalBonuses.ts:1488 carries the +2 item bonus to Performance made with the piano."
+  },
+  {
+   "id": "pilferers-gloves",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "apexAttribute delivers the Dexterity apex increase, counters + frequency track the once-per-day reroll, and situationalBonuses.ts:2583 carries 'one proficiency rank higher (a +2 item bonus instead if already legendary)' on Thievery."
+  },
+  {
+   "id": "pistoleros-challenge",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses.ts:2280 carries the +2/+3/+4 status bonus to damage rolls against the challenged opponent. The mirrored bonus the FOE receives and their Will save are the target's side."
+  },
+  {
+   "id": "prepare-papers",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Only makes Create Forgery an exploration activity and shortens it (1 hour per page, 10 minutes at legendary Society). Time and activity type are table bookkeeping."
+  },
+  {
+   "id": "psychic-weapon-expertise",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "advancement.ts psychic table applies { level: 11, track: 'unarmed'/'simple', rank: 'expert' } — exactly the grant printed here."
+  },
+  {
+   "id": "psychic-weapon-specialization",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "derive.ts:1018 weaponSpecialization() names 'psychic-weapon-specialization' explicitly, so the +2/+3/+4 damage by weapon proficiency is folded into every qualifying Strike."
+  },
+  {
+   "id": "punishing-shove",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The bludgeoning damage lands on the creature you Shove. Damage a skill action deals to a target is not a statistic on your own sheet, and the app has no Shove-damage surface."
+  },
+  {
+   "id": "quick-change",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Only reduces the action cost of changing identity (1 minute, then 3 actions, then 1 action at legendary Deception). Action economy, not a sheet number."
+  },
+  {
+   "id": "quick-climb",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "core.json already carries speedsIf [{\"skill\":\"athletics\",\"rank\":\"legendary\",\"speeds\":{\"climb\":\"@actor.speed.land\"}}], so the legendary climb Speed reaches the sheet. The extra feet on a success/critical success are movement resolution."
+  },
+  {
+   "id": "quick-contacts",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Downtime timing only (1 day, or 1 hour at legendary Society) to unlock the Connections feats in a new settlement. GM-facing."
+  },
+  {
+   "id": "quick-disguise",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Only shortens setting up a disguise (1 minute, then 3 actions, then 1 action). Time and action economy."
+  },
+  {
+   "id": "quick-identification",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Only shortens Identify Magic (1 minute, then 3 actions, then 1 action). Time and action economy."
+  },
+  {
+   "id": "quick-repair",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Only removes the exploration trait from Repair and shortens it. Time and action economy."
+  },
+  {
+   "id": "quick-squeeze",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Only changes how far you Squeeze per round. The app models no Squeeze distance."
+  },
+  {
+   "id": "quick-study",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The record carries choice {flag:'quickStudyLore', kind:'text', daily:true} — the deliberate daily-preparations lane for a Lore subject chosen each day. The feat itself forbids using the temporary proficiency as a prerequisite, which is why it is recorded rather than granted."
+  },
+  {
+   "id": "quick-swim",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "core.json already carries speedsIf [{\"skill\":\"athletics\",\"rank\":\"legendary\",\"speeds\":{\"swim\":\"@actor.speed.land\"}}], so the legendary swim Speed reaches the sheet."
+  },
+  {
+   "id": "raging-stories",
+   "verdict": "MISS",
+   "reason": "The record has no fields and is in no registry, yet while wrapped in spectral flame your melee Strikes deal +2 additional fire damage (+4 at master Religion, +6 at legendary) for the duration. That is a toggleable temporary damage rider, and the feat appears in neither core.modes nor core.stances.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Raging Stories (spectral flame)",
+     "effects": "While active (you Offered a Story and chose the spectral-flame benefit): every MELEE Strike deals +2 additional fire damage; +4 instead if you are a master in Religion, +6 if legendary. Ranged Strikes unaffected."
+    }
+   }
+  },
+  {
+   "id": "ranger-expertise",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "advancement.ts ranger table applies { level: 9, track: 'classDc', rank: 'expert' } and { level: 9, track: 'spellcasting', rank: 'expert', source: 'ranger-expertise' } — both halves of the printed grant."
+  },
+  {
+   "id": "rapid-affixture",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Only shortens Affix a Talisman (1 minute, or 3 actions at legendary Crafting). Time and action economy."
+  },
+  {
+   "id": "rascal",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The swashbuckler Style subclass option carries grants {\"skills\":[\"thievery\"]} in core.classes.swashbuckler.subclass.options, and featFeatGrants.ts:242 maps 'rascal' to ['dirty-trick']. The bravado trait added to Dirty Trick is panache timing resolved at the table."
+  },
+  {
+   "id": "read-disaster",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Reframes Augury so the GM only reveals dangers. Pure GM-adjudicated divination with no statistic attached; the legendary-Religion clause only shortens the cast time."
+  },
+  {
+   "id": "recognize-spell",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses.ts:299 carries the +1 circumstance bonus to AC and all saves against a spell you Recognize. The auto-identify rank ladder resolves on the GM's secret roll."
+  },
+  {
+   "id": "repository-of-knowledge",
+   "verdict": "MISS",
+   "reason": "This relic gift makes you trained (expert at relic level 9, master at 17) in 3 additional Lore skills while the relic is on your person, and the record carries no fields. ItemPassiveEffects (types.ts:462) only carries NUMERIC bonuses — skills is Record<ProficiencyKey, number> — so no item can currently confer a proficiency RANK, and loreChoices is a heritage-only field.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "Needs an item-borne proficiency-RANK lane plus 3 free-text Lore slots (level-gated trained/expert/master). Neither ItemPassiveEffects.skills (a numeric item bonus) nor loreChoices (heritage-only) can express it."
+   }
+  },
+  {
+   "id": "resourceful-ritualist",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets you attempt rituals one proficiency step above your rank. You still roll the same skill modifier already on the sheet; the gate is a GM permission, not a number."
+  },
+  {
+   "id": "respite-of-a-thousand-roofs",
+   "verdict": "MISS",
+   "reason": "featFeatGrants.ts:244 delivers Improvise Tool, but nothing makes the character trained in Crafting or in Cooking Lore: the heritage record carries no fields at all, and heritage ids are never looked up in FEAT_GRANTS (build.ts:2273 iterates c.feats only).",
+   "fix": {
+    "field": "FEAT_GRANTS",
+    "value": "{\"skills\":{\"crafting\":\"trained\",\"lore:cooking\":\"trained\"}}",
+    "needsEngineWork": true,
+    "note": "FEAT_GRANTS.skills is the right shape but the grant loop never reads heritage ids — the heritage lane has to be wired (read the same map for build.heritageId)."
+   }
+  },
+  {
+   "id": "revolutionary-innovation",
+   "verdict": "MISS",
+   "reason": "A level-15 inventor class feature that is a choose-one-of-N with real defensive grants — Energy Barrier (resistance 2 + half level to all eight energy types), Physical Protections (resistance half level to bludgeoning/piercing/slashing), Incredible Resistance (raises a breakthrough resistance to your full level), Perfect Fortification (resistance 2 + half level to precision) — yet it carries no effectChoices, so the player is never asked and no resistance reaches the sheet.",
+   "fix": {
+    "field": "effectChoices",
+    "value": "[{\"id\":\"revolutionary-modification\",\"prompt\":\"Choose a revolutionary innovation modification\",\"options\":[{\"value\":\"energy-barrier\",\"label\":\"Energy Barrier (armor)\",\"grant\":{\"resistances\":[{\"type\":\"acid\",\"value\":\"2+floor(@actor.level/2)\"},{\"type\":\"cold\",\"value\":\"2+floor(@actor.level/2)\"},{\"type\":\"electricity\",\"value\":\"2+floor(@actor.level/2)\"},{\"type\":\"fire\",\"value\":\"2+floor(@actor.level/2)\"},{\"type\":\"force\",\"value\":\"2+floor(@actor.level/2)\"},{\"type\":\"sonic\",\"value\":\"2+floor(@actor.level/2)\"},{\"type\":\"vitality\",\"value\":\"2+floor(@actor.level/2)\"},{\"type\":\"void\",\"value\":\"2+floor(@actor.level/2)\"}]}},{\"value\":\"physical-protections\",\"label\":\"Physical Protections (armor)\",\"grant\":{\"resistances\":[{\"type\":\"bludgeoning\",\"value\":\"floor(@actor.level/2)\"},{\"type\":\"piercing\",\"value\":\"floor(@actor.level/2)\"},{\"type\":\"slashing\",\"value\":\"floor(@actor.level/2)\"}]}},{\"value\":\"perfect-fortification\",\"label\":\"Perfect Fortification (power suit)\",\"grant\":{\"resistances\":[{\"type\":\"precision\",\"value\":\"2+floor(@actor.level/2)\"}]}},{\"value\":\"other\",\"label\":\"Another revolutionary, breakthrough or initial modification (recorded only)\"}]}]",
+    "note": "The printed option list is truncated in the imported text; the four options above are the ones expressible with a legal field. Remaining options should be listed with no grant so the pick is still recorded."
+   }
+  },
+  {
+   "id": "rivethun-adept",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "innateSpells carries Speak with Stones and Spiritual Guardian as once-per-day 5th-rank divine innate spells. The legendary-Religion heighten of spiritual guardian is a conditional upgrade the player applies when casting."
+  },
+  {
+   "id": "rivethun-devotion",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "innateSpells carries See the Unseen and Spirit Link as once-per-day 2nd-rank divine innate spells. The master/legendary Religion heighten steps are conditional upgrades applied when casting."
+  },
+  {
+   "id": "rogue-expertise",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "advancement.ts rogue table applies { level: 11, track: 'classDc', rank: 'expert', source: 'rogue-expertise' }."
+  },
+  {
+   "id": "rolling-landing",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reaction that lets you Step or Stride after a damage-free fall, and at legendary avoid reactions triggered by that movement. Reaction and movement economy with no statistic attached."
+  },
+  {
+   "id": "root-magic",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The +1/+2/+3 circumstance bonus goes to an ALLY, and the text explicitly forbids giving it to yourself. The app models only the player's own sheet."
+  },
+  {
+   "id": "ruffian",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The rogue Racket subclass option carries grants {\"skills\":[\"intimidation\"],\"armor\":[\"medium\"]}, the record carries critSpec, and derive.ts strikePrecisionRiders implements the Ruffian sneak-attack weapon rule by subclassId (simple die <= d8, martial/advanced die <= d6)."
+  },
+  {
+   "id": "runelord",
+   "verdict": "MISS",
+   "reason": "effectChoices delivers the sin pick and its school focus spell, but the class-archetype restructuring does nothing. Unlike war-mage-dedication, warrior-of-legend-dedication and vindicator-dedication, the sibling runelord-dedication feat carries NO classArchetype, so 'trained in martial polearms and spears' (advancing with simple weapons), the Thassilonian language and the bonus Advanced School Spell at 8th level are never applied.",
+   "fix": {
+    "field": "classArchetype",
+    "value": "{\"classId\":\"wizard\",\"suppressFeatures\":[\"arcane-thesis\"],\"weapon\":{\"martial\":\"trained\"},\"note\":\"Runelord: you are trained in martial polearms and spears (they advance with your simple-weapon proficiency), you learn Thassilonian, you have a personal rune in place of an arcane thesis, you must take the School of Thassilonian Rune Magic, and you gain Advanced School Spell as a bonus feat at 8th level.\"}",
+    "note": "classArchetype is a Feat field, so this belongs on the runelord-dedication record (which core.json currently ships with no classArchetype at all). A per-weapon weaponFamiliarity list would be more accurate than the whole martial category, since only polearms and spears are granted."
+   }
+  },
+  {
+   "id": "safe-house",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Establishes a downtime hideout with a Veil of Privacy effect sized by your Deception rank. Location-based and GM-adjudicated; nothing on your sheet changes."
+  },
+  {
+   "id": "sage-jotunborn",
+   "verdict": "MISS",
+   "reason": "featFeatGrants.ts:247 delivers Additional Lore, but nothing makes the character trained in Society: the heritage record carries no fields, and heritage ids are never looked up in FEAT_GRANTS (build.ts:2273 iterates c.feats only).",
+   "fix": {
+    "field": "FEAT_GRANTS",
+    "value": "{\"skills\":{\"society\":\"trained\"}}",
+    "needsEngineWork": true,
+    "note": "Right shape, wrong reach: the grant loop must also read the chosen heritage id."
+   }
+  },
+  {
+   "id": "sages-bloom",
+   "verdict": "MISS",
+   "reason": "Not in situationalBonuses even though its sibling skill talismans are (navigators-feather:1748, sneaky-key:1548). The activation turns a critical failure on a Nature check into a failure — a degree-of-success change to the player's OWN check, which the registry already stores in this exact form (paragon-benefit-regalia:877, silvertongue-mutagen:1802).",
+   "fix": {
+    "field": "FEAT_SITUATIONAL",
+    "situational": [
+     {
+      "targets": [{ "kind": "skill", "detail": "nature" }],
+      "when": "on the three Recall Knowledge checks after activating the talisman",
+      "bonus": "critical failure becomes failure"
+     }
+    ]
+   }
+  },
+  {
+   "id": "sakuras-sprig",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Gives the affixed weapon the holy trait for 1 minute. The holy trait matters only against an unholy creature's weakness — a target-side effect; uses already tracks the consumable."
+  },
+  {
+   "id": "sanctify-water",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Temporarily turns a container of water into holy or unholy water. It changes an item in the world (and explicitly imparts no monetary or ritual value), not any statistic on your sheet."
+  },
+  {
+   "id": "scorching-disarm",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "limitedUses carries the once-per-day frequency pip. Everything else is 4d6 (8d6 at legendary Athletics) damage dealt to the creature you Disarm — the target's side."
+  },
+  {
+   "id": "scoundrel",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The rogue Racket subclass option carries grants {\"skills\":[\"diplomacy\",\"deception\"]}. The off-guard-after-Feint window and the free Step are combat resolution the player applies at the table."
+  },
+  {
+   "id": "second-doctrine-cloistered-cleric",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "advancement.ts cleric (cloistered) table applies { level: 3, track: 'fortitude', rank: 'expert', source: 'second-doctrine (cloistered)' }."
+  },
+  {
+   "id": "second-doctrine-warpriest",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "advancement.ts warpriest table applies { level: 3, track: 'martial', rank: 'trained', source: 'second-doctrine (warpriest)' }."
+  },
+  {
+   "id": "shadow-magic",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The record carries focusPoolBonus (the 1 Focus Point), effectChoices (Dance of Darkness or Shadow Jump) and spellcastingGrant (occult / Charisma / trained) — all three printed grants."
+  },
+  {
+   "id": "shadow-mark",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The -2/-3/-4 circumstance penalty applies to the TARGET's Perception DC and their initiative roll while you shadow them. Nothing on your own sheet moves."
+  },
+  {
+   "id": "shall-not-falter-shall-not-rout",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "focusSpells grants the focus spell and its Focus Point, and spellcastingGrant carries the divine / Charisma / trained profile."
+  },
+  {
+   "id": "shootists-edge",
+   "verdict": "MISS",
+   "reason": "advancement.ts:388 covers the class DC master bump, but the second half has no surface: ignoring the second- and third-range-increment penalty with a master-or-better ranged weapon is exactly the line situationalBonuses.ts:2188 already stores for masterful-hunter ('attacking your hunted prey within your ranged weapon's second or third range increment... ignore the range increment penalty'), and shootists-edge has no registry entry.",
+   "fix": {
+    "field": "FEAT_SITUATIONAL",
+    "situational": [
+     {
+      "targets": [{ "kind": "strikeAttack" }],
+      "when": "with a ranged weapon you have master or greater proficiency in, in its 2nd or 3rd range increment",
+      "bonus": "ignore the range increment penalty"
+     }
+    ]
+   }
+  },
+  {
+   "id": "silvertongue-mutagen",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "AoN family/umbrella record: no price, itemType 'equipment', and the four priced Lesser/Moderate/Greater/Major kin carry the real bonuses, modes and registry entries. Deliberately inert."
+  },
+  {
+   "id": "silvertongue-mutagen-greater",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "uses tracks the consumable, situationalBonuses.ts:1802 carries the +3 item bonus to Deception/Diplomacy/Intimidation/Performance and the -2 drawbacks on Arcana/Crafting/Occultism/Society/Lore, and it has a core.modes entry keyed fromItemId for the 1-hour duration."
+  },
+  {
+   "id": "silvertongue-mutagen-lesser",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "uses tracks the consumable, situationalBonuses covers the +1 item bonuses and the -2 drawbacks, and a core.modes entry keyed fromItemId switches the 1-minute effect on."
+  },
+  {
+   "id": "silvertongue-mutagen-major",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "uses tracks the consumable, situationalBonuses covers the +4 item bonuses and the -2 drawbacks, and a core.modes entry keyed fromItemId switches the 1-hour effect on."
+  },
+  {
+   "id": "silvertongue-mutagen-moderate",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "uses tracks the consumable, situationalBonuses covers the +2 item bonuses and the -2 drawbacks, and a core.modes entry keyed fromItemId switches the 10-minute effect on."
+  },
+  {
+   "id": "skill-training-kingdom",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The record carries choice {flag:'kingdomTrainedSkill', kind:'text'} with an explicit inert note — the agreed recorded-pick treatment for Kingdom feats. The proficiency belongs to the kingdom, not the character, and Heroes Heaven has no Kingdom sheet."
+  },
+  {
+   "id": "skilled-human",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Hard-wired: build.ts:1322 applies build.heritageSkill as trained and build.ts:1324-1325 raises it to expert at level 5 specifically for heritageId 'skilled-human'. The builder renders the skill picker at shared.tsx:2302."
+  },
+  {
+   "id": "slippery-prey",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Reduces the multiple attack penalty on repeated Escape attempts. MAP is applied per-action at the table, not a statistic on the sheet."
+  },
+  {
+   "id": "snap-out-of-it-pathfinder-agent",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Reduces fascinated/frightened/stunned/stupefied on an adjacent ALLY. The app models only the player's own sheet."
+  },
+  {
+   "id": "snare-genius",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Its prerequisite is Snare Crafting, which snareFormulas.ts:17 already recognises (SNARE_CRAFTING_SOURCES), so the formula book and the free daily prepared snares are already computed by snareAllowance — at 4/6/8, at or above the 3/4/5 this feat prints. The Craft-in-3-Interacts clause is action economy and the off-guard rider lands on the target."
+  },
+  {
+   "id": "snare-specialist",
+   "verdict": "MISS",
+   "reason": "This ranger feat grants snare formulas and free daily prepared snares on its own (its prerequisite is expert Crafting, not Snare Crafting), but snareFormulas.ts:17 SNARE_CRAFTING_SOURCES lists only snare-crafting, snarecrafter-dedication, snare-expert and snare-setter — so hasSnareCrafting() is false and a ranger with Snare Specialist gets no formula book and no prepared-snare allowance at all.",
+   "fix": {
+    "field": "SNARE_CRAFTING_SOURCES",
+    "value": "add 'snare-specialist' to the set in src/rules/snareFormulas.ts",
+    "note": "Its allowance differs from the default ladder: formulas 3/6/9 at expert/master/legendary and 4/6/8 prepared, so snareAllowance may need a per-source variant rather than the shared 4+3n / 4-6-8 table."
+   }
+  },
+  {
+   "id": "snarecrafter-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "featFeatGrants.ts:146 delivers Snare Crafting, and snareFormulas.ts:17 lists 'snarecrafter-dedication' in SNARE_CRAFTING_SOURCES so snareAllowance computes the formula book (4, +3 per rank) and the 4/6/8 free daily prepared snares. The DC substitution and the Survival-for-Crafting ranger clause are table math."
+  },
+  {
+   "id": "sneaky-key",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "uses tracks the consumable, situationalBonuses.ts:1548 carries the +1 status bonus to Thievery to Pick a Lock, and it has a core.modes entry keyed fromItemId for the 1-minute duration."
+  },
+  {
+   "id": "sound-mirror",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "innateSpells carries Silence at 2nd and 1st rank once per day plus Figment as an occult innate cantrip. The printed profile (trained spell attack/DC, Charisma) is exactly the innate-entry default build.ts:2797-2798 already applies, so no spellcastingGrant is needed."
+  },
+  {
+   "id": "specialized-companion",
+   "verdict": "MISS",
+   "reason": "This is the AoN-scraped twin of specialized-companion-animal-trainer, which IS registered in companionGrants.ts:172 (maturityFloor 'specialized' plus the legendary-Performance note). This id has no companionGrants entry, so a player who takes this copy gets no specialization and no companion change at all.",
+   "fix": {
+    "field": "companionGrants",
+    "value": "{\"kinds\":[\"animal\"],\"maturityFloor\":\"specialized\",\"note\":\"Animal Trainer companion: gains one specialization of your choice, and its Performance proficiency is legendary in place of one of the specialization's skill increases.\"}",
+    "note": "Identical to the specialized-companion-animal-trainer entry. If the two records are true duplicates, suppressing this one instead would be equally correct."
+   }
+  },
+  {
+   "id": "specialized-companion-animal-trainer",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "companionGrants.ts:172 carries {kinds:['animal'], maturityFloor:'specialized', note: '...gains one specialization of your choice, and its Performance proficiency is legendary...'}."
+  },
+  {
+   "id": "spellmaster-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses.ts:344 carries the +2 circumstance bonus to Identify Magic on Arcana/Nature/Occultism/Religion. The Wayfinder Resonance Tinkerer re-pick is a daily convenience."
+  },
+  {
+   "id": "spirit-guide-form",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "limitedUses carries the once-per-day pip and the feat is in core.stances, which is where every polymorph battle form (incorporeal, resistance 10, darkvision, the fixed-modifier claws/jaws attack) is delivered as an exclusive toggle."
+  },
+  {
+   "id": "spirit-striking",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "core.json carries strikeDamage on this record — the field types.ts:271-273 documents with Spirit Striking as its worked example ('+2/3/4 spirit by weapon proficiency'). It is folded into every matching Strike."
+  },
+  {
+   "id": "splendid-companion",
+   "verdict": "MISS",
+   "reason": "Not in companionGrants (grepped companionGrants.ts). The feat matures the animal companion to nimble or savage and raises its Performance proficiency to master, and COMPANION_MODS is exactly the lane for that — its siblings specialized-companion-animal-trainer (maturityFloor) and chorus-companion (skillGrants Performance) are both registered.",
+   "fix": {
+    "field": "companionGrants",
+    "value": "{\"kinds\":[\"animal\"],\"maturityFloor\":\"nimble\",\"skillGrants\":[{\"skill\":\"performance\",\"rank\":\"master\"}],\"note\":\"Splendid Companion: your animal companion becomes a nimble or savage companion (your choice), and its Performance proficiency is master in place of one of Athletics or Acrobatics.\"}",
+    "note": "maturityFloor value must match whatever COMPANION_MODS uses for the nimble/savage tier; the nimble-or-savage choice itself is a player pick the note records."
+   }
+  },
+  {
+   "id": "spore-order",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The druid Order subclass option carries grants {\"skills\":[\"intimidation\"]}, the record carries grantsFeats ['leshy-familiar'], and it has a companionGrants entry for the fungus leshy familiar. The mushroom patch order spell comes from the order record and the anathema is table-facing."
+  },
+  {
+   "id": "stealthy-companion",
+   "verdict": "MISS",
+   "reason": "Not in companionGrants (grepped companionGrants.ts). The feat gives the animal companion the benefit of Camouflage and, for a specialized ambusher, raises its Stealth to master (legendary if already master) — a companion skill grant, which is exactly what COMPANION_MODS.skillGrants delivers for chorus-companion and fell-rider.",
+   "fix": {
+    "field": "companionGrants",
+    "value": "{\"kinds\":[\"animal\"],\"skillGrants\":[{\"skill\":\"stealth\",\"rank\":\"master\"}],\"note\":\"Stealthy Companion: your animal companion gains the benefit of the Camouflage feat (it can Hide and Sneak in natural terrain without cover or concealment). The Stealth rank shown applies only if it is a specialized ambusher, and becomes legendary if it was already master.\"}",
+    "note": "The Stealth grant is conditional on the ambusher specialization; skillGrants is unconditional, so either gate it or keep the condition in the note."
+   }
+  },
+  {
+   "id": "stir-allies",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Gives ALLIES within 30 feet a reaction to Step (Stride at legendary Diplomacy). The app models only the player's own sheet."
+  },
+  {
+   "id": "stone-of-unrivaled-skill",
+   "verdict": "MISS",
+   "reason": "choice records which skill you named, counters/frequency track Taste Fluency, and situationalBonuses.ts:1995 carries its +3 status bonus — but the item's headline benefit is never applied: sealing the contract makes you expert (master if already expert, legendary if already master) in that skill, and nothing raises the rank. ItemPassiveEffects (types.ts:462) has only numeric bonuses, no proficiency-rank lane.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "Needs an item-borne proficiency-RANK lane keyed to the item's own choice value (a conditional 'one step up from your current rank' grant). ItemPassiveEffects.skills is a numeric item bonus and cannot express a rank."
+   }
+  },
+  {
+   "id": "summoner-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "casterArchetypes.ts:82 registers 'summoner-dedication' with eidolonTradition, build.ts:3089 branches on the feat for the eidolon, and shared.tsx:2931 renders the eidolon picker when summoner-dedication is taken. The reduced ability array and the tandem-action restriction are noted in that lane."
+  },
+  {
+   "id": "suns-fury",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "focusSpells grants the Sun's Fury focus spell and its Focus Point, and spellcastingGrant carries the divine / Charisma / trained profile."
+  },
+  {
+   "id": "tactical-acumen",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets you Recall Knowledge about a troop with Warfare Lore and, at legendary, reduces the rarity DC adjustment. Recall Knowledge DCs and the troop subsystem are GM-side; the final clause penalises the enemy troop's saves."
+  },
+  {
+   "id": "talisman-dabbler-dedication",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Formula access, two free temporary talismans a day, a DC substitution and affixing four talismans in one 10-minute span. All crafting/downtime bookkeeping and table math; no statistic on the sheet moves."
+  },
+  {
+   "id": "thats-not-natural",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses.ts:645 carries both self-facing lines: the +1/+2 circumstance bonus to initiative in wilderness against aberrations/fey/mutants/undead/extraplanar foes, and the +2 circumstance bonus to Survival for the Commune ritual. The +1 to your Perception DC against their Stealth is the enemies' roll."
+  },
+  {
+   "id": "the-brave",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The exemplar 'root-epithet' extraChoice option carries grants {\"skills\":[\"athletics\"]} (core.classes.exemplar.extraChoices), so the training reaches the sheet. The free Stride after Spark Transcendence is action economy."
+  },
+  {
+   "id": "the-cunning",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The exemplar 'root-epithet' extraChoice option carries grants {\"skills\":[\"deception\"]}. The free Create a Diversion or Feint after Spark Transcendence is action economy."
+  },
+  {
+   "id": "the-deft",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The exemplar 'root-epithet' extraChoice option carries grants {\"skills\":[\"thievery\"]}. The free Steal/Palm an Object and the free Interact to reload or draw are action economy."
+  },
+  {
+   "id": "the-harder-they-fall-kingmaker",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The 1d8/2d8 (2d8/4d8 at master Athletics) damage lands on the larger creature you Trip. Damage a skill action deals to a target is not a statistic on your own sheet."
+  },
+  {
+   "id": "the-harder-they-fall-ranger",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same feat as the-harder-they-fall-kingmaker, with the AoN page scrape appended: the damage lands on the creature you Trip, which the app does not model."
+  },
+  {
+   "id": "the-mournful",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The exemplar 'root-epithet' extraChoice option carries grants {\"skills\":[\"diplomacy\"]}. Dazzling one enemy after Spark Transcendence is a condition on the target."
+  },
+  {
+   "id": "the-proud",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The exemplar 'root-epithet' extraChoice option carries grants {\"skills\":[\"intimidation\"]}. The -1/+1 status swing after the boast applies to the ENEMY's rolls, not yours."
+  },
+  {
+   "id": "the-radiant",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The exemplar 'root-epithet' extraChoice option carries grants {\"skills\":[\"diplomacy\"]}. Restoring 2 + double your level Hit Points goes to an ALLY."
+  },
+  {
+   "id": "the-trader",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "counters + frequency track the once-per-day activation and situationalBonuses.ts:1507 carries the +2 (+3 at 17th level) item bonus to Diplomacy to Gather Information. The one-hour proficiency swap between two skills is a temporary at-the-table exchange with an explicit feat-prerequisite caveat."
+  },
+  {
+   "id": "thief",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The rogue Racket subclass option carries grants {\"skills\":[\"thievery\"]}, and derive.ts:1310 / 1515 implement thiefDexDamage (Dex instead of Str to damage on a finesse melee Strike when Dex is higher) keyed on subclassId === 'thief'."
+  },
+  {
+   "id": "titan-wrestler",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Only raises the size limit for Disarm/Grapple/Reposition/Shove/Trip (two, or three sizes larger at legendary Athletics). A legality gate on the target, with no modifier attached."
+  },
+  {
+   "id": "to-the-ends-of-the-earth",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets you always know your hunted prey's exact location. Narrative/GM information with no statistic; the legendary-Nature clause only extends it across teleportation."
+  },
+  {
+   "id": "train-animal",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Downtime training whose DC and duration the GM sets, adding tricks to an animal you Command. Purely GM-adjudicated and it changes the animal, not you."
+  },
+  {
+   "id": "trap-finder",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses.ts:374 carries the +1 (+2 at master Thievery) circumstance bonus to Perception to find traps, to AC against trap attacks and to saves against traps. The disable-higher-rank-traps clause is a legality gate."
+  },
+  {
+   "id": "travelers-fulu",
+   "verdict": "MISS",
+   "reason": "Not in situationalBonuses, unlike the other Survival talisman navigators-feather (situationalBonuses.ts:1748). Activating it improves the result of your OWN Survival check to Sense Direction by one degree of success (two at master Survival) — a degree-of-success change the registry already stores in this exact form (paragon-benefit-regalia:877).",
+   "fix": {
+    "field": "FEAT_SITUATIONAL",
+    "situational": [
+     {
+      "targets": [{ "kind": "skill", "detail": "survival" }],
+      "when": "on the Sense Direction check you activated the fulu for (also counts as having a compass)",
+      "bonus": "one degree of success better (two if you are a master in Survival)"
+     }
+    ]
+   }
+  },
+  {
+   "id": "trick-magic-item",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Substitutes a skill check and a fallback proficiency to activate an item you cannot normally use. The substitute modifiers are computed at the table for one turn, and the whole thing is GM-DC driven."
+  },
+  {
+   "id": "triumphant-boast",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses.ts:644 carries the +1 (+2 with Charisma 20+ and master Performance) circumstance bonus to Demoralize a creature you successfully boasted at. The target count and their Will DC are the targets' side."
+  },
+  {
+   "id": "true-creed",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "advancement.ts 'battle-creed' table applies { level: 15, track: 'classDc', rank: 'master', source: 'true-creed' } and { level: 15, track: 'will', rank: 'master', source: 'true-creed' } — both halves of the printed grant, on the doctrine that gets this feature."
+  },
+  {
+   "id": "tsukumogami-poppet",
+   "verdict": "MISS",
+   "reason": "effectChoices delivers the material-keyed weakness (fire/electricity/cold) and situationalBonuses.ts:2238 carries the +2/+3 circumstance bonus to Aid with the tool Lore, but the player is never asked WHICH tool Lore and is never trained in it — the very skill the registry entry refers to. Heritage.loreChoices (types.ts:268-270) is the field for 'a free-text Lore a heritage grants', already used by Half Moon Sarangay and Born of Item.",
+   "fix": {
+    "field": "loreChoices",
+    "value": "1",
+    "note": "The typed subject lands in BuildState.heritageLore and becomes lore:<subject> trained, which also gives the existing situationalBonuses entry a real skill to attach to."
+   }
+  },
+  {
+   "id": "unconventional-weaponry",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The record carries choice {flag:'unconventionalWeapon', kind:'open', from:{type:'weapon', rarity:'uncommon'}} with an explicit inert note stating that access and the treat-as-simple proficiency are recorded only — the agreed treatment for legacy picks that grant nothing the engine can apply."
+  },
+  {
+   "id": "unmistakable-lore",
+   "verdict": "MISS",
+   "reason": "No fields and no registry entry, yet it changes the outcome of the player's OWN checks: a critical failure to Recall Knowledge with any trained Lore becomes a failure. situationalBonuses already stores exactly this shape, including against a lore:* target (silvertongue-mutagen:1802 uses {kind:'skill', detail:'lore:*'}).",
+   "fix": {
+    "field": "FEAT_SITUATIONAL",
+    "situational": [
+     {
+      "targets": [{ "kind": "skill", "detail": "lore:*" }],
+      "when": "to Recall Knowledge with a Lore subcategory you are trained in",
+      "bonus": "critical failure becomes failure"
+     }
+    ]
+   }
+  },
+  {
+   "id": "unshaken-in-iron",
+   "verdict": "MISS",
+   "reason": "Grants the armor specialization effect of light armor (and of medium/heavy if trained), plus an increase to those effects equal to your armour check penalty while in Tenacious Stance. Armour specialization is implemented nowhere in the app (grepped src/rules and src/sheet; only weapon critSpec exists), so a resistance the rules hand the player never appears.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "Needs an armour-specialization lane: the effect is keyed to the worn armour's group and mostly reduces critical-hit damage / grants resistance, which none of resistances, situational or modes can express faithfully. Once that lane exists, the Tenacious Stance increase is a stance-conditional bump on top."
+   }
+  },
+  {
+   "id": "unusual-treatment",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Reduces clumsy/enfeebled/stupefied (and drained at master) on the PATIENT you Treat Wounds. The app models only the player's own sheet."
+  },
+  {
+   "id": "vanishing-coin",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A one-shot talisman that casts a 2nd-rank spell on you lasting until the end of your next turn, triggered on a Stealth initiative roll. Nothing persists on the sheet, and uses already tracks the consumable."
+  },
+  {
+   "id": "vasodilation",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses.ts:812 carries the +1 item bonus (+2 master, +3 legendary in Medicine) to Medicine for Administer First Aid, Treat Disease, Treat Poison and Treat Wounds performed with your blood. Dropping the healer's toolkit requirement is equipment bookkeeping and the 1 damage is applied in play."
+  },
+  {
+   "id": "veil-may",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "featFeatGrants.ts:170 maps 'veil-may' to ['lie-to-me']. The remaining clause only reduces the action cost of dropping a disguise (3 actions, 2 at expert, 1 at legendary Deception)."
+  },
+  {
+   "id": "verdant-weapon",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The record carries choice {flag:'choice', options: Grant New / Existing Item}, which is how the seed weapon reaches the inventory so runes and talismans can be attached to it. The seed/weapon form swap is an Interact action."
+  },
+  {
+   "id": "versatile-performance",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Substitutes Performance for Diplomacy/Intimidation/Deception on three named actions. Both modifiers already sit on the sheet and the player simply rolls the better one; the prerequisite-substitution clause is a builder gate the app does not enforce against you."
+  },
+  {
+   "id": "vicious-snares",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Adds 1d6 (2d6 at legendary Crafting) precision damage to damage snares you craft. Snare damage is dealt by a deployed hazard to whoever triggers it — not a Strike and not a statistic on your sheet."
+  },
+  {
+   "id": "vigilant-goloma",
+   "verdict": "MISS",
+   "reason": "innateSpells delivers the at-will Detect Magic, but the second half has no surface: your Perception proficiency counts as one step better when detecting magical traps. This heritage is in no registry, and situationalBonuses already stores rank-step effects in this exact form (memory-of-skill:2564 and pilferers-gloves:2583 both encode 'one proficiency rank higher').",
+   "fix": {
+    "field": "FEAT_SITUATIONAL",
+    "situational": [
+     {
+      "targets": [{ "kind": "perception" }],
+      "when": "when attempting to detect a magical trap",
+      "bonus": "one proficiency rank higher (untyped)"
+     }
+    ]
+   }
+  },
+  {
+   "id": "viking-weapon-specialist",
+   "verdict": "MISS",
+   "reason": "Not in FEAT_GRANTS (featGrantsAuto/Lane hold viking-dedication and viking-shieldbearer, not this feat), so neither half lands: the critical specialization effects of the battle axe, hatchet, longsword and shortsword, and the mirrored expert-or-better proficiency in those four weapons whenever a class feature raises your weapon proficiency. critSpecWeapons and weaponFamiliarity/mirrorBestCategory are the fields for exactly these.",
+   "fix": {
+    "field": "FEAT_GRANTS",
+    "value": "{\"weaponFamiliarity\":{\"weapons\":[\"battle-axe\",\"hatchet\",\"longsword\",\"shortsword\"],\"mirrorBestCategory\":true}}",
+    "note": "The crit-spec half needs critSpec:true plus critSpecWeapons {bases:['battle-axe','hatchet','longsword','shortsword']} on the feat record itself (types.ts:296-301), since FEAT_GRANTS has no crit-spec track."
+   }
+  },
+  {
+   "id": "vindicator",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The ranger Hunter's Edge subclass option carries grants {\"skills\":[\"religion\"]}, the sibling vindicator-dedication feat carries classArchetype {classId:'ranger', addFeatures:[{level:1, featureId:'vindicator'}], note: ...}, the record carries choice (Trackless Journey terrain), and situationalBonuses.ts:903 holds the +1/+2 status bonus to spell attack rolls against hunted prey."
+  },
+  {
+   "id": "virtuosic-dancer",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses.ts:384 carries the +1 (+2 at legendary Acrobatics) circumstance bonus to Performance for a dance, acting or opera performance. Dancing Dodge is a reaction, which the app surfaces as an action rather than a modifier."
+  },
+  {
+   "id": "waking-dream",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "focusSpells grants the Waking Dream focus spell and its Focus Point, and spellcastingGrant carries the trained spell attack/DC profile with Wisdom."
+  },
+  {
+   "id": "wall-jump",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets you chain jumps off a wall and, at legendary Athletics, repeat it. Movement and action economy with no statistic attached."
+  },
+  {
+   "id": "wandering-oasis",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Protects you and allies within 60 feet from severe (extreme at legendary Survival) environmental heat and cold. Environmental hazard exposure is GM-adjudicated and the app tracks no environment."
+  },
+  {
+   "id": "war-magic",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The sibling war-mage-dedication feat carries classArchetype {classId:'wizard', suppressFeatures:['arcane-bond','arcane-thesis','defensive-robes'], addFeatures:[{level:1,featureId:'war-magic'},{level:1,featureId:'shield-block'}], armor:{light:'trained',medium:'trained'}, weapon:{martial:'trained'}}, and this record carries grantsFeats plus limitedUses for the once-per-round spell exchange."
+  },
+  {
+   "id": "ward-medic",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Only raises how many patients one Treat Disease or Treat Wounds can cover (2 / 4 at master / 8 at legendary). The benefit lands on other creatures."
+  },
+  {
+   "id": "warden-human-bb",
+   "verdict": "MISS",
+   "reason": "The record carries a choice that RECORDS the pick, but none of the three benefits is applied: Heritage.choice is documented (types.ts:558-565) as a pick that is merely 'answered on the heritage step', and effectChoices/EffectGrant (types.ts:455-461) has no lane for max HP, for a saving-throw rank, or for armour proficiency — it covers only resistances/weaknesses/immunities/senses/speeds/skills/spells. So a Warden Human gets neither +4 HP, nor expert Fortitude, nor trained medium armour.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "EffectGrant needs hp / save-rank / armor-rank tracks (FeatGrant already has save and armor, so the cleanest route is to let a heritage choice resolve into a FeatGrant-shaped grant). No existing field can carry any of the three options."
+   }
+  },
+  {
+   "id": "warden-spells",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Chassis text whose grants are already delivered elsewhere: each warden-spell feat carries focusSpells (the spell plus its Focus Point) and spellcastingGrant (primal / Wisdom / trained), and advancement.ts raises that spellcasting track to expert at 9 (ranger-expertise) and master at 17 (masterful-hunter). Focus spells are auto-heightened by the heightening lane."
+  },
+  {
+   "id": "warpriest",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "advancement.ts carries the whole warpriest doctrine ladder (light/medium armour, Fortitude expert then master, martial at 3, expert weapons at 7, spellcasting expert at 11 and master at 19), the record carries grantsFeats ['shield-block'], and build.ts:2092 gates the Deadly Simplicity grant on the deity's favored weapon being simple or unarmed."
+  },
+  {
+   "id": "warrior-android",
+   "verdict": "MISS",
+   "reason": "The heritage prints 'You're trained in all simple and martial weapons' and the record carries no fields at all (only a dataWarning about a missing feat id). Heritage ids are never looked up in FEAT_GRANTS (build.ts:2273 iterates c.feats), so a Warrior Android's weapon proficiencies are whatever the class alone gives.",
+   "fix": {
+    "field": "FEAT_GRANTS",
+    "value": "{\"weapon\":{\"simple\":\"trained\",\"martial\":\"trained\"}}",
+    "needsEngineWork": true,
+    "note": "FeatGrant.weapon is the right shape but the grant loop must also read the chosen heritage id."
+   }
+  },
+  {
+   "id": "warrior-of-legend",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices resolves the cursed weakness into weaknesses [{type, value:'max(1,floor(@actor.level/2))'}], choice records the pick, and the sibling warrior-of-legend-dedication feat carries classArchetype {classId:'fighter', suppressFeatures:['shield-block'], armorCap:{heavy:'untrained'}, note: ...} covering the removed heavy-armour training and Shield Block."
+  },
+  {
+   "id": "warshard-warrior-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "grantsFeats delivers Mythic Strike and choice records the daily warshard-weapon pick. The doubled weapon-specialization damage at mythic proficiency and the legendary-Crafting Repair treatment are conditional riders applied at the table."
+  },
+  {
+   "id": "water-sprint",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets part of a Stride cross water. Terrain-crossing permission with no Speed value or modifier attached."
+  },
+  {
+   "id": "weapon-potency",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "AoN family/umbrella record: no price, itemType 'equipment', with the priced +1/+2/+3 kin carrying the real values. The actual mechanics live in core.runes."
+  },
+  {
+   "id": "weapon-potency-3",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "core.runes carries {id:'weapon-potency-3', slot:'weapon', kind:'potency', value:3, level:16}, which is what the etching/attachment lane reads for the +3 item bonus to attack rolls and the three property-rune slots."
+  },
+  {
+   "id": "weapon-specialization",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "derive.ts:1013-1019 weaponSpecialization() detects the class feature id 'weapon-specialization' (and its greater- variant) from the class's auto-granted features and folds the +2/+3/+4 damage into every Strike you are expert or better with."
+  },
+  {
+   "id": "weapon-weird-oil",
+   "verdict": "MISS",
+   "reason": "uses tracks the consumable, but the oil's actual effect has no lane: for an hour the coated weapon uses your proficiency rank in the OIL's keyed weapon group instead of its own group, and applies that group's critical specialization effect. The app tracks proficiency by category plus a fighter weapon-group table (build.ts proficiencies.weaponGroups) and reads crit spec from critSpec.ts by the weapon's own group, and nothing can rebind either per-item.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "Needs a per-inventory-item weapon-group override that both the group-proficiency lookup and critSpec.ts honour. Not expressible as a mode (ModeModifier is numeric only) or as critSpecWeapons (which grants crit spec, it does not re-key the group)."
+   }
+  },
+  {
+   "id": "weaver-jotunborn",
+   "verdict": "MISS",
+   "reason": "situationalBonuses.ts:2125 carries the +1 circumstance bonus to Seek for hidden details, but nothing makes the character trained in Crafting: the heritage record has no fields, and heritage ids are never looked up in FEAT_GRANTS (build.ts:2273 iterates c.feats only).",
+   "fix": {
+    "field": "FEAT_GRANTS",
+    "value": "{\"skills\":{\"crafting\":\"trained\"}}",
+    "needsEngineWork": true,
+    "note": "Right shape, wrong reach: the grant loop must also read the chosen heritage id."
+   }
+  },
+  {
+   "id": "web-weaver",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "featFeatGrants.ts:179 maps 'web-weaver' to ['specialty-crafting'] (weaving specialty). Everything else is free/temporary crafting of 1sp threaded items with a rank-scaled crafting time — downtime bookkeeping with no sheet statistic."
+  },
+  {
+   "id": "what-could-have-been",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The +1/+2/+3/+4 status bonus and the -2 penalty land on the SUMMONED creature's skill checks, keyed off your proficiencies. The app models only the player's own sheet."
+  }
+ ]
+}

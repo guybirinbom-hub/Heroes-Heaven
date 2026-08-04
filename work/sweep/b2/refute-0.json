@@ -1,0 +1,614 @@
+{
+  "rulings": [
+    {
+      "id": "abysium-armor-high-grade",
+      "upheld": true,
+      "why": "Confirmed gap with no legal field: record carries nothing, no registry covers it, and the fix correctly declares needsEngineWork instead of guessing a field name. [needs engine work]"
+    },
+    {
+      "id": "abysium-armor-standard-grade",
+      "upheld": true,
+      "why": "Confirmed gap with no legal field: record carries nothing, no registry covers it, and the fix correctly declares needsEngineWork instead of guessing a field name. [needs engine work]"
+    },
+    {
+      "id": "adept-benefit-amulet",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "aeon-stone-vital-amplification",
+      "upheld": true,
+      "why": "Confirmed gap with no legal field: record carries nothing, no registry covers it, and the fix correctly declares needsEngineWork instead of guessing a field name. [needs engine work]"
+    },
+    {
+      "id": "aged-arbor-wine",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "aon-grim-specter",
+      "upheld": false,
+      "why": "Hidden duplicate scrape: findDuplicateIds drops any aon- record whose name collides with a canonical twin, and grim-specter exists — this record is never offered to a player, so it is correctly inert (the canonical twin carries the real gap)."
+    },
+    {
+      "id": "aon-living-forge",
+      "upheld": false,
+      "why": "Hidden duplicate scrape (living-forge is the canonical twin), removed from every picker by findDuplicateIds — deliberately inert."
+    },
+    {
+      "id": "aon-living-statue",
+      "upheld": false,
+      "why": "Hidden duplicate scrape (living-statue is the canonical twin) — never selectable, so nothing can land on a sheet from it."
+    },
+    {
+      "id": "aon-petal-dance",
+      "upheld": false,
+      "why": "Hidden duplicate scrape (petal-dance is the canonical twin) — hidden from all user-facing lists by findDuplicateIds."
+    },
+    {
+      "id": "aon-siccatite-buckler-standard-grade",
+      "upheld": false,
+      "why": "Hidden duplicate scrape (siccatite-buckler-standard-grade is the canonical twin) — deliberately inert."
+    },
+    {
+      "id": "aon-vengful-remnant",
+      "upheld": false,
+      "why": "Hidden duplicate scrape in feats (vengful-remnant is the canonical twin) — never offered, so no gap."
+    },
+    {
+      "id": "arbor-wine",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "arbor-wine-aged",
+      "upheld": false,
+      "why": "Duplicate of aged-arbor-wine (same item, 350 gp, level 12), and this half is itemType equipment with no activationCost/consumableType/uses — the app has no Use path on it, so a consumable mode cannot attach here. The finding is already carried by the usable twin."
+    },
+    {
+      "id": "arboreals-revenge",
+      "upheld": true,
+      "why": "Confirmed gap: the named field is legal and used elsewhere in the data with this exact shape, the record does not carry it, and no registry covers the effect. [field]"
+    },
+    {
+      "id": "arctic-worm-chitin-shield",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "attunement-to-stone",
+      "upheld": true,
+      "why": "Confirmed gap: the named field is legal and used elsewhere in the data with this exact shape, the record does not carry it, and no registry covers the effect. [field]"
+    },
+    {
+      "id": "avenging-runelord-dedication",
+      "upheld": false,
+      "why": "ALREADY MODELLED: src/rules/featGrantsLane.ts keys this feat with {skills:{arcana:trained}, rankUpgrade:[{14,expert},{16,master}]} — exactly the training AND the escalation the finding calls missing. The proposed trainedSkill field is background-only (zero feats carry it)."
+    },
+    {
+      "id": "backfire-mantle",
+      "upheld": true,
+      "why": "Confirmed gap with no legal field: record carries nothing, no registry covers it, and the fix correctly declares needsEngineWork instead of guessing a field name. [needs engine work]"
+    },
+    {
+      "id": "blood-booster-lesser",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "bloodhound-mask-greater",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "bloodhound-mask-lesser",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "bloodhound-mask-moderate",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "bloodhound-olfactory-stimulators",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "break-the-suns-legs",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "caydens-tankard",
+      "upheld": true,
+      "why": "Confirmed gap: the named field is legal and used elsewhere in the data with this exact shape, the record does not carry it, and no registry covers the effect. [field]"
+    },
+    {
+      "id": "chain-of-command",
+      "upheld": true,
+      "why": "Confirmed gap: no situationalBonuses key for this id (verified against src/rules/situationalBonuses.ts) and the fix uses legal kinds/detail shapes; effect is the player's own number. [situational]"
+    },
+    {
+      "id": "channel-protection-amulet",
+      "upheld": true,
+      "why": "Confirmed gap with no legal field: record carries nothing, no registry covers it, and the fix correctly declares needsEngineWork instead of guessing a field name. [needs engine work]"
+    },
+    {
+      "id": "chromatic-jellyfish-oil-lesser",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "clockwork-goggles",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "clockwork-goggles-greater",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "clockwork-goggles-major",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "close-formation",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "curse-of-creeping-ashes",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "curse-of-inclement-headwinds",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "curse-of-inevitable-rot",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "curse-of-the-living-death",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "curse-of-the-mortal-warrior",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "darkvision-elixir-greater",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "darkvision-elixir-lesser",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "darkvision-elixir-moderate",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "deployable-cover-ballistic-cover",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "devilwing-badge",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "devilwing-badge-greater",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "dissolutions-sight",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "draft-of-stellar-radiance",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "dragon-shape",
+      "upheld": true,
+      "why": "Confirmed gap with no legal field: record carries nothing, no registry covers it, and the fix correctly declares needsEngineWork instead of guessing a field name. [needs engine work]"
+    },
+    {
+      "id": "dragons-eye-charm",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "dragonscale-bo-staff",
+      "upheld": true,
+      "why": "Confirmed gap: no situationalBonuses key for this id (verified against src/rules/situationalBonuses.ts) and the fix uses legal kinds/detail shapes; effect is the player's own number. [situational]"
+    },
+    {
+      "id": "dragonscale-staff",
+      "upheld": true,
+      "why": "Confirmed gap with no legal field: record carries nothing, no registry covers it, and the fix correctly declares needsEngineWork instead of guessing a field name. [needs engine work]"
+    },
+    {
+      "id": "duty-of-the-oathsworn",
+      "upheld": false,
+      "why": "The text hands the choice to the GM (\"The GM selects the appropriate trait\") and the resistance only applies against attacks from creatures of that GM-chosen type — GM-side adjudication, not a sheet number."
+    },
+    {
+      "id": "echoes-in-stone",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "elder-seed",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "elemental-shape",
+      "upheld": true,
+      "why": "Confirmed gap with no legal field: record carries nothing, no registry covers it, and the fix correctly declares needsEngineWork instead of guessing a field name. [needs engine work]"
+    },
+    {
+      "id": "energetic-meltdown",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "energy-adaptive",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "energy-mutagen-lesser",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "energy-mutagen-moderate",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "energy-mutagen-greater",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "energy-mutagen-major",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "eternal-hero",
+      "upheld": true,
+      "why": "Confirmed gap with no legal field: record carries nothing, no registry covers it, and the fix correctly declares needsEngineWork instead of guessing a field name. [needs engine work]"
+    },
+    {
+      "id": "expanded-senses",
+      "upheld": false,
+      "why": "ALREADY MODELLED: src/rules/companions.ts explicitly adds low-light vision, darkvision and scent (imprecise 30 ft) to the eidolon when the feat is present — the claim that nothing reaches the eidolon sheet is false."
+    },
+    {
+      "id": "explosive-expert",
+      "upheld": true,
+      "why": "Confirmed gap: the named field is legal and used elsewhere in the data with this exact shape, the record does not carry it, and no registry covers the effect. [field immunities]"
+    },
+    {
+      "id": "exsanguinate",
+      "upheld": true,
+      "why": "Confirmed gap: no situationalBonuses key for this id (verified against src/rules/situationalBonuses.ts) and the fix uses legal kinds/detail shapes; effect is the player's own number. [situational]"
+    },
+    {
+      "id": "extract-vow-of-nonviolence",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "feral-senses",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the stances registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> stances]"
+    },
+    {
+      "id": "field-propagandist-dedication",
+      "upheld": false,
+      "why": "ALREADY MODELLED: src/rules/featGrantsAuto.ts has conditionalSkills {society:{base:trained,upgraded:expert}} — the headline grant is delivered, and the fix names trainedSkill, a field that exists only on backgrounds."
+    },
+    {
+      "id": "fiend-eternal",
+      "upheld": true,
+      "why": "Confirmed gap with no legal field: record carries nothing, no registry covers it, and the fix correctly declares needsEngineWork instead of guessing a field name. [needs engine work]"
+    },
+    {
+      "id": "fire-and-iceberg",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "five-feather-wreath",
+      "upheld": true,
+      "why": "Confirmed gap: 57 of 61 armor-mode spellhearts lack it while warding-statuette/pickled-demon-tongue/polished-demon-horn prove the top-level resistances lane; record carries no resistances and the registry entry (where one exists) covers only the save/skill bonus. [spellheart/worn resistance]"
+    },
+    {
+      "id": "five-feather-wreath-greater",
+      "upheld": true,
+      "why": "Confirmed gap: 57 of 61 armor-mode spellhearts lack it while warding-statuette/pickled-demon-tongue/polished-demon-horn prove the top-level resistances lane; record carries no resistances and the registry entry (where one exists) covers only the save/skill bonus. [spellheart/worn resistance]"
+    },
+    {
+      "id": "flaming-star",
+      "upheld": true,
+      "why": "Confirmed gap: 57 of 61 armor-mode spellhearts lack it while warding-statuette/pickled-demon-tongue/polished-demon-horn prove the top-level resistances lane; record carries no resistances and the registry entry (where one exists) covers only the save/skill bonus. [spellheart/worn resistance]"
+    },
+    {
+      "id": "flaming-star-greater",
+      "upheld": true,
+      "why": "Confirmed gap: 57 of 61 armor-mode spellhearts lack it while warding-statuette/pickled-demon-tongue/polished-demon-horn prove the top-level resistances lane; record carries no resistances and the registry entry (where one exists) covers only the save/skill bonus. [spellheart/worn resistance]"
+    },
+    {
+      "id": "force-shield",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "forge-warden",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "form-a-flock",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "foxglove-token",
+      "upheld": true,
+      "why": "Confirmed gap: 57 of 61 armor-mode spellhearts lack it while warding-statuette/pickled-demon-tongue/polished-demon-horn prove the top-level resistances lane; record carries no resistances and the registry entry (where one exists) covers only the save/skill bonus. [spellheart/worn resistance]"
+    },
+    {
+      "id": "foxglove-token-greater",
+      "upheld": true,
+      "why": "Confirmed gap: 57 of 61 armor-mode spellhearts lack it while warding-statuette/pickled-demon-tongue/polished-demon-horn prove the top-level resistances lane; record carries no resistances and the registry entry (where one exists) covers only the save/skill bonus. [spellheart/worn resistance]"
+    },
+    {
+      "id": "fresh-produce",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "frost-breath",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "frost-fair-yanyuedao",
+      "upheld": true,
+      "why": "Confirmed gap: no situationalBonuses key for this id (verified against src/rules/situationalBonuses.ts) and the fix uses legal kinds/detail shapes; effect is the player's own number. [situational]"
+    },
+    {
+      "id": "fury-cocktail-lesser",
+      "upheld": true,
+      "why": "Confirmed gap: no situationalBonuses key for this id (verified against src/rules/situationalBonuses.ts) and the fix uses legal kinds/detail shapes; effect is the player's own number. [situational]"
+    },
+    {
+      "id": "galvanic-chew",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "geomancer-dedication",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "ghostcallers-planchette",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "godless-healing",
+      "upheld": true,
+      "why": "Confirmed gap: no situationalBonuses key for this id (verified against src/rules/situationalBonuses.ts) and the fix uses legal kinds/detail shapes; effect is the player's own number. [situational]"
+    },
+    {
+      "id": "goz-mask-major",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "greater-clay-sphere",
+      "upheld": true,
+      "why": "Confirmed gap: 57 of 61 armor-mode spellhearts lack it while warding-statuette/pickled-demon-tongue/polished-demon-horn prove the top-level resistances lane; record carries no resistances and the registry entry (where one exists) covers only the save/skill bonus. [spellheart/worn resistance]"
+    },
+    {
+      "id": "greater-foxglove-token",
+      "upheld": true,
+      "why": "Confirmed gap: 57 of 61 armor-mode spellhearts lack it while warding-statuette/pickled-demon-tongue/polished-demon-horn prove the top-level resistances lane; record carries no resistances and the registry entry (where one exists) covers only the save/skill bonus. [spellheart/worn resistance]"
+    },
+    {
+      "id": "greater-heartmoss",
+      "upheld": true,
+      "why": "Confirmed gap: 57 of 61 armor-mode spellhearts lack it while warding-statuette/pickled-demon-tongue/polished-demon-horn prove the top-level resistances lane; record carries no resistances and the registry entry (where one exists) covers only the save/skill bonus. [spellheart/worn resistance]"
+    },
+    {
+      "id": "grim-sandglass",
+      "upheld": true,
+      "why": "Confirmed gap: 57 of 61 armor-mode spellhearts lack it while warding-statuette/pickled-demon-tongue/polished-demon-horn prove the top-level resistances lane; record carries no resistances and the registry entry (where one exists) covers only the save/skill bonus. [spellheart/worn resistance]"
+    },
+    {
+      "id": "grim-sandglass-greater",
+      "upheld": true,
+      "why": "Confirmed gap: 57 of 61 armor-mode spellhearts lack it while warding-statuette/pickled-demon-tongue/polished-demon-horn prove the top-level resistances lane; record carries no resistances and the registry entry (where one exists) covers only the save/skill bonus. [spellheart/worn resistance]"
+    },
+    {
+      "id": "grim-specter",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "grolna",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "hands-of-the-wildling",
+      "upheld": true,
+      "why": "Confirmed gap: no situationalBonuses key for this id (verified against src/rules/situationalBonuses.ts) and the fix uses legal kinds/detail shapes; effect is the player's own number. [situational]"
+    },
+    {
+      "id": "harden-flesh",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "heartmoss",
+      "upheld": true,
+      "why": "Confirmed gap: 57 of 61 armor-mode spellhearts lack it while warding-statuette/pickled-demon-tongue/polished-demon-horn prove the top-level resistances lane; record carries no resistances and the registry entry (where one exists) covers only the save/skill bonus. [spellheart/worn resistance]"
+    },
+    {
+      "id": "heartmoss-greater",
+      "upheld": true,
+      "why": "Confirmed gap: 57 of 61 armor-mode spellhearts lack it while warding-statuette/pickled-demon-tongue/polished-demon-horn prove the top-level resistances lane; record carries no resistances and the registry entry (where one exists) covers only the save/skill bonus. [spellheart/worn resistance]"
+    },
+    {
+      "id": "heartmoss-major",
+      "upheld": true,
+      "why": "Confirmed gap: 57 of 61 armor-mode spellhearts lack it while warding-statuette/pickled-demon-tongue/polished-demon-horn prove the top-level resistances lane; record carries no resistances and the registry entry (where one exists) covers only the save/skill bonus. [spellheart/worn resistance]"
+    },
+    {
+      "id": "horned-lion-amulet",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "impossible",
+      "upheld": true,
+      "why": "Confirmed gap with no legal field: record carries nothing, no registry covers it, and the fix correctly declares needsEngineWork instead of guessing a field name. [needs engine work]"
+    },
+    {
+      "id": "iron-wine",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "jolt-coil",
+      "upheld": true,
+      "why": "Confirmed gap: 57 of 61 armor-mode spellhearts lack it while warding-statuette/pickled-demon-tongue/polished-demon-horn prove the top-level resistances lane; record carries no resistances and the registry entry (where one exists) covers only the save/skill bonus. [spellheart/worn resistance]"
+    },
+    {
+      "id": "jolt-coil-greater",
+      "upheld": true,
+      "why": "Confirmed gap: 57 of 61 armor-mode spellhearts lack it while warding-statuette/pickled-demon-tongue/polished-demon-horn prove the top-level resistances lane; record carries no resistances and the registry entry (where one exists) covers only the save/skill bonus. [spellheart/worn resistance]"
+    },
+    {
+      "id": "jolt-coil-major",
+      "upheld": true,
+      "why": "Confirmed gap: 57 of 61 armor-mode spellhearts lack it while warding-statuette/pickled-demon-tongue/polished-demon-horn prove the top-level resistances lane; record carries no resistances and the registry entry (where one exists) covers only the save/skill bonus. [spellheart/worn resistance]"
+    },
+    {
+      "id": "kinetic-dampening",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "lesser-maelstromic-destabilizer",
+      "upheld": false,
+      "why": "AoN family-blob duplicate of maelstromic-destabilizer-lesser with no usage/activationCost/uses — nothing to activate, so a consumable mode cannot hang off it; the usable twin is separately (and correctly) flagged."
+    },
+    {
+      "id": "living-statue",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "lumber-lords-axe",
+      "upheld": true,
+      "why": "Confirmed gap: no situationalBonuses key for this id (verified against src/rules/situationalBonuses.ts) and the fix uses legal kinds/detail shapes; effect is the player's own number. [situational]"
+    },
+    {
+      "id": "maelstromic-destabilizer-lesser",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "maelstromic-destabilizer-major",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "maelstromic-destabilizer-moderate",
+      "upheld": true,
+      "why": "Confirmed gap: not in core.modes (no fromItemId/entry), not in stances, not in situationalBonuses; the effect is on the player's own sheet and the modes registry is the right surface — fix describes the numbers rather than inventing a field. [toggle -> modes]"
+    },
+    {
+      "id": "major-clay-sphere",
+      "upheld": true,
+      "why": "Confirmed gap: 57 of 61 armor-mode spellhearts lack it while warding-statuette/pickled-demon-tongue/polished-demon-horn prove the top-level resistances lane; record carries no resistances and the registry entry (where one exists) covers only the save/skill bonus. [spellheart/worn resistance]"
+    },
+    {
+      "id": "major-durian-bomb",
+      "upheld": false,
+      "why": "itemType equipment with no damage/range/reload block: you cannot Strike with this record at all, so an attack-roll bonus has nothing to modify. The ownable weapon record durian-bomb-major already carries the +3 item entry in situationalBonuses."
+    },
+    {
+      "id": "major-foxglove-token",
+      "upheld": true,
+      "why": "Confirmed gap: 57 of 61 armor-mode spellhearts lack it while warding-statuette/pickled-demon-tongue/polished-demon-horn prove the top-level resistances lane; record carries no resistances and the registry entry (where one exists) covers only the save/skill bonus. [spellheart/worn resistance]"
+    },
+    {
+      "id": "major-heartmoss",
+      "upheld": true,
+      "why": "Confirmed gap: 57 of 61 armor-mode spellhearts lack it while warding-statuette/pickled-demon-tongue/polished-demon-horn prove the top-level resistances lane; record carries no resistances and the registry entry (where one exists) covers only the save/skill bonus. [spellheart/worn resistance]"
+    },
+    {
+      "id": "major-inflammation-flask",
+      "upheld": false,
+      "why": "itemType equipment with no weapon block — no Strike to modify; inflammation-flask-major already carries the +3 item entry in situationalBonuses."
+    },
+    {
+      "id": "major-maelstromic-destabilizer",
+      "upheld": false,
+      "why": "AoN family-blob duplicate of maelstromic-destabilizer-major with no activation fields — the mode belongs on the usable twin, which is already flagged."
+    },
+    {
+      "id": "major-timepiece-standard",
+      "upheld": true,
+      "why": "Confirmed gap: no situationalBonuses key for this id (verified against src/rules/situationalBonuses.ts) and the fix uses legal kinds/detail shapes; effect is the player's own number. [situational]"
+    },
+    {
+      "id": "mimic-protections",
+      "upheld": false,
+      "why": "The resistance types are read off the hunted prey's statblock, which the app never sees; there is no build-time value to put on the sheet, so this is GM/play-time information, not an engine gap."
+    },
+    {
+      "id": "moderate-durian-bomb",
+      "upheld": false,
+      "why": "Same non-weapon duplicate: no damage block to attack with, and durian-bomb-moderate already carries the +1 item entry in situationalBonuses."
+    },
+    {
+      "id": "moderate-inflammation-flask",
+      "upheld": false,
+      "why": "itemType equipment with no weapon block — no Strike to modify; inflammation-flask-moderate already carries the +1 item entry in situationalBonuses."
+    },
+    {
+      "id": "moderate-maelstromic-destabilizer",
+      "upheld": false,
+      "why": "AoN family-blob duplicate of maelstromic-destabilizer-moderate with no activation fields — the mode belongs on the usable twin, which is already flagged."
+    }
+  ]
+}

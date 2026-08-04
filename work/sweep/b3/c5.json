@@ -1,0 +1,1090 @@
+[
+ {
+  "id": "advanced-element-control",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Advanced Element Control",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain one kineticist feat. For the purpose of meeting its prerequisites, your kineticist level is equal to half your level. Your options include impulse feats for your kinetic element, as normal for a kineticist. --- **Special** You can select this feat more than once. Each time you select it, you gain another kineticist feat."
+ },
+ {
+  "id": "advanced-field-training",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Advanced Field Training",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain a commander feat. For the purpose of meeting its prerequisites, your commander level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another commander feat."
+ },
+ {
+  "id": "advanced-flair",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Advanced Flair",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain one swashbuckler feat. For the purpose of meeting its prerequisites, your swashbuckler level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another swashbuckler feat."
+ },
+ {
+  "id": "advanced-fury",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Advanced Fury",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain one barbarian feat. For the purpose of meeting its prerequisites, your barbarian level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another barbarian feat."
+ },
+ {
+  "id": "advanced-general-training",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Advanced General Training",
+  "level": 13,
+  "traits": [
+   "human"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featPickGrants"
+  ],
+  "text": "Over the long course of your adventuring life, your adaptability has let you pick up numerous useful abilities. You gain a general feat of 7th level or lower. You must meet the feat's prerequisites. --- **Special** You can select this feat multiple times, choosing a different feat each time."
+ },
+ {
+  "id": "advanced-glory",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Advanced Glory",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain an exemplar feat. For the purpose of meeting its prerequisites, your exemplar level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another exemplar feat."
+ },
+ {
+  "id": "advanced-hunters-trick",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Advanced Hunter's Trick",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain one ranger feat. For the purpose of meeting its prerequisites, your ranger level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another ranger feat."
+ },
+ {
+  "id": "advanced-kata",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Advanced Kata",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain one monk feat. For the purpose of meeting its prerequisites, your monk level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another monk feat."
+ },
+ {
+  "id": "advanced-maneuver",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Advanced Maneuver",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain a fighter feat. For the purpose of meeting its prerequisites, your fighter level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another fighter feat."
+ },
+ {
+  "id": "advanced-martial-magic",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Advanced Martial Magic",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain one magus feat. For the purpose of meeting its prerequisites, your magus level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another magus feat."
+ },
+ {
+  "id": "advanced-muses-whispers",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Advanced Muse's Whispers",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain one bard feat. For the purpose of meeting its prerequisites, your bard level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another bard feat."
+ },
+ {
+  "id": "advanced-mysteries",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Advanced Mysteries",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain one oracle feat. For meeting its prerequisites, your oracle level is equal to half your level. --- **Special** You can select this feat more than once. Each time, you gain another oracle feat."
+ },
+ {
+  "id": "advanced-shooting",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Advanced Shooting",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain one gunslinger feat. For the purpose of meeting its prerequisites, your gunslinger level is equal to half your level. --- **Special** You can select this feat more than once. Each time you select it, you gain another gunslinger feat."
+ },
+ {
+  "id": "advanced-synergy",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Advanced Synergy",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain one summoner feat. For the purpose of meeting its prerequisites, your summoner level is equal to half your character level. **Special** You can select this feat more than once. Each time you select it, you gain another summoner feat."
+ },
+ {
+  "id": "advanced-thaumaturgy",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Advanced Thaumaturgy",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain one thaumaturge feat. For the purpose of meeting its prerequisites, your thaumaturge level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another thaumaturge feat."
+ },
+ {
+  "id": "advanced-thoughtform",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Advanced Thoughtform",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain one psychic feat. For the purpose of meeting its prerequisites, your psychic level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another psychic feat."
+ },
+ {
+  "id": "advanced-trickery",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Advanced Trickery",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain one rogue feat. For the purpose of meeting its prerequisites, your rogue level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another rogue feat."
+ },
+ {
+  "id": "advanced-weaponry",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Advanced Weaponry",
+  "level": 1,
+  "traits": [
+   "evolution",
+   "summoner"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "Your eidolon's attack evolves. Choose one of your eidolon's starting melee unarmed attacks. It gains one of the following traits, chosen when you gain the feat: disarm, grapple, nonlethal, shove, trip, or versatile bludgeoning, piercing, or slashing."
+ },
+ {
+  "id": "advanced-wilding",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Advanced Wilding",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain one druid feat. For the purpose of meeting its prerequisites, your druid level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another druid feat."
+ },
+ {
+  "id": "advanced-witchcraft",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Advanced Witchcraft",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain one witch feat. For the purpose of meeting its prerequisites, your witch level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another witch feat."
+ },
+ {
+  "id": "affinity-stones",
+  "lane": "grantsFeat",
+  "collection": "items",
+  "name": "Affinity Stones",
+  "level": 9,
+  "traits": [
+   "artifact",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Dwarven tales state that the first set of these stones was created by a dwarven lapidary for his elven sweetheart. The gem he chose was amber—to show his clan that a union between stone and leaf was possible. His family remained hesitant, despite the unmistakable love that the men shared. The tales then say that it was Folgrit who grew impatient and transformed the stones as a sign of her approval. Since then, more sets of these have been created, but doing so is an unsure process. Some of the stones are seemingly given their magical abilities at random, which most attribute as further blessings from Folgrit. Each set of affinity stones typically comes as a pair of gems set into worn items such as hilts, necklaces, or rings, though some sets of affinity stones feature additional gems. The full set of stones must be invested together across multiple creatures, or else their magic fails to function. To invest these items, one person must be a dwarf and everyone must perform a one-hour ceremony that includes divulging their innermost feelings. Their love need not be romantic, but it must be genuine and deep. If they pass this test, they receive the following benefits. - You are always aware of each other and permanently gain the effects of the Status spell. - Non-dwarves gain the benefits of a 1st- or 5th-level ancestry feat with the dwarf trait, and dwarves gain the benefits one 1st- or 5th-level ancestry feat with a trait corresponding to the ancestry of another person with which the affinity stones are invested. For example, if you share investment in the stones with a halfling, you can take halfling ancestry feats. You can't use these feats to meet prerequisites, but the benefits of the feats otherwise function as if you had taken the feat. - You gradually take on some of the physical characteristics of your counterparts. An elf may begin to grow a beard, while their dwarven counterpart may develop pointed ears. These changes have no mechanical effect. --- **Destruction** If one of the people who had invested in the *affinity stones* commits an act of true and regretless betrayal against someone else invested in the *affinity stones*, all of the stones shatter to dust."
+ },
+ {
+  "id": "aiuvarin",
+  "lane": "grantsFeat",
+  "collection": "heritages",
+  "name": "Aiuvarin",
+  "traits": [
+   "aiuvarin"
+  ],
+  "engineFieldsPresent": [
+   "senses"
+  ],
+  "inRegistries": [],
+  "text": "You have elves, or possibly other aiuvarins, in your family tree. You have pointed ears and other telltale signs of elf heritage. You gain the elf trait, the aiuvarin trait, and low-light vision. In addition, when you gain an ancestry feat, you can choose from aiuvarin and elf feats in addition to those from your ancestry."
+ },
+ {
+  "id": "ancestors-call",
+  "lane": "grantsFeat",
+  "collection": "items",
+  "name": "Ancestors' Call",
+  "level": 0,
+  "traits": [
+   "divination",
+   "dwarf",
+   "mental"
+  ],
+  "engineFieldsPresent": [
+   "choice",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Ancestors' Call Source Pathfinder #193: Mantle of Gold pg. 85 Aspect Mind Dwarven spirits gravitate toward this relic, and you can call upon them to inhabit you and your allies to impart ancestral secrets. When you gain this gift, choose three common 1st-level dwarf ancestry feats. Activate envision; Frequency once per hour; Effect Select one of the three ancestry feats. You and each ally in a 10-foot-radius burst centered on you gain that feat and the dwarf trait for 1 minute."
+ },
+ {
+  "id": "ancestral-blood-magic",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Ancestral Blood Magic",
+  "level": 1,
+  "traits": [
+   "sorcerer"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The magic of your bloodline mixes with that of your ancestry. You gain your blood magic effect when you cast a non-cantrip spell you gained from a heritage or an ancestry feat, in addition to the normal circumstances that trigger your blood magic."
+ },
+ {
+  "id": "ancestral-embrace",
+  "lane": "grantsFeat",
+  "collection": "items",
+  "name": "Ancestral Embrace",
+  "level": 26,
+  "traits": [
+   "artifact",
+   "divine"
+  ],
+  "engineFieldsPresent": [
+   "choice",
+   "counters",
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This brightly colored *+4 major resilient leather armor* is inscribed with a spiral that has no end or beginning. Though it is a symbol of the ancient religion of Holy Xatramba, it also serves as a religious symbol of Pharasma. When you invest the armor, you gain void resistance 25 and can draw on the power of your ancestors. You gain an ancestry feat from your ancestry; the feat can be any level, but you must meet any other prerequisites of the feat. You lose the feat when the investment ends, and you can select a different feat each time you invest the armor again. --- **Activate** ⟨4⟩ envision **Frequency** once per day **Trigger** You use an ancestry feat that has a limited number of uses per day --- **Effect** You gain an additional use of the ancestry feat. If you do not use it before the next time you make your daily preparations, the use is lost. --- **Activate** ⟨4⟩ envision **Trigger** You begin casting a legend lore ritual to learn legends about your ancestry or about someone of your ancestry --- **Effect** *Ancestral Embrace* reduces the casting time of this ritual to 1 hour, and you don't need secondary casters for this ritual. --- **Activate** ⟨2⟩ command, Interact **Frequency** once per day --- **Effect** The armor casts Avatar, granting these specific additional abilities instead of those associated with a deity: Speed 70 feet, air walk, ignore difficult terrain and greater difficult terrain - **Melee** 1 spear (reach 15 feet, thrown 50 feet), Damage 6d6+6 piercing - **Ranged** 1 blowgun (range 120 feet), Damage 1d6+3 piercing plus 5d6 poison. --- **Destruction** *Ancestral Embrace* crumbles if its wearer intentionally and knowingly kills or desecrates the remains of six generations of their family."
+ },
+ {
+  "id": "ancestral-paragon",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Ancestral Paragon",
+  "level": 3,
+  "traits": [
+   "general"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featPickGrants"
+  ],
+  "text": "Whether through instinct, study, or magic, you feel a deeper connection to your ancestry. You gain a 1st-level ancestry feat."
+ },
+ {
+  "id": "ancient-elf",
+  "lane": "grantsFeat",
+  "collection": "heritages",
+  "name": "Ancient Elf",
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featPickGrants"
+  ],
+  "text": "In your long life, you've dabbled in many paths and many styles. A typical ancient elf is at least 100 years old, though you might be younger at the GM's discretion. Choose a class other than your own. You gain the multiclass dedication feat for that class, even though you don't meet its level prerequisite. You must still meet its other prerequisites to gain the feat."
+ },
+ {
+  "id": "angel-eidolon",
+  "lane": "grantsFeat",
+  "collection": "classFeatures",
+  "name": "Angel Eidolon",
+  "level": 1,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Your eidolon is a celestial messenger, a member of the angelic host with a unique link to you, allowing them to carry a special message to the mortal world at your side. Most angel eidolons are roughly humanoid in form, with feathered wings, glowing eyes, halos, or similar angelic features. However, some take the form of smaller angelic servitors like the winged helmet cassisian angel instead. The two of you are destined for an important role in the plans of the celestial realms. Though a true angel, your angel eidolon's link to you as a mortal prevents them from casting the angelic messenger ritual, even if they somehow learn it. **Tradition** divine **Traits** angel, celestial, eidolon **Alignment** must be good, usually neutral good **Home Plane** Nirvana (if NG), Elysium (if CG), or Heaven (if LG) --- **Size** Medium or Small **Suggested Attacks** fist (bludgeoning), wing (bludgeoning), unarmed attacks shaped like a weapon **Angelic Avenger** Str 18, Dex 14, Con 16, Int 8, Wis 12, Cha 10; +2 AC (+3 Dex cap) **Angelic Emissary** Str 12, Dex 18, Con 12, Int 10, Wis 12, Cha 14; +1 AC (+4 Dex cap) **Skills** Diplomacy, Religion **Senses** darkvision **Language** Celestial **Speed** 25 feet --- **Eidolon Abilities** *Initial* hallowed strikes; *Symbiosis* traveler's aura; *Transcendence* angelic mercy ## Hallowed Strikes Your eidolon's attacks are hallowed by the celestial realms. Your eidolon's unarmed Strikes deal an extra 1 good damage; as usual, this extra damage harms only evil creatures or those with a weakness to good damage. Additionally, your eidolon can make nonlethal attacks with its unarmed attacks without taking the usual –2 circumstance penalty. ## Traveler's Aura 7th Your eidolon emanates a powerful aura—resembling that of an astral deva—that protects creatures as they travel. The aura has the abjuration, aura, and divine traits. Your eidolon and its allies within a 20-foot emanation are protected from severe heat and cold, and your eidolon is never off-guard to creatures inside the aura that are of a lower level than the eidolon. When you gain the transcendence class feature, this evolves to the full benefits of an astral deva; your eidolon and allies in the aura are protected from environmental damage from any plane, including severe and extreme heat and cold as well as more unusual dangers. ## Angelic Mercy 17th Your eidolon's angelic power allows them to assuage a variety of ailments, just like most other powerful angels. Your eidolon can cast *remove curse*, *remove disease*, *remove fear*, and *remove paralysis* once per day each as 9th-level divine innate spells."
+ },
+ {
+  "id": "animal-feature",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Animal Feature",
+  "level": 4,
+  "traits": [
+   "ranger"
+  ],
+  "engineFieldsPresent": [
+   "focusSpells"
+  ],
+  "inRegistries": [],
+  "text": "Animal Feature Source Advanced Player's Guide pg. 132 Prerequisites warden spells You are so connected with the animal world that you can grant yourself an animal's features and abilities. You gain the animal feature warden spell. Increase the number of Focus Points in your focus pool by 1."
+ },
+ {
+  "id": "animal-senses",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Animal Senses",
+  "level": 1,
+  "traits": [
+   "beastkin"
+  ],
+  "engineFieldsPresent": [
+   "choice",
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You gain one of the following senses available to your inherent animal: darkvision, low-light vision, or scent (imprecise) 30 feet. You must have low-light vision before you can gain darkvision with this feat. If your inherent animal doesn't typically have a specific type of sense, you can't gain that sense with this feat. --- **Special** You can select this feat multiple times, choosing a different sense each time."
+ },
+ {
+  "id": "animal-shape",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Animal Shape",
+  "level": 17,
+  "traits": [
+   "beastkin"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "You have full control over your shape and can transform into your inherent animal. You can use Change Shape to enter an animal shape. When you gain this feat, choose either Aerial Form, Animal Form, Dinosaur Form, or Insect Form; after you choose a form, you can't change the form. While in animal shape, you gain the effects of a 5th-rank casting of your chosen form spell, except you always transform into an animal matching your inherent animal and can use your humanoid form's AC if it's higher than what the animal form grants. If your inherent animal isn't among the animals listed in the form, you default to the statistics and abilities of the bird battle form, cat battle form, deinonychus battle form, or ant battle form for *aerial form*, *animal form, dinosaur form*, or *insect form* respectively (at the GM's discretion, you instead default to a different form that is closest to your inherent animal). You can remain in animal shape indefinitely and can use Change Shape to return to your humanoid or hybrid shape at any time. If you have the Critter Shape feat, you can choose to gain the effects of a 4th-rank Pest Form, can remain in critter shape indefinitely, and can return to your critter shape at any time after leaving the shape, just as you can with Animal Shape."
+ },
+ {
+  "id": "animal-strength",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Animal Strength",
+  "level": 6,
+  "traits": [
+   "ranger"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You tap into the primal strength of your animal feature. When you gain a claw or jaws attack from animal feature, you can choose a weapon you're carrying and apply all runes from that weapon (if they're applicable) to that unarmed attack. This replaces any runes the unarmed attacks would normally have from other sources, like handwraps of mighty blows. In addition, when you critically hit with a claw or jaws attack from animal feature, you deal 1d6 damage."
+ },
+ {
+  "id": "animal-swiftness",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Animal Swiftness",
+  "level": 17,
+  "traits": [
+   "beastkin"
+  ],
+  "engineFieldsPresent": [
+   "choice",
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You move like an animal. Your Speed increases by 5 feet. In addition, you gain one of the following Speeds available to your inherent animal: climb, fly, or swim. You gain this Speed only while in your hybrid shape. The new movement is as fast as your standard Speed; for example, if you have a 30-foot Speed, you can gain a 30-foot climb Speed. If your inherent animal doesn't typically have a specific type of Speed, you can't gain it with this feat. If your inherent animal doesn't typically have a climb, fly, or swim Speed, your Speed increases by 10 feet instead."
+ },
+ {
+  "id": "animal-wrangler",
+  "lane": "grantsFeat",
+  "collection": "backgrounds",
+  "name": "Animal Wrangler",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "trainedLoreChoice",
+   "trainedSkillChoice"
+  ],
+  "inRegistries": [],
+  "text": "You have a long history of working with large circus animals for the Celestial Menagerie, such as performing in an animal act, jostling animals back into their cages, or even sweeping dung out of squalid pens. Mistress Dusklight's ongoing mistreatment of her animals compelled you to quit, and you now strive to ensure animals aren't abused. Choose two attribute boosts. One must be to **Strength** or **Wisdom**, and one is a free attribute boost. You're trained in your choice of the Athletics or Nature skills. You gain a skill feat: Titan Wrestler if you chose Athletics, or Train Animal if you chose Nature. You are also trained in a Lore skill related to a particular kind of common animal (such as Equine Lore, Feline Lore, or Pachyderm Lore). --- ## Background details **Attribute Boosts** Strength or Wisdom, one free"
+ },
+ {
+  "id": "animists-power",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Animist's Power",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain one animist feat. For the purpose of meeting its prerequisites, your animist level is equal to half your character level. You can't use this feat to gain animist feats with the wandering trait. --- **Special** You can select this feat more than once. Each time you select it, you gain another animist feat."
+ },
+ {
+  "id": "anti-thrune-saboteur",
+  "lane": "grantsFeat",
+  "collection": "backgrounds",
+  "name": "Anti-Thrune Saboteur",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "choice",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkillChoice"
+  ],
+  "inRegistries": [],
+  "text": "House Thrune has cast its tyrannical shadow over Cheliax for over 80 years, and you long to topple the dynasty and free southwest Avistan from its grip. You might be a spy for Andoran or another active combatant in the ongoing war, or perhaps you're a rebellious soul who grew up under Thrune's thumb and dreams of a better future. Whatever the case, you're a versed saboteur ready to destroy Cheliax's armies from behind enemy lines. Choose two attribute boosts. One must be to **Dexterity** or **Charisma**, and one is a free attribute boost. You're trained in either Deception or Thievery, as well as either the Cheliax Lore or Engineering Lore skill. If you chose Deception, you gain the Lengthy Diversion skill feat. If you chose Thievery, you gain the Dirty Trick skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Lore** Cheliax Lore"
+ },
+ {
+  "id": "aon-aasimar",
+  "lane": "grantsFeat",
+  "collection": "heritages",
+  "name": "Aasimar",
+  "traits": [
+   "aasimar"
+  ],
+  "engineFieldsPresent": [
+   "senses"
+  ],
+  "inRegistries": [],
+  "text": "You descend from celestials or were touched by the celestial realms, gaining an air of awe and grace, as well as features distinctive to your celestial forebears. You gain the aasimar trait, in addition to the traits from your ancestry. You also gain low-light vision, or you gain darkvision if your ancestry already has low-light vision. You can choose from aasimar feats and feats from your ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "aon-ancestors-call",
+  "lane": "grantsFeat",
+  "collection": "items",
+  "name": "Ancestors' Call",
+  "level": 0,
+  "traits": [
+   "divination",
+   "dwarf",
+   "mental"
+  ],
+  "engineFieldsPresent": [
+   "choice",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Ancestors' Call Aspect Mind Dwarven spirits gravitate toward this relic, and you can call upon them to inhabit you and your allies to impart ancestral secrets. When you gain this gift, choose three common 1st-level dwarf ancestry feats. Activate Single Action envision; Frequency once per hour; Effect Select one of the three ancestry feats. You and each ally in a 10-foot-radius burst centered on you gain that feat and the dwarf trait for 1 minute."
+ },
+ {
+  "id": "aon-aphorite",
+  "lane": "grantsFeat",
+  "collection": "heritages",
+  "name": "Aphorite",
+  "traits": [
+   "aphorite"
+  ],
+  "engineFieldsPresent": [
+   "senses"
+  ],
+  "inRegistries": [],
+  "text": "You were born with a connection to Axis, the Plane of Law. You gain the aphorite trait, in addition to the traits from your ancestry. You also gain low-light vision, or you gain darkvision if your ancestry already has low-light vision. You can choose from aphorite feats and feats from your ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "aon-ganzi",
+  "lane": "grantsFeat",
+  "collection": "heritages",
+  "name": "Ganzi",
+  "traits": [
+   "ganzi"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Your blood is touched by primal chaos. You gain the ganzi trait in addition to the traits from your ancestry. You gain resistance to a single damage type equal to half your level; at the beginning of each day, determine randomly whether this resistance applies to acid, electricity, or sonic damage. You also gain a +1 circumstance bonus to saving throws against effects that would cause you to gain the controlled condition. You can choose from ganzi feats and feats from your ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "aon-half-elf",
+  "lane": "grantsFeat",
+  "collection": "heritages",
+  "name": "Half-Elf",
+  "traits": [],
+  "engineFieldsPresent": [
+   "senses"
+  ],
+  "inRegistries": [],
+  "text": "Either one of your parents was an elf, or one or both were half-elves. You have pointed ears and other telltale signs of elf heritage. You gain the elf trait, the half-elf trait, and low-light vision. In addition, you can select elf, half-elf, and human feats whenever you gain an ancestry feat."
+ },
+ {
+  "id": "aon-half-orc",
+  "lane": "grantsFeat",
+  "collection": "heritages",
+  "name": "Half-Orc",
+  "traits": [],
+  "engineFieldsPresent": [
+   "senses"
+  ],
+  "inRegistries": [],
+  "text": "One of your parents was an orc, or one or both were half-orcs. You have a green tinge to your skin and other indicators of orc heritage. You gain the orc trait, the half-orc trait, and low-light vision. In addition, you can select orc, half-orc, and human feats whenever you gain an ancestry feat."
+ },
+ {
+  "id": "aon-historical-reeanactor",
+  "lane": "grantsFeat",
+  "collection": "backgrounds",
+  "name": "Historical Reeanactor",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "choice",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkillChoice"
+  ],
+  "inRegistries": [],
+  "text": "To Clan Tolorr, history shouldn't be dry and boring; it deserves to be engaging and made relevant to the living. You couldn't agree more! Whether it's your hobby or career, you've developed a reputation for translating the past into the present through demonstrations, period performances, acting out famous events, donning replica armor, and other feats of living history—filling in a few historical blanks if it makes a better show. Having learned of your passion, Clan Tolorr has sponsored your visit to Highhelm so that you can learn from each other. It's a wonderful opportunity, and Tolorr puppetry arts, storytelling, props, and historical rigor are the stuff of legends. Already, you've begun researching dwarven history so that you're prepared for whatever lies ahead. Choose two attribute boosts. One must be to Strength or Charisma , and one is a free attribute boost. You're trained in either the Performance skill or the Society skill, and you're trained in the Dwarf Lore skill. If you selected Performance, you gain the Impressive Performance skill feat. If you chose Society, you gain the Dubious Knowledge skill feat. Connection: Bulgra Veldollow, a matriarch in Clan Tolorr and accomplished puppeteer Reputation Points: +0"
+ },
+ {
+  "id": "aon-ifrit",
+  "lane": "grantsFeat",
+  "collection": "heritages",
+  "name": "Ifrit",
+  "traits": [
+   "ifrit"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You descend from fire elementals or bear the mark of the Inner Spheres, and your features illustrate the influence that elemental fire has over you. You gain the ifrit trait, in addition to the traits from your ancestry. You gain resistance to fire equal to half your level (minimum 1), and you treat environmental heat effects as if they were one step less severe (incredible heat becomes extreme, extreme heat becomes severe, and so on). You can choose from ifrit feats and feats from your ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "aon-kingdom-assurance",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Kingdom Assurance",
+  "level": 1,
+  "traits": [
+   "fortune",
+   "general",
+   "kingdom"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "Even when things go poorly in other areas, you can count on consistency in carrying out kingdom activities with a chosen skill. Choose one Kingdom skill in which your kingdom is trained. Once per Kingdom turn, when you would attempt a skill check for that skill, you can forgo rolling and instead take a result equal to 10 + your proficiency bonus; do not apply any other bonuses, penalties, or modifiers to this result. **Special** You can select this feat multiple times. Each time, choose a different skill and gain the benefits of this feat for that skill."
+ },
+ {
+  "id": "aon-tiefling",
+  "lane": "grantsFeat",
+  "collection": "heritages",
+  "name": "Tiefling",
+  "traits": [
+   "tiefling"
+  ],
+  "engineFieldsPresent": [
+   "senses"
+  ],
+  "inRegistries": [],
+  "text": "You descend from fiends or bear the mark of the fiendish realms, manifesting as some unusual feature that belies your heritage, such as horns or a tail. You gain the tiefling trait, in addition to the traits from your ancestry. You also gain low-light vision, or you gain darkvision if your ancestry already has low-light vision. You can choose from tiefling feats and feats from your ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "apparition-stabilization",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Apparition Stabilization",
+  "level": 6,
+  "traits": [
+   "animist",
+   "apparition",
+   "wandering"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your attuned apparition ensures that even if you would be distracted or disrupted, your magic does not go to waste. If a reaction would disrupt your spellcasting action, attempt a . If you succeed, your action isn't disrupted. When you gain the third apparition class feature, this DC is reduced to 13, and when you gain the fourth apparition class feature, this DC is reduced to 10."
+ },
+ {
+  "id": "arcana-of-iron",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Arcana of Iron",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featGrantsAuto"
+  ],
+  "text": "You eschew wands and staves for more advanced weaponry. You become trained in advanced weapons. If you gain the Weapon Expertise class feature, your proficiency in martial and advanced weapons increases to expert. The extra damage you deal with Bespell Strikes increases to 1d8."
+ },
+ {
+  "id": "ardande",
+  "lane": "grantsFeat",
+  "collection": "heritages",
+  "name": "Ardande",
+  "traits": [
+   "ardande"
+  ],
+  "engineFieldsPresent": [
+   "senses"
+  ],
+  "inRegistries": [],
+  "text": "You descend from wood elementals or have some other heritage influenced by the elemental Plane of Wood. You might have green, mossy skin, vines that grow from your head instead of hair, or thin appendages that resemble twigs. You gain the ardande trait, in addition to the traits from your ancestry. You also gain low-light vision, or you gain darkvision if your ancestry already has low-light vision. You can choose from ardande feats, geniekin feats, and feats from your ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "armigers-protection",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Armiger's Protection",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [
+   "featGrantsAuto"
+  ],
+  "text": "You've learned to wear the iconic Hellknight armor. You become trained in light armor and Hellknight Breastplate, a medium armor. If you were already trained in light armor and medium armor, you gain training in Hellknight Half Plate and Hellknight Plate. Whenever you gain a class feature that grants you expert or greater proficiency in any type of armor (but not unarmored defense), you also gain that proficiency in the armor types granted to you by this feat. If you have a class feature that grants you expert proficiency in unarmored defense and you're 13th level or higher, you also become an expert in the armor types granted to you by this feat. In addition, when you choose this feat, you receive a non-magical suit of Hellknight armor of a type you become trained in (Hellknight Breastplate, Hellknight Half Plate, or Hellknight Plate)."
+ },
+ {
+  "id": "arodens-innovation",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Aroden's Innovation",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [
+   "featPickGrants"
+  ],
+  "text": "As befits the god of humanity and innovation, Aroden left teachings that continue to inspire. You've studied his works, and you understand the need to constantly reinvent yourself to meet new challenges. Each day during your daily preparations, choose a general feat of 3rd level or lower. If you meet the feat's prerequisites, you gain the benefits of that feat until your next daily preparations."
+ },
+ {
+  "id": "ascend",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Ascend",
+  "level": 14,
+  "traits": [
+   "mythic"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses",
+   "speeds"
+  ],
+  "inRegistries": [],
+  "text": "As you strive to ascend to the ranks of celestials, the pull of gravity loosens on your body. You gain a fly Speed equal to your land Speed and the Flyby Attack action. When you gain this feat, you can choose to sprout wings, if desired; these wings are permanent. Once per day as a single action, you can fly at incredible speeds. When you do, your fly Speed becomes equal to double your Speed for 5 rounds."
+ },
+ {
+  "id": "automaton-armament",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Automaton Armament",
+  "level": 1,
+  "traits": [
+   "automaton"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "You've been provided a body part designed for combat. You gain either a claw or pincer unarmed attack. The claw deals 1d4 slashing damage, is in the brawling group, and has the agile, finesse, and unarmed traits. The pincer deals 1d6 piercing damage, is in the brawling group, and has the grapple and unarmed traits. Your body can be reconfigured; you can select this feat at any level, and you can retrain into or out of this feat or change the type of attack you gain. **Enhancement** Your attacking part is reinforced. Increase the damage die of the unarmed attack you gain from this feat by one step (from 1d4 to 1d6, or from 1d6 to 1d8)."
+ },
+ {
+  "id": "avenger",
+  "lane": "grantsFeat",
+  "collection": "classFeatures",
+  "name": "Avenger",
+  "level": 1,
+  "traits": [
+   "rogue"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "Trained far from watching eyes, you use stealth, intimidation, and deadly bladework to root out threats to your church. You must select Avenger Dedication as your 2nd-level class feat. **Prerequisites:** You must be a rogue. **Avenger Adjustments:** You must choose a deity to be a follower of. You are trained in Intimidation, Religion, Stealth, the divine skill granted by your racket, and a number of additional skills equal to 3 plus your Intelligence modifier, instead of your normal starting skill proficiencies. You must choose the avenger racket for your rogue's racket. You do not gain the Surprise Attack class feature. You gain the Hunt Prey action. ## Avenger Racket Trained to be a precise but brutal weapon by the priests of your faith, you eschew complex trickery for swift and deadly efficiency. Subtlety and deception have their uses, but when a false smile fails, your blades have their own way of finding the truth. You are trained in your deity's favored weapon. Whenever you gain a class feature that grants you expert or greater proficiency with simple or martial weapons, you also gain that proficiency rank with your deity's favored weapon. You can deal sneak attack damage to your prey with your deity's favored weapon, in addition to the weapons listed in the sneak attack class feature. When you critically succeed at an attack roll using your deity's favored weapon and the target has the off-guard condition, you also apply the weapon's critical specialization effect. You're trained in your deity's divine skill and medium armor; if you're already trained in your deity's divine skill, you are instead trained in another skill of your choice. You can choose Strength as your key attribute modifier. When you gain light armor expertise, you also gain expert proficiency in medium armor, and when you gain light armor mastery, you also gain master proficiency in medium armor."
+ },
+ {
+  "id": "awakened-power",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Awakened Power",
+  "level": 4,
+  "traits": [
+   "deviant"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "Your power spontaneously evolves or reconfigures itself. You gain one awakening benefit for a deviant feat of 4th level or lower. --- **Special** You can take this feat multiple times. Each time you do, choose a different deviant feat of 4th level or lower, and gain one of its awakening benefits."
+ },
+ {
+  "id": "azarketi-weapon-expertise",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Azarketi Weapon Expertise",
+  "level": 13,
+  "traits": [
+   "azarketi"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your mastery with weapons both above and below water is unmatched. Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency in Crossbows, Hand Crossbows, Longspears, Spears, Tridents, and all azarketi weapons in which you are trained."
+ },
+ {
+  "id": "bard-dedication",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Bard Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication",
+   "multiclass"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [
+   "featGrantsAuto"
+  ],
+  "text": "You cast spells like a bard and gain the Cast a Spell activity. You gain a spell repertoire with two common cantrips from the occult spell list or any other occult cantrips you've learned or discovered. You're trained in the spell attack modifier and spell DC statistics. Your key spellcasting attribute for bard archetype spells is Charisma, and they are occult bard spells. You become trained in Occultism and Performance; for each of these skills in which you were already trained, you instead become trained in a skill of your choice. Choose a muse as you would if you were a bard. You can take that muse's feats, but you don't gain the starting feat, spell or any other abilities the choice of muse grants."
+ },
+ {
+  "id": "basic-arcana",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Basic Arcana",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featPickGrants"
+  ],
+  "text": "You gain a 1st- or 2nd-level wizard feat of your choice."
+ },
+ {
+  "id": "basic-blood-potency",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Basic Blood Potency",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featPickGrants"
+  ],
+  "text": "You gain a 1st- or 2nd-level sorcerer feat."
+ },
+ {
+  "id": "basic-breakthrough",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Basic Breakthrough",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featPickGrants"
+  ],
+  "text": "You gain a 1st- or 2nd-level inventor feat of your choice."
+ },
+ {
+  "id": "basic-concoction",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Basic Concoction",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featPickGrants"
+  ],
+  "text": "You gain a 1st- or 2nd-level alchemist feat."
+ },
+ {
+  "id": "basic-deduction",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Basic Deduction",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featPickGrants"
+  ],
+  "text": "You gain a 1st- or 2nd-level investigator feat of your choice."
+ },
+ {
+  "id": "basic-defender",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Basic Defender",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featPickGrants"
+  ],
+  "text": "You gain a 1st- or 2nd-level guardian feat."
+ },
+ {
+  "id": "basic-devotion",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Basic Devotion",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featPickGrants"
+  ],
+  "text": "You gain a 1st- or 2nd-level champion feat."
+ },
+ {
+  "id": "basic-dogma",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Basic Dogma",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featPickGrants"
+  ],
+  "text": "You gain a 1st- or 2nd-level cleric feat."
+ },
+ {
+  "id": "basic-field-training",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Basic Field Training",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featPickGrants"
+  ],
+  "text": "You gain a 1st- or 2nd-level commander feat."
+ },
+ {
+  "id": "basic-flair",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Basic Flair",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featPickGrants"
+  ],
+  "text": "You gain a 1st- or 2nd-level swashbuckler feat of your choice."
+ },
+ {
+  "id": "basic-fury",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Basic Fury",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featPickGrants"
+  ],
+  "text": "You gain a 1st- or 2nd-level barbarian feat."
+ },
+ {
+  "id": "basic-glory",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Basic Glory",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featPickGrants"
+  ],
+  "text": "You gain a 1st- or 2nd-level exemplar feat."
+ },
+ {
+  "id": "basic-hunters-trick",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Basic Hunter's Trick",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featPickGrants"
+  ],
+  "text": "You gain a 1st- or 2nd-level ranger feat."
+ },
+ {
+  "id": "basic-kata",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Basic Kata",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featPickGrants"
+  ],
+  "text": "You gain a 1st- or 2nd-level monk feat."
+ },
+ {
+  "id": "basic-maneuver",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Basic Maneuver",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featPickGrants"
+  ],
+  "text": "You gain a 1st- or 2nd-level fighter feat."
+ },
+ {
+  "id": "basic-martial-magic",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Basic Martial Magic",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featPickGrants"
+  ],
+  "text": "You gain a 1st- or 2nd-level magus feat of your choice."
+ },
+ {
+  "id": "basic-muses-whispers",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Basic Muse's Whispers",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featPickGrants"
+  ],
+  "text": "You gain a 1st- or 2nd-level bard feat."
+ },
+ {
+  "id": "basic-mysteries",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Basic Mysteries",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featPickGrants"
+  ],
+  "text": "You gain a 1st- or 2nd-level oracle feat of your choice."
+ }
+]

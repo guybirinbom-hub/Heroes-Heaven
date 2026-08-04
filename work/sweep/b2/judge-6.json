@@ -1,0 +1,947 @@
+{
+  "records": [
+    {
+      "id": "toxic-effluence",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A contact poison: every stage applies damage and conditions to the creature it is used against, never to the player's own sheet."
+    },
+    {
+      "id": "tree-of-duality",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Area impulse that heals allies and dazzles enemies; nothing lands on the kineticist's own statistics."
+    },
+    {
+      "id": "tremorsensors",
+      "verdict": "MISS",
+      "reason": "Once-per-day activation grants tremorsense (imprecise) 20 feet for 10 minutes. counters/frequency track the use, but the granted SENSE never reaches the sheet's senses list, and no mode exists for it.",
+      "fix": {
+        "toggle": {
+          "registry": "modes",
+          "name": "Tremorsensors",
+          "effects": "While active (10 minutes, once per day): you gain tremorsense as an imprecise sense with a range of 20 feet. No numeric modifiers; the granted sense is carried as the mode note, exactly like item-pallesthetic-mutagen's tremorsense/echolocation note."
+        }
+      }
+    },
+    {
+      "id": "trinity-geode",
+      "verdict": "MISS",
+      "reason": "heldSpells covers the Scatter Scree casting, but the spellheart's Armor benefit (resistance 1 to physical except adamantine after casting an earth spell) and Weapon benefit (+1d4 bludgeoning on Strikes) deliver nothing. Its sibling spellheart warding-statuette carries both passiveEffects and a situational entry; this one carries neither.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [{ "kind": "strikeDamage" }],
+            "when": "on Strikes with the affixed weapon after casting an earth spell via the geode",
+            "bonus": "+1d4 bludgeoning"
+          }
+        ],
+        "toggle": {
+          "registry": "modes",
+          "name": "Trinity Geode (Armor)",
+          "effects": "Until the end of your next turn after casting an earth spell by Activating the geode: resistance 1 to physical damage (except adamantine), doubled to 2 if the spell was not a cantrip."
+        }
+      }
+    },
+    {
+      "id": "trinity-geode-greater",
+      "verdict": "MISS",
+      "reason": "Same gap as trinity-geode at the greater grade: the Armor (resistance 3 physical) and Weapon (+1d6 bludgeoning) spellheart benefits are unmodelled; only heldSpells is present.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [{ "kind": "strikeDamage" }],
+            "when": "on Strikes with the affixed weapon after casting an earth spell via the geode",
+            "bonus": "+1d6 bludgeoning"
+          }
+        ],
+        "toggle": {
+          "registry": "modes",
+          "name": "Trinity Geode (Greater, Armor)",
+          "effects": "Until the end of your next turn after casting an earth spell by Activating the geode: resistance 3 to physical damage (except adamantine), doubled to 6 if the spell was not a cantrip."
+        }
+      }
+    },
+    {
+      "id": "trinity-geode-major",
+      "verdict": "MISS",
+      "reason": "Same gap at the major grade: Armor resistance 5 to physical and Weapon +1d8 bludgeoning are unmodelled; only heldSpells is present.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [{ "kind": "strikeDamage" }],
+            "when": "on Strikes with the affixed weapon after casting an earth spell via the geode",
+            "bonus": "+1d8 bludgeoning"
+          }
+        ],
+        "toggle": {
+          "registry": "modes",
+          "name": "Trinity Geode (Major, Armor)",
+          "effects": "Until the end of your next turn after casting an earth spell by Activating the geode: resistance 5 to physical damage (except adamantine), doubled to 10 if the spell was not a cantrip."
+        }
+      }
+    },
+    {
+      "id": "triumphant-boast",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "The +1/+2 circumstance bonus to Demoralize a boasted-at creature is already an entry in the situationalBonuses registry (inRegistries: situationalBonuses)."
+    },
+    {
+      "id": "truth-potion",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Compels honest speech for 10 minutes; purely roleplay/GM-adjudicated, no statistic changes."
+    },
+    {
+      "id": "uncanny-prediction",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "The whole effect is a save-or-stunned imposed on a foe; the app models only the player's own sheet."
+    },
+    {
+      "id": "undead-eidolon",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "The eidolon's +2 circumstance bonus to saves against death effects, disease, poison and undead-only effects is carried in the situationalBonuses registry (inRegistries: situationalBonuses)."
+    },
+    {
+      "id": "unleash-yaoguai-might",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "limitedUses tracks the once-per-day use and the per-heritage bonuses (+1 circumstance AC, +1 status attack, resistance 5, fast healing 5) are already in the situationalBonuses registry."
+    },
+    {
+      "id": "unusual-composition",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A spellshape that changes which senses a composition's audience can perceive it with; it alters how targets are affected, not any number on the bard's sheet."
+    },
+    {
+      "id": "unwind-death",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A downtime Crafting check to revive another creature; entirely GM-adjudicated and affects only the target."
+    },
+    {
+      "id": "vaccine",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "AoN family-summary row: no price, five kin (minor/lesser/moderate/greater/major), no mechanical field, so findDuplicateIds/umbrella hiding deliberately makes it inert. The graded records carry the mechanics."
+    },
+    {
+      "id": "vaccine-greater",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "The +2 item bonus to saves against other strains of the same disease is in the situationalBonuses registry, and uses tracks the consumable."
+    },
+    {
+      "id": "vaccine-lesser",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "situationalBonuses registry carries the +2 item bonus to saves against other strains; uses tracks the dose."
+    },
+    {
+      "id": "vaccine-major",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "situationalBonuses registry carries the +2 item bonus to saves against other strains; uses tracks the dose."
+    },
+    {
+      "id": "vaccine-minor",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "situationalBonuses registry carries the +2 item bonus to saves against other strains; uses tracks the dose."
+    },
+    {
+      "id": "vaccine-moderate",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "situationalBonuses registry carries the +2 item bonus to saves against other strains; uses tracks the dose."
+    },
+    {
+      "id": "vapor-sphere",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A one-shot talisman reaction whose resistance and precision immunity apply only against the single triggering attack or trap reaction; there is no persisting state for the sheet to hold, and uses already tracks the consumable."
+    },
+    {
+      "id": "vengeful-remnant",
+      "verdict": "MISS",
+      "reason": "Once per day you gain resistance 10 to all damage except force, ghost touch, spirit and vitality (doubled against non-magical sources). limitedUses tracks the frequency, but the resistance itself reaches nothing on the sheet.",
+      "fix": {
+        "toggle": {
+          "registry": "modes",
+          "name": "Vengeful Remnant",
+          "effects": "While active (until the start of your next turn, or the end of your next turn if you slay a significant foe with the Spectral Dagger): resistance 10 to all damage except force, ghost touch, spirit and vitality; resistance 20 instead against non-magical damage."
+        }
+      }
+    },
+    {
+      "id": "vengful-remnant",
+      "verdict": "MISS",
+      "reason": "Misspelled second copy of the same feat, still visible (it is not an aon- prefixed record so the duplicate hider never touches it). Same unmodelled resistance 10 as vengeful-remnant.",
+      "fix": {
+        "toggle": {
+          "registry": "modes",
+          "name": "Vengful Remnant",
+          "effects": "While active (until the start of your next turn): resistance 10 to all damage except force, ghost touch, spirit and vitality; resistance 20 instead against non-magical damage."
+        }
+      }
+    },
+    {
+      "id": "vibration-sense",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "The eidolon's tremorsense/wavesense 30 feet grant is an entry in the companionGrants registry (inRegistries: companionGrants)."
+    },
+    {
+      "id": "vicious-debilitations",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Adds two Debilitating Strike options that impose weakness 5 or clumsy 1 on the struck foe; both land only on the target."
+    },
+    {
+      "id": "victory-plate",
+      "verdict": "MISS",
+      "reason": "The once-per-hour activation gives resistance 5 (10 vs oozes, precision) to a damage type chosen from the recorded victim's traits for 1 minute. counters/frequency track the use but the resistance is delivered nowhere.",
+      "fix": {
+        "toggle": {
+          "registry": "modes",
+          "name": "Victory Plate (Recall Triumph)",
+          "effects": "For 1 minute: resistance 5 to one damage type chosen from the recorded creature's trait — mental (aberration/fey), good (celestial), poison (construct), a matching energy type (dragon/elemental), evil (fiend), void (undead), or precision at resistance 10 (ooze)."
+        }
+      }
+    },
+    {
+      "id": "vivacious-afterimage",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Creates a decoy that occupies a square and can be flanked with; it is battlefield geometry adjudicated at the table, with no number on the swashbuckler's sheet."
+    },
+    {
+      "id": "void-mirror",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "The +3 item bonus to Astronomy Lore/Perception checks made while using the mirror is in the situationalBonuses registry; counters/frequency track the ritual activations."
+    },
+    {
+      "id": "volatile-grease",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Reshapes Grease so the target gains weakness 2 to fire; the entire effect is on the target creature."
+    },
+    {
+      "id": "walk-the-plank",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A Demoralize variant that adds forced movement to the foe; nothing changes on the player's own sheet."
+    },
+    {
+      "id": "wall-of-roses",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "innateSpells carries the once-per-day 4th-rank divine innate Wall of Thorns; the wall's fire immunity, silver-counting thorns and Milani-follower exemption are properties of the conjured wall and of other creatures, not of the caster's sheet."
+    },
+    {
+      "id": "wand-of-noisome-acid",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "AoN family-summary row: no price, twelve kin, no mechanical field, so it is umbrella-hidden by design. The graded wand records carry heldSpells."
+    },
+    {
+      "id": "wand-of-noisome-acid-2nd-level-spell",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Legacy (pre-remaster, acid arrow) scrape duplicate whose text is the whole family blob; the live record wand-of-noisome-acid-2nd-rank carries counters/frequency/heldSpells/uses. Its only mechanic (a sickened target) lands on the foe anyway."
+    },
+    {
+      "id": "wand-of-noisome-acid-2nd-rank",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "heldSpells delivers the Acid Grip casting at 2nd rank and counters/frequency/uses track the once-per-day-plus-overcharge activation."
+    },
+    {
+      "id": "wand-of-noisome-acid-2nd-rank-spell",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Scrape duplicate carrying the whole family blob text; wand-of-noisome-acid-2nd-rank is the modelled copy. The sickened rider affects only the target."
+    },
+    {
+      "id": "wand-of-noisome-acid-4nd-rank",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "heldSpells delivers the Acid Grip casting at 4th rank; counters/frequency/uses track the activation."
+    },
+    {
+      "id": "wand-of-noisome-acid-4th-level-spell",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Legacy acid-arrow scrape duplicate with family-blob text; wand-of-noisome-acid-4nd-rank is the modelled copy and the sickened rider is a target-side effect."
+    },
+    {
+      "id": "wand-of-noisome-acid-4th-rank-spell",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Scrape duplicate carrying the family blob; wand-of-noisome-acid-4nd-rank is the modelled copy."
+    },
+    {
+      "id": "wand-of-noisome-acid-6th-level-spell",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Legacy acid-arrow scrape duplicate with family-blob text; wand-of-noisome-acid-6th-rank is the modelled copy."
+    },
+    {
+      "id": "wand-of-noisome-acid-6th-rank",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "heldSpells delivers the Acid Grip casting at 6th rank; counters/frequency/uses track the activation."
+    },
+    {
+      "id": "wand-of-noisome-acid-6th-rank-spell",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Scrape duplicate carrying the family blob; wand-of-noisome-acid-6th-rank is the modelled copy."
+    },
+    {
+      "id": "wand-of-noisome-acid-8th-level-spell",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Legacy acid-arrow scrape duplicate with family-blob text; wand-of-noisome-acid-8th-rank is the modelled copy."
+    },
+    {
+      "id": "wand-of-noisome-acid-8th-rank",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "heldSpells delivers the Acid Grip casting at 8th rank; counters/frequency/uses track the activation."
+    },
+    {
+      "id": "wand-of-noisome-acid-8th-rank-spell",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Scrape duplicate carrying the family blob; wand-of-noisome-acid-8th-rank is the modelled copy."
+    },
+    {
+      "id": "warcallers-chime",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "AoN family-summary row: no price, six kin, no mechanical field — umbrella-hidden by design; the individual chimes are the ownable items."
+    },
+    {
+      "id": "warcallers-chime-of-resistance",
+      "verdict": "MISS",
+      "reason": "A visible, priced item (not umbrella-hidden) that carries no engine field at all: activating it gives YOU resistance 5 to a chosen energy type for 10 minutes, and the sheet shows nothing.",
+      "fix": {
+        "toggle": {
+          "registry": "modes",
+          "name": "Warcaller's Chime of Resistance",
+          "effects": "For 10 minutes (once per week): resistance 5 to one chosen damage type — acid, cold, electricity, fire, or sonic."
+        }
+      }
+    },
+    {
+      "id": "warding-statuette",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "passiveEffects.resistances carries the resistance 1 against ranged weapon attacks, heldSpells carries Shield/Spiritual Armament, and the conditional Weapon benefit is in situationalBonuses."
+    },
+    {
+      "id": "warding-statuette-greater",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "Same wiring at the greater grade: passiveEffects.resistances (5 vs ranged weapon attacks), heldSpells, and a situationalBonuses entry."
+    },
+    {
+      "id": "warding-tattoo",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "The triggered +1 status bonus to AC and saves plus resistance 2 is in the situationalBonuses registry, and counters/frequency track the once-per-day trigger."
+    },
+    {
+      "id": "warding-tattoo-fiend",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "Both the always-on resistance against fiend spells/magical attacks and the triggered bonus are in the situationalBonuses registry; counters/frequency track the use."
+    },
+    {
+      "id": "warding-tattoo-trail",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "The resistance against hazardous terrain/environmental hazards and the triggered bonus are in the situationalBonuses registry."
+    },
+    {
+      "id": "warding-tattoo-wave",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "The triggered +1 status bonus to AC and saves plus resistance 2 is in the situationalBonuses registry; counters/frequency track the once-per-day trigger."
+    },
+    {
+      "id": "warming-parka",
+      "verdict": "MISS",
+      "reason": "The once-per-day Extra Warming activation gives resistance 3 to cold and a -2 item penalty to Perception for 1 minute. counters/frequency track the use, but neither the resistance nor the Perception penalty reaches the sheet, and the item carries no passiveEffects and no situational entry.",
+      "fix": {
+        "toggle": {
+          "registry": "modes",
+          "name": "Warming Parka (Extra Warming)",
+          "effects": "For 1 minute (once per day, dismissable): resistance 3 to cold damage, and Perception drops by 2 (a -2 item penalty). The always-on environmental-cold reduction stays in the note — it is GM/environment adjudicated."
+        }
+      }
+    },
+    {
+      "id": "wave-the-flag",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Reduces frightened and grants re-saves to ALLIES benefiting from your banner; the app models only the player's own sheet."
+    },
+    {
+      "id": "weavers-web",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Your swarm creates difficult terrain and an immobilize save for other creatures; the DCs used are your existing class/spell DC and nothing changes on your sheet."
+    },
+    {
+      "id": "whisper-of-wings",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "The witch class record's patron option 'whisper-of-wings' already carries tradition: 'primal', grants.skills ['nature'] (the Patron Skill, applied by build.ts's subclass-granted-skills loop) and focusSpells ['murmuration'] (the Lesson hex cantrip). The classFeature record is just the printed text."
+    },
+    {
+      "id": "whispering-staff",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "The item carries apexAttribute: 'int' (the apex Intelligence increase), counters/frequency for its charges and activations, heldSpells for its staff list, and the +3 item bonus to Decipher Writing / Identify Magic / Recall Knowledge is in the situationalBonuses registry."
+    },
+    {
+      "id": "whispering-steps",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "An amp whose entire effect is forced movement imposed on an enemy target."
+    },
+    {
+      "id": "wilding-steward",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "The witch class record's patron option 'wilding-steward' carries tradition: 'primal', grants.skills ['nature'] and focusSpells ['wilding-word']; the classFeature record is the printed description."
+    },
+    {
+      "id": "winged-terror",
+      "verdict": "MISS",
+      "reason": "The record carries no engine field of any kind: it is imported as itemType 'equipment' with no armour statistics despite being +2 greater resilient winged studded leather, and the wearer's resistance 5 to physical damage dealt by frightened creatures is delivered nowhere. A conditional resistance has no home — passiveEffects.resistances is unconditional and SituationalTarget.kind has no resistance member.",
+      "fix": {
+        "needsEngineWork": true,
+        "note": "Needs a conditional-resistance lane (resistance 5 to physical damage dealt by frightened creatures). Separately the record should be imported as itemType 'armor' (studded leather: category light, group leather, acBonus 2) so the base armour numbers exist at all."
+      }
+    },
+    {
+      "id": "winter-sleet",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "It is a stance entry in core.stances (id winter-sleet) with the ice/fall and slowed-1 effects captured in the stance note (inRegistries: core.stances)."
+    },
+    {
+      "id": "wintershot-artifact",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Legacy blob copy of the intelligent artifact bow; its runes come from the weapon record itself and all three activations (Auroral Shine, Signal Flare, Rimecrust) impose saves and conditions on targets. Concealment/wind negation is GM-adjudicated."
+    },
+    {
+      "id": "wintershot-heroic",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Same artifact bow; counters/frequency track its activations, and every activation resolves against a target. Negating mist concealment and wind penalties is table adjudication, not a sheet number."
+    },
+    {
+      "id": "witchs-finger",
+      "verdict": "MISS",
+      "reason": "A priced, visible consumable giving cold resistance 3 for a full hour (plus 8 hours of environmental-cold reduction). uses tracks the dose, but the resistance never appears on the sheet — this is exactly the consumable-mode lane that 223 other items already use.",
+      "fix": {
+        "toggle": {
+          "registry": "modes",
+          "name": "Witch's Finger",
+          "effects": "For 1 hour: resistance 3 to cold damage. Note (8 hours): negates severe environmental cold damage and reduces extreme cold to severe."
+        }
+      }
+    },
+    {
+      "id": "witchwarg-fur",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A catalyst that retypes a Fire Shield casting from fire to cold; it edits the spell's own effects, and spell-granted resistances are never held on the sheet. heldSpells/uses already record the catalyst."
+    },
+    {
+      "id": "witness-to-ancient-battles",
+      "verdict": "MISS",
+      "reason": "The animist class record's apparition option carries grantedSpells and focusSpells ['embodiment-of-battle'], but no skill grant — so the printed Apparition Skills (Battlegrounds Lore, Heraldry Lore) train nothing when this apparition is attuned. Two lores cannot be expressed by trainedLore, which holds one.",
+      "fix": {
+        "needsEngineWork": false,
+        "note": "Data fix on the animist class option, not on this record: add grants: { skills: ['lore:battlegrounds', 'lore:heraldry'] } — build.ts's subclass-granted-skills loop already trains lore:* keys. All 13 apparition options have the same hole, so this is one shared patch."
+      }
+    },
+    {
+      "id": "wondrous-figurine",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "AoN family-summary row: no price, ten kin, no mechanical field — umbrella-hidden by design."
+    },
+    {
+      "id": "wondrous-figurine-onyx-dog",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Summons a separate minion creature with its own statistics; the app's companion/pet lane models animal companions, familiars and eidolons, not temporary summons, and nothing here touches the player's own sheet. frequency already tracks the once-per-week use."
+    },
+    {
+      "id": "wooden-palisade",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Creates a wall with its own AC/Hardness/HP; it is battlefield terrain, not a change to the kineticist's statistics."
+    },
+    {
+      "id": "worm-form",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "The battle form is a core.stances entry (form: true), which derive injects as the active form's AC, temporary HP, senses, Strikes and speeds (inRegistries: core.stances)."
+    },
+    {
+      "id": "wyrm-claw",
+      "verdict": "MISS",
+      "reason": "heldSpells covers Gouging Claw / Summon Dragon, but the spellheart's Armor benefit — resistance 5 to acid, cold, electricity and fire for 1 minute after activating a conjuration spell — reaches nothing. Compare warding-statuette, which carries passiveEffects plus a situational entry.",
+      "fix": {
+        "toggle": {
+          "registry": "modes",
+          "name": "Wyrm Claw (Armor)",
+          "effects": "For 1 minute after casting a conjuration spell by Activating the wyrm claw: resistance 5 to acid, cold, electricity and fire. Note: the Weapon benefit instead grants a 2-action Breath Weapon (6d6, usable once before the end of your next turn)."
+        }
+      }
+    },
+    {
+      "id": "wyrm-on-the-wing",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "effectChoices lets the player pick the depicted dragon's tradition and resolves the matching resistance 5 (force/spirit/mental/fire) into resolvedItemPassives; counters/frequency track the Dragon Wings activation."
+    },
+    {
+      "id": "wyrm-spindle",
+      "verdict": "MISS",
+      "reason": "Same spellheart gap as wyrm-claw: heldSpells is present but the Armor benefit (resistance 5 to fire, force, mental and spirit for 1 minute after a non-cantrip activation) is delivered nowhere.",
+      "fix": {
+        "toggle": {
+          "registry": "modes",
+          "name": "Wyrm Spindle (Armor)",
+          "effects": "For 1 minute after casting a non-cantrip spell by Activating the spindle: resistance 5 to fire, force, mental and spirit. Note: the Weapon benefit instead grants a 2-action Dragon Breath (6d6, once before the end of your next turn)."
+        }
+      }
+    },
+    {
+      "id": "wyrms-wingspan",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "Twin of wyrm-on-the-wing and wired the same way: effectChoices resolves the chosen tradition's resistance 5, with counters/frequency for the Dragon Wings activation."
+    },
+    {
+      "id": "you-cant-kill-an-idea",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A death-replacement narrative capstone that ends by rebuilding the character with the GM ('work with your GM to choose which combination of class, attributes, skills and feats'); the ideaform state is table adjudication, not a sheet configuration."
+    },
+    {
+      "id": "youre-an-embarrassment",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Grants an ALLY a reroll with a +1 circumstance bonus; the app models only the player's own sheet."
+    },
+    {
+      "id": "zetogeki-hide-armor",
+      "verdict": "MISS",
+      "reason": "passiveEffects covers the always-on fire resistance 5 from the fire-resistant rune, but the once-per-day Shift Scales activation (resistance 5 to bludgeoning, piercing and slashing plus -10 feet to all Speeds) reaches nothing. counters/frequency only track the use.",
+      "fix": {
+        "toggle": {
+          "registry": "modes",
+          "name": "Zetogeki Hide Armor (Shift Scales)",
+          "effects": "Until the end of your next turn (once per day): resistance 5 to bludgeoning, piercing and slashing damage, and every Speed drops by 10 feet (minimum 5 feet)."
+        }
+      }
+    },
+    {
+      "id": "accolade-robe-greater",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "passiveEffects.skills carries the +3 item bonus to Arcana, and counters/frequency track the once-per-day Extra Credit activation. The extradimensional pocket and the one-turn Focus Point are transient/inventory flavour."
+    },
+    {
+      "id": "aegis-for-the-innocent",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "Already a feat-gated entry in the modes registry (inRegistries: core.modes(feat-gated)); the +1 status bonus to AC lands on the protected creature and the rest is the barrier's saves against enemies."
+    },
+    {
+      "id": "aeon-stone-rainbow-prism",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Captures images and casts Illusory Disguise on you; a disguise moves no number on the sheet, and counters/frequency already track the three-per-day activation."
+    },
+    {
+      "id": "alchemical-fuse",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A timer cord that delays a bomb's detonation; it changes when a device goes off, never the character's statistics. uses tracks the consumable."
+    },
+    {
+      "id": "aloof-firmament",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "In the featFeatGrants registry, which delivers the granted Cat Fall and (in Arcane Cascade) Quick Jump general feats; the Arcane Cascade stance itself is a core.stances entry."
+    },
+    {
+      "id": "anchor-of-aquatic-exploration",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Underwater breathing, sinking, and protection from depth/pressure are exploration and environment rules the GM adjudicates; counters/frequency already track the Cozy Cabin activation."
+    },
+    {
+      "id": "ancient-scale-azarketi",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "The heritage carries the senses field (darkvision); the phosphorescent 10-foot dim-light glow is flavour with no statistic attached."
+    },
+    {
+      "id": "animist-apparition-spellcasting",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "The animist class record's spellcasting config ({ type: 'prepared', tradition: 'divine', keyAbility: 'wis', progression: 'animist' }) plus each apparition option's grantedSpells drive both halves of this feature; the classFeature record is the printed description."
+    },
+    {
+      "id": "anylength-rope",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "AoN family-summary row: no price, three kin, no mechanical field — umbrella-hidden by design. The rope's splitting/rejoining is utility with no character statistic anyway."
+    },
+    {
+      "id": "aon-creative-spark",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "An aon- prefixed duplicate that collides by name with the canonical items['creative-spark'], so findDuplicateIds hides it from every list. The canonical twin is where the Crafting bonus belongs."
+    },
+    {
+      "id": "aon-elements-of-creation",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "aon- duplicate colliding with the canonical items['elements-of-creation']; hidden by findDuplicateIds."
+    },
+    {
+      "id": "aon-feral-claws",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "aon- duplicate colliding with the canonical items['feral-claws']; hidden by findDuplicateIds."
+    },
+    {
+      "id": "aon-fulcrum-lenses",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "The lens bonuses (+2 item to saves vs fear, +2/+4 item to melee Strike damage) are in the situationalBonuses registry, keyed for this id (inRegistries: situationalBonuses)."
+    },
+    {
+      "id": "aon-greater-mat-of-resilence",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "aon- duplicate colliding with the canonical items['greater-mat-of-resilence']; hidden by findDuplicateIds."
+    },
+    {
+      "id": "aon-judgment-of-the-monolith",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "aon- duplicate colliding with the canonical feats['judgment-of-the-monolith']; hidden by findDuplicateIds."
+    },
+    {
+      "id": "aon-mat-of-resilence",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "aon- duplicate colliding with the canonical items['mat-of-resilence']; hidden by findDuplicateIds."
+    },
+    {
+      "id": "aon-petal-dance",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "aon- duplicate colliding with the canonical items['petal-dance']; hidden by findDuplicateIds."
+    },
+    {
+      "id": "aon-tide-of-death",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "aon- duplicate colliding with the canonical items['tide-of-death']; hidden by findDuplicateIds."
+    },
+    {
+      "id": "aon-wombat-burrow",
+      "verdict": "MISS",
+      "reason": "Not a hidden duplicate — no canonical 'Wombat Burrow' exists, so this record is live. The Wombat Style stance entry (core.stances['aon-wombat-style']) carries strikes and a note but no burrow Speed, so the feat's Burrow speed equal to your Incredible Movement bonus is delivered nowhere.",
+      "fix": {
+        "toggle": {
+          "registry": "stances",
+          "name": "Wombat Style",
+          "effects": "For a monk who has taken Wombat Burrow: while in this stance, gain a Burrow Speed equal to the Speed bonus from Incredible Movement (+10 ft at 9th, +15 at 13th, +20 at 17th, +25 at 20th). Burrowing works through earth and soil only, not solid rock."
+        }
+      }
+    },
+    {
+      "id": "aon-wyrm-s-flight",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "aon- duplicate colliding with the canonical items['wyrms-flight']; hidden by findDuplicateIds."
+    },
+    {
+      "id": "attunement-to-stone",
+      "verdict": "MISS",
+      "reason": "The feat carries no engine field: the tremorsense it grants while in contact with a stone surface never appears in the sheet's senses list.",
+      "fix": {
+        "field": "senses",
+        "value": [{ "name": "tremorsense", "range": 5, "acuity": "imprecise" }],
+        "note": "The printed grant is conditional ('when in contact with a stone surface') and SenseEntry has no condition slot; list it with that caveat in the feat text. The ka stone's One with Stone activation is a separate spell-grant lane."
+      }
+    },
+    {
+      "id": "aura-shaping",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Lets you choose the emanation size of your kinetic aura; area geometry is measured on the map, not on the sheet."
+    },
+    {
+      "id": "axe-of-the-dwarven-lords",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "passiveEffects carries the +4 item bonus to Crafting and the greater darkvision sense, and situationalBonuses carries the Crafting-category restriction plus the +1d6 damage against orcs."
+    },
+    {
+      "id": "barricade-stone",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "AoN family-summary row: no price, three kin, no mechanical field — umbrella-hidden by design."
+    },
+    {
+      "id": "barricade-stone-cylinder",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A consumable that creates solid stone terrain and can roll over foes; every effect is on the battlefield or on other creatures, and uses tracks the consumable."
+    },
+    {
+      "id": "bioluminescent-stripes",
+      "verdict": "MISS",
+      "reason": "The graft carries no engine field. While glowing you take a -4 item penalty to Stealth checks to Hide and Sneak and can't be undetected — a hard number and a hard restriction with a player-controlled on/off switch, which is exactly a mode, and nothing delivers it.",
+      "fix": {
+        "toggle": {
+          "registry": "modes",
+          "name": "Bioluminescent Stripes (Glowing)",
+          "effects": "While the stripes glow (activate 1 action, dismiss as a free action): Stealth drops by 4 (a -4 item penalty), applying to Hide and Sneak. Note: you can't be undetected, and you shed bright light in a 20-foot radius plus dim light for the next 20 feet."
+        }
+      }
+    },
+    {
+      "id": "black-powder-flash",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "An action inside Powder Punch Stance whose whole effect is a save-or-dazzled/blinded on an adjacent foe."
+    },
+    {
+      "id": "blade-byrnie",
+      "verdict": "MISS",
+      "reason": "The armour half is imported correctly (itemType armor, category light, group chain, acBonus 2), but activating it produces a +1 striking dagger you then Strike with, and the strikes subsystem never learns about that weapon. No legal field expresses 'activate to produce a weapon'.",
+      "fix": {
+        "needsEngineWork": true,
+        "note": "Needs an item-produced-weapon lane: on activation, add a +1 striking dagger (1d4 piercing, agile/finesse/thrown-10/versatile-S) to the strike list for one Strike, its potency rune tracking the armour's potency rune (+2 at +2 armor potency, +3 at +3)."
+      }
+    },
+    {
+      "id": "blade-byrnie-greater",
+      "verdict": "MISS",
+      "reason": "Same gap at the greater grade: the produced +2 greater striking dagger never reaches the strike list.",
+      "fix": {
+        "needsEngineWork": true,
+        "note": "Same item-produced-weapon lane as blade-byrnie, at +2 greater striking."
+      }
+    },
+    {
+      "id": "blade-byrnie-major",
+      "verdict": "MISS",
+      "reason": "Same gap at the major grade: the produced +3 greater striking dagger never reaches the strike list.",
+      "fix": {
+        "needsEngineWork": true,
+        "note": "Same item-produced-weapon lane as blade-byrnie, at +3 greater striking."
+      }
+    },
+    {
+      "id": "blade-phantoms-guide",
+      "verdict": "MISS",
+      "reason": "For 1 minute this whetstone raises your proficiency with the treated weapon to your HIGHEST weapon proficiency — a large, real change to attack rolls that the sheet never reflects. uses only tracks the consumable, and no field (and no mode target) can move a weapon proficiency rank.",
+      "fix": {
+        "needsEngineWork": true,
+        "note": "Needs a temporary weapon-proficiency override lane: for 1 minute, treat the chosen weapon's proficiency rank as equal to the character's highest weapon proficiency rank, capped to weapons of level 11 or lower."
+      }
+    },
+    {
+      "id": "blazing-streak",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A flourish action inside Stoked Flame Stance (Stride twice, Strike up to four foes, damage retyped to fire); it is a turn's action sequence, not a sheet state."
+    },
+    {
+      "id": "blazing-talon-surge",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A flourish action inside Rain of Embers Stance: Stride, one Strike with +1d4, then a Grapple attempt. Per-turn action sequencing with no persistent sheet change."
+    },
+    {
+      "id": "blessed-reformer",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "heldSpells carries the Protection and Calm activations and counters/frequency track them; the weapon's runes come from the item's own weapon data. The redeemer-wielder bonuses land on the struck creature."
+    },
+    {
+      "id": "blessed-tattoo",
+      "verdict": "MISS",
+      "reason": "The once-per-day activation gives you the effects of Protection (a +1 status bonus to AC and saves against evil creatures) for its duration. counters/frequency track the use, but the item carries no heldSpells and no situational entry, so the bonus reaches nothing.",
+      "fix": {
+        "toggle": {
+          "registry": "modes",
+          "name": "Blessed Tattoo (Protection)",
+          "effects": "While active (1 minute): AC rises by 1 and every saving throw rises by 1 (a +1 status bonus), applying only against attacks, spells and effects created by evil/unholy creatures."
+        }
+      }
+    },
+    {
+      "id": "boots-of-free-running",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "AoN family-summary row: no price, three kin, no mechanical field — umbrella-hidden by design. The graded boots (lesser/moderate/greater) each carry their own situationalBonuses entry."
+    },
+    {
+      "id": "bottled-air",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Lets you breathe in an airless or toxic environment; an exploration/environment effect with no statistic on the sheet."
+    },
+    {
+      "id": "bright-fetchling",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "innateSpells carries the occult innate Light cantrip; the 5-foot dim-light glow is flavour with no statistic."
+    },
+    {
+      "id": "bullet-dancer-burn",
+      "verdict": "MISS",
+      "reason": "In Bullet Dancer Stance, a follow-up melee attack deals an extra 1 fire plus 1 persistent fire damage per weapon damage die of the attached firearm. That is a real damage rider on the player's own Strike, and the feat carries no field and no registry entry.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [{ "kind": "strikeDamage" }],
+            "when": "in Bullet Dancer Stance, on your next melee Strike after a ranged Strike at a foe in reach",
+            "bonus": "+1 fire and +1 persistent fire per firearm damage die"
+          }
+        ]
+      }
+    },
+    {
+      "id": "bullet-dancer-dedication",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "The granted stance is a core.stances entry (id bullet-dancer-stance) carrying its unarmored requirement and its weapon restrictions in the stance note. NOTE for the apply step: stances surface in MainTab only when the character has a FEAT whose id matches the stance key, and bullet-dancer-stance exists as an action, not a feat — the stance data is present but currently unreachable from the dedication. That is a general keying bug, not a data gap in this record."
+    },
+    {
+      "id": "bullet-dancer-reload",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A flourish that combines a Strike with a reload and waives the free-hand requirement; pure action economy at the table."
+    },
+    {
+      "id": "cape-of-illumination",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "AoN family-summary row: no price, three kin, no mechanical field — umbrella-hidden by design."
+    },
+    {
+      "id": "cape-of-illumination-greater",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "The cape's Light effect is illumination and the blinding flash resolves as a save imposed on enemies within 30 feet; nothing lands on the wearer. counters/frequency already track the once-per-hour use."
+    },
+    {
+      "id": "cape-of-illumination-lesser",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Light plus a blinding flash that only enemies save against; counters/frequency track the once-per-day use."
+    },
+    {
+      "id": "cape-of-illumination-moderate",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Light plus a blinding flash that only enemies save against; counters/frequency track the once-per-day use."
+    },
+    {
+      "id": "capture-magic",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "The +2 status bonus to Arcane Cascade damage is in the situationalBonuses registry, and the Arcane Cascade stance itself is a core.stances entry."
+    },
+    {
+      "id": "caydens-tankard",
+      "verdict": "MISS",
+      "reason": "'Imbued with Cayden Cailean's courage, you are immune to fear effects' is an unconditional, always-on immunity while the tankard is wielded, and the item carries only counters/frequency — no passiveEffects. Immunity to fear is a hard defensive fact the sheet should show (only one shipped record carries a fear immunity today).",
+      "fix": {
+        "field": "passiveEffects.immunities",
+        "value": ["fear"],
+        "note": "The three activations (turning a fear effect back on its creator, ending movement-restricting conditions, casting indestructibility) resolve in play and stay in the description."
+      }
+    },
+    {
+      "id": "channel-elements",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Turns the kinetic aura on and defines its 10-foot emanation; the aura itself 'can't damage anything or affect the environment' without another ability, and the stance impulses that do carry numbers are separate core.stances entries."
+    },
+    {
+      "id": "channeled-protection",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "The +1/+2 status bonus to AC and Reflex saves after casting from a spell slot in Channeler's Stance is in the situationalBonuses registry."
+    },
+    {
+      "id": "claw-and-talon-flow",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A flourish that makes one Strike and swaps you between two existing stances; the stances themselves carry the numbers."
+    },
+    {
+      "id": "claw-snag",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A reaction that enters Claw Stance and makes one Strike; the stance's own core.stances entry holds the mechanics."
+    },
+    {
+      "id": "clawdancer-dedication",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "Both granted stances exist as core.stances entries (claw-stance and talon-stance) with their strikes and notes. NOTE for the apply step: both are keyed to ACTION ids rather than feat ids, so MainTab's feat-keyed stance toggle can't surface them — the same general keying bug as bullet-dancer-dedication, not a data gap here."
+    },
+    {
+      "id": "clawed-bracers",
+      "verdict": "MISS",
+      "reason": "The once-per-hour Extend Claws activation gives a climb Speed of 20 feet and a claw unarmed attack (1d6 slashing, agile, finesse) for 10 minutes. counters/frequency track the use; neither the speed nor the new Strike reaches the sheet.",
+      "fix": {
+        "toggle": {
+          "registry": "stances",
+          "name": "Clawed Bracers (Extended Claws)",
+          "effects": "While active (10 minutes, once per hour, dismissable): gain a climb Speed of 20 feet, and gain a claw unarmed Strike dealing 1d6 slashing, brawling group, traits agile, finesse, unarmed. Unlike a real stance this does not restrict your other Strikes."
+        }
+      }
+    },
+    {
+      "id": "clinging-shadows-initiate",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "focusSpells carries the granted Clinging Shadows Stance qi spell, which is how the app delivers monk stance focus spells."
+    },
+    {
+      "id": "cloak-of-elvenkind",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "passiveEffects.skills carries the +1 item bonus to Stealth, innateSpells carries the arcane Ghost Sound cantrip, and counters/frequency track the once-per-day hood activation."
+    },
+    {
+      "id": "cloak-of-elvenkind-greater",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "Same wiring at the greater grade: passiveEffects.skills (+2 item Stealth), innateSpells (Ghost Sound), counters/frequency for the hood."
+    },
+    {
+      "id": "cobra-envenom",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "limitedUses tracks the once-per-minute frequency, and the Special clause (Cobra Stance's Fortitude bonus rising from +1 to +2) is in the situationalBonuses registry alongside the cobra-stance core.stances entry."
+    },
+    {
+      "id": "collar-of-inconspicuousness",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Disguises your animal companion as a harmless Tiny creature via Pest Form; it changes the companion's appearance for social/exploration play and imposes no statistic the app tracks."
+    },
+    {
+      "id": "communal-sustain",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Grants an ALLY a free-action Sustain; the app models only the player's own sheet. limitedUses already caps the frequency."
+    },
+    {
+      "id": "confounding-image",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Rewrites Mirror Image into a separate decoy with its own AC and saves derived from your spell DC; it is a battlefield object, not a change to your statistics."
+    },
+    {
+      "id": "convergent-tides",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Ignoring water-caused difficult terrain while in Arcane Cascade is terrain adjudication at the table; no number on the sheet moves."
+    },
+    {
+      "id": "cordelias-construct-key",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Its benefits are GM-side (secret Recall Knowledge rolls the GM makes for you, rendering constructs dormant instead of destroyed) plus two summon activations already tracked by counters/frequency."
+    },
+    {
+      "id": "cordelias-construct-key-greater",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Legacy scrape copy whose text is the whole family blob including both grades; cordelias-greater-construct-key is the live record. Its own mechanics are GM-side and target-side anyway."
+    },
+    {
+      "id": "cordelias-greater-construct-key",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "The greater benefit ignores the first 5 of a construct's resistance — an adjustment to the TARGET's defences — and the rest is GM-rolled Recall Knowledge plus summons already tracked by counters/frequency."
+    },
+    {
+      "id": "cowl-of-keys",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "The item carries apexAttribute: 'dex' for the apex Dexterity increase and passiveEffects.skills for the +3 item bonus to Stealth; counters/frequency track the once-per-day doorway. The Thieves' Tools transformation is inventory flavour."
+    },
+    {
+      "id": "cracked-mountain",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A reaction that keeps you at 1 HP, raises wounded and makes one Strike; entirely resolved in play, no persistent sheet state."
+    },
+    {
+      "id": "crane-flutter",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "The Crane Stance AC bonus rising to +3 against the triggering attack is in the situationalBonuses registry, and crane-stance is a core.stances entry carrying acBonus +1."
+    },
+    {
+      "id": "creative-spark",
+      "verdict": "MISS",
+      "reason": "The canonical (non-hidden) copy of this relic gift. It grants a +1/+2/+3 bonus to Crafting checks involving blacksmithing and general metalworking while the fire wisp assists, and the record carries only frequency — no situational entry, no passiveEffects.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [{ "kind": "skill", "detail": "crafting" }],
+            "when": "blacksmithing or metalworking, while the summoned fire wisp assists",
+            "bonus": "+1 (+2 at 9th level, +3 at 17th)"
+          }
+        ],
+        "note": "Also once per day a critical failure on a blacksmithing Crafting check becomes a plain failure — a degree-of-success shift with no field, worth keeping in the description."
+      }
+    },
+    {
+      "id": "cross-the-final-horizon",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A capstone action inside Sky and Heaven Stance: Stride, three Strikes at -2, damage retyped, target drained on a full hit. Pure per-turn action resolution."
+    },
+    {
+      "id": "crown-of-insight",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "The GM rolls a secret Perception check for you when you enter an area with unnoticed creatures; it changes those creatures' detection state, not any statistic on your sheet."
+    },
+    {
+      "id": "cruel-piercing",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Grants the Puncture Flesh action while in Golden Erinys Stance; an added action with no number to fold into the sheet."
+    },
+    {
+      "id": "culverts-collapse",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A conditional Strike in Flood Stance dealing an extra 1d8 bleed to the foe that damaged you; the extra damage lands on the target as part of a one-off retaliatory action, not as a standing bonus."
+    },
+    {
+      "id": "curled-cure-gel",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Used alongside Treat Wounds to reduce a clumsy/enfeebled/stupefied value by 1 on the treated creature; condition values are entered by the player during play and uses already tracks the consumable."
+    },
+    {
+      "id": "curse-maelstrom-dedication",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "The maelstrom state's only numbers are a -1 status penalty imposed on every OTHER creature in the emanation; the self-side effect is a fortune/misfortune restriction the GM adjudicates, not a statistic."
+    }
+  ]
+}

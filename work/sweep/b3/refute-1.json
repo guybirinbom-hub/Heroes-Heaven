@@ -1,0 +1,359 @@
+{
+ "rulings": [
+  {
+   "id": "shattered-sacrament",
+   "upheld": true,
+   "why": "Real: halcyon-speaker-dedication is in casterArchetypes.ts with repertoire:true, but no legal field adds repertoire spells to an archetype entry. NOTE for apply: the CANTRIP half does fit featCantripGrants.ts (a chosen halcyon cantrip); only the extra 1st-rank repertoire spell truly needs engine work."
+  },
+  {
+   "id": "sign-bound",
+   "upheld": false,
+   "why": "Fix undeliverable: effectChoices is resolved only for feats/heritages/classFeatures/class options/items (build.ts:2458-2570) and rendered only for feats (Builder.tsx:1422) and heritages (shared.tsx:2422). BACKGROUNDS have no effectChoices resolve path and no picker, so this would be dead data. Gap is real; honest verdict is needsEngineWork on the background choice lane."
+  },
+  {
+   "id": "sin-reservoir",
+   "upheld": true,
+   "why": "Real: spellSlotBonus only expresses perRank/exceptHighest, so 'one extra slot at a rank you choose, up to two below your highest' has no shape. No registry keys sin-reservoir."
+  },
+  {
+   "id": "snowcaster",
+   "upheld": true,
+   "why": "Verified: CASTER_ARCHETYPES lists 38 dedications and none is gelid-shard, so 'you gain the basic spellcasting benefits' delivers nothing. Fix is a casterArchetypes.ts entry with a custom basicId (the feat is named Snowcaster, not Basic Gelid Shard Spellcasting)."
+  },
+  {
+   "id": "staff-nexus",
+   "upheld": true,
+   "why": "Real: staff-nexus IS an owned record (wizard `thesis` extraChoice, so it reaches grantOptions and build.ts:2228), and no legal field grants an inventory item or a staff charge pool."
+  },
+  {
+   "id": "studious-capacity",
+   "upheld": true,
+   "why": "Real and well-formed: 558 feats already carry limitedUses and per-day feat use tracking ships. NOTE: limitedUses only puts a 1/day counter on the sheet; the extra casting itself stays unmodelled."
+  },
+  {
+   "id": "the-deck-of-destiny",
+   "upheld": true,
+   "why": "Confirmed: derive.ts:710 reads ONLY passiveEffects.senses/resistances/immunities from worn/invested items, so the record's top-level immunities array is dead. Not an umbrella (no kin) and not a duplicate, so it is obtainable. Fix matches rule 3 exactly."
+  },
+  {
+   "id": "true-channel-spell",
+   "upheld": true,
+   "why": "Confirmed: spellcasting.ts:88 animistPreparedSlots loops r=1..9, so a 10th-rank animist slot cannot exist, and spellSlotBonus has no single-rank form."
+  },
+  {
+   "id": "wellspring-magic",
+   "upheld": false,
+   "why": "Record is unreachable: 'wellspring-magic' appears in NO class's features list and is NOT an extraChoice option, and no feat/feature carries a classArchetype block naming it. ownedFeatureIds therefore never contains it, so spellSlotBonus written here would never be read. It is a rules-glossary record (also present in core.rules, edition legacy-era)."
+  },
+  {
+   "id": "zodiac-bound",
+   "upheld": false,
+   "why": "Same as sign-bound: effectChoices on a BACKGROUND is neither resolved (build.ts resolvePick covers feats/heritages/classFeatures/class options/items only) nor rendered (there is no background choice picker in shared.tsx). The existing inert `choice` is unrendered for the same reason. Real gap, wrong lane."
+  },
+  {
+   "id": "able-carter",
+   "upheld": true,
+   "why": "Well-formed: trainedSkillChoice ['deception','diplomacy'] is already present and backgroundGrantedFeats (build.ts:331) keys grantedFeatByChoice off backgroundSkillChoice, so this delivers exactly. charming-liar and hobnobber both exist."
+  },
+  {
+   "id": "add-element",
+   "upheld": true,
+   "why": "Real: the `choice` records the second element (it feeds kineticistElements), but 'you gain an impulse feat for that element' has no picker, and FEAT_PICK_GRANTS cannot filter on a sibling choice's value."
+  },
+  {
+   "id": "advanced-arcana",
+   "upheld": true,
+   "why": "Verified absent: featPickGrants.ts lists every basic-* twin and no advanced-* one; grep of src/ finds no advanced-feat handling and the record carries no field, so the bonus class feat is never offered. NOTE for apply: this is a REGISTRY line, not engine work - {prompt:'Choose a class feat', category:'class', maxLevel:'self', traits:['wizard']} works today (slightly permissive on the half-level cap, which featPickGrants.ts's own header explicitly accepts); only repeatable-take storage (maxTakable:null vs pickFeatChoices keyed by feat id) needs code."
+  },
+  {
+   "id": "advanced-blood-potency",
+   "upheld": true,
+   "why": "Verified absent: featPickGrants.ts lists every basic-* twin and no advanced-* one; grep of src/ finds no advanced-feat handling and the record carries no field, so the bonus class feat is never offered. NOTE for apply: this is a REGISTRY line, not engine work - {prompt:'Choose a class feat', category:'class', maxLevel:'self', traits:['sorcerer']} works today (slightly permissive on the half-level cap, which featPickGrants.ts's own header explicitly accepts); only repeatable-take storage (maxTakable:null vs pickFeatChoices keyed by feat id) needs code."
+  },
+  {
+   "id": "advanced-breakthrough",
+   "upheld": true,
+   "why": "Verified absent: featPickGrants.ts lists every basic-* twin and no advanced-* one; grep of src/ finds no advanced-feat handling and the record carries no field, so the bonus class feat is never offered. NOTE for apply: this is a REGISTRY line, not engine work - {prompt:'Choose a class feat', category:'class', maxLevel:'self', traits:['inventor']} works today (slightly permissive on the half-level cap, which featPickGrants.ts's own header explicitly accepts); only repeatable-take storage (maxTakable:null vs pickFeatChoices keyed by feat id) needs code."
+  },
+  {
+   "id": "advanced-concoction",
+   "upheld": true,
+   "why": "Verified absent: featPickGrants.ts lists every basic-* twin and no advanced-* one; grep of src/ finds no advanced-feat handling and the record carries no field, so the bonus class feat is never offered. NOTE for apply: this is a REGISTRY line, not engine work - {prompt:'Choose a class feat', category:'class', maxLevel:'self', traits:['alchemist']} works today (slightly permissive on the half-level cap, which featPickGrants.ts's own header explicitly accepts); only repeatable-take storage (maxTakable:null vs pickFeatChoices keyed by feat id) needs code."
+  },
+  {
+   "id": "advanced-deduction",
+   "upheld": true,
+   "why": "Verified absent: featPickGrants.ts lists every basic-* twin and no advanced-* one; grep of src/ finds no advanced-feat handling and the record carries no field, so the bonus class feat is never offered. NOTE for apply: this is a REGISTRY line, not engine work - {prompt:'Choose a class feat', category:'class', maxLevel:'self', traits:['investigator']} works today (slightly permissive on the half-level cap, which featPickGrants.ts's own header explicitly accepts); only repeatable-take storage (maxTakable:null vs pickFeatChoices keyed by feat id) needs code."
+  },
+  {
+   "id": "advanced-defender",
+   "upheld": true,
+   "why": "Verified absent: featPickGrants.ts lists every basic-* twin and no advanced-* one; grep of src/ finds no advanced-feat handling and the record carries no field, so the bonus class feat is never offered. NOTE for apply: this is a REGISTRY line, not engine work - {prompt:'Choose a class feat', category:'class', maxLevel:'self', traits:['guardian']} works today (slightly permissive on the half-level cap, which featPickGrants.ts's own header explicitly accepts); only repeatable-take storage (maxTakable:null vs pickFeatChoices keyed by feat id) needs code."
+  },
+  {
+   "id": "advanced-devotion",
+   "upheld": true,
+   "why": "Verified absent: featPickGrants.ts lists every basic-* twin and no advanced-* one; grep of src/ finds no advanced-feat handling and the record carries no field, so the bonus class feat is never offered. NOTE for apply: this is a REGISTRY line, not engine work - {prompt:'Choose a class feat', category:'class', maxLevel:'self', traits:['champion']} works today (slightly permissive on the half-level cap, which featPickGrants.ts's own header explicitly accepts); only repeatable-take storage (maxTakable:null vs pickFeatChoices keyed by feat id) needs code."
+  },
+  {
+   "id": "advanced-dogma",
+   "upheld": true,
+   "why": "Verified absent: featPickGrants.ts lists every basic-* twin and no advanced-* one; grep of src/ finds no advanced-feat handling and the record carries no field, so the bonus class feat is never offered. NOTE for apply: this is a REGISTRY line, not engine work - {prompt:'Choose a class feat', category:'class', maxLevel:'self', traits:['cleric']} works today (slightly permissive on the half-level cap, which featPickGrants.ts's own header explicitly accepts); only repeatable-take storage (maxTakable:null vs pickFeatChoices keyed by feat id) needs code."
+  },
+  {
+   "id": "advanced-element-control",
+   "upheld": true,
+   "why": "Verified absent: featPickGrants.ts lists every basic-* twin and no advanced-* one; grep of src/ finds no advanced-feat handling and the record carries no field, so the bonus class feat is never offered. NOTE for apply: this is a REGISTRY line, not engine work - {prompt:'Choose a class feat', category:'class', maxLevel:'self', traits:['kineticist']} works today (slightly permissive on the half-level cap, which featPickGrants.ts's own header explicitly accepts); only repeatable-take storage (maxTakable:null vs pickFeatChoices keyed by feat id) needs code."
+  },
+  {
+   "id": "advanced-field-training",
+   "upheld": true,
+   "why": "Verified absent: featPickGrants.ts lists every basic-* twin and no advanced-* one; grep of src/ finds no advanced-feat handling and the record carries no field, so the bonus class feat is never offered. NOTE for apply: this is a REGISTRY line, not engine work - {prompt:'Choose a class feat', category:'class', maxLevel:'self', traits:['commander']} works today (slightly permissive on the half-level cap, which featPickGrants.ts's own header explicitly accepts); only repeatable-take storage (maxTakable:null vs pickFeatChoices keyed by feat id) needs code."
+  },
+  {
+   "id": "advanced-flair",
+   "upheld": true,
+   "why": "Verified absent: featPickGrants.ts lists every basic-* twin and no advanced-* one; grep of src/ finds no advanced-feat handling and the record carries no field, so the bonus class feat is never offered. NOTE for apply: this is a REGISTRY line, not engine work - {prompt:'Choose a class feat', category:'class', maxLevel:'self', traits:['swashbuckler']} works today (slightly permissive on the half-level cap, which featPickGrants.ts's own header explicitly accepts); only repeatable-take storage (maxTakable:null vs pickFeatChoices keyed by feat id) needs code."
+  },
+  {
+   "id": "advanced-fury",
+   "upheld": true,
+   "why": "Verified absent: featPickGrants.ts lists every basic-* twin and no advanced-* one; grep of src/ finds no advanced-feat handling and the record carries no field, so the bonus class feat is never offered. NOTE for apply: this is a REGISTRY line, not engine work - {prompt:'Choose a class feat', category:'class', maxLevel:'self', traits:['barbarian']} works today (slightly permissive on the half-level cap, which featPickGrants.ts's own header explicitly accepts); only repeatable-take storage (maxTakable:null vs pickFeatChoices keyed by feat id) needs code."
+  },
+  {
+   "id": "advanced-glory",
+   "upheld": true,
+   "why": "Verified absent: featPickGrants.ts lists every basic-* twin and no advanced-* one; grep of src/ finds no advanced-feat handling and the record carries no field, so the bonus class feat is never offered. NOTE for apply: this is a REGISTRY line, not engine work - {prompt:'Choose a class feat', category:'class', maxLevel:'self', traits:['exemplar']} works today (slightly permissive on the half-level cap, which featPickGrants.ts's own header explicitly accepts); only repeatable-take storage (maxTakable:null vs pickFeatChoices keyed by feat id) needs code."
+  },
+  {
+   "id": "advanced-hunters-trick",
+   "upheld": true,
+   "why": "Verified absent: featPickGrants.ts lists every basic-* twin and no advanced-* one; grep of src/ finds no advanced-feat handling and the record carries no field, so the bonus class feat is never offered. NOTE for apply: this is a REGISTRY line, not engine work - {prompt:'Choose a class feat', category:'class', maxLevel:'self', traits:['ranger']} works today (slightly permissive on the half-level cap, which featPickGrants.ts's own header explicitly accepts); only repeatable-take storage (maxTakable:null vs pickFeatChoices keyed by feat id) needs code."
+  },
+  {
+   "id": "advanced-kata",
+   "upheld": true,
+   "why": "Verified absent: featPickGrants.ts lists every basic-* twin and no advanced-* one; grep of src/ finds no advanced-feat handling and the record carries no field, so the bonus class feat is never offered. NOTE for apply: this is a REGISTRY line, not engine work - {prompt:'Choose a class feat', category:'class', maxLevel:'self', traits:['monk']} works today (slightly permissive on the half-level cap, which featPickGrants.ts's own header explicitly accepts); only repeatable-take storage (maxTakable:null vs pickFeatChoices keyed by feat id) needs code."
+  },
+  {
+   "id": "advanced-maneuver",
+   "upheld": true,
+   "why": "Verified absent: featPickGrants.ts lists every basic-* twin and no advanced-* one; grep of src/ finds no advanced-feat handling and the record carries no field, so the bonus class feat is never offered. NOTE for apply: this is a REGISTRY line, not engine work - {prompt:'Choose a class feat', category:'class', maxLevel:'self', traits:['fighter']} works today (slightly permissive on the half-level cap, which featPickGrants.ts's own header explicitly accepts); only repeatable-take storage (maxTakable:null vs pickFeatChoices keyed by feat id) needs code."
+  },
+  {
+   "id": "advanced-martial-magic",
+   "upheld": true,
+   "why": "Verified absent: featPickGrants.ts lists every basic-* twin and no advanced-* one; grep of src/ finds no advanced-feat handling and the record carries no field, so the bonus class feat is never offered. NOTE for apply: this is a REGISTRY line, not engine work - {prompt:'Choose a class feat', category:'class', maxLevel:'self', traits:['magus']} works today (slightly permissive on the half-level cap, which featPickGrants.ts's own header explicitly accepts); only repeatable-take storage (maxTakable:null vs pickFeatChoices keyed by feat id) needs code."
+  },
+  {
+   "id": "advanced-muses-whispers",
+   "upheld": true,
+   "why": "Verified absent: featPickGrants.ts lists every basic-* twin and no advanced-* one; grep of src/ finds no advanced-feat handling and the record carries no field, so the bonus class feat is never offered. NOTE for apply: this is a REGISTRY line, not engine work - {prompt:'Choose a class feat', category:'class', maxLevel:'self', traits:['bard']} works today (slightly permissive on the half-level cap, which featPickGrants.ts's own header explicitly accepts); only repeatable-take storage (maxTakable:null vs pickFeatChoices keyed by feat id) needs code."
+  },
+  {
+   "id": "advanced-mysteries",
+   "upheld": true,
+   "why": "Verified absent: featPickGrants.ts lists every basic-* twin and no advanced-* one; grep of src/ finds no advanced-feat handling and the record carries no field, so the bonus class feat is never offered. NOTE for apply: this is a REGISTRY line, not engine work - {prompt:'Choose a class feat', category:'class', maxLevel:'self', traits:['oracle']} works today (slightly permissive on the half-level cap, which featPickGrants.ts's own header explicitly accepts); only repeatable-take storage (maxTakable:null vs pickFeatChoices keyed by feat id) needs code."
+  },
+  {
+   "id": "advanced-shooting",
+   "upheld": true,
+   "why": "Verified absent: featPickGrants.ts lists every basic-* twin and no advanced-* one; grep of src/ finds no advanced-feat handling and the record carries no field, so the bonus class feat is never offered. NOTE for apply: this is a REGISTRY line, not engine work - {prompt:'Choose a class feat', category:'class', maxLevel:'self', traits:['gunslinger']} works today (slightly permissive on the half-level cap, which featPickGrants.ts's own header explicitly accepts); only repeatable-take storage (maxTakable:null vs pickFeatChoices keyed by feat id) needs code."
+  },
+  {
+   "id": "advanced-synergy",
+   "upheld": true,
+   "why": "Verified absent: featPickGrants.ts lists every basic-* twin and no advanced-* one; grep of src/ finds no advanced-feat handling and the record carries no field, so the bonus class feat is never offered. NOTE for apply: this is a REGISTRY line, not engine work - {prompt:'Choose a class feat', category:'class', maxLevel:'self', traits:['summoner']} works today (slightly permissive on the half-level cap, which featPickGrants.ts's own header explicitly accepts); only repeatable-take storage (maxTakable:null vs pickFeatChoices keyed by feat id) needs code."
+  },
+  {
+   "id": "advanced-thaumaturgy",
+   "upheld": true,
+   "why": "Verified absent: featPickGrants.ts lists every basic-* twin and no advanced-* one; grep of src/ finds no advanced-feat handling and the record carries no field, so the bonus class feat is never offered. NOTE for apply: this is a REGISTRY line, not engine work - {prompt:'Choose a class feat', category:'class', maxLevel:'self', traits:['thaumaturge']} works today (slightly permissive on the half-level cap, which featPickGrants.ts's own header explicitly accepts); only repeatable-take storage (maxTakable:null vs pickFeatChoices keyed by feat id) needs code."
+  },
+  {
+   "id": "advanced-thoughtform",
+   "upheld": true,
+   "why": "Verified absent: featPickGrants.ts lists every basic-* twin and no advanced-* one; grep of src/ finds no advanced-feat handling and the record carries no field, so the bonus class feat is never offered. NOTE for apply: this is a REGISTRY line, not engine work - {prompt:'Choose a class feat', category:'class', maxLevel:'self', traits:['psychic']} works today (slightly permissive on the half-level cap, which featPickGrants.ts's own header explicitly accepts); only repeatable-take storage (maxTakable:null vs pickFeatChoices keyed by feat id) needs code."
+  },
+  {
+   "id": "advanced-trickery",
+   "upheld": true,
+   "why": "Verified absent: featPickGrants.ts lists every basic-* twin and no advanced-* one; grep of src/ finds no advanced-feat handling and the record carries no field, so the bonus class feat is never offered. NOTE for apply: this is a REGISTRY line, not engine work - {prompt:'Choose a class feat', category:'class', maxLevel:'self', traits:['rogue']} works today (slightly permissive on the half-level cap, which featPickGrants.ts's own header explicitly accepts); only repeatable-take storage (maxTakable:null vs pickFeatChoices keyed by feat id) needs code."
+  },
+  {
+   "id": "advanced-wilding",
+   "upheld": true,
+   "why": "Verified absent: featPickGrants.ts lists every basic-* twin and no advanced-* one; grep of src/ finds no advanced-feat handling and the record carries no field, so the bonus class feat is never offered. NOTE for apply: this is a REGISTRY line, not engine work - {prompt:'Choose a class feat', category:'class', maxLevel:'self', traits:['druid']} works today (slightly permissive on the half-level cap, which featPickGrants.ts's own header explicitly accepts); only repeatable-take storage (maxTakable:null vs pickFeatChoices keyed by feat id) needs code."
+  },
+  {
+   "id": "advanced-witchcraft",
+   "upheld": true,
+   "why": "Verified absent: featPickGrants.ts lists every basic-* twin and no advanced-* one; grep of src/ finds no advanced-feat handling and the record carries no field, so the bonus class feat is never offered. NOTE for apply: this is a REGISTRY line, not engine work - {prompt:'Choose a class feat', category:'class', maxLevel:'self', traits:['witch']} works today (slightly permissive on the half-level cap, which featPickGrants.ts's own header explicitly accepts); only repeatable-take storage (maxTakable:null vs pickFeatChoices keyed by feat id) needs code."
+  },
+  {
+   "id": "animists-power",
+   "upheld": true,
+   "why": "Verified absent: featPickGrants.ts lists every basic-* twin and no advanced-* one; grep of src/ finds no advanced-feat handling and the record carries no field, so the bonus class feat is never offered. NOTE for apply: this is a REGISTRY line, not engine work - {prompt:'Choose a class feat', category:'class', maxLevel:'self', traits:['animist']} works today (slightly permissive on the half-level cap, which featPickGrants.ts's own header explicitly accepts); only repeatable-take storage (maxTakable:null vs pickFeatChoices keyed by feat id) needs code."
+  },
+  {
+   "id": "affinity-stones",
+   "upheld": false,
+   "why": "Fix renders nowhere: an ITEM `choice` surfaces only through dailyChoicesFor (dailyChoices.ts:59), which requires daily:true - the cited precedent ancestral-embrace carries it and this fix does not, and there is no build-time item choice picker anywhere in src/. Even with daily:true the pick is explicitly inert (nothing applies an item-granted feat), and the benefit needs a multi-creature shared investiture."
+  },
+  {
+   "id": "aiuvarin",
+   "upheld": true,
+   "why": "Confirmed: 7 ancestry-category feats carry ONLY the 'aiuvarin' trait (round-ears, sociable, pinch-time, earned-glory, elf-atavism, inspire-imitation, supernatural-charm). featSlots.ts:56 gates ancestry slots on build.ancestryId alone, so all 7 are unreachable. One shared engine gap with ardande / aon-half-elf / aon-half-orc."
+  },
+  {
+   "id": "aon-aasimar",
+   "upheld": false,
+   "why": "Not unreachable: all 6 aasimar-trait feats in core.json (azata-magic, peri-magic, enforced-order, ...) are category 'general', and featSlots.ts already offers any general feat in a general slot. The vision half is modelled (senses + darkvisionIfAncestryLowLight, both in effect-backfill.json). Nothing is missing."
+  },
+  {
+   "id": "aon-aphorite",
+   "upheld": false,
+   "why": "Nothing to reach: core.json contains ZERO feats carrying the 'aphorite' trait, so the widened ancestry-feat pool is empty. Vision is already modelled via effect-backfill.json. Correctly inert."
+  },
+  {
+   "id": "aon-ganzi",
+   "upheld": true,
+   "why": "Real and well-formed: heritage effectChoices ARE resolved (build.ts:2459) and rendered (shared.tsx:2422), EffectGrant.resistances exists, and IwrEntry.value accepts a level-formula string. situationalBonuses covers only the controlled-save bonus, never the half-level resistance. (The ganzi feat-pool clause is moot - zero ganzi-trait feats exist.)"
+  },
+  {
+   "id": "aon-half-elf",
+   "upheld": true,
+   "why": "Real: 'you can select elf, half-elf, and human feats' - ancestryId is elf, so every human-trait ancestry feat is unreachable (featSlots.ts:56 matches build.ancestryId only). Same systemic gap as aiuvarin/ardande. No half-elf-trait feats exist, so only the human half is actually missing."
+  },
+  {
+   "id": "aon-half-orc",
+   "upheld": true,
+   "why": "Real: ancestryId is orc, so the human-trait ancestry feats this heritage unlocks can never be picked (featSlots.ts:56). Same systemic engine gap as aon-half-elf."
+  },
+  {
+   "id": "aon-ifrit",
+   "upheld": true,
+   "why": "Strong: the record carries NO engine fields at all, Heritage extends DefenseGrants so top-level `resistances` is the correct lane, and IwrEntry.value takes the formula string. NOTE: also add senses:[{name:'low-light-vision'}] + darkvisionIfAncestryLowLight:true, which every other geniekin heritage has and this one lacks."
+  },
+  {
+   "id": "aon-tiefling",
+   "upheld": false,
+   "why": "Nothing to reach: core.json contains ZERO feats carrying the 'tiefling' trait (the remaster moved them to the nephilim lineage), so the widened pool is empty. Vision is modelled via effect-backfill.json. Correctly inert."
+  },
+  {
+   "id": "ardande",
+   "upheld": true,
+   "why": "Confirmed: 23 ancestry-category feats carry the 'ardande' trait and none carries a base-ancestry trait, so every one is unreachable through featSlots.ts:56. The largest instance of the versatile-heritage feat-pool gap."
+  },
+  {
+   "id": "azarketi-weapon-expertise",
+   "upheld": true,
+   "why": "Verified: featGrantsAuto.ts:47 has azarketi-weapon-familiarity (rank trained) but NO azarketi-weapon-expertise, while catfolk/conrasu/genie/ghoran/grippli/hobgoblin/kobold/vanara/vishkanya all ship the mirrorBestCategory twin. Registry line; no engine work needed."
+  },
+  {
+   "id": "born-of-the-bones-of-the-earth",
+   "upheld": true,
+   "why": "Verified deliverable: the id IS an exemplar extraChoice option (dominion-epithet), so it reaches grantOptions and build.ts:2228 reads classFeatures[id].grantsFeats. energized-spark exists and carries its own element `choice`. NOTE: all 8 dominion epithets share this gap, and the granted feat's element picker will be unrestricted (the epithet limits it to earth/fire)."
+  },
+  {
+   "id": "brevic-noble",
+   "upheld": true,
+   "why": "Real: the record hardcodes the Garess branch. NOTE for apply: grantedFeatByChoice is INERT on its own here - backgroundGrantedFeats (build.ts:337) keys off trainedSkillChoice, which this record lacks. Must also replace trainedSkill:'crafting' with trainedSkillChoice:[crafting,society,athletics,survival,diplomacy,deception], and the fixed trainedLore should become trainedLoreOptions."
+  },
+  {
+   "id": "butterflys-sting",
+   "upheld": true,
+   "why": "Real: sneak-attack is a classFeature and no data field grants a class FEATURE; ownedFeatureIds is built only from the class's own feature list + subclass + class-archetype adds, so no feat-grant path can reach it. Correctly needsEngineWork."
+  },
+  {
+   "id": "captain-dedication",
+   "upheld": true,
+   "why": "Upheld on the FEAT half only. NOTE for apply: the follower claim is WRONG - CompanionsTab.tsx:148 lists every content.followers entry unconditionally, so a captain can add the novice follower by hand today. What is genuinely missing is the 'Group Impression or Group Coercion' pick, and it needs NO engine work: FeatPickSpec.ids already supports an explicit menu (the pitborn pattern), so FEAT_PICK_GRANTS['captain-dedication'] = {prompt, maxLevel:1, ids:['group-impression','group-coercion']}."
+  },
+  {
+   "id": "champion-dedication",
+   "upheld": true,
+   "why": "Confirmed: only 5 feats in core.json carry classDcGrant (gunslinger/fighter/ranger/rogue/alchemist dedications); champion-dedication has none although its text prints 'You become trained in champion class DC'. build.ts:2508 reads the field and the shape matches."
+  },
+  {
+   "id": "child-of-notoriety",
+   "upheld": true,
+   "why": "Real: pastApproach records the branch but changes nothing. NOTE for apply: as with brevic-noble, grantedFeatByChoice does nothing until trainedSkill:'diplomacy' becomes trainedSkillChoice:['diplomacy','intimidation'] (build.ts:337 resolves the key from backgroundSkillChoice), and trainedLore should become trainedLoreOptions ['genealogy','underworld']."
+  },
+  {
+   "id": "child-of-the-polis",
+   "upheld": true,
+   "why": "Fully deliverable as written: trainedSkillChoice ['diplomacy','society'] already exists, streetwise and bargain-hunter both exist, and backgroundGrantedFeats lets grantedFeatByChoice REPLACE the flat grantedFeatId. NOTE: drop the now-redundant grantedFeatId, and the city-state Lore should become trainedLoreChoice."
+  },
+  {
+   "id": "combat-flexibility",
+   "upheld": true,
+   "why": "Confirmed obtainable and unmodelled: combat-flexibility IS in the fighter's features at level 9 in core.json, and the record carries no field at all - no daily-prep pick, no registry entry."
+  },
+  {
+   "id": "commander-dedication",
+   "upheld": true,
+   "why": "Confirmed: the text prints 'trained in commander class DC' and the record has no classDcGrant, unlike the five dedications that do. Field and shape are correct and build.ts:2508 consumes it."
+  },
+  {
+   "id": "dancer-in-the-seasons",
+   "upheld": true,
+   "why": "Same verified lane as born-of-the-bones-of-the-earth: the id is an exemplar dominion-epithet extraChoice option, so classFeatures[id].grantsFeats is read at build.ts:2228, and energized-spark exists. NOTE: the epithet restricts the element to cold/fire/void/wood; the granted feat's own picker will offer all."
+  },
+  {
+   "id": "determined-lore-seeker",
+   "upheld": true,
+   "why": "Real: the existing `choice` only records which spell you favour. Feat effectChoices ARE resolved (build.ts:2458) and rendered (Builder.tsx:1422); innateSpells supports rank/usesPerDay/heightenHalfLevel and all three spell ids (translate, sound-body, see-the-unseen) exist in core.json."
+  },
+  {
+   "id": "devout-magic",
+   "upheld": true,
+   "why": "Real: the record has focusPoolBonus:1, no focusSpells and no picker, so the Focus Point has nothing to spend it on. All three spell ids exist; EffectGrant.focusSpells is the documented 'choose one of N focus spells' lane and feat effectChoices render."
+  },
+  {
+   "id": "draconic-paragon",
+   "upheld": true,
+   "why": "Real: no fields, no registry entry. Two branches are genuine sheet changes (deadly d6 on granted jaws/claws/tail Strikes; +1/day on another feat's innate spells) and neither has a legal field - correctly needsEngineWork."
+  },
+  {
+   "id": "dragonblood",
+   "upheld": true,
+   "why": "Real and well-precedented: the record carries only versatile:true. situationalBonuses.ts already ships free-text degree-of-success entries in exactly this shape (steadying-stone line 584, 'success becomes a critical success'), and the `when` is well under 90 chars."
+  },
+  {
+   "id": "dwarven-weapon-expertise",
+   "upheld": true,
+   "why": "Confirmed by grep: NO occurrence of 'dwarven-weapon-expertise' OR 'dwarven-weapon-familiarity' anywhere in src/ or the backfill, so the whole dwarf weapon lane is dead - battle axes, picks, warhammers and dwarven weapons never mirror the class's expert-or-better rank. The featGrantsAuto weaponFamiliarity/mirrorBestCategory lane exists and is registry-only, so no engine work is actually required."
+  },
+  {
+   "id": "elemental-overlap",
+   "upheld": true,
+   "why": "Real: no fields, no registry entry. FEAT_PICK_GRANTS cannot express 'a composite impulse feat that includes YOUR kinetic element' (no element-aware filter, and maxLevel has no 'below the level you took this' form)."
+  },
+  {
+   "id": "elven-weapon-expertise",
+   "upheld": true,
+   "why": "Confirmed by grep: neither 'elven-weapon-expertise' nor 'elven-weapon-familiarity' appears anywhere in src/ or the backfill. Longbows/longswords/rapiers/shortbows/elf weapons never mirror the class weapon rank. Registry-only fix via featGrantsAuto weaponFamiliarity with mirrorBestCategory:true."
+  },
+  {
+   "id": "evolution-feat",
+   "upheld": true,
+   "why": "Verified against core.json: summoner.features contains evolution-feat at level 1 while summoner.featProgression.class is [2,4,...,20] - there is no level-1 class-feat slot, so the 1st-level evolution feat can never be chosen."
+  },
+  {
+   "id": "experimental-spellshaping",
+   "upheld": true,
+   "why": "Verified obtainable: experimental-spellshaping IS a wizard `thesis` extraChoice option (so it reaches grantOptions), and the record carries no field - neither the permanent 1st-level spellshape feat nor the 4th-level daily-prep one is delivered."
+  },
+  {
+   "id": "fated-rival",
+   "upheld": true,
+   "why": "Real and well-formed: grantedFeatId is the Background lane, backgroundGrantedFeats reads it, and diehard exists in core.json. situationalBonuses covers only the three conditional bonuses, never the outright feat."
+  },
+  {
+   "id": "favored-prey",
+   "upheld": true,
+   "why": "Real: the record carries no field of any kind, so a permanent player choice is never made or stored. Feat effectChoices render (Builder.tsx:1422) and options with no `grant` are explicitly supported (types.ts:394). NOTE: a `choice` {kind:'array'} with an `inert` note is the tighter shape, since none of the four options changes a statistic."
+  }
+ ]
+}

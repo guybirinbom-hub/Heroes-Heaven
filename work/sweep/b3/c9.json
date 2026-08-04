@@ -1,0 +1,1129 @@
+[
+ {
+  "id": "vashus-ninth-life",
+  "lane": "grantsFeat",
+  "collection": "items",
+  "name": "Vashu's Ninth Life",
+  "level": 9,
+  "traits": [
+   "deadly-d8",
+   "magical",
+   "two-hand-d10",
+   "versatile-p"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "This *+1 striking ghost touch katana* is made from a whisker stolen from the king of cats over 300 years ago by a catfolk rogue named Vashu Vigaru. He sought the magic of the whisker to preternaturally extend his life, and some believe he still lives, having successfully divested himself of the sword to escape the king's wrath in the end. **Activate—Whisker's Sense** ⟨4⟩ (concentrate) **Frequency** once per hour **Trigger** Your turn ends --- **Effect** You extend your senses through the blade, allowing you to react to nearby movement. *Vashu's Ninth Life* gains the parry trait and raises itself into parrying position, granting you a +1 circumstance bonus to AC until the start of your next turn. **Activate—Full of Life** ⟨5⟩ (concentrate) **Frequency** once per day **Trigger** You slay a living creature with *Vashu's Ninth Life* --- **Effect** A portion of the slain creature's life force travels through the blade and into your soul, bolstering your own life. You gain the benefits of the Diehard feat for 1 minute. This causes you to die from the dying condition at dying 5 rather than dying 4."
+ },
+ {
+  "id": "verduran-city-folk",
+  "lane": "grantsFeat",
+  "collection": "backgrounds",
+  "name": "Verduran City Folk",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "You hail from one of the few large settlements in or around the Verduran Forest, such as Bellis or Wispil. It might be that you're part of these towns' timber operations or supporting industries, such as transporting supplies, overseeing operations, or serving as a remote bureaucrat who reports to a distant capital and enforces the Treaty of the Wildwood. Whatever the case, you're part of a scattered constellation of settlements that share cultural touchstones, including fey-inspired games like Prismati. Choose two attribute boosts. One must be to **Dexterity** or **Intelligence**, and one is a free attribute boost. You're trained in the Society skill and the Games Lore skill. You gain either or Streetwise as a skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Society **Lore** Games Lore"
+ },
+ {
+  "id": "viking-weapon-specialist",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Viking Weapon Specialist",
+  "level": 6,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Viking Weapon Specialist Source Advanced Player's Guide pg. 198 Archetype Viking Prerequisites Viking Weapon Familiarity You are even more skilled in the weapons of your people. You gain the critical specialization effects of the battle axe, hatchet, longsword, and shortsword. Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency rank in the above four weapons."
+ },
+ {
+  "id": "vindicator",
+  "lane": "grantsFeat",
+  "collection": "classFeatures",
+  "name": "Vindicator",
+  "level": 1,
+  "traits": [
+   "ranger"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "You have been specially trained to use guile and magic to reveal hidden threats. You must select Vindicator Dedication as your 2nd-level class feat. **Prerequisites:** You must be a ranger. **Vindicator Adjustments:** You must choose a deity to be a follower of, and you gain your deity's sanctification. You are trained in Religion instead of Nature. You are trained in your deity's favored weapon. If your deity's favored weapon is a simple weapon or unarmed attack with a damage die smaller than d6, you gain the Deadly Simplicity feat. If your deity's favored weapon is an advanced weapon, your proficiency with it is equal to your proficiency with martial weapons. You must choose the vindication edge for your hunter's edge. You learn warden spells as divine spells instead of primal spells, and your spellcasting attribute is Wisdom. When you gain domain spells via the Domain Initiate or Advanced Domain feats, they are warden spells for the purposes of all your vindicator feats and abilities. ## Vindication Edge Your specialized training gives you a unique edge that allows you to more effectively bring the tools of your faith to bear against the monsters that lurk in the night or hide among the faithful. You gain a +1 status bonus to your spell attack rolls against your hunted prey, and they take a –1 status penalty to their saving throws against divine spells you cast. You gain the Vindicator's Mark warden spell. ## Trackless Journey 5th Vindicators can choose to gain the benefits of this class feature in either urban or natural terrain, chosen at the time the class feature is gained. ## Masterful Hunter 17th The masterful hunter class feature gives an additional benefit based on your hunter's edge. Included here is the additional benefit for the vindication edge. **Vindication:** You combine skill and magic to swiftly defeat your prey. The status bonus to divine spell attack rolls against your hunted prey increases to +2, and the status penalty to their saving throws against divine spells you cast is –2."
+ },
+ {
+  "id": "vishkanya-weapon-expertise",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Vishkanya Weapon Expertise",
+  "level": 13,
+  "traits": [
+   "vishkanya"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featGrantsAuto"
+  ],
+  "text": "Extensive training has granted you an elegant control in the use of vishkanyan weapons. Whenever you gain a class feature that grants you expert or greater proficiency in a given weapon or weapons, you also gain that proficiency in the blowgun, fighting fan, kris, kukri, shuriken, and all vishkanyan weapons in which you are trained."
+ },
+ {
+  "id": "voice-of-nature",
+  "lane": "grantsFeat",
+  "collection": "classFeatures",
+  "name": "Voice of Nature",
+  "level": 1,
+  "traits": [
+   "druid"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain your choice of the Animal Empathy or Plant Empathy druid feat."
+ },
+ {
+  "id": "war-conditioning",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "War Conditioning",
+  "level": 13,
+  "traits": [
+   "hobgoblin"
+  ],
+  "engineFieldsPresent": [
+   "choice",
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You have extensive training in remote environments, allowing you to move through these areas easily. When you gain this feat, you can choose to gain either a climb Speed of 20 feet or a swim Speed of 20 feet."
+ },
+ {
+  "id": "warpriests-armor",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Warpriest’s Armor",
+  "level": 2,
+  "traits": [
+   "cleric"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featGrantsAuto"
+  ],
+  "text": "Your training has helped you adapt to ever-heavier armor. You are trained in heavy armor. Whenever you gain a class feature that grants you expert or greater proficiency in medium armor, you also gain that proficiency in heavy armor. You treat armor you wear of 2 Bulk or higher as though it were 1 Bulk lighter (to a minimum of 1 Bulk)."
+ },
+ {
+  "id": "warrior-of-legend",
+  "lane": "grantsFeat",
+  "collection": "classFeatures",
+  "name": "Warrior of Legend",
+  "level": 1,
+  "traits": [
+   "fighter"
+  ],
+  "engineFieldsPresent": [
+   "choice",
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You have received a blessing that will ensure your ascension to legend, and a curse that foretells your inevitable fall. You must select Warrior of Legend Dedication as your 2nd-level class feat. **Prerequisites:** You must be a fighter. **Warrior of Legend Adjustments:** You aren't trained in heavy armor. The armor expertise and armor mastery class features only improve your proficiency rank for light armor, medium armor, and unarmored defense. You don't gain Shield Block as a class feature. You are trained in both Acrobatics and Athletics, rather than one or the other. Choose one physical damage type, which becomes your cursed weakness: bludgeoning, piercing, or slashing. You gain weakness to this damage type equal to half your level (minimum 1). You gain Diehard as a bonus feat, but you become Doomed 2 whenever you take damage from your cursed weakness (unless your doomed value is already higher). Your fighter weapon mastery and weapon legend class features grant you increased proficiency in both spears and polearms, but you can't choose any other weapon group with these class features."
+ },
+ {
+  "id": "wellspring-gnome",
+  "lane": "grantsFeat",
+  "collection": "heritages",
+  "name": "Wellspring Gnome",
+  "traits": [],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "Some other source of magic has a greater hold on you than the primal magic of your fey lineage does. This connection might come from an occult plane or an ancient occult song; a deity, celestial, or fiend; magical effluent left behind by a mage war; or ancient rune magic. Choose arcane, divine, or occult. You gain one cantrip from that magical tradition's spell list. You can cast this spell as an innate spell at will, as a spell of your chosen tradition. A cantrip is heightened to a spell rank equal to half your level rounded up. Whenever you gain a primal innate spell from a gnome ancestry feat, change its tradition from primal to your chosen tradition."
+ },
+ {
+  "id": "whose-cry-is-thunder",
+  "lane": "grantsFeat",
+  "collection": "classFeatures",
+  "name": "Whose Cry is Thunder",
+  "level": 7,
+  "traits": [
+   "exemplar"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The sky overhead is yours to command as lightning strikes your soul. You gain the Energized Spark feat for your choice of electricity or sonic. When you critically succeed on a Strike, a thunderclap booms! The target must make a saving throw against your class DC. On a failure, they are knocked prone and deafened for 1 minute. This is a sonic effect. When you Spark Transcendence, you can choose to become electrically charged until the start of your next turn. Any creature that touches you or damages you with an unarmed attack or non-reach melee weapon while you're charged takes 1d6 damage as lightning courses back to them."
+ },
+ {
+  "id": "wild-strider",
+  "lane": "grantsFeat",
+  "collection": "feats",
+  "name": "Wild Strider",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Natural obstacles pose no obstacle to you. You gain the ranger's Wild Stride class feature. This allows you to ignore the effects of all non-magical difficult terrain, treat greater difficult terrain as merely difficult terrain, and gives you an additional benefit from Favored Terrain based on the terrain."
+ },
+ {
+  "id": "act-together",
+  "lane": "resource",
+  "collection": "classFeatures",
+  "name": "Act Together",
+  "level": 1,
+  "traits": [
+   "summoner",
+   "tandem"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Frequency** once per round You and your eidolon act as one. Either you or your eidolon takes an action or activity using the same number of actions as Act Together, and the other takes a single action. For example, if you spent 2 actions to Act Together, you could cast Breathe Fire (2 actions) and your eidolon could Strike (1 action), or your eidolon could use its Breath Weapon (2 actions) and you could Stride (1 action). This lets you each use separate exploration activities like Avoid Notice as you travel."
+ },
+ {
+  "id": "aeon-stone",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Aeon Stone",
+  "level": 1,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Aeon Stone Source GM Core pg. 284 Usage worn Over millennia, these mysterious, intricately cut gemstones have been hoarded by mystics and fanatics hoping to discover their secrets. Despite their myriad forms and functions, these stones are purportedly all fragments of crystal tools used by otherworldly entities to construct the universe in primeval times. When you invest one of these precisely shaped crystals, the stone orbits your head instead of being worn on your body. You can stow an aeon stone with an Interact action, and an orbiting stone can be snatched out of the air with a successful Disarm action against you. A stowed or removed stone remains invested, but its effects are suppressed until you return it to orbit your head again. There are various types of aeon stones, each with a different appearance and magical effect. Each aeon stone also gains a resonant power when slotted into a special magical item called a wayfinder Aeon Stone (Amplifying) Source GM Core pg. 284 Price 9,750 gp An amplifying aeon stone must be activated to provide a benefit. The resonant power grants you a +2 item bonus to Arcana, Nature, Occultism, or Religion checks—whichever corresponds to the tradition of the last spell you enhanced with this aeon stone. Activate—Amplify (concentrate, spellshape) Effect If your next action is to Cast a Spell, that spell's rank is 1 higher (maximum 10th rank) for the purposes of counteracting and being counteracted. Aeon Stone (Consumed) Source GM Core pg. 284 Price 9 gp A consumed aeon stone is a dull lump that has lost its magical properties. It still rotates your head like any other aeon stone and can thus serve as a stylish, hand-free option for various spells that target an object. This aeon stone has no resonant power. Aeon Stone (Delaying) Source GM Core pg. 284 Price 350 gp When you would die from the dying condition (typically at dying 4), this smooth pink stone automatically activates and reduces your dying value to 1 less than would normally kill you (typically to dying 3). The stone then permanently turns into a consumed aeon stone. You can benefit from this ability only once per day, even if you have multiple such stones. The resonant power allows you to cast 1st-rank heal as a divine innate spell once per day. Aeon Stone (Envisioning) Source GM Core pg. 284 Price 425 gp This clear cube allows you to communicate with a limited form of telepathy to a range of 100 feet. The messages are transmitted as a simple image each round. These images are the quality of a hasty or childish sketch but can be roughly understood by creatures regardless of language. This provides no special ability to respond to your images. The resonant power allows you to cast translate as an occult innate spell once per day. Aeon Stone (Peering) Source GM Core pg. 284 Price 9,500 gp This faintly colored prism catches and transforms light. If the aeon stone is in an area of bright light, shades of purple light provide dim light in a 30-foot radius. In that radius, magical items and effects are tinged with purple, the depth of the color revealing their counteract rank. The GM also secretly rolls a counteract check against any darkness or illusio"
+ },
+ {
+  "id": "aeon-stone-gold-nodule",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Aeon Stone (Gold Nodule)",
+  "level": 6,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "When a gold nodule aeon stone is created, its creator chooses a language they know to store within the crystal. When you invest the stone, you gain the ability to understand, speak, and write that language. The resonant power allows you to cast Translate as an occult innate spell once per day."
+ },
+ {
+  "id": "angel-eidolon",
+  "lane": "resource",
+  "collection": "classFeatures",
+  "name": "Angel Eidolon",
+  "level": 1,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Your eidolon is a celestial messenger, a member of the angelic host with a unique link to you, allowing them to carry a special message to the mortal world at your side. Most angel eidolons are roughly humanoid in form, with feathered wings, glowing eyes, halos, or similar angelic features. However, some take the form of smaller angelic servitors like the winged helmet cassisian angel instead. The two of you are destined for an important role in the plans of the celestial realms. Though a true angel, your angel eidolon's link to you as a mortal prevents them from casting the angelic messenger ritual, even if they somehow learn it. **Tradition** divine **Traits** angel, celestial, eidolon **Alignment** must be good, usually neutral good **Home Plane** Nirvana (if NG), Elysium (if CG), or Heaven (if LG) --- **Size** Medium or Small **Suggested Attacks** fist (bludgeoning), wing (bludgeoning), unarmed attacks shaped like a weapon **Angelic Avenger** Str 18, Dex 14, Con 16, Int 8, Wis 12, Cha 10; +2 AC (+3 Dex cap) **Angelic Emissary** Str 12, Dex 18, Con 12, Int 10, Wis 12, Cha 14; +1 AC (+4 Dex cap) **Skills** Diplomacy, Religion **Senses** darkvision **Language** Celestial **Speed** 25 feet --- **Eidolon Abilities** *Initial* hallowed strikes; *Symbiosis* traveler's aura; *Transcendence* angelic mercy ## Hallowed Strikes Your eidolon's attacks are hallowed by the celestial realms. Your eidolon's unarmed Strikes deal an extra 1 good damage; as usual, this extra damage harms only evil creatures or those with a weakness to good damage. Additionally, your eidolon can make nonlethal attacks with its unarmed attacks without taking the usual –2 circumstance penalty. ## Traveler's Aura 7th Your eidolon emanates a powerful aura—resembling that of an astral deva—that protects creatures as they travel. The aura has the abjuration, aura, and divine traits. Your eidolon and its allies within a 20-foot emanation are protected from severe heat and cold, and your eidolon is never off-guard to creatures inside the aura that are of a lower level than the eidolon. When you gain the transcendence class feature, this evolves to the full benefits of an astral deva; your eidolon and allies in the aura are protected from environmental damage from any plane, including severe and extreme heat and cold as well as more unusual dangers. ## Angelic Mercy 17th Your eidolon's angelic power allows them to assuage a variety of ailments, just like most other powerful angels. Your eidolon can cast *remove curse*, *remove disease*, *remove fear*, and *remove paralysis* once per day each as 9th-level divine innate spells."
+ },
+ {
+  "id": "aon-living-statue",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Living Statue",
+  "level": 0,
+  "traits": [
+   "earth"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Living Statue Aspect Earth Your relic's energies have given you control over the boundary between flesh and stone. You can cast 6th-rank petrify and sure footing (to remove petrification only) as innate spells, each once per day. As long as you are standing on the earth, your body reflexively petrifies at the moment you are struck, granting you resistance 5 to physical damage (except adamantine). This increases to 8 in caves or subterranean environments."
+ },
+ {
+  "id": "aon-seer-s-array",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Seer's Array",
+  "level": 0,
+  "traits": [
+   "relic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Seer's Array Aspects Mind and Time Diviners through the ages have employed a variety of tools to glimpse the future, but one who assembles five pieces of a seer's array gains strong second sight. Seer's arrays can be found across Golarion, from the caravans of Varisian harrowers to the scale diviners at the court of the Dragon King of Xa Hoi. A diviner who wears the array is bound to be sought after for counsel, and those who consult such farsighted individuals do well to heed any advice given. Set Items : Pendant of the Occult (level 3), Staff of the Unblinking Eye (level 6), Clarity Goggles (Lesser) (level 8), Crystal Ball (Clear Quartz) (level 14), Amulet of the Third Eye (level 17) Gifts : The set grants the following gifts. - 1: Recalculate - 2: Borrow Time - 3: Time Jump - 4: Precognition - 5: Time Reversal Collective Features : The set grants the following features. Two Items : The circumstance bonus from recalculate increases by 1. Three Items : Creatures become temporarily immune to the relic's borrow time gift for 1 hour. Four Items : You can use the relic's time jump once per hour. For each use after the first in a given day, you must attempt a flat check with a DC of 9 + the number of times you've used the gift that day. If you fail, you can still complete the time jump, but after that the gift is no longer available until you next complete your daily preparations. You can roll the flat check before using the gift and decide not to do so after seeing the roll. However, any failure applies to the next use of the gift that day, making your next use your last that day. Five Items : You can use the relic's precognition once per hour. Each use after the first requires a flat check like for time jump at four items, but this flat check affects your use of precognition."
+ },
+ {
+  "id": "colorful-coating",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Colorful Coating",
+  "level": 3,
+  "traits": [
+   "alchemical",
+   "consumable"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Colorful Coating Source Treasure Vault (Remastered) pg. 52 Usage held in 1 hand Bulk L Activate (manipulate) These coatings come in different colors, each with a different special effect. A bottle of colorful coating contains enough to slather over one 5-foot square within your reach or space and is made with a special dispenser that enables you to coat the surface using only one hand. It's possible to use the coating on any surface that can be painted (subject to the GM's discretion). Colorful coating dries instantly, and its effect in the square you coated lasts for 1 minute. After that time, the coating turns to fine, inert powder, returning the square to its original condition unless otherwise noted. Colorful Coating (Blue) Source Treasure Vault (Remastered) pg. 52 Price 8 gp Bulk L Blue colorful coating contains bonding compounds that firm up a surface, making it more stable and more supportive of weight. When applied to material that's loose or unstable, the square can hold twice as much weight before giving way. The coating also slows any collapse, making it easier to avoid and granting a +1 circumstance bonus to Reflex saving throws in reaction to the coated surface's collapse. This coating can shore up a wall, ceiling, door, or similar opening, granting a +2 circumstance bonus to the DC for Athletics checks to Force Open the coated surface. Colorful Coating (Green) Source Treasure Vault (Remastered) pg. 52 Price 10 gp Bulk L Green colorful coating dries into a low-friction surface. It makes the square slippery, making it both difficult terrain and uneven ground with a DC to Balance of 20. A creature that Steps or Crawls doesn’t have to attempt to Balance. The coating also makes a coated wall or ceiling harder to climb. It imposes a –2 circumstance penalty to checks to Climb the coated surface. Yellow colorful coating and green colorful coating have opposite effects. If they’re both applied to the same surface, they negate one another. Colorful Coating (Indigo) Source Treasure Vault (Remastered) pg. 52 Price 10 gp Bulk L Indigo colorful coating contains agents that destroy weaker objects. When applied to a surface or object, the coating treats the object's Hardness as 2 lower and deals 1d4 acid damage to the object each round. The damage this coating deals remains after the coating becomes inert. Colorful Coating (Orange) Source Treasure Vault (Remastered) pg. 52 Price 12 gp Bulk L Orange colorful coating contains a mixture of acidic substances. As it dries, caustic ingredients rise to the coating's surface. The square becomes hazardous terrain, dealing 1d4 acid damage to any creature that moves through it. A creature can take this acid damage only once per round. Colorful Coating (Red) Source Treasure Vault (Remastered) pg. 52 Price 10 gp Bulk L Red colorful coating contains rubbery compounds, turning any surface it covers into a trampoline. A creature or object that falls onto a square coated with red colorful coating takes no falling damage and bounces half again as high as the original fall. If the creature fell straight down, then with several bounces, it comes safely to a stop. If it was moving horizontally, its bounce continues"
+ },
+ {
+  "id": "decanter-of-endless-water",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Decanter of Endless Water",
+  "level": 7,
+  "traits": [
+   "magical",
+   "water"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This item looks like an ordinary glass flask full of water. The stopper can't be removed unless you speak one of the item's three command words, each of which causes water to pour forth in a different way. Pulling the stopper straight out creates fresh water, and rotating it as you pull creates salt water. Any effect of the decanter lasts until the decanter is plugged (with its own stopper, a finger, or the like). **Activate** ⟨1⟩ command, Interact --- **Effect** Speaking \"stream\", you cause water to pour out at a rate of 1 gallon per round. **Activate** ⟨1⟩ command, Interact --- **Effect** Speaking \"fountain\", you cause water to pour out in a 5-foot-long stream at a rate of 5 gallons per round. **Activate** ⟨1⟩ command, Interact --- **Effect** Speaking \"geyser\", you cause a powerful deluge of water to erupt at a rate of 15 gallons per round. You can direct the stream at a creature, subjecting it to the effects of Hydraulic Push (spell attack roll +15). You can repeat this once per round as long as the geyser continues, spending an Interact action to direct the geyser each time."
+ },
+ {
+  "id": "demon-eidolon",
+  "lane": "resource",
+  "collection": "classFeatures",
+  "name": "Demon Eidolon",
+  "level": 1,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Your eidolon is a demon, born of mortal sin congealed amid the chaos and evil of the Abyss, using its link to you to spread chaos at your side. Choose an associated sin for your demon. Demon eidolons have appearances as varied as the infinite Abyss. While demons are inherently untrustworthy, your demon eidolon has reached an accord with you and generally keeps it, though that doesn't mean your eidolon isn't actively working to bring your life deeper into its associated sin. Though a true demon, your demon eidolon's link to you as a mortal prevents them from casting the abyssal pact ritual, even if they somehow learn it. **Tradition** divine **Traits** demon, eidolon, fiend **Alignment** must be chaotic evil **Home Plane** The Abyss --- **Size** Medium or Small **Suggested Attacks** claw (slashing), jaws (piercing), horn (piercing), tail (bludgeoning), tentacle (bludgeoning), wing (bludgeoning) **Wrecker Demon** Str 18, Dex 14, Con 16, Int 10, Wis 8, Cha 12; +2 AC (+3 Dex cap) **Tempter Demon** Str 12, Dex 18, Con 12, Int 10, Wis 10, Cha 16; +1 AC (+4 Dex cap) **Skills** Intimidation, Religion **Senses** darkvision **Language** Abyssal **Speed** 25 feet --- **Eidolon Abilities** *Initial* demonic strikes; *Symbiosis* visions of sin; *Transcendence* blasphemous decree ## Demonic Strikes Your eidolon's attacks are corrupted by the Abyss and imbued with pure evil and shifting chaos. All your eidolon's unarmed Strikes deal an extra 1 evil damage; as usual, this extra damage harms only good creatures or those with a weakness to evil damage. Additionally, choose one of your eidolon's unarmed attacks that deals physical damage; it gains the versatile trait for a different type of physical damage you choose. ## Visions of Sin 7th Your demon is born of sin and can project the sin it is formed from into the minds of others. It gains the Visions of Sin activity. ## Blasphemous Decree 17th Your demon utters indescribable words writhing with its associated sin. It can cast an evil Divine Decree once per day as a 9th-level spell. You are unaffected by this decree, even if you aren't evil. At 19th level, this becomes a 10th-level divine decree instead."
+ },
+ {
+  "id": "drifting-pollen",
+  "lane": "resource",
+  "collection": "feats",
+  "name": "Drifting Pollen",
+  "level": 8,
+  "traits": [
+   "impulse",
+   "kineticist",
+   "plant",
+   "primal",
+   "stance",
+   "wood"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "core.stances"
+  ],
+  "text": "A haze of pollen floats around you. A creature in your kinetic aura when you enter the stance, or who later enters the aura or ends its turn in the aura, attempts at a save against your class DC. On a failure, it's Sickened 1 (Sickened 2 on a critical failure) and dazzled until it's no longer sickened. A creature attempts this save no more than once per round and doesn't attempt a new save if already affected."
+ },
+ {
+  "id": "enhanced-psychopomp-familiar",
+  "lane": "resource",
+  "collection": "feats",
+  "name": "Enhanced Psychopomp Familiar",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your psychopomp's continued service in Pharasma's name brings it favor from the goddess. It might change appearance to look like a different, more powerful kind of psychopomp. You can select four familiar or master abilities each day, instead of two, but two must be from the Psychopomp Familiar feat or the following ability. - **Augury** Your familiar can glimpse the strands of fate to give you a cryptic clue regarding your future. Your familiar can cast Augury once per day using your magical tradition and spell DC. You must be at least 8th level to select this ability."
+ },
+ {
+  "id": "enkindled-quintessence",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Enkindled Quintessence",
+  "level": 14,
+  "traits": [
+   "contract",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You have fully subsumed your soul within that of a dragon's soul, overloading your very essence with eldritch potential. You immediately retrain your class to that of a sorcerer with the draconic bloodline, with your draconic exemplar matching your bound dragon. You are able to cast spells immediately as if you had a full 8 hours of rest and completed your daily preparations; however, you become Drained 2 from the strain of igniting your soul's magical potential. Once per day, from any distance, the dragon can either teleport you to their lair or teleport to switch places with you. This is a 3-action activity with the teleportation trait and the dragon's tradition trait. --- **Oathbreaker's Calamity** Should either party break the oath, both your souls begin to immolate through your physical forms. If either of you casts a spell, they immediately become Drained 3 unless they're casting it to harm the other party. If either of you die as a result of this calamity, you rise as a wraith (if it's you) or a wyrmwraith (if it's the dragon)."
+ },
+ {
+  "id": "essence-forge-greater",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Essence Forge (Greater)",
+  "level": 18,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "An *essence forge* consists of a large stone workbench with a receptacle for fuel built into the left side. Sparkling crystals are embedded across the forge's structure, with additional flourishes made from a different material, as appropriate to the type of forge. *Life forges* are adorned with fossilized bones and petrified wood. They're used to craft items associated with the divine and primal magic traditions. One must attempt a Nature or Religion check to prime a *life forge*. *Matter forges* are decorated with strips of precious metal. They can be used to craft items associated with the arcane and primal magic traditions. One must attempt an Arcana or Nature check to prime a *matter forge*. *Mind forges* are accentuated with glittering gemstones. They can be used to craft items associated with the arcane and occult magic traditions. One must attempt an Arcana or Occultism check to prime a *mind forge*. *Spirit forges* are emblazoned with strange runes and obscure symbols enhanced by different pigments. They can be used to craft items associated with the divine and occult magic traditions. One must attempt an Occultism or Religion check to prime a *spirit forge*. --- **Activate—Prime the Forge** 1 minute (concentrate, manipulate) **Requirements** The *essence forge* doesn't currently contain any stored essence **Effect** You prepare the *essence forge* for use by placing raw materials in its receptacle then spend an hour concentrating on the forge, using your own magical potential to consume the materials. The combined gp value of the raw materials sets the maximum price of the item you can craft with the *essence forge*. An *essence forge*'s receptacle can hold no more than 3 Bulk of raw materials, so coins, gemstones, or small valuable objects or items make for the best sources of fuel. Attempt an , , , or check as appropriate for the tradition of *essence forge* you're using to focus your magical potential on the receptacle. **Critical Success** The raw materials are consumed, and the *essence forge* stores essence equal to the value of the raw materials. Additional essence overflows back into you, granting a +3 item bonus to the skill you used to Prime the Forge for the next 24 hours. **Success** The raw materials are consumed, and the *essence forge* stores essence equal to the value of the raw materials. **Failure** The raw materials are consumed, but the burn is inefficient, and the *essence forge* stores essence equal to half the value of the raw materials. **Critical Failure** The raw materials are consumed and lost, but no essence is stored in the forge; the raw materials are wasted. --- **Activate—Craft an Item** 2 hours (concentrate, manipulate) **Requirements** The *essence forge* has been primed with raw materials equaling or exceeding the value of the item you intend to craft, and you are not fatigued **Effect** You place your hands atop the forge's workspace and focus your concentration on the essence contained within the forge. Choose an item whose formula you have and whose level is equal to or less than the *essence forge*'s level, or choose an Essence Charm. The *essence forge* begins to construct that item as you con"
+ },
+ {
+  "id": "essence-forge-lesser",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Essence Forge (Lesser)",
+  "level": 6,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "An *essence forge* consists of a large stone workbench with a receptacle for fuel built into the left side. Sparkling crystals are embedded across the forge's structure, with additional flourishes made from a different material, as appropriate to the type of forge. *Life forges* are adorned with fossilized bones and petrified wood. They're used to craft items associated with the divine and primal magic traditions. One must attempt a Nature or Religion check to prime a *life forge*. *Matter forges* are decorated with strips of precious metal. They can be used to craft items associated with the arcane and primal magic traditions. One must attempt an Arcana or Nature check to prime a *matter forge*. *Mind forges* are accentuated with glittering gemstones. They can be used to craft items associated with the arcane and occult magic traditions. One must attempt an Arcana or Occultism check to prime a *mind forge*. *Spirit forges* are emblazoned with strange runes and obscure symbols enhanced by different pigments. They can be used to craft items associated with the divine and occult magic traditions. One must attempt an Occultism or Religion check to prime a *spirit forge*. --- **Activate—Prime the Forge** 1 minute (concentrate, manipulate) **Requirements** The *essence forge* doesn't currently contain any stored essence **Effect** You prepare the *essence forge* for use by placing raw materials in its receptacle then spend an hour concentrating on the forge, using your own magical potential to consume the materials. The combined gp value of the raw materials sets the maximum price of the item you can craft with the *essence forge*. An *essence forge*'s receptacle can hold no more than 3 Bulk of raw materials, so coins, gemstones, or small valuable objects or items make for the best sources of fuel. Attempt an , , , or check as appropriate for the tradition of *essence forge* you're using to focus your magical potential on the receptacle. **Critical Success** The raw materials are consumed, and the *essence forge* stores essence equal to the value of the raw materials. Additional essence overflows back into you, granting a +1 item bonus to the skill you used to Prime the Forge for the next 24 hours. **Success** The raw materials are consumed, and the *essence forge* stores essence equal to the value of the raw materials. **Failure** The raw materials are consumed, but the burn is inefficient, and the *essence forge* stores essence equal to half the value of the raw materials. **Critical Failure** The raw materials are consumed and lost, but no essence is stored in the forge; the raw materials are wasted. --- **Activate—Craft an Item** 2 hours (concentrate, manipulate) **Requirements** The *essence forge* has been primed with raw materials equaling or exceeding the value of the item you intend to craft, and you are not fatigued **Effect** You place your hands atop the forge's workspace and focus your concentration on the essence contained within the forge. Choose an item whose formula you have and whose level is equal to or less than the *essence forge*'s level, or choose an Essence Charm. The *essence forge* begins to construct that item as you con"
+ },
+ {
+  "id": "essence-forge-moderate",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Essence Forge (Moderate)",
+  "level": 12,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "An *essence forge* consists of a large stone workbench with a receptacle for fuel built into the left side. Sparkling crystals are embedded across the forge's structure, with additional flourishes made from a different material, as appropriate to the type of forge. *Life forges* are adorned with fossilized bones and petrified wood. They're used to craft items associated with the divine and primal magic traditions. One must attempt a Nature or Religion check to prime a *life forge*. *Matter forges* are decorated with strips of precious metal. They can be used to craft items associated with the arcane and primal magic traditions. One must attempt an Arcana or Nature check to prime a *matter forge*. *Mind forges* are accentuated with glittering gemstones. They can be used to craft items associated with the arcane and occult magic traditions. One must attempt an Arcana or Occultism check to prime a *mind forge*. *Spirit forges* are emblazoned with strange runes and obscure symbols enhanced by different pigments. They can be used to craft items associated with the divine and occult magic traditions. One must attempt an Occultism or Religion check to prime a *spirit forge*. --- **Activate—Prime the Forge** 1 minute (concentrate, manipulate) **Requirements** The *essence forge* doesn't currently contain any stored essence **Effect** You prepare the *essence forge* for use by placing raw materials in its receptacle then spend an hour concentrating on the forge, using your own magical potential to consume the materials. The combined gp value of the raw materials sets the maximum price of the item you can craft with the *essence forge*. An *essence forge*'s receptacle can hold no more than 3 Bulk of raw materials, so coins, gemstones, or small valuable objects or items make for the best sources of fuel. Attempt an , , , or check as appropriate for the tradition of *essence forge* you're using to focus your magical potential on the receptacle. **Critical Success** The raw materials are consumed, and the *essence forge* stores essence equal to the value of the raw materials. Additional essence overflows back into you, granting a +2 item bonus to the skill you used to Prime the Forge for the next 24 hours. **Success** The raw materials are consumed, and the *essence forge* stores essence equal to the value of the raw materials. **Failure** The raw materials are consumed, but the burn is inefficient, and the *essence forge* stores essence equal to half the value of the raw materials. **Critical Failure** The raw materials are consumed and lost, but no essence is stored in the forge; the raw materials are wasted. --- **Activate—Craft an Item** 2 hours (concentrate, manipulate) **Requirements** The *essence forge* has been primed with raw materials equaling or exceeding the value of the item you intend to craft, and you are not fatigued **Effect** You place your hands atop the forge's workspace and focus your concentration on the essence contained within the forge. Choose an item whose formula you have and whose level is equal to or less than the *essence forge*'s level, or choose an Essence Charm. The *essence forge* begins to construct that item as you con"
+ },
+ {
+  "id": "fearsome-familiar",
+  "lane": "resource",
+  "collection": "feats",
+  "name": "Fearsome Familiar",
+  "level": 6,
+  "traits": [
+   "impulse",
+   "kineticist",
+   "primal"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your familiar trades places with an elemental from its elemental plane. Summon a common creature that has the elemental trait and a level no greater than your level - 4. This creature appears in the same space as your familiar, which disappears for the duration of this impulse. The elemental can appear in a space it can't normally reach. A creature you summon with the Fearsome Familiar feat gains the summoned trait. You can Sustain this impulse up to 1 minute. When the impulse ends, the familiar appears in the space the summoned elemental occupied. A familiar can endure this process only so often-if you use this impulse on your familiar more than once per day, it dies as soon as it returns the second time."
+ },
+ {
+  "id": "fulcrum-lenses",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Fulcrum Lenses",
+  "level": 9,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Fulcrum Lenses Source Pathfinder #165: Eyes of Empty Death pg. 75 Fulcrum lenses are unique magical crystals that each contain a sliver of Nhimbaloth's essence. They belong to a larger set of lenses created to manipulate or even bind the Empty Death; most of the other lenses are long lost and likely destroyed. The Haruvex family came into possession of four of the lenses, and they knew that bringing them together focused Nhimbaloth's attention in unprecedented and dangerous ways. Belcorra brought all four lenses to the Abomination Vaults with her, intending to install them in Gauntlight for her ultimate revenge upon Absalom. She also created a special receptacle called the Fulcrum Lattice to hold the lenses so that their power could be focused together. She realized the danger of keeping the fulcrum lenses too close together until the right time and spread them out among loyal groups in the Abomination Vaults' lowest levels for safekeeping. Belcorra keeps only the most powerful lens, the Ebon Fulcrum Lens, with her—indeed, as a ghost, it's the only one she can carry. If the heroes can bring the other three lenses to bear against Belcorra, they can draw Nhimbaloth's dread glare to the sorcerer. Despite her loyalty, Belcorra can't hope to keep her spirit intact when Nhimbaloth gazes directly upon it. The fulcrum lenses are more than mere receptacles of Nhimbaloth's essence. Each grants those who use it a fragment of the Great Old One's power. Crimson Fulcrum Lens May contain spoilers from Abomination Vaults Source Pathfinder #165: Eyes of Empty Death pg. 75 Price 700 gp Bulk 1 This concave lens has a drifting crimson cloud resembling slowly swirling blood within it. While you have the Crimson Fulcrum Lens invested, you seethe with malevolent fury you can barely contain. You gain a +2 item bonus to saving throws against fear effects and a +2 item bonus to your melee Strike damage (this increases to a +4 item bonus to damage if the melee Strike is a jaws attack). You can also activate the lens in the following ways. Activate Interact; Frequency once per day; Effect You grasp the Crimson Fulcrum Lens in one hand and make a Strike that doesn't require that hand. The Strike deals an additional 1d8 precision damage (or 2d8 precision damage if you make a jaws Strike) and doesn't count toward your multiple attack penalty. Activate Interact (attack, possession); Effect While grasping the lens, make a melee spell attack roll with a modifier of +18. On a hit, you force the splinter of Nhimbaloth's essence from the lens to possess the target. You're no longer invested in the lens, and the target gains the benefits as though it had invested the lens but can't activate the lens's other abilities. This effect is permanent, but it can be ended by any effect that removes a possession effect. The lens doesn't have any magical abilities until the possession effect ends; when it does, the essence returns to the lens. Ebon Fulcrum Lens May contain spoilers from Abomination Vaults Source Pathfinder #165: Eyes of Empty Death pg. 75 Price 2,000 gp Bulk L This strangest and most powerful of the fulcrum lenses resembles a chip of smooth obsidian containing three dark gl"
+ },
+ {
+  "id": "garland-spell",
+  "lane": "resource",
+  "collection": "feats",
+  "name": "Garland Spell",
+  "level": 12,
+  "traits": [
+   "druid",
+   "manipulate",
+   "spellshape"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "If your next action is to Cast a Spell with the fungus or plant trait, a garland of plants grows in a in the spell's range. The plants are difficult terrain and hazardous terrain, covered in your choice of thorns or poisonous vines. Any creature that moves into one of these squares or ends its turn in one takes 2d6 damage ( damage for thorns or for vines). A creature can take this damage only once per turn. You and your familiar are immune to this damage. The plants last for 1 minute or until you cast another Garland Spell, whichever comes first. The damage increases to 3d6 at 16th level and 4d6 at 20th level."
+ },
+ {
+  "id": "hag-eye-oracular",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Hag Eye (Oracular)",
+  "level": 4,
+  "traits": [
+   "divination",
+   "invested",
+   "occult",
+   "scrying"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Hag Eye Source Bestiary 3 pg. 128 Usage worn This item appears to be an ordinary semiprecious stone and is typically mounted on a brooch or ring, but the stone is, in fact, an eyeball. This illusion can be seen through with true seeing or similar magic, and anyone who interacts with the item feels its wet and sticky surface, allowing them to attempt to disbelieve the illusion (DC 19). Many hags claim a hag eye is more effective if plucked from a living, awake creature, but this is likely just a convenient excuse for sadism. The hag eye produces no direct benefit for the wearer, but allows the hag who created it, or any member of her coven, can peer through the eye using the Seek action. This has no range limit, provided the hag is on the same plane. Any damage dealt to the eye destroys it. If this happens while a hag is looking through it, the hag is blinded for 1 hour. Craft Requirements You must be a hag. Hag Eye Source Bestiary 3 pg. 128 Price 50 gp Usage worn Hag Eye (Frightful) Source Pathfinder #182: Graveclaw pg. 76 Price 85 gp Usage worn A frightful hag eye is made with the eye of a creature whose gaze inflicts fear, such as some velstracs. Activate (emotion, enchantment, fear, mental, visual) Trigger once per day; Effect You target a creature within 30 feet that must be able to see the frightful hag eye; the target must attempt a DC 19 Will save. Once a creature attempts this save, it's temporarily immune for 24 hours. Critical Success The target is unaffected. Success The target is frightened 1. Failure The target is frightened 2. Critical Failure The target is frightened 3 and fleeing for 1 round. Hag Eye (Oracular) Source Pathfinder #182: Graveclaw pg. 76 Price 75 gp Usage worn Bulk L Oracular hag eyes are made with the eye of a cyclops. A hag who casts augury with an oracular hag eye in her possession reduces the DC of the secret flat check to 2. Hag Eye (Smokey) Source Pathfinder #182: Graveclaw pg. 76 Price 450 gp Usage worn A smoky hag eye is named after the black vapor that constantly emanates from it, like the smoke that continually seeps from a bodak's eye. Activate (death, necromancy, visual) Effect You target a creature within 30 feet that must be able to see the smoky hag eye. The target must attempt a DC 24 Fortitude save. Once a creature attempts this save, it's temporarily immune for 24 hours. Critical Success The creature is unaffected. Success The creature is drained 1. Failure The creature is doomed 1 and drained 2. Critical Failure The creature is doomed 1 and drained 3. Hag Eye (Stoney) Source Pathfinder #182: Graveclaw pg. 76 Price 250 gp Usage worn A stony hag eye is fashioned from the eye of a creature, such a basilisk or medusa, with a petrifying gaze. Activate (incapacitation, transmutation, visual) Trigger once per round; Effect You target a creature within 30 feet that can see the stony hag eye. The target must attempt a DC 22 Fortitude save. On a failure, it's slowed 1 for 1 minute; on a critical failure, if the creature is already slowed, it's permanently petrified. Touching the stony hag eye to the petrified creature (a single action with the manipulate trait) removes the petrified condition."
+ },
+ {
+  "id": "hag-eye-smokey",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Hag Eye (Smokey)",
+  "level": 8,
+  "traits": [
+   "divination",
+   "invested",
+   "occult",
+   "scrying"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Hag Eye Source Bestiary 3 pg. 128 Usage worn This item appears to be an ordinary semiprecious stone and is typically mounted on a brooch or ring, but the stone is, in fact, an eyeball. This illusion can be seen through with true seeing or similar magic, and anyone who interacts with the item feels its wet and sticky surface, allowing them to attempt to disbelieve the illusion (DC 19). Many hags claim a hag eye is more effective if plucked from a living, awake creature, but this is likely just a convenient excuse for sadism. The hag eye produces no direct benefit for the wearer, but allows the hag who created it, or any member of her coven, can peer through the eye using the Seek action. This has no range limit, provided the hag is on the same plane. Any damage dealt to the eye destroys it. If this happens while a hag is looking through it, the hag is blinded for 1 hour. Craft Requirements You must be a hag. Hag Eye Source Bestiary 3 pg. 128 Price 50 gp Usage worn Hag Eye (Frightful) Source Pathfinder #182: Graveclaw pg. 76 Price 85 gp Usage worn A frightful hag eye is made with the eye of a creature whose gaze inflicts fear, such as some velstracs. Activate (emotion, enchantment, fear, mental, visual) Trigger once per day; Effect You target a creature within 30 feet that must be able to see the frightful hag eye; the target must attempt a DC 19 Will save. Once a creature attempts this save, it's temporarily immune for 24 hours. Critical Success The target is unaffected. Success The target is frightened 1. Failure The target is frightened 2. Critical Failure The target is frightened 3 and fleeing for 1 round. Hag Eye (Oracular) Source Pathfinder #182: Graveclaw pg. 76 Price 75 gp Usage worn Bulk L Oracular hag eyes are made with the eye of a cyclops. A hag who casts augury with an oracular hag eye in her possession reduces the DC of the secret flat check to 2. Hag Eye (Smokey) Source Pathfinder #182: Graveclaw pg. 76 Price 450 gp Usage worn A smoky hag eye is named after the black vapor that constantly emanates from it, like the smoke that continually seeps from a bodak's eye. Activate (death, necromancy, visual) Effect You target a creature within 30 feet that must be able to see the smoky hag eye. The target must attempt a DC 24 Fortitude save. Once a creature attempts this save, it's temporarily immune for 24 hours. Critical Success The creature is unaffected. Success The creature is drained 1. Failure The creature is doomed 1 and drained 2. Critical Failure The creature is doomed 1 and drained 3. Hag Eye (Stoney) Source Pathfinder #182: Graveclaw pg. 76 Price 250 gp Usage worn A stony hag eye is fashioned from the eye of a creature, such a basilisk or medusa, with a petrifying gaze. Activate (incapacitation, transmutation, visual) Trigger once per round; Effect You target a creature within 30 feet that can see the stony hag eye. The target must attempt a DC 22 Fortitude save. On a failure, it's slowed 1 for 1 minute; on a critical failure, if the creature is already slowed, it's permanently petrified. Touching the stony hag eye to the petrified creature (a single action with the manipulate trait) removes the petrified condition."
+ },
+ {
+  "id": "hag-eye-stoney",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Hag Eye (Stoney)",
+  "level": 6,
+  "traits": [
+   "divination",
+   "invested",
+   "occult",
+   "scrying"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Hag Eye Source Bestiary 3 pg. 128 Usage worn This item appears to be an ordinary semiprecious stone and is typically mounted on a brooch or ring, but the stone is, in fact, an eyeball. This illusion can be seen through with true seeing or similar magic, and anyone who interacts with the item feels its wet and sticky surface, allowing them to attempt to disbelieve the illusion (DC 19). Many hags claim a hag eye is more effective if plucked from a living, awake creature, but this is likely just a convenient excuse for sadism. The hag eye produces no direct benefit for the wearer, but allows the hag who created it, or any member of her coven, can peer through the eye using the Seek action. This has no range limit, provided the hag is on the same plane. Any damage dealt to the eye destroys it. If this happens while a hag is looking through it, the hag is blinded for 1 hour. Craft Requirements You must be a hag. Hag Eye Source Bestiary 3 pg. 128 Price 50 gp Usage worn Hag Eye (Frightful) Source Pathfinder #182: Graveclaw pg. 76 Price 85 gp Usage worn A frightful hag eye is made with the eye of a creature whose gaze inflicts fear, such as some velstracs. Activate (emotion, enchantment, fear, mental, visual) Trigger once per day; Effect You target a creature within 30 feet that must be able to see the frightful hag eye; the target must attempt a DC 19 Will save. Once a creature attempts this save, it's temporarily immune for 24 hours. Critical Success The target is unaffected. Success The target is frightened 1. Failure The target is frightened 2. Critical Failure The target is frightened 3 and fleeing for 1 round. Hag Eye (Oracular) Source Pathfinder #182: Graveclaw pg. 76 Price 75 gp Usage worn Bulk L Oracular hag eyes are made with the eye of a cyclops. A hag who casts augury with an oracular hag eye in her possession reduces the DC of the secret flat check to 2. Hag Eye (Smokey) Source Pathfinder #182: Graveclaw pg. 76 Price 450 gp Usage worn A smoky hag eye is named after the black vapor that constantly emanates from it, like the smoke that continually seeps from a bodak's eye. Activate (death, necromancy, visual) Effect You target a creature within 30 feet that must be able to see the smoky hag eye. The target must attempt a DC 24 Fortitude save. Once a creature attempts this save, it's temporarily immune for 24 hours. Critical Success The creature is unaffected. Success The creature is drained 1. Failure The creature is doomed 1 and drained 2. Critical Failure The creature is doomed 1 and drained 3. Hag Eye (Stoney) Source Pathfinder #182: Graveclaw pg. 76 Price 250 gp Usage worn A stony hag eye is fashioned from the eye of a creature, such a basilisk or medusa, with a petrifying gaze. Activate (incapacitation, transmutation, visual) Trigger once per round; Effect You target a creature within 30 feet that can see the stony hag eye. The target must attempt a DC 22 Fortitude save. On a failure, it's slowed 1 for 1 minute; on a critical failure, if the creature is already slowed, it's permanently petrified. Touching the stony hag eye to the petrified creature (a single action with the manipulate trait) removes the petrified condition."
+ },
+ {
+  "id": "hand-hewed-face",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Hand-Hewed Face",
+  "level": 7,
+  "traits": [
+   "contract",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "At the crossroads under a new moon, you traded your face for one that you can mold as though it were clay, sealed with a ribbon worn around your neck to hide the seam. Your true appearance changes to that of a generic member of your ancestry. You can shape your facial features with your hands and thus don't need a disguise kit to Impersonate, and you don't take circumstance penalties to Impersonate someone due to the difference in your facial features. Once per day, from any distance, the entity that holds your *bargained contract* can change their appearance to match your appearance from before you sealed the contract, or the appearance you're currently using through Impersonate. When they do, your face transforms to your new true appearance—that of a generic member of your ancestry—and you become Stunned 3 by the sudden backlash. **Activate—Fresh Face** ⟨2⟩ (manipulate) **Requirements** You have used Impersonate and molded your face into a different face --- **Effect** You peel your current face from your skin, revealing the true generic appearance from your *bargained contract*. This allows you to duck out of sight and remove the facial component of your disguise almost immediately, though clothing or other elements might still give you away."
+ },
+ {
+  "id": "ignite-the-sun",
+  "lane": "resource",
+  "collection": "feats",
+  "name": "Ignite the Sun",
+  "level": 18,
+  "traits": [
+   "fire",
+   "impulse",
+   "kineticist",
+   "light",
+   "primal"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "The fires of creation become yours to control. You create a miniature sun in a within 500 feet. A creature takes damage any time it's in the miniature sun, with a save against your class DC. A creature can take this damage no more than once per round. The sun sheds bright light in a (and dim light for another 500 feet); this is sunlight for creatures with a particular vulnerability to sunlight. The sun lasts until the end of your next turn, but you can Sustain it up to 1 minute. The first time you Sustain the impulse each round, you can choose to increase the size of the sun's burst by 5 feet, then make it Fly up to 30 feet. The sun can move through creatures, damaging them as described above. The sun continually channels fire into you and your allies. You and each of your allies within the sun's light deal an additional 1d6 damage with all Strikes, spells that deal fire damage, and impulses that deal fire damage (except for Ignite the Sun itself). These aren't cumulative with multiple suns."
+ },
+ {
+  "id": "inner-fire-monk",
+  "lane": "resource",
+  "collection": "feats",
+  "name": "Inner Fire (Monk)",
+  "level": 6,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "While you're in Stoked Flame Stance, you have cold and fire resistance equal to half your level, and any creature that hits you with an unarmed attack, tries to Grab or Grapple you, or otherwise touches you takes fire damage equal to your Wisdom modifier (minimum 1). A creature can take this damage no more than once per turn."
+ },
+ {
+  "id": "inner-fire-som",
+  "lane": "resource",
+  "collection": "feats",
+  "name": "Inner Fire (SoM)",
+  "level": 6,
+  "traits": [
+   "monk"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Inner Fire (SoM) Source Secrets of Magic pg. 202 Prerequisites Stoked Flame Stance While you're in Stoked Flame Stance, you have cold and fire resistance equal to half your level, and any creature that hits you with an unarmed attack, tries to Grab or Grapple you, or otherwise touches you takes fire damage equal to your Wisdom modifier (minimum 1). A creature can take this damage no more than once per turn."
+ },
+ {
+  "id": "legendary-medic",
+  "lane": "resource",
+  "collection": "feats",
+  "name": "Legendary Medic",
+  "level": 15,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've discovered medical breakthroughs or techniques that achieve miraculous results. Once per day for each target, you can spend 1 hour treating that target and attempt a Medicine check to remove a disease or the blinded, deafened, doomed, or drained condition. Use the DC of the disease or of the spell or effect that created the condition. If the effect's source is an artifact, above 20th level, or similarly powerful, increase the DC by 10."
+ },
+ {
+  "id": "living-statue",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Living Statue",
+  "level": 0,
+  "traits": [
+   "earth"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Living Statue Source GM Core pg. 313 Aspect Earth Your relic's energies have given you control over the boundary between flesh and stone. You can cast 6th-rank petrify and sure footing (to remove petrification only) as innate spells, each once per day. As long as you are standing on the earth, your body reflexively petrifies at the moment you are struck, granting you resistance 5 to physical damage (except adamantine). This increases to 8 in caves or subterranean environments."
+ },
+ {
+  "id": "magical-adept",
+  "lane": "resource",
+  "collection": "feats",
+  "name": "Magical Adept",
+  "level": 8,
+  "traits": [
+   "evolution",
+   "summoner"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "Your eidolon gains more magic. Choose one 2nd-rank spell and one 1st-rank spell of your eidolon's tradition. Your eidolon can cast them each once per day as innate spells. At every even level after you take this feat, your eidolon can swap one of these innate spells for a new innate spell that's 2 or more levels lower than your highest-rank spell slot."
+ },
+ {
+  "id": "magical-master",
+  "lane": "resource",
+  "collection": "feats",
+  "name": "Magical Master",
+  "level": 18,
+  "traits": [
+   "evolution",
+   "summoner"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "Your eidolon gains a bevy of lower-rank spells. Choose an innate spell of your eidolon's tradition of each of the spell ranks from 1 to 7 in which your eidolon doesn't currently have an innate spell from Magical Adept. Your eidolon can cast each once per day as innate spells. You can swap these spells at every even level, but your eidolon can never know more than one spell of each spell rank 1 through 7"
+ },
+ {
+  "id": "magical-medals",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Magical Medals",
+  "level": 3,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Magical Medals Source Battlecry! pg. 151 Usage worn Military leaders or heads of state award these special medals to commend exemplary performance by their top soldiers. They’re typically worn on a special strip of fabric near the lapel, but soldiers from different countries sometimes wear them in other places. No matter how many magical medals you have, they collectively count as one invested item. Medal of Gorilla’s Might Source Battlecry! pg. 151 Price 25 gp This steel medal resembles the head and upper body of a gorilla. It’s typically given in recognition of physical prowess, and it grants you a +1 item bonus to Athletics checks to Climb, Force Open, High Jump, and Long Jump. Activate—Gorila's Second Leap (concentrate, fortune) Frequency once per day; Trigger You would fail but not critically fail an Athletics check to High Jump or Long Jump; Effect The gorilla on the medal beats its chest, giving you another chance. You reroll the failed check. Medal of Griffon’s Heart Source Battlecry! pg. 151 Price 80 gp This copper medal features a griffon’s face, wings, and talons in profile. It is given in recognition of remarkable bravery, and it grants you a +1 item bonus to saving throws against fear and mental effects. While wearing this pendant, you can also cast forbidding ward as an innate cantrip. Medal of the Wolf Pack Source Battlecry! pg. 151 Price 350 gp There are three wolf’s heads engraved on this pewter medal, typically awarded to squads who demonstrate exceptional teamwork. While wearing the medal of the wolf pack, you gain a +2 circumstance bonus to damage rolls against enemies you are flanking. Medal of Unicorn’s Purity Source Battlecry! pg. 151 Price 1,700 gp The profile of the unicorn on this silver medal has a horn that extends slightly beyond the circular border. This medal is awarded in recognition of true righteousness and exemplary service to a cause. Activate—Unicorn’s Grace (concentrate, healing, vitality) Frequency once per day; Trigger You would regain Hit Points from a magical effect; Effect You regain an additional 4d6 Hit Points. Medal of Phoenix’s Fire Source Battlecry! pg. 151 Price 9,000 gp The phoenix on this gold medal is proud and fierce, and the medal features a border shaped like a flame. This medal is considered the highest honor in many countries and is awarded to those soldiers who have truly exemplified the ethics of their country through unbelievable service. Activate—Phoenix’s Sacrifice (vitality) Frequency once per day; Trigger Your dying condition increases; Effect The phoenix bursts into flames. You lose the dying condition and regain 1 Hit Point. Your wounded value does not increase. You can use this action while unconscious."
+ },
+ {
+  "id": "medal-of-griffons-heart",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Medal of Griffon’s Heart",
+  "level": 4,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "innateSpells"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Magical Medals Source Battlecry! pg. 151 Usage worn Military leaders or heads of state award these special medals to commend exemplary performance by their top soldiers. They’re typically worn on a special strip of fabric near the lapel, but soldiers from different countries sometimes wear them in other places. No matter how many magical medals you have, they collectively count as one invested item. Medal of Gorilla’s Might Source Battlecry! pg. 151 Price 25 gp This steel medal resembles the head and upper body of a gorilla. It’s typically given in recognition of physical prowess, and it grants you a +1 item bonus to Athletics checks to Climb, Force Open, High Jump, and Long Jump. Activate—Gorila's Second Leap (concentrate, fortune) Frequency once per day; Trigger You would fail but not critically fail an Athletics check to High Jump or Long Jump; Effect The gorilla on the medal beats its chest, giving you another chance. You reroll the failed check. Medal of Griffon’s Heart Source Battlecry! pg. 151 Price 80 gp This copper medal features a griffon’s face, wings, and talons in profile. It is given in recognition of remarkable bravery, and it grants you a +1 item bonus to saving throws against fear and mental effects. While wearing this pendant, you can also cast forbidding ward as an innate cantrip. Medal of the Wolf Pack Source Battlecry! pg. 151 Price 350 gp There are three wolf’s heads engraved on this pewter medal, typically awarded to squads who demonstrate exceptional teamwork. While wearing the medal of the wolf pack, you gain a +2 circumstance bonus to damage rolls against enemies you are flanking. Medal of Unicorn’s Purity Source Battlecry! pg. 151 Price 1,700 gp The profile of the unicorn on this silver medal has a horn that extends slightly beyond the circular border. This medal is awarded in recognition of true righteousness and exemplary service to a cause. Activate—Unicorn’s Grace (concentrate, healing, vitality) Frequency once per day; Trigger You would regain Hit Points from a magical effect; Effect You regain an additional 4d6 Hit Points. Medal of Phoenix’s Fire Source Battlecry! pg. 151 Price 9,000 gp The phoenix on this gold medal is proud and fierce, and the medal features a border shaped like a flame. This medal is considered the highest honor in many countries and is awarded to those soldiers who have truly exemplified the ethics of their country through unbelievable service. Activate—Phoenix’s Sacrifice (vitality) Frequency once per day; Trigger Your dying condition increases; Effect The phoenix bursts into flames. You lose the dying condition and regain 1 Hit Point. Your wounded value does not increase. You can use this action while unconscious."
+ },
+ {
+  "id": "medal-of-the-wolf-pack",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Medal of the Wolf Pack",
+  "level": 7,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Magical Medals Source Battlecry! pg. 151 Usage worn Military leaders or heads of state award these special medals to commend exemplary performance by their top soldiers. They’re typically worn on a special strip of fabric near the lapel, but soldiers from different countries sometimes wear them in other places. No matter how many magical medals you have, they collectively count as one invested item. Medal of Gorilla’s Might Source Battlecry! pg. 151 Price 25 gp This steel medal resembles the head and upper body of a gorilla. It’s typically given in recognition of physical prowess, and it grants you a +1 item bonus to Athletics checks to Climb, Force Open, High Jump, and Long Jump. Activate—Gorila's Second Leap (concentrate, fortune) Frequency once per day; Trigger You would fail but not critically fail an Athletics check to High Jump or Long Jump; Effect The gorilla on the medal beats its chest, giving you another chance. You reroll the failed check. Medal of Griffon’s Heart Source Battlecry! pg. 151 Price 80 gp This copper medal features a griffon’s face, wings, and talons in profile. It is given in recognition of remarkable bravery, and it grants you a +1 item bonus to saving throws against fear and mental effects. While wearing this pendant, you can also cast forbidding ward as an innate cantrip. Medal of the Wolf Pack Source Battlecry! pg. 151 Price 350 gp There are three wolf’s heads engraved on this pewter medal, typically awarded to squads who demonstrate exceptional teamwork. While wearing the medal of the wolf pack, you gain a +2 circumstance bonus to damage rolls against enemies you are flanking. Medal of Unicorn’s Purity Source Battlecry! pg. 151 Price 1,700 gp The profile of the unicorn on this silver medal has a horn that extends slightly beyond the circular border. This medal is awarded in recognition of true righteousness and exemplary service to a cause. Activate—Unicorn’s Grace (concentrate, healing, vitality) Frequency once per day; Trigger You would regain Hit Points from a magical effect; Effect You regain an additional 4d6 Hit Points. Medal of Phoenix’s Fire Source Battlecry! pg. 151 Price 9,000 gp The phoenix on this gold medal is proud and fierce, and the medal features a border shaped like a flame. This medal is considered the highest honor in many countries and is awarded to those soldiers who have truly exemplified the ethics of their country through unbelievable service. Activate—Phoenix’s Sacrifice (vitality) Frequency once per day; Trigger Your dying condition increases; Effect The phoenix bursts into flames. You lose the dying condition and regain 1 Hit Point. Your wounded value does not increase. You can use this action while unconscious."
+ },
+ {
+  "id": "midnight-milk",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Midnight Milk",
+  "level": 5,
+  "traits": [
+   "alchemical",
+   "consumable",
+   "drug",
+   "ingested",
+   "poison"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Midnight Milk May contain spoilers from Seven Dooms for Sandpoint Source Pathfinder #200: Seven Dooms for Sandpoint pg. 184 Usage held in 1 hand Bulk L Activate Interact Midnight milk is a strange and powerful drug, originally invented by the intellect devourers of the alien city of Ilvarandin to remotely steal the bodies of distant dreaming victims through the use of an artifact called the Dream Lens. Pure midnight milk is incredibly rare—almost all of that found beyond the vault of Ilvarandin is instead cut to reduce costs and expenses. Crafting a dose of this dangerous drug requires a wide range of reagents; the most difficult to acquire of these reagents are vials of refined “sweat” harvested via a mithral blade from the fleshy fronds of a rare form of cavetongue fungus known as authul, which grows wild only in remote corners of the Vaults of Orv. When an alchemist mixes midnight milk, they must do so while in a trancelike state that approximates the dreaming mind—a classic method of reaching this state involves the repetition of a wordless chant spoken in a specific meter and rhyme scheme (one that the poet Vumeshki unknowingly duplicated with his dream-inspired poem, “Ilvarandin”). Recently, an experimental form of the drug created by the alchemist Aliver Podiker has been developed, but so far, attempts to replicate refined midnight milk using these methods have met with failure. Midnight Milk (Experimental) Source Pathfinder #200: Seven Dooms for Sandpoint pg. 184 Price 30 gp Bulk L Saving Throw DC 19 Fortitude; Onset 10 minutes; Maximum Duration 8 hours; Stage 1 +2 item bonus to Perception (1 hour); Stage 2 fatigued (1 hour); Stage 3 unconscious (1 hour; while unconscious, the creature dreams of being drawn down into the Darklands to be ruled by sinister unseen forces—to the dreaming creature, the effect seems to last for years, and the creature is fatigued upon awakening from this stage) Midnight Milk (Refined) Source Pathfinder #200: Seven Dooms for Sandpoint pg. 184 Price 400 gp Bulk L Saving Throw DC 29 Fortitude; Onset 1 minute; Maximum Duration 8 hours; Stage 1 +3 item bonus to Perception (1 hour); Stage 2 unconscious (1 hour; if the creature recovers from the dosage and wakes up before reaching Stage 3, they don't remember their vivid dreams but do wake up feeling revitalized as if they'd enjoyed a full 8 hours of sleep—this doesn't allow the creature to perform their daily preparations more often than once per day though); Stage 3 unconscious (1 hour; the vivid dreams the creature enjoys at Stage 2 shift into phantasmagoric nightmares as described in the text above—during this stage, the creature is a viable Dream Lens target, and once a creature recovers and awakens from Stage 3, they're fatigued) Midnight Milk (Pure) Source Pathfinder #200: Seven Dooms for Sandpoint pg. 184 Price 14,000 gp Bulk L Saving Throw DC 43 Fortitude; Stage 1 +3 item bonus to Perception checks and Will saving throws; Stage 2 unconscious (1 hour; the creature endures phantasmagoric nightmares as described in the text above—during this stage, the creature is a viable Dream Lens target, and once a creature recovers and awakens from Stage 3, they're fati"
+ },
+ {
+  "id": "necklace-of-strangulation",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Necklace of Strangulation",
+  "level": 15,
+  "traits": [
+   "cursed",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This beautiful necklace appears to be a magical item such as a necklace of fireballs or a pendant of the occult. When invested, it magically locks in place, suspiciously tightly, and fuses to you. When you enter a situation of extreme stress (as determined by the GM), the necklace tightens around your neck, suffocating you and dealing 30 damage to you at the end of each of your turns. Once per round, you can spend a single action to attempt a DC 34 Athletics check or save; success means you don't take the damage on your current turn, but you continue suffocating. The necklace loosens after you've been dead for a month."
+ },
+ {
+  "id": "nosoi-charm-greater",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Nosoi Charm (Greater)",
+  "level": 18,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "innateSpells",
+   "passiveEffects"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Nosois serve as scribes and messengers to psychopomps. They are rare outside of the Boneyard, so it's common for psychopomps venturing to other planes to carry a nosoi facsimile to aid in their travels. This tiny icon of a masked raven emits twittering sounds in perfect accompaniment to your performances. You gain a +3 item bonus to Performance checks to play an instrument, orate, or sing. You can cast Sending once per day as a divine innate spell. You gain lifesense as an imprecise sense with a range of 30 feet as long as you continue holding the charm. This allows you to sense the life force that animates living creatures and the perverse force that animates the dead, though you can't distinguish between the two. --- **Activate** ⟨3⟩ Interact --- **Effect** You twist the base of the charm, and the twittering it emits becomes helpful words to boost your arguments. You lose the item bonus to Performance checks and gain a +3 item bonus to Diplomacy checks to make Requests until you use this activation again."
+ },
+ {
+  "id": "patrons-claim",
+  "lane": "resource",
+  "collection": "feats",
+  "name": "Patron’s Claim",
+  "level": 18,
+  "traits": [
+   "witch"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your patron partially manifests itself through your familiar to claim a foe's power for its own. Your familiar gains the Patron's Claim activity."
+ },
+ {
+  "id": "patrons-presence",
+  "lane": "resource",
+  "collection": "feats",
+  "name": "Patron’s Presence",
+  "level": 14,
+  "traits": [
+   "witch"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your patron can direct its attention through your familiar, and its mere presence becomes an ominous weight on the minds of other beings to distract them and blot out their magic. Your familiar gains the Patron's Presence activity."
+ },
+ {
+  "id": "pirates-pet",
+  "lane": "resource",
+  "collection": "feats",
+  "name": "Pirate's Pet",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices",
+   "grantsFeats"
+  ],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Pirate's Pet Source High Seas pg. 92 Archetype Pirate Prerequisites Pirate Dedication Access You're from the Shackles An animal has become your loyal ally, perhaps after you liberated it from another ship or found it on a remote island. You gain the Pet general feat. Your pet gains an additional pet Shackles Options ability, which you can choose from the standard pet abilities or the following familiar abilities: accompanist, damage avoidance, independent, partner in crime, speech, and valet. In addition, you learn a common 1st- or 2nd-rank spell that targets your familiar, and can cast it once per day as a primal innate spell. You can instead learn phase familiar and can cast it once per hour as a primal innate spell; it’s not a focus spell for you. When you cast the chosen spell, you target your pirate’s pet instead of a familiar."
+ },
+ {
+  "id": "primal-howl",
+  "lane": "resource",
+  "collection": "feats",
+  "name": "Primal Howl",
+  "level": 10,
+  "traits": [
+   "druid"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your companion can let out a howl laced with your primal magic. It gains the Primal Howl advanced maneuver, in addition to any advanced maneuvers it already knows."
+ },
+ {
+  "id": "psychopomp-eidolon",
+  "lane": "resource",
+  "collection": "classFeatures",
+  "name": "Psychopomp Eidolon",
+  "level": 1,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "companionGrants"
+  ],
+  "text": "Your eidolon is a psychopomp, a creature whose sworn duty is to usher souls safely to the afterlife and maintain the courts of the dead. Psychopomp eidolons have a variety of appearances, but since they often traffic with mortals, their form typically includes an elaborate mask. You and your psychopomp eidolon share an important fate together, whether it relates directly to your own soul or to a mission that will somehow protect the souls of others. **Tradition** divine **Traits** eidolon, monitor, psychopomp **Alignment** must be true neutral **Home Plane** The Boneyard --- **Size** Medium **Suggested Attacks** beak (piercing), claw (slashing), fist (bludgeoning), jaws (piercing), unarmed attacks shaped like a weapon **Soul Guardian** Str 18, Dex 14, Con 16, Int 10, Wis 12, Cha 8; +2 AC (+3 Dex cap) **Scribe of the Dead** Str 12, Dex 18, Con 12, Int 14, Wis 12, Cha 10; +1 AC (+4 Dex cap) **Skills** Intimidation, Religion **Senses** darkvision **Language** Requian **Speed** 25 feet --- **Eidolon Abilities***Initial *spirit touch*; Symbiosis *hidden watcher*; Transcendence *spirit taker ## Spirit Touch Your eidolon's attacks possess a psychopomp's ability to harm the living and the dead. Your eidolon's unarmed Strikes affect incorporeal creatures as though etched with a Ghost Touch property rune and deal an extra 1 void damage to living creatures and an extra 1 vitality damage to undead. ## Hidden Watcher 7th Your eidolon can render both of you unseen. Once per hour, it can cast targeting you, them, or both of you at once. If the spell targeted both of you, the spell ends for both of you if either of you uses a hostile action. ## Spirit Taker 17th Your eidolon is particularly capable when it comes to handling bodiless spirits and putting undead to their final rest. Your eidolon can see incorporeal creatures inside of solid objects and can attack them with Strikes without penalty; an incorporeal creature in a solid object that takes damage from your eidolon's Strike is expelled from the object to the nearest available space, moving closer to your eidolon if possible. Additionally, your eidolon can target or affect a creature projecting its consciousness (such as via Project Image) or possessing another creature, even if its body is elsewhere, though your eidolon must know about the possession or projection and choose to do so. Finally, the spirit of an undead destroyed by your eidolon's Strikes is sent directly to the Boneyard for judgment; an undead with an ability to avoid such a fate automatically, such as a ghost's rejuvenation, can attempt a counteract check against your spell DC to return via that ability as normal. In that case, it uses its Will save modifier as its counteract modifier."
+ },
+ {
+  "id": "ring-of-wizardry",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Ring of Wizardry",
+  "level": 7,
+  "traits": [
+   "arcane",
+   "divination",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Ring of Wizardry Source Core Rulebook pg. 615 Usage worn This ring is made from the purest platinum and is covered in esoteric arcane symbols. It does nothing unless you have a spellcasting class feature with the arcane tradition. While wearing the ring of wizardry, you gain a +1 item bonus to Arcana checks and have two additional 1st-level arcane spell slots each day. You prepare spells in these slots or cast from them spontaneously, just as you normally cast your spells. If you take off the ring for any reason, you lose the additional spell slots. You can’t gain spell slots from more than one ring of wizardry per day, nor can a single ring of wizardry grant spell slots more than once per day. If you can cast arcane spells in a variety of different ways (such as if you are a draconic bloodline sorcerer with the wizard multiclass archetype), you can divide the spell slots as you wish among your various sources of arcane spells. Craft Requirements You have a spellcasting class feature with the arcane tradition. Ring of Wizardry (Type I) Source Core Rulebook pg. 615 Price 360 gp Ring of Wizardry (Type II) Source Core Rulebook pg. 615 Price 1,000 gp The bonus is +2, and the ring grants two 2nd-level spell slots and one 1st-level spell slot. Ring of Wizardry (Type III) Source Core Rulebook pg. 615 Price 2,000 gp The bonus is +2, and the ring grants two 3rd-level spell slots and one 2nd-level spell slot. Ring of Wizardry (Type IV) Source Core Rulebook pg. 615 Price 4,500 gp The bonus is +2, and the ring grants two 4th-level spell slots and one 3rd-level spell slot."
+ },
+ {
+  "id": "ring-of-wizardry-type-i",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Ring of Wizardry (Type I)",
+  "level": 7,
+  "traits": [
+   "arcane",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects",
+   "spellSlotBonus"
+  ],
+  "inRegistries": [],
+  "text": "This ring is made from the purest platinum and is covered in esoteric arcane symbols. It does nothing unless you have a spellcasting class feature with the arcane tradition. While wearing the ring of wizardry, you gain a +1 item bonus to Arcana checks and have two additional 1st-rank arcane spell slots each day. You prepare spells in these slots or cast from them spontaneously, just as you normally cast your spells. If you take off the ring for any reason, you lose the additional spell slots. You can't gain spell slots from more than one ring of wizardry per day, nor can a single ring of wizardry grant spell slots more than once per day. If you can cast arcane spells in a variety of different ways (such as if you are a draconic bloodline sorcerer with the wizard multiclass archetype), you can divide the spell slots as you wish among your various sources of arcane spells. **Craft Requirements** You have a spellcasting class feature with the arcane tradition."
+ },
+ {
+  "id": "ring-of-wizardry-type-ii",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Ring of Wizardry (Type II)",
+  "level": 10,
+  "traits": [
+   "arcane",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects",
+   "spellSlotBonus"
+  ],
+  "inRegistries": [],
+  "text": "This ring is made from the purest platinum and is covered in esoteric arcane symbols. It does nothing unless you have a spellcasting class feature with the arcane tradition. While wearing the ring of wizardry, you gain a +2 item bonus to Arcana checks and have two additional 2nd-rank and one additional 1st-rank arcane spell slot each day. You prepare spells in these slots or cast from them spontaneously, just as you normally cast your spells. If you take off the ring for any reason, you lose the additional spell slots. You can't gain spell slots from more than one ring of wizardry per day, nor can a single ring of wizardry grant spell slots more than once per day. If you can cast arcane spells in a variety of different ways (such as if you are a draconic bloodline sorcerer with the wizard multiclass archetype), you can divide the spell slots as you wish among your various sources of arcane spells. **Craft Requirements** You have a spellcasting class feature with the arcane tradition."
+ },
+ {
+  "id": "ring-of-wizardry-type-iii",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Ring of Wizardry (Type III)",
+  "level": 12,
+  "traits": [
+   "arcane",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects",
+   "spellSlotBonus"
+  ],
+  "inRegistries": [],
+  "text": "This ring is made from the purest platinum and is covered in esoteric arcane symbols. It does nothing unless you have a spellcasting class feature with the arcane tradition. While wearing the ring of wizardry, you gain a +2 item bonus to Arcana checks and have two additional 3rd-rank and one additional 2nd-rank arcane spell slot each day. You prepare spells in these slots or cast from them spontaneously, just as you normally cast your spells. If you take off the ring for any reason, you lose the additional spell slots. You can't gain spell slots from more than one ring of wizardry per day, nor can a single ring of wizardry grant spell slots more than once per day. If you can cast arcane spells in a variety of different ways (such as if you are a draconic bloodline sorcerer with the wizard multiclass archetype), you can divide the spell slots as you wish among your various sources of arcane spells. **Craft Requirements** You have a spellcasting class feature with the arcane tradition."
+ },
+ {
+  "id": "ring-of-wizardry-type-iv",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Ring of Wizardry (Type IV)",
+  "level": 14,
+  "traits": [
+   "arcane",
+   "invested"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects",
+   "spellSlotBonus"
+  ],
+  "inRegistries": [],
+  "text": "This ring is made from the purest platinum and is covered in esoteric arcane symbols. It does nothing unless you have a spellcasting class feature with the arcane tradition. While wearing the ring of wizardry, you gain a +2 item bonus to Arcana checks and have two additional 4th-rank and one additional 3rd-rank arcane spell slot each day. You prepare spells in these slots or cast from them spontaneously, just as you normally cast your spells. If you take off the ring for any reason, you lose the additional spell slots. You can't gain spell slots from more than one ring of wizardry per day, nor can a single ring of wizardry grant spell slots more than once per day. If you can cast arcane spells in a variety of different ways (such as if you are a draconic bloodline sorcerer with the wizard multiclass archetype), you can divide the spell slots as you wish among your various sources of arcane spells. **Craft Requirements** You have a spellcasting class feature with the arcane tradition."
+ },
+ {
+  "id": "seal-of-the-golden-dragon",
+  "lane": "resource",
+  "collection": "feats",
+  "name": "Seal of the Golden Dragon",
+  "level": 10,
+  "traits": [
+   "archetype",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** You would take acid, cold, electricity, poison, fire, or sonic damage. **Requirements** Your familiar has the resistance ability and is adjacent to you. --- Your familiar coils around you, protecting you with its magical resistance. You gain the benefits of your familiar's resistance ability until the start of your next turn. If your familiar has any upgrades to this ability, such as major resistance, you gain them as well. Once per day, if your familiar's resistance is a different damage type, your familiar's resistance ability changes to the appropriate type. If you already have resistance of the same type, choose the higher of the two."
+ },
+ {
+  "id": "seers-array",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Seer's Array",
+  "level": 0,
+  "traits": [
+   "relic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Seer's Array Source Treasure Vault (Remastered) pg. 202 Aspects Mind and Time Diviners through the ages have employed a variety of tools to glimpse the future, but one who assembles five pieces of a seer's array gains strong second sight. Seer's arrays can be found across Golarion, from the caravans of Varisian harrowers to the scale diviners at the court of the Dragon King of Xa Hoi. A diviner who wears the array is bound to be sought after for counsel, and those who consult such farsighted individuals do well to heed any advice given. Set Items: Pendant of the Occult (level 3), Staff of the Unblinking Eye (level 6), Clarity Goggles (Lesser) (level 8), Crystal Ball (Clear Quartz) (level 14), Amulet of the Third Eye (level 17) Gifts: The set grants the following gifts. - 1: Recalculate - 2: Borrow Time - 3: Time Jump - 4: Precognition - 5: Time Reversal Collective Features: The set grants the following features. Two Items: The circumstance bonus from recalculate increases by 1. Three Items: Creatures become temporarily immune to the relic's borrow time gift for 1 hour. Four Items: You can use the relic's time jump once per hour. For each use after the first in a given day, you must attempt a flat check with a DC of 9 + the number of times you've used the gift that day. If you fail, you can still complete the time jump, but after that the gift is no longer available until you next complete your daily preparations. You can roll the flat check before using the gift and decide not to do so after seeing the roll. However, any failure applies to the next use of the gift that day, making your next use your last that day. Five Items: You can use the relic's precognition once per hour. Each use after the first requires a flat check like for time jump at four items, but this flat check affects your use of precognition."
+ },
+ {
+  "id": "sickening-assault",
+  "lane": "resource",
+  "collection": "classFeatures",
+  "name": "Sickening Assault",
+  "level": 1,
+  "traits": [
+   "concentrate",
+   "eidolon"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Frequency** once per minute **Requirements** Your eidolon is dispersed. --- Your eidolon focuses on inflicting the most damage possible on its foes. If your eidolon's next action is to use Swarming Assault, the number of damage dice of the Swarming Assault are doubled. Additionally, creatures that fail their Reflex save against that Swarming Assault are Sickened 2 (Sickened 4 on a critical failure)."
+ },
+ {
+  "id": "skarjas-heartstone",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Skarja's Heartstone",
+  "level": 13,
+  "traits": [
+   "invested",
+   "occult"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "This pale gemstone grants its wearer a +2 item bonus to saving throws and the ability to discern a target's alignment (as *detect alignment*, but can detect chaotic, evil, good, and lawful auras simultaneously) at will by peering through the gemstone. Like all hag *heartstones*, this gemstone is powered by Skarja's spirit. Skarja does not need to wear her *heartstone* to benefit from its powers, but she cannot use them if she hasn't touched her *heartstone* in the past 7 days. If Skarja's *heartstone* is separated from her for more than 7 days (or if she's been dead for 7 days), it becomes a non-magical gemstone. ***Note:** Item is worth 1000 gp when non-magical* Skarja's *heartstone* allows her to use additional occult innate spells: Ethereal Jaunt (9th level) and Seize Soul at will, Shadow Blast (6th level) twice per day, and Spirit Blast once per day. --- **Activate** ⟨1⟩ command **Requirements** You must be touching the heartstone. --- **Effect** The *heartstone* attempts to counteract one disease affecting you (counteract rank 7, counteract modifier 1d20+23). --- **Craft Requirements** You must be a night hag."
+ },
+ {
+  "id": "steam-knight",
+  "lane": "resource",
+  "collection": "feats",
+  "name": "Steam Knight",
+  "level": 6,
+  "traits": [
+   "composite",
+   "fire",
+   "impulse",
+   "kineticist",
+   "primal",
+   "stance",
+   "water"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses",
+   "core.stances"
+  ],
+  "text": "You shape your kinetic aura into swirling armor of steam that scalds your enemies and propels you on super-heated jet streams. A creature can take damage from Steam Knight only once per round. Your steam armor has the following effects. - You gain a +10-foot status bonus to your Speed. - When you Leap, you can jump up to your Speed. You don't immediately fall at the end of a jump, provided you Leap again with your next action. If you Leap over a creature and come within 10 feet, that creature takes damage with a save against your class DC. - At the start of each of your turns, you can emit steam as a free action. It deals damage to each creature in your kinetic aura with a save against your class DC. A creature that fails is also pushed 5 feet. --- **Level (+5)** The fire damage from a jump or blast of steam increases by 1d6."
+ },
+ {
+  "id": "swarm-eidolon",
+  "lane": "resource",
+  "collection": "classFeatures",
+  "name": "Swarm Eidolon",
+  "level": 1,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your eidolon is a collective of primal energy and nature spirits, gathered into a single fragmentary being. This collection of natural energy has neither form nor identity until bonded with a summoner. You give these spirits purpose, connecting with them and drawing them through to the physical realm. When manifesting, these nature spirits don a simple form, adopting the guise of many Tiny animals. Each of these animals is the same creature and is marked with your summoner's sigil. The act of manifesting in this swarm form temporarily binds the spirits together into one being, making the eidolon a single entity—one mind and personality speaking with a multitude of voices, and a multitude of bodies acting in concert with a singular purpose. **Tradition** primal **Traits** animal, eidolon, swarm **Home Plane** the Universe --- **Size** Medium (condensed) and Large (dispersed) **Suggested Attacks** beaks (piercing), claws (slashing), jaws (piercing), talons (slashing) **Brazen Swarm** *Str* +4, *Dex* +2, *Con* +3, *Int* +0, *Wis* +0, *Cha* +0; +2 AC (+3 Dex cap) **Slinking Swarm** *Str* +2, *Dex* +4, *Con* +3, *Int* +0, *Wis* +1, *Cha* –1; +1 AC (+4 Dex cap) **Skills** Nature, Survival **Senses** low-light vision **Languages** Common **Speed** 25 feet --- **Eidolon Abilities** *Initial *swarm form*; Symbiosis *sudden shift*; Transcendence *sickening swarm ## Swarm Form Your eidolon is an intelligent swarm composed of hundreds of Tiny creatures, and it's immune to the grabbed, prone, and restrained conditions. It can fit through tight spaces as though it were a Tiny creature. It has weakness to area damage equal to its level. Your eidolon has two forms: condensed and dispersed. When you Manifest Eidolon, it manifests condensed. It can switch between these two forms as a single action that has the concentrate trait. **Condensed Form:** When condensed, your eidolon draws all its component bodies into a single, condensed mound that functions as a Medium creature. It has a reach of 5 feet, can make Strikes, and can't occupy the same space as other creatures. While condensed, it can use the Haunting Visage action. **Dispersed Form:** When dispersed, your eidolon scatters its component bodies across a wider area, increasing its size by one category (to Large for most swarm eidolons). It has a reach of 0 feet, can't make Strikes, and can occupy the same space as other creatures. While dispersed, it can use the Swarming Assault activity. ## Sudden Shift 7th Once per round, your eidolon can switch forms between condensed and dispersed as a free action, rather than a single action. In addition, your eidolon gains the reaction. ## Sickening Form 17th Your eidolon is particularly good at distracting and hindering its foes while dispersed. While dispersed, spaces your eidolon occupies are difficult terrain for other creatures. In addition, your eidolon gains the Sickening Assault action."
+ },
+ {
+  "id": "taljjaes-mask-the-grandmother",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Taljjae's Mask (The Grandmother)",
+  "level": 18,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Those who gain one of Taljjae's masks, either by defeating Taljjae or some other means, are known as its understudies and gain a fraction of its power. Each of Taljjae's masks is an 18th-level unique item with the invested and magical traits; if broken, they're automatically repaired to full HP when invested during daily preparations. The effect of a mask on a PC is noted in the mask's Understudy entry. Wearing one of Taljjae's masks also imposes Taljjae's jelly sense and jelly gluttony on the creature as long as it wears the mask. The *Grandmother* allows its wearer to cast 8th-rank Heal and 7th-rank Breath of Life, each as a divine innate spell, once per day."
+ },
+ {
+  "id": "taljjaes-mask-the-hermit",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Taljjae's Mask (The Hermit)",
+  "level": 18,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Those who gain one of Taljjae's masks, either by defeating Taljjae or some other means, are known as its understudies and gain a fraction of its power. Each of Taljjae's masks is an 18th-level unique item with the invested and magical traits; if broken, they're automatically repaired to full HP when invested during daily preparations. The effect of a mask on a PC is noted in the mask's Understudy entry. Wearing one of Taljjae's masks also imposes Taljjae's jelly sense and jelly gluttony on the creature as long as it wears the mask. The *Hermit* allows its wearer to cast 8th-rank Spirit Blast and 7th-rank Flame Strike, each as a divine innate spell, once per day."
+ },
+ {
+  "id": "taljjaes-mask-the-wanderer",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Taljjae's Mask (The Wanderer)",
+  "level": 18,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Those who gain one of Taljjae's masks, either by defeating Taljjae or some other means, are known as its understudies and gain a fraction of its power. Each of Taljjae's masks is an 18th-level unique item with the invested and magical traits; if broken, they're automatically repaired to full HP when invested during daily preparations. The effect of a mask on a PC is noted in the mask's Understudy entry. Wearing one of Taljjae's masks also imposes Taljjae's jelly sense and jelly gluttony on the creature as long as it wears the mask. The *Wanderer* allows its wearer to cast 7th-rank Air Walk and 8th-rank Unfettered Movement, each as a divine innate spell, once per day."
+ },
+ {
+  "id": "thurible-of-revelation",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Thurible of Revelation",
+  "level": 3,
+  "traits": [
+   "divine"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Thurible of Revelation Source GM Core pg. 277 Usage held in 1 hand Bulk 1 This brass censer dangles on a length of chain. Most thuribles of revelation are adorned with swirling Empyrean text, though some are iron and feature Diabolic or Chthonian text. Activate—Burn Incense (manipulate)Cost incense worth at least 5 gp; Effect You light the incense inside the censer, and it burns for 1 hour. During that time, as long you are holding the thurible, you gain a +1 item bonus to Religion checks, and any critical failure you roll when you Decipher Writing of a religious nature is a failure instead. Thurible of Revelation (Lesser) Source GM Core pg. 277, Core Rulebook pg. 575 Price 55 gp Thurible of Revelation (Moderate) Source GM Core pg. 277, Core Rulebook pg. 575 Price 900 gp The thurible grants a +2 bonus. Once per day, when you activate the thurible, you can increase its revelations. During that activation, you can hold the thurible up to your eyes with an Interact action to gain the effects of see the unseen for 1 round by peering through the smoke. Thurible of Revelation (Greater) Source GM Core pg. 277, Core Rulebook pg. 575 Price 19,000 gp The thurible grants a +3 bonus. The greater version shares the once-per-day enhanced revelations of the moderate version, except peering through the smoke also grants you the effects of truesight."
+ },
+ {
+  "id": "unusual-treatment",
+  "lane": "resource",
+  "collection": "feats",
+  "name": "Unusual Treatment",
+  "level": 2,
+  "traits": [
+   "general",
+   "skill"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your medical training extends to less obvious conditions. When you succeed against a DC 20 check to Treat Wounds, you can also reduce the value of one clumsy, enfeebled, or stupefied condition on the patient by 1. If you're able to treat more than one creature at once, choose only one to gain this benefit. A creature can benefit from Unusual Treatment only once per day. If the condition results from an affliction, the affliction isn't cured, though the condition is reduced as long as the affliction remains at that stage. If you are a master in Medicine, add the drained condition to the list of conditions you can remove if you succeed at a DC 30 check. If you are legendary in Medicine, you reduce the chosen condition by 2 instead of by 1."
+ },
+ {
+  "id": "vortex-pouch",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Vortex Pouch",
+  "level": 6,
+  "traits": [
+   "air",
+   "magical",
+   "mythic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "When empty, the *vortex pouch*'s net seems too loose to hold much. However, when used to catch the wind, it stretches to hold the air. With nowhere for the wind to go, the air inside it swirls violently. If the caught wind includes a storm, clouds, fog, or similar effect, it's visible among the whirlwind. --- **Activate—Catch Wind** ⟨2⟩ (air, manipulate) **Requirements** The *vortex pouch* is empty **Effect** You gather the nearby air and wind within the *vortex pouch*. Creatures within a must attempt a save or be moved 5 feet closer toward you as the air rushes into the pouch. Targets that critically fail the save are moved 10 feet. You can Sustain the activation once per round, up to 1 minute, to continue Catching Wind. If you spend a Mythic Point when Catching Wind, the *vortex pouch* gathers air in a 10-mile radius; though the vortex is only strong enough to forcibly suck in creatures within the original , weaker creatures with the air trait and creatures associated with the sky in the 10-mile radius will know your general direction and feel a sense of unease, granting you a +2 status bonus to Intimidation checks against those creatures for 1 week. When you end the activation, the *vortex pouch* becomes 1 Bulk and you can empty it using Release Wind. --- **Activate—Release Wind** ⟨2⟩ (air, manipulate) **Requirements** The *vortex pouch* contains air or wind **Effect** Wind rushes out of the *vortex pouch* in a . All creatures in the cone take damage ( save). Creatures that fail their saving throw are pushed 5 feet away from you; creatures that critically fail are pushed 10 feet. If the caught wind included weather that might deal a different type of damage, Release Wind deals this damage instead (for instance, dealing electricity damage if it caught a thundercloud or cold damage if it caught a blizzard)."
+ },
+ {
+  "id": "warcallers-chime",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Warcaller's Chime",
+  "level": 4,
+  "traits": [
+   "evocation",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Warcaller's Chime May contain spoilers from Strength of Thousands Source Pathfinder #170: Spoken on the Song Wind pg. 77 Usage held in 1 hand Bulk L The Nantambu Chime-Ringers created these magical chimes to aid in their defense of their city. Each chime is made from elaborately carved wood depicting the nature of a given chime's power. Activate envision; Effect You ring the chime, unleashing its magic. The specifics of each chime, as well as the activation's frequency (if any), appear in its entry below. Warcaller's Chime of Blasting Source Pathfinder #170: Spoken on the Song Wind pg. 77 Price 250 gp Bulk L This chime features carvings of destructive runes. When activated, it creates the effects of a 3rd-level sound burst centered on you (DC 20 Fortitude save). Instead of the spell's normal range, it has a 5-foot emanation. In addition, creatures that critically fail their save are knocked prone by the chime's effect. You can use this chime once per day. Warcaller's Chime of Destruction Source Pathfinder #170: Spoken on the Song Wind pg. 77 Price 100 gp Bulk L A series of shattered mountains are carved into this chime. When activated, you touch the chime against an unattended object, casting shatter upon the object, ignoring the object's Hardness if it's 6 or lower. You can use this chime once per day. Warcaller's Chime of Dread Source Pathfinder #170: Spoken on the Song Wind pg. 77 Price 1,000 gp Bulk L This chime's carvings depict skulls and other grim icons. When activated, it creates an aura of fear in a 5-foot emanation for 1 round. Creatures in the aura must attempt a DC 27 Will save. On a failure, they become frightened 1 (frightened 2 on a critical failure). Affected creatures can't reduce their frightened condition below frightened 1 while the chime is ringing. You can Sustain the Activation to sustain the aura, up to a total of 5 rounds. This chime can be used only once per day, whether or not you Sustain the aura. Warcaller's Chime of Refuge Source Pathfinder #170: Spoken on the Song Wind pg. 77 Price 500 gp Bulk L This chime's carvings depict a series of warding runes that evoke feelings of serene protection. When activated, you touch the chime to yourself or a willing creature. The target gains the effects of sanctuary (DC 20 Will save). You can use this chime up to five times per day, but each use must target a different creature. Warcaller's Chime of Resistance Source Pathfinder #170: Spoken on the Song Wind pg. 77 Price 160 gp Bulk L This chime features several elemental runes in its carvings. When activated, it creates a defensive aura in a 5-foot emanation. As you activate the chime, choose acid, cold, electricity, fire, or sonic. You and creatures in the aura gain resistance 5 against the damage type you chose. This aura remains active for 10 minutes. This chime can be used once per week. Warcaller's Chime of Restoration Source Pathfinder #170: Spoken on the Song Wind pg. 77 Price 2,000 gp Bulk L This chime's carvings depict blooming flowers. When activated, it creates a small aura of healing in a 5-foot emanation. Creatures in the aura gain fast healing 15. This aura remains active for 3 rounds. This chime can be used onc"
+ },
+ {
+  "id": "wardrobe-stone",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Wardrobe Stone",
+  "level": 3,
+  "traits": [
+   "illusion",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Wardrobe Stone Source Grand Bazaar pg. 51 Usage held in 1 hand Bulk L This large stone eye is the size of a fist and decorated with elaborate carvings of robes and other garments. Activate (1 minute) envision, Interact; Effect You enter a brief trance in which you envision yourself entering a large dressing room. You maneuver through the endless dressing-room mindscape and search for whatever articles of clothing, accessories, and other garments you desire. After the activation, you gain the effects of illusory disguise, except that it only causes you to appear to be wearing the exact outfit you selected within the mindscape. The illusion also disguises the wardrobe stone to match your outfit and not appear out of place, such as by appearing to be a glove or bracelet, though it continues to occupy your hand while you're under the effects of illusory disguise. You can actively Dismiss the Spell, but the effects are also dismissed immediately when you're no longer holding the wardrobe stone. Wardrobe Stone (Lesser) Source Grand Bazaar pg. 51 Price 50 gp Bulk L Wardrobe Stone (Moderate) Source Grand Bazaar pg. 51 Price 1,250 gp Bulk L You gain a +2 item bonus to a specific Lore skill associated with your outfit, such as Carpentry Lore when wearing a carpenter's outfit or Cooking Lore when wearing a chef's outfit. Activate (1 minute) envision, Interact; Frequency once per day; Effect You cast prying eye. Wardrobe Stone (Greater) Source Grand Bazaar pg. 51 Price 55,000 gp Bulk L You gain +3 item bonus to Perception checks involving sight and a +3 item bonus to a specific Lore skill associated with your outfit. Activate (1 minute) envision, Interact; Effect You cast prying eye. Activate (10 minutes) envision, Interact; Effect The wardrobe stone splits open and permanently transforms into a specific type of magical robe of your choosing. It can transform into any 20th-level or lower magical robe to which you have access, except for items that can't normally be Crafted, such as artifacts. This process is irreversible."
+ },
+ {
+  "id": "wondrous-figurine",
+  "lane": "resource",
+  "collection": "items",
+  "name": "Wondrous Figurine",
+  "level": 2,
+  "traits": [
+   "conjuration",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Wondrous Figurine Source Core Rulebook pg. 576 Usage held in 1 hand Bulk L Each one of these statuettes is 1 inch in height, carved from a specific material and taking the shape of a particular animal or animals. Activate command, Interact; Effect You activate the statue by placing it on solid ground and then speaking its name, causing the statuette to transform into a living creature or creatures. In creature form, the figurine has the minion trait. It can understand your language and it obeys you to the best of its ability when you use an action to command it. The specifics of each creature, as well as the activation’s frequency (if any), appear in its entry below. If the figurine is slain while in animal form, it reverts to its statue shape and cannot be activated again until 1 week has passed. If the figurine is destroyed in statue form, it is shattered and its magic is lost. Wondrous Figurine (Golden Lions) Source Core Rulebook pg. 576 Price 900 gp This statuette depicts a pair of gold lions, and when activated, it becomes a pair of adult lions. The lions can be called on only once per day, and they remain in lion form for no more than 1 hour. If either of the lions is slain, that lion cannot be summoned again until 1 week has passed, but this doesn't prevent you from summoning the other. Wondrous Figurine (Jade Serpent) Source Core Rulebook pg. 576 Price 340 gp This tiny statue first appears to be a formless lump of jade until closer inspection reveals it to be a serpentine body curled into a snug knot. When activated, this figurine becomes a giant viper. The figurine can be used only once per day, and it can remain in serpent form for no more than 10 minutes. Wondrous Figurine (Marble Elephant) Source Core Rulebook pg. 576 Price 2,700 gp Finely carved from a solid piece of marble, this gleaming elephant statuette becomes a fully grown elephant when activated. The elephant can be called upon no more than four times per month. It remains for 24 hours as long as it is being used as a beast of burden or for transport. If it attempts an attack or otherwise engages in combat, it reverts to statuette form after 1d4 rounds. Wondrous Figurine (Obsidian Steed) Source Core Rulebook pg. 576 Price 6,000 gp This sinister-looking black statuette resembles a horse rearing up on its hind legs. When activated, this figurine becomes a nightmare. It can be called upon once per week for up to 24 hours, though it won't use plane shift or its other abilities on behalf of its rider. Although evil, it allows itself to be ridden by creatures of any alignment, although if a good creature mounts it, the rider must attempt a DC 3 flat check. On a failure, the nightmare uses plane shift to take the rider to a random location in the Abyss, where it promptly returns to statue form, stranding its rider in that nightmarish place. Wondrous Figurine (Onyx Dog) Source Core Rulebook pg. 576 Price 34 gp This simple onyx statue transforms into a guard dog. The dog has a +4 circumstance bonus to Survival checks to Track, and it has darkvision. When the dog senses a hidden creature with its scent, that creature is instead observed and concealed. The onyx dog can be activated o"
+ },
+ {
+  "id": "wyrms-breath",
+  "lane": "resource",
+  "collection": "classFeatures",
+  "name": "Wyrm's Breath",
+  "level": 1,
+  "traits": [
+   "concentrate",
+   "eidolon"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Frequency** once per minute Your eidolon gathers the power of the mightiest wyrms to make its magical breath even more spectacular. If your eidolon's next action is to use Breath Weapon, both the number of damage dice and area of the Breath Weapon are doubled."
+ },
+ {
+  "id": "oculus-of-abaddon",
+  "lane": "companion",
+  "collection": "items",
+  "name": "Oculus of Abaddon",
+  "level": 15,
+  "traits": [
+   "artifact",
+   "evil",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells",
+   "senses",
+   "passiveEffects"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "An *oculus of Abaddon* is a potent artifact rumored to have been created by one of the Four Horsemen of the Apocalypse as a way to reward those who work as their agents on the Material Plane. More likely, these items were crafted by a powerful pre-Earthfall death cult that has long since moved on, leaving behind these dangerous artifacts to tempt mortals into serving the needs of the Horsemen. An *oculus of Abaddon* appears as a sphere of clear crystal that contains a pinpoint of flickering red light at its center. When held, the oculus feels warm to the touch and fills you with a sudden desire to pluck out an eye and place the oculus within the socket-this causes 4d6 damage. Once placed in an eye socket, the oculus can be removed only by ripping it free (causing the same amount of persistent bleed damage as the initial plucking). When you place the oculus in your empty eye socket, you immediately heal all damage caused by plucking the previous eye out. Once placed, an oculus grants you constant Darkvision. It can also be activated to perform a number of other magical effects, as detailed below, but if you aren't evil, each time you activate an *oculus of Abaddon*, you must succeed at a save or become affected by a subconscious suggestion (heightened to 8th level) to perform an evil act the next time an opportunity to do so arises, as determined by the GM. --- **Activate** 10 minutes (envision) **Frequency** three times per day **Effect** You gain the effects of Scrying, heightened to 7th level. --- **Activate** Cast a Spell **Frequency** once per week **Effect** You use the *oculus of Abaddon* to cast a Binding Circle ritual, heightened to 7th level. You can only conjure neutral evil creatures with this casting of planar binding. If you already know the planar binding ritual, you gain a +3 item bonus on the primary check when casting planar binding. --- **Activate** ⟨3⟩ envision; **Requirement** you have a familiar or animal companion **Effect** You can see and hear through your familiar or animal companion's eyes and ears, provided you are on the same plane. This effect can be sustained, but as long as you do so you can take no other actions. --- **Activate** 1 hour (envision; evil) **Frequency** once per year **Effect** You manipulate the minds of a huge number of targets, provided that the end goal of the manipulation is a tragic or otherwise horrific fate for those being manipulated. This functions as Suggestion, but with a range of 1 mile. All creatures within this area are affected, with the same suggestion implanted in their minds. Creatures hear the telepathic suggestion in their native language, and creatures that are 7th level or higher can attempt a save to resist the effect. This power was used by Vordakai to cause the vanishing of Varnhold, suggesting to its inhabitants to leave their homes and travel south to his tomb. If this effect is counteracted or removed on one victim, it ends for all victims. --- **Destruction** A foul and hideous object, an *oculus of Abaddon* is fortunately relatively easy to destroy, as far as artifacts go. It has Hardness 25 and 100 Hit Points, but repairs damage to itself swiftly, regaining 10 Hit P"
+ }
+]

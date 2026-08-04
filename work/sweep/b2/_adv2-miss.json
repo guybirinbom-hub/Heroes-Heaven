@@ -1,0 +1,1074 @@
+[
+ {
+  "file": "judge-8",
+  "id": "soaring-wings-major",
+  "verdict": "MISS",
+  "reason": "engineFieldsPresent is empty. The tattoo's whole purpose is an activated fly Speed equal to your land Speed or 20 feet (whichever is greater), lasting until Dismissed, and nothing puts a fly Speed on the sheet. Comparable activated flight is delivered elsewhere as a toggle (the `wings-of-air` stance).",
+  "fix": {
+   "toggle": {
+    "registry": "modes",
+    "name": "Soaring Wings (Major)",
+    "effects": "While active: gain a fly Speed equal to your land Speed or 20 feet, whichever is greater. No frequency limit; lasts until you Dismiss it. No other statistic changes."
+   }
+  }
+ },
+ {
+  "file": "judge-8",
+  "id": "stone-body",
+  "verdict": "MISS",
+  "reason": "engineFieldsPresent is empty and the feat is in no registry, yet it grants resistance 10 to ALL damage - a large, explicitly numeric defense. It is temporary (ends at the end of your next turn or on a critical hit) and gated on Tenacious Stance, so it belongs in the toggle lane rather than as a flat `resistances` entry.",
+  "fix": {
+   "toggle": {
+    "registry": "modes",
+    "name": "Stone Body",
+    "effects": "While active: resistance 10 to all damage. Requires Tenacious Stance; ends at the end of your next turn or immediately when you are critically hit."
+   }
+  }
+ },
+ {
+  "file": "judge-8",
+  "id": "stone-brawler-dedication",
+  "verdict": "MISS",
+  "reason": "The dedication's only grant is the Stonestrike Stance action. `stonestrike-stance` exists in core.actions as descriptive text but is NOT in the core.stances registry (unlike tenacious-stance, talon-stance, etc.), so entering it gives the character nothing - in particular no stonestrike attack on the Strikes page - even though the sibling feat Stoney Deflection is already wired into situationalBonuses for the same stance.",
+  "fix": {
+   "toggle": {
+    "registry": "stances",
+    "name": "Stonestrike Stance",
+    "effects": "While in the stance you can make stonestrike attacks: 1d8 bludgeoning, brawling group, traits forceful, magical, unarmed. Requires that you are standing on the ground. (Text verified against core.actions['stonestrike-stance'].)"
+   }
+  }
+ },
+ {
+  "file": "judge-8",
+  "id": "stone-communion",
+  "verdict": "MISS",
+  "reason": "engineFieldsPresent is empty. The feat grants the Terran language outright - a sheet-visible item the app does model (core.languages, and heritages carry `grantsLanguages`, e.g. tidepool-dragonet = ['thalassic']) - and nothing delivers it. The Speak with Stones activation is a 10-minute item activation and needs nothing.",
+  "fix": {
+   "field": "grantsLanguages",
+   "value": [
+    "terran"
+   ],
+   "note": "Same shape as heritages/tidepool-dragonet in effect-backfill.json; the field is currently only used on heritages, so the feat lane may need to read it."
+  }
+ },
+ {
+  "file": "judge-8",
+  "id": "stoutheart-centaur",
+  "verdict": "MISS",
+  "reason": "situationalBonuses already carries the +1 circumstance bonus to Balance and to the Reflex DC against being tripped, but the heritage also raises the ancestry Hit Points from 8 to 10 and nothing delivers that - engineFieldsPresent is empty and no heritage in core.json carries a maxHpBonus. The character's maximum HP is 2 too low at every level.",
+  "fix": {
+   "needsEngineWork": true,
+   "note": "Wants a +2 ancestry-HP grant on the heritage. `maxHpBonus` exists in effect-backfill.json but only ever on feats (barbarian-resiliency etc.), and zero heritages carry it, so the heritage pipeline has to learn to read it."
+  }
+ },
+ {
+  "file": "judge-8",
+  "id": "twisting-tree",
+  "verdict": "MISS",
+  "reason": "The conflux spell (Spinning Staff) is delivered by classes.magus.subclass.options['twisting-tree'].focusSpells, but the hybrid study's central benefit is not: a staff you wield gains the agile trait and a 1d6 damage die in one hand, and parry, reach and trip in two hands. Those are strike statistics shown on the Strikes page and nothing changes them - engineFieldsPresent is empty and the classFeature record carries no mechanical field.",
+  "fix": {
+   "needsEngineWork": true,
+   "note": "Wants a wielded-weapon override lane: while this feature is owned, a staff gets die d6 + agile one-handed, or parry/reach/trip two-handed. No existing field modifies an already-owned weapon's die or traits (grantedStrikes only creates NEW strikes)."
+  }
+ },
+ {
+  "file": "judge-8",
+  "id": "unfurling-brocade",
+  "verdict": "MISS",
+  "reason": "The conflux spell comes from classes.magus.subclass.options['unfurling-brocade'].focusSpells, but the hybrid study's core grant - a qi-infused fabric weapon usable as a Bladed Scarf, uniquely wieldable in ONE hand at a d4 die - never reaches the Strikes page. engineFieldsPresent is empty; core.items['bladed-scarf'] is held-in-two-hands only, so the one-handed d4 form does not exist anywhere.",
+  "fix": {
+   "field": "grantedStrikes",
+   "value": [
+    {
+     "name": "Qi-Infused Fabric",
+     "die": "1d4",
+     "damageType": "slashing",
+     "traits": [
+      "disarm",
+      "finesse",
+      "reach",
+      "sweep",
+      "trip"
+     ],
+     "group": "flail"
+    }
+   ],
+   "note": "The one-handed d4 form; two-handed it is simply a Bladed Scarf (1d6). Runes come from Handwraps of Mighty Blows, and while in Arcane Cascade it also gains the grapple trait - that conditional trait has no field."
+  }
+ },
+ {
+  "file": "judge-8",
+  "id": "unshaken-in-iron",
+  "verdict": "MISS",
+  "reason": "engineFieldsPresent is empty and the feat is in no registry, yet it grants armour specialization effects for light armour (and medium/heavy if trained) plus, in Tenacious Stance, an increase to those effects equal to your armour check penalty. Armour specialization is a damage resistance keyed to the armour group and nothing in src/rules implements it at all (no 'armorSpecialization' anywhere).",
+  "fix": {
+   "needsEngineWork": true,
+   "note": "Needs an armour-specialization lane: resistance by worn armour group (e.g. plate = resistance to slashing/bludgeoning), plus a Tenacious-Stance mode that adds the armour check penalty's value to that resistance."
+  }
+ },
+ {
+  "file": "judge-8",
+  "id": "upset-balance",
+  "verdict": "MISS",
+  "reason": "The feat's outcome (target becomes clumsy) is target-facing and needs nothing, but it also grants the character a +2 circumstance bonus to its own Athletics check when anchored, and neither engineFieldsPresent nor situationalBonuses carries it. Sibling stalwart-defender feats with exactly this shape (Stalwart Song, Tunnel Wall, Stoney Deflection) are all in the registry.",
+  "fix": {
+   "situational": [
+    {
+     "targets": [
+      {
+       "kind": "skill",
+       "detail": "athletics"
+      }
+     ],
+     "when": "on the Upset Balance check while you are anchored",
+     "bonus": "+2 circumstance"
+    }
+   ]
+  }
+ },
+ {
+  "file": "judge-8",
+  "id": "wayfinder-of-rescue",
+  "verdict": "MISS",
+  "reason": "`frequency` gives the once-per-day pip, but the spell itself never reaches the character's Spells page. This is exactly the item-spell lane the app already ships - core.items['sun-wheel'] carries heldSpells {0:['shield']} and the wardrobe stones carry heldSpells for Scouting Eye - and this wayfinder has no heldSpells entry, so the player has no way to cast the Heal it grants.",
+  "fix": {
+   "field": "heldSpells",
+   "value": {
+    "1": [
+     "heal"
+    ]
+   },
+   "note": "1st-rank Heal, one- or two-action version, cast on a creature other than yourself; `frequency` already caps it at once per day."
+  }
+ },
+ {
+  "file": "judge-8",
+  "id": "wayfinder-resonance-infiltrator",
+  "verdict": "MISS",
+  "reason": "`limitedUses` carries the once-per-day cadence, but the granted spell is missing: nothing puts Illusory Disguise (heightened to 2nd rank, arcane) on the Spells page. Sibling feats that grant a once-per-day innate spell all carry `innateSpells` (e.g. shory-aeromancer, share-thoughts in effect-backfill.json).",
+  "fix": {
+   "field": "innateSpells",
+   "value": [
+    {
+     "spellId": "illusory-disguise",
+     "tradition": "arcane",
+     "rank": 2,
+     "usesPerDay": 1
+    }
+   ],
+   "note": "The second activation (transform the wayfinder into a replica badge for 1 hour) is cosmetic and needs nothing."
+  }
+ },
+ {
+  "file": "judge-8",
+  "id": "winged",
+  "verdict": "MISS",
+  "reason": "`counters` + `frequency` give the once-per-hour pip, but the rune's entire benefit - a fly Speed of 25 feet or your land Speed, whichever is slower, for 5 minutes - never appears anywhere. engineFieldsPresent has no `speeds`, and there is no mode for it.",
+  "fix": {
+   "toggle": {
+    "registry": "modes",
+    "name": "Winged (Take to the Skies)",
+    "effects": "While active: gain a fly Speed equal to 25 feet or your land Speed, whichever is SLOWER. Lasts 5 minutes or until Dismissed; once per hour (the existing counters/frequency already track that)."
+   }
+  }
+ },
+ {
+  "file": "judge-8",
+  "id": "wyrms-flight",
+  "verdict": "MISS",
+  "reason": "`frequency` gives the once-per-day pip, but the relic gift's whole effect - a fly Speed equal to your Speed or 20 feet, whichever is greater, for 10 minutes (unlimited at 17th level) - is delivered by nothing. There is no `speeds` field and no mode.",
+  "fix": {
+   "toggle": {
+    "registry": "modes",
+    "name": "Wyrm's Flight",
+    "effects": "While active: gain a fly Speed equal to your land Speed or 20 feet, whichever is greater. Lasts 10 minutes or until Dismissed, once per day; at 17th level the duration is unlimited and there is no frequency limit."
+   }
+  }
+ },
+ {
+  "file": "judge-8",
+  "id": "adept-storyteller",
+  "verdict": "MISS",
+  "reason": "engineFieldsPresent is empty and the feat is in no registry, yet it hands out TWO Performance skill feats of 7th level or lower - real feat picks that should occupy real slots on the character. The app already ships pick-a-feat pickers (effectChoices / grantedFeatByChoice), so this is a data gap, not a missing capability.",
+  "fix": {
+   "field": "effectChoices",
+   "value": [
+    {
+     "id": "perf-feat-1",
+     "prompt": "Adept Storyteller: choose a Performance skill feat of 7th level or lower",
+     "featFilter": {
+      "skill": "performance",
+      "maxLevel": 7,
+      "category": "skill"
+     }
+    },
+    {
+     "id": "perf-feat-2",
+     "prompt": "Adept Storyteller: choose a second Performance skill feat of 7th level or lower",
+     "featFilter": {
+      "skill": "performance",
+      "maxLevel": 7,
+      "category": "skill"
+     }
+    }
+   ],
+   "note": "Copy the exact filter key names from an existing pick-a-feat effectChoices record; the shape shown here mirrors minor-magic's spellFilter. The 'use any Recall Knowledge skill's rank to meet Performance prerequisites' clause is a prerequisite substitution and needs nothing."
+  }
+ },
+ {
+  "file": "judge-8",
+  "id": "ageless-spirit",
+  "verdict": "MISS",
+  "reason": "engineFieldsPresent is empty and the feat is in no registry. It gives the leshy the trained proficiency rank in any one skill of their choice, refreshed each daily preparation - a visible change to the skills page that the character never gets. The FEAT_GRANTS lane already expresses exactly this (featGrantsLane.ts 'free-heart' = skillChoices:[{options:'any',rank:'trained'}]), so nothing new is needed to hold it.",
+  "fix": {
+   "field": "trainedSkillChoice",
+   "value": "any",
+   "note": "Daily-preparation pick, one skill, trained until the next preparations; encode as skillChoices:[{options:'any',rank:'trained'}] in the FEAT_GRANTS lane with daily:true. The rules bar using it as a prerequisite, so it must not unlock skill increases or feats."
+  }
+ },
+ {
+  "file": "judge-8",
+  "id": "alchemical-discoveries",
+  "verdict": "MISS",
+  "reason": "engineFieldsPresent is empty. The feat raises the number of versatile vials you create each day by 1/2/3 with your Crafting rank. Versatile vials ARE a tracked resource in the app (CLASS_RESOURCES 'versatile-vials'), but only for the alchemist class - the investigator has no such resource at all - so this feat's core benefit is invisible.",
+  "fix": {
+   "needsEngineWork": true,
+   "note": "Wants (a) a versatile-vials resource for the investigator methodology (Int modifier per day) and (b) a proficiency-scaled bonus to its max from this feat (+1 expert / +2 master / +3 legendary in Crafting). Learning two formulas per level instead of one is inventory bookkeeping and needs nothing."
+  }
+ },
+ {
+  "file": "judge-8",
+  "id": "alchemical-sciences-methodology",
+  "verdict": "MISS",
+  "reason": "featFeatGrants already delivers the Alchemical Crafting skill feat, but nothing makes the investigator trained in Crafting - engineFieldsPresent is empty, no classFeature in core.json carries trainedSkill, and the investigator class record's trainedSkills.fixed is ['society'] only. Same shape as the swashbuckler styles judged MISS in earlier batches.",
+  "fix": {
+   "field": "trainedSkill",
+   "value": "crafting",
+   "note": "The versatile vials (Int modifier per day) and Quick Tincture this methodology also grants have no resource on the investigator side - see alchemical-discoveries - but the Crafting training is the cleanly fixable half."
+  }
+ },
+ {
+  "file": "judge-8",
+  "id": "ancestral-echoing",
+  "verdict": "MISS",
+  "reason": "engineFieldsPresent is empty. The rune raises your proficiency rank with the etched weapon by one step (capped at your best weapon rank), which directly moves the attack bonus shown on the Strikes page, and nothing delivers it. The 'expert in one Lore' half is GM-determined and needs nothing.",
+  "fix": {
+   "needsEngineWork": true,
+   "note": "Wants a per-weapon-instance proficiency bump on an etched rune: rank(this weapon) = min(normal rank + 1 step, best weapon rank the character has). The FEAT_GRANTS weapon lane only handles whole categories and is keyed to feats, not inventory instances."
+  }
+ },
+ {
+  "file": "judge-8",
+  "id": "ancestral-longevity",
+  "verdict": "MISS",
+  "reason": "engineFieldsPresent is empty and the feat is in no registry. It gives the elf the trained proficiency rank in one skill of their choice each daily preparation, and the skills page never shows it. The FEAT_GRANTS lane already holds exactly this shape for 'free-heart'.",
+  "fix": {
+   "field": "trainedSkillChoice",
+   "value": "any",
+   "note": "Daily-preparation pick, one skill, trained until the next preparations; encode as skillChoices:[{options:'any',rank:'trained'}] with daily:true. Must not count as a prerequisite for skill increases or feats."
+  }
+ },
+ {
+  "file": "judge-8",
+  "id": "ant-kholo",
+  "verdict": "MISS",
+  "reason": "situationalBonuses covers the +1 circumstance bonuses (Lie claiming innocence, the Deception DC against Sense Motive, Deception initiative), but nothing makes the character trained in Deception - engineFieldsPresent is empty and no heritage in core.json carries a skill-training field. Identical to the wisp-fetchling MISS from batch 1.",
+  "fix": {
+   "field": "trainedSkill",
+   "value": "deception",
+   "note": "Must fall back to another skill of the player's choice if Deception is already trained (the generic already-trained fallback). The heritage also sets size to Small, for which there is no legal field; that half needs engine work."
+  }
+ },
+ {
+  "file": "judge-8",
+  "id": "armored-exercise",
+  "verdict": "MISS",
+  "reason": "engineFieldsPresent is empty and the feat is in no registry. It raises your light, medium and heavy armour proficiency to expert for whichever you were already trained in - directly moving AC - and neither featGrantsAuto.ts nor featGrants.ts contains an entry for it, so it does nothing.",
+  "fix": {
+   "needsEngineWork": true,
+   "note": "The FEAT_GRANTS `armor` lane (featGrantsAuto.ts) can express {light:'expert',medium:'expert',heavy:'expert'} but has no way to say 'only for the categories you are ALREADY trained in', which is what makes this conditional. Needs that conditional-upgrade shape."
+  }
+ },
+ {
+  "file": "judge-8",
+  "id": "armored-stealth",
+  "verdict": "MISS",
+  "reason": "engineFieldsPresent is empty and the feat is in no registry. It reduces the armour check penalty applied to Stealth by 1/2/3 with your Stealth proficiency - a change to a number the sheet actually prints. The registry does hold signed adjustments to skills already (e.g. firebrand-braggart-dedication stores a '-1 circumstance (penalty)').",
+  "fix": {
+   "situational": [
+    {
+     "targets": [
+      {
+       "kind": "skill",
+       "detail": "stealth"
+      }
+     ],
+     "when": "wearing non-noisy armor you're trained in (reduces the armor check penalty)",
+     "bonus": "+1 (+2 if master in Stealth, +3 if legendary; never above 0 penalty)"
+    }
+   ],
+   "note": "If the armour has the noisy trait the feat instead ignores that trait outright, which the situational row cannot express - note it in the star text."
+  }
+ },
+ {
+  "file": "judge-8",
+  "id": "artery-map",
+  "verdict": "MISS",
+  "reason": "engineFieldsPresent is empty and the feat is in no registry, yet it adds 1d6 (1d10 at legendary Medicine) persistent bleed to every knife-group Strike against an off-guard creature. That is recurring Strike damage the Strikes page should show and nothing carries it.",
+  "fix": {
+   "situational": [
+    {
+     "targets": [
+      {
+       "kind": "strikeDamage"
+      }
+     ],
+     "when": "Strike an off-guard creature with a knife-group weapon",
+     "bonus": "1d6 persistent bleed (1d10 if legendary in Medicine)"
+    }
+   ]
+  }
+ },
+ {
+  "file": "judge-8",
+  "id": "avenger",
+  "verdict": "MISS",
+  "reason": "The record carries critSpec and `choice`, but this is a rogue CLASS ARCHETYPE and its substitutions are missing: it retrains the starting skills (Intimidation, Religion, Stealth, the deity's divine skill), trains you in medium armour and your deity's favoured weapon, removes the Surprise Attack class feature and adds Hunt Prey. None of that happens - avenger-dedication has no classArchetype entry in core.json, and the classArchetype lane already exists and is used (war-mage-dedication, vindicator-dedication, warrior-of-legend-dedication, palatine-detective-dedication).",
+  "fix": {
+   "needsEngineWork": true,
+   "note": "Author a classArchetype block on avenger-dedication: {classId:'rogue', suppressFeatures:['surprise-attack'], skills:{intimidation:'trained',religion:'trained',stealth:'trained'}, armor:{medium:'trained'}, note: deity's favoured weapon + divine skill + Strength as key attribute + medium-armour rank tracking light-armour rank}. Only the multi-skill/armour substitution is beyond the existing shape."
+  }
+ },
+ {
+  "file": "judge-8",
+  "id": "azarketi-weapon-expertise",
+  "verdict": "MISS",
+  "reason": "engineFieldsPresent is empty and the feat is in no registry. Its whole job is to carry expert-or-better weapon proficiency across to crossbows, hand crossbows, longspears, spears, tridents and azarketi weapons whenever a class feature grants it - directly changing attack bonuses. featGrantsAuto.ts wires 'azarketi-weapon-familiarity' but there is no entry for any ancestry *-weapon-expertise feat (elven, dwarven and the rest are equally bare).",
+  "fix": {
+   "needsEngineWork": true,
+   "note": "Systemic: every ancestry weapon-expertise feat needs a rule of the form 'the named weapons track your best category rank'. The FEAT_GRANTS weaponFamiliarity lane pins a fixed rank and cannot follow the class's advancing rank."
+  }
+ },
+ {
+  "file": "judge-8",
+  "id": "banished-celestial",
+  "verdict": "MISS",
+  "reason": "`abilityBoosts` covers the two free boosts, but the rest of the background is missing: it trains you in any one skill of your choice AND any one Lore skill of your choice, and grants the Enlightenment in Adversity ability. Backgrounds are precisely where trainedSkillChoice / trainedLoreChoice / grantedFeatId DO work (494 of 500 backgrounds carry a skill field), so this is a plain data hole.",
+  "fix": {
+   "field": "trainedLoreChoice",
+   "value": true,
+   "note": "Also needs the free-skill choice (trainedSkillChoice covering every skill, since the background says 'any one skill of your choice') and grantedFeatId 'enlightenment-in-adversity'."
+  }
+ },
+ {
+  "file": "judge-8",
+  "id": "battle-creed",
+  "verdict": "MISS",
+  "reason": "engineFieldsPresent is empty. This is the cleric Battle Harbinger class archetype and it replaces the class wholesale: a different spells-per-day table (max two slots at your highest rank plus two one rank lower), no Resolute Faith, no Miraculous Spell, and the divine font replaced by a battle font of four Bane/Bless slots. None of that reaches the sheet, and battle-harbinger-dedication carries no classArchetype block even though four other dedications do.",
+  "fix": {
+   "needsEngineWork": true,
+   "note": "The existing classArchetype shape can suppress features (resolute-faith, miraculous-spell) but cannot replace a class's spells-per-day table or swap the divine font for a restricted Bane/Bless font - both need new capability."
+  }
+ },
+ {
+  "file": "judge-8",
+  "id": "battledancer",
+  "verdict": "MISS",
+  "reason": "featFeatGrants already delivers the Fascinating Performance skill feat, but nothing makes the swashbuckler trained in Performance - engineFieldsPresent is empty, the classFeature carries no trainedSkill, and swashbuckler's trainedSkills.fixed is ['acrobatics'] only, with no style-skill choice. Same defect as the 'wit' style judged MISS in batch 1.",
+  "fix": {
+   "field": "trainedSkill",
+   "value": "performance",
+   "note": "The bravado trait added to Perform is a table-facing tag on the action and needs nothing."
+  }
+ },
+ {
+  "file": "judge-8",
+  "id": "braggart",
+  "verdict": "MISS",
+  "reason": "engineFieldsPresent is empty and the record is in no registry, yet the style trains you in Intimidation. The swashbuckler class record's trainedSkills.fixed is ['acrobatics'] with no choice entry, so the style skill is simply lost - identical to the 'wit' and 'battledancer' styles.",
+  "fix": {
+   "field": "trainedSkill",
+   "value": "intimidation",
+   "note": "The bravado trait added to Demoralize is a table-facing tag on the action and needs nothing."
+  }
+ },
+ {
+  "file": "judge-8",
+  "id": "brawling-focus",
+  "verdict": "MISS",
+  "reason": "engineFieldsPresent is empty and core.json's record for this feat carries no critSpec at all, even though the critical-specialization lane exists and is used by comparable records (student-of-the-staff has critSpec:true + critSpecWeapons:{bases:['staff']}; avenger has critSpec:true). The monk therefore never sees the brawling critical specialization effect on the Strikes page.",
+  "fix": {
+   "field": "critSpec",
+   "value": true,
+   "note": "Also needs the companion field limiting it to the brawling group - shape it like student-of-the-staff's critSpecWeapons, e.g. {groups:['brawling']}, plus the Monastic Weaponry extension to monk weapons you're trained in."
+  }
+ },
+ {
+  "file": "judge-9",
+  "id": "consult-the-stars",
+  "verdict": "MISS",
+  "reason": "`limitedUses` tracks the once/day, but the feat grants trained proficiency in a chosen Cha/Int/Wis skill that lasts until the next daily preparation - exactly the daily-preparation lane dailyChoices.ts drives off `choice.daily === true` (compare quick-study / environmental-adaptability). The record has no choice at all, so the training is never recorded or applied.",
+  "fix": {
+   "field": "choice",
+   "value": {
+    "flag": "consultTheStarsSkill",
+    "prompt": "Today's Consult the Stars skill",
+    "kind": "array",
+    "daily": true,
+    "options": [
+     {
+      "value": "arcana",
+      "label": "Arcana"
+     },
+     {
+      "value": "crafting",
+      "label": "Crafting"
+     },
+     {
+      "value": "deception",
+      "label": "Deception"
+     },
+     {
+      "value": "diplomacy",
+      "label": "Diplomacy"
+     },
+     {
+      "value": "intimidation",
+      "label": "Intimidation"
+     },
+     {
+      "value": "medicine",
+      "label": "Medicine"
+     },
+     {
+      "value": "nature",
+      "label": "Nature"
+     },
+     {
+      "value": "occultism",
+      "label": "Occultism"
+     },
+     {
+      "value": "performance",
+      "label": "Performance"
+     },
+     {
+      "value": "religion",
+      "label": "Religion"
+     },
+     {
+      "value": "society",
+      "label": "Society"
+     },
+     {
+      "value": "survival",
+      "label": "Survival"
+     }
+    ]
+   },
+   "note": "Only Charisma/Intelligence/Wisdom-keyed skills are legal; temporary, so it must not feed feat prerequisites."
+  }
+ },
+ {
+  "file": "judge-9",
+  "id": "crystal-ward-spells",
+  "verdict": "MISS",
+  "reason": "`focusSpells` delivers Electrified Crystal Ward and the focus pool, but the feat also says 'you are trained in arcane spell attack rolls and spell DCs. Your spellcasting ability is Intelligence' - and the record has no spellcastingGrant, so a non-caster who takes this archetype gets a focus spell with no proficiency or key attribute behind its DC. Sibling feats (dracomancer, holy-bloom, invoke-the-crimson-oath) carry the field.",
+  "fix": {
+   "field": "spellcastingGrant",
+   "value": {
+    "tradition": "arcane",
+    "keyAbility": "int",
+    "proficiency": "trained"
+   }
+  }
+ },
+ {
+  "file": "judge-9",
+  "id": "dragon-turtle-scale",
+  "verdict": "MISS",
+  "reason": "`uses` only tracks the charge. Activating the talisman gives a swim Speed equal to half your land Speed for 1 minute - a real movement-type line on the sheet - and nothing anywhere delivers it (there is no mode, no passiveEffects, and a plain `speeds` field would wrongly make it permanent).",
+  "fix": {
+   "toggle": {
+    "registry": "modes",
+    "name": "Dragon Turtle Scale",
+    "effects": "While active (1 minute, item-driven consumable mode): the character gains a swim Speed equal to half their land Speed. No other statistic changes."
+   },
+   "needsEngineWork": true,
+   "note": "ModeModifier today is numeric only (value: number over a ModeTargetKind); granting a movement TYPE derived from land Speed needs the mode lane extended, as no existing mode touches speeds."
+  }
+ },
+ {
+  "file": "judge-9",
+  "id": "dragon-turtle-scale-greater",
+  "verdict": "MISS",
+  "reason": "Same gap as the base scale, at full land Speed: the 1-minute swim Speed is a sheet movement line that no field or registry currently supplies.",
+  "fix": {
+   "toggle": {
+    "registry": "modes",
+    "name": "Dragon Turtle Scale (Greater)",
+    "effects": "While active (1 minute, item-driven consumable mode): the character gains a swim Speed equal to their land Speed. No other statistic changes."
+   },
+   "needsEngineWork": true,
+   "note": "Same mode-lane limitation as the lesser scale - modes carry numeric modifiers only."
+  }
+ },
+ {
+  "file": "judge-9",
+  "id": "dwarven-weapon-expertise",
+  "verdict": "MISS",
+  "reason": "The record has no fields and no registry entry. featGrantsAuto.ts implements exactly this pattern for other ancestries ('catfolk-weapon-expertise', 'hobgoblin-weapon-expertise', 'genie-weapon-expertise' … all weaponFamiliarity with mirrorBestCategory:true), but dwarf/elf/gnome/goblin/halfling are absent, so a 13th-level dwarf's battle axes and warhammers never follow their class weapon rank.",
+  "fix": {
+   "field": "weaponFamiliarity",
+   "value": {
+    "weapons": [
+     "battle-axe",
+     "pick",
+     "warhammer",
+     "clan-dagger",
+     "dwarven-war-axe",
+     "dwarven-scattergun"
+    ],
+    "mirrorBestCategory": true
+   },
+   "note": "Plus any other dwarf-trait weapon the character is trained in. The paired 'dwarven-weapon-familiarity' feat is likewise missing its trained-rank weaponFamiliarity grant."
+  }
+ },
+ {
+  "file": "judge-9",
+  "id": "eclipseborn",
+  "verdict": "MISS",
+  "reason": "abilityBoosts and innateSpells (Ill Omen) are present, but the background also says 'you're trained in a Lore skill related to that event' and the record has no lore field at all. 47 backgrounds already carry `trainedLoreChoice: true` (the free-text Lore input, e.g. out-of-towner), so the lane exists and this record simply misses it.",
+  "fix": {
+   "field": "trainedLoreChoice",
+   "value": true,
+   "note": "Free-text: the catastrophe is agreed with the GM, so the player types the Lore subject."
+  }
+ },
+ {
+  "file": "judge-9",
+  "id": "elven-weapon-expertise",
+  "verdict": "MISS",
+  "reason": "No fields, no registry entry, and featGrantsAuto.ts has no 'elven-weapon-expertise' key even though it implements the identical mirrorBestCategory pattern for a dozen other ancestries - so elven weapons never track the character's class weapon rank.",
+  "fix": {
+   "field": "weaponFamiliarity",
+   "value": {
+    "weapons": [
+     "longbow",
+     "composite-longbow",
+     "longsword",
+     "rapier",
+     "shortbow",
+     "composite-shortbow",
+     "elven-curve-blade",
+     "elven-branched-spear"
+    ],
+    "mirrorBestCategory": true
+   },
+   "note": "Plus any other elf-trait weapon the character is trained in."
+  }
+ },
+ {
+  "file": "judge-9",
+  "id": "empiricism-methodology",
+  "verdict": "MISS",
+  "reason": "featFeatGrants supplies That's Odd and Expeditious Inspection, but unlike its siblings the investigator subclass option 'empiricism-methodology' has grants = null (forensic-medicine grants medicine, interrogation grants diplomacy, alchemical-sciences grants crafting) because this one is a PLAYER CHOICE - 'trained in one Intelligence-based skill of your choice'. Nothing offers or records that pick.",
+  "fix": {
+   "field": "trainedSkillChoice",
+   "value": [
+    "arcana",
+    "crafting",
+    "occultism",
+    "society"
+   ]
+  }
+ },
+ {
+  "file": "judge-9",
+  "id": "gnome-weapon-expertise",
+  "verdict": "MISS",
+  "reason": "No fields, no registry entry, and featGrantsAuto.ts carries no 'gnome-weapon-expertise' key despite implementing the same mirrorBestCategory pattern for catfolk, conrasu, genie, ghoran, grippli, hobgoblin, kobold, vanara and vishkanya - so gnome weapons never track the character's class weapon rank.",
+  "fix": {
+   "field": "weaponFamiliarity",
+   "value": {
+    "weapons": [
+     "glaive",
+     "kukri",
+     "gnome-flickmace",
+     "gnome-hooked-hammer"
+    ],
+    "mirrorBestCategory": true
+   },
+   "note": "Plus any other gnome-trait weapon the character is trained in."
+  }
+ },
+ {
+  "file": "judge-9",
+  "id": "goblin-weapon-expertise",
+  "verdict": "MISS",
+  "reason": "No fields and no featGrantsAuto entry, so a goblin's dogslicer and horsechopper stay at their class weapon-category rank instead of following it up to expert/master/legendary.",
+  "fix": {
+   "field": "weaponFamiliarity",
+   "value": {
+    "weapons": [
+     "dogslicer",
+     "horsechopper",
+     "goblin-flail",
+     "goblin-shrapnel-blade"
+    ],
+    "mirrorBestCategory": true
+   },
+   "note": "Plus any other goblin-trait weapon the character is trained in."
+  }
+ },
+ {
+  "file": "judge-9",
+  "id": "halfling-weapon-expertise",
+  "verdict": "MISS",
+  "reason": "No fields and no featGrantsAuto entry, so slings, halfling sling staves and shortswords never follow the character's class weapon rank the way every other implemented ancestry's expertise feat does.",
+  "fix": {
+   "field": "weaponFamiliarity",
+   "value": {
+    "weapons": [
+     "sling",
+     "halfling-sling-staff",
+     "shortsword",
+     "filchers-fork",
+     "frying-pan"
+    ],
+    "mirrorBestCategory": true
+   },
+   "note": "Plus any other halfling-trait weapon the character is trained in."
+  }
+ },
+ {
+  "file": "judge-9",
+  "id": "haunting-memories",
+  "verdict": "MISS",
+  "reason": "The record carries no fields at all, yet at every daily preparation it grants expert in an untrained skill (or master in a trained one) PLUS a matching skill feat, lasting until the next preparation. dailyChoices.ts drives exactly this off `choice.daily === true` (quick-study, environmental-adaptability), so the lane exists and this record never enters it.",
+  "fix": {
+   "field": "choice",
+   "value": {
+    "flag": "hauntingMemoriesSkill",
+    "prompt": "Today's Haunting Memories skill (expert if untrained, master if already trained)",
+    "kind": "open",
+    "daily": true
+   },
+   "needsEngineWork": true,
+   "note": "The skill pick fits the existing daily lane; the paired 'gain one skill feat whose minimum rank you just reached, using half your level for level prerequisites' half has no legal field and needs the daily lane extended to grant a feat."
+  }
+ },
+ {
+  "file": "judge-9",
+  "id": "impossible-polymath",
+  "verdict": "MISS",
+  "reason": "The record carries nothing, but the feat mechanically widens which spells Esoteric Polymath may draw into the bard's book and daily repertoire - arcane if trained in Arcana, primal if in Nature, divine if in Religion. 'esoteric-polymath' does carry a `choice`, so the picker exists; nothing extends its tradition filter, so the player can never actually pick the cross-tradition spells this feat grants.",
+  "fix": {
+   "needsEngineWork": true,
+   "note": "Widen the esoteric-polymath spell picker's tradition filter to include arcane/primal/divine gated on trained Arcana/Nature/Religion when Impossible Polymath is owned, and keep the cross-tradition entries from persisting past a re-prepare (they don't survive even with Eclectic Polymath). No legal record field expresses a picker-filter widening."
+  }
+ },
+ {
+  "file": "judge-9",
+  "id": "keeper-jotunborn",
+  "verdict": "MISS",
+  "reason": "The heritage has no engine fields at all. featFeatGrants was meant to supply Survey Wildlife (the record even carries a dataWarning that the granted feat id is missing from the data) and situationalBonuses covers the +1 circumstance bonus to Track animals - but 'You are trained in Survival' is delivered by nothing.",
+  "fix": {
+   "field": "trainedSkill",
+   "value": "survival",
+   "note": "The record's existing dataWarning is about the missing Survey Wildlife feat id, not about this proficiency."
+  }
+ },
+ {
+  "file": "judge-9",
+  "id": "klingegeist",
+  "verdict": "MISS",
+  "reason": "The record carries no fields and appears in no registry. This is an alternate FORM - the app already has that lane (129 stance entries, 20+ flagged `form: true` including ursine-avenger-form, bat-form, worm-form, final-form) - but 'klingegeist' is absent, so possessing a blade changes nothing: AC, fly Speed, the weapon proficiency and the action restriction are all invisible.",
+  "fix": {
+   "toggle": {
+    "registry": "stances",
+    "name": "Klingegeist (Possess a Blade)",
+    "effects": "Alternate form (form: true), 10 minutes or until Dismissed. AC becomes a flat 18 + character level (replacing the normal AC calculation, not a bonus to it). Gain a fly Speed of 30 feet; land Speed and all other movement types are unavailable. Become trained in the possessed slashing weapon of 2 Bulk or less unless already better, and the only actions available are Strike and Fly (neither triggers reactions). You have the weapon's Hardness and Hit Points (typically Hardness 5, HP 20) instead of your own defences; only spirit damage bypasses them to hurt you. You can't be Disarmed, and you neither benefit from nor provide flanking.",
+    "note": "Model it alongside the existing form entries; the Hardness/HP substitution has no field today and may need engine support."
+   },
+   "needsEngineWork": true
+  }
+ },
+ {
+  "file": "judge-9",
+  "id": "mature-trained-companion",
+  "verdict": "MISS",
+  "reason": "No fields and no registry entry. companionGrants.ts is where maturity upgrades live (`maturityFloor`: advanced-reanimated-companion, paragon-companion, incredible-megafauna-companion, and the sibling Animal Trainer feat 'specialized-companion-animal-trainer'), but this feat is absent - so taking it leaves the companion young, with no Performance advance and no maneuver swap.",
+  "fix": {
+   "field": "companionGrants",
+   "value": {
+    "kinds": [
+     "animal"
+    ],
+    "maturityFloor": "mature",
+    "skillGrants": [
+     {
+      "skill": "performance",
+      "rank": "expert"
+     }
+    ],
+    "note": "Mature Trained Companion: your animal companion becomes a mature animal companion, taking expert Performance in place of one of the three skill increases for mature, and gains the Mesmerizing Performance advanced maneuver instead of the normal one for its type."
+   }
+  }
+ },
+ {
+  "file": "judge-10",
+  "id": "multilingual",
+  "verdict": "MISS",
+  "reason": "Nothing grants the extra language slots. bonusLanguageSlots (build.ts:824) is only max(0, Int mod) + ancestry.languages.additional and never reads feats, and grantsLanguages is documented as FIXED grants ('Multilingual picks are separate'). A Multilingual character can therefore record no additional languages at all, nor the extra one at master/legendary Society.",
+  "fix": {
+   "field": "choice",
+   "needsEngineWork": true,
+   "note": "OpenChoiceFrom.type already includes 'language', so an open multi-pick choice is the closest existing shape, but bonusLanguageSlots must also count feat-granted slots. No current field expresses 'N extra player-chosen languages'."
+  }
+ },
+ {
+  "file": "judge-10",
+  "id": "orc-weapon-expertise",
+  "verdict": "MISS",
+  "reason": "Absent from FEAT_GRANTS. Every other ancestry Weapon Expertise feat is registered in featGrantsAuto.ts with weaponFamiliarity/mirrorBestCategory (catfolk-, conrasu-, genie-, ghoran-, grippli-, hobgoblin-, kobold-, vanara-, vishkanya-weapon-expertise), so an orc character never gets the mirrored expert/master rank on the falchion, greataxe or orc weapons.",
+  "fix": {
+   "field": "FEAT_GRANTS",
+   "value": "{\"weaponFamiliarity\":{\"weapons\":[\"falchion\",\"greataxe\",\"orc-knuckle-dagger\",\"orc-necksplitter\",\"butchering-axe\",\"horsechopper\",\"dogslicer\"],\"mirrorBestCategory\":true}}",
+   "note": "Shape copied from catfolk-weapon-expertise. The weapon-id list must be re-derived from core.items for the weapons actually carrying the orc trait before applying."
+  }
+ },
+ {
+  "file": "judge-10",
+  "id": "perfections-path",
+  "verdict": "MISS",
+  "reason": "The record has a choice (fortitude/reflex/will) that RECORDS the pick, but nothing applies it: perfections-path is absent from FEAT_GRANTS, so the chosen saving throw never reaches master. FeatGrant.choiceGrants exists for exactly this 'grants selected by the feat's own choice dropdown' case.",
+  "fix": {
+   "field": "FEAT_GRANTS",
+   "value": "{\"choiceGrants\":{\"fortitude\":{\"save\":{\"fortitude\":\"master\"}},\"reflex\":{\"save\":{\"reflex\":\"master\"}},\"will\":{\"save\":{\"will\":\"master\"}}}}"
+  }
+ },
+ {
+  "file": "judge-10",
+  "id": "raging-stories",
+  "verdict": "MISS",
+  "reason": "The record has no fields and is in no registry, yet while wrapped in spectral flame your melee Strikes deal +2 additional fire damage (+4 at master Religion, +6 at legendary) for the duration. That is a toggleable temporary damage rider, and the feat appears in neither core.modes nor core.stances.",
+  "fix": {
+   "toggle": {
+    "registry": "modes",
+    "name": "Raging Stories (spectral flame)",
+    "effects": "While active (you Offered a Story and chose the spectral-flame benefit): every MELEE Strike deals +2 additional fire damage; +4 instead if you are a master in Religion, +6 if legendary. Ranged Strikes unaffected."
+   }
+  }
+ },
+ {
+  "file": "judge-10",
+  "id": "repository-of-knowledge",
+  "verdict": "MISS",
+  "reason": "This relic gift makes you trained (expert at relic level 9, master at 17) in 3 additional Lore skills while the relic is on your person, and the record carries no fields. ItemPassiveEffects (types.ts:462) only carries NUMERIC bonuses — skills is Record<ProficiencyKey, number> — so no item can currently confer a proficiency RANK, and loreChoices is a heritage-only field.",
+  "fix": {
+   "needsEngineWork": true,
+   "note": "Needs an item-borne proficiency-RANK lane plus 3 free-text Lore slots (level-gated trained/expert/master). Neither ItemPassiveEffects.skills (a numeric item bonus) nor loreChoices (heritage-only) can express it."
+  }
+ },
+ {
+  "file": "judge-10",
+  "id": "respite-of-a-thousand-roofs",
+  "verdict": "MISS",
+  "reason": "featFeatGrants.ts:244 delivers Improvise Tool, but nothing makes the character trained in Crafting or in Cooking Lore: the heritage record carries no fields at all, and heritage ids are never looked up in FEAT_GRANTS (build.ts:2273 iterates c.feats only).",
+  "fix": {
+   "field": "FEAT_GRANTS",
+   "value": "{\"skills\":{\"crafting\":\"trained\",\"lore:cooking\":\"trained\"}}",
+   "needsEngineWork": true,
+   "note": "FEAT_GRANTS.skills is the right shape but the grant loop never reads heritage ids — the heritage lane has to be wired (read the same map for build.heritageId)."
+  }
+ },
+ {
+  "file": "judge-10",
+  "id": "revolutionary-innovation",
+  "verdict": "MISS",
+  "reason": "A level-15 inventor class feature that is a choose-one-of-N with real defensive grants — Energy Barrier (resistance 2 + half level to all eight energy types), Physical Protections (resistance half level to bludgeoning/piercing/slashing), Incredible Resistance (raises a breakthrough resistance to your full level), Perfect Fortification (resistance 2 + half level to precision) — yet it carries no effectChoices, so the player is never asked and no resistance reaches the sheet.",
+  "fix": {
+   "field": "effectChoices",
+   "value": "[{\"id\":\"revolutionary-modification\",\"prompt\":\"Choose a revolutionary innovation modification\",\"options\":[{\"value\":\"energy-barrier\",\"label\":\"Energy Barrier (armor)\",\"grant\":{\"resistances\":[{\"type\":\"acid\",\"value\":\"2+floor(@actor.level/2)\"},{\"type\":\"cold\",\"value\":\"2+floor(@actor.level/2)\"},{\"type\":\"electricity\",\"value\":\"2+floor(@actor.level/2)\"},{\"type\":\"fire\",\"value\":\"2+floor(@actor.level/2)\"},{\"type\":\"force\",\"value\":\"2+floor(@actor.level/2)\"},{\"type\":\"sonic\",\"value\":\"2+floor(@actor.level/2)\"},{\"type\":\"vitality\",\"value\":\"2+floor(@actor.level/2)\"},{\"type\":\"void\",\"value\":\"2+floor(@actor.level/2)\"}]}},{\"value\":\"physical-protections\",\"label\":\"Physical Protections (armor)\",\"grant\":{\"resistances\":[{\"type\":\"bludgeoning\",\"value\":\"floor(@actor.level/2)\"},{\"type\":\"piercing\",\"value\":\"floor(@actor.level/2)\"},{\"type\":\"slashing\",\"value\":\"floor(@actor.level/2)\"}]}},{\"value\":\"perfect-fortification\",\"label\":\"Perfect Fortification (power suit)\",\"grant\":{\"resistances\":[{\"type\":\"precision\",\"value\":\"2+floor(@actor.level/2)\"}]}},{\"value\":\"other\",\"label\":\"Another revolutionary, breakthrough or initial modification (recorded only)\"}]}]",
+   "note": "The printed option list is truncated in the imported text; the four options above are the ones expressible with a legal field. Remaining options should be listed with no grant so the pick is still recorded."
+  }
+ },
+ {
+  "file": "judge-10",
+  "id": "runelord",
+  "verdict": "MISS",
+  "reason": "effectChoices delivers the sin pick and its school focus spell, but the class-archetype restructuring does nothing. Unlike war-mage-dedication, warrior-of-legend-dedication and vindicator-dedication, the sibling runelord-dedication feat carries NO classArchetype, so 'trained in martial polearms and spears' (advancing with simple weapons), the Thassilonian language and the bonus Advanced School Spell at 8th level are never applied.",
+  "fix": {
+   "field": "classArchetype",
+   "value": "{\"classId\":\"wizard\",\"suppressFeatures\":[\"arcane-thesis\"],\"weapon\":{\"martial\":\"trained\"},\"note\":\"Runelord: you are trained in martial polearms and spears (they advance with your simple-weapon proficiency), you learn Thassilonian, you have a personal rune in place of an arcane thesis, you must take the School of Thassilonian Rune Magic, and you gain Advanced School Spell as a bonus feat at 8th level.\"}",
+   "note": "classArchetype is a Feat field, so this belongs on the runelord-dedication record (which core.json currently ships with no classArchetype at all). A per-weapon weaponFamiliarity list would be more accurate than the whole martial category, since only polearms and spears are granted."
+  }
+ },
+ {
+  "file": "judge-10",
+  "id": "sage-jotunborn",
+  "verdict": "MISS",
+  "reason": "featFeatGrants.ts:247 delivers Additional Lore, but nothing makes the character trained in Society: the heritage record carries no fields, and heritage ids are never looked up in FEAT_GRANTS (build.ts:2273 iterates c.feats only).",
+  "fix": {
+   "field": "FEAT_GRANTS",
+   "value": "{\"skills\":{\"society\":\"trained\"}}",
+   "needsEngineWork": true,
+   "note": "Right shape, wrong reach: the grant loop must also read the chosen heritage id."
+  }
+ },
+ {
+  "file": "judge-10",
+  "id": "sages-bloom",
+  "verdict": "MISS",
+  "reason": "Not in situationalBonuses even though its sibling skill talismans are (navigators-feather:1748, sneaky-key:1548). The activation turns a critical failure on a Nature check into a failure — a degree-of-success change to the player's OWN check, which the registry already stores in this exact form (paragon-benefit-regalia:877, silvertongue-mutagen:1802).",
+  "fix": {
+   "field": "FEAT_SITUATIONAL",
+   "situational": [
+    {
+     "targets": [
+      {
+       "kind": "skill",
+       "detail": "nature"
+      }
+     ],
+     "when": "on the three Recall Knowledge checks after activating the talisman",
+     "bonus": "critical failure becomes failure"
+    }
+   ]
+  }
+ },
+ {
+  "file": "judge-10",
+  "id": "shootists-edge",
+  "verdict": "MISS",
+  "reason": "advancement.ts:388 covers the class DC master bump, but the second half has no surface: ignoring the second- and third-range-increment penalty with a master-or-better ranged weapon is exactly the line situationalBonuses.ts:2188 already stores for masterful-hunter ('attacking your hunted prey within your ranged weapon's second or third range increment... ignore the range increment penalty'), and shootists-edge has no registry entry.",
+  "fix": {
+   "field": "FEAT_SITUATIONAL",
+   "situational": [
+    {
+     "targets": [
+      {
+       "kind": "strikeAttack"
+      }
+     ],
+     "when": "with a ranged weapon you have master or greater proficiency in, in its 2nd or 3rd range increment",
+     "bonus": "ignore the range increment penalty"
+    }
+   ]
+  }
+ },
+ {
+  "file": "judge-10",
+  "id": "snare-specialist",
+  "verdict": "MISS",
+  "reason": "This ranger feat grants snare formulas and free daily prepared snares on its own (its prerequisite is expert Crafting, not Snare Crafting), but snareFormulas.ts:17 SNARE_CRAFTING_SOURCES lists only snare-crafting, snarecrafter-dedication, snare-expert and snare-setter — so hasSnareCrafting() is false and a ranger with Snare Specialist gets no formula book and no prepared-snare allowance at all.",
+  "fix": {
+   "field": "SNARE_CRAFTING_SOURCES",
+   "value": "add 'snare-specialist' to the set in src/rules/snareFormulas.ts",
+   "note": "Its allowance differs from the default ladder: formulas 3/6/9 at expert/master/legendary and 4/6/8 prepared, so snareAllowance may need a per-source variant rather than the shared 4+3n / 4-6-8 table."
+  }
+ },
+ {
+  "file": "judge-10",
+  "id": "specialized-companion",
+  "verdict": "MISS",
+  "reason": "This is the AoN-scraped twin of specialized-companion-animal-trainer, which IS registered in companionGrants.ts:172 (maturityFloor 'specialized' plus the legendary-Performance note). This id has no companionGrants entry, so a player who takes this copy gets no specialization and no companion change at all.",
+  "fix": {
+   "field": "companionGrants",
+   "value": "{\"kinds\":[\"animal\"],\"maturityFloor\":\"specialized\",\"note\":\"Animal Trainer companion: gains one specialization of your choice, and its Performance proficiency is legendary in place of one of the specialization's skill increases.\"}",
+   "note": "Identical to the specialized-companion-animal-trainer entry. If the two records are true duplicates, suppressing this one instead would be equally correct."
+  }
+ },
+ {
+  "file": "judge-10",
+  "id": "splendid-companion",
+  "verdict": "MISS",
+  "reason": "Not in companionGrants (grepped companionGrants.ts). The feat matures the animal companion to nimble or savage and raises its Performance proficiency to master, and COMPANION_MODS is exactly the lane for that — its siblings specialized-companion-animal-trainer (maturityFloor) and chorus-companion (skillGrants Performance) are both registered.",
+  "fix": {
+   "field": "companionGrants",
+   "value": "{\"kinds\":[\"animal\"],\"maturityFloor\":\"nimble\",\"skillGrants\":[{\"skill\":\"performance\",\"rank\":\"master\"}],\"note\":\"Splendid Companion: your animal companion becomes a nimble or savage companion (your choice), and its Performance proficiency is master in place of one of Athletics or Acrobatics.\"}",
+   "note": "maturityFloor value must match whatever COMPANION_MODS uses for the nimble/savage tier; the nimble-or-savage choice itself is a player pick the note records."
+  }
+ },
+ {
+  "file": "judge-10",
+  "id": "stealthy-companion",
+  "verdict": "MISS",
+  "reason": "Not in companionGrants (grepped companionGrants.ts). The feat gives the animal companion the benefit of Camouflage and, for a specialized ambusher, raises its Stealth to master (legendary if already master) — a companion skill grant, which is exactly what COMPANION_MODS.skillGrants delivers for chorus-companion and fell-rider.",
+  "fix": {
+   "field": "companionGrants",
+   "value": "{\"kinds\":[\"animal\"],\"skillGrants\":[{\"skill\":\"stealth\",\"rank\":\"master\"}],\"note\":\"Stealthy Companion: your animal companion gains the benefit of the Camouflage feat (it can Hide and Sneak in natural terrain without cover or concealment). The Stealth rank shown applies only if it is a specialized ambusher, and becomes legendary if it was already master.\"}",
+   "note": "The Stealth grant is conditional on the ambusher specialization; skillGrants is unconditional, so either gate it or keep the condition in the note."
+  }
+ },
+ {
+  "file": "judge-10",
+  "id": "stone-of-unrivaled-skill",
+  "verdict": "MISS",
+  "reason": "choice records which skill you named, counters/frequency track Taste Fluency, and situationalBonuses.ts:1995 carries its +3 status bonus — but the item's headline benefit is never applied: sealing the contract makes you expert (master if already expert, legendary if already master) in that skill, and nothing raises the rank. ItemPassiveEffects (types.ts:462) has only numeric bonuses, no proficiency-rank lane.",
+  "fix": {
+   "needsEngineWork": true,
+   "note": "Needs an item-borne proficiency-RANK lane keyed to the item's own choice value (a conditional 'one step up from your current rank' grant). ItemPassiveEffects.skills is a numeric item bonus and cannot express a rank."
+  }
+ },
+ {
+  "file": "judge-10",
+  "id": "travelers-fulu",
+  "verdict": "MISS",
+  "reason": "Not in situationalBonuses, unlike the other Survival talisman navigators-feather (situationalBonuses.ts:1748). Activating it improves the result of your OWN Survival check to Sense Direction by one degree of success (two at master Survival) — a degree-of-success change the registry already stores in this exact form (paragon-benefit-regalia:877).",
+  "fix": {
+   "field": "FEAT_SITUATIONAL",
+   "situational": [
+    {
+     "targets": [
+      {
+       "kind": "skill",
+       "detail": "survival"
+      }
+     ],
+     "when": "on the Sense Direction check you activated the fulu for (also counts as having a compass)",
+     "bonus": "one degree of success better (two if you are a master in Survival)"
+    }
+   ]
+  }
+ },
+ {
+  "file": "judge-10",
+  "id": "tsukumogami-poppet",
+  "verdict": "MISS",
+  "reason": "effectChoices delivers the material-keyed weakness (fire/electricity/cold) and situationalBonuses.ts:2238 carries the +2/+3 circumstance bonus to Aid with the tool Lore, but the player is never asked WHICH tool Lore and is never trained in it — the very skill the registry entry refers to. Heritage.loreChoices (types.ts:268-270) is the field for 'a free-text Lore a heritage grants', already used by Half Moon Sarangay and Born of Item.",
+  "fix": {
+   "field": "loreChoices",
+   "value": "1",
+   "note": "The typed subject lands in BuildState.heritageLore and becomes lore:<subject> trained, which also gives the existing situationalBonuses entry a real skill to attach to."
+  }
+ },
+ {
+  "file": "judge-10",
+  "id": "unmistakable-lore",
+  "verdict": "MISS",
+  "reason": "No fields and no registry entry, yet it changes the outcome of the player's OWN checks: a critical failure to Recall Knowledge with any trained Lore becomes a failure. situationalBonuses already stores exactly this shape, including against a lore:* target (silvertongue-mutagen:1802 uses {kind:'skill', detail:'lore:*'}).",
+  "fix": {
+   "field": "FEAT_SITUATIONAL",
+   "situational": [
+    {
+     "targets": [
+      {
+       "kind": "skill",
+       "detail": "lore:*"
+      }
+     ],
+     "when": "to Recall Knowledge with a Lore subcategory you are trained in",
+     "bonus": "critical failure becomes failure"
+    }
+   ]
+  }
+ },
+ {
+  "file": "judge-10",
+  "id": "unshaken-in-iron",
+  "verdict": "MISS",
+  "reason": "Grants the armor specialization effect of light armor (and of medium/heavy if trained), plus an increase to those effects equal to your armour check penalty while in Tenacious Stance. Armour specialization is implemented nowhere in the app (grepped src/rules and src/sheet; only weapon critSpec exists), so a resistance the rules hand the player never appears.",
+  "fix": {
+   "needsEngineWork": true,
+   "note": "Needs an armour-specialization lane: the effect is keyed to the worn armour's group and mostly reduces critical-hit damage / grants resistance, which none of resistances, situational or modes can express faithfully. Once that lane exists, the Tenacious Stance increase is a stance-conditional bump on top."
+  }
+ },
+ {
+  "file": "judge-10",
+  "id": "vigilant-goloma",
+  "verdict": "MISS",
+  "reason": "innateSpells delivers the at-will Detect Magic, but the second half has no surface: your Perception proficiency counts as one step better when detecting magical traps. This heritage is in no registry, and situationalBonuses already stores rank-step effects in this exact form (memory-of-skill:2564 and pilferers-gloves:2583 both encode 'one proficiency rank higher').",
+  "fix": {
+   "field": "FEAT_SITUATIONAL",
+   "situational": [
+    {
+     "targets": [
+      {
+       "kind": "perception"
+      }
+     ],
+     "when": "when attempting to detect a magical trap",
+     "bonus": "one proficiency rank higher (untyped)"
+    }
+   ]
+  }
+ },
+ {
+  "file": "judge-10",
+  "id": "viking-weapon-specialist",
+  "verdict": "MISS",
+  "reason": "Not in FEAT_GRANTS (featGrantsAuto/Lane hold viking-dedication and viking-shieldbearer, not this feat), so neither half lands: the critical specialization effects of the battle axe, hatchet, longsword and shortsword, and the mirrored expert-or-better proficiency in those four weapons whenever a class feature raises your weapon proficiency. critSpecWeapons and weaponFamiliarity/mirrorBestCategory are the fields for exactly these.",
+  "fix": {
+   "field": "FEAT_GRANTS",
+   "value": "{\"weaponFamiliarity\":{\"weapons\":[\"battle-axe\",\"hatchet\",\"longsword\",\"shortsword\"],\"mirrorBestCategory\":true}}",
+   "note": "The crit-spec half needs critSpec:true plus critSpecWeapons {bases:['battle-axe','hatchet','longsword','shortsword']} on the feat record itself (types.ts:296-301), since FEAT_GRANTS has no crit-spec track."
+  }
+ },
+ {
+  "file": "judge-10",
+  "id": "warden-human-bb",
+  "verdict": "MISS",
+  "reason": "The record carries a choice that RECORDS the pick, but none of the three benefits is applied: Heritage.choice is documented (types.ts:558-565) as a pick that is merely 'answered on the heritage step', and effectChoices/EffectGrant (types.ts:455-461) has no lane for max HP, for a saving-throw rank, or for armour proficiency — it covers only resistances/weaknesses/immunities/senses/speeds/skills/spells. So a Warden Human gets neither +4 HP, nor expert Fortitude, nor trained medium armour.",
+  "fix": {
+   "needsEngineWork": true,
+   "note": "EffectGrant needs hp / save-rank / armor-rank tracks (FeatGrant already has save and armor, so the cleanest route is to let a heritage choice resolve into a FeatGrant-shaped grant). No existing field can carry any of the three options."
+  }
+ },
+ {
+  "file": "judge-10",
+  "id": "warrior-android",
+  "verdict": "MISS",
+  "reason": "The heritage prints 'You're trained in all simple and martial weapons' and the record carries no fields at all (only a dataWarning about a missing feat id). Heritage ids are never looked up in FEAT_GRANTS (build.ts:2273 iterates c.feats), so a Warrior Android's weapon proficiencies are whatever the class alone gives.",
+  "fix": {
+   "field": "FEAT_GRANTS",
+   "value": "{\"weapon\":{\"simple\":\"trained\",\"martial\":\"trained\"}}",
+   "needsEngineWork": true,
+   "note": "FeatGrant.weapon is the right shape but the grant loop must also read the chosen heritage id."
+  }
+ },
+ {
+  "file": "judge-10",
+  "id": "weapon-weird-oil",
+  "verdict": "MISS",
+  "reason": "uses tracks the consumable, but the oil's actual effect has no lane: for an hour the coated weapon uses your proficiency rank in the OIL's keyed weapon group instead of its own group, and applies that group's critical specialization effect. The app tracks proficiency by category plus a fighter weapon-group table (build.ts proficiencies.weaponGroups) and reads crit spec from critSpec.ts by the weapon's own group, and nothing can rebind either per-item.",
+  "fix": {
+   "needsEngineWork": true,
+   "note": "Needs a per-inventory-item weapon-group override that both the group-proficiency lookup and critSpec.ts honour. Not expressible as a mode (ModeModifier is numeric only) or as critSpecWeapons (which grants crit spec, it does not re-key the group)."
+  }
+ },
+ {
+  "file": "judge-10",
+  "id": "weaver-jotunborn",
+  "verdict": "MISS",
+  "reason": "situationalBonuses.ts:2125 carries the +1 circumstance bonus to Seek for hidden details, but nothing makes the character trained in Crafting: the heritage record has no fields, and heritage ids are never looked up in FEAT_GRANTS (build.ts:2273 iterates c.feats only).",
+  "fix": {
+   "field": "FEAT_GRANTS",
+   "value": "{\"skills\":{\"crafting\":\"trained\"}}",
+   "needsEngineWork": true,
+   "note": "Right shape, wrong reach: the grant loop must also read the chosen heritage id."
+  }
+ },
+ {
+  "file": "judge-11",
+  "id": "wisp-fetchling",
+  "verdict": "MISS",
+  "reason": "situationalBonuses covers the +1 circumstance tumble-through bonus and featFeatGrants covers the Quick Squeeze grant, but engineFieldsPresent is empty - nothing makes the character trained in Acrobatics. (The Small size change also has no legal field; the trained-proficiency half is the fixable part.)",
+  "fix": {
+   "field": "trainedSkill",
+   "value": "acrobatics",
+   "note": "Heritage also sets size to Small, for which there is no legal field; that half needs engine work."
+  }
+ },
+ {
+  "file": "judge-11",
+  "id": "wit",
+  "verdict": "MISS",
+  "reason": "featFeatGrants already delivers the Bon Mot skill feat, but the record carries no proficiency field, so the 'trained in Diplomacy' half of this swashbuckler style does nothing. The bravado trait on Bon Mot is GM/table-facing and needs nothing.",
+  "fix": {
+   "field": "trainedSkill",
+   "value": "diplomacy"
+  }
+ }
+]

@@ -88,6 +88,10 @@ export function FeatsTab({ character, content, onPlay }: { character: Character;
       if (!feature) continue;
       entries.push({
         key: `feature:${clsId}:${f.featureId}`,
+        // Carried so a class feature printing "Frequency once per day" can draw use pips like a feat.
+        // 21 class features have `limitedUses` and drew nothing, because the pip lookup only ever
+        // consulted content.feats and a feature row had no id to look up with.
+        featureId: f.featureId,
         name: feature.name + pickSuffix(f.featureId),
         level: f.level,
         traits: feature.traits,
@@ -292,7 +296,15 @@ export function FeatsTab({ character, content, onPlay }: { character: Character;
                     {(() => {
                       // `content` is passed so a feat that RETUNES this one's frequency (Reliable
                       // Luck → Cat's Luck once per hour) changes the pips it draws.
-                      const use = e.featId ? featUse(character, content.feats[e.featId], content) : null;
+                      // Class features are looked up too: Flurry of Blows, Tactics and 19 others
+                      // carry `limitedUses`, and gating this on `featId` alone left all of them
+                      // drawing nothing — the data was there, the row just had nowhere to read it.
+                      const rec = e.featId
+                        ? content.feats[e.featId]
+                        : e.featureId
+                          ? (content.classFeatures[e.featureId] as unknown as typeof content.feats[string])
+                          : undefined;
+                      const use = featUse(character, rec, content);
                       if (!use || !onPlay) return null;
                       const stop = (ev: React.MouseEvent) => ev.stopPropagation();
                       return (

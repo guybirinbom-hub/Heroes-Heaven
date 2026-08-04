@@ -1,0 +1,514 @@
+{
+ "records": [
+  {
+   "id": "advanced-element-control",
+   "verdict": "MISS",
+   "reason": "\"You gain one kineticist feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['kineticist']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "advanced-field-training",
+   "verdict": "MISS",
+   "reason": "\"You gain one commander feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['commander']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "advanced-flair",
+   "verdict": "MISS",
+   "reason": "\"You gain one swashbuckler feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['swashbuckler']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "advanced-fury",
+   "verdict": "MISS",
+   "reason": "\"You gain one barbarian feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['barbarian']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "advanced-general-training",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "FEAT_PICK_GRANTS['advanced-general-training'] = {category:'general', maxLevel:7} in src/rules/featPickGrants.ts renders the picker and grants the chosen general feat."
+  },
+  {
+   "id": "advanced-glory",
+   "verdict": "MISS",
+   "reason": "\"You gain one exemplar feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['exemplar']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "advanced-hunters-trick",
+   "verdict": "MISS",
+   "reason": "\"You gain one ranger feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['ranger']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "advanced-kata",
+   "verdict": "MISS",
+   "reason": "\"You gain one monk feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['monk']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "advanced-maneuver",
+   "verdict": "MISS",
+   "reason": "\"You gain one fighter feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['fighter']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "advanced-martial-magic",
+   "verdict": "MISS",
+   "reason": "\"You gain one magus feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['magus']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "advanced-muses-whispers",
+   "verdict": "MISS",
+   "reason": "\"You gain one bard feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['bard']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "advanced-mysteries",
+   "verdict": "MISS",
+   "reason": "\"You gain one oracle feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['oracle']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "advanced-shooting",
+   "verdict": "MISS",
+   "reason": "\"You gain one gunslinger feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['gunslinger']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "advanced-synergy",
+   "verdict": "MISS",
+   "reason": "\"You gain one summoner feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['summoner']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "advanced-thaumaturgy",
+   "verdict": "MISS",
+   "reason": "\"You gain one thaumaturge feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['thaumaturge']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "advanced-thoughtform",
+   "verdict": "MISS",
+   "reason": "\"You gain one psychic feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['psychic']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "advanced-trickery",
+   "verdict": "MISS",
+   "reason": "\"You gain one rogue feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['rogue']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "advanced-weaponry",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The record's `choice` field (flag advancedWeaponry, 8 trait options) records the pick and carries an `inert` note explaining that eidolon unarmed-attack traits aren't tracked — the pick is preserved for Grasping Limbs."
+  },
+  {
+   "id": "advanced-wilding",
+   "verdict": "MISS",
+   "reason": "\"You gain one druid feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['druid']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "advanced-witchcraft",
+   "verdict": "MISS",
+   "reason": "\"You gain one witch feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['witch']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "affinity-stones",
+   "verdict": "MISS",
+   "reason": "The stones grant the benefits of a 1st- or 5th-level dwarf ancestry feat (or, for a dwarf, a co-investor's ancestry feat). The item record has no `choice`, so the player cannot even record which feat they took. The sibling artifact ancestral-embrace solves exactly this with a recorded-only open feat picker; mirror it. (The permanent status-spell link between investors is mutual awareness with no sheet statistic, and the physical changes are explicitly non-mechanical.)",
+   "fix": {
+    "field": "choice",
+    "value": "{\"flag\":\"affinityStonesFeat\",\"prompt\":\"Ancestry feat gained from the invested affinity stones (recorded only — not applied to your sheet)\",\"kind\":\"open\",\"from\":{\"type\":\"feat\",\"featCategory\":\"ancestry\",\"maxLevel\":5},\"inert\":\"Recorded only: nothing in Heroes Heaven applies a feat granted by an ITEM. A non-dwarf picks a 1st- or 5th-level DWARF feat; a dwarf picks one matching a co-investor's ancestry.\"}"
+   }
+  },
+  {
+   "id": "aiuvarin",
+   "verdict": "MISS",
+   "reason": "Low-light vision IS modelled (senses:[low-light-vision]). Not modelled: \"you gain the elf trait ... you can choose from aiuvarin and elf feats in addition to those from your ancestry\" — e.g. round-ears/sociable/earned-glory (traits:[\"aiuvarin\"]) can never be picked. src/rules/featSlots.ts:56 gates an ancestry-feat slot on f.traits.includes(build.ancestryId) alone and never consults the chosen heritage, so the widened feat pool this heritage grants is unreachable. Engine fix: eligibleFeatsForSlot must also accept feats carrying the heritage trait (and the heritage record needs a field listing the extra allowed traits).",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "ancestors-call",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effect-backfill.json gives it a `choice` (flag ancestorsCallFeats, 3 distinct 1st-level dwarf ancestry feats) plus `frequency` once per hour; the 1-minute grant to self and allies is a temporary party-wide effect the sheet does not apply."
+  },
+  {
+   "id": "ancestral-blood-magic",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "It only widens WHEN your bloodline blood-magic effect triggers; blood magic effects have no sheet statistic and nothing to pick, so there is no number for the engine to change."
+  },
+  {
+   "id": "ancestral-embrace",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "passiveEffects.resistances (void 25), two per-day `counters`, `frequency`, and a daily open `choice` (ancestralEmbraceFeat) are all present. Its \"+4 major resilient\" runes are unencoded, but NO specific magic armor in core.json encodes built-in runes — a global convention, not a defect of this record."
+  },
+  {
+   "id": "ancestral-paragon",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in src/rules/featPickGrants.ts (FEAT_PICK_GRANTS['ancestral-paragon']) — a 1st-level ancestry feat of your own ancestry, lineage feats excluded; the builder renders the picker and buildCharacter grants the chosen feat with its effects."
+  },
+  {
+   "id": "ancient-elf",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in src/rules/featPickGrants.ts (FEAT_PICK_GRANTS['ancient-elf']) — a multiclass dedication for a class other than your own, resolved off build.heritageId on the heritage step; the builder renders the picker and buildCharacter grants the chosen feat with its effects."
+  },
+  {
+   "id": "angel-eidolon",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in src/rules/companionGrants.ts — the eidolon type, its ability arrays, senses, skills and speed are delivered through the companion lane."
+  },
+  {
+   "id": "animal-feature",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "focusSpells:[\"animal-feature\"] (from effect-backfill.json). The \"+1 Focus Point\" is delivered automatically: build.ts:1498 states each granted focus spell carries its own pool point, so focusPoolBonus is reserved for pool-only feats."
+  },
+  {
+   "id": "animal-senses",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Backfilled effectChoices `sense` (darkvision / low-light vision / scent 30 ft imprecise) — the picked sense merges into chosenEffects and shows on the sheet."
+  },
+  {
+   "id": "animal-shape",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The `choice` field (flag animalShapeForm) records which of Aerial/Animal/Dinosaur/Insect Form you locked in. The battle-form statistics are a polymorph spell effect, which the app does not apply for any polymorph spell."
+  },
+  {
+   "id": "animal-strength",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Both benefits apply only to the claw/jaws Strikes granted by the animal feature warden spell. The app never creates those temporary spell-granted Strikes, so there is no Strike for the copied runes or the extra crit die to attach to."
+  },
+  {
+   "id": "animal-swiftness",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Backfilled effectChoices `movement` (land/climb/fly/swim, each granting the speed) plus landSpeedBonus:5 for the flat +5 ft."
+  },
+  {
+   "id": "animal-wrangler",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "abilityBoosts, trainedSkillChoice [athletics,nature], trainedLoreChoice, and grantedFeatByChoice {athletics:titan-wrestler, nature:train-animal} — every clause is wired."
+  },
+  {
+   "id": "animists-power",
+   "verdict": "MISS",
+   "reason": "\"You gain one animist feat\" (class level = half your character level) — the pick-a-feat analogue of spiritual-awakening, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['animist']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "anti-thrune-saboteur",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "abilityBoosts, trainedSkillChoice, trainedLore (Cheliax Lore) and grantedFeatByChoice {deception:lengthy-diversion, thievery:dirty-trick} from effect-backfill.json."
+  },
+  {
+   "id": "aon-aasimar",
+   "verdict": "MISS",
+   "reason": "Vision is modelled (senses + darkvisionIfAncestryLowLight, both from effect-backfill.json). Not modelled: \"you can choose from aasimar feats ... whenever you gain an ancestry feat\". src/rules/featSlots.ts:56 gates an ancestry-feat slot on f.traits.includes(build.ancestryId) alone and never consults the chosen heritage, so the widened feat pool this heritage grants is unreachable. Engine fix: eligibleFeatsForSlot must also accept feats carrying the heritage trait (and the heritage record needs a field listing the extra allowed traits).",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "aon-ancestors-call",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Same backfilled `choice` (ancestorsCallFeats, picks:3, distinct) and `frequency` as the canonical ancestors-call record."
+  },
+  {
+   "id": "aon-aphorite",
+   "verdict": "MISS",
+   "reason": "Vision is modelled (senses + darkvisionIfAncestryLowLight in effect-backfill.json). Not modelled: access to aphorite feats. src/rules/featSlots.ts:56 gates an ancestry-feat slot on f.traits.includes(build.ancestryId) alone and never consults the chosen heritage, so the widened feat pool this heritage grants is unreachable. Engine fix: eligibleFeatsForSlot must also accept feats carrying the heritage trait (and the heritage record needs a field listing the extra allowed traits).",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "aon-ganzi",
+   "verdict": "MISS",
+   "reason": "situationalBonuses.ts:2128 covers the +1 circumstance bonus vs becoming controlled, but the resistance equal to half your level (type randomized daily among acid/electricity/sonic) is delivered by nothing — the heritage record has no `resistances` and no `effectChoices`. Model it as a daily effect choice; build.ts mergeEffect already accepts grant.resistances, and sibling heritages use the same max(1,floor(@actor.level/2)) formula. Access to ganzi feats is a separate systemic gap: src/rules/featSlots.ts:56 gates an ancestry-feat slot on f.traits.includes(build.ancestryId) alone and never consults the chosen heritage, so the widened feat pool this heritage grants is unreachable. Engine fix: eligibleFeatsForSlot must also accept feats carrying the heritage trait (and the heritage record needs a field listing the extra allowed traits).",
+   "fix": {
+    "effectChoices": [
+     {
+      "id": "chaos-resistance",
+      "prompt": "Resistance type for today (randomly determined each day)",
+      "options": [
+       {
+        "value": "acid",
+        "label": "Acid resistance (half your level)",
+        "grant": {
+         "resistances": [
+          {
+           "type": "acid",
+           "value": "max(1,floor(@actor.level/2))"
+          }
+         ]
+        }
+       },
+       {
+        "value": "electricity",
+        "label": "Electricity resistance (half your level)",
+        "grant": {
+         "resistances": [
+          {
+           "type": "electricity",
+           "value": "max(1,floor(@actor.level/2))"
+          }
+         ]
+        }
+       },
+       {
+        "value": "sonic",
+        "label": "Sonic resistance (half your level)",
+        "grant": {
+         "resistances": [
+          {
+           "type": "sonic",
+           "value": "max(1,floor(@actor.level/2))"
+          }
+         ]
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "aon-half-elf",
+   "verdict": "MISS",
+   "reason": "Low-light vision is modelled and ancestryId is elf, so elf feats are reachable. Not modelled: \"you can select elf, half-elf, and human feats\" — the human/half-elf half of that pool is unreachable. src/rules/featSlots.ts:56 gates an ancestry-feat slot on f.traits.includes(build.ancestryId) alone and never consults the chosen heritage, so the widened feat pool this heritage grants is unreachable. Engine fix: eligibleFeatsForSlot must also accept feats carrying the heritage trait (and the heritage record needs a field listing the extra allowed traits).",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "aon-half-orc",
+   "verdict": "MISS",
+   "reason": "Low-light vision is modelled and ancestryId is orc, so orc feats are reachable. Not modelled: \"you can select orc, half-orc, and human feats\" — the human/half-orc half of that pool is unreachable. src/rules/featSlots.ts:56 gates an ancestry-feat slot on f.traits.includes(build.ancestryId) alone and never consults the chosen heritage, so the widened feat pool this heritage grants is unreachable. Engine fix: eligibleFeatsForSlot must also accept feats carrying the heritage trait (and the heritage record needs a field listing the extra allowed traits).",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "aon-historical-reeanactor",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Backfilled trainedSkillChoice [performance,society] + grantedFeatByChoice {performance:impressive-performance, society:dubious-knowledge}, plus abilityBoosts and trainedLore (Dwarf Lore)."
+  },
+  {
+   "id": "aon-ifrit",
+   "verdict": "MISS",
+   "reason": "The heritage record carries NO engine fields at all: the fire resistance equal to half your level (minimum 1) never reaches the Defenses card. Sibling heritages already ship exactly this shape (desert-elf, wintertouched-human, vivacious-gnome). Also missing on the same record: senses:[{\"name\":\"low-light-vision\"}] + darkvisionIfAncestryLowLight:true, which every other geniekin heritage has. (Treating environmental heat as one step less severe has no sheet statistic; ifrit feats are category general, so they remain reachable through general slots.)",
+   "fix": {
+    "field": "resistances",
+    "value": "[{\"type\":\"fire\",\"value\":\"max(1,floor(@actor.level/2))\"}]"
+   }
+  },
+  {
+   "id": "aon-kingdom-assurance",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The `choice` field (flag kingdomAssuranceSkill, kind text) records the Kingdom skill and carries the inert note that Heroes Heaven has no Kingdom sheet — the agreed kingdom-feat treatment."
+  },
+  {
+   "id": "aon-tiefling",
+   "verdict": "MISS",
+   "reason": "Vision is modelled (senses + darkvisionIfAncestryLowLight in effect-backfill.json). Not modelled: access to tiefling feats. src/rules/featSlots.ts:56 gates an ancestry-feat slot on f.traits.includes(build.ancestryId) alone and never consults the chosen heritage, so the widened feat pool this heritage grants is unreachable. Engine fix: eligibleFeatsForSlot must also accept feats carrying the heritage trait (and the heritage record needs a field listing the extra allowed traits).",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "apparition-stabilization",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "It grants a flat check to resist a disrupted spellcasting action, with a DC that steps down at later apparition features. The app tracks no in-play disruption roll and no flat-check DCs, so there is no statistic to change and nothing to pick."
+  },
+  {
+   "id": "arcana-of-iron",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in src/rules/featGrantsAuto.ts — advanced-weapon training and the Weapon Expertise mirroring are applied there."
+  },
+  {
+   "id": "ardande",
+   "verdict": "MISS",
+   "reason": "Vision is modelled (senses + darkvisionIfAncestryLowLight). Not modelled: access to ardande AND geniekin feats. src/rules/featSlots.ts:56 gates an ancestry-feat slot on f.traits.includes(build.ancestryId) alone and never consults the chosen heritage, so the widened feat pool this heritage grants is unreachable. Engine fix: eligibleFeatsForSlot must also accept feats carrying the heritage trait (and the heritage record needs a field listing the extra allowed traits).",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "armigers-protection",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in src/rules/featGrantsAuto.ts for the armor proficiencies, plus a `choice` (flag hellknightDedication) for which Hellknight armor. The free non-magical suit is starting gear, which no feat in the app auto-adds to inventory."
+  },
+  {
+   "id": "arodens-innovation",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "FEAT_PICK_GRANTS['arodens-innovation'] = {category:'general', maxLevel:3} in featPickGrants.ts, prompt labelled as a daily-preparations pick."
+  },
+  {
+   "id": "ascend",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "speeds {fly:\"@actor.speed.land\"} and limitedUses {max:1, per:\"day\"} are both on the record (backfilled), and it is also keyed in situationalBonuses.ts. Flyby Attack is an action, not a statistic."
+  },
+  {
+   "id": "automaton-armament",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "`choice` (claw/pincer) plus grantedStrikes with per-option choiceValue — the picked unarmed attack, its die, group and traits appear on the Strikes card."
+  },
+  {
+   "id": "avenger",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Handled as a class archetype in src/rules/build.ts, with featFeatGrants and situationalBonuses entries, critSpec:true, and a `choice` for the deity divine skill (including the already-trained replacement)."
+  },
+  {
+   "id": "awakened-power",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Backfilled open `choice` (flag awakenedPowerFeat, filtered to deviant feats of level <=4) with an inert note explaining that an awakening is a prose upgrade to the chosen ability."
+  },
+  {
+   "id": "azarketi-weapon-expertise",
+   "verdict": "MISS",
+   "reason": "\"Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency in Crossbows, Hand Crossbows, Longspears, Spears, Tridents, and all azarketi weapons\" is delivered by nothing. featGrantsAuto.ts has the trained half (azarketi-weapon-familiarity, line 47) and has the mirrorBestCategory expertise twin for every comparable ancestry (catfolk-, conrasu-, genie-, ghoran-, grippli-, hobgoblin-, kobold-, vanara-, vishkanya-weapon-expertise) — azarketi alone is absent. weaponFamiliarity is NOT a record field (0 feats in core.json carry it), so the fix is a registry line in featGrantsAuto.ts: \"azarketi-weapon-expertise\": { weaponFamiliarity: { weapons: [\"crossbow\",\"hand-crossbow\",\"longspear\",\"spear\",\"trident\",\"boarding-axe\",\"gill-hook\"], mirrorBestCategory: true } }",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "bard-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in src/rules/casterArchetypes.ts (occult repertoire, Cha key, 2 cantrips, spell attack/DC) and featGrantsAuto.ts (Occultism + Performance training with the already-trained fallback), plus a `choice` for the muse."
+  },
+  {
+   "id": "basic-arcana",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in src/rules/featPickGrants.ts (FEAT_PICK_GRANTS['basic-arcana']) — a class feat of level <=2 with the wizard trait; the builder renders the picker and buildCharacter grants the chosen feat with its effects."
+  },
+  {
+   "id": "basic-blood-potency",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in src/rules/featPickGrants.ts (FEAT_PICK_GRANTS['basic-blood-potency']) — a class feat of level <=2 with the sorcerer trait; the builder renders the picker and buildCharacter grants the chosen feat with its effects."
+  },
+  {
+   "id": "basic-breakthrough",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in src/rules/featPickGrants.ts (FEAT_PICK_GRANTS['basic-breakthrough']) — a class feat of level <=2 with the inventor trait; the builder renders the picker and buildCharacter grants the chosen feat with its effects."
+  },
+  {
+   "id": "basic-concoction",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in src/rules/featPickGrants.ts (FEAT_PICK_GRANTS['basic-concoction']) — a class feat of level <=2 with the alchemist trait; the builder renders the picker and buildCharacter grants the chosen feat with its effects."
+  },
+  {
+   "id": "basic-deduction",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in src/rules/featPickGrants.ts (FEAT_PICK_GRANTS['basic-deduction']) — a class feat of level <=2 with the investigator trait; the builder renders the picker and buildCharacter grants the chosen feat with its effects."
+  },
+  {
+   "id": "basic-defender",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in src/rules/featPickGrants.ts (FEAT_PICK_GRANTS['basic-defender']) — a class feat of level <=2 with the guardian trait; the builder renders the picker and buildCharacter grants the chosen feat with its effects."
+  },
+  {
+   "id": "basic-devotion",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in src/rules/featPickGrants.ts (FEAT_PICK_GRANTS['basic-devotion']) — a class feat of level <=2 with the champion trait; the builder renders the picker and buildCharacter grants the chosen feat with its effects."
+  },
+  {
+   "id": "basic-dogma",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in src/rules/featPickGrants.ts (FEAT_PICK_GRANTS['basic-dogma']) — a class feat of level <=2 with the cleric trait; the builder renders the picker and buildCharacter grants the chosen feat with its effects."
+  },
+  {
+   "id": "basic-field-training",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in src/rules/featPickGrants.ts (FEAT_PICK_GRANTS['basic-field-training']) — a class feat of level <=2 with the commander trait; the builder renders the picker and buildCharacter grants the chosen feat with its effects."
+  },
+  {
+   "id": "basic-flair",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in src/rules/featPickGrants.ts (FEAT_PICK_GRANTS['basic-flair']) — a class feat of level <=2 with the swashbuckler trait; the builder renders the picker and buildCharacter grants the chosen feat with its effects."
+  },
+  {
+   "id": "basic-fury",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in src/rules/featPickGrants.ts (FEAT_PICK_GRANTS['basic-fury']) — a class feat of level <=2 with the barbarian trait; the builder renders the picker and buildCharacter grants the chosen feat with its effects."
+  },
+  {
+   "id": "basic-glory",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in src/rules/featPickGrants.ts (FEAT_PICK_GRANTS['basic-glory']) — a class feat of level <=2 with the exemplar trait; the builder renders the picker and buildCharacter grants the chosen feat with its effects."
+  },
+  {
+   "id": "basic-hunters-trick",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in src/rules/featPickGrants.ts (FEAT_PICK_GRANTS['basic-hunters-trick']) — a class feat of level <=2 with the ranger trait; the builder renders the picker and buildCharacter grants the chosen feat with its effects."
+  },
+  {
+   "id": "basic-kata",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in src/rules/featPickGrants.ts (FEAT_PICK_GRANTS['basic-kata']) — a class feat of level <=2 with the monk trait; the builder renders the picker and buildCharacter grants the chosen feat with its effects."
+  },
+  {
+   "id": "basic-maneuver",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in src/rules/featPickGrants.ts (FEAT_PICK_GRANTS['basic-maneuver']) — a class feat of level <=2 with the fighter trait; the builder renders the picker and buildCharacter grants the chosen feat with its effects."
+  },
+  {
+   "id": "basic-martial-magic",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in src/rules/featPickGrants.ts (FEAT_PICK_GRANTS['basic-martial-magic']) — a class feat of level <=2 with the magus trait; the builder renders the picker and buildCharacter grants the chosen feat with its effects."
+  },
+  {
+   "id": "basic-muses-whispers",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in src/rules/featPickGrants.ts (FEAT_PICK_GRANTS['basic-muses-whispers']) — a class feat of level <=2 with the bard trait; the builder renders the picker and buildCharacter grants the chosen feat with its effects."
+  },
+  {
+   "id": "basic-mysteries",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in src/rules/featPickGrants.ts (FEAT_PICK_GRANTS['basic-mysteries']) — a class feat of level <=2 with the oracle trait; the builder renders the picker and buildCharacter grants the chosen feat with its effects."
+  }
+ ]
+}

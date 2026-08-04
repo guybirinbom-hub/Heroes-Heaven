@@ -1,0 +1,438 @@
+{
+ "records": [
+  {
+   "id": "flexible-spell-preparation",
+   "verdict": "MISS",
+   "reason": "The Flexible Spellcaster class archetype restructures the caster: slots never advance 2->3, 2 fewer cantrips, and a daily spell COLLECTION replaces per-slot preparation. The record carries no classArchetype and no slot/cantrip modifiers, so taking it changes nothing on the sheet. No legal field expresses 'reduce slots per rank' or 'prepare a collection'.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "flowing-footsteps",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "passiveEffects.speeds.swim = max(15,@actor.speed.land) delivers the swim Speed, the only numeric grant; water walk / water breathing are environmental with no sheet stat."
+  },
+  {
+   "id": "focus-spells",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Generic rules explainer for the focus subsystem; the pool is built by the engine from the focusSpells / focusPoolBonus fields on the records that actually grant spells."
+  },
+  {
+   "id": "foreseen-failure",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "limitedUses tracks the once-per-day trigger; recasting a different spell is a play-time action with no persistent sheet value."
+  },
+  {
+   "id": "forge-blessed-dwarf",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices 'patron' lists every dwarven deity, each option granting innateSpells with tradition divine, usesPerDay 1, usesPer week."
+  },
+  {
+   "id": "forgotten-shell",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Armor stats are present; the Veil of Privacy benefit and the Recall Knowledge block only alter OTHER creatures' checks about you, and the welded-in penalties apply to a bound captive, not the player."
+  },
+  {
+   "id": "fungal-armor",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "counters + frequency (once per day, resetsOnRest) track the reaction activation; the Vapor Form / spore cloud is a 1-minute in-play buff that would require a toggle, which is out of scope."
+  },
+  {
+   "id": "furnace-form",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in core.stances, so the impulse appears in the stance manager where its Fiery Body benefits are applied while active."
+  },
+  {
+   "id": "future-spell-learning",
+   "verdict": "MISS",
+   "reason": "Adds seven named spells (Behold the Weave, Cast into Time, Haste, Loose Time's Arrow, Quicken Time, Slow, Stagnate Time) to your spell list / spellbook / repertoire. Nothing on the record does this and no field in the schema expresses 'expand the spell list you may prepare or learn from'.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "gamtu-hat",
+   "verdict": "MISS",
+   "reason": "Hat Trick activation grants the effects of a 2nd-rank spell, but the spell's name was stripped by the AoN import ('the effects of a 2nd-rank spell'), so heldSpells cannot be filled in. The item has no heldSpells, no uses and no counters; the activation does nothing. Needs the source spell identified before any field can be written.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "geomancer-dedication",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Every terrain attunement is a one-round effect that fires when you cast a slotted spell in matching terrain; the self-side ones (1-round swim Speed, 1-round resistance, temp HP, a Fly, 1-round darkvision) are transient in-play effects and the rest are enemy-side saves."
+  },
+  {
+   "id": "ghost-hunter-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices give the Spirit/Haunt Lore training and two open occult cantrip picks granted as at-will innate spells; also keyed in featGrantsLane."
+  },
+  {
+   "id": "godling-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "focusPoolBonus 1 + effectChoices 'domain' (every domain's initial focus spell) + spellcastingGrant. The hierophant ally's benefits are ally-side."
+  },
+  {
+   "id": "great-bear",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "limitedUses tracks the once-per-hour use; the Enlarge effect only exists inside Ursine Avenger Form, handled by the alternate-form lane."
+  },
+  {
+   "id": "greater-bloodline",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "src/rules/build.ts ADV_SPELL maps 'greater-bloodline' to subOption.greaterFocusSpell, so the bloodline's greater focus spell (and its pool point) is granted from the chosen bloodline."
+  },
+  {
+   "id": "greater-cloak-of-social-graces",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "passiveEffects.skills.diplomacy = 2 delivers the item bonus and frequency {max:1,per:'day'} tracks the activation; the 1-minute heroism buff would need a toggle."
+  },
+  {
+   "id": "greater-deathly-secrets",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices 'deathly-secret' offers Malignant Sustenance / Grasping Grave, each granting focusSpells; build.ts counts the granted spell's own pool point."
+  },
+  {
+   "id": "greater-esoteric-spellcasting",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices carry three spellFilter picks (4th rank, 5th at L12, 6th at L14) granted as 1/day innate spells of the tradition set by the 'esotericTradition' choice."
+  },
+  {
+   "id": "greater-feral-linguist",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A catalyst consumable that only alters a battle-form spell you cast (retain speech, cast one spell while transformed); no persistent stat and no legal field for battle-form exceptions."
+  },
+  {
+   "id": "greater-revelation",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "src/rules/build.ts ADV_SPELL maps 'greater-revelation' to subOption.greaterFocusSpell, resolved from the chosen mystery."
+  },
+  {
+   "id": "greater-spell-runes",
+   "verdict": "MISS",
+   "reason": "Grants a 4th-rank arcane spell rune (plus 5th at L12 and 6th at L14), each castable once per day as an innate spell. The sibling feat spell-runes already ships exactly this as spellFilter effectChoices; greater-spell-runes has no fields at all, so the picks never appear.",
+   "fix": {
+    "effectChoices": [
+     { "id": "rune-4", "prompt": "Spell rune: choose a 4th-rank arcane spell (cast once per day as an innate spell)", "spellFilter": { "traditions": ["arcane"], "rank": 4, "cantripsOnly": false, "grantAs": "innate", "innate": { "tradition": "arcane", "usesPerDay": 1 } } },
+     { "id": "rune-5", "prompt": "Spell rune (12th level): choose a 5th-rank arcane spell (cast once per day as an innate spell)", "spellFilter": { "traditions": ["arcane"], "rank": 5, "cantripsOnly": false, "grantAs": "innate", "innate": { "tradition": "arcane", "usesPerDay": 1 }, "minLevel": 12 } },
+     { "id": "rune-6", "prompt": "Spell rune (14th level): choose a 6th-rank arcane spell (cast once per day as an innate spell)", "spellFilter": { "traditions": ["arcane"], "rank": 6, "cantripsOnly": false, "grantAs": "innate", "innate": { "tradition": "arcane", "usesPerDay": 1 }, "minLevel": 14 } }
+    ]
+   }
+  },
+  {
+   "id": "greater-sun-blessing",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "focusPoolBonus 1 + effectChoices 'advanced-domain' listing every Blessing of the Sun Gods domain's advanced focus spell."
+  },
+  {
+   "id": "greater-vital-evolution",
+   "verdict": "MISS",
+   "reason": "Twice per day you may cast a spell after your slots of that rank are gone. That is a tracked per-day resource and the record has no fields, so nothing on the sheet counts the two uses.",
+   "fix": { "field": "limitedUses", "value": "{\"max\":2,\"per\":\"day\"}" }
+  },
+  {
+   "id": "guest-of-sedeq-lodge",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "abilityBoosts, trainedSkillChoice, trainedLore and grantedFeatId (Recognize Spell) are all present, and the Sedeq Lodge circumstance bonus is keyed in situationalBonuses."
+  },
+  {
+   "id": "halcyon-speaker-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "src/rules/casterArchetypes.ts defines 'halcyon-speaker-dedication' as a spontaneous arcane/primal caster with customUnlocks granting the 1st-rank halcyon slot at L6 plus 2 cantrips."
+  },
+  {
+   "id": "halcyon-spellcasting-adept",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "casterArchetypes.ts customUnlocks give ranks 4 and 5 at L14 gated on this feat, and profExpertFeat: 'halcyon-spellcasting-adept' raises the proficiency to expert."
+  },
+  {
+   "id": "halcyon-spellcasting-initiate",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "casterArchetypes.ts customUnlocks give halcyon ranks 2 and 3 at L10 gated on this feat."
+  },
+  {
+   "id": "halcyon-spellcasting-sage",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "casterArchetypes.ts customUnlocks give ranks 6 and 7 at L18 gated on this feat, and profMasterFeat: 'halcyon-spellcasting-sage' raises the proficiency to master."
+  },
+  {
+   "id": "hallowed-initiate",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "focusPoolBonus 1 + effectChoices 'hallowed-initiate-spell' offering Call of the Grave / Death's Call as focusSpells."
+  },
+  {
+   "id": "headwrap-of-wisdom",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "apexAttribute 'wis' applies the apex Wisdom increase, and two counters (once per day, once per hour) track the Augury and reroll activations."
+  },
+  {
+   "id": "helts-spelldance",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 3-action activity: a Performance check, Strides, then a spell. Its only bonus is a -1 circumstance penalty to the ENEMY's saves, which is target-side."
+  },
+  {
+   "id": "hex-spells",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices 'starting-hex' grants Patron's Puppet or Phase Familiar as focusSpells (with its pool point); the patron record supplies the hex cantrip."
+  },
+  {
+   "id": "hierophants-power",
+   "verdict": "MISS",
+   "reason": "Grants a SECOND 10th-rank spell slot on top of the druid capstone. spellSlotBonus only supports perRank across all ranks or exceptHighest; there is no way to add a slot at one specific rank, so this cannot be expressed with a legal field.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "holy-bloom",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "focusPoolBonus 1 + effectChoices 'domain' (Freedom - Unimpeded Stride / Zeal - Weapon Surge) + spellcastingGrant {divine, wis, trained}."
+  },
+  {
+   "id": "holy-flower",
+   "verdict": "MISS",
+   "reason": "Grants the advanced domain spell of the domain you took with Holy Bloom (Freedom or Zeal), yet the record has no fields at all - no focus spell reaches the sheet. Holy Bloom already encodes the same two-domain pick, and Liberty's Devotion ships the identical advanced-domain shape.",
+   "fix": {
+    "effectChoices": [
+     { "id": "advanced-domain", "prompt": "Choose the advanced domain spell (from the domain you took with Holy Bloom)", "options": [
+      { "value": "freedom", "label": "Freedom - Word of Freedom", "grant": { "focusSpells": ["word-of-freedom"] } },
+      { "value": "zeal", "label": "Zeal - Zeal for Battle", "grant": { "focusSpells": ["zeal-for-battle"] } }
+     ] }
+    ]
+   }
+  },
+  {
+   "id": "hunters-dawn",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "innateSpells grants locate at rank 5, 1/day arcane, and counters/frequency track the three-per-day fire activation."
+  },
+  {
+   "id": "hybrid-study-spell",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "focusPoolBonus 1 + effectChoices 'hybrid-study' listing all eight hybrid studies with their conflux focus spells."
+  },
+  {
+   "id": "infinite-mind",
+   "verdict": "MISS",
+   "reason": "The psychic capstone grants a 10th-rank spell slot, but psychicSlots() in src/rules/spellcasting.ts deliberately stops at rank 9 ('does NOT get a 10th-rank slot') and this feature carries no field, so a level-19 psychic never gets the slot. spellSlotBonus cannot target one rank.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "initiate-warden",
+   "verdict": "MISS",
+   "reason": "Grants one of three initial warden focus spells (Gravity Weapon, Heal Companion, Magic Hide) plus the focus point. The record has no fields, is in no registry and has no backfill entry, and there is no warden-spell machinery in src/rules, so the ranger gets nothing.",
+   "fix": {
+    "effectChoices": [
+     { "id": "warden-spell", "prompt": "Choose an initial warden spell", "options": [
+      { "value": "gravity-weapon", "label": "Gravity Weapon", "grant": { "focusSpells": ["gravity-weapon"] } },
+      { "value": "heal-companion", "label": "Heal Companion", "grant": { "focusSpells": ["heal-companion"] } },
+      { "value": "magic-hide", "label": "Magic Hide", "grant": { "focusSpells": ["magic-hide"] } }
+     ] }
+    ]
+   }
+  },
+  {
+   "id": "intuitive-illusions",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "limitedUses tracks the once-per-day free Sustain; a free action at the start of your turn has no sheet value."
+  },
+  {
+   "id": "invisibility-potion",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "uses {current:1,max:1} tracks the single drink; the resulting invisibility is a timed in-play buff that would require a toggle."
+  },
+  {
+   "id": "jian-of-lifes-duality",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "heldSpells {'1':['harm','heal']} carries the Burst of Duality casting, a 'Charges' counter tracks the dark/light charges and a per-day counter tracks the activation."
+  },
+  {
+   "id": "ki-spells",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A rules explainer for the ki focus subsystem; the tradition choice, proficiency and pool arrive with the feat that grants your first ki spell, which carries the fields."
+  },
+  {
+   "id": "learned-guard-prodigy",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "abilityBoosts, trainedSkillChoice, trainedLore (Legal Lore) and grantedFeatId (Recognize Spell) are present, and the Learned Guard social bonus is keyed in situationalBonuses."
+  },
+  {
+   "id": "legendary-monster",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "limitedUses tracks the once-per-day enhanced Unleash Yaoguai Might; the three 1-minute options (heightened Enlarge, +1d4 spirit, Fly) are transient form buffs needing a toggle."
+  },
+  {
+   "id": "leshy-familiar-secrets",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in situationalBonuses (the Purify Air +2 save bonus against inhaled/olfactory effects); the reach and Verdant Burst abilities belong to the familiar."
+  },
+  {
+   "id": "libertys-devotion",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "focusPoolBonus 1 + effectChoices 'advanced-domain-spell' (Freedom / Truth / Zeal advanced focus spells)."
+  },
+  {
+   "id": "link-spells",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The summoner class record's focusSpells array is ['evolution-surge','boost-eidolon'], so both the link spell and link cantrip are granted with the class."
+  },
+  {
+   "id": "listeners-boon",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Keyed in featFeatGrants.ts, which hands the character the Domain Initiate feat (and through it the chosen domain's focus spell and pool point)."
+  },
+  {
+   "id": "loaner-spell",
+   "verdict": "MISS",
+   "reason": "During daily preparations you gain the ability to cast one ally-prepared spell of up to 3rd rank once that day, using your class DC and class DC - 10 as the spell attack. Nothing on the record delivers this. It belongs to the daily-preparations lane (a re-pickable spell choice) and needs a cast-with-class-DC path, neither of which any legal field expresses.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "local-savior",
+   "verdict": "MISS",
+   "reason": "The hometown pick is only RECORDED - the record has a `choice` (flag hometownCantrip, kind array) listing ten town/cantrip pairs but no effectChoices, so the promised at-will divine innate cantrip never reaches the Spells page. Every sibling record with the same shape (makari-lizardfolk, mage-automaton, forge-blessed-dwarf) grants it via effectChoices.",
+   "fix": {
+    "effectChoices": [
+     { "id": "hometownCantrip", "prompt": "Hometown - choose your divine innate cantrip (at will, heightened to half your level)", "options": [
+      { "value": "ilsurian-shield", "label": "Ilsurian - Shield", "grant": { "innateSpells": [{ "spellId": "shield", "tradition": "divine", "atWill": true, "heightenHalfLevel": true }] } },
+      { "value": "ilsurian-stabilize", "label": "Ilsurian - Stabilize", "grant": { "innateSpells": [{ "spellId": "stabilize", "tradition": "divine", "atWill": true, "heightenHalfLevel": true }] } },
+      { "value": "osprey-cove-message", "label": "Osprey Cove - Message", "grant": { "innateSpells": [{ "spellId": "message", "tradition": "divine", "atWill": true, "heightenHalfLevel": true }] } },
+      { "value": "osprey-cove-read-aura", "label": "Osprey Cove - Read Aura", "grant": { "innateSpells": [{ "spellId": "read-aura", "tradition": "divine", "atWill": true, "heightenHalfLevel": true }] } },
+      { "value": "rodericscove-forbidding-ward", "label": "Roderic's Cove - Forbidding Ward", "grant": { "innateSpells": [{ "spellId": "forbidding-ward", "tradition": "divine", "atWill": true, "heightenHalfLevel": true }] } },
+      { "value": "rodericscove-guidance", "label": "Roderic's Cove - Guidance", "grant": { "innateSpells": [{ "spellId": "guidance", "tradition": "divine", "atWill": true, "heightenHalfLevel": true }] } },
+      { "value": "sandpoint-haunting-hymn", "label": "Sandpoint - Haunting Hymn", "grant": { "innateSpells": [{ "spellId": "haunting-hymn", "tradition": "divine", "atWill": true, "heightenHalfLevel": true }] } },
+      { "value": "sandpoint-summon-instrument", "label": "Sandpoint - Summon Instrument", "grant": { "innateSpells": [{ "spellId": "summon-instrument", "tradition": "divine", "atWill": true, "heightenHalfLevel": true }] } },
+      { "value": "turtleback-ferry-daze", "label": "Turtleback Ferry - Daze", "grant": { "innateSpells": [{ "spellId": "daze", "tradition": "divine", "atWill": true, "heightenHalfLevel": true }] } },
+      { "value": "turtleback-ferry-prestidigitation", "label": "Turtleback Ferry - Prestidigitation", "grant": { "innateSpells": [{ "spellId": "prestidigitation", "tradition": "divine", "atWill": true, "heightenHalfLevel": true }] } }
+     ] }
+    ]
+   }
+  },
+  {
+   "id": "luck-blade-wishing",
+   "verdict": "MISS",
+   "reason": "The wishing variant holds one casting of wish that you can cast as an arcane innate spell while wielding the blade. The record has counters/frequency for the reroll reaction only - no innateSpells - so the wish never appears on the Spells page.",
+   "fix": { "field": "innateSpells", "value": "[{\"spellId\":\"wish\",\"tradition\":\"arcane\",\"rank\":10,\"usesPerDay\":1}]" }
+  },
+  {
+   "id": "magaambya-academic",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "abilityBoosts, trainedSkillChoice (Arcana/Nature), trainedLore (Academia) and grantedFeatId (Recognize Spell) are all present."
+  },
+  {
+   "id": "mage-automaton",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices 'arcaneCantrip' lists the arcane cantrips, each granting innateSpells with atWill + heightenHalfLevel."
+  },
+  {
+   "id": "magical-adept",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "A `choice` (flag magicalAdeptSpells, kind open, picks 2, distinct, spell source rank 1-2) records both spells with the deliberate inert note that the eidolon's innate spells are not tracked on the player's sheet - the agreed choice-lane treatment."
+  },
+  {
+   "id": "magical-understudy",
+   "verdict": "MISS",
+   "reason": "The eidolon gains the Cast a Spell activity and two innate cantrips of its tradition, and the record carries no fields at all - not even the recorded-only pick that its sibling Magical Adept ships. The eidolon's own spellcasting is not tracked by the engine, so the honest fix is a recorded 2-cantrip pick plus eidolon innate-spell support.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "magnum-opus",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "fullCasterSlots() in src/rules/spellcasting.ts grants slots[10] = 1 at level >= 19 as the class capstone, which is exactly this feature; the two 10th-rank repertoire spells are picked in the Spells UI."
+  },
+  {
+   "id": "magus-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "casterArchetypes.ts CASTER_ARCHETYPES['magus-dedication'] = arcane/int/4 cantrips prepared caster with basic/expert/master magus spellcasting feats, and featGrantsAuto supplies the Arcana and simple-weapon training."
+  },
+  {
+   "id": "major-cloak-of-social-graces",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "passiveEffects.skills.diplomacy = 3 delivers the item bonus and frequency {max:1,per:'day'} tracks the activation."
+  },
+  {
+   "id": "makari-lizardfolk",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices 'cantrip' offers Divine Lance / Forbidding Ward, each granting an at-will divine innateSpell."
+  },
+  {
+   "id": "maker-of-miracles",
+   "verdict": "MISS",
+   "reason": "Grants a SECOND 10th-rank spell slot beyond the cleric capstone. spellSlotBonus can only add slots at every rank or exclude the top N ranks, so a single-rank slot addition has no legal field.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "master-captivator-spellcasting",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "casterArchetypes.ts registers 'captivator-dedication' (occult/cha) whose masterId is 'master-captivator-spellcasting'; taking it unlocks the 7th/8th-rank archetype slots via RANK_UNLOCKS and sets spell proficiency to master."
+  },
+  {
+   "id": "master-skysage-divination",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices 'skysage-rank7' offers Retrocognition / True Target, each granting a 1/day occult innateSpell (with a note explaining the archetype has no slots)."
+  },
+  {
+   "id": "masterful-warden",
+   "verdict": "MISS",
+   "reason": "Grants one of two master warden focus spells (Ephemeral Tracking, Ranger's Bramble) and its pool point. The record has no fields, no registry entry and no backfill patch, so nothing reaches the focus pool.",
+   "fix": {
+    "effectChoices": [
+     { "id": "warden-spell", "prompt": "Choose a master warden spell", "options": [
+      { "value": "ephemeral-tracking", "label": "Ephemeral Tracking", "grant": { "focusSpells": ["ephemeral-tracking"] } },
+      { "value": "rangers-bramble", "label": "Ranger's Bramble", "grant": { "focusSpells": ["rangers-bramble"] } }
+     ] }
+    ]
+   }
+  },
+  {
+   "id": "meddling-futures",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A randomized (1d4) one-action effect that constrains your next action and gives it a status bonus; a per-roll transient buff with no persistent sheet value and no conditional 'when' that a star could state."
+  },
+  {
+   "id": "mind-over-matter",
+   "verdict": "MISS",
+   "reason": "Grants an additional 10th-rank spell slot to a psychic who has none from the slot table. spellSlotBonus cannot target one specific rank, so no legal field expresses it.",
+   "fix": { "needsEngineWork": true }
+  },
+  {
+   "id": "minor-deific-power",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices carry two spellFilter picks: an at-will divine cantrip and a 1/day 1st-rank divine spell, both granted as innate."
+  },
+  {
+   "id": "minor-magic",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices 'cantrip-1' and 'cantrip-2' are open spellFilter picks across all four traditions granted as at-will innate spells; the innate entry supplies the trained proficiency."
+  },
+  {
+   "id": "miraculous-spell",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "fullCasterSlots() grants slots[10] = 1 at level >= 19 - this cleric capstone is exactly the slot the table already provides."
+  },
+  {
+   "id": "mirror-shield",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reaction that turns an enemy's critically failed spell attack back on the caster; the entire effect resolves on the opponent's side."
+  },
+  {
+   "id": "morphic-strike",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "grantedStrikes lists every heritage's unarmed attack (claw, spirit touch, all eight elemental currents, striking surface, root) with die, damage type, traits and brawling group, and a `choice` picks the Object variant's damage type."
+  },
+  {
+   "id": "mystery",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An explainer for the oracle subclass slot; the actual mystery is a subOption whose granted spells, revelation spell, skill and feat are resolved by build.ts from the chosen subclass record."
+  },
+  {
+   "id": "mystic-tutor",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "abilityBoosts, trainedSkillChoice (Arcana/Occultism), trainedLore (Academia) and grantedFeatId (Recognize Spell) are all present."
+  },
+  {
+   "id": "mythic-magic",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices carry three spellFilter picks (1st-2nd rank, any tradition) granted as innate with heightenHalfLevel, plus the higher-rank additions at 14th and 20th."
+  },
+  {
+   "id": "nantambu-chime-ringer-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices 'chime-cantrip' is an open arcane/occult cantrip pick granted at will, and featGrantsAuto supplies the Arcana/Occultism trained-or-expert upgrade."
+  }
+ ]
+}

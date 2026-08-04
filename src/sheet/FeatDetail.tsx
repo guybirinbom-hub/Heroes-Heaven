@@ -17,6 +17,10 @@ export interface FeatEntry {
   description: string;
   descRefs?: DescRef[];
   isFeature: boolean;
+  /** For a CLASS FEATURE row: its `content.classFeatures` id, so a feature printing "Frequency once
+   *  per day" can draw use pips the way a feat does. 21 class features carry `limitedUses` and drew
+   *  nothing, because the pip lookup only consulted `content.feats` and a feature row had no id. */
+  featureId?: string;
   /** The builder CARD HEADING this pick came from ("Bloodline", "Hunter's Edge", "Kinetic Gate
    *  (elements)"). Rendered as a plain tag beside Feature/Granted. It is NOT a PF2e trait, so it must
    *  never be put in `traits`: that showed it as a trait pill AND made traitDesc() manufacture a

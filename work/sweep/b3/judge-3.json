@@ -1,0 +1,426 @@
+{
+  "records": [
+    {
+      "id": "noqual-armor",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "situationalBonuses.ts keys \"noqual-armor\" with the +1 circumstance AC vs spell attack rolls, the +4 save to protect the armor, and the DC 5 flat-check-to-cast note."
+    },
+    {
+      "id": "noqual-armor-high-grade",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "situationalBonuses.ts has its own \"noqual-armor-high-grade\" key carrying the +1 circumstance AC vs spell attacks and the flat-check note."
+    },
+    {
+      "id": "noqual-armor-standard-grade",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "situationalBonuses.ts has its own \"noqual-armor-standard-grade\" key carrying the +1 circumstance AC vs spell attacks and the flat-check note."
+    },
+    {
+      "id": "oatia-skysage-dedication",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "spellcastingGrant {occult/int/trained} plus effectChoices (Astronomy Lore vs expert Occultism, and the two repertoire cantrips as innate grants) are both on the record via effect-backfill."
+    },
+    {
+      "id": "occult-breadth",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "spellSlotBonus {perRank:1, exceptHighest:2, entryId:'bard-dedication-casting'} — exactly the '+1 per rank except your two highest' rule, aimed at the bard archetype pool."
+    },
+    {
+      "id": "occult-spellcasting",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "The bard's slot pool is built from classes.bard.spellcasting plus fullCasterSlots() in src/rules/spellcasting.ts; this feature record is the prose description of that engine table."
+    },
+    {
+      "id": "open-the-blazing-eye",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "limitedUses tracks the once-per-day activation; the See the Unseen benefit and the ignore-concealment rider only resolve during play against a target."
+    },
+    {
+      "id": "oracle-dedication",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "CASTER_ARCHETYPES['oracle-dedication'] (divine/cha/2 cantrips, spontaneous) builds the archetype repertoire and spell DC; featGrantsAuto covers Religion training and `choice` records the mystery."
+    },
+    {
+      "id": "oracle-spellcasting",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "The oracle slot pool comes from classes.oracle.spellcasting + fullCasterSlots(); this record is the prose description of that engine table."
+    },
+    {
+      "id": "oracular-clarity",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "fullCasterSlots() in src/rules/spellcasting.ts already sets slots[10] = 1 at level >= 19 — the capstone 10th-rank slot this feature grants."
+    },
+    {
+      "id": "oracular-providence",
+      "verdict": "MISS",
+      "reason": "A SECOND 10th-rank slot. SpellSlotBonus only exposes perRank/exceptHighest, which spread slots across every rank — there is no way to say 'one more slot at rank 10 only', so no legal field expresses this.",
+      "fix": { "needsEngineWork": true }
+    },
+    {
+      "id": "oracular-samsaran",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "effectChoices 'cantrip' offers every arcane/divine/occult cantrip as an at-will innateSpells grant (effect-backfill)."
+    },
+    {
+      "id": "order-magic",
+      "verdict": "MISS",
+      "reason": "The record has only `choice` (records which order, kind:'array' — inert) and focusPoolBonus:1; the initial order SPELL of the chosen order is never granted. Sibling feat order-spell already does this with effectChoices/focusSpells, so the same shape applies (drop focusPoolBonus when adding it — an EffectGrant.focusSpells already carries its own Focus Point).",
+      "fix": {
+        "effectChoices": [
+          {
+            "id": "order-magic-order",
+            "prompt": "Choose an order you selected with Order Explorer — you gain its initial order spell",
+            "options": [
+              { "value": "animal-order", "label": "Animal Order — Heal Animal", "grant": { "focusSpells": ["heal-animal"] } },
+              { "value": "cultivation-order", "label": "Cultivation Order — Cornucopia", "grant": { "focusSpells": ["cornucopia"] } },
+              { "value": "flame-order", "label": "Flame Order — Wildfire", "grant": { "focusSpells": ["wildfire"] } },
+              { "value": "leaf-order", "label": "Leaf Order — Cornucopia", "grant": { "focusSpells": ["cornucopia"] } },
+              { "value": "spore-order", "label": "Spore Order — Mushroom Patch", "grant": { "focusSpells": ["mushroom-patch"] } },
+              { "value": "stone-order", "label": "Stone Order — Crushing Ground", "grant": { "focusSpells": ["crushing-ground"] } },
+              { "value": "storm-order", "label": "Storm Order — Tempest Surge", "grant": { "focusSpells": ["tempest-surge"] } },
+              { "value": "untamed-order", "label": "Untamed Order — Untamed Shift", "grant": { "focusSpells": ["untamed-shift"] } },
+              { "value": "wave-order", "label": "Wave Order — Rising Surf", "grant": { "focusSpells": ["rising-surf"] } }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "order-spell",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "effectChoices 'druidic-order-spell' maps each druid order to its initial order focus spell (effect-backfill)."
+    },
+    {
+      "id": "ornate-tattoo",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "effectChoices 'ornate-spell' with a spellFilter for a 1st-rank arcane spell granted as a 1/day innate arcane spell."
+    },
+    {
+      "id": "otherworldly-acumen",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "effectChoices 'acumen-spell' with a spellFilter for a common 2nd-rank spell granted as a 1/day innate spell."
+    },
+    {
+      "id": "pact-of-infernal-prowess",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "limitedUses tracks the once-per-hour critical-failure reroll; the Earn Income auto-success and the soul/afterlife clauses are downtime and GM-side."
+    },
+    {
+      "id": "paradoxical-mystery",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "`choice` {flag:'paradoxicalMysterySpell', daily:true, from:{type:'spell', traits:['focus']}} — a daily-preparation focus-spell picker."
+    },
+    {
+      "id": "patrons-breadth",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "spellSlotBonus {perRank:1, exceptHighest:2, entryId:'witch-dedication-casting'}."
+    },
+    {
+      "id": "patrons-gift",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "fullCasterSlots() grants slots[10] = 1 at level >= 19 for the witch's own prepared pool."
+    },
+    {
+      "id": "patrons-truth",
+      "verdict": "MISS",
+      "reason": "A second 10th-rank slot. SpellSlotBonus has no per-rank targeting (only perRank/exceptHighest, which touch every rank), so no legal field expresses a single extra rank-10 slot.",
+      "fix": { "needsEngineWork": true }
+    },
+    {
+      "id": "peacemaker",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Talisman granting Sanctuary — the whole effect is a save enemies make against attacking you; nothing on the player's own sheet changes, and `uses` already tracks the single charge."
+    },
+    {
+      "id": "peerless-warden",
+      "verdict": "MISS",
+      "reason": "'Gain your choice of one warden spell from the peerless warden spells' — the record has no fields at all, so neither focus spell is ever added. Both spell ids exist in core.json.",
+      "fix": {
+        "effectChoices": [
+          {
+            "id": "peerless-warden-spell",
+            "prompt": "Choose a peerless warden spell",
+            "options": [
+              { "value": "hunters-vision", "label": "Hunter's Vision", "grant": { "focusSpells": ["hunters-vision"] } },
+              { "value": "terrain-transposition", "label": "Terrain Transposition", "grant": { "focusSpells": ["terrain-transposition"] } }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "perfect-encore",
+      "verdict": "MISS",
+      "reason": "An additional 10th-rank spell slot; SpellSlotBonus cannot target one specific rank (perRank/exceptHighest apply across all castable ranks).",
+      "fix": { "needsEngineWork": true }
+    },
+    {
+      "id": "perfect-ki-adept",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "effectChoices 'qi-spell' maps each School of Perfection to its focus spell; an EffectGrant.focusSpells carries its own Focus Point, covering the +1 pool clause."
+    },
+    {
+      "id": "perfect-ki-exemplar",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "effectChoices for the school's qi focus spell plus spellcastingGrant {occult/wis/expert}."
+    },
+    {
+      "id": "perfect-ki-expert",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "effectChoices for the school's qi focus spell plus spellcastingGrant {occult/wis/expert}."
+    },
+    {
+      "id": "perfect-ki-grandmaster",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "effectChoices for the school's qi focus spell plus spellcastingGrant {occult/wis/master}."
+    },
+    {
+      "id": "phoenix-cinder",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "situationalBonuses carries the +1 circumstance to saves vs fire at stage 1+, and the item is a consumable-mode source (core.modes fromItemId) with counters/frequency/uses for the once-per-day flame wreath."
+    },
+    {
+      "id": "pirates-pet",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "companionGrants covers the Pet, grantsFeats delivers the Pet general feat, and effectChoices 'familiar-spell' picks the 1st/2nd-rank 1/day primal innate spell."
+    },
+    {
+      "id": "pistol-of-wonder",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "The Wonder Shot table is a random d% of spells cast at a chosen target — pure GM/target-side resolution. Its built-in +2 greater striking follows the app-wide convention that no item record encodes runes (zero items in core.json carry a runes field); the player etches runes on the inventory item."
+    },
+    {
+      "id": "planar-ribbon",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "counters + frequency track the once-per-round teleport activation; the scrying window and the position swap resolve entirely against a target."
+    },
+    {
+      "id": "plane-hopper-jotunborn",
+      "verdict": "MISS",
+      "reason": "The cantrip is covered by effectChoices, but 'instead of Large, your size is Medium' is not. Jotunborn's ancestry size is 'large' and build.ts line 3051 only raises size ('SIZE_ORDER.indexOf(g.sizeOverride) > indexOf(size)'), so sizeOverride:'medium' would be silently ignored — a size LOWERING lane does not exist.",
+      "fix": { "needsEngineWork": true }
+    },
+    {
+      "id": "potion-of-leaping",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Grants the Jump spell's effect whenever you Leap — a movement-action rider with no sheet statistic; `uses` already tracks the single dose."
+    },
+    {
+      "id": "potion-of-undetectability",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Purely defensive concealment against other creatures' detection/See the Unseen/Truesight; the text explicitly excludes the mental-effect bonus, so no player-sheet number changes."
+    },
+    {
+      "id": "primal-evolution",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "effectChoices 'primal-evolution-spell' grants Summon Animal or Summon Plant or Fungus as a 1/day heightened-to-half-level innate spell (effect-backfill)."
+    },
+    {
+      "id": "primal-hierophant",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "fullCasterSlots() sets slots[10] = 1 at level >= 19 for the druid's prepared pool."
+    },
+    {
+      "id": "prophet-of-kalistrade-dedication",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "CASTER_ARCHETYPES['prophet-of-kalistrade-dedication'] = mk('occult','cha',3,'prophet') builds the archetype casting pool, key attribute and spell DC; featGrantsAuto covers expert Society."
+    },
+    {
+      "id": "psi-development",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "focusPoolBonus:1 delivers the Focus Point for amping; the extra psi cantrip is picked on the Spells page from the archetype's occult pool, as psychic-dedication's own `choice.note` documents."
+    },
+    {
+      "id": "psyche-salts",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "AoN umbrella summary — no price, three priced kin (lesser/moderate/greater) that carry the fields."
+    },
+    {
+      "id": "psyche-salts-greater",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "situationalBonuses keys \"psyche-salts-greater\" for the +3 item bonus to saves vs mental, and it is a consumable-mode source (core.modes fromItemId); `uses` tracks the dose."
+    },
+    {
+      "id": "psyche-salts-lesser",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "situationalBonuses keys \"psyche-salts-lesser\" (+1 item to saves vs mental) and it is registered as a consumable mode."
+    },
+    {
+      "id": "psyche-salts-moderate",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "situationalBonuses keys \"psyche-salts-moderate\" (+2 item to saves vs mental) and it is registered as a consumable mode."
+    },
+    {
+      "id": "psychic-dedication",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "CASTER_ARCHETYPES['psychic-dedication'] (occult, 1 cantrip, choiceKeyAbility int/cha) builds the pool and DC; featGrantsAuto gives Occultism; `choice` records the conscious mind with an explicit inert note."
+    },
+    {
+      "id": "psychic-spellcasting",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "psychicSlots() in src/rules/spellcasting.ts implements the psychic's limited slot table (and deliberately no 10th-rank slot); this record is its prose."
+    },
+    {
+      "id": "pure-legion-enforcer-dedication",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "featGrantsAuto raises Intimidation/Religion, featFeatGrants delivers Recognize Spell, and situationalBonuses carries the +2 circumstance Religion when recognizing a divine spell."
+    },
+    {
+      "id": "ragdyan-vanara",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "effectChoices 'divineCantrip' lists the non-damaging divine cantrips as at-will innate grants (effect-backfill)."
+    },
+    {
+      "id": "ranger-dedication",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "classDcGrant {classId:'ranger'} plus `choice` for the class-DC attribute; featGrantsAuto covers Survival. The spell-attack/DC clause is conditional on later gaining a warden spell, which the warden-spell feats supply."
+    },
+    {
+      "id": "rat-form",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "Registered in core.stances — the polymorph battle form is offered through the stance/alternate-form manager."
+    },
+    {
+      "id": "reliable-magic",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Changes only the flat check when overcharging a wand and the destruction check when casting from a scroll during play — no character statistic, resource or grant on the sheet."
+    },
+    {
+      "id": "respite-of-loam-and-leaf",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "effectChoices 'cantrip' offers the primal cantrips as at-will innate grants (effect-backfill)."
+    },
+    {
+      "id": "retain-absorbed-spell",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Modifies the outcome of the Absorb Spell reaction mid-combat (how many recasts / how long it lasts); nothing on the sheet changes until that reaction triggers."
+    },
+    {
+      "id": "return-to-the-sea",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "situationalBonuses keys \"return-to-the-sea\" with the +1 status to AC and to all saves against amphibious/aquatic/water creatures."
+    },
+    {
+      "id": "revelation-spells",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "Each oracle mystery in classes.oracle.subclass.options carries focusSpells (e.g. ancestors → ancestral-touch), which supplies the initial revelation spell and its Focus Point."
+    },
+    {
+      "id": "ring-of-wizardry",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "AoN umbrella summary — no price; the four priced Type I–IV rings are the buyable records."
+    },
+    {
+      "id": "ring-of-wizardry-type-i",
+      "verdict": "MISS",
+      "reason": "The record carries spellSlotBonus {\"byRank\":{\"1\":2}}, but SpellSlotBonus (src/rules/types.ts:358) only defines perRank/exceptHighest/entryId and build.ts:2548 never reads byRank — so it falls through to perRank=1 with no exceptHighest and adds +1 slot at EVERY rank instead of two 1st-rank slots. The byRank lane needs implementing (and it should be capped to arcane casters).",
+      "fix": { "needsEngineWork": true }
+    },
+    {
+      "id": "ring-of-wizardry-type-ii",
+      "verdict": "MISS",
+      "reason": "spellSlotBonus {\"byRank\":{\"1\":1,\"2\":2}} is ignored by the engine (no byRank branch in build.ts:2548); the ring instead grants +1 slot at every rank the character can cast.",
+      "fix": { "needsEngineWork": true }
+    },
+    {
+      "id": "ring-of-wizardry-type-iii",
+      "verdict": "MISS",
+      "reason": "Its spellSlotBonus byRank map (two 3rd-rank + one 2nd-rank) is never read; SpellSlotBonus has no per-rank lane, so the applied result is +1 slot at every rank.",
+      "fix": { "needsEngineWork": true }
+    },
+    {
+      "id": "ring-of-wizardry-type-iv",
+      "verdict": "MISS",
+      "reason": "Its spellSlotBonus byRank map (two 4th-rank + one 3rd-rank) is never read; SpellSlotBonus has no per-rank lane, so the applied result is +1 slot at every rank.",
+      "fix": { "needsEngineWork": true }
+    },
+    {
+      "id": "rising-blood-magic",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Both clauses key off ranked bloodrager-archetype spell slots, which the app deliberately never grants — CASTER_ARCHETYPES['bloodrager-dedication'] is cantripsOnly (no Basic/Expert/Master Bloodrager feats ship), so there is no new-rank slot and no repertoire rank to add to."
+    },
+    {
+      "id": "rite-of-invocation",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "effectChoices 'arcaneOccultCantrip' offers the arcane/occult cantrips as at-will innate grants (effect-backfill)."
+    },
+    {
+      "id": "rivethun-adherent",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "abilityBoosts, trainedSkill (Occultism), trainedLore (Spirit Lore) and grantedFeatId (Recognize Spell) cover every clause of the background."
+    },
+    {
+      "id": "rivethun-involutionist-dedication",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "CASTER_ARCHETYPES['rivethun-involutionist-dedication'] = mk('divine','wis',2,'rivethun') builds the divine repertoire, key attribute and spell DC; featGrantsAuto covers expert Nature/Religion."
+    },
+    {
+      "id": "roaring-potion",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "AoN umbrella summary — no price of its own; the lesser/moderate/greater records are the buyable items."
+    },
+    {
+      "id": "roaring-potion-greater",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Its two activations are a Bullhorn voice effect and a cone that damages/frightens enemies — entirely target-side; `uses` already tracks the dose."
+    },
+    {
+      "id": "roaring-potion-lesser",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Bullhorn plus an area scream resolved against enemies' Fortitude saves; nothing modifies the drinker's own statistics."
+    },
+    {
+      "id": "roaring-potion-moderate",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Bullhorn plus an area scream resolved against enemies' Fortitude saves; nothing modifies the drinker's own statistics."
+    },
+    {
+      "id": "runelord",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "effectChoices 'sin' (in effect-backfill) makes the player pick a sin and grants that sin's initial school focus spell, which is this record's spell-lane grant. (Its martial polearm/spear proficiency belongs to the class-archetype lane on runelord-dedication, a different record.)"
+    },
+    {
+      "id": "scrap-shot",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "situationalBonuses keys \"scrap-shot\" with the +1 circumstance to the spell attack roll against metal-armoured/metal targets; the damage and clumsy rider are target-side."
+    },
+    {
+      "id": "scrollstaff",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A plain d8 staff whose only extra rule is that a scroll can be inscribed on it during Crafting — the spell comes from the scroll the player already owns and tracks, so the staff record grants nothing itself."
+    },
+    {
+      "id": "second-thoughts",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A triggered free recast of a spell that a target critically saved against — resolved in play against another creature, with no persistent sheet resource (no frequency limit to track)."
+    },
+    {
+      "id": "secrets-of-shadow",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "effectChoices 'shadow-energy-resistance' grants void or vitality resistance scaled by level (effect-backfill); the extra shadow-reservoir spell is part of that archetype's reservoir, not a slot."
+    },
+    {
+      "id": "seer-of-the-dead",
+      "verdict": "MISS",
+      "reason": "'You gain the effects of the Spirit Sense spell at all times' is never delivered — the record has only abilityBoosts/trainedSkill/trainedLore. Backgrounds do support innateSpells (eclipseborn, blessed, astrological-augur all use it) and spirit-sense exists in core.json with traditions divine/occult.",
+      "fix": {
+        "field": "innateSpells",
+        "value": "[{\"spellId\":\"spirit-sense\",\"tradition\":\"divine\",\"rank\":2,\"atWill\":true}]"
+      }
+    },
+    {
+      "id": "seneschal",
+      "verdict": "MISS",
+      "reason": "The class archetype replaces the patron's lesson with the Manifest Will hex cantrip, but the record carries no fields (only otherTags:['class-archetype']), so the focus cantrip and its Focus Point are never granted. manifest-will exists in core.json (hex/cantrip/witch) and classFeatures do support focusSpells (heros-defiance uses it).",
+      "fix": {
+        "field": "focusSpells",
+        "value": "[\"manifest-will\"]"
+      }
+    },
+    {
+      "id": "sequestered-spell",
+      "verdict": "ALREADY_MODELLED",
+      "reason": "effectChoices 'magiphage-cantrip' uses a spellFilter (cantripsOnly, grantAs innate, atWill + heightenHalfLevel) to deliver the chosen cantrip."
+    }
+  ]
+}

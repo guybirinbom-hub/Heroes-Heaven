@@ -1,0 +1,669 @@
+{
+ "rulings": [
+  {
+   "id": "mutagenic-renovator",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "necrologist-dedication",
+   "upheld": false,
+   "why": "companionGrants deliberately holds this back (named in the file header as an ambiguous grant awaiting a distinct model), and the horde's resistances/weaknesses/immunities are the HORDE's statistics, not the player's sheet."
+  },
+  {
+   "id": "nimbus-breath",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "nocturnal-senses",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "obsidian-goggles-greater",
+   "upheld": true,
+   "why": "Verified: effect-backfill/situationalBonuses cover only the Perception bonus; the darkvision is undelivered. Apply as passiveEffects.senses — derive.ts reads only passiveEffects on items."
+  },
+  {
+   "id": "obsidian-goggles-major",
+   "upheld": true,
+   "why": "Verified: registry covers only the +3 Perception; greater darkvision undelivered. Apply under passiveEffects.senses, not top-level."
+  },
+  {
+   "id": "orb-of-dragonkind",
+   "upheld": true,
+   "why": "Verified: effectChoices exists but its orb-variety options carry no grant blocks, so the at-will 10th-rank innate spell reaches nothing."
+  },
+  {
+   "id": "pallid-crystal",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "peerless-under-heaven",
+   "upheld": true,
+   "why": "Verified: 23 classFeatures carry critSpec and this one carries none; well-formed field fix."
+  },
+  {
+   "id": "perfect-droplet",
+   "upheld": true,
+   "why": "Verified: attachments.ts only validates affixing; no spellheart armour benefit is applied anywhere. Apply under passiveEffects.resistances."
+  },
+  {
+   "id": "perfect-droplet-greater",
+   "upheld": true,
+   "why": "Verified: spellheart armour benefits are applied nowhere. Apply under passiveEffects.resistances."
+  },
+  {
+   "id": "pickled-demon-tongue-greater",
+   "upheld": false,
+   "why": "edition \"superseded\" — always hidden from Add Items and every picker (build.ts:1155, AddItemsModal:118); the live record greater-pickled-demon-tongue already carries the acid resistance."
+  },
+  {
+   "id": "polished-demon-horn-greater",
+   "upheld": false,
+   "why": "edition \"superseded\" — permanently hidden from pickers; the live greater-polished-demon-horn already carries resistances [{unholy,5}]."
+  },
+  {
+   "id": "potion-of-acid-resistance-lesser",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "potion-of-cold-resistance-lesser",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "potion-of-electricity-resistance-lesser",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "potion-of-fire-resistance-lesser",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "potion-of-sonic-resistance-lesser",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "prey-mutagen-greater",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "prey-mutagen-lesser",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "prey-mutagen-major",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "prey-mutagen-moderate",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "purple-pepper-powder",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "rainbow-vinegar-greater",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "rainbow-vinegar-moderate",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "reincarnated-ridiculer",
+   "upheld": true,
+   "why": "Upheld: a printed conditional change to one of the player's own rolls, absent from situationalBonuses; target and bonus text are well-formed."
+  },
+  {
+   "id": "resonating-fork",
+   "upheld": true,
+   "why": "Verified: the registry entry covers only the save bonus; the sonic resistance is separate and undelivered. Apply under passiveEffects.resistances."
+  },
+  {
+   "id": "resonating-fork-greater",
+   "upheld": true,
+   "why": "Verified: registry covers only the save bonus; resistance 5 sonic undelivered. Apply under passiveEffects.resistances."
+  },
+  {
+   "id": "rime-crystal",
+   "upheld": true,
+   "why": "Verified: only heldSpells present, spellheart armour benefits applied nowhere. Apply under passiveEffects.resistances."
+  },
+  {
+   "id": "rime-crystal-greater",
+   "upheld": true,
+   "why": "Verified: only heldSpells/counters present; armour benefit undelivered. Apply under passiveEffects.resistances."
+  },
+  {
+   "id": "rune-of-sin-envy",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "rune-of-sin-gluttony",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "rune-of-sin-greed",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "rune-of-sin-lust",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "rune-of-sin-pride",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "rune-of-sin-sloth",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "rune-of-sin-wrath",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "sairazul-blue",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "sanguine-fang",
+   "upheld": true,
+   "why": "Verified: registry covers only the void-save bonus; persistent-bleed resistance undelivered. Apply under passiveEffects.resistances."
+  },
+  {
+   "id": "sanguine-fang-greater",
+   "upheld": true,
+   "why": "Verified: registry covers only the void-save bonus; bleed resistance undelivered. Apply under passiveEffects.resistances."
+  },
+  {
+   "id": "saurian-spike",
+   "upheld": true,
+   "why": "Verified: no senses on the record and spellheart armour benefits are applied nowhere. Apply under passiveEffects.senses."
+  },
+  {
+   "id": "saurian-spike-greater",
+   "upheld": true,
+   "why": "Verified: same gap at the greater grade. Apply under passiveEffects.senses."
+  },
+  {
+   "id": "saurian-spike-major",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "scouring-spark",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "sense-holiness",
+   "upheld": true,
+   "why": "Upheld on the lifesense/deathsense precedent, but the applier's STRICT_VOCAB will reject the new sense name until \"sense holiness\" is added to the vocabulary."
+  },
+  {
+   "id": "sense-unholiness",
+   "upheld": true,
+   "why": "Upheld on the lifesense/deathsense precedent; the applier will reject the unknown sense name until it is added to the vocabulary."
+  },
+  {
+   "id": "shadow-master",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "shadow-sight",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "shockwave",
+   "upheld": true,
+   "why": "Verified: characterSituationalIds pushes etched property-rune ids, so a registry entry keyed \"shockwave\" fires when the rune is etched."
+  },
+  {
+   "id": "siccatite-buckler-high-grade",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "siccatite-buckler-standard-grade",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "siccatite-shield-high-grade",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "siccatite-shield-standard-grade",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "skunk-bomb-moderate",
+   "upheld": true,
+   "why": "Verified: the registry holds skunk-bomb, -lesser, -greater and -major but not -moderate; identical printed text, clean situational fix."
+  },
+  {
+   "id": "spell-survivor",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "spike-skin",
+   "upheld": false,
+   "why": "A targeted impulse (\"You touch a willing creature\"); the app does not turn self-castable buff spells/impulses into modes, or every buff spell in the game would need one."
+  },
+  {
+   "id": "spiny-lodestone",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "spiny-lodestone-greater",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "spun-cloud-blue",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "starlight-armor",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "stone-body-mutagen-lesser",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "stone-body-mutagen-moderate",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "storm-breath",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "studious-spells",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "sun-slayer",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "supernatural-senses",
+   "upheld": true,
+   "why": "Upheld: a printed conditional change to one of the player's own rolls, absent from situationalBonuses; target and bonus text are well-formed."
+  },
+  {
+   "id": "swarmsuit",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "tallowheart-mass",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "the-desert",
+   "upheld": false,
+   "why": "The only standing grant is immunity to extreme-cold/extreme-heat ENVIRONMENTAL effects plus doubled breath/food/water endurance — all GM-adjudicated environment rules the app does not model."
+  },
+  {
+   "id": "thorn-of-milani-lesser",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "thorn-triad",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "thorn-triad-greater",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "thorn-triad-major",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "thousand-year-dragonroot",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "titans-breaker",
+   "upheld": true,
+   "why": "Upheld: a printed conditional change to one of the player's own rolls, absent from situationalBonuses; target and bonus text are well-formed."
+  },
+  {
+   "id": "toadskin-salve",
+   "upheld": false,
+   "why": "The resistance applies only to the single triggering attack of a reaction — resolved in play, never a sheet state a mode could hold."
+  },
+  {
+   "id": "toadskin-salve-greater",
+   "upheld": false,
+   "why": "Same one-shot reaction: resistance against the single triggering attack only, no persistent sheet state."
+  },
+  {
+   "id": "toadskin-salve-major",
+   "upheld": false,
+   "why": "Same one-shot reaction: resistance against the single triggering attack only, no persistent sheet state."
+  },
+  {
+   "id": "tremorsensors",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "trinity-geode",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "trinity-geode-greater",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "trinity-geode-major",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "vengeful-remnant",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "vengful-remnant",
+   "upheld": false,
+   "why": "Misspelled scrape duplicate of vengeful-remnant, which carries the same finding; the defect here is deduplication, not a lane gap."
+  },
+  {
+   "id": "victory-plate",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "warcallers-chime-of-resistance",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "warming-parka",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "winged-terror",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "witchs-finger",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "witness-to-ancient-battles",
+   "upheld": false,
+   "why": "ALREADY MODELLED — effect-backfill.json already grants { skills: { \"lore:battlegrounds\": \"trained\", \"lore:heraldry\": \"trained\" } } on the animist apparition choice option for this id."
+  },
+  {
+   "id": "wyrm-claw",
+   "upheld": false,
+   "why": "edition \"superseded\" — the renamed/outdated half of a remaster change, always hidden from pickers, so no player can ever hold it."
+  },
+  {
+   "id": "wyrm-spindle",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "zetogeki-hide-armor",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "aon-wombat-burrow",
+   "upheld": false,
+   "why": "The fix writes core.stances[\"aon-wombat-burrow\"] named \"Wombat Style\", duplicating aon-wombat-style; the feat has no stance trait so stanceFeats never lists it."
+  },
+  {
+   "id": "attunement-to-stone",
+   "upheld": false,
+   "why": "The fix writes an UNCONDITIONAL tremorsense 5 ft, but the grant only applies while in contact with a stone surface; conditionalSenses is the lane for that and the fix does not use it, so it would write wrong data."
+  },
+  {
+   "id": "bioluminescent-stripes",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "blade-byrnie",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "blade-byrnie-greater",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "blade-byrnie-major",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "blade-phantoms-guide",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "blessed-tattoo",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "bullet-dancer-burn",
+   "upheld": true,
+   "why": "Upheld: a printed conditional change to one of the player's own rolls, absent from situationalBonuses; target and bonus text are well-formed."
+  },
+  {
+   "id": "caydens-tankard",
+   "upheld": true,
+   "why": "Verified: no passiveEffects on the record; passiveEffects.immunities is exactly the right home (the only one derive.ts reads for items)."
+  },
+  {
+   "id": "clawed-bracers",
+   "upheld": false,
+   "why": "Same: an item-keyed stances entry never reaches stanceFeats; it also is not a stance and would wrongly become mutually exclusive with real stances."
+  },
+  {
+   "id": "creative-spark",
+   "upheld": true,
+   "why": "Upheld: a printed conditional change to one of the player's own rolls, absent from situationalBonuses; target and bonus text are well-formed."
+  },
+  {
+   "id": "curse-of-engulfing-flames",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "electric-counter",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "elements-of-creation",
+   "upheld": true,
+   "why": "Upheld: a printed conditional change to one of the player's own rolls, absent from situationalBonuses; target and bonus text are well-formed."
+  },
+  {
+   "id": "feral-claws",
+   "upheld": false,
+   "why": "core.stances is read only for ids that are FEATS the character has (MainTab stanceFeats); a stance keyed to an ITEM id can never surface, so the fix delivers nothing."
+  },
+  {
+   "id": "five-breath-vanguard-dedication",
+   "upheld": true,
+   "why": "Upheld: the grant is real and the named field is one the engine already reads for this record type."
+  },
+  {
+   "id": "flying-animal",
+   "upheld": true,
+   "why": "Verified: awakened-animal ancestry land Speed is 5 and effect-backfill gives this heritage only immunities, so the sheet shows 5 ft instead of 20. Re-wrap the fix as field landSpeedMin."
+  },
+  {
+   "id": "gathering-moss",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "gorilla-pound",
+   "upheld": false,
+   "why": "The fix writes core.stances[\"gorilla-pound\"] — a phantom second \"Gorilla Stance\"; MainTab stanceFeats only surfaces feats with the stance trait (Gorilla Pound has emotion/flourish/mental/monk), so it would never appear and would not amend gorilla-stance."
+  },
+  {
+   "id": "immortal-techniques",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "inexorable-iron",
+   "upheld": true,
+   "why": "Verified: effect-backfill covers only the hybrid-study conflux focus spell; the temporary HP in Arcane Cascade is undelivered."
+  },
+  {
+   "id": "inner-fire-monk",
+   "upheld": false,
+   "why": "Same defect: core.stances[\"inner-fire-monk\"] duplicates the name \"Stoked Flame Stance\" on a feat with no stance trait, so it never surfaces and stoked-flame-stance keeps no resistances."
+  },
+  {
+   "id": "inner-fire-som",
+   "upheld": false,
+   "why": "Legacy-era duplicate of inner-fire-monk, and the stance fix is undeliverable for the same reason as its twin."
+  },
+  {
+   "id": "judgement-of-the-monolith",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "judgment-of-the-monolith",
+   "upheld": false,
+   "why": "edition \"legacy-era\" duplicate of judgement-of-the-monolith, which already carries the identical finding and fix."
+  },
+  {
+   "id": "klingegeist",
+   "upheld": false,
+   "why": "A stances entry keyed to an archetype/concentrate/possession feat with no stance trait and no form:true (the applier writes only {id,name,note}), so stanceFeats can never surface it."
+  },
+  {
+   "id": "ladys-blessing-oil",
+   "upheld": true,
+   "why": "Upheld: a printed conditional change to one of the player's own rolls, absent from situationalBonuses; target and bonus text are well-formed."
+  },
+  {
+   "id": "leopards-armor",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "mountain-quake",
+   "upheld": false,
+   "why": "Same defect: a phantom stance keyed to a non-stance feat that never reaches stanceFeats and does not change mountain-stance.dexCap."
+  },
+  {
+   "id": "mountain-stronghold",
+   "upheld": false,
+   "why": "Same defect: core.stances[\"mountain-stronghold\"] is a phantom \"Mountain Stance\"; the feat has no stance trait so it never surfaces, and mountain-stance's dexCap 0 is left untouched."
+  },
+  {
+   "id": "of-verse-unbroken",
+   "upheld": true,
+   "why": "Upheld: the grant is real and the named field is one the engine already reads for this record type."
+  },
+  {
+   "id": "ore-fists",
+   "upheld": false,
+   "why": "Phantom stance on an archetype feat with no stance trait (and stonestrike-stance is not in the registry at all); the cold-iron/silver clause also only changes which of the TARGET's resistances are bypassed."
+  },
+  {
+   "id": "petal-dance",
+   "upheld": false,
+   "why": "Same: a stances entry keyed to an item id is unreachable — stanceFeats maps character.feats only, so the form would never appear."
+  },
+  {
+   "id": "petrified-skin",
+   "upheld": false,
+   "why": "The reason is factually wrong — the record already carries grantedStrikes with the stone fist (1d8 bludgeoning, shove, brawling); only the sub-half-HP die step remains and the fix names no field."
+  },
+  {
+   "id": "pyrefeather-token",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "renewing-cycle",
+   "upheld": true,
+   "why": "Upheld: a real player-side state change (resistance/speed/temp HP/penalty) with no field, no registry entry and no consumable-mode; the note-only mode is the honest home."
+  },
+  {
+   "id": "rescuers-press",
+   "upheld": true,
+   "why": "Upheld: a real player-facing grant with no legal field to hold it; correctly flagged needsEngineWork rather than given a guessed field."
+  },
+  {
+   "id": "resurgent-maelstrom",
+   "upheld": true,
+   "why": "Verified: effect-backfill covers only the conflux focus spell; the improvised-weapon rules are undelivered."
+  },
+  {
+   "id": "safe-elements",
+   "upheld": true,
+   "why": "Upheld: the grant is real and the named field is one the engine already reads for this record type."
+  }
+ ]
+}

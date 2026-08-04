@@ -1,0 +1,918 @@
+{
+ "records": [
+  {
+   "id": "a-little-bird-told-me",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "core.stances entry 'a-little-bird-told-me' carries form:true, senses (low-light + imprecise scent 30), speeds.fly 25 and a note with the AC/skill/weakness details."
+  },
+  {
+   "id": "abysium-armor",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella AoN family record (no price, kin abysium-armor-standard-grade / -high-grade carry the real entries); deliberately inert."
+  },
+  {
+   "id": "abysium-armor-high-grade",
+   "verdict": "MISS",
+   "reason": "Wearing it makes you sickened 3 (and you can't reduce it while worn or for 1 hour after) - a permanent -3 status penalty to every check and DC while the armour is equipped, and nothing on the record delivers it.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "No legal field expresses 'item imposes a persistent condition value on the wearer'. Needs an item-imposed-condition lane: while this armour is worn, apply sickened 3 and block reducing it (also for 1 hour after removal). The nearby-creature Fortitude save is GM-side and needs nothing."
+   }
+  },
+  {
+   "id": "abysium-armor-standard-grade",
+   "verdict": "MISS",
+   "reason": "Wearing it makes you sickened 2 and you can't reduce the condition while worn - a persistent -2 status penalty to all checks and DCs that nothing on the record applies.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "Same item-imposed-condition lane as the high-grade version: while worn, apply sickened 2 and block reducing it (and for 1 hour after removal)."
+   }
+  },
+  {
+   "id": "acknowledge-fan",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Everything it does (stunned / paralyzed / temporary immunity) lands on one target creature; the app models only the player's own sheet."
+  },
+  {
+   "id": "acupuncturist",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Downtime activity whose entire result is a bonus or penalty on an ally's later check; nothing touches the acting character's sheet."
+  },
+  {
+   "id": "adept-benefit-amulet",
+   "verdict": "MISS",
+   "reason": "When you use Amulet's Abeyance you (or your ally) gain resistance 5 - 10 at 15th level - to a chosen damage type until the start of your next turn; no field or registry entry delivers that resistance on the player's sheet.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Amulet's Abeyance (Adept Benefit)",
+     "effects": "While active (until the start of your next turn after Amulet's Abeyance): resistance 5 to one damage type chosen when the mode is switched on; the resistance is 10 instead at character level 15+."
+    }
+   }
+  },
+  {
+   "id": "adept-benefit-mirror",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Shatters the mirror duplicate to deal slashing damage to other creatures; the text explicitly says you're immune to that damage, so nothing changes on your sheet."
+  },
+  {
+   "id": "admirers-bouquet",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The +1 item bonus to emotion/mental saves and the extra save both belong to the ally you hand the bouquet to; the self-activation only reduces your sickened value by 1, a one-off condition change rather than a sheet modifier. Frequency/counters already track both activations."
+  },
+  {
+   "id": "admonishing-band",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Talisman activation fires Warning Shot at a target and removes the target's temporary immunity to your Demoralize; nothing modifies the wielder's own statistics."
+  },
+  {
+   "id": "aeon-stone",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella AoN family record aggregating every aeon stone; the individual aeon-stone-* records carry the real effects."
+  },
+  {
+   "id": "aeon-stone-pearly-white-spindle",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "passiveEffects on the record carries resistances [{type: void, value: 1}]; the 1 HP/minute regeneration is out-of-combat healing the app doesn't need to model."
+  },
+  {
+   "id": "aeon-stone-vital-amplification",
+   "verdict": "MISS",
+   "reason": "While invested you regain 1 extra HP for every 10 HP regained (minimum 1); nothing on the record modifies healing received.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "No legal field scales HP recovered by a formula. Needs a healing-received modifier lane: +1 HP per full 10 HP regained, minimum +1, while the stone is invested. (The void resistance 5 is the resonant power and only applies when slotted in a wayfinder, so it should not be a flat resistances entry.)"
+   }
+  },
+  {
+   "id": "aetheric-irritant",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella family record over the lesser/moderate/greater/major irritants."
+  },
+  {
+   "id": "aetheric-irritant-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Placed on the ground; the difficult-terrain effect and Will save apply only to fey/spirit/undead creatures entering the area, never to the user's sheet."
+  },
+  {
+   "id": "aetheric-irritant-lesser",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Area effect against fey/spirit/undead creatures only; nothing changes on the player's own sheet."
+  },
+  {
+   "id": "aetheric-irritant-major",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Area effect against fey/spirit/undead creatures only; nothing changes on the player's own sheet."
+  },
+  {
+   "id": "aetheric-irritant-moderate",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Area effect against fey/spirit/undead creatures only; nothing changes on the player's own sheet."
+  },
+  {
+   "id": "agathion-raiment",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Relic-set summary page: it lists which separate item records make up the set and which gift records it unlocks; the gifts (Feral Claws, Form of Fury, etc.) are their own records and the set assembly is GM-gated."
+  },
+  {
+   "id": "aged-arbor-wine",
+   "verdict": "MISS",
+   "reason": "Drinking it gives you tremorsense at 30 feet for 1 minute; the record has only uses, is not in core.modes(fromItemId), and nothing grants the sense.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Aged Arbor Wine",
+     "effects": "For 1 minute after drinking: you gain tremorsense with a range of 30 feet. (The writhing vegetation that makes a 20-foot emanation difficult terrain is battlefield-only and needs nothing.)"
+    },
+    "note": "Modes currently carry only numeric modifiers plus a note - delivering a sense needs the same senses shape stances already use, e.g. [{name: 'tremorsense', range: 30}]."
+   }
+  },
+  {
+   "id": "alarming-disappearance",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Makes enemies you hid from frightened 1; entirely a change to other creatures."
+  },
+  {
+   "id": "alchemical-revivification",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Triggers only when the character dies, and its result is that elixirs/mutagens the player already owns are applied; death and revival are adjudicated at the table, not on the build sheet."
+  },
+  {
+   "id": "alghollthu-lash",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The activation exposes a struck creature to a curse; the weapon's own +1 striking whip statistics come from the item's weapon data. Nothing alters the wielder's statistics."
+  },
+  {
+   "id": "alkenstar-ice-wine",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The record states no mechanical effect at all - it only notes the drink has the properties of alcohol and that undead are immune to the drug's (unlisted) effects. Pure flavour as written."
+  },
+  {
+   "id": "all-in-my-head",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reaction that retypes one instance of incoming damage to mental and makes it nonlethal; it is resolved on a single triggering attack, not a persistent statistic."
+  },
+  {
+   "id": "alloy-flesh-and-steel",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "core.stances entry 'alloy-flesh-and-steel' with form:true and a note covering the Ferrous Form benefits, the Sustain/Raise a Shield rider, the extra metal blast die and the level-16 resistance."
+  },
+  {
+   "id": "ambrosia-of-undying-hope",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A one-shot death ward - it triggers once when you would die, restores 20 HP and ends. No persistent statistic changes; uses already tracks the consumable."
+  },
+  {
+   "id": "anathema-fulu",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Everything (sickened 2, the Banishment penalty) applies to creatures with the chosen trait inside the fulu's area, never to the character who activated it."
+  },
+  {
+   "id": "angel-eidolon",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In the companionGrants registry, which builds the eidolon's attributes, senses, skills, speed and its initial/symbiosis/transcendence abilities."
+  },
+  {
+   "id": "angelic-opera-cloak",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Record carries apexAttribute:'dex' for the apex boost and passiveEffects.skills.acrobatics = 3 for the item bonus; counters/frequency track the once-per-hour flight activation."
+  },
+  {
+   "id": "anger-phantom-eidolon",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In the companionGrants registry, which builds the phantom eidolon's stat arrays, senses, skills and its Furious Strike / Seething Frenzy / Anger Aura abilities."
+  },
+  {
+   "id": "anglerfish-lantern",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The Mesmerizing Lights activation fascinates other creatures in the lantern's light; counters/frequency already track the once-per-hour use."
+  },
+  {
+   "id": "anglerfish-lantern-submersible",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Fascination affects other creatures and the Dive! activation creates a vehicle; neither changes the user's statistics. Counters/frequency track both activations."
+  },
+  {
+   "id": "animal-nip",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella family record over the lesser/moderate/greater/major animal nips."
+  },
+  {
+   "id": "animal-nip-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Fascinates creatures with the animal trait in a 30-foot radius; entirely a change to other creatures."
+  },
+  {
+   "id": "animal-nip-lesser",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Fascinates creatures with the animal trait in a 30-foot radius; entirely a change to other creatures."
+  },
+  {
+   "id": "animal-nip-major",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Fascinates creatures with the animal trait in a 30-foot radius; entirely a change to other creatures."
+  },
+  {
+   "id": "animal-nip-moderate",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Fascinates creatures with the animal trait in a 30-foot radius; entirely a change to other creatures."
+  },
+  {
+   "id": "animal-pheromones",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella family record over the lesser/moderate/greater pheromones."
+  },
+  {
+   "id": "animal-pheromones-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Only shifts the attitude of designated animals toward the anointed creature - an NPC-attitude change the GM adjudicates."
+  },
+  {
+   "id": "animal-pheromones-lesser",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Only shifts the attitude of designated animals toward the anointed creature - an NPC-attitude change the GM adjudicates."
+  },
+  {
+   "id": "animal-pheromones-moderate",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Only shifts the attitude of designated animals toward the anointed creature - an NPC-attitude change the GM adjudicates."
+  },
+  {
+   "id": "animal-senses",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Record carries choice + effectChoices (darkvision / low-light vision / imprecise scent 30) plus maxTakable for the repeatable selection."
+  },
+  {
+   "id": "antimagic-oil",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants a blanket 1-minute immunity to all spells, magic items and magical effects - including the wearer's own - which is a table-level suppression the GM adjudicates rather than a sheet statistic."
+  },
+  {
+   "id": "aon-abysium-armor",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "aon- collision duplicate of the abysium-armor umbrella record (the graded records abysium-armor-standard-grade / -high-grade are the real entries)."
+  },
+  {
+   "id": "aon-agathion-raiment",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "aon- collision duplicate of the agathion-raiment relic-set summary."
+  },
+  {
+   "id": "aon-beast-senses",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "passiveEffects.senses on the record grants low-light vision (and the non-aon twin beast-senses carries the same senses array)."
+  },
+  {
+   "id": "aon-borrow-time",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "You point the relic at a creature within 30 feet; the quickened-then-slowed swing lands on that target, and quickened/slowed are in-play action-economy conditions."
+  },
+  {
+   "id": "aon-celestial-mount",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In the companionGrants registry, which applies the steed's darkvision, +40 HP, weakness 10 to unholy and fly Speed."
+  },
+  {
+   "id": "aon-dad-joke",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In the situationalBonuses registry (the +2 circumstance bonus on the Lore-check version); the damage and stupefied land on the target."
+  },
+  {
+   "id": "aon-death-gaze",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Deals void damage to (or heals) a target creature; nothing touches the relic bearer's sheet."
+  },
+  {
+   "id": "aon-draconic-resistance",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices carries the energy-resistance choice scaled to half the relic's level, and situationalBonuses carries the +1 status bonus to AC against dragons."
+  },
+  {
+   "id": "aon-dragonhide",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Precious-material description (Hardness/HP/BT tables and what can be crafted from it); the crafted dragonhide armour and shield records carry the actual effects."
+  },
+  {
+   "id": "aon-dragonhide-armor",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In the situationalBonuses registry for the +1 circumstance bonus to AC and saves against the corresponding damage type; the armour's own immunity is object durability."
+  },
+  {
+   "id": "aon-dragonhide-buckler-standard-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Only states that the shield object itself is immune to one damage type - object durability, not a wearer statistic."
+  },
+  {
+   "id": "aon-dragonhide-object-standard-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Generic crafted-object entry for the material; all it carries is object Hardness/HP/BT and the object's own damage immunity."
+  },
+  {
+   "id": "aon-dragonhide-shield",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Only states that the shield object itself is immune to one damage type - object durability, not a wearer statistic."
+  },
+  {
+   "id": "aon-emotion-conduit",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Counteracts an emotion effect on a target within 30 feet; the effect is entirely on that other creature."
+  },
+  {
+   "id": "aon-energy-robe",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices carries the per-type resistance 5 choice, and situationalBonuses carries the activation's Speed/movement benefit; frequency tracks the once-per-day use."
+  },
+  {
+   "id": "aon-fascinating",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "grantsFeats on the record hands the player the Fascinating Performance skill feat, ignoring prerequisites."
+  },
+  {
+   "id": "aon-fiendish-mount",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In the companionGrants registry, which applies the steed's darkvision, +40 HP, weakness 10 to holy and fly Speed."
+  },
+  {
+   "id": "aon-grim-specter",
+   "verdict": "MISS",
+   "reason": "Once per day you become incorporeal for up to 1 minute: immunity to precision damage and to effects requiring a physical body, and resistance to all damage equal to half the relic's level (doubled against non-magical damage). Only frequency is present, so none of the defences reach the sheet.",
+   "fix": {
+    "toggle": {
+     "registry": "stances",
+     "name": "Grim Specter",
+     "effects": "Form. While active: resistance to all damage equal to half the relic's level (force, ghost touch, spirit, void and vitality ignore it; doubled against non-magical damage); immunity to precision damage, most diseases and most poisons; you can move through solid objects and are slowed 1 on turns you start inside one; you can't attempt or be the target of Strength-based checks against corporeal creatures. Once per day, up to 1 minute (Sustain)."
+    }
+   }
+  },
+  {
+   "id": "aon-grisantian-hide-object-standard-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Generic crafted-object entry for the pelt material: object Hardness/HP/BT and the object's own fire immunity, not a wearer statistic."
+  },
+  {
+   "id": "aon-grisantian-pelt",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Precious-material description with harvest rules and object durability tables; the grisantian pelt armour record carries the wearer-facing effect."
+  },
+  {
+   "id": "aon-grisantian-pelt-armor",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In the situationalBonuses registry for the +1 circumstance bonus to AC and saves against fire attacks and spells; the rest is object durability."
+  },
+  {
+   "id": "aon-inflamation-flask",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A thrown bomb: the weakness it inflicts lands on the target, and the item bonus to attack rolls is the bomb's own attack statistic carried by the item entry."
+  },
+  {
+   "id": "aon-living-forge",
+   "verdict": "MISS",
+   "reason": "Once per day you transform into a forge elemental battle form with Speed 30, fire resistance 10, weakness 5 to cold and water and a modular forgestrike; only frequency is present, so none of the form's statistics reach the sheet.",
+   "fix": {
+    "toggle": {
+     "registry": "stances",
+     "name": "Living Forge",
+     "effects": "Form (7th-level elemental form). While active: Speed 30 feet; resistance 10 to fire; weakness 5 to cold and weakness 5 to water; single-action forgestrike unarmed Strike for 1d10 modular (bludgeoning/piercing/slashing, switchable with an Interact action) plus 1d4 persistent fire. Once per day."
+    }
+   }
+  },
+  {
+   "id": "aon-living-statue",
+   "verdict": "MISS",
+   "reason": "While standing on the earth you have resistance 5 to physical damage except adamantine (8 in caves or subterranean environments), plus 6th-rank petrify and sure footing as once-per-day innate spells. Nothing on the record delivers either.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "Two gaps and no legal field for either: (1) a terrain-conditional resistance - resistance 5 to physical except adamantine while standing on earth, 8 underground - which has no conditional-resistance shape (situational kinds do not include resistance); (2) the once-per-day innate spells petrify (6th rank) and sure footing, which is an innate-spell grant, not a defense-lane field."
+   }
+  },
+  {
+   "id": "aon-lucky-coin",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A once-per-hour fortune reroll triggered by a misfortune effect; a reroll is resolved at the table and is not a sheet statistic."
+  },
+  {
+   "id": "aon-megaflora",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Conjures a plant with its own statistics that damages, sickens or heals creatures around it; the bearer is explicitly excluded from the harmful versions. Frequency already tracks the once-per-day use."
+  },
+  {
+   "id": "aon-obscure",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants permission to attempt Stealth to Hide in dim light without being concealed - a rules permission with no number attached, adjudicated when the player Hides."
+  },
+  {
+   "id": "aon-oppurtune-trickster",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Makes the target off-guard against an ally's attack; the only self-facing outcome is falling prone on a critical failure."
+  },
+  {
+   "id": "aon-orator-s-fillibuster",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Fascinates observing creatures for as long as you talk; every mechanical consequence is on the listeners, and the periodic Fortitude save is rolled with your normal statistics."
+  },
+  {
+   "id": "aon-petal-dance",
+   "verdict": "MISS",
+   "reason": "Once per hour you discorporate into petals for 1 minute: immunity to falling damage, resistance 5 to bludgeoning and slashing, weakness 5 to area and splash damage. Only frequency is present, so none of it reaches the sheet.",
+   "fix": {
+    "toggle": {
+     "registry": "stances",
+     "name": "Petal Dance",
+     "effects": "Form. While active: resistance 5 to bludgeoning and resistance 5 to slashing; weakness 5 to area damage and weakness 5 to splash damage; immunity to falling damage; you gain the swarm trait and can squeeze through inch-wide gaps, but can't speak, Cast Spells, use manipulate actions needing hands, Activate magic items or Strike with your normal body; you lack swarm mind so mental effects still affect you normally. Once per hour, up to 1 minute."
+    }
+   }
+  },
+  {
+   "id": "aon-pierce-the-veil",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The record carries negativeHealing (void healing as though undead) and is in situationalBonuses for the +2 item bonus (+3 at 13th) to saves against death effects."
+  },
+  {
+   "id": "aon-quickening-emotion",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reaction that counteracts an incoming emotion effect and leaves you quickened for its remaining duration - a one-off in-combat trade resolved when it triggers, not a persistent statistic."
+  },
+  {
+   "id": "aon-remember-thy-names",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Deals mental and persistent mental damage to a target of your Ultimatum of Liberation; entirely a change to another creature."
+  },
+  {
+   "id": "aon-rolling-geode",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Creates a rolling geode object with its own AC/Hardness/HP that damages foes it passes through; nothing modifies the bearer."
+  },
+  {
+   "id": "aon-seer-s-array",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In the situationalBonuses registry (the recalculate circumstance bonus); the rest of the entry is a relic-set summary naming separate item and gift records."
+  },
+  {
+   "id": "aon-siccatite-buckler-standard-grade",
+   "verdict": "MISS",
+   "reason": "While you have the siccatite shield Raised you gain resistance 5 to the opposing energy type (10 for high grade) - a wearer-facing resistance. The record carries no fields and is in no registry; the shield's own resistance 10/20 is object durability and correctly inert.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Siccatite Shield Raised",
+     "effects": "While the siccatite shield is Raised: resistance 5 to the opposing energy type - cold resistance for a hot siccatite shield, fire resistance for a cold one. Standard grade 5; high grade 10."
+    },
+    "note": "Modes currently store only numeric modifiers, so carrying a resistance needs the same resistances shape stances already use."
+   }
+  },
+  {
+   "id": "aon-siccatite-shield",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Material/family summary record for siccatite shields (the per-grade buckler and shield records are separate); the resistances quoted are the shield object's own."
+  },
+  {
+   "id": "aon-sisterstone-armor",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The activation grants the resistance to an ally who damaged an undead creature; the app models only the player's own sheet."
+  },
+  {
+   "id": "aon-vengful-remnant",
+   "verdict": "MISS",
+   "reason": "Until the start of your next turn you gain resistance 10 to all damage except force, ghost touch, spirit and vitality, doubled against non-magical sources. Nothing on the record or in any registry delivers that resistance.",
+   "fix": {
+    "toggle": {
+     "registry": "stances",
+     "name": "Vengeful Remnant",
+     "effects": "While active (until the start of your next turn, extendable by slaying a significant foe with the spectral dagger): resistance 10 to all damage, except that force, ghost touch, spirit and vitality damage ignore it; the resistance is 20 instead against non-magical damage."
+    }
+   }
+  },
+  {
+   "id": "aon-warcaller-s-chime",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Aggregate/collision record listing every warcaller's chime at once; each chime already exists as its own record (warcallers-chime-of-blasting, -of-dread, -of-resistance, -of-restoration, -of-refuge, -of-destruction)."
+  },
+  {
+   "id": "appetizing-flavor-snare",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Douses the creature that triggers it so predators can smell it - a change to the target plus GM-adjudicated animal behaviour."
+  },
+  {
+   "id": "arbor-wine",
+   "verdict": "MISS",
+   "reason": "Drinking it gives you tremorsense at 30 feet for 1 minute; the record carries only uses and is not in core.modes(fromItemId), so the sense never reaches the sheet.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Arbor Wine",
+     "effects": "For 1 minute after drinking: you gain tremorsense with a range of 30 feet."
+    },
+    "note": "Modes currently store only numeric modifiers, so a sense grant needs the senses shape stances already use, e.g. [{name: 'tremorsense', range: 30}]."
+   }
+  },
+  {
+   "id": "arbor-wine-aged",
+   "verdict": "MISS",
+   "reason": "Same aged arbor wine as aged-arbor-wine but a separate record that carries no fields at all (not even uses): the 1-minute tremorsense 30 feet is undelivered.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Arbor Wine (Aged)",
+     "effects": "For 1 minute after drinking: you gain tremorsense with a range of 30 feet. (The 20-foot emanation of writhing difficult terrain is battlefield-only.)"
+    },
+    "note": "This record duplicates aged-arbor-wine; whichever one the app surfaces needs the mode."
+   }
+  },
+  {
+   "id": "arboreal-staff",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "heldSpells carries the staff's full cantrip-to-5th spell list and counters carries the charge pips; the intelligent-item personality is GM-run."
+  },
+  {
+   "id": "arboreals-revenge",
+   "verdict": "MISS",
+   "reason": "The curse gives the wielder weakness 5 to fire (and raises the persistent-fire flat check). situationalBonuses only holds the +4 circumstance bonus to Reflex DC against Disarm; the weakness is a plain wearer-facing defense value with a legal field and nothing carries it.",
+   "fix": {
+    "weaknesses": [
+     {
+      "type": "fire",
+      "value": 5
+     }
+    ],
+    "note": "Applies once the blunderbuss has been fired and fused with you. The flat-check increase (15 to 17, or 10 to 12 with help) to recover from persistent fire damage is a separate rider with no legal field."
+   }
+  },
+  {
+   "id": "arcane-standard",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The Magical Weakness activation gives an enemy in the aura weakness 5 to an energy type; the change is entirely on the target. Counters/frequency track the once-per-turn use."
+  },
+  {
+   "id": "arctic-worm-chitin-shield",
+   "verdict": "MISS",
+   "reason": "The Misty Chill activation gives the wielder resistance 5 to cold until the beginning of their next turn; the record carries only speedPenalty and is in no registry, so the resistance is undelivered.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Misty Chill (Arctic Worm Chitin Shield)",
+     "effects": "While active (from Raising the shield with Misty Chill until the beginning of your next turn): resistance 5 to cold. The 3d6 cold damage to creatures ending their turn adjacent to you is a target-side effect."
+    },
+    "note": "Modes currently store only numeric modifiers, so carrying a resistance needs the resistances shape stances already use."
+   }
+  },
+  {
+   "id": "aroma-concealer",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In situationalBonuses (+2 item bonus to Stealth to Hide/Sneak against smell-reliant creatures) and in core.modes(fromItemId) as item-aroma-concealer with a 1-hour duration."
+  },
+  {
+   "id": "aromatic-ammunition",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In the situationalBonuses registry for the +1 item bonus to Survival checks to Track the marked creature; the odour itself is a target-side effect."
+  },
+  {
+   "id": "arundhat",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The deity record carries the structured deity fields the app builds from: domains, divineFont ['heal'], favoredWeapons ['staff'] and skill 'nature'."
+  },
+  {
+   "id": "assassinate",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A Strike against your mark that adds precision damage and may kill it; every consequence lands on the target."
+  },
+  {
+   "id": "attunement-to-stone",
+   "verdict": "MISS",
+   "reason": "The feat grants tremorsense (imprecise) 5 feet whenever you're in contact with a stone surface. The record carries no fields and is in no registry, so the sense never appears - the app already models item-granted tremorsense (e.g. robe-of-stone).",
+   "fix": {
+    "senses": [
+     {
+      "name": "tremorsense",
+      "range": 5,
+      "acuity": "imprecise"
+     }
+    ],
+    "note": "Only while in contact with a stone surface, and only along that surface - carry that as the sense's note. conditionalSenses is the wrong shape here: it only expresses upgrade-if-you-already-have-X."
+   }
+  },
+  {
+   "id": "aurochs-jerky",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In situationalBonuses (+1 item bonus to Fortitude saves, +2 item bonus against fatiguing effects) and in core.modes(fromItemId) for the 1-hour horn effect."
+  },
+  {
+   "id": "auspicious-mount",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In the companionGrants registry with a choice field for the specialization; the auspice package (traits, Int/Wis increases, expert Religion, extra HP, weakness, fly Speed) belongs to the companion build."
+  },
+  {
+   "id": "avenging-runelord-dedication",
+   "verdict": "MISS",
+   "reason": "The dedication makes you trained in Arcana (or a skill of your choice if already trained), but the record carries only effectChoices for the sin pick and is in featGrantsLane for the granted reaction - no proficiency field, so the skill training never lands.",
+   "fix": {
+    "trainedSkill": "arcana",
+    "note": "The already-trained fallback to a skill of your choice is the generic replacement-skill path. The expert-at-14 / master-at-16 Arcana escalation, the polearm/spear weapon familiarity and the Thassilonian language have no legal defense/proficiency field and need engine work."
+   }
+  },
+  {
+   "id": "axe-of-the-dwarven-lords",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "passiveEffects carries the +4 Crafting bonus and greater darkvision, and the record is in situationalBonuses for the conditional riders; counters/frequency track the weekly summon."
+  },
+  {
+   "id": "azarim",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An intelligent weapon whose behaviour (approving of a wielder, inflicting enfeebled on one it rejects, bonus damage against Droskar's worshippers) is entirely GM-run against specific campaign NPCs."
+  },
+  {
+   "id": "backfire-mantle",
+   "verdict": "MISS",
+   "reason": "situationalBonuses carries only the +1 circumstance bonus to Reflex saves against your own and allies' spells; the mantle's resistance 3 to splash damage from your own and allies' alchemical items is a second, separate benefit that nothing delivers.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "A source-conditional resistance: resistance 3 (5 for backfire-mantle-greater) to splash damage, but only from your own and your allies' alchemical items. No legal field fits - resistances is unconditional and situational has no resistance kind."
+   }
+  },
+  {
+   "id": "banish-falsehoods-of-flesh",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A Religion check to counteract a polymorph effect on another creature within 30 feet; nothing changes on the animist's own sheet."
+  },
+  {
+   "id": "banner-of-the-rising-star",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The Rise Up activation heals and stands a dying ally; the app models only the player's own sheet. Counters/frequency track the daily use."
+  },
+  {
+   "id": "banners-inspiration",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Reduces allies' frightened value and lets them re-save against mental effects; every effect is on an ally."
+  },
+  {
+   "id": "barricade-snare",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Changes how a prepared snare is deployed - the barricade's AC/Hardness/HP and the +2 to the DC to detect the snare are object and GM-side numbers, not the character's statistics."
+  },
+  {
+   "id": "battle-assessment",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A GM-rolled secret check that returns information about an enemy; nothing on the sheet moves."
+  },
+  {
+   "id": "battle-medicine",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants an action that heals using the existing Treat Wounds DCs and your existing Medicine modifier; it adds no bonus or statistic to the sheet."
+  },
+  {
+   "id": "battle-medics-baton",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "passiveEffects carries the +1 item bonus to Medicine checks; counters/frequency track the once-per-hour Battle Medicine activation."
+  },
+  {
+   "id": "battle-prayer",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A Religion check that deals damage to a foe; the only self-facing result is being unable to reuse it for 10 minutes on a critical failure."
+  },
+  {
+   "id": "battlefront-sabotage",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Sabotages an enemy's siege weapon, vehicle or wielded weapon; every consequence is on the target's equipment."
+  },
+  {
+   "id": "beast-eidolon",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In the companionGrants registry, which builds the beast eidolon's stat arrays, senses, skills, speed and its Beast's Charge / Primal Roar / Whirlwind Maul abilities."
+  },
+  {
+   "id": "beasts-of-slumbering-steel",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Conjures temporary mounts with their own statistics for up to five willing creatures; the mounts are summoned creatures, not the kineticist's own statistics."
+  },
+  {
+   "id": "beguiling-crown",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The record carries apexAttribute:'cha' for the apex Charisma boost, and counters/frequency for the three activations; the attitude aura and Sanctuary effects are target-side."
+  },
+  {
+   "id": "belimariuss-invidious-halberd",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An intelligent weapon that spends its own actions casting effects at enemies; the only wielder-facing rider is being quickened for a round, which is in-play action economy. Counters/frequency track the activations."
+  },
+  {
+   "id": "benevolent-spirit-deck",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In the situationalBonuses registry as a +1 status bonus to AC while you sustain the deck on yourself; the resistance scales with the harrow omen suit, and the effect can equally be spent on an ally."
+  },
+  {
+   "id": "bestial-snarling",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Makes adjacent enemies frightened; entirely a change to other creatures."
+  },
+  {
+   "id": "bewitching-bloom",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella family record listing every bloom variety with its own price; the per-variety records (e.g. bewitching-bloom-magnolia) are the real entries, and every variety targets a willing ally."
+  },
+  {
+   "id": "bewitching-bloom-magnolia",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In the situationalBonuses registry; in any case the +1 status bonus to Diplomacy and the fascinate rider both belong to the willing ally you choose, not to you."
+  },
+  {
+   "id": "blast-suit",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In situationalBonuses for the +2 circumstance bonus to Reflex saves against area effects while the suit is locked (with the immobilized rider noted); the +1 resilient full plate statistics come from the armour data and speedPenalty."
+  },
+  {
+   "id": "bless-tonic",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A Crafting feat that adds the vitality trait to healing items you Craft; the void resistance 5 lands for 1 round on whoever drinks the resulting item, at the table - the feat itself changes no statistic on your sheet."
+  },
+  {
+   "id": "blisterwort",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An injury poison; all damage and weakness stages apply to the victim."
+  },
+  {
+   "id": "blood-booster-lesser",
+   "verdict": "MISS",
+   "reason": "For 10 minutes you gain resistance 5 to persistent bleed and persistent poison damage and a reduced flat check to end them. The record carries only uses and is in no registry, so nothing lands on the sheet.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Blood Booster (Lesser)",
+     "effects": "For 10 minutes after drinking: resistance 5 to persistent bleed damage and resistance 5 to persistent poison damage; flat checks to end persistent bleed or persistent poison are made at the reduced DC 10 (as if you had received particularly appropriate aid)."
+    },
+    "note": "Modes currently store only numeric modifiers; the resistance half needs the resistances shape stances already use."
+   }
+  },
+  {
+   "id": "bloodhound-mask",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Family record, and it is in the situationalBonuses registry with the +1 to +3 item bonus to Survival to Track by scent; the per-grade records carry the concrete entries."
+  },
+  {
+   "id": "bloodhound-mask-greater",
+   "verdict": "MISS",
+   "reason": "situationalBonuses covers only the +3 item bonus to Survival; the mask's main benefit - imprecise scent with a 60-foot range for 8 hours - has no field and no mode, so the sense never reaches the sheet.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Bloodhound Mask (Greater)",
+     "effects": "For 8 hours after activating the mask: you gain imprecise scent with a range of 60 feet, and your proficiency bonus for Survival checks to Track by scent is equal to your level even if untrained. You can't wear another mask while wearing it."
+    },
+    "note": "Modes currently store only numeric modifiers; the sense grant needs the senses shape stances already use, e.g. [{name: 'scent', range: 60, acuity: 'imprecise'}]."
+   }
+  },
+  {
+   "id": "bloodhound-mask-lesser",
+   "verdict": "MISS",
+   "reason": "situationalBonuses covers only the +1 item bonus to Survival; the imprecise scent with a 15-foot range for 10 minutes is undelivered.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Bloodhound Mask (Lesser)",
+     "effects": "For 10 minutes after activating the mask: you gain imprecise scent with a range of 15 feet, and your proficiency bonus for Survival checks to Track by scent is equal to your level even if untrained. You can't wear another mask while wearing it."
+    }
+   }
+  },
+  {
+   "id": "bloodhound-mask-moderate",
+   "verdict": "MISS",
+   "reason": "situationalBonuses covers only the +2 item bonus to Survival; the imprecise scent with a 30-foot range for 1 hour is undelivered.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Bloodhound Mask (Moderate)",
+     "effects": "For 1 hour after activating the mask: you gain imprecise scent with a range of 30 feet, and your proficiency bonus for Survival checks to Track by scent is equal to your level even if untrained. You can't wear another mask while wearing it."
+    }
+   }
+  },
+  {
+   "id": "bloodhound-olfactory-stimulators",
+   "verdict": "MISS",
+   "reason": "The once-per-day activation gives you imprecise scent with a 30-foot range for 1 minute; the record carries only counters/frequency, so the sense itself is undelivered.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Bloodhound Olfactory Stimulators",
+     "effects": "For 1 minute after activating (once per day): you gain imprecise scent with a range of 30 feet."
+    },
+    "note": "The worn item also has a non-aon twin record, olfactory-stimulators-bloodhound, that carries even less."
+   }
+  },
+  {
+   "id": "bloodline-mutation",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices carries the choose-one grant (fly Speed / amphibious + swim Speed / resistance 20 to an energy type) plus the vision upgrade."
+  },
+  {
+   "id": "blooming-lotus-seed-pod",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Creates floating lotus pads (terrain) or an 8-hour camp that grants long-term rest benefits to everyone sleeping nearby - exploration-mode and GM-adjudicated, with no statistic on the sheet."
+  },
+  {
+   "id": "boleras-interrogation",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The compulsion and the -2/-4 penalty to Deception apply to the interrogated creature; limitedUses already tracks the three-per-day frequency."
+  },
+  {
+   "id": "bone-swarm",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "core.stances entry 'bone-swarm' with form:true, speeds.fly 40 and a note covering the swarm immunities, the weakness 5 to area/splash and the swarm damage ability; limitedUses tracks the daily frequency."
+  },
+  {
+   "id": "bonekeepers-bane",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Imposes a -1 status penalty on enemies who start their turn adjacent to you; the penalty lives on the enemy's sheet."
+  },
+  {
+   "id": "borrow-time",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "limitedUses carries the once-per-minute frequency; becoming quickened and then stunned 1 is in-play action economy, not a sheet statistic."
+  },
+  {
+   "id": "borrowed-ability",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In the situationalBonuses registry for the Awakening's +1 circumstance bonus to a saving throw; the borrowed skill proficiency and borrowed senses depend on the touched creature's statistics, which the app doesn't model."
+  },
+  {
+   "id": "bottled-omen",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A one-shot fortune effect - roll one saving throw twice and keep the better result; a reroll is resolved at the table, and uses already tracks the consumable."
+  },
+  {
+   "id": "bracers-of-devotion",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "In the situationalBonuses registry with both riders recorded (+2 item bonus against Disarm of your blessed armament, and Blessed Swiftness's Speed bonus raised to +10 status); counters/frequency track the daily Focus Point activation."
+  },
+  {
+   "id": "branch-of-the-great-sugi",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The activations grow a climbable tree and heal every creature in an area; nothing modifies the wielder's own statistics, and counters/frequency track the daily use."
+  },
+  {
+   "id": "brandish-the-gorgons-gaze",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Raising the aegis is an existing action; the slowed 1 petrification lands on the creature whose attack you Shield Block."
+  },
+  {
+   "id": "break-the-suns-legs",
+   "verdict": "MISS",
+   "reason": "Besides the area Darkness, the transcendence grants you greater darkvision for the 1-minute duration. The record carries no fields and is in no registry, so the sense never appears.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Break the Sun's Legs",
+     "effects": "For the 1-minute duration: you gain greater darkvision (the surrounding area is under a 9th-rank Darkness effect)."
+    },
+    "note": "Modes currently store only numeric modifiers; the sense grant needs the senses shape stances already use, e.g. [{name: 'greater-darkvision'}]."
+   }
+  },
+  {
+   "id": "breastplate-of-the-mountain",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The record carries apexAttribute:'con' for the apex Constitution boost plus the full armour statistics (acBonus, dexCap, checkPenalty, speedPenalty, strength) and counters/frequency for the three daily activations."
+  },
+  {
+   "id": "breath-of-hungry-death",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Area damage and paralysis against foes; the only self-facing rider is becoming satiated, which the Consume Flesh feat tracks. limitedUses already carries the once-per-hour frequency."
+  },
+  {
+   "id": "breath-of-vital-ash",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The ikon's whole content is an imbue that grants a Transcendence activity; the record states no numeric change to any statistic."
+  },
+  {
+   "id": "breathtaking-vapor",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An inhaled poison; all damage, drained values and suffocation stages apply to the victim."
+  },
+  {
+   "id": "briar",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A campaign artifact whose powers unlock through GM-awarded Sharpness Points and whose activations target enemies; the underlying +3 greater striking cold iron bastard sword statistics come from the weapon data, and counters/frequency track the activations."
+  },
+  {
+   "id": "broadleaf-shield",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices carries all four seasonal options, each granting passive.resistances (void/fire/poison/cold) at value 3; counters/frequency track the Change Season activation."
+  },
+  {
+   "id": "broadleaf-shield-greater",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices carries the four seasonal resistance options at the greater value; counters/frequency track the Change Season activation."
+  },
+  {
+   "id": "broadleaf-shield-major",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices carries the four seasonal resistance options at the major value; counters/frequency track the Change Season activation."
+  },
+  {
+   "id": "broadleaf-shield-true",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices carries the four seasonal resistance options at the true value; counters/frequency track the Change Season activation."
+  },
+  {
+   "id": "burglars-rosebud",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Emits a cloud that sickens and can make animals flee; every effect applies to creatures in or entering the cloud, not to the user."
+  }
+ ]
+}

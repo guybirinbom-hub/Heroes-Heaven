@@ -141,6 +141,13 @@ export interface CompanionMod {
 }
 
 export const COMPANION_MODS: Record<string, CompanionMod> = {
+  // Coverage sweep, registry lane. "gains one specialization of your choice. Increase its
+  // proficiency rank in Performance to legendary instead of one of the specialization's skill increases."
+  'specialized-companion': { kinds: ['animal'], maturityFloor: 'specialized', skillGrants: [{ skill: 'performance', rank: 'legendary' }], note: "Specialized Companion: your Animal Trainer companion becomes specialized and its Performance rank rises to legendary in place of one of the specialization's skill increases." },
+  // NOTE-ONLY on purpose. The text gives master Stealth only to a SPECIALIZED AMBUSHER; the app has
+  // no conditional-skill lane for companions, and an unconditional skillGrant here would hand master
+  // Stealth to every companion — an over-grant is worse than the gap.
+  'stealthy-companion': { kinds: ['animal'], note: "Stealthy Companion: your companion gains the benefit of the Camouflage feat. If it is a specialized ambusher, its Stealth rank increases to master (legendary if it was already master) — apply that by hand, as it depends on the specialization you chose." },
   'advanced-reanimated-companion': {"kinds":["animal"],"maturityFloor":"mature","note":"Advanced Reanimated Companion: your construct companion is at least an advanced construct companion (the mature rung here) — +1 Str/Dex/Con/Wis, unarmed Strikes go from one die to two, and Perception and all saves become expert. During an encounter, even if you don't use the Command a Minion action, it can still use 1 action on your turn that round to Stride or Strike. It also becomes trained in Intimidation, Stealth, and Survival, and you may change its Size to Small, Medium, or Large (not tracked on this block)."},
   'airborne-form': {"kinds":["eidolon"],"speeds":{"fly":"land"},"note":"Airborne Form: your eidolon can fly."},
   'angel-eidolon': {"kinds":["eidolon"],"senses":["darkvision"],"note":"Hallowed Strikes: the eidolon's unarmed Strikes deal an extra 1 spirit (good) damage."},

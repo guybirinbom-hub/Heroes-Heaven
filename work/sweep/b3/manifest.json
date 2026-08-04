@@ -1,0 +1,12 @@
+{
+ "batch": "b3",
+ "lanes": [
+  "spellGrant",
+  "grantsFeat",
+  "resource",
+  "companion"
+ ],
+ "records": 749,
+ "chunkSize": 75,
+ "chunks": 10
+}

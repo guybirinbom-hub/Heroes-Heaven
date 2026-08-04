@@ -1,0 +1,1012 @@
+{
+ "records": [
+  {
+   "id": "saurian-spike-major",
+   "verdict": "MISS",
+   "reason": "heldSpells/counters/frequency cover the two Cast a Spell activations, but the Armor-mode benefit ('You gain precise scent with a range of 60 feet') is a real sense grant and nothing delivers it — the record has no senses and no modes entry.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Saurian Spike — Armor",
+     "effects": "While the spellheart is affixed to armor: gain precise scent with a range of 60 feet."
+    },
+    "note": "The Weapon-mode frightening polymorph effect is target-facing and needs nothing."
+   }
+  },
+  {
+   "id": "scalding-gauntlets",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The runes (+2 striking spiked gauntlets) are carried by the item's own weapon data; the only extra rule damages and sickens a creature YOU grabbed — target-side only."
+  },
+  {
+   "id": "scalding-gauntlets-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same as the base gauntlets: the rune package is weapon data and the grab/sicken rider changes only the grabbed creature's statistics."
+  },
+  {
+   "id": "scalding-gauntlets-major",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Rune package is weapon data; the 3d6 + sickened rider affects only the creature you grab or restrain."
+  },
+  {
+   "id": "scalding-gauntlets-true",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Rune package is weapon data; the 4d6 + sickened rider affects only the creature you grab or restrain."
+  },
+  {
+   "id": "scholars-drop",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "core.modes carries the 'Scholar's Drop' mode (fromItemId) with the 1-hour duration and the fatigued Secondary Effect note, and situationalBonuses carries the +1 item bonus to saves against effects that could make you fatigued."
+  },
+  {
+   "id": "school-of-thassilonian-rune-magic",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices already presents the seven-sins pick that this curriculum requires; the curriculum spell list itself is delivered by the wizard curriculum/spellbook machinery, not by a field on this record."
+  },
+  {
+   "id": "scouring-spark",
+   "verdict": "MISS",
+   "reason": "No fields at all. While Channeling your Divine Spark this grants immunity to confused and frightened, +1d6 fire on unarmed Strikes and an extra die on fire spells — all player-side numbers that nothing delivers.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Scouring Spark (Divine Spark channelled)",
+     "effects": "Immune to the confused and frightened conditions; unarmed Strikes deal +1d6 fire damage; your fire spells deal one additional damage die of the spell's own die type. (Creatures that touch you taking 3d6 is target-facing.)"
+    }
+   }
+  },
+  {
+   "id": "scrap-barricade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Everything the impulse produces is the wall's own AC/Hardness/HP and damage to creatures adjacent when it collapses — battlefield geometry the GM tracks, no statistic of yours moves."
+  },
+  {
+   "id": "seasoned-command",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "limitedUses covers the per-target immunity tracking and situationalBonuses already carries both critical-success entries (+1 circumstance to the skill check and to the attack roll to Aid the chosen ally)."
+  },
+  {
+   "id": "seers-array",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The relic set is wired through the situational registry (SITUATIONAL_SUPERSEDES maps seers-array → recalculate, so the set's boosted gift replaces the base one); the five set items carry their own records and gifts."
+  },
+  {
+   "id": "sense-holiness",
+   "verdict": "MISS",
+   "reason": "No fields. The feat grants a permanent new sense (detect holy creatures within 120 feet, vague) and nothing puts it on the sheet's senses line. Free-form sense names are already used in the data ('lifesense', 'thoughtsense', 'sense dragons (within 10 miles)').",
+   "fix": {
+    "field": "senses",
+    "value": [{ "name": "sense holiness", "acuity": "vague", "range": 120 }],
+    "note": "The opposed Deception check to hide sanctification is GM-side."
+   }
+  },
+  {
+   "id": "sense-unholiness",
+   "verdict": "MISS",
+   "reason": "No fields. Grants a permanent vague sense for unholy creatures within 120 feet; nothing puts it on the senses line.",
+   "fix": {
+    "field": "senses",
+    "value": [{ "name": "sense unholiness", "acuity": "vague", "range": 120 }],
+    "note": "The opposed Deception check to hide sanctification is GM-side."
+   }
+  },
+  {
+   "id": "senses-of-the-bear",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The core.stances 'ursine form' entry carries senseIfFeat: { feat: 'senses-of-the-bear', senses: [low-light-vision, scent imprecise 30], upgradeDarkvisionIfLowLight: true } — exactly this feat, including the low-light→darkvision upgrade."
+  },
+  {
+   "id": "serene-smelling-salts",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Reduces a frightened value by 1 on you or an adjacent creature — an in-play condition adjustment the player/GM applies at the table; no persistent sheet statistic changes. uses already tracks the consumable."
+  },
+  {
+   "id": "shadow-master",
+   "verdict": "MISS",
+   "reason": "No fields. In dim light or darkness this gives resistance 5 to all damage (except force and Ghost Touch Strikes) and a fortune effect on Reflex saves — both player-side and both undelivered.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Shadow Master (in dim light or darkness)",
+     "effects": "Resistance 5 to all damage except force damage and damage from Strikes with the Ghost Touch property rune; roll Reflex saves twice and take the higher result (fortune)."
+    }
+   }
+  },
+  {
+   "id": "shadow-sight",
+   "verdict": "MISS",
+   "reason": "limitedUses gives the once-per-hour pip but nothing grants the sense: for 1 minute you gain greater darkvision, and greater-darkvision is a supported sense name that never reaches the sheet.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Shadow Sight",
+     "effects": "For 1 minute (once per hour), gain the greater-darkvision sense."
+    }
+   }
+  },
+  {
+   "id": "shaman",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "grantsFeats already delivers spirit-familiar-animist, enhanced-familiar and incredible-familiar, and the record is in the companionGrants registry; the 17th-level incorporeal package is the familiar's own statistics, not yours."
+  },
+  {
+   "id": "shell-of-easy-breathing",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants the ability to breathe underwater for an hour — an environmental permission the GM adjudicates; no number on the sheet moves."
+  },
+  {
+   "id": "shell-of-easy-breathing-greater",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same as the base shell: breathe underwater for 8 hours, an environmental permission with no sheet statistic behind it."
+  },
+  {
+   "id": "shining-runes",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants concealment from enemies until your next turn and raises the DC others use to identify your spells — both are adjudicated at the table against other creatures' rolls; neither is a statistic on your sheet."
+  },
+  {
+   "id": "shining-symbol-greater",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "passiveEffects.skills gives the +2 item bonus to Religion, counters/frequency track the once-per-day Spiritual Light, and situationalBonuses carries the −2 status penalty to Deception and Stealth while standing in your own light."
+  },
+  {
+   "id": "shockwave",
+   "verdict": "MISS",
+   "reason": "This is a weapon property rune (core.runes id 'shockwave', kind 'property'), and unlike flaming/frost its rune entry carries no damage field — because the splash scales with the weapon's damage dice, which the damage shape can't express. Nothing tells the player their Strikes deal splash.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "strikeDamage" }],
+      "when": "on Strikes with the etched weapon",
+      "bonus": "bludgeoning splash damage equal to the number of weapon damage dice (you are immune to it)"
+     }
+    ]
+   }
+  },
+  {
+   "id": "siccatite-buckler-high-grade",
+   "verdict": "MISS",
+   "reason": "No fields. Beyond the shield's own resistances, the wielder gains resistance 10 to the opposing energy type while the shield is Raised — a player-side resistance nothing delivers. The hot/cold choice is also unrecorded.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Siccatite Buckler (High-Grade) Raised",
+     "effects": "While this shield is Raised, you gain resistance 10 to the opposing energy type — cold if it is a hot siccatite shield, fire if it is a cold siccatite shield. The player must first record whether the shield is hot or cold."
+    }
+   }
+  },
+  {
+   "id": "siccatite-buckler-standard-grade",
+   "verdict": "MISS",
+   "reason": "No fields. While Raised, the wielder gains resistance 5 to the opposing energy type; nothing on the record grants it, and the hot/cold pick is unrecorded.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Siccatite Buckler (Standard-Grade) Raised",
+     "effects": "While this shield is Raised, you gain resistance 5 to the opposing energy type — cold for a hot siccatite shield, fire for a cold siccatite shield. The player must first record whether the shield is hot or cold."
+    }
+   }
+  },
+  {
+   "id": "siccatite-shield",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella record: no price, and it is the AoN family summary sitting above the four priced buckler/shield grade variants. Deliberately inert."
+  },
+  {
+   "id": "siccatite-shield-high-grade",
+   "verdict": "MISS",
+   "reason": "No fields. While Raised, the wielder gains resistance 10 to the opposing energy type — a player-side resistance nothing delivers.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Siccatite Shield (High-Grade) Raised",
+     "effects": "While this shield is Raised, you gain resistance 10 to the opposing energy type — cold for a hot siccatite shield, fire for a cold siccatite shield. The player must first record whether the shield is hot or cold."
+    }
+   }
+  },
+  {
+   "id": "siccatite-shield-standard-grade",
+   "verdict": "MISS",
+   "reason": "No fields. While Raised, the wielder gains resistance 5 to the opposing energy type; nothing on the record grants it.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Siccatite Shield (Standard-Grade) Raised",
+     "effects": "While this shield is Raised, you gain resistance 5 to the opposing energy type — cold for a hot siccatite shield, fire for a cold siccatite shield. The player must first record whether the shield is hot or cold."
+    }
+   }
+  },
+  {
+   "id": "siren-song",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "limitedUses already tracks the once-per-day frequency; every graded outcome (fascinated, stupefied) lands on other creatures, which the app does not model."
+  },
+  {
+   "id": "sisterstone-armor",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella record: no price, the AoN family summary above the low/standard/high-grade priced variants. Deliberately inert."
+  },
+  {
+   "id": "sisterstone-armor-high-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The only activation grants resistance to an ALLY (who must also wear sisterstone gear); the app models only the player's own sheet."
+  },
+  {
+   "id": "sisterstone-armor-low-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The activation's resistance 2 goes to an ally with a reciprocal sisterstone field, never to the wearer."
+  },
+  {
+   "id": "sisterstone-armor-standard-grade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The activation's resistance 3 goes to an ally, not the wearer — ally-only, outside what the app models."
+  },
+  {
+   "id": "skirt-the-underworld",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A transcendence action: you become invisible for a round and Fly your Speed (using your existing Speed), and adjacent enemies may be blinded. Invisibility duration and the blinding are in-play states, not sheet statistics."
+  },
+  {
+   "id": "skunk-bomb",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella record: no price, the AoN family summary above the four priced lesser/moderate/greater/major bombs. Deliberately inert (a stray situational entry exists but the record is never a real inventory item)."
+  },
+  {
+   "id": "skunk-bomb-greater",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses carries the +1 item bonus to Survival to Track a creature the bomb sickened; the bomb's own +2 item attack bonus is part of the alchemical bomb's weapon data, and the sickened/slowed/blinded results are all target-side."
+  },
+  {
+   "id": "skunk-bomb-lesser",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses carries the +1 item bonus to Track a creature this bomb sickened; everything else the bomb does lands on the target."
+  },
+  {
+   "id": "skunk-bomb-major",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses carries the +1 item Track entry for this id; the rest of the bomb's text is target-facing."
+  },
+  {
+   "id": "skunk-bomb-moderate",
+   "verdict": "MISS",
+   "reason": "The only grade of skunk bomb NOT in situationalBonuses (inRegistries is empty and the registry has no 'skunk-bomb-moderate' key), even though its lesser/greater/major siblings all carry the Track entry. Its rules text grants the same +1 item bonus to Track.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "skill", "detail": "survival" }],
+      "when": "to Track a creature this bomb sickened, while its odor lasts",
+      "bonus": "+1 item"
+     }
+    ]
+   }
+  },
+  {
+   "id": "sky-and-heaven-stance",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "core.stances carries the full entry: the skyward slash 1d10 brawling strike with its traits, requires.unarmored, and resistances [electricity 2, sonic 2] with the level-scaling note."
+  },
+  {
+   "id": "sky-hammer",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The rune package is weapon data; Comet Fall drops a fireball that damages other creatures (you are immune to your own), so nothing on your sheet moves."
+  },
+  {
+   "id": "slay",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A Strike with extra precision damage and a death effect against a doomed target — entirely target-facing."
+  },
+  {
+   "id": "snap-out-of-it",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants an ALLY a Will save with a +1 circumstance bonus; the app models only the player's own sheet."
+  },
+  {
+   "id": "snap-out-of-it-marshal",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Duplicate of the marshal feat — the +1 circumstance bonus is on the ally's save, not yours."
+  },
+  {
+   "id": "solar-detonation",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An area impulse: damage, dazzled and blinded all land on creatures in the burst; nothing changes your own statistics."
+  },
+  {
+   "id": "sorshens-sinuous-guisarme",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "counters + frequency track Arcane Shift and Impose Will (once per day, once per day per spell) and heldSpells carries the spells it casts; the +4 mythic striking keen quickstrike shifting spell reservoir package is the weapon's own rune data."
+  },
+  {
+   "id": "soulcutter-artifact",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses carries both save entries (+3 item to saves vs mental effects while carried, rising to +5 vs possession); frequency tracks the hourly activations, and Soothe Souls / Soulcutting Storm / Shame Demon are target-facing."
+  },
+  {
+   "id": "soulcutter-heroic",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "counters + frequency track the hourly activations and situationalBonuses carries the +3 item (mental) / +5 item (possession) save entries for this id."
+  },
+  {
+   "id": "soulforger-dedication",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The record carries a `choice` field recording the essence power pick, and situationalBonuses already spells out the essence-power bonuses (Deep-Seeded Fear +2 status Intimidation, Heroic Heart +1 status to attacks/Perception/skills/saves, and the rest)."
+  },
+  {
+   "id": "sparkwarden",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "counters + frequency track the once-per-day reaction and situationalBonuses carries the +1 status bonus to AC and to each save against the triggering effect."
+  },
+  {
+   "id": "spell-survivor",
+   "verdict": "MISS",
+   "reason": "No fields. After a critical success on a save vs a spell you gain resistance 1 to all damage from that caster (scaling +1 at 9th and every 4 levels) — a real player-side resistance that nothing delivers.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Spell Survivor",
+     "effects": "Until the end of that caster's next turn, gain resistance to all damage dealt by the caster whose spell you critically saved against: resistance 1, increasing by 1 at 9th level and every 4 levels thereafter (2 at 9th, 3 at 13th, 4 at 17th)."
+    }
+   }
+  },
+  {
+   "id": "spellmasters-resilience",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "effectChoices already grants resistances per tradition ({ type: 'damage from arcane spells', value: 5 } and siblings), the `choice` field records the tradition pick, and situationalBonuses carries the +1 circumstance bonus to saves vs that tradition."
+  },
+  {
+   "id": "spellstrike",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants the Spellstrike activity and then spends its whole length on adjudication rules (one target, reach, ancillary effects, immune targets). No statistic changes."
+  },
+  {
+   "id": "spiced-demonade",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Suppresses the effects of alcohol and lack of sleep for an hour — neither is a tracked sheet statistic; `uses` already tracks the consumable."
+  },
+  {
+   "id": "spike-skin",
+   "verdict": "MISS",
+   "reason": "No fields. The impulse targets a willing creature, which can be YOU, granting resistance 4 to all physical damage except adamantine (increasing by 2 every 2 levels) for up to 10 minutes. Nothing delivers that resistance.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Spike Skin",
+     "effects": "Resistance 4 to all physical damage except adamantine, increasing by 2 for every 2 levels above 8th. Lasts 10 minutes, and the duration drops by 1 minute each time you take physical damage. (The retaliatory damage to attackers is target-facing.)"
+    }
+   }
+  },
+  {
+   "id": "spinning-release",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Forced movement plus confused/sickened on the creature you had grabbed — entirely target-facing."
+  },
+  {
+   "id": "spiny-lodestone",
+   "verdict": "MISS",
+   "reason": "heldSpells covers the Needle Darts activation, but the Armor-mode benefit (+1 item bonus to Athletics and resistance 2 to nonlethal damage) has no field and no modes entry.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Spiny Lodestone — Armor",
+     "effects": "While affixed to armor: +1 item bonus to Athletics checks and resistance 2 to nonlethal damage."
+    },
+    "note": "The Weapon-mode +1d4 piercing after casting is a strike-damage rider that would need the situational lane."
+   }
+  },
+  {
+   "id": "spiny-lodestone-greater",
+   "verdict": "MISS",
+   "reason": "Same gap at the greater grade: counters/frequency/heldSpells cover the two spells, but the Armor mode's +1 item Athletics and resistance 5 to nonlethal damage are undelivered.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Spiny Lodestone (Greater) — Armor",
+     "effects": "While affixed to armor: +1 item bonus to Athletics checks and resistance 5 to nonlethal damage."
+    },
+    "note": "The Weapon-mode +1d6 piercing after casting is a strike-damage rider that would need the situational lane."
+   }
+  },
+  {
+   "id": "spirit-guide-form",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "core.stances carries the whole form: form: true, both claws/jaws strikes with dice and traits, senses [darkvision], resistances [all 10] with the force/ghost-touch/spirit exception note; limitedUses gives the once-per-day pip."
+  },
+  {
+   "id": "spiritsight-crossbow",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "counters + frequency track Ethereal Vision (once per minute) and the dependent Ethereal Shot; the ethereal sight itself lasts only until the end of your turn and is line-of-effect adjudication, not a sheet statistic. The rune package is weapon data."
+  },
+  {
+   "id": "spore-cloud",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "limitedUses tracks the once-per-hour frequency; dazzled/blinded all land on other creatures in the emanation."
+  },
+  {
+   "id": "sportlebore-choke",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Damage and sickened on each creature in your swarm's space — entirely target-facing."
+  },
+  {
+   "id": "spun-cloud",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella record: no price, the AoN family summary above the five priced colour variants. Deliberately inert."
+  },
+  {
+   "id": "spun-cloud-blue",
+   "verdict": "MISS",
+   "reason": "Only `uses` is present. The white variant got a situational speed entry for standing inside the cloud, but blue's 'creatures gain resistance 5 to electricity while in the cloud' — which includes you and your allies — is delivered by nothing.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Spun Cloud (Blue) — inside the cloud",
+     "effects": "While you are inside the exhaled blue cloud (20-foot burst, lasts 1 minute), gain resistance 5 to electricity."
+    }
+   }
+  },
+  {
+   "id": "staff-of-the-black-desert",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "counters + heldSpells run the charge-driven spell list and situationalBonuses carries the +2 circumstance bonus to Occultism to identify Darklands aberrations and oozes."
+  },
+  {
+   "id": "staff-of-the-black-desert-greater",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Same as the base staff: counters + heldSpells for the charges and spell list, situationalBonuses for the +2 circumstance Occultism entry keyed to this id."
+  },
+  {
+   "id": "staff-of-the-unblinking-eye",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "counters + heldSpells cover the charges and spell list, and situationalBonuses carries the +1 status bonus to Perception checks rolled for initiative while wielding the staff."
+  },
+  {
+   "id": "staff-of-the-unblinking-eye-greater",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Same fields plus its own situationalBonuses entry for the +1 status initiative bonus."
+  },
+  {
+   "id": "staff-of-the-unblinking-eye-major",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Same fields plus its own situationalBonuses entry for the +1 status initiative bonus."
+  },
+  {
+   "id": "staff-of-water",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "passiveEffects.resistances is exactly [{ type: 'fire', value: 2 }] — the wielded-staff fire resistance — and counters + heldSpells run the charges and spell list."
+  },
+  {
+   "id": "staff-of-water-greater",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "passiveEffects.resistances is [{ type: 'fire', value: 5 }], matching the greater staff's text, with counters + heldSpells for the charges."
+  },
+  {
+   "id": "stalk-goggles-major",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "counters + frequency track the once-per-day Looksee, and situationalBonuses carries the +2 item bonus to sight-based Perception while it is active; all-around vision (can't be flanked) is a positioning rule the GM applies."
+  },
+  {
+   "id": "stand-firm",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Reduces an ALLY's frightened value and gives that ally a new save and action relief; nothing touches your own sheet."
+  },
+  {
+   "id": "standard-of-the-true-ally",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants a free Step or Stride folded into the Aid preparation — pure action economy, no statistic changes."
+  },
+  {
+   "id": "stargazers-eyes",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The record carries conditionalSenses: [{ ifPresent: 'low-light-vision', base: { name: 'low-light-vision' }, upgraded: { name: 'darkvision' } }], plus maxTakable: 2 for the Special second taking."
+  },
+  {
+   "id": "starlight-armor",
+   "verdict": "MISS",
+   "reason": "limitedUses gives the once-per-day pip, but the armour itself — resistance 7 to piercing, bludgeoning and slashing (10 at 17th level) for the effect's duration — is delivered by nothing.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Starlight Armor",
+     "effects": "For 1 minute (once per day): resistance 7 to piercing, bludgeoning and slashing damage, increasing to 10 at 17th level. (The dazzling save for adjacent attackers is target-facing.)"
+    }
+   }
+  },
+  {
+   "id": "starsong-nectar",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "core.modes carries the 'Starsong Nectar' mode (fromItemId, 10 minutes) and situationalBonuses carries the +3 status bonus across attacks, spell attacks, Perception, saves and skills; counters/frequency/uses handle the once-per-round reroll and the consumable."
+  },
+  {
+   "id": "statue-skin-salve",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "core.modes carries 'Statue Skin' (fromItemId) with resistance 3 to piercing and slashing for 20 minutes, and situationalBonuses carries the +2 item bonus to Impersonate a statue or stone creature."
+  },
+  {
+   "id": "stoic-as-hell",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses carries the +2 circumstance bonus against the triggering emotion/controlled effect on all three saves; the temporary HP and the free Demoralize are in-play consequences of a reaction."
+  },
+  {
+   "id": "stone-body-mutagen",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella record: no price, the AoN family summary above the priced lesser/moderate/greater mutagens. Deliberately inert."
+  },
+  {
+   "id": "stone-body-mutagen-lesser",
+   "verdict": "MISS",
+   "reason": "Only `uses` is present. Every mechanical part of the mutagen — resistance 5 to physical damage except bludgeoning, −10 feet to all Speeds, −2 to Reflex saves — is delivered by nothing, even though sibling mutagens/elixirs in this data set carry modes.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Stone Body Mutagen (Lesser)",
+     "effects": "For 10 minutes: resistance 5 to physical damage except bludgeoning; all Speeds reduced by 10 feet (minimum 5 feet); −2 penalty to Reflex saves."
+    }
+   }
+  },
+  {
+   "id": "stone-body-mutagen-moderate",
+   "verdict": "MISS",
+   "reason": "Only `uses` is present; the same benefit and drawback package (resistance 5 physical except bludgeoning, −10 feet Speeds, −2 Reflex) reaches nothing on the sheet, only the duration differs.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Stone Body Mutagen (Moderate)",
+     "effects": "For 1 hour: resistance 5 to physical damage except bludgeoning; all Speeds reduced by 10 feet (minimum 5 feet); −2 penalty to Reflex saves."
+    }
+   }
+  },
+  {
+   "id": "stone-of-encouragement",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "counters + frequency track the once-per-day activation, and situationalBonuses carries the +1 item bonus to the first skill check attempted within 1 minute."
+  },
+  {
+   "id": "stone-of-encouragement-greater",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Same fields, with its own situationalBonuses entry for the +2 item bonus to the first skill check within 1 minute."
+  },
+  {
+   "id": "stoneraiser-javelin",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "counters + frequency track the once-per-day activation; the stalagmites' AC/Hardness/HP, the difficult terrain and the Reflex damage are all battlefield and target-side. The +2 striking returning package is weapon data."
+  },
+  {
+   "id": "storm-breath",
+   "verdict": "MISS",
+   "reason": "Only `uses` is present. Inhaling the bottled breath gives YOU resistance 5 to both electricity and sonic — a player-side resistance that reaches nothing (the exhaled bolt is target-facing).",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Storm Breath",
+     "effects": "While the breath is held: resistance 5 to electricity and resistance 5 to sonic damage."
+    }
+   }
+  },
+  {
+   "id": "stormshard",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "counters + frequency track Free the Spirits, and situationalBonuses carries the +1 item bonus to Intimidation to influence undead while holding the shard; the permission to Demoralize mindless undead is a rules permission the GM applies."
+  },
+  {
+   "id": "stormshard-greater",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Same fields, with its own situationalBonuses entry for the +2 item Intimidation-vs-undead bonus."
+  },
+  {
+   "id": "stormshard-major",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Same fields, with its own situationalBonuses entry for the +3 item Intimidation-vs-undead bonus."
+  },
+  {
+   "id": "studious-spells",
+   "verdict": "MISS",
+   "reason": "No fields. This magus feature hands out two extra spell slots (2nd rank at 7th, 3rd at 11th, 4th at 13th) restricted to a fixed spell list that varies by hybrid study, and adds those spells to your spellbook. None of it reaches the Spells page.",
+   "fix": {
+    "needsEngineWork": true,
+    "note": "Needs a restricted extra-slot grant (a spellSlotBonus-style grant whose slots may hold only the listed spells) plus a per-hybrid-study spell addition to the spellbook. No field in the defense/proficiency/situational lanes expresses it."
+   }
+  },
+  {
+   "id": "stunning-surprise",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A Strike whose entire rider — stunned, no reactions, unconscious — lands on the target creature."
+  },
+  {
+   "id": "stunt-performer-stance",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "core.stances carries the entry with requires.unarmored and resistances [{ type: 'physical', value: 2 }], and situationalBonuses carries the +2 circumstance bonus to Reflex saves and to Escape checks."
+  },
+  {
+   "id": "subjugation",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Spends a Mythic Point to slow or control a creature you can sense; every result is on the target, and the Recall Knowledge insight is information the GM gives you."
+  },
+  {
+   "id": "such-a-disgrace",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Rerolls an ALLY's failed Will save with a +1 circumstance bonus — ally-only, outside what the app models."
+  },
+  {
+   "id": "sudden-terror",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses carries the +2 circumstance bonus to Demoralize a creature you were hidden to; losing the auditory trait and the no-shared-language exemption are rules permissions applied at the table."
+  },
+  {
+   "id": "sulfur-bomb",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella record: no price, the AoN family summary above the four priced grades. Deliberately inert."
+  },
+  {
+   "id": "sulfur-bomb-greater",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses carries '+2 item on Strikes thrown with this bomb'; the −1 status penalty and sickened are on the target."
+  },
+  {
+   "id": "sulfur-bomb-lesser",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The lesser grade grants no item bonus to attack rolls, and everything it does (damage, −1 status penalty, sickened) lands on the target."
+  },
+  {
+   "id": "sulfur-bomb-major",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses carries '+3 item on Strikes thrown with this bomb'; the rest is target-facing."
+  },
+  {
+   "id": "sulfur-bomb-moderate",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses carries '+1 item on Strikes thrown with this bomb'; the rest is target-facing."
+  },
+  {
+   "id": "sun-slayer",
+   "verdict": "MISS",
+   "reason": "counters + frequency track the once-per-day Sunset activation, but the shield's standing benefit — 'while you have this shield raised, you gain fire resistance 5' — is delivered by nothing.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Sun Slayer Raised",
+     "effects": "While this shield is Raised, you gain resistance 5 to fire damage."
+    }
+   }
+  },
+  {
+   "id": "sunbird-glare",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A save against your class DC that dazzles the target; nothing on your own sheet moves."
+  },
+  {
+   "id": "sunder-spell",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A Strike that becomes a counteract attempt against a spell on the target; the counteract rank is derived at the table from your level and uses the attack roll you already have."
+  },
+  {
+   "id": "supernatural-senses",
+   "verdict": "MISS",
+   "reason": "No fields. While raging, the flat check to target a concealed creature drops from DC 5 to DC 3 and from DC 11 to DC 9 for a hidden one — a player-side roll change with no delivery. The registry already handles flat-check text this way for 'superior-sight'.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "strikeAttack" }],
+      "when": "while raging, targeting a concealed or hidden creature",
+      "bonus": "flat check DC is 3 (concealed) or 9 (hidden) instead of 5 or 11"
+     }
+    ]
+   }
+  },
+  {
+   "id": "surgical-shock",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses carries the +1 circumstance bonus to your next attack action against that creature on a Failure result; the clumsy/stupefied outcomes are on the target."
+  },
+  {
+   "id": "swarm-eidolon",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "otherTags: ['summoner-eidolon'] routes this into the eidolon subsystem, which owns the Brazen/Slinking ability spreads, the suggested attacks and the form abilities; every statistic in the text belongs to the eidolon, not the summoner's own sheet."
+  },
+  {
+   "id": "swarmkeeper-dedication",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The swarm is a separate entity with its own Speed, resistances and weakness; the dedication grants actions (Swarm Forth, Bite and Sting) and an anti-synergy with animal companions. No number on the summoner's own sheet changes."
+  },
+  {
+   "id": "swarmsuit",
+   "verdict": "MISS",
+   "reason": "speedPenalty −5 is present as standard armour data, but 'you gain resistance 3 to physical damage from swarms' is a player-side resistance no field delivers — and the plain resistances field can't carry the 'from swarms' condition.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Swarmsuit (against swarms)",
+     "effects": "While wearing the swarmsuit and fighting swarms: resistance 3 to physical damage from swarms."
+    }
+   }
+  },
+  {
+   "id": "tallowheart-mass",
+   "verdict": "MISS",
+   "reason": "No fields at all — not even uses/counters for the three consumable portions. The third portion grants YOU resistance 10 to fire for 1 minute, and the first grants quickened; nothing delivers either.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Tallowheart Mass — Fire Ward",
+     "effects": "For 1 minute after rubbing a portion on your body: resistance 10 to fire damage. (Separate portions instead grant quickened 1 for 1 minute usable only for held-weapon Strikes, or heal 4d8+12 — the mass has three portions total.)"
+    },
+    "note": "The record also lacks any uses/counters field for the three portions."
+   }
+  },
+  {
+   "id": "tame-animal",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An exploration skill feat resolved entirely by a Nature check against a GM-set DC; the outcome is the animal's attitude, not a statistic of yours."
+  },
+  {
+   "id": "tangle-in-riddle",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A transcendence action whose every degree of success applies stupefied or confused to one target creature."
+  },
+  {
+   "id": "taste-blood",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants temporary Hit Points equal to the target's level — an in-play value the player enters when they use it — and drains the target. No persistent sheet statistic changes."
+  },
+  {
+   "id": "tattletale-orb",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella record: no price, the AoN family summary above the priced clear quartz/selenite/moonstone/peridot/obsidian orbs. Deliberately inert."
+  },
+  {
+   "id": "tattletale-orb-moonstone",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A cursed scrying item: every clause governs what the SCRYED-ON creature learns or may do back to you, plus a Will save to use another such device — all GM-adjudicated, no sheet statistic."
+  },
+  {
+   "id": "tattletale-orb-obsidian",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same as its siblings: the target's temporary immunity and the false vision you see are scrying adjudication the GM runs; nothing on your sheet moves."
+  },
+  {
+   "id": "tattletale-orb-selenite",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same as its siblings: the target's immunity to the orb's see invisibility and its choice to hide from your scrying are GM-side."
+  },
+  {
+   "id": "tectonic-stomp",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A deviant ability whose damage, prone and stunned results land on creatures around you; the raised stone chunks are terrain with their own AC/Hardness/HP."
+  },
+  {
+   "id": "temperbrand",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "counters + frequency track the once-per-day Molten Smash; the rune package is the weapon's own data, the dominance Will save and the Molten Smash burst are target/GM-facing, and 'the wielder is immune to this splash damage' is a clarification, not a statistic."
+  },
+  {
+   "id": "terrifying-countenance",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "innateSpells already delivers the once-per-day innate occult Mask of Terror targeting yourself; the immunity-breaking clause on a critical hit is adjudicated at the table."
+  },
+  {
+   "id": "terrifying-howl",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Demoralizes each enemy within 30 feet with no bonus to your own check — the only change is losing the language penalty, a rules permission the GM applies."
+  },
+  {
+   "id": "terrifying-transformation",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same shape as Terrifying Howl: mass Demoralize with a trait swap and no language penalty; no bonus to any statistic of yours."
+  },
+  {
+   "id": "testudo-shield",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "counters + frequency track the once-per-day Tortoise Form; the conjured barrier is terrain with the shield's own Hardness and HP, not a statistic on your sheet."
+  },
+  {
+   "id": "testudo-shield-greater",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Same fields; only the barrier's length differs, and the barrier is battlefield terrain."
+  },
+  {
+   "id": "the-desert",
+   "verdict": "MISS",
+   "reason": "counters + frequency track the once-per-day sandblast, but the standing invested benefit — immunity to the effects of temperatures from extreme cold to extreme heat — is a genuine immunity list entry that nothing delivers.",
+   "fix": {
+    "field": "immunities",
+    "value": ["extreme cold", "extreme heat"],
+    "note": "Holding your breath and going without food and water for twice as long is GM-tracked downtime and needs nothing."
+   }
+  },
+  {
+   "id": "the-eye-of-the-slumberer",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "counters + frequency track Open the Eye and Vortex; everything else — the dream influence on aquatic creatures, the nightmare burst, the difficult swimming terrain — lands on other creatures or the environment."
+  },
+  {
+   "id": "the-fiend",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses carries the +2 item bonus (+3 at 17th) when you repeat a non-Strike action you already took this round, and counters/frequency/heldSpells cover the once-per-day Phantasmal Calamity."
+  },
+  {
+   "id": "the-infinite-eye",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "otherTags routes the psychic conscious-mind granted spells and cantrip amps, and situationalBonuses already carries the amped detect magic save bonus and the omnidirectional scan attack/damage bonuses for this id."
+  },
+  {
+   "id": "the-lantern-king",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "The deity record carries structured domains, divineFont, favoredWeapons and skill fields — everything a deity mechanically gives a character. The quoted text is flavour plus edicts/anathema, which are roleplay."
+  },
+  {
+   "id": "the-pale-horse",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Same as any deity: domains, divineFont (Harm), favoredWeapons (Trident) and skill (Intimidation) are structured fields on the record; the prose is flavour and edicts/anathema."
+  },
+  {
+   "id": "the-rakshasa",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses carries the item bonus to Coerce scaled by pledged-follower count, and counters + frequency track the once-per-minute HP transfer; the follower's HP loss is another creature's."
+  },
+  {
+   "id": "the-silent-whisper",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "Like its sibling conscious minds, otherTags routes the granted spell list and the standard/unique psi cantrips into the psychic subsystem; every amp effect listed (weakness to mental, stunned, stupefied, an ally's reaction) lands on a target or an ally."
+  },
+  {
+   "id": "thorn-of-milani",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Umbrella record: no price, the AoN family summary above the priced lesser and moderate talismans. Deliberately inert."
+  },
+  {
+   "id": "thorn-of-milani-lesser",
+   "verdict": "MISS",
+   "reason": "Only `uses` is present. Activating the talisman gives YOU weakness 1 to unholy until the end of your next turn — a player-side weakness, the one thing the weaknesses lane exists for — and it reaches nothing.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Thorn of Milani (activated)",
+     "effects": "Until the end of your next turn after activating the thorn: weakness 1 to unholy. The triggering Strike also deals an extra 1d4 spirit damage with the holy trait."
+    }
+   }
+  },
+  {
+   "id": "thorn-triad",
+   "verdict": "MISS",
+   "reason": "heldSpells covers the Timber activation, but the Armor mode — resistance 2 to bludgeoning and piercing AND weakness 3 to fire after casting a plant spell (doubled resistance for a non-cantrip) — is delivered by nothing.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Thorn Triad — Armor (after a plant spell)",
+     "effects": "Until the end of your next turn after casting a plant spell by activating the triad: resistance 2 to bludgeoning and piercing damage (4 if the spell was not a cantrip) and weakness 3 to fire."
+    },
+    "note": "The Weapon mode's +1d4 persistent bleed on Strikes is a strike-damage rider for the situational lane."
+   }
+  },
+  {
+   "id": "thorn-triad-greater",
+   "verdict": "MISS",
+   "reason": "Same gap at the greater grade: resistance 4 to bludgeoning/piercing (8 for a non-cantrip) plus weakness 3 to fire after a plant spell, with no field and no modes entry.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Thorn Triad (Greater) — Armor (after a plant spell)",
+     "effects": "Until the end of your next turn after casting a plant spell by activating the triad: resistance 4 to bludgeoning and piercing damage (8 if the spell was not a cantrip) and weakness 3 to fire."
+    },
+    "note": "The Weapon mode's +1d6 persistent bleed on Strikes is a strike-damage rider for the situational lane."
+   }
+  },
+  {
+   "id": "thorn-triad-major",
+   "verdict": "MISS",
+   "reason": "Same gap at the major grade: resistance 6 to bludgeoning/piercing (12 for a non-cantrip) plus weakness 3 to fire after a plant spell, undelivered.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Thorn Triad (Major) — Armor (after a plant spell)",
+     "effects": "Until the end of your next turn after casting a plant spell by activating the triad: resistance 6 to bludgeoning and piercing damage (12 if the spell was not a cantrip) and weakness 3 to fire."
+    },
+    "note": "The Weapon mode's +1d8 persistent bleed on Strikes is a strike-damage rider for the situational lane."
+   }
+  },
+  {
+   "id": "thoughtform-summoning",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Changes the statistics of creatures you summon (resistance, weakness, movement through enemies) — the summoned creature is not the player's sheet."
+  },
+  {
+   "id": "thousand-year-dragonroot",
+   "verdict": "MISS",
+   "reason": "Only `uses` is present. Activating it gives YOU a fly Speed of 40 feet and fire resistance 5 for 1 minute — a speeds entry and a resistance, both legal shapes, both undelivered.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Thousand-Year Dragonroot",
+     "effects": "For 1 minute: gain a fly Speed of 40 feet and resistance 5 to fire damage; your body sheds light as a torch."
+    }
+   }
+  },
+  {
+   "id": "three-pillared-yang-na",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "passiveEffects.skills carries the first blessing's +1 item bonus to Diplomacy; the second blessing is a direction-finding detection with no statistic, and the third is a one-shot reaction against a single instance of spirit damage."
+  },
+  {
+   "id": "thumper-snare",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A placed snare that helps creatures with tremorsense detect IT — it modifies other creatures' detection of a battlefield object, never the player's sheet."
+  },
+  {
+   "id": "thunder-helm",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "situationalBonuses carries both halves of the worn trade-off (−1 circumstance to auditory and visual Perception, +1 circumstance to saves against auditory and visual effects), and counters + frequency track the once-per-day barrage."
+  },
+  {
+   "id": "time-shield-potion",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Removes you from play for 2d4 rounds — you can't act or be targeted and durations are suspended. That is a table-level state, not a statistic; `uses` already tracks the potion."
+  },
+  {
+   "id": "timepiece-standard",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants 5 temporary Hit Points to whoever Delays or Readies inside the aura — an in-play temporary HP value the player enters, with per-creature immunity the GM tracks."
+  },
+  {
+   "id": "timepiece-standard-major",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Same as the base banner with 10 temporary Hit Points — an in-play value, not a persistent sheet statistic."
+  },
+  {
+   "id": "titans-breaker",
+   "verdict": "MISS",
+   "reason": "No fields beyond otherTags. The ikon's Immanence adds 2 spirit damage per weapon damage die to every Strike with the chosen weapon and bypasses Hardness equal to your level — a player-side strike-damage change that nothing delivers (no ikon carries any mechanical field and the record is absent from situationalBonuses).",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "strikeDamage" }],
+      "when": "while the titan's breaker is empowered (immanence), with the chosen weapon",
+      "bonus": "+2 spirit damage per weapon damage die; bypasses Hardness equal to your level"
+     }
+    ]
+   }
+  },
+  {
+   "id": "toadskin-salve",
+   "verdict": "MISS",
+   "reason": "Only `uses` is present. The second reaction grants YOU resistance 3 to physical damage against the triggering attack — a player-side resistance nothing delivers (the first reaction, flinging mucus, is target-facing).",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Toadskin Salve — Mucus Guard",
+     "effects": "Against the triggering melee attack that deals physical damage: resistance 3 to physical damage. One use only; using either reaction ends the salve."
+    }
+   }
+  },
+  {
+   "id": "toadskin-salve-greater",
+   "verdict": "MISS",
+   "reason": "Same gap at the greater grade: resistance 5 to physical damage against the triggering attack, delivered by nothing.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Toadskin Salve (Greater) — Mucus Guard",
+     "effects": "Against the triggering melee attack that deals physical damage: resistance 5 to physical damage. One use only; using either reaction ends the salve."
+    }
+   }
+  },
+  {
+   "id": "toadskin-salve-major",
+   "verdict": "MISS",
+   "reason": "Same gap at the major grade: resistance 8 to physical damage against the triggering attack, delivered by nothing.",
+   "fix": {
+    "toggle": {
+     "registry": "modes",
+     "name": "Toadskin Salve (Major) — Mucus Guard",
+     "effects": "Against the triggering melee attack that deals physical damage: resistance 8 to physical damage. One use only; using either reaction ends the salve."
+    }
+   }
+  },
+  {
+   "id": "torrent-in-the-blood",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An area heal plus a fresh save against a poison or disease for each creature in the burst — healing and affliction saves are in-play events, not sheet statistics."
+  },
+  {
+   "id": "toshigami-blossom",
+   "verdict": "ALREADY_MODELLED",
+   "reason": "counters + frequency track all three activations (once per day, once per hour, once per minute); the spells cast are the blossom's, and the blossom cloud's concealment and extra Strike damage land on creatures inside the area."
+  }
+ ]
+}

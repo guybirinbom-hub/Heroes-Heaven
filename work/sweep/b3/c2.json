@@ -1,0 +1,1114 @@
+[
+ {
+  "id": "flexible-spell-preparation",
+  "lane": "spellGrant",
+  "collection": "classFeatures",
+  "name": "Flexible Spell Preparation",
+  "level": 1,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This class feature alters your spellcasting class feature (such as Arcane Spellcasting for the wizard or Divine Spellcasting for the cleric). If you choose this class archetype, you must select Flexible Spellcaster Dedication as your 2nd-level class feat. - You can cast fewer spells each day. Your number of spell slots per day don't advance from 2 to 3 spells at even levels. - Reduce the number of cantrips you gain from your class by 2. This archetype doesn't change the way you prepare cantrips. - During your daily preparations, you prepare a spell collection rather than preparing spells into each spell slot individually. The number of spells in your spell collection each day equals the total number of spell slots you get each day from your class spells. Select these spells from the same source as normal, such as from a spellbook for a wizard. - You can cast any of the spells in your collection by using a spell slot of an appropriate level. For instance, if you were level 1 and had Gentle Landing and Force Barrage in your spell collection, you could cast *gentle landing* twice that day, *force barrage* twice, or each spell once. - Extra spell slots you gain that have additional restrictions, like the wizard's specialist school spells or the cleric's divine font spells, don't change due to this archetype, nor do such spells count toward the number of spells you place in your spell collection."
+ },
+ {
+  "id": "flowing-footsteps",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Flowing Footsteps",
+  "level": 0,
+  "traits": [
+   "water"
+  ],
+  "engineFieldsPresent": [
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Flowing Footsteps Source GM Core pg. 319 Aspect Water Your relic ensures no water impedes your movement. You gain the effects of the water walk spell, and the ability to breathe water. You also gain a swim Speed equal to your Speed or 15 feet, whichever is higher."
+ },
+ {
+  "id": "focus-spells",
+  "lane": "spellGrant",
+  "collection": "classFeatures",
+  "name": "Focus Spells",
+  "level": 1,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Focus spells are a special type of spell attained directly from a branch of study, from a deity, or from another specific source. You can learn focus spells only through special class features or feats, rather than choosing them from a spell list. Furthermore, you cast focus spells using a special pool of Focus Points-you can't prepare a focus spell in a spell slot or use your spell slots to cast focus spells; similarly, you can't spend your Focus Points to cast spells that aren't focus spells. Even some classes that don't normally grant spellcasting, such as the Champion and Monk, can grant focus spells. Focus spells are automatically heightened to half your level rounded up, just like cantrips are. You can't cast a focus spell if its minimum level is greater than half your level rounded up, even if you somehow gain access to it. Casting any of your focus spells costs you 1 Focus Point. You automatically gain a focus pool of 1 Focus Point the first time you gain an ability that gives you a focus spell. You replenish all the Focus Points in your pool during your daily preparations. You can also use the Refocus activity to pray, study, meditate, or otherwise reattune yourself to the source of your focus magic and regain a Focus Point. Some abilities allow you to increase the Focus Points in your pool beyond 1. Typically, these are feats that give you a new focus spell and increase the number of points in your pool by 1. Your focus pool can't have a capacity beyond 3 Focus Points, even if feats that increase your pool would cause it to exceed this number. --- To regain focus points, see the Refocus action. --- # Spellcasters with Focus Spells Source**Core Rulebook pg. 302** If you are a spellcaster, your focus spells are the same tradition of spell as the class that gave you the focus spell. A Bard's are Occult, a Cleric's are Divine, a Druid's are Primal, a Wizard's are Arcane, and a Sorcerer's are determined by their bloodline. # Non-Spellcasters with Focus Spells Source **Core Rulebook pg. 302** If you get focus spells from a class or other source that doesn't grant spellcasting ability (for example, if you're a Monk with the Qi Spells feat), the ability that gives you focus spells also provides your proficiency rank for spell attack rolls and spell DCs, as well as the magical tradition of your focus spells. You gain the ability to Cast a Spell and use any spellcasting actions necessary to cast your focus spells (see below). However, you don't qualify for feats and other rules that require you to be a spellcaster."
+ },
+ {
+  "id": "foreseen-failure",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Foreseen Failure",
+  "level": 12,
+  "traits": [
+   "fortune",
+   "occult",
+   "psychic"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per day **Trigger** A spell you cast has no effect because you critically failed all your spell attack rolls or because all targets critically succeeded at their saving throws. --- You see your spell fail to take hold to disastrous end, then snap back to reality—it was all a precognition, and you know to try a different spell. Your spell is expended, but you can Cast a Spell that requires the same number of actions as the triggering spell or fewer to cast. The second spell must be a different spell than the first."
+ },
+ {
+  "id": "forge-blessed-dwarf",
+  "lane": "spellGrant",
+  "collection": "heritages",
+  "name": "Forge-Blessed Dwarf",
+  "traits": [],
+  "engineFieldsPresent": [
+   "choice",
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You are from a family in Highhelm that venerates a particular dwarven deity above all others. Your birth was blessed by your family's patron deity, granting you a fraction of their power. Choose one deity from the dwarven pantheon. You can cast the 1st-rank spell they grant clerics (such as Soothe if your family's patron is Bolka) as an innate divine spell once per week."
+ },
+ {
+  "id": "forgotten-shell",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Forgotten Shell",
+  "level": 13,
+  "traits": [
+   "bulwark",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "This *+2 resilient Full Plate*, crafted from grim plates of iron, covers the entire body except for small holes for the eyes and mouth. While wearing the armor, you gain the benefits of a Veil of Privacy spell. Additionally, creatures attempting to Recall Knowledge about a subject involving you must succeed at a . On a success, they can attempt the check normally. On a failure, they can still attempt the check, but even if they successfully Recall Knowledge, they don't remember you (although they might remember other details about the event). Creatures that fail their save can make another attempt to Recall Knowledge about you, but they must wait 24 hours to do so. You can spend 1 hour using blacksmithing tools to bind a helpless Medium humanoid inside the suit, which welds the suit shut and makes it impossible to remove without breaking it (Hardness 9, HP 36, BT 18). The humanoid inside the suit counts as being Invested while bound in this fashion and can't break out of the suit on its own. If the suit is welded shut, the creature gains the benefits above but also the following penalties: - Whenever the humanoid attempts a Deception, Diplomacy, Intimidation, or Performance check, they must roll twice and use the worse result. - Additionally, creatures the humanoid encounters have an initial attitude toward them of one degree worse than they normally would (for instance, unfriendly instead of indifferent). - Good creatures are Enfeebled 2 while carrying, wielding, or wearing this item crafted by the sea-witches. **Craft Requirements** Supply a casting of *Nondetection* and Outcast's Curse."
+ },
+ {
+  "id": "fungal-armor",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Fungal Armor",
+  "level": 15,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This *+2 greater resilient Studded Leather Armor* is made of hardened fungus. Every day the armor grows dozens of unusual mushrooms that can be used for cooking, infused reagents, or common spell material components. --- **Activate** ⟨5⟩ or ⟨1⟩ Envision **Frequency** once per day **Trigger** You are hit by a melee, ranged, or spell attack --- **Effect** The attack misses you, dealing no damage as you transform into a cloud of spores. You gain the benefits of a Vapor Form spell for 1 minute. For the duration, a cloud of deadly spores surrounds you. Each breathing creature that begins its turn within 10 feet of you takes 6d8 damage (). You can Dismiss the cloud form. --- **Craft Requirements** Supply a casting of Toxic Cloud and *gaseous form*."
+ },
+ {
+  "id": "furnace-form",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Furnace Form",
+  "level": 12,
+  "traits": [
+   "fire",
+   "impulse",
+   "kineticist",
+   "manipulate",
+   "polymorph",
+   "primal"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "core.stances"
+  ],
+  "text": "Opening your kinetic gate, you allow flames to consume your form and leave you a living flame. You gain the benefits of the Fiery Body spell (except the ability to cast ignition) until the end of your next turn. You can Sustain the impulse up to 1 minute, and when you do, you can Fly up to half your fly Speed. Your fire Elemental Blasts deal an additional die of damage. --- **Level (16th)** This duration is 1 minute, you can't Sustain the impulse, and you can Dismiss the impulse."
+ },
+ {
+  "id": "future-spell-learning",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Future Spell Learning",
+  "level": 8,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "More future memories of time magic percolate back to the present, teaching you spells you've yet to learn. Add Behold the Weave, Cast into Time, Haste, Loose Time's Arrow, Quicken Time, Slow, and Stagnate Time to your spell list. If you have a repository of spells, like a witch's familiar or a spellbook, add these spells to it. If you have a spell repertoire, when you gain this feat you can retrain one spell in it, replacing it with one of the added spells."
+ },
+ {
+  "id": "gamtu-hat",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Gamtu Hat",
+  "level": 5,
+  "traits": [
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You conjure a magical gamtu hat, which is a magic item of light Bulk. The gamtu persists for 1 hour, and you can give the gamtu to another creature to wear. **Activate—Hat Trick** ⟨2⟩ (manipulate) --- **Effect** You tap the hat and gain the effects of a 2nd-rank spell, which lasts for the spell's normal duration, until the hat is removed, or until the hat's normal duration runs out, whichever comes first. After the spell ends, the gamtu disappears."
+ },
+ {
+  "id": "geomancer-dedication",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Geomancer Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You feel a deep connection to the world no matter where you are, a phenomenon known as \"terrain attunement.\" When you expend a spell slot to cast a spell with a trait that corresponds to the type of terrain you are currently in (as listed below), you gain the terrain attunement effect for that type of terrain. The GM might determine an attunement applies as long as it's prevalent enough around you. For instance, you might be in aquatic terrain on a riverbank or on a boat. Similarly, one place might count as multiple types of terrain, such as a mountain in the far north being both arctic and mountain. In this case, you choose only one terrain attunement effect, even if the spell has traits that would apply to each terrain type. Certain terrain attunements affect your enemies instead of you. If they do, when you cast the spell you apply the listed effect to all enemies who are either adjacent to you, in the area of the spell, or targeted by the spell. These enemies receive the listed saving throw against your spell DC to attempt to avoid the effect. - **Aquatic** (water) You ride the currents of water. If you're in the water, you gain a swim Speed equal to your land Speed. If you're on a surface, temporary waves of water follow your movements, allowing you to use your swim Speed-if you have one-as your land Speed. This effect lasts one round. - **Arctic** (cold) Arctic rime covers your foes' bodies. Enemies must attempt a Fortitude save. They take a –5-foot status penalty to their Speeds for 2 rounds (-10-foot on a critical failure). - **Desert** (fire) The scorching heat of the desert dehydrates your foes. Enemies must attempt a Fortitude save. On a failure, they're fatigued until they drink water or another potable liquid. - **Forest** (plant) Branches and vines reach out to get in your foes' way. Enemies must attempt a Reflex save. On a failure, they become Clumsy 1 for 1 round (Clumsy 2 on a critical failure). - **Mountain** (earth) The rugged endurance of the mountain protects you from harm. You gain resistance to physical damage (except adamantine) equal to the spell rank for 1 round. - **Plains** (plant) The growing fields and pulsing vitality of the plains provide you vigor. You gain temporary Hit Points equal to the spell rank for 1 round. - **Sky** (air) A gust of wind carries you aloft. You can Fly up to 10 feet. If you're in the air at the end of the turn and don't have a fly Speed, you fall. - **Swamp** (plant) Your magic draws in noxious swamp gas to fumigate your foes. Affected foes take Persistent Poison Damage equal to half the spell's rank (minimum 1 damage) with a basic Fortitude save. - **Underground** (earth) The endless darkness of the cavern depths opens up its secrets to your senses. For 1 round, you gain darkvision as well as imprecise tremorsense out to 15 feet."
+ },
+ {
+  "id": "ghost-hunter-dedication",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Ghost Hunter Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [
+   "choice",
+   "effectChoices"
+  ],
+  "inRegistries": [
+   "featGrantsLane"
+  ],
+  "text": "You have focused your training on hunting and defeating ghosts, spirits, and all manner of haunts. Pick Spirit Lore or Haunt Lore; you become trained in this skill. If you were already trained in both skills, you become trained in a new Lore skill of your choice. Choose two cantrips from the occult spell list. Each cantrip must have the divination, enchantment, or necromancy trait. You can cast these spells as innate occult spells. You gain access to the Cast a Spell activity if you didn't have it already. You're trained in occult spell attack rolls and spell DCs. You can usually replace material components with somatic components, so you don't need a spell component pouch. Your key spellcasting ability for these spells is Charisma."
+ },
+ {
+  "id": "godling-dedication",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Godling Dedication",
+  "level": 12,
+  "traits": [
+   "destiny",
+   "mythic"
+  ],
+  "engineFieldsPresent": [
+   "choice",
+   "effectChoices",
+   "spellcastingGrant"
+  ],
+  "inRegistries": [],
+  "text": "Your Calling allows you to begin walking the path to true deific ascension, inspiring followers as your divine seed grows. Your first follower is your hierophant—the high priest of your new faith—whom you rely on to spread your word and provide an anchoring mortal presence as your perspectives are increasingly pulled toward the cosmic. When you gain this feat, choose one willing ally to be your hierophant. If your hierophant is not trained in spell attack modifier and spell DC, they become trained for as long as they are your designated hierophant. If your hierophant dies or chooses to part ways with you, you can designate a new hierophant by communing with the chosen ally for a period of 24 hours. Your Calling allows you to seize the divine magic typically restricted to deities. Choose one domain to claim from the list on Player Core, or from other domains you have access to. You learn the initial domain spell for this domain. You gain a pool of Focus Points with 1 Focus Point and you can Refocus by taking 10 minutes to replenish your divine energy from the planes beyond. You gain expert proficiency in spell modifier and spell DC, and your spellcasting ability for these spells is your choice of Wisdom or Charisma, decided when you gain this feat. Your hierophant also gains the Cast a Spell activity and can cast the domain spell you learned with Godling Dedication. When they Cast the Spell in this way, your Focus Point is expended as the cost of the spell. Your hierophant uses their own spellcasting proficiency in spell modifier and spell DC when casting a spell in this way, and they use their own Wisdom or Charisma modifier (matching your choice). If your hierophant has mythic power, they can spend a Mythic Point to cast any divine spell they gain by being your hierophant at mythic proficiency."
+ },
+ {
+  "id": "great-bear",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Great Bear",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per hour --- When you transform, you can take on a bear's bulk and size. You can spend an additional action when using Ursine Avenger Form to gain the effects of a 1st-rank Enlarge spell, which lasts for the spell's normal duration or until you leave your Ursine Avenger Form, whichever comes first."
+ },
+ {
+  "id": "greater-bloodline",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Greater Bloodline",
+  "level": 10,
+  "traits": [
+   "sorcerer"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You uncover the greater secrets of your bloodline. You gain the greater bloodline spell associated with your bloodline."
+ },
+ {
+  "id": "greater-cloak-of-social-graces",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Greater Cloak of Social Graces",
+  "level": 13,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Cloak of Social Graces Source High Seas pg. 50 Usage worn cloak Bulk L Access You're from Hermea These cloaks are created from hand-dyed leather decorated with gemstones, appealing to the individual tastes of the owner. The beautiful decorations of these cloaks encourage their owner to wear them no matter the season, making it visibly part of their unique style. Wearing the cloak boosts self-confidence, granting a +1 item bonus to Diplomacy checks. Activate—Overcome Self-Doubt (concentrate, manipulate) Frequency once per day; Effect You readjust your cloak, straightening the collar and brushing out any wrinkles. You gain the effects of a heroism spell for 1 minute. Cloak of Social Graces Source High Seas pg. 50 Price 380 gp Greater Cloak of Social Graces Source High Seas pg. 50 Price 3,000 gp The item bonus is +2, and when you activate the cloak, you gain the benefits of a 6th-rank heroism spell for 1 minute. Major Cloak of Social Graces Source High Seas pg. 50 Price 40,000 gp The item bonus is +3, and when you activate the cloak, you gain the benefits of a 9th-rank heroism spell for 1 minute."
+ },
+ {
+  "id": "greater-deathly-secrets",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Greater Deathly Secrets",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "Your undead secrets grow stronger still. You learn either the Malignant Sustenance or Grasping Grave focus spell. Your focus pool increases by 1 point. **Special** You can select this feat more than once. Each time, you learn a different spell and your focus pool increases by 1 Focus Point."
+ },
+ {
+  "id": "greater-esoteric-spellcasting",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Greater Esoteric Spellcasting",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "choice",
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "Your understanding of magic has evolved, and so has your spellcasting. You become an expert in the spell attack modifier and spell DC statistics. Also, choose a tradition from which you can cast innate spells due to the Esoteric Spellcasting feat. You also gain a 4th-rank spell of that tradition as an innate spell you can cast once a day. At 12th level, you gain a 5th-rank spell, and at 14th level, you gain a 6th-rank spell, both of the same tradition. --- **Special** You can take this feat a second time, choosing a different eligible tradition."
+ },
+ {
+  "id": "greater-feral-linguist",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Greater Feral Linguist",
+  "level": 8,
+  "traits": [
+   "catalyst",
+   "consumable",
+   "magical"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Feral Linguist May contain spoilers from Wardens of Wildwood Source Pathfinder #202: Severed at the Root pg. 78 Usage held in 1 hand Bulk L Activate Cast a Spell (add 1 action) This wooden whistle is stuffed with cotton and carved with images of bellowing stags, howling wolves, and chirping birds. You can blow on this whistle to use it as a catalyst when casting an animal form spell. When you do, you gain the listed benefit for the duration of the spell. Feral Linguist Source Pathfinder #202: Severed at the Root pg. 78 Price 3 gp You retain the ability to speak, though this doesn’t allow you to cast spells. Greater Feral Linguist Source Pathfinder #202: Severed at the Root pg. 78 Price 85 gp You retain the ability to speak. Once during the spell’s duration, you can cast either a spell of 4th-rank or lower or a cantrip of any level, ignoring the inability to cast spells while in your battle form."
+ },
+ {
+  "id": "greater-revelation",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Greater Revelation",
+  "level": 12,
+  "traits": [
+   "oracle"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You unlock deeper revelations hidden within your mystery. You gain your mystery's greater revelation spell"
+ },
+ {
+  "id": "greater-spell-runes",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Greater Spell Runes",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You gain more powerful spell runes. You gain a spell rune corresponding to a 4th-rank arcane spell. At 12th level, you gain a spell rune corresponding to a 5th-rank arcane spell, and at 14th level, you gain a spell rune corresponding to a 6th-rank arcane spell."
+ },
+ {
+  "id": "greater-sun-blessing",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Greater Sun Blessing",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "Your connection to the Old Sun Gods grows stronger. You gain an advanced domain spell from a domain you chose with Blessing of the Sun Gods. Increase the number of Focus Points in your focus pool by 1. **Special** You can select this feat multiple times. Each time you do so, you must select a different domain for which you have an initial domain spell from Blessing of the Sun Gods."
+ },
+ {
+  "id": "greater-vital-evolution",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Greater Vital Evolution",
+  "level": 16,
+  "traits": [
+   "sorcerer"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Vital power surges through you like a font of energy. Twice per day, you can cast a spell after you've run out of spell slots of the appropriate spell rank; the two spells you cast with this feat must be of different spell ranks."
+ },
+ {
+  "id": "guest-of-sedeq-lodge",
+  "lane": "spellGrant",
+  "collection": "backgrounds",
+  "name": "Guest of Sedeq Lodge",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "choice",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkillChoice"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "Either as a guest, event staff, or part of the construction crew, you spent a significant stretch of time at the Pathfinder Society's new lodge in Sedeq. The lodge serves as a new home for those fleeing from oppression or otherwise seeking a fresh start in Qadira. The magic and marvels you witnessed at the lodge inspired you to find more excitement as a member of the Pathfinder Society. Choose two attribute boosts. One must be to **Constitution** or **Wisdom**, and one is a free attribute boost. You're trained in your choice of the Arcana or Religion skills, as well as your choice of the Genie Lore or Sarenrae Lore skills. You gain the Recognize Spell skill feat. Additionally, when you receive a mission briefing at Sedeq Lodge, your familiarity with the site and the nearby area comes in handy. You gain a +2 circumstance bonus to your checks to Gather Information or Recall Knowledge during the Getting Started segment of such adventures. Be sure to remind your GM that you have a relevant background. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Skill Feat** Recognize Spell"
+ },
+ {
+  "id": "halcyon-speaker-dedication",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Halcyon Speaker Dedication",
+  "level": 6,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You devote much of your study to halcyon magic. You gain two common Halcyon cantrips and two common 1st-rank halcyon spells. In addition to being able to cast your halcyon spells via your arcane or primal spell slots, you also gain a 1st-rank halcyon spell slot. You can use your halcyon spell slots to spontaneously cast your halcyon spells."
+ },
+ {
+  "id": "halcyon-spellcasting-adept",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Halcyon Spellcasting Adept",
+  "level": 14,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You refine your halcyon magic. You gain two common 4th-rank halcyon spells and two 5th-rank halcyon spells. You also gain a 4th-rank halcyon spell slot and a 5th-rank halcyon spell slot. Your proficiency rank in either arcane or primal spell DCs and spell attack rolls advances from trained to expert."
+ },
+ {
+  "id": "halcyon-spellcasting-initiate",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Halcyon Spellcasting Initiate",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your knowledge of halcyon magic increases. You gain two common 2nd-rank halcyon spells and two 3rd-rank halcyon spells. You also gain a 2nd-rank halcyon spell slot and a 3rd-rank halcyon spell slot. These and all future halcyon spell slots work like the 1st-rank halcyon spell slot you gained from Halcyon Speaker Dedication."
+ },
+ {
+  "id": "halcyon-spellcasting-sage",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Halcyon Spellcasting Sage",
+  "level": 18,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your command over halcyon magic is nearly unmatched. You gain two common 6th-rank and 7th-rank halcyon spells. You also gain a 6th-rank halcyon spell slot and a 7th-rank halcyon spell slot. Your proficiency rank in either arcane or primal spell DCs and spell attack rolls advances from expert to master."
+ },
+ {
+  "id": "hallowed-initiate",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Hallowed Initiate",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You've expanded your focus spellcasting to techniques used by clerics and wizards. You gain an additional focus spell, either the necromancer school spell Call of the Grave or the initial domain spell of the death domain, Death's Call. Increase the number of Focus Points in your focus pool by 1. **Special** You can select this feat a second time, choosing the other initial focus spell."
+ },
+ {
+  "id": "headwrap-of-wisdom",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Headwrap of Wisdom",
+  "level": 17,
+  "traits": [
+   "apex",
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "This simple scarf is designed for wrapping around the head and comes with a gemmed pin for decoration. When you invest the headwrap, you either increase your Wisdom modifier by 1 or increase it to +4, whichever would give you a higher value. --- **Activate—Consider the Consequences** ⟨1⟩ (concentrate) **Frequency** once per day **Effect** When you are considering a course of action, you get a gut feeling about whether it's a good idea. You gain the effects of an Augury spell, except that you receive the result from your own instincts rather than an external source. --- **Activate—Reclaim Your Mind** ⟨5⟩ (concentrate, fortune) **Frequency** once per hour **Trigger** You fail a saving throw against an effect that makes you confused, fascinated, or stupefied **Effect** The *headwrap of wisdom* clears your mind. You can reroll the saving throw and use the better result."
+ },
+ {
+  "id": "helts-spelldance",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Helt's Spelldance",
+  "level": 8,
+  "traits": [
+   "bard",
+   "sorcerer",
+   "witch",
+   "wizard"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Ranik Helt knows a special technique to hide his spells as part of a performance, and you've learned this technique. Ostentatiously performing, you move across the battlefield, taking foes aback and creating an opening for your spell. Attempt a Performance check against all observers' Perception DCs. Then, Stride once or twice. During this movement, you don't trigger reactions that are triggered by your movement from the creatures against which you succeeded on your Performance check. After your movement, you can Cast a Spell. If you used one Stride, you can cast either a 1-action or a 2-action spell; if you used two Strides, you can only cast a 1-action spell. If you critically succeed on your check against any creature, they take a –1 circumstance penalty to their saving throws against any spell you cast as part of your Helt's Spelldance due to your distracting performance. All creatures that observed you become temporarily immune to your Helt's Spelldance for 10 minutes."
+ },
+ {
+  "id": "hex-spells",
+  "lane": "spellGrant",
+  "collection": "classFeatures",
+  "name": "Hex Spells",
+  "level": 1,
+  "traits": [
+   "witch"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "As a favored agent of your patron, you can invoke their power for a more direct magical intervention. A hex is a spell shaped by your patron and sent to you through your familiar, rather than an ability you use directly. Your patron expects you to advance its interests and does not take kindly to repeated requests for aid; as such, you can use only one hex each turn, and any attempts to use a second hex on that turn fail and the actions are lost. Hex spells are a type of focus spell. It costs 1 Focus Point to cast a focus spell, and you start with a focus pool of 1 Focus Point. You refill your focus pool during your daily preparations, and you can regain 1 Focus Point by spending 10 minutes using the Refocus activity to commune with your familiar. Focus spells are automatically heightened to half your level rounded up, much like cantrips. Focus spells don't require spell slots, and you can't cast them using spell slots. Certain feats give you more focus spells. The maximum Focus Points your focus pool can hold is equal to the number of focus spells you have, but it can never be more than 3 points. You learn your choice of the Patron's Puppet hex or Phase Familiar hex, which let you command your familiar or defend it from harm, respectively. You learn most other hexes from witch lessons. ## Hex Cantrips Hex cantrips are special hexes that don't cost Focus Points, so you can cast them as often as you like, though you can still use only one hex each turn. Hex cantrips are in addition to the cantrips you choose with witch spellcasting and aren't counted toward your prepared cantrips. You gain a hex cantrip determined by your choice of patron."
+ },
+ {
+  "id": "hierophants-power",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Hierophant's Power",
+  "level": 20,
+  "traits": [
+   "druid"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You have entwined yourself with the natural world, and its full power flows through you. You gain an additional 10th-rank spell slot."
+ },
+ {
+  "id": "holy-bloom",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Holy Bloom",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices",
+   "spellcastingGrant"
+  ],
+  "inRegistries": [],
+  "text": "Though you might not be a priest of Milani, her divine spirit flows through you. You gain holy sanctification. Select the or domain. You gain the initial domain spell for that domain. If you don't have one, you gain a focus pool of 1 Focus Point. You can Refocus by praying to Milani or by working with others to plan a just uprising. You become trained in spell attack modifier and spell DC, and your spellcasting attribute for these spells is Wisdom. --- **Special** You can choose this feat a second time, gaining the initial domain spell of the domain you didn't gain the first time."
+ },
+ {
+  "id": "holy-flower",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Holy Flower",
+  "level": 10,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Milani's grace empowers you further. You gain the advanced domain spell from the domain you chose with Holy Bloom. --- **Special** If you selected Holy Bloom twice, you can choose this feat a second time, gaining the advanced domain spell of the other domain."
+ },
+ {
+  "id": "hunters-dawn",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Hunter's Dawn",
+  "level": 23,
+  "traits": [
+   "arcane",
+   "artifact",
+   "thrown-10"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "innateSpells"
+  ],
+  "inRegistries": [],
+  "text": "*Hunter's Dawn* is a *+3 greater striking Speed Ghost Touch club*. However, the notched head of the weapon marks it as an atlatl, an ancient tool used for throwing darts and javelins. You can use *Hunter's Dawn* with a mundane dart or javelin like you would use a bow with an arrow; when you do so, the range of the dart or javelin is doubled, and the dart or javelin uses *Hunter's Dawn* to determine its attack modifier and damage dice. --- **Activate** ⟨1⟩, ⟨2⟩, or ⟨3⟩ Interact **Effect** You swing *Hunter's Dawn* and launch a magically conjured javelin at a target within 60 feet, making a ranged Strike. The javelin has the statistics of a javelin but gains the magical properties of *Hunter's Dawn* and disappears immediately after hitting or missing its target. On a successful hit, you deal damage (3d6, due to the atlatl's *greater striking* rune, plus your Strength modifier); in addition, a gazelle leaps from the hit target to one or more targets within 20 feet of the first, dealing 2d6 damage plus your Strength modifier. The number of additional targets hit in this way is equal to the number of actions you spend to activate this ability (one additional target if you used one action, two additional targets for two actions, and so forth). --- **Activate** ⟨5⟩ **Trigger** You hit a creature with a ranged Strike with *Hunter's Dawn* **Effect** The target is marked. Once per day, you can cast a 5th-rank Locate spell on the marked target, regardless of its distance from you or your ability to cast spells. This effect persists until it is dispelled (counterspell DC 46), the creature dies, or a new target is marked. --- **Activate** ⟨1⟩ Interact **Frequency** three times per day **Effect** You shave a curl of wood from *Hunter's Dawn* and create a roaring fire within 15 feet. You can choose one of the following shapes for the fire to take: a 10-foot square, a , or a . Each creature in the affected squares take 6d6 damage (). --- **Destruction** *Hunter's Dawn* can be destroyed only by placing it on the funeral pyre of a dead god."
+ },
+ {
+  "id": "hybrid-study-spell",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Hybrid Study Spell",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "Gain the conflux spell from a hybrid study of your choice. If you don't already have one, you gain a focus pool of 1 Focus Point, which you can Refocus by studying your spellbook and performing a physical regimen. You don't gain any of the hybrid study's other benefits."
+ },
+ {
+  "id": "infinite-mind",
+  "lane": "spellGrant",
+  "collection": "classFeatures",
+  "name": "Infinite Mind",
+  "level": 19,
+  "traits": [
+   "psychic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Anything you can imagine is now within the realm of possibility. Add two common 10th-rank occult spells to your repertoire; you gain a single 10th-rank spell slot you can use to cast one of those two spells using psychic spellcasting. You don't gain more 10th-rank spells as you level up, unlike other spell slots, and you can't use 10th-rank slots with abilities that give you more spell slots or that let you cast spells without expending spell slots. You can take the Mind Over Matter psychic feat to gain a second slot."
+ },
+ {
+  "id": "initiate-warden",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Initiate Warden",
+  "level": 1,
+  "traits": [
+   "ranger"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You've trained with one of the ranger sects known as wardens, who practice a specialized type of primal magic. You gain your choice of one warden spell from these initial warden spells (or another you have access to). Gravity Weapon Heal Companion Magic Hide --- **Special** You can take this feat multiple times, choosing a different initial warden spell each time."
+ },
+ {
+  "id": "intuitive-illusions",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Intuitive Illusions",
+  "level": 5,
+  "traits": [
+   "gnome"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "**Frequency** once per day **Trigger** Your turn begins. --- Illusion magic comes to you so naturally that you can effortlessly sustain your magical ruses. You immediately gain the effects of a Sustain a Spell action to extend the duration of one of your active illusion spells."
+ },
+ {
+  "id": "invisibility-potion",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Invisibility Potion",
+  "level": 4,
+  "traits": [
+   "consumable",
+   "illusion",
+   "magical",
+   "potion"
+  ],
+  "engineFieldsPresent": [
+   "uses"
+  ],
+  "inRegistries": [],
+  "text": "**Activate** ⟨1⟩ (manipulate) --- An *invisibility* potion is colorless and oddly lightweight. Upon drinking it, you gain the effects of a 2nd-rank spell."
+ },
+ {
+  "id": "jian-of-lifes-duality",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Jian of Life's Duality",
+  "level": 13,
+  "traits": [
+   "magical",
+   "versatile-p"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency",
+   "heldSpells"
+  ],
+  "inRegistries": [],
+  "text": "This *+2 greater striking longsword* sports no extravagant characteristics save for a blade of pure, unblemished ivory and a hilt of unmarred obsidian. It takes on the propensity of its user, turning whiter or darker based on their actions. The effects of *life's duality* are based on the number and type of charges it has. It begins with 0 charges and can gain either dark or light charges, up to a maximum of 3 charges of one type. A charge dissipates after 10 minutes or when a charge of the opposite type is gained. If you have a charge of one type and would gain the opposite type of charge, you lose your current charges. *Life's duality* gains a dark charge when it critically succeeds at a Strike against an opponent or reduces the Hit Points of a living enemy to 0. For each dark charge it has, it deals an additional 1d4 damage (maximum 3d4). *Life's duality* gains a light charge when you use a spell, skill check, or ability to restore at least 10 Hit Points to an ally. The damage healed must have been inflicted by a significant foe or threat. For each light charge it has, you gain 1d4 temporary Hit Points at the end of each round (maximum 3d4). **Activate—Burst of Duality** ⟨3⟩ (concentrate) **Requirements** *Life's duality* has 3 dark charges or 3 light charges; **Frequency** once per day --- **Effect** You unleash the sword's charged energy in a magical display. You cast a 3-action 5th-rank Harm spell if you have 3 dark charges or a 3-action 5th-rank Heal spell if you have 3 light charges (). The sword then reverts to having 0 charges."
+ },
+ {
+  "id": "ki-spells",
+  "lane": "spellGrant",
+  "collection": "classFeatures",
+  "name": "Ki Spells",
+  "level": 1,
+  "traits": [],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "## Ki Spells By tapping into a supernatural inner reserve called ki, you can create magical effects. Certain feats grant you special spells called ki spells, which are a type of focus spell. It costs 1 Focus Point to cast a focus spell. When you gain your first ki spell, you also gain a focus pool of 1 Focus Point. You refill your focus pool during your daily preparations, and you regain 1 Focus Point by spending 10 minutes using the Refocus activity to meditate in order to reach inner peace. When you first gain a ki spell, decide whether your ki spells are divine spells or occult spells. You become trained in spell attacks and spell DCs of that tradition and your key spellcasting ability is Wisdom. Focus spells are automatically heightened to half your level rounded up. Taking feats can give you more focus spells and increase the size of your focus pool, though your focus pool can never hold more than 3 points."
+ },
+ {
+  "id": "learned-guard-prodigy",
+  "lane": "spellGrant",
+  "collection": "backgrounds",
+  "name": "Learned Guard Prodigy",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "choice",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkillChoice"
+  ],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "For some, the nuts and bolts of keeping the peace are practically second nature. Such is the case for you, a member of the Learned Guard with an incredible mind for investigation as well as a gift for understanding magic. You probably aren't a hit with your peers, who find your intellect and natural gift of deduction perhaps a bit off-putting, but when left to your own devices you excel, and you get along well with professors and mages such as those who work in Forae Logos or the Arcanamirium. After no shortage of debating the pros and cons, you decided to transfer to the Edgewatch precinct. Sure, you have a keen understanding of the theories and principles behind law enforcement, but you've reasoned that in order to be a truly effective guard you'll need some first-hand experience in a high-risk area nabbing suspects and protecting innocents- all the while taking fastidious notes and writing your grand thesis on the merits and shortcomings of Absalom's laws. Choose two attribute boosts. One must be to **Intelligence** or **Wisdom**, and one is a free attribute boost. You're trained in your choice of the Arcana or Occultism skill, as well as Legal Lore. You gain a +1 circumstance bonus to Deception, Diplomacy, and Intimidation checks to interact with Learned Guards and with academics such as librarians and scholars. You gain the Recognize Spell skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Lore** Legal Lore **Skill Feat** Recognize Spell"
+ },
+ {
+  "id": "legendary-monster",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Legendary Monster",
+  "level": 17,
+  "traits": [
+   "yaoguai"
+  ],
+  "engineFieldsPresent": [
+   "limitedUses"
+  ],
+  "inRegistries": [],
+  "text": "Your yaoguai form has reached its pinnacle, allowing you to assume (or perhaps, return to) the form of a monster of legend. You can Unleash Yaoguai Might any number of times per day. Once per day when you Unleash Yaoguai Might, you can gain one of the following additional benefits, which persists for 1 minute or until you Change Shape again. - Your body grows to impossible heights. Your Enlarge effect is heightened to 4th rank. - Your spiritual power erupts to punish your enemies. You deal an additional 1d4 spirit damage with all Strikes and attack spells, and your Strikes and attack spells gain the spirit trait. - You can leap off the air itself. You gain the effects of the Fly spell."
+ },
+ {
+  "id": "leshy-familiar-secrets",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Leshy Familiar Secrets",
+  "level": 4,
+  "traits": [
+   "druid"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "situationalBonuses"
+  ],
+  "text": "The leaf order's secrets allow your familiar to take advantage of its leshy form. You can select one additional familiar ability each day, which must be one of the following leshy familiar abilities. You can't select more than one ability from this feat at a time. - **Grasping Tendrils** Your familiar can extend vines or similar tendrils, increasing its reach to 15 feet. - **Purify Air** Your familiar recycles air, providing enough oxygen for a Medium creature in areas with stale air, such as a sealed chamber or extradimensional space. Creatures within a of the leshy gain a +2 circumstance bonus to their saving throws against inhaled poison effects, olfactory effects, or other effects that rely on breathing (such as toxic cloud), at the GM's discretion. - **Verdant Burst** When your familiar dies, it releases its primal energy to cast the 3-action version of Heal, heightened to a rank 1 lower than your highest-rank spell slot. The *heal* spell gains a status bonus equal to twice the spell's rank to the Hit Points it restores to plants. You must be able to cast 2nd-rank spells using spell slots to select this familiar ability."
+ },
+ {
+  "id": "libertys-devotion",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Liberty's Devotion",
+  "level": 12,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You've deepened your connection with the ideals of Andoran. You gain an advanced domain spell from one domain you selected with Liberty's Promise. Increase the number of Focus Points in your focus pool by 1. --- **Special** You can take this feat multiple times, each time selecting a different advanced domain spell from a domain you selected with Liberty's Promise."
+ },
+ {
+  "id": "link-spells",
+  "lane": "spellGrant",
+  "collection": "classFeatures",
+  "name": "Link Spells",
+  "level": 1,
+  "traits": [
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your connection to your eidolon allows you to cast link spells, special spells that have been forged through your shared connection with your eidolon. Link spells are a type of focus spell. It costs 1 Focus Point to cast a focus spell, and you start with a focus pool of 1 Focus Point. You refill your focus pool during your daily preparations, and you can regain 1 Focus Point by spending 10 minutes using the Refocus activity to specifically connect with your eidolon, such as by having a heart-to-heart conversation, playing together, or meditating in unison on the nature of your bond. Focus spells are automatically heightened to half your level rounded up, much like cantrips. Focus spells don't require spell slots, and you can't cast them using spell slots. Taking feats can give you more focus spells and increase the size of your focus pool, though your focus pool can never hold more than 3 Focus Points. The full rules for focus spells appear on page 300 of the Core Rulebook. You learn the Evolution Surge link spell, which allows you to grant your eidolon one of several useful benefits. ### Link Cantrips Link cantrips are special link spells that don't cost Focus Points, so you can cast them as often as you like. Link cantrips are in addition to the cantrips you choose from your tradition's spell list. Generally, only feats can give you more link cantrips. Unlike other cantrips, you can't swap out link cantrips gained from summoner feats at a later level, unless you swap out the specific feat via retraining. You learn the Boost Eidolon link cantrip, which briefly improves your eidolon's capabilities, allowing it to attack with greater power."
+ },
+ {
+  "id": "listeners-boon",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Listener's Boon",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featFeatGrants"
+  ],
+  "text": "Isthralei has given you a gift to assist you on your journey. You gain the Domain Initiate feat for the domain of fire, knowledge, protection, or travel. You can Refocus by spending 10 minutes telling stories of your travels or listening to others' stories of theirs. You gain the trained proficiency rank in spell attack modifier and spell DC, increasing to expert at 11th level. --- **Special** You can select this feat multiple times, selecting a different domain each time and gaining its domain spell. --- *PFS Note:* For the purposes of this feat, use charisma as your spellcasting attribute."
+ },
+ {
+  "id": "loaner-spell",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Loaner Spell",
+  "level": 8,
+  "traits": [
+   "rogue"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "During your daily preparations, you can gain the assistance of an allied prepared spellcaster to prepare one spell for the day. The spell can be up to 3rd level. Your ally must be able to prepare and cast it, and the spell must have a Targets entry or an area. Your ally loses a spell slot of the corresponding spell rank, and you gain the ability to cast the prepared spell once that day. When you Cast the Spell, use your class DC for any saving throws required by the spell, and your class DC - 10 as a spell attack roll modifier."
+ },
+ {
+  "id": "local-savior",
+  "lane": "spellGrant",
+  "collection": "backgrounds",
+  "name": "Local Savior",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "choice",
+   "trainedLore",
+   "trainedSkill"
+  ],
+  "inRegistries": [],
+  "text": "Some may be born into a situation that locks them into a heroic destiny or forced into an adventurous lifestyle from an early age through tragic events beyond their control. In your case, you're an entirely self-made hero. You had no childhood trauma or birthright that compelled you into the adventurer's lifestyle, but the small town in which you grew up needed someone to stand up for those in need. Be it an unwavering loyalty to your fellow townsfolk, an inborn conviction that compels you toward the defense of others, or simply a desire to make the world a better place, you volunteered time and again to help the community. This often had you working alongside local churches, faiths, or artisans, and whether or not you became a person of faith or an accomplished artist yourself, your knowledge of all matters faith and art is impressive. Eventually, this led you to join with your fellow PCs, and with their aid, you went from a local savior to an increasingly renowned hero. Yet even if you haven't been back to your hometown, your heart and soul never really left, and the lessons you learned in those formative years of triumphs (and perhaps failures) have made you into the famous adventurer you are today. Queen Sorshen even complimented your early accomplishments in her invitation to you to attend the opening ceremonies for the Circle of Open Hands and mentioned how she'd like you to help inspire the people of Xin-Eurythnia to follow in your footsteps in making the capital city of New Thassilon a safe place to thrive. Choose two attribute boosts. One must be to **Strength** or **Wisdom**, and the other is a free attribute boost. You're trained in Religion and Art Lore. In addition, choose one of the following small towns as your hometown. As part of your heroic services to your hometown, one of the deities whose presence is strong there has granted you a divine cantrip that you can cast as a divine innate spell at will. This cantrip is heightened to a spell rank equal to half your level rounded up. With your GM's permission, you can select a different small town from somewhere outside of the Saga Lands or even make up a small town of your own design, in which case you should work with your GM to decide which of the following five boons best match the theme and flavor of your hometown. - **Ilsurian** Located in south-central Varisia, the inhabitants of the riverside-town of Ilsurian have always been fiercely independent and self-sufficient in nature. Choose either Shield or Stabilize as your divine innate cantrip. Ilsurian is detailed in Towns of the Inner Sea. - **Osprey Cove** Located on the southern shore of Chakikoth Isle in the Ironbound Archipelago, Osprey Cove was founded by two siblings who fled servitude to crime lords in the pirate city of Riddleport. Today, Osprey Cove struggles to maintain its independence as Runelord Belimarius continues to expand her control over the region. Choose either Message or Read Aura as your divine innate cantrip. Osprey Cove is detailed in Rusthenge. - **Roderic's Cove** Located on the west coast of Varisia, Roderic's Cove has long struggled to remain self-sufficient in the shadow of the crime lords of nea"
+ },
+ {
+  "id": "luck-blade-wishing",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Luck Blade (Wishing)",
+  "level": 19,
+  "traits": [
+   "agile",
+   "finesse",
+   "fortune",
+   "magical",
+   "versatile-s"
+  ],
+  "engineFieldsPresent": [
+   "counters",
+   "frequency"
+  ],
+  "inRegistries": [],
+  "text": "Luck and good fortune bless the wielder of this *+3 greater striking shortsword*. *Luck blades* are crafted in a variety of styles, but their hilts or blades always incorporate symbols of luck, such as clovers, horseshoes, fish, ladybugs, or other symbols. --- **Activate** ⟨5⟩ envision **Frequency** once per day **Trigger** You miss on a Strike with the *luck blade* **Effect** Reroll the triggering attack roll and use the new result. This is a fortune effect. --- Some *luck blades* contain one Wish when crafted. You can cast this spell as an arcane innate spell while wielding the *luck blade*, expending the spell. A spellcaster who can cast *wish* can place another *wish* into the blade by spending 8,000 gp and 4 days of downtime. A *wishing luck blade* can hold no more than one *wish* at a time. --- **Craft Requirements** Supply a casting of *wish*."
+ },
+ {
+  "id": "magaambya-academic",
+  "lane": "spellGrant",
+  "collection": "backgrounds",
+  "name": "Magaambya Academic",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkillChoice"
+  ],
+  "inRegistries": [],
+  "text": "**Prerequisite** Region - Mwangi Expanse --- You studied magic at the prestigious Magaambya academy in Nantambu, learning magical traditions dating back to Old- Mage Jatembe and earning a pedigree respected by magical scholars almost everywhere. Choose two attribute boosts. One must be to **Intelligence** or **Charisma**, and one is a free attribute boost. You're trained in your choice of either the Arcana or Nature skill, as well as the Academia Lore skill. You gain the Recognize Spell skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Lore** Academia Lore **Skill Feat** Recognize Spell"
+ },
+ {
+  "id": "mage-automaton",
+  "lane": "spellGrant",
+  "collection": "heritages",
+  "name": "Mage Automaton",
+  "traits": [],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "The chamber housing your core has a more direct connection to the rest of your humanoid shape, allowing you to tap into your core's magical energy. You gain one cantrip from the arcane spell list. You can cast this spell as an arcane innate spell at will. A cantrip is heightened to a spell rank equal to half your level rounded up."
+ },
+ {
+  "id": "magical-adept",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Magical Adept",
+  "level": 8,
+  "traits": [
+   "evolution",
+   "summoner"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "Your eidolon gains more magic. Choose one 2nd-rank spell and one 1st-rank spell of your eidolon's tradition. Your eidolon can cast them each once per day as innate spells. At every even level after you take this feat, your eidolon can swap one of these innate spells for a new innate spell that's 2 or more levels lower than your highest-rank spell slot."
+ },
+ {
+  "id": "magical-understudy",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Magical Understudy",
+  "level": 2,
+  "traits": [
+   "evolution",
+   "summoner"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your eidolon evolves to cast spells. It gains the Cast a Spell activity and learns two cantrips of its tradition, which it can cast as innate spells."
+ },
+ {
+  "id": "magnum-opus",
+  "lane": "spellGrant",
+  "collection": "classFeatures",
+  "name": "Magnum Opus",
+  "level": 19,
+  "traits": [
+   "bard"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You have tuned your spellcasting to the highest caliber. Add two common 10th-rank occult spells to your repertoire. You gain a single 10th-rank spell slot you can use to cast these spells using bard spellcasting. Unlike other spell slots, you can't use 10th-rank slots with abilities that give you more spell slots or that let you cast spells without expending spell slots. You don't gain more 10th-rank spells as you level up, but you can take the Perfect Encore feat to gain a second slot."
+ },
+ {
+  "id": "magus-dedication",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Magus Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication",
+   "multiclass"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [
+   "featGrantsAuto"
+  ],
+  "text": "You cast spells like a magus, gaining a spellbook with four common arcane cantrips of your choice. You gain the Cast a Spell activity. You can prepare two cantrips each day from your spellbook. Each time you gain a spell slot of a new level from the magus archetype, add a spell of that rank or lower to your spellbook. You're trained in arcane spell attack rolls and spell DCs. Your key spellcasting attribute for magus archetype spells is Intelligence, and they are arcane magus spells. You become trained in Arcana; if you were already trained in Arcana, you instead become trained in a skill of your choice. You become trained in simple weapons."
+ },
+ {
+  "id": "major-cloak-of-social-graces",
+  "lane": "spellGrant",
+  "collection": "items",
+  "name": "Major Cloak of Social Graces",
+  "level": 19,
+  "traits": [
+   "invested",
+   "magical"
+  ],
+  "engineFieldsPresent": [
+   "frequency",
+   "passiveEffects"
+  ],
+  "inRegistries": [],
+  "text": "Cloak of Social Graces Source High Seas pg. 50 Usage worn cloak Bulk L Access You're from Hermea These cloaks are created from hand-dyed leather decorated with gemstones, appealing to the individual tastes of the owner. The beautiful decorations of these cloaks encourage their owner to wear them no matter the season, making it visibly part of their unique style. Wearing the cloak boosts self-confidence, granting a +1 item bonus to Diplomacy checks. Activate—Overcome Self-Doubt (concentrate, manipulate) Frequency once per day; Effect You readjust your cloak, straightening the collar and brushing out any wrinkles. You gain the effects of a heroism spell for 1 minute. Cloak of Social Graces Source High Seas pg. 50 Price 380 gp Greater Cloak of Social Graces Source High Seas pg. 50 Price 3,000 gp The item bonus is +2, and when you activate the cloak, you gain the benefits of a 6th-rank heroism spell for 1 minute. Major Cloak of Social Graces Source High Seas pg. 50 Price 40,000 gp The item bonus is +3, and when you activate the cloak, you gain the benefits of a 9th-rank heroism spell for 1 minute."
+ },
+ {
+  "id": "makari-lizardfolk",
+  "lane": "spellGrant",
+  "collection": "heritages",
+  "name": "Makari Lizardfolk",
+  "traits": [
+   "lizardfolk"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You have a trunk-like snout and a connection to the divine. The tradition of any spells or magical abilities you gain from a lizardfolk heritage or ancestry feat is divine instead of its normal tradition (usually primal). You gain your choice of the Divine Lance or Forbidding Ward cantrips, which you can cast as a divine innate cantrip at will. A cantrip is heightened to a spell rank equal to half your level rounded up. When you cast this cantrip, it loses the manipulate trait, as you cast purely by roaring and flaring your trunk."
+ },
+ {
+  "id": "maker-of-miracles",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Maker of Miracles",
+  "level": 20,
+  "traits": [
+   "cleric"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You are a conduit for truly deific power. You gain an additional 10th-rank spell slot."
+ },
+ {
+  "id": "master-captivator-spellcasting",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Master Captivator Spellcasting",
+  "level": 16,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You master the most powerful spells that enchant and deceive. You learn a 7th-rank occult spell. At 18th level, you learn an 8th-rank spell, and at 20th level, you learn a 9th-rank spell. Each of these spells must come from either the enchantment or illusion school. You cast these spells as occult innate spells. You become a master with spell attack rolls and spell DCs for occult spells."
+ },
+ {
+  "id": "master-skysage-divination",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Master Skysage Divination",
+  "level": 16,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You unlock the most powerful secrets hidden in the stars above. You choose one of the following 7th-rank spells to add to your spell repertoire: or True Target. At 18th level, add Pinpoint to your spell repertoire, and at 20th level, add Foresight to your spell repertoire. You gain master proficiency with spell attack rolls and spell DCs for occult spells."
+ },
+ {
+  "id": "masterful-warden",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Masterful Warden",
+  "level": 6,
+  "traits": [
+   "ranger"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your mastery of warden magic increases. You gain your choice of one warden spell from the master warden spells. Ephemeral Tracking Ranger's Bramble --- **Special** You can take this feat multiple times, choosing a different master warden spell each time."
+ },
+ {
+  "id": "meddling-futures",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Meddling Futures",
+  "level": 2,
+  "traits": [
+   "cursebound",
+   "divine",
+   "oracle"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You open yourself to the guidance of whatever spirits or powers deign to help you. Roll 1d4 to see what type of spirit is drawn to you. Your next action must be the type of action the spirit prefers, but you also gain the listed benefit for the action as the spirit guides you. If you attempt to use a different action, you must succeed at a or the action is lost. **1 Warrior** You must attempt a Strike. You gain a +1 status bonus to your attack roll and a +2 status bonus to damage, or a +6 status bonus to damage if you are at least Cursebound 3. **2 Adept** You must attempt a Perception check or a skill action. You gain a +1 status bonus to the check, or a +2 status bonus if you are cursebound 3. **3 Sage** You must attempt to Cast a Spell. You gain a status bonus to the spell's damage or healing equal to the spell's rank, or equal to the spell's rank + 3 if you are at least cursebound 3. **4 Wanderer** You must attempt a Stride action, or a Fly, Climb, or Burrow action if you have the relevant speed. You gain a +10-foot status bonus to your Speed for the action, or a +20-foot status bonus if you are at least cursebound 3."
+ },
+ {
+  "id": "mind-over-matter",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Mind over Matter",
+  "level": 20,
+  "traits": [
+   "psychic"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "Your mind's limits are only what you imagine them to be. You gain an additional 10th-rank spell slot."
+ },
+ {
+  "id": "minor-deific-power",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Minor Deific Power",
+  "level": 4,
+  "traits": [
+   "archetype"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "Your mental, physical, and spiritual training have granted you access to divine magic that doesn't rely on any other deity or patron. Choose a common divine cantrip and one common 1st-rank divine spell. You can cast the cantrip as a divine innate spell at will and the 1st-rank spell as a divine innate spell once per day."
+ },
+ {
+  "id": "minor-magic",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Minor Magic",
+  "level": 2,
+  "traits": [
+   "rogue"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You've dabbled in minor magical abilities. Choose arcane, divine, occult, or primal magic, and gain two cantrips from the common cantrips that are available in that tradition. You gain the Cast a Spell activity, your key spellcasting ability is Charisma, and you're trained in spell attack rolls and DCs for the tradition you chose."
+ },
+ {
+  "id": "miraculous-spell",
+  "lane": "spellGrant",
+  "collection": "classFeatures",
+  "name": "Miraculous Spell",
+  "level": 19,
+  "traits": [
+   "cleric"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "You're exalted by your deity and gain truly incredible spells. You gain a single 10th-rank spell slot and can prepare a spell in that slot using cleric spellcasting. Unlike with other spell slots, you can't use 10-rank slots with abilities that give you more spell slots or that let you cast spells without expending spell slots. You don't gain more 10th-rank spells as you level up, but you can take the Maker of Miracles feat to gain a second slot."
+ },
+ {
+  "id": "mirror-shield",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Mirror Shield",
+  "level": 10,
+  "traits": [
+   "fighter"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "**Trigger** An opponent casting a spell that targets you critically fails a spell attack roll against your AC. **Requirements** You have a shield raised. --- You reflect the spell back against its caster. Make a ranged attack against the attacker using your highest proficiency with a ranged weapon. If you can cast spells, you can choose to make a spell attack roll instead. If you succeed, your opponent takes the effects of a successful spell attack roll for their own spell (or the effects of a critical success if your attack roll was a critical success)."
+ },
+ {
+  "id": "morphic-strike",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Morphic Strike",
+  "level": 1,
+  "traits": [
+   "yaoguai"
+  ],
+  "engineFieldsPresent": [
+   "choice"
+  ],
+  "inRegistries": [],
+  "text": "You can lash out with a portion of your previous self. You gain a melee unarmed Strike depending on your heritage, described below. You can use this unarmed Strike in either your humanoid form or your yaoguai form. These Strikes are in the brawling group. Like other unarmed attacks, you can improve this attack with handwraps of mighty blows. - **Animal** 1 claw (agile, finesse), Damage 1d6 slashing - **Celestial** 1 spirit touch (magical, sanctified, spirit), Damage 1d4 spirit - **Elements** 1 elemental current (magical), Damage 1d4; this ability deals the same damage type and gains the same elemental traits of the cantrip you gained from your heritage - **Object** 1 striking surface (sweep), Damage 1d8 bludgeoning or slashing (chosen when you gain this feat) - **Vegetation** 1 root (reach), Damage 1d6 bludgeoning"
+ },
+ {
+  "id": "mystery",
+  "lane": "spellGrant",
+  "collection": "classFeatures",
+  "name": "Mystery",
+  "level": 1,
+  "traits": [
+   "oracle"
+  ],
+  "engineFieldsPresent": [],
+  "inRegistries": [],
+  "text": "An oracle wields divine power, but not from a single divine being. This power could come from a potent concept or ideal, the attention of multiple divine entities whose areas of concern all touch on that subject, or a direct and dangerous conduit to raw divine power. This is the oracle's mystery, a source of divine magic not beholden to any deity. Choose the mystery that empowers your magic. Your mystery grants you additional spells, and special focus spells called revelation spells. Your mystery also gives you a unique cursebound ability that lets you draw upon the divine, as well as dictating the effects of the oracular curse that falls upon you when you touch too much of this power. --- - Ancestors Voices of past generations teach and haunt you. - Ashes You see all things in the world as fleeting and temporary, waiting to be purified into their base essence: the ash left behind after a burning fire. - Battle You embody the virtues upheld by heroes of legend. - Blight A spring bud will wither, a mighty oak will crash to the forest floor, and a callow youth will grow into maturity, then decline into old age. - Bones Death always seems near, and the dead speak to you. - Cosmos You draw power from the stars and the spaces between. - Flames You dance with fire and do your best to remain unscorched by it. - Life The teeming energies of life flow through you out into the world. - Lore You gain access to unparalleled, overwhelming knowledge. - Tempest Wind, waves, and storms rage at your beck and call. - Time Whether by accident, fate, or purposeful meddling, you exist slightly outside of time. ### Reading a Mystery Entry A mystery entry contains the following information, followed by a description of that mystery's curse. **Granted Spells** You automatically add the spells listed here to your spell repertoire, as described in Spell Repertoire on page 130. At 1st level, you gain a cantrip and a 1st-rank spell. You learn the other spells on the list as soon as you gain the ability to cast oracle spells of that rank. **Revelation Spells** You automatically gain your mystery's initial revelation spell at 1st level and can gain more by selecting the Advanced Revelation, Greater Revelation, and Diverse Mystery oracle feats. These spells start on page 259. **Related Domains** These are the cleric domains associated with your mystery. You gain domain spells, which you can cast as revelation spells, by taking the Domain Acumen and Domain Fluency feats. At 11th level, the divine access class feature also gives you additional slotted spells based on your domains. The domains and their domain spells appear on page 372 of Player Core. Domains marked with an asterisk (*) are found in Pathfinder Lost Omens Divine Mysteries. **Mystery Skill** You become trained in the listed skill. A few mysteries make you trained in more than one skill. **Oracle Feat** You gain this 1st-level oracle feat. This is a cursebound feat, so using it aggravates your oracular curse."
+ },
+ {
+  "id": "mystic-tutor",
+  "lane": "spellGrant",
+  "collection": "backgrounds",
+  "name": "Mystic Tutor",
+  "traits": [],
+  "engineFieldsPresent": [
+   "abilityBoosts",
+   "choice",
+   "grantedFeatId",
+   "trainedLore",
+   "trainedSkillChoice"
+  ],
+  "inRegistries": [],
+  "text": "You spent years predicting, identifying, and harnessing the innate magical talents of those around you. A magic-rich world has taught you that you can never have too much training when everyone around you is capable of magic. Choose two attribute boosts. One must be **Intelligence** or **Wisdom** and one is a free attribute boost. Your innate magical trait is arcane or occult. You're trained in either Arcana or Occultism, depending on your innate magical trait, and the Academia Lore skill. You gain the Recognize Spell skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Lore** Academia Lore **Skill Feat** Recognize Spell"
+ },
+ {
+  "id": "mythic-magic",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Mythic Magic",
+  "level": 8,
+  "traits": [
+   "mythic"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [],
+  "text": "You convert your mythic power into a magical effect. When you gain this feat, choose up to three spells of 1st or 2nd rank that take no more than 3 actions to cast and that are either instantaneous or have a duration of 10 minutes or less. You can spend a Mythic Point to cast any of those spells for their normal action cost and use mythic proficiency to determine your spell attack rolls and spell DCs, and the spells are automatically heightened to a rank equal to half your level (rounded up). If you don't normally have the ability to cast spells, you use Charisma as your spellcasting attribute modifier; otherwise, you use the spellcasting ability associated with your spellcasting class. You gain the Cast a Spell activity only for spells cast with this feat; you don't otherwise gain the typical benefits of being a spellcaster. --- **Special** At 14th level, add one spell of 3rd rank for you to cast using this ability. At 20th level, add one 4th-rank spell."
+ },
+ {
+  "id": "nantambu-chime-ringer-dedication",
+  "lane": "spellGrant",
+  "collection": "feats",
+  "name": "Nantambu Chime-Ringer Dedication",
+  "level": 2,
+  "traits": [
+   "archetype",
+   "dedication"
+  ],
+  "engineFieldsPresent": [
+   "effectChoices"
+  ],
+  "inRegistries": [
+   "featGrantsAuto"
+  ],
+  "text": "You've studied the basics of harmony and resonance in magic, exemplified by the ringing of chimes. You gain a single arcane or occult cantrip of your choice, heightened to a spell rank equal to half your level, rounded up. If you weren't already, you become trained in that tradition's spell DCs and spell attack rolls, with Intelligence as your spellcasting ability if you choose arcane or Charisma as your spellcasting ability if you choose occult. Regardless of your choice, you also either become trained in Arcana or Occultism, or an expert in one of these skills if you are already trained in both."
+ }
+]

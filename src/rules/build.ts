@@ -2550,13 +2550,24 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       ? spellcasting.find((e) => e.id === bonus.entryId)
       : spellcasting.find((e) => e.type === 'spontaneous' || e.type === 'prepared');
     if (!entry) continue;
+    const add = (r: number, n: number) => {
+      if (entry.slots?.[r]) entry.slots[r].max += n;
+      if (entry.prepared?.[r]) entry.prepared[r].push(...Array.from({ length: n }, () => ({ spellId: null, expended: false })));
+    };
+    // SPECIFIC ranks ("two 4th-rank and one 3rd-rank") win over the per-rank spread. Without this
+    // branch the four Rings of Wizardry — which all carry byRank — fell through to `perRank ?? 1`
+    // with no exceptHighest, granting a slot at EVERY rank instead of the printed handful.
+    if (bonus.byRank) {
+      for (const [rank, n] of Object.entries(bonus.byRank)) {
+        const r = Number(rank);
+        if (Number.isFinite(r) && r > 0 && n > 0) add(r, n);
+      }
+      continue;
+    }
     const perRank = bonus.perRank ?? 1;
     const ranks = Object.keys(entry.slots ?? entry.prepared ?? {}).map(Number).filter((r) => r > 0).sort((a, b) => a - b);
     const eligible = bonus.exceptHighest ? ranks.slice(0, Math.max(0, ranks.length - bonus.exceptHighest)) : ranks;
-    for (const r of eligible) {
-      if (entry.slots?.[r]) entry.slots[r].max += perRank;
-      if (entry.prepared?.[r]) entry.prepared[r].push(...Array.from({ length: perRank }, () => ({ spellId: null, expended: false })));
-    }
+    for (const r of eligible) add(r, perRank);
   }
 
   // Static data-warnings: an owned feat/heritage/feature/worn item whose effect references missing
