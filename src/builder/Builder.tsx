@@ -903,7 +903,7 @@ export function Builder({
                 <OptionsCard build={build} actions={actions} content={content} />
                 <VariantRulesCard build={build} actions={actions} content={content} />
                 <CampaignOptionsCard build={build} actions={actions} content={content} />
-                <SourcesCard build={build} actions={actions} catalog={sourceCat} />
+                <SourcesCard build={build} actions={actions} catalog={sourceCat} content={ovContent} />
                 {build.options?.overridesEnabled && (
                   <OverridesCard build={build} actions={actions} content={ovContent} character={featPrereqChar} />
                 )}

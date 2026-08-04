@@ -1101,6 +1101,117 @@ export function collectChosenIds(build: BuildState, content: ContentDatabase): S
   return ids;
 }
 
+/** One thing the character has chosen that came from a book being switched off. */
+export interface ChosenFromBook {
+  id: string;
+  name: string;
+  /** The content map it lives in ('feats', 'spells', …) — used to group the warning. */
+  kind: string;
+  book: string;
+}
+
+/**
+ * What this character would LOSE if `books` were switched off.
+ *
+ * Turning a source off hides it from every picker, but the character may already have taken things
+ * from it. Silently keeping them makes the source list a lie; silently dropping them deletes a
+ * player's choices without asking. So the caller warns with this list first.
+ */
+export function chosenFromBooks(build: BuildState, content: ContentDatabase, books: ReadonlySet<string>): ChosenFromBook[] {
+  if (!books.size) return [];
+  const chosen = collectChosenIds(build, content);
+  const out: ChosenFromBook[] = [];
+  const seen = new Set<string>();
+  for (const m of CHOOSABLE_SOURCE_MAPS) {
+    const map = content[m] as Record<string, { name?: string; source?: SourceInfo }> | undefined;
+    if (!map) continue;
+    for (const id of chosen) {
+      if (seen.has(id)) continue;
+      const e = map[id];
+      const book = e?.source?.book?.trim();
+      if (!e || !book || !books.has(book)) continue;
+      seen.add(id);
+      out.push({ id, name: e.name ?? id, kind: m, book });
+    }
+  }
+  return out.sort((a, b) => a.kind.localeCompare(b.kind) || a.name.localeCompare(b.name));
+}
+
+/**
+ * Clear every reference to `ids` from the build — the inverse of collectChosenIds.
+ *
+ * Deliberately mirrors that function field for field: anything it can COLLECT must be removable here,
+ * or switching a source off would leave a dangling reference the pickers can no longer show. Removing
+ * an ancestry/class/background leaves that slot unset, which is the state a new character starts in,
+ * so the builder already handles it and the player can simply pick again.
+ */
+export function removeChosenIds(build: BuildState, ids: ReadonlySet<string>): BuildState {
+  if (!ids.size) return build;
+  const gone = (v?: string | null) => !!v && ids.has(v);
+  // Every id-bearing slot on BuildState is `string | null` (an unset ancestry is null, not absent), so
+  // clearing one means writing null — the same value emptyBuild() uses.
+  const clear = <T extends string | null | undefined>(v: T) => (gone(v) ? null : v);
+  const filterRec = (r: Record<string, string> | undefined) =>
+    r ? Object.fromEntries(Object.entries(r).filter(([, v]) => !gone(v))) : r;
+  const filterArrRec = (r: Record<string, string[]> | undefined) =>
+    r ? Object.fromEntries(Object.entries(r).map(([k, a]) => [k, a.filter((v) => !gone(v))])) : r;
+
+  const next: BuildState = {
+    ...build,
+    ancestryId: clear(build.ancestryId),
+    heritageId: clear(build.heritageId),
+    classId: clear(build.classId),
+    classId2: clear(build.classId2),
+    subclassId: clear(build.subclassId),
+    subclassId2: clear(build.subclassId2),
+    deityId: clear(build.deityId),
+    backgroundId: clear(build.backgroundId),
+    heritageFeatId: clear(build.heritageFeatId),
+    umtFeatId: clear(build.umtFeatId),
+    voiceOfNature: clear(build.voiceOfNature),
+    primaryApparition: clear(build.primaryApparition),
+    devotionSpell: clear(build.devotionSpell),
+    dragonExemplar: clear(build.dragonExemplar),
+    featPicks: filterRec(build.featPicks) ?? build.featPicks,
+    featChoices: filterRec(build.featChoices) ?? build.featChoices,
+    dedicationSkillFeats: filterRec(build.dedicationSkillFeats),
+    signatures: filterRec(build.signatures) ?? build.signatures,
+    gateForks: filterRec(build.gateForks),
+    gateExpands: filterRec(build.gateExpands),
+    extraChoices: filterArrRec(build.extraChoices) ?? build.extraChoices,
+    spells: filterArrRec(build.spells) ?? build.spells,
+    cantrips: build.cantrips.filter((v) => !gone(v)),
+    commanderTactics: build.commanderTactics?.filter((v) => !gone(v)),
+    // An item is dropped outright; a held spell inside a kept item is just cleared.
+    inventory: build.inventory.filter((it) => !gone(it.itemId)).map((it) => (gone(it.heldSpell) ? { ...it, heldSpell: undefined } : it)),
+  };
+  if (build.inventorModifications) {
+    next.inventorModifications = {
+      ...build.inventorModifications,
+      initial: clear(build.inventorModifications.initial),
+      breakthrough: clear(build.inventorModifications.breakthrough),
+      revolutionary: clear(build.inventorModifications.revolutionary),
+    };
+  }
+  if (build.archetypeSpells) {
+    next.archetypeSpells = {
+      ...build.archetypeSpells,
+      cantrips: build.archetypeSpells.cantrips.filter((v) => !gone(v)),
+      spells: filterArrRec(build.archetypeSpells.spells) ?? build.archetypeSpells.spells,
+    };
+  }
+  if (build.overrides) {
+    next.overrides = {
+      ...build.overrides,
+      addedFeats: build.overrides.addedFeats?.filter((a) => !gone(a.featId)),
+      allowedFeats: build.overrides.allowedFeats?.filter((v) => !gone(v)),
+      addedFeatures: build.overrides.addedFeatures?.filter((a) => !gone(a.featureId)),
+      addedSpells: build.overrides.addedSpells?.filter((a) => !gone(a.spellId)),
+    };
+  }
+  return next;
+}
+
 /** Hide content from disabled source books (the BUILDER's picker content only — never the sheet's).
  *  Keeps any entry whose book is enabled OR whose id is already chosen (`keepIds`). Returns the same
  *  ref when nothing is dropped (memo-safe, like applyOverrides). */

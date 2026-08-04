@@ -1504,6 +1504,19 @@ body {
 .iwr-val.senses-val {
   text-align: left;
 }
+/* "This will be removed" list in the source-removal confirmation. Capped and scrollable: a character
+   can easily have thirty feats from one book, and a dialog that grows past the screen hides its own
+   Cancel button — the one control someone reading a destructive warning most needs to reach. */
+.src-losing {
+  margin: 8px 0;
+  padding-left: 18px;
+  max-height: 40vh;
+  overflow-y: auto;
+  line-height: 1.5;
+}
+.src-losing li + li {
+  margin-top: 4px;
+}
 /* One-tap resistance/weakness adjusters in the HP pad. They WRAP rather than scroll — a phone must
    never need a sideways swipe to reach a button, and a character with several types would otherwise
    push the last chip off the edge. */

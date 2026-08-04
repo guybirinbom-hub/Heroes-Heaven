@@ -32,6 +32,8 @@ import {
   resolveBackground,
   subclassKeyAbility,
   backgroundGrantedFeats,
+  chosenFromBooks,
+  removeChosenIds,
 } from '../rules/build';
 import { cantripsKnown } from '../rules/spellcasting';
 import { abpSkillBudget } from '../rules/abp';
@@ -1552,7 +1554,37 @@ const profTrackName = (key: string) =>
 
 /** Per-character source books: enable/disable books (default = the four Core books) so the builder
  *  pickers only offer content from the books you allow. Already-chosen content is always kept. */
-export function SourcesCard({ build, actions, catalog }: { build: BuildState; actions: BuilderActions; catalog: ReturnType<typeof sourceCatalog> }) {
+/** Content-map name → what a player calls it, for the "this will be removed" list. */
+const SOURCE_KIND_LABEL: Record<string, string> = {
+  ancestries: 'Ancestry',
+  heritages: 'Heritage',
+  backgrounds: 'Background',
+  classes: 'Class',
+  feats: 'Feats',
+  spells: 'Spells',
+  items: 'Items',
+  deities: 'Deity',
+  actions: 'Actions',
+  animalCompanions: 'Animal companions',
+  companionSpecializations: 'Companion specializations',
+  specificFamiliars: 'Familiars',
+  familiarAbilities: 'Familiar abilities',
+  companionAdvanced: 'Companion options',
+};
+
+export function SourcesCard({
+  build,
+  actions,
+  catalog,
+  content,
+}: {
+  build: BuildState;
+  actions: BuilderActions;
+  catalog: ReturnType<typeof sourceCatalog>;
+  /** The UNFILTERED content (ovContent). It must see books that are currently off, or a chosen entry
+   *  from a disabled book could not be named in the warning. */
+  content: ContentDatabase;
+}) {
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   // Live filter for the (long) book list — a draft filter, not a committed value, so filter-as-you-type.
   const [search, setSearch] = useState('');
@@ -1597,18 +1629,59 @@ export function SourcesCard({ build, actions, catalog }: { build: BuildState; ac
   // Searching forces sections open so matches show without manual expansion.
   const hbOpen = sq !== '' || expanded.has('__homebrew__');
   const write = (next: Set<string>) => actions.patch({ enabledSources: [...next].sort() });
-  const setBooks = (books: string[], on: boolean) => {
+  /**
+   * Switching a book OFF when the character already took something from it.
+   *
+   * Turning a source off hides it from every picker. If the character has already chosen from it,
+   * doing nothing makes the source list a lie (the book is "off" but its content is still on the
+   * sheet), and dropping it silently deletes the player's choices without asking. So: name exactly
+   * what would go, and only remove it if they say yes.
+   */
+  const setBooks = async (books: string[], on: boolean) => {
     const n = new Set(enabled);
     for (const b of books) on ? n.add(b) : n.delete(b);
-    write(n);
+    if (on) return write(n);
+
+    const losing = chosenFromBooks(build, content, new Set(books));
+    if (!losing.length) return write(n);
+
+    const byKind = new Map<string, string[]>();
+    for (const c of losing) byKind.set(c.kind, [...(byKind.get(c.kind) ?? []), c.name]);
+    const ok = await confirmDialog({
+      title: losing.length === 1 ? `Remove ${losing[0].name}?` : `Remove ${losing.length} things from this character?`,
+      message: (
+        <>
+          <p>
+            This character already uses content from {books.length === 1 ? 'this book' : 'these books'}. Turning{' '}
+            {books.length === 1 ? 'it' : 'them'} off will remove:
+          </p>
+          <ul className="src-losing">
+            {[...byKind.entries()].map(([kind, names]) => (
+              <li key={kind}>
+                <strong>{SOURCE_KIND_LABEL[kind] ?? kind}:</strong> {names.slice(0, 8).join(', ')}
+                {names.length > 8 ? ` and ${names.length - 8} more` : ''}
+              </li>
+            ))}
+          </ul>
+          <p>Anything else you chose is untouched, and you can turn the book back on and pick again.</p>
+        </>
+      ),
+      confirmLabel: `Remove and turn off`,
+      danger: true,
+    });
+    if (!ok) return;
+    // patch takes a Partial<BuildState>; a whole rebuilt build is a valid one, and it must be applied
+    // in ONE write so the source list and the removals can never land out of step.
+    actions.patch(removeChosenIds({ ...build, enabledSources: [...n].sort() }, new Set(losing.map((c) => c.id))));
   };
   const setCategory = (g: SourceGroup, on: boolean) => setBooks(g.entries.flatMap((e) => e.books), on);
   return (
     <SetupCard icon="ti-books" label="Sources" count={`${enabledReal}/${allBooks.length}`}>
       <div className="src-wrap">
         <p className="ovr-intro">
-          Choose which books this character can draw from. Disabled books are hidden from every picker — anything you've
-          already selected stays available even if its book is off. New characters start with the Core books only.
+          Choose which books this character can draw from. Disabled books are hidden from every picker. If you turn one
+          off that this character already uses, you'll be told exactly what would be removed first. New characters start
+          with the Core books only.
         </p>
         <ToggleWithInfo
           label="Hide legacy data"

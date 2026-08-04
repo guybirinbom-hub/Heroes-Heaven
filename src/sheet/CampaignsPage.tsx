@@ -67,7 +67,7 @@ function DefaultsEditor({ content, build, setBuild }: { content: ContentDatabase
       </div>
       <VariantRulesCard build={build} actions={actions} content={content} />
       <CampaignOptionsCard build={build} actions={actions} content={content} />
-      <SourcesCard build={build} actions={actions} catalog={catalog} />
+      <SourcesCard build={build} actions={actions} catalog={catalog} content={content} />
     </div>
   );
 }
