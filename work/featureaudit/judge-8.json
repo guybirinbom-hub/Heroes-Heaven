@@ -1,0 +1,121 @@
+{"records":[
+ {"id":"second-skin","verdict":"ALREADY_OK","reason":"The light/medium/unarmored master ranks come from CLASS_ADVANCEMENT (advancement.ts, ranger level 19 'medium-armor-mastery' entries, keyed by class not by feature id). Resting normally in light or medium armor is a downtime/exploration rule the sheet does not model."},
+
+ {"id":"seek-and-destroy","verdict":"NEEDS_NOTHING","reason":"A commander tactic: every effect (free Seek, reactions, half-level precision damage) lands on SQUADMATES, not on the commander. Surfaced as a folio action in MainTab's tactic list."},
+
+ {"id":"seething-frenzy","verdict":"MISS","reason":"A 1-minute self/eidolon buff with a real drawback: temporary HP equal to your level on the shared summoner/eidolon HP pool, boost eidolon, and a -2 AC penalty. Nothing toggles it; the mode lane is the standing lane for a timed toggleable effect.","fix":{"mode":{"id":"seething-frenzy","name":"Seething Frenzy (eidolon)","feats":["seething-frenzy"],"duration":"1 minute","modifiers":[{"value":-2,"type":"untyped","target":"ac","appliesWhen":"your eidolon's AC while frenzied"}],"note":"Your eidolon is affected by boost eidolon and gains temporary Hit Points equal to your level, but takes a -2 penalty to AC. It can't end the frenzy voluntarily; afterward it's fatigued for 1 minute and can't frenzy again for 1 minute."}}},
+
+ {"id":"selfish-shield","verdict":"MISS","reason":"Beyond the reaction itself, it leaves a standing rider on the player's own Strikes against the triggering creature until the end of your next turn (1 spirit, 2 at 9th, 3 at 16th). Nothing records it.","fix":{"situational":[{"targets":[{"kind":"strikeDamage"}],"when":"vs the creature that triggered Selfish Shield, until end of next turn","bonus":"+1 spirit (2 at 9th level, 3 at 16th)"}]}},
+
+ {"id":"sever-conduit","verdict":"NEEDS_NOTHING","reason":"A reaction resolved at the table: it cancels the triggering damage and unmanifests the eidolon. No standing statistic changes."},
+
+ {"id":"sever-four-dragonfly-wings","verdict":"NEEDS_NOTHING","reason":"A discrete 3-action Strike routine resolved at the table; the multiple-attack-penalty wording applies within the action itself, not as a standing MAP change (mapReduction is for persistent lower MAP)."},
+
+ {"id":"shadow-sheath","verdict":"MISS","reason":"The ikon's immanence is a real damage rider on the player's own Strikes (+2 spirit per weapon damage die, 3 per die vs an off-guard target) and nothing carries it. Same shape as the shipped hands-of-the-wildling / titans-breaker immanence entries in situationalBonuses.ts.","fix":{"situational":[{"targets":[{"kind":"strikeDamage"}],"when":"with a weapon drawn from the shadow sheath, while its immanence is active","bonus":"+2 spirit damage per weapon damage die (3 per die if the target is off-guard)"}]}},
+
+ {"id":"shadows-in-the-moonlight","verdict":"MISS","reason":"The tactic's benefits are ally-facing, but the Special clause changes the COMMANDER's own checks: with this tactic prepared you may roll Warfare Lore in place of Stealth to Hide and Sneak. Nothing records that substitution.","fix":{"situational":[{"targets":[{"kind":"skill","detail":"stealth"}],"when":"to Hide or Sneak, while this tactic is prepared","bonus":"you can use Warfare Lore in place of Stealth"}]}},
+
+ {"id":"share-senses","verdict":"NEEDS_NOTHING","reason":"An action resolved at the table: it swaps whose senses you perceive through for up to 1 minute. It grants no sense, speed or bonus the sheet tracks."},
+
+ {"id":"shared-reflexes","verdict":"ALREADY_OK","reason":"Delivered by CLASS_ADVANCEMENT in src/rules/advancement.ts — summoner level 9, {track:'reflex', rank:'expert', source:'shared-reflexes'}. The eidolon shares the summoner's saves."},
+
+ {"id":"shared-resolve","verdict":"MISS","reason":"The Will master rank IS delivered (advancement.ts, summoner level 15, source 'shared-resolve'), but the save-result upgrade — a success on a Will save becomes a critical success — is a player-facing benefit nothing records. Same shape as the shipped 'irrepressible' / 'cantorian-reinforcement' entries.","fix":{"situational":[{"targets":[{"kind":"save","detail":"will"}],"when":"on any Will save (you and your eidolon)","bonus":"a success is a critical success instead"}]}},
+
+ {"id":"shared-vigilance","verdict":"ALREADY_OK","reason":"Delivered by CLASS_ADVANCEMENT in src/rules/advancement.ts — summoner level 3, {track:'perception', rank:'expert', source:'shared-vigilance'}."},
+
+ {"id":"shed-spirit","verdict":"NEEDS_NOTHING","reason":"A familiar activity resolved at the table: the familiar damages an enemy (save vs your spell DC) and heals an ally. Everything it changes is a target's or an ally's statistics."},
+
+ {"id":"shed-the-mortal-skin","verdict":"NEEDS_NOTHING","reason":"An action resolved at the table: ends persistent fire/acid on you, sheds light, and sprouts a herb another creature can consume. No standing statistic on the sheet changes."},
+
+ {"id":"shepherd-of-errant-winds","verdict":"MISS","reason":"The apparition's spells and vessel spell ARE delivered (animist class record's apparition option carries grantedSpells + focusSpells:['gift-of-the-anemos']), but its Apparition Skills — trained in Sailing Lore and Scouting Lore while attuned — reach nothing: no apparition option carries a lore grant anywhere in core.json.","fix":{"needsEngineWork":true,"note":"trainedLore holds a single subject and SubclassOption.grants.skills is SkillId[] (no 'lore:<Subject>'); an apparition grants TWO Lore skills. Needs a list-valued lore grant (or grants.skills accepting lore: keys, which EffectGrant.skills already does)."}},
+
+ {"id":"shields-up","verdict":"NEEDS_NOTHING","reason":"A commander tactic whose whole effect (Raise a Shield / parry / Shield cantrip as a reaction) belongs to squadmates, not to the commander."},
+
+ {"id":"silence-in-snow","verdict":"ALREADY_OK","reason":"Delivered by the witch class record's patron SubclassOption: {\"tradition\":\"primal\",\"grants\":{\"skills\":[\"nature\"]},\"focusSpells\":[\"clinging-ice\"]}. The familiar's spell and the difficult-terrain ice are familiar-side / target-side."},
+
+ {"id":"simple-weapon-expertise","verdict":"ALREADY_OK","reason":"Pure proficiency increase delivered by CLASS_ADVANCEMENT — advancement.ts carries level-11 simple + unarmed expert entries with source 'simple-weapon-expertise' for both animist and summoner."},
+
+ {"id":"skin-hard-as-horn","verdict":"MISS","reason":"The immanence grants resistance equal to half your level to a damage type you attune during daily preparations (not against critical hits). The player never picks the type and never gets the resistance.","fix":{"needsEngineWork":true,"note":"Needs a resistance whose TYPE is a daily-preparation pick and that is live only while this ikon holds the divine spark. effectChoices+EffectGrant.resistances can record the pick but would grant it permanently (over-grant), choiceResistance is heritage-only, and whileActive has no 'immanence' state."}},
+
+ {"id":"slingers-precision","verdict":"MISS","reason":"An auto-granted level-1 gunslinger feature that adds real damage on every qualifying Strike (+2 precision with non-repeating crossbows, +1d4 with non-repeating firearms; +3 / +1d6 with gunslinging legend). No registry entry and no field anywhere.","fix":{"situational":[{"targets":[{"kind":"strikeDamage"}],"when":"with a non-repeating crossbow","bonus":"+2 precision (+3 with gunslinging legend)"},{"targets":[{"kind":"strikeDamage"}],"when":"with a non-repeating firearm","bonus":"+1d4 precision (1d6 with gunslinging legend)"},{"targets":[{"kind":"strikeAttack"}],"when":"in melee with a combination weapon whose ranged form is a firearm or crossbow","bonus":"use your firearm/crossbow proficiency"}]}},
+
+ {"id":"slip-and-sizzle","verdict":"NEEDS_NOTHING","reason":"A commander tactic: the Trip, the reaction spell and the slowed aftermath all belong to squadmates and their targets."},
+
+ {"id":"sloth","verdict":"MISS","reason":"The Reclined's focus spell IS delivered (a runelord sin-school option grants focusSpells:['reclined-apport']), but the sin spell list — the curriculum this school gives you access to — is prose only; the shipped option note even says 'Curriculum gains the … sin spells'. spellListAdditions is the lane that widens the prepare/learn pool without granting anything.","fix":{"spellListAdditions":{"spells":["telekinetic-hand","telekinetic-projectile","sleep","enfeeble","ghostly-carrier","summon-elemental","cozy-cabin","slow","dull-ambition","translocate","summon-dragon","telekinetic-haul","collective-transposition","indolent-haze","planar-palace","quandary","resplendent-mansion"]}}},
+
+ {"id":"sneak-attack","verdict":"ALREADY_OK","reason":"Delivered in src/rules/derive.ts — strikePrecisionRiders() checks owned.has('sneak-attack'), applies the agile/finesse/unarmed/ranged and thrown qualification (plus the ruffian racket widening) and scales 1d6 → 4d6 at levels 5/11/17."},
+
+ {"id":"spasm-of-the-berserker","verdict":"MISS","reason":"A self-buff with a duration that changes the player's own statistics (Large size, +5 ft reach, +2 status damage on melee Strikes, clumsy 1 from 4th-rank Enlarge; fangs/claws Strikes, +10-foot status Speed bonus, temporary HP and weakness to silver from 6th-rank Moon Frenzy). Nothing toggles any of it.","fix":{"mode":{"id":"spasm-of-the-berserker","name":"Spasm of the Berserker","feats":["spasm-of-the-berserker"],"duration":"until the end of your next turn (extendable)","modifiers":[],"note":"You're affected by a 4th-rank Enlarge (Large, +5-foot reach, +2 status damage with melee Strikes, clumsy 1) and a 6th-rank Moon Frenzy (fangs and claws unarmed Strikes, +10-foot status bonus to Speeds, temporary Hit Points, weakness to silver); you can't end the moon frenzy early."}}},
+
+ {"id":"speaker-in-sibilance","verdict":"MISS","reason":"Spells and vessel spell ARE delivered by the animist apparition option (grantedSpells + focusSpells:['crown-of-prophets']); its Apparition Skills — Fortune-Telling Lore and Mountain Lore while attuned — are delivered nowhere (no lore grant exists on any apparition option in core.json).","fix":{"needsEngineWork":true,"note":"Same gap as every apparition: trainedLore is single-valued and grants.skills is SkillId[], so a two-Lore apparition grant cannot be expressed."}},
+
+ {"id":"spell-blending","verdict":"MISS","reason":"A wizard thesis that restructures the spell slot table at daily preparations — trade two slots of one rank for a bonus slot up to 2 ranks higher, or a slot for two extra cantrips. The player's slot line never changes.","fix":{"needsEngineWork":true,"note":"spellSlotBonus only ADDS slots ({perRank}); there is no lane for a daily-preparation TRADE (spend N slots of rank R for one slot of rank R+2, or a slot for 2 cantrips), which needs a per-rest slot-exchange record."}},
+
+ {"id":"spell-substitution","verdict":"NEEDS_NOTHING","reason":"A 10-minute exploration/downtime re-preparation rule. The builder already lets a prepared spell be swapped freely, and nothing about the character's statistics changes."},
+
+ {"id":"spinning-crush","verdict":"NEEDS_NOTHING","reason":"A 3-action attack resolved at the table: it deals area damage to adjacent creatures and pushes them. Everything it changes is a target's statistics."},
+
+ {"id":"spirit-instinct","verdict":"MISS","reason":"Spirit Rage's damage IS delivered (RAGE_DAMAGE in derive.ts: 'spirit-instinct' tiers [3,7,13], type 'spirit'), but Raging Resistance at 9th — resistance to void damage and to damage dealt by undead creatures' attacks and abilities while raging — reaches nothing; no instinct carries a whileActive resistance anywhere in core.json.","fix":{"needsEngineWork":true,"note":"whileActive {state:'rage', resistances:[…]} is the right lane but has no LEVEL gate (this feature is level 1, the resistance starts at 9) and no way to say 'damage from undead regardless of type'. Barbarian Raging Resistance is 3 + Con modifier, so it also needs the ability-mod formula on a level-gated grant."}},
+
+ {"id":"spring-the-trap","verdict":"NEEDS_NOTHING","reason":"A free action on initiative: it draws/sets a combination weapon and suppresses enemies' reaction triggers for a turn. Nothing standing on the sheet changes."},
+
+ {"id":"stalker-in-darkened-boughs","verdict":"MISS","reason":"Spells and vessel spell ARE delivered by the animist apparition option (grantedSpells + focusSpells:['darkened-forest-form']); the Apparition Skills Forest Lore and Hunting Lore are delivered nowhere — and other feats explicitly test 'your attuned apparition grants Hunting Lore … as one of its apparition skills', so the training is load-bearing.","fix":{"needsEngineWork":true,"note":"Same gap as every apparition: no list-valued Lore grant exists (trainedLore is one subject, grants.skills is SkillId[])."}},
+
+ {"id":"starless-shadow","verdict":"ALREADY_OK","reason":"Delivered by the witch class record's patron SubclassOption — occult tradition, Occultism via grants.skills, focusSpells:['shroud-of-night']. The familiar's Fear spell and the frightened rider are familiar-side / target-side."},
+
+ {"id":"starlit-span","verdict":"ALREADY_OK","reason":"Delivered by the magus class record's hybrid-study SubclassOption, which carries focusSpells:['shooting-star']. The ranged-Spellstrike permission is a rule applied when the player uses the Spellstrike action, not a standing statistic."},
+
+ {"id":"starshot","verdict":"MISS","reason":"The ikon's immanence adds 1 spirit splash damage per weapon damage die to the player's own Strikes and nothing carries it — the identical hands-of-the-wildling immanence rider is already shipped in situationalBonuses.ts.","fix":{"situational":[{"targets":[{"kind":"strikeDamage"}],"when":"with the starshot, while its immanence is active","bonus":"+1 spirit splash damage per weapon damage die"}]}},
+
+ {"id":"steward-of-stone-and-fire","verdict":"MISS","reason":"Spells and vessel spell ARE delivered by the animist apparition option (grantedSpells + focusSpells:['earths-bile']); the Apparition Skills Mountain Lore and Volcano Lore are delivered nowhere.","fix":{"needsEngineWork":true,"note":"Same gap as every apparition: no list-valued Lore grant exists (trainedLore is one subject, grants.skills is SkillId[])."}},
+
+ {"id":"stitching-strike","verdict":"NEEDS_NOTHING","reason":"A familiar activity resolved at the table: it damages and immobilizes an enemy against your spell DC. Only the target's statistics change."},
+
+ {"id":"stone-order","verdict":"ALREADY_OK","reason":"Delivered by the druid class record's order SubclassOption: {\"grantedFeats\":[\"steadying-stone\"],\"grants\":{\"skills\":[\"crafting\"]},\"focusSpells\":[\"crushing-ground\"]}. Anathema is GM-adjudicated."},
+
+ {"id":"storm-order","verdict":"ALREADY_OK","reason":"Delivered by the druid class record's order SubclassOption — grantedFeats:['storm-born'], focusSpells:['tempest-surge'], and Acrobatics via grants.skills. Anathema is GM-adjudicated."},
+
+ {"id":"strained-metabolism","verdict":"NEEDS_NOTHING","reason":"A backlash table the GM triggers; each tier applies ordinary conditions (enfeebled/clumsy/fatigued/sickened) that the sheet's existing condition tracking already models, and the trigger is not something the record can carry."},
+
+ {"id":"strategic-strike","verdict":"MISS","reason":"An auto-granted level-1 investigator feature adding 1d6 precision damage (2d6/3d6/4d6/5d6 at 5th/9th/13th/17th) to every Strike made after Devise a Stratagem. The rogue's equivalent is wired into strikePrecisionRiders(); this one has no field and no registry entry.","fix":{"situational":[{"targets":[{"kind":"strikeDamage"}],"when":"on a Strike that adds Int from Devise a Stratagem","bonus":"+1d6 precision (2d6 at 5th, 3d6 at 9th, 4d6 at 13th, 5d6 at 17th)"}]}},
+
+ {"id":"strike-breathe-rend","verdict":"NEEDS_NOTHING","reason":"A 1-action follow-up resolved at the table — it deals spirit damage to the creature you just hit, equal to the weapon's damage dice. Only the target takes anything."},
+
+ {"id":"strike-hard","verdict":"NEEDS_NOTHING","reason":"A commander tactic whose entire effect is an ALLY making a Strike as a reaction."},
+
+ {"id":"stubborn","verdict":"MISS","reason":"The Will expert rank IS delivered (advancement.ts, gunslinger level 3, source 'stubborn'), but the second save against the controlled condition — a real player-facing benefit tied to a condition the sheet tracks — is recorded nowhere.","fix":{"situational":[{"on":"condition","id":"controlled","value":"extra save at the start of your next turn","note":"Stubborn: when you fail (but don't critically fail) a Will save against an effect that would make you controlled, you can attempt a second save at the start of your next turn; on a success the controlled condition ends (other effects remain). No third save."}]}},
+
+ {"id":"stupefying-raid","verdict":"NEEDS_NOTHING","reason":"A commander tactic: squadmates Stride and enemies save against your class DC or become stupefied. Everything it changes is an ally's action or a target's condition."},
+
+ {"id":"surprise-attack","verdict":"NEEDS_NOTHING","reason":"It changes the TARGETS' statistics — creatures that haven't acted are off-guard to you on the first round — rather than any statistic on the rogue's own sheet; whether it applies is decided per encounter at the table."},
+
+ {"id":"swarming-assault","verdict":"NEEDS_NOTHING","reason":"An eidolon action resolved at the table: area damage against your spell DC with a 1d4-round cooldown. Only targets are affected."},
+
+ {"id":"swift-prey","verdict":"MISS","reason":"An auto-granted level-19 ranger feature that changes the ACTION COST of Hunt Prey (2 actions → free, as your first action). Nothing marks the hunt-prey action, so a level-19 ranger sees no change at all.","fix":{"situational":[{"on":"action","id":"hunt-prey","value":"free action (first action of your turn)","note":"Swift Prey: you can use Hunt Prey as a free action if it's your first action of your turn."}]}},
+
+ {"id":"tactical-takedown","verdict":"NEEDS_NOTHING","reason":"A commander tactic: allies Stride as reactions and an enemy saves against your class DC or falls prone. Ally- and target-side only."},
+
+ {"id":"take-the-high-ground","verdict":"NEEDS_NOTHING","reason":"A commander tactic: the Stride and the boosted Leap belong to squadmates (the legendary Warfare Lore clause only lengthens THEIR leap)."},
+
+ {"id":"tangle-line","verdict":"MISS","reason":"An inventor weapon modification whose whole content is 'your innovation gains the parry, ranged trip and tethered traits' — real traits on the weapon the character actually wields, delivered nowhere.","fix":{"needsEngineWork":true,"note":"weaponTraits is the right lane but its match can only say melee/ranged, groups, anyTrait or fixed core.json item ids — there is no way to scope it to 'the inventor's chosen innovation', and an unmatched grant would add parry/ranged trip/tethered to every weapon wielded (over-grant)."}},
+
+ {"id":"taunt","verdict":"NEEDS_NOTHING","reason":"Its whole content is 'you gain the Taunt action' — an ACTION resolved at the table; the Taunt record already exists in core.actions and carries the rules text."},
+
+ {"id":"teacher-of-heroes","verdict":"NEEDS_NOTHING","reason":"A free Recall Knowledge after Spark Transcendence that hands information (immunities/resistances/weaknesses/lowest save) to you and your allies. It changes no statistic; the GM supplies the answer."},
+
+ {"id":"tempered-reflexes","verdict":"MISS","reason":"The Reflex master rank IS delivered (advancement.ts, fighter level 15, source 'tempered-reflexes'), but the evasion clause — a success on a Reflex save becomes a critical success — is recorded nowhere, though the same shape ships for 'irrepressible' and 'cantorian-reinforcement'.","fix":{"situational":[{"targets":[{"kind":"save","detail":"reflex"}],"when":"on any Reflex save","bonus":"a success is a critical success instead"}]}},
+
+ {"id":"tempest","verdict":"MISS","reason":"The oracle class record's mystery option delivers the tradition spells, Nature via grants.skills and the revelation focus spells (tempest-touch / thunderburst / tempest-form) — but not the mystery's free Oracle Feat, Foretell Harm. 'foretell-harm' appears in core.json only as the feat record and a descRef label, never as a grant.","fix":{"grantsFeats":["foretell-harm"]}},
+
+ {"id":"tempest-sun-mages","verdict":"MISS","reason":"Its entire mechanical content is an Additional Curriculum — 11 spells added to the wizard's curriculum — and the school appears in core.json only as a bare {value,label} option with no grant, so choosing it changes nothing the spell picker offers.","fix":{"spellListAdditions":{"spells":["ignition","breathe-fire","fleet-step","blazing-bolt","fireball","fly","elemental-form","wall-of-force","fiery-body","monstrosity-form","implosion"]}}},
+
+ {"id":"tendril-strike","verdict":"NEEDS_NOTHING","reason":"An eidolon action resolved at the table: one Strike with +5 feet of reach (or the matching disarm/shove/trip). No standing statistic changes."},
+
+ {"id":"tensile-absorption","verdict":"MISS","reason":"An inventor armor modification granting resistance to bludgeoning damage equal to half your level while wearing your armor innovation. It carries no resistances field, so the resistance never appears on the sheet. The 'while wearing your armor innovation' clause has no gate in the engine; an armor-innovation inventor is assumed to be wearing it.","fix":{"resistances":[{"type":"bludgeoning","value":"floor(@actor.level/2)"}]}},
+
+ {"id":"thaumaturgic-expertise","verdict":"MISS","reason":"The class DC expert rank IS delivered (advancement.ts, thaumaturge level 9, source 'thaumaturgic-expertise'), but the ADDITIONAL skill increase — restricted to Arcana, Nature, Occultism or Religion — is a pick the player never gets to make.","fix":{"needsEngineWork":true,"note":"BuildState.skillIncreases is Record<level, ProficiencyKey>: exactly one increase per level, so a second increase at level 9 (restricted to four skills) cannot be represented or offered in the builder."}},
+
+ {"id":"thaumaturgic-mastery","verdict":"MISS","reason":"The class DC master rank IS delivered (advancement.ts, thaumaturge level 17, source 'thaumaturgic-mastery'), but the additional skill increase restricted to Arcana/Nature/Occultism/Religion is never offered.","fix":{"needsEngineWork":true,"note":"Same as thaumaturgic-expertise: skillIncreases is keyed one-per-level, so a second, restricted increase at level 17 has nowhere to live."}},
+
+ {"id":"the-inscribed-one","verdict":"ALREADY_OK","reason":"Delivered by the witch class record's patron SubclassOption — arcane tradition, Arcana via grants.skills, focusSpells:['discern-secrets']. The familiar's Runic Weapon and its flanking trick are familiar-side."}
+]}

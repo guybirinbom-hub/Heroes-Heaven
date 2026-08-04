@@ -1,0 +1,481 @@
+{
+ "records": [
+  {
+   "id": "field-discovery-bomber",
+   "verdict": "MISS",
+   "reason": "The bomber's 5th-level field discovery changes the player's own bomb splash damage to their Int modifier and nothing delivers it (no field on the record, no registry entry, and classes.alchemist.subclass option 'bomber' is bare). The codebase's lane for exactly this wording is a situational strikeDamage entry — see 'expanded-splash' in situationalBonuses.ts, which puts +Int on a bomb's splash the same way.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "strikeDamage" }],
+      "when": "to a thrown alchemical bomb's splash damage, when you choose to",
+      "bonus": "splash equals your Intelligence modifier (minimum 1) instead of the normal amount"
+     }
+    ]
+   }
+  },
+  {
+   "id": "field-discovery-chirurgeon",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The temporary Hit Points land on whatever creature drinks the elixir (usually an ally) at the moment it is drunk — a target-side, table-applied value, not a standing statistic of the alchemist.",
+   "fix": {}
+  },
+  {
+   "id": "field-discovery-mutagenist",
+   "verdict": "MISS",
+   "reason": "A fortune reroll on the player's own Fortitude saves whenever a mutagen is active, delivered nowhere. Rerolls are an established situational-lane entry in this codebase (perfect-clarity, grit-and-tenacity, premonition-of-clarity in situationalBonuses.ts all encode 'reroll a failed save' this way).",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "save", "detail": "fortitude" }],
+      "when": "on a Fortitude save while affected by a mutagen",
+      "bonus": "you can end the mutagen to reroll the save (fortune)"
+     }
+    ]
+   }
+  },
+  {
+   "id": "field-of-roots",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 2-action eidolon activity whose entire content is damage and Speed/immobilized results imposed on enemies by their Reflex saves — target-side and resolved at the table; the activity itself is present in core.actions.field-of-roots.",
+   "fix": {}
+  },
+  {
+   "id": "fifth-doctrine",
+   "verdict": "ALREADY_OK",
+   "reason": "Subclass header that only names the doctrine choice; the mechanics live on the doctrine option records plus the doctrine-keyed ladders in CLASS_ADVANCEMENT (advancement.ts 'cleric' / 'warpriest' / 'battle-creed').",
+   "fix": {}
+  },
+  {
+   "id": "fifth-doctrine-cloistered-cleric",
+   "verdict": "ALREADY_OK",
+   "reason": "Pure proficiency: CLASS_ADVANCEMENT.cleric has { level 15, track 'spellcasting', rank 'master', source 'fifth-doctrine (cloistered)' } in advancement.ts, which covers both the spell attack modifier and the spell DC.",
+   "fix": {}
+  },
+  {
+   "id": "final-doctrine",
+   "verdict": "ALREADY_OK",
+   "reason": "Subclass header naming the doctrine only; the doctrine-specific records and the CLASS_ADVANCEMENT ladders carry the mechanics.",
+   "fix": {}
+  },
+  {
+   "id": "final-doctrine-cloistered-cleric",
+   "verdict": "ALREADY_OK",
+   "reason": "Pure proficiency: CLASS_ADVANCEMENT.cleric level 19 spellcasting → legendary, source 'final-doctrine (cloistered)' (advancement.ts).",
+   "fix": {}
+  },
+  {
+   "id": "final-doctrine-warpriest",
+   "verdict": "ALREADY_OK",
+   "reason": "Both halves are delivered: CLASS_ADVANCEMENT.warpriest level 19 spellcasting → master, and the deity's favored weapon reaches master at 19 through the per-weapon override in build.ts (favoredRank: warpriest → master at level >= 19, merged into proficiencies.weaponOverrides).",
+   "fix": {}
+  },
+  {
+   "id": "finish-the-job",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 1-action gunslinger deed that just makes another Strike under a stated multiple attack penalty — an action resolved at the table (present as core.actions.finish-the-job); no standing statistic changes.",
+   "fix": {}
+  },
+  {
+   "id": "fire-in-the-hole",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The reaction belongs to a planted bomb hazard and only deals damage to an object and to adjacent creatures — entirely target-side and GM-adjudicated; the reaction is present as core.actions.fire-in-the-hole.",
+   "fix": {}
+  },
+  {
+   "id": "first-doctrine",
+   "verdict": "ALREADY_OK",
+   "reason": "Subclass header that only names the doctrine; its mechanics live on the doctrine options (classes.cleric.subclass) and the doctrine-keyed CLASS_ADVANCEMENT ladders.",
+   "fix": {}
+  },
+  {
+   "id": "first-doctrine-cloistered-cleric",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered by the class pipeline: classes.cleric.subclass option 'cloistered-cleric' carries grantedFeats ['domain-initiate'], and domain-initiate itself carries focusPoolBonus 1.",
+   "fix": {}
+  },
+  {
+   "id": "flame-order",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered by the class pipeline: classes.druid.subclass option 'flame-order' carries grantedFeats ['fire-lung'], grants.skills ['acrobatics'] and focusSpells ['wildfire'] — the order skill, order feat and order spell in full.",
+   "fix": {}
+  },
+  {
+   "id": "flames",
+   "verdict": "MISS",
+   "reason": "Most of the mystery is delivered by classes.oracle.subclass option 'flames' (grantedSpells ignition/breathe-fire/blazing-bolt/fireball, grants.skills acrobatics, focusSpells incendiary-aura + advanced/greater revelation spells), but the mystery's granted oracle feat is not: the oracle class text states 'Oracle Feat — You gain this 1st-level oracle feat', and no oracle mystery option carries grantedFeats. Foretell Harm exists as core.feats.foretell-harm and is never handed over.",
+   "fix": {
+    "grantsFeats": ["foretell-harm"]
+   }
+  },
+  {
+   "id": "flash-of-grandeur",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A champion's reaction whose whole effect is resistance granted to an ALLY against one instance of damage plus a spell effect on the enemy — nothing touches the champion's own statistics; the reaction is present as core.actions.flash-of-grandeur.",
+   "fix": {}
+  },
+  {
+   "id": "fleeting-arc-through-heaven-and-earth",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 3-action transcendence activity: area damage against enemies' saves plus a teleport — an action resolved at the table (core.actions has the record); no standing statistic changes.",
+   "fix": {}
+  },
+  {
+   "id": "flicker-deviant-classification",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The whole record is flavour plus backlash results (persistent fire damage, immobilized, stupefied) that the GM applies when a deviant ability backlashes — event-time damage and conditions, never a standing effect. Consistent with every other deviant classification record, all of which are inert except dragon's damage-type pick.",
+   "fix": {}
+  },
+  {
+   "id": "fling-magic",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 2-action thaumaturge activity that deals damage to a target against your class DC, with an optional boost — an action resolved at the table (core.actions.fling-magic); it changes no statistic on the sheet.",
+   "fix": {}
+  },
+  {
+   "id": "flowing-spirit-strike",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A transcendence activity that makes two Strikes and combines their damage — an action resolved at the table (core.actions.flowing-spirit-strike); the Strike numbers themselves come from the weapon.",
+   "fix": {}
+  },
+  {
+   "id": "formula-book",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Formula lists are downtime Crafting bookkeeping and the app deliberately does not gate on them — AlchemyPanel.tsx states 'Formulas aren't tracked, so the picker offers every alchemical item you're eligible for', so no formula pick is needed for the player to use anything the formula book would unlock.",
+   "fix": {}
+  },
+  {
+   "id": "fortitude-expertise",
+   "verdict": "ALREADY_OK",
+   "reason": "Pure proficiency increase on an auto-granted feature; every listed class has its own Fortitude→expert entry in CLASS_ADVANCEMENT (advancement.ts), which is keyed by class rather than by feature id.",
+   "fix": {}
+  },
+  {
+   "id": "fortress-of-will",
+   "verdict": "MISS",
+   "reason": "Will→legendary is delivered (CLASS_ADVANCEMENT.psychic level 17 will legendary, source 'fortress-of-will'), but the two degree-of-success riders are delivered nowhere — no field, no registry entry, and nothing in src infers them from rank. The codebase's lane for this wording is a situational entry (paragon-benefit-regalia, intuitive-crafting, and the judged siblings divine-will/dogged-will).",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "save", "detail": "will" }],
+      "when": "on every Will save",
+      "bonus": "a critical failure is a failure instead; on a failure against a damaging effect you take half damage"
+     }
+    ]
+   }
+  },
+  {
+   "id": "fourth-apparition",
+   "verdict": "ALREADY_OK",
+   "reason": "Both halves are delivered: classes.animist.extraChoices 'apparition' has pickByLevel {1:2, 7:3, 15:4} (and build.ts resolves the primary apparition), and build.ts sets the animist focus pool to 1 + (level>=7) + (level>=15), capped at 3.",
+   "fix": {}
+  },
+  {
+   "id": "fourth-doctrine",
+   "verdict": "ALREADY_OK",
+   "reason": "Subclass header naming the doctrine only; the mechanics live on the doctrine option records and the doctrine-keyed CLASS_ADVANCEMENT ladders.",
+   "fix": {}
+  },
+  {
+   "id": "fourth-doctrine-warpriest",
+   "verdict": "ALREADY_OK",
+   "reason": "Pure proficiency: CLASS_ADVANCEMENT.warpriest level 11 spellcasting → expert, source 'fourth-doctrine (warpriest)' (advancement.ts), covering spell attack modifier and spell DC.",
+   "fix": {}
+  },
+  {
+   "id": "fracture-mountains",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A transcendence activity: one Strike with the Titan's Breaker that spends the ikon's immanence for extra damage on that Strike — an action resolved at the table (core.actions.fracture-mountains); the standing immanence bonus itself lives on titans-breaker, which already has a situationalBonuses entry.",
+   "fix": {}
+  },
+  {
+   "id": "fungal-rot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Purely a deviant backlash table — self-damage and sickened applied by the GM when a deviant ability backlashes, never a standing effect on the sheet.",
+   "fix": {}
+  },
+  {
+   "id": "gather-to-me",
+   "verdict": "ALREADY_OK",
+   "reason": "It is pickable where the app expects tactics: core.actions.gather-to-me carries traits ['commander','tactic'] and tacticTier 'basic', so commanderTacticOptions (build.ts) offers it in the Tactics folio. Its effect (squadmates Stride as a reaction) is ally-side and resolved at the table.",
+   "fix": {}
+  },
+  {
+   "id": "gathered-lore",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered by the class pipeline: classes.psychic.extraChoices 'subconscious-mind' option 'gathered-lore' carries keyAbility 'int', which is the whole mechanical content (the Psyche Action, Recall the Teachings, is an action resolved at the table).",
+   "fix": {}
+  },
+  {
+   "id": "ghost-shot",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 1-action gunslinger deed: a Strike that borrows One Shot, One Kill's precision damage when you are hidden, plus a change to your detection state — an action resolved at the table (core.actions.ghost-shot).",
+   "fix": {}
+  },
+  {
+   "id": "giant-felling-comet",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A transcendence activity dealing area damage against enemies' saves, with a penalty to THEIR saving throws — target-side and resolved at the table (core.actions.giant-felling-comet).",
+   "fix": {}
+  },
+  {
+   "id": "giant-instinct",
+   "verdict": "MISS",
+   "reason": "The instinct's rage damage IS delivered (derive.ts RAGE_DAMAGE['giant-instinct'] tiers 6/10/18 with the larger-weapon note), but Raging Resistance (9th) is not — nothing grants resistance 3 + Con to bludgeoning and a chosen energy type while raging, and the sibling dragon-instinct record openly admits it ('Raging Resistance (9th) isn't applied'). The bludgeoning half fits the whileActive 'rage' lane; the cold/electricity/fire PICK does not, because EffectGrant (types.ts) has no whileActive member, so an effectChoices option could only grant the energy resistance unconditionally, which would over-grant it outside rage.",
+   "fix": {
+    "whileActive": [
+     {
+      "state": "rage",
+      "resistances": [
+       { "type": "bludgeoning", "value": "(3+@actor.abilities.con.mod)*min(1,max(0,@actor.level-8))" }
+      ]
+     }
+    ],
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "gleaming-blade",
+   "verdict": "MISS",
+   "reason": "The ikon's immanence adds 2 spirit damage per weapon damage die to the player's own Strikes and nothing delivers it — the record carries no field and there is no situationalBonuses entry, while the identical sibling ikons do have one (titans-breaker: '+2 spirit damage per weapon damage die'; hands-of-the-wildling).",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "strikeDamage" }],
+      "when": "with the gleaming blade while its immanence is empowered",
+      "bonus": "+2 spirit damage per weapon damage die"
+     }
+    ]
+   }
+  },
+  {
+   "id": "glimpse-of-redemption",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A champion's reaction: the ALLY is unharmed or gains resistance against one instance of damage and the enemy becomes enfeebled — entirely ally/target-side, resolved at the table (core.actions.glimpse-of-redemption).",
+   "fix": {}
+  },
+  {
+   "id": "gluttony",
+   "verdict": "ALREADY_OK",
+   "reason": "This is a Thassilonian sin, and the pick plus its mechanics live on classFeatures.runelord's effectChoices 'sin': option 'gluttony' grants focusSpells ['all-encompassing-hunger'] and its note records the curriculum sin spells and the anathema.",
+   "fix": {}
+  },
+  {
+   "id": "godly-expertise",
+   "verdict": "ALREADY_OK",
+   "reason": "Pure proficiency increase on an auto-granted feature — CLASS_ADVANCEMENT.exemplar raises classDc to expert at level 9 (advancement.ts), keyed by class.",
+   "fix": {}
+  },
+  {
+   "id": "graceful-legend",
+   "verdict": "ALREADY_OK",
+   "reason": "All three halves are pure proficiency and all three are in CLASS_ADVANCEMENT.monk at level 17: unarmored → legendary, classDc → master, spellcasting → master, all sourced 'graceful-legend' (advancement.ts).",
+   "fix": {}
+  },
+  {
+   "id": "graceful-mastery",
+   "verdict": "ALREADY_OK",
+   "reason": "Pure proficiency: CLASS_ADVANCEMENT.monk level 13 unarmored → master, source 'graceful-mastery' (advancement.ts).",
+   "fix": {}
+  },
+  {
+   "id": "grandeur",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The cause's mechanical content is its champion's reaction (Flash of Grandeur, present as core.actions.flash-of-grandeur) and two later upgrades to that same reaction, all of which act on the triggering enemy and the damaged ally; the edicts and anathema are roleplay. Nothing in it changes the champion's own statistics.",
+   "fix": {}
+  },
+  {
+   "id": "greater-creed",
+   "verdict": "ALREADY_OK",
+   "reason": "Pure proficiency: CLASS_ADVANCEMENT['battle-creed'] level 11 spellcasting → expert, source 'greater-creed' (advancement.ts).",
+   "fix": {}
+  },
+  {
+   "id": "greater-deed",
+   "verdict": "ALREADY_OK",
+   "reason": "Header whose whole content is 'you gain the greater deed of the way you chose'; the mechanics live on the gunslinger way option records (classes.gunslinger.subclass), not here.",
+   "fix": {}
+  },
+  {
+   "id": "greater-dogged-will",
+   "verdict": "MISS",
+   "reason": "Will→legendary is delivered (CLASS_ADVANCEMENT.investigator level 17, source 'greater-dogged-will'), but the three degree-of-success riders are delivered nowhere; the situational lane is the codebase's place for them (cf. the already-judged dogged-will).",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "save", "detail": "will" }],
+      "when": "on every Will save",
+      "bonus": "a success is a critical success and a critical failure is a failure; on a failure against a damaging effect you take half damage"
+     }
+    ]
+   }
+  },
+  {
+   "id": "greater-eidolon-specialization",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered in companions.ts: the eidolon weapon specialization flat is +2/+3/+4 at level 7 and doubles to +4/+6/+8 at level 15 for Greater Eidolon Specialization (companions.ts eidolon Strike derivation).",
+   "fix": {}
+  },
+  {
+   "id": "greater-field-discovery",
+   "verdict": "ALREADY_OK",
+   "reason": "Generic header pointing at the research field; the mechanics live on the four greater-field-discovery-<field> records, exactly as the already-judged 'field-discovery' header does.",
+   "fix": {}
+  },
+  {
+   "id": "greater-field-discovery-bomber",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "It only widens the splash AREA to 10 (or 15) feet — a measurement made on the table when the bomb lands, not a statistic on the sheet; the damage side of expanded splash is already carried by the expanded-splash situational entry.",
+   "fix": {}
+  },
+  {
+   "id": "greater-field-discovery-chirurgeon",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "It replaces the healing ROLL of an elixir of life with its maximum — a die result taken at the table, applied to whichever creature is healed; no standing statistic changes.",
+   "fix": {}
+  },
+  {
+   "id": "greater-field-discovery-mutagenist",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "It lifts a restriction the sheet never enforced: the 200-odd mutagen item modes in core.modes carry no exclusiveGroup, so two mutagen modes can already be active at once; the drawback bookkeeping when a third arrives is table-side.",
+   "fix": {}
+  },
+  {
+   "id": "greater-field-discovery-toxicologist",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The effect happens entirely on the far side of the table — a failed save by an enemy exposes a second adjacent creature to the poison; nothing about the alchemist changes.",
+   "fix": {}
+  },
+  {
+   "id": "greater-juggernaut",
+   "verdict": "MISS",
+   "reason": "Fortitude→legendary is delivered (CLASS_ADVANCEMENT.barbarian level 13, source 'greater-juggernaut'), but the crit-fail-becomes-failure and half-damage-on-a-failed-save riders are delivered nowhere — no field, no registry entry, nothing derived from rank.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "save", "detail": "fortitude" }],
+      "when": "on every Fortitude save",
+      "bonus": "a critical failure is a failure instead; on a failure against a damaging effect you take half damage"
+     }
+    ]
+   }
+  },
+  {
+   "id": "greater-kinetic-durability",
+   "verdict": "MISS",
+   "reason": "Fortitude→legendary is delivered (CLASS_ADVANCEMENT.kineticist level 15, source 'greater-kinetic-durability'); the crit-fail-becomes-failure and half-damage riders are not delivered anywhere.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "save", "detail": "fortitude" }],
+      "when": "on every Fortitude save",
+      "bonus": "a critical failure is a failure instead; on a failure against a damaging effect you take half damage"
+     }
+    ]
+   }
+  },
+  {
+   "id": "greater-mysterious-resolve",
+   "verdict": "MISS",
+   "reason": "Will→legendary is delivered (CLASS_ADVANCEMENT.oracle level 17, source 'greater-mysterious-resolve'); the success→critical-success, critical-failure→failure and half-damage riders are delivered nowhere.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "save", "detail": "will" }],
+      "when": "on every Will save",
+      "bonus": "a success is a critical success and a critical failure is a failure; on a failure against a damaging effect you take half damage"
+     }
+    ]
+   }
+  },
+  {
+   "id": "greater-natural-reflexes",
+   "verdict": "MISS",
+   "reason": "Reflex→legendary is delivered (CLASS_ADVANCEMENT.ranger level 15, source 'greater-natural-reflexes'); the crit-fail-becomes-failure and half-damage riders are not.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "save", "detail": "reflex" }],
+      "when": "on every Reflex save",
+      "bonus": "a critical failure is a failure instead; on a failure against a damaging effect you take half damage"
+     }
+    ]
+   }
+  },
+  {
+   "id": "greater-performers-heart",
+   "verdict": "MISS",
+   "reason": "Will→legendary is delivered (CLASS_ADVANCEMENT.bard level 17, source 'greater-performers-heart'); the crit-fail-becomes-failure and half-damage riders are delivered nowhere.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "save", "detail": "will" }],
+      "when": "on every Will save",
+      "bonus": "a critical failure is a failure instead; on a failure against a damaging effect you take half damage"
+     }
+    ]
+   }
+  },
+  {
+   "id": "greater-rogue-reflexes",
+   "verdict": "MISS",
+   "reason": "Reflex→legendary is delivered (CLASS_ADVANCEMENT.rogue level 13, source 'greater-rogue-reflexes'); the crit-fail-becomes-failure and half-damage riders are not delivered anywhere.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "save", "detail": "reflex" }],
+      "when": "on every Reflex save",
+      "bonus": "a critical failure is a failure instead; on a failure against a damaging effect you take half damage"
+     }
+    ]
+   }
+  },
+  {
+   "id": "greater-unassailable-soul",
+   "verdict": "MISS",
+   "reason": "Will→legendary is delivered (CLASS_ADVANCEMENT.exemplar level 13, source 'greater-unassailable-soul'); the success→critical-success, critical-failure→failure and half-damage riders are delivered nowhere.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [{ "kind": "save", "detail": "will" }],
+      "when": "on every Will save",
+      "bonus": "a success is a critical success and a critical failure is a failure; on a failure against a damaging effect you take half damage"
+     }
+    ]
+   }
+  },
+  {
+   "id": "greed",
+   "verdict": "ALREADY_OK",
+   "reason": "A Thassilonian sin: the pick and its mechanics live on classFeatures.runelord's effectChoices 'sin' — option 'greed' grants focusSpells ['precious-gleam'] with its curriculum sin spells and anathema recorded in the note.",
+   "fix": {}
+  },
+  {
+   "id": "guardian-expertise",
+   "verdict": "ALREADY_OK",
+   "reason": "Pure proficiency increase on an auto-granted feature — CLASS_ADVANCEMENT.guardian raises classDc to expert at level 9 (advancement.ts), keyed by class.",
+   "fix": {}
+  },
+  {
+   "id": "guardians-armor",
+   "verdict": "MISS",
+   "reason": "Auto-granted at guardian 1 and completely invisible: resistance to physical damage equal to 1 + half your level while in medium or heavy armor is delivered nowhere (the record has no resistances field and no other guardian feature supplies it). A bare resistances field would over-grant it to a guardian in light or no armor — resistance entries accept only type and value, with no condition — so the armour gate belongs in a mode, which the mode system supports (modes carry resistances, and modes.ts gates on class-FEATURE ids via featIds). The 'rest normally in armor' clause needs nothing: sleeping-in-armor is not modelled.",
+   "fix": {
+    "mode": {
+     "id": "guardians-armor",
+     "name": "Guardian's Armor",
+     "feats": ["guardians-armor"],
+     "duration": "while wearing medium or heavy armor",
+     "resistances": [{ "type": "physical", "value": "1+floor(@actor.level/2)" }],
+     "note": "While wearing medium or heavy armor you have resistance to physical damage equal to 1 + half your level. You can also rest normally in medium and heavy armor."
+    }
+   }
+  },
+  {
+   "id": "guardians-calling",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Selectable as a Mythic Calling, and its whole content is spending a Mythic Point to roll one Disarm/Reposition/Shove check at mythic proficiency and regaining a point on a critical success — the mythic point pool is already tracked in play state (play.ts mythicPoints, refilled on rest), and the swap is a one-check, table-time decision. Same verdict as the judged doomsayers-calling and dreamers-calling.",
+   "fix": {}
+  }
+ ]
+}

@@ -1,0 +1,121 @@
+{"records":[
+ {"id":"guardians-techniques","verdict":"NEEDS_NOTHING","reason":"Grants the Intercept Attack reaction and an extra initiative reaction — both are actions/table adjudication, no standing statistic changes."},
+
+ {"id":"gunslingers-way","verdict":"ALREADY_OK","reason":"Subclass HEADER only: it names the Way choice. The deed, slinger's reload and skill live on the chosen way option (SubclassOption.skillChoice/grants), which build.ts resolves via subOption."},
+
+ {"id":"gunslinging-legend","verdict":"ALREADY_OK","reason":"Pure proficiency. Firearms/crossbows legendary(simple+martial)/master(advanced) at 13 come from proficiencies.firearmProf in build.ts (level>=13 branch); the generic weapon categories are deliberately not advanced for a gunslinger per the note in advancement.ts."},
+
+ {"id":"hampering-spikes","verdict":"MISS","reason":"Adds hampering, trip and versatile P to the inventor's innovation weapon. weaponTraits is a FEAT-only field (derive.ts weaponRiderTraits reads db.feats only) and is not on the ClassFeature type, and nothing marks WHICH inventory weapon is the innovation — writing an unfiltered rider would over-grant to every wielded weapon. Needs an innovation-item designation + a classFeature weaponTraits lane.","fix":{"needsEngineWork":true}},
+
+ {"id":"handlers-calling","verdict":"MISS","reason":"Mythic Points exist as a play resource but the calling is display-only (build.ts grantedFeatures). The Command an Animal option is a real, repeatable player choice and belongs on the action.","fix":{"situational":[{"on":"action","id":"command-an-animal","value":"mythic proficiency (1 Mythic Point)","note":"Handler's Calling: spend a Mythic Point to attempt the check at mythic proficiency. The first time each day you critically succeed to Make an Impression on a wild animal or Command an Animal that isn't your pet or companion, you regain a Mythic Point."}]}},
+
+ {"id":"haunting-visage","verdict":"NEEDS_NOTHING","reason":"An eidolon action that resolves a Demoralize attempt against a target; the trait swap and the off-guard result are the target's side of the check."},
+
+ {"id":"healer-of-the-world","verdict":"NEEDS_NOTHING","reason":"Changes other creatures' statistics (removes dying, grants allies temporary HP) after a Spark Transcendence — ally-side only."},
+
+ {"id":"heaven-rains-an-ending","verdict":"NEEDS_NOTHING","reason":"A three-action Strike activity resolved at the table; the –2 penalty and the deferred multiple attack penalty apply only inside that one activity."},
+
+ {"id":"heavy-construction","verdict":"MISS","reason":"Rewrites the innovation armour to a printed heavy-armour stat block (AC +5, Dex cap +1, check –2, Speed –10/0, Str +3, Bulk 3, bulwark + entrench) and sets innovation-armour proficiency equal to medium. There is no innovation ARMOUR item to restat — build.inventorArmorStats only picks power-suit/subterfuge-suit — and no per-item armour proficiency lane.","fix":{"needsEngineWork":true}},
+
+ {"id":"heavy-is-the-crown","verdict":"NEEDS_NOTHING","reason":"A transcendence action that damages enemies and knocks them prone — entirely target-side, resolved at the table."},
+
+ {"id":"hefty-composition","verdict":"MISS","reason":"Adds shove, razing and versatile B to the innovation weapon. Same gap as the other weapon-innovation modifications: weaponTraits is feat-only and no inventory item is designated as the innovation.","fix":{"needsEngineWork":true}},
+
+ {"id":"horn-of-plenty","verdict":"MISS","reason":"An ikon that hands the player 1 (2 at 8th, 3 at 16th) temporary elixirs/potions of their level or lower, each individually chosen, refreshed at daily preparations. That is a real pick and real inventory; there is no daily temporary-consumable lane (advancedAlchemy is alchemist-only and feat-keyed).","fix":{"needsEngineWork":true}},
+
+ {"id":"humble-strikes","verdict":"MISS","reason":"Auto-granted at exemplar 1 and completely invisible: every simple weapon the character wields should show one damage die size larger. unarmedTraits.stepDie is unarmed-only, weaponTraits has no stepDie, and neither field exists on ClassFeature. Needs a wielded-weapon die-step lane filtered to simple weapons.","fix":{"needsEngineWork":true}},
+
+ {"id":"hunt-prey","verdict":"ALREADY_OK","reason":"The action ships as core.actions 'hunt-prey' and the hunted state is a live toggle — CLASS_RESOURCES['ranger'] hunt-prey (classResources.ts), which whileActive/mapReduction whileState:'hunt-prey' read."},
+
+ {"id":"hunters-calling","verdict":"MISS","reason":"Mythic Points are tracked in play but the calling is display-only; the Seek/Track option never reaches the sheet.","fix":{"situational":[{"on":"action","id":"seek","value":"mythic proficiency (1 Mythic Point)","note":"Hunter's Calling: spend a Mythic Point to attempt the check at mythic proficiency. The first time each day you critically succeed to Seek or Track a hostile or unfriendly creature, you regain a Mythic Point."},{"on":"action","id":"track","value":"mythic proficiency (1 Mythic Point)","note":"Hunter's Calling: spend a Mythic Point to attempt the check at mythic proficiency."}]}},
+
+ {"id":"implement-adept","verdict":"ALREADY_OK","reason":"build.ts resolves build.implementAdept (defaulting to the first implement) and pushes the matching 'adept-benefit-<implement>' classFeature into classChoices at level 7, so the pick and the benefit both arrive."},
+
+ {"id":"implement-paragon","verdict":"ALREADY_OK","reason":"build.ts resolves build.implementParagon against the implements that already gained adept and pushes 'paragon-benefit-<implement>' into classChoices at level 17."},
+
+ {"id":"implements-empowerment","verdict":"MISS","reason":"+2 damage per weapon damage die on every Strike is the thaumaturge's core damage feature and nothing shows it. It is conditional (must hold an implement, nothing else in either hand but one one-handed weapon/implements/esoterica) and 'per weapon damage die' is not expressible by strikeDamage.flat, so it belongs in the situational lane.","fix":{"situational":[{"targets":[{"kind":"strikeDamage"}],"when":"holding an implement and nothing but a one-handed weapon","bonus":"+2 per weapon damage die"}]}},
+
+ {"id":"implements-interruption","verdict":"NEEDS_NOTHING","reason":"A triggered reaction Strike; the MAP exemption applies only inside that reaction, resolved at the table."},
+
+ {"id":"impossible-alloy","verdict":"NEEDS_NOTHING","reason":"Only decides whether a TARGET's skymetal weakness applies — the text explicitly excludes every other skymetal effect, so nothing on the player's sheet changes."},
+
+ {"id":"impostor-in-hidden-places","verdict":"ALREADY_OK","reason":"The animist apparition option carries grantedSpells (telekinetic-hand … phantasmagoria) and focusSpells ['discomfiting-whispers'], and the apparition-lore effectChoices option grants lore:fortune-telling + lore:underworld as trained. The Avatar stat block is a form resolved at the table."},
+
+ {"id":"improved-flexibility","verdict":"ALREADY_OK","reason":"build.ts pushes an extra 'bonus' feat slot for a fighter at level 15 as well as level 9, so a 15th-level fighter fills two flexibility feats — exactly what this feature grants."},
+
+ {"id":"inconspicuous-appearance","verdict":"MISS","reason":"Adds backstabber and versatile P (plus concealable when light Bulk) to the innovation weapon. Same innovation-item gap: weaponTraits is feat-only and no inventory item is the innovation.","fix":{"needsEngineWork":true}},
+
+ {"id":"indomitable-will","verdict":"MISS","reason":"The Will-master half is ALREADY delivered by CLASS_ADVANCEMENT.barbarian level 15 'indomitable-will', but the degree upgrade ('a success is a critical success') is unconditional, real, and shown nowhere. The situational lane is the precedent for degree upgrades (see breath-control, forlorn).","fix":{"situational":[{"targets":[{"kind":"save","detail":"will"}],"when":"on every Will save","bonus":"a success becomes a critical success"}]}},
+
+ {"id":"infinite-invention","verdict":"NEEDS_NOTHING","reason":"Daily-preparation repair plus permission to re-pick the innovation and retrain dependent feats — a rebuild/downtime allowance, and the builder already lets the innovation and its modifications be changed at any time."},
+
+ {"id":"infused-reagents","verdict":"ALREADY_OK","reason":"Legacy pre-Remaster record; it is not listed in any class's features (no \"featureId\":\"infused-reagents\" in core.json). The alchemist's daily pool ships as CLASS_RESOURCES['alchemist'] Versatile Vials (classResources.ts) with the advancedAlchemy lane on top."},
+
+ {"id":"iniquity","verdict":"NEEDS_NOTHING","reason":"The cause grants the Destructive Vengeance reaction (an action resolved at the table); the 9th-level persistent spirit damage and the 11th-level splash both change damage dealt to ENEMIES, never the champion's own statistics."},
+
+ {"id":"initiate-benefit-amulet","verdict":"NEEDS_NOTHING","reason":"Grants the Amulet's Abeyance reaction — an action resolved at the table whose effect lands on the protected ally."},
+
+ {"id":"initiate-benefit-bell","verdict":"NEEDS_NOTHING","reason":"Grants the Ring Bell activity; all three musics weaken a foe, so the effects are target-side."},
+
+ {"id":"initiate-benefit-chalice","verdict":"NEEDS_NOTHING","reason":"Grants the Drink from the Chalice action — an action resolved at the table that heals you or an ally."},
+
+ {"id":"initiate-benefit-mirror","verdict":"NEEDS_NOTHING","reason":"Grants the Mirror's Reflection action — an action resolved at the table."},
+
+ {"id":"initiate-benefit-wand","verdict":"MISS","reason":"Beyond the Fling Magic activity it makes the player choose the wand's attunement (cold, electricity or fire) once, and that pick is asked nowhere. effectChoices records a pick even when the option carries no stat grant (build.ts effectPicks), which is exactly this case.","fix":{"effectChoices":[{"id":"wand-attunement","prompt":"Choose your wand implement's attunement","options":[{"value":"cold","label":"Cold","note":"Fling Magic deals cold damage."},{"value":"electricity","label":"Electricity","note":"Fling Magic deals electricity damage."},{"value":"fire","label":"Fire","note":"Fling Magic deals fire damage."}]}]}},
+
+ {"id":"initiate-benefit-weapon","verdict":"MISS","reason":"The reaction half is fine, but from 5th level this grants weapon critical specialization with the weapon implement and no Strike ever shows it. critSpec must be paired with critSpecWeapons and there is no way to say 'the weapon you designated as your implement' — an unfiltered critSpec would over-grant to every weapon.","fix":{"needsEngineWork":true}},
+
+ {"id":"instant-manifestation","verdict":"MISS","reason":"Auto-granted at summoner 19 and invisible: Manifest Eidolon drops from a three-action activity to a single action. That is a change to an ACTION, and core.actions 'manifest-eidolon' exists.","fix":{"situational":[{"on":"action","id":"manifest-eidolon","value":"1 action","note":"Instant Manifestation: you can use Manifest Eidolon as a single action instead of a three-action activity."}]}},
+
+ {"id":"instinct","verdict":"ALREADY_OK","reason":"Subclass HEADER only: it names the Instinct choice. The ability, anathema, specialization damage and instinct resistances live on the chosen instinct option, resolved through subOption/grantOptions."},
+
+ {"id":"integrated-gauntlet","verdict":"MISS","reason":"Adds the free-hand trait to the innovation weapon (excluding two-hand/fatal aim). Same innovation-item gap: weaponTraits is feat-only and no inventory item is designated as the innovation.","fix":{"needsEngineWork":true}},
+
+ {"id":"intensify-vulnerability","verdict":"NEEDS_NOTHING","reason":"Grants the Intensify Vulnerability action; the per-implement intensify benefits are described inside each implement's own text and all resolve against the creature you Exploited — target side."},
+
+ {"id":"intercept-attack","verdict":"NEEDS_NOTHING","reason":"A reaction resolved at the table (move, then take an ally's damage using your own IWR); it changes who takes damage, not any standing statistic."},
+
+ {"id":"into-the-fray","verdict":"NEEDS_NOTHING","reason":"A free action triggered by rolling initiative — drawing weapons and a Stride, all resolved at the table."},
+
+ {"id":"inventor-weapon-expertise","verdict":"MISS","reason":"The expert simple/martial/unarmed half is delivered by CLASS_ADVANCEMENT.inventor level 5, but 'if you have a Weapon Innovation you gain the critical specialization effect with your innovation' is delivered nowhere (the record carries no critSpec, and neither does weapon-innovation). critSpec cannot be restricted to the innovation because no inventory item is marked as it, and an unfiltered grant would over-grant to every weapon.","fix":{"needsEngineWork":true}},
+
+ {"id":"inventor-weapon-mastery","verdict":"ALREADY_OK","reason":"Pure proficiency: CLASS_ADVANCEMENT.inventor level 13 raises unarmed/simple/martial to master, sourced 'inventor-weapon-mastery'."},
+
+ {"id":"juggernaut","verdict":"MISS","reason":"The Fortitude-master half is ALREADY delivered by CLASS_ADVANCEMENT (barbarian level 7, magus level 15, both sourced 'juggernaut'), but the unconditional degree upgrade is modelled nowhere.","fix":{"situational":[{"targets":[{"kind":"save","detail":"fortitude"}],"when":"on every Fortitude save","bonus":"a success becomes a critical success"}]}},
+
+ {"id":"justice","verdict":"NEEDS_NOTHING","reason":"The cause grants the Retributive Strike reaction (an action resolved at the table); the 9th-level persistent damage lands on the target and the 11th-level upgrade lets ALLIES spend their own reactions — nothing touches the champion's own statistics."},
+
+ {"id":"keen-flair","verdict":"MISS","reason":"Auto-granted at swashbuckler 15 and shown nowhere: with a master-proficiency weapon or unarmed attack, a 19 that succeeds becomes a critical success. No crit-range field exists, but the situational lane is where degree upgrades are recorded.","fix":{"situational":[{"targets":[{"kind":"strikeAttack"}],"when":"with a weapon or unarmed attack you have master proficiency in","bonus":"a 19 on the die that succeeds becomes a critical success"}]}},
+
+ {"id":"kinetic-aura","verdict":"NEEDS_NOTHING","reason":"Grants the Channel Elements action, which activates the aura; the aura itself is descriptive and confers no standing statistic in this record."},
+
+ {"id":"kinetic-durability","verdict":"MISS","reason":"The Fortitude-master half is ALREADY delivered by CLASS_ADVANCEMENT.kineticist level 7 'kinetic-durability'; the unconditional degree upgrade is not.","fix":{"situational":[{"targets":[{"kind":"save","detail":"fortitude"}],"when":"on every Fortitude save","bonus":"a success becomes a critical success"}]}},
+
+ {"id":"kinetic-quickness","verdict":"MISS","reason":"The Reflex-master half is ALREADY delivered by CLASS_ADVANCEMENT.kineticist level 11 'kinetic-quickness'; the unconditional degree upgrade is not.","fix":{"situational":[{"targets":[{"kind":"save","detail":"reflex"}],"when":"on every Reflex save","bonus":"a success becomes a critical success"}]}},
+
+ {"id":"layered-mesh","verdict":"MISS","reason":"A chosen armour-innovation modification granting piercing resistance equal to half your level, and the Defenses card shows nothing. Inventor modifications ARE owned features (derive.ts ownedFeatureIds folds c.inventor.modifications in) and deriveDefenses reads a classFeature's resistances, so the field lands.","fix":{"resistances":[{"type":"piercing","value":"floor(@actor.level/2)"}]}},
+
+ {"id":"lead-constitution","verdict":"MISS","reason":"The Fortitude-master half is ALREADY delivered by CLASS_ADVANCEMENT.gunslinger level 17 'lead-constitution'; the unconditional degree upgrade is not.","fix":{"situational":[{"targets":[{"kind":"save","detail":"fortitude"}],"when":"on every Fortitude save","bonus":"a success becomes a critical success"}]}},
+
+ {"id":"leech-deviant-classification","verdict":"NEEDS_NOTHING","reason":"Flavour plus a backlash table (fascinated/confused at the GM's call after using a deviant ability) — GM-adjudicated conditions, not a standing statistic."},
+
+ {"id":"legendary-armor","verdict":"ALREADY_OK","reason":"Pure proficiency: CLASS_ADVANCEMENT.champion level 17 raises unarmored/light/medium/heavy to legendary, sourced 'legendary-armor'."},
+
+ {"id":"legendary-overdrive","verdict":"MISS","reason":"Neither half arrives. 'You become legendary in Crafting' is a SKILL rank from a class feature — ClassFeature has no skills lane and FEAT_GRANTS/FEAT_SKILL_GRANTS is keyed to feats only (featGrantsAuto.ts already carries an unused 'legendary-overdrive': {skills:{crafting:'legendary'}} entry that nothing reads for a class feature). The +3 Overdrive damage also has no home — the cat-overdrive mode in modes.ts ships with an empty modifiers array.","fix":{"needsEngineWork":true}},
+
+ {"id":"legendary-spellcaster","verdict":"ALREADY_OK","reason":"Pure proficiency: every listed class has a level-19 spellcasting-legendary row in CLASS_ADVANCEMENT sourced 'legendary-spellcaster' (bard line 38 and the same for animist/druid/oracle/psychic/sorcerer/witch/wizard)."},
+
+ {"id":"legendary-tactician","verdict":"MISS","reason":"Two of three halves land — CLASS_ADVANCEMENT.commander level 19 gives classDc legendary, and commanderFolioMax(level) adds +2 folio slots at 19 while commanderMaxTier unlocks legendary tactics. But 'the total number of tactics you can have prepared increases to six' never happens: build.ts hardcodes preparedMax: 3 + preparedBonus, and preparedTacticsBonus is a FEAT-only field read from content.feats.","fix":{"needsEngineWork":true}},
+
+ {"id":"lesson-of-bargains","verdict":"MISS","reason":"The Over the Coals hex reaches no focus spell list — nothing in core.json grants it, and Basic/Greater/Major Lesson only stores the pick in the feat's `choice` (flag basic_lesson) which the engine reads for kind:'domains' only. The familiar half is the familiar's, not the player's.","fix":{"focusSpells":["over-the-coals"]}},
+
+ {"id":"lesson-of-calamity","verdict":"MISS","reason":"The Stumbling Curse hex is granted by nothing in core.json (its only occurrence is the spell record itself); the lesson pick is stored on the Lesson feat's `choice` and never resolved into an owned feature. The familiar's Ill Omen is the familiar's, not the player's.","fix":{"focusSpells":["stumbling-curse"]}},
+
+ {"id":"lesson-of-death","verdict":"MISS","reason":"The Curse of Death hex never reaches the focus pool — same unresolved lesson-pick path as the other lessons. The familiar's Raise Dead is the familiar's.","fix":{"focusSpells":["curse-of-death"]}},
+
+ {"id":"lesson-of-decay","verdict":"MISS","reason":"The Mycological Malady hex never reaches the focus pool — same unresolved lesson-pick path. The familiar's Insect Form is the familiar's.","fix":{"focusSpells":["mycological-malady"]}},
+
+ {"id":"lesson-of-dreams","verdict":"MISS","reason":"The Veil of Dreams hex never reaches the focus pool — same unresolved lesson-pick path. The familiar's Sleep is the familiar's.","fix":{"focusSpells":["veil-of-dreams"]}},
+
+ {"id":"lesson-of-elements","verdict":"MISS","reason":"The Elemental Betrayal hex never reaches the focus pool — same unresolved lesson-pick path. The familiar's choice of Breathe Fire / Air Bubble / Hydraulic Push / Pummeling Rubble is the familiar's spell, not the player's.","fix":{"focusSpells":["elemental-betrayal"]}}
+]}

@@ -1,0 +1,495 @@
+{
+ "records": [
+  {
+   "id": "primal-roar",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 2-action eidolon action: the eidolon Demoralizes enemies that hear it. Everything it does lands on TARGETS (Intimidation vs each enemy, no language penalty) and is resolved at the table."
+  },
+  {
+   "id": "prodigious-will",
+   "verdict": "MISS",
+   "reason": "Will master at 17 is ALREADY delivered by CLASS_ADVANCEMENT wizard (advancement.ts: level 17 will/master, source prodigious-will), but the \"a success is a critical success instead\" rider on Will saves is delivered nowhere — situationalBonuses.ts models exactly this rider for other records (cantorian-reinforcement, irrepressible) and has no entry for this one.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "will"
+       }
+      ],
+      "when": "on any Will save",
+      "bonus": "a success is a critical success instead"
+     }
+    ]
+   }
+  },
+  {
+   "id": "protective-screen",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Commander tactic: it signals squadmates to Stride and suppresses reactions against an ALLY. Nothing touches the commander's own statistics; the tactic itself is selectable through the commander folio (CommanderTactics in build.ts)."
+  },
+  {
+   "id": "psi-cantrips-and-amps",
+   "verdict": "ALREADY_OK",
+   "reason": "The focus pool of 2 is granted in build.ts (~line 2090: \"the psychic DOES have a Focus Pool … you start with a focus pool of 2\"), and the three psi cantrips come from the chosen conscious mind — classes.psychic.subclass.options[*].grantedSpells, folded into the repertoire/cantrip list by the spellcasting pipeline. Amping is a Focus Point spend made at the table."
+  },
+  {
+   "id": "quick-alchemy",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered by the alchemy subsystem: src/sheet/AlchemyPanel.tsx has an explicit \"Quick Alchemy (-1 vial)\" control, and CLASS_RESOURCES.alchemist tracks the Versatile Vials it spends (classResources.ts)."
+  },
+  {
+   "id": "quick-tempered",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Its whole content is \"you gain the Quick-Tempered free action\" — an action resolved at the table. The Rage state it enters is already a toggle (CLASS_RESOURCES.barbarian rage)."
+  },
+  {
+   "id": "quick-tincture",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 1-action ability that creates a temporary infused elixir/tool at the table; it changes no statistic on the sheet, and the item it makes lasts only to end of turn."
+  },
+  {
+   "id": "race-the-skies",
+   "verdict": "MISS",
+   "reason": "A 1-minute standing self-buff — a fly Speed equal to your land Speed or 20 feet, whichever is greater — that nothing grants. The modes lane is exactly the toggleable-duration lane for this, and ModeDef.speeds accepts a SpeedGrants formula string (the IWR/speed evaluator supports @actor.speed.land and max()).",
+   "fix": {
+    "mode": {
+     "id": "race-the-skies",
+     "name": "Race the Skies",
+     "category": "Exemplar",
+     "feats": [
+      "race-the-skies"
+     ],
+     "duration": "1 minute",
+     "modifiers": [],
+     "speeds": {
+      "fly": "max(@actor.speed.land,20)"
+     },
+     "note": "Transcendence: for 1 minute you gain a fly Speed equal to your Speed or 20 feet, whichever is greater."
+    }
+   }
+  },
+  {
+   "id": "raconteurs-reload",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 1-action combination of Interact-to-reload plus a Deception/Intimidation check against a foe — action economy and a check against a TARGET, resolved at the table."
+  },
+  {
+   "id": "rage",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered by CLASS_RESOURCES.barbarian (classResources.ts: the \"rage\" toggle, refresh encounter), which is the state derive.ts activeStateGrants reads for whileActive grants; the Rage action itself exists as core.actions \"rage\"."
+  },
+  {
+   "id": "raging-resistance",
+   "verdict": "MISS",
+   "reason": "Resistance 3 + Con modifier to instinct-typed damage while raging reaches nothing: no classFeature carries whileActive, and none of the ten *-instinct features (animal-instinct, dragon-instinct, …) carries a resistance either. The lane exists — whileActive [{state:\"rage\",resistances:[…]}] with a \"3+@actor.con.mod\" formula (derive.ts substitutes @actor.<abil>.mod) — but it must be written on each INSTINCT feature, because this record cannot name the damage types; raging-resistance itself has nothing to carry.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "rain-scribes",
+   "verdict": "ALREADY_OK",
+   "reason": "Selectable: it is an option of the magaambyaBranch choice on the school-of-rooted-wisdom class feature (its `choice` field). Its only content is an Additional Curriculum spell list, and wizard curricula are prose everywhere in this data (no school record grants curriculum spells; classes.wizard.subclass.options carry only focusSpells/advancedFocusSpell)."
+  },
+  {
+   "id": "razor-prongs",
+   "verdict": "MISS",
+   "reason": "A selectable weapon-innovation modification (build.ts inventorModificationOptions offers it) whose whole content is \"your innovation gains the tearing, trip, and versatile S traits\" — and nothing adds them. weaponTraits cannot express it: derive.ts reads weaponTraits only from db.feats, and the innovation is never bound to an inventory item (InventorBuild.modifications is resolved \"for display\" only). Needs an innovation→item link plus weaponTraits on class features.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "reaction-time",
+   "verdict": "ALREADY_OK",
+   "reason": "The Perception-to-expert half is delivered by CLASS_ADVANCEMENT guardian (advancement.ts: level 7 perception/expert, source reaction-time). The extra reaction is action economy — the app tracks no reaction count for any class — so it is table-side."
+  },
+  {
+   "id": "reactive-strike",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Its whole content is \"you gain the Reactive Strike reaction\" — an action resolved at the table (the action record exists as core.actions \"reactive-strike\"); it changes no statistic."
+  },
+  {
+   "id": "ready-aim-fire",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Commander tactic: squadmates reload and Strike as reactions against an enemy. Every effect is on ALLIES and a TARGET; the pick itself rides the commander folio."
+  },
+  {
+   "id": "reap-the-field",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A transcendence action: Stride and make another Strike against a different creature. Action economy and a MAP ruling applied when the Strike is made at the table."
+  },
+  {
+   "id": "recall-the-teachings",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "It pre-readies Aid for ALLIES and swaps the Aid check to Occultism — the benefit lands on the ally you Aid, and the Aid reaction is resolved at the table."
+  },
+  {
+   "id": "reconfigure",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Downtime retraining: a day of tinkering plus a Crafting check to swap one innovation modification or modification feat. The builder already lets those picks be changed; nothing on the sheet changes from owning it."
+  },
+  {
+   "id": "red-mantis-magic-school",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered by the class pipeline: classes.wizard.subclass.options[\"red-mantis-magic-school\"] carries focusSpells [\"debilitating-terror\"] and advancedFocusSpell \"shroud-of-the-mantis\". The curriculum block is a prose spell list, as on every wizard school."
+  },
+  {
+   "id": "redemption",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A champion cause: edicts/anathema are roleplay, and its mechanics are the Glimpse of Redemption reaction plus the relentless/exalted upgrades, all of which act on the triggering ENEMY (persistent spirit damage) or grant resistance to ALLIES. The cause pick itself is classes.champion.subclass.options[\"redemption\"]."
+  },
+  {
+   "id": "redistribute",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A once-per-10-minutes eidolon reaction that downgrades a triggering critical hit and swaps the eidolon's form — resolved at the table when the trigger fires; no standing statistic changes (limitedUses cannot express a per-10-minutes frequency)."
+  },
+  {
+   "id": "reflex-expertise",
+   "verdict": "ALREADY_OK",
+   "reason": "Pure proficiency: CLASS_ADVANCEMENT carries { track: \"reflex\", rank: \"expert\", source: \"reflex-expertise\" } for every class that grants it (barbarian 9, bard 3, champion/cleric 11, druid 5, guardian 7, sorcerer 9, thaumaturge 3, witch 5, wizard 11)."
+  },
+  {
+   "id": "reflow-elements",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A daily-preparation retraining allowance (swap one impulse feat for another of the same element). Feat picks are already editable in the builder; it restates the retraining rules."
+  },
+  {
+   "id": "reinforced-ego",
+   "verdict": "MISS",
+   "reason": "Will master at 17 comes from CLASS_ADVANCEMENT swashbuckler (source reinforced-ego), but the \"a success is a critical success instead\" rider on Will saves has no registry entry and reaches the player nowhere.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "will"
+       }
+      ],
+      "when": "on any Will save",
+      "bonus": "a success is a critical success instead"
+     }
+    ]
+   }
+  },
+  {
+   "id": "rejoin-in-flight",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A transcendence action making two thrown Strikes with a special MAP ordering, flanking, and a damage die if both hit — all resolved on the TARGET at the table."
+  },
+  {
+   "id": "relentless-reaction",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A pointer feature: \"your champion's reaction gains the relentless benefit listed in your cause\". The content lives on the cause options, and every cause's relentless benefit acts on the triggering enemy or on allies."
+  },
+  {
+   "id": "reload",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Commander tactic: squadmates Interact to reload (or Load a siege weapon) as reactions. Purely ALLY-side; the tactic itself is folio-selectable."
+  },
+  {
+   "id": "reloading-strike",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A 1-action Strike-plus-reload with a wielding requirement — action economy resolved at the table; it changes no statistic on the sheet."
+  },
+  {
+   "id": "research-field",
+   "verdict": "ALREADY_OK",
+   "reason": "A subclass header that only names the choice; the pick is classes.alchemist.subclass (\"Research Field\", options bomber/chirurgeon/mutagenist/toxicologist) and the mechanics sit on those options and their field-discovery features (e.g. field-discovery-toxicologist carries the poison resistance)."
+  },
+  {
+   "id": "resolute-faith",
+   "verdict": "MISS",
+   "reason": "Will master at 9 is delivered by CLASS_ADVANCEMENT cleric and warpriest (source resolute-faith); the \"a success is a critical success instead\" rider on Will saves is delivered nowhere.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "will"
+       }
+      ],
+      "when": "on any Will save",
+      "bonus": "a success is a critical success instead"
+     }
+    ]
+   }
+  },
+  {
+   "id": "resolve",
+   "verdict": "MISS",
+   "reason": "Will master is delivered by CLASS_ADVANCEMENT magus (level 9, source resolve); the \"a success is a critical success instead\" rider on Will saves has no carrier.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "will"
+       }
+      ],
+      "when": "on any Will save",
+      "bonus": "a success is a critical success instead"
+     }
+    ]
+   }
+  },
+  {
+   "id": "retributive-strike",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A champion reaction: the resistance goes to the triggering ALLY and the Strike hits the enemy. Nothing changes on the champion's own sheet."
+  },
+  {
+   "id": "reveler-in-lost-glee",
+   "verdict": "MISS",
+   "reason": "The apparition spells and the Trickster's Mirrors vessel spell ARE delivered (classes.animist.extraChoices[\"apparition\"] option carries grantedSpells + focusSpells), but the Apparition Skills — trained in Circus Lore and Fortune-Telling Lore while attuned, which the animist class text confirms you \"forget\" when the apparition is dispersed — reach nothing. No lane fits: trainedLore/trainedSkill exist only on Background, and the option-level `grants.skills` (used by witch patrons and exemplar epithets) is typed to SkillId, so it cannot carry two Lore subjects. Fix belongs on classes.animist.extraChoices apparition option once grants.skills accepts \"lore:<Name>\".",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "revitalizing-rage",
+   "verdict": "MISS",
+   "reason": "It changes the Rage ACTION's printed rule (the wait before Rage grants temporary Hit Points again drops from 1 minute to one full turn out of Rage) and nothing records it. That is the action-marker lane, and core.actions has a real \"rage\" id.",
+   "fix": {
+    "situational": [
+     {
+      "on": "action",
+      "id": "rage",
+      "value": "temp HP again after 1 turn out of Rage (not 1 minute)",
+      "note": "Revitalizing Rage: instead of waiting 1 minute before you can gain temporary Hit Points from Rage again, you need only spend at least one full turn not in a Rage."
+     }
+    ]
+   }
+  },
+  {
+   "id": "ring-bell",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A thaumaturge implement reaction: the target saves against your class DC and becomes stupefied/enfeebled/clumsy. Everything lands on the TARGET and is resolved at the table."
+  },
+  {
+   "id": "ringing-challenge",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A transcendence action dealing area spirit/sonic damage with a save and a deafened rider — entirely TARGET-side, resolved at the table."
+  },
+  {
+   "id": "ripple-in-the-deep",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered by the class pipeline: classes.witch.subclass.options[\"ripple-in-the-deep\"] carries tradition \"primal\", grants.skills [\"nature\"] (the Patron Skill) and focusSpells [\"sting-of-the-sea\"] (the hex cantrip). The familiar's learned spell and the wave push are familiar/target-side."
+  },
+  {
+   "id": "roaring-charge",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Commander tactic: squadmates Stride and nearby creatures save against your class DC or become frightened — ALLY and TARGET side only; the tactic is folio-selectable."
+  },
+  {
+   "id": "rogue-resilience",
+   "verdict": "MISS",
+   "reason": "Fortitude expert at 9 is delivered by CLASS_ADVANCEMENT rogue (source rogue-resilience); the \"a success is a critical success instead\" rider on Fortitude saves is delivered nowhere.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "fortitude"
+       }
+      ],
+      "when": "on any Fortitude save",
+      "bonus": "a success is a critical success instead"
+     }
+    ]
+   }
+  },
+  {
+   "id": "root-epithet",
+   "verdict": "ALREADY_OK",
+   "reason": "The pick is delivered by classes.exemplar.extraChoices[\"root-epithet\"] (pickByLevel {\"3\":1}), and each option carries its skill grant (the-brave → grants.skills [\"athletics\"], the-cunning → deception, …). The Spark Transcendence rider lives on the individual epithet records."
+  },
+  {
+   "id": "rope-shot",
+   "verdict": "MISS",
+   "reason": "A selectable ranged weapon-innovation modification whose content is \"your weapon innovation gains the climbing and ranged trip traits, and tethered if thrown\" — nothing adds them. Same blocker as razor-prongs: derive.ts reads weaponTraits only from db.feats, and the innovation is never bound to an inventory weapon, so no legal field can target it.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "rune-capacity",
+   "verdict": "MISS",
+   "reason": "A selectable innovation modification granting one property rune slot beyond the item's normal limit (max four with +3 potency). No field expresses a rune-capacity change — there is no lane for the etching/rune-slot cap at all, and the innovation is not linked to an inventory item.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "runelords-calling",
+   "verdict": "MISS",
+   "reason": "The mythic point pool exists in play state, but the calling's actual grant — spend a Mythic Point to attempt Identify Magic / Learn a Spell / a ritual check at mythic proficiency, and regain a point on your first daily critical success at Identify Magic — reaches the player nowhere (the classFeature is pushed into grantedFeatures for display only, build.ts ~3178). situationalBonuses.ts already models \"roll at mythic proficiency\" riders (avoid-fates-gaze, become-shadow, binds-that-tie).",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "all"
+       }
+      ],
+      "when": "to Identify Magic, Learn a Spell, or cast a ritual (spend a Mythic Point)",
+      "bonus": "roll at mythic proficiency; the first time each day you critically succeed at an Arcana, Nature, Occultism, or Religion check to Identify Magic, you regain a Mythic Point"
+     }
+    ]
+   }
+  },
+  {
+   "id": "sacred-body",
+   "verdict": "MISS",
+   "reason": "Fortitude master at 9 is delivered by CLASS_ADVANCEMENT champion (source sacred-body); the \"a success is a critical success instead\" rider on Fortitude saves is delivered nowhere.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "fortitude"
+       }
+      ],
+      "when": "on any Fortitude save",
+      "bonus": "a success is a critical success instead"
+     }
+    ]
+   }
+  },
+  {
+   "id": "sagas-calling",
+   "verdict": "MISS",
+   "reason": "Same lane as the other callings: spending a Mythic Point to roll Performance or Gather Information at mythic proficiency, and regaining a point on your first daily critical Gather Information, reaches nothing — the calling is displayed only. Modelled elsewhere as \"roll at mythic proficiency\" situational entries.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "performance"
+       }
+      ],
+      "when": "when you spend a Mythic Point on a Performance check",
+      "bonus": "roll at mythic proficiency"
+     },
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "diplomacy"
+       }
+      ],
+      "when": "to Gather Information (spend a Mythic Point)",
+      "bonus": "roll at mythic proficiency; the first time each day you critically succeed at Gather Information, you regain a Mythic Point"
+     }
+    ]
+   }
+  },
+  {
+   "id": "sages-calling",
+   "verdict": "MISS",
+   "reason": "The Recall Knowledge grant — spend a Mythic Point to roll at mythic proficiency, regain one on your first daily critical success against an enemy — is delivered nowhere; the calling record carries no fields at all and is only rendered for display.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "all"
+       }
+      ],
+      "when": "to Recall Knowledge (spend a Mythic Point)",
+      "bonus": "roll at mythic proficiency; the first time each day you critically succeed at Recall Knowledge against an enemy creature, you regain a Mythic Point"
+     }
+    ]
+   }
+  },
+  {
+   "id": "savvy-reflexes",
+   "verdict": "MISS",
+   "reason": "Reflex master at 15 is delivered by CLASS_ADVANCEMENT investigator (source savvy-reflexes); the \"a success is a critical success instead\" rider on Reflex saves is delivered nowhere.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "reflex"
+       }
+      ],
+      "when": "on any Reflex save",
+      "bonus": "a success is a critical success instead"
+     }
+    ]
+   }
+  },
+  {
+   "id": "school-of-ars-grammatica",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered by the class pipeline: classes.wizard.subclass.options[\"school-of-ars-grammatica\"] carries focusSpells [\"protective-wards\"] and advancedFocusSpell \"rune-of-observation\". The Curriculum block is a prose spell list, as on every wizard school in this data."
+  },
+  {
+   "id": "school-of-battle-magic",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered by the class pipeline: classes.wizard.subclass.options[\"school-of-battle-magic\"] carries focusSpells [\"force-bolt\"] and advancedFocusSpell \"energy-absorption\". The Curriculum block is a prose spell list, as on every wizard school in this data."
+  },
+  {
+   "id": "school-of-civic-wizardry",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered by the class pipeline: classes.wizard.subclass.options[\"school-of-civic-wizardry\"] carries focusSpells [\"earthworks\"] and advancedFocusSpell \"community-restoration\". The Curriculum block is a prose spell list, as on every wizard school in this data."
+  },
+  {
+   "id": "school-of-gates",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered by the class pipeline: classes.wizard.subclass.options[\"school-of-gates\"] carries focusSpells [\"friendly-push\"] and advancedFocusSpell \"rapid-retreat\". The Curriculum block is a prose spell list, as on every wizard school in this data."
+  },
+  {
+   "id": "school-of-kalistrade",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered by the class pipeline: classes.wizard.subclass.options[\"school-of-kalistrade\"] carries focusSpells [\"unexpected-windfall\"] and advancedFocusSpell \"capital-dividend\". The Curriculum block is a prose spell list, as on every wizard school in this data."
+  },
+  {
+   "id": "school-of-magical-technologies",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered by the class pipeline: classes.wizard.subclass.options[\"school-of-magical-technologies\"] carries focusSpells [\"augmented-body\"] and advancedFocusSpell \"conjured-clockwork\". The Curriculum block is a prose spell list, as on every wizard school in this data."
+  },
+  {
+   "id": "school-of-mentalism",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered by the class pipeline: classes.wizard.subclass.options[\"school-of-mentalism\"] carries focusSpells [\"charming-push\"] and advancedFocusSpell \"invisibility-cloak\". The Curriculum block is a prose spell list, as on every wizard school in this data."
+  },
+  {
+   "id": "school-of-protean-form",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered by the class pipeline: classes.wizard.subclass.options[\"school-of-protean-form\"] carries focusSpells [\"scramble-body\"] and advancedFocusSpell \"shifting-form\". The Curriculum block is a prose spell list, as on every wizard school in this data."
+  },
+  {
+   "id": "school-of-the-boundary",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered by the class pipeline: classes.wizard.subclass.options[\"school-of-the-boundary\"] carries focusSpells [\"fortify-summoning\"] and advancedFocusSpell \"spiral-of-horrors\". The Curriculum block is a prose spell list, as on every wizard school in this data."
+  },
+  {
+   "id": "school-of-the-reclamation",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered by the class pipeline: classes.wizard.subclass.options[\"school-of-the-reclamation\"] carries focusSpells [\"grasping-vine\"] and advancedFocusSpell \"unsettling-knowledge\". The Curriculum block is a prose spell list, as on every wizard school in this data."
+  },
+  {
+   "id": "second-adept",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered by build.ts (the thaumaturge implement-benefit block, ~line 3090): pushBenefit(\"adept\", …) grants the `adept-benefit-<implement>` class feature for the OTHER of your first two implements at level 11, and those records carry the actual benefits."
+  },
+  {
+   "id": "second-doctrine",
+   "verdict": "ALREADY_OK",
+   "reason": "A doctrine pointer whose level-3 benefit is pure proficiency, already in CLASS_ADVANCEMENT: cleric { level 3, fortitude, expert, source \"second-doctrine (cloistered)\" } and warpriest { level 3, martial, trained, source \"second-doctrine (warpriest)\" }; the doctrine itself is classes.cleric.subclass."
+  }
+ ]
+}

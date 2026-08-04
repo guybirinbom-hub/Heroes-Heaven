@@ -1,0 +1,533 @@
+{
+ "rulings": [
+  {
+   "id": "abundant-vials",
+   "upheld": true,
+   "why": "Permanent quickened is a standing condition on an owned alchemist 17 feature; core.conditions.quickened exists so the marker resolves, and the same lane already carries eternal-boost and panache-paragon.",
+   "correction": {}
+  },
+  {
+   "id": "acrobats-calling",
+   "upheld": false,
+   "why": "A mythic calling is pushed to grantedFeatures for DISPLAY ONLY (build.ts:3176-3189): it is not in cls.features, not a subclass option and not a classChoice, so ownedFeatureIds never contains it - and both stars and markers key off characterSituationalIds, which is built from ownedFeatureIds (explain.ts:189-194). The Balance / Maneuver in Flight / Tumble Through / Long Jump entries would render for nobody.",
+   "correction": {}
+  },
+  {
+   "id": "adamantine-strikes",
+   "upheld": true,
+   "why": "Owned monk 17 feature; 'unarmed attacks are treated as adamantine' is a real bypass benefit carried nowhere (unarmedTraits is feat-only and holds traits, not materials), and a display-only strikeDamage star is this codebase's lane for a prose rider.",
+   "correction": {}
+  },
+  {
+   "id": "adept-benefit-chalice",
+   "upheld": false,
+   "why": "Nothing ownedFeatureIds reads can reach 'adept-benefit-chalice': thaumaturge implements are stored as the IMPLEMENT ids (amulet..weapon) and cls.features lists implement-adept, never adept-benefit-*, so the marker can never render; the upgraded healing also lands on whichever creature drinks, an ally as often as you.",
+   "correction": {}
+  },
+  {
+   "id": "advanced-deed",
+   "upheld": true,
+   "why": "Gunslinger 9 is in cls.features but the way's advanced deed lives in classFeatures, which grantsFeats cannot reach (it resolves against core.feats) - a genuine engine gap, and needsEngineWork writes no field that could be wrong.",
+   "correction": {}
+  },
+  {
+   "id": "advanced-design",
+   "upheld": true,
+   "why": "Owned via c.inventor.modifications; 'uses a level-0 advanced weapon's statistics, martial proficiency' really changes the player's own Strike, no field expresses it, and the registry is display-only so it cannot over-grant.",
+   "correction": {}
+  },
+  {
+   "id": "advanced-rangefinder",
+   "upheld": true,
+   "why": "Owned inventor modification; backstabber plus 20 feet of range increment reach nothing (weaponTraits is read from db.feats and cannot be aimed at the innovation), and the star is display-only.",
+   "correction": {}
+  },
+  {
+   "id": "advanced-vials-mutagenist",
+   "upheld": true,
+   "why": "Owned as the subclass variant advanced-vials+mutagenist; the mode is legally gated on a real classFeature id, states its duration, and deriveDefenses reads mode resistances - the level formula matches shipped entries.",
+   "correction": {}
+  },
+  {
+   "id": "aerodynamic-construction",
+   "upheld": true,
+   "why": "Owned inventor modification whose entire content is two traits on the innovation; nothing carries them and a display-only star cannot over-grant.",
+   "correction": {}
+  },
+  {
+   "id": "agile-mind",
+   "upheld": true,
+   "why": "The degree-of-success rider is not the proficiency half: nothing in src derives it from rank (CLASS_ADVANCEMENT carries only track/rank/source), the id is absent from FEAT_SITUATIONAL, the record is an owned class feature (rogue 17), and the fix wording matches the printed text exactly.",
+   "correction": {}
+  },
+  {
+   "id": "alchemy",
+   "upheld": true,
+   "why": "Owned alchemist 1 feature; classes.alchemist never mentions alchemical-crafting, core.feats.alchemical-crafting exists, and build.ts:2331 reads grantsFeats off cls.features, so the grant actually fires.",
+   "correction": {}
+  },
+  {
+   "id": "anvils-hardness",
+   "upheld": true,
+   "why": "The degree-of-success rider is not the proficiency half: nothing in src derives it from rank (CLASS_ADVANCEMENT carries only track/rank/source), the id is absent from FEAT_SITUATIONAL, the record is an owned class feature (inventor 17), and the fix wording matches the printed text exactly.",
+   "correction": {}
+  },
+  {
+   "id": "arcane-bond",
+   "upheld": true,
+   "why": "Owned wizard 1 feature; core.actions.drain-bonded-item prints 'Frequency once per day' and nothing tracks it - limitedUses {max:1,per:'day'} is the shipped shape (21 classFeatures already carry it).",
+   "correction": {}
+  },
+  {
+   "id": "armor-expertise",
+   "upheld": true,
+   "why": "The rank half is CLASS_ADVANCEMENT, but 'you gain the armor specialization effects of medium and heavy armor' is a separate damage-reduction benefit with no code anywhere in src/rules; the AC star is display-only and names its condition.",
+   "correction": {}
+  },
+  {
+   "id": "artisans-calling",
+   "upheld": false,
+   "why": "A mythic calling is pushed to grantedFeatures for DISPLAY ONLY (build.ts:3176-3189): it is not in cls.features, not a subclass option and not a classChoice, so ownedFeatureIds never contains it - and both stars and markers key off characterSituationalIds, which is built from ownedFeatureIds (explain.ts:189-194). The Craft and Repair entries would render for nobody.",
+   "correction": {}
+  },
+  {
+   "id": "assured-evasion",
+   "upheld": true,
+   "why": "The degree-of-success rider is not the proficiency half: nothing in src derives it from rank (CLASS_ADVANCEMENT carries only track/rank/source), the id is absent from FEAT_SITUATIONAL, the record is an owned class feature (swashbuckler 13), and the fix wording matches the printed text exactly.",
+   "correction": {}
+  },
+  {
+   "id": "attack-refiner",
+   "upheld": true,
+   "why": "Owned inventor modification; backswing and forceful on the innovation reach nothing, and the star is display-only.",
+   "correction": {}
+  },
+  {
+   "id": "barrows-edge",
+   "upheld": true,
+   "why": "Exemplar ikon owned through classChoices (derive.ts:1175); the immanence's per-die spirit damage reaches nothing while the sibling ikon titans-breaker is already carried this exact way.",
+   "correction": {}
+  },
+  {
+   "id": "battle-hardened",
+   "upheld": true,
+   "why": "The degree-of-success rider is not the proficiency half: nothing in src derives it from rank (CLASS_ADVANCEMENT carries only track/rank/source), the id is absent from FEAT_SITUATIONAL, the record is an owned class feature (fighter/guardian 9), and the fix wording matches the printed text exactly.",
+   "correction": {}
+  },
+  {
+   "id": "battlefield-intuition",
+   "upheld": true,
+   "why": "The degree-of-success rider is not the proficiency half: nothing in src derives it from rank (CLASS_ADVANCEMENT carries only track/rank/source), the id is absent from FEAT_SITUATIONAL, the record is an owned class feature (commander 15), and the fix wording matches the printed text exactly.",
+   "correction": {}
+  },
+  {
+   "id": "blast-dodger",
+   "upheld": true,
+   "why": "The degree-of-success rider is not the proficiency half: nothing in src derives it from rank (CLASS_ADVANCEMENT carries only track/rank/source), the id is absent from FEAT_SITUATIONAL, the record is an owned class feature (gunslinger 11), and the fix wording matches the printed text exactly.",
+   "correction": {}
+  },
+  {
+   "id": "blessed-shield",
+   "upheld": true,
+   "why": "Owned champion extra-choice; shield Hardness/HP/BT come only from an ETCHED reinforcing rune (derive.ts reads held.inv.runes.reinforcing) and no field grants a level-scaling rune - a true engine gap with no field write attached.",
+   "correction": {}
+  },
+  {
+   "id": "bloodrager",
+   "upheld": true,
+   "why": "Rage damage is delivered but Raging Resistance and the Blood Rage bleed rider are not, and a level-1 instinct record cannot carry a level-9 grant - correctly filed as engine work rather than a field that would grant it eight levels early.",
+   "correction": {}
+  },
+  {
+   "id": "blunt-shot",
+   "upheld": true,
+   "why": "Gap is real, but needsEngineWork is wrong: this is the same shape as its siblings aerodynamic-construction, attack-refiner and entangling-form, which this pool carries as display-only stars - no engine work is needed for that.",
+   "correction": {
+    "fix": {
+     "situational": [
+      {
+       "targets": [
+        {
+         "kind": "strikeAttack"
+        }
+       ],
+       "when": "with your ranged weapon innovation",
+       "bonus": "it gains the concussive trait and the ranged trip trait"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "bravery",
+   "upheld": true,
+   "why": "The gap is real, but the judge's fix mixes a stat star and a condition marker in one `situational` array: the applier routes by SHAPE, takes the marker branch and silently DROPS the fear-save half. Folded both halves into the marker note so neither is lost.",
+   "correction": {
+    "fix": {
+     "situational": [
+      {
+       "on": "condition",
+       "id": "frightened",
+       "value": "-1 when gained",
+       "note": "Bravery: anytime you gain the frightened condition, reduce its value by 1. In addition, when you roll a success at a Will save against a fear effect, you get a critical success instead."
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "camouflage-pigmentation",
+   "upheld": true,
+   "why": "Owned inventor modification; core.actions.hide exists so the marker resolves, and 'Hide with no cover or concealment' is a permanent change to an action's requirements that nothing records.",
+   "correction": {}
+  },
+  {
+   "id": "caretakers-calling",
+   "upheld": false,
+   "why": "A mythic calling is pushed to grantedFeatures for DISPLAY ONLY (build.ts:3176-3189): it is not in cls.features, not a subclass option and not a classChoice, so ownedFeatureIds never contains it - and both stars and markers key off characterSituationalIds, which is built from ownedFeatureIds (explain.ts:189-194). The the Medicine entries would render for nobody.",
+   "correction": {}
+  },
+  {
+   "id": "cascade-bearers",
+   "upheld": false,
+   "why": "Doubly dead: spellListAdditions is read only from content.feats[fc.featId], so a classFeatures record carrying it does nothing and the applier's usedIn guard rejects it outright; and 'cascade-bearers' is not among the 14 wizard subclass options, so no character can hold the record at all.",
+   "correction": {}
+  },
+  {
+   "id": "chemical-hardiness",
+   "upheld": true,
+   "why": "The degree-of-success rider is not the proficiency half: nothing in src derives it from rank (CLASS_ADVANCEMENT carries only track/rank/source), the id is absent from FEAT_SITUATIONAL, the record is an owned class feature (alchemist 11), and the fix wording matches the printed text exactly.",
+   "correction": {}
+  },
+  {
+   "id": "churning-mind",
+   "upheld": true,
+   "why": "The degree-of-success rider is not the proficiency half: nothing in src derives it from rank (CLASS_ADVANCEMENT carries only track/rank/source), the id is absent from FEAT_SITUATIONAL, the record is an owned class feature (inventor 11), and the fix wording matches the printed text exactly.",
+   "correction": {}
+  },
+  {
+   "id": "commanding-will",
+   "upheld": true,
+   "why": "The degree-of-success rider is not the proficiency half: nothing in src derives it from rank (CLASS_ADVANCEMENT carries only track/rank/source), the id is absent from FEAT_SITUATIONAL, the record is an owned class feature (commander 11), and the fix wording matches the printed text exactly.",
+   "correction": {}
+  },
+  {
+   "id": "complex-simplicity",
+   "upheld": true,
+   "why": "Gap is real, but a display-only note carries both halves (die step plus the two chosen traits) exactly as enhanced-damage and dynamic-weighting do; effectChoices was never needed.",
+   "correction": {
+    "fix": {
+     "situational": [
+      {
+       "targets": [
+        {
+         "kind": "strikeDamage"
+        }
+       ],
+       "when": "with your simple weapon innovation",
+       "bonus": "its weapon damage die increases one step, and it gains two traits of your choice from versatile B, versatile P, versatile S or razing"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "confident-evasion",
+   "upheld": true,
+   "why": "The degree-of-success rider is not the proficiency half: nothing in src derives it from rank (CLASS_ADVANCEMENT carries only track/rank/source), the id is absent from FEAT_SITUATIONAL, the record is an owned class feature (swashbuckler 7), and the fix wording matches the printed text exactly.",
+   "correction": {}
+  },
+  {
+   "id": "crafter-in-the-vault",
+   "upheld": true,
+   "why": "Owned animist apparition (classChoices); the attuned Lore skills are a real grant and trainedLore is single-valued, so engine work is the honest call and no field is written.",
+   "correction": {}
+  },
+  {
+   "id": "crash-against-me",
+   "upheld": false,
+   "why": "A 1-action TRANSCENDENCE record (traits: ['transcendence']) that no character ever owns - the ikon skin-hard-as-horn is the classChoice and its own description already carries this text, so a fix here is invisible by construction.",
+   "correction": {}
+  },
+  {
+   "id": "curse-of-ancestral-meddling",
+   "upheld": false,
+   "why": "The oracle curse records are reachable by nothing: classes.oracle has no extraChoices, the curses are not subclass options, and no class JSON mentions them - so ownedFeatureIds never holds one and neither a marker nor a star can render. The judge noted this itself and filed the fix anyway; the shipped cat-cursebound-1..4 modes already tell the player to apply their mystery's curse by hand.",
+   "correction": {}
+  },
+  {
+   "id": "curse-of-outpouring-life",
+   "upheld": false,
+   "why": "The oracle curse records are reachable by nothing: classes.oracle has no extraChoices, the curses are not subclass options, and no class JSON mentions them - so ownedFeatureIds never holds one and neither a marker nor a star can render. The judge noted this itself and filed the fix anyway; the shipped cat-cursebound-1..4 modes already tell the player to apply their mystery's curse by hand.",
+   "correction": {}
+  },
+  {
+   "id": "curse-of-the-skys-call",
+   "upheld": false,
+   "why": "The oracle curse records are reachable by nothing: classes.oracle has no extraChoices, the curses are not subclass options, and no class JSON mentions them - so ownedFeatureIds never holds one and neither a marker nor a star can render. The judge noted this itself and filed the fix anyway; the shipped cat-cursebound-1..4 modes already tell the player to apply their mystery's curse by hand.",
+   "correction": {}
+  },
+  {
+   "id": "curse-of-torrential-knowledge",
+   "upheld": false,
+   "why": "The oracle curse records are reachable by nothing: classes.oracle has no extraChoices, the curses are not subclass options, and no class JSON mentions them - so ownedFeatureIds never holds one and neither a marker nor a star can render. The judge noted this itself and filed the fix anyway; the shipped cat-cursebound-1..4 modes already tell the player to apply their mystery's curse by hand.",
+   "correction": {}
+  },
+  {
+   "id": "curse-of-turbulent-moments",
+   "upheld": false,
+   "why": "The oracle curse records are reachable by nothing: classes.oracle has no extraChoices, the curses are not subclass options, and no class JSON mentions them - so ownedFeatureIds never holds one and neither a marker nor a star can render. The judge noted this itself and filed the fix anyway; the shipped cat-cursebound-1..4 modes already tell the player to apply their mystery's curse by hand.",
+   "correction": {}
+  },
+  {
+   "id": "custodian-of-groves-and-gardens",
+   "upheld": true,
+   "why": "Same as its sibling apparition: two attuned Lore skills with no multi-lore grant lane, and the fix writes nothing that could be wrong.",
+   "correction": {}
+  },
+  {
+   "id": "deadly-strike",
+   "upheld": true,
+   "why": "Gap is real, but the sibling modifications ride as display-only notes, which cannot over-grant to other weapons the way the judge feared - and the note states the conditional step the judge said had no form.",
+   "correction": {
+    "fix": {
+     "situational": [
+      {
+       "targets": [
+        {
+         "kind": "strikeDamage"
+        }
+       ],
+       "when": "with your weapon innovation",
+       "bonus": "it gains deadly d8 - or, if it was already deadly, its deadly die steps up by up to two sizes, to a maximum of deadly d12"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "deific-weapon",
+   "upheld": true,
+   "why": "derive.ts's die step is gated on the FEAT deadly-simplicity, so a character holding Deific Weapon as a class feature gets none of the three benefits; it is deity-dependent, so no record field can express it and needsEngineWork writes nothing.",
+   "correction": {}
+  },
+  {
+   "id": "deity-cleric",
+   "upheld": true,
+   "why": "Owned cleric 1 feature; the deity's `skill` field is read only at derive.ts:270 for the Sanguine Pendant, so the deity-granted trained skill is never trained - deity-dependent, so engine work is right.",
+   "correction": {}
+  },
+  {
+   "id": "demagogues-calling",
+   "upheld": false,
+   "why": "A mythic calling is pushed to grantedFeatures for DISPLAY ONLY (build.ts:3176-3189): it is not in cls.features, not a subclass option and not a classChoice, so ownedFeatureIds never contains it - and both stars and markers key off characterSituationalIds, which is built from ownedFeatureIds (explain.ts:189-194). The the Coerce and Make an Impression entries would render for nobody.",
+   "correction": {}
+  },
+  {
+   "id": "dense-plating",
+   "upheld": true,
+   "why": "Owned inventor modification; resistances is carried by 9 classFeatures already and phlogistonic-regulator ships the identical armor-modification resistance unconditionally, so both the shape and the precedent hold.",
+   "correction": {}
+  },
+  {
+   "id": "deny-advantage",
+   "upheld": true,
+   "why": "Owned rogue 3 feature; core.conditions['off-guard'] exists so the marker resolves, and a permanent narrowing of when you are off-guard is recorded nowhere.",
+   "correction": {}
+  },
+  {
+   "id": "disciplined-mind",
+   "upheld": true,
+   "why": "The degree-of-success rider is not the proficiency half: nothing in src derives it from rank (CLASS_ADVANCEMENT carries only track/rank/source), the id is absent from FEAT_SITUATIONAL, the record is an owned class feature (thaumaturge 7), and the fix wording matches the printed text exactly.",
+   "correction": {}
+  },
+  {
+   "id": "divine-will",
+   "upheld": true,
+   "why": "The degree-of-success rider is not the proficiency half: nothing in src derives it from rank (CLASS_ADVANCEMENT carries only track/rank/source), the id is absent from FEAT_SITUATIONAL, the record is an owned class feature (champion 11), and the fix wording matches the printed text exactly.",
+   "correction": {}
+  },
+  {
+   "id": "dogged-will",
+   "upheld": true,
+   "why": "The degree-of-success rider is not the proficiency half: nothing in src derives it from rank (CLASS_ADVANCEMENT carries only track/rank/source), the id is absent from FEAT_SITUATIONAL, the record is an owned class feature (investigator 11), and the fix wording matches the printed text exactly.",
+   "correction": {}
+  },
+  {
+   "id": "dynamic-weighting",
+   "upheld": true,
+   "why": "Owned inventor modification; the innovation's base weapon is explicitly not modelled (build.ts:951), so a display-only note is the only lane that does not over-grant - compliant-gold is the precedent.",
+   "correction": {}
+  },
+  {
+   "id": "earned-resilience",
+   "upheld": true,
+   "why": "The degree-of-success rider is not the proficiency half: nothing in src derives it from rank (CLASS_ADVANCEMENT carries only track/rank/source), the id is absent from FEAT_SITUATIONAL, the record is an owned class feature (thaumaturge 15), and the fix wording matches the printed text exactly.",
+   "correction": {}
+  },
+  {
+   "id": "eidolon-symbiosis",
+   "upheld": true,
+   "why": "Owned summoner 7 feature; companions.ts derives only ability mods, unarmed Strikes, senses and defences, so a type-keyed eidolon ability has no field and needsEngineWork writes nothing.",
+   "correction": {}
+  },
+  {
+   "id": "eidolon-transcendence",
+   "upheld": true,
+   "why": "Owned summoner 17 feature; neither the type ability nor the +2 to an eidolon ability score is modelled or prompted, and no legal field expresses either.",
+   "correction": {}
+  },
+  {
+   "id": "enhanced-damage",
+   "upheld": true,
+   "why": "Owned inventor modification; unarmedTraits.stepDie is unarmed-only and weaponTraits has no die step, so a display-only note is the only non-over-granting lane.",
+   "correction": {}
+  },
+  {
+   "id": "enhanced-resistance",
+   "upheld": true,
+   "why": "Owned inventor modification; no field can rewrite another feature's resistance formula and which modification it upgrades is a player pick - engine work, no field written.",
+   "correction": {}
+  },
+  {
+   "id": "entangling-form",
+   "upheld": true,
+   "why": "Owned inventor modification; disarm/grapple/trip on the innovation alone cannot be expressed by weaponTraits, and the star is display-only.",
+   "correction": {}
+  },
+  {
+   "id": "eternal-confidence",
+   "upheld": true,
+   "why": "Owned swashbuckler 19 feature; the class-DC half is CLASS_ADVANCEMENT but the finisher / Opportune Riposte rider is not delivered, and finisher riders already ride as strikeDamage stars (exemplary-finisher, flying-blade).",
+   "correction": {}
+  },
+  {
+   "id": "evasive-reflexes",
+   "upheld": true,
+   "why": "The degree-of-success rider is not the proficiency half: nothing in src derives it from rank (CLASS_ADVANCEMENT carries only track/rank/source), the id is absent from FEAT_SITUATIONAL, the record is an owned class feature (rogue 7), and the fix wording matches the printed text exactly.",
+   "correction": {}
+  },
+  {
+   "id": "expert-tactician",
+   "upheld": true,
+   "why": "Gap is real, but preparedTacticsBonus is summed over FEATS ONLY (build.ts:3126 reads content.feats[...]) and no classFeatures record carries it, so the field would be written and read by nothing - and the applier's usedIn guard rejects it. Engine work is the honest verdict.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true
+    }
+   }
+  },
+  {
+   "id": "explosion-dodger",
+   "upheld": true,
+   "why": "The degree-of-success rider is not the proficiency half: nothing in src derives it from rank (CLASS_ADVANCEMENT carries only track/rank/source), the id is absent from FEAT_SITUATIONAL, the record is an owned class feature (alchemist 15), and the fix wording matches the printed text exactly.",
+   "correction": {}
+  },
+  {
+   "id": "extensible-weapon",
+   "upheld": true,
+   "why": "Owned inventor modification; the `reach` field is character-wide and the innovation's base weapon is not modelled, so the display-only note is correct and does not over-grant.",
+   "correction": {}
+  },
+  {
+   "id": "eye-catching-spot",
+   "upheld": true,
+   "why": "Exemplar ikon owned through classChoices; the immanence's -1 circumstance penalty to melee attacks against you is a standing defensive effect, and sibling ikons (gaze-sharp-as-steel, scar-of-the-survivor) use exactly this lane.",
+   "correction": {}
+  },
+  {
+   "id": "field-discovery-bomber",
+   "upheld": true,
+   "why": "Owned as the subclass variant field-discovery+bomber (derive.ts:1162-1169); splash equal to your Int modifier really changes the player's own bomb, and expanded-splash is the identical shipped entry.",
+   "correction": {}
+  },
+  {
+   "id": "field-discovery-mutagenist",
+   "upheld": true,
+   "why": "Owned subclass variant; a fortune reroll on your own Fortitude saves is delivered nowhere, and rerolls are an established situational entry (perfect-clarity, grit-and-tenacity).",
+   "correction": {}
+  },
+  {
+   "id": "flames",
+   "upheld": true,
+   "why": "The record's own text names the mystery's Oracle Feat outright; core.feats['foretell-harm'] exists and build.ts:2339 reads grantsFeats off the CHOSEN SUBCLASS OPTION id, so a grant written here actually fires.",
+   "correction": {}
+  },
+  {
+   "id": "fortress-of-will",
+   "upheld": true,
+   "why": "The degree-of-success rider is not the proficiency half: nothing in src derives it from rank (CLASS_ADVANCEMENT carries only track/rank/source), the id is absent from FEAT_SITUATIONAL, the record is an owned class feature (psychic 17), and the fix wording matches the printed text exactly.",
+   "correction": {}
+  },
+  {
+   "id": "giant-instinct",
+   "upheld": true,
+   "why": "Gap is real, but the fix cannot land: whileActive is scanned only for feats, the heritage and ownedFeatureIds (derive.ts:481-483), and a barbarian INSTINCT is a subclassId, which ownedFeatureIds never adds; no classFeatures record carries whileActive either, so the applier's usedIn guard drops the whole fix - engine list, not a field write.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true
+    }
+   }
+  },
+  {
+   "id": "gleaming-blade",
+   "upheld": true,
+   "why": "Exemplar ikon owned through classChoices; +2 spirit damage per weapon damage die is delivered nowhere while the identical sibling titans-breaker already has the entry.",
+   "correction": {}
+  },
+  {
+   "id": "greater-dogged-will",
+   "upheld": true,
+   "why": "The degree-of-success rider is not the proficiency half: nothing in src derives it from rank (CLASS_ADVANCEMENT carries only track/rank/source), the id is absent from FEAT_SITUATIONAL, the record is an owned class feature (investigator 17), and the fix wording matches the printed text exactly.",
+   "correction": {}
+  },
+  {
+   "id": "greater-juggernaut",
+   "upheld": true,
+   "why": "The degree-of-success rider is not the proficiency half: nothing in src derives it from rank (CLASS_ADVANCEMENT carries only track/rank/source), the id is absent from FEAT_SITUATIONAL, the record is an owned class feature (barbarian 13), and the fix wording matches the printed text exactly.",
+   "correction": {}
+  },
+  {
+   "id": "greater-kinetic-durability",
+   "upheld": true,
+   "why": "The degree-of-success rider is not the proficiency half: nothing in src derives it from rank (CLASS_ADVANCEMENT carries only track/rank/source), the id is absent from FEAT_SITUATIONAL, the record is an owned class feature (kineticist 15), and the fix wording matches the printed text exactly.",
+   "correction": {}
+  },
+  {
+   "id": "greater-mysterious-resolve",
+   "upheld": true,
+   "why": "The degree-of-success rider is not the proficiency half: nothing in src derives it from rank (CLASS_ADVANCEMENT carries only track/rank/source), the id is absent from FEAT_SITUATIONAL, the record is an owned class feature (oracle 17), and the fix wording matches the printed text exactly.",
+   "correction": {}
+  },
+  {
+   "id": "greater-natural-reflexes",
+   "upheld": true,
+   "why": "The degree-of-success rider is not the proficiency half: nothing in src derives it from rank (CLASS_ADVANCEMENT carries only track/rank/source), the id is absent from FEAT_SITUATIONAL, the record is an owned class feature (ranger 15), and the fix wording matches the printed text exactly.",
+   "correction": {}
+  },
+  {
+   "id": "greater-performers-heart",
+   "upheld": true,
+   "why": "The degree-of-success rider is not the proficiency half: nothing in src derives it from rank (CLASS_ADVANCEMENT carries only track/rank/source), the id is absent from FEAT_SITUATIONAL, the record is an owned class feature (bard 17), and the fix wording matches the printed text exactly.",
+   "correction": {}
+  },
+  {
+   "id": "greater-rogue-reflexes",
+   "upheld": true,
+   "why": "The degree-of-success rider is not the proficiency half: nothing in src derives it from rank (CLASS_ADVANCEMENT carries only track/rank/source), the id is absent from FEAT_SITUATIONAL, the record is an owned class feature (rogue 13), and the fix wording matches the printed text exactly.",
+   "correction": {}
+  },
+  {
+   "id": "greater-unassailable-soul",
+   "upheld": true,
+   "why": "The degree-of-success rider is not the proficiency half: nothing in src derives it from rank (CLASS_ADVANCEMENT carries only track/rank/source), the id is absent from FEAT_SITUATIONAL, the record is an owned class feature (exemplar 13), and the fix wording matches the printed text exactly.",
+   "correction": {}
+  },
+  {
+   "id": "guardians-armor",
+   "upheld": true,
+   "why": "Owned guardian 1 feature; a bare resistances field would over-grant to a guardian in light armor, and the mode is legally gated on a real class-feature id with a stated duration - modeRelevant's featIds set includes ownedFeatureIds.",
+   "correction": {}
+  }
+ ]
+}

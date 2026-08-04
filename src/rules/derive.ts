@@ -1184,6 +1184,12 @@ export function ownedFeatureIds(c: Character, db: ContentDatabase): Set<string> 
   for (const id of Object.values(c.inventor?.modifications ?? {})) {
     if (typeof id === 'string' && db.classFeatures[id]) out.add(id);
   }
+  // The chosen MYTHIC CALLING is a classFeatures record, but build.ts only pushes it to
+  // `grantedFeatures`, which is a display list nothing derives from. So the calling was picked, shown
+  // in the builder, and then ignored by everything that reads owned features — its own fields, its
+  // situational bonuses and any marker keyed on it all rendered for nobody. Same shape as the
+  // inventor-modification case above, which is why that comment reads the way it does.
+  if (c.mythicCalling && db.classFeatures[c.mythicCalling]) out.add(c.mythicCalling);
   return out;
 }
 

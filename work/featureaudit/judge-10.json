@@ -1,0 +1,707 @@
+{
+ "records": [
+  {
+   "id": "zoophonia",
+   "verdict": "ALREADY_OK",
+   "reason": "The bard class record's muse option for zoophonia already carries grantedSpells:[\"summon-animal\"] and grantedFeats:[\"zoophonic-communication\"], consumed by src/rules/build.ts; the standalone classFeatures record is just the descriptive twin."
+  },
+  {
+   "id": "ambitious-human",
+   "verdict": "MISS",
+   "reason": "Grants the Fleet general feat outright to every ambitious human, plus a second class-keyed ability (Raging Intimidation / Well-Versed / Toughness / Cantrip Expansion). grantsFeats delivers the unconditional Fleet; the class-keyed second grant still has no conditional lane (grantsFeats cannot be gated on class).",
+   "fix": {
+    "grantsFeats": [
+     "fleet"
+    ]
+   }
+  },
+  {
+   "id": "ancient-blooded-dwarf",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Its whole content is granting the Call on Ancient Blood reaction, an action the player spends at the table; it changes no standing statistic."
+  },
+  {
+   "id": "athamasi",
+   "verdict": "MISS",
+   "reason": "Removes off-guard while Climbing and lets you Climb or Grab an Edge with your hands full — a real change to two actions that nothing records.",
+   "fix": {
+    "situational": [
+     {
+      "on": "action",
+      "id": "climb",
+      "value": "not off-guard",
+      "note": "Your secondary arms let you Climb even with both primary hands full, and you aren't off-guard while Climbing."
+     },
+     {
+      "on": "action",
+      "id": "grab-an-edge",
+      "note": "You can Grab an Edge with your secondary arms even if one or both primary hands are full."
+     }
+    ]
+   }
+  },
+  {
+   "id": "badlands-orc",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Doubled Hustle duration is exploration-mode travel and the heat-step reduction is a GM-adjudicated environmental effect; neither is a sheet statistic."
+  },
+  {
+   "id": "bandaagee-vanara",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Ignoring difficult terrain from crowds is resolved on the map by the GM; it moves no number the sheet holds."
+  },
+  {
+   "id": "camouflage-tripkee",
+   "verdict": "MISS",
+   "reason": "The player must PICK a terrain (aquatic, forest or swamp) at character creation and nothing asks for it, and the Hide/Sneak-without-cover exception in that terrain is unrecorded.",
+   "fix": {
+    "effectChoices": [
+     {
+      "id": "camouflage-terrain",
+      "prompt": "Choose the terrain your skin mimics",
+      "options": [
+       {
+        "value": "aquatic",
+        "label": "Aquatic"
+       },
+       {
+        "value": "forest",
+        "label": "Forest"
+       },
+       {
+        "value": "swamp",
+        "label": "Swamp"
+       }
+      ]
+     }
+    ],
+    "situational": [
+     {
+      "on": "action",
+      "id": "hide",
+      "note": "In your chosen terrain (aquatic, forest or swamp) you can Hide without cover or being concealed."
+     },
+     {
+      "on": "action",
+      "id": "sneak",
+      "note": "In your chosen terrain (aquatic, forest or swamp) you can Sneak without cover or being concealed."
+     }
+    ]
+   }
+  },
+  {
+   "id": "caveclimber-kobold",
+   "verdict": "MISS",
+   "reason": "Combat Climber is already delivered by src/rules/featFeatGrants.ts, but the success-to-critical-success upgrade on Athletics checks to Climb (and climbing with hands free) is delivered by nothing.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "athletics"
+       }
+      ],
+      "when": "on an Athletics check to Climb",
+      "bonus": "a success is a critical success instead"
+     },
+     {
+      "on": "action",
+      "id": "climb",
+      "value": "success → critical success",
+      "note": "You Climb with your clawed feet and tail, leaving your hands free, and a success on the Athletics check is a critical success."
+     }
+    ]
+   }
+  },
+  {
+   "id": "cavernstalker-kobold",
+   "verdict": "MISS",
+   "reason": "Climbing natural stone at half Speed on a success (full on a critical success) and the success-to-critical-success upgrade on Acrobatics to Squeeze are real degree-of-success changes nothing records.",
+   "fix": {
+    "situational": [
+     {
+      "on": "action",
+      "id": "climb",
+      "value": "half Speed on a success",
+      "note": "On rock walls, stalactites and other natural stone you Climb at half Speed on a success and full Speed on a critical success (full on a success with Quick Climb). Not while using a climb Speed."
+     },
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "acrobatics"
+       }
+      ],
+      "when": "on an Acrobatics check to Squeeze",
+      "bonus": "a success is a critical success instead"
+     }
+    ]
+   }
+  },
+  {
+   "id": "celestial-envoy-kitsune",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants the Invoke Celestial Privilege reaction, resolved at the table; the tailless alternate form only names what the ancestry's Change Shape turns you into."
+  },
+  {
+   "id": "cliffscale-lizardfolk",
+   "verdict": "MISS",
+   "reason": "Combat Climber is already delivered by src/rules/featFeatGrants.ts, but the success-to-critical-success upgrade on Athletics checks to climb (barefoot, hands free) reaches nothing.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "athletics"
+       }
+      ],
+      "when": "on an Athletics check to Climb",
+      "bonus": "a success is a critical success instead"
+     },
+     {
+      "on": "action",
+      "id": "climb",
+      "value": "success → critical success",
+      "note": "While not wearing footwear you climb with the sticky pads on your feet, leaving your hands free, and a success on the Athletics check is a critical success."
+     }
+    ]
+   }
+  },
+  {
+   "id": "cloudleaper-lizardfolk",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Avoiding fall damage is resolved at the table (the text itself defers the room-to-glide question to the GM) and falling damage is not a statistic the sheet carries."
+  },
+  {
+   "id": "compact-skeleton",
+   "verdict": "MISS",
+   "reason": "Quick Squeeze is already granted via src/rules/featFeatGrants.ts, but the size change Medium to Small is not delivered: sizeOverride only ever RAISES size (build.ts keeps the largest of ancestry size and any override), so there is no lane for a heritage that LOWERS the ancestry's size.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "dark-fields-kitsune",
+   "verdict": "MISS",
+   "reason": "Demoralize changing traits (auditory to visual) and losing the language penalty is a concrete change to an action that nothing records. (The Invigorating Fear reaction and the fox alternate form need nothing.)",
+   "fix": {
+    "situational": [
+     {
+      "on": "action",
+      "id": "demoralize",
+      "value": "visual, not auditory",
+      "note": "Your Demoralize loses the auditory trait and gains the visual trait, and you take no penalty against a creature that doesn't understand your language."
+     }
+    ]
+   }
+  },
+  {
+   "id": "death-warden-dwarf",
+   "verdict": "MISS",
+   "reason": "A degree-of-success upgrade on saves against void effects and effects created by undead. The situational lane already carries this exact shape for other records (see \"cantorian-reinforcement\" in src/rules/situationalBonuses.ts); the entry keyed \"death-warden\" there is a different record and does not cover this heritage.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "all"
+       }
+      ],
+      "when": "against a void effect or an effect created by an undead creature",
+      "bonus": "a success is a critical success instead"
+     }
+    ]
+   }
+  },
+  {
+   "id": "deep-orc",
+   "verdict": "ALREADY_OK",
+   "reason": "Delivered by src/rules/featFeatGrants.ts line 205: 'deep-orc': ['terrain-expertise', 'combat-climber'] — both granted feats are the whole of the heritage's content."
+  },
+  {
+   "id": "desert-rat",
+   "verdict": "MISS",
+   "reason": "Speed rises to 30 feet with both hands free — a conditional speed change nothing records. (The heat/cold step shifts and the starvation/thirst extension are GM-adjudicated environment and downtime.)",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "speed"
+       }
+      ],
+      "when": "with both hands free, running on all fours",
+      "bonus": "Speed becomes 30 feet"
+     }
+    ]
+   }
+  },
+  {
+   "id": "dijiang",
+   "verdict": "MISS",
+   "reason": "A failure-to-success upgrade on saves against emotion effects; the situational lane carries exactly this kind of degree-of-success wording elsewhere, and nothing carries it for dijiang.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "all"
+       }
+      ],
+      "when": "against an emotion effect",
+      "bonus": "a failure (but not a critical failure) is a success instead"
+     }
+    ]
+   }
+  },
+  {
+   "id": "discarded-fleshwarp",
+   "verdict": "MISS",
+   "reason": "A degree-of-success upgrade on saves against transmutation effects that nothing records.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "all"
+       }
+      ],
+      "when": "against a transmutation effect",
+      "bonus": "a success is a critical success instead"
+     }
+    ]
+   }
+  },
+  {
+   "id": "dog-kholo",
+   "verdict": "MISS",
+   "reason": "Speed rises to 30 feet (from the kholo base 25) when both hands are free; the sheet's Speed never moves.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "speed"
+       }
+      ],
+      "when": "with both hands free, running on all fours",
+      "bonus": "Speed becomes 30 feet"
+     }
+    ]
+   }
+  },
+  {
+   "id": "dogtooth-tengu",
+   "verdict": "MISS",
+   "reason": "The beak unarmed Strike gains deadly d8 and the Strikes card never shows it. unarmedTraits is the right lane and the exact shape is already used elsewhere ({\"match\":[\"beak\"],\"add\":[\"versatile-s\"]}); note that applyUnarmedRiders in src/rules/derive.ts currently reads unarmedTraits only from db.feats, so the reader must also scan the heritage.",
+   "fix": {
+    "unarmedTraits": {
+     "match": [
+      "beak"
+     ],
+     "add": [
+      "deadly-d8"
+     ]
+    }
+   }
+  },
+  {
+   "id": "draxie",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Touch telepathy is a way of communicating with a creature you touch; it changes no statistic and is not a precise/imprecise sense the senses lane models."
+  },
+  {
+   "id": "elfbane-hobgoblin",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Its whole content is granting the Resist Elf Magic reaction, which the player spends at the table."
+  },
+  {
+   "id": "fishseeker-shoony",
+   "verdict": "MISS",
+   "reason": "Two degree-of-success upgrades on your own Grab an Edge that nothing records. (The Disarm clause changes the ATTACKER's result, so no fix for that half.)",
+   "fix": {
+    "situational": [
+     {
+      "on": "action",
+      "id": "grab-an-edge",
+      "value": "success → crit success; crit fail → fail",
+      "note": "On a check to Grab an Edge a success is a critical success and a critical failure is a failure instead."
+     }
+    ]
+   }
+  },
+  {
+   "id": "fodder-skeleton",
+   "verdict": "MISS",
+   "reason": "Base Speed 30 instead of the skeleton ancestry's 25. landSpeedMin is exactly this lane and build/derive already read it from the heritage (derive.ts applies db.heritages[...].landSpeedMin as a floor).",
+   "fix": {
+    "landSpeedMin": 30
+   }
+  },
+  {
+   "id": "frilled-lizardfolk",
+   "verdict": "MISS",
+   "reason": "Demoralize swapping auditory for visual and dropping the language penalty is a concrete change to an action nothing records. (Threatening Approach is an action resolved at the table.)",
+   "fix": {
+    "situational": [
+     {
+      "on": "action",
+      "id": "demoralize",
+      "value": "visual, not auditory",
+      "note": "Your Demoralize loses the auditory trait and gains the visual trait, and you take no penalty against a creature that doesn't understand your language."
+     }
+    ]
+   }
+  },
+  {
+   "id": "fruit-leshy",
+   "verdict": "MISS",
+   "reason": "A once-per-day healing resource (a fruit ripening at dawn, healing 1d8 per 2 levels beyond 1st) that the player must track. limitedUses is the right shape but featUses.ts reads limitedUses only from feats, so a heritage-borne daily resource has no counter lane.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "full-moon-sarangay",
+   "verdict": "MISS",
+   "reason": "Folk Healer is already granted via src/rules/featFeatGrants.ts, but the heritage also REPLACES the ancestry's attribute boost (Wisdom instead of Strength) and flaw (Constitution instead of Wisdom), and no field can alter an ancestry's boosts/flaws from the heritage.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "gourd-leshy",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Head storage is inventory flavour, the +4 is to the DC another creature rolls against to Steal from you (target-side), and drawing the stored item is an action-economy allowance resolved at the table."
+  },
+  {
+   "id": "gutsy-halfling",
+   "verdict": "MISS",
+   "reason": "A degree-of-success upgrade on saves against emotion effects. The identical entry already exists for the Irrepressible feats in src/rules/situationalBonuses.ts, and those entries even reference this heritage — but the heritage itself carries nothing.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "all"
+       }
+      ],
+      "when": "against an emotion effect",
+      "bonus": "a success is a critical success instead"
+     }
+    ]
+   }
+  },
+  {
+   "id": "heavenscribe-kobold",
+   "verdict": "MISS",
+   "reason": "Grants the Draconic language outright (grantsLanguages is read from the heritage in build.ts) and upgrades critical failures on Diplomacy to Make an Impression or Request; neither reaches the sheet.",
+   "fix": {
+    "grantsLanguages": [
+     "draconic"
+    ],
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "diplomacy"
+       }
+      ],
+      "when": "on a Diplomacy check to Make an Impression or Request",
+      "bonus": "a critical failure is a failure instead"
+     }
+    ]
+   }
+  },
+  {
+   "id": "hillock-halfling",
+   "verdict": "MISS",
+   "reason": "Adds your level to HP regained overnight and to HP from someone else's Treat Wounds (with a snack). restRecovery is the nearest lane but it only carries hpMultiplier/conditionSteps and is read from feats only — a flat, level-scaled addend to rest healing and to Treat Wounds healing has no lane.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "hold-scarred-orc",
+   "verdict": "MISS",
+   "reason": "Diehard is already granted via src/rules/featFeatGrants.ts, but the ancestry HP change (12 instead of 10) never reaches max HP. maxHpBonus is the right field; note featHpBonus in src/rules/derive.ts currently sums maxHpBonus over c.feats only, so it must also read the heritage.",
+   "fix": {
+    "maxHpBonus": {
+     "flat": 2
+    }
+   }
+  },
+  {
+   "id": "hunter-automaton",
+   "verdict": "MISS",
+   "reason": "Speed rises to 30 feet (from the automaton base 25) when both hands are free; nothing records it.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "speed"
+       }
+      ],
+      "when": "with both hands free, running on all fours",
+      "bonus": "Speed becomes 30 feet"
+     }
+    ]
+   }
+  },
+  {
+   "id": "jinxed-halfling",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants the Jinx action, resolved at the table; the ban on ever taking Halfling Luck is a build restriction that removes nothing from the sheet."
+  },
+  {
+   "id": "jinxed-tengu",
+   "verdict": "MISS",
+   "reason": "A degree-of-success upgrade on saves against curse and misfortune effects, plus a flat check that reduces incoming doomed by 1. (The imported text lost the flat-check DC, so the marker states the effect without inventing a number.)",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "all"
+       }
+      ],
+      "when": "against a curse or misfortune effect",
+      "bonus": "a success is a critical success instead"
+     },
+     {
+      "on": "condition",
+      "id": "doomed",
+      "value": "-1 on a successful flat check",
+      "note": "When you would gain doomed, attempt the flat check; on a success reduce the doomed value you gain by 1."
+     }
+    ]
+   }
+  },
+  {
+   "id": "jungle-catfolk",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Ignoring (or downgrading) difficult terrain from undergrowth is resolved on the map by the GM; no sheet statistic changes."
+  },
+  {
+   "id": "keen-venom-vishkanya",
+   "verdict": "MISS",
+   "reason": "Your Envenom stops triggering reactions that trigger on manipulate actions — a real change to an action the sheet lists, recorded nowhere. (Venom Draw is an action resolved at the table.)",
+   "fix": {
+    "situational": [
+     {
+      "on": "action",
+      "id": "envenom",
+      "value": "no manipulate triggers",
+      "note": "Your Envenom doesn't trigger reactions that normally trigger on a manipulate action."
+     }
+    ]
+   }
+  },
+  {
+   "id": "lantern-surki",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Emitting, recolouring or extinguishing light changes no statistic, and both Evolution entries only hand over actions (Lantern Beam, Lantern Strobe) resolved at the table."
+  },
+  {
+   "id": "leaf-leshy",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Immunity to falling damage is resolved at the table when a fall happens; falling damage is not a statistic the sheet carries, and the immunities lane covers damage types, not falling."
+  },
+  {
+   "id": "littlehorn-minotaur",
+   "verdict": "MISS",
+   "reason": "Two real changes, neither expressible: the size must be LOWERED Large to Medium (sizeOverride only raises — build.ts keeps the largest), and the horns unarmed Strike must step DOWN d8 to d6 while gaining agile (unarmedTraits only steps a die UP and is read from feats only).",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "lotus-leshy",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Walking on still water and Balancing across flowing water are movement permissions adjudicated at the table against a Swim DC; no sheet statistic changes."
+  },
+  {
+   "id": "luminous-sprite",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Shedding torchlight and toggling/recolouring it changes no statistic; it is a light source resolved at the table."
+  },
+  {
+   "id": "melixie",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Talking to arthropods and their starting attitude toward you are social situations the GM adjudicates; no statistic moves."
+  },
+  {
+   "id": "mightyfall-kobold",
+   "verdict": "MISS",
+   "reason": "10 ancestry Hit Points instead of the kobold's 6 never reaches max HP. maxHpBonus is the right field; featHpBonus in src/rules/derive.ts must also read the heritage. (The optional alternative Str/Cha boosts with an Int flaw still has no lane for replacing ancestry boosts.)",
+   "fix": {
+    "maxHpBonus": {
+     "flat": 4
+    }
+   }
+  },
+  {
+   "id": "murkeyed-azarketi",
+   "verdict": "MISS",
+   "reason": "Lowers the flat check you roll to target concealed and hidden creatures — a real change to two conditions the sheet tracks. The imported text dropped both DCs, so the markers state the effect and the printed DCs must be restored from the book before this ships.",
+   "fix": {
+    "situational": [
+     {
+      "on": "condition",
+      "id": "concealed",
+      "value": "reduced flat check",
+      "note": "You need only a successful flat check at the heritage's reduced DC to target a concealed creature."
+     },
+     {
+      "on": "condition",
+      "id": "hidden",
+      "value": "reduced flat check",
+      "note": "You need only a successful flat check at the heritage's reduced DC to target a hidden creature."
+     }
+    ]
+   }
+  },
+  {
+   "id": "mutated-fleshwarp",
+   "verdict": "MISS",
+   "reason": "The DC of your own checks to recover from persistent bleed damage drops from 15 to 10 (lower still with effective assistance) — a change to a condition the sheet tracks that nothing records.",
+   "fix": {
+    "situational": [
+     {
+      "on": "condition",
+      "id": "persistent-damage",
+      "value": "bleed recovery DC 10",
+      "note": "Your flat check to end persistent bleed damage is DC 10 instead of 15, and lower still with particularly effective assistance."
+     }
+    ]
+   }
+  },
+  {
+   "id": "nine-lives-catfolk",
+   "verdict": "MISS",
+   "reason": "Diehard is already granted via src/rules/featFeatGrants.ts, but the recovery-check change (you don't add your dying value to the DC, so it stays 10) is a change to the dying condition that nothing records.",
+   "fix": {
+    "situational": [
+     {
+      "on": "condition",
+      "id": "dying",
+      "value": "recovery DC 10",
+      "note": "While dying you don't add your dying value to the DC of your recovery checks, so the DC is typically 10."
+     }
+    ]
+   }
+  },
+  {
+   "id": "nomadic-halfling",
+   "verdict": "MISS",
+   "reason": "Two extra languages of the PLAYER'S choice, and nothing asks for them: grantsLanguages takes fixed ids only, and Heritage.choice records a single pick with no count. A 'gain N languages of your choice' lane (extra language slots) is missing.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "paddler-shoony",
+   "verdict": "MISS",
+   "reason": "The success-to-critical-success upgrade on Swim is a real degree-of-success change nothing records. (Ignoring bog difficult terrain is map-side and needs nothing.)",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "skill",
+        "detail": "athletics"
+       }
+      ],
+      "when": "on an Athletics check to Swim",
+      "bonus": "a success is a critical success instead"
+     },
+     {
+      "on": "action",
+      "id": "swim",
+      "value": "success → critical success",
+      "note": "A success on a check to Swim is a critical success instead."
+     }
+    ]
+   }
+  },
+  {
+   "id": "palace-echoes-kitsune",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants the Nudging Whisper action, resolved at the table; the tailless alternate form only names what the ancestry's Change Shape turns you into."
+  },
+  {
+   "id": "peachchild-leshy",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Speaking with domesticated animals and their starting attitude toward you are social situations the GM adjudicates; no statistic moves."
+  },
+  {
+   "id": "pearl-dragonet",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Its whole content is the Bounce Away reaction, which the player spends at the table."
+  },
+  {
+   "id": "pelagic-merfolk",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Its whole content is granting the Shielding Wave action, resolved at the table."
+  },
+  {
+   "id": "pixie",
+   "verdict": "MISS",
+   "reason": "Size Small instead of the sprite ancestry's Tiny is a raise, which sizeOverride expresses exactly (build.ts keeps the largest of ancestry size and heritage sizeOverride), and the record carries nothing.",
+   "fix": {
+    "sizeOverride": "small"
+   }
+  },
+  {
+   "id": "poisonhide-tripkee",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Its whole content is granting the Toxic Skin reaction, resolved at the table."
+  },
+  {
+   "id": "polyglot-android",
+   "verdict": "MISS",
+   "reason": "Two extra languages of the PLAYER'S choice (three with the matching feat) and nothing asks for them; grantsLanguages only takes fixed ids and there is no 'N languages of your choice' slot lane.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "quillcoat-shisk",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Its whole content is granting the Barbed Quills reaction, resolved at the table against an attacker."
+  },
+  {
+   "id": "resolute-fetchling",
+   "verdict": "MISS",
+   "reason": "A degree-of-success upgrade on saves against emotion effects that nothing records (the equivalent entries exist for the Irrepressible feats in src/rules/situationalBonuses.ts, but not for this heritage).",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "save",
+        "detail": "all"
+       }
+      ],
+      "when": "against an emotion effect",
+      "bonus": "a success is a critical success instead"
+     }
+    ]
+   }
+  },
+  {
+   "id": "rite-of-knowing",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Its whole content is granting the Call to Axis action, resolved at the table."
+  }
+ ]
+}

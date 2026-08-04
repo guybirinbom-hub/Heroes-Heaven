@@ -57725,5 +57725,269 @@
         "group": "brawling"
       }
     ]
+  },
+  {
+    "category": "classFeatures",
+    "id": "alchemy",
+    "field": "grantsFeats",
+    "value": [
+      "alchemical-crafting"
+    ]
+  },
+  {
+    "category": "classFeatures",
+    "id": "arcane-bond",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "day"
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "dense-plating",
+    "field": "resistances",
+    "value": [
+      {
+        "type": "slashing",
+        "value": "floor(@actor.level/2)"
+      }
+    ]
+  },
+  {
+    "category": "heritages",
+    "id": "ambitious-human",
+    "field": "grantsFeats",
+    "value": [
+      "fleet"
+    ]
+  },
+  {
+    "category": "heritages",
+    "id": "camouflage-tripkee",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "camouflage-terrain",
+        "prompt": "Choose the terrain your skin mimics",
+        "options": [
+          {
+            "value": "aquatic",
+            "label": "Aquatic"
+          },
+          {
+            "value": "forest",
+            "label": "Forest"
+          },
+          {
+            "value": "swamp",
+            "label": "Swamp"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "heritages",
+    "id": "fodder-skeleton",
+    "field": "landSpeedMin",
+    "value": 30
+  },
+  {
+    "category": "heritages",
+    "id": "heavenscribe-kobold",
+    "field": "grantsLanguages",
+    "value": [
+      "draconic"
+    ]
+  },
+  {
+    "category": "heritages",
+    "id": "running-animal",
+    "field": "landSpeedMin",
+    "value": 30
+  },
+  {
+    "category": "heritages",
+    "id": "running-animal",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "running-animal-attack",
+        "prompt": "Choose your animal attack",
+        "options": [
+          {
+            "value": "claw",
+            "label": "Claw (1d4 slashing; agile, finesse)"
+          },
+          {
+            "value": "jaws",
+            "label": "Jaws (1d6 piercing)"
+          },
+          {
+            "value": "tail",
+            "label": "Tail (1d6 bludgeoning)"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "heritages",
+    "id": "skyborn-tengu",
+    "field": "immunities",
+    "value": [
+      "falling damage"
+    ]
+  },
+  {
+    "category": "heritages",
+    "id": "stuffed-poppet",
+    "field": "immunities",
+    "value": [
+      "falling damage"
+    ]
+  },
+  {
+    "category": "classFeatures",
+    "id": "flames",
+    "field": "grantsFeats",
+    "value": [
+      "foretell-harm"
+    ]
+  },
+  {
+    "category": "classFeatures",
+    "id": "initiate-benefit-wand",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "wand-attunement",
+        "prompt": "Choose your wand implement's attunement",
+        "options": [
+          {
+            "value": "cold",
+            "label": "Cold",
+            "note": "Fling Magic deals cold damage."
+          },
+          {
+            "value": "electricity",
+            "label": "Electricity",
+            "note": "Fling Magic deals electricity damage."
+          },
+          {
+            "value": "fire",
+            "label": "Fire",
+            "note": "Fling Magic deals fire damage."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "classFeatures",
+    "id": "layered-mesh",
+    "field": "resistances",
+    "value": [
+      {
+        "type": "piercing",
+        "value": "floor(@actor.level/2)"
+      }
+    ]
+  },
+  {
+    "category": "classFeatures",
+    "id": "liturgist",
+    "field": "grantsFeats",
+    "value": [
+      "circle-of-spirits"
+    ]
+  },
+  {
+    "category": "classFeatures",
+    "id": "masterful-hunter-flurry",
+    "field": "mapReduction",
+    "value": {
+      "step": 2,
+      "agileStep": 1,
+      "whileState": "hunt-prey",
+      "note": "Masterful Hunter (Flurry)"
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "mastermind",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "mastermind-skill",
+        "prompt": "Trained skill",
+        "options": [
+          {
+            "value": "arcana",
+            "label": "Arcana",
+            "grant": {
+              "skills": {
+                "arcana": "trained"
+              }
+            }
+          },
+          {
+            "value": "nature",
+            "label": "Nature",
+            "grant": {
+              "skills": {
+                "nature": "trained"
+              }
+            }
+          },
+          {
+            "value": "occultism",
+            "label": "Occultism",
+            "grant": {
+              "skills": {
+                "occultism": "trained"
+              }
+            }
+          },
+          {
+            "value": "religion",
+            "label": "Religion",
+            "grant": {
+              "skills": {
+                "religion": "trained"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "classFeatures",
+    "id": "peerless-inventor",
+    "field": "grantsFeats",
+    "value": [
+      "inventor"
+    ]
+  },
+  {
+    "category": "classFeatures",
+    "id": "tempest",
+    "field": "grantsFeats",
+    "value": [
+      "foretell-harm"
+    ]
+  },
+  {
+    "category": "classFeatures",
+    "id": "tensile-absorption",
+    "field": "resistances",
+    "value": [
+      {
+        "type": "bludgeoning",
+        "value": "floor(@actor.level/2)"
+      }
+    ]
   }
 ]

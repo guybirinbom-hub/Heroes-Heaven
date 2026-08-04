@@ -138,27 +138,35 @@ for (const rec of records) {
     continue;
   }
 
+  // NOTE ON CONTROL FLOW: none of the lanes below `continue`. A fix may carry a marker AND a field,
+  // or a mode AND a field, and an earlier version of this stopped at the first lane — which silently
+  // dropped the only player-side half of a fix whose other half was target-side. Every lane runs.
+
   // ---- a mark on an ACTION or a CONDITION rather than a stat ----
   // Routed by SHAPE, not by key: adversaries return these under `situational` too, and a Leap
   // distance written as a star on a stat would claim a bonus it does not give.
-  if (Array.isArray(fix.situational) && fix.situational.some((b) => b?.on && b?.id)) {
-    if (existingMarkers.has(id) || newMarkers.has(id)) { skipped.push(`${id}: already in RECORD_MARKERS`); continue; }
-    const marks = fix.situational.filter((b) => b?.on && b?.id && b?.note);
-    if (marks.some((b) => b.on !== 'action' && b.on !== 'condition')) { skipped.push(`${id}: marker "on" must be action or condition`); continue; }
-    const dead = marks.filter((b) => (b.on === 'action' ? !core.actions?.[b.id] : !core.conditions?.[b.id]));
-    if (dead.length) { skipped.push(`${id}: marker points at no such ${dead[0].on}: ${dead.map((d) => d.id).join(', ')}`); continue; }
-    if (marks.length) newMarkers.set(id, marks.map((m) => ({ on: m.on, id: m.id, ...(m.value ? { value: String(m.value) } : {}), note: String(m.note) })));
-    continue;
+  const markerEntries = Array.isArray(fix.situational) ? fix.situational.filter((b) => b?.on && b?.id) : [];
+  if (markerEntries.length) {
+    const marks = markerEntries.filter((b) => b?.note);
+    if (existingMarkers.has(id) || newMarkers.has(id)) skipped.push(`${id}: already in RECORD_MARKERS`);
+    else if (marks.some((b) => b.on !== 'action' && b.on !== 'condition')) skipped.push(`${id}: marker "on" must be action or condition`);
+    else {
+      const dead = marks.filter((b) => (b.on === 'action' ? !core.actions?.[b.id] : !core.conditions?.[b.id]));
+      if (dead.length) skipped.push(`${id}: marker points at no such ${dead[0].on}: ${dead.map((d) => d.id).join(', ')}`);
+      else if (marks.length) newMarkers.set(id, marks.map((m) => ({ on: m.on, id: m.id, ...(m.value ? { value: String(m.value) } : {}), note: String(m.note) })));
+    }
   }
 
   // ---- conditional bonuses -> the star registry ----
   // FEAT_SITUATIONAL is feat/classFeature ONLY: a heritage entry there breaks the registry test, so a
   // heritage's conditional bonus has no home and is recorded rather than mis-filed.
-  if (fix.situational?.length) {
-    if (coll !== 'classFeatures') { skipped.push(`${id}: FEAT_SITUATIONAL takes feats and class features only, not a ${coll} record`); continue; }
-    if (existingReg.has(id) || sitEntries.has(id)) { skipped.push(`${id}: already in the situational registry`); continue; }
+  const starEntries = Array.isArray(fix.situational) ? fix.situational.filter((b) => !(b?.on && b?.id)) : [];
+  if (starEntries.length) {
+    if (coll !== 'classFeatures') skipped.push(`${id}: FEAT_SITUATIONAL takes feats and class features only, not a ${coll} record`);
+    else if (existingReg.has(id) || sitEntries.has(id)) skipped.push(`${id}: already in the situational registry`);
+    else {
     const out = [];
-    for (const b of fix.situational) {
+    for (const b of starEntries) {
       const targets = (b.targets ?? []).filter((t) => {
         if (!KINDS.has(t.kind)) { skipped.push(`${id}: target kind "${t.kind}"`); return false; }
         if (t.kind === 'skill' && t.detail && t.detail !== 'all' && !t.detail.startsWith('lore:') && !SKILLS.has(t.detail)) { skipped.push(`${id}: unknown skill "${t.detail}"`); return false; }
@@ -174,11 +182,11 @@ for (const rec of records) {
       });
       out.push(`{ targets: [${lits.join(', ')}], when: "${esc(String(b.when ?? '').trim().slice(0, 90))}", bonus: "${esc(String(b.bonus).trim())}" }`);
     }
-    if (out.length) sitEntries.set(id, out);
-    continue;
+      if (out.length) sitEntries.set(id, out);
+    }
   }
 
-  // ---- a toggleable effect -> a mode. Does NOT continue: a fix may carry a mode AND fields. ----
+  // ---- a toggleable effect -> a mode ----
   if (fix.mode) {
     const m = fix.mode;
     const gate = (m?.feats ?? []).filter((f) => !core.feats[f] && !core.classFeatures[f]);
@@ -199,7 +207,8 @@ for (const rec of records) {
       return { field, value };
     });
   if (!pairs.length) {
-    if (!fix.mode) skipped.push(`${id}: a MISS whose fix says nothing`);
+    // Only complain when NO lane took it — a marker-only or star-only fix is complete as it stands.
+    if (!fix.mode && !markerEntries.length && !starEntries.length) skipped.push(`${id}: a MISS whose fix says nothing`);
     continue;
   }
 

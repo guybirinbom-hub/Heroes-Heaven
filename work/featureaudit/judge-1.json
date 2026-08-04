@@ -1,0 +1,518 @@
+{
+  "records": [
+    {
+      "id": "bloodline-undead",
+      "verdict": "ALREADY_OK",
+      "reason": "Delivered by the sorcerer subclass option classes.sorcerer.subclass.options['bloodline-undead'] — tradition divine, grantedSpells (the ten sorcerous gifts), grants.skills Intimidation/Religion, focusSpells undeaths-blessing + advanced drain-life + greater grasping-grave. Blood Magic (Stolen Life) is a per-cast rider resolved at the table."
+    },
+    {
+      "id": "bloodrager",
+      "verdict": "MISS",
+      "reason": "Rage damage IS delivered (derive.ts RAGE_DAMAGE['bloodrager'] tiers [2,4,8]), but Raging Resistance (resist slashing and persistent bleed while raging) reaches nothing: whileActive can carry rage resistances but has no level gate, and this instinct record is level 1 while Raging Resistance is gained at level 9 — putting it on the record would grant it eight levels early. The Blood Rage persistent-bleed rider (half your Rage damage) also has no lane: strikeDamage cannot be limited to the rage state.",
+      "fix": {
+        "needsEngineWork": true
+      }
+    },
+    {
+      "id": "blunt-shot",
+      "verdict": "MISS",
+      "reason": "The innovation gains the concussive and ranged trip traits, and nothing carries that. weaponTraits.match only selects by melee/anyTrait, and build.ts states the inventor's chosen base weapon is 'not modelled', so there is no way to point the trait grant at the innovation only — applying it to every wielded weapon would be an over-grant.",
+      "fix": {
+        "needsEngineWork": true
+      }
+    },
+    {
+      "id": "bravery",
+      "verdict": "MISS",
+      "reason": "The Will-expert advance is ALREADY delivered (advancement.ts CLASS_ADVANCEMENT fighter, level 3, source 'bravery'), but the two extra benefits reach nothing: the fear-save degree upgrade and the automatic frightened reduction.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [{ "kind": "save", "detail": "will" }],
+            "when": "against fear effects",
+            "bonus": "a success upgrades to a critical success"
+          },
+          {
+            "on": "condition",
+            "id": "frightened",
+            "value": "-1 when gained",
+            "note": "Bravery: anytime you gain the frightened condition, reduce its value by 1."
+          }
+        ]
+      }
+    },
+    {
+      "id": "breath-weapon",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A two-action eidolon activity that deals damage to creatures in an area with a basic Reflex save — it only changes the targets' statistics and is resolved at the table."
+    },
+    {
+      "id": "buckle-cut-blitz",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A commander tactic: it signals squadmates (allies) to Stride and imposes clumsy on enemies. Nothing on the commander's own sheet changes."
+    },
+    {
+      "id": "burn-out-of-time",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A transcendence Strike: extra spirit/void damage to one creature and a retroactive resurrection of another creature. Target-side only, resolved at the table."
+    },
+    {
+      "id": "burnished-armor-expertise",
+      "verdict": "ALREADY_OK",
+      "reason": "Pure proficiency increase, delivered by CLASS_ADVANCEMENT in src/rules/advancement.ts — exemplar level 13 light/medium/unarmored to expert, source 'burnished-armor-expertise'."
+    },
+    {
+      "id": "burnished-armor-mastery",
+      "verdict": "ALREADY_OK",
+      "reason": "Pure proficiency increase, delivered by CLASS_ADVANCEMENT in src/rules/advancement.ts — exemplar level 19 light/medium/unarmored to master, source 'burnished-armor-mastery'."
+    },
+    {
+      "id": "camouflage-pigmentation",
+      "verdict": "MISS",
+      "reason": "While wearing the armor innovation you may Hide with no cover and no concealment — a permanent change to the requirements of a core action that nothing records. The inventor's chosen modifications ARE read as owned features (derive.ts, c.inventor.modifications), so a marker on the record would surface.",
+      "fix": {
+        "situational": [
+          {
+            "on": "action",
+            "id": "hide",
+            "value": "no cover or concealment needed",
+            "note": "Camouflage Pigmentation: while wearing your armor innovation you can Hide even without cover or concealment, as long as you stay still."
+          }
+        ]
+      }
+    },
+    {
+      "id": "captivating-charm",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A two-action transcendence that fascinates a creature on a failed save against your class DC — it changes only the target's statistics."
+    },
+    {
+      "id": "caretakers-calling",
+      "verdict": "MISS",
+      "reason": "Mythic callings ARE selectable and granted (build.ts mythicCalling), so the record's fields would fire — but nothing records that you can spend a Mythic Point to roll Treat Disease/Poison/Wounds and Battle Medicine at mythic proficiency. situationalBonuses already uses the 'roll at mythic proficiency' phrasing ('avoid-fates-gaze'). The edicts/anathema and the Mythic Point refresh are table-side.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [{ "kind": "skill", "detail": "medicine" }],
+            "when": "to Treat Disease, Treat Poison, Treat Wounds, or Battle Medicine (spend a Mythic Point)",
+            "bonus": "roll at mythic proficiency"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cascade-bearers",
+      "verdict": "MISS",
+      "reason": "The Additional Curriculum adds twelve named spells to the wizard's curriculum list and nothing delivers them; the spellListAdditions lane exists and every id resolves in core.spells. (It is also absent from classes.wizard.subclass.options, so it currently cannot be picked at all — the field alone is necessary but not sufficient.)",
+      "fix": {
+        "spellListAdditions": {
+          "spells": [
+            "telekinetic-projectile",
+            "force-barrage",
+            "mystic-armor",
+            "telekinetic-maneuver",
+            "levitate",
+            "flicker",
+            "telekinetic-haul",
+            "cursed-metamorphosis",
+            "contingency",
+            "project-image",
+            "pinpoint",
+            "detonate-magic"
+          ]
+        }
+      }
+    },
+    {
+      "id": "cause",
+      "verdict": "ALREADY_OK",
+      "reason": "A subclass HEADER that only names the choice — the picker is classes.champion.subclass ('Cause') with its seven options; the mechanics live on the chosen option."
+    },
+    {
+      "id": "chalice",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "The Initiate, Adept and Paragon Benefit sections are empty in this record, so the only stated mechanic is Intensify Vulnerability: extra temporary Hit Points / healing for whoever Drinks from the Chalice — an action resolved at the table, and the drinker may be an ally."
+    },
+    {
+      "id": "champion-expertise",
+      "verdict": "ALREADY_OK",
+      "reason": "Pure proficiency increase, delivered by CLASS_ADVANCEMENT in src/rules/advancement.ts — champion level 9 classDc and spellcasting to expert, source 'champion-expertise'."
+    },
+    {
+      "id": "champion-mastery",
+      "verdict": "ALREADY_OK",
+      "reason": "Pure proficiency increase, delivered by CLASS_ADVANCEMENT in src/rules/advancement.ts — champion level 17 classDc and spellcasting to master, source 'champion-mastery'."
+    },
+    {
+      "id": "champions-aura",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A 15-foot emanation used purely as a RANGE for the champion's reaction and other effects, plus a single action to suppress or resume it. It sets no statistic on the sheet."
+    },
+    {
+      "id": "champions-reaction",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A pointer only — 'Your cause gives you a special reaction. See specific causes.' It carries no mechanics of its own; the reaction lives on the chosen cause option."
+    },
+    {
+      "id": "chemical-hardiness",
+      "verdict": "MISS",
+      "reason": "The Fortitude-master advance is ALREADY delivered (advancement.ts, alchemist level 11, source 'chemical-hardiness'), but the success-to-critical-success upgrade on every Fortitude save reaches nothing.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [{ "kind": "save", "detail": "fortitude" }],
+            "when": "whenever you roll a success on a Fortitude save",
+            "bonus": "the success upgrades to a critical success"
+          }
+        ]
+      }
+    },
+    {
+      "id": "churning-mind",
+      "verdict": "MISS",
+      "reason": "The Will-master advance is ALREADY delivered (advancement.ts, inventor level 11, source 'churning-mind'), but the success-to-critical-success upgrade on every Will save reaches nothing.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [{ "kind": "save", "detail": "will" }],
+            "when": "whenever you roll a success on a Will save",
+            "bonus": "the success upgrades to a critical success"
+          }
+        ]
+      }
+    },
+    {
+      "id": "coiling-serpents",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A two-action ikon Strike that Immobilizes the target until it Escapes your class DC — target-side only, resolved at the table."
+    },
+    {
+      "id": "command-a-construct",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A one-action command that gives the construct companion (a minion) two actions — an action resolved at the table under the minion trait; it sets nothing on the character's sheet."
+    },
+    {
+      "id": "commanding-will",
+      "verdict": "MISS",
+      "reason": "The Will-master advance is ALREADY delivered (advancement.ts, commander level 11, source 'commanding-will'), but the success-to-critical-success upgrade on every Will save reaches nothing.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [{ "kind": "save", "detail": "will" }],
+            "when": "whenever you roll a success on a Will save",
+            "bonus": "the success upgrades to a critical success"
+          }
+        ]
+      }
+    },
+    {
+      "id": "complete-reconfiguration",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Downtime only — it widens what a successful downtime Crafting check lets you swap or retrain. The builder already lets the player re-pick modifications freely, and no statistic changes."
+    },
+    {
+      "id": "complex-simplicity",
+      "verdict": "MISS",
+      "reason": "Steps the innovation's weapon damage die up one size and adds two player-chosen traits from versatile B/P/S or razing. Neither is expressible: weaponTraits has no die step (only unarmedTraits does) and cannot be pointed at the innovation specifically, and effectChoices cannot feed a weapon-trait grant.",
+      "fix": {
+        "needsEngineWork": true
+      }
+    },
+    {
+      "id": "confident-evasion",
+      "verdict": "MISS",
+      "reason": "The Reflex-master advance is ALREADY delivered (advancement.ts, swashbuckler level 7, source 'confident-evasion'), but the success-to-critical-success upgrade on every Reflex save reaches nothing.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [{ "kind": "save", "detail": "reflex" }],
+            "when": "whenever you roll a success on a Reflex save",
+            "bonus": "the success upgrades to a critical success"
+          }
+        ]
+      }
+    },
+    {
+      "id": "confident-finisher",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "It grants the Confident Finisher action, resolved at the table; the rest of the text restates the general finisher trait rules. The panache gate is already applied generically by actionGates.ts (finisher trait -> panache)."
+    },
+    {
+      "id": "coordinating-maneuvers",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A commander tactic that lets a signalled squadmate (an ally) Step and Reposition — it changes an ally's options, never the commander's own statistics."
+    },
+    {
+      "id": "corpse-crenellation",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A commander tactic: squadmates Stride and Strike, and a fallen enemy's body provides cover to squadmates. Every effect lands on allies, enemies or the battlefield."
+    },
+    {
+      "id": "cosmos",
+      "verdict": "ALREADY_OK",
+      "reason": "Delivered by classes.oracle.subclass.options['cosmos'] — grantedSpells light/dizzying-colors/darkness/moon-frenzy, grants.skills nature, focusSpells spray-of-stars, advanced interstellar-void, greater moonlight-bridge. (The associated curse is a separate record, judged on its own.)"
+    },
+    {
+      "id": "covered-reload",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "It grants an action that is resolved at the table (Take Cover or Hide, then Interact to reload) and the action record already exists as core.actions['covered-reload']. No statistic changes."
+    },
+    {
+      "id": "crafter-in-the-vault",
+      "verdict": "MISS",
+      "reason": "Spells and the vessel focus spell ARE delivered (classes.animist.extraChoices.apparition option carries grantedSpells + focusSpells traveling-workshop), but the Apparition Skills are not: apparition-attunement's own text says attuned apparitions 'grant you knowledge in the form of Lore skills', so Architecture Lore and Engineering Lore should be trained while attuned. trainedLore is single-valued and there is no multi-lore grant lane on a class-choice option.",
+      "fix": {
+        "needsEngineWork": true
+      }
+    },
+    {
+      "id": "crash-against-me",
+      "verdict": "MISS",
+      "reason": "Grants resistance equal to your level to a chosen damage type until the start of your next turn (plus off-guard and a -2 on the attacker, which is target-side). A ModeDef can carry resistances with an @actor.level formula, but its IwrEntry type is fixed at authoring time and there is no per-activation damage-type choice, so the mode cannot express 'the chosen damage type'.",
+      "fix": {
+        "needsEngineWork": true
+      }
+    },
+    {
+      "id": "curse-of-ancestral-meddling",
+      "verdict": "MISS",
+      "reason": "A standing condition scaled by the cursebound resource (which the app DOES track — classResources.ts 'cursebound' meter, plus the cat-cursebound-1..4 modes whose modifiers are empty and whose note tells the player to apply the curse by hand). Nothing records the clumsy value. Note the oracle mystery options carry no link to their curse, so the record must also be attached to the mystery.",
+      "fix": {
+        "situational": [
+          {
+            "on": "condition",
+            "id": "clumsy",
+            "value": "= your cursebound value",
+            "note": "Curse of Ancestral Meddling: while you have the cursebound condition you are clumsy with a value equal to your cursebound value."
+          }
+        ]
+      }
+    },
+    {
+      "id": "curse-of-outpouring-life",
+      "verdict": "MISS",
+      "reason": "A real, permanent penalty to healing received that nothing records; the cursebound value is tracked as a class resource. The oracle mystery options also carry no link to their curse.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [{ "kind": "hp" }],
+            "when": "to HP restored by magical effects, while cursebound",
+            "bonus": "-1 status per level (minimum 1) times your cursebound value"
+          }
+        ]
+      }
+    },
+    {
+      "id": "curse-of-the-skys-call",
+      "verdict": "MISS",
+      "reason": "Two standing effects scaled by cursebound value — enfeebled, and a status penalty to saves and DCs against forced movement — and nothing records either. The oracle mystery options also carry no link to their curse.",
+      "fix": {
+        "situational": [
+          {
+            "on": "condition",
+            "id": "enfeebled",
+            "value": "= your cursebound value",
+            "note": "Curse of the Sky's Call: while you have the cursebound condition you are enfeebled with a value equal to your cursebound value."
+          },
+          {
+            "targets": [{ "kind": "save", "detail": "all" }],
+            "when": "against forced movement, while cursebound (also to your DCs)",
+            "bonus": "-1 status per point of cursebound value"
+          }
+        ]
+      }
+    },
+    {
+      "id": "curse-of-torrential-knowledge",
+      "verdict": "MISS",
+      "reason": "A status penalty to Perception and Will scaled by cursebound value, plus a stupefied 1 and a communication block at cursebound 4 — none of it recorded. The oracle mystery options also carry no link to their curse.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [{ "kind": "perception" }, { "kind": "save", "detail": "will" }],
+            "when": "while cursebound",
+            "bonus": "-1 status per point of cursebound value"
+          },
+          {
+            "on": "condition",
+            "id": "stupefied",
+            "value": "1 at cursebound 4",
+            "note": "At cursebound 4 you can't speak, use linguistic effects, or communicate with allies; you can still cast spells, but you're stupefied 1."
+          }
+        ]
+      }
+    },
+    {
+      "id": "curse-of-turbulent-moments",
+      "verdict": "MISS",
+      "reason": "A status penalty to AC against reaction/free-action attacks and to saves against fatigued or slowed, both scaled by cursebound value, and nothing records either. The oracle mystery options also carry no link to their curse.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [{ "kind": "ac" }],
+            "when": "against attacks made with reactions or free actions, while cursebound",
+            "bonus": "-1 status per point of cursebound value"
+          },
+          {
+            "targets": [{ "kind": "save", "detail": "all" }],
+            "when": "against effects that would make you fatigued or slowed, while cursebound",
+            "bonus": "-1 status per point of cursebound value"
+          }
+        ]
+      }
+    },
+    {
+      "id": "custodian-of-groves-and-gardens",
+      "verdict": "MISS",
+      "reason": "Spells and the vessel focus spell ARE delivered (classes.animist.extraChoices.apparition option carries grantedSpells + focusSpells garden-of-healing), but the Apparition Skills are not: apparition-attunement's text grants Lore skills while attuned, so Farming Lore and Herbalism Lore should be trained. trainedLore is single-valued and there is no multi-lore grant lane on a class-choice option.",
+      "fix": {
+        "needsEngineWork": true
+      }
+    },
+    {
+      "id": "deadly-strike",
+      "verdict": "MISS",
+      "reason": "The innovation gains deadly d8, or steps an existing deadly die up by two sizes to a maximum of d12. weaponTraits could add a deadly trait but cannot be aimed at the innovation (build.ts: the inventor's base weapon is 'not modelled'), and it has no conditional step-if-already-deadly form — a blanket grant to every wielded weapon would be an over-grant.",
+      "fix": {
+        "needsEngineWork": true
+      }
+    },
+    {
+      "id": "debilitating-strike",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "It grants the Debilitating Strike free action; the debilitations it applies land on the target and are resolved at the table."
+    },
+    {
+      "id": "decay-instinct",
+      "verdict": "ALREADY_OK",
+      "reason": "Rotting Rage and its specialization increase are delivered by RAGE_DAMAGE['decay-instinct'] in src/rules/derive.ts — tiers [6,10,18] with the damage type overridden to poison, applied to melee and unarmed Strikes only while the rage class resource is on."
+    },
+    {
+      "id": "defensive-retreat",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A commander tactic that lets all signalled squadmates (allies) Step three times; nothing on the commander's own sheet changes."
+    },
+    {
+      "id": "defensive-robes",
+      "verdict": "ALREADY_OK",
+      "reason": "Pure proficiency increase, delivered by CLASS_ADVANCEMENT in src/rules/advancement.ts — level 13 unarmored to expert, source 'defensive-robes', listed on each of the four casting classes."
+    },
+    {
+      "id": "deific-mastery",
+      "verdict": "ALREADY_OK",
+      "reason": "Pure proficiency increase, delivered by CLASS_ADVANCEMENT in src/rules/advancement.ts — exemplar level 17 classDc to master, source 'deific-mastery'."
+    },
+    {
+      "id": "deific-weapon",
+      "verdict": "MISS",
+      "reason": "Steps the damage die of the deity's favored weapon up one size when it is a simple weapon or a d4 unarmed attack, grants access if uncommon, and treats an advanced favored weapon as martial. derive.ts implements exactly this die step, but only for the FEAT Deadly Simplicity (hasDeadlySimplicity checks c.feats for 'deadly-simplicity'); a champion holds Deific Weapon as a class feature, so none of the three benefits apply. No record field can express a deity-dependent die step or a proficiency-category downgrade.",
+      "fix": {
+        "needsEngineWork": true
+      }
+    },
+    {
+      "id": "deity-cleric",
+      "verdict": "MISS",
+      "reason": "The favored-weapon training IS delivered (build.ts writes proficiencies.weaponOverrides from deity.favoredWeapons, doctrine-scaled) and sanctification comes through the deity's own effectChoices, but the deity's granted SKILL is not: deities carry a 'skill' field (e.g. sarenrae.skill = medicine) and the only reader in src is derive.ts:270, for the Sanguine Pendant item bonus. Nothing trains it. The value is deity-dependent, so trainedSkill on this record cannot express it.",
+      "fix": {
+        "needsEngineWork": true
+      }
+    },
+    {
+      "id": "demagogues-calling",
+      "verdict": "MISS",
+      "reason": "Mythic callings ARE selectable and granted (build.ts mythicCalling), so the record's fields would fire — but nothing records that you can spend a Mythic Point to roll Coerce or Make an Impression at mythic proficiency. The edicts/anathema and the Mythic Point refresh are table-side.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [{ "kind": "skill", "detail": "intimidation" }],
+            "when": "to Coerce (spend a Mythic Point)",
+            "bonus": "roll at mythic proficiency"
+          },
+          {
+            "targets": [{ "kind": "skill", "detail": "diplomacy" }],
+            "when": "to Make an Impression (spend a Mythic Point)",
+            "bonus": "roll at mythic proficiency"
+          }
+        ]
+      }
+    },
+    {
+      "id": "demoralizing-charge",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A commander tactic: squadmates (allies) Stride and Strike, and the enemy saves or becomes frightened. Every effect is on an ally or an enemy."
+    },
+    {
+      "id": "dense-plating",
+      "verdict": "MISS",
+      "reason": "Resistance to slashing equal to half your level while wearing the armor innovation, and nothing carries it. The resistances lane accepts the level formula, and derive.ts already treats the inventor's chosen modifications as owned features, so the field will surface on the sheet's resistance list.",
+      "fix": {
+        "resistances": [{ "type": "slashing", "value": "floor(@actor.level/2)" }]
+      }
+    },
+    {
+      "id": "deny-advantage",
+      "verdict": "MISS",
+      "reason": "A permanent change to when the rogue is off-guard — nothing in the data or the registry records it, so the sheet gives the player no cue that hidden, undetected and flanking creatures of their level or lower no longer make them off-guard.",
+      "fix": {
+        "situational": [
+          {
+            "on": "condition",
+            "id": "off-guard",
+            "value": "not off-guard to equal/lower-level foes",
+            "note": "Deny Advantage: you aren't off-guard to hidden, undetected or flanking creatures of your level or lower, or to such creatures using surprise attack. They can still help their allies flank."
+          }
+        ]
+      }
+    },
+    {
+      "id": "desecration",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Edicts and anathema are flavour/GM adjudication; the mechanics are the Selfish Shield reaction (which exists as core.actions['selfish-shield'] and classFeatures['selfish-shield']) and its two upgrades — a transient resistance against the triggering damage only, and a -1 status penalty on enemies' attack rolls. All reaction-time, and the exalted upgrade is target-side."
+    },
+    {
+      "id": "destructive-vengeance",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A champion's reaction: you take extra damage and deal damage to the triggering enemy, plus 2/4/6 extra spirit damage on your Strikes against that one creature until the end of your next turn. Reaction-time and target-scoped, resolved at the table."
+    },
+    {
+      "id": "desynchronized-motions",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "A deviant-ability backlash table: persistent fire damage, immobilized, and stupefied applied to you when a backlash triggers in play. These are conditions the player applies at the table when they occur, not standing statistics."
+    },
+    {
+      "id": "devise-a-stratagem",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Its whole content is 'You gain the Devise a Stratagem action' — an action resolved at the table."
+    },
+    {
+      "id": "devourer-of-decay",
+      "verdict": "ALREADY_OK",
+      "reason": "Delivered by classes.witch.subclass.options['devourer-of-decay'] — tradition primal, grants.skills nature, focusSpells scrounger's-glee (scroungers-glee). The Familiar of Parasitic Might rider sickens a nearby creature, i.e. target-side."
+    },
+    {
+      "id": "disciplined-mind",
+      "verdict": "MISS",
+      "reason": "The Will-master advance is ALREADY delivered (advancement.ts, thaumaturge level 7, source 'disciplined-mind'), but the success-to-critical-success upgrade on every Will save reaches nothing.",
+      "fix": {
+        "situational": [
+          {
+            "targets": [{ "kind": "save", "detail": "will" }],
+            "when": "whenever you roll a success on a Will save",
+            "bonus": "the success upgrades to a critical success"
+          }
+        ]
+      }
+    },
+    {
+      "id": "bomber",
+      "verdict": "NEEDS_NOTHING",
+      "reason": "Every field benefit changes how a thrown bomb or versatile vial damages TARGETS — splash area, splash amount (Int mod at 5th, 10/15 feet at 13th) and the vial's damage type or precious material. None of it sets a statistic on the alchemist's sheet, and the two starting bomb formulas belong to the formula book, which the app does not model for any research field."
+    },
+    {
+      "id": "bones",
+      "verdict": "ALREADY_OK",
+      "reason": "Delivered by classes.oracle.subclass.options['bones'] — grantedSpells void-warp/grim-tendrils/false-vitality/ghostly-weapon, grants.skills medicine, focusSpells soul-siphon, advanced armor-of-bones, greater claim-undead. (The associated curse is a separate record, judged on its own.)"
+    }
+  ]
+}

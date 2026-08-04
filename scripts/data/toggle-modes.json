@@ -3129,5 +3129,105 @@
     "duration": "while wielding the giant catch pole",
     "modifiers": [],
     "note": "You are Clumsy 1 while wielding it (apply as a condition). The rope loop lets you Grapple without having a free hand, and the giant version can Grapple creatures up to your normal size limit rather than only Medium or smaller."
+  },
+  "field-vial-mutagenist": {
+    "id": "field-vial-mutagenist",
+    "name": "Field Vial (Mutagenist)",
+    "feats": [
+      "advanced-vials-mutagenist"
+    ],
+    "duration": "the field vial's duration",
+    "resistances": [
+      {
+        "type": "physical",
+        "value": "floor(@actor.level/2)"
+      }
+    ],
+    "note": "Advanced Vials (Mutagenist): while a field vial you drank is in effect you have resistance to physical damage equal to half your level.",
+    "modifiers": []
+  },
+  "guardians-armor": {
+    "id": "guardians-armor",
+    "name": "Guardian's Armor",
+    "feats": [
+      "guardians-armor"
+    ],
+    "duration": "while wearing medium or heavy armor",
+    "resistances": [
+      {
+        "type": "physical",
+        "value": "1+floor(@actor.level/2)"
+      }
+    ],
+    "note": "While wearing medium or heavy armor you have resistance to physical damage equal to 1 + half your level. You can also rest normally in medium and heavy armor.",
+    "modifiers": []
+  },
+  "mode-mountaineering-training": {
+    "id": "mode-mountaineering-training",
+    "name": "Mountaineering Training",
+    "category": "Commander",
+    "classes": [
+      "commander"
+    ],
+    "feats": [
+      "mountaineering-training"
+    ],
+    "duration": "until the end of your next turn",
+    "modifiers": [],
+    "speeds": {
+      "climb": 20
+    },
+    "note": "Mountaineering Training tactic: you and each signalled squadmate gain a climb Speed of 20 feet until the end of your next turn. While this tactic is prepared you can also use Warfare Lore in place of Athletics to Climb."
+  },
+  "mode-mutagenist-field-vial": {
+    "id": "mode-mutagenist-field-vial",
+    "name": "Field Vial (Mutagenist)",
+    "category": "Alchemist",
+    "classes": [
+      "alchemist"
+    ],
+    "feats": [
+      "mutagenist"
+    ],
+    "duration": "1 minute",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "physical",
+        "value": "floor(@actor.level/2)"
+      }
+    ],
+    "note": "Advanced Vials (11th): drinking a field vial also gives you resistance to physical damage equal to half your level for the same duration. The vial also suppresses one mutagen drawback for 1 minute."
+  },
+  "tactic-naval-training": {
+    "id": "tactic-naval-training",
+    "name": "Naval Training",
+    "category": "Commander",
+    "classes": [
+      "commander"
+    ],
+    "feats": [
+      "naval-training"
+    ],
+    "duration": "until the end of your next turn",
+    "modifiers": [],
+    "speeds": {
+      "swim": 20
+    },
+    "note": "Naval Training tactic: you and each signalled squadmate gain a swim Speed of 20 feet until the end of your next turn. While this tactic is prepared you can also use Warfare Lore in place of Athletics to Swim."
+  },
+  "race-the-skies": {
+    "id": "race-the-skies",
+    "name": "Race the Skies",
+    "category": "Exemplar",
+    "feats": [
+      "race-the-skies"
+    ],
+    "duration": "1 minute",
+    "modifiers": [],
+    "speeds": {
+      "fly": "max(@actor.speed.land,20)"
+    },
+    "note": "Transcendence: for 1 minute you gain a fly Speed equal to your Speed or 20 feet, whichever is greater."
   }
 }

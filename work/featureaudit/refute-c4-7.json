@@ -1,0 +1,866 @@
+{
+ "rulings": [
+  {
+   "id": "hampering-spikes",
+   "upheld": true,
+   "why": "Real trait grant on the innovation weapon; derive.ts reads weaponTraits from db.feats only and no inventory item is bound to the innovation, so needsEngineWork is the honest lane.",
+   "correction": {}
+  },
+  {
+   "id": "handlers-calling",
+   "upheld": true,
+   "why": "The mythic-proficiency rider is real, but a marker keyed on this id can never fire: build.ts ~3176 pushes the chosen calling into grantedFeatures, and characterSituationalIds (explain.ts 189) reads feats + ownedFeatureIds only.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true
+    }
+   }
+  },
+  {
+   "id": "heavy-construction",
+   "upheld": true,
+   "why": "Reprints the innovation armour as a heavy-armour stat block; inventorArmorStats knows only power-suit/subterfuge-suit and there is no per-item armour proficiency lane.",
+   "correction": {}
+  },
+  {
+   "id": "hefty-composition",
+   "upheld": true,
+   "why": "Same weapon-innovation gap: weaponTraits is feat-only and the innovation is bound to no inventory item.",
+   "correction": {}
+  },
+  {
+   "id": "horn-of-plenty",
+   "upheld": true,
+   "why": "The ikon is owned (exemplar extraChoices -> classChoices), and daily temporary elixirs/potions of your level are a real pick and real inventory with no lane.",
+   "correction": {}
+  },
+  {
+   "id": "humble-strikes",
+   "upheld": true,
+   "why": "Auto-granted at exemplar 1 and invisible: a damage-die step on every wielded SIMPLE weapon; unarmedTraits.stepDie is unarmed-only and no wielded-weapon step lane exists.",
+   "correction": {}
+  },
+  {
+   "id": "hunters-calling",
+   "upheld": true,
+   "why": "The Seek/Track mythic rider is real, but RECORD_MARKERS is looked up from ownedFeatureIds and a mythic calling only ever reaches grantedFeatures, so the marker would never fire.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true
+    }
+   }
+  },
+  {
+   "id": "implements-empowerment",
+   "upheld": true,
+   "why": "Auto at thaumaturge 1; +2 per weapon damage die is conditional on what you hold and is not expressible by strikeDamage, so the situational lane is right and the id is owned.",
+   "correction": {}
+  },
+  {
+   "id": "inconspicuous-appearance",
+   "upheld": true,
+   "why": "Same weapon-innovation trait gap.",
+   "correction": {}
+  },
+  {
+   "id": "indomitable-will",
+   "upheld": true,
+   "why": "Record text carries both halves; CLASS_ADVANCEMENT delivers only the Will-master step and the registry has no indomitable-will key.",
+   "correction": {}
+  },
+  {
+   "id": "initiate-benefit-wand",
+   "upheld": true,
+   "why": "build.ts pushBenefit puts initiate-benefit-<implement> into classChoices, so the record is owned and effectChoices resolve (build.ts 2575); the pick carries four real options, so no empty picker.",
+   "correction": {}
+  },
+  {
+   "id": "initiate-benefit-weapon",
+   "upheld": true,
+   "why": "Crit spec restricted to \"the weapon you designated as your implement\" has no selector in critSpecWeapons, and the applier rejects critSpec:true without it — needsEngineWork is correct.",
+   "correction": {}
+  },
+  {
+   "id": "instant-manifestation",
+   "upheld": true,
+   "why": "An action-cost change to your own action; core.actions manifest-eidolon exists and the marker lane already ships the identical shape (quick-unlock -> pick-a-lock, \"1 action\").",
+   "correction": {}
+  },
+  {
+   "id": "integrated-gauntlet",
+   "upheld": true,
+   "why": "Same weapon-innovation trait gap.",
+   "correction": {}
+  },
+  {
+   "id": "inventor-weapon-expertise",
+   "upheld": true,
+   "why": "Text confirms the crit-spec half is innovation-only; an unfiltered critSpec would over-grant and the applier would reject it.",
+   "correction": {}
+  },
+  {
+   "id": "juggernaut",
+   "upheld": true,
+   "why": "Record text carries the degree upgrade for both the barbarian and the magus half; CLASS_ADVANCEMENT delivers only the rank.",
+   "correction": {}
+  },
+  {
+   "id": "keen-flair",
+   "upheld": true,
+   "why": "Auto at swashbuckler 15; the registry already carries the identical wording under savage-critical, so lane and phrasing are precedented.",
+   "correction": {}
+  },
+  {
+   "id": "kinetic-durability",
+   "upheld": true,
+   "why": "Text confirms the success-to-critical-success rider; advancement delivers only the Fortitude rank.",
+   "correction": {}
+  },
+  {
+   "id": "kinetic-quickness",
+   "upheld": true,
+   "why": "Text confirms the Reflex degree upgrade; advancement delivers only the rank.",
+   "correction": {}
+  },
+  {
+   "id": "layered-mesh",
+   "upheld": true,
+   "why": "Owned via c.inventor.modifications; physical-protections already ships the identical \"While wearing your armor\" resistance unconditionally as floor(@actor.level/2), so the field lands and matches precedent.",
+   "correction": {}
+  },
+  {
+   "id": "lead-constitution",
+   "upheld": true,
+   "why": "Text confirms the Fortitude degree upgrade.",
+   "correction": {}
+  },
+  {
+   "id": "legendary-overdrive",
+   "upheld": true,
+   "why": "Crafting legendary from a class feature has no lane (FEAT_GRANTS is feat-keyed) and cat-overdrive ships modifiers: [].",
+   "correction": {}
+  },
+  {
+   "id": "legendary-tactician",
+   "upheld": true,
+   "why": "preparedMax is hardcoded 3 + a FEAT-only preparedTacticsBonus, so the rise to six cannot be written on a class feature.",
+   "correction": {}
+  },
+  {
+   "id": "lesson-of-bargains",
+   "upheld": true,
+   "why": "The hex is genuinely undelivered, but focusSpells on this record is inert: build.ts reads classFeature focusSpells ONLY from klass.features (build.ts 2026), the witch never lists lesson-of-* there, and the pick is stored on the Basic/Greater/Major Lesson feat as choice value \"aon-lesson-*\" (FeatChoiceDef options carry no grant). Needs a feat-choice-value -> focus-spell lane.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true
+    }
+   }
+  },
+  {
+   "id": "lesson-of-calamity",
+   "upheld": true,
+   "why": "The hex is genuinely undelivered, but focusSpells on this record is inert: build.ts reads classFeature focusSpells ONLY from klass.features (build.ts 2026), the witch never lists lesson-of-* there, and the pick is stored on the Basic/Greater/Major Lesson feat as choice value \"aon-lesson-*\" (FeatChoiceDef options carry no grant). Needs a feat-choice-value -> focus-spell lane.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true
+    }
+   }
+  },
+  {
+   "id": "lesson-of-death",
+   "upheld": true,
+   "why": "The hex is genuinely undelivered, but focusSpells on this record is inert: build.ts reads classFeature focusSpells ONLY from klass.features (build.ts 2026), the witch never lists lesson-of-* there, and the pick is stored on the Basic/Greater/Major Lesson feat as choice value \"aon-lesson-*\" (FeatChoiceDef options carry no grant). Needs a feat-choice-value -> focus-spell lane.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true
+    }
+   }
+  },
+  {
+   "id": "lesson-of-decay",
+   "upheld": true,
+   "why": "The hex is genuinely undelivered, but focusSpells on this record is inert: build.ts reads classFeature focusSpells ONLY from klass.features (build.ts 2026), the witch never lists lesson-of-* there, and the pick is stored on the Basic/Greater/Major Lesson feat as choice value \"aon-lesson-*\" (FeatChoiceDef options carry no grant). Needs a feat-choice-value -> focus-spell lane.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true
+    }
+   }
+  },
+  {
+   "id": "lesson-of-dreams",
+   "upheld": true,
+   "why": "The hex is genuinely undelivered, but focusSpells on this record is inert: build.ts reads classFeature focusSpells ONLY from klass.features (build.ts 2026), the witch never lists lesson-of-* there, and the pick is stored on the Basic/Greater/Major Lesson feat as choice value \"aon-lesson-*\" (FeatChoiceDef options carry no grant). Needs a feat-choice-value -> focus-spell lane.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true
+    }
+   }
+  },
+  {
+   "id": "lesson-of-elements",
+   "upheld": true,
+   "why": "The hex is genuinely undelivered, but focusSpells on this record is inert: build.ts reads classFeature focusSpells ONLY from klass.features (build.ts 2026), the witch never lists lesson-of-* there, and the pick is stored on the Basic/Greater/Major Lesson feat as choice value \"aon-lesson-*\" (FeatChoiceDef options carry no grant). Needs a feat-choice-value -> focus-spell lane.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true
+    }
+   }
+  },
+  {
+   "id": "lesson-of-favors",
+   "upheld": true,
+   "why": "The hex is genuinely undelivered, but focusSpells on this record is inert: build.ts reads classFeature focusSpells ONLY from klass.features (build.ts 2026), the witch never lists lesson-of-* there, and the pick is stored on the Basic/Greater/Major Lesson feat as choice value \"aon-lesson-*\" (FeatChoiceDef options carry no grant). Needs a feat-choice-value -> focus-spell lane.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true
+    }
+   }
+  },
+  {
+   "id": "lesson-of-life",
+   "upheld": true,
+   "why": "The hex is genuinely undelivered, but focusSpells on this record is inert: build.ts reads classFeature focusSpells ONLY from klass.features (build.ts 2026), the witch never lists lesson-of-* there, and the pick is stored on the Basic/Greater/Major Lesson feat as choice value \"aon-lesson-*\" (FeatChoiceDef options carry no grant). Needs a feat-choice-value -> focus-spell lane.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true
+    }
+   }
+  },
+  {
+   "id": "lesson-of-memory",
+   "upheld": true,
+   "why": "The hex is genuinely undelivered, but focusSpells on this record is inert: build.ts reads classFeature focusSpells ONLY from klass.features (build.ts 2026), the witch never lists lesson-of-* there, and the pick is stored on the Basic/Greater/Major Lesson feat as choice value \"aon-lesson-*\" (FeatChoiceDef options carry no grant). Needs a feat-choice-value -> focus-spell lane.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true
+    }
+   }
+  },
+  {
+   "id": "lesson-of-mischief",
+   "upheld": true,
+   "why": "The hex is genuinely undelivered, but focusSpells on this record is inert: build.ts reads classFeature focusSpells ONLY from klass.features (build.ts 2026), the witch never lists lesson-of-* there, and the pick is stored on the Basic/Greater/Major Lesson feat as choice value \"aon-lesson-*\" (FeatChoiceDef options carry no grant). Needs a feat-choice-value -> focus-spell lane.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true
+    }
+   }
+  },
+  {
+   "id": "lesson-of-protection",
+   "upheld": true,
+   "why": "The hex is genuinely undelivered, but focusSpells on this record is inert: build.ts reads classFeature focusSpells ONLY from klass.features (build.ts 2026), the witch never lists lesson-of-* there, and the pick is stored on the Basic/Greater/Major Lesson feat as choice value \"aon-lesson-*\" (FeatChoiceDef options carry no grant). Needs a feat-choice-value -> focus-spell lane.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true
+    }
+   }
+  },
+  {
+   "id": "lesson-of-renewal",
+   "upheld": true,
+   "why": "The hex is genuinely undelivered, but focusSpells on this record is inert: build.ts reads classFeature focusSpells ONLY from klass.features (build.ts 2026), the witch never lists lesson-of-* there, and the pick is stored on the Basic/Greater/Major Lesson feat as choice value \"aon-lesson-*\" (FeatChoiceDef options carry no grant). Needs a feat-choice-value -> focus-spell lane.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true
+    }
+   }
+  },
+  {
+   "id": "lesson-of-shadow",
+   "upheld": true,
+   "why": "The hex is genuinely undelivered, but focusSpells on this record is inert: build.ts reads classFeature focusSpells ONLY from klass.features (build.ts 2026), the witch never lists lesson-of-* there, and the pick is stored on the Basic/Greater/Major Lesson feat as choice value \"aon-lesson-*\" (FeatChoiceDef options carry no grant). Needs a feat-choice-value -> focus-spell lane.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true
+    }
+   }
+  },
+  {
+   "id": "lesson-of-snow",
+   "upheld": true,
+   "why": "The hex is genuinely undelivered, but focusSpells on this record is inert: build.ts reads classFeature focusSpells ONLY from klass.features (build.ts 2026), the witch never lists lesson-of-* there, and the pick is stored on the Basic/Greater/Major Lesson feat as choice value \"aon-lesson-*\" (FeatChoiceDef options carry no grant). Needs a feat-choice-value -> focus-spell lane.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true
+    }
+   }
+  },
+  {
+   "id": "lesson-of-the-flock",
+   "upheld": true,
+   "why": "The hex is genuinely undelivered, but focusSpells on this record is inert: build.ts reads classFeature focusSpells ONLY from klass.features (build.ts 2026), the witch never lists lesson-of-* there, and the pick is stored on the Basic/Greater/Major Lesson feat as choice value \"aon-lesson-*\" (FeatChoiceDef options carry no grant). Needs a feat-choice-value -> focus-spell lane.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true
+    }
+   }
+  },
+  {
+   "id": "lesson-of-the-frozen-queen",
+   "upheld": true,
+   "why": "The hex is genuinely undelivered, but focusSpells on this record is inert: build.ts reads classFeature focusSpells ONLY from klass.features (build.ts 2026), the witch never lists lesson-of-* there, and the pick is stored on the Basic/Greater/Major Lesson feat as choice value \"aon-lesson-*\" (FeatChoiceDef options carry no grant). Needs a feat-choice-value -> focus-spell lane.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true
+    }
+   }
+  },
+  {
+   "id": "lesson-of-the-shark",
+   "upheld": true,
+   "why": "The hex is genuinely undelivered, but focusSpells on this record is inert: build.ts reads classFeature focusSpells ONLY from klass.features (build.ts 2026), the witch never lists lesson-of-* there, and the pick is stored on the Basic/Greater/Major Lesson feat as choice value \"aon-lesson-*\" (FeatChoiceDef options carry no grant). Needs a feat-choice-value -> focus-spell lane.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true
+    }
+   }
+  },
+  {
+   "id": "lesson-of-vengeance",
+   "upheld": true,
+   "why": "The hex is genuinely undelivered, but focusSpells on this record is inert: build.ts reads classFeature focusSpells ONLY from klass.features (build.ts 2026), the witch never lists lesson-of-* there, and the pick is stored on the Basic/Greater/Major Lesson feat as choice value \"aon-lesson-*\" (FeatChoiceDef options carry no grant). Needs a feat-choice-value -> focus-spell lane.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true
+    }
+   }
+  },
+  {
+   "id": "lesson-of-vows",
+   "upheld": true,
+   "why": "The hex is genuinely undelivered, but focusSpells on this record is inert: build.ts reads classFeature focusSpells ONLY from klass.features (build.ts 2026), the witch never lists lesson-of-* there, and the pick is stored on the Basic/Greater/Major Lesson feat as choice value \"aon-lesson-*\" (FeatChoiceDef options carry no grant). Needs a feat-choice-value -> focus-spell lane.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true
+    }
+   }
+  },
+  {
+   "id": "ligneous-instinct",
+   "upheld": true,
+   "why": "Barbarian instinct option (owned); the speed penalty, the level-9 raging resistance and the fire weakness genuinely have no legal field, and attaching whileActive resistances would over-grant from level 1.",
+   "correction": {}
+  },
+  {
+   "id": "liturgist",
+   "upheld": true,
+   "why": "\"You gain the Circle of Spirits feat\" is real, the feat id exists, and grantsFeats on a classFeature IS read for a chosen subclass OPTION (build.ts 2339 grantOptions), which is exactly what an animist practice is.",
+   "correction": {}
+  },
+  {
+   "id": "lust",
+   "upheld": true,
+   "why": "The Runelord sin curriculum reaches no character, but the fix cannot apply: spellListAdditions is carried by no classFeatures record and read nowhere for that collection, so the applier rejects the whole fix — and there is no wizard subclass option \"lust\", so even the focusSpells half would sit on a record nobody owns.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true
+    }
+   }
+  },
+  {
+   "id": "majestic-will",
+   "upheld": true,
+   "why": "Text confirms the Will degree upgrade; advancement delivers only the rank and the registry has no entry.",
+   "correction": {}
+  },
+  {
+   "id": "master-of-mind-and-spirit",
+   "upheld": true,
+   "why": "Text confirms the Will degree upgrade; advancement delivers only the rank.",
+   "correction": {}
+  },
+  {
+   "id": "master-overdrive",
+   "upheld": true,
+   "why": "Crafting master from a class feature has no lane and cat-overdrive ships modifiers: [].",
+   "correction": {}
+  },
+  {
+   "id": "master-tactician",
+   "upheld": true,
+   "why": "The gap is real, but preparedTacticsBonus is carried by no classFeatures record and read only from content.feats, so the applier rejects the whole fix (and the printed increase is to five, i.e. +2, not +1). Warfare Lore legendary has no lane either.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true
+    }
+   }
+  },
+  {
+   "id": "masterful-hunter-flurry",
+   "upheld": true,
+   "why": "Owned as a subclass VARIANT of masterful-hunter@17 (derive.ts ownedFeatureIds), mapReduction is read from class features by mapStepFor, and the base flurry record already carries the identical shape.",
+   "correction": {}
+  },
+  {
+   "id": "masterful-hunter-precision",
+   "upheld": true,
+   "why": "A per-round hit counter has no lane; strikeDamage is unconditional and situational carries no counter.",
+   "correction": {}
+  },
+  {
+   "id": "mastermind",
+   "upheld": true,
+   "why": "The trained skill pick (\"Society and one of Arcana, Nature, Occultism, or Religion\") is printed and offered nowhere, and effectChoices on a racket record resolve through grantOptions (build.ts 2580). But the judge's fix loses it: the applier routes any situational entry carrying on+id to RECORD_MARKERS and CONTINUES, so effectChoices would never be written. The Recall Knowledge rider is target-side anyway.",
+   "correction": {
+    "fix": {
+     "effectChoices": [
+      {
+       "id": "mastermind-skill",
+       "prompt": "Trained skill",
+       "options": [
+        {
+         "value": "arcana",
+         "label": "Arcana",
+         "grant": {
+          "skills": {
+           "arcana": "trained"
+          }
+         }
+        },
+        {
+         "value": "nature",
+         "label": "Nature",
+         "grant": {
+          "skills": {
+           "nature": "trained"
+          }
+         }
+        },
+        {
+         "value": "occultism",
+         "label": "Occultism",
+         "grant": {
+          "skills": {
+           "occultism": "trained"
+          }
+         }
+        },
+        {
+         "value": "religion",
+         "label": "Religion",
+         "grant": {
+          "skills": {
+           "religion": "trained"
+          }
+         }
+        }
+       ]
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "medium-armor-expertise-inventor",
+   "upheld": true,
+   "why": "Armour-group critical specialization has no lane at all (critSpec is weapons-only), so needsEngineWork is correct rather than a mis-shaped critSpec.",
+   "correction": {}
+  },
+  {
+   "id": "modular-head",
+   "upheld": true,
+   "why": "weaponTraits cannot name \"your weapon innovation\" — its match filter accepts melee/groups/anyTrait/items only — so the modification pick lands and its effect cannot.",
+   "correction": {}
+  },
+  {
+   "id": "mortal-harvest",
+   "upheld": true,
+   "why": "Ikon picks are owned, and titans-breaker already ships the identical immanence wording in the situational registry, so this entry both lands and matches precedent.",
+   "correction": {}
+  },
+  {
+   "id": "mortality-reforged",
+   "upheld": true,
+   "why": "Text confirms the Fortitude degree upgrade; advancement delivers only the rank.",
+   "correction": {}
+  },
+  {
+   "id": "mountaineering-training",
+   "upheld": true,
+   "why": "The climb Speed is real and player-side, but the judge's mode carries no duration and the applier refuses a mode that \"does not say how long it lasts\". Duration added; the Warfare Lore substitution moves into the note so no situational entry is present to swallow the mode.",
+   "correction": {
+    "fix": {
+     "mode": {
+      "id": "mode-mountaineering-training",
+      "name": "Mountaineering Training",
+      "category": "Commander",
+      "classes": [
+       "commander"
+      ],
+      "feats": [
+       "mountaineering-training"
+      ],
+      "duration": "until the end of your next turn",
+      "modifiers": [],
+      "speeds": {
+       "climb": 20
+      },
+      "note": "Mountaineering Training tactic: you and each signalled squadmate gain a climb Speed of 20 feet until the end of your next turn. While this tactic is prepared you can also use Warfare Lore in place of Athletics to Climb."
+     }
+    }
+   }
+  },
+  {
+   "id": "multisensory-mask",
+   "upheld": true,
+   "why": "Owned via c.inventor.modifications; a standing concealment state has no field, core.conditions has \"concealed\", and the condition-marker lane is exactly this shape.",
+   "correction": {}
+  },
+  {
+   "id": "mutagenist",
+   "upheld": true,
+   "why": "Advanced Vials (11th) really does grant physical resistance equal to half your level for the field vial's duration, but the judge's fix cannot apply: the mode carries no duration (rejected outright), and the situational entry would make the applier take the situational branch and CONTINUE before the mode is ever read. Mode only, with the printed 1-minute duration.",
+   "correction": {
+    "fix": {
+     "mode": {
+      "id": "mode-mutagenist-field-vial",
+      "name": "Field Vial (Mutagenist)",
+      "category": "Alchemist",
+      "classes": [
+       "alchemist"
+      ],
+      "feats": [
+       "mutagenist"
+      ],
+      "duration": "1 minute",
+      "modifiers": [],
+      "resistances": [
+       {
+        "type": "physical",
+        "value": "floor(@actor.level/2)"
+       }
+      ],
+      "note": "Advanced Vials (11th): drinking a field vial also gives you resistance to physical damage equal to half your level for the same duration. The vial also suppresses one mutagen drawback for 1 minute."
+     }
+    }
+   }
+  },
+  {
+   "id": "mysterious-resolve",
+   "upheld": true,
+   "why": "Text confirms the Will degree upgrade; advancement delivers only the rank.",
+   "correction": {}
+  },
+  {
+   "id": "natural-reflexes",
+   "upheld": true,
+   "why": "Text confirms the Reflex degree upgrade; advancement delivers only the rank.",
+   "correction": {}
+  },
+  {
+   "id": "natures-edge",
+   "upheld": true,
+   "why": "Auto at ranger 9 with no action attached: a permanent conditional advantage on your own attack rolls, which is what the strikeAttack star is for. Not a table-resolved action and not a per-encounter effect.",
+   "correction": {}
+  },
+  {
+   "id": "naval-training",
+   "upheld": true,
+   "why": "The swim Speed is real, but the applier takes the situational branch and CONTINUES before it reads fix.mode, so pairing the two silently drops the mode. Mode only; the Warfare Lore substitution goes in the note.",
+   "correction": {
+    "fix": {
+     "mode": {
+      "id": "tactic-naval-training",
+      "name": "Naval Training",
+      "category": "Commander",
+      "classes": [
+       "commander"
+      ],
+      "feats": [
+       "naval-training"
+      ],
+      "duration": "until the end of your next turn",
+      "modifiers": [],
+      "speeds": {
+       "swim": 20
+      },
+      "note": "Naval Training tactic: you and each signalled squadmate gain a swim Speed of 20 feet until the end of your next turn. While this tactic is prepared you can also use Warfare Lore in place of Athletics to Swim."
+     }
+    }
+   }
+  },
+  {
+   "id": "noble-branch",
+   "upheld": true,
+   "why": "Ikon picks are owned and titans-breaker already ships the identical immanence damage wording, so the entry lands and matches precedent.",
+   "correction": {}
+  },
+  {
+   "id": "omnirange-stabilizers",
+   "upheld": true,
+   "why": "Owned via c.inventor.modifications; the range increment (and losing volley) genuinely changes your own ranged Strike and nothing records it.",
+   "correction": {}
+  },
+  {
+   "id": "one-shot-one-kill",
+   "upheld": false,
+   "why": "A triggered free action, once per encounter, whose whole text — including the precision damage — already renders from core.actions \"one-shot-one-kill\". A situational entry keyed on this id could never fire anyway: the deed is referenced by the Way option as a descRef, so classFeatures[\"one-shot-one-kill\"] never enters ownedFeatureIds.",
+   "correction": {
+    "verdict": "NEEDS_NOTHING"
+   }
+  },
+  {
+   "id": "pacification-tools",
+   "upheld": true,
+   "why": "Owned via c.inventor.modifications, and a situational note on the strike is a legal, applying fix for a trait change the strike line cannot otherwise show.",
+   "correction": {}
+  },
+  {
+   "id": "paradox-of-opposites",
+   "upheld": false,
+   "why": "Already delivered: classes.witch.subclass.options[\"paradox-of-opposites\"] carries focusSpells [\"trade-death-for-life\"] (and grants.skills [\"religion\"]), which build.ts folds into the focus repertoire through grantOptions.",
+   "correction": {
+    "verdict": "ALREADY_OK"
+   }
+  },
+  {
+   "id": "paragon-benefit-amulet",
+   "upheld": true,
+   "why": "Pushed into classChoices by pushBenefit, so owned; the upgrade changes the target set of your own reaction and the resistance YOU gain, which the action row should say.",
+   "correction": {}
+  },
+  {
+   "id": "paragon-benefit-bell",
+   "upheld": false,
+   "why": "Its entire content is raising the condition values inflicted on ENEMIES and widening whose Strike can trigger it — the same target-side ground on which the base ring-bell record was ruled NEEDS_NOTHING in this very pass.",
+   "correction": {
+    "verdict": "NEEDS_NOTHING"
+   }
+  },
+  {
+   "id": "paragon-benefit-mirror",
+   "upheld": true,
+   "why": "Owned via pushBenefit; an extra free Interact/Seek/Strike is your own action economy, and core.actions \"mirrors-reflection\" exists for the mark.",
+   "correction": {}
+  },
+  {
+   "id": "paragon-benefit-wand",
+   "upheld": true,
+   "why": "Owned via pushBenefit; range 180 feet and a per-use damage-type choice are numbers the player reads off their own Fling Magic row, and the wand implement already carries a fling-magic marker as precedent.",
+   "correction": {}
+  },
+  {
+   "id": "paragon-benefit-weapon",
+   "upheld": false,
+   "why": "The whole change is when the ENEMY's action is disrupted by your reaction — resolved inside the reaction at the table, the same ground on which implements-interruption itself was ruled NEEDS_NOTHING in this pass.",
+   "correction": {
+    "verdict": "NEEDS_NOTHING"
+   }
+  },
+  {
+   "id": "path-to-perfection",
+   "upheld": true,
+   "why": "Text confirms the degree upgrade on the chosen save; the builder delivers only the rank, and detail \"all\" is the only expressible target for a per-character pick.",
+   "correction": {}
+  },
+  {
+   "id": "peerless-inventor",
+   "upheld": true,
+   "why": "Auto at inventor 1, the feat id \"inventor\" exists in core.feats, and grantsFeats on a class feature the class actually lists is read at build.ts 2331.",
+   "correction": {}
+  },
+  {
+   "id": "perfected-form",
+   "upheld": true,
+   "why": "Auto at monk 19; a fortune floor on your own first Strike each turn with nothing on the sheet.",
+   "correction": {}
+  },
+  {
+   "id": "perfected-mind",
+   "upheld": true,
+   "why": "Auto at thaumaturge 13; all three riders are printed and none is modelled. Legal save targets throughout.",
+   "correction": {}
+  },
+  {
+   "id": "performers-heart",
+   "upheld": true,
+   "why": "Text confirms the Will degree upgrade; advancement delivers only the rank.",
+   "correction": {}
+  },
+  {
+   "id": "perpetual-infusions",
+   "upheld": false,
+   "why": "Legacy pre-Remaster record: classes.alchemist.features lists alchemy, research-field, field-discovery, powerful-alchemy, double-brew, advanced-vials, greater-field-discovery, abundant-vials and alchemical-mastery — no perpetual-* feature at any level. No character can own it, exactly the ground on which infused-reagents was ruled fine in this pass.",
+   "correction": {
+    "verdict": "NEEDS_NOTHING"
+   }
+  },
+  {
+   "id": "perpetual-perfection-toxicologist",
+   "upheld": false,
+   "why": "Same legacy ground: no perpetual-* feature appears in classes.alchemist.features, so this 17th-level variant reaches no character; the Remaster alchemist runs on Versatile Vials + Advanced Alchemy, which ship.",
+   "correction": {
+    "verdict": "NEEDS_NOTHING"
+   }
+  },
+  {
+   "id": "perpetual-potency-bomber",
+   "upheld": false,
+   "why": "Same legacy ground: classes.alchemist.features carries no perpetual-* entry, so the record is unreachable.",
+   "correction": {
+    "verdict": "NEEDS_NOTHING"
+   }
+  },
+  {
+   "id": "perpetual-potency-chirurgeon",
+   "upheld": false,
+   "why": "Same legacy ground: classes.alchemist.features carries no perpetual-* entry, so the record is unreachable.",
+   "correction": {
+    "verdict": "NEEDS_NOTHING"
+   }
+  },
+  {
+   "id": "perpetual-potency-mutagenist",
+   "upheld": false,
+   "why": "Same legacy ground: classes.alchemist.features carries no perpetual-* entry, so the record is unreachable.",
+   "correction": {
+    "verdict": "NEEDS_NOTHING"
+   }
+  },
+  {
+   "id": "polymath",
+   "upheld": false,
+   "why": "Already delivered, and by the shape every other muse uses: classes.bard.subclass.options[\"polymath\"] carries grantedFeats [\"versatile-performance\"] AND grantedSpells [\"phantasmal-minion\"] — the muse spell is a repertoire spell there, exactly as enigma->sure-strike and maestro->soothe. The proposed focusSpells write would also have been inert, since classFeature focusSpells are read only from klass.features.",
+   "correction": {
+    "verdict": "ALREADY_OK"
+   }
+  },
+  {
+   "id": "powerful-alchemy",
+   "upheld": true,
+   "why": "Auto at alchemist 5 (classes.alchemist.features), and swapping in your own class DC is a player-side number with no other home.",
+   "correction": {}
+  },
+  {
+   "id": "precise-strike",
+   "upheld": true,
+   "why": "Auto at swashbuckler 1; strikePrecisionRiders covers only sneak-attack and the ranger edge, and a flat strikeDamage rider has no agile/finesse scope, so the situational lane is right.",
+   "correction": {}
+  },
+  {
+   "id": "pride",
+   "upheld": true,
+   "why": "The sin curriculum is genuinely unreachable, but the fix cannot apply: spellListAdditions is carried by no classFeatures record and read nowhere for that collection, so the applier rejects the entire fix — and there is no wizard subclass option \"pride\", so the focusSpells half would sit on a record nobody owns.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true
+    }
+   }
+  },
+  {
+   "id": "prodigious-will",
+   "upheld": true,
+   "why": "Text confirms the Will degree upgrade; advancement delivers only the rank.",
+   "correction": {}
+  },
+  {
+   "id": "race-the-skies",
+   "upheld": true,
+   "why": "A 1-minute fly Speed is a real standing grant; ModeDef.speeds accepts formulas and resolveFormula supports max() and @actor.speed.land, and core.json modes reach the player through playerModeLibrary regardless of gate.",
+   "correction": {}
+  },
+  {
+   "id": "raging-resistance",
+   "upheld": true,
+   "why": "Correctly refuses to write: this record cannot name the damage types, and whileActive resistances on the instinct records carry no minLevel, so attaching them would grant from level 1 instead of 9.",
+   "correction": {}
+  },
+  {
+   "id": "razor-prongs",
+   "upheld": true,
+   "why": "Same weapon-innovation gap, correctly left as engine work rather than a mis-targeted weaponTraits write.",
+   "correction": {}
+  },
+  {
+   "id": "reinforced-ego",
+   "upheld": true,
+   "why": "Text confirms the Will degree upgrade; advancement delivers only the rank.",
+   "correction": {}
+  },
+  {
+   "id": "resolute-faith",
+   "upheld": true,
+   "why": "Text confirms the Will degree upgrade; advancement delivers only the rank.",
+   "correction": {}
+  },
+  {
+   "id": "resolve",
+   "upheld": true,
+   "why": "Text confirms the Will degree upgrade; advancement delivers only the rank.",
+   "correction": {}
+  },
+  {
+   "id": "reveler-in-lost-glee",
+   "upheld": true,
+   "why": "The two Apparition Lores really do reach nothing: grants.skills is typed to SkillId and trainedLore exists only on Background. Correctly recorded as engine work rather than forced into a wrong field.",
+   "correction": {}
+  },
+  {
+   "id": "revitalizing-rage",
+   "upheld": true,
+   "why": "Auto at barbarian 17; core.actions \"rage\" exists and the marker lane already carries rage marks (berserkers-cloak), so a changed rule on your own action row is precedented.",
+   "correction": {}
+  },
+  {
+   "id": "rogue-resilience",
+   "upheld": true,
+   "why": "Text confirms the Fortitude degree upgrade (the rank is expert here); advancement delivers only the rank.",
+   "correction": {}
+  },
+  {
+   "id": "rope-shot",
+   "upheld": true,
+   "why": "Same weapon-innovation gap, correctly left as engine work.",
+   "correction": {}
+  },
+  {
+   "id": "rune-capacity",
+   "upheld": true,
+   "why": "An extra property-rune slot is a real change to the player's own item and no field expresses a rune-slot cap.",
+   "correction": {}
+  },
+  {
+   "id": "runelords-calling",
+   "upheld": true,
+   "why": "The rider is real, but the fix is inert: a mythic calling is pushed to grantedFeatures for display, and characterSituationalIds reads feats + ownedFeatureIds only, so a FEAT_SITUATIONAL entry keyed here would never be looked up.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true
+    }
+   }
+  },
+  {
+   "id": "sacred-body",
+   "upheld": true,
+   "why": "Text confirms the Fortitude degree upgrade; advancement delivers only the rank.",
+   "correction": {}
+  },
+  {
+   "id": "sagas-calling",
+   "upheld": true,
+   "why": "Same blocker as the other callings: the calling id never enters ownedFeatureIds, so the registry entry could not fire. (Performance and Diplomacy/Gather Information are otherwise the right skills.)",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true
+    }
+   }
+  },
+  {
+   "id": "sages-calling",
+   "upheld": true,
+   "why": "Same blocker: the calling reaches the character only through grantedFeatures, which the situational lookup does not read.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true
+    }
+   }
+  },
+  {
+   "id": "savvy-reflexes",
+   "upheld": true,
+   "why": "Text confirms the Reflex degree upgrade; advancement delivers only the rank.",
+   "correction": {}
+  }
+ ]
+}

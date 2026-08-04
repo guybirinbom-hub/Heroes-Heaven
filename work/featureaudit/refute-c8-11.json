@@ -1,0 +1,877 @@
+{
+ "rulings": [
+  {
+   "id": "seething-frenzy",
+   "upheld": false,
+   "why": "A 1-action activity whose every effect sits on the eidolon's block; the mode's only modifier stars the PLAYER's AC for a penalty the eidolon takes, and its feats gate names an id no character owns (the summoner owns anger-phantom-eidolon, not seething-frenzy), so the mode would never appear.",
+   "correction": {
+    "verdict": "NEEDS_NOTHING"
+   }
+  },
+  {
+   "id": "selfish-shield",
+   "upheld": false,
+   "why": "A reaction resolved at the table, and the registry key can never fire: the champion owns the cause `desecration` (which is what grants this), never the id `selfish-shield`, so nothing would ever look it up.",
+   "correction": {
+    "verdict": "NEEDS_NOTHING"
+   }
+  },
+  {
+   "id": "shadow-sheath",
+   "upheld": true,
+   "why": "Immanence damage rider on the player's own Strikes; the ikon IS ownable (exemplar:ikon option) so the registry key fires, and the shape matches the shipped weapon-ikon entries.",
+   "correction": {}
+  },
+  {
+   "id": "shadows-in-the-moonlight",
+   "upheld": false,
+   "why": "The tactic body is ally-facing; the Special clause substitutes Warfare Lore, a Lore the app has no rank lane for (see this batch's own warfare-expertise verdict), and tactic ids never enter characterSituationalIds (explain.ts:189) so the star could never appear anyway.",
+   "correction": {
+    "verdict": "NEEDS_NOTHING"
+   }
+  },
+  {
+   "id": "shared-resolve",
+   "upheld": true,
+   "why": "Text plainly gives the player success->critical success on Will saves; only the master rank is delivered by CLASS_ADVANCEMENT. Auto-granted at summoner 15, so the key fires.",
+   "correction": {}
+  },
+  {
+   "id": "shepherd-of-errant-winds",
+   "upheld": true,
+   "why": "Confirmed: SubclassOption.grants.skills is SkillId[] and trainedLore holds one subject, so a two-Lore apparition grant has no lane. needsEngineWork is correct.",
+   "correction": {}
+  },
+  {
+   "id": "skin-hard-as-horn",
+   "upheld": true,
+   "why": "Daily-preparation resistance TYPE pick, live only while the ikon holds the spark; no lane combines a daily pick with an immanence gate. needsEngineWork stands.",
+   "correction": {}
+  },
+  {
+   "id": "slingers-precision",
+   "upheld": true,
+   "why": "Auto-granted gunslinger 1; real per-Strike precision damage with no field and no registry entry.",
+   "correction": {}
+  },
+  {
+   "id": "sloth",
+   "upheld": false,
+   "why": "Reclined Apport is already granted by the runelord `sin` effectChoice (grant.focusSpells:['reclined-apport']). The remaining sin-spell list is a no-op: every listed spell is already arcane, spellListAdditions is declared inside `interface Feat` (types.ts:801) so it is not a legal ClassFeature field, build.ts reads it only from content.feats, and the record is never owned. The judge's own `wrath` verdict calls granting this list an over-grant.",
+   "correction": {
+    "verdict": "NEEDS_NOTHING"
+   }
+  },
+  {
+   "id": "spasm-of-the-berserker",
+   "upheld": false,
+   "why": "A 1-action transcendence resolved at the table; the proposed mode carries zero modifiers and its feats gate names `spasm-of-the-berserker`, an id nothing owns (it is a transcendence action, not an owned ikon), so the mode is invisible — the exact ungated-mode trap.",
+   "correction": {
+    "verdict": "NEEDS_NOTHING"
+   }
+  },
+  {
+   "id": "speaker-in-sibilance",
+   "upheld": true,
+   "why": "Same verified gap: no list-valued Lore grant exists on a subclass/extraChoice option.",
+   "correction": {}
+  },
+  {
+   "id": "spell-blending",
+   "upheld": true,
+   "why": "Confirmed against the record text: a daily-preparation slot TRADE, and spellSlotBonus only adds. needsEngineWork stands.",
+   "correction": {}
+  },
+  {
+   "id": "spirit-instinct",
+   "upheld": true,
+   "why": "Raging Resistance at 9th (void + damage from undead) reaches nothing; whileActive has no level gate and no 'from undead regardless of type' predicate. needsEngineWork stands.",
+   "correction": {}
+  },
+  {
+   "id": "stalker-in-darkened-boughs",
+   "upheld": true,
+   "why": "Same verified apparition Lore gap.",
+   "correction": {}
+  },
+  {
+   "id": "starshot",
+   "upheld": true,
+   "why": "Immanence splash rider on the player's own Strikes; ownable exemplar ikon, matching the shipped weapon-ikon entries.",
+   "correction": {}
+  },
+  {
+   "id": "steward-of-stone-and-fire",
+   "upheld": true,
+   "why": "Same verified apparition Lore gap.",
+   "correction": {}
+  },
+  {
+   "id": "strategic-strike",
+   "upheld": true,
+   "why": "Verified: strikePrecisionRiders() in derive.ts handles only sneak-attack and the precision hunter's edge — the investigator's dice are delivered by nothing.",
+   "correction": {}
+  },
+  {
+   "id": "stubborn",
+   "upheld": true,
+   "why": "The second save vs controlled is a player-facing benefit on a condition the sheet tracks; `controlled` is a real core.conditions id.",
+   "correction": {}
+  },
+  {
+   "id": "swift-prey",
+   "upheld": true,
+   "why": "Real action-cost change; `hunt-prey` is a real core.actions id and the record is auto-granted at ranger 19.",
+   "correction": {}
+  },
+  {
+   "id": "tangle-line",
+   "upheld": true,
+   "why": "weaponTraits cannot be scoped to 'the inventor's chosen innovation' and an unmatched grant would over-grant. needsEngineWork stands; the record IS owned (ownedFeatureIds reads c.inventor.modifications).",
+   "correction": {}
+  },
+  {
+   "id": "tempered-reflexes",
+   "upheld": true,
+   "why": "Text gives success->critical success on Reflex saves; only the master rank is delivered.",
+   "correction": {}
+  },
+  {
+   "id": "tempest",
+   "upheld": true,
+   "why": "Verified: the oracle mystery option carries grantedSpells/grants.skills/focusSpells but no grantedFeats, and build.ts:2339 reads classFeatures[optionId].grantsFeats for chosen options — so the fix lands. `foretell-harm` exists.",
+   "correction": {}
+  },
+  {
+   "id": "tempest-sun-mages",
+   "upheld": false,
+   "why": "The fix is a no-op three ways: every one of the eleven spells is already in the arcane tradition so a wizard's pool already contains them; spellListAdditions is declared inside `interface Feat` and is not a legal ClassFeature field; and build.ts reads it only from content.feats. The record is also never owned (magaambyanBranch is a flag choice, not a classChoices pick).",
+   "correction": {
+    "verdict": "NEEDS_NOTHING"
+   }
+  },
+  {
+   "id": "tensile-absorption",
+   "upheld": true,
+   "why": "resistances with an @actor.level formula is exactly the shipped shape (classFeatures.energy-barrier, field-discovery-toxicologist), and the record is owned via c.inventor.modifications. No over-grant: it is only selectable with an armour innovation.",
+   "correction": {}
+  },
+  {
+   "id": "thaumaturgic-expertise",
+   "upheld": true,
+   "why": "Verified: BuildState.skillIncreases is one ProficiencyKey per level, so a second restricted increase at 9 cannot be offered.",
+   "correction": {}
+  },
+  {
+   "id": "thaumaturgic-mastery",
+   "upheld": true,
+   "why": "Same verified structural limit at level 17.",
+   "correction": {}
+  },
+  {
+   "id": "thespians-calling",
+   "upheld": true,
+   "why": "The Mythic Point spend on Performance is a real player option nothing records. Caveat for the applier: ownedFeatureIds does not include c.mythicCalling (build.ts pushes it only into grantedFeatures), so the reader must add it or the star will not appear.",
+   "correction": {}
+  },
+  {
+   "id": "tough-to-kill",
+   "upheld": true,
+   "why": "The dying-2 floor is real and unrecorded, but Diehard is ALREADY granted — featFeatGrants.ts carries 'tough-to-kill': ['diehard']. grantsFeats dropped.",
+   "correction": {
+    "fix": {
+     "situational": [
+      {
+       "on": "condition",
+       "id": "dying",
+       "value": "first time each day: stay at dying 2",
+       "note": "Tough to Kill: the first time each day you would be reduced to dying 3 or higher, you stay at dying 2 instead."
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "twin-juggernauts",
+   "upheld": true,
+   "why": "Text gives success->critical success on Fortitude saves; only the master rank is delivered.",
+   "correction": {}
+  },
+  {
+   "id": "unassailable-soul",
+   "upheld": true,
+   "why": "Text gives success->critical success on Will saves; only the master rank is delivered.",
+   "correction": {}
+  },
+  {
+   "id": "unfailing-bow",
+   "upheld": true,
+   "why": "Immanence damage rider on the player's own Strikes; ownable exemplar ikon.",
+   "correction": {}
+  },
+  {
+   "id": "unimpeded-journey",
+   "upheld": true,
+   "why": "Auto-granted at ranger 11; the stride marker lane already carries this exact clause for water-dancer/feather-step.",
+   "correction": {}
+  },
+  {
+   "id": "unlimited-esoterica",
+   "upheld": true,
+   "why": "Real action-cost change; both `exploit-vulnerability` and `intensify-vulnerability` are real core.actions ids and the feature is auto-granted at thaumaturge 19.",
+   "correction": {}
+  },
+  {
+   "id": "unyielding-resolve",
+   "upheld": true,
+   "why": "Text gives success->critical success on Will saves; only the master rank is delivered.",
+   "correction": {}
+  },
+  {
+   "id": "uzunjati",
+   "upheld": false,
+   "why": "The fix delivers nothing: all nine spells (including Kgalaserke's Axes and Ibex's Harvest) are already tagged arcane in core.spells, so a wizard's pool already holds them; spellListAdditions is a Feat-only field build.ts reads only from content.feats; and the record is never owned — magaambyanBranch is a `choice.flag` on the dedication feat, which never adds `uzunjati` to classChoices.",
+   "correction": {
+    "verdict": "NEEDS_NOTHING"
+   }
+  },
+  {
+   "id": "walls-of-will",
+   "upheld": true,
+   "why": "Text gives success->critical success on Will saves; only the master rank is delivered.",
+   "correction": {}
+  },
+  {
+   "id": "wardens-endurance",
+   "upheld": true,
+   "why": "Text gives success->critical success on Fortitude saves; only the master rank is delivered.",
+   "correction": {}
+  },
+  {
+   "id": "warfare-expertise",
+   "upheld": true,
+   "why": "Verified: AdvancementTrack has no skill/lore track and trainedLore/loreChoices grant trained only, so expert Warfare Lore cannot be expressed.",
+   "correction": {}
+  },
+  {
+   "id": "wild-willpower",
+   "upheld": true,
+   "why": "Text gives success->critical success on Will saves; only the master rank is delivered.",
+   "correction": {}
+  },
+  {
+   "id": "wildsong",
+   "upheld": true,
+   "why": "The missing language is real, but grantsLanguages on a ClassFeature is inert: build.ts's language block reads feats, the heritage and invested items only, never classFeatures.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true,
+     "note": "grantsLanguages is legal on ClassFeature but nothing reads it there — build.ts:3262-3266 collects languages from content.feats, content.heritages and invested items only. Needs that reader extended to owned class features (or a class-level language grant) before 'wildsong' reaches the sheet."
+    }
+   }
+  },
+  {
+   "id": "will-of-the-pupil",
+   "upheld": true,
+   "why": "Text gives success->critical success on Will saves; only the master rank is delivered.",
+   "correction": {}
+  },
+  {
+   "id": "wrath",
+   "upheld": false,
+   "why": "Vengeful Glare is ALREADY delivered: the runelord class-archetype record carries effectChoices id 'sin' whose wrath option is {grant:{focusSpells:['vengeful-glare']}}. The bare `sin` list on school-of-thassilonian-rune-magic is the descriptive twin.",
+   "correction": {
+    "verdict": "NEEDS_NOTHING"
+   }
+  },
+  {
+   "id": "ambitious-human",
+   "upheld": true,
+   "why": "Fleet is not in featFeatGrants.ts and heritages.grantsFeats IS read (build.ts:2316); the unconditional half lands and the class-keyed half is correctly left out.",
+   "correction": {}
+  },
+  {
+   "id": "athamasi",
+   "upheld": true,
+   "why": "Both clauses are about the player's own Climb / Grab an Edge; both action ids exist.",
+   "correction": {}
+  },
+  {
+   "id": "camouflage-tripkee",
+   "upheld": true,
+   "why": "The terrain pick is genuinely never asked for; options with no grant are explicitly legal (EffectChoice doc) and 44 heritages already carry effectChoices.",
+   "correction": {}
+  },
+  {
+   "id": "caveclimber-kobold",
+   "upheld": true,
+   "why": "Combat Climber is already granted, but the Athletics success->critical success upgrade is delivered by nothing; the judge scoped the fix to that half.",
+   "correction": {}
+  },
+  {
+   "id": "cavernstalker-kobold",
+   "upheld": true,
+   "why": "Both degree-of-success changes are real and unrecorded; `climb` and Acrobatics-to-Squeeze are both expressible.",
+   "correction": {}
+  },
+  {
+   "id": "cliffscale-lizardfolk",
+   "upheld": true,
+   "why": "Same as caveclimber: only the unrecorded climb upgrade is fixed.",
+   "correction": {}
+  },
+  {
+   "id": "compact-skeleton",
+   "upheld": true,
+   "why": "Quick Squeeze is already granted; the Medium->Small LOWERING really has no lane (build.ts:3287 keeps the largest of ancestry size and sizeOverride). needsEngineWork stands.",
+   "correction": {}
+  },
+  {
+   "id": "dark-fields-kitsune",
+   "upheld": true,
+   "why": "The Demoralize trait swap and dropped language penalty change the player's own action; `demoralize` is a real action id and 'fancy-moves' already marks it.",
+   "correction": {}
+  },
+  {
+   "id": "death-warden-dwarf",
+   "upheld": true,
+   "why": "Real degree-of-success upgrade on saves; verified that no registry key 'death-warden-dwarf' exists.",
+   "correction": {}
+  },
+  {
+   "id": "desert-rat",
+   "upheld": true,
+   "why": "Ratfolk base land Speed is 25; the 30-foot hands-free clause is conditional, so situational (not landSpeedMin) is the right lane — no over-grant.",
+   "correction": {}
+  },
+  {
+   "id": "dijiang",
+   "upheld": true,
+   "why": "Real failure->success upgrade vs emotion effects, recorded nowhere.",
+   "correction": {}
+  },
+  {
+   "id": "discarded-fleshwarp",
+   "upheld": true,
+   "why": "Real success->critical success upgrade vs transmutation effects, recorded nowhere.",
+   "correction": {}
+  },
+  {
+   "id": "dog-kholo",
+   "upheld": true,
+   "why": "Kholo base land Speed is 25; conditional 30 is correctly filed as situational rather than landSpeedMin.",
+   "correction": {}
+  },
+  {
+   "id": "dogtooth-tengu",
+   "upheld": true,
+   "why": "The deadly d8 on the beak is real, but unarmedTraits is declared inside `interface Feat` (types.ts:852) — not on Heritage — no heritage carries it and derive.ts:1762 reads it only from db.feats, so the write would be quarantined.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true,
+     "note": "unarmedTraits is a Feat-only field: Heritage extends ContentBase + DefenseGrants, which does not declare it, and applyUnarmedRiders (derive.ts:1762) reads db.feats[...].unarmedTraits only. Needs the field lifted to DefenseGrants (or the reader extended to heritages) before the beak can gain deadly d8."
+    }
+   }
+  },
+  {
+   "id": "fishseeker-shoony",
+   "upheld": true,
+   "why": "Two degree-of-success changes on the player's own Grab an Edge; the Disarm half was correctly excluded as attacker-side.",
+   "correction": {}
+  },
+  {
+   "id": "fodder-skeleton",
+   "upheld": true,
+   "why": "Skeleton base land Speed is 25 and the text SETS it to 30 — landSpeedMin is the correct lane and derive.ts:1896 already reads it from the heritage.",
+   "correction": {}
+  },
+  {
+   "id": "frilled-lizardfolk",
+   "upheld": true,
+   "why": "Same verified Demoralize change as dark-fields-kitsune; Threatening Approach correctly excluded.",
+   "correction": {}
+  },
+  {
+   "id": "fruit-leshy",
+   "upheld": true,
+   "why": "Verified: four heritages carry limitedUses but featUses.ts reads it from feats only, so a heritage-borne daily resource has no counter. needsEngineWork stands.",
+   "correction": {}
+  },
+  {
+   "id": "full-moon-sarangay",
+   "upheld": true,
+   "why": "Folk Healer is already granted; the boost/flaw REPLACEMENT genuinely has no field — no heritage in core.json carries any boost/flaw override. needsEngineWork stands.",
+   "correction": {}
+  },
+  {
+   "id": "gutsy-halfling",
+   "upheld": true,
+   "why": "Real success->critical success vs emotion effects; the Irrepressible feats carry it, this heritage carries nothing.",
+   "correction": {}
+  },
+  {
+   "id": "heavenscribe-kobold",
+   "upheld": true,
+   "why": "Draconic is a real language id and heritages.grantsLanguages IS read (build.ts:3263); the Diplomacy critical-failure upgrade is separately unrecorded.",
+   "correction": {}
+  },
+  {
+   "id": "hillock-halfling",
+   "upheld": true,
+   "why": "Verified: restRecovery carries hpMultiplier/conditionSteps only and is read from feats, so a flat level addend to rest and Treat Wounds healing has no lane.",
+   "correction": {}
+  },
+  {
+   "id": "hold-scarred-orc",
+   "upheld": true,
+   "why": "12 ancestry HP instead of 10 is real, but maxHpBonus is declared inside `interface Feat` (types.ts:870), not on Heritage; no heritage carries it and both readers (build.ts:3197, derive.ts:376) iterate c.feats only.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true,
+     "note": "Ancestry HP comes from ancestry.hp (build.ts:1558) and maxHpBonus is a Feat-only field read only over c.feats. A heritage that changes ancestry HP (12 instead of 10 here) needs either an ancestryHp override on Heritage or maxHpBonus lifted to DefenseGrants plus the two readers extended."
+    }
+   }
+  },
+  {
+   "id": "hunter-automaton",
+   "upheld": true,
+   "why": "Automaton base land Speed is 25; conditional 30 correctly filed as situational.",
+   "correction": {}
+  },
+  {
+   "id": "jinxed-tengu",
+   "upheld": true,
+   "why": "Both halves are real, but the imported text lost the DC and the marker must not ship vague — the printed flat check is DC 17 (AoN heritage-355 / heritage-77).",
+   "correction": {
+    "fix": {
+     "situational": [
+      {
+       "targets": [
+        {
+         "kind": "save",
+         "detail": "all"
+        }
+       ],
+       "when": "against a curse or misfortune effect",
+       "bonus": "a success is a critical success instead"
+      },
+      {
+       "on": "condition",
+       "id": "doomed",
+       "value": "DC 17 flat check",
+       "note": "When you would gain the doomed condition, attempt a DC 17 flat check; on a success, reduce the doomed value you would gain by 1."
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "keen-venom-vishkanya",
+   "upheld": true,
+   "why": "A property of the player's own Envenom action; `envenom` is a real core.actions id and Venom Draw was correctly excluded.",
+   "correction": {}
+  },
+  {
+   "id": "littlehorn-minotaur",
+   "upheld": true,
+   "why": "Both halves confirmed inexpressible: sizeOverride only raises, and unarmedTraits can only step a die UP and is Feat-only. needsEngineWork stands.",
+   "correction": {}
+  },
+  {
+   "id": "mightyfall-kobold",
+   "upheld": true,
+   "why": "10 ancestry HP instead of 6 is real, but maxHpBonus is a Feat-only field no heritage carries and neither reader scans heritages.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true,
+     "note": "Same lane as hold-scarred-orc: ancestry HP is ancestry.hp and maxHpBonus (types.ts:870, inside interface Feat) is summed over c.feats only. A heritage HP override needs a declared field plus a reader. The alternative Str/Cha boosts with an Int flaw have no lane either."
+    }
+   }
+  },
+  {
+   "id": "murkeyed-azarketi",
+   "upheld": true,
+   "why": "Real flat-check reduction, but 'the heritage's reduced DC' is a placeholder; the printed values are DC 3 and DC 9 (AoN heritage-89), and supernatural-senses/warrenbred already use the strikeAttack shape for exactly this.",
+   "correction": {
+    "fix": {
+     "situational": [
+      {
+       "targets": [
+        {
+         "kind": "strikeAttack"
+        }
+       ],
+       "when": "targeting a concealed or hidden creature",
+       "bonus": "flat check DC is 3 (concealed) or 9 (hidden) instead of 5 or 11"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "mutated-fleshwarp",
+   "upheld": true,
+   "why": "Real change to a tracked condition, but the assisted value was left vague; the printed text is DC 10, reduced to DC 5 with particularly effective assistance (AoN heritage-126).",
+   "correction": {
+    "fix": {
+     "situational": [
+      {
+       "on": "condition",
+       "id": "persistent-damage",
+       "value": "bleed flat check DC 10",
+       "note": "Your flat check to recover from persistent bleed damage is DC 10 instead of 15, and DC 5 instead of 10 with particularly effective assistance."
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "nine-lives-catfolk",
+   "upheld": true,
+   "why": "Diehard is already granted; the recovery-DC change to the dying condition is separately unrecorded.",
+   "correction": {}
+  },
+  {
+   "id": "nomadic-halfling",
+   "upheld": true,
+   "why": "Verified: grantsLanguages takes fixed ids and the language budget is Int mod + ancestry.languages.additional — there is no 'N languages of your choice' slot lane.",
+   "correction": {}
+  },
+  {
+   "id": "paddler-shoony",
+   "upheld": true,
+   "why": "The Swim degree-of-success upgrade is real; the bog terrain half was correctly excluded.",
+   "correction": {}
+  },
+  {
+   "id": "pixie",
+   "upheld": true,
+   "why": "Sprite is Tiny and this SETS Small — a RAISE, which is exactly what build.ts:3287 keeps, and the heritage is already passed to consider().",
+   "correction": {}
+  },
+  {
+   "id": "polyglot-android",
+   "upheld": true,
+   "why": "Same verified missing 'N languages of your choice' lane.",
+   "correction": {}
+  },
+  {
+   "id": "resolute-fetchling",
+   "upheld": true,
+   "why": "Real success->critical success vs emotion effects, carried by nothing.",
+   "correction": {}
+  },
+  {
+   "id": "rite-of-passage",
+   "upheld": true,
+   "why": "Both halves are the player's own; the Acrobatics half is word-for-word the shipped jungle-strider entry and the stride marker mirrors water-dancer.",
+   "correction": {}
+  },
+  {
+   "id": "river-azarketi",
+   "upheld": true,
+   "why": "Real Swim degree-of-success upgrade, carried by nothing.",
+   "correction": {}
+  },
+  {
+   "id": "running-animal",
+   "upheld": true,
+   "why": "Awakened-animal base land Speed is 5 and the text SETS 30, so landSpeedMin is right (flying-animal already carries it). But EffectGrant has NO grantedStrikes field (types.ts:397-414), so the attack grants would be silently dropped — reduced to a recorded pick, as the sibling heritages ship it.",
+   "correction": {
+    "fix": {
+     "landSpeedMin": 30,
+     "effectChoices": [
+      {
+       "id": "running-animal-attack",
+       "prompt": "Choose your animal attack",
+       "options": [
+        {
+         "value": "claw",
+         "label": "Claw (1d4 slashing; agile, finesse)"
+        },
+        {
+         "value": "jaws",
+         "label": "Jaws (1d6 piercing)"
+        },
+        {
+         "value": "tail",
+         "label": "Tail (1d6 bludgeoning)"
+        }
+       ]
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "runtboss-hobgoblin",
+   "upheld": true,
+   "why": "The Coerce degree-of-success upgrade is real, but Group Coercion is ALREADY granted — featFeatGrants.ts carries 'runtboss-hobgoblin': ['group-coercion'].",
+   "correction": {
+    "fix": {
+     "situational": [
+      {
+       "targets": [
+        {
+         "kind": "skill",
+         "detail": "intimidation"
+        }
+       ],
+       "when": "on Intimidation checks to Coerce a goblin",
+       "bonus": "a success is a critical success instead, and a critical failure is a failure instead"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "shortshanks-hobgoblin",
+   "upheld": true,
+   "why": "The off-guard-while-Climbing clause is real, but Ride is ALREADY granted — featFeatGrants.ts carries 'shortshanks-hobgoblin': ['ride'].",
+   "correction": {
+    "fix": {
+     "situational": [
+      {
+       "targets": [
+        {
+         "kind": "skill",
+         "detail": "athletics"
+        }
+       ],
+       "when": "while you Climb",
+       "bonus": "you aren't off-guard while Climbing"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "skyborn-tengu",
+   "upheld": true,
+   "why": "The text is unconditional ('regardless of the distance you fall'), so immunities is not an over-grant; flying-animal and elytron-surki already ship the identical entry.",
+   "correction": {}
+  },
+  {
+   "id": "snaring-anadi",
+   "upheld": true,
+   "why": "The grapple/trip traits on Fangs are real, but unarmedTraits is a Feat-only field (types.ts:852) that no heritage carries and derive.ts:1762 reads only from db.feats.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true,
+     "note": "unarmedTraits is declared inside interface Feat; Heritage extends ContentBase + DefenseGrants only, and applyUnarmedRiders reads db.feats[...].unarmedTraits. Needs the field lifted to DefenseGrants (or the reader extended to heritages)."
+    }
+   }
+  },
+  {
+   "id": "steelskin-hobgoblin",
+   "upheld": true,
+   "why": "Real change to the tracked persistent-damage condition, but the assisted DC was left vague; the printed text is DC 13, or DC 8 with particularly effective assistance (AoN heritage-96).",
+   "correction": {
+    "fix": {
+     "situational": [
+      {
+       "on": "condition",
+       "id": "persistent-damage",
+       "value": "DC 13 flat check",
+       "note": "Steelskin: your flat check to recover from persistent physical (including bleed), energy, or poison damage is DC 13 instead of DC 15, or DC 8 when provided particularly effective assistance."
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "stonestep-shisk",
+   "upheld": true,
+   "why": "Standing movement change nobody picked; the stride marker lane already carries this exact clause for water-dancer.",
+   "correction": {}
+  },
+  {
+   "id": "stuffed-poppet",
+   "upheld": true,
+   "why": "Unconditional falling-damage immunity, exactly as flying-animal ships it.",
+   "correction": {}
+  },
+  {
+   "id": "sturdy-skeleton",
+   "upheld": true,
+   "why": "Diehard is ALREADY granted (featFeatGrants.ts 'sturdy-skeleton': ['diehard']), and maxHpBonus is a Feat-only field no heritage carries and neither HP reader scans — so nothing in the judge's fix would land.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true,
+     "note": "10 ancestry HP instead of 6 has no lane: ancestry HP is ancestry.hp (build.ts:1558) and maxHpBonus (types.ts:870, interface Feat) is summed over c.feats only. Diehard needs nothing — featFeatGrants.ts already grants it."
+    }
+   }
+  },
+  {
+   "id": "technological-fleshwarp",
+   "upheld": true,
+   "why": "Real success->critical success vs emotion effects, carried by nothing.",
+   "correction": {}
+  },
+  {
+   "id": "thalassic-azarketi",
+   "upheld": true,
+   "why": "The underwater range-increment clause is real, but Underwater Marauder is ALREADY granted — featFeatGrants.ts carries 'thalassic-azarketi': ['underwater-marauder'].",
+   "correction": {
+    "fix": {
+     "situational": [
+      {
+       "targets": [
+        {
+         "kind": "strikeAttack"
+        }
+       ],
+       "when": "with piercing ranged attacks against underwater targets",
+       "bonus": "range increments aren't halved"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "toy-poppet",
+   "upheld": true,
+   "why": "Poppet is Small and this SETS Tiny — a LOWERING. build.ts:3287 keeps the LARGEST of ancestry size and sizeOverride, so the fix would do nothing; identical to the littlehorn-minotaur case the same batch flagged.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true,
+     "note": "sizeOverride only ever RAISES (build.ts:3287 keeps the largest of ancestry size and any override), so Small->Tiny cannot be expressed. Needs a size SET (or a sizeFloor/sizeCap pair) before Bulk limit, reach and space follow the heritage."
+    }
+   }
+  },
+  {
+   "id": "trogloshi",
+   "upheld": false,
+   "why": "Its entire content is 'You gain the Crystal Luminescence ancestry feat', and that is already delivered: featFeatGrants.ts carries 'trogloshi': ['crystal-luminescence'].",
+   "correction": {
+    "verdict": "NEEDS_NOTHING"
+   }
+  },
+  {
+   "id": "tunnel-rat",
+   "upheld": true,
+   "why": "The tight-spaces clause is real, but Quick Squeeze is ALREADY granted — featFeatGrants.ts carries 'tunnel-rat': ['quick-squeeze'].",
+   "correction": {
+    "fix": {
+     "situational": [
+      {
+       "on": "action",
+       "id": "stride",
+       "note": "Tight spaces that aren't tight enough to require the Squeeze action aren't difficult terrain for you."
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "unbreakable-goblin",
+   "upheld": true,
+   "why": "The half-distance falling clause is real, but maxHpBonus is a Feat-only field no heritage carries and neither HP reader scans heritages, so that half would be quarantined.",
+   "correction": {
+    "fix": {
+     "situational": [
+      {
+       "targets": [
+        {
+         "kind": "hp"
+        }
+       ],
+       "when": "when you fall",
+       "bonus": "take falling damage as though you had fallen half the distance"
+      }
+     ],
+     "needsEngineWork": true,
+     "note": "10 ancestry HP instead of 6 has no lane: ancestry HP is ancestry.hp and maxHpBonus (types.ts:870, interface Feat) is read over c.feats only."
+    }
+   }
+  },
+  {
+   "id": "vine-leshy",
+   "upheld": true,
+   "why": "Both halves are the player's own Climb; `climb` is a real action id and the Athletics upgrade is carried by nothing.",
+   "correction": {}
+  },
+  {
+   "id": "warrenbred-hobgoblin",
+   "upheld": true,
+   "why": "The flat-check clause is word-for-word the shipped supernatural-senses entry (strikeAttack), and the Squeeze upgrade is separately unrecorded.",
+   "correction": {}
+  },
+  {
+   "id": "warrior-automaton",
+   "upheld": true,
+   "why": "The 1d4->1d6 fist step is real, but unarmedTraits is a Feat-only field no heritage carries and derive.ts:1762 reads it from db.feats only.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true,
+     "note": "unarmedTraits (types.ts:852) is declared inside interface Feat; Heritage does not carry it and applyUnarmedRiders reads db.feats only. Needs the field lifted to DefenseGrants or the reader extended."
+    }
+   }
+  },
+  {
+   "id": "warrior-jotunborn",
+   "upheld": true,
+   "why": "Same verified gap as warrior-automaton: the stepDie lane is Feat-only in both declaration and reader.",
+   "correction": {
+    "fix": {
+     "needsEngineWork": true,
+     "note": "unarmedTraits (types.ts:852) is a Feat-only field; derive.ts:1762 reads db.feats[...].unarmedTraits only, so a heritage-borne stepDie is inert."
+    }
+   }
+  },
+  {
+   "id": "wildwood-halfling",
+   "upheld": true,
+   "why": "Standing movement change; the stride marker lane already carries this exact clause for water-dancer.",
+   "correction": {}
+  },
+  {
+   "id": "windweb-tripkee",
+   "upheld": true,
+   "why": "The benefit is real but immunities would OVER-GRANT: this heritage's text is conditional ('As long as you have one hand free'), unlike skyborn-tengu / stuffed-poppet. The conditional lane is the right one.",
+   "correction": {
+    "fix": {
+     "situational": [
+      {
+       "targets": [
+        {
+         "kind": "hp"
+        }
+       ],
+       "when": "when you fall with at least one hand free",
+       "bonus": "you take no falling damage, regardless of the distance"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "wishborn-poppet",
+   "upheld": true,
+   "why": "Real success->critical success vs emotion or fear effects, carried by nothing.",
+   "correction": {}
+  },
+  {
+   "id": "woodland-elf",
+   "upheld": true,
+   "why": "Both clauses are the player's own; `climb` and `take-cover` are real core.actions ids.",
+   "correction": {}
+  },
+  {
+   "id": "woodstalker-lizardfolk",
+   "upheld": true,
+   "why": "The forest Take Cover clause is real, but Terrain Stalker is ALREADY granted — featFeatGrants.ts carries 'woodstalker-lizardfolk': ['terrain-stalker'].",
+   "correction": {
+    "fix": {
+     "situational": [
+      {
+       "on": "action",
+       "id": "take-cover",
+       "note": "You can always Take Cover while in forest or jungle terrain, even if you are not next to an obstacle."
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

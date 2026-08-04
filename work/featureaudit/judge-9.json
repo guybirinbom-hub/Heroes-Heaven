@@ -1,0 +1,121 @@
+{"records":[
+{"id":"the-last-ruler","verdict":"NEEDS_NOTHING","reason":"After Spark Transcendence it grants a conditional free action (Demoralize an enemy that failed an attack roll) — an action resolved at the table against an enemy; no statistic of yours changes."},
+
+{"id":"the-oscillating-wave","verdict":"ALREADY_OK","reason":"Delivered by the psychic class record's conscious-mind subclass option `the-oscillating-wave` (tradition occult + grantedSpells: breathe-fire…falling-stars plus frostbite/ignition and the amp spells); build.ts:1730 folds grantedSpells into the repertoire/cantrips."},
+
+{"id":"the-resentment","verdict":"ALREADY_OK","reason":"Delivered by classes.witch.subclass option `the-resentment` = {tradition:'occult', grants:{skills:['occultism']}, focusSpells:['evil-eye']}. The familiar's curse-prolonging is a familiar ability affecting enemies."},
+
+{"id":"the-unseen-broker","verdict":"ALREADY_OK","reason":"Delivered by classes.witch.subclass option `the-unseen-broker` = {tradition:'occult', grants:{skills:['occultism']}, focusSpells:['pact-broker']}. The familiar making enemies off-guard targets enemies."},
+
+{"id":"thespians-calling","verdict":"MISS","reason":"Spending a Mythic Point to roll Performance at mythic proficiency (and regaining a Mythic Point on the day's first critical success to Perform) is a real player-facing option; mythicPoints exist in play.ts but no calling is registered.","fix":{"situational":[{"targets":[{"kind":"skill","detail":"performance"}],"when":"to Perform or Earn Income, spending a Mythic Point","bonus":"attempt the check at mythic proficiency"},{"targets":[{"kind":"skill","detail":"performance"}],"when":"first critical success to Perform each day","bonus":"regain 1 Mythic Point"}]}},
+
+{"id":"thief-of-moonlight","verdict":"NEEDS_NOTHING","reason":"Grants a free-action Palm an Object / Steal attempt after Spark Transcendence — an action resolved at the table against an enemy; no statistic changes."},
+
+{"id":"third-doctrine","verdict":"ALREADY_OK","reason":"Subclass header that only names the doctrine choice; the mechanics live on the doctrine options (classes.cleric.subclass: cloistered-cleric / warpriest / battle-creed) and CLASS_ADVANCEMENT keys `cleric` and `warpriest`."},
+
+{"id":"third-doctrine-cloistered-cleric","verdict":"ALREADY_OK","reason":"Pure proficiency: CLASS_ADVANCEMENT.cleric has {level:7, track:'spellcasting', rank:'expert', source:'third-doctrine (cloistered)'} in src/rules/advancement.ts:44."},
+
+{"id":"third-implement","verdict":"ALREADY_OK","reason":"Delivered by the thaumaturge implement extraChoice group (pickByLevel gives the third pick at 15) and build.ts:3086-3108, which applies each implement's initiate benefit on acquisition and reserves adept/paragon for the first two."},
+
+{"id":"thoughtful-reload","verdict":"NEEDS_NOTHING","reason":"A 1-action activity (Recall Knowledge, then Interact to reload) resolved at the table; it changes no statistic."},
+
+{"id":"time","verdict":"ALREADY_OK","reason":"Delivered by classes.oracle.subclass option `time` = {grantedSpells:['time-sense','de-ja-vu','time-pocket','time-beacon'], grants:{skills:['occultism']}, focusSpells:['temporal-distortion'], advancedFocusSpell:'time-skip', greaterFocusSpell:'manifold-lives'}."},
+
+{"id":"tome","verdict":"ALREADY_OK","reason":"The tome implement's benefits are carried by the separate benefit records already registered in src/rules/situationalBonuses.ts (`initiate-benefit-tome`, `adept-benefit-tome`, `paragon-benefit-tome`); this header's only own text is an Intensify Vulnerability fortune effect resolved at the table."},
+
+{"id":"topple-the-pillar-of-heaven","verdict":"NEEDS_NOTHING","reason":"A 2-action transcendence Strike-like area attack: damage dealt to targets with a save against your class DC, resolved at the table; nothing on your sheet changes."},
+
+{"id":"touch-and-go","verdict":"NEEDS_NOTHING","reason":"A 1-action slinger's reload (Step, swap combination-weapon mode, reload) resolved at the table; no statistic changes."},
+
+{"id":"tough-to-kill","verdict":"MISS","reason":"Auto-granted at Guardian 3: it hands over the Diehard general feat (which itself carries dyingThresholdBonus:1) and a once-per-day floor at dying 2. Neither reaches the sheet — nothing grants Diehard and nothing notes the dying floor.","fix":{"grantsFeats":["diehard"],"situational":[{"on":"condition","id":"dying","value":"first time each day: stay at dying 2","note":"Tough to Kill: the first time each day you would be reduced to dying 3 or higher, you stay at dying 2 instead."}]}},
+
+{"id":"trackless-journey","verdict":"NEEDS_NOTHING","reason":"Exploration-mode benefit: you always gain Cover Tracks in natural terrain without halving your Speed. It is an exploration activity the GM adjudicates and changes no statistic."},
+
+{"id":"troll-deviant-classification","verdict":"NEEDS_NOTHING","reason":"A classification label plus the shared deviation backlash procedure (flat check DC escalation, mild/moderate/severe backlash). It grants nothing itself — the deviant abilities are separate records — and the backlash roll is table/GM-resolved."},
+
+{"id":"true-shapeshift","verdict":"NEEDS_NOTHING","reason":"A 2-action activity that swaps which untamed form you are in; the forms themselves carry the statistics, so this action changes nothing on its own."},
+
+{"id":"twin-juggernauts","verdict":"MISS","reason":"The proficiency half is delivered (CLASS_ADVANCEMENT.summoner {level:11, track:'fortitude', rank:'master', source:'twin-juggernauts'}), but the success-to-critical-success upgrade on Fortitude saves reaches nothing — no registry entry, no field.","fix":{"situational":[{"targets":[{"kind":"save","detail":"fortitude"}],"when":"on any Fortitude save (also your eidolon's)","bonus":"a success is a critical success instead"}]}},
+
+{"id":"unassailable-soul","verdict":"MISS","reason":"Proficiency is delivered (CLASS_ADVANCEMENT.exemplar {level:7, track:'will', rank:'master', source:'unassailable-soul'}), but the success-to-critical-success upgrade on Will saves is delivered nowhere.","fix":{"situational":[{"targets":[{"kind":"save","detail":"will"}],"when":"on any Will save","bonus":"a success is a critical success instead"}]}},
+
+{"id":"unbreakable-expertise","verdict":"ALREADY_OK","reason":"Pure proficiency: CLASS_ADVANCEMENT.guardian has medium and heavy armor -> expert at level 5, source 'unbreakable-expertise' (advancement.ts:355-356)."},
+
+{"id":"unbreakable-legend","verdict":"ALREADY_OK","reason":"Pure proficiency: CLASS_ADVANCEMENT.guardian level 15 sets medium/heavy legendary and unarmored/light master, source 'unbreakable-legend' (advancement.ts:367-370)."},
+
+{"id":"unbreakable-mastery","verdict":"ALREADY_OK","reason":"Pure proficiency: CLASS_ADVANCEMENT.guardian level 11 sets medium/heavy master and unarmored/light expert, source 'unbreakable-mastery' (advancement.ts:361-364)."},
+
+{"id":"unfailing-bow","verdict":"MISS","reason":"The immanence damage (+1 spirit per weapon damage die, 1d4 per die on a crit) is a real damage change while the ikon is empowered and nothing carries it — the comparable weapon ikons `titans-breaker` and `hands-of-the-wildling` are registered in situationalBonuses.ts, this one is not.","fix":{"situational":[{"targets":[{"kind":"strikeDamage"}],"when":"while the unfailing bow is empowered (immanence), on Strikes with it","bonus":"+1 spirit damage per weapon damage die; +1d4 spirit per die on a critical hit"}]}},
+
+{"id":"unimpeded-journey","verdict":"MISS","reason":"Auto-granted at Ranger 11: ignoring difficult terrain (and treating greater difficult terrain as difficult) is a standing movement change nobody picked, so an inert record is invisible. Precedent exists — `feather-step` and `water-dancer` carry difficult-terrain notes as action markers.","fix":{"situational":[{"on":"action","id":"stride","note":"Unimpeded Journey: you ignore the effects of difficult terrain, and treat greater difficult terrain as difficult terrain."}]}},
+
+{"id":"unleash-psyche","verdict":"ALREADY_OK","reason":"Delivered as a class resource + sheet state: CLASS_RESOURCES psychic entry {id:'unleash-psyche', kind:'toggle'} (src/rules/classResources.ts:63), the 'unleash-psyche' ResourceGate in actionGates.ts, the VitalsRail toggle, and the `cat-unleash-psyche` mode."},
+
+{"id":"unlimited-esoterica","verdict":"MISS","reason":"Auto-granted at Thaumaturge 19: it drops Exploit Vulnerability and Intensify Vulnerability from 1 action to a free action (still once per round). Nothing records the reduced cost, and both are real core.actions ids.","fix":{"situational":[{"on":"action","id":"exploit-vulnerability","value":"free action","note":"Unlimited Esoterica: you can Exploit Vulnerability as a free action instead of a single action, still only once per round."},{"on":"action","id":"intensify-vulnerability","value":"free action","note":"Unlimited Esoterica: you can Intensify Vulnerability as a free action instead of a single action, still only once per round."}]}},
+
+{"id":"unlimited-signature-spells","verdict":"ALREADY_OK","reason":"Delivered in src/rules/build.ts:1769, which checks for the class feature `unlimited-signature-spells` at or below the character's level and marks the whole repertoire as signature."},
+
+{"id":"untamed-order","verdict":"ALREADY_OK","reason":"Delivered by classes.druid.subclass option `untamed-order` = {grantedFeats:['untamed-form'], grants:{skills:['intimidation']}, focusSpells:['untamed-shift']}. The anathema is roleplay."},
+
+{"id":"unyielding-resolve","verdict":"MISS","reason":"Proficiency is delivered (CLASS_ADVANCEMENT.guardian {level:17, track:'will', rank:'master', source:'unyielding-resolve'}), but the success-to-critical-success upgrade on Will saves reaches nothing.","fix":{"situational":[{"targets":[{"kind":"save","detail":"will"}],"when":"on any Will save","bonus":"a success is a critical success instead"}]}},
+
+{"id":"uzunjati","verdict":"MISS","reason":"The Uzunjati branch grants a defined Additional Curriculum — real spell access (including non-arcane Mwangi spells such as Kgalaserke's Axes and Ibex's Harvest) — and nothing carries it; the branch is picked via magaambyan-attendant-dedication's `magaambyanBranch` choice, so a player really can reach it.","fix":{"spellListAdditions":{"spells":["daze","mindlink","kgalaserkes-axes","ibexs-harvest","telepathy","mind-probe","truespeech","mislead","hidden-mind"]}}},
+
+{"id":"vanguard-of-roaring-waters","verdict":"ALREADY_OK","reason":"Delivered by the animist `apparition` extraChoice option `vanguard-of-roaring-waters` = {grantedSpells:[rousing-splash…wrathful-storm], focusSpells:['river-carving-mountains']}. The apparition Lore skills and the Avatar form apply only while attuned/avatar-form, which no apparition option grants permanently (deliberately, to avoid an over-grant)."},
+
+{"id":"verdant-core-deviant-classification","verdict":"NEEDS_NOTHING","reason":"A classification label plus the shared deviation backlash procedure; it grants nothing on its own (the deviations are separate records) and the backlash flat check and recuperation time are table/GM-resolved."},
+
+{"id":"verdant-rest","verdict":"NEEDS_NOTHING","reason":"A 1-action activity that puts you into a plant form (statistics come from One with Plants) and gives out-of-combat healing/condition removal on a 10-minute or full rest — a downtime effect resolved at the table."},
+
+{"id":"versatile-legend","verdict":"ALREADY_OK","reason":"Pure proficiency: CLASS_ADVANCEMENT.fighter level 19 sets unarmed/simple/martial legendary, advanced master and classDc master, source 'versatile-legend' (advancement.ts:145-149)."},
+
+{"id":"versatile-vials","verdict":"ALREADY_OK","reason":"Delivered as a class resource: CLASS_RESOURCES['alchemist'] entry id 'versatile-vials' (src/rules/classResources.ts:37) drives the max (2 + Int), the AlchemyPanel counter, and quickAlchemy spending in play.ts:1019; feats add to the max via resourceMaxSet."},
+
+{"id":"visions-of-sin","verdict":"NEEDS_NOTHING","reason":"An eidolon action that forces a Will save on a target creature and applies conditions to it; everything it does happens on the target's side."},
+
+{"id":"vital-shot","verdict":"NEEDS_NOTHING","reason":"A 2-action gunslinger deed: make a ranged Strike with an extra damage die and persistent bleed against an off-guard target — resolved at the table, no standing statistic change."},
+
+{"id":"walls-of-will","verdict":"MISS","reason":"Proficiency is delivered (CLASS_ADVANCEMENT.psychic {level:11, track:'will', rank:'master', source:'walls-of-will'}), but the success-to-critical-success upgrade on Will saves reaches nothing.","fix":{"situational":[{"targets":[{"kind":"save","detail":"will"}],"when":"on any Will save","bonus":"a success is a critical success instead"}]}},
+
+{"id":"wandering-reverie","verdict":"ALREADY_OK","reason":"Delivered by the psychic `subconscious-mind` extraChoice option `wandering-reverie` = {keyAbility:'cha'}; the Psyche Action (Fade Into Daydreams) is its own action record gated by the unleash-psyche resource."},
+
+{"id":"wardens-endurance","verdict":"MISS","reason":"Proficiency is delivered (CLASS_ADVANCEMENT.ranger {level:11, track:'fortitude', rank:'master', source:'wardens-endurance'}), but the success-to-critical-success upgrade on Fortitude saves reaches nothing.","fix":{"situational":[{"targets":[{"kind":"save","detail":"fortitude"}],"when":"on any Fortitude save","bonus":"a success is a critical success instead"}]}},
+
+{"id":"warfare-expertise","verdict":"MISS","reason":"Auto-granted at Commander 3: expert proficiency in Warfare Lore, plus using Warfare Lore for initiative. There is no lane that raises a Lore skill's rank — AdvancementTrack (types.ts:77) has no skill/lore track, and the only record-level lore fields (trainedLore, loreChoices) grant trained only, so the expert bump cannot be expressed.","fix":{"needsEngineWork":true}},
+
+{"id":"wave-order","verdict":"ALREADY_OK","reason":"Delivered by classes.druid.subclass option `wave-order` = {grantedFeats:['shore-step'], grants:{skills:['medicine']}, focusSpells:['rising-surf']}. The anathema is roleplay."},
+
+{"id":"way-of-the-drifter","verdict":"ALREADY_OK","reason":"Subclass header. classes.gunslinger.subclass option `way-of-the-drifter` = {grants:{skills:['acrobatics']}}; the slinger's reload and the three deeds are separate action records resolved at the table."},
+
+{"id":"way-of-the-pistolero","verdict":"ALREADY_OK","reason":"Subclass header. classes.gunslinger.subclass option `way-of-the-pistolero` = {skillChoice:['deception','intimidation']}, so the player picks the way skill; the deeds are separate action records."},
+
+{"id":"way-of-the-sniper","verdict":"ALREADY_OK","reason":"Subclass header. classes.gunslinger.subclass option `way-of-the-sniper` = {grants:{skills:['stealth']}}; the deeds (One Shot One Kill, Vital Shot, Ghost Shot) are separate action records."},
+
+{"id":"way-of-the-spellshot","verdict":"ALREADY_OK","reason":"Subclass header. classes.gunslinger.subclass option `way-of-the-spellshot` = {keyAbility:'int', grants:{skills:['arcana']}}, which delivers both the Arcana training and the Intelligence class DC; the Spellshot Dedication is a class feat the player takes."},
+
+{"id":"way-of-the-triggerbrand","verdict":"ALREADY_OK","reason":"Subclass header. classes.gunslinger.subclass option `way-of-the-triggerbrand` = {grants:{skills:['thievery']}}; combination-weapon access and the deeds are item access and separate action records."},
+
+{"id":"way-of-the-vanguard","verdict":"ALREADY_OK","reason":"Subclass header. classes.gunslinger.subclass option `way-of-the-vanguard` = {grants:{skills:['athletics']}}; the deeds are separate action records."},
+
+{"id":"weapon-innovation","verdict":"ALREADY_OK","reason":"Delivered by the inventor pipeline: innovationType() maps the `weapon-innovation` subclass to the 'weapon' modification type (build.ts:940-942) and build.ts:3130-3150 resolves the tiered modification picks from class features tagged weapon-innovation-modification."},
+
+{"id":"weapon-mastery","verdict":"ALREADY_OK","reason":"Pure proficiency: every class listed has its own CLASS_ADVANCEMENT level-13 entries with source 'weapon-mastery' (e.g. thaumaturge unarmed/simple/martial -> master at advancement.ts:566-568; likewise barbarian, commander, guardian, magus)."},
+
+{"id":"whirlwind-maul","verdict":"NEEDS_NOTHING","reason":"An eidolon action: up to four melee unarmed Strikes against different enemies with a deferred multiple attack penalty — resolved at the table, no standing statistic change."},
+
+{"id":"wild-willpower","verdict":"MISS","reason":"Proficiency is delivered (CLASS_ADVANCEMENT.druid {level:11, track:'will', rank:'master', source:'wild-willpower'}), but the success-to-critical-success upgrade on Will saves reaches nothing.","fix":{"situational":[{"targets":[{"kind":"save","detail":"will"}],"when":"on any Will save","bonus":"a success is a critical success instead"}]}},
+
+{"id":"wildsong","verdict":"MISS","reason":"Auto-granted at Druid 1: every druid knows the Wildsong in addition to their ancestry languages, and nothing adds it — classes.druid has no language grant, so the sheet's language list is short by one. `wildsong` is a real core.languages id.","fix":{"grantsLanguages":["wildsong"]}},
+
+{"id":"will-expertise","verdict":"ALREADY_OK","reason":"Pure proficiency: CLASS_ADVANCEMENT.alchemist {level:7, track:'will', rank:'expert', source:'will-expertise'} (advancement.ts:224), with matching entries on the kineticist and ranger tables."},
+
+{"id":"will-of-the-pupil","verdict":"MISS","reason":"Proficiency is delivered (CLASS_ADVANCEMENT.witch {level:17, track:'will', rank:'master', source:'will-of-the-pupil'}), but the success-to-critical-success upgrade on Will saves reaches nothing.","fix":{"situational":[{"targets":[{"kind":"save","detail":"will"}],"when":"on any Will save","bonus":"a success is a critical success instead"}]}},
+
+{"id":"wind-them-up","verdict":"NEEDS_NOTHING","reason":"A 2-action triggerbrand deed: a melee Strike then a Thievery check at -5 to Steal, making the target off-guard against your ranged attacks. Everything it changes is on the target's side or is resolved at the table."},
+
+{"id":"wizard-weapon-expertise","verdict":"ALREADY_OK","reason":"Delivered as a split: CLASS_ADVANCEMENT.wizard {level:11, track:'unarmed', rank:'expert', source:'weapon-expertise'} plus the per-weapon grant for club/crossbow/dagger/heavy crossbow/staff applied through weaponOverrides in build.ts — the comment at advancement.ts:215-217 records exactly this."},
+
+{"id":"wraith-deviant-classification","verdict":"NEEDS_NOTHING","reason":"A classification label plus the shared deviation backlash procedure; the classification grants nothing itself (the deviations are separate records) and the backlash flat check is table/GM-resolved."},
+
+{"id":"wrath","verdict":"MISS","reason":"The Wrath sin school's Initial School Spell, Vengeful Glare, is a focus spell the character gains, and `vengeful-glare` exists in core.spells. Nothing grants it — classes.wizard.subclass's `runelord` option has no focusSpells and runelord-dedication carries no sin choice, so the focus spell reaches no sheet. (Only the initial school spell is fixed here; the Sin Spells list is a school-list restriction the app does not model, and granting it would over-grant access.)","fix":{"focusSpells":["vengeful-glare"]}}
+]}
