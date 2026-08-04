@@ -296,6 +296,36 @@ export function ItemDetail({
               <span className="sd-rune-hint">Affixed to {hostName ?? 'an item'}.</span>
             </div>
           )}
+          {/* An item that says "choose one of N". The engine has always been ready to use the answer
+              (buildCharacter resolves it for build gear, applyPlayState for gear bought in play), but
+              nothing ever ASKED — 33 items carried a question with no screen to answer it on. It sits
+              here, on the item itself, because that is where the player is holding it. */}
+          {onPlay && (item.effectChoices ?? []).length > 0 && (
+            <div className="sd-uses">
+              <span className="sd-uses-title">Choices</span>
+              {(item.effectChoices ?? []).map((ch) => {
+                const value = inv.effectChoices?.[ch.id] ?? '';
+                return (
+                  <label className="sd-choice-row" key={ch.id}>
+                    <span className="sd-choice-prompt">{ch.prompt}</span>
+                    <select
+                      value={value}
+                      onChange={(e) =>
+                        onPlay((p) => updateInventoryItem(p, inv.instanceId, { effectChoices: { ...(inv.effectChoices ?? {}), [ch.id]: e.currentTarget.value } }))
+                      }
+                    >
+                      <option value="">Choose…</option>
+                      {(ch.options ?? []).map((o) => (
+                        <option key={o.value} value={o.value}>
+                          {o.label}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                );
+              })}
+            </div>
+          )}
           {onPlay && counters.length > 0 && (
             <div className="sd-uses">
               <span className="sd-uses-title">Uses</span>

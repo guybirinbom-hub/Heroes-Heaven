@@ -41,7 +41,7 @@ import { spellsMatching } from '../rules/spellChoice';
 import { FEAT_CANTRIP_GRANTS } from '../rules/featCantripGrants';
 import type { ContentDatabase, Feat, FeatCategory, FeatChoiceDef, ProficiencyKey, ProficiencyRank, SaveId } from '../rules/types';
 import { ABILITIES, PROFICIENCY_RANKS, SKILLS } from '../rules/types';
-import { AbilitySelect, CampaignAttachCard, CampaignOptionsCard, ChoiceDetails, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, SearchSelect, SetupCard, SetupUnlockedChoices, SnareFormulasCard, SourcesCard, SkillEditor, AttributeEditor, SubCard, VariantRulesCard, cap, loreKey, loreLabel, useBuilderActions } from './shared';
+import { AbilitySelect, CampaignAttachCard, CampaignOptionsCard, ChoiceDetails, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, SearchSelect, SetupCard, SetupUnlockedChoices, SnareFormulasCard, SourcesCard, EffectChoicesPicker, SkillEditor, AttributeEditor, SubCard, VariantRulesCard, cap, loreKey, loreLabel, useBuilderActions } from './shared';
 import { hasSnareCrafting } from '../rules/snareFormulas';
 import { FilterableSelect, PickerRow, descNodeOf } from '../sheet/FilterableSelect';
 import { DescriptionModal } from '../sheet/DescriptionModal';
@@ -1130,6 +1130,16 @@ export function Builder({
                                 const def = content.classFeatures[f.id]?.choice;
                                 return def && !def.daily ? renderChoice(def, `feature:${f.id}`) : null;
                               })()}
+                              {/* A class feature can ALSO carry effectChoices. build.ts resolves those
+                                  (resolvePick, ~2571) but only feats and heritages ever drew them, so
+                                  15 features asked a question with no screen to answer it on. */}
+                              <EffectChoicesPicker
+                                recordId={f.id}
+                                choices={content.classFeatures[f.id]?.effectChoices}
+                                build={build}
+                                actions={actions}
+                                content={content}
+                              />
                             </div>
                           ))}
                         {/* Level-gated proficiency upgrades from feats taken EARLIER (Brilliant Crafter:

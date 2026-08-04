@@ -45011,5 +45011,5747 @@
         }
       ]
     }
+  },
+  {
+    "category": "deities",
+    "id": "maat",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "kostchtchie",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "otolmens",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "valmallos",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-godclaw",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "sangpotshi",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "wards-of-the-pharaoh",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-path-of-the-heavens",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "demon-bringers",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-freeing-flame",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "sky-keepers",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "touch-of-the-sun",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "conqueror-worm",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "orcus",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-endless-road",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "graveladys-guard",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "keepers-of-the-hearth",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "sorrows-sword",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-deliberate-journey",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-enlightened-scholars-path",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "hearth-and-harvest",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-laborers-bastion",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-offering-plate",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "seafarers-hope",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "urban-prosperity",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-divine-dare",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-last-breath",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-perplexing-jest",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-resplendent-court",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "abadar",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "calistria",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "cayden-cailean",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "desna",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "erastil",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "gorum",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "irori",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "lamashtu",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "nethys",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "norgorber",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "sarenrae",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "shelyn",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "torag",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "zon-kuthon",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "green-faith",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "baekho",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "mugura-and-nrithu",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "phi-deva",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "srikalis-sritaming-and-sribaril",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-lady-of-the-north-star",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "daikitsu",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "general-susumu",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "hei-feng",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "kofusachi",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "lady-jingxi",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "lao-shu-po",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "nalinivati",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "qi-zhong",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "shizuru",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "sun-wukong",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "tsukiyo",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "yaezhing",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "yamatsumi",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "achaekek",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "arazni",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "aleth",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "alseta",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "besmara",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "brigh",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "casandalee",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "chaldira",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "dajermube",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "embaral",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "genzaeri",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "grandmother-spider",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "groetus",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "hanspur",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "izuyaku",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "kaldemash",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "kazutal",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "kurgess",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "milani",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "nocticula",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "razmir",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "vudravati",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "zjar-tovan",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "good-neighbors",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-readied-strike",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "shadow-cabinet",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "cosmic-caravan",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "fortunes-fate",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "guardians-of-the-sacred-self",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "radiant-prism",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "sovyrian-conclave",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "stones-blood",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "talons-of-the-godclaw",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "dispater",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "acavna",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "elion",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "jaidi",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "lissala",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "sicva",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "cihua-coatl",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "pahti-coatl",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "tolte-coatl",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "anogetz",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "cixyron",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "laivatiniel",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "tresmalvos",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "zelishkar",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "baphomet",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "dagon",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "haagenti",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "jezelda",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "vulot",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "xoveron",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "angradd",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "bolka",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "folgrit",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "magrim",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "findeladlara",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ketephys",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "yuelral",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "andoletta",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "arshea",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ashava",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "black-butterfly",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "eritrice",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "falayna",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "irez",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "kelinahat",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "keltheald",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "korada",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "lalaci",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "lorris",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "neshen",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "pulura",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "reymenda",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "seramaydiel",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "soralyon",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "uskyeria",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "valani",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ylimancha",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "zohls",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "aegirran",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "bergelmir",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "fandarra",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "minderhal",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "skode",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "skrymir",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "thremyr",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "urazra",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "yrmidar",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "zursvaater",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "lurlup",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "teki-stronggut",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "zogmugot",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "anubis",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "aroden",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "cernunnos",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "grundinnar",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "horus",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ra",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "sturovenen",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "thoth",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "grask-uldeth",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "mahja-firehair",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "rull",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "uirch",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "thamir",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "aonaurious",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "chavazvug",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "isph-aun-vuln",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "nyuo-ogh",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "oaur-ooung",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "thuskchoon",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "yamasoth",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ardad-lili",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "doloras",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "mahathallah",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ananshea",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "charg",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "dachzerul",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "hataam",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "nameless",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "shawnari",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "vermilion-mother",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "zipacna",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "alglenweis",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "kagia",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "arundhat",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ashukharma",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "chamidu",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "diomazul",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "likha",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "matravash",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ragdya",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "raumya",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ravithra",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "suyuddha",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "vineshvakhi",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "etaris",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "immonhiel",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "rokoga-gin",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "yelayne",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "bastet",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "bes",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "hathor",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "neith",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "nephthys",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ptah",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "sekhmet",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "selket",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "set",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "sobek",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "dammerich",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "halcamora",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "jaidz",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "marishi",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "picoperi",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "rowdrosh",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "shei",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "tanagaar",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "thisamet",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "husk",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "aminara",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "cormigus",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "adanye",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "chohar",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "kalekot",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "lubaiko",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "luhar",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "mazludeh",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "uvuko",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "walkena",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "hshurha",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "lysianassa",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ranginori",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "sairazul",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "shumunue",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ymeri",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-tides-of-chaos",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "iapholi",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "upion-and-warrik",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ytildos",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "anras",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "belech",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "cormion",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "deshto",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "ongalte",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "gaasham",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "garhaazh",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "otilaz",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "sarshallatu",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "turvu",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "yluma",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "the-anointing-of-kings",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "essence-dancers",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "alocer",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "unholy",
+            "label": "Unholy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "lissala-the-order-of-virtue",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "chinostes",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "deities",
+    "id": "norns",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "sanctification",
+        "prompt": "Sanctification",
+        "options": [
+          {
+            "value": "holy",
+            "label": "Holy"
+          },
+          {
+            "value": "none",
+            "label": "None",
+            "note": "You take no sanctification."
+          }
+        ]
+      }
+    ]
   }
 ]

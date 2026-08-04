@@ -2568,6 +2568,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   };
   for (const fc of feats) resolvePick(fc.featId, content.feats[fc.featId]?.effectChoices, applyAlwaysOn, content.feats[fc.featId]?.name ?? fc.featId);
   if (build.heritageId) resolvePick(build.heritageId, content.heritages[build.heritageId]?.effectChoices, applyAlwaysOn, content.heritages[build.heritageId]?.name ?? build.heritageId);
+  // The DEITY and the BACKGROUND can carry a pick too (Lurlup's optional Unholy sanctification;
+  // Magical Experiment). Neither was resolved, so both were questions with no answer and no effect.
+  if (build.deityId) resolvePick(build.deityId, content.deities[build.deityId]?.effectChoices, applyAlwaysOn, content.deities[build.deityId]?.name ?? build.deityId);
+  if (build.backgroundId) resolvePick(build.backgroundId, content.backgrounds[build.backgroundId]?.effectChoices, applyAlwaysOn, content.backgrounds[build.backgroundId]?.name ?? build.backgroundId);
   for (const fid of ownedFeatureIds) resolvePick(fid, content.classFeatures[fid]?.effectChoices, applyAlwaysOn, content.classFeatures[fid]?.name ?? fid);
   // A chosen subclass / extra-choice option (a kineticist element gate, the wizard's Runelord school)
   // ships as a classFeature record under the same slug — its picks are the character's too.

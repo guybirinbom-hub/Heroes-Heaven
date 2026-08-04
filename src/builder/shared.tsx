@@ -1,5 +1,5 @@
 import { useMemo, useState, type Dispatch, type ReactNode, type SetStateAction } from 'react';
-import type { AbilityId, BuildOverrides, Character, CharacterOptions, ChoiceGroup, ClassDef, CompanionConfig, ContentDatabase, CustomBackground, DescRef, MonsterPartsMode, ProficiencyKey, ProficiencyRank, SaveId, SkillId, Tradition } from '../rules/types';
+import type { AbilityId, BuildOverrides, EffectChoice, Character, CharacterOptions, ChoiceGroup, ClassDef, CompanionConfig, ContentDatabase, CustomBackground, DescRef, MonsterPartsMode, ProficiencyKey, ProficiencyRank, SaveId, SkillId, Tradition } from '../rules/types';
 import { ABILITIES, SKILLS, PROFICIENCY_RANKS } from '../rules/types';
 import { enabledBookSet, sourceCatalog, NICHE_CATEGORIES, type SourceGroup } from '../rules/sources';
 import { usePrefs } from '../data/prefs';
@@ -36,6 +36,7 @@ import {
   removeChosenIds,
 } from '../rules/build';
 import { cantripsKnown } from '../rules/spellcasting';
+import { spellsMatching } from '../rules/spellChoice';
 import { abpSkillBudget } from '../rules/abp';
 import { activeCasterArchetype } from '../rules/casterArchetypes';
 import { snareAllowance, snareFormulaOptions, isBaseSnareSlot, SNARE_FORMULA_KEY } from '../rules/snareFormulas';
@@ -2994,6 +2995,15 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
               descRefs: d.descRefs,
             }))}
           />
+          {/* A deity can ask a question of its own — Lurlup's "Sanctification: can be Unholy". Deities
+              were the one chosen record with no pick surface at all, so the answer had nowhere to go. */}
+          <EffectChoicesPicker
+            recordId={build.deityId ?? ''}
+            choices={build.deityId ? content.deities[build.deityId]?.effectChoices : undefined}
+            build={build}
+            actions={actions}
+            content={content}
+          />
           {(() => {
             const d = build.deityId ? content.deities[build.deityId] : undefined;
             return d?.description ? <ChoiceDetails name={d.name} flavor={d.description} descRefs={d.descRefs} /> : null;
@@ -3589,6 +3599,69 @@ export function FullStats({ build, content, character }: { build: BuildState; co
           onClose={() => setStatRef(null)}
         />
       )}
+    </>
+  );
+}
+
+/**
+ * The "choose one of N" picker for a record's `effectChoices`, wherever that record lives.
+ *
+ * THE BUG THIS FIXES. effectChoices were rendered for feats (Builder.tsx) and heritages only, but
+ * build.ts RESOLVES them for class features, class-feature options and inventory items too. So 50
+ * records — 15 class features, 33 items, 2 backgrounds — carried a choice the engine was waiting on
+ * and no screen ever asked. The pick was authored, resolved and unanswerable.
+ *
+ * One component for every surface, so a new one can never drift from the others again. The pick is
+ * stored under `${recordId}:${choiceId}`, which is exactly the key resolvePick() reads.
+ */
+export function EffectChoicesPicker({
+  recordId,
+  choices,
+  build,
+  actions,
+  content,
+}: {
+  recordId: string;
+  choices: EffectChoice[] | undefined;
+  build: BuildState;
+  actions: BuilderActions;
+  content: ContentDatabase;
+}) {
+  if (!choices?.length) return null;
+  return (
+    <>
+      {choices.map((ch) => {
+        const ecKey = `${recordId}:${ch.id}`;
+        const set = (v: string) => actions.patch({ effectChoices: { ...(build.effectChoices ?? {}), [ecKey]: v } });
+        // An OPEN pick ("any 1st-rank arcane spell") gets a searchable list; a fixed set gets the
+        // dropdown. Hidden until its unlock level, same as the feat path.
+        if (ch.spellFilter) {
+          if (build.level < (ch.spellFilter.minLevel ?? 1)) return null;
+          const opts = spellsMatching(ch.spellFilter, content, build.hideLegacy).map((s) => ({
+            id: s.id,
+            name: s.name,
+            note: (s.rank ?? 0) === 0 ? 'Cantrip' : `${s.rank} rank`,
+          }));
+          return (
+            <SubCard key={`ec-${ecKey}`} icon="ti-sparkles" label={ch.prompt}>
+              <SearchSelect bare label="Spell" placeholder="Search spells…" value={build.effectChoices?.[ecKey] ?? null} onChange={set} options={opts} />
+            </SubCard>
+          );
+        }
+        return (
+          <SubCard key={`ec-${ecKey}`} icon="ti-adjustments" label={ch.prompt}>
+            <PopupSelect
+              title={ch.prompt}
+              placeholder={`${ch.prompt}…`}
+              value={build.effectChoices?.[ecKey] ?? ''}
+              onChange={set}
+              // An option may carry a note instead of a grant (a kineticist gate junction: only
+              // Elemental Resistance moves a stat), so the note is shown as the description.
+              options={(ch.options ?? []).map((o) => ({ value: o.value, label: o.label, description: o.note }))}
+            />
+          </SubCard>
+        );
+      })}
     </>
   );
 }

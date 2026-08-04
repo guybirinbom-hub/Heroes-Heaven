@@ -575,6 +575,9 @@ export interface Heritage extends ContentBase, DefenseGrants {
 }
 
 export interface Background extends ContentBase {
+  /** A "choose one of N" this record asks at build time; resolved by buildCharacter and rendered
+   *  by the shared EffectChoicesPicker. */
+  effectChoices?: EffectChoice[];
   abilityBoosts: AbilityBoost[];
   /** Innate spells the background grants outright — Blessed gives Guidance, Astrological Augur gives
    *  Augury. buildCharacter reads these alongside the heritage's; before that they were inert. */
@@ -1139,6 +1142,9 @@ export type Item =
   | TreasureItem;
 
 export interface Deity extends ContentBase {
+  /** A "choose one of N" this record asks at build time; resolved by buildCharacter and rendered
+   *  by the shared EffectChoicesPicker. */
+  effectChoices?: EffectChoice[];
   edicts?: string[];
   anathema?: string[];
   divineFont?: ('heal' | 'harm')[];
@@ -1769,6 +1775,14 @@ export interface InventoryItem {
    * and it expires, so it must be distinguishable from a permanent rune the player etched. Cleared
    * by rest(), and shown on the item card so a temporary bonus never looks permanent.
    */
+  /**
+   * Answers to THIS item instance's "choose one of N" (Item.effectChoices), keyed by choice id.
+   *
+   * On the instance rather than the character so two copies of the same item can differ, and because
+   * equipment is bought on the sheet: buildCharacter only ever resolves item choices for gear in
+   * build.inventory, so an item acquired in play had a question nobody could answer.
+   */
+  effectChoices?: Record<string, string>;
   battleforged?: boolean;
   /** Set by a GM who planted this cursed item WITHOUT telling the player. Its  twin
    *  is what the player sees; the GM view shows the true item and the true numbers. */

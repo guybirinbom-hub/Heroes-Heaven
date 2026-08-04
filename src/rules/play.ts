@@ -12,7 +12,7 @@
  * changes — a Con boost, a level-up — the character stays as hurt as they were,
  * rather than the current value silently desyncing from the new max.
  */
-import type { AbilityId, ActiveCondition, Character, CharacterDetails, Coins, CompanionConfig, ContentDatabase, InventoryItem, ItemImbuement, ItemMonsterPart, ModeDef, NotePage, PinnedDesc, PreparedSlot } from './types';
+import type { AbilityId, ActiveCondition, Character, CharacterDetails, Coins, CompanionConfig, ContentDatabase, InventoryItem, ItemImbuement, ItemPassiveEffects, ItemMonsterPart, ModeDef, NotePage, PinnedDesc, PreparedSlot } from './types';
 import { deriveMaxHp, deriveBulk } from './derive';
 import { monsterPartApex } from './monsterParts';
 import { dyingDeathThreshold } from './conditions';
@@ -78,6 +78,8 @@ export interface PlayState {
    * a rest is the coarsest boundary the sheet models.
    */
   featUses?: Record<string, number>;
+  /* An item's "choose one of N" answer lives on the INVENTORY INSTANCE (InventoryItem.effectChoices),
+   * not here, so two copies of the same item can differ. */
   /** Notes pages; when set, overrides the build's notes (so the sheet can edit them). */
   notes?: NotePage[];
   /** Conditions on each companion, keyed by companion id. */
@@ -284,6 +286,10 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
     speedOverride: play.tempSpeed,
     conditions,
     inventory: play.inventory ?? ch.inventory,
+    // An item bought in PLAY can carry a "choose one of N" whose answer lives in play state, so the
+    // picked option's item bonuses are merged here. buildCharacter already does the same for items in
+    // build.inventory; without this half, a question asked on the sheet could never change anything.
+    resolvedItemPassives: resolvePlayItemPassives(ch, play, content),
     currency: play.currency ?? ch.currency,
     pinned: play.pinned ?? ch.pinned ?? [],
     pinnedDescs: play.pinnedDescs ?? ch.pinnedDescs ?? [],
@@ -1174,4 +1180,41 @@ export function rest(
       return !def?.fromItemId || def.survivesRest;
     }),
   };
+}
+
+/**
+ * Item bonuses from a play-bought item's answered "choose one of N", merged over whatever the build
+ * already resolved.
+ *
+ * buildCharacter resolves effectChoices for items in `build.inventory`, but equipment is bought on
+ * the SHEET, so anything acquired in play was never seen by that pass. This closes the other half.
+ * Only the picked option's `passive` block is applied — the same subset buildCharacter uses for
+ * items — so the two paths cannot disagree about what an item choice may grant.
+ */
+function resolvePlayItemPassives(
+  ch: Character,
+  play: PlayState,
+  content: ContentDatabase,
+): Record<string, ItemPassiveEffects> | undefined {
+  const inv = play.inventory ?? ch.inventory ?? [];
+  if (!inv.length) return ch.resolvedItemPassives;
+  let out: Record<string, ItemPassiveEffects> | undefined;
+  for (const it of inv) {
+    const choices = content.items[it.itemId]?.effectChoices;
+    if (!choices?.length) continue;
+    for (const ch2 of choices) {
+      const picked = it.effectChoices?.[ch2.id];
+      if (!picked) continue;
+      const grant = (ch2.options ?? []).find((o) => o.value === picked)?.grant;
+      if (!grant?.passive) continue;
+      out ??= { ...(ch.resolvedItemPassives ?? {}) };
+      const cur = (out[it.itemId] ??= {});
+      for (const [k, v] of Object.entries(grant.passive)) {
+        if (k === 'skills') cur.skills = { ...cur.skills, ...(v as Record<string, number>) };
+        else if (Array.isArray(v)) (cur as Record<string, unknown[]>)[k] = [...((cur as Record<string, unknown[]>)[k] ?? []), ...v];
+        else (cur as Record<string, unknown>)[k] = v;
+      }
+    }
+  }
+  return out ?? ch.resolvedItemPassives;
 }
