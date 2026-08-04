@@ -1,0 +1,194 @@
+[
+ {
+  "id": "ring-of-wizardry-type-i",
+  "name": "Ring of Wizardry (Type I)",
+  "collection": "items",
+  "lane": "resource",
+  "priorReason": "The record carries spellSlotBonus {\"byRank\":{\"1\":2}}, but SpellSlotBonus (src/rules/types.ts:358) only defines perRank/exceptHighest/entryId and build.ts:2548 never reads byRank — so it falls through to perRank=1 with no exceptHighest and adds +1 slot at EVERY rank instead of two 1st-rank slots. The byRank lane needs implementing (and it should be capped to arcane casters).",
+  "text": "This ring is made from the purest platinum and is covered in esoteric arcane symbols. It does nothing unless you have a spellcasting class feature with the arcane tradition. While wearing the ring of wizardry, you gain a +1 item bonus to Arcana checks and have two additional 1st-rank arcane spell slots each day. You prepare spells in these slots or cast from them spontaneously, just as you normally cast your spells. If you take off the ring for any reason, you lose the additional spell slots. You can't gain spell slots from more than one ring of wizardry per day, nor can a single ring of wizardry grant spell slots more than once per day. If you can cast arcane spells in a variety of different ways (such as if you are a draconic bloodline sorcerer with the wizard multiclass archetype), you can divide the spell slots as you wish among your various sources of arcane spells. **Craft Requirements** You have a spellcasting class feature with the arcane tradition."
+ },
+ {
+  "id": "ring-of-wizardry-type-ii",
+  "name": "Ring of Wizardry (Type II)",
+  "collection": "items",
+  "lane": "resource",
+  "priorReason": "spellSlotBonus {\"byRank\":{\"1\":1,\"2\":2}} is ignored by the engine (no byRank branch in build.ts:2548); the ring instead grants +1 slot at every rank the character can cast.",
+  "text": "This ring is made from the purest platinum and is covered in esoteric arcane symbols. It does nothing unless you have a spellcasting class feature with the arcane tradition. While wearing the ring of wizardry, you gain a +2 item bonus to Arcana checks and have two additional 2nd-rank and one additional 1st-rank arcane spell slot each day. You prepare spells in these slots or cast from them spontaneously, just as you normally cast your spells. If you take off the ring for any reason, you lose the additional spell slots. You can't gain spell slots from more than one ring of wizardry per day, nor can a single ring of wizardry grant spell slots more than once per day. If you can cast arcane spells in a variety of different ways (such as if you are a draconic bloodline sorcerer with the wizard multiclass archetype), you can divide the spell slots as you wish among your various sources of arcane spells. **Craft Requirements** You have a spellcasting class feature with the arcane tradition."
+ },
+ {
+  "id": "ring-of-wizardry-type-iii",
+  "name": "Ring of Wizardry (Type III)",
+  "collection": "items",
+  "lane": "resource",
+  "priorReason": "Its spellSlotBonus byRank map (two 3rd-rank + one 2nd-rank) is never read; SpellSlotBonus has no per-rank lane, so the applied result is +1 slot at every rank.",
+  "text": "This ring is made from the purest platinum and is covered in esoteric arcane symbols. It does nothing unless you have a spellcasting class feature with the arcane tradition. While wearing the ring of wizardry, you gain a +2 item bonus to Arcana checks and have two additional 3rd-rank and one additional 2nd-rank arcane spell slot each day. You prepare spells in these slots or cast from them spontaneously, just as you normally cast your spells. If you take off the ring for any reason, you lose the additional spell slots. You can't gain spell slots from more than one ring of wizardry per day, nor can a single ring of wizardry grant spell slots more than once per day. If you can cast arcane spells in a variety of different ways (such as if you are a draconic bloodline sorcerer with the wizard multiclass archetype), you can divide the spell slots as you wish among your various sources of arcane spells. **Craft Requirements** You have a spellcasting class feature with the arcane tradition."
+ },
+ {
+  "id": "ring-of-wizardry-type-iv",
+  "name": "Ring of Wizardry (Type IV)",
+  "collection": "items",
+  "lane": "resource",
+  "priorReason": "Its spellSlotBonus byRank map (two 4th-rank + one 3rd-rank) is never read; SpellSlotBonus has no per-rank lane, so the applied result is +1 slot at every rank.",
+  "text": "This ring is made from the purest platinum and is covered in esoteric arcane symbols. It does nothing unless you have a spellcasting class feature with the arcane tradition. While wearing the ring of wizardry, you gain a +2 item bonus to Arcana checks and have two additional 4th-rank and one additional 3rd-rank arcane spell slot each day. You prepare spells in these slots or cast from them spontaneously, just as you normally cast your spells. If you take off the ring for any reason, you lose the additional spell slots. You can't gain spell slots from more than one ring of wizardry per day, nor can a single ring of wizardry grant spell slots more than once per day. If you can cast arcane spells in a variety of different ways (such as if you are a draconic bloodline sorcerer with the wizard multiclass archetype), you can divide the spell slots as you wish among your various sources of arcane spells. **Craft Requirements** You have a spellcasting class feature with the arcane tradition."
+ },
+ {
+  "id": "shattered-sacrament",
+  "name": "Shattered Sacrament",
+  "collection": "feats",
+  "lane": "spellGrant",
+  "priorReason": "Grants a halcyon cantrip and a 1st-rank halcyon spell (extra spells KNOWN in the halcyon repertoire, which casterArchetypes.ts models as repertoire:true) and lets halcyon spells be cast as divine. No legal field adds repertoire spells to an archetype casting entry.",
+  "text": "When Vigil fell to Tar-Baphon's Radiant Fire, that lost innocence brought you a deeper understanding of what faith means in the context of your own magic. When you cast a halcyon spell, you can choose for it to be a divine spell instead of arcane or primal. You gain a halcyon cantrip and a 1st-rank halcyon spell."
+ },
+ {
+  "id": "sin-reservoir",
+  "name": "Sin Reservoir",
+  "collection": "feats",
+  "lane": "spellGrant",
+  "priorReason": "Grants one extra prepared slot per day at a rank the player chooses (up to two below the highest wizard rank). SpellSlotBonus only expresses per-rank grants (perRank/exceptHighest), so it cannot express one choose-the-rank slot, and nothing else delivers it.",
+  "text": "During your daily preparations, you can indulge in your associated sin or meditate on its values (and risks). When you do, you gain one additional spell slot of any spell level up to two levels below the highest-level wizard spell you can cast. You can prepare only one of your curriculum spells in this slot."
+ },
+ {
+  "id": "snowcaster",
+  "name": "Snowcaster",
+  "collection": "feats",
+  "lane": "spellGrant",
+  "priorReason": "\"You gain the basic spellcasting benefits\", but the Gelid Shard archetype has no entry in src/rules/casterArchetypes.ts, so its cantrips, spell slots and trained spell attack/DC never appear (expert-snowcasting and master-snowcasting are dead for the same reason).",
+  "text": "Your magical power grows as the shard's icy influence spreads ever deeper into your being. You gain the basic spellcasting benefits. Each time you gain a spell slot of a new level from this archetype, add a spell of the appropriate spell rank (including heightened versions of lower-rank spells) to your repertoire, either a common spell of the arcane tradition that has the cold trait or another cold spell you have access to."
+ },
+ {
+  "id": "staff-nexus",
+  "name": "Staff Nexus",
+  "collection": "classFeatures",
+  "lane": "spellGrant",
+  "priorReason": "The thesis gives the wizard a makeshift staff holding one cantrip and one 1st-rank spell with a daily charge pool fed by expending spells (two at 8th, three at 16th). Nothing grants the item or the pool, and no data field grants an inventory item.",
+  "text": "Your thesis maintains that early and intense adoption of staves from the first days of study can create a symbiotic bond between spellcaster and staff, allowing them to create remarkable magic together. You've formed such a connection with a makeshift staff you built, and you are ready to infuse any staff you encounter with greater power. You begin play with a makeshift staff of your own invention. It has the magical trait and contains one cantrip and one 1st-rank spell, both from your spellbook. During your daily preparations, you can expend one spell to grant the staff a number of charges equal to that spell's rank, which dissipate after 24 hours. While you are holding the staff, you can Cast the Spells it contains. The 1st-rank spell consumes 1 charge but the cantrip doesn't require charges. If your staff is destroyed, you can create a new one over the course of 1 hour, though it has no charges. During your daily preparations, you can merge your makeshift staff with another staff in your possession, adding the two chosen spells to it. This staff gains charges from preparing it and from expending spells. At 8th level, you can expend two spells instead of one when preparing any staff, adding additional charges equal to the combined ranks of the expended spells. At 16th level, you can expend up to a total of three spells to add charges to the staff, adding additional charges eq"
+ },
+ {
+  "id": "true-channel-spell",
+  "name": "True Channel Spell",
+  "collection": "feats",
+  "lane": "spellGrant",
+  "priorReason": "Grants a single 10th-rank animist prepared slot, but animistPreparedSlots() caps at rank 9 and the spellSlotBonus the builder reads has no single-rank form, so the slot never appears.",
+  "text": "You are a true conduit for spiritual power, able to unleash the greatest spells. You gain a single 10th-rank spell slot and can prepare a spell in that slot using animist spellcasting. You can't use 10th-rank slots with abilities that give you more spell slots or that let you cast spells without expending spell slots."
+ },
+ {
+  "id": "add-element",
+  "name": "Add Element",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "The choice records the second kinetic element, but \"You gain an impulse feat for that element\" is never offered. FEAT_PICK_GRANTS cannot express \"an impulse feat carrying the element I just chose\" (no dynamic trait sourced from a sibling choice, and maxLevel has no half-character-level form).",
+  "text": "Choose a second kinetic element to add to the one you already have. You gain an impulse feat for that element. For the purpose of meeting its prerequisites, your kineticist level is equal to half your level. If you gain more kineticist feats, you can select hybrid impulses that have both your elements, as normal for a kineticist."
+ },
+ {
+  "id": "advanced-arcana",
+  "name": "Advanced Arcana",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "Grants one wizard feat, but unlike its basic-tier twin basic-arcana (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null).",
+  "text": "You gain one wizard feat. For the purpose of meeting its prerequisites, your wizard level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another wizard feat."
+ },
+ {
+  "id": "advanced-blood-potency",
+  "name": "Advanced Blood Potency",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "Grants one sorcerer feat, but unlike its basic-tier twin basic-blood-potency (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null).",
+  "text": "You gain one sorcerer feat. For the purpose of prerequisites, your sorcerer level is half your character level. --- **Special** You can select this feat more than once. Each time you do, you gain another sorcerer feat."
+ },
+ {
+  "id": "advanced-breakthrough",
+  "name": "Advanced Breakthrough",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "Grants one inventor feat, but unlike its basic-tier twin basic-breakthrough (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null).",
+  "text": "You gain one inventor feat. For the purpose of meeting its prerequisites, your inventor level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another inventor feat."
+ },
+ {
+  "id": "advanced-concoction",
+  "name": "Advanced Concoction",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "Grants one alchemist feat, but unlike its basic-tier twin basic-concoction (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null).",
+  "text": "You gain one alchemist feat. For the purpose of meeting its prerequisites, your alchemist level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another alchemist feat."
+ },
+ {
+  "id": "advanced-deduction",
+  "name": "Advanced Deduction",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "Grants one investigator feat, but unlike its basic-tier twin basic-deduction (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null).",
+  "text": "You gain one investigator feat. For the purpose of meeting its prerequisites, your investigator level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another investigator feat."
+ },
+ {
+  "id": "advanced-defender",
+  "name": "Advanced Defender",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "Grants one guardian feat, but unlike its basic-tier twin basic-defender (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null).",
+  "text": "You gain one guardian feat. For the purpose of meeting its prerequisites, your guardian level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another guardian feat."
+ },
+ {
+  "id": "advanced-devotion",
+  "name": "Advanced Devotion",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "Grants one champion feat, but unlike its basic-tier twin basic-devotion (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null).",
+  "text": "You gain one champion feat. For the purpose of meeting its prerequisites, your champion level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another champion feat."
+ },
+ {
+  "id": "advanced-dogma",
+  "name": "Advanced Dogma",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "Grants one cleric feat, but unlike its basic-tier twin basic-dogma (which IS in src/rules/featPickGrants.ts) it has no FEAT_PICK_GRANTS entry and no data field, so no picker is ever shown. FeatPickSpec also has no half-character-level maxLevel, and the feat is repeatable (maxTakable:null).",
+  "text": "You gain one cleric feat. For the purpose of meeting its prerequisites, your cleric level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another cleric feat."
+ },
+ {
+  "id": "advanced-element-control",
+  "name": "Advanced Element Control",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "\"You gain one kineticist feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['kineticist']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+  "text": "You gain one kineticist feat. For the purpose of meeting its prerequisites, your kineticist level is equal to half your level. Your options include impulse feats for your kinetic element, as normal for a kineticist. --- **Special** You can select this feat more than once. Each time you select it, you gain another kineticist feat."
+ },
+ {
+  "id": "advanced-field-training",
+  "name": "Advanced Field Training",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "\"You gain one commander feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['commander']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+  "text": "You gain a commander feat. For the purpose of meeting its prerequisites, your commander level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another commander feat."
+ },
+ {
+  "id": "advanced-flair",
+  "name": "Advanced Flair",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "\"You gain one swashbuckler feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['swashbuckler']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+  "text": "You gain one swashbuckler feat. For the purpose of meeting its prerequisites, your swashbuckler level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another swashbuckler feat."
+ },
+ {
+  "id": "advanced-fury",
+  "name": "Advanced Fury",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "\"You gain one barbarian feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['barbarian']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+  "text": "You gain one barbarian feat. For the purpose of meeting its prerequisites, your barbarian level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another barbarian feat."
+ },
+ {
+  "id": "advanced-glory",
+  "name": "Advanced Glory",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "\"You gain one exemplar feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['exemplar']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+  "text": "You gain an exemplar feat. For the purpose of meeting its prerequisites, your exemplar level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another exemplar feat."
+ },
+ {
+  "id": "advanced-hunters-trick",
+  "name": "Advanced Hunter's Trick",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "\"You gain one ranger feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['ranger']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+  "text": "You gain one ranger feat. For the purpose of meeting its prerequisites, your ranger level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another ranger feat."
+ }
+]

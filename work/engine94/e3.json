@@ -1,0 +1,178 @@
+[
+ {
+  "id": "elven-weapon-expertise",
+  "name": "Elven Weapon Expertise",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "Same gap as the dwarven feat — grep of src/ finds no 'elven-weapon-expertise' or 'elven-weapon-familiarity' entry in any registry or the backfill, and core.json carries only level/category. Longbows, composite longbows, longswords, rapiers, shortbows and elf weapons never mirror the class's expert-or-better weapon proficiency. Needs a featGrantsAuto weaponFamiliarity entry with mirrorBestCategory:true (registry-only lane).",
+  "text": "Elven Weapon Expertise Source Core Rulebook pg. 41 Prerequisites Elven Weapon Familiarity Your elven affinity blends with your class training, granting you great skill with elven weapons. Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency in longbows, composite longbows, longswords, rapiers, shortbows, composite shortbows, and all elf weapons in which you are trained."
+ },
+ {
+  "id": "evolution-feat",
+  "name": "Evolution Feat",
+  "collection": "classFeatures",
+  "lane": "grantsFeat",
+  "priorReason": "The summoner class lists evolution-feat at level 1, but core.json's summoner featProgression.class is [2,4,...,20] — there is no 1st-level class-feat slot, so a summoner is never offered the evolution feat the class grants at level 1. Needs a level-1 evolution-restricted class feat slot in the summoner's feat progression (a class-level structure, no per-record field).",
+  "text": "Evolution feats are a special type of summoner class feat that allow you to customize your eidolon through your shared link. You gain an evolution feat for your eidolon at 1st level, representing the differences that make it unique from other eidolons of its type. If you retrain this feat, the feat you replace it with must also be an evolution feat."
+ },
+ {
+  "id": "experimental-spellshaping",
+  "name": "Experimental Spellshaping",
+  "collection": "classFeatures",
+  "lane": "grantsFeat",
+  "priorReason": "The wizard thesis has no fields at all. Neither half is delivered: the permanent 1st-level spellshape wizard feat, nor the 4th-level daily-preparations spellshape feat. featPickGrants is keyed by granting FEAT id (build.pickFeatChoices), so this class feature needs the filtered/daily-prep pick lane construct-eidolon uses.",
+  "text": "Your thesis posits that the magical practice of spellshaping can be realized more efficiently by altering variables and parameters as you cast, imitating the wizards of long ago who had to work out their own spells themselves. This allows you efficient access to various spellshape effects. You gain one 1st-level spellshape wizard feat of your choice. Starting at 4th level, during your daily preparations, you can gain a spellshape wizard feat of your choice that has a level requirement of no more than half your level, which you can use until your next daily preparations."
+ },
+ {
+  "id": "fury-instinct",
+  "name": "Fury Instinct",
+  "collection": "classFeatures",
+  "lane": "grantsFeat",
+  "priorReason": "The rage-damage tiers ARE modelled (derive.ts:1100 RAGE_DAMAGE 'fury-instinct': [3,7,13]), but \"You gain a bonus 1st-level barbarian feat\" is delivered by nothing: FEAT_PICK_GRANTS is consulted only for taken FEATS (build.ts:2177) and build.heritageId (2188), never for a class feature or subclass id, and no other bonus-feat lane exists for class features.",
+  "text": "Your rage comes from a deep and purely personal well within you. You use your rage as you choose. **Instinct Ability—Unstoppable Frenzy** Increase the additional damage from Rage from 2 to 3. You gain a bonus 1st-level barbarian feat. **Specialization Ability (7th)** Increase the additional damage from Rage from 3 to 7. If you have greater weapon specialization, instead increase the additional damage from Rage to 13. **Raging Resistance (9th)** You resist physical weapon damage, but not physical damage from other sources (such as unarmed attacks)."
+ },
+ {
+  "id": "haunting-memories",
+  "name": "Haunting Memories",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "Daily preparations grant expert in an untrained skill OR master in a trained one, plus a matching skill feat. Nothing is on the record. skillChoices.conditionalRank can express only ONE base→upgraded pair, so neither branch pair (untrained→expert, trained→master) is representable, and bonusSkillFeat has no rank gate.",
+  "text": "Your soul bears metaphysical impressions of the innumerable other spirits imprisoned with you in the Final Blade from which you escaped, allowing you to draw upon their memories. When you make your daily preparations, you can either gain the expert proficiency rank in one skill in which you're untrained or raise your proficiency rank to master in one skill in which you're trained or better. You also gain one skill feat with a minimum requirement of your new rank in the chosen skill. For the purpose of meeting level prerequisites for this feat, your level is equal to half your level. This proficiency and feat last until you make your daily preparations again. Since the proficiency is temporary, you can't use it as a prerequisite for any permanent character option."
+ },
+ {
+  "id": "kaiju-stalker",
+  "name": "Kaiju Stalker",
+  "collection": "backgrounds",
+  "lane": "grantsFeat",
+  "priorReason": "trainedSkill 'athletics', trainedLore 'kaiju' and the +1 Kaiju Lore star (situationalBonuses.ts:2149) are all wired, but \"gain one Athletics skill feat of your choice\" is not: backgrounds support only grantedFeatId / grantedFeatByChoice (build.ts:333-345), and FEAT_PICK_GRANTS is keyed off taken feats and heritageId only — it is never consulted for a background.",
+  "text": "The lands of Tian Xia can be as dangerous as they are beautiful, and like any land, it calls for hunters. A normal hunter's game varies in size, with the deadliest quarries possessing venomous fangs or a ferocious bite. A monster hunter must be prepared for more supernatural maladies and terrors. As a kaiju stalker, you venture into the Wall of Heaven, Valashmai Jungle, or another land where the bounties are much bigger. A mere scale or feather is your grandest trophy—the survival of your community your ultimate prize. Choose two attribute boosts. One must be to **Strength** or **Dexterity**, and one is a free attribute boost. You're trained in Athletics and gain one Athletics skill feat of your choice, best suited toward the style of hunting you prefer. You're trained in Kaiju Lore. When rolling a Recall Knowledge check using Kaiju Lore and you have sight of one item that belongs to the kaiju you're attempting to Recall Knowledge about, you gain a +1 circumstance bonus to the skill check. The item can range from a scale to slime, to a footprint, or to crafted or harvested goods. --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Trained Skill** Athletics **Lore** Kaiju Lore"
+ },
+ {
+  "id": "order-explorer",
+  "name": "Order Explorer",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "The record's `choice` records WHICH order you explored, but the printed grant — 'you gain a 1st-level feat that lists that order as a prerequisite' — reaches nothing: no FEAT_PICK_GRANTS key, and FeatPickSpec can only filter by category/level/traits, not by a prerequisite string, and the legal set changes with the order just picked. Needs a pick-spec whose pool is derived from another answer.",
+  "text": "You have learned the secrets of another druidic order, passing whatever rites of initiation that order requires and gaining access to its secrets. Choose an order other than your own. You gain a 1st-level feat that lists that order as a prerequisite, and you are now a member of that order for the purpose of meeting feat prerequisites. If you commit acts anathema to your new order, you lose all feats and abilities requiring that order but retain your other druid feats and abilities. You don't gain any of the other benefits of the order you chose. --- **Special** You can take this feat multiple times. Each time you do, you must choose a different order other than your own."
+ },
+ {
+  "id": "potent-nectar",
+  "name": "Potent Nectar",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "The `choice` records splash vs persistent and nothing more. Both branches add damage to the nectar ranged unarmed Strike — but core.feats['caustic-nectar'] has no grantedStrikes either, so the Strike doesn't exist on the sheet and there is no field that attaches a damage rider to another record's granted Strike.",
+  "text": "Your nectar becomes particularly dangerous. Select one of the following benefits when you gain this feat. This choice is permanent and can't be changed. - Your nectar is sticky, and clings to your target. Your nectar unarmed attack deals an additional 1d4 persistent acid damage to the target. This persistent damage isn't multiplied on a critical hit. - Your nectar is shot at a high velocity, and splashes upon contact. Your nectar unarmed attack additionally deals 1d4 acid splash damage. This splash damage isn't multiplied on a critical hit. --- **Special** This feat gains the trait for your ancestry."
+ },
+ {
+  "id": "professional-letter-writer",
+  "name": "Professional Letter Writer",
+  "collection": "backgrounds",
+  "lane": "grantsFeat",
+  "priorReason": "core.backgrounds has abilityBoosts + trainedLore 'scribing' + a `choice` (flag 'skillFeat') that only RECORDS Specialty Crafting vs Multilingual. The feat is never granted: grantedFeatId is unset, grantedFeatByChoice is keyed by trainedSkillChoice (build.ts:336) and this background has no trainedSkillChoice, and FEAT_PICK_GRANTS is resolved for feat and heritage ids only — backgrounds have no feat-pick lane.",
+  "text": "You make a living out of reading and writing letters for people who are eager to keep in touch with their loved ones over long distances. Many of these people are semiliterate and can't afford magical communication, such as sending or dream message spells. You aren't always fluent in the many disparate languages you're asked to record, but with your many books and dictionaries, you get by. Your services are important to the community, despite your craft being a rarity Choose two attribute boosts. One must be to **Intelligence** or **Charisma**, and one is a free attribute boost. You're trained in Scribing Lore. You gain one skill feat of your choice between the Specialty Crafting or Multilingual skill feat. During your daily preparations, you can choose one additional language that you know. You can change this language the next time you make your daily preparations. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Lore** Scribing Lore"
+ },
+ {
+  "id": "sacred-spells",
+  "name": "Sacred Spells",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "The `choice` (flag 'sacredSpellsBenefit') records prepared-swap vs spontaneous-signature, but the feat's primary grant — adding seven named spells to your spell list so they can be prepared or added to a repertoire — reaches nothing. grantedSpells (types.ts:804) exists only on subclass options, not on feats, and no feat field widens a tradition's spell list.",
+  "text": "Add Void Warp, Death Ward, Vitality Lash, Infuse Vitality, Holy Cascade, Magic Stone, and Sunburst to your spell list. These are all necromancy spells for you, even if they normally have a different spell school. You can either prepare these spells or add them to your repertoire just like the spells normally on your tradition's spell list. When you gain this feat, you can retrain existing spells to replace them with ones on this list. In addition, your knowledge of the conduits to the Forge of Creation allows you more flexibility with these spells. Choose one of these two benefits. - If you're a prepared spellcaster, you can spend 10 minutes to replace one of the spells you've prepared with a spell of the same rank from the list of sacred spells. You can do this while Refocusing. - If you're a spontaneous spellcaster with the signature spells class feature, add two of the spells from the list of sacred spells to your repertoire. They are signature spells for you, in addition to your normal signature spells. When you gain the ability to cast a new rank of spells, you can choose to switch the spells from this feat to any other spells from the list."
+ },
+ {
+  "id": "shadow-sneak-attack",
+  "name": "Shadow Sneak Attack",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "Sneak attack is computed in strikePrecisionRiders (derive.ts:1073) purely from ownedFeatureIds having the rogue class feature 'sneak-attack', with dice scaling off character level. This feat grants a FLAT 1d6 that never scales; nothing adds it (grep: 'shadow-sneak-attack' appears nowhere in src/), so an archetype shadowdancer shows no precision damage at all. No data field can express a fixed-die sneak attack.",
+  "text": "You gain the Sneak Attack class feature, except you deal 1d6 precision damage regardless of your level. Sneak attack from multiple sources isn't cumulative. If you have sneak attack from more than one source, use only the highest number of dice when you sneak attack rather than adding the amounts together."
+ },
+ {
+  "id": "skilled-partner",
+  "name": "Skilled Partner",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "No fields, no registry key. It gives the eidolon three skill feats (1st-level, ≤2nd-level, and a ≤7th-level one at 7th). CompanionMod (companionGrants.ts) can grant senses, speeds, HP, ability boosts, maturity and skillGrants — but has no feat lane at all, so an eidolon can never hold a skill feat.",
+  "text": "Your eidolon gains a 1st-level skill feat and a 2nd-level or lower skill feat. At 7th level, your eidolon gains an additional skill feat, of 7th level or lower."
+ },
+ {
+  "id": "sneak-attacker",
+  "name": "Sneak Attacker",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "Identical to Shadow Sneak Attack: derive.ts:1073 only fires for owners of the 'sneak-attack' class feature and scales dice off level, whereas this grants 1d4 rising to 1d6 at 6th and never further. 'sneak-attacker' appears nowhere in src/, so an archetype rogue's Strikes show no precision rider.",
+  "text": "You gain the Sneak Attack class feature, except it deals 1d4 damage, increasing to 1d6 at 6th level. You don't increase the number of dice as you gain levels."
+ },
+ {
+  "id": "sponsored-by-a-stranger",
+  "name": "Sponsored by a Stranger",
+  "collection": "backgrounds",
+  "lane": "grantsFeat",
+  "priorReason": "The `choice` (flag 'bgFeat') only RECORDS Dubious Knowledge vs Quick Identification; no grantedFeatId is set. grantedFeatByChoice can't express it either — build.ts:336 indexes it by the trainedSkillChoice answer, and here the feat pick is independent of the Occultism/Nature choice. Backgrounds have no feat-PICK lane (FEAT_PICK_GRANTS is resolved for feat and heritage ids only).",
+  "text": "You remember the day the stranger approached you to make several peculiar inquiries. You don't remember much about them, other than a large head and a frail body. At first, the stranger's questions seemed odd: how might forgotten history nevertheless shape the present, whether an insect hive mind could be manipulated at a distance, and so on. You don't remember all of the questions, and you don't know why you could refuse to answer some but felt compelled to answer others. The stranger nevertheless seemed pleased with your responses and insisted you would find study at the Magaambya enlightening. You never saw them again, but you're now here at the Magaambya, with more questions than answers about your future. Choose two attribute boosts. One must be to **Intelligence** or **Wisdom**, and one is a free attribute boost. You're trained in your choice of the Occultism or Nature skill. You gain your choice of the Dubious Knowledge or Quick Identification skill feat. You're also trained in Insect Lore. Your recommended primary branch is the Rain-Scribes. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Lore** Insect Lore"
+ },
+ {
+  "id": "stylish-tricks",
+  "name": "Stylish Tricks",
+  "collection": "classFeatures",
+  "lane": "grantsFeat",
+  "priorReason": "Half-delivered. The extra skill FEATS are in the class table — core.classes.swashbuckler.featProgression.skill includes the odd levels 3, 7 and 15. The extra skill INCREASES are not: skillIncreaseLevels is [3,5,7,…,19] (the standard set) and build.skillIncreases is keyed by LEVEL (build.ts:1355-1362), one increase per level, so a second increase at 3/7/15 cannot be represented — the swashbuckler is short three proficiency steps.",
+  "text": "At 3rd level, 7th level, and 15th level, you gain an additional skill increase you can apply only to Acrobatics or the skill from your swashbuckler's style. You also gain an additional skill feat at these levels. This feat must be for Acrobatics or the trained skill from your swashbuckler's style."
+ },
+ {
+  "id": "ultimate-flexibility",
+  "name": "Ultimate Flexibility",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "Combat/Improved Flexibility is hardcoded in build.ts:3806 — exactly two 'bonus' slots, at levels 9 and 15, with featSlots.ts:78 capping each at a fighter feat of level ≤ slotLevel-1. 'ultimate-flexibility' appears nowhere in src/, so the third feat (up to 18th level) is never offered and the second slot's ceiling never rises to 14.",
+  "text": "Your experience keeps you on your toes, helping you adopt complex strategies on the fly and face the most dangerous challenges. When you gain a fighter feat using combat flexibility, you gain three fighter feats instead of two. While the first feat must still be 8th level or lower, the second feat can be up to 14th level, and the third feat can be up to 18th level. You can use the first feat to meet the prerequisites of the second or third feats and the second feat to meet the prerequisites of the third feat. You must meet all three feats' other prerequisites normally. In addition, you can adapt to the battlefield's challenges by spending 1 hour to train. If you do, you can reselect the feats chosen with combat flexibility as if you had made your daily preparations. You can't trade out limited-use abilities that you've already used, such as Determination."
+ },
+ {
+  "id": "unconventional-expertise",
+  "name": "Unconventional Expertise",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "Nothing keys 'unconventional-expertise' (grep: zero hits in src/ and in effect-backfill.json), so the expert-and-better mirror never happens. It also can't be authored as a static weaponFamiliarity list because the weapon comes from Unconventional Weaponry — whose own backfilled `choice` is marked inert ('the treat-as-simple proficiency is not applied to your sheet'), so the pick isn't even readable by a proficiency lane yet.",
+  "text": "You've continued to advance your powers using your unconventional weapon. Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency in the weapon you chose for Unconventional Weaponry."
+ },
+ {
+  "id": "verduran-city-folk",
+  "name": "Verduran City Folk",
+  "collection": "backgrounds",
+  "lane": "grantsFeat",
+  "priorReason": "The background grants a skill feat (a choice of two; the first name was lost in the AoN export, descRefs preserves Streetwise) and the record has abilityBoosts/trainedSkill/trainedLore but no feat grant at all. grantedFeatId takes only one id and grantedFeatByChoice keys off a skill pick that this background doesn't offer, and EffectGrant has no feat lane — a two-way background feat choice has no lane.",
+  "text": "You hail from one of the few large settlements in or around the Verduran Forest, such as Bellis or Wispil. It might be that you're part of these towns' timber operations or supporting industries, such as transporting supplies, overseeing operations, or serving as a remote bureaucrat who reports to a distant capital and enforces the Treaty of the Wildwood. Whatever the case, you're part of a scattered constellation of settlements that share cultural touchstones, including fey-inspired games like Prismati. Choose two attribute boosts. One must be to **Dexterity** or **Intelligence**, and one is a free attribute boost. You're trained in the Society skill and the Games Lore skill. You gain either or Streetwise as a skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Society **Lore** Games Lore"
+ },
+ {
+  "id": "enhanced-psychopomp-familiar",
+  "name": "Enhanced Psychopomp Familiar",
+  "collection": "feats",
+  "lane": "resource",
+  "priorReason": "Raises the familiar's daily ability budget from 2 to 4 (with two locked to Psychopomp Familiar's list plus the Augury master ability) — a genuine 'let the player pick what the rules give them' gap. companionGrants.ts keys 'psychopomp-familiar' (abilityBudget 3) but has no entry for the enhanced feat; a budget upgrade lives in that registry, not in a record field.",
+  "text": "Your psychopomp's continued service in Pharasma's name brings it favor from the goddess. It might change appearance to look like a different, more powerful kind of psychopomp. You can select four familiar or master abilities each day, instead of two, but two must be from the Psychopomp Familiar feat or the following ability. - **Augury** Your familiar can glimpse the strands of fate to give you a cryptic clue regarding your future. Your familiar can cast Augury once per day using your magical tradition and spell DC. You must be at least 8th level to select this ability."
+ },
+ {
+  "id": "inner-fire-monk",
+  "name": "Inner Fire (Monk)",
+  "collection": "feats",
+  "lane": "resource",
+  "priorReason": "Grants cold and fire resistance equal to half your level (and a touch-damage rider) WHILE in Stoked Flame Stance. The feat has no fields; putting resistances on the feat would make them permanent, and core.stances['stoked-flame-stance'] has no way to gate its resistances on owning this feat (whileActive only supports rage/panache/hunt-prey/unleash-psyche).",
+  "text": "While you're in Stoked Flame Stance, you have cold and fire resistance equal to half your level, and any creature that hits you with an unarmed attack, tries to Grab or Grapple you, or otherwise touches you takes fire damage equal to your Wisdom modifier (minimum 1). A creature can take this damage no more than once per turn."
+ },
+ {
+  "id": "inner-fire-som",
+  "name": "Inner Fire (SoM)",
+  "collection": "feats",
+  "lane": "resource",
+  "priorReason": "Legacy Secrets of Magic printing of the same feat, equally unwired: half-level cold and fire resistance conditional on Stoked Flame Stance, with no stance-gated resistance lane (whileActive covers only rage/panache/hunt-prey/unleash-psyche).",
+  "text": "Inner Fire (SoM) Source Secrets of Magic pg. 202 Prerequisites Stoked Flame Stance While you're in Stoked Flame Stance, you have cold and fire resistance equal to half your level, and any creature that hits you with an unarmed attack, tries to Grab or Grapple you, or otherwise touches you takes fire damage equal to your Wisdom modifier (minimum 1). A creature can take this damage no more than once per turn."
+ },
+ {
+  "id": "primal-howl",
+  "name": "Primal Howl",
+  "collection": "feats",
+  "lane": "resource",
+  "priorReason": "The animal companion gains an ADDITIONAL advanced maneuver, but animalCompanions records carry a single `maneuver` string and there is no lane (no companionGrants shape, no companionAdvanced entry) for adding one — so the companion sheet never shows it.",
+  "text": "Your companion can let out a howl laced with your primal magic. It gains the Primal Howl advanced maneuver, in addition to any advanced maneuvers it already knows."
+ }
+]

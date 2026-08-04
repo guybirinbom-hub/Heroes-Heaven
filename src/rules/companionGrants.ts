@@ -42,6 +42,7 @@ export interface CompanionGrant {
 // undead HORDE, not one persistent companion) and `moray-eel-mount` (a Bonded-Animal minion, weaker
 // than a companion). `abilityBudget` is a display hint (the picker isn't hard-capped).
 export const FEAT_COMPANION_GRANTS: Record<string, CompanionGrant> = {
+  "enhanced-psychopomp-familiar": {"kind":"familiar","label":"Enhanced Psychopomp Familiar","abilityBudget":4,"lockedAbilities":["speech"],"supersedes":["psychopomp-familiar"],"note":"Choose 4 familiar or master abilities each day. It always has Speech. Two of the four must come from the Psychopomp Familiar list (Soul Sight, Spirit Touch) or Augury (8th level or higher)."},
   'additional-companion': { kind: 'animal', label: 'Additional Companion', note: 'Grants an animal companion — choose its type and advance it in the Edit tab.' },
   'alchemical-familiar': { kind: 'familiar', label: 'Alchemical Familiar', abilityBudget: 2, lockedAbilities: ['construct', 'tough'], note: 'Grants a familiar you configure here. Choose 2 familiar abilities. It always has Construct (a construct-trait familiar; requires and includes Tough).' },
   'animal-accomplice': { kind: 'familiar', label: 'Animal Accomplice', abilityBudget: 2, note: 'Grants a familiar you configure here. Choose 2 familiar abilities.' },

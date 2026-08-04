@@ -1,0 +1,194 @@
+[
+ {
+  "id": "advanced-red-mantis-magic",
+  "name": "Advanced Red Mantis Magic",
+  "collection": "feats",
+  "lane": "spellGrant",
+  "priorReason": "Grants a 2nd/3rd/4th-rank Red Mantis spell slot at levels 6/8/10 plus spellbook additions. The Red Mantis archetype is absent from CASTER_ARCHETYPES (src/rules/casterArchetypes.ts) and no spellSlotBonus shape can express a level-gated per-rank unlock, so no slot ever appears.",
+  "text": "Advanced Red Mantis Magic Source World Guide pg. 71 Archetype Red Mantis Assassin Prerequisites Basic Red Mantis Magic Your Red Mantis magical training has improved. Add two 2nd-level spells to your Red Mantis assassin spellbook. You gain a 2nd-level spell slot that you can use to prepare a spell from your Red Mantis assassin spellbook. At 8th level, add two 3rd-level spells to your Red Mantis assassin spellbook. You gain a 3rd-level spell slot that you can use to prepare a spell from your Red Mantis assassin spellbook. At 10th level, add two 4th-level spells to your Red Mantis assassin spellbook. You gain a 4th-level spell slot that you can use to prepare a spell from your Red Mantis assassin spellbook. Advanced Red Mantis Magic leads to... Vernai Training"
+ },
+ {
+  "id": "advanced-school-spell",
+  "name": "Advanced School Spell",
+  "collection": "feats",
+  "lane": "spellGrant",
+  "priorReason": "focusPoolBonus:1 only. The wizard arcane-school subOptions in core.json already carry advancedFocusSpell (e.g. red-mantis-magic-school -> shroud-of-the-mantis), but build.ts ADV_SPELL only maps advanced/greater-bloodline and advanced/greater-revelation, so the wizard never receives the spell. One-line map addition.",
+  "text": "You gain access to the advanced teachings of your arcane institution, learning a powerful new school spell. You gain the advanced school spell for your arcane school."
+ },
+ {
+  "id": "archwizards-might",
+  "name": "Archwizard's Might",
+  "collection": "feats",
+  "lane": "spellGrant",
+  "priorReason": "Grants a SECOND 10th-rank slot. spellcasting.ts hardcodes slots[10]=1 at level 19+, and spellSlotBonus has no rank targeting ({perRank,exceptHighest,entryId}), so this level-20 feat currently does nothing.",
+  "text": "You have mastered the greatest secrets of arcane magic. You gain an additional 10th-rank spell slot."
+ },
+ {
+  "id": "basic-cathartic-spellcasting",
+  "name": "Basic Cathartic Spellcasting",
+  "collection": "feats",
+  "lane": "spellGrant",
+  "priorReason": "cathartic-mage-dedication is NOT in CASTER_ARCHETYPES, so this feat unlocks no spell slots at all - the dedication only grants a cantrip via spellFilter. The archetype needs an entry (chosen tradition, cha key, repertoire) for the basic/expert/master progression to fire.",
+  "text": "You gain the benefits. Each time you gain a spell slot of a new rank from this archetype, add a spell of that spell rank from your chosen tradition to your repertoire-either a common spell or another spell you've learned or discovered."
+ },
+ {
+  "id": "bloodline-perfection",
+  "name": "Bloodline Perfection",
+  "collection": "feats",
+  "lane": "spellGrant",
+  "priorReason": "Grants a SECOND 10th-rank slot; spellcasting.ts hardcodes a single slots[10]=1 and spellSlotBonus cannot target a specific rank, so the level-20 feat does nothing.",
+  "text": "You command the ultimate powers of your bloodline and tradition. You gain an additional 10th-rank spell slot."
+ },
+ {
+  "id": "candle-of-invocation",
+  "name": "Candle of Invocation",
+  "collection": "items",
+  "lane": "spellGrant",
+  "priorReason": "Grants two extra spell slots at half your highest rank to a divine caster of the matching deity during daily preparations. Only \"uses\" is present; spellSlotBonus ({perRank,exceptHighest,entryId}) cannot express \"2 slots at half your highest rank\" and the item is not in consumable-modes.json, so the benefit never reaches the sheet.",
+  "text": "**Activate** ⟨1⟩ Interact This golden candle bears the symbol of a specific deity emblazoned on its surface, surrounded by the iconography of that deity's faith. Once lit, this candle burns for 1 hour, and it can't be extinguished. Characters who cast divine spells and worship the deity emblazoned on the candle can perform their daily preparations within 10 feet of the lit candle to gain two additional spell slots for the day, each at half the highest spell slot they possess (for example, 4th rank slots if the caster can cast 8th-rank spells). Prepared casters must prepare spells in these spell slots as they do for all their other spell slots. A caster's additional spell slots from the candle are lost the next time that caster performs their daily preparations. No one can benefit from more than one candle of invocation in a day, but multiple characters can benefit from a single candle's effects."
+ },
+ {
+  "id": "captivating-intensity",
+  "name": "Captivating Intensity",
+  "collection": "feats",
+  "lane": "spellGrant",
+  "priorReason": "Adds one extra daily casting to every captivator innate spell (and a second casting of the Heightened Captivation spell). No field raises the usesPerDay of previously granted innate spells, so the feat is inert.",
+  "text": "Your ability to captivate others has grown, and you can use your captivator abilities more often. You seem to never run out of the ability to fascinate or distract. You can cast each occult innate spell granted by captivator archetype feats one additional time per day. You can do this for spells of all levels granted, other than your two highest spell ranks from non-cantrip captivator spells. If you have Heightened Captivation, you can Cast the chosen Spell a second time each day, though one of the two times you cast it, it's heightened two levels lower than your highest level of non-cantrip captivator spells, as long as the spell can be cast at that spell rank."
+ },
+ {
+  "id": "cascade-bearers-spellcasting",
+  "name": "Cascade Bearer's Spellcasting",
+  "collection": "feats",
+  "lane": "spellGrant",
+  "priorReason": "Grants an additional halcyon cantrip and an additional 1st-rank halcyon spell, and widens halcyon selection to the divine/occult lists. The halcyon-speaker CASTER_ARCHETYPES entry has a fixed cantrip count and customUnlocks that this feat is not part of, so nothing is added.",
+  "text": "Your Cascade Bearer training allows you to broaden the horizons of your halcyon spells further than most Magaambyans, weaving in spiritual magic. You can select halcyon spells from the divine or occult spell lists in additional to the arcane or primal spell lists, though they are still halcyon spells (so you choose when casting if they are arcane or primal spells). You gain a halcyon cantrip and a halcyon 1st-rank spell."
+ },
+ {
+  "id": "conscious-spell-specialization",
+  "name": "Conscious Spell Specialization",
+  "collection": "feats",
+  "lane": "spellGrant",
+  "priorReason": "Four extra spell slots (1st–4th, plus 5th at 18th) usable only for conscious-mind-granted spells. spellSlotBonus only expresses {perRank, exceptHighest, entryId} — it cannot express a fixed rank set nor a content restriction, and the eligible spell list depends on the subclass, so no legal data field delivers it.",
+  "text": "You become more adept with the spells that are always in your mind. You gain an additional spell slot of 1st, 2nd, 3rd, and 4th ranks. You can use these spell slots to cast only a spell granted by your conscious mind. At 18th level, you also gain an additional 5th-rank spell slot, with the same restrictions."
+ },
+ {
+  "id": "creed-magic",
+  "name": "Creed Magic",
+  "collection": "feats",
+  "lane": "spellGrant",
+  "priorReason": "Two extra 2nd-rank 'creed' slots restricted to a named spell list (Resist Energy / See the Unseen / Sure Strike / Water Breathing), which grow to 3rd rank at 10th (+Haste, Heroism) and 4th at 14th (+Fly, Unfettered Movement). spellSlotBonus has no content restriction and no rank ladder, and innateSpells cannot express 'two slots, prepared daily from a growing list'.",
+  "text": "You've expanded your divine capabilities, granting you magic that better supports your combat focus. You gain two special 2nd-rank creed spell slots, which can be used to prepare Resist Energy, See the Unseen, Sure Strike, and Water Breathing as divine spells. At 10th level, the extra slots increase to 3rd rank and you add Haste and Heroism to the spells you can prepare in your creed spell slots. At 14th level, the extra slots increase to 4th rank and you add Fly and Unfettered Movement."
+ },
+ {
+  "id": "domain-fluency",
+  "name": "Domain Fluency",
+  "collection": "feats",
+  "lane": "spellGrant",
+  "priorReason": "This feat grants the ADVANCED domain spell, but its `choice` is {kind:'domains'}, and build.ts:1481 resolves every domains-choice through DOMAIN_SPELLS (src/rules/domains.ts), which holds only INITIAL domain spells — so the character is handed the wrong spell (and, for an oracle who already took Domain Acumen on that domain, a duplicate).",
+  "text": "You command a deep understanding of the domains related to your mystery. Choose one of the domains associated with your mystery for which you have an initial domain spell. You gain an advanced domain spell from that domain, which you cast as a revelation spell."
+ },
+ {
+  "id": "elementally-infused",
+  "name": "Elementally Infused",
+  "collection": "backgrounds",
+  "lane": "spellGrant",
+  "priorReason": "abilityBoosts and trainedLoreChoice are wired and `choice` records the elemental plane, but the at-will primal cantrip tied to that plane (Gale Blast / Scatter Scree / Ignition / Needle Darts / Spout / Root Reading) is never granted. Background supports only an UNCONDITIONAL innateSpells array, and build.ts resolves effectChoices for feats, heritages, class features, subclass options and items — never backgrounds.",
+  "text": "You were exposed to a strong burst of elemental essence originating directly from an elemental plane, most likely caused by a planar breach. Your body absorbed the elemental essence with no ill effects, and now it coalesces within you. With time, you've learned to project elemental power in a manner safe to you but still deadly to others. Choose two attribute boosts. One must be to **Constitution** or **Charisma**, and one is a free attribute boost. Choose one elemental plane: Air, Earth, Fire, Metal, Water, or Wood. You are trained in the corresponding Lore skill: Plane of Air Lore, Plane of Earth Lore, Plane of Fire Lore, Plane of Metal Lore, Plane of Water Lore, or Plane of Wood Lore. You also gain a cantrip according to your chosen plane: **Air:** Gale Blast **Earth:** Scatter Scree **Fire:** Ignition **Metal:** Needle Darts **Water:** Spout **Wood:** Root Reading You can cast this spell as a primal innate spell at will. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free"
+ },
+ {
+  "id": "exultant-blood-magic",
+  "name": "Exultant Blood Magic",
+  "collection": "feats",
+  "lane": "spellGrant",
+  "priorReason": "'Increase the spell slots you gain from the bloodrager archetype feats by 1 for each spell rank' delivers nothing: CASTER_ARCHETYPES['bloodrager-dedication'] is deliberately cantripsOnly with no ranked slots, so there is no entry for a spellSlotBonus to target and no entryId to name.",
+  "text": "The magic in your blood sings an exultant song of battle. You gain the benefits. Increase the spell slots you gain from the bloodrager archetype feats by 1 for each spell rank. In addition, when you Cast a Spell from your repertoire and you are at least Drained 2, double the extra damage dealt by that spell from Rage instead."
+ },
+ {
+  "id": "future-spell-learning",
+  "name": "Future Spell Learning",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "Adds seven named spells (Behold the Weave, Cast into Time, Haste, Loose Time's Arrow, Quicken Time, Slow, Stagnate Time) to your spell list / spellbook / repertoire. Nothing on the record does this and no field in the schema expresses 'expand the spell list you may prepare or learn from'.",
+  "text": "More future memories of time magic percolate back to the present, teaching you spells you've yet to learn. Add Behold the Weave, Cast into Time, Haste, Loose Time's Arrow, Quicken Time, Slow, and Stagnate Time to your spell list. If you have a repository of spells, like a witch's familiar or a spellbook, add these spells to it. If you have a spell repertoire, when you gain this feat you can retrain one spell in it, replacing it with one of the added spells."
+ },
+ {
+  "id": "hierophants-power",
+  "name": "Hierophant's Power",
+  "collection": "feats",
+  "lane": "spellGrant",
+  "priorReason": "Grants a SECOND 10th-rank spell slot on top of the druid capstone. spellSlotBonus only supports perRank across all ranks or exceptHighest; there is no way to add a slot at one specific rank, so this cannot be expressed with a legal field.",
+  "text": "You have entwined yourself with the natural world, and its full power flows through you. You gain an additional 10th-rank spell slot."
+ },
+ {
+  "id": "infinite-mind",
+  "name": "Infinite Mind",
+  "collection": "classFeatures",
+  "lane": "spellGrant",
+  "priorReason": "The psychic capstone grants a 10th-rank spell slot, but psychicSlots() in src/rules/spellcasting.ts deliberately stops at rank 9 ('does NOT get a 10th-rank slot') and this feature carries no field, so a level-19 psychic never gets the slot. spellSlotBonus cannot target one rank.",
+  "text": "Anything you can imagine is now within the realm of possibility. Add two common 10th-rank occult spells to your repertoire; you gain a single 10th-rank spell slot you can use to cast one of those two spells using psychic spellcasting. You don't gain more 10th-rank spells as you level up, unlike other spell slots, and you can't use 10th-rank slots with abilities that give you more spell slots or that let you cast spells without expending spell slots. You can take the Mind Over Matter psychic feat to gain a second slot."
+ },
+ {
+  "id": "loaner-spell",
+  "name": "Loaner Spell",
+  "collection": "feats",
+  "lane": "spellGrant",
+  "priorReason": "During daily preparations you gain the ability to cast one ally-prepared spell of up to 3rd rank once that day, using your class DC and class DC - 10 as the spell attack. Nothing on the record delivers this. It belongs to the daily-preparations lane (a re-pickable spell choice) and needs a cast-with-class-DC path, neither of which any legal field expresses.",
+  "text": "During your daily preparations, you can gain the assistance of an allied prepared spellcaster to prepare one spell for the day. The spell can be up to 3rd level. Your ally must be able to prepare and cast it, and the spell must have a Targets entry or an area. Your ally loses a spell slot of the corresponding spell rank, and you gain the ability to cast the prepared spell once that day. When you Cast the Spell, use your class DC for any saving throws required by the spell, and your class DC - 10 as a spell attack roll modifier."
+ },
+ {
+  "id": "magical-understudy",
+  "name": "Magical Understudy",
+  "collection": "feats",
+  "lane": "spellGrant",
+  "priorReason": "The eidolon gains the Cast a Spell activity and two innate cantrips of its tradition, and the record carries no fields at all - not even the recorded-only pick that its sibling Magical Adept ships. The eidolon's own spellcasting is not tracked by the engine, so the honest fix is a recorded 2-cantrip pick plus eidolon innate-spell support.",
+  "text": "Your eidolon evolves to cast spells. It gains the Cast a Spell activity and learns two cantrips of its tradition, which it can cast as innate spells."
+ },
+ {
+  "id": "maker-of-miracles",
+  "name": "Maker of Miracles",
+  "collection": "feats",
+  "lane": "spellGrant",
+  "priorReason": "Grants a SECOND 10th-rank spell slot beyond the cleric capstone. spellSlotBonus can only add slots at every rank or exclude the top N ranks, so a single-rank slot addition has no legal field.",
+  "text": "You are a conduit for truly deific power. You gain an additional 10th-rank spell slot."
+ },
+ {
+  "id": "mind-over-matter",
+  "name": "Mind over Matter",
+  "collection": "feats",
+  "lane": "spellGrant",
+  "priorReason": "Grants an additional 10th-rank spell slot to a psychic who has none from the slot table. spellSlotBonus cannot target one specific rank, so no legal field expresses it.",
+  "text": "Your mind's limits are only what you imagine them to be. You gain an additional 10th-rank spell slot."
+ },
+ {
+  "id": "oracular-providence",
+  "name": "Oracular Providence",
+  "collection": "feats",
+  "lane": "spellGrant",
+  "priorReason": "A SECOND 10th-rank slot. SpellSlotBonus only exposes perRank/exceptHighest, which spread slots across every rank — there is no way to say 'one more slot at rank 10 only', so no legal field expresses this.",
+  "text": "Your mystery grants you access to deep reserves of truly miraculous divine power. You gain an additional 10th-rank spell slot."
+ },
+ {
+  "id": "patrons-truth",
+  "name": "Patron's Truth",
+  "collection": "feats",
+  "lane": "spellGrant",
+  "priorReason": "A second 10th-rank slot. SpellSlotBonus has no per-rank targeting (only perRank/exceptHighest, which touch every rank), so no legal field expresses a single extra rank-10 slot.",
+  "text": "You have mastered the greatest secrets of your patron's magic and learned a fundamental truth about your patron, even if their identity still remains a mystery. You gain an additional 10th-rank spell slot."
+ },
+ {
+  "id": "perfect-encore",
+  "name": "Perfect Encore",
+  "collection": "feats",
+  "lane": "spellGrant",
+  "priorReason": "An additional 10th-rank spell slot; SpellSlotBonus cannot target one specific rank (perRank/exceptHighest apply across all castable ranks).",
+  "text": "You develop another incredible creation. You gain an additional 10th-rank spell slot."
+ },
+ {
+  "id": "plane-hopper-jotunborn",
+  "name": "Plane-Hopper Jotunborn",
+  "collection": "heritages",
+  "lane": "spellGrant",
+  "priorReason": "The cantrip is covered by effectChoices, but 'instead of Large, your size is Medium' is not. Jotunborn's ancestry size is 'large' and build.ts line 3051 only raises size ('SIZE_ORDER.indexOf(g.sizeOverride) > indexOf(size)'), so sizeOverride:'medium' would be silently ignored — a size LOWERING lane does not exist.",
+  "text": "You were chosen for your smaller size that allows you to move between planar thresholds with ease. You generally serve as a messenger or scout, and planar exposure has granted you a spark of magical power. Instead of Large, your size is Medium. You gain one cantrip from the occult spell list. You can cast this spell as an occult innate spell at will. A cantrip is heightened to a spell rank equal to half your level rounded up."
+ }
+]

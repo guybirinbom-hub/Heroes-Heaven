@@ -1,0 +1,256 @@
+{
+  "_note": "Adversarial re-check of retriage-0..3. Every NOW_FIXABLE was assumed wrong until the record text + src/rules code forced otherwise. Every NOT_A_GAP was checked against the live data. A sample of STILL_BLOCKED was re-tested against the four new lanes.",
+  "rulings": [
+    {
+      "id": "archwizards-might",
+      "upheld": true,
+      "why": "Text is 'You gain an additional 10th-rank spell slot.' fullCasterSlots (spellcasting.ts:33) sets slots[10]=1 at level>=19, and build.ts:2554 add() does `entry.slots[r].max += n` only when the rank already exists — so byRank {\"10\":1} yields exactly 2, never sets a total, and can only apply to a level-20 wizard. spellSlotBonus is declared on Feat (types.ts:324) and collected for feats at build.ts:2531; byRank is read at build.ts:2560 and short-circuits the perRank spread. Record currently has no spellSlotBonus, so this is a pure add.",
+      "correction": {}
+    },
+    {
+      "id": "bloodline-perfection",
+      "upheld": true,
+      "why": "Text 'You gain an additional 10th-rank spell slot.' Sorcerer is a full caster (slots[10]=1 at 19+), spontaneous entry -> slots[10].max 1->2. Value adds ONE, matching the printed word 'additional'. Verified no existing spellSlotBonus on the record.",
+      "correction": {}
+    },
+    {
+      "id": "hierophants-power",
+      "upheld": true,
+      "why": "Verified this is the level-20 DRUID FEAT ('You gain an additional 10th-rank spell slot'), not the 19th-level feature that creates the capstone slot — so byRank {\"10\":1} increments an existing rank rather than creating one. core.json confirms feats/hierophants-power, level 20, spellSlotBonus undefined.",
+      "correction": {}
+    },
+    {
+      "id": "maker-of-miracles",
+      "upheld": true,
+      "why": "core.json feats/maker-of-miracles level 20: 'You are a conduit for truly deific power. You gain an additional 10th-rank spell slot.' Cleric prepared entry has prepared[10] built from fullCasterSlots at 19+, and add() pushes exactly one empty prepared slot. Exact match.",
+      "correction": {}
+    },
+    {
+      "id": "oracular-providence",
+      "upheld": true,
+      "why": "Level-20 oracle feat, printed 'an additional 10th-rank spell slot'. Oracle is a full caster; spontaneous slots[10].max 1->2. No over-grant (adds 1).",
+      "correction": {}
+    },
+    {
+      "id": "patrons-truth",
+      "upheld": true,
+      "why": "Level-20 witch feat, printed 'an additional 10th-rank spell slot'. Witch prepared entry has rank 10 at level 19+. byRank adds one.",
+      "correction": {}
+    },
+    {
+      "id": "perfect-encore",
+      "upheld": true,
+      "why": "Level-20 bard feat, printed 'an additional 10th-rank spell slot'. Bard spontaneous entry slots[10].max 1->2. Adds one, not a total.",
+      "correction": {}
+    },
+    {
+      "id": "azarketi-weapon-expertise",
+      "upheld": true,
+      "why": "FeatGrant.weaponFamiliarity {weapons, mirrorBestCategory} exists (featGrants.ts:116-120) and is applied at build.ts:2477. Confirmed the feat is ABSENT from FEAT_GRANTS/featGrantsAuto (only the sibling 'azarketi-weapon-familiarity' at featGrantsAuto.ts:63 is registered). Weapon list is byte-identical to that sibling entry and matches the printed 'Crossbows, Hand Crossbows, Longspears, Spears, Tridents, and all azarketi weapons'; core.json confirms the ONLY azarketi-trait weapons are boarding-axe and gill-hook. mirrorBestCategory cannot hand out an unearned rank.",
+      "correction": {}
+    },
+    {
+      "id": "dwarven-weapon-expertise",
+      "upheld": false,
+      "why": "Verdict NOW_FIXABLE is right and the lane is right, but the VALUE is incomplete: 'all dwarven weapons in which you are trained' is under-covered. core.json holds ten level-0 dwarf-trait base weapons — clan-dagger, clan-pistol, dwarven-dorn-dergar, dwarven-scattergun, dwarven-war-axe, dwarven-waraxe, long-hammer, wrecker, wrecker-melee, wrecker-ranged — and the proposed list omits dwarven-war-axe and the two wrecker combination sub-forms. That is inconsistent with the same author's own elven fix (which correctly listed three-peaked-tree plus -melee and -ranged) and with the monastic-weaponry precedent (bow-staff / -melee / -ranged). A character wielding the dwarven-war-axe record or either wrecker form would get nothing. Magic specific dwarf weapons (axe-of-the-dwarven-lords, animate-dreamer, skysunder, immolation-clan-pistol) are correctly excluded — base-weapon-only is the registry norm.",
+      "correction": {
+        "kind": "featGrant",
+        "id": "dwarven-weapon-expertise",
+        "grant": {
+          "weaponFamiliarity": {
+            "weapons": [
+              "battle-axe",
+              "pick",
+              "warhammer",
+              "clan-dagger",
+              "clan-pistol",
+              "dwarven-scattergun",
+              "dwarven-dorn-dergar",
+              "dwarven-war-axe",
+              "dwarven-waraxe",
+              "long-hammer",
+              "wrecker",
+              "wrecker-melee",
+              "wrecker-ranged"
+            ],
+            "mirrorBestCategory": true
+          }
+        }
+      }
+    },
+    {
+      "id": "elven-weapon-expertise",
+      "upheld": true,
+      "why": "Lane verified (featGrants.ts:116, applied build.ts:2477) and the feat is absent from the registry. Weapon list checked against core.json: the elf-trait BASE weapons are exactly dawnsilver-tree, elven-branched-spear, elven-curve-blade, three-peaked-tree + three-peaked-tree-melee + three-peaked-tree-ranged — all six present, combination sub-forms included. morning-glow (lvl 14), soulcutter (lvl 15) and soulcutter-heroic (artifact) are specific magic weapons, correctly left out. Base martial ids longbow/composite-longbow/longsword/rapier/shortbow/composite-shortbow all exist and match the printed list.",
+      "correction": {}
+    },
+    {
+      "id": "captain-dedication",
+      "upheld": true,
+      "why": "captain-dedication is a FEAT, so FEAT_PICK_GRANTS[featId] is consulted at build.ts:2177. Text names exactly two options, which is the documented `ids` form; pickableFeats short-circuits on spec.ids (featPickGrants.ts:115) so the vestigial maxLevel:1 is inert and harmless. Both group-impression and group-coercion exist in core.feats. Grants exactly ONE feat — no over-grant, and the 'if you already have both' fallback is correctly left unmodelled rather than guessed. Caveat (not a defect): the dedicated-follower half is argued in the prose but is NOT in the fix object, so applying this fix alone leaves the follower ungranted.",
+      "correction": {}
+    },
+    {
+      "id": "order-explorer",
+      "upheld": true,
+      "why": "It is a feat, so lane 3 reaches it. I enumerated every level-1 druid-trait feat in core.json and its prerequisites: exactly seven list an order — animal-companion(animal), fire-lung(flame), leshy-familiar(leaf), shore-step(wave), steadying-stone(stone), storm-born(storm), untamed-form(untamed). The proposed ids are precisely that set, no more and no less; cultivation and spore have no level-1 order-prereq feat in the data, so nothing was dropped. One feat granted, not a pool — no over-grant. Repeatability limits a second take to storing one pick (pickFeatChoices is Record<string,string>, build.ts:188), but that under-serves rather than over-grants and matches shipped repeatable entries like multifarious-muse.",
+      "correction": {}
+    },
+    {
+      "id": "enhanced-psychopomp-familiar",
+      "upheld": true,
+      "why": "Registry and fields verified real: CompanionGrant declares kind/abilityBudget/lockedAbilities/note/supersedes (companionGrants.ts:18-34) and FEAT_COMPANION_GRANTS['psychopomp-familiar'] is already {abilityBudget:3, lockedAbilities:['speech']} (line 83), so the superseding budget 4 matches the printed 'You can select four familiar or master abilities each day, instead of two' exactly, with `supersedes` preventing a second familiar card. Shape matches improved-familiar-attunement (line 73) and pirates-pet (line 81). Note: the fix's kind label 'companionGrant' is outside the four kinds the task prescribed, and the lane is pre-existing rather than one of the four new ones — but the record does still need this registry row, so NOW_FIXABLE stands.",
+      "correction": {}
+    },
+    {
+      "id": "inner-fire-monk",
+      "upheld": true,
+      "why": "ModeDef.resistances (types.ts:1407) and ModeDef.feats (types.ts:1389) both exist, and deriveDefenses consumes active-mode resistances at derive.ts:762-767, resolving the value through resolveFormula (derive.ts:801). The formula string 'floor(@actor.level/2)' is used verbatim by shipped data (feats/necromantic-resistance), and the grammar (floor/ceil/max/min) parses it. Value matches 'cold and fire resistance equal to half your level' — no max(1,...) invented, since the printed minimum-1 applies only to the Wisdom fire damage, which correctly rides in `note` (it is a target-side rider the sheet does not own). Gate present (feats: [...]), so the mode will surface. StanceDef has resistances but no resistIfFeat sibling to senseIfFeat (types.ts:1462-1468), so writing it on stoked-flame-stance would give it to every monk in the stance — the mode is the only non-over-granting expression. Catalog entries get predefined:true automatically via CATALOG_MODES (modes.ts:206), and category 'Monk' already exists (cat-mountain-stance).",
+      "correction": {}
+    },
+    {
+      "id": "inner-fire-som",
+      "upheld": true,
+      "why": "Same printed text as inner-fire-monk (verified in core.json, the Secrets of Magic reprint) and the same ModeDef with both ids in its `feats` gate, so it is correctly the SAME row, not a second one. Upheld with the implementation caveat the ruling itself states: exactly ONE object with id 'cat-inner-fire-stoked-flame' may be added to RAW_MODES — adding it twice would duplicate the toggle and collide in CATALOG_MODE_MAP.",
+      "correction": {}
+    },
+    {
+      "id": "ring-of-wizardry-type-i",
+      "upheld": true,
+      "why": "Verified: the item already carries spellSlotBonus {\"byRank\":{\"1\":2}} in core.json, matching 'two additional 1st-rank arcane spell slots', and build.ts:2560 now reads byRank (items are collected at build.ts:2542 when invested). No change needed — NOT_A_GAP is correct.",
+      "correction": {}
+    },
+    {
+      "id": "ring-of-wizardry-type-ii",
+      "upheld": true,
+      "why": "Data confirmed {\"byRank\":{\"1\":1,\"2\":2}} = 'two additional 2nd-rank and one additional 1st-rank'. Engine reads it. No change needed.",
+      "correction": {}
+    },
+    {
+      "id": "ring-of-wizardry-type-iii",
+      "upheld": true,
+      "why": "Data confirmed {\"byRank\":{\"2\":1,\"3\":2}} = 'two additional 3rd-rank and one additional 2nd-rank'. No change needed.",
+      "correction": {}
+    },
+    {
+      "id": "ring-of-wizardry-type-iv",
+      "upheld": true,
+      "why": "Data confirmed {\"byRank\":{\"3\":1,\"4\":2}} = 'two additional 4th-rank and one additional 3rd-rank'. No change needed.",
+      "correction": {}
+    },
+    {
+      "id": "combat-flexibility",
+      "upheld": true,
+      "why": "Confirmed in code: build.ts:3817 pushes a 'bonus' feat slot for a fighter at levels 9 and 15, and featSlots.ts:78 restricts that slot to a fighter-trait feat of level <= slotLevel-1 (<=8 at L9, <=14 at L15). Already delivered without a data field. NOT_A_GAP stands.",
+      "correction": {}
+    },
+    {
+      "id": "true-channel-spell",
+      "upheld": true,
+      "why": "Re-tested against lane 1 and the block holds for a stronger reason than stated. Text is 'You gain a SINGLE 10th-rank spell slot' (creating a rank), and add() only mutates ranks that already exist (build.ts:2554-2555). animistPreparedSlots (spellcasting.ts:86) loops r=1..9, so the prepared entry has no rank 10 — byRank {\"10\":1} is a silent no-op. Additional hazard the ruling missed: APPARITION_SLOTS DOES contain 10:1 at levels 19-20, so an entryId-less byRank could land on the animist's spontaneous apparition pool instead of the prepared one, which would be a wrong grant. STILL_BLOCKED confirmed.",
+      "correction": {}
+    },
+    {
+      "id": "infinite-mind",
+      "upheld": true,
+      "why": "Confirmed psychicSlots (spellcasting.ts:70) loops r=1..9 with an explicit comment that the psychic never gets a 10th-rank slot, and add() cannot create a missing rank. byRank {\"10\":1} would be inert. Needs a rank-creating slot lane. STILL_BLOCKED stands.",
+      "correction": {}
+    },
+    {
+      "id": "mind-over-matter",
+      "upheld": true,
+      "why": "Same wall as infinite-mind, verified in spellcasting.ts and build.ts. STILL_BLOCKED stands.",
+      "correction": {}
+    },
+    {
+      "id": "conscious-spell-specialization",
+      "upheld": true,
+      "why": "Re-checked the printed text: the four slots are usable ONLY for conscious-mind spells, and the 5th-rank slot arrives at 18th. byRank {\"1\":1,\"2\":1,\"3\":1,\"4\":1} would hand a 14th-level psychic four UNRESTRICTED slots — an over-grant, which the task ranks worse than the gap. Needs slot restriction by spell source + a level-gated grant. STILL_BLOCKED stands.",
+      "correction": {}
+    },
+    {
+      "id": "sin-reservoir",
+      "upheld": true,
+      "why": "Text confirms 'one additional spell slot of any spell level up to two levels below the highest' + curriculum-only. byRank names fixed ranks and cannot encode a player-chosen rank; perRank+exceptHighest:2 would add a slot at EVERY eligible rank. STILL_BLOCKED stands.",
+      "correction": {}
+    },
+    {
+      "id": "candle-of-invocation",
+      "upheld": true,
+      "why": "Text confirms 'two additional spell slots, each at half the highest rank' — a level-relative rank byRank cannot compute. STILL_BLOCKED stands.",
+      "correction": {}
+    },
+    {
+      "id": "creed-magic",
+      "upheld": true,
+      "why": "Text confirms slots restricted to a named spell list that also MOVES rank (2nd -> 3rd at 10th -> 4th at 14th). byRank is static and unrestricted; writing it would over-grant at every level below the step. STILL_BLOCKED stands.",
+      "correction": {}
+    },
+    {
+      "id": "advanced-red-mantis-magic",
+      "upheld": true,
+      "why": "Verified there is no 'red-mantis' row in CASTER_ARCHETYPES, so there is no entry for entryId to target; an entryId-less byRank would land on the character's own class caster. The slots are also level-gated (2nd at 6th, 3rd at 8th, 4th at 10th) and restricted to a Red Mantis spellbook. STILL_BLOCKED stands.",
+      "correction": {}
+    },
+    {
+      "id": "exultant-blood-magic",
+      "upheld": true,
+      "why": "Verified CASTER_ARCHETYPES['bloodrager-dedication'] (casterArchetypes.ts:65) is cantripsOnly:true with no ranked slots, so there is nothing for add() to increment. STILL_BLOCKED stands.",
+      "correction": {}
+    },
+    {
+      "id": "snowcaster",
+      "upheld": true,
+      "why": "Verified 'gelid-shard-dedication' has no row in casterArchetypes.ts, which is a hand-maintained code table with no data-field equivalent. STILL_BLOCKED stands.",
+      "correction": {}
+    },
+    {
+      "id": "basic-cathartic-spellcasting",
+      "upheld": true,
+      "why": "Verified 'cathartic-mage-dedication' has no CASTER_ARCHETYPES row. STILL_BLOCKED stands.",
+      "correction": {}
+    },
+    {
+      "id": "elementally-infused",
+      "upheld": true,
+      "why": "Verified: resolvePick is called for feats (build.ts:2458), heritage (2459), class features (2460), subclass options (2465) and items (2581) — never for a background id. An effectChoices block on this background would be inert, and the record currently has none. STILL_BLOCKED stands.",
+      "correction": {}
+    },
+    {
+      "id": "kaiju-stalker",
+      "upheld": true,
+      "why": "Verified FEAT_PICK_GRANTS is consulted only for entries of `feats` (build.ts:2176-2184) and for build.heritageId (2187-2194). Backgrounds are never looked up, so lane 3 cannot reach it. Same verdict therefore holds for professional-letter-writer, sponsored-by-a-stranger and verduran-city-folk. STILL_BLOCKED stands.",
+      "correction": {}
+    },
+    {
+      "id": "fury-instinct",
+      "upheld": true,
+      "why": "Verified: FEAT_PICK_GRANTS resolution is keyed to feat ids and heritageId only; a classFeatures/subclass id is never consulted. Same for evolution-feat and experimental-spellshaping. STILL_BLOCKED stands.",
+      "correction": {}
+    },
+    {
+      "id": "advanced-arcana",
+      "upheld": true,
+      "why": "Spot-check of the 24-strong advanced-* family. Verified FeatPickSpec.maxLevel is `number | 'self'` only (featPickGrants.ts:22) and pickableFeats resolves 'self' to build.level (line 120) — there is no half-character-level mode, so 'self' over-grants at every level and any constant is wrong at some level. Verified BuildState.pickFeatChoices is Record<string,string> keyed by granting-feat id (build.ts:188), so a repeatable take cannot store a second pick. Both blockers real. Applies identically to advanced-blood-potency, -breakthrough, -concoction, -deduction, -defender, -devotion, -dogma, -element-control, -field-training, -flair, -fury, -glory, -hunters-trick, -kata, -maneuver, -martial-magic, -muses-whispers, -mysteries, -shooting, -synergy, -thaumaturgy, -thoughtform, -trickery, -wilding, -witchcraft, animists-power and add-element. STILL_BLOCKED stands.",
+      "correction": {}
+    },
+    {
+      "id": "ultimate-flexibility",
+      "upheld": true,
+      "why": "Verified the two flexibility slots are hardcoded at build.ts:3817 (levels 9 and 15 only) with the level ceiling in featSlots.ts:78; nothing keys 'ultimate-flexibility' and no data field adds a slot or raises a ceiling. STILL_BLOCKED stands.",
+      "correction": {}
+    },
+    {
+      "id": "aiuvarin",
+      "upheld": true,
+      "why": "Re-tested against lane 3: FEAT_PICK_GRANTS is read for build.heritageId, so a heritage CAN carry a pick — but the printed effect is 'when you gain an ancestry feat, you can choose from aiuvarin and elf feats', a permanently widened slot pool at EVERY ancestry-feat level, not one bonus pick. Encoding it as a single pick would both under-grant (one feat) and mis-model. Same for aon-half-elf, aon-half-orc and ardande. STILL_BLOCKED stands.",
+      "correction": {}
+    },
+    {
+      "id": "inner-fire-adjacent-sample",
+      "upheld": true,
+      "why": "Lane-2 sweep of the remaining STILL_BLOCKED set: draconic-paragon (adds the deadly trait to an existing Strike + increments another feat's innate-spell uses + target-side persistent damage), primal-howl (companion maneuver; text confirms it is an action the COMPANION uses against creatures), butterflys-sting / shadow-sneak-attack / sneak-attacker (precision-damage riders), haunting-memories and stylish-tricks (skill ranks and a second per-level skill increase), staff-nexus, potent-nectar, skilled-partner, unconventional-expertise, elemental-overlap, shattered-sacrament, sacred-spells, future-spell-learning, loaner-spell, captivating-intensity, domain-fluency, advanced-school-spell, cascade-bearers-spellcasting, magical-understudy, plane-hopper-jotunborn. None of these is a resistance / weakness / immunity / sense / speed toggle, so ModeDef's new grant fields cannot reach any of them, and none is a rank-named spell slot, a filtered bonus feat pick, or a weapon-familiarity mirror. No missed fix found in the STILL_BLOCKED set.",
+      "correction": {}
+    }
+  ]
+}

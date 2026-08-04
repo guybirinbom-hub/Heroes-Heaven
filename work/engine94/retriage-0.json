@@ -1,0 +1,131 @@
+{
+ "records": [
+  {
+   "id": "advanced-red-mantis-magic",
+   "verdict": "STILL_BLOCKED",
+   "why": "byRank is static with no level gate (2nd at 6th, 3rd at 8th, 4th at 10th) and there is no red-mantis entry to target — with no entryId the bonus would land on the character's OWN class caster, over-granting. Needs a Red Mantis CASTER_ARCHETYPES entry plus level-gated slot unlocks."
+  },
+  {
+   "id": "advanced-school-spell",
+   "verdict": "STILL_BLOCKED",
+   "why": "The spell depends on the picked arcane school, so no data field on the feat can name it; needs 'advanced-school-spell': subOption?.advancedFocusSpell added to the ADV_SPELL map in build.ts (~line 1462). An effectChoices menu of all schools would let a wizard pick a school they don't have, i.e. over-grant."
+  },
+  {
+   "id": "archwizards-might",
+   "verdict": "NOW_FIXABLE",
+   "why": "spellSlotBonus.byRank now targets a single rank; the wizard already has slots[10]=1 at level 19+, and build.ts add() increments the existing rank, giving exactly 2.",
+   "fix": {"kind": "field", "collection": "feats", "id": "archwizards-might", "field": "spellSlotBonus", "value": {"byRank": {"10": 1}}}
+  },
+  {
+   "id": "basic-cathartic-spellcasting",
+   "verdict": "STILL_BLOCKED",
+   "why": "cathartic-mage-dedication has no CASTER_ARCHETYPES entry, so there is no archetype spellcasting entry for any slot lane to target; needs the archetype table row (tradition choice, key ability, repertoire), which is code."
+  },
+  {
+   "id": "bloodline-perfection",
+   "verdict": "NOW_FIXABLE",
+   "why": "byRank adds exactly one slot at rank 10 on top of the sorcerer's existing 10th-rank slot (full-caster table gives slots[10]=1 at 19+).",
+   "fix": {"kind": "field", "collection": "feats", "id": "bloodline-perfection", "field": "spellSlotBonus", "value": {"byRank": {"10": 1}}}
+  },
+  {
+   "id": "candle-of-invocation",
+   "verdict": "STILL_BLOCKED",
+   "why": "'Two slots at HALF your highest rank' is relative to the caster's level; byRank is a literal rank map and cannot be computed, and the benefit is also deity-gated and consumed at daily preparations. Needs a relative-rank slot lane."
+  },
+  {
+   "id": "captivating-intensity",
+   "verdict": "STILL_BLOCKED",
+   "why": "Needs a lane that raises usesPerDay on innate spells ALREADY granted by other feats (and excludes the two highest ranks); innateSpells only adds new grants, it cannot amend existing ones."
+  },
+  {
+   "id": "cascade-bearers-spellcasting",
+   "verdict": "STILL_BLOCKED",
+   "why": "The halcyon-speaker cantrip count and slot unlocks are hardcoded in casterArchetypes.ts customUnlocks; there is no data field to add one cantrip + one 1st-rank spell to another feat's archetype entry, nor to widen its tradition list to divine/occult."
+  },
+  {
+   "id": "conscious-spell-specialization",
+   "verdict": "STILL_BLOCKED",
+   "why": "byRank could write {1:1,2:1,3:1,4:1}, but the slots are usable ONLY for conscious-mind spells and the 5th-rank slot arrives at 18th — writing them plain would hand a 14th-level psychic four unrestricted slots. Needs slot restriction by spell source plus a level-gated slot grant."
+  },
+  {
+   "id": "creed-magic",
+   "verdict": "STILL_BLOCKED",
+   "why": "Two slots restricted to a named spell list that both MOVES rank (2nd/3rd/4th at 6th/10th/14th) and grows its list. Needs slot restriction by spell id and a level-indexed rank ladder; byRank is static and unrestricted."
+  },
+  {
+   "id": "domain-fluency",
+   "verdict": "STILL_BLOCKED",
+   "why": "domains.ts holds only INITIAL domain spells, so choice{kind:'domains'} grants the wrong (and, after Domain Acumen, duplicate) spell. Needs an ADVANCED_DOMAIN_SPELLS table plus ADV_SPELL-style wiring; no field on the feat can name a domain-dependent spell."
+  },
+  {
+   "id": "elementally-infused",
+   "verdict": "STILL_BLOCKED",
+   "why": "The effectChoices field would express the six at-will primal cantrips exactly, but build.ts calls resolvePick only for feats, heritage, class features, subclass options and items (lines 2458-2465, 2581) — never backgrounds, so the field would be inert. Needs background effectChoices resolution."
+  },
+  {
+   "id": "exultant-blood-magic",
+   "verdict": "STILL_BLOCKED",
+   "why": "CASTER_ARCHETYPES['bloodrager-dedication'] is cantrips-only with no ranked slots, so there is nothing for a slot bonus to increment and no entryId to name; needs the bloodrager archetype's ranked slot progression first."
+  },
+  {
+   "id": "future-spell-learning",
+   "verdict": "STILL_BLOCKED",
+   "why": "Needs a 'add named spells to your spell list / spellbook / repertoire' lane; no field expands what a caster may prepare or learn from."
+  },
+  {
+   "id": "hierophants-power",
+   "verdict": "NOW_FIXABLE",
+   "why": "byRank adds exactly one extra rank-10 slot to the druid's existing capstone slot.",
+   "fix": {"kind": "field", "collection": "feats", "id": "hierophants-power", "field": "spellSlotBonus", "value": {"byRank": {"10": 1}}}
+  },
+  {
+   "id": "infinite-mind",
+   "verdict": "STILL_BLOCKED",
+   "why": "psychicSlots() stops at rank 9, and build.ts add() only increments a rank that already exists ('if (entry.slots?.[r])'), so byRank {10:1} would be silently inert. Needs a slot lane that can CREATE a rank the class table lacks (plus the two-spell rank-10 repertoire restriction)."
+  },
+  {
+   "id": "loaner-spell",
+   "verdict": "STILL_BLOCKED",
+   "why": "Needs a daily-preparations borrowed-spell lane plus a cast-using-class-DC path; no field expresses either."
+  },
+  {
+   "id": "magical-understudy",
+   "verdict": "STILL_BLOCKED",
+   "why": "Needs an eidolon innate-spellcasting lane — the eidolon has no spellcasting entry, and putting the two cantrips in the feat's own innateSpells/effectChoices would grant them to the SUMMONER, which over-grants."
+  },
+  {
+   "id": "maker-of-miracles",
+   "verdict": "NOW_FIXABLE",
+   "why": "byRank adds one extra rank-10 slot on top of the cleric's miraculous-spell slot.",
+   "fix": {"kind": "field", "collection": "feats", "id": "maker-of-miracles", "field": "spellSlotBonus", "value": {"byRank": {"10": 1}}}
+  },
+  {
+   "id": "mind-over-matter",
+   "verdict": "STILL_BLOCKED",
+   "why": "Depends on Infinite Mind's rank-10 slot, which the psychic table never creates (psychicSlots caps at 9) and add() cannot create; same missing lane as infinite-mind. byRank {10:1} would do nothing."
+  },
+  {
+   "id": "oracular-providence",
+   "verdict": "NOW_FIXABLE",
+   "why": "byRank adds one extra rank-10 slot to the oracle's full-caster capstone slot.",
+   "fix": {"kind": "field", "collection": "feats", "id": "oracular-providence", "field": "spellSlotBonus", "value": {"byRank": {"10": 1}}}
+  },
+  {
+   "id": "patrons-truth",
+   "verdict": "NOW_FIXABLE",
+   "why": "byRank adds one extra rank-10 slot to the witch's full-caster capstone slot.",
+   "fix": {"kind": "field", "collection": "feats", "id": "patrons-truth", "field": "spellSlotBonus", "value": {"byRank": {"10": 1}}}
+  },
+  {
+   "id": "perfect-encore",
+   "verdict": "NOW_FIXABLE",
+   "why": "byRank adds one extra rank-10 slot to the bard's magnum-opus slot (spontaneous entry: slots[10].max 1 -> 2).",
+   "fix": {"kind": "field", "collection": "feats", "id": "perfect-encore", "field": "spellSlotBonus", "value": {"byRank": {"10": 1}}}
+  },
+  {
+   "id": "plane-hopper-jotunborn",
+   "verdict": "STILL_BLOCKED",
+   "why": "The cantrip is already covered by effectChoices; the remaining half needs a size-LOWERING lane — build.ts:3062 only applies sizeOverride when it is LARGER than the ancestry size, so 'medium' on a Large jotunborn is discarded."
+  }
+ ]
+}

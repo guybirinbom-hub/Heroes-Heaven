@@ -2175,5 +2175,26 @@
       }
     ],
     "note": "While Raised, a cold siccatite shield grants resistance 10 to fire — the opposing energy type. Switch on the one matching your shield."
+  },
+  "cat-inner-fire-stoked-flame": {
+    "id": "cat-inner-fire-stoked-flame",
+    "name": "Inner Fire (Stoked Flame Stance)",
+    "category": "Monk",
+    "feats": [
+      "inner-fire-monk",
+      "inner-fire-som"
+    ],
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "cold",
+        "value": "floor(@actor.level/2)"
+      },
+      {
+        "type": "fire",
+        "value": "floor(@actor.level/2)"
+      }
+    ],
+    "note": "While in Stoked Flame Stance: cold and fire resistance equal to half your level. Any creature that hits you with an unarmed attack, tries to Grab or Grapple you, or otherwise touches you takes fire damage equal to your Wisdom modifier (minimum 1), no more than once per turn."
   }
 }

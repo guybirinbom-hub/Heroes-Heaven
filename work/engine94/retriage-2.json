@@ -1,0 +1,153 @@
+{
+ "records": [
+  {
+   "id": "advanced-kata",
+   "verdict": "STILL_BLOCKED",
+   "why": "FEAT_PICK_GRANTS exists but FeatPickSpec.maxLevel is only number|'self' (featPickGrants.ts:22) — 'a monk feat, your monk level = half your character level' needs a half-level cap; any static number over-grants at some levels and 'self' over-grants at every level. Also repeatable (maxTakable null) while build.pickFeatChoices is keyed by feat id alone (build.ts:188), so a second take cannot be stored. Missing lane: maxLevel:'half' + per-take pick storage."
+  },
+  {
+   "id": "advanced-maneuver",
+   "verdict": "STILL_BLOCKED",
+   "why": "Same as advanced-kata: FeatPickSpec has no half-character-level maxLevel mode and pickFeatChoices cannot store repeated takes. Missing lane: maxLevel:'half' + per-take pick storage."
+  },
+  {
+   "id": "advanced-martial-magic",
+   "verdict": "STILL_BLOCKED",
+   "why": "Same as advanced-kata: no maxLevel:'half' in FeatPickSpec (a fixed number or 'self' would over-grant), and no per-take storage for a repeatable pick. Missing lane: maxLevel:'half' + per-take pick storage."
+  },
+  {
+   "id": "advanced-muses-whispers",
+   "verdict": "STILL_BLOCKED",
+   "why": "Same as advanced-kata: no maxLevel:'half' in FeatPickSpec, no per-take storage for repeatable picks. Missing lane: maxLevel:'half' + per-take pick storage."
+  },
+  {
+   "id": "advanced-mysteries",
+   "verdict": "STILL_BLOCKED",
+   "why": "Same as advanced-kata: no maxLevel:'half' in FeatPickSpec, no per-take storage for repeatable picks. Missing lane: maxLevel:'half' + per-take pick storage."
+  },
+  {
+   "id": "advanced-shooting",
+   "verdict": "STILL_BLOCKED",
+   "why": "Same as advanced-kata: no maxLevel:'half' in FeatPickSpec, no per-take storage for repeatable picks. Missing lane: maxLevel:'half' + per-take pick storage."
+  },
+  {
+   "id": "advanced-synergy",
+   "verdict": "STILL_BLOCKED",
+   "why": "Same as advanced-kata: no maxLevel:'half' in FeatPickSpec, no per-take storage for repeatable picks (basic-synergy's excludeTraits:['tandem'] twin exists but its maxLevel 2 is a printed cap, not a half-level one). Missing lane: maxLevel:'half' + per-take pick storage."
+  },
+  {
+   "id": "advanced-thaumaturgy",
+   "verdict": "STILL_BLOCKED",
+   "why": "Same as advanced-kata: no maxLevel:'half' in FeatPickSpec, no per-take storage for repeatable picks. Missing lane: maxLevel:'half' + per-take pick storage."
+  },
+  {
+   "id": "advanced-thoughtform",
+   "verdict": "STILL_BLOCKED",
+   "why": "Same as advanced-kata: no maxLevel:'half' in FeatPickSpec, no per-take storage for repeatable picks. Missing lane: maxLevel:'half' + per-take pick storage."
+  },
+  {
+   "id": "advanced-trickery",
+   "verdict": "STILL_BLOCKED",
+   "why": "Same as advanced-kata: no maxLevel:'half' in FeatPickSpec, no per-take storage for repeatable picks. Missing lane: maxLevel:'half' + per-take pick storage."
+  },
+  {
+   "id": "advanced-wilding",
+   "verdict": "STILL_BLOCKED",
+   "why": "Same as advanced-kata: no maxLevel:'half' in FeatPickSpec, no per-take storage for repeatable picks. Missing lane: maxLevel:'half' + per-take pick storage."
+  },
+  {
+   "id": "advanced-witchcraft",
+   "verdict": "STILL_BLOCKED",
+   "why": "Same as advanced-kata: no maxLevel:'half' in FeatPickSpec, no per-take storage for repeatable picks. Missing lane: maxLevel:'half' + per-take pick storage."
+  },
+  {
+   "id": "aiuvarin",
+   "verdict": "STILL_BLOCKED",
+   "why": "Low-light vision is already modelled; the unmodelled half is 'you can choose from aiuvarin and elf feats in addition to those from your ancestry'. featSlots.ts:56 gates an ancestry slot on f.traits.includes(build.ancestryId) only, and the Heritage interface (types.ts:551-575) has no field listing extra allowed feat traits. FEAT_PICK_GRANTS is a one-shot bonus pick, not a widened slot pool, so it cannot express this. Missing lane: a heritage extraFeatTraits field consulted by eligibleFeatsForSlot."
+  },
+  {
+   "id": "animists-power",
+   "verdict": "STILL_BLOCKED",
+   "why": "Same shape as the advanced-* feats: needs maxLevel:'half' (animist level = half character level) plus excludeTraits:['wandering'], and it is repeatable so pickFeatChoices (keyed by feat id) cannot hold multiple takes. excludeTraits exists; the half-level cap and per-take storage do not. Missing lane: maxLevel:'half' + per-take pick storage."
+  },
+  {
+   "id": "aon-half-elf",
+   "verdict": "STILL_BLOCKED",
+   "why": "Elf feats are already reachable via ancestryId; 'you can select elf, half-elf, and human feats' needs the ancestry-feat pool widened by heritage traits. featSlots.ts:56 consults only build.ancestryId and Heritage (types.ts:551) carries no extra-trait field. Missing lane: a heritage extraFeatTraits field consulted by eligibleFeatsForSlot."
+  },
+  {
+   "id": "aon-half-orc",
+   "verdict": "STILL_BLOCKED",
+   "why": "Same as aon-half-elf: 'you can select orc, half-orc, and human feats' — the half-orc/human half of the pool is unreachable because featSlots.ts:56 filters ancestry slots on build.ancestryId alone and Heritage has no extra-feat-trait field. Missing lane: a heritage extraFeatTraits field consulted by eligibleFeatsForSlot."
+  },
+  {
+   "id": "ardande",
+   "verdict": "STILL_BLOCKED",
+   "why": "Vision is modelled (senses + darkvisionIfAncestryLowLight). The unmodelled half is access to ardande AND geniekin feats at every ancestry-feat slot — featSlots.ts:56 filters on build.ancestryId only and Heritage (types.ts:551) has no field for extra allowed feat traits. Missing lane: a heritage extraFeatTraits field consulted by eligibleFeatsForSlot."
+  },
+  {
+   "id": "azarketi-weapon-expertise",
+   "verdict": "NOW_FIXABLE",
+   "why": "Lane 4 (weaponFamiliarity.mirrorBestCategory, featGrants.ts:116, applied via the FEAT_SKILL_GRANTS/FEAT_GRANTS registry in featGrantsAuto.ts) expresses exactly 'whenever you gain a class feature granting expert or greater proficiency in certain weapons, you also gain it in <list>'. Every other ancestry expertise twin already uses it; azarketi alone was missing. All seven weapon ids verified in core.json (boarding-axe and gill-hook are the two azarketi-trait weapons). mirrorBestCategory (not a flat rank) keeps a low-level holder from gaining anything unearned.",
+   "fix": {
+    "kind": "featGrant",
+    "id": "azarketi-weapon-expertise",
+    "grant": {
+     "weaponFamiliarity": {
+      "weapons": ["crossbow", "hand-crossbow", "longspear", "spear", "trident", "boarding-axe", "gill-hook"],
+      "mirrorBestCategory": true
+     }
+    }
+   }
+  },
+  {
+   "id": "butterflys-sting",
+   "verdict": "STILL_BLOCKED",
+   "why": "'You gain the Sneak Attack class feature' — derive.ts:1137 emits the precision rider only when ownedFeatureIds() has 'sneak-attack', and ownedFeatureIds (derive.ts:1089) is built solely from cls.features, subclass variants and classChoices; no feat can inject into it. A ModeDef grants check bonuses/defences/senses/speeds, not a precision-damage rider, so the new mode lane does not reach it either. Also needs a non-scaling 1d6 (derive.ts scales by character level). Missing lane: a feat-grants-a-class-feature lane feeding ownedFeatureIds, with a no-scaling flag."
+  },
+  {
+   "id": "captain-dedication",
+   "verdict": "NOW_FIXABLE",
+   "why": "The Diplomacy/Intimidation training is already in featGrantsAuto.ts:79. The missing 'your choice of the Group Impression or the Group Coercion skill feat' is exactly the FEAT_PICK_GRANTS ids form (lane 3 — 'use ids when the text names the options'); both ids verified in core.json as level-1 skill feats. The dedicated follower is also expressible with the existing companion registry: CompanionKind already includes 'follower' (types.ts:1486) and SimpleCompanion models it (types.ts:1276), so a FEAT_COMPANION_GRANTS entry {kind:'follower', label:'Dedicated Follower', note:'Begins as a novice follower; has the minion trait.'} completes it. Note the 'if you already have both, gain another 1st-level skill feat' fallback is not modelled by the pick and is left out rather than over-granted.",
+   "fix": {
+    "kind": "featPick",
+    "id": "captain-dedication",
+    "spec": {
+     "prompt": "Choose Group Impression or Group Coercion",
+     "maxLevel": 1,
+     "ids": ["group-impression", "group-coercion"]
+    }
+   }
+  },
+  {
+   "id": "combat-flexibility",
+   "verdict": "NOT_A_GAP",
+   "why": "Already delivered, just not by a field on the record. build.ts:3817 pushes an additive 'bonus' feat slot for a fighter at level 9 (and 15 for Improved Flexibility), featSlots.ts:78 restricts that slot to a fighter feat of level <= slotLevel-1 (so <=8 at L9, <=14 at L15), and build.ts:3562 lets the slot accept fighter-trait feats when re-placing. The app has no daily-prep step, so the feat is modelled as a persistent bonus slot — the pick renders and its effects apply."
+  },
+  {
+   "id": "draconic-paragon",
+   "verdict": "STILL_BLOCKED",
+   "why": "Three branches, none expressible. Benefactor's Strike adds the deadly d6 trait to already-granted jaws/claws/tail unarmed Strikes — no lane adds a trait to an existing Strike. Dracomancer increments another feat's innate-spell uses per day by 1 — innateSpells declares uses outright, there is no increment-another-record's-uses lane. Kobold Breath's crit-fail persistent damage is entirely target-side. Modes grant defences/senses/speeds/check bonuses, none of which apply. Missing lanes: add-a-trait-to-a-granted-Strike, and increment-another-feat's-innate-spell-uses."
+  },
+  {
+   "id": "dwarven-weapon-expertise",
+   "verdict": "NOW_FIXABLE",
+   "why": "Lane 4 (weaponFamiliarity.mirrorBestCategory, featGrants.ts:116) expresses this verbatim and the feat is simply absent from the featGrantsAuto registry. Base-item ids verified in core.json: battle-axe, pick, warhammer plus the dwarf-trait weapons clan-dagger, clan-pistol, dwarven-scattergun, dwarven-dorn-dergar, dwarven-waraxe, long-hammer, wrecker. mirrorBestCategory (never a flat 'expert') keeps it from granting proficiency the character has not earned, matching 'whenever you gain a class feature that grants expert or greater'.",
+   "fix": {
+    "kind": "featGrant",
+    "id": "dwarven-weapon-expertise",
+    "grant": {
+     "weaponFamiliarity": {
+      "weapons": ["battle-axe", "pick", "warhammer", "clan-dagger", "clan-pistol", "dwarven-scattergun", "dwarven-dorn-dergar", "dwarven-waraxe", "long-hammer", "wrecker"],
+      "mirrorBestCategory": true
+     }
+    }
+   }
+  },
+  {
+   "id": "elemental-overlap",
+   "verdict": "STILL_BLOCKED",
+   "why": "'A composite impulse feat that INCLUDES YOUR KINETIC ELEMENT' cannot be written: FeatPickSpec has traits/dynamicTrait ('class'|'ancestry') only — there is no element-aware dynamic filter, so traits:['impulse','composite'] would offer the 16 composite impulses of elements the character does not have (over-granting; featSlots.ts:68 applies that element gate to normal slots, pickableFeats does not). The 'feat's level must be lower than the level at which you selected this' cap is also not a constant (the feat is level 8 but repeatable at later levels), and being repeatable it hits the same pickFeatChoices one-pick-per-feat-id limit. Missing lane: an element-aware dynamicTrait plus per-take pick storage."
+  }
+ ]
+}

@@ -1,0 +1,194 @@
+[
+ {
+  "id": "advanced-kata",
+  "name": "Advanced Kata",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "\"You gain one monk feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['monk']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+  "text": "You gain one monk feat. For the purpose of meeting its prerequisites, your monk level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another monk feat."
+ },
+ {
+  "id": "advanced-maneuver",
+  "name": "Advanced Maneuver",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "\"You gain one fighter feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['fighter']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+  "text": "You gain a fighter feat. For the purpose of meeting its prerequisites, your fighter level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another fighter feat."
+ },
+ {
+  "id": "advanced-martial-magic",
+  "name": "Advanced Martial Magic",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "\"You gain one magus feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['magus']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+  "text": "You gain one magus feat. For the purpose of meeting its prerequisites, your magus level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another magus feat."
+ },
+ {
+  "id": "advanced-muses-whispers",
+  "name": "Advanced Muse's Whispers",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "\"You gain one bard feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['bard']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+  "text": "You gain one bard feat. For the purpose of meeting its prerequisites, your bard level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another bard feat."
+ },
+ {
+  "id": "advanced-mysteries",
+  "name": "Advanced Mysteries",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "\"You gain one oracle feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['oracle']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+  "text": "You gain one oracle feat. For meeting its prerequisites, your oracle level is equal to half your level. --- **Special** You can select this feat more than once. Each time, you gain another oracle feat."
+ },
+ {
+  "id": "advanced-shooting",
+  "name": "Advanced Shooting",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "\"You gain one gunslinger feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['gunslinger']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+  "text": "You gain one gunslinger feat. For the purpose of meeting its prerequisites, your gunslinger level is equal to half your level. --- **Special** You can select this feat more than once. Each time you select it, you gain another gunslinger feat."
+ },
+ {
+  "id": "advanced-synergy",
+  "name": "Advanced Synergy",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "\"You gain one summoner feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['summoner']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+  "text": "You gain one summoner feat. For the purpose of meeting its prerequisites, your summoner level is equal to half your character level. **Special** You can select this feat more than once. Each time you select it, you gain another summoner feat."
+ },
+ {
+  "id": "advanced-thaumaturgy",
+  "name": "Advanced Thaumaturgy",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "\"You gain one thaumaturge feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['thaumaturge']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+  "text": "You gain one thaumaturge feat. For the purpose of meeting its prerequisites, your thaumaturge level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another thaumaturge feat."
+ },
+ {
+  "id": "advanced-thoughtform",
+  "name": "Advanced Thoughtform",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "\"You gain one psychic feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['psychic']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+  "text": "You gain one psychic feat. For the purpose of meeting its prerequisites, your psychic level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another psychic feat."
+ },
+ {
+  "id": "advanced-trickery",
+  "name": "Advanced Trickery",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "\"You gain one rogue feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['rogue']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+  "text": "You gain one rogue feat. For the purpose of meeting its prerequisites, your rogue level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another rogue feat."
+ },
+ {
+  "id": "advanced-wilding",
+  "name": "Advanced Wilding",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "\"You gain one druid feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['druid']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+  "text": "You gain one druid feat. For the purpose of meeting its prerequisites, your druid level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another druid feat."
+ },
+ {
+  "id": "advanced-witchcraft",
+  "name": "Advanced Witchcraft",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "\"You gain one witch feat\" (class level = half your character level) — the pick-a-feat analogue of basic-*, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['witch']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+  "text": "You gain one witch feat. For the purpose of meeting its prerequisites, your witch level is equal to half your character level. --- **Special** You can select this feat more than once. Each time you select it, you gain another witch feat."
+ },
+ {
+  "id": "aiuvarin",
+  "name": "Aiuvarin",
+  "collection": "heritages",
+  "lane": "grantsFeat",
+  "priorReason": "Low-light vision IS modelled (senses:[low-light-vision]). Not modelled: \"you gain the elf trait ... you can choose from aiuvarin and elf feats in addition to those from your ancestry\" — e.g. round-ears/sociable/earned-glory (traits:[\"aiuvarin\"]) can never be picked. src/rules/featSlots.ts:56 gates an ancestry-feat slot on f.traits.includes(build.ancestryId) alone and never consults the chosen heritage, so the widened feat pool this heritage grants is unreachable. Engine fix: eligibleFeatsForSlot must also accept feats carrying the heritage trait (and the heritage record needs a field listing the extra allowed traits).",
+  "text": "You have elves, or possibly other aiuvarins, in your family tree. You have pointed ears and other telltale signs of elf heritage. You gain the elf trait, the aiuvarin trait, and low-light vision. In addition, when you gain an ancestry feat, you can choose from aiuvarin and elf feats in addition to those from your ancestry."
+ },
+ {
+  "id": "animists-power",
+  "name": "Animist's Power",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "\"You gain one animist feat\" (class level = half your character level) — the pick-a-feat analogue of spiritual-awakening, but this id is absent from FEAT_PICK_GRANTS, so no picker ever renders and the bonus feat is never granted. featPickGrants.ts covers every basic-* twin (basic-fury, basic-kata, …) and none of the advanced-* ones. Fix = add {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['animist']} to FEAT_PICK_GRANTS, which needs two small engine additions in featPickGrants.ts/pickableFeats: a maxLevel mode 'half' (floor(level/2)) and per-take storage, since these feats are repeatable (maxTakable:null) while build.pickFeatChoices is keyed by feat id alone.",
+  "text": "You gain one animist feat. For the purpose of meeting its prerequisites, your animist level is equal to half your character level. You can't use this feat to gain animist feats with the wandering trait. --- **Special** You can select this feat more than once. Each time you select it, you gain another animist feat."
+ },
+ {
+  "id": "aon-half-elf",
+  "name": "Half-Elf",
+  "collection": "heritages",
+  "lane": "grantsFeat",
+  "priorReason": "Low-light vision is modelled and ancestryId is elf, so elf feats are reachable. Not modelled: \"you can select elf, half-elf, and human feats\" — the human/half-elf half of that pool is unreachable. src/rules/featSlots.ts:56 gates an ancestry-feat slot on f.traits.includes(build.ancestryId) alone and never consults the chosen heritage, so the widened feat pool this heritage grants is unreachable. Engine fix: eligibleFeatsForSlot must also accept feats carrying the heritage trait (and the heritage record needs a field listing the extra allowed traits).",
+  "text": "Either one of your parents was an elf, or one or both were half-elves. You have pointed ears and other telltale signs of elf heritage. You gain the elf trait, the half-elf trait, and low-light vision. In addition, you can select elf, half-elf, and human feats whenever you gain an ancestry feat."
+ },
+ {
+  "id": "aon-half-orc",
+  "name": "Half-Orc",
+  "collection": "heritages",
+  "lane": "grantsFeat",
+  "priorReason": "Low-light vision is modelled and ancestryId is orc, so orc feats are reachable. Not modelled: \"you can select orc, half-orc, and human feats\" — the human/half-orc half of that pool is unreachable. src/rules/featSlots.ts:56 gates an ancestry-feat slot on f.traits.includes(build.ancestryId) alone and never consults the chosen heritage, so the widened feat pool this heritage grants is unreachable. Engine fix: eligibleFeatsForSlot must also accept feats carrying the heritage trait (and the heritage record needs a field listing the extra allowed traits).",
+  "text": "One of your parents was an orc, or one or both were half-orcs. You have a green tinge to your skin and other indicators of orc heritage. You gain the orc trait, the half-orc trait, and low-light vision. In addition, you can select orc, half-orc, and human feats whenever you gain an ancestry feat."
+ },
+ {
+  "id": "ardande",
+  "name": "Ardande",
+  "collection": "heritages",
+  "lane": "grantsFeat",
+  "priorReason": "Vision is modelled (senses + darkvisionIfAncestryLowLight). Not modelled: access to ardande AND geniekin feats. src/rules/featSlots.ts:56 gates an ancestry-feat slot on f.traits.includes(build.ancestryId) alone and never consults the chosen heritage, so the widened feat pool this heritage grants is unreachable. Engine fix: eligibleFeatsForSlot must also accept feats carrying the heritage trait (and the heritage record needs a field listing the extra allowed traits).",
+  "text": "You descend from wood elementals or have some other heritage influenced by the elemental Plane of Wood. You might have green, mossy skin, vines that grow from your head instead of hair, or thin appendages that resemble twigs. You gain the ardande trait, in addition to the traits from your ancestry. You also gain low-light vision, or you gain darkvision if your ancestry already has low-light vision. You can choose from ardande feats, geniekin feats, and feats from your ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "azarketi-weapon-expertise",
+  "name": "Azarketi Weapon Expertise",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "\"Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency in Crossbows, Hand Crossbows, Longspears, Spears, Tridents, and all azarketi weapons\" is delivered by nothing. featGrantsAuto.ts has the trained half (azarketi-weapon-familiarity, line 47) and has the mirrorBestCategory expertise twin for every comparable ancestry (catfolk-, conrasu-, genie-, ghoran-, grippli-, hobgoblin-, kobold-, vanara-, vishkanya-weapon-expertise) — azarketi alone is absent. weaponFamiliarity is NOT a record field (0 feats in core.json carry it), so the fix is a registry line in featGrantsAuto.ts: \"azarketi-weapon-expertise\": { weaponFamiliarity: { weapons: [\"crossbow\",\"hand-crossbow\",\"longspear\",\"spear\",\"trident\",\"boarding-axe\",\"gill-hook\"], mirrorBestCategory: true } }",
+  "text": "Your mastery with weapons both above and below water is unmatched. Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency in Crossbows, Hand Crossbows, Longspears, Spears, Tridents, and all azarketi weapons in which you are trained."
+ },
+ {
+  "id": "butterflys-sting",
+  "name": "Butterfly's Sting",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "\"You gain the Sneak Attack class feature\" — derive.ts:1073 emits the precision rider only when ownedFeatureIds() contains 'sneak-attack', and ownedFeatureIds (derive.ts:1025) is built solely from the class's own feature list, subclass variants and classChoices; no feat-grant path reaches it. Taking this archetype feat therefore adds nothing to any Strike. Also needs the archetype's non-scaling 1d6 (derive.ts scales by character level).",
+  "text": "You gain the Sneak Attack class feature. You don't increase the number of dice as you gain levels."
+ },
+ {
+  "id": "captain-dedication",
+  "name": "Captain Dedication",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "featGrantsAuto.ts:63 covers only the Diplomacy/Intimidation training. The dedication also grants a Group Impression / Group Coercion pick and, more importantly, a novice dedicated follower minion — captain-dedication is absent from companionGrants.ts, so the follower never appears in the Companions tab. Needs a companionGrants entry plus a two-option feat pick (grantedFeatByChoice is Background-only, types.ts:601).",
+  "text": "You become trained in your choice of Diplomacy or Intimidation; if you are already trained in both of these skills, you become trained in a skill of your choice. You also gain your choice of the Group Impression or the Group Coercion skill feat. If you already have both of these skill feats, you gain another 1st-level skill feat for which you qualify. You also gain the assistance of a dedicated follower, who has agreed to accompany you on your journeys. They have the minion trait and begin as a novice follower. --- **Special** Once you have a follower, you can never take a feat or class feature that grants an animal companion or another companion that prevents you from having an animal companion."
+ },
+ {
+  "id": "combat-flexibility",
+  "name": "Combat Flexibility",
+  "collection": "classFeatures",
+  "lane": "grantsFeat",
+  "priorReason": "The 9th-level fighter feature hands you an 8th-or-lower fighter feat at every daily preparation, and the record carries no field at all — no choice, no registry entry, so the feat is never picked or applied. featPickGrants is keyed by granting FEAT id (build.pickFeatChoices), so a class feature needs the open daily-prep pick lane (as construct-eidolon uses for its evolution feat).",
+  "text": "You can prepare your tactics to suit different situations. When you make your daily preparations, you gain one fighter feat of 8th level or lower that you meet the prerequisites for and don't already have. You can use that feat until your next daily preparations."
+ },
+ {
+  "id": "draconic-paragon",
+  "name": "Draconic Paragon",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "Nothing on the record (no fields at all) delivers any of the three upgrades. Two are real sheet changes: your jaws/claws/tail unarmed Strikes gain the deadly d6 trait, and each Dracomancer 1st/2nd-rank innate spell gains +1 use per day. There is no lane for adding a trait to an already-granted Strike or for incrementing another feat's innate-spell uses, and the branch that applies depends on which prerequisite feat you own.",
+  "text": "Your connection to your draconic benefactor becomes especially pronounced. You gain additional effects for the prerequisite kobold feat. If you have more than one of the prerequisite feats, you gain the appropriate additional effects. - **Benefactor's Strike** Your unarmed strikes made with your jaws, claws, or tail gain the deadly d6 trait. - **Dracomancer** Increase the number of times per day you can cast each of the granted 1st- and 2nd-rank innate spells by 1. - **Kobold Breath** Creatures that critically fail their save against your Kobold Breath take 3d4 persistent damage of the type dealt by your draconic benefactor."
+ },
+ {
+  "id": "dwarven-weapon-expertise",
+  "name": "Dwarven Weapon Expertise",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "Grep of src/ finds no 'dwarven-weapon-expertise' or 'dwarven-weapon-familiarity' anywhere — not in featGrantsAuto, featGrants, featFeatGrants or the backfill, and core.json carries only level/category. A dwarf with this feat never gets expert-or-better in battle axes, picks, warhammers and dwarven weapons. The lane exists (featGrantsAuto weaponFamiliarity with mirrorBestCategory:true, as used for catfolk/conrasu/hobgoblin) but is registry-only — there is no weaponFamiliarity data field on any core.json feat.",
+  "text": "Dwarven Weapon Expertise Source Core Rulebook pg. 37 Prerequisites Dwarven Weapon Familiarity Your dwarven affinity blends with your training, granting you great skill with dwarven weapons. Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency for battle axes, picks, warhammers, and all dwarven weapons in which you are trained."
+ },
+ {
+  "id": "elemental-overlap",
+  "name": "Elemental Overlap",
+  "collection": "feats",
+  "lane": "grantsFeat",
+  "priorReason": "\"Gain a composite impulse feat that includes your kinetic element\" is a filtered feat pick and the record has no fields and no registry entry, so the feat is never chosen or applied. It belongs in featPickGrants.ts (class category, traits ['impulse','composite'], maxLevel below the level taken) — a registry lane with no data-field equivalent.",
+  "text": "Though you've dedicated yourself to one element, you learn to mix that element with another. Gain a composite impulse feat that includes your kinetic element. You can use that impulse even though you can't channel all its elements. The feat's level must be lower than the level at which you selected Elemental Overlap. --- **Special** You can select this feat more than once, choosing a different impulse feat each time."
+ }
+]

@@ -44770,5 +44770,75 @@
         "usesPerDay": 1
       }
     ]
+  },
+  {
+    "category": "feats",
+    "id": "archwizards-might",
+    "field": "spellSlotBonus",
+    "value": {
+      "byRank": {
+        "10": 1
+      }
+    }
+  },
+  {
+    "category": "feats",
+    "id": "bloodline-perfection",
+    "field": "spellSlotBonus",
+    "value": {
+      "byRank": {
+        "10": 1
+      }
+    }
+  },
+  {
+    "category": "feats",
+    "id": "hierophants-power",
+    "field": "spellSlotBonus",
+    "value": {
+      "byRank": {
+        "10": 1
+      }
+    }
+  },
+  {
+    "category": "feats",
+    "id": "maker-of-miracles",
+    "field": "spellSlotBonus",
+    "value": {
+      "byRank": {
+        "10": 1
+      }
+    }
+  },
+  {
+    "category": "feats",
+    "id": "oracular-providence",
+    "field": "spellSlotBonus",
+    "value": {
+      "byRank": {
+        "10": 1
+      }
+    }
+  },
+  {
+    "category": "feats",
+    "id": "patrons-truth",
+    "field": "spellSlotBonus",
+    "value": {
+      "byRank": {
+        "10": 1
+      }
+    }
+  },
+  {
+    "category": "feats",
+    "id": "perfect-encore",
+    "field": "spellSlotBonus",
+    "value": {
+      "byRank": {
+        "10": 1
+      }
+    }
   }
 ]

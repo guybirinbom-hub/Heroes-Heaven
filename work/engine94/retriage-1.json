@@ -1,0 +1,148 @@
+{
+  "records": [
+    {
+      "id": "ring-of-wizardry-type-i",
+      "verdict": "NOT_A_GAP",
+      "why": "The byRank lane is now IMPLEMENTED (build.ts:2560 reads bonus.byRank and short-circuits before the perRank spread; SpellSlotBonus.byRank is declared at types.ts:372). The record already carries spellSlotBonus {\"byRank\":{\"1\":2}}, which matches 'two additional 1st-rank arcane spell slots' exactly. No data change needed. Residual (out of scope, not a new gap): the arcane-tradition gate is not expressible — entryId targets an entry id, not a tradition — so a non-arcane caster wearing the ring still gets the slots.",
+      "fix": null
+    },
+    {
+      "id": "ring-of-wizardry-type-ii",
+      "verdict": "NOT_A_GAP",
+      "why": "byRank is now read (build.ts:2560). Data already holds {\"byRank\":{\"1\":1,\"2\":2}} = 'two additional 2nd-rank and one additional 1st-rank'. Exact match, no change needed. Same arcane-tradition gating caveat as Type I.",
+      "fix": null
+    },
+    {
+      "id": "ring-of-wizardry-type-iii",
+      "verdict": "NOT_A_GAP",
+      "why": "byRank is now read (build.ts:2560). Data already holds {\"byRank\":{\"2\":1,\"3\":2}} = 'two additional 3rd-rank and one additional 2nd-rank'. Exact match, no change needed. Same arcane-tradition gating caveat.",
+      "fix": null
+    },
+    {
+      "id": "ring-of-wizardry-type-iv",
+      "verdict": "NOT_A_GAP",
+      "why": "byRank is now read (build.ts:2560). Data already holds {\"byRank\":{\"3\":1,\"4\":2}} = 'two additional 4th-rank and one additional 3rd-rank'. Exact match, no change needed. Same arcane-tradition gating caveat.",
+      "fix": null
+    },
+    {
+      "id": "shattered-sacrament",
+      "verdict": "STILL_BLOCKED",
+      "why": "Needs a repertoire-add lane: extra spells KNOWN in an ARCHETYPE spellcasting entry. halcyon-speaker-dedication is repertoire:true in casterArchetypes.ts, but grantedRepertoire (types.ts:1786) is only ever written by SUBCLASS options (grantedSpells, types.ts:813); no feat-level field feeds it. FEAT_CANTRIP_GRANTS is the wrong lane — it injects picks into the INNATE entry (at-will/1-per-day), which would mis-grant. The 'cast a halcyon spell as divine instead' clause is display-only.",
+      "fix": null
+    },
+    {
+      "id": "sin-reservoir",
+      "verdict": "STILL_BLOCKED",
+      "why": "Needs a PLAYER-CHOSEN-RANK slot lane. byRank names fixed ranks; this grants ONE slot at a rank the player picks each day (any rank up to two below the highest wizard rank), further restricted to curriculum spells. perRank+exceptHighest:2 would add a slot at EVERY eligible rank (massive over-grant), and byRank cannot encode 'one, rank of your choice'. Also needs a slot-contents restriction (curriculum-only), which no field expresses.",
+      "fix": null
+    },
+    {
+      "id": "snowcaster",
+      "verdict": "STILL_BLOCKED",
+      "why": "Needs a casterArchetypes.ts entry for 'gelid-shard-dedication' (archetype spellcasting progression: cantrips, slot ladder, trained spell attack/DC, repertoire:true). CASTER_ARCHETYPES is a hand-maintained code table, not a data field in types.ts — there is no field on the feat that can declare 'you gain the basic spellcasting benefits'. spellcastingGrant only sets an attack/DC profile, not slots. expert-snowcasting / master-snowcasting are dead for the same reason.",
+      "fix": null
+    },
+    {
+      "id": "staff-nexus",
+      "verdict": "STILL_BLOCKED",
+      "why": "Needs a grants-an-inventory-item lane (no field creates an item in build.inventory) plus a staff charge pool fed by expending prepared spells at daily preparations, scaling to two spells at 8th and three at 16th. limitedUses is a fixed per-day counter and cannot model 'charges equal to the expended spell's rank'.",
+      "fix": null
+    },
+    {
+      "id": "true-channel-spell",
+      "verdict": "STILL_BLOCKED",
+      "why": "byRank exists but cannot CREATE a rank the entry does not already have: build.ts's add() is `if (entry.prepared?.[r]) entry.prepared[r].push(...)`, and animistPreparedSlots (spellcasting.ts:86) loops r=1..9 only, so the animist prepared entry has no rank-10 key and {\"byRank\":{\"10\":1}} is a silent no-op. Needs add() to materialise a missing rank (and the 'can't be used with abilities that give more slots' clause has no lane either).",
+      "fix": null
+    },
+    {
+      "id": "add-element",
+      "verdict": "STILL_BLOCKED",
+      "why": "Needs a FeatPickSpec trait sourced from a SIBLING CHOICE (the element just picked in the record's own choice.flag 'addedElement'); dynamicTrait only supports 'class' | 'ancestry' (featPickGrants.ts:112-139). Also needs a maxLevel 'half' mode — floor(level/2) — which FeatPickSpec lacks (maxLevel is number | 'self' only). Fixed traits would offer the wrong element's impulses; maxLevel 'self' would over-grant.",
+      "fix": null
+    },
+    {
+      "id": "advanced-arcana",
+      "verdict": "STILL_BLOCKED",
+      "why": "Needs a maxLevel 'half' mode in FeatPickSpec. The offered wizard feat is capped by wizard level = floor(character level / 2); maxLevel is number | 'self' (featPickGrants.ts:120), so 'self' over-grants (a 6th-level character could take a 6th-level wizard feat) and a fixed number under-grants at higher levels. Second blocker: the feat is repeatable (maxTakable:null) but build.pickFeatChoices is Record<string,string> keyed by granting-feat id (build.ts:188/2179), so a second take cannot store a second pick.",
+      "fix": null
+    },
+    {
+      "id": "advanced-blood-potency",
+      "verdict": "STILL_BLOCKED",
+      "why": "Same two missing lanes as advanced-arcana: FeatPickSpec has no 'half' maxLevel (sorcerer feat capped at floor(level/2)), and pickFeatChoices keyed by feat id cannot hold per-take picks for a repeatable feat.",
+      "fix": null
+    },
+    {
+      "id": "advanced-breakthrough",
+      "verdict": "STILL_BLOCKED",
+      "why": "Same two missing lanes: no 'half' maxLevel in FeatPickSpec (inventor feat capped at floor(level/2)) and no per-take pick storage for a repeatable feat.",
+      "fix": null
+    },
+    {
+      "id": "advanced-concoction",
+      "verdict": "STILL_BLOCKED",
+      "why": "Same two missing lanes: no 'half' maxLevel in FeatPickSpec (alchemist feat capped at floor(level/2)) and no per-take pick storage for a repeatable feat.",
+      "fix": null
+    },
+    {
+      "id": "advanced-deduction",
+      "verdict": "STILL_BLOCKED",
+      "why": "Same two missing lanes: no 'half' maxLevel in FeatPickSpec (investigator feat capped at floor(level/2)) and no per-take pick storage for a repeatable feat.",
+      "fix": null
+    },
+    {
+      "id": "advanced-defender",
+      "verdict": "STILL_BLOCKED",
+      "why": "Same two missing lanes: no 'half' maxLevel in FeatPickSpec (guardian feat capped at floor(level/2)) and no per-take pick storage for a repeatable feat.",
+      "fix": null
+    },
+    {
+      "id": "advanced-devotion",
+      "verdict": "STILL_BLOCKED",
+      "why": "Same two missing lanes: no 'half' maxLevel in FeatPickSpec (champion feat capped at floor(level/2)) and no per-take pick storage for a repeatable feat.",
+      "fix": null
+    },
+    {
+      "id": "advanced-dogma",
+      "verdict": "STILL_BLOCKED",
+      "why": "Same two missing lanes: no 'half' maxLevel in FeatPickSpec (cleric feat capped at floor(level/2)) and no per-take pick storage for a repeatable feat.",
+      "fix": null
+    },
+    {
+      "id": "advanced-element-control",
+      "verdict": "STILL_BLOCKED",
+      "why": "Same two missing lanes: no 'half' maxLevel in FeatPickSpec (kineticist feat capped at floor(level/2)) and no per-take pick storage for a repeatable feat. The priorReason already named these as required engine additions and neither has landed.",
+      "fix": null
+    },
+    {
+      "id": "advanced-field-training",
+      "verdict": "STILL_BLOCKED",
+      "why": "Same two missing lanes: no 'half' maxLevel in FeatPickSpec (commander feat capped at floor(level/2)) and no per-take pick storage for a repeatable feat.",
+      "fix": null
+    },
+    {
+      "id": "advanced-flair",
+      "verdict": "STILL_BLOCKED",
+      "why": "Same two missing lanes: no 'half' maxLevel in FeatPickSpec (swashbuckler feat capped at floor(level/2)) and no per-take pick storage for a repeatable feat.",
+      "fix": null
+    },
+    {
+      "id": "advanced-fury",
+      "verdict": "STILL_BLOCKED",
+      "why": "Same two missing lanes: no 'half' maxLevel in FeatPickSpec (barbarian feat capped at floor(level/2)) and no per-take pick storage for a repeatable feat.",
+      "fix": null
+    },
+    {
+      "id": "advanced-glory",
+      "verdict": "STILL_BLOCKED",
+      "why": "Same two missing lanes: no 'half' maxLevel in FeatPickSpec (exemplar feat capped at floor(level/2)) and no per-take pick storage for a repeatable feat.",
+      "fix": null
+    },
+    {
+      "id": "advanced-hunters-trick",
+      "verdict": "STILL_BLOCKED",
+      "why": "Same two missing lanes: no 'half' maxLevel in FeatPickSpec (ranger feat capped at floor(level/2)) and no per-take pick storage for a repeatable feat.",
+      "fix": null
+    }
+  ]
+}

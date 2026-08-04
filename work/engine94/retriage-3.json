@@ -1,0 +1,231 @@
+{
+  "records": [
+    {
+      "id": "elven-weapon-expertise",
+      "verdict": "NOW_FIXABLE",
+      "why": "Lane 4 (weaponFamiliarity.mirrorBestCategory) is exactly this text. build.ts:2470-2492 applies FEAT_GRANTS[featId].weaponFamiliarity AFTER class advancement, using the character's best weapon-category rank when mirrorBestCategory is set — the same shape already shipped for gnoll/gnome/goblin/halfling/orc/vanths weapon expertise. Weapon ids verified against core.json (longbow, composite-longbow, longsword, rapier, shortbow, composite-shortbow all exist; the elf-trait base weapons are elven-curve-blade, elven-branched-spear, dawnsilver-tree and the three-peaked-tree trio). mirrorBestCategory grants nothing at level 1 and never hands out a rank the character has not earned, so it cannot over-grant.",
+      "fix": {
+        "kind": "featGrant",
+        "id": "elven-weapon-expertise",
+        "grant": {
+          "weaponFamiliarity": {
+            "weapons": [
+              "longbow",
+              "composite-longbow",
+              "longsword",
+              "rapier",
+              "shortbow",
+              "composite-shortbow",
+              "elven-curve-blade",
+              "elven-branched-spear",
+              "dawnsilver-tree",
+              "three-peaked-tree",
+              "three-peaked-tree-melee",
+              "three-peaked-tree-ranged"
+            ],
+            "mirrorBestCategory": true
+          }
+        }
+      }
+    },
+    {
+      "id": "evolution-feat",
+      "verdict": "STILL_BLOCKED",
+      "why": "None of the four new lanes reach it. FEAT_PICK_GRANTS is resolved only for taken FEAT ids (build.ts:2176-2183) and build.heritageId (2187-2194) — never for a classFeatures record — and the real shape needed is not a bonus pick at all but a RESTRICTED level-1 class-feat slot in core.classes.summoner.featProgression.class (which is [2,4,…,20]).",
+      "fix": null,
+      "missingLane": "needs a restricted (evolution-only) extra class-feat slot in a class's featProgression"
+    },
+    {
+      "id": "experimental-spellshaping",
+      "verdict": "STILL_BLOCKED",
+      "why": "Both halves need lanes that do not exist. FEAT_PICK_GRANTS cannot be keyed to a classFeatures/thesis id (build.ts consults it for feat ids and heritageId only), and the 4th-level half is a DAILY re-pick of a feat — FeatChoiceDef.daily records an answer but grants nothing, and there is no daily feat-grant lane.",
+      "fix": null,
+      "missingLane": "needs FEAT_PICK_GRANTS resolution keyed by class-feature/subclass id, plus a daily-preparations feat-pick grant"
+    },
+    {
+      "id": "fury-instinct",
+      "verdict": "STILL_BLOCKED",
+      "why": "The rage tiers are modelled (derive.ts RAGE_DAMAGE). The 'bonus 1st-level barbarian feat' is not: fury-instinct is a classFeatures/subclass record, and FEAT_PICK_GRANTS is only read for entries of `feats` and for build.heritageId. SubclassOption.grantedFeats takes fixed ids, not a filtered pick, so it cannot express 'a barbarian feat of your choice'.",
+      "fix": null,
+      "missingLane": "needs FEAT_PICK_GRANTS resolution keyed by class-feature/subclass id"
+    },
+    {
+      "id": "haunting-memories",
+      "verdict": "STILL_BLOCKED",
+      "why": "No new lane touches it. FeatGrant.conditionalSkills carries a single base→upgraded pair per skill, so the two printed branches (untrained→expert OR trained→master, player's pick, re-made every day) cannot both be written; bonusSkillFeat has no rank gate and no daily reset; and FeatChoiceDef.daily only records an answer.",
+      "fix": null,
+      "missingLane": "needs a daily-preparations skill-rank lane with two alternative base→upgraded branches plus a rank-gated bonus skill feat"
+    },
+    {
+      "id": "kaiju-stalker",
+      "verdict": "STILL_BLOCKED",
+      "why": "'One Athletics skill feat of your choice' is a PICK, and backgrounds have no pick lane: backgroundGrantedFeats() (build.ts:331-345) reads only grantedFeatId (fixed ids) and grantedFeatByChoice (keyed by the trainedSkillChoice answer), and FEAT_PICK_GRANTS is never consulted for a background id. Everything else on the record (athletics, kaiju lore, the +1 star) is already wired.",
+      "fix": null,
+      "missingLane": "needs FEAT_PICK_GRANTS resolution keyed by background id"
+    },
+    {
+      "id": "order-explorer",
+      "verdict": "NOW_FIXABLE",
+      "why": "Lane 3 applies: order-explorer IS a feat, so FEAT_PICK_GRANTS[featId] is read at build.ts:2177 and the chosen feat is added with its own effects (picking animal-companion correctly materialises the companion via FEAT_COMPANION_GRANTS). The text names its pool by prerequisite, so `ids` lists exactly the 1st-level druid feats in core.json whose prerequisite is an order — verified: fire-lung(flame), shore-step(wave), steadying-stone(stone), animal-companion(animal), leshy-familiar(leaf), storm-born(storm), untamed-form(untamed). Still exactly ONE feat, so no over-grant; the pool is not narrowed to the order recorded in the feat's own `choice` (FeatPickSpec has no cross-choice filter), which is the documented featPickGrants.ts policy of being at worst slightly permissive and never blocking a legal pick.",
+      "fix": {
+        "kind": "featPick",
+        "id": "order-explorer",
+        "spec": {
+          "prompt": "Choose a 1st-level feat of the order you explored",
+          "maxLevel": 1,
+          "ids": [
+            "animal-companion",
+            "fire-lung",
+            "leshy-familiar",
+            "shore-step",
+            "steadying-stone",
+            "storm-born",
+            "untamed-form"
+          ]
+        }
+      }
+    },
+    {
+      "id": "potent-nectar",
+      "verdict": "STILL_BLOCKED",
+      "why": "Both branches attach damage to the nectar ranged unarmed Strike that Caustic Nectar grants, and core.feats['caustic-nectar'] has no grantedStrikes, so the Strike does not exist on the sheet. No lane (new or old) attaches a persistent/splash damage rider to another record's Strike; effectChoices' EffectGrant has no damage-rider field.",
+      "fix": null,
+      "missingLane": "needs a damage-rider lane on a granted Strike (persistent / splash), plus grantedStrikes on caustic-nectar"
+    },
+    {
+      "id": "professional-letter-writer",
+      "verdict": "STILL_BLOCKED",
+      "why": "A two-way feat CHOICE on a background. grantedFeatId takes fixed ids only (picking one would hand out the wrong feat half the time), grantedFeatByChoice is indexed by the trainedSkillChoice answer and this background has no trainedSkillChoice, and FEAT_PICK_GRANTS is not consulted for background ids. The record's `choice` (flag 'skillFeat') is read by nothing in build.ts. The bonus daily language has no lane either.",
+      "fix": null,
+      "missingLane": "needs a background feat-pick lane (grants keyed by the background's own `choice` value)"
+    },
+    {
+      "id": "sacred-spells",
+      "verdict": "STILL_BLOCKED",
+      "why": "The primary grant widens your spell LIST with seven named spells so they can be prepared or added to a repertoire. grantedSpells (types.ts:814) exists only on SubclassOption and adds spells to the known list, not to the list you may prepare from; innateSpells would over-grant (free daily casts instead of list access). No feat field widens a tradition's spell list.",
+      "fix": null,
+      "missingLane": "needs a spell-list-widening lane on feats (add spells to the list you prepare/repertoire from)"
+    },
+    {
+      "id": "shadow-sneak-attack",
+      "verdict": "STILL_BLOCKED",
+      "why": "strikePrecisionRiders (derive.ts:1137) fires only when ownedFeatureIds contains the rogue class feature 'sneak-attack', and hardcodes the dice as 1 + steps at L5/11/17. A flat, never-scaling 1d6 from a feat has no data field; none of the four new lanes (slots, mode defences/speeds, feat picks, weapon familiarity) touches strike damage.",
+      "fix": null,
+      "missingLane": "needs a precision-damage rider lane (fixed-die sneak attack granted by a feat, non-cumulative with the class feature)"
+    },
+    {
+      "id": "skilled-partner",
+      "verdict": "STILL_BLOCKED",
+      "why": "Three skill feats for the EIDOLON. CompanionGrant (companionGrants.ts) carries kind/label/abilityBudget/lockedAbilities/note/supersedes and explicitly excludes summoner eidolons; nothing in the companion model can hold a feat. FEAT_PICK_GRANTS grants feats to the PLAYER, so using it here would wrongly give the character three skill feats.",
+      "fix": null,
+      "missingLane": "needs a companion/eidolon feat lane"
+    },
+    {
+      "id": "sneak-attacker",
+      "verdict": "STILL_BLOCKED",
+      "why": "Same wall as shadow-sneak-attack: the sneak-attack rider is computed from the rogue class feature id with level-scaled dice (derive.ts:1137), and there is no field for a feat-granted 1d4→1d6-at-6th precision die that never scales further.",
+      "fix": null,
+      "missingLane": "needs a precision-damage rider lane (fixed-die sneak attack granted by a feat)"
+    },
+    {
+      "id": "sponsored-by-a-stranger",
+      "verdict": "STILL_BLOCKED",
+      "why": "The Dubious Knowledge / Quick Identification pick is INDEPENDENT of the Occultism/Nature skill pick, so grantedFeatByChoice (which backgroundGrantedFeats indexes by the trainedSkillChoice answer) would invent a coupling the text does not print — the player who takes Occultism could no longer choose Quick Identification. grantedFeatId can hold only one id, and backgrounds are never looked up in FEAT_PICK_GRANTS.",
+      "fix": null,
+      "missingLane": "needs a background feat-pick lane (grants keyed by the background's own `choice` value)"
+    },
+    {
+      "id": "stylish-tricks",
+      "verdict": "STILL_BLOCKED",
+      "why": "The skill-FEAT half is already delivered by core.classes.swashbuckler.featProgression.skill (3/7/15). The extra skill INCREASES are not: build.skillIncreases is keyed by level with one increase per level, so a second, restricted (Acrobatics or the style skill) increase at 3/7/15 cannot be represented. No new lane addresses skill increases.",
+      "fix": null,
+      "missingLane": "needs a second, restricted skill increase at a given level (build.skillIncreases is one-per-level)"
+    },
+    {
+      "id": "ultimate-flexibility",
+      "verdict": "STILL_BLOCKED",
+      "why": "Combat/Improved Flexibility is hardcoded in build.ts (two 'bonus' slots at levels 9 and 15) with featSlots.ts capping each at a fighter feat of level ≤ slotLevel-1. Nothing keys 'ultimate-flexibility'. There is no data field that adds a third flexibility slot or raises the existing slots' level ceilings.",
+      "fix": null,
+      "missingLane": "needs a combat-flexibility slot-count / level-ceiling override lane"
+    },
+    {
+      "id": "unconventional-expertise",
+      "verdict": "STILL_BLOCKED",
+      "why": "mirrorBestCategory (lane 4) is the right mechanism but needs a STATIC weapons list, and here the weapon is whatever was chosen for Unconventional Weaponry — a choice value stored on a DIFFERENT feat. FeatGrant.choiceGrants is matched against the SAME feat's `fc.choice.value` (build.ts:2480), and unconventional-expertise carries no choice of its own; Unconventional Weaponry's own backfilled choice is still marked inert.",
+      "fix": null,
+      "missingLane": "needs a weaponFamiliarity whose weapon list is read from ANOTHER feat's choice value (cross-record choice reference)"
+    },
+    {
+      "id": "verduran-city-folk",
+      "verdict": "STILL_BLOCKED",
+      "why": "A two-way background skill-feat choice (the first option's name was lost in the AoN export; descRefs preserves Streetwise). Same wall as the other backgrounds: grantedFeatId is a fixed id, grantedFeatByChoice keys off a trainedSkillChoice this background does not have, and FEAT_PICK_GRANTS is never read for a background id.",
+      "fix": null,
+      "missingLane": "needs a background feat-pick lane (and the missing option name recovered from the source)"
+    },
+    {
+      "id": "enhanced-psychopomp-familiar",
+      "verdict": "NOW_FIXABLE",
+      "why": "The lane already exists and is keyed by feat id — FEAT_COMPANION_GRANTS in companionGrants.ts, where abilityBudget + lockedAbilities + supersedes is exactly the shape improved-familiar-attunement (supersedes 'familiar', budget 4) and pirate's-pet (supersedes 'pet', budget 3) already use. The base entry 'psychopomp-familiar' is budget 3 ('three instead of two' + locked speech); this feat prints 'four instead of two', so the superseding entry is budget 4 with the same locked speech, and `supersedes` keeps a single familiar on the sheet rather than adding a second. abilityBudget is a display hint (the picker is not hard-capped), so this cannot over-grant.",
+      "fix": {
+        "kind": "companionGrant",
+        "registry": "FEAT_COMPANION_GRANTS (src/rules/companionGrants.ts)",
+        "id": "enhanced-psychopomp-familiar",
+        "grant": {
+          "kind": "familiar",
+          "label": "Enhanced Psychopomp Familiar",
+          "abilityBudget": 4,
+          "lockedAbilities": ["speech"],
+          "supersedes": ["psychopomp-familiar"],
+          "note": "Choose 4 familiar or master abilities each day. It always has Speech. Two of the four must come from the Psychopomp Familiar list (Soul Sight, Spirit Touch) or Augury (8th level or higher)."
+        }
+      }
+    },
+    {
+      "id": "inner-fire-monk",
+      "verdict": "NOW_FIXABLE",
+      "why": "Lane 2 is exactly this: a ModeDef may now carry `resistances`, gated by `feats: [id]`, and deriveDefenses consumes active-mode resistances alongside feats/items/stances (derive.ts:763) with the same formula resolver stances use — so 'floor(@actor.level/2)' resolves like Rain of Embers' half-level fire resistance. The mode is player-toggled, which is the correct model for 'while you're in Stoked Flame Stance' (the stance record itself has no resistIfFeat sibling to senseIfFeat). The Wisdom-mod touch damage is not a numeric stat the sheet owns, so it rides in `note`. No `classes` gate, so an archetype monk who took Stoked Flame Stance still sees it.",
+      "fix": {
+        "kind": "mode",
+        "mode": {
+          "id": "cat-inner-fire-stoked-flame",
+          "name": "Inner Fire (Stoked Flame Stance)",
+          "category": "Monk",
+          "feats": ["inner-fire-monk", "inner-fire-som"],
+          "modifiers": [],
+          "resistances": [
+            { "type": "cold", "value": "floor(@actor.level/2)" },
+            { "type": "fire", "value": "floor(@actor.level/2)" }
+          ],
+          "note": "While in Stoked Flame Stance: cold and fire resistance equal to half your level. Any creature that hits you with an unarmed attack, tries to Grab or Grapple you, or otherwise touches you takes fire damage equal to your Wisdom modifier (minimum 1), no more than once per turn."
+        }
+      }
+    },
+    {
+      "id": "inner-fire-som",
+      "verdict": "NOW_FIXABLE",
+      "why": "Identical text to Inner Fire (Monk) — the legacy Secrets of Magic printing — and the same lane-2 mode covers it. The mode's `feats` gate lists BOTH ids, so this is the SAME ModeDef, added once, not a second copy (adding a duplicate would show two identical toggles and, if both were switched on, still resolve correctly since same-type resistances take the highest — but the duplicate is unwanted).",
+      "fix": {
+        "kind": "mode",
+        "mode": {
+          "id": "cat-inner-fire-stoked-flame",
+          "name": "Inner Fire (Stoked Flame Stance)",
+          "category": "Monk",
+          "feats": ["inner-fire-monk", "inner-fire-som"],
+          "modifiers": [],
+          "resistances": [
+            { "type": "cold", "value": "floor(@actor.level/2)" },
+            { "type": "fire", "value": "floor(@actor.level/2)" }
+          ],
+          "note": "While in Stoked Flame Stance: cold and fire resistance equal to half your level. Any creature that hits you with an unarmed attack, tries to Grab or Grapple you, or otherwise touches you takes fire damage equal to your Wisdom modifier (minimum 1), no more than once per turn."
+        }
+      }
+    },
+    {
+      "id": "primal-howl",
+      "verdict": "STILL_BLOCKED",
+      "why": "AnimalCompanionType.maneuver (types.ts:1167) is a single string owned by the companion TYPE, and CompanionGrant has no maneuver field, so a feat cannot add an extra advanced maneuver to an existing companion. None of the four new lanes touches companions.",
+      "fix": null,
+      "missingLane": "needs a companion extra-advanced-maneuver lane"
+    }
+  ]
+}

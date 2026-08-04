@@ -64,6 +64,8 @@ export const FEAT_PICK_GRANTS: Record<string, FeatPickSpec> = {
   'skill-mastery-rogue': { prompt: 'Choose a skill feat', category: 'skill', maxLevel: 'self' },
   // HERITAGE-keyed (tanuki): 'your choice of Everyday Form or Teakettle Form as a bonus ancestry feat'
   'steadfast-tanuki': { prompt: 'Choose Everyday Form or Teakettle Form', maxLevel: 1, ids: ['everyday-form', 'teakettle-form'] },
+  "captain-dedication": {"prompt":"Choose Group Impression or Group Coercion","maxLevel":1,"ids":["group-impression","group-coercion"]},
+  "order-explorer": {"prompt":"Choose a 1st-level feat of the order you explored","maxLevel":1,"ids":["animal-companion","fire-lung","leshy-familiar","shore-step","steadying-stone","storm-born","untamed-form"]},
   'ancestral-paragon': { prompt: "Choose a ancestry feat", category: 'ancestry', maxLevel: 1, dynamicTrait: 'ancestry', excludeTraits: ['lineage'] },
   // HERITAGE-keyed, not a feat: Ancient Elf grants a multiclass dedication at 1st level "even though
   // you don't meet its level prerequisite", so maxLevel 2 offers the normally-2nd-level dedications.

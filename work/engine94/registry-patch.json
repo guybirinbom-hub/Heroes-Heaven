@@ -1,0 +1,94 @@
+{
+  "FEAT_SKILL_GRANTS": {
+    "azarketi-weapon-expertise": {
+      "weaponFamiliarity": {
+        "weapons": [
+          "crossbow",
+          "hand-crossbow",
+          "longspear",
+          "spear",
+          "trident",
+          "boarding-axe",
+          "gill-hook"
+        ],
+        "mirrorBestCategory": true
+      }
+    },
+    "dwarven-weapon-expertise": {
+      "weaponFamiliarity": {
+        "weapons": [
+          "battle-axe",
+          "pick",
+          "warhammer",
+          "clan-dagger",
+          "clan-pistol",
+          "dwarven-scattergun",
+          "dwarven-dorn-dergar",
+          "dwarven-war-axe",
+          "dwarven-waraxe",
+          "long-hammer",
+          "wrecker",
+          "wrecker-melee",
+          "wrecker-ranged"
+        ],
+        "mirrorBestCategory": true
+      }
+    },
+    "elven-weapon-expertise": {
+      "weaponFamiliarity": {
+        "weapons": [
+          "longbow",
+          "composite-longbow",
+          "longsword",
+          "rapier",
+          "shortbow",
+          "composite-shortbow",
+          "elven-curve-blade",
+          "elven-branched-spear",
+          "dawnsilver-tree",
+          "three-peaked-tree",
+          "three-peaked-tree-melee",
+          "three-peaked-tree-ranged"
+        ],
+        "mirrorBestCategory": true
+      }
+    }
+  },
+  "FEAT_PICK_GRANTS": {
+    "captain-dedication": {
+      "prompt": "Choose Group Impression or Group Coercion",
+      "maxLevel": 1,
+      "ids": [
+        "group-impression",
+        "group-coercion"
+      ]
+    },
+    "order-explorer": {
+      "prompt": "Choose a 1st-level feat of the order you explored",
+      "maxLevel": 1,
+      "ids": [
+        "animal-companion",
+        "fire-lung",
+        "leshy-familiar",
+        "shore-step",
+        "steadying-stone",
+        "storm-born",
+        "untamed-form"
+      ]
+    }
+  },
+  "COMPANION_GRANTS": {
+    "enhanced-psychopomp-familiar": {
+      "kind": "familiar",
+      "label": "Enhanced Psychopomp Familiar",
+      "abilityBudget": 4,
+      "lockedAbilities": [
+        "speech"
+      ],
+      "supersedes": [
+        "psychopomp-familiar"
+      ],
+      "note": "Choose 4 familiar or master abilities each day. It always has Speech. Two of the four must come from the Psychopomp Familiar list (Soul Sight, Spirit Touch) or Augury (8th level or higher)."
+    }
+  }
+}
