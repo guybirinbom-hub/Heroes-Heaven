@@ -52343,5 +52343,277 @@
       "hpMultiplier": 2,
       "conditionSteps": 2
     }
+  },
+  {
+    "category": "feats",
+    "id": "hilt-hammer",
+    "field": "weaponTraits",
+    "value": {
+      "match": {
+        "melee": true
+      },
+      "add": [
+        "versatile-b"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "deadly-grace",
+    "field": "weaponTraits",
+    "value": {
+      "match": {
+        "melee": true,
+        "anyTrait": [
+          "agile",
+          "finesse"
+        ]
+      },
+      "add": [
+        "deadly-d8"
+      ],
+      "onlyIfMissing": true
+    }
+  },
+  {
+    "category": "feats",
+    "id": "spirit-of-vigil",
+    "field": "dyingThresholdBonus",
+    "value": 1
+  },
+  {
+    "category": "feats",
+    "id": "spirit-warrior-dedication",
+    "field": "unarmedTraits",
+    "value": {
+      "match": [
+        "fist"
+      ],
+      "add": [
+        "parry"
+      ],
+      "stepDie": true
+    }
+  },
+  {
+    "category": "feats",
+    "id": "steelhoof",
+    "field": "unarmedTraits",
+    "value": {
+      "match": [
+        "hoof"
+      ],
+      "stepDie": true
+    }
+  },
+  {
+    "category": "feats",
+    "id": "symphony-of-the-unfettered-heart",
+    "field": "focusSpells",
+    "value": [
+      "symphony-of-the-unfettered-heart"
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "syu-tak-nwas-deadly-hair",
+    "field": "unarmedTraits",
+    "value": {
+      "match": [
+        "hair"
+      ],
+      "add": [
+        "grapple"
+      ],
+      "stepDie": true
+    }
+  },
+  {
+    "category": "feats",
+    "id": "syu-tak-nwas-hexed-locks",
+    "field": "unarmedTraits",
+    "value": {
+      "match": [
+        "hair"
+      ],
+      "add": [
+        "reach"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "tactical-excellence",
+    "field": "preparedTacticsBonus",
+    "value": 1
+  },
+  {
+    "category": "feats",
+    "id": "talisman-esoterica",
+    "field": "choice",
+    "value": {
+      "flag": "esotericaTalismans",
+      "prompt": "Today's two temporary talismans (item level up to half your level)",
+      "kind": "text",
+      "daily": true,
+      "picks": 2,
+      "distinct": true,
+      "inert": "Recorded only — the temporary talismans aren't added to your inventory.",
+      "note": "Each talisman's item level must be no higher than half your level, and you must know its formula; you know every common talisman formula in GM Core of your level or lower, and need no formula book for them. They lose their magic at your next daily preparations."
+    }
+  },
+  {
+    "category": "feats",
+    "id": "tenacious-jaws",
+    "field": "unarmedTraits",
+    "value": {
+      "match": [
+        "jaws"
+      ],
+      "add": [
+        "grapple"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "tengu-weapon-study",
+    "field": "critSpec",
+    "value": true
+  },
+  {
+    "category": "feats",
+    "id": "tengu-weapon-study",
+    "field": "critSpecWeapons",
+    "value": {
+      "traits": [
+        "tengu"
+      ],
+      "bases": [
+        "katana",
+        "khakkara",
+        "temple-sword",
+        "wakazashi"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "true-perception",
+    "field": "senses",
+    "value": [
+      {
+        "name": "truesight"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "unbelievable-luck",
+    "field": "usesUpgrade",
+    "value": {
+      "featId": "unexpected-sharpshooter-dedication",
+      "max": 1,
+      "per": "hour"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "unbreakable-er-goblin",
+    "field": "maxHpBonus",
+    "value": {
+      "flat": 10
+    }
+  },
+  {
+    "category": "feats",
+    "id": "uncanny-awareness",
+    "field": "senses",
+    "value": [
+      {
+        "name": "motion-sense",
+        "range": 30,
+        "acuity": "imprecise"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "vanths-weapon-execution",
+    "field": "critSpec",
+    "value": true
+  },
+  {
+    "category": "feats",
+    "id": "vanths-weapon-execution",
+    "field": "critSpecWeapons",
+    "value": {
+      "bases": [
+        "bo-staff",
+        "staff",
+        "scythe",
+        "longbow",
+        "composite-longbow"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "vernai-training",
+    "field": "spellSlotBonus",
+    "value": {
+      "perRank": 1,
+      "exceptHighest": 2,
+      "entryId": "red-mantis-assassin-dedication-casting"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "vicious-incisors",
+    "field": "unarmedTraits",
+    "value": {
+      "match": [
+        "jaws"
+      ],
+      "add": [
+        "backstabber"
+      ],
+      "stepDie": true
+    }
+  },
+  {
+    "category": "feats",
+    "id": "voluminous-vials",
+    "field": "resourceMaxSet",
+    "value": {
+      "resourceId": "versatile-vials",
+      "values": [
+        5,
+        6,
+        7
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "warding-light",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "light",
+        "tradition": "divine",
+        "atWill": true,
+        "heightenHalfLevel": true
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "xidao-sea-mine-drop",
+    "field": "limitedUses",
+    "value": {
+      "max": 2,
+      "per": "day"
+    }
   }
 ]

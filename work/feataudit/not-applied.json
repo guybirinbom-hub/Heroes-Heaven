@@ -147,6 +147,24 @@
   "soulsight-bard: already has senses — not overwriting",
   "soulsight-sorcerer: already has senses — not overwriting",
   "spark-of-immortality: already has dyingThresholdBonus — not overwriting",
+  "spirit-of-vigil: already has dyingThresholdBonus — not overwriting",
+  "spirit-warrior-dedication: already has unarmedTraits — not overwriting",
+  "stalwart-chant: mode \"stalwart-chant\" already exists",
+  "stalwart-chant: a MISS whose fix says nothing",
+  "steelhoof: already has unarmedTraits — not overwriting",
+  "strand-strider: mode \"strand-strider-spider-shape\" already exists",
+  "strand-strider: a MISS whose fix says nothing",
+  "sweeping-tail: The feat's entire content is a 2-action ACTIVITY the companion performs at the table (two tail Strikes, MAP, forced movement) — no companion statistic changes, and COMPANION_MODS models senses/HP/speeds/IWR/maturity/skills, not action lists. The same judge ruled stitched-familiar ('grants an activity to your familiar') NEEDS_NOTHING in this very file.",
+  "symphony-of-the-unfettered-heart: already has focusSpells — not overwriting",
+  "syu-tak-nwas-deadly-hair: already has unarmedTraits — not overwriting",
+  "syu-tak-nwas-hexed-locks: already has unarmedTraits — not overwriting",
+  "tactical-excellence: already has preparedTacticsBonus — not overwriting",
+  "tactical-reflexes: Word-for-word the fighter twin of divine-reflexes ('At the start of each of your turns, you gain an additional reaction…'), which judge-10 ruled NEEDS_NOTHING and no adversary contested; the settled line is that permanent QUICKENED is a condition mark because core.conditions.quickened exists, while per-turn REACTION economy is not modelled and has no condition to mark.",
+  "talisman-esoterica: already has choice — not overwriting",
+  "tenacious-jaws: already has unarmedTraits — not overwriting",
+  "tengu-weapon-study: already has critSpec — not overwriting",
+  "the-tyrant-falls: mode \"the-tyrant-falls\" already exists",
+  "the-tyrant-falls: a MISS whose fix says nothing",
   "bond-companion: The designated companion is ANOTHER player character and Fortify Focus spends your action to refill THEIR Focus Point - nothing on your own sheet changes.",
   "bonded-focus: False premise: refocusRestore ('all') is a real Feat field (types.ts:733, applied build.ts:2588, rendered SpellsTab ~992) and core.json already carries refocusRestore:\"all\" on this record.",
   "brain-drain: already has limitedUses — not overwriting",
@@ -154,6 +172,24 @@
   "broken-chain-dedication: A per-use Mythic Point spend on an Escape/Force Open check, an Ultimatum action, and a GM-adjudicated anathema - all table/GM side.",
   "buzzing-death-cicadas: The fly Speed goes to the swarmkeeper's SWARM, not the character, and Death Drone is an action resolved at the table.",
   "cackle: already has focusSpells — not overwriting",
+  "true-perception: already has senses — not overwriting",
+  "unbelievable-luck: already has usesUpgrade — not overwriting",
+  "unbreakable-er-goblin: already has maxHpBonus — not overwriting",
+  "uncanny-awareness: already has senses — not overwriting",
+  "unyielding-force: mode \"unyielding-force\" already exists",
+  "unyielding-force: a MISS whose fix says nothing",
+  "vanths-weapon-execution: already has critSpec — not overwriting",
+  "vernai-training: already has spellSlotBonus — not overwriting",
+  "veteran-follower: Nothing consumes it: kinds.includes() is only ever tested for 'animal' and 'eidolon' (companions.ts:428/466/785), so a 'follower' mod is dead data, and follower records carry only prose with no quality tier to raise.",
+  "vicious-incisors: already has unarmedTraits — not overwriting",
+  "vicious-rend: It grants a 2-action activity resolved at the table whose extra damage lands on the target — every player-side action grant in this same pool was ruled NEEDS_NOTHING, and no COMPANION_MODS entry carries an activity.",
+  "voluminous-vials: already has resourceMaxSet — not overwriting",
+  "warding-light: already has innateSpells — not overwriting",
+  "warped-by-rage: mode \"warped-by-rage\" already exists",
+  "warped-by-rage: a MISS whose fix says nothing",
+  "whats-that-up-your-sleeve: Both halves are 'use the other number the sheet already prints' — the same pool ruled twirl-through and unified-theory NEEDS_NOTHING for exactly that, and the Conceal an Object half is a DC another creature rolls against.",
+  "worm-caller-dedication: Fix is wrong twice over: `grantedFeatId` is a BACKGROUND field (types.ts:625, read only as bg?.grantedFeatId in build.ts) and no feat carries it, so usedIn() rejects it; and the only core.feats['shake-it-off'] is the BARBARIAN rage feat from Player Core 2, not the once/day fortune reaction from Pathfinder #194 the archetype actually grants — that one exists as core.actions['shake-it-off'], which the record already points at via its descRef, and no action-grant lane exists.",
+  "xidao-sea-mine-drop: already has limitedUses — not overwriting",
   "calm-and-centered: The app never decrements frightened/stupefied itself - condition values are typed in by the player and restConditions only steps Doomed/Drained - so there is no computed value this changes.",
   "canopy-predator: mode \"canopy-predator\" already exists",
   "canopy-predator: a MISS whose fix says nothing",
@@ -705,9 +741,94 @@
    "reason": "The 20th-level wizard capstone converts one prepared slot of every rank except 1st and 2nd into a combination slot that holds TWO spells at once. That is a real change to spell preparation the player cannot record: spellSlotBonus adds slots rather than re-typing them, and no field marks a slot as a combination slot or lets two spells be prepared in one."
   },
   {
+   "id": "splinter-faith",
+   "name": "Splinter Faith",
+   "reason": "You choose four domains that REPLACE your deity's domain list, and the app's domain picker (choice kind 'domains' in Builder.tsx) enumerates strictly content.deities[deityId].domains, so Domain Initiate and friends still offer only the printed list. No field can override a deity's domain set."
+  },
+  {
+   "id": "strong-arm",
+   "name": "Strong Arm",
+   "reason": "It permanently increases the range increment of every thrown weapon you Strike with — a number the strike card shows — and there is no field or registry that modifies weapon range."
+  },
+  {
+   "id": "student-of-water",
+   "name": "Student of Water",
+   "reason": "It hands you Underwater Marauder and Water Sprint, but only once you meet each one’s prerequisite (trained / master in Athletics). grantsFeats applies unconditionally, so writing it would give a 2nd-level monk the 7th-level Water Sprint — a prerequisite-gated feat grant has no lane."
+  },
+  {
+   "id": "tactical-expansion",
+   "name": "Tactical Expansion",
+   "reason": "Repeatable: \"Add two additional tactics you qualify for to your folio.\" Tactics are real records (core.json `tactic` / actions with the tactic trait) and the folio is built by commanderFolioMax() in src/rules/build.ts, a fixed formula no record can influence. A folio-size grant field (repeatable, +2 each time) does not exist."
+  },
+  {
+   "id": "talismanic-sage",
+   "name": "Talismanic Sage",
+   "reason": "Lets one specially treated item hold two active talismans at once. The app enforces the opposite: attachKind()/the host rule in src/rules/attachments.ts allows a host at most one talisman, so this feat is actively contradicted by the engine and no field relaxes the cap for a nominated item."
+  },
+  {
+   "id": "tempest-clouds-speed",
+   "name": "Tempest Cloud's Speed",
+   "reason": "The feat permanently gives your familiar the Path of the Tempest familiar ability (an activation that grants YOU a +10-foot status bonus to Speed, reaction-free Striding and a Long Jump without a Stride). The record carries nothing and the familiar's ability roster never shows it; the COMPANION_MODS registry is the existing lane for feats that modify an existing companion."
+  },
+  {
+   "id": "terrifying-mien",
+   "name": "Terrifying Mien",
+   "reason": "Grants the PLAYER a standing resistance to bludgeoning, piercing and slashing from Strikes made by frightened creatures, equal to four times that attacker's frightened value. Nothing delivers it: the resistances field is unconditional and its value can only reference the actor, so there is no way to key a resistance to the ATTACKER's condition value (and a flat resistance here would be a large over-grant)."
+  },
+  {
    "id": "bolstered-recovery",
    "name": "Bolstered Recovery",
    "reason": "Grants the Instant Recovery action and doubles rest recovery. Instant Recovery exists only in content.actions (no feat record), and grantsFeats resolves solely against content.feats (src/rules/build.ts ~2343), so the granted action can never reach the sheet; there is also no lane for scaling nightly rest recovery."
+  },
+  {
+   "id": "ubiquitous-gadgets",
+   "name": "Ubiquitous Gadgets",
+   "reason": "Raises the inventor's daily temporary-gadget count by 2 (repeatable at 14th for +4 total) — a per-day player resource. Nothing in src models gadgets at all: there is no 'gadgets' entry in src/rules/classResources.ts, so resourceMaxSet has no resourceId to target, and no advancedAlchemy-style count field exists for Gadget Specialist."
+  },
+  {
+   "id": "ubiquitous-snares",
+   "name": "Ubiquitous Snares",
+   "reason": "Doubles the free daily prepared snares from Snare Specialist (4/6/8 by Crafting rank becomes 8/12/16). The app already computes that allowance in src/rules/snareFormulas.ts snareAllowance(), but the number is hardcoded off Crafting rank with no record field able to modify it."
+  },
+  {
+   "id": "ultimate-polymath",
+   "name": "Ultimate Polymath",
+   "reason": "Makes EVERY spell in the bard's repertoire a signature spell, which drives the app's 'cast at' heightening picker. The engine only produces all-repertoire signatures from the summoner class feature check ('unlimited-signature-spells', src/rules/build.ts:1766-1771); there is no record field a feat can set, and no entry exists for this feat."
+  },
+  {
+   "id": "unburdened-iron",
+   "name": "Unburdened Iron",
+   "reason": "'Ignore the reduction to your Speed from any armor you wear' plus a 5-foot reduction to one other Speed penalty. The app really does subtract the worn armor's Speed penalty from every Speed (src/rules/derive.ts:1926) and applies encumbered as -10, with no check for this feat and no record field that waives a penalty (speedPenalty only ADDS one; landSpeedBonus would over-grant when unarmored)."
+  },
+  {
+   "id": "untrained-improvisation",
+   "name": "Untrained Improvisation",
+   "reason": "The record carries untrainedProficiency {levelMinus:2}, but untrainedSkillBonus (src/rules/derive.ts:305-315) computes level − levelMinus with no scaling, so the player is stuck at level−2 forever; the printed feat improves to level−1 at 5th and full level at 7th. The lane needs a level-keyed levelMinus (or a scale table) before this feat can be delivered correctly."
+  },
+  {
+   "id": "venomous-weapons",
+   "name": "Venomous Weapons",
+   "reason": "Wielded blowguns and slings gain the venomous trait — a permanent change to the player's weapons that nothing delivers. There is no lane to add a trait to a MANUFACTURED weapon (unarmedTraits is unarmed-only, and core.json's 'venomous' trait record is a bare stub with no description), so the strike line and the item's trait list never show it."
+  },
+  {
+   "id": "versatile-blasts",
+   "name": "Versatile Blasts",
+   "reason": "Adds selectable damage types to your Elemental Blasts (air/fire cold, earth/wood poison, metal electricity, water acid). deriveBlastStrikes (src/rules/derive.ts ~1537) hardcodes one damage type per element from ELEMENT_BLAST with no alternative, and no record field can add blast damage types, so the sheet can never show the type the player chose."
+  },
+  {
+   "id": "versatile-font",
+   "name": "Versatile Font",
+   "reason": "Lets you prepare either Harm or Heal in every divine-font slot. build.ts pins the font entry to a single type ({type: build.divineFont}) and SpellsTab renders that one spell for each pip, so half the feat's slots are shown as the wrong spell. The battle-font 'allowed' list is the existing mechanism, but nothing keys it to this feat — no record field can express it."
+  },
+  {
+   "id": "walk-the-wilds",
+   "name": "Walk the Wilds",
+   "reason": "Adds Animal Form to the animist apparition spell repertoire, which the app does build (build.ts animist-apparition-casting) — but no field can add a spell to a repertoire."
+  },
+  {
+   "id": "winged-warrior-dedication",
+   "name": "Winged Warrior Dedication",
+   "reason": "Permanently increases any fly Speed granted by ancestry feats/permanent wings by 5 feet, which is a persistent sheet speed. No lane exists: 'speeds' only sets an absolute value and landSpeedBonus covers land Speed only, so there is no way to add +5 to an existing fly Speed. (The Leap +10 feet half correctly needs nothing, matching Powerful Leap/Winglets which carry no field.)"
   },
   {
    "id": "cantrip-casting",

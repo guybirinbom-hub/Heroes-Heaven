@@ -806,6 +806,30 @@ export interface Feat extends ContentBase, DefenseGrants {
    */
   restRecovery?: { hpMultiplier?: number; conditionSteps?: number };
   /**
+   * Traits this feat adds to WIELDED weapons that match a filter — "Melee weapons you wield gain the
+   * versatile B trait" (Hilt Hammer), "an agile or finesse melee weapon that doesn't have the deadly
+   * trait gains deadly d8" (Deadly Grace). The wielded-weapon sibling of `unarmedTraits`.
+   *
+   * Every field on `match` must hold; `anyTrait` is the one OR ("agile OR finesse").
+   */
+  weaponTraits?: {
+    match?: {
+      /** true = melee only, false = ranged only, omitted = either. */
+      melee?: boolean;
+      /** Weapon groups it applies to ('axe', 'sword'). */
+      groups?: string[];
+      /** Applies when the weapon carries ANY of these (Deadly Grace: agile or finesse). */
+      anyTrait?: string[];
+      /** Specific core.json weapon ids. */
+      items?: string[];
+    };
+    add?: string[];
+    /** Add only to weapons that do NOT already carry a trait of that family — Deadly Grace reads
+     *  "an agile or finesse melee weapon that DOESN'T have the deadly trait". Without this it would
+     *  quietly downgrade a deadly d10 weapon to d8. */
+    onlyIfMissing?: boolean;
+  };
+  /**
    * Weakness types this feat REMOVES ("you no longer gain silver weakness from Werecreature
    * Dedication"). Every other field adds; there was no way to take one away, so a feat whose whole
    * point is undoing an earlier drawback left the drawback on the sheet.

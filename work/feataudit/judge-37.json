@@ -1,0 +1,480 @@
+{
+ "records": [
+  {
+   "id": "steel-on-steel",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Ikon imbuement whose content is an Immanence/Transcendence activity resolved at the table against a target; no static stat change to the wielder."
+  },
+  {
+   "id": "steel-skin",
+   "verdict": "MISS",
+   "reason": "Its whole content is a fatigued exemption (sleeping in armor) and nothing records it.",
+   "fix": {
+    "situational": [
+     {
+      "on": "condition",
+      "id": "fatigued",
+      "note": "Steel Skin: you don't become fatigued if you sleep while wearing armor."
+     }
+    ]
+   }
+  },
+  {
+   "id": "steel-your-resolve",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A single action that spends a Resolve Point to regain Stamina in the stamina variant rule; the recovery is applied at the table, not a build-time stat."
+  },
+  {
+   "id": "steelhoof",
+   "verdict": "MISS",
+   "reason": "Steps the hoof unarmed Strike damage die from d6 to d8 and no field said so.",
+   "fix": {
+    "unarmedTraits": {
+     "match": [
+      "hoof"
+     ],
+     "stepDie": true
+    }
+   }
+  },
+  {
+   "id": "stellas-stab-and-snag",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A two-action activity (Stride, Strike, then a Thievery check to Steal) resolved entirely at the table."
+  },
+  {
+   "id": "step-lively",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reaction that lets you Step; no stat, sense, speed or resource changes."
+  },
+  {
+   "id": "stepping-stones",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A kineticist impulse that creates terrain on the battlefield; nothing on the caster’s sheet changes."
+  },
+  {
+   "id": "sticky-bomb",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An additive applied when you make a bomb; the persistent damage lands on the target, not on your sheet."
+  },
+  {
+   "id": "sticky-poison",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A flat check at the table that decides whether an applied poison is expended; no character statistic changes."
+  },
+  {
+   "id": "stitch-flesh",
+   "verdict": "MISS",
+   "reason": "It extends what Treat Wounds can do for the player (undead targets) and no record surfaces that on the action.",
+   "fix": {
+    "situational": [
+     {
+      "on": "action",
+      "id": "treat-wounds",
+      "note": "Stitch Flesh: you can use Treat Wounds to restore Hit Points to undead as well as living creatures, using healer's tools; the GM may raise the DC for circumstances specific to undead."
+     }
+    ]
+   }
+  },
+  {
+   "id": "stitched-familiar",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants an activity to your familiar; it changes the familiar, not the character’s statistics."
+  },
+  {
+   "id": "stomp-ground",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A two-action area attack; every effect (off-guard, prone, falling damage) lands on the targets."
+  },
+  {
+   "id": "stone-blood",
+   "verdict": "MISS",
+   "reason": "Lowers the persistent-bleed flat check to DC 10 and speeds drained recovery — real player-side mechanics with no record anywhere.",
+   "fix": {
+    "situational": [
+     {
+      "on": "condition",
+      "id": "persistent-damage",
+      "value": "bleed flat check DC 10",
+      "note": "Stone Blood: the flat check to end persistent bleed damage on you is DC 10 instead of DC 15, and you can spend a single concentrate action to get an early flat check without binding the wound. You also recover from drained twice as quickly as normal."
+     }
+    ]
+   }
+  },
+  {
+   "id": "stone-blood-stonebound",
+   "verdict": "MISS",
+   "reason": "Same DC 15 -> DC 10 bleed flat check and doubled drained recovery; nothing records it.",
+   "fix": {
+    "situational": [
+     {
+      "on": "condition",
+      "id": "persistent-damage",
+      "value": "bleed flat check DC 10",
+      "note": "Stone Blood (Stonebound): the flat check to end persistent bleed damage on you is DC 10 instead of DC 15, and you can spend a single concentrate action to get an early flat check without binding the wound. You also recover from drained twice as quickly as normal."
+     }
+    ]
+   }
+  },
+  {
+   "id": "stone-bones",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reaction with a flat check that downgrades an incoming critical hit; resolved at the table when it triggers."
+  },
+  {
+   "id": "stonebane",
+   "verdict": "MISS",
+   "reason": "A flat +1d6 damage rider on your stonestrike against a named creature category, with no situational entry.",
+   "fix": {
+    "situational": [
+     {
+      "targets": [
+       {
+        "kind": "strikeDamage"
+       }
+      ],
+      "when": "stonestrike vs constructs, earth-trait creatures, or earthen objects",
+      "bonus": "+1d6"
+     }
+    ]
+   }
+  },
+  {
+   "id": "stonewall",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reaction that petrifies you until end of turn to negate an effect; a table-resolved damage negation, not a standing statistic."
+  },
+  {
+   "id": "storied-companion",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Spends a Mythic Point to reroll your companion’s save and give the companion temporary HP — it changes the companion, on a reaction."
+  },
+  {
+   "id": "storm-born",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Removes weather-caused circumstance penalties and weather concealment flat checks; the app models neither weather nor those penalties, so there is nothing to modify."
+  },
+  {
+   "id": "storm-retribution",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reaction that casts an already-known focus spell at the triggering enemy and pushes it; all effects are on the target."
+  },
+  {
+   "id": "storm-spiral",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An impulse dealing area damage with a save; entirely target-side."
+  },
+  {
+   "id": "storming-breath",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A deviant ability: an area damage action plus awakening riders that affect the targets or move you during the action."
+  },
+  {
+   "id": "storming-gaze",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A two-action area damage ability with its own cooldown, resolved at the table against targets."
+  },
+  {
+   "id": "strand-strider",
+   "verdict": "MISS",
+   "reason": "Grants a real climb Speed, but only in spider shape — a bare speeds field would grant it in humanoid form too, so it belongs in a toggleable mode.",
+   "fix": {
+    "mode": {
+     "id": "strand-strider-spider-shape",
+     "name": "Spider Shape (Strand Strider)",
+     "feats": [
+      "strand-strider"
+     ],
+     "duration": "while in your spider shape",
+     "modifiers": [],
+     "speeds": {
+      "climb": 25
+     },
+     "note": "Strand Strider: while in your spider shape you have a climb Speed of 25 feet."
+    }
+   }
+  },
+  {
+   "id": "strategic-assessment",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The GM tells you one fact about an enemy; it is information about the target, chosen and delivered by the GM."
+  },
+  {
+   "id": "strategic-bypass",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Ignores an amount of the TARGET’s resistance; it changes how the target’s defenses apply, not any statistic on your sheet."
+  },
+  {
+   "id": "strategic-repose",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets you choose the damage type of precision damage you already deal; a per-Strike choice made at the table."
+  },
+  {
+   "id": "streetwise",
+   "verdict": "MISS",
+   "reason": "Substituting Society for Diplomacy on Gather Information (and Society Recall Knowledge for it) is a concrete change to two actions the app lists, and nothing says so.",
+   "fix": {
+    "situational": [
+     {
+      "on": "action",
+      "id": "gather-information",
+      "note": "Streetwise: you can use your Society modifier instead of your Diplomacy modifier to Gather Information."
+     },
+     {
+      "on": "action",
+      "id": "recall-knowledge",
+      "note": "Streetwise: in any settlement you frequent regularly you can Recall Knowledge with Society for what Gather Information would reveal — a much higher DC, but no time spent; a failure still lets you Gather Information normally."
+     }
+    ]
+   }
+  },
+  {
+   "id": "strix-vengeance",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A once-per-10-minutes reaction granting extra damage only against the one enemy that triggered it, until the end of your next turn; resolved at the table."
+  },
+  {
+   "id": "strong-arm",
+   "verdict": "MISS",
+   "reason": "It permanently increases the range increment of every thrown weapon you Strike with — a number the strike card shows — and there is no field or registry that modifies weapon range.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "strong-of-wing",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Take Flight grants its 15-foot fly Speed only for that one movement (and carries no speeds field for exactly that reason); raising it to 25 feet changes a momentary value inside the action, not a standing fly Speed."
+  },
+  {
+   "id": "stronger-debilitating-venom",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Adds debilitation options chosen when you Envenom; each debilitation is a condition and damage reduction applied to the target at the table."
+  },
+  {
+   "id": "stubborn-persistence",
+   "verdict": "MISS",
+   "reason": "A flat check to avoid becoming fatigued at all is a genuine player-side condition rule that nothing records.",
+   "fix": {
+    "situational": [
+     {
+      "on": "condition",
+      "id": "fatigued",
+      "value": "flat check to negate",
+      "note": "Stubborn Persistence: when you would become fatigued, attempt a flat check; on a success you aren't fatigued. If the cause isn't addressed, re-attempt the check at intervals the GM sets."
+     }
+    ]
+   }
+  },
+  {
+   "id": "student-of-the-canon",
+   "verdict": "MISS",
+   "reason": "Degree-of-success shifts on two named actions (Recall Knowledge, Decipher Writing) with nothing to show them.",
+   "fix": {
+    "situational": [
+     {
+      "on": "action",
+      "id": "recall-knowledge",
+      "value": "crit fail -> fail (Religion)",
+      "note": "Student of the Canon: a critical failure to Recall Knowledge about the tenets of faiths becomes a failure. For your OWN faith, a failure becomes a success and a success becomes a critical success."
+     },
+     {
+      "on": "action",
+      "id": "decipher-writing",
+      "value": "crit fail -> fail (religious)",
+      "note": "Student of the Canon: a critical failure on a Religion check to Decipher Writing of a religious nature becomes a failure instead."
+     }
+    ]
+   }
+  },
+  {
+   "id": "student-of-water",
+   "verdict": "MISS",
+   "reason": "It hands you Underwater Marauder and Water Sprint, but only once you meet each one’s prerequisite (trained / master in Athletics). grantsFeats applies unconditionally, so writing it would give a 2nd-level monk the 7th-level Water Sprint — a prerequisite-gated feat grant has no lane.",
+   "fix": {
+    "needsEngineWork": true
+   }
+  },
+  {
+   "id": "stumbling-finisher",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A finisher Strike that pushes the target; all effects are on the target."
+  },
+  {
+   "id": "stunning-appearance",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Adds a stunned condition to the foe when you use Startling Appearance; purely target-side."
+  },
+  {
+   "id": "stunning-blows",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Lets a Flurry target attempt a save or be stunned; the effect lands on the target."
+  },
+  {
+   "id": "stunning-finisher",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A one-action Strike with a save; every result is a condition on the target."
+  },
+  {
+   "id": "sturdy-bindings",
+   "verdict": "MISS",
+   "reason": "A critical failure to Grapple becoming a failure is a player-side degree-of-success change with no record.",
+   "fix": {
+    "situational": [
+     {
+      "on": "action",
+      "id": "grapple",
+      "value": "crit fail -> fail",
+      "note": "Sturdy Bindings: a critical failure on your check to Grapple is a failure instead. A creature you have grabbed also turns a failed Escape into a critical failure, and a critical success into a success."
+     }
+    ]
+   }
+  },
+  {
+   "id": "subjective-truth",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Whether a lie-detecting effect catches you is GM adjudication about your current identity; no statistic involved."
+  },
+  {
+   "id": "submission-hold",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A one-action Athletics check that enfeebles the creature you already have grabbed; target-side."
+  },
+  {
+   "id": "subtle-shank",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A two-action activity chaining Interact, Strike and Conceal an Object; resolved at the table."
+  },
+  {
+   "id": "subtle-theft",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "The –2 penalty is to OBSERVERS’ Perception DCs, and the undetected clause is a table-tracked stealth state the app does not model."
+  },
+  {
+   "id": "sudden-charge",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A two-action Stride-Stride-Strike activity; nothing on the sheet changes."
+  },
+  {
+   "id": "sudden-leap",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A two-action jump-and-Strike activity whose distances are worked out at the table."
+  },
+  {
+   "id": "sudden-mindfulness",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reaction that upgrades one triggering saving throw and makes the source off-guard; resolved when it triggers."
+  },
+  {
+   "id": "summoners-call",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A reaction that teleports your eidolon next to you; a positioning effect, no statistic changes."
+  },
+  {
+   "id": "sunder-enchantment",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Extends Sunder a Spell to counteract a magic ITEM; the counteract and its 10-minute suppression apply to the target’s item."
+  },
+  {
+   "id": "sunlit-vitality",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Photosynthesis replaces buying food — a downtime/upkeep detail the app does not model."
+  },
+  {
+   "id": "sunwrecker",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "An ikon whose Immanence casts Darkness on a critically hit target and whose Transcendence is a table-resolved activity; nothing static on the wielder."
+  },
+  {
+   "id": "superior-bond",
+   "verdict": "MISS",
+   "reason": "An extra daily use of Drain Bonded Item, which the app lists as an action with limitedUses but never surfaces as an upgradable count (usesUpgrade only retunes FEATS, and there is no wizard class resource for it).",
+   "fix": {
+    "situational": [
+     {
+      "on": "action",
+      "id": "drain-bonded-item",
+      "value": "+1 use/day",
+      "note": "Superior Bond: you can use Drain Bonded Item one additional time per day, but that extra use can only cast a spell 2 or more ranks lower than your highest-rank wizard spell slot."
+     }
+    ]
+   }
+  },
+  {
+   "id": "suplex",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A one-action unarmed Strike against a creature you have grabbed; prone and extra damage land on the target."
+  },
+  {
+   "id": "supreme-psychic-center",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A free action inside the psychic duel subsystem, which the app does not model."
+  },
+  {
+   "id": "supreme-spellstrike",
+   "verdict": "MISS",
+   "reason": "Permanent quickened with a restricted extra action is a standing character state; the condition-marker lane already carries the identical Eternal Boost / Panache Paragon / Perfect Readiness entries but not this one.",
+   "fix": {
+    "situational": [
+     {
+      "on": "condition",
+      "id": "quickened",
+      "value": "always on",
+      "note": "Supreme Spellstrike: you're permanently quickened; the extra action can be used only to Strike or to recharge Spellstrike."
+     }
+    ]
+   }
+  },
+  {
+   "id": "sure-feet",
+   "verdict": "MISS",
+   "reason": "Success -> critical success on Balance and Climb, plus no off-guard while doing either; a concrete change to two listed actions with nothing recording it.",
+   "fix": {
+    "situational": [
+     {
+      "on": "action",
+      "id": "balance",
+      "value": "success -> crit success",
+      "note": "Sure Feet: a success on an Acrobatics check to Balance is a critical success instead, and you're not off-guard while you Balance."
+     },
+     {
+      "on": "action",
+      "id": "climb",
+      "value": "success -> crit success",
+      "note": "Sure Feet: a success on an Athletics check to Climb is a critical success instead, and you're not off-guard while you Climb."
+     }
+    ]
+   }
+  },
+  {
+   "id": "sure-footed",
+   "verdict": "MISS",
+   "reason": "Clumsy stops penalizing your AC in medium or heavy armor — a real defensive rule with no record.",
+   "fix": {
+    "situational": [
+     {
+      "on": "condition",
+      "id": "clumsy",
+      "value": "no AC penalty in medium/heavy armor",
+      "note": "Sure-Footed: you take no penalty to AC from the clumsy condition while wearing medium or heavy armor. Clumsy still applies to other Dexterity-based checks and DCs, and this benefit is lost if the armor is broken."
+     }
+    ]
+   }
+  },
+  {
+   "id": "surface-rush",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A two-action movement activity chaining Stride and Swim; no statistic changes."
+  },
+  {
+   "id": "surface-skimmer",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "Grants cover in a specific GM-adjudicated position (submerged, attacker out of the water); the app does not track cover."
+  },
+  {
+   "id": "surface-tension",
+   "verdict": "NEEDS_NOTHING",
+   "reason": "A one-action fix to a broken weapon whose bonus damage, deadly trait and destruction are all resolved during that use, at the table."
+  }
+ ]
+}

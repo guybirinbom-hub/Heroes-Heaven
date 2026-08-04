@@ -20,6 +20,7 @@ import type {
   AbilityScores,
   InventoryItem,
   Item,
+  WeaponItem,
   SenseEntry,
   ProficiencyKey,
   ProficiencyRank,
@@ -1359,10 +1360,39 @@ export function strikeDamageRiders(
   return [...[...flatByType].map(([type, n]) => `${n} ${DAMAGE_ABBR[type] ?? type}`), ...diceTerms];
 }
 
+/**
+ * Traits a feat adds to a WIELDED weapon — "Melee weapons you wield gain the versatile B trait"
+ * (Hilt Hammer), "an agile or finesse melee weapon that doesn't have the deadly trait gains deadly
+ * d8" (Deadly Grace). The wielded sibling of applyUnarmedRiders; weapon traits came straight off the
+ * item record, so none of these feats could touch them.
+ */
+function weaponRiderTraits(c: Character, db: ContentDatabase, w: WeaponItem): string[] {
+  let traits = w.traits;
+  for (const fc of c.feats ?? []) {
+    const r = db.feats[fc.featId]?.weaponTraits;
+    if (!r?.add?.length) continue;
+    const m = r.match ?? {};
+    const isMelee = !w.range;
+    if (m.melee !== undefined && m.melee !== isMelee) continue;
+    if (m.groups?.length && !m.groups.includes(w.group ?? '')) continue;
+    if (m.items?.length && !m.items.includes(w.id)) continue;
+    if (m.anyTrait?.length && !m.anyTrait.some((t) => traits.includes(t))) continue;
+    // "…that doesn't have the deadly trait": skip a weapon that already carries the family, or the
+    // rider would replace a deadly d10 with a d8.
+    const add = r.onlyIfMissing
+      ? r.add.filter((t) => !traits.some((existing) => traitFamily(existing) === traitFamily(t)))
+      : r.add;
+    if (add.length) traits = [...new Set([...traits, ...add])];
+  }
+  return traits;
+}
+
 export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryItem): Strike | null {
   const item = db.items[inv.itemId];
   if (!item || item.itemType !== 'weapon') return null;
-  const w = item;
+  // A feat may add traits to what you wield; everything below reads `w.traits`, so widen it here.
+  const riderTraits = weaponRiderTraits(c, db, item);
+  const w = riderTraits === item.traits ? item : { ...item, traits: riderTraits };
   // Material/precious-metal placeholder "weapons" (cold iron, adamantine ingots, silver, …) carry no
   // damage object; guard so a stray equip can't crash the entire Strikes computation + Main tab.
   if (!w.damage) return null;

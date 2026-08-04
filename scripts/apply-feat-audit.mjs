@@ -151,6 +151,10 @@ const FEATGRANT_FIELDS = new Set(
     .matchAll(/^ {2}([a-zA-Z][\w]*)\??:/gm)].map((m) => m[1]),
 );
 const COMPANION_KINDS = new Set(typesSrc.match(/CompanionKind = ([^;]+);/)[1].match(/'[a-z-]+'/g).map((s) => s.slice(1, -1)));
+/** The kinds companions.ts actually tests COMPANION_MODS against — read from the source, not assumed. */
+const CONSUMED_COMPANION_KINDS = new Set(
+  [...readFileSync(p('src/rules/companions.ts'), 'utf8').matchAll(/mod\.kinds\.includes\('([a-z-]+)'\)/g)].map((m) => m[1]),
+);
 const MATURITIES = new Set(readFileSync(p('src/rules/companions.ts'), 'utf8').match(/export type Maturity =([\s\S]*?);/)[1].match(/'[a-z-]+'/g).map((s) => s.slice(1, -1)));
 
 const esc = (s) => String(s).replace(/\\/g, '\\\\').replace(/"/g, '\\"');
@@ -251,6 +255,13 @@ for (const rec of records) {
     const m = fix.companionMod;
     if (compMods.has(id)) { skipped.push(`${id}: already in COMPANION_MODS`); continue; }
     if (!(m.kinds ?? []).length || m.kinds.some((k) => !COMPANION_KINDS.has(k))) { skipped.push(`${id}: companionMod kinds ${JSON.stringify(m.kinds)}`); continue; }
+    // COMPANION_MODS is READ only for 'animal' (companions.ts deriveAnimalCompanion) and 'eidolon'
+    // (deriveEidolon). A familiar- or follower-kind entry passes every other check and then sits dead
+    // — deriveFamiliar never looks at this table. Better a recorded gap than a field that reads done.
+    if (!m.kinds.some((k) => CONSUMED_COMPANION_KINDS.has(k))) {
+      skipped.push(`${id}: companionMod for ${m.kinds.join('/')} — only animal and eidolon entries are ever read`);
+      continue;
+    }
     if (m.maturityFloor && !MATURITIES.has(m.maturityFloor)) { skipped.push(`${id}: maturityFloor "${m.maturityFloor}" is not on the ladder`); continue; }
     newCompMods.set(id, m);
     continue;

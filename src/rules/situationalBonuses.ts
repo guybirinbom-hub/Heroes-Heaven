@@ -2762,8 +2762,10 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
 
 
 
+
+
   // ---- full feat audit (scripts/apply-feat-audit.mjs) — every never-examined feat — do not hand-edit below ----
-  // 76 feats. Selected by what the record HAS, not by whether its text matched a pattern.
+  // 88 feats. Selected by what the record HAS, not by whether its text matched a pattern.
   "abjure-the-false-kin": [{ targets: [{ kind: 'save', detail: 'all' }], when: "on a saving throw against a mental effect that doesn't deal damage", bonus: "a success becomes a critical success" }],
   "agent-of-all-holds": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }, { kind: 'skill', detail: 'intimidation' }, { kind: 'skill', detail: 'performance' }], when: "when you critically fail a Diplomacy, Intimidation, or Performance check", bonus: "critical failure becomes a failure (against a creature with the orc trait you may instead reroll as a fortune effect, still treating a critical failure as a failure)" }],
   "angel-of-vindication": [{ targets: [{ kind: 'strikeDamage' }], when: "backstabber weapon vs an off-guard undead (+4 if the weapon is a +3 weapon)", bonus: "+2 precision" }],
@@ -2840,6 +2842,18 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "see-the-unseen": [{ targets: [{ kind: 'strikeAttack' }], when: "targeting an adjacent undetected creature of your level or lower", bonus: "it is only hidden from you (DC 11 flat check) rather than undetected" }],
   "sense-allies": [{ targets: [{ kind: 'perception' }], when: "to notice or target willing allies within 60 feet you're aware of", bonus: "they are hidden rather than undetected, and your flat check to target them is DC 5 instead of 11" }],
   "sly-striker": [{ targets: [{ kind: 'strikeDamage' }], when: "you hit a creature that isn't off-guard with a sneak-attack-capable weapon", bonus: "+1d6 precision (2d6 at 14th level if you'd deal 3d6+ sneak attack)" }],
+  "steadfast-grip": [{ targets: [{ kind: 'save', detail: 'reflex', dcOnly: true }], when: "against attempts to Disarm, Steal or otherwise remove your warshard weapon", bonus: "calculated at mythic proficiency" }],
+  "stonebane": [{ targets: [{ kind: 'strikeDamage' }], when: "stonestrike vs constructs, earth-trait creatures, or earthen objects", bonus: "+1d6" }],
+  "surging-blood-magic": [{ targets: [{ kind: 'spellDamage' }], when: "raging repertoire spell while Drained 2+ (Rising Blood Magic)", bonus: "+2 (total 3)" }],
+  "swordlord-exile": [{ targets: [{ kind: 'strikeDamage' }], when: "first hit each round with an Aldori dueling sword", bonus: "+5 precision" }],
+  "takedown-expert": [{ targets: [{ kind: 'strikeAttack' }], when: "attack stratagem with a one-handed club-group weapon", bonus: "use Int on the attack roll; the Strike qualifies for strategic strike" }],
+  "titan-slinger": [{ targets: [{ kind: 'strikeDamage' }], when: "on a hit with a sling-group weapon against a Large or larger creature", bonus: "weapon damage die increased one step" }],
+  "triangulate": [{ targets: [{ kind: 'strikeAttack' }], when: "crossbow/firearm in your 2nd range increment, if you and your spotter see the target", bonus: "no range penalty (cancels the usual -2)" }, { targets: [{ kind: 'strikeAttack' }], when: "crossbow/firearm past the 2nd range increment, if you and your spotter see it", bonus: "-3 at the 3rd increment, then -2 more per further increment (-5/-7/-9)" }],
+  "unwavering-mien": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against an effect that would make you fall asleep", bonus: "treat your result as one degree of success better" }],
+  "vanara-battle-clarity": [{ targets: [{ kind: 'ac' }], when: "vs hidden, undetected, flanking or surprise-attacking foes of your level or lower", bonus: "you aren't off-guard to them (while you can act)" }],
+  "vicious-fangs": [{ targets: [{ kind: 'strikeDamage' }], when: "on a critical hit with your vampire fangs Strike", bonus: "1d6 persistent bleed (2d6 at 14th level, 3d6 at 20th)" }],
+  "vow-of-mortal-defiance": [{ targets: [{ kind: 'strikeDamage' }], when: "first time each round you damage the creature you vowed to defeat", bonus: "+1d6 spirit" }],
+  "weapon-improviser-dedication": [{ targets: [{ kind: 'strikeAttack' }], when: "attacking with an improvised weapon", bonus: "the -2 item penalty does not apply" }, { targets: [{ kind: 'strikeDamage' }], when: "wielding an improvised weapon", bonus: "minimum damage die 1d6 (1d4 if agile)" }],
 };
 
 /** A StatRef, loosened so callers outside explain.ts can pass a plain object. */
@@ -3004,8 +3018,10 @@ export const RECORD_MARKERS: Record<string, RecordMarker[]> = {
 
 
 
+
+
   // ---- full feat audit — action/condition marks ----
-  // 17 feats that change an ACTION or a CONDITION rather than a stat.
+  // 37 feats that change an ACTION or a CONDITION rather than a stat.
   'dancing-leaf': [{"on":"action","id":"leap","value":"+5 feet","note":"You jump 5 feet farther when you Leap."},{"on":"action","id":"high-jump","value":"+5 feet","note":"A successful High Jump carries you 5 feet farther."},{"on":"action","id":"long-jump","value":"+5 feet","note":"A successful Long Jump carries you 5 feet farther. When calculating falling damage, don't count any distance fallen while you are adjacent to a wall."}],
   'defy-death': [{"on":"condition","id":"dying","value":"DC 9 + dying (8 with Toughness)","note":"The DC of your recovery checks is 9 + your dying value, or 8 + your dying value if you have the Toughness general feat. Magic that returns you to life never leaves you debilitated for a week."}],
   'dwarven-doughtiness': [{"on":"condition","id":"frightened","value":"-2 per turn","note":"At the end of your turn, reduce your frightened condition by 2 instead of 1."}],
@@ -3023,6 +3039,26 @@ export const RECORD_MARKERS: Record<string, RecordMarker[]> = {
   'panache-paragon': [{"on":"condition","id":"quickened","value":"always on","note":"Panache Paragon: you are permanently quickened; the extra action can be used only to perform a bravado action."}],
   'peerless-captain': [{"on":"condition","id":"quickened","value":"with an active follower","note":"Peerless Captain: while you have an active follower in an encounter you are quickened; the extra action can be used only to Direct your Follower."}],
   'perfect-readiness': [{"on":"condition","id":"quickened","value":"always on","note":"Perfect Readiness: you're permanently quickened; the extra action can be used only to Step or to Interact to reload."}],
+  'steel-skin': [{"on":"condition","id":"fatigued","note":"Steel Skin: you don't become fatigued if you sleep while wearing armor."}],
+  'stitch-flesh': [{"on":"action","id":"treat-wounds","note":"Stitch Flesh: you can use Treat Wounds to restore Hit Points to undead as well as living creatures, using healer's tools; the GM may raise the DC for circumstances specific to undead."}],
+  'stone-blood': [{"on":"condition","id":"persistent-damage","value":"bleed flat check DC 10","note":"Stone Blood: the flat check to end persistent bleed damage on you is DC 10 instead of DC 15, and you can spend a single concentrate action to get an early flat check without binding the wound. You also recover from drained twice as quickly as normal."}],
+  'stone-blood-stonebound': [{"on":"condition","id":"persistent-damage","value":"bleed flat check DC 10","note":"Stone Blood (Stonebound): the flat check to end persistent bleed damage on you is DC 10 instead of DC 15, and you can spend a single concentrate action to get an early flat check without binding the wound. You also recover from drained twice as quickly as normal."}],
+  'streetwise': [{"on":"action","id":"gather-information","note":"Streetwise: you can use your Society modifier instead of your Diplomacy modifier to Gather Information."},{"on":"action","id":"recall-knowledge","note":"Streetwise: in any settlement you frequent regularly you can Recall Knowledge with Society for what Gather Information would reveal — a much higher DC, but no time spent; a failure still lets you Gather Information normally."}],
+  'stubborn-persistence': [{"on":"condition","id":"fatigued","value":"flat check to negate","note":"Stubborn Persistence: when you would become fatigued, attempt a flat check; on a success you aren't fatigued. If the cause isn't addressed, re-attempt the check at intervals the GM sets."}],
+  'student-of-the-canon': [{"on":"action","id":"recall-knowledge","value":"crit fail -> fail (Religion)","note":"Student of the Canon: a critical failure to Recall Knowledge about the tenets of faiths becomes a failure. For your OWN faith, a failure becomes a success and a success becomes a critical success."},{"on":"action","id":"decipher-writing","value":"crit fail -> fail (religious)","note":"Student of the Canon: a critical failure on a Religion check to Decipher Writing of a religious nature becomes a failure instead."}],
+  'sturdy-bindings': [{"on":"action","id":"grapple","value":"crit fail -> fail","note":"Sturdy Bindings: a critical failure on your check to Grapple is a failure instead. A creature you have grabbed also turns a failed Escape into a critical failure, and a critical success into a success."}],
+  'superior-bond': [{"on":"action","id":"drain-bonded-item","value":"+1 use/day","note":"Superior Bond: you can use Drain Bonded Item one additional time per day, but that extra use can only cast a spell 2 or more ranks lower than your highest-rank wizard spell slot."}],
+  'supreme-spellstrike': [{"on":"condition","id":"quickened","value":"always on","note":"Supreme Spellstrike: you're permanently quickened; the extra action can be used only to Strike or to recharge Spellstrike."}],
+  'sure-feet': [{"on":"action","id":"balance","value":"success -> crit success","note":"Sure Feet: a success on an Acrobatics check to Balance is a critical success instead, and you're not off-guard while you Balance."},{"on":"action","id":"climb","value":"success -> crit success","note":"Sure Feet: a success on an Athletics check to Climb is a critical success instead, and you're not off-guard while you Climb."}],
+  'sure-footed': [{"on":"condition","id":"clumsy","value":"no AC penalty in medium/heavy armor","note":"Sure-Footed: you take no penalty to AC from the clumsy condition while wearing medium or heavy armor. Clumsy still applies to other Dexterity-based checks and DCs, and this benefit is lost if the armor is broken."}],
+  'swift-paragon': [{"on":"condition","id":"quickened","value":"always on","note":"Swift Paragon: you're permanently quickened; the extra action can be used only to Step, Stride, or Fly (if you have a fly Speed). If you're mounted on your animal companion at the start of your turn, you can have the mount be quickened that turn instead of you."}],
+  'swift-sneak': [{"on":"action","id":"sneak","value":"full Speed","note":"Swift Sneak: you move your full Speed when you Sneak, and you can Sneak while Burrowing, Climbing, Flying, or Swimming instead of Striding if you have that movement type."}],
+  'walk-on-the-wind': [{"on":"action","id":"stride","note":"You can Stride at half your land Speed across calm air. If you try to carry another creature with you while walking on air, even in an extradimensional space, you fall."}],
+  'wary-skulker': [{"on":"action","id":"scout","note":"You can perform Scout at the same time as the Avoid Notice exploration activity."},{"on":"action","id":"avoid-notice","note":"You can perform Avoid Notice at the same time as the Scout exploration activity."}],
+  'water-dancer': [{"on":"action","id":"stride","note":"In an aquatic or swamp environment you ignore the effects of non-magical difficult terrain."},{"on":"action","id":"swim","note":"Swimming up or down isn't difficult terrain for you."}],
+  'water-step': [{"on":"action","id":"stride","note":"You can Stride across liquid and surfaces that don't support your weight; the benefit lasts only during that movement, and you fall if you end on such a surface."}],
+  'water-walker': [{"on":"action","id":"stride","value":"while cursebound","note":"While Cursebound 1 you can Stride across liquids that don't support your weight, but must end on a supporting surface or fall in. At cursebound 2 or worse you gain the effects of water walk."}],
+  'weapon-supremacy': [{"on":"condition","id":"quickened","value":"always on","note":"Weapon Supremacy: you're permanently quickened; the extra action can be used only to Strike."}],
 };
 
 /**

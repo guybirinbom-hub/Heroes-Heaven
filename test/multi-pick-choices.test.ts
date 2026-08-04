@@ -52,6 +52,11 @@ describe('multi-pick choices', () => {
       // `own-*` sources resolve against the CHARACTER, so they are legitimately empty here — Fuse
       // Stance offers the stances YOU know, which is nothing until you know some.
       if (def.kind === 'open' && String(def.from?.type ?? '').startsWith('own-')) continue;
+      // A 'text' pick is the player TYPING, so it has no option list by definition and counting one
+      // is meaningless. Talisman Esoterica asks for two typed talisman names: openChoice has no
+      // generic item source, and "a talisman whose formula you know" is not expressible as a filter,
+      // so free text is the honest shape rather than a missing list.
+      if (def.kind === 'text') continue;
       // An 'open' choice has no static list — its options resolve from `from` at render time, so
       // reading def.options would wrongly count zero.
       const opts = def.kind === 'open' ? openChoiceOptions(def.from, c).length : def.options?.length ?? 0;

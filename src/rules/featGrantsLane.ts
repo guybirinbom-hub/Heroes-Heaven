@@ -39,8 +39,10 @@ export const FEAT_LANE_GRANTS: Record<string, FeatGrant> = {
 
 
 
+
+
   // ---- full feat audit (scripts/apply-feat-audit.mjs) ----
-  // 9 entries. The judge said "no lane exists"; the adversary found the lane.
+  // 10 entries. The judge said "no lane exists"; the adversary found the lane.
   'crescent-cross-training': {"weaponFamiliarity":{"weapons":["crescent-cross","crescent-cross-melee","crescent-cross-ranged"],"mirrorCategory":"simple"}},
   'eagle-eye': {"perception":"master"},
   'jotunborn-weapon-familiarity': {"weaponFamiliarity":{"weapons":["bola","greataxe","halberd","maul","war-flail"],"mirrorCategory":"simple"}},
@@ -50,4 +52,5 @@ export const FEAT_LANE_GRANTS: Record<string, FeatGrant> = {
   'marine-combat-training': {"weaponFamiliarity":{"weapons":["harpoon","trident"],"mirrorCategory":"simple"}},
   'performance-weapon-expert': {"weapon":{"simple":"expert","martial":"expert"}},
   'signifer-armor-expertise': {"armor":{"medium":"expert","heavy":"expert"}},
+  'tools-of-the-trade': {"weaponFamiliarity":{"weapons":["bola","sap","whip"],"mirrorCategory":"simple"}},
 };

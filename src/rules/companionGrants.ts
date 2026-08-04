@@ -97,6 +97,8 @@ export const FEAT_COMPANION_GRANTS: Record<string, CompanionGrant> = {
 
 
 
+
+
   // ---- full feat audit — companion grants ----
   // 3 entries. The judge said "no lane exists"; the adversary found the lane.
   'adaptive-mask-familiar': {"kind":"familiar","label":"Adaptive Mask Familiar","abilityBudget":4,"supersedes":["mask-familiar"],"note":"Your mask familiar adapts quickly to material form: select four master and familiar abilities each day instead of two."},
@@ -196,8 +198,10 @@ export const COMPANION_MODS: Record<string, CompanionMod> = {
 
 
 
+
+
   // ---- full feat audit — companion mods ----
-  // 34 entries. The judge said "no lane exists"; the adversary found the lane.
+  // 37 entries. The judge said "no lane exists"; the adversary found the lane.
   'a-miracle-of-science': {"kinds":["animal"],"maturityFloor":"specialized","note":"A Miracle of Science!: your construct companion is at least a paragon (specialized) construct companion."},
   'advanced-construct-companion': {"kinds":["animal"],"maturityFloor":"mature","note":"Advanced Construct Companion: your construct companion is at least an advanced construct companion (the mature rung here). During an encounter, even without Command a Construct, it can still use 1 action on your turn to Stride or Strike."},
   'battle-hardened-companion': {"kinds":["animal"],"maturityFloor":"nimble","note":"Battle-Hardened Companion: the companion you gained with Commander's Companion is at least a nimble or savage animal companion — pick savage in Edit if you want that side. During an encounter, even without Command an Animal, it can use 1 action on your turn to Stride or Strike, and then gains a reaction for your tactics (that is all the actions it gets that round)."},
@@ -232,4 +236,7 @@ export const COMPANION_MODS: Record<string, CompanionMod> = {
   'specialized-companion-ranger': {"kinds":["animal"],"maturityFloor":"specialized","note":"Specialized Companion: your animal companion is at least a specialized companion, gaining one specialization of your choice — choose it in Edit. Selectable up to three times, a different specialization each time."},
   'specialized-megafauna-companion': {"kinds":["animal"],"maturityFloor":"specialized","note":"Specialized Megafauna Companion: your megafauna companion is at least a specialized companion and gains your choice of the bully, racer, tracker, or wrecker specialization — choose it in Edit. Selectable up to three times, a different one of those four each time (three maximum)."},
   'specialized-mount': {"kinds":["animal"],"maturityFloor":"specialized","note":"Specialized Mount: your mount is at least a specialized companion, gaining one specialization of your choice — choose it in Edit. Selectable up to three times, a different specialization each time (three maximum)."},
+  'towering-size': {"kinds":["eidolon"],"note":"Towering Size: your eidolon becomes Huge instead of Large, and the reach on all its attacks increases to 15 feet. No other statistics change."},
+  'unbreakable-bond': {"kinds":["animal"],"note":"Unbreakable Bond: your megafauna companion automatically succeeds at the recovery check to stabilize at 0 HP on its turn, and it dies at dying 5 rather than dying 4. Once per day, the first time it would reach dying 5 and die while you're alive, its dying value drops to 0 instead."},
+  'undead-companion': {"kinds":["animal","familiar"],"note":"Undead Companion: your companion has the undead trait instead of the animal trait and gains void healing (void damage heals it; vitality damage harms it). It otherwise uses the normal animal companion or familiar rules and can still be affected by conditions and effects most undead ignore."},
 };

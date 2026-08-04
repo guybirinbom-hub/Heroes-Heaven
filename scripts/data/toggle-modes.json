@@ -2802,5 +2802,83 @@
       "land": "max(0,25-@actor.speed.land)"
     },
     "note": "You walk on two legs: your land Speed becomes 25 feet. You lose the swim Speed from your merfolk ancestry (swim Speeds from other sources remain). Using the Shore Gift also counts as creating a disguise for Impersonate and automatically defeats Perception DCs to notice it."
+  },
+  "stalwart-chant": {
+    "id": "stalwart-chant",
+    "name": "Stalwart Chant",
+    "feats": [
+      "stalwart-chant"
+    ],
+    "duration": "against the effect of the mental save you failed",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "mental",
+        "value": "floor(@actor.level/2)"
+      }
+    ],
+    "note": "Stalwart Chant: you can use Stalwart Song against any mental effect. If you fail that save, you gain resistance to mental damage equal to half your level against the resulting effect. Turn this on for that effect only."
+  },
+  "strand-strider-spider-shape": {
+    "id": "strand-strider-spider-shape",
+    "name": "Spider Shape (Strand Strider)",
+    "feats": [
+      "strand-strider"
+    ],
+    "duration": "while in your spider shape",
+    "modifiers": [],
+    "speeds": {
+      "climb": 25
+    },
+    "note": "Strand Strider: while in your spider shape you have a climb Speed of 25 feet."
+  },
+  "the-tyrant-falls": {
+    "id": "the-tyrant-falls",
+    "name": "The Tyrant Falls!",
+    "feats": [
+      "the-tyrant-falls"
+    ],
+    "duration": "1 minute (Dismissable)",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "all-damage",
+        "value": "floor(@actor.level/2)"
+      }
+    ],
+    "note": "The Tyrant Falls!: at the start of each of your turns you become drained 1 or increase your drained value by 1, and you can't reduce or remove drained while this is active — but drained doesn't penalize your Fortitude save while it lasts. You can cast Invoke the Crimson Oath at will without spending Focus Points (with an increased area). Any melee weapon you wield gains the reach trait (or +5 feet of reach if it already had reach) and its Strikes deal an extra 2d6 vitality or void damage, whichever is more effective against the target."
+  },
+  "unyielding-force": {
+    "id": "unyielding-force",
+    "name": "Unyielding Force (medium/heavy armor)",
+    "feats": [
+      "unyielding-force"
+    ],
+    "duration": "while wearing medium or heavy armor",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "physical",
+        "value": "6+floor(@actor.level/2)"
+      }
+    ],
+    "note": "Unyielding Force: while you wear medium or heavy armor, your guardian's armor resistance to physical damage is 6 + half your level."
+  },
+  "warped-by-rage": {
+    "id": "warped-by-rage",
+    "name": "Warped by Rage (Immanence)",
+    "feats": [
+      "warped-by-rage"
+    ],
+    "duration": "while this ikon is immanent",
+    "modifiers": [
+      {
+        "value": 4,
+        "type": "status",
+        "target": "damage",
+        "appliesWhen": "melee Strike damage while enlarged by the ikon's immanence"
+      }
+    ],
+    "note": "Immanence: you're affected by a 4th-rank Enlarge — you become Huge, your reach increases by 10 feet, you gain a +4 status bonus to melee damage and are clumsy 1. You can forgo this effect when your body ikon becomes empowered."
   }
 }
