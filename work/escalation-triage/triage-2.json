@@ -1,0 +1,219 @@
+{"results":[
+ {
+  "id": "succubus-kiss",
+  "verdict": "DECIDABLE",
+  "answer": "Two parts. (1) Consumable: succubus kiss is a timed drug that changes sheet numbers, so it belongs in the consumable-MODE lane, not the situational registry — ruling E case 2 (mode WITH real modifiers, +2 item to initiative and to saves vs emotion/mental, duration 10 minutes, survivesRest false, hidden from the Modes manager, activated by Use). It is currently absent from the 225 item-modes in core.json, so add it. (2) Initiative: do NOT add an 'initiative' target kind. There is no `initiative` StatRef, so a new kind could never be displayed, and the app's own convention is to put the bonus on the STATISTIC YOU ROLL for initiative with the word 'initiative' in the trigger — 36 shipped entries already do this. Use target `perception` with the exact incredible-initiative wording: when = \"on initiative rolls (whatever statistic you roll for initiative — usually Perception)\". A dedicated Initiative row on the sheet is a feature request for the backlog, not a blocking ruling.",
+  "evidence": "DECISIONS.md §E case 2; core.json `modes` (225 entries, e.g. item-sanguine-mutagen-lesser) + src/rules/play.ts:796 (activate-on-use) + src/rules/modes.ts:275 (hidden from manager); src/rules/explain.ts:61-75 StatRef has no 'initiative'; src/rules/situationalBonuses.ts:496 incredible-initiative"
+ },
+ {
+  "id": "dragonscale-bo-staff",
+  "verdict": "DECIDABLE",
+  "answer": "Store the pick as an item effectChoice — this exact shape already ships. Copy `wyrms-wingspan`, whose effectChoice is literally id 'dragon-tradition' with arcane/divine/occult/primal options, each granting the matching resistance. Give dragonscale-bo-staff an effectChoices entry `dragon-tradition` (arcane→force 5, divine→spirit 5, occult→mental 5, primal→fire 5); the resistance resolves through resolvedItemPassives, and the situational entry then reads \"+1 circumstance to saves against occult magic, while benefiting from the staff's parry AC bonus\" with the chosen tradition named instead of generic text.",
+  "evidence": "core.json items.wyrms-wingspan / -greater / -major effectChoices id 'dragon-tradition'; src/rules/build.ts:2572 + src/rules/types.ts:1028 (effectChoices → resolvedItemPassives); src/rules/derive.ts:709"
+ },
+ {
+  "id": "azarim",
+  "verdict": "DECIDABLE",
+  "answer": "Star it on the wielder. Ruling F's test is WHO RECEIVES the bonus, not who triggers it — Azarim's assist lands on YOUR Deception check, so it is yours and belongs on your sheet; ruling F only removes bonuses that land on someone else. Register two entries keyed to `azarim`: skill/deception, when = \"when Azarim agrees to assist your Lie (her choice)\", bonus \"+2 circumstance\"; and strikeDamage, when = \"against worshippers of Droskar or creatures allied with his faith\", bonus \"+1d6\". The registry already carries item-activation-grants-you-a-bonus entries of exactly this shape (needle-of-undeath).",
+  "evidence": "DECISIONS.md §F (\"if its an effect the effects a teamate and not you\"); src/rules/situationalBonuses.ts:1707 needle-of-undeath (item grants the holder skill bonuses); strikeDamage precedent at situationalBonuses.ts:849 zerk"
+ },
+ {
+  "id": "briar",
+  "verdict": "DECIDABLE",
+  "answer": "Register it. Adventure-specific artifacts are already shipped and already registered — anima-robe-artifact, fiendbreaker-artifact, slithermaws-bane-artifact and soulcutter-artifact all sit in the registry — and progress gates are handled by spelling the gate out in the `when` string, exactly as the-peacock does (\"only if you already had Incredible Initiative before investing\"). So: targets save/all, when = \"for 1 minute after Briar's partner spends the Sharpness Point for this power, against Nyrissa's spells\", bonus \"+4 item\". No new gating field, no exclusion.",
+  "evidence": "src/rules/situationalBonuses.ts:1764-1767 (four *-artifact entries); situationalBonuses.ts:1506 the-peacock (unlock gate carried in `when`)"
+ },
+ {
+  "id": "admirers-bouquet",
+  "verdict": "DECIDABLE",
+  "answer": "Register it on the item, once — and it lands on whoever is holding it. Ruling F: nothing on the GIVER's sheet (the bonus is not theirs), and the activation is not timed so there is no display-only mode either. The RECIPIENT gets it for free with no extra work: an item's situational entries fire off the character's own inventory, so once the bouquet is in the recipient's inventory and held, the star appears. Entry: save/all, when = \"while you carry the admirer's bouquet an ally handed you, against emotion and mental effects\", bonus \"+1 item\".",
+  "evidence": "DECISIONS.md §F; src/rules/explain.ts:188-203 characterSituationalIds (an item's entries resolve from that character's own inventory, while equipped/worn/invested)"
+ },
+ {
+  "id": "open-mind",
+  "verdict": "DECIDABLE",
+  "answer": "Yes — patch it; this is a data bug, not a design question, and the same call DECISIONS.md already made for explosive-death-drop (\"the importer stripped the skill name out... A data bug, fixed on its own\"). The missing spell is HYPERCOGNITION, confirmed in the pristine AoN mirror: \"Abraxas opens your inner eye; you gain the effects of hypercognition.\" The +1 item bonus to Lore checks is unconditional passiveEffects.loreBonus, not a situational entry.",
+  "evidence": "C:/wonderers guide/aon-2e-archive/data/by-category/equipment/equipment-1806.json; DECISIONS.md §D leftovers (explosive-death-drop precedent); derive.ts:702 pe.loreBonus"
+ },
+ {
+  "id": "beast-staff",
+  "verdict": "DECIDABLE",
+  "answer": "Star Diplomacy for every wielder, with the Animal Empathy requirement spelled out in the `when` — do NOT build a feat-gated condition. Its own two siblings already ship exactly this way, so gating the base grade would make one staff behave unlike the other two. Entry: skill/diplomacy, when = \"while wielding the prepared staff, on Animal Empathy checks to influence animals (only if you have Animal Empathy)\", bonus \"+1 circumstance\". Carrying a prerequisite as free text in `when` is the established pattern (the-peacock).",
+  "evidence": "src/rules/situationalBonuses.ts:1221-1222 beast-staff-greater / beast-staff-major (same wording, ungated); situationalBonuses.ts:1506 the-peacock"
+ },
+ {
+  "id": "gamblers-staff",
+  "verdict": "DECIDABLE",
+  "answer": "Key it to skill 'all', not lore:games. The book says \"typically using Games Lore\" — 'typically' IS the rules being open, and ruling H is explicit: \"WHERE THE RULES ARE OPEN, STAY OPEN... Narrowing it would put my ruling on the sheet dressed as the book's.\" Ruling C points the same way (star every skill that could do it). Entry: skill/all, when = \"to Earn Income from gambling, while the staff is on your person for the whole downtime (typically Games Lore)\", bonus \"+2 circumstance\". A blanket skill:'all' entry with a scoped trigger is already the shipped pattern.",
+  "evidence": "DECISIONS.md §H.1 and §C; src/rules/situationalBonuses.ts:1765 fiendbreaker-artifact (skill:'all' with a scoped trigger)"
+ },
+ {
+  "id": "fury-cocktail",
+  "verdict": "DECIDABLE",
+  "answer": "Mode, not stars — ruling E case 2 covers it exactly: an ongoing effect that changes sheet numbers for a duration gets a mode WITH real modifiers. Every other mutagen family already has one (item-bendy-arm-*, item-deadweight-*, item-sanguine-*, item-war-blood-* …); fury-cocktail's three grades are the gap — add item-fury-cocktail-lesser/moderate/greater carrying the melee attack bonus AND the −1 AC / −2 Reflex drawbacks, survivesRest false. The `fury-cocktail` parent needs nothing: it is already an umbrella (no price, 3 graded kin, no mechanical field) and is hidden from every picker by ruling A.",
+  "evidence": "DECISIONS.md §E case 2 + §A; core.json `modes` has 32 mutagen entries but none for fury-cocktail; src/data/index.ts:149-177 findUmbrellaIds catches `fury-cocktail`; existing stars at situationalBonuses.ts:1255-1256, 2667"
+ },
+ {
+  "id": "colorful-coating",
+  "verdict": "DECIDABLE",
+  "answer": "Moot — already handled. `colorful-coating` is caught by findUmbrellaIds (no price, 7 kin, no mechanical field) and is therefore hidden from every picker, so it can never be owned or displayed; ruling A says umbrella records get NO situational entries. The per-colour records carry them and already do (colorful-coating-blue, -yellow). Same verdict for every id named in the question: emetic-paste, healing-vapor, sense-dulling-hood, affliction-suppressant, bendy-arm-mutagen, deadweight-mutagen and sanguine-mutagen are all confirmed umbrella=true.",
+  "evidence": "DECISIONS.md §A; src/data/index.ts:149-177 findUmbrellaIds — verified all eight ids match (no price, ≥2 kin, no mechanical field); situationalBonuses.ts:1280-1281"
+ },
+ {
+  "id": "emetic-paste",
+  "verdict": "DECIDABLE",
+  "answer": "Moot — ruling A, already enforced. `emetic-paste` has no price, 3 graded kin and no mechanical field, so findUmbrellaIds hides it from all pickers; it gets no entry and no \"varies by grade\" string. The three grades are already registered with their real numbers (+2/+3/+4 item) AND already have consumable modes.",
+  "evidence": "DECISIONS.md §A; src/data/index.ts:149-177; src/rules/situationalBonuses.ts:1282-1284; core.json modes item-emetic-paste-lesser"
+ },
+ {
+  "id": "healing-vapor",
+  "verdict": "DECIDABLE",
+  "answer": "Moot — ruling A. `healing-vapor` is an umbrella (no price, 4 kin, no mechanical field), hidden from pickers; only the four grades carry entries, which they already do (+1/+1/+2/+3 item vs disease and poison) plus a consumable mode each.",
+  "evidence": "DECISIONS.md §A; src/data/index.ts:149-177; src/rules/situationalBonuses.ts:1285-1288; core.json modes item-healing-vapor-lesser"
+ },
+ {
+  "id": "sense-dulling-hood",
+  "verdict": "DECIDABLE",
+  "answer": "Moot — ruling A. `sense-dulling-hood` is an umbrella (no price, 2 kin, no mechanical field) and is hidden; the lesser and greater records already carry both the +2/+4 item bonus and the −1 Perception penalty, and both already have consumable modes.",
+  "evidence": "DECISIONS.md §A; src/data/index.ts:149-177; src/rules/situationalBonuses.ts:1289-1290; core.json modes item-sense-dulling-hood-lesser"
+ },
+ {
+  "id": "affliction-suppressant",
+  "verdict": "DECIDABLE",
+  "answer": "Moot — ruling A. Umbrella (no price, 4 kin, no mechanical field), hidden from pickers, no entry. All four grades are already registered (+1/+2/+3/+4 item vs afflictions) and already carry consumable modes.",
+  "evidence": "DECISIONS.md §A; src/data/index.ts:149-177; src/rules/situationalBonuses.ts:1291-1294; core.json modes item-affliction-suppressant-lesser"
+ },
+ {
+  "id": "bendy-arm-mutagen",
+  "verdict": "DECIDABLE",
+  "answer": "Moot — ruling A. Umbrella (no price, 4 kin, no mechanical field), hidden. The four grades already carry the Acrobatics entries and already have consumable modes holding the Benefit and the Drawback together, which is where a mutagen's numbers belong (ruling E case 2).",
+  "evidence": "DECISIONS.md §A + §E case 2; src/data/index.ts:149-177; src/rules/situationalBonuses.ts:1295-1298; core.json modes item-bendy-arm-mutagen-lesser"
+ },
+ {
+  "id": "deadweight-mutagen",
+  "verdict": "DECIDABLE",
+  "answer": "Moot — ruling A. Umbrella (no price, 4 kin, no mechanical field), hidden. Only the four grades carry entries; they already do, and they already have consumable modes.",
+  "evidence": "DECISIONS.md §A; src/data/index.ts:149-177; src/rules/situationalBonuses.ts:1299-1302; core.json modes item-deadweight-mutagen-lesser"
+ },
+ {
+  "id": "sanguine-mutagen",
+  "verdict": "DECIDABLE",
+  "answer": "The Modes system, not the situational registry — ruling E case 2, and it is already built: item-sanguine-mutagen-lesser/moderate/greater/major exist in core.json `modes` with the flat +N to Fortitude and Reflex plus an appliesWhen line for the improved disease/poison/fatigue value. The always-on-while-active worry does not arise: a consumable in your pack is not equipped, worn or invested, so its registry entry never stars anything (explain.ts only counts an item while it is in use). The parent `sanguine-mutagen` is an umbrella and is hidden — ruling A, no entry.",
+  "evidence": "DECISIONS.md §E case 2 + §A; core.json modes item-sanguine-mutagen-lesser; src/rules/explain.ts:180-182 and 194-196 (\"An ITEM only counts while it is actually in use\"); src/data/index.ts:149-177"
+ },
+ {
+  "id": "poison-concentrator",
+  "verdict": "DECIDABLE",
+  "answer": "No, never keyed here — twice over. (1) `poison-concentrator` is an umbrella (no price, 4 graded kin, no mechanical field) so ruling A hides it and gives it nothing. (2) The graded variants get no situational entry either: the +1 item bonus moves the CONCENTRATED POISON's own DC, a number that belongs to a crafted item and is not a character statistic — the app models no such stat, and this is the same class the owner already ruled has no surface (skill DCs / target-side numbers: \"the player will tell the gm\"). The item description already states it.",
+  "evidence": "DECISIONS.md §A and §D-continued (\"SKILL DCs ... NO surface. The player remembers these.\") + §D leftovers 2026-07-30; src/data/index.ts:149-177; SituationalTarget.dcOnly is defined only for `save` (src/rules/situationalBonuses.ts:44-55)"
+ },
+ {
+  "id": "execution-powder",
+  "verdict": "DECIDABLE",
+  "answer": "Moot — the owner already ruled on this exact record. DECISIONS.md, \"D leftovers — target-side bonuses — DECIDED (2026-07-30)\": \"BOMBER'S EYE ELIXIR (lesser + greater) and EXECUTION POWDER: no surface, no effect, no star.\" Verified inert by scripts/check-inert.mjs. The temporary Hit Points half is independently settled by ruling E: \"HP and damage never move sheet stats, even inside a mode\" — so no targetKind 'hp' entry either.",
+  "evidence": "DECISIONS.md lines 262-272 (D leftovers) and §E (\"HP and damage never move sheet stats\"); scripts/check-inert.mjs"
+ },
+ {
+  "id": "black-tendril-shot",
+  "verdict": "DECIDABLE",
+  "answer": "Graded variants only — and in this case not even those. (1) `black-tendril-shot` is an umbrella (no price, 3 kin, no mechanical field): ruling A, hidden, no entry. (2) The +2 circumstance bonus to Escape belongs to the CREATURE YOU SHOT, i.e. an enemy — ruling F: a bonus that lands on someone else puts nothing on your sheet, and there is no timed self-state to show, so no display-only mode either. The three grades get no situational entry; the ammunition's description carries it.",
+  "evidence": "DECISIONS.md §A and §F; src/data/index.ts:149-177 (black-tendril-shot umbrella=true, kin lesser/moderate/greater)"
+ },
+ {
+  "id": "magnetic-shot",
+  "verdict": "DECIDABLE",
+  "answer": "Moot — graded variants only, and they are already done. `magnetic-shot` is an umbrella (no price, 3 kin, no mechanical field) and is hidden from pickers by ruling A; magnetic-shot-lesser/moderate/greater already carry the strikeAttack entry with the metal-target trigger.",
+  "evidence": "DECISIONS.md §A; src/data/index.ts:149-177; src/rules/situationalBonuses.ts:1365-1367"
+ },
+ {
+  "id": "disguise-kit-elite-cosmetics",
+  "verdict": "DECIDABLE",
+  "answer": "Only the parent kit is marked. The 5 sp record is a replacement cosmetics SUPPLY, not a kit — the +1 item bonus is a property of the elite kit, and putting it on the refill would grant the bonus to a character who bought cosmetics and no kit. This is the general principle ruling G states: the mark lives on the thing that actually carries it, and it never sits beside a duplicate of itself. `disguise-kit-elite` is already registered; leave the cosmetics record with no entry. Separately, the inherited-verbatim description is an import defect worth trimming to the replenishment sentence (same class as explosive-death-drop).",
+  "evidence": "DECISIONS.md §G; src/rules/situationalBonuses.ts:1381 disguise-kit-elite; core.json items.disguise-kit-elite-cosmetics.description is byte-identical to the kit's minus its last sentence"
+ },
+ {
+  "id": "musical-instrument",
+  "verdict": "DECIDABLE",
+  "answer": "Moot — excluded entirely, not treated as a base variant. `musical-instrument` is caught by findUmbrellaIds (no price, 4 kin: handheld / heavy / virtuoso-handheld / virtuoso-heavy, no mechanical field), so ruling A hides it from every picker — it is not an ownable item and cannot appear on a sheet. The +1 item bonus sits where it belongs, on the two virtuoso records, and already does.",
+  "evidence": "DECISIONS.md §A (\"they should only see the options they can have\"); src/data/index.ts:149-177; src/rules/situationalBonuses.ts:1385-1386"
+ },
+ {
+  "id": "steelscour",
+  "verdict": "DECIDABLE",
+  "answer": "Moot — same as Musical Instrument: `steelscour` is an umbrella (no price, 4 graded kin, no mechanical field), hidden by ruling A, so it is neither ownable nor displayable and gets no entry. Note the real gap the question exposes: the moderate/greater/major grades are registered but steelscour-LESSER is not — if the lesser bomb has an attack bonus in its own right, register it under its own id; do not smuggle it onto the hidden parent.",
+  "evidence": "DECISIONS.md §A; src/data/index.ts:149-177; src/rules/situationalBonuses.ts:2617-2619 (moderate/greater/major present, lesser absent)"
+ },
+ {
+  "id": "bewitching-bloom",
+  "verdict": "DECIDABLE",
+  "answer": "Parent carries none. `bewitching-bloom` is an umbrella (no price, 9 per-flower kin, no mechanical field) and is hidden by ruling A — a union of all nine bonuses would be exactly the 'summary that isn't a real item' the owner rejected. Bonuses stay on the per-flower records, where they already are. One follow-up the question does not ask but the data shows: those per-flower entries currently star the GIVER's own stats while their `when` says \"the targeted ally's...\" — under ruling F an ally-only bonus puts nothing on your sheet, so they should become display-only modes on the giver (the effects are timed: 1 minute / 10 minutes) and star the ally only through the ally's own sheet.",
+  "evidence": "DECISIONS.md §A and §F; src/data/index.ts:149-177; src/rules/situationalBonuses.ts:1398-1402"
+ },
+ {
+  "id": "unifying-emblem-skoan-quah",
+  "verdict": "DECIDABLE",
+  "answer": "Yes — patch core.json; a data bug, decided the same way as explosive-death-drop. The pristine AoN mirror gives the missing link exactly: \"The tattoo of the Skull clan depicts a broken maxilla and mandible. It can cast ventriloquism.\" Restore the spell reference on unifying-emblem-skoan-quah (and check the sibling clan records the same way — the mirror shows Tamiir-Quah/Sun clan casts concordant choir). The Diplomacy +1 needs no new decision: register it identically to the six sibling emblems already in the registry.",
+  "evidence": "C:/wonderers guide/aon-2e-archive/data/by-category/equipment/equipment-2223-1926.json; DECISIONS.md §D leftovers (importer-stripped text is a data bug); src/rules/situationalBonuses.ts:1409-1415 (six siblings registered, skoan-quah missing)"
+ },
+ {
+  "id": "canary-tail-first-week",
+  "verdict": "OWNER",
+  "why": "This is not a rules question — the bonus and its trigger are unambiguous. It is a question about whether the sheet has any surface at all for a PURCHASED DOWNTIME SERVICE, and the codebase is currently contradictory rather than decided. Services are look-only catalog rows that are never added to inventory (AddItemsModal.tsx:162 'Reference only — services aren't added to your inventory'), and an item's situational entries only fire while it is equipped, worn or invested (explain.ts:180-182) — a hired informant is none of those. So the three canary entries already sitting in the registry can never fire, and any entry added for the four weekly tiers would be equally dead. Whether hired help deserves a place on the sheet is a product call about what the sheet is for, and a reasonable person could go either way.",
+  "options": [
+   {"label": "No surface — leave downtime services unregistered (and retire the three dead canary entries)",
+    "looksLike": "Buying a canary changes nothing on the sheet. Diplomacy shows no star. The service's description in the catalog is the whole of it, and the player remembers the +1 when they sit down to do downtime — exactly how the owner already ruled skill DCs and Potion of Disguise are handled."},
+   {"label": "Give services a surface — let a purchased service be marked ACTIVE, so its entry fires like a worn item",
+    "looksLike": "Diplomacy gains a `*`; opening it shows 'Canary Tail — +1 circumstance to Gather Information about the individual you are having tailed'. Costs a new 'active' toggle for non-wearable purchases and a route for services into inventory, and puts a downtime-only note on a combat-facing sheet."}
+  ],
+  "recommend": "Option 1. It matches the owner's own precedent for downtime-and-DC-only bonuses ('there is a setting... the user will need to remember'), it needs no engine work, and it fixes a real defect for free by retiring three entries that silently do nothing. If option 1 is chosen, the other three canary-tail questions collapse with it.",
+  "theme": "downtime-services-on-the-sheet"
+ },
+ {
+  "id": "canary-tail-second-week",
+  "verdict": "DECIDABLE",
+  "answer": "Cumulative, one line — and it needs no new mechanism. If these are registered at all (see the canary-tail-first-week decision), give week N the CUMULATIVE bonus (+1/+2/+3/+4) and give all four the BYTE-IDENTICAL `when` string. The shipped stacking rule then does the rest: poolSituationalLines keys on type + sign + normalised trigger and keeps only the highest, so a player holding weeks one and two sees a single '+2 circumstance', not '+1' and '+2'. Four separate stars would be the bug the cross-cutting ruling exists to prevent (\"if i have +1 item bonus and a +2 item bonus it will only show the +2\").",
+  "evidence": "DECISIONS.md ★ CROSS-CUTTING (amended) — \"compare the `when` strings. Identical -> keep the highest of that type\"; src/rules/situationalBonuses.ts:2937 poolSituationalLines (key = `${type}|${sign}|${normalizeWhen(when)}`)"
+ },
+ {
+  "id": "canary-tail-third-week",
+  "verdict": "DECIDABLE",
+  "answer": "Same as week two: cumulative value (+3), identical `when` text to the other three tiers. poolSituationalLines collapses same-type/same-trigger lines to the best one, so the sheet shows one '+3 circumstance' line rather than three stacked stars. No per-tier wording variation — a single character's difference in `when` defeats the collapse and re-creates the four-star display.",
+  "evidence": "DECISIONS.md ★ CROSS-CUTTING (amended); src/rules/situationalBonuses.ts:2923 normalizeWhen + 2937 poolSituationalLines"
+ },
+ {
+  "id": "canary-tail-fourth-week",
+  "verdict": "DECIDABLE",
+  "answer": "Same as weeks two and three: bonus +4, identical `when` to the other tiers so the pooling rule shows one line. The printed cap is self-enforcing — there is no fifth tier record, so +4 is the ceiling — and the 'the individual begins to suspect they are being tailed' clause is narrative, not a modifier: it goes in the record's description, never in a bonus string.",
+  "evidence": "DECISIONS.md ★ CROSS-CUTTING (amended); src/rules/situationalBonuses.ts:2937 poolSituationalLines; DECISIONS.md §H.2 (notes capped at ~one line, full text a click away)"
+ },
+ {
+  "id": "the-publican",
+  "verdict": "DECIDABLE",
+  "answer": "Neither a notes list nor nothing — put it on the AID ACTION, which is ruling D's whole answer for effects that change no stat: \"attach the marker to the THING IT MODIFIES — the action, or the condition.\" Ruling D also explicitly rejected building generic note surfaces. Add a RECORD_MARKERS entry keyed `the-publican`: { on: 'action', id: 'aid', value: \"crit fail → fail\", note: \"Critically failed Aid checks count as failures; at 14th level the circumstance bonus you provide increases by 1.\" }. The 'aid' action id exists in core.json. The ally-facing half rides along in the same note rather than getting its own surface, because the thing it modifies is still your Aid action (ruling F would otherwise give it nothing).",
+  "evidence": "DECISIONS.md §D (\"REJECTED my option 1 (build generic stat surfaces)... attach the marker to the THING IT MODIFIES\") + §F; src/rules/situationalBonuses.ts:2810-2830 RecordMarker / RECORD_MARKERS; core.json actions.aid"
+ },
+ {
+  "id": "the-lens-of-the-outreaching-eye",
+  "verdict": "DECIDABLE",
+  "answer": "Both — take the broad reading and let the table judge. This is the shape ruling H already settled: \"WHERE THE RULES ARE OPEN, STAY OPEN... Narrowing it to Fortitude would put my ruling on the sheet dressed as the book's.\" Register targets [{spell,'all'}, {skill,'all'}] with when = \"on any check made to resolve a divination effect\", bonus \"+3 item\". A skill:'all' target with a tightly scoped trigger is already the shipped pattern (fiendbreaker-artifact), and ruling C independently says to star every skill that could perform the named thing.",
+  "evidence": "DECISIONS.md §H.1 (Bootstrap Respirator: star all saves, printed trigger as the note) and §C; src/rules/situationalBonuses.ts:1765 fiendbreaker-artifact (skill 'all' + scoped trigger)"
+ },
+ {
+  "id": "globe-of-shrouds",
+  "verdict": "DECIDABLE",
+  "answer": "Not the holder — this is settled by rule, not taste. Player Core's targeting rules state plainly: \"Some effects target or require an ally... You are not your own ally.\" The censer-holder is therefore excluded from \"an ally in the aura\", so ruling F applies exactly: the bonus lands on someone else, so NOTHING on the holder's sheet — no star on their Stealth. Because the activation is timed and once per day, ruling F clause 2 applies: give the holder a DISPLAY-ONLY mode (\"Globe of Shrouds — aura lit\") that moves no numbers and just shows the aura is running. Allies get the +2 status through their own sheets.",
+  "evidence": "Player Core / CRB targeting rules — \"You are not your own ally\" (C:/wonderers guide/aon-2e-archive/data/by-category/rules/rules-353.json, rules-2380.json); DECISIONS.md §F clauses 1 and 2"
+ },
+ {
+  "id": "spiny-lodestone",
+  "verdict": "DECIDABLE",
+  "answer": "Fold it, do not star it — and fix the affix bug that this exposes. Ruling B set the principle in one direction (a bonus the RULES restrict leaves passiveEffects and becomes a star); its converse holds here — in armour mode the +1 item bonus to Athletics has no printed restriction at all, so a star would promise a condition that does not exist and would leave the Athletics total wrong. The app knows the mode: attachments.ts identifies the host by itemType. Model it as an effectChoices/resolvedItemPassives pair keyed to the affixture (the energy-robe pattern), armour → passiveEffects.skills.athletics 1 + resistance, weapon → a situational strikeDamage entry (that one IS conditional: 'after you Activate the lodestone, until the end of your next turn'). BLOCKING BUG: affixing sets worn/equipped/invested all false (play.ts:747), and both derive.ts:705 and explain.ts:194 require one of those — so today an affixed spellheart contributes nothing at all, by either route. Treat an affixed item as in-use via its host, the same special case the etched-rune fix already makes.",
+  "evidence": "DECISIONS.md §B (converse); src/rules/play.ts:747; src/rules/derive.ts:705-709; src/rules/explain.ts:194-203 (etched-rune special case); src/rules/attachments.ts:60-62; core.json items.energy-robe.effectChoices"
+ },
+ {
+  "id": "spiny-lodestone-greater",
+  "verdict": "DECIDABLE",
+  "answer": "Identical to the base spiny lodestone: armour-mode +1 item to Athletics (and resistance 5) folds into the maths through the affixture-resolved passive, weapon-mode 1d6 piercing stays a situational strikeDamage entry because it is genuinely conditional on having Activated the lodestone. Same blocking prerequisite: an affixed attachment is currently worn/equipped/invested = false and so is invisible to both derive and the situational lookup — fix that once and both grades work.",
+  "evidence": "DECISIONS.md §B (converse); src/rules/play.ts:747; src/rules/derive.ts:705-709; src/rules/explain.ts:194-203"
+ }
+]}

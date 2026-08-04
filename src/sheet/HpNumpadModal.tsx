@@ -25,6 +25,8 @@ export function HpNumpadModal({
   onSetHp,
   onSetTemp,
   onClose,
+  resistances = [],
+  weaknesses = [],
 }: {
   current: number;
   max: number;
@@ -34,6 +36,10 @@ export function HpNumpadModal({
   onSetHp: (n: number) => void;
   onSetTemp: (n: number) => void;
   onClose: () => void;
+  /** The character's resistances/weaknesses, for the one-tap damage adjusters. Empty = no chips.
+   *  Immunity is deliberately not offered: immune damage is 0, so there is nothing to type. */
+  resistances?: { type: string; value: number }[];
+  weaknesses?: { type: string; value: number }[];
 }) {
   useEscapeClose(onClose);
   const [mode, setMode] = useState<Mode>('damage');
@@ -110,6 +116,53 @@ export function HpNumpadModal({
         </div>
 
         <div className={'np-display' + (value === '' ? ' empty' : '')}>{value === '' ? '0' : value}</div>
+
+        {/* One-tap resistance/weakness damage. You type the damage the GM said, then tap the type it
+            was — the arithmetic AND the hit are applied in that one tap, so the common case is two
+            actions instead of three. Damage entry only: healing and Set HP have no damage type.
+            Immunity is absent on purpose (immune damage is 0, so there is nothing to enter). */}
+        {mode === 'damage' && (resistances.length > 0 || weaknesses.length > 0) && (
+          <div className="np-iwr">
+            {resistances.map((r) => {
+              const dealt = Math.max(0, n - r.value);
+              return (
+                <button
+                  key={`r-${r.type}`}
+                  type="button"
+                  className="np-iwr-chip res"
+                  disabled={n === 0}
+                  title={`Take ${dealt} — ${n} less ${r.value} resistance to ${r.type}`}
+                  onClick={() => {
+                    onDamage(dealt);
+                    onClose();
+                  }}
+                >
+                  Resistance {r.type} {r.value}
+                  {n > 0 && <span className="np-iwr-result"> → {dealt}</span>}
+                </button>
+              );
+            })}
+            {weaknesses.map((w) => {
+              const dealt = n + w.value;
+              return (
+                <button
+                  key={`w-${w.type}`}
+                  type="button"
+                  className="np-iwr-chip weak"
+                  disabled={n === 0}
+                  title={`Take ${dealt} — ${n} plus ${w.value} weakness to ${w.type}`}
+                  onClick={() => {
+                    onDamage(dealt);
+                    onClose();
+                  }}
+                >
+                  Weakness {w.type} {w.value}
+                  {n > 0 && <span className="np-iwr-result"> → {dealt}</span>}
+                </button>
+              );
+            })}
+          </div>
+        )}
 
         <div className="np-grid">
           {['1', '2', '3', '4', '5', '6', '7', '8', '9'].map((d) => (

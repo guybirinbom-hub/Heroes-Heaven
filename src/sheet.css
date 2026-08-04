@@ -1504,6 +1504,57 @@ body {
 .iwr-val.senses-val {
   text-align: left;
 }
+/* One-tap resistance/weakness adjusters in the HP pad. They WRAP rather than scroll — a phone must
+   never need a sideways swipe to reach a button, and a character with several types would otherwise
+   push the last chip off the edge. */
+.np-iwr {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0 2px;
+  justify-content: center;
+}
+.np-iwr-chip {
+  flex: 0 1 auto;
+  max-width: 100%;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line, #2c2f3d);
+  background: var(--panel-2, #1b1e2a);
+  color: var(--text, #e8e9f0);
+  font-size: 0.82rem;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+.np-iwr-chip:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+/* The resulting damage, shown on the chip itself — tapping it deals exactly this, so the number the
+   player is committing to has to be visible BEFORE the tap, not just in the tooltip. */
+.np-iwr-result {
+  font-weight: 700;
+  opacity: 0.95;
+}
+/* Resistance reduces the number, weakness increases it — colour-coded the same way the readout
+   already codes heal vs damage, so the direction is readable before the label is. */
+.np-iwr-chip.res:not(:disabled) {
+  border-color: color-mix(in srgb, var(--good, #4ade80) 45%, transparent);
+}
+.np-iwr-chip.weak:not(:disabled) {
+  border-color: color-mix(in srgb, var(--bad, #f87171) 45%, transparent);
+}
+/* The `*` beside a resistance that only applies sometimes ("while raging"). Same meaning and the
+   same accent as the conditional marker used on stats elsewhere, so it reads as one language. */
+.iwr-cond {
+  color: var(--accent, #8b8bf0);
+  font-weight: 700;
+  margin-left: 1px;
+  cursor: help;
+}
 /* Speed + Senses are wrapped in .kv-cubes: transparent on desktop (still rendered as rail lines),
    turned into a 2-up tile grid on mobile (see the <=720px block). */
 .kv-cubes {

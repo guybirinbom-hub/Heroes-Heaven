@@ -1,0 +1,161 @@
+{
+ "modes": [
+  {
+   "id": "item-zetogeki-hide-armor",
+   "name": "Shift Scales",
+   "fromItemId": "zetogeki-hide-armor",
+   "duration": "until the end of your next turn",
+   "note": "Once per day. While the scales are shifted your Speeds are ALSO reduced by 10 feet (minimum 5 feet) — the app can't apply that yet, so lower your Speeds by hand.",
+   "modifiers": [],
+   "resistances": [
+    { "type": "bludgeoning", "value": 5 },
+    { "type": "piercing", "value": 5 },
+    { "type": "slashing", "value": 5 }
+   ]
+  },
+  {
+   "id": "item-bioluminescent-stripes",
+   "name": "Glowing Stripes",
+   "fromItemId": "bioluminescent-stripes",
+   "duration": "until you Dismiss the glow",
+   "note": "You shed bright light in a 20-foot radius and dim light for the next 20 feet, and you can't be undetected. Dismiss as a free action.",
+   "modifiers": [
+    {
+     "value": -4,
+     "type": "item",
+     "target": "skill",
+     "detail": "stealth",
+     "appliesWhen": "on Stealth checks to Hide and Sneak"
+    }
+   ]
+  },
+  {
+   "id": "item-blessed-tattoo",
+   "name": "Blessed Tattoo",
+   "fromItemId": "blessed-tattoo",
+   "duration": "1 minute",
+   "note": "Once per day; grants the effect of Protection against evil. Can be activated as a reaction instead of a 2-action activity when a demon attacks you or you attempt a save against a demon's ability.",
+   "modifiers": [
+    {
+     "value": 1,
+     "type": "status",
+     "target": "ac",
+     "appliesWhen": "against evil creatures' attacks, spells and effects"
+    },
+    {
+     "value": 1,
+     "type": "status",
+     "target": "save",
+     "appliesWhen": "against evil creatures' attacks, spells and effects"
+    }
+   ]
+  },
+  {
+   "id": "curse-of-engulfing-flames",
+   "name": "Engulfing Flames",
+   "feats": ["curse-of-engulfing-flames"],
+   "duration": "while you have the cursebound condition",
+   "note": "You catch fire: persistent fire damage equal to your cursebound value, and any fire immunity or resistance you have is suppressed (the sheet still lists it — ignore it while this is on). The flames shed light like a torch. They subside while you Refocus to assuage the curse or while unconscious.",
+   "modifiers": []
+  },
+  {
+   "id": "electric-counter",
+   "name": "Electric Counter",
+   "feats": ["electric-counter"],
+   "duration": "until the start of your next turn",
+   "note": "Reaction while in Wild Winds Stance when you would take damage; the resistance also applies to the triggering damage if it was electricity. If the trigger was a melee attack, the attacker takes 3d6 damage.",
+   "modifiers": [],
+   "resistances": [{ "type": "electricity", "value": "@actor.level" }]
+  },
+  {
+   "id": "gathering-moss",
+   "name": "Gathering Moss",
+   "feats": ["gathering-moss"],
+   "duration": "1 minute or until Tenacious Stance ends",
+   "note": "Fast healing equal to your level (triggered when you enter Tenacious Stance). Track the healing yourself — the app has no fast-healing lane.",
+   "modifiers": []
+  },
+  {
+   "id": "immortal-techniques",
+   "name": "Immortal Techniques",
+   "feats": ["immortal-techniques"],
+   "duration": "until the start of your next turn",
+   "note": "The first time each round you use an action with both the monk and stance traits, you gain 20 temporary Hit Points. Enter them in the temporary HP box yourself.",
+   "modifiers": []
+  },
+  {
+   "id": "inexorable-iron",
+   "name": "Inexorable Iron",
+   "feats": ["inexorable-iron"],
+   "duration": "while in Arcane Cascade stance",
+   "note": "While wielding a melee weapon in two hands you gain temporary Hit Points equal to half your level (minimum 1) when you enter Arcane Cascade and at the start of each of your turns. Enter them in the temporary HP box yourself.",
+   "modifiers": []
+  },
+  {
+   "id": "item-leopards-armor",
+   "name": "Leopard's Ferocity",
+   "fromItemId": "leopards-armor",
+   "duration": "1 hour",
+   "note": "Once per day; Activate the armor again to revert it to its original form.",
+   "modifiers": [
+    { "value": 2, "type": "item", "target": "skill", "detail": "stealth" },
+    {
+     "value": 2,
+     "type": "item",
+     "target": "skill",
+     "detail": "intimidation",
+     "appliesWhen": "on Intimidation checks to Demoralize"
+    },
+    { "value": -2, "type": "untyped", "target": "skill", "detail": "diplomacy" },
+    { "value": -2, "type": "untyped", "target": "skill", "detail": "society" }
+   ]
+  },
+  {
+   "id": "item-pyrefeather-token",
+   "name": "Pyrefeather Token",
+   "fromItemId": "pyrefeather-token",
+   "duration": "1 minute",
+   "note": "5 temporary Hit Points — enter them in the temporary HP box yourself. Activating also reduces the triggering recovery check's DC by 1; you can Activate it while unconscious.",
+   "modifiers": []
+  },
+  {
+   "id": "renewing-cycle",
+   "name": "Renewing Cycle",
+   "feats": ["renewing-cycle"],
+   "duration": "until the start of your next turn",
+   "note": "The first time each round you Cycle Elemental Stance you gain temporary Hit Points equal to half your level — enter them yourself. You can't gain them again from the same elemental stance until you've entered every other elemental stance you know, or 10 minutes pass.",
+   "modifiers": []
+  },
+  {
+   "id": "stone-body",
+   "name": "Stone Body",
+   "feats": ["stone-body"],
+   "duration": "until the end of your next turn",
+   "note": "Requires Tenacious Stance. Ends immediately if you are critically hit.",
+   "modifiers": [],
+   "resistances": [{ "type": "all", "value": 10 }]
+  },
+  {
+   "id": "raging-stories",
+   "name": "Raging Stories",
+   "feats": ["raging-stories"],
+   "duration": "until the end of your next turn",
+   "note": "Taken in place of Offer a Story's normal +1 status bonus to AC and Will saves: you wrap yourself in spectral flame and the action gains the fire trait. The extra damage is fire and applies only to melee Strikes.",
+   "modifiers": [
+    {
+     "value": 2,
+     "type": "untyped",
+     "target": "damage",
+     "appliesWhen": "on melee Strikes, as fire damage (4 if you're a master in Religion, 6 if legendary)"
+    }
+   ]
+  }
+ ],
+ "skipped": [
+  { "id": "klingegeist", "why": "needs a mode speed/strike lane" },
+  { "id": "soaring-wings-major", "why": "needs a mode speed/strike lane" },
+  { "id": "stone-brawler-dedication", "why": "needs a mode speed/strike lane" },
+  { "id": "winged", "why": "needs a mode speed/strike lane" },
+  { "id": "wyrms-flight", "why": "needs a mode speed/strike lane" }
+ ]
+}

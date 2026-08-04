@@ -1,0 +1,257 @@
+{"results":[
+ {
+  "id": "aon-shotalashu",
+  "verdict": "DECIDABLE",
+  "answer": "No. One-time acquisition / downtime PREREQUISITE checks are out of scope for the situational lane — only in-play bonuses get a star. Give aon-shotalashu no situational entry. Two independent reasons: (1) the display model cannot carry it — SituationalLine.sourceCollection is 'feats'|'items'|'heritages'|'backgrounds'|'ancestries'|'classFeatures', and animalCompanions is not in that union, so an entry keyed to this record could never render anywhere; (2) it would be self-defeating even if it could — the record only enters a character's scope once they already OWN the shotalashu, i.e. after the DC 21 Occultism check has been passed, so the star would appear exactly when it no longer matters. This is the same call the owner made for skill DCs ('NO surface. The player remembers these. Not starred anywhere'). Generalise it: acquisition/downtime-prerequisite bonuses are never starred.",
+  "evidence": "src/rules/situationalBonuses.ts:2788 (SituationalLine.sourceCollection union — no animalCompanions); work/rulings/DECISIONS.md ruling D, 'SKILL DCs … NO surface'"
+ },
+ {
+  "id": "eldritch-archer-dedication",
+  "verdict": "DECIDABLE",
+  "answer": "Moot — already shipped correctly, and as a real spontaneous repertoire, not the innate lane. CASTER_ARCHETYPES carries 'eldritch-archer-dedication': mk('arcane','cha',1,'eldritch-archer', true) — 1 cantrip, Charisma key, player-chosen tradition — and the id is in SPONTANEOUS_DEDICATIONS, which sets repertoire = true. That matches the printed text ('You gain a spell repertoire with one cantrip of your choice, from a tradition of your choice … Your key spellcasting attribute for these spells is Charisma') and is the only shape later Eldritch Archer feats can add to. Do not move it to the innate lane; an innate at-will cantrip cannot receive additions.",
+  "evidence": "src/rules/casterArchetypes.ts:76 (registry entry) + :113-126 (SPONTANEOUS_DEDICATIONS → repertoire = true)"
+ },
+ {
+  "id": "marshall-fiendish-forces",
+  "verdict": "DECIDABLE",
+  "answer": "Already ruled — do neither yet. The owner explicitly deferred this exact record: picks that only benefit an ally or an NPC/summoned creature stay in the deferred bucket, 'not to be silently resolved, not to be quietly dropped'. So: no free-text field, no picker; the feat stays prose-only and stays on the deferred list until the ally/NPC-pick lane is reopened. Do not re-escalate it.",
+  "evidence": "work/choice-lane/DECISIONS.md §3 'Picks that only benefit allies / NPCs → DEFERRED', which names Marshall Fiendish Forces"
+ },
+ {
+  "id": "sanctified-relic",
+  "verdict": "DECIDABLE",
+  "answer": "Already ruled deferred — do not prompt for it now. Sanctified Relic is named by name in the owner's ally/NPC-pick deferral. Two premises in the question are also stale and should not be re-raised: (a) FeatChoiceDef now HAS a pick count — `picks?: number` plus `distinct?: boolean`, answers stored per index as `<slotKey>#<i>` — so 'choose two attributes' is expressible today; (b) the holy/unholy half depends on the separate sanctification scope call (see the `lurlup` entry), not on this record. When the deferral lifts, ship it as one 2-pick distinct attribute choice plus a separate holy/unholy choice, not a flattened list.",
+  "evidence": "work/choice-lane/DECISIONS.md §3 (names Sanctified Relic); src/rules/types.ts:661-663 (`picks`, `distinct`)"
+ },
+ {
+  "id": "assume-godhood",
+  "verdict": "DECIDABLE",
+  "answer": "Already ruled deferred — prompt for none of the three. Assume Godhood is named in the owner's ally/NPC-pick deferral (its picks benefit your followers and an NPC hierophant, never your own sheet). Leave it prose-only and keep it on the deferred list; do not build a record-only prompt for the three follower spells, the divine skill or the extra divine attribute.",
+  "evidence": "work/choice-lane/DECISIONS.md §3 (names Assume Godhood)"
+ },
+ {
+  "id": "breakthrough-innovation",
+  "verdict": "DECIDABLE",
+  "answer": "Moot on both halves. (1) The picker already offers breakthrough + initial: inventorModificationOptions() returns every class-feature tagged `<type>-innovation-modification` whose level <= the tier level, and tier is encoded in the modification's own level (1 = initial, 7 = breakthrough, 15 = revolutionary). That is exactly what the printed text allows ('You can choose an initial modification … instead if you prefer'). (2) Light mortar is NOT weapon — innovationType() already returns undefined for 'light-mortar-innovation', and the record prints its own initial / breakthrough / revolutionary light-mortar modification lists inside its description ('choose from the following breakthrough light mortar modifications'). Remaining work is a DATA gap, not a decision: the light-mortar modifications exist only as prose inside that description, so a Munitions Master inventor gets no picker at all — extract them as classFeatures tagged `light-mortar-innovation-modification` at levels 1/7/15 and add 'light-mortar' to InnovationType.",
+  "evidence": "src/rules/build.ts:946-970 (inventorModificationOptions, level<=maxTierLevel) and :939-945 (innovationType — 'light-mortar is archetype-only → none'); core.json classFeatures/light-mortar-innovation description"
+ },
+ {
+  "id": "endless-memories",
+  "verdict": "DECIDABLE",
+  "answer": "Model it as a daily-preparation pick — already ruled, and not yet wired. The owner's decision names Endless Memories / Ancient Memories directly: 'the REST button IS daily preparations', with the ask-every-time / reuse-my-last-pick setting. Neither record carries a `choice` in core.json today, so this is unbuilt: add `choice: { flag, prompt, kind:'open'|'array', daily: true }` to ancient-memories (a skill to become trained in) and to endless-memories (a skill you are already trained in → expert). The 'cannot be used as prerequisites' rule needs no extra machinery: daily answers live in PlayState.dailyChoices, not BuildState, and prerequisite checking reads the build — so keep the grant out of BuildState and the bar enforces itself. A sheet reminder alone is NOT enough; that would be a pick that silently does nothing.",
+  "evidence": "work/choice-lane/DECISIONS.md §1 (names Endless Memories / Ancient Memories); src/rules/dailyChoices.ts:1-31 ('Those answers are PLAY state'); core.json feats/endless-memories has no `choice`"
+ },
+ {
+  "id": "kinetic-gate",
+  "verdict": "DECIDABLE",
+  "answer": "All three are settled by the record's own printed text. (a) NO explicit Single/Dual toggle — the mode is fully determined by the number of elements picked (1 element = single gate, 2 = dual gate), so a separate toggle adds a second source of truth that can contradict the picker. Label the existing element picker so the player sees which gate they built. (b) YES auto-grant the impulse junction when exactly one element is picked — RAW: 'Choose one element … In addition, you gain an impulse junction'. Dual gate grants none. Metal's junction carries its own sub-choice (acid / electricity / piercing), so it needs an EffectChoice. (c) YES two 1st-level impulse feat slots — but in BOTH cases, not only single gate: single gate = 'select two 1st-level impulse feats that have that element's trait'; dual gate = 'select two 1st-level impulse feats, one with the trait of the first element and one with the trait of the other'. Element filtering for those slots already exists.",
+  "evidence": "core.json classFeatures/kinetic-gate description (Single Gate / Dual Gate paragraphs); src/rules/featSlots.ts:67-71 (impulse feats already gated to your elements)"
+ },
+ {
+  "id": "weapon-legend",
+  "verdict": "DECIDABLE",
+  "answer": "Add a second, independent group pick at 13 — the current single-group model is a simplification, not a rule. RAW: 'You can select one weapon group and increase your proficiency ranks to legendary …' with nothing tying it to the group Fighter Weapon Mastery raised at 5. Store a second field (e.g. build.fighterWeaponGroupLegend) defaulted to the level-5 group so existing characters are unchanged, and apply legendary (master for advanced) to whichever group it names. Note the re-pick is free of downside: at 13 Weapon Legend already raises ALL simple/martial/unarmed to master, so the level-5 group's master rank is redundant by then.",
+  "evidence": "core.json classFeatures/weapon-legend description; src/rules/build.ts:122 (single `fighterWeaponGroup`) and :2008-2011 (promoted, never re-chosen)"
+ },
+ {
+  "id": "blessing-of-the-devoted",
+  "verdict": "DECIDABLE",
+  "answer": "Moot — the question was answered by shipping, and the answer was 'ship all three'. scripts/apply-champion-blessing.mjs adds the champion extraChoices group 'blessing' (pickByLevel {3:1}) built from the three classFeatures tagged `blessing-of-the-devoted`, and writes it into scripts/data/effect-backfill.json so it survives `npm run data`. Blessed Armament already records its pick (a daily 5-option property-rune choice on the record); Blessed Shield is offered and recorded as prose. Do not hold the feature back waiting for an item-targeting lane. Follow-up when that lane exists: Blessed Armament's chosen rune should attach to the bound weapon/handwraps, and Blessed Shield should apply a level-scaled Reinforcing rune.",
+  "evidence": "scripts/apply-champion-blessing.mjs:24-46; core.json classFeatures/blessed-armament `choice` (flag 'blessedRune', daily:true, 5 options)"
+ },
+ {
+  "id": "divine-spark-and-ikons",
+  "verdict": "DECIDABLE",
+  "answer": "Yes — every weapon and worn ikon must bind to a real inventory item, and the free item is granted, not optional. RAW: 'Weapon and worn ikons are tied to items of power. When you select one, you gain a non-magical, level-0 item of your choice that matches its usage entry', and 'Your ikons can be etched with runes … A body or worn ikon can have runes etched on it to apply to your unarmed attacks as though it were handwraps of mighty blows, though only one of your ikons can have these runes and no ikon can have both these and armor or weapon runes.' HH keeps runes on InventoryItem.runes and the strike engine reads them from there, so with no bound item those two sentences are unrepresentable. Implement: selecting a weapon/worn ikon either links an owned item of the matching usage or creates the free level-0 one; body ikons bind to no item but may be the single rune-carrying ikon (handwraps-equivalent), enforced as at-most-one.",
+  "evidence": "core.json classFeatures/divine-spark-and-ikons description ('you gain a non-magical, level-0 item'; the handwraps clause); src/rules/types.ts InventoryItem.runes; memory project_pf2e_codex_strikes ('Handwraps unarmed guard is load-bearing')"
+ },
+ {
+  "id": "thaumaturges-demesne",
+  "verdict": "OWNER",
+  "why": "Nothing here is a rules question — the demesne changes no number on the character's sheet, and the app has precedents pointing both ways. Ruling §2 (kingdom feats) says record a pick even when nothing consumes it; ruling F and the D-leftovers say things that aren't you get no surface at all. Which one governs a purely narrative detail the player wrote down is the owner's taste, and it recurs across the corpus (any 'name your X' pick with no mechanical consequence).",
+  "options": [
+   {
+    "label": "Capture it — a free-text field on the feat",
+    "looksLike": "On the Feats & Features row, Thaumaturge's Demesne shows a small text input at build time and afterwards reads 'Thaumaturge's Demesne (The Old Mill, Absalom)'. Same shape as the existing Lore free-text inputs."
+   },
+   {
+    "label": "Stay silent — prose only",
+    "looksLike": "The feat row shows only the feat name and its description. The player writes the demesne in their own notes; the app never asks."
+   },
+   {
+    "label": "Capture it in the character's Notes instead",
+    "looksLike": "Taking the feat drops a prefilled line into the character's free-form notes ('Demesne: ____') and the feat row stays plain — one place for all narrative detail rather than a field per feat."
+   }
+  ],
+  "recommend": "Option 1, a free-text field. It is the cheapest of the three (the Lore/heritage free-text input already exists and the choice shape supports kind:'text'), it keeps the app's promise that a printed 'choose X' is never silently dropped, and unlike Notes it keeps the answer next to the thing that asked for it. Whatever you pick, apply it to the whole family — this is the recurring 'name your X' shape, not a one-off.",
+  "theme": "narrative-only picks: capture as free text or stay silent"
+ },
+ {
+  "id": "split-slot",
+  "verdict": "DECIDABLE",
+  "answer": "Never add a slot — that would be a straight rules error. RAW: the feat lets you prepare TWO spells in ONE existing slot and 'When you Cast a Spell from that slot, choose which spell to cast. Once you've chosen, the unused spell dissipates as though you hadn't prepared it at all'. Your number of castings is unchanged. Model it as a paired preparation on the chosen slot: record the chosen rank (at least 1 lower than your highest), let the player prepare a second spell into that one slot, show both, and have casting either one consume the single slot. If the paired-preparation UI is too much for now, the fallback is recording the rank plus a note — but the slot COUNT must not move under any implementation.",
+  "evidence": "core.json feats/split-slot description ('prepare two spells in that slot … the unused spell dissipates')"
+ },
+ {
+  "id": "unlimited-pluripotency",
+  "verdict": "DECIDABLE",
+  "answer": "Build it as a daily-preparation pick — this is exactly the shape the owner already ruled on. The text is explicit about when: 'When you emerge and make your daily preparations, you can select a different surki heritage to replace it', and the Rest button IS daily preparations. So: `choice: { flag:'pupaHeritage', prompt:'Surki heritage today', kind:'array', daily:true }` with the four surki heritages (breaker / elytron / hardshell / lantern) as options. Leaving it as descriptive text is not acceptable — 'Never show a pick that silently does nothing' cuts both ways, so the daily answer must actually override the heritage used for derivation (senses/speeds/grants), not merely be recorded. Scope note: today dailyChoices only STORE answers; this one needs the derive path to read a heritage override, which is the only new engine work here. HH's single-heritage model makes 'one of your surki heritages' unambiguous — it swaps the character's one surki heritage.",
+  "evidence": "work/choice-lane/DECISIONS.md §1 (Rest = daily preparations) and §4 ('Never silently show a pick that does nothing'); src/rules/dailyChoices.ts:1-31; core.json heritages: breaker/elytron/hardshell/lantern-surki"
+ },
+ {
+  "id": "peerless-mascot-companion",
+  "verdict": "DECIDABLE",
+  "answer": "Add 'peerless-mascot' as a real companionSpecializations record; skip the companion-language field. The specialization list is a data-driven collection of 11 records with structured fields (skills[{skill,rank}], abilityBoosts, acRank, note) — without a record for it the printed option cannot be selected at all, and the feat's own text says 'You can select one of the usual specializations OR the peerless mascot specialization'. Its printed benefits map onto the existing fields: abilityBoosts {int:2, wis:1}, the expert rank grants into skills/acRank, and the 30-foot banner aura into `note`. The prose note in companionGrants.ts is not good enough because it leaves the pick unavailable. The language is different: 'It can speak one language that you also speak' changes nothing the sheet computes and no companion language surface exists — put it in the specialization/feat note rather than inventing a field.",
+  "evidence": "core.json companionSpecializations (11 records, e.g. 'ambusher' with skills/abilityBoosts/acRank/note); core.json feats/peerless-mascot-companion description"
+ },
+ {
+  "id": "built-in-tools",
+  "verdict": "DECIDABLE",
+  "answer": "Ship the picker. 'Record the pick even when nothing consumes it yet' is already the house rule (kingdom feats, ruling §2), and EffectChoice options are explicitly allowed to carry no grant. Use the existing multi-pick shape — `picks: 2` on a choice resolved from the character's owned tool items ('choose up to two sets of tools you own'). It is also not purely display: the tools become part of the innovation and 'The innovation's Bulk doesn't increase from this addition', so the chosen tools' Bulk stops counting against encumbrance — which HH does compute. Do not hold it back for the worn-tools limit; that limit is a table convenience, not a number on the sheet.",
+  "evidence": "work/choice-lane/DECISIONS.md §2 (kingdom feats: keep the pick, record it); src/rules/types.ts:394 (EffectChoice option grant is optional) and :661 (`picks`)"
+ },
+ {
+  "id": "apotropaic-fulu",
+  "verdict": "DECIDABLE",
+  "answer": "No surface and no pick. The warded alignment decides which OTHER creature gets sickened when it passes the entrance — a target-side effect on someone who is not you, and the owner has ruled twice that those get nothing on your sheet ('if its an effect the effects a teamate and not you then dont do anything'; 'this dosent need to have an effect the player will tel the gm'). It is also not a limited-duration state you activate, so it does not earn a display-only mode either. Independently: the record is edition 'legacy-era' and alignment traits no longer exist post-Remaster, so there is nothing left to grant. Leave the printed 'Pick an alignment trait' in the description and add nothing.",
+  "evidence": "work/rulings/DECISIONS.md ruling F and the 'D leftovers — target-side bonuses' entry; core.json items/apotropaic-fulu edition='legacy-era'"
+ },
+ {
+  "id": "captivating-score",
+  "verdict": "DECIDABLE",
+  "answer": "Stay silent — no per-copy note field, for this or the family. The emotion and the subject decide what OTHER listeners are influenced to feel ('Each creature that can hear the score must succeed at a save or be influenced to feel the emotion you chose toward the subject'); nothing about it touches the composer's sheet, which is the same target-side case ruling F and the D-leftovers already closed with 'no surface, the player tells the GM'. Do not add a note field to InventoryItem — there is no such field today and adding one for flavour would set the precedent for every 'inscribe/compose it this way' consumable. A player who wants their copy labelled has the stated general escape hatch: author it in the item editor / Homebrew, which is ruling I's answer to every 'the app can't express this' case.",
+  "evidence": "work/rulings/DECISIONS.md ruling F, the D-leftovers entry, and ruling I ('the general answer to every the-app-cant-express-this case'); src/rules/types.ts InventoryItem (no note/label field)"
+ },
+ {
+  "id": "faith-tattoo",
+  "verdict": "DECIDABLE",
+  "answer": "Two parts. (1) The spell pick ships NOW and needs no new slot — the premise that a record holds one choice is stale: items carry `effectChoices?: EffectChoice[]`, an ARRAY, and the item choice picker is built. Add an effectChoices entry for 'harm / heal / your deity's 1st-rank cleric spell', filtered by the deity's divine font ('You can choose harm or heal only in accord with the deity's divine font'). (2) The optional self-sanctification is RAW-legal for an item to set — 'When you get the tattoo and aren't sanctified, you can choose to sanctify yourself to your deity' — so IF sanctification becomes a character field, this item writes it as a second effectChoices entry. It cannot today: Deity has no sanctification field and the cleric `sanctification` feature is description-only. So: no sanctification surface until the collection-wide call is made (see the `lurlup` entry). Do not invent a per-item sanctification flag in the meantime.",
+  "evidence": "src/rules/types.ts:1029 (item `effectChoices?: EffectChoice[]`); src/rules/types.ts Deity interface (no sanctification); src/rules/seed.ts:119 (cleric sanctification feature = description only)"
+ },
+ {
+  "id": "faith-tattoo-greater",
+  "verdict": "DECIDABLE",
+  "answer": "Same answer as the base Faith Tattoo, differing only in rank: ship the 3rd-rank harm/heal/deity-spell pick now as an item effectChoices entry (items take an ARRAY of effectChoices, so no second slot is needed), and give the optional self-sanctification no surface until the collection-wide sanctification call is made (see `lurlup`). All four grades must be treated identically — they are one item at four grades, not four decisions.",
+  "evidence": "src/rules/types.ts:1029 (item `effectChoices?: EffectChoice[]`); src/rules/types.ts Deity interface (no sanctification field)"
+ },
+ {
+  "id": "faith-tattoo-major",
+  "verdict": "DECIDABLE",
+  "answer": "Same answer as the base Faith Tattoo, at 5th rank: the harm/heal/deity-spell pick ships now as one of the item's effectChoices (the field is an array, so 'only one choice per record' is not a constraint), and the optional self-sanctification gets no surface until the sanctification field exists (see `lurlup`). Apply the same treatment across all four grades.",
+  "evidence": "src/rules/types.ts:1029 (item `effectChoices?: EffectChoice[]`); src/rules/types.ts Deity interface (no sanctification field)"
+ },
+ {
+  "id": "faith-tattoo-true",
+  "verdict": "DECIDABLE",
+  "answer": "Same answer as the base Faith Tattoo, at 7th rank: the harm/heal/deity-spell pick ships now as one of the item's effectChoices (array-valued, so no second slot is required), and the optional self-sanctification gets no surface until the collection-wide sanctification call is made (see `lurlup`). Treat all four grades identically.",
+  "evidence": "src/rules/types.ts:1029 (item `effectChoices?: EffectChoice[]`); src/rules/types.ts Deity interface (no sanctification field)"
+ },
+ {
+  "id": "taper-of-sanctification",
+  "verdict": "DECIDABLE",
+  "answer": "Ship it as two item records — Taper of Sanctification (Holy) and Taper of Sanctification (Unholy). The variant is fixed when the item is made and it changes a MECHANICAL property (which trait the praying creature's Strikes gain), while EffectChoice picks key per item DEFINITION, so a character holding one of each could not be represented. That is the same reason creation-fixed variants already ship as separate records here (faith-tattoo-greater/major/true, essence-forge-lesser/moderate/greater, awakened-cold-iron-shot). The deity gets NO field: the candle's effect is identical whichever deity it honours, so it changes nothing computed — the same target-side/flavour reasoning as ruling F. The granted holy/unholy Strike trait stays inert until the sanctification question is answered (see `lurlup`); the split is correct regardless of that answer. General rule to reuse: split into variant records when the variant changes something the engine computes; record nothing when it does not.",
+  "evidence": "core.json items/taper-of-sanctification description ('the crafter must choose one when the candle is made'); src/rules/types.ts:~310 (effectChoices keyed `<recordId>:<choiceId>`); existing split records faith-tattoo-* / essence-forge-* / awakened-cold-iron-shot"
+ },
+ {
+  "id": "essence-forge",
+  "verdict": "DECIDABLE",
+  "answer": "Both halves are settled by existing rulings. (b) HIDE the base `essence-forge` record from item pickers: it has no price and three graded twins (essence-forge-lesser gp250 / -moderate gp2000 / -greater gp24000) — exactly ruling A's umbrella test ('an umbrella record has no price and a graded twin at the same base name'), and ruling A says hide, never delete, so a character who already owns one keeps resolving it. (a) Do NOT create four life/matter/mind/spirit variant records. The type only decides which skill primes the forge and which tradition's items it can craft, and HH models no crafting or priming subsystem — nothing the engine computes changes, so splitting would give 12 records for zero mechanical difference. If the owner answers the narrative-capture theme (see `thaumaturges-demesne`) with 'capture it', the type comes along free as a no-grant effectChoices label on the graded records.",
+  "evidence": "work/rulings/DECISIONS.md ruling A (umbrella test + hide-not-delete); core.json items: essence-forge (no price) vs essence-forge-lesser/moderate/greater"
+ },
+ {
+  "id": "aon-awakened-metal-shot",
+  "verdict": "DECIDABLE",
+  "answer": "Moot as a curation call — the split already exists, twice. core.json ships awakened-adamantine-shot (L18, 3500gp), awakened-cold-iron-shot (L17, 2300gp) and awakened-silver-shot (L17, 2300gp), AND a second copy of the same three under awakened-metal-shot-awakened-*-shot. So: author nothing and split nothing. Hide `aon-awakened-metal-shot` under the `aon-` duplicate suppression (it is the aon- twin of `awakened-metal-shot`, price {}), and hide `awakened-metal-shot` itself under ruling A (no price + graded twins). Hide, never delete — characters store raw ids. Real follow-up, a data bug rather than a decision: pick ONE of the two id schemes for the three variants and suppress the other, or the item picker shows every awakened shot twice.",
+  "evidence": "work/rulings/DECISIONS.md ruling A; memory project_hh_display_hygiene rule 2 ('aon- duplicate suppression — HIDE, NEVER DELETE'); core.json items listing of the six awakened-*-shot records"
+ },
+ {
+  "id": "dragon-deviant-classification",
+  "verdict": "OWNER",
+  "why": "This is a build-or-not call on a whole absent subsystem, not a rules reading. The corpus is further along than the question assumes — core.json has 30 feats carrying the `deviant` trait and a deviantAbilityClassification collection with 7 entries (dragon, troll, wraith, blight-soul, verdant-core, flicker, leech) — but src/ has ZERO references to 'deviant', so those 30 rare feats are currently selectable as ordinary class feats with no gate, no Strain, and no classification. Fixing that means deciding how much of Dark Archive's Deviant Abilities to model, which is scope and roadmap, and the backlog does not mention it. Reasonable people would answer differently.",
+  "options": [
+   {
+    "label": "Full subsystem",
+    "looksLike": "A Setup card beside the GMG variant rules: switch on Deviant Abilities, pick your deviation and its classification (dragon → cold/electricity/fire/sonic), and the 30 deviant feats become selectable only then, each showing its damage type and its Strain cost on the sheet."
+   },
+   {
+    "label": "Minimal — gate + classify only",
+    "looksLike": "No Setup card and no Strain tracking. The deviant feats are gated behind the Deviant Ability archetype's feats, and a dragon-type deviation shows one extra pick ('damage type: cold / electricity / fire / sonic') whose answer prints on the feat row. Everything else stays prose."
+   },
+   {
+    "label": "Nothing — and hide the content",
+    "looksLike": "The 30 deviant feats disappear from the class-feat picker (they are all rare, so most tables never see them anyway) and the classification record stays unreferenced."
+   }
+  ],
+  "recommend": "Option 2, minimal. It fixes the one thing that is actually wrong today — 30 rare feats offered with no gate — using lanes that already exist (feat gating plus a no-grant effectChoices pick for the damage type), and it costs a data pass rather than a subsystem. Option 1 only pays off if Dark Archive play is on your roadmap; option 3 throws away content that is already imported.",
+  "theme": "absent subsystem: build it, gate-and-record only, or hide the content"
+ },
+ {
+  "id": "elemental-magic",
+  "verdict": "DECIDABLE",
+  "answer": "Yes, in scope — and the field placement is not a judgement call. The class-archetype lane already exists (ClassArchetype: classId / suppressFeatures / addFeatures / armor / weapon / armorCap / weaponCap / note) with four archetypes shipping, and spell-list replacement (Elementalist) is on the named-subsystem list the owner already approved. Put `classArchetype` on `elementalist-dedication` — the feat exists at level 2 with classArchetype null — NOT on this class-feature record: the retarget rule is that a field on a record nobody OWNS is inert, and elemental-magic is in no class feature list and no subclass option list, so it would never be read. The genuinely new piece is the spell-list replacement itself ('Replace your spell list with the elemental spell list'), which is the one large subsystem still outstanding and is shared with Divine Access / Ancestral Mage — build it once, on the spell picker, not per record.",
+  "evidence": "src/rules/types.ts:327 + :2041 (ClassArchetype); src/rules/build.ts:2425-2429 (carriers scanned on feats and chosen subclass options only); core.json feats/elementalist-dedication (L2, classArchetype null); memory project_hh_feat_mechanics (owner-approved named-subsystem list incl. spell-list replacement / Elementalist)"
+ },
+ {
+  "id": "elemental-school",
+  "verdict": "DECIDABLE",
+  "answer": "Wire it, but only as an Elementalist-gated option — it is not a 15th school for every wizard. RAW ties it to the archetype ('your curriculum spells can be any spells … that have your chosen element's trait. Your school spells are the elemental focus spells of your chosen element'), so it belongs in the wizard arcane-school option list filtered to characters who have taken elementalist-dedication, using the same option-gating the class-archetype layer already applies. Until the Elementalist archetype lands (see `elemental-magic`) leave it unreferenced rather than adding a school every wizard can pick — that would be a rules error, not a simplification. Its `otherTags: ['wizard-elemental-school']` is the right hook to select it by.",
+  "evidence": "core.json classFeatures/elemental-school description + otherTags; src/rules/build.ts:2425-2429 (class-archetype carriers on feats / chosen subclass options)"
+ },
+ {
+  "id": "perpetual-infusions-bomber",
+  "verdict": "DECIDABLE",
+  "answer": "Do not wire legacy alchemist — leave it hidden as superseded. HH ships the Player Core 2 remaster alchemist (versatile vials / advanced-vials / abundant-vials / alchemical-mastery); this is the Core Rulebook (OGL) half the remaster replaced, and the edition rule already covers exactly this case: `superseded` content is ALWAYS hidden from pickers regardless of the 'Hide legacy data' toggle. Concrete action: stamp `edition: 'superseded'` on the fifteen legacy perpetual-* class features (they carry no `edition` at all today, which is why they read as orphans rather than as suppressed), and leave them in no class feature list. Hide, never delete.",
+  "evidence": "src/rules/build.ts:1150-1156 (superseded always hidden, keepIds never dropped); core.json classFeatures/perpetual-infusions-bomber source = 'Pathfinder Core Rulebook' (OGL), no `edition` field"
+ },
+ {
+  "id": "perpetual-perfection-bomber",
+  "verdict": "DECIDABLE",
+  "answer": "Same as the whole legacy alchemist set: do not wire it. It is a 17th-level Core Rulebook (OGL) feature that the Player Core 2 alchemist replaced, present in no class feature list, subclass option list or extraChoices group. Stamp `edition: 'superseded'` so the existing edition rule hides it from every picker unconditionally, and leave it unreferenced. Hide, never delete — a saved character that already picked one keeps resolving it.",
+  "evidence": "src/rules/build.ts:1150-1156 (superseded always hidden); core.json classFeatures/perpetual-perfection-bomber (Core Rulebook OGL, no `edition`)"
+ },
+ {
+  "id": "perpetual-perfection-chirurgeon",
+  "verdict": "DECIDABLE",
+  "answer": "Same as the whole legacy alchemist set: do not wire it. Stamp `edition: 'superseded'` and leave it out of every feature/option list; the edition rule then hides it from all pickers regardless of the Hide-legacy toggle, while an already-chosen id still resolves. The remaster alchemist HH ships has no chirurgeon Perpetual Perfection to map it onto.",
+  "evidence": "src/rules/build.ts:1150-1156; core.json classFeatures/perpetual-perfection-chirurgeon (Core Rulebook OGL, no `edition`)"
+ },
+ {
+  "id": "perpetual-perfection-mutagenist",
+  "verdict": "DECIDABLE",
+  "answer": "Same as the whole legacy alchemist set: do not wire it — stamp `edition: 'superseded'` and leave it unreferenced. On the parenthetical check: the toxicologist variant DOES exist, and so does the whole family — core.json carries perpetual-infusions{,-bomber,-chirurgeon,-mutagenist,-toxicologist}, perpetual-potency{,-…} and perpetual-perfection{,-…}, fifteen records in all, every one Core Rulebook (OGL) and every one editionless. Treat all fifteen identically in one pass.",
+  "evidence": "src/rules/build.ts:1150-1156; core.json classFeatures — 15 perpetual-* records, all source 'Pathfinder Core Rulebook'"
+ },
+ {
+  "id": "perpetual-potency-toxicologist",
+  "verdict": "DECIDABLE",
+  "answer": "RAW: they are REPLACED, not added to — the answer is two free items at any level, never four. Perpetual Infusions (7) / Perpetual Potency (11) / Perpetual Perfection (17) are successive upgrades of the SAME two free Quick Alchemy items; Potency and Perfection re-choose the pair at a higher level rather than granting a second pair. So a 17th-level toxicologist shows two 11th-level-or-lower poisons, and the 5th-level picks are gone. In practice this is moot: these are the superseded Core Rulebook (OGL) alchemist features and will not be wired at all (see the perpetual-* answers) — HH ships the Player Core 2 alchemist.",
+  "evidence": "core.json classFeatures/perpetual-potency-toxicologist + perpetual-perfection-toxicologist (same feature at 11 and 17, both 'Choose two …'); src/rules/build.ts:1150-1156 (superseded hidden)"
+ },
+ {
+  "id": "sign-bound",
+  "verdict": "DECIDABLE",
+  "answer": "Include the 14th option. Ruling H is explicit — 'WHERE THE RULES ARE OPEN, STAY OPEN … Narrowing it would put my ruling on the sheet dressed as the book's' — and the background's own text contemplates it ('you might have been born under a different constellation and gain different benefits as determined by the GM'). Ship 'Other (GM-determined)' as an option that records the pick and carries no grant (EffectChoice options are allowed to have no grant, and the kineticist junction menu already ships that pattern). Because the sign supplies one of the two attribute boosts and the innate spell, pair the option with a free attribute boost and a free-text spell field so the sheet is not left with a boost missing — the rest is the GM's call, said plainly in the option's label.",
+  "evidence": "work/rulings/DECISIONS.md ruling H ('WHERE THE RULES ARE OPEN, STAY OPEN'); core.json backgrounds/sign-bound description; src/rules/types.ts:394 (option grant optional)"
+ },
+ {
+  "id": "lurlup",
+  "verdict": "OWNER",
+  "why": "Whether Heroes Heaven models sanctification at all is a scope decision about the app, not a rules reading. The rules are clear (holy/unholy is a real trait with real consequences), but the cost is collection-wide — a new Deity field backfilled across ~485 deities, a choice on the cleric `sanctification` feature (which today ships as description-only text with no field anywhere in src/), and a holy/unholy trait concept the strike/damage engine does not have — and the payoff is mostly a tag plus a handful of items. It is also the blocker behind four Faith Tattoo grades, the Taper of Sanctification, Sanctified Relic and the champion/exemplar edges, so answering it once unlocks a cluster.",
+  "options": [
+   {
+    "label": "Model it — a real build field",
+    "looksLike": "Deity records gain 'Sanctification: holy / unholy / either / none'; a cleric or champion of a deity offering both is asked to choose at build time; the sheet shows a 'Holy' (or 'Unholy') tag beside the deity, items like the Taper and the Faith Tattoos can set it, and holy/unholy-keyed effects can be gated on it. Lurlup gets 'Can be Unholy' as a real, pickable option."
+   },
+   {
+    "label": "Leave it narrative",
+    "looksLike": "The deity page keeps printing 'Sanctification: Can be Unholy' as text in the description and nothing else changes. Lurlup needs no choice (needsBuildChoice = false), the Faith Tattoos' self-sanctification clause gets no surface, and holy/unholy stays something the player tracks at the table."
+   },
+   {
+    "label": "Record-only middle",
+    "looksLike": "One pick on the cleric/champion sanctification feature ('holy / unholy / none') that shows as a tag on the sheet and is stored, with no deity-side data and nothing gated on it — the same 'record the pick, grant nothing' shape used for kingdom feats."
+   }
+  ],
+  "recommend": "Option 3, the record-only middle, then option 1 later if holy/unholy-keyed mechanics start mattering. It costs one choice on one class feature instead of a 485-record backfill, it puts the answer on the sheet so items and feats that reference it read sensibly, and it does not fabricate deity data we would then have to verify book by book. What it does NOT do is validate that a given deity may be sanctified that way — which is exactly what the deity field would buy, so revisit it if that starts biting.",
+  "theme": "sanctification: model it as a build field, record it only, or leave it narrative"
+ }
+]}

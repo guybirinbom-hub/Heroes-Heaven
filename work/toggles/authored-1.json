@@ -1,0 +1,291 @@
+{
+ "modes": [
+  {
+   "id": "curse-of-the-living-death-1",
+   "name": "Living Death 1",
+   "category": "Oracle",
+   "exclusiveGroup": "oracle-cursebound",
+   "feats": ["curse-of-the-living-death"],
+   "note": "Cursebound 1. You can be targeted by and are hurt by both vitality and void damage even if one normally has no effect on you (Heal can damage you), and any immunity or resistance you have to vitality or void is suppressed.",
+   "modifiers": [],
+   "weaknesses": [
+    { "type": "vitality", "value": 2 },
+    { "type": "void", "value": 2 }
+   ]
+  },
+  {
+   "id": "curse-of-the-living-death-2",
+   "name": "Living Death 2",
+   "category": "Oracle",
+   "exclusiveGroup": "oracle-cursebound",
+   "feats": ["curse-of-the-living-death"],
+   "note": "Cursebound 2 (includes stage 1). Vitality and void still reach you through any immunity or resistance you have.",
+   "modifiers": [
+    { "value": -1, "type": "status", "target": "save", "detail": "fortitude" }
+   ],
+   "weaknesses": [
+    { "type": "vitality", "value": 2 },
+    { "type": "void", "value": 2 }
+   ]
+  },
+  {
+   "id": "curse-of-the-living-death-3",
+   "name": "Living Death 3",
+   "category": "Oracle",
+   "exclusiveGroup": "oracle-cursebound",
+   "feats": ["curse-of-the-living-death"],
+   "note": "Cursebound 3. The weakness rises to 5 + your level; vitality and void still reach you through any immunity or resistance.",
+   "modifiers": [
+    { "value": -1, "type": "status", "target": "save", "detail": "fortitude" }
+   ],
+   "weaknesses": [
+    { "type": "vitality", "value": "5+@actor.level" },
+    { "type": "void", "value": "5+@actor.level" }
+   ]
+  },
+  {
+   "id": "curse-of-the-living-death-4",
+   "name": "Living Death 4",
+   "category": "Oracle",
+   "exclusiveGroup": "oracle-cursebound",
+   "feats": ["curse-of-the-living-death"],
+   "note": "Cursebound 4. The Fortitude penalty doubles; vitality and void still reach you through any immunity or resistance.",
+   "modifiers": [
+    { "value": -2, "type": "status", "target": "save", "detail": "fortitude" }
+   ],
+   "weaknesses": [
+    { "type": "vitality", "value": "5+@actor.level" },
+    { "type": "void", "value": "5+@actor.level" }
+   ]
+  },
+
+  {
+   "id": "curse-of-the-mortal-warrior-1",
+   "name": "Mortal Warrior 1",
+   "category": "Oracle",
+   "exclusiveGroup": "oracle-cursebound",
+   "feats": ["curse-of-the-mortal-warrior"],
+   "note": "Cursebound 1. Any immunity or resistance you have to spells is suppressed. This applies only to spells, not other magical abilities.",
+   "modifiers": [],
+   "weaknesses": [{ "type": "damage from spells", "value": 2 }]
+  },
+  {
+   "id": "curse-of-the-mortal-warrior-2",
+   "name": "Mortal Warrior 2",
+   "category": "Oracle",
+   "exclusiveGroup": "oracle-cursebound",
+   "feats": ["curse-of-the-mortal-warrior"],
+   "note": "Cursebound 2 (includes stage 1). Any immunity or resistance you have to spells is still suppressed.",
+   "modifiers": [
+    { "value": -1, "type": "status", "target": "save", "appliesWhen": "against spells" }
+   ],
+   "weaknesses": [{ "type": "damage from spells", "value": 2 }]
+  },
+  {
+   "id": "curse-of-the-mortal-warrior-3",
+   "name": "Mortal Warrior 3",
+   "category": "Oracle",
+   "exclusiveGroup": "oracle-cursebound",
+   "feats": ["curse-of-the-mortal-warrior"],
+   "note": "Cursebound 3. Your weakness to spell damage equals your level; immunity or resistance to spells stays suppressed.",
+   "modifiers": [
+    { "value": -1, "type": "status", "target": "save", "appliesWhen": "against spells" }
+   ],
+   "weaknesses": [{ "type": "damage from spells", "value": "@actor.level" }]
+  },
+  {
+   "id": "curse-of-the-mortal-warrior-4",
+   "name": "Mortal Warrior 4",
+   "category": "Oracle",
+   "exclusiveGroup": "oracle-cursebound",
+   "feats": ["curse-of-the-mortal-warrior"],
+   "note": "Cursebound 4. The penalty on saves against spells doubles; immunity or resistance to spells stays suppressed.",
+   "modifiers": [
+    { "value": -2, "type": "status", "target": "save", "appliesWhen": "against spells" }
+   ],
+   "weaknesses": [{ "type": "damage from spells", "value": "@actor.level" }]
+  },
+
+  {
+   "id": "item-darkvision-elixir-lesser",
+   "name": "Darkvision",
+   "fromItemId": "darkvision-elixir-lesser",
+   "duration": "10 minutes",
+   "note": "Your sight becomes sharper in darkness.",
+   "modifiers": [],
+   "senses": [{ "name": "darkvision" }]
+  },
+  {
+   "id": "item-darkvision-elixir-moderate",
+   "name": "Darkvision",
+   "fromItemId": "darkvision-elixir-moderate",
+   "duration": "1 hour",
+   "note": "Your sight becomes sharper in darkness.",
+   "modifiers": [],
+   "senses": [{ "name": "darkvision" }]
+  },
+  {
+   "id": "item-darkvision-elixir-greater",
+   "name": "Darkvision",
+   "fromItemId": "darkvision-elixir-greater",
+   "duration": "24 hours",
+   "survivesRest": true,
+   "note": "Your sight becomes sharper in darkness. Lasts a full day, so a night's rest doesn't end it.",
+   "modifiers": [],
+   "senses": [{ "name": "darkvision" }]
+  },
+
+  {
+   "id": "item-deployable-cover-ballistic-cover",
+   "name": "Ballistic Cover",
+   "fromItemId": "deployable-cover-ballistic-cover",
+   "duration": "While you have cover from Take Cover behind it",
+   "note": "The resistance applies only while a creature has cover from Taking Cover behind the deployed ballistic cover. The standard cover itself (+2 circumstance to AC) comes from Take Cover, not from this mode. Refolding the cover before reuse takes 1 minute.",
+   "modifiers": [],
+   "resistances": [
+    { "type": "piercing damage from ranged weapons and ranged unarmed attacks", "value": 2 }
+   ]
+  },
+
+  {
+   "id": "item-devilwing-badge",
+   "name": "Devilwing Badge (Armor)",
+   "fromItemId": "devilwing-badge",
+   "duration": "While affixed to your armor",
+   "survivesRest": true,
+   "note": "The spellheart's armor option. Affixed to a WEAPON instead, it gives no resistance — your Strikes deal an extra 1d4 spirit damage until the end of your next turn after you cast a spell by Activating it. Activating it casts Divine Lance (spell attack +8, DC 18).",
+   "modifiers": [],
+   "resistances": [
+    { "type": "fire", "value": 2 },
+    { "type": "unholy", "value": 2 }
+   ]
+  },
+  {
+   "id": "item-devilwing-badge-greater",
+   "name": "Devilwing Badge (Armor)",
+   "fromItemId": "devilwing-badge-greater",
+   "duration": "While affixed to your armor",
+   "survivesRest": true,
+   "note": "The spellheart's armor option. Affixed to a WEAPON instead, it gives no resistance — your Strikes deal an extra 1d6 spirit damage until the end of your next turn after you cast a spell by Activating it. Activating it casts Divine Lance (spell attack +14, DC 24), or Crisis of Faith once per day.",
+   "modifiers": [],
+   "resistances": [
+    { "type": "fire", "value": 5 },
+    { "type": "unholy", "value": 5 }
+   ]
+  },
+
+  {
+   "id": "dissolutions-sight",
+   "name": "Dissolution's Sight",
+   "feats": ["dissolutions-sight"],
+   "duration": "1 minute",
+   "note": "Once per hour. Accepting your inner darkness means no outer darkness can obscure your sight.",
+   "modifiers": [],
+   "senses": [{ "name": "greater-darkvision" }]
+  },
+
+  {
+   "id": "item-draft-of-stellar-radiance",
+   "name": "Stellar Radiance",
+   "fromItemId": "draft-of-stellar-radiance",
+   "duration": "1 minute",
+   "note": "You emanate bright light in a 20-foot radius (dim light for another 20 feet). Any creature that targets you with an attack or ability must succeed at a save or be dazzled for 1 round; a creature that succeeds is immune to that effect for 24 hours.",
+   "modifiers": [
+    { "value": -20, "type": "untyped", "target": "skill", "detail": "stealth" }
+   ]
+  },
+
+  {
+   "id": "item-dragons-eye-charm",
+   "name": "Golden Shroud",
+   "fromItemId": "dragons-eye-charm",
+   "duration": "10 minutes",
+   "note": "The charm's golden-shroud activation (once per day). Its three other once-per-day activations are separate and not covered here: a 5th-rank Ignition (spell attack +13); looking through the pupil for darkvision while you Sustain, up to 10 minutes; and speaking and understanding Draconic while you Sustain, up to 10 minutes. Track those yourself.",
+   "modifiers": [],
+   "resistances": [{ "type": "fire", "value": 5 }]
+  },
+
+  {
+   "id": "echoes-in-stone",
+   "name": "Echoes in Stone",
+   "feats": ["echoes-in-stone"],
+   "duration": "Until the start of your next turn",
+   "note": "Requires that you are standing on a stone or earthen surface.",
+   "modifiers": [],
+   "senses": [{ "name": "tremorsense", "range": 20, "acuity": "imprecise" }]
+  },
+
+  {
+   "id": "item-elder-seed",
+   "name": "Elder Seed (Stage 1)",
+   "fromItemId": "elder-seed",
+   "duration": "Stage 1 — 9 days",
+   "survivesRest": true,
+   "note": "Stage 1 of the boon. You can also cast Enlarge, Speak with Animals, Speak with Plants and Web each once per day as primal innate spells. Later stages are not modelled here: stage 2 (1 month) adds low-light vision, Arboreal, Clumsy 1, a -1 status penalty to initiative and a weakness to fire and to axes equal to half your level; stage 3 (1 month) raises those to Clumsy 2, -2 initiative and a weakness equal to your level, and makes you Slowed on every initiative roll; stage 4 kills you. Purging ends the effects.",
+   "modifiers": [],
+   "resistances": [
+    { "type": "bludgeoning", "value": "@actor.level" },
+    { "type": "piercing", "value": "@actor.level" }
+   ],
+   "senses": [{ "name": "tremorsense", "range": 30 }]
+  },
+
+  {
+   "id": "energetic-meltdown",
+   "name": "Moderate Backlash",
+   "feats": ["energetic-meltdown"],
+   "duration": "Until your next daily preparations",
+   "survivesRest": true,
+   "note": "Moderate Backlash from Energetic Meltdown. You also lose immunity to that energy type, if you had it, until your next daily preparations. (Mild Backlash is only damage equal to your level; Severe Backlash is a burst dealing 1d6 per level, which you take in full without a save.)",
+   "modifiers": [],
+   "weaknesses": [
+    { "type": "your backlash's energy type", "value": "floor(@actor.level/3)" }
+   ]
+  },
+
+  {
+   "id": "item-energy-adaptive",
+   "name": "Energy Adaptive",
+   "fromItemId": "energy-adaptive",
+   "duration": "Until you Activate the rune again or the armor is no longer invested",
+   "survivesRest": true,
+   "note": "Activated as a reaction-style 5-action activation, once per hour, triggered by taking acid, cold, electricity or fire damage. The resistance does NOT apply to the triggering damage. Only one energy type can be active at a time — the app can't know which one you picked, so read this row as the type you triggered on.",
+   "modifiers": [],
+   "resistances": [
+    { "type": "the triggering energy type (acid, cold, electricity or fire)", "value": 5 }
+   ]
+  },
+
+  {
+   "id": "item-energy-mutagen-lesser",
+   "name": "Energy Mutagen",
+   "fromItemId": "energy-mutagen-lesser",
+   "duration": "1 minute",
+   "note": "The mutagen is attuned to one of acid, cold, electricity or fire when it is created — the app can't know which, so the two rows below name the type rather than fixing it. Benefit also: whenever you score a hit with a melee weapon, add 1 damage of the attuned type.",
+   "modifiers": [],
+   "resistances": [{ "type": "the mutagen's attuned energy type", "value": 5 }],
+   "weaknesses": [{ "type": "each of the other three energy types", "value": 5 }]
+  },
+  {
+   "id": "item-energy-mutagen-moderate",
+   "name": "Energy Mutagen",
+   "fromItemId": "energy-mutagen-moderate",
+   "duration": "10 minutes",
+   "note": "The mutagen is attuned to one of acid, cold, electricity or fire when it is created — the app can't know which, so the two rows below name the type rather than fixing it. Benefit also: whenever you score a hit with a melee weapon, add 1d4 damage of the attuned type.",
+   "modifiers": [],
+   "resistances": [{ "type": "the mutagen's attuned energy type", "value": 10 }],
+   "weaknesses": [{ "type": "each of the other three energy types", "value": 5 }]
+  },
+  {
+   "id": "item-energy-mutagen-greater",
+   "name": "Energy Mutagen",
+   "fromItemId": "energy-mutagen-greater",
+   "duration": "1 hour",
+   "note": "The mutagen is attuned to one of acid, cold, electricity or fire when it is created — the app can't know which, so the two rows below name the type rather than fixing it. Benefit also: whenever you score a hit with a melee weapon, add 1d6 damage of the attuned type; and you can end the mutagen as a 2-action activity to unleash a burst dealing 2d6 of the attuned type per full 10 minutes of remaining duration (max 8d6), with a save.",
+   "modifiers": [],
+   "resistances": [{ "type": "the mutagen's attuned energy type", "value": 15 }],
+   "weaknesses": [{ "type": "each of the other three energy types", "value": 5 }]
+  }
+ ],
+ "skipped": []
+}

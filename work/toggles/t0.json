@@ -1,0 +1,200 @@
+[
+ {
+  "id": "adept-benefit-amulet",
+  "name": "Adept Benefit (Amulet)",
+  "collection": "classFeatures",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Amulet's Abeyance (Adept Benefit)",
+  "effects": "While active (until the start of your next turn after Amulet's Abeyance): resistance 5 to one damage type chosen when the mode is switched on; the resistance is 10 instead at character level 15+.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "aged-arbor-wine",
+  "name": "Aged Arbor Wine",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Aged Arbor Wine",
+  "effects": "For 1 minute after drinking: you gain tremorsense with a range of 30 feet. (The writhing vegetation that makes a 20-foot emanation difficult terrain is battlefield-only and needs nothing.)",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "arbor-wine",
+  "name": "Arbor Wine",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Arbor Wine",
+  "effects": "For 1 minute after drinking: you gain tremorsense with a range of 30 feet.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "arctic-worm-chitin-shield",
+  "name": "Arctic Worm Chitin Shield",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Misty Chill (Arctic Worm Chitin Shield)",
+  "effects": "While active (from Raising the shield with Misty Chill until the beginning of your next turn): resistance 5 to cold. The 3d6 cold damage to creatures ending their turn adjacent to you is a target-side effect.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "blood-booster-lesser",
+  "name": "Blood Booster (Lesser)",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Blood Booster (Lesser)",
+  "effects": "For 10 minutes after drinking: resistance 5 to persistent bleed damage and resistance 5 to persistent poison damage; flat checks to end persistent bleed or persistent poison are made at the reduced DC 10 (as if you had received particularly appropriate aid).",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "bloodhound-mask-greater",
+  "name": "Bloodhound Mask (Greater)",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Bloodhound Mask (Greater)",
+  "effects": "For 8 hours after activating the mask: you gain imprecise scent with a range of 60 feet, and your proficiency bonus for Survival checks to Track by scent is equal to your level even if untrained. You can't wear another mask while wearing it.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "bloodhound-mask-lesser",
+  "name": "Bloodhound Mask (Lesser)",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Bloodhound Mask (Lesser)",
+  "effects": "For 10 minutes after activating the mask: you gain imprecise scent with a range of 15 feet, and your proficiency bonus for Survival checks to Track by scent is equal to your level even if untrained. You can't wear another mask while wearing it.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "bloodhound-mask-moderate",
+  "name": "Bloodhound Mask (Moderate)",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Bloodhound Mask (Moderate)",
+  "effects": "For 1 hour after activating the mask: you gain imprecise scent with a range of 30 feet, and your proficiency bonus for Survival checks to Track by scent is equal to your level even if untrained. You can't wear another mask while wearing it.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "bloodhound-olfactory-stimulators",
+  "name": "Bloodhound Olfactory Stimulators",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Bloodhound Olfactory Stimulators",
+  "effects": "For 1 minute after activating (once per day): you gain imprecise scent with a range of 30 feet.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "break-the-suns-legs",
+  "name": "Break the Sun's Legs",
+  "collection": "classFeatures",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Break the Sun's Legs",
+  "effects": "For the 1-minute duration: you gain greater darkvision (the surrounding area is under a 9th-rank Darkness effect).",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "chromatic-jellyfish-oil-lesser",
+  "name": "Chromatic Jellyfish Oil (Lesser)",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Chromatic Jellyfish Oil (Lesser)",
+  "effects": "For 10 minutes: resistance 5 to precision damage and to the extra damage from critical hits; you ignore difficult terrain from tight spaces that don't force a Squeeze; you move 5 feet per round when you succeed at Squeeze (10 feet on a critical success); you can Crawl at half your Speed.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "clockwork-goggles",
+  "name": "Clockwork Goggles",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Clockwork Goggles",
+  "effects": "For 10 minutes you gain low-light vision.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "clockwork-goggles-greater",
+  "name": "Clockwork Goggles (Greater)",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Clockwork Goggles (Greater)",
+  "effects": "For 10 minutes you gain low-light vision and darkvision.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "clockwork-goggles-major",
+  "name": "Clockwork Goggles (Major)",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Clockwork Goggles (Major)",
+  "effects": "For 10 minutes you gain low-light vision, darkvision, and the effects of See the Unseen (you can see invisible creatures as concealed).",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "close-formation",
+  "name": "Close Formation",
+  "collection": "feats",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Close Formation (two fans)",
+  "effects": "While wielding two fans, one in each hand, you have imprecise tremorsense with a 20-foot range.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "curse-of-creeping-ashes",
+  "name": "Curse of Creeping Ashes",
+  "collection": "classFeatures",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Curse of Creeping Ashes (Cursebound 1-4)",
+  "effects": "Exclusive stage modes in the oracle-cursebound group. Stage 1: weakness 2 to fire and any fire immunity or resistance you have is suppressed. Stage 2: additionally a -2 circumstance penalty to your ranged attack rolls. Stage 3: fire weakness becomes 5 + your level. Stage 4: additionally a -10-foot status penalty to all your Speeds.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "curse-of-inclement-headwinds",
+  "name": "Curse of Inclement Headwinds",
+  "collection": "classFeatures",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Curse of Inclement Headwinds (Cursebound 1-4)",
+  "effects": "Exclusive stage modes in the oracle-cursebound group. Stage 1: weakness 2 to electricity, you count as wearing metal for electricity effects, and any electricity immunity or resistance is suppressed. Stage 2: additionally a -2 circumstance penalty to your ranged attack rolls. Stage 3: electricity weakness becomes 5 + your level. Stage 4: additionally a -10-foot status penalty to all your Speeds.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "curse-of-inevitable-rot",
+  "name": "Curse of Inevitable Rot",
+  "collection": "classFeatures",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Curse of Inevitable Rot (Cursebound 1-4)",
+  "effects": "Exclusive stage modes in the oracle-cursebound group. Stage 1: weakness 2 to acid and to poison. Stage 2: additionally a -1 status penalty to saving throws against diseases and poisons, and a -1 status penalty to anyone's skill check to Treat your Disease, Poison or Wounds. Stage 3: acid and poison weakness becomes twice your level. Stage 4: those status penalties become -2.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ }
+]

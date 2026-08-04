@@ -558,6 +558,22 @@ const REINFORCING: Record<number, { hardness: number; hp: number; bt: number }> 
   6: { hardness: 20, hp: 160, bt: 80 }, // supreme
 };
 
+/** One thing that contributed a resistance / weakness / immunity, and what it offered.
+ *
+ *  `value` is the resolved number this source alone would give. Same-type resistances DO NOT stack in
+ *  Pathfinder 2e — the highest applies — so a source whose value lost to a bigger one is kept here
+ *  with `applied: false`. That is the whole point of the breakdown: a player looking at "Fire 5"
+ *  needs to see that their ring offers 2 and is doing nothing, so unequipping the cloak matters. */
+export interface DefenseSource {
+  /** Human label — the feat, item, heritage or stance that granted it. */
+  from: string;
+  value?: number;
+  /** False when a same-type source with a higher value supersedes this one. */
+  applied: boolean;
+  /** Set when the grant only applies sometimes ("while raging") — rendered as a `*`. */
+  condition?: string;
+}
+
 export interface CharacterDefenses {
   /** Senses (raw selectors, e.g. "darkvision", "scent"), including ancestry vision. */
   senses: SenseEntry[];
@@ -566,6 +582,9 @@ export interface CharacterDefenses {
   immunities: string[];
   /** Void (negative) healing — healed by void energy, harmed by vitality (dhampir & co.). */
   negativeHealing?: boolean;
+  /** Where each entry came from, keyed `"resistance:fire"` / `"weakness:cold"` / `"immunity:disease"`.
+   *  Additive: absent means "not computed", never "no sources". */
+  sources?: Record<string, DefenseSource[]>;
 }
 
 const ACUITY_ORDER: Record<string, number> = { precise: 3, imprecise: 2, vague: 1 };
@@ -677,11 +696,16 @@ export function resolveIwrValue(value: number | string, level: number): number {
  *  of the same type don't stack — the highest value wins. Conditional (predicated) and
  *  choice-based grants aren't parsed at import, so they don't appear here. */
 export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefenses {
-  const sources: DefenseGrants[] = [];
-  if (c.heritageId && db.heritages[c.heritageId]) sources.push(db.heritages[c.heritageId]);
+  // Each source carries the NAME of what granted it, so the sheet can answer "where is my Fire 2
+  // coming from?" — the same question every other stat's breakdown already answers.
+  const sources: (DefenseGrants & { __from?: string; __cond?: string })[] = [];
+  const push = (from: string, g: DefenseGrants | undefined, cond?: string) => {
+    if (g) sources.push({ ...g, __from: from, __cond: cond });
+  };
+  if (c.heritageId && db.heritages[c.heritageId]) push(db.heritages[c.heritageId].name ?? 'Heritage', db.heritages[c.heritageId]);
   for (const f of c.feats) {
     const feat = db.feats[f.featId];
-    if (feat) sources.push(feat);
+    if (feat) push(feat.name ?? f.featId, feat);
   }
   const cls = c.classId ? db.classes[c.classId] : undefined;
   // A class archetype can REMOVE class features and substitute its own — honor both here so the
@@ -696,11 +720,11 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
     for (const id of ownedFeatureIds(c, db)) {
       const base = sub && id.endsWith(sub) ? id.slice(0, -sub.length) : id;
       if (suppressed.has(id) || suppressed.has(base)) continue;
-      if (db.classFeatures[id]) sources.push(db.classFeatures[id]);
+      if (db.classFeatures[id]) push(db.classFeatures[id].name ?? id, db.classFeatures[id]);
     }
   }
   for (const af of c.classArchetype?.addedFeatures ?? []) {
-    if (af.level <= c.level && db.classFeatures[af.featureId]) sources.push(db.classFeatures[af.featureId]);
+    if (af.level <= c.level && db.classFeatures[af.featureId]) push(db.classFeatures[af.featureId].name ?? af.featureId, db.classFeatures[af.featureId]);
   }
   // Worn/invested items with passive senses/resistances/immunities (Goggles of Night pattern) count as
   // grant sources too — the generic magic-item lane.
@@ -708,18 +732,20 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
     if (!(inv.worn || inv.invested || inv.equipped)) continue;
     for (const pe of [db.items[inv.itemId]?.passiveEffects, c.resolvedItemPassives?.[inv.itemId]]) {
       if (pe && (pe.senses || pe.resistances || pe.immunities)) {
-        sources.push({ senses: pe.senses, resistances: pe.resistances, immunities: pe.immunities });
+        push(db.items[inv.itemId]?.name ?? inv.itemId, { senses: pe.senses, resistances: pe.resistances, immunities: pe.immunities });
       }
     }
   }
   // The ACTIVE stance / form: its typed resistances (Rain of Embers: fire = half level) and senses (an
   // ursine form's low-light + scent) apply only while it's the active one.
   const activeStance = activeStanceDef(c, db);
-  if (activeStance?.resistances?.length) sources.push({ resistances: activeStance.resistances });
-  if (activeStance?.senses?.length) sources.push({ senses: activeStance.senses });
+  if (activeStance?.resistances?.length) push(activeStance.name ?? 'Stance', { resistances: activeStance.resistances }, 'while this stance is active');
+  if (activeStance?.senses?.length) push(activeStance.name ?? 'Stance', { senses: activeStance.senses }, 'while this stance is active');
   // "While raging / while you have panache …" conditional grants (Raging Resistance), gated on the
   // character's live resource toggle. Owned feats/features contribute only while the state is on.
-  for (const wa of activeStateGrants(c, db)) sources.push({ resistances: wa.resistances, senses: wa.senses, immunities: wa.immunities });
+  for (const wa of activeStateGrants(c, db)) {
+    push((wa as { name?: string }).name ?? 'Active state', { resistances: wa.resistances, senses: wa.senses, immunities: wa.immunities }, 'only while that state is active');
+  }
   // Senses a rider feat grants only in this form (Senses of the Bear → Ursine Avenger Form).
   const rider = activeStance?.senseIfFeat;
   if (rider && c.feats.some((f) => f.featId === rider.feat)) {
@@ -728,10 +754,19 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
     const senses = rider.upgradeDarkvisionIfLowLight && hasLowLight
       ? rider.senses.map((s) => (/low-light/i.test(s.name) ? { ...s, name: 'darkvision' } : s))
       : rider.senses;
-    sources.push({ senses });
+    push(db.feats[rider.feat]?.name ?? 'Form sense', { senses });
+  }
+  // ACTIVE MODES — a drunk potion, a switched-on ability. These are temporary by nature, so the
+  // breakdown names the mode and marks it conditional: a player looking at "Fire 5" needs to see
+  // which part of it disappears when the effect ends.
+  for (const m of c.activeModes ?? []) {
+    if (m.resistances?.length || m.weaknesses?.length || m.immunities?.length || m.senses?.length) {
+      push(m.name ?? m.id, { resistances: m.resistances, weaknesses: m.weaknesses, immunities: m.immunities, senses: m.senses },
+        m.duration ? `while active · ${m.duration}` : 'while active');
+    }
   }
   // Resolved "choose one of N" effects (dragon-tattoo resistance type, energy-heart element).
-  if (c.chosenEffects) sources.push(c.chosenEffects);
+  if (c.chosenEffects) push('Your chosen effect', c.chosenEffects);
 
   const senses = new Map<string, SenseEntry>();
   const rank = (a?: string) => ACUITY_ORDER[a ?? 'precise'] ?? 3;
@@ -751,17 +786,35 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
   // Formulas may reference the character's level and ability modifiers (Wyrmbane Aura's Cha-mod
   // resistance). Speed-relative formulas belong to deriveSpeeds, which knows the resolved Speeds.
   const scope: FormulaScope = { level: c.level, abilities: c.abilities };
+  /** Every contributor, kept even when it loses — see DefenseSource. `applied` is decided at the end,
+   *  once the winning value per type is known. */
+  const attribution = new Map<string, DefenseSource[]>();
+  const note = (key: string, from: string | undefined, value: number | undefined, condition?: string) => {
+    if (!from) return;
+    const list = attribution.get(key) ?? [];
+    list.push({ from, value, applied: true, condition });
+    attribution.set(key, list);
+  };
   for (const src of sources) {
     for (const s of src.senses ?? []) addSense(s);
     for (const r of src.resistances ?? []) {
       const v = resolveFormula(r.value, scope);
-      if (v > 0) res.set(r.type, Math.max(res.get(r.type) ?? 0, v));
+      if (v > 0) {
+        res.set(r.type, Math.max(res.get(r.type) ?? 0, v));
+        note(`resistance:${r.type}`, src.__from, v, src.__cond);
+      }
     }
     for (const w of src.weaknesses ?? []) {
       const v = resolveFormula(w.value, scope);
-      if (v > 0) weak.set(w.type, Math.max(weak.get(w.type) ?? 0, v));
+      if (v > 0) {
+        weak.set(w.type, Math.max(weak.get(w.type) ?? 0, v));
+        note(`weakness:${w.type}`, src.__from, v, src.__cond);
+      }
     }
-    for (const t of src.immunities ?? []) imm.add(t);
+    for (const t of src.immunities ?? []) {
+      imm.add(t);
+      note(`immunity:${t}`, src.__from, undefined, src.__cond);
+    }
   }
 
   // Monster Parts: worn/invested/wielded items grant resistances (Energy Resistant, value = the
@@ -802,12 +855,23 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
     res.set(c.heritageResistanceChoice, Math.max(res.get(c.heritageResistanceChoice) ?? 0, v));
   }
 
+  // Pathfinder 2e: same-type resistances (and weaknesses) DO NOT stack — the highest applies. Mark the
+  // losers so the breakdown can show "Ring of Fire Resistance 2 — superseded" instead of silently
+  // dropping it, which is what makes the list trustworthy when a player unequips something.
+  for (const [key, list] of attribution) {
+    const kind = key.slice(0, key.indexOf(':'));
+    if (kind === 'immunity') continue; // immunities are boolean; nothing to supersede
+    const best = Math.max(...list.map((s) => s.value ?? 0));
+    for (const s of list) if ((s.value ?? 0) < best) s.applied = false;
+  }
+
   const sortByType = (a: { type: string }, b: { type: string }) => a.type.localeCompare(b.type);
   return {
     senses: [...senses.values()],
     resistances: [...res].map(([type, value]) => ({ type, value })).sort(sortByType),
     weaknesses: [...weak].map(([type, value]) => ({ type, value })).sort(sortByType),
     immunities: [...imm].sort(),
+    sources: Object.fromEntries(attribution),
     negativeHealing:
       !!heritage?.negativeHealing ||
       c.feats.some((f) => db.feats[f.featId]?.negativeHealing) ||
@@ -1724,6 +1788,23 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
     if (!v) continue;
     if (key === 'land') speeds.land = (speeds.land ?? 0) + v;
     else speeds[key] = Math.max(speeds[key] ?? 0, v);
+  }
+
+  // An ACTIVE MODE's Speed — a potion granting "a fly Speed of 40 feet for 1 minute", a rune granting
+  // "a fly Speed of 25 feet or your land Speed, whichever is slower". Placed HERE, beside the stance
+  // block and after the base grants, for the same reason: these formulas reference "@actor.speed.land"
+  // and would resolve to 0 if evaluated before the land Speed was known.
+  // Without this lane a Speed toggle could only ever be prose — Triple Time still ships as
+  // `modifiers: []` plus a note for exactly that reason.
+  for (const m of c.activeModes ?? []) {
+    for (const [k, raw] of Object.entries(m.speeds ?? {})) {
+      const key = k as keyof Speeds;
+      if (raw == null) continue;
+      const v = typeof raw === 'number' ? raw : resolveFormula(raw as unknown as string, { level: c.level, abilities: c.abilities, speeds });
+      if (!v) continue;
+      if (key === 'land') speeds.land = (speeds.land ?? 0) + v;
+      else speeds[key] = Math.max(speeds[key] ?? 0, v);
+    }
   }
 
   const worn = findWornArmor(c, db);

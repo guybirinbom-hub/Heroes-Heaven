@@ -1,0 +1,200 @@
+[
+ {
+  "id": "stone-body-mutagen-lesser",
+  "name": "Stone Body Mutagen (Lesser)",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Stone Body Mutagen (Lesser)",
+  "effects": "For 10 minutes: resistance 5 to physical damage except bludgeoning; all Speeds reduced by 10 feet (minimum 5 feet); −2 penalty to Reflex saves.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "stone-body-mutagen-moderate",
+  "name": "Stone Body Mutagen (Moderate)",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Stone Body Mutagen (Moderate)",
+  "effects": "For 1 hour: resistance 5 to physical damage except bludgeoning; all Speeds reduced by 10 feet (minimum 5 feet); −2 penalty to Reflex saves.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "storm-breath",
+  "name": "Storm Breath",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Storm Breath",
+  "effects": "While the breath is held: resistance 5 to electricity and resistance 5 to sonic damage.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "sun-slayer",
+  "name": "Sun Slayer",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Sun Slayer Raised",
+  "effects": "While this shield is Raised, you gain resistance 5 to fire damage.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "swarmsuit",
+  "name": "Swarmsuit",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Swarmsuit (against swarms)",
+  "effects": "While wearing the swarmsuit and fighting swarms: resistance 3 to physical damage from swarms.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "tallowheart-mass",
+  "name": "Tallowheart Mass",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Tallowheart Mass — Fire Ward",
+  "effects": "For 1 minute after rubbing a portion on your body: resistance 10 to fire damage. (Separate portions instead grant quickened 1 for 1 minute usable only for held-weapon Strikes, or heal 4d8+12 — the mass has three portions total.)",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "thorn-of-milani-lesser",
+  "name": "Thorn of Milani (Lesser)",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Thorn of Milani (activated)",
+  "effects": "Until the end of your next turn after activating the thorn: weakness 1 to unholy. The triggering Strike also deals an extra 1d4 spirit damage with the holy trait.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "thorn-triad",
+  "name": "Thorn Triad",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Thorn Triad — Armor (after a plant spell)",
+  "effects": "Until the end of your next turn after casting a plant spell by activating the triad: resistance 2 to bludgeoning and piercing damage (4 if the spell was not a cantrip) and weakness 3 to fire.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "thorn-triad-greater",
+  "name": "Thorn Triad (Greater)",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Thorn Triad (Greater) — Armor (after a plant spell)",
+  "effects": "Until the end of your next turn after casting a plant spell by activating the triad: resistance 4 to bludgeoning and piercing damage (8 if the spell was not a cantrip) and weakness 3 to fire.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "thorn-triad-major",
+  "name": "Thorn Triad (Major)",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Thorn Triad (Major) — Armor (after a plant spell)",
+  "effects": "Until the end of your next turn after casting a plant spell by activating the triad: resistance 6 to bludgeoning and piercing damage (12 if the spell was not a cantrip) and weakness 3 to fire.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "thousand-year-dragonroot",
+  "name": "Thousand-Year Dragonroot",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Thousand-Year Dragonroot",
+  "effects": "For 1 minute: gain a fly Speed of 40 feet and resistance 5 to fire damage; your body sheds light as a torch.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "tremorsensors",
+  "name": "Tremorsensors",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Tremorsensors",
+  "effects": "While active (10 minutes, once per day): you gain tremorsense as an imprecise sense with a range of 20 feet. No numeric modifiers; the granted sense is carried as the mode note, exactly like item-pallesthetic-mutagen's tremorsense/echolocation note.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "vengeful-remnant",
+  "name": "Vengeful Remnant",
+  "collection": "feats",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Vengeful Remnant",
+  "effects": "While active (until the start of your next turn, or the end of your next turn if you slay a significant foe with the Spectral Dagger): resistance 10 to all damage except force, ghost touch, spirit and vitality; resistance 20 instead against non-magical damage.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "victory-plate",
+  "name": "Victory Plate",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Victory Plate (Recall Triumph)",
+  "effects": "For 1 minute: resistance 5 to one damage type chosen from the recorded creature's trait — mental (aberration/fey), good (celestial), poison (construct), a matching energy type (dragon/elemental), evil (fiend), void (undead), or precision at resistance 10 (ooze).",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "warcallers-chime-of-resistance",
+  "name": "Warcaller's Chime of Resistance",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Warcaller's Chime of Resistance",
+  "effects": "For 10 minutes (once per week): resistance 5 to one chosen damage type — acid, cold, electricity, fire, or sonic.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "warming-parka",
+  "name": "Warming Parka",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Warming Parka (Extra Warming)",
+  "effects": "For 1 minute (once per day, dismissable): resistance 3 to cold damage, and Perception drops by 2 (a -2 item penalty). The always-on environmental-cold reduction stays in the note — it is GM/environment adjudicated.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "witchs-finger",
+  "name": "Witch's Finger",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Witch's Finger",
+  "effects": "For 1 hour: resistance 3 to cold damage. Note (8 hours): negates severe environmental cold damage and reduces extreme cold to severe.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "wyrm-spindle",
+  "name": "Wyrm Spindle",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Wyrm Spindle (Armor)",
+  "effects": "For 1 minute after casting a non-cantrip spell by Activating the spindle: resistance 5 to fire, force, mental and spirit. Note: the Weapon benefit instead grants a 2-action Dragon Breath (6d6, once before the end of your next turn).",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ }
+]

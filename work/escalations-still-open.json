@@ -1,0 +1,1682 @@
+[
+ {
+  "collection": "feats",
+  "id": "magnetic-pinions",
+  "name": "Magnetic Pinions",
+  "question": "Impulse attack rolls use the kineticist's spell-attack statistic, so I mapped this to target kind 'spell'. Confirm that 'spell' is the right bucket for impulse attack rolls in this app (rather than 'strikeAttack', which is for weapon Strikes).",
+  "evidence": "\"Make ranged impulse attack rolls against up to three creatures within 60 feet of you; you gain a +1 circumstance bonus to your attack roll against any target wearing metal armor or made of metal.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "skull-creeper",
+  "name": "Skull Creeper",
+  "question": "Same call as Nosoi's Mask: the +1 item bonus belongs to the Splendid Skull Mask item (which core.json already has a descRef to), not to the feat. Register on the feat, or wait for the item lane?",
+  "evidence": "\"If you pay 50 gp for a Splendid Skull Mask, the mask grants you a +1 item bonus to Intimidation; its usage is worn (mask).\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "raise-a-tome",
+  "name": "Raise a Tome",
+  "question": "The Recall Knowledge skill depends on which book is currently held (Arcana for a spellbook, something else for another tome). Should this be starred on every skill (skill:'all') with the condition text, on Arcana only (the printed example, correct for the common magus case), or left out until books carry a subject-skill field?",
+  "evidence": "\"While you have a book raised, you gain a +2 circumstance bonus to AC and a +1 circumstance bonus to Recall Knowledge to identify creatures using a skill related to the subject of the book (Arcana if you're using your spellbook).\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "confabulator",
+  "name": "Confabulator",
+  "question": "Confabulator improves your odds without modifying your own check. Should it still get a display-only note on Deception (\"repeat Lie / Create a Diversion: the target's bonus drops to +2, +1 at master, none at legendary\"), or should records that only shrink an enemy's bonus be excluded from the registry entirely?",
+  "evidence": "\"Reduce the circumstance bonus a target gains for your previous attempts to Create a Diversion or Lie to it from +4 to +2.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "whirling-throw",
+  "name": "Whirling Throw",
+  "question": "This bonus/penalty exists only inside the Whirling Throw action itself (it is not a general Athletics modifier). Do you want action-internal size modifiers starred on the Athletics skill, or is that display noise you would rather keep out of the registry?",
+  "evidence": "\"You gain a +2 circumstance bonus to your check if the target is one size smaller than you and a +4 circumstance bonus if it's smaller than that\" (and a -2/-4 penalty if larger).",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "meddling-futures",
+  "name": "Meddling Futures",
+  "question": "One free action randomly picks ONE of four mutually exclusive benefits (1d4). Six stars would light up at once even though at most one applies on any given use. Do you want all six markers, or a single grouped marker on one representative stat with the 1d4 table in the popup?",
+  "evidence": "\"Roll 1d4 to see what type of spirit is drawn to you. Your next action must be the type of action the spirit prefers, but you also gain the listed benefit\" — each of the four results is a different typed bonus.",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "derring-do",
+  "name": "Derring-do",
+  "question": "This is a fortune reroll, not a typed bonus, and the affected skills vary by which bravado actions the character actually has (Tumble Through = Acrobatics, Demoralize = Intimidation, Feint = Deception, Bon Mot = Diplomacy, ...). Should it be one skill:'all' marker, or should it be expanded per bravado action the character owns?",
+  "evidence": "\"you can roll twice and use the higher result on checks to which the circumstance bonus from Stylish Combatant applies (Tumble Through and any skill actions with the bravado trait)\".",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "swashbucklers-speed",
+  "name": "Swashbuckler's Speed",
+  "question": "Fold the +5-foot leg into the computed Speed and star only the panache upgrade, or leave both legs as situational markers?",
+  "evidence": "\"Increase the status bonus to your Speeds when you have panache to a +10-foot status bonus; you also gain a +5-foot status bonus to your Speeds when you don't have panache.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "endemic-herbs",
+  "name": "Endemic Herbs",
+  "question": "This is a crafting feat whose benefit lands on whoever eats the item — starring it would light up all three saves plus Perception on the crafter's own sheet permanently. Do you want all five markers, or should consumable-granted bonuses be excluded from this registry?",
+  "evidence": "\"When a creature consumes one of your herbal items, that creature gains the benefit matching the location where you created that item\" — e.g. \"**Aquatic** Gain a +1 circumstance bonus to Fortitude saves\".",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "tweak-appearances",
+  "name": "Tweak Appearances",
+  "question": "The bonus goes to 'the target' — normally an ally, though the feat owner can plausibly tweak their own appearance. Should this feat star the OWNER's Diplomacy/Performance at all, or should it be excluded from the registry until an ally-buff channel exists? (I listed it as a self-bonus on the assumption self-targeting is allowed.)",
+  "evidence": "\"You spend 1 minute making quick adjustments to someone's clothing and appearance ... While speaking to that audience, the target gains a +1 item bonus to Diplomacy and Performance checks. If you have master proficiency in Crafting, the bonus increases to +2; if you have legendary proficiency in Crafting, the bonus increases to +3.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "clans-edge",
+  "name": "Clan's Edge",
+  "question": "The feat itself grants no new bonus — it only compresses the actions needed to reach the clan dagger's own parry bonus ('the +1 circumstance bonus to your AC FROM your clan dagger's parrying trait'). Should the star be registered on this feat, or on the clan dagger item once the item lane can show markers? Registering it in both places would double-star AC.",
+  "evidence": "\"Make two clan dagger Strikes against different targets ... You then use an Interact action to gain the +1 circumstance bonus to your AC from your clan dagger's parrying trait.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "battleforger",
+  "name": "Battleforger",
+  "question": "This is really a temporary +1 potency rune on ONE chosen item, and the app already models potency runes. Should Battleforger be a star, or should it instead be offered as a temporary rune the player applies to a specific item (which would make the numbers real)? As a star it is imprecise — it cannot say WHICH weapon, and it must not appear if every weapon already has a potency rune.",
+  "evidence": "\"By spending 1 hour working on a weapon or armor, you can grant it the effects of a *+1 potency* rune until your next daily preparations, gaining a +1 item bonus to attack rolls for a weapon or increasing armor's item bonus to AC by 1. This has no effect if the weapon or armor already had a *potency* rune.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "regional-specialty",
+  "name": "Regional Specialty",
+  "question": "Should feats that create a consumable for OTHERS (here: alchemical food from Morning Side Dishes) put a star on the crafter's own saves? Five always-visible entries may be noise if the character usually hands the food to allies.",
+  "evidence": "\"Each element has an immediate benefit and a +3 item bonus to certain saves that lasts for 1 hour after the food is consumed. The item bonus increases to +4 if the alchemical item is 18th level or higher.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "prepare-elemental-medicine",
+  "name": "Prepare Elemental Medicine",
+  "question": "Does the app want granted-to-another-creature bonuses in this registry at all, and can a character use Prepare Elemental Medicine on themselves (the text says 'a creature' and never forbids self, but consistently says 'your patient')?",
+  "evidence": "\"prepare an excellent elemental medicine that grants the recipient a +2 circumstance bonus to saves against the affliction\" / \"**Success** As critical success, but the bonus is +1.\" / \"**Critical Failure** ... imposes a –1 circumstance penalty to saves against the affliction.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "aegis-for-the-innocent",
+  "name": "Aegis for the Innocent",
+  "question": "Can Aegis for the Innocent target the exemplar themselves ('a willing creature within the bright light of your nimbus')? If yes, the +1 status AC may star the owner's sheet; if it is ally-only, it must not.",
+  "evidence": "\"Select a willing creature within the bright light of your nimbus ... The target gains a +1 status bonus to AC.\" — barrier \"lasts for 1 minute, or until you Dismiss it\"; Requirements: \"Your nimbus is active.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "black-powder-boost",
+  "name": "Black Powder Boost",
+  "question": "Leap/jump distance is not one of the eleven target kinds. Should jump-distance bonuses map onto 'speed' with wording that says 'jump distance', gain a dedicated jump target, or be skipped entirely? (Same question applies to Reach for the Stars.)",
+  "evidence": "You Leap and discharge your firearm to add a +10-foot status bonus to the distance traveled.",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "artillerist-dedication",
+  "name": "Artillerist Dedication",
+  "question": "Only Repair is a defined skill action (Crafting). Load, Aim and move a siege weapon are crew actions with no fixed skill in HH - should the star flag Crafting alone, or should there be a stat-less 'siege weapon crew checks' note?",
+  "evidence": "If you're serving on a siege weapon crew, you and all other members gain a +2 circumstance bonus to any checks to Load, Aim, move, or Repair the weapon.",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "hydraulic-maneuvers",
+  "name": "Hydraulic Maneuvers",
+  "question": "Hydraulic Maneuvers grants NO bonus — it suppresses item bonuses and body-related circumstance bonuses and upgrades a critical failure to a failure. Should the situational registry carry non-bonus modifiers like this (a star that warns rather than promises), or should it hold only actual bonuses and leave suppressions out?",
+  "evidence": "\"If the next action you take is an Athletics check to Disarm, Shove, or Trip, that action has a range of 15 feet. You don't receive any item bonuses to that check or any circumstance bonuses related to your physical body, but if you roll a critical failure on that Athletics check, you get a failure instead.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "gravelands-herbalist",
+  "name": "Gravelands Herbalist",
+  "question": "Two calls for you. (a) Should a consumable's bonus be registered on the FEAT that unlocks it, or left to the item lane once items can carry markers? Registering it here stars Stealth for anyone holding the feat even when they haven't eaten any soup — the feat by itself grants nothing. (b) core.json's items/lastwall-soup-greater says \"+3 item bonus\" while this feat says the Greater version grants +4 — one of the two records is wrong; which is authoritative?",
+  "evidence": "Feat: \"At 10th level, you can make Lastwall Soup (Improved) that grants a +3 item bonus. At 18th level, you can make Lastwall Soup (Greater) that grants a +4 item bonus...\" The bonus itself is defined on the consumable — items/lastwall-soup: \"you gain a +2 item bonus to Stealth checks and DCs against undead\"; items/lastwall-soup-improved: \"+3 item bonus to Stealth checks and DCs against undead\".",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "uncanny-bombs",
+  "name": "Uncanny Bombs",
+  "question": "Should target-side reductions (e.g. \"reduce the target's cover bonus by 1\") be surfaced as situational markers on the player's Strike, or excluded because no actual bonus is applied to this character?",
+  "evidence": "\"you reduce any circumstance bonus to the target's AC from cover by 1, and you automatically succeed at the flat check when targeting a concealed creature\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "come-and-get-me",
+  "name": "Come and Get Me",
+  "question": "Should situational DRAWBACKS (e.g. \"damage rolls against you gain +2\", \"you are off-guard\") be surfaced with a marker too, or is the star strictly for bonuses that help the character?",
+  "evidence": "\"Until your rage ends, you are off-guard, and damage rolls against you gain a +2 circumstance bonus.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "incredible-scout",
+  "name": "Incredible Scout",
+  "question": "Scout normally gives \"you and your allies\" +1, but Incredible Scout's text upgrades only \"your allies\" to +2 — do you want to read that literally (scout keeps +1, nothing to show on their sheet), or treat the scout as included and star their Perception-for-initiative?",
+  "evidence": "\"When using the Scout exploration activity, you grant your allies a +2 circumstance bonus to their initiative rolls instead of a +1 circumstance bonus.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "signature-crafting",
+  "name": "Signature Crafting",
+  "question": "Should a crafted item that rolled the 'Skillful' quirk (+1 item bonus to one type of skill check) be authorable on the item itself via the Homebrew/item editor, so it reaches the sheet through the item lane rather than the feat lane?",
+  "evidence": "\"Any benefit a creature gains from an item quirk applies only while the creature wears the item (for a worn item) or holds it (for a held item).\" — the only numeric quirk is \"| 10 | Skillful | The item grants a +1 item bonus to one type of skill checks. |\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "perfected-gamtu",
+  "name": "Perfected Gamtu",
+  "question": "Model this as a situational star ('while wearing your gamtu'), or as a real item bonus folded into the Stealth total — and if the latter, does the gamtu need to exist as an inventory item so item-bonus stacking is resolved correctly?",
+  "evidence": "\"Your gamtu now grants its wearer a +1 item bonus to Stealth checks when worn\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "unwavering-guide",
+  "name": "Unwavering Guide",
+  "question": "Unlike Incredible Scout this says \"your party\", which normally includes the scout — confirm the character themselves gets the +2 (that is the reading authored here), and confirm you want initiative bonuses to keep riding on the Perception stat rather than getting a real initiative target kind.",
+  "evidence": "\"When you Scout, you grant your party a +2 circumstance bonus to initiative rolls instead of the normal +1.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "infiltrators-elixir",
+  "name": "Infiltrator's Elixir",
+  "question": "Should one-use consumables whose bonus lasts only while the effect runs (10 minutes here) put a permanent star on the Deception row just for sitting in inventory, or should consumable bonuses only be surfaced from the item entry / an active-effect toggle?",
+  "evidence": "\"You gain a +4 status bonus to your Deception DC to avoid others seeing through your disguise, and you add your level to this DC even if untrained.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "field-propagandist-dedication",
+  "name": "Field Propagandist Dedication",
+  "question": "Should DC-only bonuses get their own target kind (e.g. perceptionDc / skillDc), or is a star on the check with a clarifying 'DC only' note acceptable?",
+  "evidence": "\"You gain a +2 circumstance bonus to your Perception DC against attempts made by others to Lie to you. If you have the Lie to Me skill feat, you gain a +2 circumstance bonus to your Deception DC.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "acrobats-staff",
+  "name": "Acrobat's Staff",
+  "question": "Should fortune-style rerolls (no number attached) be listed alongside numeric situational bonuses, or kept out of this registry entirely?",
+  "evidence": "\"granting you a +1 circumstance bonus to your Reflex DC against checks to Disarm you of it\" / \"Trigger You fail or critically fail an Acrobatics check to Balance and would fall … Reroll the Acrobatics check and take the better result.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "addiction-suppressant",
+  "name": "Addiction Suppressant",
+  "question": "Drug addiction is a poison-trait affliction, so the ongoing save is Fortitude — the record itself never names the save. Register this against Fortitude specifically, or against all saves with the condition text carrying the caveat?",
+  "evidence": "\"You also gain an item bonus against the ongoing save against the drug's addiction depending on the type of addiction suppressant\" — it applies only to the addiction save for the one drug the suppressant was crafted for.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "sovereign-steel",
+  "name": "Sovereign Steel",
+  "question": "This record is the precious-material description, not a wearable item — the bonus really belongs to whatever weapon or armor is made of sovereign steel. Should material records be registered at all (so the star appears merely because the material entry is in inventory), or should this be attached only to crafted sovereign steel weapons/armor?",
+  "evidence": "\"All sovereign steel items ... grant their bonus to saves the owner makes specifically to protect the item from magic (such as against the rusting grasp spell)\" — the +4 circumstance bonus applies only to saves made to protect that item.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "sovereign-steel-chunk",
+  "name": "Sovereign Steel Chunk",
+  "question": "A chunk is raw crafting stock, and the quoted line is boilerplate reprinted from the material entry. Register it (a star on all saves for carrying a lump of metal), or restrict sovereign steel entries to finished weapons/armor?",
+  "evidence": "\"All sovereign steel items ... grant their bonus to saves the owner makes specifically to protect the item from magic (such as against the rusting grasp spell)\" — narrow: only saves defending the item itself.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "sovereign-steel-ingot",
+  "name": "Sovereign Steel Ingot",
+  "question": "An ingot is raw crafting stock, and the quoted line is boilerplate reprinted from the material entry. Register it, or restrict sovereign steel entries to finished weapons/armor?",
+  "evidence": "\"All sovereign steel items ... grant their bonus to saves the owner makes specifically to protect the item from magic (such as against the rusting grasp spell)\" — narrow: only saves defending the item itself.",
+  "lane": "situational"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "gate-junction",
+  "name": "Gate Junction",
+  "question": "This is the umbrella rules text; the actual skill depends on which element's skill junction was taken (Athletics for earth, Intimidation for fire, Crafting for metal, etc.), each of which has its own record. Should the umbrella feature also carry an entry (risking a double star), or should only the per-element gate records carry it?",
+  "evidence": "\"While your kinetic aura is active, you gain a +1 status bonus to the listed skill; the bonus increases to +2 at 10th level and +3 at 17th level.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "lantern",
+  "name": "Lantern",
+  "question": "For implement records whose sub-benefits are separate features, should the implement record carry only its Intensify Vulnerability effects (as done here), or nothing at all?",
+  "evidence": "Intensify Vulnerability: \"Against the target of your Exploit Vulnerability, the status bonuses from the lantern's initiate benefit increase to +2.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "shield",
+  "name": "Shield",
+  "question": "For implements, should bonuses live on the implement record or on the separate initiate-/adept-/paragon-benefit records (which the character also has)?",
+  "evidence": "Adept Benefit: \"you gain a status bonus to your saves against spells and other magic effects equal to your circumstance bonus to AC from your shield\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "the-distant-grasp",
+  "name": "The Distant Grasp",
+  "question": "Should bonuses that only exist inside an amped spell (dancing blade Guard here, warp step in The Unbound Step) be registered on the class feature, or left to the spell entry so the star only appears while the spell is up?",
+  "evidence": "Amped Dancing Blade, Guard option: \"the weapon grants a +2 circumstance bonus to AC against melee attacks to the creature it's following\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "the-unbound-step",
+  "name": "The Unbound Step",
+  "question": "Register spell-duration bonuses (warp step's Speed) on the conscious-mind feature, or only on the spell?",
+  "evidence": "Warp Step: \"granting you a +10-foot status to your Speed instead of a +5-foot status bonus when you warp step\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "sovereign-steel-object-standard-grade",
+  "name": "Sovereign Steel Object (Standard-Grade)",
+  "question": "Should a bulk-material record (priced per Bulk, not worn or wielded) carry a star at all, and should 'a save made to protect an item' register on all three saves or be skipped as unrollable at the table?",
+  "evidence": "\"All sovereign steel items (including weapon and armor below) have a +4 circumstance bonus on saves against magic that the item makes, and grant their bonus to saves the owner makes specifically to protect the item from magic (such as against the rusting grasp spell).\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "sovereign-steel-object-high-grade",
+  "name": "Sovereign Steel Object (High-Grade)",
+  "question": "Same as the standard-grade object: should bulk-material records show a marker, and does 'a save to protect an item' belong on all three saves?",
+  "evidence": "\"All sovereign steel items (including weapon and armor below) have a +4 circumstance bonus on saves against magic that the item makes, and grant their bonus to saves the owner makes specifically to protect the item from magic (such as against the rusting grasp spell).\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "sixfingers-elixir",
+  "name": "Sixfingers Elixir",
+  "question": "Should a bonus to a defence DC (Reflex DC vs. Disarm) be surfaced on the Reflex save row with an explanatory condition string, or does the sheet need a separate Reflex-DC readout before this record is registered?",
+  "evidence": "\"You gain a +2 item bonus to your Reflex DC to keep from being Disarmed and a climb Speed of 20 feet for the listed duration.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "harrow-mat",
+  "name": "Harrow Mat",
+  "question": "For 'relevant Lore' bonuses, does the registry want a lore:* wildcard the skill lookup expands, two explicit keys (lore:fortune-telling, lore:harrow), or should the Lore leg be dropped and left to the text?",
+  "evidence": "\"The mat provides a +1 item bonus to Deception, Diplomacy, and relevant Lore checks (such as Fortune-Telling Lore or Harrow Lore) to convince a creature that a harrow reading was accurate.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "weapon-innovation",
+  "name": "Weapon Innovation",
+  "question": "This bonus only exists if the inventor picked the specific weapon modification that grants the concealable trait, AND only while the weapon is collapsed. Should the marker show for every character with Weapon Innovation (over-reporting), or should it be keyed to the chosen modification once the app tracks weapon-modification selections? Note also that the bonus covers a Stealth DC as well as a Stealth check, which the display cannot distinguish.",
+  "evidence": "Concealable-trait modification: \"the concealable trait, which grants you a +2 circumstance bonus to Stealth checks and DCs to hide or conceal the weapon\".",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "aon-cooperative-leadership",
+  "name": "Cooperative Leadership",
+  "question": "Should Kingmaker kingdom-building feats (trait 'kingdom') be excluded from the situational-bonus registry outright, or is a kingdom sheet with its own statistics planned? MEMORY lists Kingmaker rules as pending decisions.",
+  "evidence": "When a leader uses the Focused Attention kingdom activity to aid another leader's kingdom check, the circumstance bonus granted by a success is increased to +3.",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "aon-crush-dissent",
+  "name": "Crush Dissent",
+  "question": "Should Kingmaker kingdom-building feats (trait 'kingdom') be excluded from the situational-bonus registry outright, or is a kingdom sheet with its own statistics planned? MEMORY lists Kingmaker rules as pending decisions.",
+  "evidence": "In addition, you gain a +1 status bonus to checks to resolve dangerous kingdom events that involve internal bickering, such as Feud.",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "aon-fortified-fiefs",
+  "name": "Fortified Fiefs",
+  "question": "Should Kingmaker kingdom-building feats (trait 'kingdom') be excluded from the situational-bonus registry outright, or is a kingdom sheet with its own statistics planned? MEMORY lists Kingmaker rules as pending decisions.",
+  "evidence": "You gain a +2 circumstance bonus to checks attempted as part of the Fortify Hex activity and on activities to build or repair a Barracks, Castle, Garrison, Keep, Stone Wall, or Wooden Wall. In addition, you gain a +1 status bonus to all kingdom checks attempted during dangerous events that directly impact your settlements' defenses.",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "aon-free-and-fair",
+  "name": "Free and Fair",
+  "question": "Should Kingmaker kingdom-building feats (trait 'kingdom') be excluded from the situational-bonus registry outright, or is a kingdom sheet with its own statistics planned? MEMORY lists Kingmaker rules as pending decisions.",
+  "evidence": "You gain a +2 circumstance bonus to Loyalty-based checks attempted as part of the New Leadership and Pledge of Fealty activities.",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "aon-insider-trading",
+  "name": "Insider Trading",
+  "question": "Should Kingmaker kingdom-building feats (trait 'kingdom') be excluded from the situational-bonus registry outright, or is a kingdom sheet with its own statistics planned? MEMORY lists Kingmaker rules as pending decisions.",
+  "evidence": "You gain a +1 status bonus to Establish Work Site, Establish Trade Agreement, and Trade Commodities activities.",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "aon-inspiring-entertainment",
+  "name": "Inspiring Entertainment",
+  "question": "Should Kingmaker kingdom-building feats (trait 'kingdom') be excluded from the situational-bonus registry outright, or is a kingdom sheet with its own statistics planned? MEMORY lists Kingmaker rules as pending decisions.",
+  "evidence": "Your kingdom also gains a +2 status bonus to all Culture-based skill checks whenever your kingdom has at least 1 Unrest.",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "aon-practical-magic",
+  "name": "Practical Magic",
+  "question": "Should Kingmaker kingdom-building feats (trait 'kingdom') be excluded from the situational-bonus registry outright, or is a kingdom sheet with its own statistics planned? MEMORY lists Kingmaker rules as pending decisions.",
+  "evidence": "You gain a +1 status bonus to Magic checks, and you can use Magic checks in place of Engineering checks.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "marked-playing-cards",
+  "name": "Marked Playing Cards",
+  "question": "The text says '+1 item bonus to Games Lore checks OR OTHER RELEVANT CHECKS to gamble with the cards'. Should we flag only lore:games, or also skill 'all' (any GM-approved check made to gamble with this deck)?",
+  "evidence": "A deck of marked cards grants you a +1 item bonus to Games Lore checks or other relevant checks to gamble with the cards.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "fixer",
+  "name": "Fixer",
+  "question": "Should umbrella/summary records like 'Fixer' (no price, description reprints all variants) be flagged at all, or treated as reference-only so only the four purchasable variants light stars? The same question applies to redpitch-bomb, secret-keepers-mask, skeptics-elixir, necrotic-bomb and fulcrum-lenses in this batch.",
+  "evidence": "An informant automatically Aids you on attempts to Gather Information and Recall Knowledge about your specific location, granting you a +1 circumstance bonus to such checks. An expert informant critically succeeds at Aiding you, granting a +2 circumstance bonus. ... A counselor automatically Aids you on attempts to Impersonate, Lie, Make an Impression, and Request when speaking with individuals within the location of the counselor's expertise.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "skeptics-elixir",
+  "name": "Skeptic's Elixir",
+  "question": "Policy for consumables: should a Skeptic's Elixir sitting unused in the pack light a star on Will/Perception, or only once it has been drunk (i.e. gate consumable entries behind an active-effect toggle)? This decides skeptics-elixir, ichthyosis-mutagen, fungal-walk-musk and every other consumable in this batch.",
+  "evidence": "You gain an item bonus to Perception checks and Perception DCs to notice falsehoods, whether they're spoken lies or written deceit. You gain this same item bonus to Will saves.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "singing-shortbow",
+  "name": "Singing Shortbow",
+  "question": "Should an area buff centred on the ENEMY you hit be starred on the wielder's own saves? A 60-ft archer is usually outside the emanation, so the marker would be misleading more often than not. Include it, or restrict the registry to bonuses that reliably apply to the character?",
+  "evidence": "\"Song of Soothing … Each creature regains 3d10 Hit Points and gains a +1 status bonus to saves against mental effects for 1 minute.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "singing-shortbow-greater",
+  "name": "Singing Shortbow (Greater)",
+  "question": "Same call as the base Singing Shortbow: should an emanation centred on the struck enemy be starred on the wielder's own saves, given the archer is usually outside it?",
+  "evidence": "\"Song of Soothing … Each creature regains 5d10 Hit Points and gains a +1 status bonus to saves against mental effects for 1 minute.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "leopards-armor",
+  "name": "Leopard's Armor",
+  "question": "Should the registry carry PENALTIES as well as bonuses? This item's activation is a package deal — you cannot take the +2 Stealth/Demoralize without the -2 Diplomacy/Society — so showing only the upside misrepresents it. The type of the -2 is not stated in the text (printed as an untyped penalty).",
+  "evidence": "\"You gain a +2 item bonus to Stealth checks and Intimidation checks to Demoralize, but take a -2 penalty to Diplomacy and Society checks. This lasts for 1 hour…\" (Activate, once per day)",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "sulfur-bomb",
+  "name": "Sulfur Bomb",
+  "question": "Should umbrella family records (sulfur-bomb, vexing-vapor, malleable-mixture — no price, description is the whole item-family blob) be indexed at all, or only the purchasable graded records? A naive text scan of this record would attribute the moderate/greater/major numbers to a level-1 item.",
+  "evidence": "\"On a hit, the target takes a –1 status penalty to Perception checks and attack rolls until the end of its next turn\" — the penalty lands on the creature hit, not on you.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "malleable-mixture",
+  "name": "Malleable Mixture",
+  "question": "Umbrella family record: should it be indexed, and if so should the bonus text carry both grades ('+2/+3') or should umbrella records be skipped in favour of the graded siblings?",
+  "evidence": "\"you gain an item bonus to your Fortitude and Reflex DCs against attempts to Grapple, Shove, or Trip you\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "vexing-vapor",
+  "name": "Vexing Vapor",
+  "question": "Same umbrella-record question as sulfur-bomb: index family blobs, or only the priced graded siblings?",
+  "evidence": "\"Vexing Vapor (Lesser) ... The bomb deals 1d6 mental damage and 1 mental splash damage.\" — the lesser grade this record covers grants no item bonus at all.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "noqual",
+  "name": "Noqual",
+  "question": "Two calls needed: (a) the rules do not name a save type for \"saves the owner makes specifically to protect the item\" — should this star all three saves, or only Reflex (the usual item-protection save)? (b) Should raw base-material records ('noqual', 'noqual-chunk', 'noqual-ingot', 'noqual-object-*') carry a star at all, or only the finished Noqual armor/shield/weapon a character actually equips?",
+  "evidence": "\"Objects made of noqual have a +4 circumstance bonus on saves against magic that the item attempts and grant their bonus to saves the owner makes specifically to protect the item from magic (such as against the rusting grasp spell).\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "noqual-chunk",
+  "name": "Noqual Chunk",
+  "question": "Same as 'noqual': which save track should carry this (the rules name none), and should a carried lump of raw material star a save at all?",
+  "evidence": "\"Objects made of noqual have a +4 circumstance bonus on saves against magic that the item attempts and grant their bonus to saves the owner makes specifically to protect the item from magic (such as against the Rusting Grasp spell).\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "noqual-ingot",
+  "name": "Noqual Ingot",
+  "question": "Same as 'noqual': which save track should carry this (the rules name none), and should a carried ingot of raw material star a save at all?",
+  "evidence": "\"Objects made of noqual have a +4 circumstance bonus on saves against magic that the item attempts and grant their bonus to saves the owner makes specifically to protect the item from magic (such as against the Rusting Grasp spell).\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "noqual-object-standard-grade",
+  "name": "Noqual Object (Standard-Grade)",
+  "question": "Same as 'noqual': which save track should carry this, and should generic 'object made of X' records be flagged?",
+  "evidence": "\"Objects made of noqual have a +4 circumstance bonus on saves against magic that the item attempts and grant their bonus to saves the owner makes specifically to protect the item from magic (such as against the rusting grasp spell).\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "noqual-object-high-grade",
+  "name": "Noqual Object (High-Grade)",
+  "question": "Same as 'noqual': which save track should carry this, and should generic 'object made of X' records be flagged?",
+  "evidence": "\"Objects made of noqual have a +4 circumstance bonus on saves against magic that the item attempts and grant their bonus to saves the owner makes specifically to protect the item from magic (such as against the rusting grasp spell).\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "noqual-shield",
+  "name": "Noqual Shield",
+  "question": "The bonus size is 'its circumstance bonus', i.e. whatever AC bonus the underlying shield gives (+1 buckler, +2 standard shield). Should the entry hard-code a number per variant, or should the display read the equipped shield's AC bonus at runtime?",
+  "evidence": "\"When you have a noqual shield Raised, you gain its circumstance bonus to saving throws against spells that target you (as well as AC).\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "exploration-lens",
+  "name": "Exploration Lens",
+  "question": "This is an umbrella record describing three MUTUALLY EXCLUSIVE lens types (Detecting / Investigating / Searching), each of which also exists as its own record. Should the umbrella record be given the union of all three (starring stats the character's actual lens may not affect), or left blank so only the specific 'exploration-lens-*' record marks anything?",
+  "evidence": "\"There are several different types of exploration lens, each granting benefits with a different type of exploration activity.\" — Detecting: \"You also gain a +2 item bonus to checks to Identify Magic within the light\"; Investigating: \"a +1 item bonus to skill checks to Recall Knowledge while Investigating\"; Searching: \"a +2 item bonus to Perception checks to spot such features while Searching\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "red-rib-gill-mask",
+  "name": "Red-Rib Gill Mask",
+  "question": "This umbrella record prints only 'the listed item bonus' and defers the number to the three graded records, which all exist separately. Should the umbrella show a range as above, or be left unflagged so only 'red-rib-gill-mask-lesser/moderate/greater' mark Fortitude?",
+  "evidence": "\"After Activating the mask, you also gain the listed item bonus to Fortitude saves against inhaled effects; this bonus is increased against the deadly volcanic gas known around Terwa Lake as Dead Man's Breath\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "spiderfoot-brew-major",
+  "name": "Spiderfoot Brew (Major)",
+  "question": "Same consumable question as Spiderfoot Brew: should a drink-it-to-get-it bonus show as a star while the (unconsumed) item is merely carried?",
+  "evidence": "\"Spiderfoot Brew (Major) ... The climb speed is 25 feet, the item bonus is +3, and the duration is 1 hour.\" applied to \"an item bonus to Athletics checks made to climb\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "qat",
+  "name": "Qat",
+  "question": "Should drug/elixir stage effects be entered in the situational registry at all (starring the stat while the unconsumed item is carried), or should they instead be modelled as toggleable Modes/effects that apply while active?",
+  "evidence": "\"Stage 1 +1 item bonus to Reflex saves (10 minutes)\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "grit",
+  "name": "Grit",
+  "question": "Same consumable question as Qat — and separately: should drug penalties (grit's -2/-4 item to Perception) be surfaced through this bonus registry, or only its bonuses?",
+  "evidence": "\"Stage 1 +1 item bonus to Athletics, Crafting, and Performance checks (10 minutes)\"; \"Stage 2 +1 item bonus to Athletics, Crafting, and Performance checks, -2 item penalty to Perception checks (1 hour)\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "demon-dust",
+  "name": "Demon Dust",
+  "question": "Same consumable question as Qat: should a drug's while-active stage bonus star the stat while the item is merely carried?",
+  "evidence": "\"Stage 1 +2 item bonus to Athletics checks and treat up to 4 Bulk as being negligible in weight (1 minute)\"; stage 2 repeats the same +2 with Stupefied 1",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "succubus-kiss",
+  "name": "Succubus Kiss",
+  "question": "Same consumable question as Qat; plus: should initiative bonuses keep being approximated as Perception, or is an 'initiative' target kind worth adding?",
+  "evidence": "\"Stage 1 +2 item bonus to initiative checks (10 minutes) and to all saving throws against emotion and mental effects\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "dragonscale-bo-staff",
+  "name": "Dragonscale Bo Staff",
+  "question": "Should per-copy item choices like this staff's dragon tradition be a stored item property (so the star can name 'occult' instead of 'the staff's tradition'), or stay generic text?",
+  "evidence": "\"When benefiting from the circumstance bonus to AC granted by the bo staff's parry trait, you also gain a +1 circumstance bonus to saving throws against magical effects of the tradition matching the dragon who provided the scales\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "azarim",
+  "name": "Azarim",
+  "question": "Azarim is an intelligent weapon whose Deception help is her own action, not a passive wielder bonus — should intelligent-item activations that buff the wielder be starred on the wielder's sheet at all, or listed only in the item description?",
+  "evidence": "\"she can assist with her wielder's attempt to Lie and grant a +2 circumstance bonus to the Deception check\"; \"Azarim deals an additional 1d6 damage to worshippers of Droskar, to creatures allied with Droskar's faith\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "briar",
+  "name": "Briar",
+  "question": "Should single-adventure artifacts with unlock-counter-gated powers (Briar's Sharpness Points) be registered at all, or excluded as unrepresentable campaign one-offs?",
+  "evidence": "\"*Briar's* partner gains a +4 item bonus to all saving throws against Nyrissa's spells for 1 minute.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "admirers-bouquet",
+  "name": "Admirer's Bouquet",
+  "question": "Should bonuses that only exist while an item has been handed to you by an ally be shown on the owner's sheet, the recipient's sheet, or neither?",
+  "evidence": "\"they gain a +1 item bonus to saves against emotion and mental effects as long as they continue to carry the admirer's bouquet\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "open-mind",
+  "name": "Open Mind",
+  "question": "Open Mind's activation effect is empty in core.json ('you gain the effects of .') — should the missing spell reference be re-sourced from AoN before this record is considered complete?",
+  "evidence": "\"This tattoo of a stylized eye provides a +1 item bonus to Lore checks.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "beast-staff",
+  "name": "Beast Staff",
+  "question": "Animal Empathy makes you 'use Diplomacy to Make an Impression on and make very simple Requests of animals', so I mapped 'checks using it' to Diplomacy. Do you want the star to appear on Diplomacy for every wielder, or only when the character actually has the animal-empathy feat (which would need a feat-gated condition in the lookup)?",
+  "evidence": "\"While wielding the staff while you have it prepared, you're affected by Speak with Animals. If you have Animal Empathy, you gain a +1 circumstance bonus on checks using it.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "gamblers-staff",
+  "name": "Gambler's Staff",
+  "question": "Should this key to lore:games only (star appears solely for characters who have Games Lore), or to skill 'all' with the 'gambling' condition spelled out, so a character using a different skill for the gambling job still sees the reminder?",
+  "evidence": "\"A *gambler's staff* grants you a +2 circumstance bonus to checks to Earn Income from gambling (typically using Games Lore). To get this benefit, the staff must be on your person during all the downtime you spend gambling.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "fury-cocktail",
+  "name": "Fury Cocktail",
+  "question": "The melee attack bonus and the AC/Reflex drawbacks are unconditional once the mutagen is drunk. Should mutagens be handled as a Mode (toggled, folded into the maths) rather than as situational stars?",
+  "evidence": "\"You gain an item bonus to melee attack rolls… **Skeptical** … You gain a +1 item bonus to saves against magic… **Drawback** You take a –1 penalty to AC and a –2 penalty to Reflex saves.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "colorful-coating",
+  "name": "Colorful Coating",
+  "question": "This is an umbrella record whose description concatenates every colour variant (blue/green/indigo/orange/red/violet/yellow) while separate per-colour item records also exist. Should umbrella/base records carry situational entries at all, or should only the specific variant records be marked? The same question applies to emetic-paste, healing-vapor, sense-dulling-hood, affliction-suppressant, bendy-arm-mutagen, deadweight-mutagen and sanguine-mutagen in this chunk.",
+  "evidence": "Blue: \"granting a +1 circumstance bonus to Reflex saving throws in reaction to the coated surface's collapse\"; Yellow: \"It provides a +2 circumstance bonus to checks to Climb the coated surface.\"; Green: \"It imposes a –2 circumstance penalty to checks to Climb the coated surface.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "emetic-paste",
+  "name": "Emetic Paste",
+  "question": "Umbrella record: its description concatenates the lesser/moderate/greater variants, which exist as their own records. Should base records like this carry entries (with a \"varies by grade\" bonus string), or only the graded variants?",
+  "evidence": "\"The paste grants the target an item bonus to that save and to all saving throws to reduce the sickened condition for 1 hour.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "healing-vapor",
+  "name": "Healing Vapor",
+  "question": "Umbrella record: its description concatenates the lesser/moderate/greater/major variants, which exist as their own records. Should base records like this carry entries, or only the graded variants?",
+  "evidence": "\"While affected, a creature also gains an item bonus to saving throws against diseases and poisons.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "sense-dulling-hood",
+  "name": "Sense-Dulling Hood",
+  "question": "Umbrella record: its description concatenates the lesser and greater variants, which exist as their own records. Should base records like this carry entries, or only the graded variants?",
+  "evidence": "\"The mask grants you an item bonus to saving throws against auditory, olfactory, and visual effects for a time... the mask also imposes a –1 penalty to rolls and checks using Perception for the same duration.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "affliction-suppressant",
+  "name": "Affliction Suppressant",
+  "question": "Umbrella record: its description concatenates the lesser/moderate/greater/major variants, which exist as their own records. Should base records like this carry entries, or only the graded variants?",
+  "evidence": "\"Upon drinking an affliction suppressant, you gain an item bonus to all saves against afflictions for 10 minutes.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "bendy-arm-mutagen",
+  "name": "Bendy-Arm Mutagen",
+  "question": "Umbrella record: its description concatenates the lesser/moderate/greater/major variants, which exist as their own records. Should base records like this carry entries, or only the graded variants?",
+  "evidence": "\"Benefit You gain the listed item bonus to Acrobatics checks to Escape, Squeeze, and Tumble Through... Drawback You take a –1 penalty to Athletics checks, Stealth checks, Thievery checks, and attack rolls, and a –1 penalty per damage die to all weapon and unarmed attack damage.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "deadweight-mutagen",
+  "name": "Deadweight Mutagen",
+  "question": "Umbrella record: its description concatenates the lesser/moderate/greater/major variants, which exist as their own records. Should base records like this carry entries, or only the graded variants?",
+  "evidence": "\"Benefit You gain an item bonus to Athletics checks to Shove and Trip, to your Fortitude and Reflex DCs against attempts to Shove or Trip you, and to saving throws against effects that attempt to force you to move or knock you prone.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "sanguine-mutagen",
+  "name": "Sanguine Mutagen",
+  "question": "The base Fortitude/Reflex bonus here is UNCONDITIONAL for the mutagen's whole duration — the only 'condition' is that the mutagen is active. Should always-on-while-active consumable buffs like this live in the situational-bonus registry (a permanent star on the stat, which will show even when the player has never drunk it), or in the existing Modes system as a toggleable modifier set? This applies to every consumable in this chunk, but sanguine mutagen is the sharpest case. Separately, this is also an umbrella record duplicating its four graded variants.",
+  "evidence": "\"Benefit You gain an item bonus to Fortitude and Reflex saves. This bonus improves when you attempt a save against an effect that has the disease trait, poison trait, or would give you the fatigued condition.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "poison-concentrator",
+  "name": "Poison Concentrator",
+  "question": "Parent/umbrella item records (poison-concentrator with no price, alongside the four graded ids) — should they ever be keyed in this registry, or should only graded variants be?",
+  "evidence": "\"you can use a poison concentrator to combine two doses of the same infused alchemical poison, creating a single concentrated poison. The concentrated potion has a +1 item bonus to its DC, and its level is increased by 1.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "execution-powder",
+  "name": "Execution Powder",
+  "question": "Should effects whose beneficiary is a random/other creature (not necessarily this character) be registered at all? And should temporary Hit Points be expressed via targetKind 'hp', or excluded because it is a resource grant rather than a typed bonus?",
+  "evidence": "\"the spores from their last breath alight on a random creature adjacent to the victim, granting that creature 20 temporary Hit Points and a +1 status bonus to attack and damage rolls for 10 minutes\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "black-tendril-shot",
+  "name": "Black Tendril Shot",
+  "question": "Parent/umbrella item records (black-tendril-shot with no price, alongside lesser/moderate/greater) — register them, or graded variants only?",
+  "evidence": "\"Success The target is slowed 1 but gains a +2 circumstance bonus to Escape the ammunition's effect.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "magnetic-shot",
+  "name": "Magnetic Shot",
+  "question": "Parent/umbrella item records (magnetic-shot with no price, alongside lesser/moderate/greater) — register them, or graded variants only?",
+  "evidence": "\"The activated ammunition grants a circumstance bonus to attack rolls against such targets [a target wearing metal armor or made of metal], according to its type.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "disguise-kit-elite-cosmetics",
+  "name": "Disguise Kit (Elite Cosmetics)",
+  "question": "This id is the 5 sp replenishment cosmetics for an elite disguise kit, not a kit itself; its description is inherited verbatim from `disguise-kit-elite`. Should the refill record carry the +1 star (double-listing it for anyone who owns both), or should only the parent kit be marked?",
+  "evidence": "\"An elite disguise kit adds a +1 item bonus to relevant checks.\" — this 5 sp record is the replacement cosmetics supply, but carries the kit's full text.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "musical-instrument",
+  "name": "Musical Instrument",
+  "question": "Umbrella records like this one (level 0, no price, description covering every variant) still appear as ownable items. Should such variant-index records be excluded from the situational registry entirely, or treated as the cheapest/base variant (no bonus, as classified here)?",
+  "evidence": "\"A virtuoso instrument is more finely made and gives a +1 item bonus to Performance checks using that instrument.\" — the bonus is attributed to the VIRTUOSO variants, not to this base entry.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "steelscour",
+  "name": "Steelscour",
+  "question": "Same umbrella-record question as Musical Instrument: should variant-index records (whose descriptions concatenate every grade) be excluded from the registry, or treated as the lowest grade as classified here?",
+  "evidence": "The lesser entry — this record's own level 1 / 3 gp line — reads only \"It deals 1d8 persistent acid damage that ignores up to 5 hardness from metal\", with no attack bonus.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "bewitching-bloom",
+  "name": "Bewitching Bloom",
+  "question": "This id is the aggregated AoN parent entry that reprints all nine flowers; the per-flower ids (bewitching-bloom-bellflower, -lilac, -lotus, -magnolia, -red-rose) are what a character actually owns. Should the parent record carry the union of all nine bonuses, or carry none and leave the bonuses only on the per-flower records?",
+  "evidence": "\"Choose a willing ally you can see within 30 feet. The ally fills with an emotion themed to the flower and gains the benefit listed for the type of bewitching bloom you have.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "unifying-emblem-skoan-quah",
+  "name": "Unifying Emblem (Skoan-Quah)",
+  "question": "Unrelated to the bonus, but this record's Activate effect reads 'The tattoo casts .' with the spell name missing - the parent unifying-emblem entry says it casts ventriloquism. Should the importer/core.json be patched to restore the spell link?",
+  "evidence": "\"If you already know that language, you instead gain a +1 item bonus on Diplomacy checks you make when speaking Shoanti to someone who understands it.\" The Skull clan text adds only a once-per-day spell casting, which is not a bonus.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "canary-tail-first-week",
+  "name": "Canary Tail (First Week)",
+  "question": "Same as the parent Canary record: should a paid-per-week service flag Diplomacy on the sheet at all?",
+  "evidence": "\"For each week that they are hired, you gain a +1 circumstance bonus on your check to Gather Information on the movements and mannerisms of the individual\".",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "canary-tail-second-week",
+  "name": "Canary Tail (Second Week)",
+  "question": "Same as the parent Canary record, plus: if a player buys week one through week four as four separate inventory items, should the sheet show +4 (the cumulative cap) or four separate stars?",
+  "evidence": "\"For each week that they are hired, you gain a +1 circumstance bonus … up to a maximum of four weeks for a +4 bonus\" — the weekly records are cumulative, so week two is +2.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "canary-tail-third-week",
+  "name": "Canary Tail (Third Week)",
+  "question": "Same as the parent Canary record and the second-week tier: cumulative tier display versus one star per purchased week.",
+  "evidence": "\"For each week that they are hired, you gain a +1 circumstance bonus … up to a maximum of four weeks for a +4 bonus\".",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "canary-tail-fourth-week",
+  "name": "Canary Tail (Fourth Week)",
+  "question": "Same as the parent Canary record and the second-week tier: cumulative tier display versus one star per purchased week.",
+  "evidence": "\"up to a maximum of four weeks for a +4 bonus. After four weeks, the individual typically begins to suspect they are being tailed\".",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "the-publican",
+  "name": "The Publican",
+  "question": "Where should effects that improve what you grant to allies (Aid bonuses, degree-of-success upgrades on your own Aid) surface — a separate \"notes\" list on the sheet, or not at all? They cannot be a star on one of your stats.",
+  "evidence": "\"treat critically failed checks made to Aid as regular failures instead. If you are at least 14th level, the circumstance bonus you provide … increases by 1.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "the-lens-of-the-outreaching-eye",
+  "name": "The Lens of the Outreaching Eye",
+  "question": "Does \"all checks made to resolve divination effects\" mean only the rolls a divination spell/item itself calls for (spell attack, counteract), or does it also cover skill checks generated by such effects (for example Identify Magic or a Seek prompted by a divination)? The answer decides whether this is one spell entry or also four skill entries.",
+  "evidence": "\"you gain a +3 item bonus on all checks made to resolve divination effects\" — scoped to one kind of magic rather than all your checks.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "globe-of-shrouds",
+  "name": "Globe of Shrouds",
+  "question": "The text grants the Stealth bonus to 'an ally in the aura' — it does not say 'you and your allies'. Should the star appear on the censer-holder's own Stealth (the common table reading), or only be documented as an ally-facing effect the holder cannot self-apply?",
+  "evidence": "\"An ally in the aura is concealed and gains a +2 status bonus to Stealth checks.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "spiny-lodestone",
+  "name": "Spiny Lodestone",
+  "question": "Spellhearts have two mutually exclusive modes (Armor / Weapon) and the app already tracks drag-to-attach affixture. When the app knows a spellheart is on armor, should its armor-mode Athletics bonus be folded into the Athletics total (it is unconditional in that mode) and the star dropped, or should both modes always be shown as situational because the player can re-affix it?",
+  "evidence": "\"Armor You gain a +1 item bonus to Athletics checks and resistance 2 to nonlethal damage.\" / \"Weapon After you cast a spell by Activating the spiny lodestone, your Strikes with the weapon deal an additional 1d4 piercing damage until the end of your next turn.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "spiny-lodestone-greater",
+  "name": "Spiny Lodestone (Greater)",
+  "question": "Same as the base spiny lodestone: should armor-mode spellheart bonuses be folded into the maths when the app knows the affixture, or always displayed as situational?",
+  "evidence": "\"Armor You gain a +1 item bonus to Athletics checks and resistance 5 to nonlethal damage.\" / \"...deal an additional 1d6 piercing damage until the end of your next turn.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "spiny-lodestone-major",
+  "name": "Spiny Lodestone (Major)",
+  "question": "Same as the base spiny lodestone: should armor-mode spellheart bonuses be folded into the maths when the app knows the affixture, or always displayed as situational?",
+  "evidence": "\"Armor You gain a +2 item bonus to Athletics checks and resistance 10 to nonlethal damage.\" / \"...deal an additional 1d8 piercing damage until the end of your next turn.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "ursine-avenger-hood",
+  "name": "Ursine Avenger Hood",
+  "question": "Should conditional PENALTIES (here –1 item to Diplomacy) live in this same registry and render with the same star as bonuses, or be excluded / rendered distinctly? The registry is named FEAT_SITUATIONAL/SituationalBonus and every existing entry is a bonus, so listing a penalty is an owner call. I have included it so the information is not lost.",
+  "evidence": "\"the wearer gains a +1 item bonus to Nature checks to Command an Animal, which increases to +2 if the animal is a bear\"; and \"takes a –1 item penalty to all Diplomacy checks to Gather Information or Make an Impression if they go more than 5 days inside a large town or city without spending at least 4 hours in the wilderness.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "heartblood-ring",
+  "name": "Heartblood Ring",
+  "question": "Same penalty-in-a-bonus-registry question as Ursine Avenger Hood, and: should staged boons/afflictions (heartblood, phoenix cinder, void fragment) be excluded from this registry entirely until the app can track which stage the character is in?",
+  "evidence": "Stage 1: \"you gain a +1 circumstance bonus to saving throws (or any other defense) against death effects, disease, paralysis, poison, and sleep.\" Purging: \"a dose of heartblood imposes a –2 status penalty to your saving throws against the powers of the vampire who created it.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "void-fragment",
+  "name": "Void Fragment",
+  "question": "Same as Heartblood Ring: exclude staged boons until a stage tracker exists, and confirm whether penalties belong in this registry.",
+  "evidence": "Stage 1: \"you are under the effects of Hidden Mind, except that its status bonus is +1\" (Hidden Mind: \"The target gains a +4 status bonus to saves against mental effects\"). Stage 2: \"If any creatures can be detected by your thoughtsense, you take a –1 penalty to Perception checks\"; stage 3: \"The mental noise increases the penalty to Perception to –2.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "corruption-cassock",
+  "name": "Corruption Cassock",
+  "question": "This is a cursed item whose printed bonus is a deliberate lie: the wearer BELIEVES they have +2 Religion / +1 divine skill and the GM secretly removes it. Should the sheet (a) show the fake bonus as if real, preserving the trap, (b) show nothing, or (c) show it flagged as cursed and spoil the GM's secret? That is an app-owner call about how cursed items are surfaced, not something the text decides.",
+  "evidence": "\"While you remain loyal to another deity, you believe the cassock grants you a +2 item bonus to Religion checks and a +1 item bonus to the divine skill of the deity to whom you believe the cassock is dedicated. It does neither… If you convert to following the cassock's true unholy deity, however, these bonuses function normally for you.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "gaffe-glasses",
+  "name": "Gaffe Glasses",
+  "question": "Cursed-item display policy, same as Corruption Cassock: should the sheet render the illusory +1 Diplomacy bonus the player thinks they have, show nothing, or show it labelled as cursed? Note the item also NEGATES real +1 item bonuses to Diplomacy from other sources, which is a suppression rule this registry cannot express.",
+  "evidence": "\"These wire-rim glasses appear to be Glasses of Sociability, making you think they grant a +1 item bonus to Diplomacy when they grant none.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "words-of-wisdom",
+  "name": "Words of Wisdom",
+  "question": "Words of Wisdom's second skill is chosen at application time (Intimidation / Deception / Performance). Should the item carry a stored choice (like a rune/variant selection) so only one skill is starred, or should all three be listed with 'if you chose ...' conditions as I did here?",
+  "evidence": "\"When the tattoo is applied, choose whether the phrase is of threatening words (Intimidation), persuasive words (Deception), or dramatic words (Performance). ... Effect You speak your meaningful phrase ... emboldening your words for 1 minute. During this time, you gain a +1 item bonus to Diplomacy checks and checks of the skill associated with your phrase.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "words-of-wisdom-lesser",
+  "name": "Words of Wisdom (Lesser)",
+  "question": "Same choice question as `words-of-wisdom`: store the chosen phrase-skill on the item, or list all three variants?",
+  "evidence": "\"emboldening your words for 1 minute. During this time, you gain a +1 item bonus to Diplomacy checks and checks of the skill associated with your phrase.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "words-of-wisdom-moderate",
+  "name": "Words of Wisdom (Moderate)",
+  "question": "Same choice question as `words-of-wisdom`: store the chosen phrase-skill on the item, or list all three variants?",
+  "evidence": "\"emboldening your words for 10 minutes. During this time, you gain a +2 item bonus to Diplomacy checks and checks of the skill associated with your phrase.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "words-of-wisdom-greater",
+  "name": "Words of Wisdom (Greater)",
+  "question": "Same choice question as `words-of-wisdom`: store the chosen phrase-skill on the item, or list all three variants?",
+  "evidence": "\"emboldening your words for 1 hour. During this time, you gain a +3 item bonus to Diplomacy checks and checks of the skill associated with your phrase.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "antidote",
+  "name": "Antidote",
+  "question": "Should consumables that grant a bonus only while their effect is running (elixirs, mutagens, potions) produce a situational star just from sitting in inventory, or should they be excluded from the registry until there is an 'active effect' toggle? Starring on possession alone will mark Fortitude for any character carrying a 3 gp antidote.",
+  "evidence": "\"Upon drinking an antidote, you gain an item bonus to Fortitude saving throws against poisons for 6 hours.\" — Lesser +2, Moderate +3, Greater +4, Major +4.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "antiplague",
+  "name": "Antiplague",
+  "question": "Same decision as Antidote — do drunk-only consumable bonuses belong in the situational registry at all, or only once an active-effect toggle exists?",
+  "evidence": "\"Upon drinking an antiplague, you gain an item bonus to Fortitude saving throws against diseases for 24 hours; this applies to your daily save against a disease's progression.\" — Lesser +2, Moderate +3, Greater +4, Major +4.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "madcap-top",
+  "name": "Madcap Top",
+  "question": "Should random, temporary results of an item activation (Madcap Top result 12: +1 status to attack rolls, Perception, saves and skills for 1 minute) be registered as situational bonuses at all, or handled only by the temporary-effects/Modes system? If they should be registered, the same rule will apply to every random-table and one-off activation item.",
+  "evidence": "\"roll a d20 on the table below to determine the top's effect\" ... \"12 | Four singing skeletons appear to serenade you and your allies for 1 minute, granting a +1 status bonus to attack rolls, Perception checks, saving throws, and skill checks.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "therapeutic-snap-peas",
+  "name": "Therapeutic Snap Peas",
+  "question": "Policy for CONSUMABLES: this is a single-use item whose bonus lasts 1 minute and can be handed to allies. Should consumables appear in the situational registry at all (a permanent star on Fort/Ref/Will just because the pods sit in the pack), or should timed consumable effects be routed to the temporary-effect / Modes lane instead? The same question governs the mutagens, talismans and kits in this chunk.",
+  "evidence": "\"Up to 5 creatures of your choice within 30 feet regain 4d8+10 Hit Points and gain a +2 item bonus to all saves against poisons or diseases for 1 minute.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "prey-mutagen",
+  "name": "Prey Mutagen",
+  "question": "Policy for CONSUMABLES (same question as Therapeutic Snap Peas): should a one-shot elixir put a permanent star on AC just for sitting in the pack, or should its timed benefits be handled by the temporary-effect / Modes lane instead?",
+  "evidence": "Family/summary record: \"Timely Dodge — Trigger You are targeted by a Strike; Effect You dart aside, gaining a circumstance bonus to AC, then Step after the Strike resolves.\" The grades give \"+1 / +2 / +3 / +4 circumstance bonus to AC when using Timely Dodge\".",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "prey-mutagen-lesser",
+  "name": "Prey Mutagen (Lesser)",
+  "question": "Consumable policy (see Therapeutic Snap Peas): star a one-shot mutagen permanently, or route its timed effects to the temporary-effect / Modes lane?",
+  "evidence": "\"Timely Dodge ... Trigger You are targeted by a Strike; Effect You dart aside, gaining a +1 circumstance bonus to AC, then Step after the Strike resolves.\" Duration 1 minute.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "prey-mutagen-moderate",
+  "name": "Prey Mutagen (Moderate)",
+  "question": "Consumable policy (see Therapeutic Snap Peas): star a one-shot mutagen permanently, or route its timed effects to the temporary-effect / Modes lane?",
+  "evidence": "\"You dart aside, gaining a +2 circumstance bonus to AC, then Step after the Strike resolves.\" Duration 10 minutes.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "prey-mutagen-greater",
+  "name": "Prey Mutagen (Greater)",
+  "question": "Consumable policy (see Therapeutic Snap Peas): star a one-shot mutagen permanently, or route its timed effects to the temporary-effect / Modes lane?",
+  "evidence": "\"You dart aside, gaining a +3 circumstance bonus to AC, then Step after the Strike resolves.\" Duration 1 hour.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "prey-mutagen-major",
+  "name": "Prey Mutagen (Major)",
+  "question": "Consumable policy (see Therapeutic Snap Peas): star a one-shot mutagen permanently, or route its timed effects to the temporary-effect / Modes lane?",
+  "evidence": "\"You dart aside, gaining a +4 circumstance bonus to AC, then Step after the Strike resolves.\" Duration 1 hour.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "armor-polishing-kit",
+  "name": "Armor Polishing Kit",
+  "question": "Consumable policy (see Therapeutic Snap Peas): the kit is single-use with a 24-hour window and can be used on someone else's armor — star it permanently on Diplomacy, or handle it as a timed effect?",
+  "evidence": "\"Creatures wearing armor that has been maintained by this kit gain a +1 circumstance bonus on Diplomacy checks to Make an Impression on soldiers, guards, Gorumites, and other martially minded characters. This bonus expires after 24 hours, or if the armor is soiled...\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "sanitizing-pin",
+  "name": "Sanitizing Pin",
+  "question": "Consumable policy (see Therapeutic Snap Peas): a one-use talisman affixed to armor — star it permanently on Fortitude, or handle it as a triggered one-shot effect?",
+  "evidence": "\"Trigger You attempt a saving throw against a disease or poison... You gain a +2 status bonus on your Fortitude save against the initial exposure to the affliction. If you roll a critical failure on the triggering attempt, you get a failure instead.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "fluid-form-staff",
+  "name": "Fluid Form Staff",
+  "question": "The record says PERCEPTION checks to identify magic, but Identify Magic is normally the tradition skill (Arcana/Nature/Occultism/Religion). Should the marker sit on Perception as printed, or should it also/instead mark the four tradition skills? I have followed the printed text.",
+  "evidence": "\"While wielding the staff, you gain a +2 circumstance bonus to Perception checks to identify morph and polymorph magic.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "fluid-form-staff-greater",
+  "name": "Fluid Form Staff (Greater)",
+  "question": "Same as Fluid Form Staff: keep the marker on Perception as printed, or move it to the tradition skills used for Identify Magic?",
+  "evidence": "\"While wielding the staff, you gain a +2 circumstance bonus to Perception checks to identify morph and polymorph magic.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "fluid-form-staff-major",
+  "name": "Fluid Form Staff (Major)",
+  "question": "Same as Fluid Form Staff: keep the marker on Perception as printed, or move it to the tradition skills used for Identify Magic?",
+  "evidence": "\"While wielding the staff, you gain a +2 circumstance bonus to Perception checks to identify morph and polymorph magic.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-elemental-power-greater",
+  "name": "Staff of Elemental Power (Greater)",
+  "question": "Same as the base Staff of Elemental Power: confirm Arcana+Nature as the identify-an-elemental skills.",
+  "evidence": "\"While wielding the staff, you gain a +2 circumstance bonus to checks to identify elemental creatures.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-elemental-power-major",
+  "name": "Staff of Elemental Power (Major)",
+  "question": "Same as the base Staff of Elemental Power: confirm Arcana+Nature as the identify-an-elemental skills.",
+  "evidence": "\"While wielding the staff, you gain a +2 circumstance bonus to checks to identify elemental creatures.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "verdant-staff-greater",
+  "name": "Verdant Staff (Greater)",
+  "question": "Same as the base Verdant Staff: confirm Nature as the identify-plants-and-fungi skill.",
+  "evidence": "\"While wielding it, you gain a +2 circumstance bonus to checks to identify plants and fungi.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "aeon-stone",
+  "name": "Aeon Stone",
+  "question": "This generic record's description is a dump of ALL aeon stone variants (including several with bonuses: Amplifying +2 item to a tradition skill, Formulating/Repairing +1 item to Craft, Smoothing's ignore-status-penalties, Flickering's +1 circumstance initiative). Should the aggregate 'Aeon Stone' record be excluded from the situational registry entirely (my assumption), or split into the missing per-variant records first?",
+  "evidence": "The record is the generic parent entry - \"There are various types of aeon stones, each with a different appearance and magical effect\" - and its own text grants no bonus; the description merely concatenates every variant's write-up (Amplifying, Delaying, Peering, Formulating, Repairing, Flickering, ...).",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "midnight-milk",
+  "name": "Midnight Milk",
+  "question": "This id is an umbrella record whose description reprints all three graded doses, which also exist as their own item ids (midnight-milk-experimental / -refined / -pure). Should the registry carry bonuses on the umbrella record as well, or only on the three concrete items?",
+  "evidence": "\"Stage 1 +2 item bonus to Perception (1 hour)\" (Experimental), \"Stage 1 +3 item bonus to Perception (1 hour)\" (Refined), \"Stage 1 +3 item bonus to Perception checks and Will saving throws\" (Pure)",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "assassins-skin",
+  "name": "Assassin's Skin",
+  "question": "Escape may be rolled with Acrobatics, Athletics, OR your unarmed attack modifier. I registered the two skills; should the +3 also mark the unarmed strikeAttack, or would starring the attack stat mislead (since it only helps the Escape action, never a Strike)?",
+  "evidence": "\"The wearer of assassin's skin gains a +3 item bonus to Escape checks.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "bombers-eye-elixir-lesser",
+  "name": "Bomber's Eye Elixir (Lesser)",
+  "question": "Should target-side effects like cover reduction be surfaced as a strikeAttack star described as an effective +1 to hit, or omitted entirely because the app models no target AC/cover?",
+  "evidence": "\"For the next 5 minutes, your alchemical bomb Strikes reduce the circumstance bonus to AC your targets gain from cover by 1.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "bombers-eye-elixir-greater",
+  "name": "Bomber's Eye Elixir (Greater)",
+  "question": "Same call as bombers-eye-elixir-lesser: surface cover reduction as an effective strikeAttack bonus, or omit it?",
+  "evidence": "\"your alchemical bomb Strikes reduce the circumstance bonus to AC your targets gain from cover by 2.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "bestial-mutagen",
+  "name": "Bestial Mutagen",
+  "question": "Should the grade-less umbrella item records (bestial-mutagen, cognitive-mutagen, drakeheart-mutagen) carry situational entries at all — with a range like \"+1 to +4 by grade\" — or be left out so only the four graded, purchasable records are flagged?",
+  "evidence": "\"Benefit You gain an item bonus to Athletics checks and unarmed attack rolls... Drawback You take a –2 penalty to Reflex saves, Acrobatics checks, and Stealth checks.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "drakeheart-mutagen",
+  "name": "Drakeheart Mutagen",
+  "question": "For drakeheart, should the AC entry be shown at all before the engine can model \"item bonus to AC that replaces armor's, with a +2 Dex cap\" — and should the grade-less umbrella record carry a \"+4 to +7 by grade\" range or be left to the four graded records?",
+  "evidence": "\"Benefit You gain the listed bonus to AC, a Dexterity cap of +2..., and an item bonus to Perception checks... Drawback You take a –1 penalty to Will saves, Reflex saves, and all skill checks to Recall Knowledge.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "freedoms-flame",
+  "name": "Freedom's Flame",
+  "question": "Should this be narrowed to Will only (compulsion/control effects are overwhelmingly Will saves) or kept as save 'all' to match the literal text?",
+  "evidence": "\"Any creature within 120 feet that's currently under a compulsion or control effect can immediately attempt a new saving throw to break free of the effect, with a +3 status bonus.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "surprise-doll",
+  "name": "Surprise Doll",
+  "question": "Confirm the split: does the plain Surprise Doll (1 gp) grant no Stealth bonus, with the +1 item bonus to Conceal an Item belonging only to Surprise Doll (Exquisite)? The merged AoN text makes this ambiguous to any automated pass.",
+  "evidence": "The +1 line sits under the Exquisite heading: \"Surprise Doll (Exquisite) ... Price 10 gp ... Hiding an object inside this beautifully crafted surprise doll grants you a +1 item bonus to Stealth checks made to Conceal an Item\". The plain doll's own text is only \"This doll contains a hidden compartment or pouch capable of holding a single object of up to light Bulk\".",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "antifungal-salve",
+  "name": "Antifungal Salve",
+  "question": "This is the generic parent record and its text never states the base bonus size (only Lesser +2 / Moderate +3 / Greater +4 / Major +4 are given), yet it is level 1 / 1 gp while Lesser is level 1 / 3 gp. Should this parent record carry a marker at all, or should only the four graded variants be registered? If it is kept, what bonus size does it use?",
+  "evidence": "\"grants an item bonus to saving throws against all afflictions that have the fungus trait ... The bonus lasts for 6 hours.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "crimson-godsblood-serum",
+  "name": "Crimson Godsblood Serum",
+  "question": "This is the generic parent record: it states no bonus size (only Lesser +2 / Moderate +3 / Greater +4 are given) yet is level 6, the same level as Lesser. Should the parent record be registered at all, or only the three graded variants? If kept, which size does it use?",
+  "evidence": "\"While under the effect of the potion, you gain a status bonus to physical damage rolls for 1 minute.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "essence-forge",
+  "name": "Essence Forge",
+  "question": "Two calls for the app owner. (1) This is the generic parent record and states no bonus size — the size comes from the grade (Lesser +1 / Moderate +2 / Greater +3). Should the parent be registered at all, or only the graded variants? (2) An essence forge is a 20-Bulk stone workbench, not carried gear — should a workshop fixture ever mark a stat on the character sheet?",
+  "evidence": "\"Additional essence overflows back into you, granting an item bonus to the skill you used to Prime the Forge for the next 24 hours.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "potion-of-disguise",
+  "name": "Potion of Disguise",
+  "question": "Should a bonus that only raises a skill DC (never the check) be shown as a star on that skill, or does it need a separate 'skill DC' display so it can't be misread as a check bonus?",
+  "evidence": "\"You gain a +4 status bonus to your Deception DC against such Perception checks and add your level even if untrained.\" (the DC onlookers roll Perception against while you're disguised by the potion)",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "potion-of-disguise-lesser",
+  "name": "Potion of Disguise (Lesser)",
+  "question": "Same as the parent record: should a skill-DC-only bonus be starred on the skill row, or does it need its own DC display?",
+  "evidence": "\"The effects of this potion use the same rules as the Impersonate activity of Deception ... You gain a +4 status bonus to your Deception DC against such Perception checks and add your level even if untrained.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "potion-of-disguise-moderate",
+  "name": "Potion of Disguise (Moderate)",
+  "question": "Same as the parent record: should a skill-DC-only bonus be starred on the skill row, or does it need its own DC display?",
+  "evidence": "\"You gain a +4 status bonus to your Deception DC against such Perception checks and add your level even if untrained.\" (the moderate grade only changes the size range and reach, not the bonus)",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "potion-of-disguise-greater",
+  "name": "Potion of Disguise (Greater)",
+  "question": "Same as the parent record: should a skill-DC-only bonus be starred on the skill row, or does it need its own DC display?",
+  "evidence": "\"You gain a +4 status bonus to your Deception DC against such Perception checks and add your level even if untrained.\" plus \"You can attempt to Impersonate a specific individual, though you still need to roll Deception.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "berserkers-cloak",
+  "name": "Berserker's Cloak",
+  "question": "Should Berserker's Cloak be handled by the strikes engine (granting jaws/claws as real unarmed Strikes with +1 potency/striking while raging, or upgrading bestial rage attacks for animal instinct) instead of a situational star, and if so should the situational entries be omitted entirely?",
+  "evidence": "\"If you have the Rage action, while raging you grow jaws ... and claws ... You gain the benefits of a *+1 weapon potency* rune and a *striking* rune with these attacks (gaining a +1 item bonus to attack rolls and increasing the weapon damage dice by one).\" / \"If you have an animal instinct and the bestial rage instinct ability, instead ... a *+2 weapon potency* rune and a *greater striking* rune.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "berserkers-cloak-greater",
+  "name": "Berserker's Cloak (Greater)",
+  "question": "Same as the base cloak: handle via the strikes engine instead of a situational star?",
+  "evidence": "\"You gain the benefits of a *+2 weapon potency* rune and a greater *striking* rune with these attacks (gaining a +2 item bonus to attack rolls and increasing the weapon damage dice by two).\" / \"If you have an animal instinct and the bestial rage instinct ability ... a *+3 weapon potency* rune and a *major striking* rune (granting a +3 item bonus to attack rolls ...).\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "psyche-salts",
+  "name": "Psyche Salts",
+  "question": "This record is a scraped AGGREGATE stub: its text repeats all three tiers (lesser +1, moderate +2, greater +3) and it duplicates psyche-salts-lesser at the same level 5. Should the base 'psyche-salts' id be classified at all, or suppressed in favour of the three tier records?",
+  "evidence": "\"The creature gains the effect of a clear mind spell and a +1 item bonus to saving throws against mental effects for 10 minutes.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "greater-swift-standard",
+  "name": "Greater Swift Standard",
+  "question": "The greater/major tiers say the banner \"instead grants\" a larger bonus. Does the base text's \"This bonus is doubled while traveling\" still apply to the replaced value (+20 here), or does 'instead' replace the whole sentence? The scraped text does not settle it; I have assumed the doubling carries over.",
+  "evidence": "\"+5-foot status bonus to land Speeds... doubled while traveling\"; Greater: \"instead grants a +10-foot status bonus to land Speeds\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "major-swift-standard",
+  "name": "Major Swift Standard",
+  "question": "Same ambiguity as the greater standard: does \"doubled while traveling\" still apply after \"instead grants a +15-foot status bonus\"? Assumed yes (+30 traveling); confirm before shipping the doubled figure.",
+  "evidence": "\"+5-foot status bonus to land Speeds... doubled while traveling\"; Major: \"instead grants a +15-foot status bonus to land Speeds\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "privacy-ward-fulu",
+  "name": "Privacy Ward Fulu",
+  "question": "This is the umbrella/parent record that only summarises the three purchasable variants (Hallway, Room, Chamber, all present separately in core.json). Should the umbrella id carry a marker at all, or should markers be keyed only to the specific variant a character actually owns?",
+  "evidence": "\"When applied to a wall inside a room, all creatures within the room gain an item bonus to Stealth checks against creatures outside the room.\" (Hallway/Room grant +1, Chamber grants +2.)",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "dragonscale-staff",
+  "name": "Dragonscale Staff",
+  "question": "Should a conditional flat extra-damage rider like this (+1 damage, untyped, for 1 round) be listed under strikeDamage, or does the registry only carry typed circumstance/status/item bonuses? Same question applies to the clay sphere's die-step entry.",
+  "evidence": "\"When this resistance prevents you from taking damage, the *dragonscale staff* deals an additional 1 damage of the type matching its resistance for 1 round.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "olfactory-obfuscator-lesser",
+  "name": "Olfactory Obfuscator (Lesser)",
+  "question": "Should DC-only bonuses (they raise the DC an enemy rolls against, never a check you roll) be shown as a star on the related skill with DC-only wording, or suppressed until the sheet can display skill DCs separately?",
+  "evidence": "\"You gain a +4 item bonus against attempts to Seek you by creatures using only scent-based senses; if they use any other senses as well, the bonus doesn't apply.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "medics-armband",
+  "name": "Medic's Armband",
+  "question": "Should self-imposed conditional PENALTIES (the -4 status to your own damage rolls from Do No Harm) be listed in the same star list as bonuses, or does the registry only carry bonuses? If bonuses only, drop the second entry.",
+  "evidence": "\"Diplomacy checks to change the attitudes of diseased, poisoned, and wounded creatures\" — the bonus only applies to that narrow use of Diplomacy, so it cannot be folded into the Diplomacy total. The Do No Harm activation additionally imposes a self-penalty: \"Both you and the triggering enemy take a -4 status penalty to damage rolls until the end of your next turn.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "greater-medics-armband",
+  "name": "Greater Medic’s Armband",
+  "question": "Same as the base armband: are self-imposed penalties in scope for this registry? Also confirm the greater version keeps the base +1 Diplomacy (the record embeds the base text, so I carried it forward).",
+  "evidence": "Greater adds \"+2 item bonus to Medicine checks to Administer First Aid and Treat Wounds\" on top of the base armband's \"Diplomacy checks to change the attitudes of diseased, poisoned, and wounded creatures\", and \"the status penalty to damage rolls from Do No Harm increases to -8\". Both bonuses name specific activities, so both are conditional.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "champions-laurels",
+  "name": "Champions Laurels",
+  "question": "For variant-container records like this one (a single entry that lists amateur/professional/renowned), do you want an entry with a range, or should containers be skipped and only the concrete variants registered?",
+  "evidence": "\"Trigger You are about to roll an Acrobatics or Athletics check, and you are trained or better in the skill; Requirements You can perceive at least 12 allies or friendly bystanders encouraging you\" — bonus applies only to that triggering check.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "strand-of-the-seven-births",
+  "name": "Strand of the Seven Births",
+  "question": "Should ally-only aura bonuses (\"allies in the area gain +2 ...\") appear on the item owner's own stat stars? If yes, do you treat the activator as included, or label the entry \"allies only\"?",
+  "evidence": "\"Allies within the image's bright light hear the constant whispers ... and they gain a +2 status bonus to saving throws against auditory effects\" — the text names ALLIES as the beneficiaries, not the activator.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "oil-of-corpse-restoration",
+  "name": "Oil of Corpse Restoration",
+  "question": "Should this be registered at all for a living PC who merely carries the oil, or only surfaced when the character is undead (e.g. a skeleton ancestry)?",
+  "evidence": "\"It gains a +2 circumstance bonus on Deception checks to look like a living creature\" — 'it' is the undead creature or corpse the oil was spread over, and the effect lasts only 8 hours.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "paradigm-cube",
+  "name": "Paradigm Cube",
+  "question": "Two calls here: (1) do ally-only auras show on the item holder's sheet? (2) should mutually exclusive per-colour effects be six situational entries, or a Mode/toggle with one active at a time?",
+  "evidence": "Each colour reads \"Allies in the area gain a +2 item bonus to ...\" (Intimidation to Coerce / Performance / Intimidation to Demoralize / Lore to Recall Knowledge / Perception to Sense Motive / Stealth to Hide), each lasting 1 minute inside the illusion's emanation and only once per day per colour.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "overflowing-life",
+  "name": "Overflowing Life",
+  "question": "Should bonuses to healing received be flagged under targetKind 'hp' (the HP stat) at all, or does the app need a separate 'healing received' target before entries like this are worth showing?",
+  "evidence": "\"You gain an item bonus equal to half the relic's level (minimum 1) to the Hit Points you recover from healing vitality spells; this bonus applies only the first time per casting that a particular spell heals you.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "conrasu-coin",
+  "name": "Conrasu Coin",
+  "question": "This record is an umbrella/family entry that just reprints both variants; the buyable items are conrasu-coin-arbiter and conrasu-coin-bythos. Should umbrella records get situational entries at all, or should they be skipped so the marker only fires on the real, ownable item?",
+  "evidence": "Arbiter: 'you gain a +2 circumstance bonus on the Diplomacy check, which increases to a +3 circumstance bonus to Make an Impression on a creature with the aeon trait.' Bythos: 'You gain a +2 circumstance bonus to AC against the attack'.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "self-emptying-pocket",
+  "name": "Self-Emptying Pocket",
+  "question": "This is a GM-controlled coin flip that is as likely to be a penalty as a bonus. Should such swing-either-way effects be listed in the situational-bonus registry (with the penalty spelled out in the condition text, as done here), or excluded so a star never implies a benefit the GM may not grant?",
+  "evidence": "'If they influence your performance favorably, you gain a +2 item bonus to your Performance check. If they influence your performance unfavorably, you take a -2 item penalty to your Performance check.'",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "aon-busine-of-divine-reinforcement",
+  "name": "Busine of Divine Reinforcement",
+  "question": "Instrument items like this are borderline: do you want musical-instrument Performance bonuses flagged as situational (\"only when you Perform with this instrument\"), or folded into the flat Performance total like a mundane masterwork instrument? The rest of this chunk assumes situational.",
+  "evidence": "\"When played as an instrument, the busine generates powerful and harmonious notes and grants a +2 item bonus to Performance checks.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "aon-sleuth-s-pipe",
+  "name": "Sleuth's Pipe",
+  "question": "The second clause — \"if you're an investigator, any checks you make to Pursue a Lead\" — is ambiguous: Pursue a Lead is not itself a check, it grants a bonus to checks investigating the subject. Should an investigator get a second entry marking ALL skills (+1 item \"on checks to investigate your pursued lead\"), or should that clause be left out of the registry?",
+  "evidence": "\"it grants you a +1 item bonus to Perception checks to Sense Motive, and if you're an investigator, any checks you make to Pursue a Lead.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "aon-emotion-surge",
+  "name": "Emotion Surge",
+  "question": "Each relic has exactly ONE emotion, but core.json has no emotion selector on this record, so authoring it as written stars ten skills at once (each condition names its emotion, so the table text is still honest). Do you want an effectChoices 'relic emotion' picker added so only the matching skill is starred? Also confirm the Dedication row: it is \"checks to Recall Knowledge\", which is any skill, hence skill 'all'.",
+  "evidence": "\"Effect A surge of emotion emanates from your relic, granting a +1 status bonus to skill checks determined by the relic's emotion. This bonus lasts for 1 minute. Anger Athletics checks Awe Performance checks Dedication Checks to Recall Knowledge Fear Stealth checks Hatred Intimidation checks Joy Diplomacy checks Love Medicine checks Misery Survival checks Pride Society checks Remorse Deception checks\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "doom-switch",
+  "name": "Doom Switch",
+  "question": "This item's only bonus comes from a 1/day activation with a duration and an outcome-dependent result (and a -1/-2 status PENALTY to attack rolls against the target on failure/critical failure). Should duration-limited activated item buffs appear as a permanent situational star, or be handled by the Modes/effects system? And can the registry render penalties as well as bonuses?",
+  "evidence": "\"You and your allies gain a +1 status bonus to attack rolls against the target for 1 minute.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "feather-of-the-unfounded-bravado",
+  "name": "Feather of the Unfounded Bravado",
+  "question": "Two calls for the owner: (a) should a 1/day, 1-hour activated buff show as a permanent situational star or live in the Modes/effects system, and (b) does the situational registry/display render NEGATIVE entries? The two penalties are part of the same package and hiding them would sell the item as pure upside.",
+  "evidence": "\"For 1 hour, the feather grants you a +1 item bonus to Intimidation checks to Demoralize and Diplomacy checks to Make an Impression, but a -1 item penalty on Acrobatics and Athletics checks\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "magical-medals",
+  "name": "Magical Medals",
+  "question": "Should the 'Magical Medals' group stub be selectable as an inventory item at all? If a character can add it, it will show no bonuses while looking like a real item; the alternatives are hiding the stub from item search or aliasing it to the specific medals.",
+  "evidence": "\"No matter how many magical medals you have, they collectively count as one invested item.\" — the only rule the group entry itself states; every bonus in the blob is introduced by an individual medal heading ('Medal of Gorilla's Might ... it grants you a +1 item bonus ...').",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "thieves-tools-concealable",
+  "name": "Thieves' Tools (Concealable)",
+  "question": "The record also carries the thieves'-tools family boilerplate: \"Infiltrator thieves' tools add a +1 item bonus to checks to Pick Locks and Disable Devices.\" A separate record thieves-toolkit-infiltrator (level 3, 50 gp) already exists, yet these Concealable tools are level 4 / 80 gp — more expensive than infiltrator grade. Are Concealable thieves' tools infiltrator-grade (and so also +1 item to Thievery to Pick Locks / Disable Devices), or do they only grant the Stealth-to-Conceal bonus? I have not listed the Thievery bonus because the text does not say it applies to this variant.",
+  "evidence": "\"You gain a +1 item bonus to Stealth checks to Conceal these tools.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "aon-fixer",
+  "name": "Fixer",
+  "question": "A fixer is a hired NPC service, not carried gear, and each fixer is either an informant OR a counselor and either normal OR expert — four different bonus sets in one record, tied to a named location the app does not model. Should hireling records mark PC stats at all, and if so should the informant/counselor and normal/expert variants be split into separate records (or a picker) so only the purchased variant stars?",
+  "evidence": "\"An informant automatically Aids you on attempts to Gather Information and Recall Knowledge about your specific location, granting you a +1 circumstance bonus to such checks.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "heritages",
+  "id": "hopeful-athamaru",
+  "name": "Hopeful Athamaru",
+  "question": "Should ally-facing auras be surfaced on the granting character's own sheet at all (e.g. as an informational note on the saves row, or in a separate \"auras you project\" section), or excluded from the situational registry entirely because they never modify this character's numbers?",
+  "evidence": "\"You have a 10-foot aura that grants any ally in it a +1 circumstance bonus to saving throws against fear; this is an emotion and mental effect.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "harrow-chosen",
+  "name": "Harrow-Chosen",
+  "question": "For a 'choose one of Fort/Ref/Will' bonus, is starring all three saves acceptable, or should the registry support a 'one of your choice' marker so the sheet does not imply all three are boosted at once?",
+  "evidence": "\"**True match**: You gain a +1 circumstance bonus to a saving throw of your choice (Fortitude, Reflex, or Will) for 1 minute.\"; \"**Misaligned**: You gain a +5-foot circumstance bonus to your Speeds for 1 minute.\"; \"**Unmatched**: You gain temporary Hit Points equal to twice your level.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "animalCompanions",
+  "id": "aon-shotalashu",
+  "name": "Shotalashu",
+  "question": "Should one-time acquisition / downtime prerequisite checks (here: +4 circumstance to the DC 21 Occultism check to bond with a shotalashu, for characters with telepathy) ever surface as situational bonuses, or are only in-play bonuses in scope?",
+  "evidence": "\"Any creature with telepathic capabilities, such as telepathy, touch telepathy, empathic sense, or the ability to cast spells such as telepathy, gains a +4 circumstance bonus to this check.\" — 'this check' being the \"DC 21 Occultism check to establish a telepathic link\" needed to acquire the companion.",
+  "lane": "situational"
+ },
+ {
+  "collection": "feats",
+  "id": "eldritch-archer-dedication",
+  "name": "Eldritch Archer Dedication",
+  "question": "Should the granted cantrip be delivered through the innate lane (like Minor Magic's grantAs:'innate' at-will) or as a real one-cantrip SPONTANEOUS repertoire with a Charisma-keyed spell attack/DC? The text says repertoire, and later Eldritch Archer feats add to it — but the innate lane is the one that exists today.",
+  "evidence": "\"You gain a spell repertoire with one cantrip of your choice, from a tradition of your choice. ... This cantrip must require a spell attack roll and come from your chosen tradition.\"",
+  "lane": "choice"
+ },
+ {
+  "collection": "feats",
+  "id": "marshall-fiendish-forces",
+  "name": "Marshall Fiendish Forces",
+  "question": "There is no bestiary in core.json, so this pick has nothing to pick from. Free-text field (player types the fiend's name), or leave the feat prose-only until creature data ships?",
+  "evidence": "\"This fiend is a common fiend of level 11 or lower, which you select when you take this feat. ... At 20th level, you can choose a common fiend of level 15 or lower to appear instead\"",
+  "lane": "choice"
+ },
+ {
+  "collection": "feats",
+  "id": "sanctified-relic",
+  "name": "Sanctified Relic",
+  "question": "Same call as Patron Reborn, and it also decides the shape here: prompt for build-time picks that only benefit an NPC hierophant? If yes, do you want this as ONE choice with 2 picks plus a separate holy/unholy choice, or a single flattened option list? FeatChoiceDef has no `picks` count today — every existing use is pick-one.",
+  "evidence": "\"When you take this feat, choose two attributes (one of which must be your key attribute) as your divine attributes and either holy or unholy sanctification; if you have the holy or unholy trait through a class feature or other ability, you must choose that same trait.\"",
+  "lane": "choice"
+ },
+ {
+  "collection": "feats",
+  "id": "assume-godhood",
+  "name": "Assume Godhood",
+  "question": "This feat has THREE separate build-time picks and none of them touch your own sheet — the three follower spells, \"one skill you are legendary in to act as your divine skill\", and \"one other attribute of your choosing\" for your divine attributes. Prompt for all of them as record-only, prompt for none, or something in between?",
+  "evidence": "\"When you Assume Godhood, choose three spells from any list other than the divine list; one must be 1st rank, one must be 2nd or 3rd rank, and one can be of any rank. These spells become additional cleric spells you can grant to your followers.\"",
+  "lane": "choice"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "breakthrough-innovation",
+  "name": "Breakthrough Innovation",
+  "question": "Should the picker offer breakthrough modifications only, or breakthrough + initial as the text allows? And which innovation type does light-mortar-innovation count as for this filter — weapon?",
+  "evidence": "\"Choose a breakthrough modification of your innovation's type to apply to your innovation. You can choose an initial modification of your innovation's type instead if you prefer.\"",
+  "lane": "choice"
+ },
+ {
+  "collection": "feats",
+  "id": "endless-memories",
+  "name": "Endless Memories",
+  "question": "Do you want daily-preparation temporary proficiencies (Ancient Memories / Endless Memories) modelled as a play-state daily-prep control, given the rules explicitly bar using them as prerequisites — or is a sheet reminder enough?",
+  "evidence": "\"When you choose a skill in which to become trained with Ancient Memories, you can also choose a skill in which you're already trained and become an expert in that skill. This lasts until your Ancient Memories expires.\"",
+  "lane": "choice"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "kinetic-gate",
+  "name": "Kinetic Gate",
+  "question": "Single vs Dual Gate is currently implicit (pick 1 vs 2 elements in the same picker) and Single Gate's automatic impulse junction is not granted. Do you want (a) an explicit Single/Dual Gate toggle in Setup, (b) auto-granting the chosen element's impulse junction when only one element is picked, and (c) two extra level-1 'impulse' feat slots for the gate's free impulse feats?",
+  "evidence": "\"You can choose either a single gate (one element) or dual gate (two elements) at 1st level.\" … \"you can pick from six elements - air, earth, fire metal, water, and wood\"",
+  "lane": "choice"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "weapon-legend",
+  "name": "Weapon Legend",
+  "question": "Weapon Legend RAW lets you pick a DIFFERENT weapon group than the one Fighter Weapon Mastery raised at level 5, but the app stores only one group (build.fighterWeaponGroup) and just promotes it to legendary at 13. Do you want a second, independent group pick at level 13, or is the simplification intentional?",
+  "evidence": "\"You can select one weapon group and increase your proficiency ranks to legendary for all simple weapons, martial weapons, and unarmed attacks in that weapon group, and to master for all advanced weapons in that weapon group.\"",
+  "lane": "choice"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "blessing-of-the-devoted",
+  "name": "Blessing of the Devoted",
+  "question": "Blessed Armament / Blessed Shield need item-targeted grants (pick a weapon or handwraps, then pick one of five property runes; or auto-apply a level-scaled Reinforcing rune to your shield) which the engine cannot express today. Ship all three options with only Blessed Swiftness mechanised and the other two as recorded-but-prose picks, or hold the whole feature until an item-targeting lane exists?",
+  "evidence": "\"Your deity blesses your service with a boon. … Choose one of the following blessings, or any other to which you have access.\"",
+  "lane": "choice"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "divine-spark-and-ikons",
+  "name": "Divine Spark and Ikons",
+  "question": "Should each weapon/worn ikon get a bound inventory item (the free level-0 item it grants, which is also where its runes are etched)? Without it, an exemplar's ikon runes and the 'body ikon acts as handwraps' rule cannot be represented.",
+  "evidence": "\"As an exemplar, you select three ikons at first level.\"",
+  "lane": "choice"
+ },
+ {
+  "collection": "feats",
+  "id": "thaumaturges-demesne",
+  "name": "Thaumaturge's Demesne",
+  "question": "Do you want an optional free-text 'demesne' note captured on this feat for flavour, or should it stay prose-only with no prompt?",
+  "evidence": "\"When you select this feat, choose a demesne, an area of no more than 2,000 square feet. You must legitimately own the area or, if its a public area, you must lay claim to the area without anyone contesting it.\"",
+  "lane": "choice"
+ },
+ {
+  "collection": "feats",
+  "id": "split-slot",
+  "name": "Split Slot",
+  "question": "Should Split Slot add a real extra prepared-spell slot at the chosen rank (which overstates power, since only one of the two paired spells can be cast), or should it only record the rank + show a note on the Spells page?",
+  "evidence": "\"you can choose one spell slot at least 1 rank lower than the highest-rank spell you can cast and prepare two spells in that slot. When you Cast a Spell from that slot, choose which spell to cast.\"",
+  "lane": "choice"
+ },
+ {
+  "collection": "feats",
+  "id": "unlimited-pluripotency",
+  "name": "Unlimited Pluripotency",
+  "question": "Do you want a play-time (daily-preparation) heritage swap for Unlimited Pluripotency, or is leaving it as descriptive text acceptable given heritage is a fixed build field?",
+  "evidence": "\"When you sleep, you can choose to enter a pupa state. … you lose the benefits of one of your surki heritages overnight. When you emerge and make your daily preparations, you can select a different surki heritage to replace it.\"",
+  "lane": "choice"
+ },
+ {
+  "collection": "feats",
+  "id": "peerless-mascot-companion",
+  "name": "Peerless Mascot Companion",
+  "question": "Peerless Mascot Companion makes two picks - the specialization (usual list OR the new 'peerless mascot') and one language the companion learns. Do you want 'peerless-mascot' added as a real companionSpecializations record and a companion-language field added, or is the prose note currently in companionGrants.ts good enough?",
+  "evidence": "\"You can select one of the usual specializations or the peerless mascot specialization.\" ... \"It can speak one language that you also speak (chosen at the time you gain this feat).\"",
+  "lane": "choice"
+ },
+ {
+  "collection": "feats",
+  "id": "built-in-tools",
+  "name": "Built-In Tools",
+  "question": "Do you want a display-only picker for feats like this (a genuine build-time selection with no number attached in HH), or should such feats stay prose-only until the underlying rule — the worn-tools limit — is modeled?",
+  "evidence": "\"When you take this feat, choose up to two sets of tools you own, such as thieves' tools or healer's tools, that weigh a total of 2 Bulk or less… The innovation's Bulk doesn't increase from this addition.\"",
+  "lane": "choice"
+ },
+ {
+  "collection": "items",
+  "id": "apotropaic-fulu",
+  "name": "Apotropaic Fulu",
+  "question": "Should consumables whose variant is fixed at creation but that affect nobody on the sheet (Apotropaic Fulu's warded alignment) get a per-instance flavour label, or is the pick left to the table? Note this is legacy-era content — alignment traits no longer exist post-Remaster, so the four options themselves are dead vocabulary.",
+  "evidence": "\"Pick an alignment trait: chaotic, good, lawful, or evil.\"",
+  "lane": "choice"
+ },
+ {
+  "collection": "items",
+  "id": "captivating-score",
+  "name": "Captivating Score",
+  "question": "Captivating Score's Positive/Negative (and its subject and instrument) are baked into each written copy but change nothing the engine calculates. Do consumables whose choice is pure flavour/record-keeping deserve a stored per-copy note field, or should the app stay silent on them? Answering this once covers a whole family of 'compose/inscribe it this way' consumables.",
+  "evidence": "\"You choose one of the emotions described below and write a musical composition to convey that emotion about a subject of your choice, typically a person or group.\"",
+  "lane": "choice"
+ },
+ {
+  "collection": "items",
+  "id": "faith-tattoo",
+  "name": "Faith Tattoo",
+  "question": "The tattoo carries a SECOND build-time choice: \"When you get the tattoo and aren't sanctified, you can choose to sanctify yourself to your deity.\" Does the app model sanctification as a character-level field an item can set (normally it arrives via cleric/champion class features), and if so should this item be allowed to grant it? The `choice` shape holds only one choice per record, so if sanctification is in scope it needs either a second slot or its own field. Same question applies to all four Faith Tattoo grades.",
+  "evidence": "\"You can choose harm or heal only in accord with the deity's divine font. If the deity allows either spell, choose one the tattoo can cast when you receive the tattoo.\"",
+  "lane": "choice"
+ },
+ {
+  "collection": "items",
+  "id": "faith-tattoo-greater",
+  "name": "Faith Tattoo (Greater)",
+  "question": "Same as base Faith Tattoo: is the optional self-sanctification (\"When you get the tattoo and aren't sanctified, you can choose to sanctify yourself to your deity\") something an item may set, and where would that live?",
+  "evidence": "\"The tattoo casts a 3rd-rank Harm, Heal, or the 3rd-rank spell from your deity's cleric spells ... If the deity allows either spell, choose one the tattoo can cast when you receive the tattoo.\"",
+  "lane": "choice"
+ },
+ {
+  "collection": "items",
+  "id": "faith-tattoo-major",
+  "name": "Faith Tattoo (Major)",
+  "question": "Same as base Faith Tattoo: is the optional self-sanctification something an item may set, and where would that live?",
+  "evidence": "\"The tattoo casts a 5th-rank Harm, Heal, or the 5th-rank spell from your deity's cleric spells ... If the deity allows either spell, choose one the tattoo can cast when you receive the tattoo.\"",
+  "lane": "choice"
+ },
+ {
+  "collection": "items",
+  "id": "faith-tattoo-true",
+  "name": "Faith Tattoo (True)",
+  "question": "Same as base Faith Tattoo: is the optional self-sanctification something an item may set, and where would that live?",
+  "evidence": "\"The tattoo casts a 7th-rank Harm, Heal, or the 7th-rank spell from your deity's cleric spells ... If the deity allows either spell, choose one the tattoo can cast when you receive the tattoo.\"",
+  "lane": "choice"
+ },
+ {
+  "collection": "items",
+  "id": "taper-of-sanctification",
+  "name": "Taper of Sanctification",
+  "question": "Should this ship as two variant item records — Taper of Sanctification (Holy) / (Unholy), the way item grades are already split — rather than as a choice? EffectChoice picks are keyed `<recordId>:<choiceId>`, i.e. per item DEFINITION, so a character holding one holy and one unholy taper could not be represented. Related: the candle is also \"dedicated to a deity who can be sanctified to holy or unholy\" — do you want the deity recorded on the item at all, or is it pure flavour?",
+  "evidence": "\"If the deity's sanctification lists both options, the crafter must choose one when the candle is made.\"",
+  "lane": "choice"
+ },
+ {
+  "collection": "items",
+  "id": "essence-forge",
+  "name": "Essence Forge",
+  "question": "The four forge types (life / matter / mind / spirit) are real, distinct items — should they become four variant records (or a display-only label on the owned item) so the sheet can show which one the party has? They confer no character-sheet effect, so I did not spec a mechanical choice. Also: this base record is an umbrella AoN dump duplicating the three graded records below — should it be hidden from item pickers?",
+  "evidence": "\"Choose an item whose formula you have and whose level is equal to or less than the essence forge's level, or choose an essence charm\" — inside **Activate—Craft an Item** (2 hours).",
+  "lane": "choice"
+ },
+ {
+  "collection": "items",
+  "id": "aon-awakened-metal-shot",
+  "name": "Awakened Metal Shot",
+  "question": "core.json ALREADY has the split variant `awakened-cold-iron-shot` (a proper standalone item with price, activationCost and descRefs). Should `aon-awakened-metal-shot` be retired as a duplicate umbrella, split into three items (adamantine/cold iron/silver), or kept and given a purchase-time variant selector? This is a content-curation call, not a rules reading.",
+  "evidence": "Three consecutive unlabelled paragraphs: \"The shot is a high-grade adamantine bullet.\" / \"The shot is a high-grade cold iron bullet.\" / \"The shot is a high-grade silver bullet.\" — with no \"choose\" verb anywhere.",
+  "lane": "choice"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "dragon-deviant-classification",
+  "name": "Dragon Deviant Classification",
+  "question": "There is no deviant subsystem in the app at all — a full-text scan of src/ for /deviant/ returns ZERO matches, this record is in no class's feature list and no subclass/extraChoice option list, and only one deviant feat ('ghostly-grasp-deviant') exists in core.json out of the whole Dark Archive set. Before this choice can be surfaced anywhere, do you want deviant abilities modelled at all, and if so where does the classification get picked — a Setup card like the GMG variant rules, or attached to the Deviant Ability archetype's feats?",
+  "evidence": "\"When you gain a dragon-type deviation, choose a type of damage, from cold, electricity, fire, or sonic. All abilities you gain from this deviation deal this type of damage and add the corresponding trait to the ability.\"",
+  "lane": "choice"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "elemental-magic",
+  "name": "Elemental Magic",
+  "question": "Is the Elementalist class archetype in scope at all? It restructures the SPELL LIST itself ('Replace your spell list with the elemental spell list'), a lane the app has never needed. If yes, it also needs a `classArchetype` field — today only 4 records in all of core.json have one (vindicator-dedication, warrior-of-legend-dedication, palatine-detective-dedication, war-mage-dedication), all on FEATS, and this record carries only the bare `otherTags: ['class-archetype']`.",
+  "evidence": "\"You must choose an elemental philosophy (detailed below), which determines which spells and other elemental magic you can use.\"",
+  "lane": "choice"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "elemental-school",
+  "name": "Elemental School",
+  "question": "This record is an ORPHAN — it is not one of the wizard's 14 arcane-school subclass options, and nothing in src/ reads its `otherTags: ['wizard-elemental-school']`. It only exists to serve the Elementalist class archetype (`elemental-magic`). Should it be wired at all, and if so does it become a 15th wizard arcane-school option that is hidden unless the Elementalist archetype is taken?",
+  "evidence": "\"your curriculum spells can be any spells that you have access to and that have your chosen element's trait. Your school spells are the elemental focus spells of your chosen element\"",
+  "lane": "choice"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-infusions-bomber",
+  "name": "Perpetual Infusions (Bomber)",
+  "question": "This record is an ORPHAN and looks superseded. The shipped alchemist is the REMASTER (Player Core 2) one — its features are versatile vials / advanced-vials / abundant-vials / alchemical-mastery, and `perpetual-infusions-bomber` (source: Pathfinder Core Rulebook, OGL) appears in NO class feature list, no subclass option list and no extraChoices group. Should legacy alchemist features be wired up at all, or hidden by the legacy/superseded edition rule?",
+  "evidence": "\"Choose two 1st-level bombs.\" / \"You gain the ability to create two 1st-level alchemical items using Quick Alchemy without spending a batch of infused reagents.\"",
+  "lane": "choice"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-perfection-bomber",
+  "name": "Perpetual Perfection (Bomber)",
+  "question": "Same legacy question as the Perpetual Infusions set: this is a 17th-level Core Rulebook (OGL) alchemist feature that the Player Core 2 remaster replaced, and it is in no class feature list, subclass option list or extraChoices group. Wire up legacy alchemist, or leave hidden as superseded?",
+  "evidence": "\"Choose two 11th-level or lower bombs.\"",
+  "lane": "choice"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-perfection-chirurgeon",
+  "name": "Perpetual Perfection (Chirurgeon)",
+  "question": "Same legacy question as the Perpetual Infusions set: 17th-level Core Rulebook (OGL) feature superseded by the Player Core 2 alchemist, present in no class feature list, subclass option list or extraChoices group. Wire up legacy alchemist, or leave hidden as superseded?",
+  "evidence": "\"Choose two 11th-level or lower elixirs with the healing trait.\"",
+  "lane": "choice"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-perfection-mutagenist",
+  "name": "Perpetual Perfection (Mutagenist)",
+  "question": "Same legacy question as the Perpetual Infusions set: 17th-level Core Rulebook (OGL) feature superseded by the Player Core 2 alchemist, present in no class feature list, subclass option list or extraChoices group. Wire up legacy alchemist, or leave hidden as superseded? (Note: only three Perpetual Perfection records were in this chunk — check whether a toxicologist variant exists and got the same treatment.)",
+  "evidence": "\"Choose two 11th-level or lower mutagens.\"",
+  "lane": "choice"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-potency-toxicologist",
+  "name": "Perpetual Potency (Toxicologist)",
+  "question": "When a toxicologist reaches 17th level and gains Perpetual Perfection, do the two 5th-level picks from Perpetual Potency remain (4 free items total), or are they replaced by the two new 11th-level picks? RAW reads as replacement/upgrade of the same slot but the app owner should confirm how many perpetual slots to show.",
+  "evidence": "\"Choose two common 5th-level or lower alchemical poisons.\"",
+  "lane": "choice"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "sign-bound",
+  "name": "Sign Bound",
+  "question": "The text says a player might be born under a non-Cosmic-Caravan constellation and 'gain different benefits as determined by the GM'. Should the picker include a 14th 'Other (GM-determined)' option that grants nothing mechanically, or list only the 13 printed signs?",
+  "evidence": "\"When you gain this background, choose a specific constellation, such as the Thrush or the Wagon. Your associated constellation determines one of the ability boosts you gain and an innate spell.\"",
+  "lane": "choice"
+ },
+ {
+  "collection": "deities",
+  "id": "lurlup",
+  "name": "Lurlup",
+  "question": "Is sanctification (holy/unholy) in scope as a mechanical build choice, or does Heroes Heaven deliberately leave it narrative? It requires a new Deity field backfilled across all 485 deities plus a choice on the cleric `sanctification` class feature — a collection-wide project, not a per-record fix. If it stays narrative, Lurlup needs NO choice and this result should be treated as needsBuildChoice=false.",
+  "evidence": "\"**Sanctification** Can be Unholy\" (and, for contrast, the non-choices: \"**Divine Font** Harm\", \"**Divine Skill** Intimidation\", \"**Favored Weapon** Dagger\", \"**Domains** Destruction, Indulgence, Void, Plague\")",
+  "lane": "choice"
+ }
+]

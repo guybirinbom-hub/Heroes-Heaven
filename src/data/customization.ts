@@ -26,6 +26,7 @@ export const DEFAULT_CUSTOMIZATION: Customization = {
   autoHideEmpty: false,
   hpCommandEntry: false,
   shieldAutoHardness: true,
+  hpIwrButtons: true,
   compactActions: true,
   showSlotBadges: true,
   consumableHighlight: true,

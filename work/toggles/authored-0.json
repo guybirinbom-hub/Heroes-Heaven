@@ -1,0 +1,350 @@
+{
+ "modes": [
+  {
+   "id": "adept-benefit-amulet",
+   "name": "Amulet's Abeyance",
+   "feats": ["adept-benefit-amulet"],
+   "duration": "until the start of your next turn",
+   "note": "Adept Benefit (Amulet): when you use Amulet's Abeyance, you or your ally chooses one damage type dealt by the triggering attack and gains resistance 5 against it (10 at 15th level). Set the type you chose; if the ally took it instead, leave this off.",
+   "modifiers": [],
+   "resistances": [
+    { "type": "chosen damage type", "value": "5+5*min(1,max(0,@actor.level-14))" }
+   ]
+  },
+  {
+   "id": "item-aged-arbor-wine",
+   "name": "Arbor Wine",
+   "fromItemId": "aged-arbor-wine",
+   "duration": "1 minute",
+   "note": "You have tremorsense at a range of 30 feet. Aged wine also makes vegetation around you writhe into difficult terrain until the start of your next turn — that is battlefield-side, not on your sheet.",
+   "modifiers": [],
+   "senses": [
+    { "name": "tremorsense", "range": 30, "acuity": "imprecise" }
+   ]
+  },
+  {
+   "id": "item-arbor-wine",
+   "name": "Arbor Wine",
+   "fromItemId": "arbor-wine",
+   "duration": "1 minute",
+   "note": "For 1 minute after drinking a glass, you have tremorsense at a range of 30 feet.",
+   "modifiers": [],
+   "senses": [
+    { "name": "tremorsense", "range": 30, "acuity": "imprecise" }
+   ]
+  },
+  {
+   "id": "item-arctic-worm-chitin-shield",
+   "name": "Misty Chill",
+   "fromItemId": "arctic-worm-chitin-shield",
+   "duration": "until the beginning of your next turn",
+   "note": "Misty Chill: you Raise the Shield and gain resistance 5 to cold. Any creature that ends its turn adjacent to you takes 3d6 cold damage (basic save) — that damage lands on their sheet, not yours.",
+   "modifiers": [],
+   "resistances": [
+    { "type": "cold", "value": 5 }
+   ]
+  },
+  {
+   "id": "item-blood-booster-lesser",
+   "name": "Blood Booster",
+   "fromItemId": "blood-booster-lesser",
+   "duration": "10 minutes",
+   "note": "Resistance 5 to persistent bleed and persistent poison damage. You also lower the DC of any flat check to end persistent bleed or persistent poison damage as if you had received particularly appropriate aid (DC 10).",
+   "modifiers": [],
+   "resistances": [
+    { "type": "persistent bleed", "value": 5 },
+    { "type": "persistent poison", "value": 5 }
+   ]
+  },
+  {
+   "id": "item-bloodhound-mask-lesser",
+   "name": "Bloodhound Mask",
+   "fromItemId": "bloodhound-mask-lesser",
+   "duration": "10 minutes",
+   "note": "Imprecise scent with a 15-foot range. When you use Survival to Track a creature by its scent, your proficiency bonus is equal to your level even if untrained. You can't wear another mask while wearing it.",
+   "modifiers": [
+    { "value": 1, "type": "item", "target": "skill", "detail": "survival", "appliesWhen": "to Track a creature by its scent" }
+   ],
+   "senses": [
+    { "name": "scent", "range": 15, "acuity": "imprecise" }
+   ]
+  },
+  {
+   "id": "item-bloodhound-mask-moderate",
+   "name": "Bloodhound Mask",
+   "fromItemId": "bloodhound-mask-moderate",
+   "duration": "1 hour",
+   "note": "Imprecise scent with a 30-foot range. When you use Survival to Track a creature by its scent, your proficiency bonus is equal to your level even if untrained. You can't wear another mask while wearing it.",
+   "modifiers": [
+    { "value": 2, "type": "item", "target": "skill", "detail": "survival", "appliesWhen": "to Track a creature by its scent" }
+   ],
+   "senses": [
+    { "name": "scent", "range": 30, "acuity": "imprecise" }
+   ]
+  },
+  {
+   "id": "item-bloodhound-mask-greater",
+   "name": "Bloodhound Mask",
+   "fromItemId": "bloodhound-mask-greater",
+   "duration": "8 hours",
+   "note": "Imprecise scent with a 60-foot range. When you use Survival to Track a creature by its scent, your proficiency bonus is equal to your level even if untrained. You can't wear another mask while wearing it.",
+   "modifiers": [
+    { "value": 3, "type": "item", "target": "skill", "detail": "survival", "appliesWhen": "to Track a creature by its scent" }
+   ],
+   "senses": [
+    { "name": "scent", "range": 60, "acuity": "imprecise" }
+   ]
+  },
+  {
+   "id": "item-bloodhound-olfactory-stimulators",
+   "name": "Olfactory Stimulators",
+   "fromItemId": "bloodhound-olfactory-stimulators",
+   "duration": "1 minute",
+   "note": "Activate (once per day): your stimulators twitch and gather more information, giving you imprecise scent with a range of 30 feet.",
+   "modifiers": [],
+   "senses": [
+    { "name": "scent", "range": 30, "acuity": "imprecise" }
+   ]
+  },
+  {
+   "id": "break-the-suns-legs",
+   "name": "Break the Sun's Legs",
+   "feats": ["break-the-suns-legs"],
+   "duration": "1 minute",
+   "note": "The stolen light is channeled to your eyes, granting you greater darkvision. The surrounding area is under a 9th-rank Darkness effect for the same minute — that part is on the battlefield, not your sheet.",
+   "modifiers": [],
+   "senses": [
+    { "name": "greater-darkvision" }
+   ]
+  },
+  {
+   "id": "item-chromatic-jellyfish-oil-lesser",
+   "name": "Jellyfish Oil",
+   "fromItemId": "chromatic-jellyfish-oil-lesser",
+   "duration": "10 minutes",
+   "note": "Resistance 5 to precision damage and to the extra damage from critical hits. You also ignore difficult terrain from tight spaces that don't force you to Squeeze, move 5 feet per round when you succeed at Squeeze (10 feet on a critical success), and can Crawl at half your Speed.",
+   "modifiers": [],
+   "resistances": [
+    { "type": "precision", "value": 5 },
+    { "type": "critical-hits", "value": 5 }
+   ]
+  },
+  {
+   "id": "item-clockwork-goggles",
+   "name": "Clockwork Goggles",
+   "fromItemId": "clockwork-goggles",
+   "duration": "10 minutes",
+   "note": "The lenses cycle rapidly, granting you low-light vision.",
+   "modifiers": [],
+   "senses": [
+    { "name": "low-light-vision" }
+   ]
+  },
+  {
+   "id": "item-clockwork-goggles-greater",
+   "name": "Clockwork Goggles",
+   "fromItemId": "clockwork-goggles-greater",
+   "duration": "10 minutes",
+   "note": "The lenses cycle rapidly, granting you low-light vision and darkvision.",
+   "modifiers": [],
+   "senses": [
+    { "name": "low-light-vision" },
+    { "name": "darkvision" }
+   ]
+  },
+  {
+   "id": "item-clockwork-goggles-major",
+   "name": "Clockwork Goggles",
+   "fromItemId": "clockwork-goggles-major",
+   "duration": "10 minutes",
+   "note": "Low-light vision, darkvision, and the effects of See the Unseen — invisible creatures are concealed to you rather than undetected.",
+   "modifiers": [],
+   "senses": [
+    { "name": "low-light-vision" },
+    { "name": "darkvision" },
+    { "name": "see-invisibility" }
+   ]
+  },
+  {
+   "id": "close-formation",
+   "name": "Close Formation",
+   "feats": ["close-formation"],
+   "duration": "while wielding two fans, one in each hand",
+   "note": "Fan-dance spatial awareness: while you wield two fans, each in a different hand, you gain tremorsense as an imprecise sense with a range of 20 feet.",
+   "modifiers": [],
+   "senses": [
+    { "name": "tremorsense", "range": 20, "acuity": "imprecise" }
+   ]
+  },
+
+  {
+   "id": "curse-of-creeping-ashes-1",
+   "name": "Creeping Ashes 1",
+   "feats": ["curse-of-creeping-ashes"],
+   "exclusiveGroup": "oracle-cursebound",
+   "duration": "while cursebound 1",
+   "note": "Cursebound 1: weakness 2 to fire damage. Any immunity or resistance you have to fire is suppressed.",
+   "modifiers": [],
+   "weaknesses": [
+    { "type": "fire", "value": 2 }
+   ]
+  },
+  {
+   "id": "curse-of-creeping-ashes-2",
+   "name": "Creeping Ashes 2",
+   "feats": ["curse-of-creeping-ashes"],
+   "exclusiveGroup": "oracle-cursebound",
+   "duration": "while cursebound 2",
+   "note": "Cursebound 2 (cumulative): weakness 2 to fire with any fire immunity or resistance suppressed, plus swirling ash imposing a −2 circumstance penalty to your ranged attack rolls.",
+   "modifiers": [
+    { "value": -2, "type": "circumstance", "target": "attack", "appliesWhen": "ranged attack rolls" }
+   ],
+   "weaknesses": [
+    { "type": "fire", "value": 2 }
+   ]
+  },
+  {
+   "id": "curse-of-creeping-ashes-3",
+   "name": "Creeping Ashes 3",
+   "feats": ["curse-of-creeping-ashes"],
+   "exclusiveGroup": "oracle-cursebound",
+   "duration": "while cursebound 3",
+   "note": "Cursebound 3 (cumulative): your weakness to fire is 5 + your level and any fire immunity or resistance is suppressed; the −2 circumstance penalty to ranged attack rolls continues.",
+   "modifiers": [
+    { "value": -2, "type": "circumstance", "target": "attack", "appliesWhen": "ranged attack rolls" }
+   ],
+   "weaknesses": [
+    { "type": "fire", "value": "5+@actor.level" }
+   ]
+  },
+  {
+   "id": "curse-of-creeping-ashes-4",
+   "name": "Creeping Ashes 4",
+   "feats": ["curse-of-creeping-ashes"],
+   "exclusiveGroup": "oracle-cursebound",
+   "duration": "while cursebound 4",
+   "note": "Cursebound 4 (cumulative): fire weakness 5 + your level, −2 circumstance to ranged attack rolls, and a −10-foot status penalty to all your Speeds as your limbs crumble — apply that Speed penalty by hand, the mode can't.",
+   "modifiers": [
+    { "value": -2, "type": "circumstance", "target": "attack", "appliesWhen": "ranged attack rolls" }
+   ],
+   "weaknesses": [
+    { "type": "fire", "value": "5+@actor.level" }
+   ]
+  },
+
+  {
+   "id": "curse-of-inclement-headwinds-1",
+   "name": "Headwinds 1",
+   "feats": ["curse-of-inclement-headwinds"],
+   "exclusiveGroup": "oracle-cursebound",
+   "duration": "while cursebound 1",
+   "note": "Cursebound 1: electricity weakness 2. Electricity spells and effects with extra effects against a creature wearing or holding metal treat you as wearing metal, and any immunity or resistance you have to them is suppressed.",
+   "modifiers": [],
+   "weaknesses": [
+    { "type": "electricity", "value": 2 }
+   ]
+  },
+  {
+   "id": "curse-of-inclement-headwinds-2",
+   "name": "Headwinds 2",
+   "feats": ["curse-of-inclement-headwinds"],
+   "exclusiveGroup": "oracle-cursebound",
+   "duration": "while cursebound 2",
+   "note": "Cursebound 2 (cumulative): electricity weakness 2 and you count as wearing metal for electricity effects, plus blowing winds imposing a −2 circumstance penalty to your ranged attack rolls.",
+   "modifiers": [
+    { "value": -2, "type": "circumstance", "target": "attack", "appliesWhen": "ranged attack rolls" }
+   ],
+   "weaknesses": [
+    { "type": "electricity", "value": 2 }
+   ]
+  },
+  {
+   "id": "curse-of-inclement-headwinds-3",
+   "name": "Headwinds 3",
+   "feats": ["curse-of-inclement-headwinds"],
+   "exclusiveGroup": "oracle-cursebound",
+   "duration": "while cursebound 3",
+   "note": "Cursebound 3 (cumulative): your weakness to electricity is 5 + your level, you still count as wearing metal for electricity effects, and the −2 circumstance penalty to ranged attack rolls continues.",
+   "modifiers": [
+    { "value": -2, "type": "circumstance", "target": "attack", "appliesWhen": "ranged attack rolls" }
+   ],
+   "weaknesses": [
+    { "type": "electricity", "value": "5+@actor.level" }
+   ]
+  },
+  {
+   "id": "curse-of-inclement-headwinds-4",
+   "name": "Headwinds 4",
+   "feats": ["curse-of-inclement-headwinds"],
+   "exclusiveGroup": "oracle-cursebound",
+   "duration": "while cursebound 4",
+   "note": "Cursebound 4 (cumulative): electricity weakness 5 + your level, −2 circumstance to ranged attack rolls, and the raging winds push you back for a −10-foot status penalty to all your Speeds — apply that Speed penalty by hand, the mode can't.",
+   "modifiers": [
+    { "value": -2, "type": "circumstance", "target": "attack", "appliesWhen": "ranged attack rolls" }
+   ],
+   "weaknesses": [
+    { "type": "electricity", "value": "5+@actor.level" }
+   ]
+  },
+
+  {
+   "id": "curse-of-inevitable-rot-1",
+   "name": "Inevitable Rot 1",
+   "feats": ["curse-of-inevitable-rot"],
+   "exclusiveGroup": "oracle-cursebound",
+   "duration": "while cursebound 1",
+   "note": "Cursebound 1: you gain weakness 2 to acid and poison damage.",
+   "modifiers": [],
+   "weaknesses": [
+    { "type": "acid", "value": 2 },
+    { "type": "poison", "value": 2 }
+   ]
+  },
+  {
+   "id": "curse-of-inevitable-rot-2",
+   "name": "Inevitable Rot 2",
+   "feats": ["curse-of-inevitable-rot"],
+   "exclusiveGroup": "oracle-cursebound",
+   "duration": "while cursebound 2",
+   "note": "Cursebound 2 (cumulative): weakness 2 to acid and poison, and a −1 status penalty to saves against diseases and poisons. Anyone attempting to Treat your Disease, Poison, or Wounds also takes −1 — that penalty is on their sheet.",
+   "modifiers": [
+    { "value": -1, "type": "status", "target": "save", "appliesWhen": "against diseases and poisons" }
+   ],
+   "weaknesses": [
+    { "type": "acid", "value": 2 },
+    { "type": "poison", "value": 2 }
+   ]
+  },
+  {
+   "id": "curse-of-inevitable-rot-3",
+   "name": "Inevitable Rot 3",
+   "feats": ["curse-of-inevitable-rot"],
+   "exclusiveGroup": "oracle-cursebound",
+   "duration": "while cursebound 3",
+   "note": "Cursebound 3 (cumulative): your weakness to acid and poison damage increases to twice your level; the −1 status penalty to saves against diseases and poisons continues (and −1 for anyone treating you).",
+   "modifiers": [
+    { "value": -1, "type": "status", "target": "save", "appliesWhen": "against diseases and poisons" }
+   ],
+   "weaknesses": [
+    { "type": "acid", "value": "2*@actor.level" },
+    { "type": "poison", "value": "2*@actor.level" }
+   ]
+  },
+  {
+   "id": "curse-of-inevitable-rot-4",
+   "name": "Inevitable Rot 4",
+   "feats": ["curse-of-inevitable-rot"],
+   "exclusiveGroup": "oracle-cursebound",
+   "duration": "while cursebound 4",
+   "note": "Cursebound 4 (cumulative): acid and poison weakness twice your level, and the status penalty to saves against diseases and poisons increases to −2 (as does the penalty for anyone attempting to Treat your Disease, Poison, or Wounds).",
+   "modifiers": [
+    { "value": -2, "type": "status", "target": "save", "appliesWhen": "against diseases and poisons" }
+   ],
+   "weaknesses": [
+    { "type": "acid", "value": "2*@actor.level" },
+    { "type": "poison", "value": "2*@actor.level" }
+   ]
+  }
+ ],
+ "skipped": []
+}

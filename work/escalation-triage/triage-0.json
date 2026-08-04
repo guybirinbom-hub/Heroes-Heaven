@@ -1,0 +1,242 @@
+{"results":[
+ {
+  "id": "magnetic-pinions",
+  "verdict": "DECIDABLE",
+  "answer": "Use kind 'strikeAttack', not 'spell'. Register: targets [{kind:'strikeAttack'}], when \"on impulse attack rolls against a target wearing metal armor or made of metal\", bonus \"+1 circumstance\". 'spell' would display nothing at all: the kineticist class record has no spellcasting entry, so there is no spell attack/DC row for the star to land on.",
+  "evidence": "src/rules/situationalBonuses.ts:2537-2539 — gate-attenuator / -greater / -major already use {kind:'strikeAttack'} with when \"on your impulse attack rolls\". src/rules/derive.ts:1429-1450 builds Elemental Blast as a strike instance (instanceId `blast:<el>`, rank c.proficiencies.classDc, atkAbility 'con'), so impulse attack rolls surface on strike rows. public/core.json classes/kineticist has no `spellcasting` key."
+ },
+ {
+  "id": "skull-creeper",
+  "verdict": "DECIDABLE",
+  "answer": "Register NOTHING on the feat. The Splendid Skull Mask already carries the bonus as a real number — it is not situational at all. Adding a feat entry would star Intimidation for any ratfolk who took Skull Creeper but never spent the 50 gp, and would read as a second +1 next to the one already in the total.",
+  "evidence": "public/core.json items/splendid-skull-mask has `passiveEffects: { skills: { intimidation: 1 } }` and usage 'wornmask'. Ruling G's general principle ('the mark lives on the thing you are looking at when it matters'). Note for the follow-up: situationalBonuses.ts:2295 registers the sibling `nosois-mask` on the FEAT; that one is defensible only because core.json has no splendid-psychopomp-mask item (only `psychopomp-mask`), so it is not a precedent to copy here."
+ },
+ {
+  "id": "raise-a-tome",
+  "verdict": "DECIDABLE",
+  "answer": "Two entries. (1) {kind:'ac'}, when \"while you have a book raised\", bonus \"+2 circumstance\". (2) {kind:'skill', detail:'all'}, when \"to Recall Knowledge to identify creatures, using a skill related to the raised book's subject (Arcana for your spellbook)\", bonus \"+1 circumstance\". Do NOT narrow to Arcana and do NOT wait for a subject-skill field on books — the printed Arcana is an example, not the rule.",
+  "evidence": "Ruling C — 'Star every skill that could do it.' Every skill can Recall Knowledge, so the set is skill:'all'. Exact shipped precedent for the same shape (a held book granting Recall Knowledge): src/rules/situationalBonuses.ts:871 initiate-benefit-tome — {kind:'skill', detail:'all'}, when \"to Recall Knowledge, while you hold your tome implement\"; and :2219 paragon-benefit-tome."
+ },
+ {
+  "id": "confabulator",
+  "verdict": "DECIDABLE",
+  "answer": "No surface. No star, no note, no registry entry. Confabulator moves a number that belongs to the TARGET (the +4 circumstance bonus the GM gives a creature you have already tried to Lie to / Create a Diversion against), and the app models neither that creature nor that bonus. The feat's own description already tells the player what to say at the table.",
+  "evidence": "Ruling D leftovers — target-side bonuses (2026-07-30): 'this dosent need to have an effect the player will tel the gm' … 'Each of these changes a number belonging to the TARGET … no surface, no effect, no star.' Identical shape to Bomber's Eye Elixir and Execution Powder."
+ },
+ {
+  "id": "whirling-throw",
+  "verdict": "DECIDABLE",
+  "answer": "Star Athletics. Register one entry: {kind:'skill', detail:'athletics'}, when \"on the Whirling Throw check, by the target's size relative to yours\", bonus \"+2 circumstance one size smaller, +4 if smaller than that; -2 one size larger, -4 if larger than that\". Ruling D's action-marker surface does NOT apply: it exists for bonuses with no stat row, and Whirling Throw's modifier lands on an Athletics check, which has one.",
+  "evidence": "Ruling D ('Bonuses with no stat row') scopes the action/condition surface to records that have no stat. Action-internal modifiers are already the dominant pattern in the registry, e.g. src/rules/situationalBonuses.ts arc-of-destruction ('against the triggering ranged Strike'), crane-flutter ('against a triggering attack while in Crane Stance'), flamboyant-cruelty, ankle-biter ('to Trip while prone'). Penalties in the same entry are explicitly sanctioned by the cross-cutting stacking ruling ('this rule for penalties too')."
+ },
+ {
+  "id": "meddling-futures",
+  "verdict": "DECIDABLE",
+  "answer": "Author FOUR entries, each with its own `when` naming the d4 result — do not build a grouped marker. 1 Warrior: [strikeAttack, strikeDamage] when \"Meddling Futures rolled a 1 (Warrior) — your next action must be a Strike\", bonus \"+1 status attack, +2 status damage (+6 damage at Cursebound 3)\". 2 Adept: [perception, skill:all] when \"…rolled a 2 (Adept) — your next action must be a Perception check or skill action\", bonus \"+1 status (+2 at Cursebound 3)\". 3 Sage: [spellDamage] when \"…rolled a 3 (Sage) — your next action must be Cast a Spell\", bonus \"+status equal to the spell's rank (rank +3 at Cursebound 3)\". 4 Wanderer: [speed] when \"…rolled a 4 (Wanderer) — your next action must be Stride/Fly/Climb/Burrow\". The trigger text tells the player which one is live; the registry has no grouping concept and needs none.",
+  "evidence": "Cross-cutting ruling (amended): 'show both if the string doesn't match. you don't need to go over every type of circumstantial bonus.' Four distinct `when` strings never pool — src/rules/situationalBonuses.ts poolSituationalLines keys on normalizeWhen(l.when), so differing triggers all survive. Ruling H #1 ('where the rules are open, stay open') points the same way."
+ },
+ {
+  "id": "derring-do",
+  "verdict": "DECIDABLE",
+  "answer": "One entry, skill:'all' — do not expand per bravado action. Register {kind:'skill', detail:'all'}, when \"to Tumble Through or on any bravado skill action (reroll and take the higher result)\", bonus \"fortune: roll twice, keep the higher\". This mirrors the record it is defined against, so the two lines read as one rule.",
+  "evidence": "src/rules/situationalBonuses.ts:954 stylish-combatant already ships {kind:'skill', detail:'all'} with when \"on skill checks with the bravado trait, while in a combat encounter\" — Derring-do's text scopes itself to exactly that set. Non-numeric fortune entries are already first-class: 13 `reroll` entries in the registry (e.g. :204 grit-and-tenacity, :206 guarded-mind, :245 mask-of-rejection) and SituationalBonus.bonus is documented as accepting 'a phrase'."
+ },
+ {
+  "id": "swashbucklers-speed",
+  "verdict": "DECIDABLE",
+  "answer": "One speed entry that carries both legs in its prose — copy the shipped vivacious-speed shape exactly: {kind:'speed'}, when \"while you have panache (without panache you still get a +5-foot status bonus)\", bonus \"+10 status\". Do not fold either leg into the computed Speed and do not author two separate lines; two lines with different `when` strings will not pool, and the player will read +5 and +10 as additive.",
+  "evidence": "src/rules/situationalBonuses.ts:955 vivacious-speed is the same with/without-panache shape and is already authored as a single entry whose `when` carries the no-panache case: when \"while you have panache (without panache you still get half this, rounded down to the nearest 5-foot increment)\". :954 stylish-combatant likewise keeps the panache speed bonus in the star list rather than in the total. Cross-cutting ruling: same-type entries with different `when` text both display."
+ },
+ {
+  "id": "endemic-herbs",
+  "verdict": "DECIDABLE",
+  "answer": "No stars on the crafter. Register nothing on the feat. The bonus belongs to whoever eats the herbal item, and reaches the sheet only through that consumable's own mode when the character eats one.",
+  "evidence": "Ruling F, which names this record: 'Endemic Herbs and the other crafting feats (the eater gets the bonus, never the cook).' Ruling F case 1: 'The bonus goes to a teammate, not you -> NOTHING on your sheet.' The eating side is ruling E (consumable modes, already built — scripts/data/consumable-modes.json)."
+ },
+ {
+  "id": "tweak-appearances",
+  "verdict": "DECIDABLE",
+  "answer": "No Diplomacy/Performance star on the owner. Give the character a DISPLAY-ONLY mode ('Tweak Appearances — the target has +1/+2/+3 item to Diplomacy and Performance while speaking to that audience') that changes none of their numbers, so they can see it is running.",
+  "evidence": "Ruling F, which names this record verbatim: 'Tweak Appearances (+1 item to the TARGET's Diplomacy/Performance, \"while speaking to that audience\" -> display-only mode on the speaker).' Ruling F case 2 supplies the mode; same mechanism as ruling E case 3."
+ },
+ {
+  "id": "clans-edge",
+  "verdict": "DECIDABLE",
+  "answer": "Register on the clan dagger (the parry trait), not on the feat, and never in both places. Clan's Edge grants no bonus — it only reaches the dagger's own parry bonus in fewer actions. The AC entry belongs to items/clan-dagger: {kind:'ac'}, when \"while you have used an Interact action to parry with your clan dagger\", bonus \"+1 circumstance\". Clan's Edge gets no entry.",
+  "evidence": "public/core.json items/clan-dagger carries traits ['agile','dwarf','parry','versatile-b'] — the parry trait is where the +1 lives (src/rules/glossary.ts:95: 'Parry: spend an action to raise the weapon, gaining a +1 circumstance bonus to AC until the start of your next turn.'). Ruling G's general principle: the mark lives on the thing you are looking at when it matters, and an upgrade replaces rather than duplicates."
+ },
+ {
+  "id": "artillerist-dedication",
+  "verdict": "OWNER",
+  "why": "The Repair leg has a clean home (Crafting), but Load, Aim and 'move the weapon' are crew actions with no skill and no action record in core.json, and the siege weapon itself is a companion in this app with its own block. Ruling D's answer — 'attach the marker to the THING IT MODIFIES' — needs an action record that does not exist, and the ★COMPANIONS ruling opened a companion-block marker surface that could plausibly hold it. Which surface a crew bonus belongs on is a layout choice, not a rules fact.",
+  "options": [
+   {
+    "label": "Star Crafting only, with a note covering all four checks",
+    "looksLike": "A * next to Crafting on the skills list. Opening it reads '+2 circumstance — to Load, Aim, move or Repair a siege weapon you are crewing (Artillerist Dedication)'. Nothing appears anywhere near the siege weapon itself; the Load/Aim/move part is a sentence the player has to carry to the table."
+   },
+   {
+    "label": "Star Crafting for Repair AND put a marker on the siege-weapon companion block",
+    "looksLike": "Same * on Crafting, plus a * on the siege weapon's card in the Companions tab reading '+2 circumstance to any check to Load, Aim, move or Repair this weapon while you crew it (Artillerist Dedication)'. The player sees it at the moment they are actually operating the weapon."
+   },
+   {
+    "label": "Crafting only, silent about Load/Aim/move",
+    "looksLike": "A * next to Crafting whose note mentions only Repair. The other three checks are simply not represented anywhere, exactly like ruling D's skill DCs ('the player remembers these')."
+   }
+  ],
+  "recommend": "Option 2. The ★COMPANIONS ruling already established that a bonus attached to a companion marks the companion's block, and this is the only surface where the Load/Aim/move legs are visible at the moment they are used. Option 1 is the cheap fallback if the siege-weapon block cannot carry markers yet; option 3 loses three quarters of the feat.",
+  "theme": "Bonus to a group of checks that have no stat row"
+ },
+ {
+  "id": "battleforger",
+  "verdict": "OWNER",
+  "why": "Battleforger does not grant a conditional bonus at all — it temporarily installs a real +1 potency rune on one item the player chooses, and the app already models potency runes as real numbers. So the fork is not 'which stat gets the star', it is 'display-only approximation vs. make the number real', and the real-number route needs a concept the app does not have (a rune that expires at daily preparations). That is a scope call.",
+  "options": [
+   {
+    "label": "Situational star on the feat",
+    "looksLike": "A * on AC and on every strike's attack row reading '+1 item — on a weapon or armor you spent an hour preparing (no effect if it already has a potency rune)'. Zero build cost, but it appears for a character every one of whose weapons already has potency, and it can never say WHICH weapon, so the displayed attack bonus stays wrong either way."
+   },
+   {
+    "label": "No entry — the player etches an ordinary +1 potency rune",
+    "looksLike": "Nothing new on the sheet. The player opens the weapon, adds a +1 potency rune in the existing rune editor, and the attack/AC totals go up for real. Correct numbers today, but the rune never expires on its own and looks permanent."
+   },
+   {
+    "label": "Build a temporary rune that clears at daily preparations",
+    "looksLike": "A 'Battleforger' control on the item that grants +1 potency and shows a 'until your next daily preparations' tag; Rest wipes it. Numbers are right and the duration is right; needs a new expiring-rune flag plus a hook into the existing Rest / daily-prep pass."
+   }
+  ],
+  "recommend": "Option 3 if you are willing to spend the work, otherwise option 2. Option 1 is the one I would not ship: a display-only star here is guaranteed to be wrong for exactly the characters the feat's own last sentence excludes, and the machinery that makes it right (runes, and the Rest/daily-preparations pass from task 24) already exists.",
+  "theme": "Feat that grants a real item mechanic rather than a conditional bonus"
+ },
+ {
+  "id": "regional-specialty",
+  "verdict": "DECIDABLE",
+  "answer": "No stars on the crafter's saves. Register nothing on the feat. The +3/+4 item bonus reaches the sheet of whoever eats the alchemical food, through that consumable's own mode.",
+  "evidence": "Ruling F case 1 and its stated scope: 'Endemic Herbs and the other crafting feats (the eater gets the bonus, never the cook).' Regional Specialty is one of 'the other crafting feats' — same shape, same answer. Ruling E supplies the eating side."
+ },
+ {
+  "id": "prepare-elemental-medicine",
+  "verdict": "DECIDABLE",
+  "answer": "No, the registry does not carry granted-to-another bonuses: star nothing on the medic. Give the preparer a DISPLAY-ONLY mode instead ('Elemental Medicine prepared — the recipient has +2/+1 circumstance to saves against that affliction for 24 hours'). On the self-patient question: yes, you may treat yourself (the feat says 'a creature' and the DC is 'the recipient's level'), but that does not change the answer — the app does not track which affliction is being resisted, so there is nothing to gate a real save bonus on; a player who wants the number can author it on themselves via the Advanced editor (ruling I).",
+  "evidence": "Ruling F case 1 ('The bonus goes to a teammate, not you -> NOTHING on your sheet') and case 2 (a limited-time effect the character activated gets a display-only mode; the medicine's effects last 24 hours). Ruling I supplies the escape hatch: 'rather than guessing a mapping, give the player the tools to say exactly what they mean' (built, task 43)."
+ },
+ {
+  "id": "aegis-for-the-innocent",
+  "verdict": "DECIDABLE",
+  "answer": "It is ally-only — the exemplar cannot be the target. Do not star the owner's AC. Give the exemplar a display-only mode for the 1-minute barrier so they can see it is running (and that their nimbus is halved while it is).",
+  "evidence": "public/core.json feats/aegis-for-the-innocent opens 'You transfer a portion of your divine spark to an ALLY, temporarily dimming your nimbus to encase an ally in a barrier of light' — 'a willing creature' in the next sentence is scoped by that. Ruling F names this record as an example of the ally case: 'Aegis for the Innocent (+1 status AC to the target)', and ruling F case 2 supplies the display-only mode."
+ },
+ {
+  "id": "black-powder-boost",
+  "verdict": "DECIDABLE",
+  "answer": "Moot — already handled, and handled the way the owner ruled. Jump distance does NOT map onto 'speed' and does not need a new target kind: ruling D moved it to the ACTION surface, and it ships. Reach for the Stars, which the question raises as the same case, ships beside it on the same action.",
+  "evidence": "src/rules/situationalBonuses.ts:2833 RECORD_MARKERS['black-powder-boost'] = [{ on:'action', id:'leap', value:'+10 feet', note:'Discharging a loaded firearm as you Leap adds a +10-foot status bonus to the distance…' }]; :2837 RECORD_MARKERS['reach-for-the-stars'] = [{ on:'action', id:'leap', value:'up to +50 feet', … }]. Ruling D: 'Black Powder Boost -> Leap action, \"+10 feet ( )\", * -> Black Powder Boost.'"
+ },
+ {
+  "id": "hydraulic-maneuvers",
+  "verdict": "DECIDABLE",
+  "answer": "Yes, carry it — a star that warns is already how this registry works. Register {kind:'skill', detail:'athletics'}, when \"on the Disarm, Shove or Trip check made right after Hydraulic Maneuvers\", bonus \"range 15 feet; you lose all item bonuses and all body-related circumstance bonuses on that check; a critical failure becomes a failure\".",
+  "evidence": "The registry already ships pure penalties and pure outcome-changes: src/rules/situationalBonuses.ts barbarian-dedication ({kind:'ac'}, 'while raging', '-1 (penalty)'), brightsoul ('-2 circumstance (Stealth)'), diverse-mystery ('-1 status'), :877 paragon-benefit-regalia (bonus 'critical failure becomes failure'), breath-control ('success becomes critical success'). Cross-cutting stacking ruling: 'this rule for penalties too' — penalties are explicitly in scope for the display list. parseBonus() returns null for a non-numeric phrase, so such a line is never pooled away."
+ },
+ {
+  "id": "gravelands-herbalist",
+  "verdict": "DECIDABLE",
+  "answer": "(a) Leave it to the item lane — register nothing on the feat. The feat by itself grants no bonus; it only adds Lastwall Soup to your herbal-item list, and the bonus is defined on the soup, which reaches the sheet as a consumable mode when you eat it. (b) THE FEAT IS AUTHORITATIVE: Greater Lastwall Soup grants +4, and items/lastwall-soup-greater's '+3' is a data bug — fix the item. The item's own paragraph is a verbatim copy of the Improved one (it literally says 'a bowl of IMPROVED Lastwall soup'), and neither Improved nor Greater exists as a printed equipment entry at all; the feat is the only place the 2/3/4 progression is published.",
+  "evidence": "public/core.json items/lastwall-soup-greater description: 'For 1 hour after consuming a bowl of improved Lastwall soup, you gain a +3 item bonus…' — self-identifying copy-paste. feats/gravelands-herbalist: 'At 10th level … a +3 item bonus. At 18th level … a +4 item bonus.' AoN mirror C:/wonderers guide/aon-2e-archive/data/by-category/equipment has exactly one Lastwall Soup doc (equipment-516.json, the base +2 version) and no Improved/Greater equipment records. Ruling E covers the eating side; the prompt's own decidable test ('the item, or a character without the item gets the bonus') covers (a)."
+ },
+ {
+  "id": "uncanny-bombs",
+  "verdict": "DECIDABLE",
+  "answer": "No surface for the cover-reduction leg. It changes a number belonging to the TARGET (the circumstance bonus to AC the target gets from cover), and the app models neither target AC nor cover. The auto-success on the concealed-creature flat check is likewise not a bonus to any stat this sheet holds — leave the whole record out of the situational registry; its description already says what it does.",
+  "evidence": "Ruling D leftovers — target-side bonuses (2026-07-30): 'Each of these changes a number belonging to the TARGET — the circumstance bonus to AC the target gets from cover — and the app models neither target AC nor cover. The player tells the GM at the table.' Uncanny Bombs is textually identical to Bomber's Eye Elixir."
+ },
+ {
+  "id": "come-and-get-me",
+  "verdict": "DECIDABLE",
+  "answer": "Yes — surface drawbacks. Register {kind:'ac'}, when \"until your rage ends, after you use Come and Get Me\", bonus \"-2 circumstance (you are off-guard); damage rolls against you also gain +2 circumstance\". The star is not reserved for things that help you.",
+  "evidence": "Cross-cutting stacking ruling, stated by the owner: 'if there are multiple bonuses from the same type only show the highest one … this rule for penalties too' — penalties are explicitly part of the display list. Shipped precedent for a feat-granted penalty on AC: src/rules/situationalBonuses.ts barbarian-dedication — {kind:'ac'}, when 'while raging', bonus '-1 (penalty)'; also brightsoul ('-2 circumstance (Stealth)') and initiate-benefit-shield (:870, '-1 circumstance (a penalty)')."
+ },
+ {
+  "id": "incredible-scout",
+  "verdict": "DECIDABLE",
+  "answer": "Read it literally: the ranger's own initiative bonus stays +1, so Incredible Scout gets NO entry on their sheet. The +1 the ranger does get comes from the Scout exploration activity itself, not from this feat — put it there if anywhere. The contrast with Unwavering Guide ('your party') is deliberate and is exactly why the two feats are worded differently.",
+  "evidence": "Ruling F case 1: 'The bonus goes to a teammate, not you -> NOTHING on your sheet. No star, no modifier. The feat's own description already says what the ally gets.' Feat text upgrades only 'your allies'; PF2e never counts a character as their own ally. No display-only mode either — Scout is an exploration activity with no limited duration to show, so ruling F case 2 does not fire."
+ },
+ {
+  "id": "signature-crafting",
+  "verdict": "DECIDABLE",
+  "answer": "Yes — the Skillful quirk is authored by the player on the item, through the item editor's Advanced section, and reaches the sheet through the item lane. Ship nothing on the feat: the quirk is rolled randomly at craft time and names no particular skill, so no shipped entry could be correct.",
+  "evidence": "Ruling I: 'a NEW FEATURE instead — an ADVANCED section in the item editor: let the PLAYER author their own situational markers and effects on an item, targeting anything, under any condition… This is the general answer to every \"the app can't express this\" case.' Already built (task 43); the authoring shape is SituationalBonus and is merged by src/rules/situationalBonuses.ts entriesFor() via ExtraSituational, so a hand-authored quirk renders identically to a shipped entry, stacking rules included. The quirk's 'only while worn/held' clause is the entry's `when`."
+ },
+ {
+  "id": "perfected-gamtu",
+  "verdict": "DECIDABLE",
+  "answer": "Situational star on the FEAT: {kind:'skill', detail:'stealth'}, when \"while wearing your gamtu\", bonus \"+1 item\". Do NOT put it in items/gamtu-hat.passiveEffects and do not require an inventory item. The hat exists without this feat (Glorious Gamtu conjures it), so an unconditional item bonus would hand +1 Stealth to every gamtu wearer, and the app has no way to gate passiveEffects on owning a 17th-level feat. Item-bonus stacking still resolves correctly on the display side because pooling compares the `when` text.",
+  "evidence": "public/core.json items/gamtu-hat exists with NO passiveEffects; it is a conjured 1-hour item from Glorious Gamtu and can be worn by another creature ('you can give the gamtu to another creature to wear'). feats/perfected-gamtu (level 17) is what adds the +1. src/rules/situationalBonuses.ts poolSituationalLines keys on type + sign + normalizeWhen(when), so a second item bonus to Stealth with a different trigger still displays."
+ },
+ {
+  "id": "unwavering-guide",
+  "verdict": "DECIDABLE",
+  "answer": "Confirmed on both counts. (1) 'Your party' includes the scout, so register it for the character: {kind:'perception'}, when \"on initiative rolls when you Scouted (your whole party gets it)\", bonus \"+2 circumstance\". (2) Keep initiative bonuses on the Perception stat — do not add an initiative target kind. The app has no initiative row; Perception is where initiative is rolled and where every other initiative entry already lives.",
+  "evidence": "src/rules/explain.ts:393 — perception is described as 'How keenly you notice things — Seek, sense danger, and roll initiative (Wisdom).' Shipped initiative entries all ride Perception: situationalBonuses.ts all-this-has-happened-before ('on your initiative roll'), ambush-awareness ('on Perception checks rolled for initiative'), always-ready ('on initiative when all your opponents are undead'). Contrast with incredible-scout, which says 'your allies' and therefore gets nothing (ruling F)."
+ },
+ {
+  "id": "infiltrators-elixir",
+  "verdict": "DECIDABLE",
+  "answer": "Moot — already handled, and handled correctly. No permanent Deception star for sitting in inventory; ruling E gave the elixir a consumable mode that activates when you Use it, carries the +4 as a conditional modifier scoped to the Deception DC, and expires with the 10-minute duration. It ships.",
+  "evidence": "scripts/data/consumable-modes.json:2223 — mode `item-infiltrators-elixir` ('Infiltrator's Guise', fromItemId 'infiltrators-elixir', duration '10 minutes') with modifier { target:'skill', detail:'deception', type:'status', value:4, appliesWhen:'to your Deception DC to avoid others seeing through your disguise' }. src/rules/modes.ts modeRelevant() returns false for any mode with `fromItemId`, so it never appears in the Modes manager — ruling E's hidden-from-manager requirement."
+ },
+ {
+  "id": "field-propagandist-dedication",
+  "verdict": "DECIDABLE",
+  "answer": "No new target kind, and no surface for this record. The owner already ruled that skill/Perception DC bonuses of this shape get nowhere to live: this exact record is on the no-surface list. The `dcOnly` flag that DOES exist is scoped to SAVE DCs only, where the star sits beside the printed save DC. A player who wants this on their sheet authors it via the Advanced item/effect editor.",
+  "evidence": "Ruling D (continued) — DC-only bonuses: 'SKILL DCs (Potion of Disguise x4, Olfactory Obfuscator, Field Propagandist): NO surface. The player remembers these. Not starred anywhere.' The save-DC mechanism is src/rules/situationalBonuses.ts:47-56 `dcOnly?: boolean` on SituationalTarget, documented as save-only, and consumed in explain.ts / VitalsRail behind the `showSaveDCs` setting. Ruling I is the escape hatch."
+ },
+ {
+  "id": "acrobats-staff",
+  "verdict": "DECIDABLE",
+  "answer": "Both legs go in, in the registry, as one record's two entries. (1) {kind:'save', detail:'reflex', dcOnly:true}, when \"against checks to Disarm you of the staff, while you wield it\", bonus \"+1 circumstance\" — the dcOnly flag puts the star beside the Reflex DC, not beside the Reflex save. (2) {kind:'skill', detail:'acrobatics'}, when \"you fail or critically fail a check to Balance and would fall (command activation)\", bonus \"fortune: reroll and take the better result\". Fortune rerolls with no number are explicitly in scope.",
+  "evidence": "SituationalBonus.bonus is documented in src/rules/situationalBonuses.ts:2782 as 'As printed: \"+2 circumstance\", \"-1 status\", or a phrase like \"roll d10s instead of d8s\"', and 13 shipped entries already use `reroll` phrasing (:83 all-this-will-happen-again, :204 grit-and-tenacity, :206 guarded-mind, :245 mask-of-rejection, :281 perfect-clarity). poolSituationalLines never pools a non-numeric bonus, so it always displays. Ruling D (continued) defines the dcOnly treatment for save DCs."
+ },
+ {
+  "id": "addiction-suppressant",
+  "verdict": "DECIDABLE",
+  "answer": "Register against Fortitude specifically, not all saves: {kind:'save', detail:'fortitude'}, when \"on the ongoing save against the one drug addiction this suppressant was crafted for\", bonus \"+item (varies by suppressant grade)\". Drug addiction is a disease, and every drug's addiction stat block prints a Fortitude save.",
+  "evidence": "AoN mirror C:/wonderers guide/aon-2e-archive/data/by-category/rules/rules-1116.json (Drugs, GMG p.120): 'for each dose they consume, they must attempt a saving throw against addiction, a DISEASE that represents cravings and withdrawal.' disease/disease-15.json is the Addiction affliction. Sample drug stat block (Shiver, equipment): 'The addiction to shiver has the virulent trait. Saving Throw DC 19 FORTITUDE; Maximum Duration 4 hours; Stage 1…'. save:'all' would be wrong — it would star Reflex and Will for a bonus that can never apply there."
+ },
+ {
+  "id": "sovereign-steel",
+  "verdict": "DECIDABLE",
+  "answer": "No entry, and the record should be hidden from pickers. This is the precious-material page, not an ownable item — no price, and it has graded twins under the same base name. It is exactly ruling A's umbrella case. The entry belongs on the finished graded records instead: sovereign-steel-weapon-standard-grade / -high-grade and sovereign-steel-armor-standard-grade / -high-grade, as {kind:'save', detail:'all'}, when \"on a save made specifically to protect this sovereign steel item from a magical effect (e.g. rusting grasp)\", bonus \"+4 circumstance\". sovereign-steel-weapon, sovereign-steel-armor and sovereign-steel-object are themselves umbrellas and get nothing.",
+  "evidence": "Ruling A: 'Umbrella/summary records get NO situational entries… They are also HIDDEN FROM PICKERS. Test: an umbrella record has no price and a graded twin at the same base name.' public/core.json items/sovereign-steel has no `price` and no `usage`; the graded twins exist — sovereign-steel-weapon-standard-grade, sovereign-steel-weapon-high-grade, sovereign-steel-armor-standard-grade, sovereign-steel-armor-high-grade. src/rules/types.ts:960-961 gives items a `material: { type, grade }` field, so the material lane is real. Hidden, not deleted, per ruling A."
+ },
+ {
+  "id": "sovereign-steel-chunk",
+  "verdict": "DECIDABLE",
+  "answer": "No entry. A chunk is raw crafting stock, and the sentence is boilerplate reprinted from the material page. Restrict sovereign steel entries to the finished graded weapon/armor records. Starring all three saves for carrying a lump of metal is precisely the case the owner has already rejected once.",
+  "evidence": "Ruling I: 'NOQUAL: star nothing. The rules name no save and no trigger, and raw ore in a pack protects nobody. The description still explains what noqual is.' Sovereign steel is an alloy of cold iron and noqual and the chunk is the same raw-stock shape. public/core.json items/sovereign-steel-chunk is level 9 / 700 gp / usage held-in-one-hand with the material page's paragraph copied verbatim; the finished graded records (sovereign-steel-weapon-standard-grade etc.) are where the bonus is real."
+ },
+ {
+  "id": "sovereign-steel-ingot",
+  "verdict": "DECIDABLE",
+  "answer": "No entry — same answer as the chunk. Raw crafting stock, boilerplate text; sovereign steel entries live only on the finished graded weapon/armor records.",
+  "evidence": "Ruling I (noqual: 'raw ore in a pack protects nobody'). public/core.json items/sovereign-steel-ingot is the chunk's paragraph verbatim at a higher price (7000 gp); the graded twins sovereign-steel-weapon-standard-grade / -high-grade and sovereign-steel-armor-standard-grade / -high-grade carry the +4."
+ },
+ {
+  "id": "gate-junction",
+  "verdict": "DECIDABLE",
+  "answer": "Only the per-element gate records carry it — the umbrella Gate Junction feature gets NOTHING. It is the rules text describing the five junction TYPES, not a benefit; giving it an entry would star every gate junction's skill for a kineticist who took an aura or critical-blast junction instead, and would double-star anyone who did take a skill junction.",
+  "evidence": "Already the shipped pattern: src/rules/situationalBonuses.ts:2190 fire-gate ({kind:'skill', detail:'intimidation'}, 'while your kinetic aura is active, if you took the fire gate's Intimidation skill junction'), :2191 metal-gate (crafting), :2220 earth-gate (athletics). public/core.json classFeatures/gate-junction is generic prose ('a skill junction makes you trained in the LISTED skill… While your kinetic aura is active, you gain a +1 status bonus to the listed skill') and names no skill. Ruling A's umbrella logic applies to a summary record with per-option twins."
+ },
+ {
+  "id": "lantern",
+  "verdict": "DECIDABLE",
+  "answer": "As done here is correct: the implement record carries ONLY its Intensify Vulnerability effects, and the initiate/adept/paragon benefits live on their own records. Keep the lantern's Intensify entry ('against the target of your Exploit Vulnerability, the lantern's initiate-benefit status bonuses increase to +2'), and leave the base +1s on initiate-benefit-lantern where they already are.",
+  "evidence": "src/rules/situationalBonuses.ts:2218 already ships initiate-benefit-lantern ({kind:'perception'} + {kind:'skill', detail:'all'}, '…inside your lit lantern's 20-foot aura', '+1 status'). public/core.json classFeatures/lantern's description has EMPTY '### Initiate Benefit' / '### Adept Benefit' headers and a full '### Intensify Vulnerability' body — the split is already in the data. Records initiate-benefit-lantern / adept-benefit-lantern / paragon-benefit-lantern all exist and are granted (task 40). Ruling G: the mark lives on the record you are looking at when it matters."
+ },
+ {
+  "id": "shield",
+  "verdict": "DECIDABLE",
+  "answer": "On the separate initiate-/adept-/paragon-benefit records, not on the implement record. This is not just a style choice: the adept benefit arrives at 9th level, so hanging it on the `shield` implement record would show a level-1 thaumaturge a save bonus they do not have. The `shield` record should carry only its Intensify Vulnerability text (shield HP regain / Hardness), which is not a stat bonus and needs no entry.",
+  "evidence": "src/rules/situationalBonuses.ts:961 already ships adept-benefit-shield ({kind:'save', detail:'all'}, 'while your shield implement is Raised, on saves against spells and other magical effects', '+status equal to your shield's circumstance bonus to AC'), and :870 initiate-benefit-shield ({kind:'ac'}, '-1 circumstance (a penalty)'). public/core.json classFeatures/shield duplicates the initiate and adept prose inside the implement record — that duplication is the trap, not the source of truth. Same pattern as regalia/tome/wand throughout the registry."
+ }
+]}

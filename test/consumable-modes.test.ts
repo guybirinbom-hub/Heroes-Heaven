@@ -19,7 +19,13 @@ describe('consumable modes: the data', () => {
     // a duration with a typed bonus, and 211 of them survived the verify pass as real modes. Ruling F
     // then added 12 more — items whose benefit goes to an ALLY for a stated time, where the activator
     // gets a display-only pill so they can see it is running.
-    expect(itemModes().length).toBe(223);
+    // +65 from the deferred-toggle pass, once a mode could carry resistances/immunities/senses rather
+    // than only numeric check bonuses — activated items whose effect is "resistance 5 to fire for 1
+    // minute", or a sense, which previously had nowhere to live at all.
+    // +12 once a mode could also carry a SPEED: four activated fly items, plus the eight siccatite
+    // shield variants (two per shield — the resistance type depends on hot vs cold siccatite, which
+    // the item record does not state, so the player switches on the one matching their shield).
+    expect(itemModes().length).toBe(300);
   });
 
   it('every item mode points at an item that actually exists', () => {

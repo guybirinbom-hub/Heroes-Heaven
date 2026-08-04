@@ -1,0 +1,118 @@
+{
+ "rulings": [
+  { "id": "kinetic-dampening", "ok": true, "problem": "", "correction": {} },
+  { "id": "item-living-statue", "ok": true, "problem": "", "correction": {} },
+  { "id": "item-maelstromic-destabilizer-lesser", "ok": true, "problem": "", "correction": {} },
+  { "id": "item-maelstromic-destabilizer-moderate", "ok": true, "problem": "", "correction": {} },
+  { "id": "item-maelstromic-destabilizer-major", "ok": true, "problem": "", "correction": {} },
+  { "id": "item-saurian-spike-major", "ok": true, "problem": "", "correction": {} },
+  { "id": "scouring-spark", "ok": true, "problem": "", "correction": {} },
+  {
+   "id": "shadow-master",
+   "ok": false,
+   "problem": "Resistance type label drops an exclusion the text states. The feat reads 'resistance 5 to all damage except force AND damage from Strikes with the Ghost Touch property rune'. The authored type 'all except force' tells the sheet the resistance covers Ghost Touch Strikes, which it does not — a player reading the pill applies 5 resistance against a Ghost Touch hit that should get none. The exclusion is only in the note, and the note is not what the resistance row displays.",
+   "correction": {
+    "id": "shadow-master",
+    "name": "Shadow Master",
+    "feats": ["shadow-master"],
+    "note": "Only while you are in an area of dim light or darkness. In dim light or darkness you may also roll Reflex saves twice and take the higher result (fortune).",
+    "modifiers": [],
+    "resistances": [
+     { "type": "all except force and damage from Ghost Touch Strikes", "value": 5 }
+    ]
+   }
+  },
+  { "id": "shadow-sight", "ok": true, "problem": "", "correction": {} },
+  { "id": "spell-survivor", "ok": true, "problem": "", "correction": {} },
+  { "id": "item-spiny-lodestone", "ok": true, "problem": "", "correction": {} },
+  { "id": "item-spiny-lodestone-greater", "ok": true, "problem": "", "correction": {} },
+  { "id": "item-spun-cloud-blue", "ok": true, "problem": "", "correction": {} },
+  { "id": "starlight-armor", "ok": true, "problem": "", "correction": {} },
+  { "id": "siccatite-buckler-standard-grade", "ok": true, "problem": "", "correction": {} },
+  { "id": "siccatite-shield-standard-grade", "ok": true, "problem": "", "correction": {} },
+  { "id": "siccatite-buckler-high-grade", "ok": true, "problem": "", "correction": {} },
+  { "id": "siccatite-shield-high-grade", "ok": true, "problem": "", "correction": {} },
+
+  { "id": "item-stone-body-mutagen-lesser", "ok": true, "problem": "", "correction": {} },
+  { "id": "item-stone-body-mutagen-moderate", "ok": true, "problem": "", "correction": {} },
+  { "id": "item-storm-breath", "ok": true, "problem": "", "correction": {} },
+  { "id": "item-sun-slayer", "ok": true, "problem": "", "correction": {} },
+  { "id": "item-swarmsuit", "ok": true, "problem": "", "correction": {} },
+  { "id": "item-tallowheart-mass", "ok": true, "problem": "", "correction": {} },
+  { "id": "item-thorn-of-milani-lesser", "ok": true, "problem": "", "correction": {} },
+  { "id": "item-thorn-triad", "ok": true, "problem": "", "correction": {} },
+  { "id": "item-thorn-triad-greater", "ok": true, "problem": "", "correction": {} },
+  { "id": "item-thorn-triad-major", "ok": true, "problem": "", "correction": {} },
+  { "id": "item-tremorsensors", "ok": true, "problem": "", "correction": {} },
+  { "id": "vengeful-remnant", "ok": true, "problem": "", "correction": {} },
+  { "id": "item-victory-plate", "ok": true, "problem": "", "correction": {} },
+  { "id": "item-warcallers-chime-of-resistance", "ok": true, "problem": "", "correction": {} },
+  { "id": "item-warming-parka", "ok": true, "problem": "", "correction": {} },
+  { "id": "item-witchs-finger", "ok": true, "problem": "", "correction": {} },
+  { "id": "item-wyrm-spindle", "ok": true, "problem": "", "correction": {} },
+  { "id": "thousand-year-dragonroot", "ok": true, "problem": "", "correction": {} },
+
+  { "id": "item-zetogeki-hide-armor", "ok": true, "problem": "", "correction": {} },
+  { "id": "item-bioluminescent-stripes", "ok": true, "problem": "", "correction": {} },
+  {
+   "id": "item-blessed-tattoo",
+   "ok": false,
+   "problem": "The two modifiers carry appliesWhen 'against evil creatures' attacks, spells and effects'. Two things go wrong. (1) Edition mismatch: the item grants 'the effect of Protection', and the Protection spell in this core.json is the REMASTER one — 'The target gains a +1 status bonus to Armor Class and saving throws', with no alignment clause at all. The 'against evil' restriction is legacy text and 'evil creature' is not a concept the remastered app models. (2) Mechanical dead end: src/rules/modes.ts modeNumberBonus and modeTypedMods both do `if (mod.appliesWhen) continue`, so a modifier with appliesWhen is NEVER added to the sheet — it renders as situational text only. As authored this mode grants the player nothing. Dropping appliesWhen makes the +1 status to AC and saves actually apply, matching the Protection spell the item points at.",
+   "correction": {
+    "id": "item-blessed-tattoo",
+    "name": "Blessed Tattoo",
+    "fromItemId": "blessed-tattoo",
+    "duration": "1 minute",
+    "note": "Once per day; grants the effect of Protection (+1 status bonus to AC and saving throws). Can be activated as a reaction instead of a 2-action activity when a demon attacks you or you attempt a save against a demon's ability.",
+    "modifiers": [
+     { "value": 1, "type": "status", "target": "ac" },
+     { "value": 1, "type": "status", "target": "save" }
+    ]
+   }
+  },
+  {
+   "id": "curse-of-engulfing-flames",
+   "ok": false,
+   "problem": "The feats gate can never match, so this mode is invisible to every character. curse-of-engulfing-flames lives in core.json's classFeatures collection as an oracle CURSE OPTION, and modeRelevant (src/rules/modes.ts:279) tests it against featIds, which every call site builds as `new Set(character.feats.map(f => f.featId))` (VitalsRail.tsx:1159, CompanionsTab.tsx:1415). Class-feature options are stored as a choice VALUE, not as a featId entry, so the set never contains this id and gates.some(Boolean) is false. Separately the entry has no mechanical fields at all — modifiers [] and nothing else — because its only real effect is SUPPRESSING fire immunity/resistance, which no mode field can express. Both reasons point the same way: this should be a skip, not a mode.",
+   "correction": { "id": "curse-of-engulfing-flames", "skip": true, "why": "Its only mechanical effect is suppressing fire immunity/resistance you already have, which no mode field can express (there is no negative/suppression lane); and it is an oracle curse OPTION in classFeatures, so a `feats` gate cannot see it — featIds is built from character.feats only." }
+  },
+  { "id": "electric-counter", "ok": true, "problem": "", "correction": {} },
+  { "id": "gathering-moss", "ok": true, "problem": "", "correction": {} },
+  { "id": "immortal-techniques", "ok": true, "problem": "", "correction": {} },
+  {
+   "id": "inexorable-iron",
+   "ok": false,
+   "problem": "Same unmatchable gate as curse-of-engulfing-flames. inexorable-iron is a magus HYBRID STUDY option in core.json's classFeatures collection — build.ts stores option picks as a choice value (see scripts/audit/choice-batch2.json, where inexorable-iron appears as a choice `value`), never as an entry in character.feats. modeRelevant tests mode.feats against a featIds set built from character.feats.map(f => f.featId), so this gate is always false and the mode never appears for anyone. The entry also has no mechanical fields (modifiers []) because temporary Hit Points have no mode lane, so nothing is lost by skipping it.",
+   "correction": { "id": "inexorable-iron", "skip": true, "why": "Grants temporary Hit Points (half your level, min 1) on entering Arcane Cascade and each turn in it — there is no temp-HP mode lane; and it is a magus hybrid-study OPTION in classFeatures, which a `feats` gate cannot match because featIds is built from character.feats only." }
+  },
+  { "id": "item-leopards-armor", "ok": true, "problem": "", "correction": {} },
+  { "id": "item-pyrefeather-token", "ok": true, "problem": "", "correction": {} },
+  { "id": "renewing-cycle", "ok": true, "problem": "", "correction": {} },
+  { "id": "stone-body", "ok": true, "problem": "", "correction": {} },
+  {
+   "id": "raging-stories",
+   "ok": false,
+   "problem": "The duration 'until the end of your next turn' is invented. The feat text says only 'Your melee Strikes FOR THE DURATION deal 2 additional fire damage' — the duration belongs to Offer a Story, and Offer a Story is not in core.json at all (searched every collection by name), so there is no record text supporting one turn. The damage modifier itself is fine as authored: it carries appliesWhen, so modeNumberBonus/modeTypedMods skip it and it renders as situational text rather than being added to every damage roll, which is exactly the convention cat-rage and cat-arcane-cascade already use in src/rules/modes.ts. Only the duration string needs to stop asserting a number the text does not give.",
+   "correction": {
+    "id": "raging-stories",
+    "name": "Raging Stories",
+    "feats": ["raging-stories"],
+    "duration": "for the duration of Offer a Story",
+    "note": "Taken in place of Offer a Story's normal benefits: you wrap yourself in spectral flame and the action gains the fire trait. The extra damage is fire and applies only to melee Strikes.",
+    "modifiers": [
+     {
+      "value": 2,
+      "type": "untyped",
+      "target": "damage",
+      "appliesWhen": "on melee Strikes, as fire damage (4 if you're a master in Religion, 6 if legendary)"
+     }
+    ]
+   }
+  },
+  { "id": "klingegeist", "ok": true, "problem": "", "correction": {} },
+  { "id": "soaring-wings-major", "ok": true, "problem": "", "correction": {} },
+  { "id": "stone-brawler-dedication", "ok": true, "problem": "", "correction": {} },
+  { "id": "winged", "ok": true, "problem": "", "correction": {} },
+  { "id": "wyrms-flight", "ok": true, "problem": "", "correction": {} }
+ ]
+}

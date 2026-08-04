@@ -1412,7 +1412,8 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
           catalog={CATALOG_MODES}
           classId={character.classId}
           ancestryId={character.ancestryId}
-          featIds={new Set(character.feats.map((f) => f.featId))}
+          // Class features too — see the note at the matching VitalsRail call site.
+          featIds={new Set([...character.feats.map((f) => f.featId), ...ownedFeatureIds(character, content)])}
           charKey={charKey}
           activeModeIds={modesOf(condFor).map((m) => m.id)}
           onToggleMode={(id) => onPlay((p) => toggleCompanionMode(p, condFor, id, content.modes))}

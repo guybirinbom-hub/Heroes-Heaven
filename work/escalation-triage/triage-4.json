@@ -1,0 +1,218 @@
+{"results":[
+ {
+  "id": "surprise-doll",
+  "verdict": "DECIDABLE",
+  "answer": "Confirmed split. Give the plain Surprise Doll NO situational entry; register the +1 item bonus to Stealth checks to Conceal an Item on surprise-doll-exquisite only. Keep surprise-doll visible (it is the only record the app has for the plain 1 gp doll, and kin=1 so the umbrella rule never touches it).",
+  "evidence": "AoN mirror C:/wonderers guide/aon-2e-archive/data/by-category/equipment/equipment-3583.json: head carries right=\"Item 1+\" and the +1 sentence sits inside the level-2 'Surprise Doll (Exquisite)' subrow, which describes 'this beautifully crafted surprise doll'. Umbrella rule needs 2+ kin: src/data/index.ts:167-173."
+ },
+ {
+  "id": "antifungal-salve",
+  "verdict": "DECIDABLE",
+  "answer": "Parent gets nothing — no situational entry, no mode. It is AoN's family head with no printed bonus size; the four grades already carry the bonus as consumable modes. Also HIDE it: its 1 gp price defeats the umbrella filter, so add 'antifungal-salve' to UMBRELLA_EXTRA_IDS (ruling A: players only see grades they can own).",
+  "evidence": "Ruling A (DECISIONS.md:6). AoN equipment-3747.json text begins <title level=\"1\" right=\"Item 1+\"> — the family-head marker. Grades already modelled: scripts/data/consumable-modes.json ids item-antifungal-salve-lesser/moderate/greater/major. Filter spares it because priced(): src/data/index.ts:154; the escape hatch is UMBRELLA_EXTRA_IDS src/data/index.ts:123."
+ },
+ {
+  "id": "crimson-godsblood-serum",
+  "verdict": "DECIDABLE",
+  "answer": "Register only the three graded variants. The parent is already hidden from every picker (no price + 3 kin), so the mode currently authored for it can never fire — delete mode id 'item-crimson-godsblood-serum' and keep item-crimson-godsblood-serum-lesser/moderate/greater.",
+  "evidence": "Ruling A (DECISIONS.md:6). findUmbrellaIds hides it: src/data/index.ts:149-177 (price null, kin 3, no mechanical field). The dead mode's own note already says 'Umbrella entry ... It duplicates the separate lesser row, so consider dropping one' — scripts/data/consumable-modes.json."
+ },
+ {
+  "id": "essence-forge",
+  "verdict": "DECIDABLE",
+  "answer": "(1) Parent gets nothing — it is unpriced with 3 kin and is already umbrella-hidden; register only essence-forge-lesser/moderate/greater (+1/+2/+3). (2) Yes, it may mark the sheet: this is not a workshop-only effect — the bonus lasts 24 hours after you Prime the Forge and travels with you. Target the four skills that can prime a forge (Arcana, Nature, Occultism, Religion) per ruling C, when: 'for 24 hours after you Prime the Forge, on the skill you primed it with'. It only displays while the forge is flagged equipped/worn/invested, which the generic item-flag toggle allows for any item.",
+  "evidence": "Ruling A (DECISIONS.md:6) + ruling C (DECISIONS.md:31). Prime skills are printed per forge type in the record ('One must attempt a Nature or Religion check to prime a life forge', 'an Arcana or Nature check ... matter forge'). Display gate: src/rules/explain.ts:195."
+ },
+ {
+  "id": "potion-of-disguise",
+  "verdict": "DECIDABLE",
+  "answer": "Register nothing — already ruled, twice over. Ruling D names Potion of Disguise x4 explicitly under SKILL DCs: 'NO surface. The player remembers these. Not starred anywhere.' And this parent record is umbrella-hidden anyway (no price, 3 kin).",
+  "evidence": "DECISIONS.md:106 (ruling D continued, skill DCs); src/data/index.ts:149-177."
+ },
+ {
+  "id": "potion-of-disguise-lesser",
+  "verdict": "DECIDABLE",
+  "answer": "Register nothing. Ruling D already settled skill-DC-only bonuses: no star on the skill row, and no separate skill-DC display is being built. The dcOnly flag exists for SAVE DCs only (the sheet renders save DCs; it renders no skill DCs).",
+  "evidence": "DECISIONS.md:106; SituationalTarget.dcOnly is documented as save-only at src/rules/situationalBonuses.ts:47-56."
+ },
+ {
+  "id": "potion-of-disguise-moderate",
+  "verdict": "DECIDABLE",
+  "answer": "Register nothing — same ruling D skill-DC decision as the lesser potion.",
+  "evidence": "DECISIONS.md:106."
+ },
+ {
+  "id": "potion-of-disguise-greater",
+  "verdict": "DECIDABLE",
+  "answer": "Register nothing for the DC. Ruling D covers it. (The greater grade's added 'you still need to roll Deception' clause grants no bonus either, so there is nothing else to register.)",
+  "evidence": "DECISIONS.md:106."
+ },
+ {
+  "id": "berserkers-cloak",
+  "verdict": "DECIDABLE",
+  "answer": "Omit the situational entries. A star on strikeAttack/strikeDamage would advertise +1 on the weapons you already wield, but the potency and striking apply only to the jaws and claws the cloak grows — the same 'put it where it actually lives' test. Route it through the item strikes lane: items already feed grantedStrikes for invested items (precedent: phantom-shroud). That lane needs two additions — a 'while raging' gate (GrantedStrike carries only choiceValue today) and the potency/striking dice on a granted strike. Until that lands, the honest surface that ships today is a RECORD_MARKER on the Rage action stating the granted attacks (ruling D's shape).",
+  "evidence": "src/rules/build.ts:1024 (invested items' grantedStrikes); GrantedStrike fields src/rules/types.ts:1688-1698; ruling D DECISIONS.md:71."
+ },
+ {
+  "id": "berserkers-cloak-greater",
+  "verdict": "DECIDABLE",
+  "answer": "Same as the base cloak: no situational entries; +2 potency / greater striking (or +3 / major striking with animal instinct and bestial rage) belong to the granted jaws and claws in the strikes lane, not to a star on your existing Strikes.",
+  "evidence": "src/rules/build.ts:1024; src/rules/types.ts:1688-1698."
+ },
+ {
+  "id": "psyche-salts",
+  "verdict": "DECIDABLE",
+  "answer": "Do not classify the base id. It is the AoN aggregate stub and is already hidden from every picker (no price, 3 kin), so anything authored on it is dead. Model the three tier records (psyche-salts-lesser/moderate/greater) as consumable modes per ruling E — none exist in consumable-modes.json yet, so that is the real remaining work.",
+  "evidence": "Ruling A (DECISIONS.md:6), ruling E (DECISIONS.md:119); findUmbrellaIds src/data/index.ts:149-177; scripts/data/consumable-modes.json has no psyche-salts entry."
+ },
+ {
+  "id": "greater-swift-standard",
+  "verdict": "DECIDABLE",
+  "answer": "The doubling carries over: ship +10 feet normally, +20 feet while traveling. 'Instead grants a +10-foot status bonus to land Speeds for 1 round' replaces only the granting sentence's value; 'This bonus is doubled while traveling' is a separate sentence that governs whatever the current bonus is. Register as a speed entry on your own sheet — 'You and allies ... within the banner's aura' includes you, so ruling F does not suppress it.",
+  "evidence": "core.json items.greater-swift-standard description keeps the head sentence 'You and allies that start your turn within the banner's aura gain a +5-foot status bonus to land Speeds for 1 round. This bonus is doubled while traveling.' and the grade row only restates the granting sentence. Ruling F DECISIONS.md:171."
+ },
+ {
+  "id": "major-swift-standard",
+  "verdict": "DECIDABLE",
+  "answer": "Same reading: +15 feet normally, +30 feet while traveling. Ship the doubled figure.",
+  "evidence": "core.json items.major-swift-standard, same merged text; the 'doubled while traveling' sentence is never replaced by a grade row."
+ },
+ {
+  "id": "privacy-ward-fulu",
+  "verdict": "DECIDABLE",
+  "answer": "The umbrella carries nothing. It is already hidden from pickers (no price, 3 kin), so key markers to privacy-ward-fulu-hallway (+1), -room (+1) and -chamber (+2) only. Those bonuses DO belong on the owner's sheet — 'all creatures within the room' includes you, so this is not an ally-only aura.",
+  "evidence": "Ruling A (DECISIONS.md:6); src/data/index.ts:149-177; ruling F applies only when the text names someone else as the beneficiary (DECISIONS.md:171)."
+ },
+ {
+  "id": "dragonscale-staff",
+  "verdict": "DECIDABLE",
+  "answer": "Yes — list it under strikeDamage. The registry's `bonus` is a free-text string, not a typed-bonus struct: it already carries dice riders and untyped phrases, and the display pooling deliberately never collapses untyped or unparseable bonuses, so an untyped '+1 damage for 1 round' renders on its own line and never gets pooled away. Same answer for the clay sphere's die-step entry.",
+  "evidence": "SituationalBonus.bonus is a string (src/rules/situationalBonuses.ts:59-65); duchy-defender stores '+2d8 precision' under strikeDamage (line 2452); poolSituationalLines keyOf: 'Untyped bonuses SUM in PF2e, so they never supersede one another' (line 2941)."
+ },
+ {
+  "id": "olfactory-obfuscator-lesser",
+  "verdict": "DECIDABLE",
+  "answer": "Moot — add no registry entry. Ruling D names Olfactory Obfuscator in the skill-DC list ('NO surface'), and the item is already fully modelled by the ruling-E consumable pass: mode item-olfactory-obfuscator-lesser, duration 10 minutes, +4 item to Stealth gated by appliesWhen 'against attempts to Seek you by creatures using only scent-based senses'. Nothing left to do.",
+  "evidence": "DECISIONS.md:106; scripts/data/consumable-modes.json id 'item-olfactory-obfuscator-lesser'."
+ },
+ {
+  "id": "medics-armband",
+  "verdict": "DECIDABLE",
+  "answer": "Keep both entries. Penalties are in scope for this registry — it already stores them, and the owner's stacking ruling explicitly extends to penalties ('this rule for penalties too'). Register: +1 item to Diplomacy when: 'to change the attitudes of diseased, poisoned, and wounded creatures'; and -4 status to strikeDamage when: 'until the end of your next turn after Do No Harm (once per day)'.",
+  "evidence": "Cross-cutting stacking ruling DECISIONS.md:40-52; registry already carries penalties: situationalBonuses.ts:102 ('-1 (penalty)') and :111 (a bonus and a -2 penalty in one record). Base bonus size confirmed +1 item in core.json items.medics-armband."
+ },
+ {
+  "id": "greater-medics-armband",
+  "verdict": "DECIDABLE",
+  "answer": "Yes on both counts. Self-imposed penalties are in scope (same evidence as the base armband), and the greater version does keep the base +1 item Diplomacy — the record embeds the base text and the greater grade adds to it rather than replacing it. Register three lines: +1 item Diplomacy (attitudes of diseased/poisoned/wounded), +2 item Medicine (Administer First Aid, Treat Wounds), -8 status to strikeDamage (after Do No Harm). No SITUATIONAL_SUPERSEDES entry is needed — nobody wears both armbands.",
+  "evidence": "DECISIONS.md:40-52 (penalties); situationalBonuses.ts:102,:111; ruling G's supersede mechanism is for set/upgrade pairs held together (DECISIONS.md:192)."
+ },
+ {
+  "id": "champions-laurels",
+  "verdict": "DECIDABLE",
+  "answer": "Moot for the container, and no range entry. Ruling A: the container is unpriced with 3 kin and is already hidden from pickers; the three concrete variants are already modelled by the ruling-E pass (modes item-champions-laurels-amateur/professional/renowned, each recording that the +1/+2/+3 status applies to the single triggering check, with the temp HP on a crit). Nothing further to author.",
+  "evidence": "Ruling A DECISIONS.md:6; src/data/index.ts:149-177; scripts/data/consumable-modes.json ids item-champions-laurels-amateur/professional/renowned."
+ },
+ {
+  "id": "strand-of-the-seven-births",
+  "verdict": "DECIDABLE",
+  "answer": "No stars on the activator. Ruling F case 1: the text names ALLIES as the beneficiaries, so nothing on your sheet — no star, no modifier. Because it runs for 1 hour, ruling F case 2 applies: give the activator a DISPLAY-ONLY mode (modifiers: [], duration '1 hour', note naming the +2 status to saves vs auditory effects for allies in the light) so they can see it is running.",
+  "evidence": "Ruling F DECISIONS.md:171-186; display-only mode shape = ruling E case 3, ModeDef.note/duration src/rules/types.ts:1380,1393."
+ },
+ {
+  "id": "oil-of-corpse-restoration",
+  "verdict": "DECIDABLE",
+  "answer": "Register nothing for a living PC who merely carries it. Ruling F case 1: 'it' is the undead creature or corpse the oil was spread over, not you. Optionally the user gets a display-only mode for the 8 hours (ruling F case 2), and a skeleton PC who is himself anointed can author the +2 circumstance Deception entry with the item editor's Advanced section — ruling I's stated answer to every 'the app can't express this' case.",
+  "evidence": "Ruling F DECISIONS.md:171-186; ruling I DECISIONS.md:242-257."
+ },
+ {
+  "id": "paradigm-cube",
+  "verdict": "DECIDABLE",
+  "answer": "(1) No — ally-only auras never show on the holder's stat stars (ruling F case 1); every colour reads 'Allies in the area gain...'. (2) Neither six situational entries nor a modifier-bearing mode: six DISPLAY-ONLY modes, one per colour, each duration '1 minute', note naming that colour's ally bonus (ruling F case 2 + ruling E case 3). That also shows which colours are spent today. No exclusiveGroup — the cube allows six activations a day and the durations may overlap.",
+  "evidence": "Ruling F DECISIONS.md:171-186; ruling E case 3 DECISIONS.md:131-140; frequency text 'six times per day (but only once per day per color)' in core.json items.paradigm-cube."
+ },
+ {
+  "id": "overflowing-life",
+  "verdict": "DECIDABLE",
+  "answer": "Use kind 'hp' — no new 'healing received' target is needed. The hp kind already carries entries that are not additions to the HP total (Stalwart's Banner stores '10 temporary HP' there), and the six previously-empty stat kinds were given breakdown surfaces. Register: targets [{kind:'hp'}], when 'on the Hit Points you recover from a vitality healing spell (first time per casting)', bonus '+half the relic's level, minimum +1 (item)'.",
+  "evidence": "src/rules/situationalBonuses.ts:2468 (stalwarts-banner-greater, kind 'hp', '10 temporary HP')."
+ },
+ {
+  "id": "conrasu-coin",
+  "verdict": "DECIDABLE",
+  "answer": "Skip the umbrella; mark only the ownable coins. conrasu-coin is unpriced with 2 kin and is already hidden from pickers, so key the entries to conrasu-coin-arbiter (+2 circumstance Diplomacy, +3 to Make an Impression on an aeon-trait creature) and conrasu-coin-bythos (+2 circumstance AC against the triggering attack).",
+  "evidence": "Ruling A DECISIONS.md:6-17; src/data/index.ts:149-177."
+ },
+ {
+  "id": "self-emptying-pocket",
+  "verdict": "DECIDABLE",
+  "answer": "Include it, as TWO entries — +2 item to Performance when 'the entity holding your bargained contract influences your performance favorably' and -2 item to Performance when 'it influences you unfavorably'. Penalties are in scope, and the display pooling keys bonuses and penalties separately by sign, so both lines show and neither swallows the other. Spelling the downside out is also required by the owner's own reading of Demon's Knot-style items: the star must not sell an item as pure upside.",
+  "evidence": "Cross-cutting stacking ruling DECISIONS.md:40-52 ('this rule for penalties too'); poolSituationalLines keyOf includes the sign, src/rules/situationalBonuses.ts:2937-2950; penalty precedents situationalBonuses.ts:102,:111."
+ },
+ {
+  "id": "aon-busine-of-divine-reinforcement",
+  "verdict": "DECIDABLE",
+  "answer": "Situational, not folded into the Performance total. This is ruling B's own worked example: Maestro's Instrument had +3 on EVERY Performance check and was moved to a star because the printed text says 'while playing music'. Register +2 item to Performance, when: 'while playing the busine as an instrument'.",
+  "evidence": "Ruling B DECISIONS.md:19-29 (Maestro's Instrument named)."
+ },
+ {
+  "id": "aon-sleuth-s-pipe",
+  "verdict": "DECIDABLE",
+  "answer": "Keep the clause — add the second entry. Ruling H case 1: where the printed rules are open, stay open rather than putting your own narrowing on the sheet dressed as the book's. Pursue a Lead is an activity, not a check, so the only readable meaning is 'checks to investigate the subject of your pursued lead', which is any skill: targets [{kind:'perception'},{kind:'skill',detail:'all'}], when 'investigator only: on checks to investigate the subject of your Pursue a Lead', bonus '+1 item'. Ruling C ('star every skill that could do it') supports the broad target; the `when` keeps it honest.",
+  "evidence": "Ruling H DECISIONS.md:224-238; ruling C DECISIONS.md:31-38; skill detail 'all' is supported, src/rules/situationalBonuses.ts:38-46."
+ },
+ {
+  "id": "aon-emotion-surge",
+  "verdict": "OWNER",
+  "why": "Each relic has exactly ONE emotion, but the app records no emotion for it, so authoring the record as printed stars ten skills for a character who gets one. Ruling C says star everything that could be it, but ruling C covered bonuses that genuinely could hit any of several stats at the moment of use; here nine of the ten are permanently false for this character, which is closer to ruling A's 'they should only see the options they can have'. Choosing between them is a call about how much the app should model versus display, and it is the same unresolved shape as Weapon Innovation, which is still parked on your go-ahead. Note one part IS decidable and needs no ruling: the Dedication row reads 'Checks to Recall Knowledge', which is any skill, so skill 'all' is correct.",
+  "options": [
+   {"label": "Star all ten as printed", "looksLike": "Athletics, Performance, Diplomacy, Deception, Intimidation, Medicine, Society, Stealth, Survival and every skill (Dedication) all carry a *, and each popup line reads '+1 status — if your relic's emotion is Anger', so the player mentally filters nine of them every time."},
+   {"label": "Add a 'relic emotion' picker on the record and star only the match", "looksLike": "When the relic is added you answer one question ('Which emotion?'); afterwards exactly one skill carries the * with '+1 status, 1 minute, when you use Emotion Surge'."},
+   {"label": "Register nothing", "looksLike": "No stars anywhere; the relic's description still lists the table, and the player tracks it by hand (the ruling-I advanced item editor lets them author their own star)."}
+  ],
+  "recommend": "Option 2, the picker. The choose-one-of-N picker and the item choice surface both already ship, so the authoring side is routine; what is genuinely new is that the situational registry keys entries by owned record id only and has no way to gate a star on a pick, so this is engine work, not data. If you don't want that work now, option 3 beats option 1 — nine wrong stars are worse than none, and the advanced item editor already covers the player who wants it.",
+  "theme": "record the choice vs star every branch"
+ },
+ {
+  "id": "doom-switch",
+  "verdict": "DECIDABLE",
+  "answer": "Registry, not Modes — and yes, it renders penalties. Item modes can only be switched on by useConsumable, which drops the quantity and deletes the item at the last one; that is wrong for a permanent worn item, so activated-buff items with a duration belong in the registry with the duration written into `when` (exactly how the Six-Fingers Elixir and Stalwart's Banner entries already read). Register: strikeAttack +1 status, when 'against the target for 1 minute after a successful Bragging Rights Strike'; strikeAttack -1 status 'against the target for 1 round on a failure'; strikeAttack -2 status 'on a critical failure'. 'You and your allies' includes you, so ruling F does not suppress it.",
+  "evidence": "src/rules/play.ts:791-800 (useConsumable is the only item-mode activation path and it consumes a quantity); duration-in-`when` precedents situationalBonuses.ts:2466, :2468; penalties DECISIONS.md:40-52 and situationalBonuses.ts:102."
+ },
+ {
+  "id": "feather-of-the-unfounded-bravado",
+  "verdict": "DECIDABLE",
+  "answer": "(a) Registry entry with the activation and duration in `when`, not a Mode — same reasoning as Doom Switch (item modes are only reachable through useConsumable, which consumes the item). (b) Yes, negative entries render, and all four lines must be authored: +1 item Intimidation (to Demoralize), +1 item Diplomacy (to Make an Impression), -1 item Acrobatics, -1 item Athletics, each when 'for 1 hour after activating the feather (once per day)'.",
+  "evidence": "src/rules/play.ts:791-800; situationalBonuses.ts:2466 (duration in `when`), :111 (one record carrying both a bonus and a penalty); DECISIONS.md:40-52."
+ },
+ {
+  "id": "magical-medals",
+  "verdict": "DECIDABLE",
+  "answer": "Hide the stub — do not alias it. Add 'magical-medals' to UMBRELLA_EXTRA_IDS next to 'aon-magical-medals', which is already there for the same AoN category page from the other import; the price-and-kin rule cannot catch it because the individual medals are unrelated ids. Nothing ownable is lost: medal-of-gorillas-might, medal-of-griffons-heart, medal-of-the-wolf-pack, medal-of-unicorns-purity and medal-of-phoenixs-fire all exist as their own records.",
+  "evidence": "src/data/index.ts:122-125 (UMBRELLA_EXTRA_IDS, already containing 'aon-magical-medals'); the five medal ids verified present in public/core.json items; hidden-not-deleted semantics src/data/index.ts:114."
+ },
+ {
+  "id": "thieves-tools-concealable",
+  "verdict": "DECIDABLE",
+  "answer": "Concealable tools are NOT infiltrator grade — register only the +1 item bonus to Stealth checks to Conceal these tools, and leave the Thievery bonus out, exactly as you had it. On AoN they are two sibling variants of the same family, not an upgrade chain: Thieves' Tools (Infiltrator) is Item 3 / 50 gp and Concealable Thieves' Tools is Item 4 / 80 gp. The infiltrator sentence is family boilerplate that the importer copies into every member of the family — it is reprinted verbatim inside the infiltrator toolkit's own record too.",
+  "evidence": "AoN mirror by-category/equipment/equipment-58-845.json (Concealable Thieves' Tools, Item 4, 80 gp) and equipment-58-53.json (Thieves' Tools (Infiltrator), Item 3, 50 gp), both under the same right=\"Item 0+\" head; core.json items.thieves-toolkit-infiltrator carries the same 'An infiltrator thieves' toolkit add a +1 item bonus' sentence."
+ },
+ {
+  "id": "aon-fixer",
+  "verdict": "DECIDABLE",
+  "answer": "Yes, hirelings may mark your stats — the +1/+2 circumstance bonus is a bonus to YOUR check (the fixer Aids you), which is the opposite of ruling F's ally-facing case. Keep it as one record with four entries whose `when` names the variant and the location, rather than splitting records or building a picker: informant -> Diplomacy (Gather Information) + skill 'all' (Recall Knowledge) 'about the location you hired the fixer for; +2 if an expert informant'; counselor -> Deception (Impersonate, Lie) + Diplomacy (Make an Impression, Request) 'when speaking with individuals within the fixer's location; +2 if an expert counselor'. The registry already carries entries whose trigger is a place or a state, and ruling H caps the note at one line with the full text a click away. Caveat worth knowing: it only displays while the hireling entry is flagged equipped/worn/invested.",
+  "evidence": "Ruling F DECISIONS.md:171-186 (only suppresses bonuses that land on someone else); ruling C DECISIONS.md:31-38; ruling H DECISIONS.md:224-238; place/state triggers e.g. situationalBonuses.ts:2468 'while within your banner's aura'; display gate src/rules/explain.ts:195."
+ },
+ {
+  "id": "hopeful-athamaru",
+  "verdict": "DECIDABLE",
+  "answer": "Excluded — no star, no modifier, and no 'auras you project' section. Ruling F case 1 is exactly this: 'the bonus goes to a teammate, not you -> NOTHING on your sheet. No star, no modifier. The record's own description already says what the ally gets.' Ruling F case 2's display-only mode does not apply either, because the aura is permanent rather than a limited-time activation.",
+  "evidence": "Ruling F DECISIONS.md:171-181."
+ },
+ {
+  "id": "harrow-chosen",
+  "verdict": "DECIDABLE",
+  "answer": "Star all three saves with a single entry whose `when` carries the choice — no new 'one of your choice' marker. This is ruling C applied as written: star every stat that could be it, and let the `when` say when it counts ('a saving throw of your choice, for 1 minute after a True Match'). It differs from a fixed one-of-N property because the pick is made at the moment of use, so on any given activation all three genuinely could be the one. Also register the Misaligned line: +5-foot circumstance to Speeds for 1 minute. The Unmatched temporary HP gets nothing — HP never moves sheet stats (ruling E).",
+  "evidence": "Ruling C DECISIONS.md:31-38; ruling E DECISIONS.md:138 ('HP and damage never move sheet stats')."
+ }
+]}

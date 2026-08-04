@@ -1,0 +1,282 @@
+[
+ {
+  "collection": "items",
+  "id": "succubus-kiss",
+  "name": "Succubus Kiss",
+  "question": "Same consumable question as Qat; plus: should initiative bonuses keep being approximated as Perception, or is an 'initiative' target kind worth adding?",
+  "evidence": "\"Stage 1 +2 item bonus to initiative checks (10 minutes) and to all saving throws against emotion and mental effects\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "dragonscale-bo-staff",
+  "name": "Dragonscale Bo Staff",
+  "question": "Should per-copy item choices like this staff's dragon tradition be a stored item property (so the star can name 'occult' instead of 'the staff's tradition'), or stay generic text?",
+  "evidence": "\"When benefiting from the circumstance bonus to AC granted by the bo staff's parry trait, you also gain a +1 circumstance bonus to saving throws against magical effects of the tradition matching the dragon who provided the scales\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "azarim",
+  "name": "Azarim",
+  "question": "Azarim is an intelligent weapon whose Deception help is her own action, not a passive wielder bonus — should intelligent-item activations that buff the wielder be starred on the wielder's sheet at all, or listed only in the item description?",
+  "evidence": "\"she can assist with her wielder's attempt to Lie and grant a +2 circumstance bonus to the Deception check\"; \"Azarim deals an additional 1d6 damage to worshippers of Droskar, to creatures allied with Droskar's faith\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "briar",
+  "name": "Briar",
+  "question": "Should single-adventure artifacts with unlock-counter-gated powers (Briar's Sharpness Points) be registered at all, or excluded as unrepresentable campaign one-offs?",
+  "evidence": "\"*Briar's* partner gains a +4 item bonus to all saving throws against Nyrissa's spells for 1 minute.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "admirers-bouquet",
+  "name": "Admirer's Bouquet",
+  "question": "Should bonuses that only exist while an item has been handed to you by an ally be shown on the owner's sheet, the recipient's sheet, or neither?",
+  "evidence": "\"they gain a +1 item bonus to saves against emotion and mental effects as long as they continue to carry the admirer's bouquet\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "open-mind",
+  "name": "Open Mind",
+  "question": "Open Mind's activation effect is empty in core.json ('you gain the effects of .') — should the missing spell reference be re-sourced from AoN before this record is considered complete?",
+  "evidence": "\"This tattoo of a stylized eye provides a +1 item bonus to Lore checks.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "beast-staff",
+  "name": "Beast Staff",
+  "question": "Animal Empathy makes you 'use Diplomacy to Make an Impression on and make very simple Requests of animals', so I mapped 'checks using it' to Diplomacy. Do you want the star to appear on Diplomacy for every wielder, or only when the character actually has the animal-empathy feat (which would need a feat-gated condition in the lookup)?",
+  "evidence": "\"While wielding the staff while you have it prepared, you're affected by Speak with Animals. If you have Animal Empathy, you gain a +1 circumstance bonus on checks using it.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "gamblers-staff",
+  "name": "Gambler's Staff",
+  "question": "Should this key to lore:games only (star appears solely for characters who have Games Lore), or to skill 'all' with the 'gambling' condition spelled out, so a character using a different skill for the gambling job still sees the reminder?",
+  "evidence": "\"A *gambler's staff* grants you a +2 circumstance bonus to checks to Earn Income from gambling (typically using Games Lore). To get this benefit, the staff must be on your person during all the downtime you spend gambling.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "fury-cocktail",
+  "name": "Fury Cocktail",
+  "question": "The melee attack bonus and the AC/Reflex drawbacks are unconditional once the mutagen is drunk. Should mutagens be handled as a Mode (toggled, folded into the maths) rather than as situational stars?",
+  "evidence": "\"You gain an item bonus to melee attack rolls… **Skeptical** … You gain a +1 item bonus to saves against magic… **Drawback** You take a –1 penalty to AC and a –2 penalty to Reflex saves.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "colorful-coating",
+  "name": "Colorful Coating",
+  "question": "This is an umbrella record whose description concatenates every colour variant (blue/green/indigo/orange/red/violet/yellow) while separate per-colour item records also exist. Should umbrella/base records carry situational entries at all, or should only the specific variant records be marked? The same question applies to emetic-paste, healing-vapor, sense-dulling-hood, affliction-suppressant, bendy-arm-mutagen, deadweight-mutagen and sanguine-mutagen in this chunk.",
+  "evidence": "Blue: \"granting a +1 circumstance bonus to Reflex saving throws in reaction to the coated surface's collapse\"; Yellow: \"It provides a +2 circumstance bonus to checks to Climb the coated surface.\"; Green: \"It imposes a –2 circumstance penalty to checks to Climb the coated surface.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "emetic-paste",
+  "name": "Emetic Paste",
+  "question": "Umbrella record: its description concatenates the lesser/moderate/greater variants, which exist as their own records. Should base records like this carry entries (with a \"varies by grade\" bonus string), or only the graded variants?",
+  "evidence": "\"The paste grants the target an item bonus to that save and to all saving throws to reduce the sickened condition for 1 hour.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "healing-vapor",
+  "name": "Healing Vapor",
+  "question": "Umbrella record: its description concatenates the lesser/moderate/greater/major variants, which exist as their own records. Should base records like this carry entries, or only the graded variants?",
+  "evidence": "\"While affected, a creature also gains an item bonus to saving throws against diseases and poisons.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "sense-dulling-hood",
+  "name": "Sense-Dulling Hood",
+  "question": "Umbrella record: its description concatenates the lesser and greater variants, which exist as their own records. Should base records like this carry entries, or only the graded variants?",
+  "evidence": "\"The mask grants you an item bonus to saving throws against auditory, olfactory, and visual effects for a time... the mask also imposes a –1 penalty to rolls and checks using Perception for the same duration.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "affliction-suppressant",
+  "name": "Affliction Suppressant",
+  "question": "Umbrella record: its description concatenates the lesser/moderate/greater/major variants, which exist as their own records. Should base records like this carry entries, or only the graded variants?",
+  "evidence": "\"Upon drinking an affliction suppressant, you gain an item bonus to all saves against afflictions for 10 minutes.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "bendy-arm-mutagen",
+  "name": "Bendy-Arm Mutagen",
+  "question": "Umbrella record: its description concatenates the lesser/moderate/greater/major variants, which exist as their own records. Should base records like this carry entries, or only the graded variants?",
+  "evidence": "\"Benefit You gain the listed item bonus to Acrobatics checks to Escape, Squeeze, and Tumble Through... Drawback You take a –1 penalty to Athletics checks, Stealth checks, Thievery checks, and attack rolls, and a –1 penalty per damage die to all weapon and unarmed attack damage.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "deadweight-mutagen",
+  "name": "Deadweight Mutagen",
+  "question": "Umbrella record: its description concatenates the lesser/moderate/greater/major variants, which exist as their own records. Should base records like this carry entries, or only the graded variants?",
+  "evidence": "\"Benefit You gain an item bonus to Athletics checks to Shove and Trip, to your Fortitude and Reflex DCs against attempts to Shove or Trip you, and to saving throws against effects that attempt to force you to move or knock you prone.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "sanguine-mutagen",
+  "name": "Sanguine Mutagen",
+  "question": "The base Fortitude/Reflex bonus here is UNCONDITIONAL for the mutagen's whole duration — the only 'condition' is that the mutagen is active. Should always-on-while-active consumable buffs like this live in the situational-bonus registry (a permanent star on the stat, which will show even when the player has never drunk it), or in the existing Modes system as a toggleable modifier set? This applies to every consumable in this chunk, but sanguine mutagen is the sharpest case. Separately, this is also an umbrella record duplicating its four graded variants.",
+  "evidence": "\"Benefit You gain an item bonus to Fortitude and Reflex saves. This bonus improves when you attempt a save against an effect that has the disease trait, poison trait, or would give you the fatigued condition.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "poison-concentrator",
+  "name": "Poison Concentrator",
+  "question": "Parent/umbrella item records (poison-concentrator with no price, alongside the four graded ids) — should they ever be keyed in this registry, or should only graded variants be?",
+  "evidence": "\"you can use a poison concentrator to combine two doses of the same infused alchemical poison, creating a single concentrated poison. The concentrated potion has a +1 item bonus to its DC, and its level is increased by 1.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "execution-powder",
+  "name": "Execution Powder",
+  "question": "Should effects whose beneficiary is a random/other creature (not necessarily this character) be registered at all? And should temporary Hit Points be expressed via targetKind 'hp', or excluded because it is a resource grant rather than a typed bonus?",
+  "evidence": "\"the spores from their last breath alight on a random creature adjacent to the victim, granting that creature 20 temporary Hit Points and a +1 status bonus to attack and damage rolls for 10 minutes\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "black-tendril-shot",
+  "name": "Black Tendril Shot",
+  "question": "Parent/umbrella item records (black-tendril-shot with no price, alongside lesser/moderate/greater) — register them, or graded variants only?",
+  "evidence": "\"Success The target is slowed 1 but gains a +2 circumstance bonus to Escape the ammunition's effect.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "magnetic-shot",
+  "name": "Magnetic Shot",
+  "question": "Parent/umbrella item records (magnetic-shot with no price, alongside lesser/moderate/greater) — register them, or graded variants only?",
+  "evidence": "\"The activated ammunition grants a circumstance bonus to attack rolls against such targets [a target wearing metal armor or made of metal], according to its type.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "disguise-kit-elite-cosmetics",
+  "name": "Disguise Kit (Elite Cosmetics)",
+  "question": "This id is the 5 sp replenishment cosmetics for an elite disguise kit, not a kit itself; its description is inherited verbatim from `disguise-kit-elite`. Should the refill record carry the +1 star (double-listing it for anyone who owns both), or should only the parent kit be marked?",
+  "evidence": "\"An elite disguise kit adds a +1 item bonus to relevant checks.\" — this 5 sp record is the replacement cosmetics supply, but carries the kit's full text.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "musical-instrument",
+  "name": "Musical Instrument",
+  "question": "Umbrella records like this one (level 0, no price, description covering every variant) still appear as ownable items. Should such variant-index records be excluded from the situational registry entirely, or treated as the cheapest/base variant (no bonus, as classified here)?",
+  "evidence": "\"A virtuoso instrument is more finely made and gives a +1 item bonus to Performance checks using that instrument.\" — the bonus is attributed to the VIRTUOSO variants, not to this base entry.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "steelscour",
+  "name": "Steelscour",
+  "question": "Same umbrella-record question as Musical Instrument: should variant-index records (whose descriptions concatenate every grade) be excluded from the registry, or treated as the lowest grade as classified here?",
+  "evidence": "The lesser entry — this record's own level 1 / 3 gp line — reads only \"It deals 1d8 persistent acid damage that ignores up to 5 hardness from metal\", with no attack bonus.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "bewitching-bloom",
+  "name": "Bewitching Bloom",
+  "question": "This id is the aggregated AoN parent entry that reprints all nine flowers; the per-flower ids (bewitching-bloom-bellflower, -lilac, -lotus, -magnolia, -red-rose) are what a character actually owns. Should the parent record carry the union of all nine bonuses, or carry none and leave the bonuses only on the per-flower records?",
+  "evidence": "\"Choose a willing ally you can see within 30 feet. The ally fills with an emotion themed to the flower and gains the benefit listed for the type of bewitching bloom you have.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "unifying-emblem-skoan-quah",
+  "name": "Unifying Emblem (Skoan-Quah)",
+  "question": "Unrelated to the bonus, but this record's Activate effect reads 'The tattoo casts .' with the spell name missing - the parent unifying-emblem entry says it casts ventriloquism. Should the importer/core.json be patched to restore the spell link?",
+  "evidence": "\"If you already know that language, you instead gain a +1 item bonus on Diplomacy checks you make when speaking Shoanti to someone who understands it.\" The Skull clan text adds only a once-per-day spell casting, which is not a bonus.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "canary-tail-first-week",
+  "name": "Canary Tail (First Week)",
+  "question": "Same as the parent Canary record: should a paid-per-week service flag Diplomacy on the sheet at all?",
+  "evidence": "\"For each week that they are hired, you gain a +1 circumstance bonus on your check to Gather Information on the movements and mannerisms of the individual\".",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "canary-tail-second-week",
+  "name": "Canary Tail (Second Week)",
+  "question": "Same as the parent Canary record, plus: if a player buys week one through week four as four separate inventory items, should the sheet show +4 (the cumulative cap) or four separate stars?",
+  "evidence": "\"For each week that they are hired, you gain a +1 circumstance bonus … up to a maximum of four weeks for a +4 bonus\" — the weekly records are cumulative, so week two is +2.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "canary-tail-third-week",
+  "name": "Canary Tail (Third Week)",
+  "question": "Same as the parent Canary record and the second-week tier: cumulative tier display versus one star per purchased week.",
+  "evidence": "\"For each week that they are hired, you gain a +1 circumstance bonus … up to a maximum of four weeks for a +4 bonus\".",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "canary-tail-fourth-week",
+  "name": "Canary Tail (Fourth Week)",
+  "question": "Same as the parent Canary record and the second-week tier: cumulative tier display versus one star per purchased week.",
+  "evidence": "\"up to a maximum of four weeks for a +4 bonus. After four weeks, the individual typically begins to suspect they are being tailed\".",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "the-publican",
+  "name": "The Publican",
+  "question": "Where should effects that improve what you grant to allies (Aid bonuses, degree-of-success upgrades on your own Aid) surface — a separate \"notes\" list on the sheet, or not at all? They cannot be a star on one of your stats.",
+  "evidence": "\"treat critically failed checks made to Aid as regular failures instead. If you are at least 14th level, the circumstance bonus you provide … increases by 1.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "the-lens-of-the-outreaching-eye",
+  "name": "The Lens of the Outreaching Eye",
+  "question": "Does \"all checks made to resolve divination effects\" mean only the rolls a divination spell/item itself calls for (spell attack, counteract), or does it also cover skill checks generated by such effects (for example Identify Magic or a Seek prompted by a divination)? The answer decides whether this is one spell entry or also four skill entries.",
+  "evidence": "\"you gain a +3 item bonus on all checks made to resolve divination effects\" — scoped to one kind of magic rather than all your checks.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "globe-of-shrouds",
+  "name": "Globe of Shrouds",
+  "question": "The text grants the Stealth bonus to 'an ally in the aura' — it does not say 'you and your allies'. Should the star appear on the censer-holder's own Stealth (the common table reading), or only be documented as an ally-facing effect the holder cannot self-apply?",
+  "evidence": "\"An ally in the aura is concealed and gains a +2 status bonus to Stealth checks.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "spiny-lodestone",
+  "name": "Spiny Lodestone",
+  "question": "Spellhearts have two mutually exclusive modes (Armor / Weapon) and the app already tracks drag-to-attach affixture. When the app knows a spellheart is on armor, should its armor-mode Athletics bonus be folded into the Athletics total (it is unconditional in that mode) and the star dropped, or should both modes always be shown as situational because the player can re-affix it?",
+  "evidence": "\"Armor You gain a +1 item bonus to Athletics checks and resistance 2 to nonlethal damage.\" / \"Weapon After you cast a spell by Activating the spiny lodestone, your Strikes with the weapon deal an additional 1d4 piercing damage until the end of your next turn.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "spiny-lodestone-greater",
+  "name": "Spiny Lodestone (Greater)",
+  "question": "Same as the base spiny lodestone: should armor-mode spellheart bonuses be folded into the maths when the app knows the affixture, or always displayed as situational?",
+  "evidence": "\"Armor You gain a +1 item bonus to Athletics checks and resistance 5 to nonlethal damage.\" / \"...deal an additional 1d6 piercing damage until the end of your next turn.\"",
+  "lane": "situational"
+ }
+]

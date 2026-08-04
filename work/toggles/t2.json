@@ -1,0 +1,200 @@
+[
+ {
+  "id": "energy-mutagen-major",
+  "name": "Energy Mutagen (Major)",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Energy Mutagen (Major)",
+  "effects": "For 1 hour: resistance 20 to one energy type the player picks (acid, cold, electricity, or fire) and weakness 5 to each of the other three; +2d6 damage of the attuned type on a melee weapon hit.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "extract-vow-of-nonviolence",
+  "name": "Extract Vow of Nonviolence",
+  "collection": "feats",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Vow of Nonviolence (sworn weapon)",
+  "effects": "For 10 minutes, resistance equal to floor(level/2) to all damage dealt by the one weapon that swore the vow. On a plain success the remaining duration drops by 1 minute each time that weapon hits you.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "feral-senses",
+  "name": "Feral Senses",
+  "collection": "feats",
+  "lane": "defense",
+  "registry": "stances",
+  "toggleName": "Werecreature Hybrid/Animal Shape",
+  "effects": "While the shape is active you gain low-light vision and imprecise scent with a range of 30 feet. (Exclusive polymorph form entered with an action, so it belongs with the other battle forms in the stances registry, where senses are already supported.)",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "fire-and-iceberg",
+  "name": "Fire and Iceberg",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Fire and Iceberg",
+  "effects": "For 1 minute after eating: resistance 5 to fire and resistance 5 to cold.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "force-shield",
+  "name": "Force Shield",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Force Shield - Force Bubble",
+  "effects": "For 1 minute (once per day): resistance 5 to physical damage. Ends early if you stop holding the shield.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "forge-warden",
+  "name": "Forge Warden",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Forge Warden (shield raised)",
+  "effects": "While the forge warden is raised you have fire resistance 5. (Allies adjacent to you get it too, but that is their sheet.)",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "form-a-flock",
+  "name": "Form a Flock",
+  "collection": "feats",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Form a Flock",
+  "effects": "Up to 1 minute: 25 temporary Hit Points, and weakness 5 to area damage and splash damage while the flock surrounds you. Ends when the temporary HP are gone, the minute elapses, or you Dismiss it.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "fresh-produce",
+  "name": "Fresh Produce",
+  "collection": "feats",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Fresh Produce (eaten)",
+  "effects": "For 10 minutes after eating the produce: resistance 2 to void damage, increasing by 2 for every 2 levels above 1st (4 at 3rd, 6 at 5th, and so on). You also cannot eat another piece while it lasts.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "frost-breath",
+  "name": "Frost Breath",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Frost Breath (inhaled)",
+  "effects": "Resistance 5 to cold while the bottled breath is held, until you exhale it as the cone or the effect ends.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "galvanic-chew",
+  "name": "Galvanic Chew",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Galvanic Chew",
+  "effects": "For up to 1 hour: resistance 5 to electricity. Ends early if you spend the Secondary Effect reaction, which makes the chew inert.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "geomancer-dedication",
+  "name": "Geomancer Dedication",
+  "collection": "feats",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Terrain Attunement",
+  "effects": "One mode per self-affecting attunement, each active for 1 round after casting a matching spell: Aquatic - swim Speed equal to your land Speed (and you may use it as your land Speed on a surface); Mountain - resistance to physical damage except adamantine equal to the rank of the spell cast; Plains - temporary Hit Points equal to the spell's rank; Underground - darkvision and imprecise tremorsense out to 15 feet. Arctic, Desert, Forest and Swamp affect enemies only and need nothing.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "ghostcallers-planchette",
+  "name": "Ghostcaller's Planchette",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Ghostcaller's Planchette (armor)",
+  "effects": "Until the start of your next turn after you cast a spell by Activating the planchette: resistance 5 to all physical damage, except that attacks by incorporeal creatures and ghost touch attacks bypass it.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "goz-mask-major",
+  "name": "Goz Mask (Major)",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Goz Mask (Major) - activated",
+  "effects": "For 1 hour (once per day): you gain darkvision, and you ignore all concealment caused by environmental effects such as fog, rain and storms.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "grim-specter",
+  "name": "Grim Specter",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Grim Specter (incorporeal)",
+  "effects": "Up to 1 minute, once per day: you become incorporeal - immune to precision damage and to effects requiring a physical body including most diseases and poisons, and you gain resistance to all damage equal to half the relic's level, doubled against non-magical damage. Force damage, ghost touch attacks, spirit damage, void damage and vitality damage ignore this resistance. You are slowed 1 on any turn you start inside an object.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "grolna",
+  "name": "Grolna",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Grolna (Stage 1)",
+  "effects": "For 1 hour after a 1-minute onset: gain scent (imprecise) 30 feet as a new sense, and you are Stupefied 1. Stage 2 replaces it with Stupefied 2 for 6 hours.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "harden-flesh",
+  "name": "Harden Flesh",
+  "collection": "feats",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Harden Flesh",
+  "effects": "Until the beginning of your next turn you have resistance to physical damage (except adamantine) equal to 3, +1 at 12th level and every 4 levels thereafter, to a maximum of 6 at 20th. Requires standing on earthen or stone ground.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "horned-lion-amulet",
+  "name": "Horned Lion Amulet",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Horned Lion Amulet",
+  "effects": "For 1 minute you have fire resistance 5. The triggering instance of fire damage is instead reduced by fire resistance 10, and if it was persistent fire damage you immediately attempt a flat check to end it (DC stays 10 until the persistent damage ends).",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "iron-wine",
+  "name": "Iron Wine",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Iron Wine",
+  "effects": "For 10 minutes your unarmed Strikes deal an additional 1d4 fire damage. A separate toggle for a second cup in one day: you gain weakness 5 to fire until your next daily preparations.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ }
+]

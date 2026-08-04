@@ -1,0 +1,200 @@
+[
+ {
+  "id": "kinetic-dampening",
+  "name": "Kinetic Dampening",
+  "collection": "feats",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Kinetic Dampening",
+  "effects": "Until the beginning of your next turn you have resistance to physical damage equal to 5, +5 at 10th level and every 4 levels thereafter. With the second Awakening, also resistance of the same value to your choice of fire, electricity or sonic (player picks the type).",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "living-statue",
+  "name": "Living Statue",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Living Statue (Standing on Earth)",
+  "effects": "While standing on the earth you have resistance 5 to physical damage except adamantine; this becomes resistance 8 in caves or subterranean environments.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "maelstromic-destabilizer-lesser",
+  "name": "Maelstromic Destabilizer (Lesser)",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Maelstromic Destabilizer (Lesser)",
+  "effects": "For 1 minute the holder has resistance 2 to spirit damage.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "maelstromic-destabilizer-major",
+  "name": "Maelstromic Destabilizer (Major)",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Maelstromic Destabilizer (Major)",
+  "effects": "For 1 minute the holder has resistance 10 to spirit damage.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "maelstromic-destabilizer-moderate",
+  "name": "Maelstromic Destabilizer (Moderate)",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Maelstromic Destabilizer (Moderate)",
+  "effects": "For 1 minute the holder has resistance 5 to spirit damage.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "saurian-spike-major",
+  "name": "Saurian Spike (Major)",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Saurian Spike — Armor",
+  "effects": "While the spellheart is affixed to armor: gain precise scent with a range of 60 feet.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "scouring-spark",
+  "name": "Scouring Spark",
+  "collection": "feats",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Scouring Spark (Divine Spark channelled)",
+  "effects": "Immune to the confused and frightened conditions; unarmed Strikes deal +1d6 fire damage; your fire spells deal one additional damage die of the spell's own die type. (Creatures that touch you taking 3d6 is target-facing.)",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "shadow-master",
+  "name": "Shadow Master",
+  "collection": "feats",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Shadow Master (in dim light or darkness)",
+  "effects": "Resistance 5 to all damage except force damage and damage from Strikes with the Ghost Touch property rune; roll Reflex saves twice and take the higher result (fortune).",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "shadow-sight",
+  "name": "Shadow Sight",
+  "collection": "feats",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Shadow Sight",
+  "effects": "For 1 minute (once per hour), gain the greater-darkvision sense.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "siccatite-buckler-high-grade",
+  "name": "Siccatite Buckler (High-Grade)",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Siccatite Buckler (High-Grade) Raised",
+  "effects": "While this shield is Raised, you gain resistance 10 to the opposing energy type — cold if it is a hot siccatite shield, fire if it is a cold siccatite shield. The player must first record whether the shield is hot or cold.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "siccatite-buckler-standard-grade",
+  "name": "Siccatite Buckler (Standard-Grade)",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Siccatite Buckler (Standard-Grade) Raised",
+  "effects": "While this shield is Raised, you gain resistance 5 to the opposing energy type — cold for a hot siccatite shield, fire for a cold siccatite shield. The player must first record whether the shield is hot or cold.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "siccatite-shield-high-grade",
+  "name": "Siccatite Shield (High-Grade)",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Siccatite Shield (High-Grade) Raised",
+  "effects": "While this shield is Raised, you gain resistance 10 to the opposing energy type — cold for a hot siccatite shield, fire for a cold siccatite shield. The player must first record whether the shield is hot or cold.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "siccatite-shield-standard-grade",
+  "name": "Siccatite Shield (Standard-Grade)",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Siccatite Shield (Standard-Grade) Raised",
+  "effects": "While this shield is Raised, you gain resistance 5 to the opposing energy type — cold for a hot siccatite shield, fire for a cold siccatite shield. The player must first record whether the shield is hot or cold.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "spell-survivor",
+  "name": "Spell Survivor",
+  "collection": "feats",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Spell Survivor",
+  "effects": "Until the end of that caster's next turn, gain resistance to all damage dealt by the caster whose spell you critically saved against: resistance 1, increasing by 1 at 9th level and every 4 levels thereafter (2 at 9th, 3 at 13th, 4 at 17th).",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "spiny-lodestone",
+  "name": "Spiny Lodestone",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Spiny Lodestone — Armor",
+  "effects": "While affixed to armor: +1 item bonus to Athletics checks and resistance 2 to nonlethal damage.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "spiny-lodestone-greater",
+  "name": "Spiny Lodestone (Greater)",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Spiny Lodestone (Greater) — Armor",
+  "effects": "While affixed to armor: +1 item bonus to Athletics checks and resistance 5 to nonlethal damage.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "spun-cloud-blue",
+  "name": "Spun Cloud (Blue)",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Spun Cloud (Blue) — inside the cloud",
+  "effects": "While you are inside the exhaled blue cloud (20-foot burst, lasts 1 minute), gain resistance 5 to electricity.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "starlight-armor",
+  "name": "Starlight Armor",
+  "collection": "feats",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Starlight Armor",
+  "effects": "For 1 minute (once per day): resistance 7 to piercing, bludgeoning and slashing damage, increasing to 10 at 17th level. (The dazzling save for adjacent attackers is target-facing.)",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ }
+]

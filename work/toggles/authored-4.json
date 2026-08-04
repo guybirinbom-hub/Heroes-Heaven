@@ -1,0 +1,221 @@
+{
+ "modes": [
+  {
+   "id": "item-stone-body-mutagen-lesser",
+   "name": "Stone Body (Lesser)",
+   "fromItemId": "stone-body-mutagen-lesser",
+   "duration": "10 minutes",
+   "note": "Benefit: resistance 5 to physical damage except bludgeoning. Drawback: -2 to Reflex saves, and all your Speeds are reduced by 10 feet (minimum 5 feet) — the Speed reduction is not applied to the sheet, track it yourself.",
+   "modifiers": [
+    { "value": -2, "type": "untyped", "target": "save", "detail": "reflex" }
+   ],
+   "resistances": [
+    { "type": "physical (except bludgeoning)", "value": 5 }
+   ]
+  },
+  {
+   "id": "item-stone-body-mutagen-moderate",
+   "name": "Stone Body (Moderate)",
+   "fromItemId": "stone-body-mutagen-moderate",
+   "duration": "1 hour",
+   "note": "Benefit: resistance 5 to physical damage except bludgeoning. Drawback: -2 to Reflex saves, and all your Speeds are reduced by 10 feet (minimum 5 feet) — the Speed reduction is not applied to the sheet, track it yourself.",
+   "modifiers": [
+    { "value": -2, "type": "untyped", "target": "save", "detail": "reflex" }
+   ],
+   "resistances": [
+    { "type": "physical (except bludgeoning)", "value": 5 }
+   ]
+  },
+  {
+   "id": "item-storm-breath",
+   "name": "Storm Breath",
+   "fromItemId": "storm-breath",
+   "duration": "While you hold the breath",
+   "note": "After inhaling the storm breath you have resistance 5 to electricity and sonic. Exhaling it ends the effect and instead deals damage to creatures in the area with a save.",
+   "modifiers": [],
+   "resistances": [
+    { "type": "electricity", "value": 5 },
+    { "type": "sonic", "value": 5 }
+   ]
+  },
+  {
+   "id": "item-sun-slayer",
+   "name": "Sun Slayer Raised",
+   "fromItemId": "sun-slayer",
+   "duration": "While the shield is Raised",
+   "note": "While you have this shield raised you gain fire resistance 5. Its separate Sunset activation (once per day, in sunlight) only dims light in an area — nothing on your own sheet.",
+   "modifiers": [],
+   "resistances": [
+    { "type": "fire", "value": 5 }
+   ]
+  },
+  {
+   "id": "item-swarmsuit",
+   "name": "Swarmsuit",
+   "fromItemId": "swarmsuit",
+   "duration": "While worn",
+   "survivesRest": true,
+   "note": "Resistance 3 to physical damage from swarms. Explorer's clothing altered this way has a Dex cap of +2, check penalty -1 and Speed penalty -5 feet regardless of your Strength.",
+   "modifiers": [],
+   "resistances": [
+    { "type": "physical damage from swarms", "value": 3 }
+   ]
+  },
+  {
+   "id": "item-tallowheart-mass",
+   "name": "Tallowheart Fire Ward",
+   "fromItemId": "tallowheart-mass",
+   "duration": "1 minute",
+   "note": "Rubbing a portion on your body grants resistance 10 to fire for 1 minute. The mass has three portions; the other two activations instead grant quickened 1 (extra action only for Strikes with weapons you wield in your hands) or restore 4d8+12 Hit Points.",
+   "modifiers": [],
+   "resistances": [
+    { "type": "fire", "value": 10 }
+   ]
+  },
+  {
+   "id": "item-thorn-of-milani-lesser",
+   "name": "Thorn of Milani",
+   "fromItemId": "thorn-of-milani-lesser",
+   "duration": "Until the end of your next turn",
+   "note": "Activating the thorn on a hit deals an extra 1d4 spirit damage with the holy trait (instantaneous), then leaves you with weakness 1 to unholy.",
+   "modifiers": [],
+   "weaknesses": [
+    { "type": "unholy", "value": 1 }
+   ]
+  },
+  {
+   "id": "item-thorn-triad",
+   "name": "Thorn Triad (Armor)",
+   "fromItemId": "thorn-triad",
+   "duration": "Until the end of your next turn",
+   "note": "After casting a plant spell by activating the triad. Double the resistance (to 4) if the spell was not a cantrip. The Weapon benefit instead adds 1d4 persistent bleed to your Strikes with the affixed weapon.",
+   "modifiers": [],
+   "resistances": [
+    { "type": "bludgeoning", "value": 2 },
+    { "type": "piercing", "value": 2 }
+   ],
+   "weaknesses": [
+    { "type": "fire", "value": 3 }
+   ]
+  },
+  {
+   "id": "item-thorn-triad-greater",
+   "name": "Thorn Triad (Greater)",
+   "fromItemId": "thorn-triad-greater",
+   "duration": "Until the end of your next turn",
+   "note": "After casting a plant spell by activating the triad. Double the resistance (to 8) if the spell was not a cantrip. The Weapon benefit instead adds 1d6 persistent bleed to your Strikes with the affixed weapon.",
+   "modifiers": [],
+   "resistances": [
+    { "type": "bludgeoning", "value": 4 },
+    { "type": "piercing", "value": 4 }
+   ],
+   "weaknesses": [
+    { "type": "fire", "value": 3 }
+   ]
+  },
+  {
+   "id": "item-thorn-triad-major",
+   "name": "Thorn Triad (Major)",
+   "fromItemId": "thorn-triad-major",
+   "duration": "Until the end of your next turn",
+   "note": "After casting a plant spell by activating the triad. Double the resistance (to 12) if the spell was not a cantrip. The Weapon benefit instead adds 1d8 persistent bleed to your Strikes with the affixed weapon.",
+   "modifiers": [],
+   "resistances": [
+    { "type": "bludgeoning", "value": 6 },
+    { "type": "piercing", "value": 6 }
+   ],
+   "weaknesses": [
+    { "type": "fire", "value": 3 }
+   ]
+  },
+  {
+   "id": "item-tremorsensors",
+   "name": "Tremorsensors",
+   "fromItemId": "tremorsensors",
+   "duration": "10 minutes",
+   "note": "Once per day. You stomp, clap or make some other sound to gain tremorsense as an imprecise sense with a range of 20 feet.",
+   "modifiers": [],
+   "senses": [
+    { "name": "tremorsense", "range": 20, "acuity": "imprecise" }
+   ]
+  },
+  {
+   "id": "vengeful-remnant",
+   "name": "Vengeful Remnant",
+   "feats": ["vengeful-remnant"],
+   "duration": "Until the start of your next turn",
+   "note": "Once per day. Resistance 10 to all damage except force, ghost touch, spirit and vitality — doubled to 20 when the damage source is non-magical (the second entry; only one applies to a given source). If you slay a significant foe not immune to spirit damage with your Spectral Dagger while this is up, it lasts until the end of your next turn instead.",
+   "modifiers": [],
+   "resistances": [
+    { "type": "all damage except force, ghost touch, spirit, and vitality", "value": 10 },
+    { "type": "non-magical damage (except force, ghost touch, spirit, and vitality)", "value": 20 }
+   ]
+  },
+  {
+   "id": "item-victory-plate",
+   "name": "Victory Plate",
+   "fromItemId": "victory-plate",
+   "duration": "1 minute",
+   "note": "Once per hour, recall one recorded triumph. Resistance 5 to one damage type set by that creature's trait — aberration or fey: mental; celestial: good; construct: poison; dragon or elemental: one matching energy type; fiend: evil; undead: void. An ooze instead gives resistance 10 to precision. Only one type applies even if several traits could.",
+   "modifiers": [],
+   "resistances": [
+    { "type": "chosen damage type (see note)", "value": 5 }
+   ]
+  },
+  {
+   "id": "item-warcallers-chime-of-resistance",
+   "name": "Chime of Resistance",
+   "fromItemId": "warcallers-chime-of-resistance",
+   "duration": "10 minutes",
+   "note": "Once per week. Choose acid, cold, electricity, fire or sonic as you activate the chime. The defensive aura also gives that resistance to other creatures inside it — their sheets, not yours.",
+   "modifiers": [],
+   "resistances": [
+    { "type": "chosen damage type (acid, cold, electricity, fire, or sonic)", "value": 5 }
+   ]
+  },
+  {
+   "id": "item-warming-parka",
+   "name": "Extra Warming",
+   "fromItemId": "warming-parka",
+   "duration": "1 minute",
+   "note": "Once per day, Dismissable. Drawing the hood closed gives resistance 3 to cold but a -2 item penalty to Perception. The parka's always-on protection (negates severe environmental cold, reduces extreme to severe and incredible to extreme) applies whether or not this is toggled.",
+   "modifiers": [
+    { "value": -2, "type": "item", "target": "perception" }
+   ],
+   "resistances": [
+    { "type": "cold", "value": 3 }
+   ]
+  },
+  {
+   "id": "item-witchs-finger",
+   "name": "Witch's Finger",
+   "fromItemId": "witchs-finger",
+   "duration": "1 hour",
+   "note": "Cold resistance 3 for 1 hour. For 8 hours it also negates the damage from severe environmental cold and reduces extreme cold damage to that of severe cold.",
+   "modifiers": [],
+   "resistances": [
+    { "type": "cold", "value": 3 }
+   ]
+  },
+  {
+   "id": "item-wyrm-spindle",
+   "name": "Wyrm Spindle (Armor)",
+   "fromItemId": "wyrm-spindle",
+   "duration": "1 minute",
+   "note": "Armor benefit, after you cast a non-cantrip spell by activating the spindle. The Weapon benefit instead grants a 2-action Dragon Breath (6d6 fire, force, mental or spirit in an area with a save) usable once before the end of your next turn.",
+   "modifiers": [],
+   "resistances": [
+    { "type": "fire", "value": 5 },
+    { "type": "force", "value": 5 },
+    { "type": "mental", "value": 5 },
+    { "type": "spirit", "value": 5 }
+   ]
+  }
+ ],
+ "skipped": [
+  {
+   "id": "thousand-year-dragonroot",
+   "why": "needs a mode speed/strike lane — the item's headline effect is a fly Speed of 40 feet for 1 minute, which a mode cannot grant. Its fire resistance 5 (1 minute, plus torchlight) would be the only modelable half, and shipping the toggle without the fly Speed would misrepresent the item."
+  }
+ ]
+}

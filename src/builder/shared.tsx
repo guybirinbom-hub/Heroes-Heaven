@@ -53,6 +53,7 @@ import { explainStat, statHasSituational, type StatRef } from '../rules/explain'
 import { useContent } from '../sheet/ContentContext';
 import { RankPill, SituationalStar } from '../sheet/widgets';
 import { StatDetailModal } from '../sheet/StatDetailModal';
+import { DefensesPills } from '../sheet/DefensesPills';
 import { DescriptionModal } from '../sheet/DescriptionModal';
 import { MythicRules } from '../sheet/MythicRules';
 import { PickerRow, descNodeOf } from '../sheet/FilterableSelect';
@@ -3450,6 +3451,11 @@ export function FullStats({ build, content, character }: { build: BuildState; co
       </div>
       <LiveStats build={build} content={content} onOpenStat={setStatRef} character={preview} />
       <StatLine label="Speed" value={`${speed} ft`} refTarget={{ kind: 'speed' }} onOpenStat={setStatRef} />
+
+      {/* Resistances/weaknesses/immunities the build has produced so far. Renders nothing until the
+          character actually has one, so it never pads the panel for the majority who have none — but
+          when an ancestry or item grants one, you see it while choosing rather than after saving. */}
+      <DefensesPills character={preview} content={content} />
 
       <div className="fs-sec">Trained skills</div>
       {trainedSkills.length ? (

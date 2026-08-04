@@ -1,0 +1,200 @@
+[
+ {
+  "id": "zetogeki-hide-armor",
+  "name": "Zetogeki Hide Armor",
+  "collection": "items",
+  "lane": "defense",
+  "registry": "modes",
+  "toggleName": "Zetogeki Hide Armor (Shift Scales)",
+  "effects": "Until the end of your next turn (once per day): resistance 5 to bludgeoning, piercing and slashing damage, and every Speed drops by 10 feet (minimum 5 feet).",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "bioluminescent-stripes",
+  "name": "Bioluminescent Stripes",
+  "collection": "items",
+  "lane": "toggle",
+  "registry": "modes",
+  "toggleName": "Bioluminescent Stripes (Glowing)",
+  "effects": "While the stripes glow (activate 1 action, dismiss as a free action): Stealth drops by 4 (a -4 item penalty), applying to Hide and Sneak. Note: you can't be undetected, and you shed bright light in a 20-foot radius plus dim light for the next 20 feet.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "blessed-tattoo",
+  "name": "Blessed Tattoo",
+  "collection": "items",
+  "lane": "toggle",
+  "registry": "modes",
+  "toggleName": "Blessed Tattoo (Protection)",
+  "effects": "While active (1 minute): AC rises by 1 and every saving throw rises by 1 (a +1 status bonus), applying only against attacks, spells and effects created by evil/unholy creatures.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "curse-of-engulfing-flames",
+  "name": "Curse of Engulfing Flames",
+  "collection": "classFeatures",
+  "lane": "toggle",
+  "registry": "modes",
+  "toggleName": "Curse of Engulfing Flames (cursebound)",
+  "effects": "While active: you take persistent fire damage equal to your cursebound value, and any fire immunity or fire resistance you have is suppressed (treated as none). Ends while Refocusing to assuage the curse or while unconscious.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "electric-counter",
+  "name": "Electric Counter",
+  "collection": "feats",
+  "lane": "toggle",
+  "registry": "modes",
+  "toggleName": "Electric Counter",
+  "effects": "While active (until the start of your next turn): resistance to electricity equal to your level.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "gathering-moss",
+  "name": "Gathering Moss",
+  "collection": "feats",
+  "lane": "toggle",
+  "registry": "modes",
+  "toggleName": "Gathering Moss",
+  "effects": "While active (1 minute, or until Tenacious Stance ends): fast healing equal to your level.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "immortal-techniques",
+  "name": "Immortal Techniques",
+  "collection": "feats",
+  "lane": "toggle",
+  "registry": "modes",
+  "toggleName": "Immortal Techniques",
+  "effects": "While active (until the start of your next turn): 20 temporary Hit Points, gained the first time each round you use an action with the monk and stance traits.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "inexorable-iron",
+  "name": "Inexorable Iron",
+  "collection": "classFeatures",
+  "lane": "toggle",
+  "registry": "modes",
+  "toggleName": "Inexorable Iron",
+  "effects": "While in Arcane Cascade stance wielding a melee weapon in two hands: gain temporary Hit Points equal to half your level (minimum 1) on entering the stance and at the start of each of your turns.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "klingegeist",
+  "name": "Klingegeist",
+  "collection": "feats",
+  "lane": "proficiency",
+  "registry": "stances",
+  "toggleName": "Klingegeist",
+  "effects": "Alternate form (10 minutes or until Dismissed): AC becomes 18 + your level; you gain a fly Speed of 30 feet; you are trained in the possessed slashing weapon unless already better; you can take only Strike and Fly actions.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "leopards-armor",
+  "name": "Leopard's Armor",
+  "collection": "items",
+  "lane": "toggle",
+  "registry": "modes",
+  "toggleName": "Leopard's Armor (Ferocity)",
+  "effects": "1 hour: +2 item bonus to Stealth; +2 item bonus to Intimidation checks to Demoralize; -2 penalty to Diplomacy; -2 penalty to Society.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "pyrefeather-token",
+  "name": "Pyrefeather Token",
+  "collection": "items",
+  "lane": "toggle",
+  "registry": "modes",
+  "toggleName": "Pyrefeather Token",
+  "effects": "1 minute: 5 temporary Hit Points. On activation it also reduces the DC of the triggering recovery check by 1.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "renewing-cycle",
+  "name": "Renewing Cycle",
+  "collection": "feats",
+  "lane": "toggle",
+  "registry": "modes",
+  "toggleName": "Renewing Cycle",
+  "effects": "While active (until the start of your next turn): temporary Hit Points equal to half your level, gained the first time each round you Cycle Elemental Stance.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "soaring-wings-major",
+  "name": "Soaring Wings (Major)",
+  "collection": "items",
+  "lane": "toggle",
+  "registry": "modes",
+  "toggleName": "Soaring Wings (Major)",
+  "effects": "While active: gain a fly Speed equal to your land Speed or 20 feet, whichever is greater. No frequency limit; lasts until you Dismiss it. No other statistic changes.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "stone-body",
+  "name": "Stone Body",
+  "collection": "feats",
+  "lane": "toggle",
+  "registry": "modes",
+  "toggleName": "Stone Body",
+  "effects": "While active: resistance 10 to all damage. Requires Tenacious Stance; ends at the end of your next turn or immediately when you are critically hit.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "stone-brawler-dedication",
+  "name": "Stone Brawler Dedication",
+  "collection": "feats",
+  "lane": "toggle",
+  "registry": "stances",
+  "toggleName": "Stonestrike Stance",
+  "effects": "While in the stance you can make stonestrike attacks: 1d8 bludgeoning, brawling group, traits forceful, magical, unarmed. Requires that you are standing on the ground. (Text verified against core.actions['stonestrike-stance'].)",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "winged",
+  "name": "Winged",
+  "collection": "items",
+  "lane": "toggle",
+  "registry": "modes",
+  "toggleName": "Winged (Take to the Skies)",
+  "effects": "While active: gain a fly Speed equal to 25 feet or your land Speed, whichever is SLOWER. Lasts 5 minutes or until Dismissed; once per hour (the existing counters/frequency already track that).",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "wyrms-flight",
+  "name": "Wyrm's Flight",
+  "collection": "items",
+  "lane": "toggle",
+  "registry": "modes",
+  "toggleName": "Wyrm's Flight",
+  "effects": "While active: gain a fly Speed equal to your land Speed or 20 feet, whichever is greater. Lasts 10 minutes or until Dismissed, once per day; at 17th level the duration is unlimited and there is no frequency limit.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ },
+ {
+  "id": "raging-stories",
+  "name": "Raging Stories",
+  "collection": "feats",
+  "lane": "proficiency",
+  "registry": "modes",
+  "toggleName": "Raging Stories (spectral flame)",
+  "effects": "While active (you Offered a Story and chose the spectral-flame benefit): every MELEE Strike deals +2 additional fire damage; +4 instead if you are a master in Religion, +6 if legendary. Ranged Strikes unaffected.",
+  "wouldSurface": false,
+  "needsEngineWork": false
+ }
+]

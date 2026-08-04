@@ -1,0 +1,445 @@
+{
+ "rulings": [
+  {
+   "id": "adept-benefit-amulet",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-aged-arbor-wine",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-arbor-wine",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-arctic-worm-chitin-shield",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-blood-booster-lesser",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-bloodhound-mask-lesser",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-bloodhound-mask-moderate",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-bloodhound-mask-greater",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-bloodhound-olfactory-stimulators",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "break-the-suns-legs",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-chromatic-jellyfish-oil-lesser",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-clockwork-goggles",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-clockwork-goggles-greater",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-clockwork-goggles-major",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "close-formation",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "curse-of-creeping-ashes-1",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "curse-of-creeping-ashes-2",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "curse-of-creeping-ashes-3",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "curse-of-creeping-ashes-4",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "curse-of-inclement-headwinds-1",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "curse-of-inclement-headwinds-2",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "curse-of-inclement-headwinds-3",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "curse-of-inclement-headwinds-4",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "curse-of-inevitable-rot-1",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "curse-of-inevitable-rot-2",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "curse-of-inevitable-rot-3",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "curse-of-inevitable-rot-4",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "curse-of-the-living-death-1",
+   "ok": false,
+   "problem": "No \"duration\" field, unlike the four Curse of Creeping Ashes / Inclement Headwinds / Inevitable Rot stages authored in the same batch, which all carry \"while cursebound N\". The pill will show no duration. Values themselves check out against the classFeature text.",
+   "correction": {
+    "duration": "while cursebound 1"
+   }
+  },
+  {
+   "id": "curse-of-the-living-death-2",
+   "ok": false,
+   "problem": "No \"duration\" field, unlike the four Curse of Creeping Ashes / Inclement Headwinds / Inevitable Rot stages authored in the same batch, which all carry \"while cursebound N\". The pill will show no duration. Values themselves check out against the classFeature text.",
+   "correction": {
+    "duration": "while cursebound 2"
+   }
+  },
+  {
+   "id": "curse-of-the-living-death-3",
+   "ok": false,
+   "problem": "No \"duration\" field, unlike the four Curse of Creeping Ashes / Inclement Headwinds / Inevitable Rot stages authored in the same batch, which all carry \"while cursebound N\". The pill will show no duration. Values themselves check out against the classFeature text.",
+   "correction": {
+    "duration": "while cursebound 3"
+   }
+  },
+  {
+   "id": "curse-of-the-living-death-4",
+   "ok": false,
+   "problem": "No \"duration\" field, unlike the four Curse of Creeping Ashes / Inclement Headwinds / Inevitable Rot stages authored in the same batch, which all carry \"while cursebound N\". The pill will show no duration. Values themselves check out against the classFeature text.",
+   "correction": {
+    "duration": "while cursebound 4"
+   }
+  },
+  {
+   "id": "curse-of-the-mortal-warrior-1",
+   "ok": false,
+   "problem": "No \"duration\" field, unlike the four Curse of Creeping Ashes / Inclement Headwinds / Inevitable Rot stages authored in the same batch, which all carry \"while cursebound N\". The pill will show no duration. Values themselves check out against the classFeature text.",
+   "correction": {
+    "duration": "while cursebound 1"
+   }
+  },
+  {
+   "id": "curse-of-the-mortal-warrior-2",
+   "ok": false,
+   "problem": "No \"duration\" field, unlike the four Curse of Creeping Ashes / Inclement Headwinds / Inevitable Rot stages authored in the same batch, which all carry \"while cursebound N\". The pill will show no duration. Values themselves check out against the classFeature text.",
+   "correction": {
+    "duration": "while cursebound 2"
+   }
+  },
+  {
+   "id": "curse-of-the-mortal-warrior-3",
+   "ok": false,
+   "problem": "No \"duration\" field, unlike the four Curse of Creeping Ashes / Inclement Headwinds / Inevitable Rot stages authored in the same batch, which all carry \"while cursebound N\". The pill will show no duration. Values themselves check out against the classFeature text.",
+   "correction": {
+    "duration": "while cursebound 3"
+   }
+  },
+  {
+   "id": "curse-of-the-mortal-warrior-4",
+   "ok": false,
+   "problem": "No \"duration\" field, unlike the four Curse of Creeping Ashes / Inclement Headwinds / Inevitable Rot stages authored in the same batch, which all carry \"while cursebound N\". The pill will show no duration. Values themselves check out against the classFeature text.",
+   "correction": {
+    "duration": "while cursebound 4"
+   }
+  },
+  {
+   "id": "item-darkvision-elixir-lesser",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-darkvision-elixir-moderate",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-darkvision-elixir-greater",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-deployable-cover-ballistic-cover",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-devilwing-badge",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-devilwing-badge-greater",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "dissolutions-sight",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-draft-of-stellar-radiance",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-dragons-eye-charm",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "echoes-in-stone",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-elder-seed",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "energetic-meltdown",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-energy-adaptive",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-energy-mutagen-lesser",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-energy-mutagen-moderate",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-energy-mutagen-greater",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-energy-mutagen-major",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "extract-vow-of-nonviolence",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "feral-senses",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-fire-and-iceberg",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-force-shield",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-forge-warden",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "form-a-flock",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "fresh-produce",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-frost-breath",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-galvanic-chew",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "geomancer-dedication",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-ghostcallers-planchette",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-goz-mask-major",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-grim-specter",
+   "ok": false,
+   "problem": "Overstates the text. Grim Specter says you are \"immune to effects that require a physical body, including precision damage as well as exposure to MOST diseases and poisons.\" The authored entry drops the qualifier and lists flat \"disease\" and \"poison\" immunities, so the sheet would zero out a poison or disease the GM rules still reaches an incorporeal creature. Everything else in this entry (precision immunity, the omitted half-relic-level resistance, the omitted incorporeal movement rules) is right.",
+   "correction": {
+    "id": "item-grim-specter",
+    "name": "Grim Specter",
+    "fromItemId": "grim-specter",
+    "duration": "up to 1 minute (Sustained)",
+    "note": "Once per day. You become incorporeal: immune to effects that require a physical body (including precision damage) and to exposure to MOST diseases and poisons — the GM decides which ones still reach you, so they are not listed as blanket immunities. You also gain resistance to all damage equal to half the relic's level (doubled against non-magical damage); force damage, ghost touch attacks, spirit, void and vitality damage ignore it — track that by hand, the app doesn't know the relic's level. You can move through solid objects but are slowed 1 on any turn you start inside one, and you can't attempt or be the target of Strength-based checks against corporeal creatures.",
+    "modifiers": [],
+    "immunities": [
+     "precision",
+     "effects that require a physical body"
+    ]
+   }
+  },
+  {
+   "id": "item-grolna",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "harden-flesh",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "item-horned-lion-amulet",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  },
+  {
+   "id": "iron-wine",
+   "ok": true,
+   "problem": "",
+   "correction": {}
+  }
+ ]
+}

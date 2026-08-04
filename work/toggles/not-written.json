@@ -1,0 +1,57 @@
+{
+ "problems": [],
+ "skipped": [
+  {
+   "id": "iron-wine",
+   "why": "The cup's actual effect is +1d4 fire damage on your unarmed Strikes for 10 minutes — needs a mode strike lane. The only other effect (weakness 5 to fire until your next daily preparations) applies solely to a SECOND cup in one day, and an item binds one mode, so encoding it here would inflict the weakness on the first cup too."
+  },
+  {
+   "id": "siccatite-buckler-standard-grade",
+   "why": "While Raised you gain resistance 5 to the OPPOSING energy type — cold if the buckler is hot siccatite, fire if it is cold siccatite. The app doesn't record which variety a given shield is, so the resistance type is unknowable; needs a mode element-choice lane."
+  },
+  {
+   "id": "siccatite-shield-standard-grade",
+   "why": "While Raised you gain resistance 5 to the OPPOSING energy type — cold if the shield is hot siccatite, fire if it is cold siccatite. The app doesn't record which variety a given shield is, so the resistance type is unknowable; needs a mode element-choice lane."
+  },
+  {
+   "id": "siccatite-buckler-high-grade",
+   "why": "While Raised you gain resistance 10 to the OPPOSING energy type — cold if the buckler is hot siccatite, fire if it is cold siccatite. The app doesn't record which variety a given shield is, so the resistance type is unknowable; needs a mode element-choice lane."
+  },
+  {
+   "id": "siccatite-shield-high-grade",
+   "why": "While Raised you gain resistance 10 to the OPPOSING energy type — cold if the shield is hot siccatite, fire if it is cold siccatite. The app doesn't record which variety a given shield is, so the resistance type is unknowable; needs a mode element-choice lane."
+  },
+  {
+   "id": "thousand-year-dragonroot",
+   "why": "needs a mode speed/strike lane — the item's headline effect is a fly Speed of 40 feet for 1 minute, which a mode cannot grant. Its fire resistance 5 (1 minute, plus torchlight) would be the only modelable half, and shipping the toggle without the fly Speed would misrepresent the item."
+  },
+  {
+   "id": "klingegeist",
+   "why": "needs a mode speed/strike lane"
+  },
+  {
+   "id": "soaring-wings-major",
+   "why": "needs a mode speed/strike lane"
+  },
+  {
+   "id": "stone-brawler-dedication",
+   "why": "needs a mode speed/strike lane"
+  },
+  {
+   "id": "winged",
+   "why": "needs a mode speed/strike lane"
+  },
+  {
+   "id": "wyrms-flight",
+   "why": "needs a mode speed/strike lane"
+  },
+  {
+   "id": "curse-of-engulfing-flames",
+   "why": "Its only mechanical effect is suppressing fire immunity/resistance you already have, which no mode field can express (there is no negative/suppression lane); and it is an oracle curse OPTION in classFeatures, so a `feats` gate cannot see it — featIds is built from character.feats only."
+  },
+  {
+   "id": "inexorable-iron",
+   "why": "Grants temporary Hit Points (half your level, min 1) on entering Arcane Cascade and each turn in it — there is no temp-HP mode lane; and it is a magus hybrid-study OPTION in classFeatures, which a `feats` gate cannot match because featIds is built from character.feats only."
+  }
+ ]
+}

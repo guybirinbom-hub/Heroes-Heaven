@@ -1,0 +1,2179 @@
+{
+  "adept-benefit-amulet": {
+    "id": "adept-benefit-amulet",
+    "name": "Amulet's Abeyance",
+    "feats": [
+      "adept-benefit-amulet"
+    ],
+    "duration": "until the start of your next turn",
+    "note": "Adept Benefit (Amulet): when you use Amulet's Abeyance, you or your ally chooses one damage type dealt by the triggering attack and gains resistance 5 against it (10 at 15th level). Set the type you chose; if the ally took it instead, leave this off.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "chosen damage type",
+        "value": "5+5*min(1,max(0,@actor.level-14))"
+      }
+    ]
+  },
+  "item-aged-arbor-wine": {
+    "id": "item-aged-arbor-wine",
+    "name": "Arbor Wine",
+    "fromItemId": "aged-arbor-wine",
+    "duration": "1 minute",
+    "note": "You have tremorsense at a range of 30 feet. Aged wine also makes vegetation around you writhe into difficult terrain until the start of your next turn — that is battlefield-side, not on your sheet.",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "tremorsense",
+        "range": 30,
+        "acuity": "imprecise"
+      }
+    ]
+  },
+  "item-arbor-wine": {
+    "id": "item-arbor-wine",
+    "name": "Arbor Wine",
+    "fromItemId": "arbor-wine",
+    "duration": "1 minute",
+    "note": "For 1 minute after drinking a glass, you have tremorsense at a range of 30 feet.",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "tremorsense",
+        "range": 30,
+        "acuity": "imprecise"
+      }
+    ]
+  },
+  "item-arctic-worm-chitin-shield": {
+    "id": "item-arctic-worm-chitin-shield",
+    "name": "Misty Chill",
+    "fromItemId": "arctic-worm-chitin-shield",
+    "duration": "until the beginning of your next turn",
+    "note": "Misty Chill: you Raise the Shield and gain resistance 5 to cold. Any creature that ends its turn adjacent to you takes 3d6 cold damage (basic save) — that damage lands on their sheet, not yours.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "cold",
+        "value": 5
+      }
+    ]
+  },
+  "item-blood-booster-lesser": {
+    "id": "item-blood-booster-lesser",
+    "name": "Blood Booster",
+    "fromItemId": "blood-booster-lesser",
+    "duration": "10 minutes",
+    "note": "Resistance 5 to persistent bleed and persistent poison damage. You also lower the DC of any flat check to end persistent bleed or persistent poison damage as if you had received particularly appropriate aid (DC 10).",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "persistent bleed",
+        "value": 5
+      },
+      {
+        "type": "persistent poison",
+        "value": 5
+      }
+    ]
+  },
+  "item-bloodhound-mask-lesser": {
+    "id": "item-bloodhound-mask-lesser",
+    "name": "Bloodhound Mask",
+    "fromItemId": "bloodhound-mask-lesser",
+    "duration": "10 minutes",
+    "note": "Imprecise scent with a 15-foot range. When you use Survival to Track a creature by its scent, your proficiency bonus is equal to your level even if untrained. You can't wear another mask while wearing it.",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "item",
+        "target": "skill",
+        "detail": "survival",
+        "appliesWhen": "to Track a creature by its scent"
+      }
+    ],
+    "senses": [
+      {
+        "name": "scent",
+        "range": 15,
+        "acuity": "imprecise"
+      }
+    ]
+  },
+  "item-bloodhound-mask-moderate": {
+    "id": "item-bloodhound-mask-moderate",
+    "name": "Bloodhound Mask",
+    "fromItemId": "bloodhound-mask-moderate",
+    "duration": "1 hour",
+    "note": "Imprecise scent with a 30-foot range. When you use Survival to Track a creature by its scent, your proficiency bonus is equal to your level even if untrained. You can't wear another mask while wearing it.",
+    "modifiers": [
+      {
+        "value": 2,
+        "type": "item",
+        "target": "skill",
+        "detail": "survival",
+        "appliesWhen": "to Track a creature by its scent"
+      }
+    ],
+    "senses": [
+      {
+        "name": "scent",
+        "range": 30,
+        "acuity": "imprecise"
+      }
+    ]
+  },
+  "item-bloodhound-mask-greater": {
+    "id": "item-bloodhound-mask-greater",
+    "name": "Bloodhound Mask",
+    "fromItemId": "bloodhound-mask-greater",
+    "duration": "8 hours",
+    "note": "Imprecise scent with a 60-foot range. When you use Survival to Track a creature by its scent, your proficiency bonus is equal to your level even if untrained. You can't wear another mask while wearing it.",
+    "modifiers": [
+      {
+        "value": 3,
+        "type": "item",
+        "target": "skill",
+        "detail": "survival",
+        "appliesWhen": "to Track a creature by its scent"
+      }
+    ],
+    "senses": [
+      {
+        "name": "scent",
+        "range": 60,
+        "acuity": "imprecise"
+      }
+    ]
+  },
+  "item-bloodhound-olfactory-stimulators": {
+    "id": "item-bloodhound-olfactory-stimulators",
+    "name": "Olfactory Stimulators",
+    "fromItemId": "bloodhound-olfactory-stimulators",
+    "duration": "1 minute",
+    "note": "Activate (once per day): your stimulators twitch and gather more information, giving you imprecise scent with a range of 30 feet.",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "scent",
+        "range": 30,
+        "acuity": "imprecise"
+      }
+    ]
+  },
+  "break-the-suns-legs": {
+    "id": "break-the-suns-legs",
+    "name": "Break the Sun's Legs",
+    "feats": [
+      "break-the-suns-legs"
+    ],
+    "duration": "1 minute",
+    "note": "The stolen light is channeled to your eyes, granting you greater darkvision. The surrounding area is under a 9th-rank Darkness effect for the same minute — that part is on the battlefield, not your sheet.",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "greater-darkvision"
+      }
+    ]
+  },
+  "item-chromatic-jellyfish-oil-lesser": {
+    "id": "item-chromatic-jellyfish-oil-lesser",
+    "name": "Jellyfish Oil",
+    "fromItemId": "chromatic-jellyfish-oil-lesser",
+    "duration": "10 minutes",
+    "note": "Resistance 5 to precision damage and to the extra damage from critical hits. You also ignore difficult terrain from tight spaces that don't force you to Squeeze, move 5 feet per round when you succeed at Squeeze (10 feet on a critical success), and can Crawl at half your Speed.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "precision",
+        "value": 5
+      },
+      {
+        "type": "critical-hits",
+        "value": 5
+      }
+    ]
+  },
+  "item-clockwork-goggles": {
+    "id": "item-clockwork-goggles",
+    "name": "Clockwork Goggles",
+    "fromItemId": "clockwork-goggles",
+    "duration": "10 minutes",
+    "note": "The lenses cycle rapidly, granting you low-light vision.",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "low-light-vision"
+      }
+    ]
+  },
+  "item-clockwork-goggles-greater": {
+    "id": "item-clockwork-goggles-greater",
+    "name": "Clockwork Goggles",
+    "fromItemId": "clockwork-goggles-greater",
+    "duration": "10 minutes",
+    "note": "The lenses cycle rapidly, granting you low-light vision and darkvision.",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "low-light-vision"
+      },
+      {
+        "name": "darkvision"
+      }
+    ]
+  },
+  "item-clockwork-goggles-major": {
+    "id": "item-clockwork-goggles-major",
+    "name": "Clockwork Goggles",
+    "fromItemId": "clockwork-goggles-major",
+    "duration": "10 minutes",
+    "note": "Low-light vision, darkvision, and the effects of See the Unseen — invisible creatures are concealed to you rather than undetected.",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "low-light-vision"
+      },
+      {
+        "name": "darkvision"
+      },
+      {
+        "name": "see-invisibility"
+      }
+    ]
+  },
+  "close-formation": {
+    "id": "close-formation",
+    "name": "Close Formation",
+    "feats": [
+      "close-formation"
+    ],
+    "duration": "while wielding two fans, one in each hand",
+    "note": "Fan-dance spatial awareness: while you wield two fans, each in a different hand, you gain tremorsense as an imprecise sense with a range of 20 feet.",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "tremorsense",
+        "range": 20,
+        "acuity": "imprecise"
+      }
+    ]
+  },
+  "curse-of-creeping-ashes-1": {
+    "id": "curse-of-creeping-ashes-1",
+    "name": "Creeping Ashes 1",
+    "feats": [
+      "curse-of-creeping-ashes"
+    ],
+    "exclusiveGroup": "oracle-cursebound",
+    "duration": "while cursebound 1",
+    "note": "Cursebound 1: weakness 2 to fire damage. Any immunity or resistance you have to fire is suppressed.",
+    "modifiers": [],
+    "weaknesses": [
+      {
+        "type": "fire",
+        "value": 2
+      }
+    ]
+  },
+  "curse-of-creeping-ashes-2": {
+    "id": "curse-of-creeping-ashes-2",
+    "name": "Creeping Ashes 2",
+    "feats": [
+      "curse-of-creeping-ashes"
+    ],
+    "exclusiveGroup": "oracle-cursebound",
+    "duration": "while cursebound 2",
+    "note": "Cursebound 2 (cumulative): weakness 2 to fire with any fire immunity or resistance suppressed, plus swirling ash imposing a −2 circumstance penalty to your ranged attack rolls.",
+    "modifiers": [
+      {
+        "value": -2,
+        "type": "circumstance",
+        "target": "attack",
+        "appliesWhen": "ranged attack rolls"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "fire",
+        "value": 2
+      }
+    ]
+  },
+  "curse-of-creeping-ashes-3": {
+    "id": "curse-of-creeping-ashes-3",
+    "name": "Creeping Ashes 3",
+    "feats": [
+      "curse-of-creeping-ashes"
+    ],
+    "exclusiveGroup": "oracle-cursebound",
+    "duration": "while cursebound 3",
+    "note": "Cursebound 3 (cumulative): your weakness to fire is 5 + your level and any fire immunity or resistance is suppressed; the −2 circumstance penalty to ranged attack rolls continues.",
+    "modifiers": [
+      {
+        "value": -2,
+        "type": "circumstance",
+        "target": "attack",
+        "appliesWhen": "ranged attack rolls"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "fire",
+        "value": "5+@actor.level"
+      }
+    ]
+  },
+  "curse-of-creeping-ashes-4": {
+    "id": "curse-of-creeping-ashes-4",
+    "name": "Creeping Ashes 4",
+    "feats": [
+      "curse-of-creeping-ashes"
+    ],
+    "exclusiveGroup": "oracle-cursebound",
+    "duration": "while cursebound 4",
+    "note": "Cursebound 4 (cumulative): fire weakness 5 + your level, −2 circumstance to ranged attack rolls, and a −10-foot status penalty to all your Speeds as your limbs crumble — apply that Speed penalty by hand, the mode can't.",
+    "modifiers": [
+      {
+        "value": -2,
+        "type": "circumstance",
+        "target": "attack",
+        "appliesWhen": "ranged attack rolls"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "fire",
+        "value": "5+@actor.level"
+      }
+    ]
+  },
+  "curse-of-inclement-headwinds-1": {
+    "id": "curse-of-inclement-headwinds-1",
+    "name": "Headwinds 1",
+    "feats": [
+      "curse-of-inclement-headwinds"
+    ],
+    "exclusiveGroup": "oracle-cursebound",
+    "duration": "while cursebound 1",
+    "note": "Cursebound 1: electricity weakness 2. Electricity spells and effects with extra effects against a creature wearing or holding metal treat you as wearing metal, and any immunity or resistance you have to them is suppressed.",
+    "modifiers": [],
+    "weaknesses": [
+      {
+        "type": "electricity",
+        "value": 2
+      }
+    ]
+  },
+  "curse-of-inclement-headwinds-2": {
+    "id": "curse-of-inclement-headwinds-2",
+    "name": "Headwinds 2",
+    "feats": [
+      "curse-of-inclement-headwinds"
+    ],
+    "exclusiveGroup": "oracle-cursebound",
+    "duration": "while cursebound 2",
+    "note": "Cursebound 2 (cumulative): electricity weakness 2 and you count as wearing metal for electricity effects, plus blowing winds imposing a −2 circumstance penalty to your ranged attack rolls.",
+    "modifiers": [
+      {
+        "value": -2,
+        "type": "circumstance",
+        "target": "attack",
+        "appliesWhen": "ranged attack rolls"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "electricity",
+        "value": 2
+      }
+    ]
+  },
+  "curse-of-inclement-headwinds-3": {
+    "id": "curse-of-inclement-headwinds-3",
+    "name": "Headwinds 3",
+    "feats": [
+      "curse-of-inclement-headwinds"
+    ],
+    "exclusiveGroup": "oracle-cursebound",
+    "duration": "while cursebound 3",
+    "note": "Cursebound 3 (cumulative): your weakness to electricity is 5 + your level, you still count as wearing metal for electricity effects, and the −2 circumstance penalty to ranged attack rolls continues.",
+    "modifiers": [
+      {
+        "value": -2,
+        "type": "circumstance",
+        "target": "attack",
+        "appliesWhen": "ranged attack rolls"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "electricity",
+        "value": "5+@actor.level"
+      }
+    ]
+  },
+  "curse-of-inclement-headwinds-4": {
+    "id": "curse-of-inclement-headwinds-4",
+    "name": "Headwinds 4",
+    "feats": [
+      "curse-of-inclement-headwinds"
+    ],
+    "exclusiveGroup": "oracle-cursebound",
+    "duration": "while cursebound 4",
+    "note": "Cursebound 4 (cumulative): electricity weakness 5 + your level, −2 circumstance to ranged attack rolls, and the raging winds push you back for a −10-foot status penalty to all your Speeds — apply that Speed penalty by hand, the mode can't.",
+    "modifiers": [
+      {
+        "value": -2,
+        "type": "circumstance",
+        "target": "attack",
+        "appliesWhen": "ranged attack rolls"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "electricity",
+        "value": "5+@actor.level"
+      }
+    ]
+  },
+  "curse-of-inevitable-rot-1": {
+    "id": "curse-of-inevitable-rot-1",
+    "name": "Inevitable Rot 1",
+    "feats": [
+      "curse-of-inevitable-rot"
+    ],
+    "exclusiveGroup": "oracle-cursebound",
+    "duration": "while cursebound 1",
+    "note": "Cursebound 1: you gain weakness 2 to acid and poison damage.",
+    "modifiers": [],
+    "weaknesses": [
+      {
+        "type": "acid",
+        "value": 2
+      },
+      {
+        "type": "poison",
+        "value": 2
+      }
+    ]
+  },
+  "curse-of-inevitable-rot-2": {
+    "id": "curse-of-inevitable-rot-2",
+    "name": "Inevitable Rot 2",
+    "feats": [
+      "curse-of-inevitable-rot"
+    ],
+    "exclusiveGroup": "oracle-cursebound",
+    "duration": "while cursebound 2",
+    "note": "Cursebound 2 (cumulative): weakness 2 to acid and poison, and a −1 status penalty to saves against diseases and poisons. Anyone attempting to Treat your Disease, Poison, or Wounds also takes −1 — that penalty is on their sheet.",
+    "modifiers": [
+      {
+        "value": -1,
+        "type": "status",
+        "target": "save",
+        "appliesWhen": "against diseases and poisons"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "acid",
+        "value": 2
+      },
+      {
+        "type": "poison",
+        "value": 2
+      }
+    ]
+  },
+  "curse-of-inevitable-rot-3": {
+    "id": "curse-of-inevitable-rot-3",
+    "name": "Inevitable Rot 3",
+    "feats": [
+      "curse-of-inevitable-rot"
+    ],
+    "exclusiveGroup": "oracle-cursebound",
+    "duration": "while cursebound 3",
+    "note": "Cursebound 3 (cumulative): your weakness to acid and poison damage increases to twice your level; the −1 status penalty to saves against diseases and poisons continues (and −1 for anyone treating you).",
+    "modifiers": [
+      {
+        "value": -1,
+        "type": "status",
+        "target": "save",
+        "appliesWhen": "against diseases and poisons"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "acid",
+        "value": "2*@actor.level"
+      },
+      {
+        "type": "poison",
+        "value": "2*@actor.level"
+      }
+    ]
+  },
+  "curse-of-inevitable-rot-4": {
+    "id": "curse-of-inevitable-rot-4",
+    "name": "Inevitable Rot 4",
+    "feats": [
+      "curse-of-inevitable-rot"
+    ],
+    "exclusiveGroup": "oracle-cursebound",
+    "duration": "while cursebound 4",
+    "note": "Cursebound 4 (cumulative): acid and poison weakness twice your level, and the status penalty to saves against diseases and poisons increases to −2 (as does the penalty for anyone attempting to Treat your Disease, Poison, or Wounds).",
+    "modifiers": [
+      {
+        "value": -2,
+        "type": "status",
+        "target": "save",
+        "appliesWhen": "against diseases and poisons"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "acid",
+        "value": "2*@actor.level"
+      },
+      {
+        "type": "poison",
+        "value": "2*@actor.level"
+      }
+    ]
+  },
+  "curse-of-the-living-death-1": {
+    "id": "curse-of-the-living-death-1",
+    "name": "Living Death 1",
+    "category": "Oracle",
+    "exclusiveGroup": "oracle-cursebound",
+    "feats": [
+      "curse-of-the-living-death"
+    ],
+    "note": "Cursebound 1. You can be targeted by and are hurt by both vitality and void damage even if one normally has no effect on you (Heal can damage you), and any immunity or resistance you have to vitality or void is suppressed.",
+    "modifiers": [],
+    "weaknesses": [
+      {
+        "type": "vitality",
+        "value": 2
+      },
+      {
+        "type": "void",
+        "value": 2
+      }
+    ]
+  },
+  "curse-of-the-living-death-2": {
+    "id": "curse-of-the-living-death-2",
+    "name": "Living Death 2",
+    "category": "Oracle",
+    "exclusiveGroup": "oracle-cursebound",
+    "feats": [
+      "curse-of-the-living-death"
+    ],
+    "note": "Cursebound 2 (includes stage 1). Vitality and void still reach you through any immunity or resistance you have.",
+    "modifiers": [
+      {
+        "value": -1,
+        "type": "status",
+        "target": "save",
+        "detail": "fortitude"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "vitality",
+        "value": 2
+      },
+      {
+        "type": "void",
+        "value": 2
+      }
+    ]
+  },
+  "curse-of-the-living-death-3": {
+    "id": "curse-of-the-living-death-3",
+    "name": "Living Death 3",
+    "category": "Oracle",
+    "exclusiveGroup": "oracle-cursebound",
+    "feats": [
+      "curse-of-the-living-death"
+    ],
+    "note": "Cursebound 3. The weakness rises to 5 + your level; vitality and void still reach you through any immunity or resistance.",
+    "modifiers": [
+      {
+        "value": -1,
+        "type": "status",
+        "target": "save",
+        "detail": "fortitude"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "vitality",
+        "value": "5+@actor.level"
+      },
+      {
+        "type": "void",
+        "value": "5+@actor.level"
+      }
+    ]
+  },
+  "curse-of-the-living-death-4": {
+    "id": "curse-of-the-living-death-4",
+    "name": "Living Death 4",
+    "category": "Oracle",
+    "exclusiveGroup": "oracle-cursebound",
+    "feats": [
+      "curse-of-the-living-death"
+    ],
+    "note": "Cursebound 4. The Fortitude penalty doubles; vitality and void still reach you through any immunity or resistance.",
+    "modifiers": [
+      {
+        "value": -2,
+        "type": "status",
+        "target": "save",
+        "detail": "fortitude"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "vitality",
+        "value": "5+@actor.level"
+      },
+      {
+        "type": "void",
+        "value": "5+@actor.level"
+      }
+    ]
+  },
+  "curse-of-the-mortal-warrior-1": {
+    "id": "curse-of-the-mortal-warrior-1",
+    "name": "Mortal Warrior 1",
+    "category": "Oracle",
+    "exclusiveGroup": "oracle-cursebound",
+    "feats": [
+      "curse-of-the-mortal-warrior"
+    ],
+    "note": "Cursebound 1. Any immunity or resistance you have to spells is suppressed. This applies only to spells, not other magical abilities.",
+    "modifiers": [],
+    "weaknesses": [
+      {
+        "type": "damage from spells",
+        "value": 2
+      }
+    ]
+  },
+  "curse-of-the-mortal-warrior-2": {
+    "id": "curse-of-the-mortal-warrior-2",
+    "name": "Mortal Warrior 2",
+    "category": "Oracle",
+    "exclusiveGroup": "oracle-cursebound",
+    "feats": [
+      "curse-of-the-mortal-warrior"
+    ],
+    "note": "Cursebound 2 (includes stage 1). Any immunity or resistance you have to spells is still suppressed.",
+    "modifiers": [
+      {
+        "value": -1,
+        "type": "status",
+        "target": "save",
+        "appliesWhen": "against spells"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "damage from spells",
+        "value": 2
+      }
+    ]
+  },
+  "curse-of-the-mortal-warrior-3": {
+    "id": "curse-of-the-mortal-warrior-3",
+    "name": "Mortal Warrior 3",
+    "category": "Oracle",
+    "exclusiveGroup": "oracle-cursebound",
+    "feats": [
+      "curse-of-the-mortal-warrior"
+    ],
+    "note": "Cursebound 3. Your weakness to spell damage equals your level; immunity or resistance to spells stays suppressed.",
+    "modifiers": [
+      {
+        "value": -1,
+        "type": "status",
+        "target": "save",
+        "appliesWhen": "against spells"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "damage from spells",
+        "value": "@actor.level"
+      }
+    ]
+  },
+  "curse-of-the-mortal-warrior-4": {
+    "id": "curse-of-the-mortal-warrior-4",
+    "name": "Mortal Warrior 4",
+    "category": "Oracle",
+    "exclusiveGroup": "oracle-cursebound",
+    "feats": [
+      "curse-of-the-mortal-warrior"
+    ],
+    "note": "Cursebound 4. The penalty on saves against spells doubles; immunity or resistance to spells stays suppressed.",
+    "modifiers": [
+      {
+        "value": -2,
+        "type": "status",
+        "target": "save",
+        "appliesWhen": "against spells"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "damage from spells",
+        "value": "@actor.level"
+      }
+    ]
+  },
+  "item-darkvision-elixir-lesser": {
+    "id": "item-darkvision-elixir-lesser",
+    "name": "Darkvision",
+    "fromItemId": "darkvision-elixir-lesser",
+    "duration": "10 minutes",
+    "note": "Your sight becomes sharper in darkness.",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "darkvision"
+      }
+    ]
+  },
+  "item-darkvision-elixir-moderate": {
+    "id": "item-darkvision-elixir-moderate",
+    "name": "Darkvision",
+    "fromItemId": "darkvision-elixir-moderate",
+    "duration": "1 hour",
+    "note": "Your sight becomes sharper in darkness.",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "darkvision"
+      }
+    ]
+  },
+  "item-darkvision-elixir-greater": {
+    "id": "item-darkvision-elixir-greater",
+    "name": "Darkvision",
+    "fromItemId": "darkvision-elixir-greater",
+    "duration": "24 hours",
+    "survivesRest": true,
+    "note": "Your sight becomes sharper in darkness. Lasts a full day, so a night's rest doesn't end it.",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "darkvision"
+      }
+    ]
+  },
+  "item-deployable-cover-ballistic-cover": {
+    "id": "item-deployable-cover-ballistic-cover",
+    "name": "Ballistic Cover",
+    "fromItemId": "deployable-cover-ballistic-cover",
+    "duration": "While you have cover from Take Cover behind it",
+    "note": "The resistance applies only while a creature has cover from Taking Cover behind the deployed ballistic cover. The standard cover itself (+2 circumstance to AC) comes from Take Cover, not from this mode. Refolding the cover before reuse takes 1 minute.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "piercing damage from ranged weapons and ranged unarmed attacks",
+        "value": 2
+      }
+    ]
+  },
+  "item-devilwing-badge": {
+    "id": "item-devilwing-badge",
+    "name": "Devilwing Badge (Armor)",
+    "fromItemId": "devilwing-badge",
+    "duration": "While affixed to your armor",
+    "survivesRest": true,
+    "note": "The spellheart's armor option. Affixed to a WEAPON instead, it gives no resistance — your Strikes deal an extra 1d4 spirit damage until the end of your next turn after you cast a spell by Activating it. Activating it casts Divine Lance (spell attack +8, DC 18).",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "fire",
+        "value": 2
+      },
+      {
+        "type": "unholy",
+        "value": 2
+      }
+    ]
+  },
+  "item-devilwing-badge-greater": {
+    "id": "item-devilwing-badge-greater",
+    "name": "Devilwing Badge (Armor)",
+    "fromItemId": "devilwing-badge-greater",
+    "duration": "While affixed to your armor",
+    "survivesRest": true,
+    "note": "The spellheart's armor option. Affixed to a WEAPON instead, it gives no resistance — your Strikes deal an extra 1d6 spirit damage until the end of your next turn after you cast a spell by Activating it. Activating it casts Divine Lance (spell attack +14, DC 24), or Crisis of Faith once per day.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "fire",
+        "value": 5
+      },
+      {
+        "type": "unholy",
+        "value": 5
+      }
+    ]
+  },
+  "dissolutions-sight": {
+    "id": "dissolutions-sight",
+    "name": "Dissolution's Sight",
+    "feats": [
+      "dissolutions-sight"
+    ],
+    "duration": "1 minute",
+    "note": "Once per hour. Accepting your inner darkness means no outer darkness can obscure your sight.",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "greater-darkvision"
+      }
+    ]
+  },
+  "item-draft-of-stellar-radiance": {
+    "id": "item-draft-of-stellar-radiance",
+    "name": "Stellar Radiance",
+    "fromItemId": "draft-of-stellar-radiance",
+    "duration": "1 minute",
+    "note": "You emanate bright light in a 20-foot radius (dim light for another 20 feet). Any creature that targets you with an attack or ability must succeed at a save or be dazzled for 1 round; a creature that succeeds is immune to that effect for 24 hours.",
+    "modifiers": [
+      {
+        "value": -20,
+        "type": "untyped",
+        "target": "skill",
+        "detail": "stealth"
+      }
+    ]
+  },
+  "item-dragons-eye-charm": {
+    "id": "item-dragons-eye-charm",
+    "name": "Golden Shroud",
+    "fromItemId": "dragons-eye-charm",
+    "duration": "10 minutes",
+    "note": "The charm's golden-shroud activation (once per day). Its three other once-per-day activations are separate and not covered here: a 5th-rank Ignition (spell attack +13); looking through the pupil for darkvision while you Sustain, up to 10 minutes; and speaking and understanding Draconic while you Sustain, up to 10 minutes. Track those yourself.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "fire",
+        "value": 5
+      }
+    ]
+  },
+  "echoes-in-stone": {
+    "id": "echoes-in-stone",
+    "name": "Echoes in Stone",
+    "feats": [
+      "echoes-in-stone"
+    ],
+    "duration": "Until the start of your next turn",
+    "note": "Requires that you are standing on a stone or earthen surface.",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "tremorsense",
+        "range": 20,
+        "acuity": "imprecise"
+      }
+    ]
+  },
+  "item-elder-seed": {
+    "id": "item-elder-seed",
+    "name": "Elder Seed (Stage 1)",
+    "fromItemId": "elder-seed",
+    "duration": "Stage 1 — 9 days",
+    "survivesRest": true,
+    "note": "Stage 1 of the boon. You can also cast Enlarge, Speak with Animals, Speak with Plants and Web each once per day as primal innate spells. Later stages are not modelled here: stage 2 (1 month) adds low-light vision, Arboreal, Clumsy 1, a -1 status penalty to initiative and a weakness to fire and to axes equal to half your level; stage 3 (1 month) raises those to Clumsy 2, -2 initiative and a weakness equal to your level, and makes you Slowed on every initiative roll; stage 4 kills you. Purging ends the effects.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "bludgeoning",
+        "value": "@actor.level"
+      },
+      {
+        "type": "piercing",
+        "value": "@actor.level"
+      }
+    ],
+    "senses": [
+      {
+        "name": "tremorsense",
+        "range": 30
+      }
+    ]
+  },
+  "energetic-meltdown": {
+    "id": "energetic-meltdown",
+    "name": "Moderate Backlash",
+    "feats": [
+      "energetic-meltdown"
+    ],
+    "duration": "Until your next daily preparations",
+    "survivesRest": true,
+    "note": "Moderate Backlash from Energetic Meltdown. You also lose immunity to that energy type, if you had it, until your next daily preparations. (Mild Backlash is only damage equal to your level; Severe Backlash is a burst dealing 1d6 per level, which you take in full without a save.)",
+    "modifiers": [],
+    "weaknesses": [
+      {
+        "type": "your backlash's energy type",
+        "value": "floor(@actor.level/3)"
+      }
+    ]
+  },
+  "item-energy-adaptive": {
+    "id": "item-energy-adaptive",
+    "name": "Energy Adaptive",
+    "fromItemId": "energy-adaptive",
+    "duration": "Until you Activate the rune again or the armor is no longer invested",
+    "survivesRest": true,
+    "note": "Activated as a reaction-style 5-action activation, once per hour, triggered by taking acid, cold, electricity or fire damage. The resistance does NOT apply to the triggering damage. Only one energy type can be active at a time — the app can't know which one you picked, so read this row as the type you triggered on.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "the triggering energy type (acid, cold, electricity or fire)",
+        "value": 5
+      }
+    ]
+  },
+  "item-energy-mutagen-lesser": {
+    "id": "item-energy-mutagen-lesser",
+    "name": "Energy Mutagen",
+    "fromItemId": "energy-mutagen-lesser",
+    "duration": "1 minute",
+    "note": "The mutagen is attuned to one of acid, cold, electricity or fire when it is created — the app can't know which, so the two rows below name the type rather than fixing it. Benefit also: whenever you score a hit with a melee weapon, add 1 damage of the attuned type.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "the mutagen's attuned energy type",
+        "value": 5
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "each of the other three energy types",
+        "value": 5
+      }
+    ]
+  },
+  "item-energy-mutagen-moderate": {
+    "id": "item-energy-mutagen-moderate",
+    "name": "Energy Mutagen",
+    "fromItemId": "energy-mutagen-moderate",
+    "duration": "10 minutes",
+    "note": "The mutagen is attuned to one of acid, cold, electricity or fire when it is created — the app can't know which, so the two rows below name the type rather than fixing it. Benefit also: whenever you score a hit with a melee weapon, add 1d4 damage of the attuned type.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "the mutagen's attuned energy type",
+        "value": 10
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "each of the other three energy types",
+        "value": 5
+      }
+    ]
+  },
+  "item-energy-mutagen-greater": {
+    "id": "item-energy-mutagen-greater",
+    "name": "Energy Mutagen",
+    "fromItemId": "energy-mutagen-greater",
+    "duration": "1 hour",
+    "note": "The mutagen is attuned to one of acid, cold, electricity or fire when it is created — the app can't know which, so the two rows below name the type rather than fixing it. Benefit also: whenever you score a hit with a melee weapon, add 1d6 damage of the attuned type; and you can end the mutagen as a 2-action activity to unleash a burst dealing 2d6 of the attuned type per full 10 minutes of remaining duration (max 8d6), with a save.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "the mutagen's attuned energy type",
+        "value": 15
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "each of the other three energy types",
+        "value": 5
+      }
+    ]
+  },
+  "item-energy-mutagen-major": {
+    "id": "item-energy-mutagen-major",
+    "name": "Energy Mutagen",
+    "fromItemId": "energy-mutagen-major",
+    "duration": "1 hour",
+    "note": "The mutagen is attuned to acid, cold, electricity or fire when it is made: apply the resistance 20 to that type and the weakness 5 to the other three. Benefit also adds 2d6 damage of the attuned type on every melee weapon hit, and you can end the mutagen to unleash a burst dealing 3d6 per full 10 minutes remaining (max 12d6).",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "the attuned energy type",
+        "value": 20
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "the other three energy types",
+        "value": 5
+      }
+    ]
+  },
+  "extract-vow-of-nonviolence": {
+    "id": "extract-vow-of-nonviolence",
+    "name": "Vow of Nonviolence",
+    "feats": [
+      "extract-vow-of-nonviolence"
+    ],
+    "duration": "10 minutes",
+    "note": "On a critical success the weapon swears not to hurt you; on a plain success the remaining duration also drops by 1 minute each time that weapon hits you. The resistance covers only damage dealt by that one weapon.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "damage from the weapon that swore the vow",
+        "value": "floor(@actor.level/2)"
+      }
+    ]
+  },
+  "feral-senses": {
+    "id": "feral-senses",
+    "name": "Feral Senses",
+    "feats": [
+      "feral-senses"
+    ],
+    "duration": "while in your hybrid or animal shape",
+    "note": "Werecreature archetype: these senses last only while the hybrid or animal shape is up.",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "low-light-vision"
+      },
+      {
+        "name": "scent",
+        "range": 30,
+        "acuity": "imprecise"
+      }
+    ]
+  },
+  "item-fire-and-iceberg": {
+    "id": "item-fire-and-iceberg",
+    "name": "Fire and Iceberg",
+    "fromItemId": "fire-and-iceberg",
+    "duration": "1 minute",
+    "note": "Eating the salad leaves a lasting sense of heat and cold.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "fire",
+        "value": 5
+      },
+      {
+        "type": "cold",
+        "value": 5
+      }
+    ]
+  },
+  "item-force-shield": {
+    "id": "item-force-shield",
+    "name": "Force Bubble",
+    "fromItemId": "force-shield",
+    "duration": "1 minute",
+    "note": "Once per day. The bubble ends early if you stop holding the shield.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "physical",
+        "value": 5
+      }
+    ]
+  },
+  "item-forge-warden": {
+    "id": "item-forge-warden",
+    "name": "Forge Warden",
+    "fromItemId": "forge-warden",
+    "duration": "while the shield is raised",
+    "note": "Adjacent allies gain the same fire resistance 5, but that belongs on their sheets.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "fire",
+        "value": 5
+      }
+    ]
+  },
+  "form-a-flock": {
+    "id": "form-a-flock",
+    "name": "Form a Flock",
+    "feats": [
+      "form-a-flock"
+    ],
+    "duration": "up to 1 minute",
+    "note": "The flock also grants 25 temporary Hit Points and ends when they are gone, the minute elapses, or you Dismiss it. Enemies in the flock aura are dazzled, and you can take the Acrid Barrage action while it lasts.",
+    "modifiers": [],
+    "weaknesses": [
+      {
+        "type": "area damage",
+        "value": 5
+      },
+      {
+        "type": "splash damage",
+        "value": 5
+      }
+    ]
+  },
+  "fresh-produce": {
+    "id": "fresh-produce",
+    "name": "Fresh Produce",
+    "feats": [
+      "fresh-produce"
+    ],
+    "duration": "10 minutes",
+    "note": "Only if you eat the produce yourself; you also feel full and can't eat another piece while it lasts. Resistance is 2 at 1st level and increases by 2 for every 2 levels.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "void",
+        "value": "2*floor((@actor.level+1)/2)"
+      }
+    ]
+  },
+  "item-frost-breath": {
+    "id": "item-frost-breath",
+    "name": "Frost Breath",
+    "fromItemId": "frost-breath",
+    "duration": "while the breath is held",
+    "note": "Ends when you exhale the breath as the single-action cone of frigid air.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "cold",
+        "value": 5
+      }
+    ]
+  },
+  "item-galvanic-chew": {
+    "id": "item-galvanic-chew",
+    "name": "Galvanic Chew",
+    "fromItemId": "galvanic-chew",
+    "duration": "up to 1 hour",
+    "note": "Ends early if you spend the Secondary Effect reaction, which makes the chew inert and leaves you temporarily immune to galvanic chews for 24 hours.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "electricity",
+        "value": 5
+      }
+    ]
+  },
+  "geomancer-dedication": {
+    "id": "geomancer-dedication",
+    "name": "Underground Attunement",
+    "feats": [
+      "geomancer-dedication"
+    ],
+    "duration": "1 round",
+    "note": "Terrain attunement after expending a slot on an earth spell underground. The other self-affecting attunements aren't tracked here: Aquatic grants a swim Speed, Sky lets you Fly 10 feet, Mountain gives resistance to physical damage (except adamantine) equal to the spell's rank, and Plains gives temporary Hit Points equal to the spell's rank. Arctic, Desert, Forest and Swamp affect enemies only.",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "darkvision"
+      },
+      {
+        "name": "tremorsense",
+        "range": 15,
+        "acuity": "imprecise"
+      }
+    ]
+  },
+  "item-ghostcallers-planchette": {
+    "id": "item-ghostcallers-planchette",
+    "name": "Planchette (Armor)",
+    "fromItemId": "ghostcallers-planchette",
+    "duration": "until the start of your next turn",
+    "note": "Only while the spellheart is affixed to armor, and only after you cast a spell by Activating it. Ghost touch attacks — including attacks by incorporeal creatures — ignore the resistance. Affixed to a weapon instead, it gives that weapon ghost touch until the end of your next turn.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "physical (except ghost touch)",
+        "value": 5
+      }
+    ]
+  },
+  "item-goz-mask-major": {
+    "id": "item-goz-mask-major",
+    "name": "Goz Mask",
+    "fromItemId": "goz-mask-major",
+    "duration": "1 hour",
+    "note": "Once per day. You also ignore all concealment from environmental effects such as fog, rain and storms.",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "darkvision"
+      }
+    ]
+  },
+  "item-grim-specter": {
+    "id": "item-grim-specter",
+    "name": "Grim Specter",
+    "fromItemId": "grim-specter",
+    "duration": "up to 1 minute (Sustained)",
+    "note": "Once per day. You become incorporeal: immune to effects that require a physical body (including precision damage) and to exposure to MOST diseases and poisons — the GM decides which ones still reach you, so they are not listed as blanket immunities. You also gain resistance to all damage equal to half the relic's level (doubled against non-magical damage); force damage, ghost touch attacks, spirit, void and vitality damage ignore it — track that by hand, the app doesn't know the relic's level. You can move through solid objects but are slowed 1 on any turn you start inside one, and you can't attempt or be the target of Strength-based checks against corporeal creatures.",
+    "modifiers": [],
+    "immunities": [
+      "precision",
+      "effects that require a physical body"
+    ]
+  },
+  "item-grolna": {
+    "id": "item-grolna",
+    "name": "Grolna",
+    "fromItemId": "grolna",
+    "duration": "1 hour (stage 1, after a 1-minute onset)",
+    "note": "You are also stupefied 1 for the hour. Stage 2 is stupefied 2 for 6 hours, with a maximum duration of 8 hours; another dose during stage 1 resets stage 1 and postpones stage 2.",
+    "modifiers": [
+      {
+        "value": 3,
+        "type": "item",
+        "target": "skill",
+        "detail": "survival",
+        "appliesWhen": "to follow tracks"
+      }
+    ],
+    "senses": [
+      {
+        "name": "scent",
+        "range": 30,
+        "acuity": "imprecise"
+      }
+    ]
+  },
+  "harden-flesh": {
+    "id": "harden-flesh",
+    "name": "Harden Flesh",
+    "feats": [
+      "harden-flesh"
+    ],
+    "duration": "until the beginning of your next turn",
+    "note": "Requires standing on earthen or stone ground. Resistance 3, increasing by 1 at 12th level and every 4 levels after, to a maximum of 6 at 20th.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "physical (except adamantine)",
+        "value": "min(6,3+floor((@actor.level-8)/4))"
+      }
+    ]
+  },
+  "item-horned-lion-amulet": {
+    "id": "item-horned-lion-amulet",
+    "name": "Horned Lion",
+    "fromItemId": "horned-lion-amulet",
+    "duration": "1 minute",
+    "note": "The triggering fire damage is instead reduced by fire resistance 10; the lasting resistance 5 is what this pill tracks. If the trigger was persistent fire damage, you immediately attempt a flat check to end it, and its DC stays 10 until it ends.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "fire",
+        "value": 5
+      }
+    ]
+  },
+  "kinetic-dampening": {
+    "id": "kinetic-dampening",
+    "name": "Kinetic Dampening",
+    "feats": [
+      "kinetic-dampening"
+    ],
+    "duration": "until the beginning of your next turn",
+    "note": "Resistance 5 to physical damage, increasing by 5 at 10th level and every 4 levels after. With the second Awakening you also gain the same resistance to your choice of fire, electricity or sonic — add that one by hand, since the app can't record the choice. The first Awakening's ally emanation isn't modelled.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "physical",
+        "value": "max(5,5+5*floor((@actor.level-6)/4))"
+      }
+    ]
+  },
+  "item-living-statue": {
+    "id": "item-living-statue",
+    "name": "Living Statue",
+    "fromItemId": "living-statue",
+    "note": "Only while you are standing on the earth. The resistance increases from 5 to 8 in caves or subterranean environments.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "physical (except adamantine)",
+        "value": 5
+      }
+    ],
+    "duration": "while standing on the earth"
+  },
+  "item-maelstromic-destabilizer-lesser": {
+    "id": "item-maelstromic-destabilizer-lesser",
+    "name": "Destabilizer (Lesser)",
+    "fromItemId": "maelstromic-destabilizer-lesser",
+    "duration": "1 minute",
+    "note": "The creature holding the gadget gains resistance 2 to spirit damage. The weakness 2 to spirit damage the destabilizer inflicts on creatures in its emanation is target-facing and isn't applied to your sheet.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "spirit",
+        "value": 2
+      }
+    ]
+  },
+  "item-maelstromic-destabilizer-moderate": {
+    "id": "item-maelstromic-destabilizer-moderate",
+    "name": "Destabilizer (Moderate)",
+    "fromItemId": "maelstromic-destabilizer-moderate",
+    "duration": "1 minute",
+    "note": "The creature holding the gadget gains resistance 5 to spirit damage. The weakness 5 to spirit damage the destabilizer inflicts on creatures in its emanation is target-facing and isn't applied to your sheet.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "spirit",
+        "value": 5
+      }
+    ]
+  },
+  "item-maelstromic-destabilizer-major": {
+    "id": "item-maelstromic-destabilizer-major",
+    "name": "Destabilizer (Major)",
+    "fromItemId": "maelstromic-destabilizer-major",
+    "duration": "1 minute",
+    "note": "The creature holding the gadget gains resistance 10 to spirit damage. The weakness 10 to spirit damage the destabilizer inflicts on creatures in its emanation is target-facing and isn't applied to your sheet.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "spirit",
+        "value": 10
+      }
+    ]
+  },
+  "item-saurian-spike-major": {
+    "id": "item-saurian-spike-major",
+    "name": "Saurian Spike (Armor)",
+    "fromItemId": "saurian-spike-major",
+    "note": "While the spellheart is affixed to armor you gain precise scent with a range of 60 feet. The weapon-affixed benefit (frightening battle forms) is target-facing.",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "scent",
+        "range": 60,
+        "acuity": "precise"
+      }
+    ],
+    "duration": "while affixed to armor"
+  },
+  "scouring-spark": {
+    "id": "scouring-spark",
+    "name": "Scouring Spark",
+    "feats": [
+      "scouring-spark"
+    ],
+    "duration": "while Channeling your Divine Spark",
+    "note": "You are immune to confused and frightened. Your unarmed attacks deal 1d6 additional fire damage and your fire spells deal one extra die of fire damage (doubled against aberrations, fiends and undead) — those damage riders aren't applied to your Strikes yet. The 3d6 to creatures that touch or hit you is target-facing.",
+    "modifiers": [],
+    "immunities": [
+      "confused",
+      "frightened"
+    ]
+  },
+  "shadow-master": {
+    "id": "shadow-master",
+    "name": "Shadow Master",
+    "feats": [
+      "shadow-master"
+    ],
+    "note": "Only while you are in an area of dim light or darkness. In dim light or darkness you may also roll Reflex saves twice and take the higher result (fortune).",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "all except force and damage from Ghost Touch Strikes",
+        "value": 5
+      }
+    ]
+  },
+  "shadow-sight": {
+    "id": "shadow-sight",
+    "name": "Shadow Sight",
+    "feats": [
+      "shadow-sight"
+    ],
+    "duration": "1 minute",
+    "note": "Once per hour, a single action: you gain greater darkvision for 1 minute.",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "greater-darkvision"
+      }
+    ]
+  },
+  "spell-survivor": {
+    "id": "spell-survivor",
+    "name": "Spell Survivor",
+    "feats": [
+      "spell-survivor"
+    ],
+    "duration": "until the end of that caster's next turn",
+    "note": "Triggered by critically succeeding at a save against a spell using Orc Superstition or Pervasive Superstition. Resistance 1 to all damage dealt by that caster, increasing by 1 at 9th level and every 4 levels thereafter.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "damage from that caster",
+        "value": "max(1,1+floor((@actor.level-5)/4))"
+      }
+    ]
+  },
+  "item-spiny-lodestone": {
+    "id": "item-spiny-lodestone",
+    "name": "Spiny Lodestone (Armor)",
+    "fromItemId": "spiny-lodestone",
+    "note": "While the spellheart is affixed to metal armor. The weapon-affixed benefit (extra 1d4 piercing on Strikes after Activating it) isn't modelled.",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "item",
+        "target": "skill",
+        "detail": "athletics"
+      }
+    ],
+    "resistances": [
+      {
+        "type": "nonlethal",
+        "value": 2
+      }
+    ],
+    "duration": "while affixed to metal armor"
+  },
+  "item-spiny-lodestone-greater": {
+    "id": "item-spiny-lodestone-greater",
+    "name": "Spiny Lodestone (Greater, Armor)",
+    "fromItemId": "spiny-lodestone-greater",
+    "note": "While the spellheart is affixed to metal armor. The weapon-affixed benefit (extra 1d6 piercing on Strikes after Activating it) isn't modelled.",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "item",
+        "target": "skill",
+        "detail": "athletics"
+      }
+    ],
+    "resistances": [
+      {
+        "type": "nonlethal",
+        "value": 5
+      }
+    ],
+    "duration": "while affixed to metal armor"
+  },
+  "item-spun-cloud-blue": {
+    "id": "item-spun-cloud-blue",
+    "name": "Spun Cloud (Blue)",
+    "fromItemId": "spun-cloud-blue",
+    "duration": "1 minute",
+    "note": "Only while you are inside the exhaled blue cloud, which dissipates after 1 minute. Creatures in the cloud gain resistance 5 to electricity.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "electricity",
+        "value": 5
+      }
+    ]
+  },
+  "starlight-armor": {
+    "id": "starlight-armor",
+    "name": "Starlight Armor",
+    "feats": [
+      "starlight-armor"
+    ],
+    "duration": "1 minute",
+    "note": "Once per day. Resistance 7 to piercing, bludgeoning and slashing, increasing to 10 at 17th level. The armor also sheds bright light for 20 feet; the dazzling save adjacent attackers must attempt is target-facing. Paizo printed no duration — 1 minute is the value the linked effect uses.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "piercing",
+        "value": "max(7,10*floor(@actor.level/17))"
+      },
+      {
+        "type": "bludgeoning",
+        "value": "max(7,10*floor(@actor.level/17))"
+      },
+      {
+        "type": "slashing",
+        "value": "max(7,10*floor(@actor.level/17))"
+      }
+    ]
+  },
+  "item-stone-body-mutagen-lesser": {
+    "id": "item-stone-body-mutagen-lesser",
+    "name": "Stone Body (Lesser)",
+    "fromItemId": "stone-body-mutagen-lesser",
+    "duration": "10 minutes",
+    "note": "Benefit: resistance 5 to physical damage except bludgeoning. Drawback: -2 to Reflex saves, and all your Speeds are reduced by 10 feet (minimum 5 feet) — the Speed reduction is not applied to the sheet, track it yourself.",
+    "modifiers": [
+      {
+        "value": -2,
+        "type": "untyped",
+        "target": "save",
+        "detail": "reflex"
+      }
+    ],
+    "resistances": [
+      {
+        "type": "physical (except bludgeoning)",
+        "value": 5
+      }
+    ]
+  },
+  "item-stone-body-mutagen-moderate": {
+    "id": "item-stone-body-mutagen-moderate",
+    "name": "Stone Body (Moderate)",
+    "fromItemId": "stone-body-mutagen-moderate",
+    "duration": "1 hour",
+    "note": "Benefit: resistance 5 to physical damage except bludgeoning. Drawback: -2 to Reflex saves, and all your Speeds are reduced by 10 feet (minimum 5 feet) — the Speed reduction is not applied to the sheet, track it yourself.",
+    "modifiers": [
+      {
+        "value": -2,
+        "type": "untyped",
+        "target": "save",
+        "detail": "reflex"
+      }
+    ],
+    "resistances": [
+      {
+        "type": "physical (except bludgeoning)",
+        "value": 5
+      }
+    ]
+  },
+  "item-storm-breath": {
+    "id": "item-storm-breath",
+    "name": "Storm Breath",
+    "fromItemId": "storm-breath",
+    "duration": "While you hold the breath",
+    "note": "After inhaling the storm breath you have resistance 5 to electricity and sonic. Exhaling it ends the effect and instead deals damage to creatures in the area with a save.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "electricity",
+        "value": 5
+      },
+      {
+        "type": "sonic",
+        "value": 5
+      }
+    ]
+  },
+  "item-sun-slayer": {
+    "id": "item-sun-slayer",
+    "name": "Sun Slayer Raised",
+    "fromItemId": "sun-slayer",
+    "duration": "While the shield is Raised",
+    "note": "While you have this shield raised you gain fire resistance 5. Its separate Sunset activation (once per day, in sunlight) only dims light in an area — nothing on your own sheet.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "fire",
+        "value": 5
+      }
+    ]
+  },
+  "item-swarmsuit": {
+    "id": "item-swarmsuit",
+    "name": "Swarmsuit",
+    "fromItemId": "swarmsuit",
+    "duration": "While worn",
+    "survivesRest": true,
+    "note": "Resistance 3 to physical damage from swarms. Explorer's clothing altered this way has a Dex cap of +2, check penalty -1 and Speed penalty -5 feet regardless of your Strength.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "physical damage from swarms",
+        "value": 3
+      }
+    ]
+  },
+  "item-tallowheart-mass": {
+    "id": "item-tallowheart-mass",
+    "name": "Tallowheart Fire Ward",
+    "fromItemId": "tallowheart-mass",
+    "duration": "1 minute",
+    "note": "Rubbing a portion on your body grants resistance 10 to fire for 1 minute. The mass has three portions; the other two activations instead grant quickened 1 (extra action only for Strikes with weapons you wield in your hands) or restore 4d8+12 Hit Points.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "fire",
+        "value": 10
+      }
+    ]
+  },
+  "item-thorn-of-milani-lesser": {
+    "id": "item-thorn-of-milani-lesser",
+    "name": "Thorn of Milani",
+    "fromItemId": "thorn-of-milani-lesser",
+    "duration": "Until the end of your next turn",
+    "note": "Activating the thorn on a hit deals an extra 1d4 spirit damage with the holy trait (instantaneous), then leaves you with weakness 1 to unholy.",
+    "modifiers": [],
+    "weaknesses": [
+      {
+        "type": "unholy",
+        "value": 1
+      }
+    ]
+  },
+  "item-thorn-triad": {
+    "id": "item-thorn-triad",
+    "name": "Thorn Triad (Armor)",
+    "fromItemId": "thorn-triad",
+    "duration": "Until the end of your next turn",
+    "note": "After casting a plant spell by activating the triad. Double the resistance (to 4) if the spell was not a cantrip. The Weapon benefit instead adds 1d4 persistent bleed to your Strikes with the affixed weapon.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "bludgeoning",
+        "value": 2
+      },
+      {
+        "type": "piercing",
+        "value": 2
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "fire",
+        "value": 3
+      }
+    ]
+  },
+  "item-thorn-triad-greater": {
+    "id": "item-thorn-triad-greater",
+    "name": "Thorn Triad (Greater)",
+    "fromItemId": "thorn-triad-greater",
+    "duration": "Until the end of your next turn",
+    "note": "After casting a plant spell by activating the triad. Double the resistance (to 8) if the spell was not a cantrip. The Weapon benefit instead adds 1d6 persistent bleed to your Strikes with the affixed weapon.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "bludgeoning",
+        "value": 4
+      },
+      {
+        "type": "piercing",
+        "value": 4
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "fire",
+        "value": 3
+      }
+    ]
+  },
+  "item-thorn-triad-major": {
+    "id": "item-thorn-triad-major",
+    "name": "Thorn Triad (Major)",
+    "fromItemId": "thorn-triad-major",
+    "duration": "Until the end of your next turn",
+    "note": "After casting a plant spell by activating the triad. Double the resistance (to 12) if the spell was not a cantrip. The Weapon benefit instead adds 1d8 persistent bleed to your Strikes with the affixed weapon.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "bludgeoning",
+        "value": 6
+      },
+      {
+        "type": "piercing",
+        "value": 6
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "fire",
+        "value": 3
+      }
+    ]
+  },
+  "item-tremorsensors": {
+    "id": "item-tremorsensors",
+    "name": "Tremorsensors",
+    "fromItemId": "tremorsensors",
+    "duration": "10 minutes",
+    "note": "Once per day. You stomp, clap or make some other sound to gain tremorsense as an imprecise sense with a range of 20 feet.",
+    "modifiers": [],
+    "senses": [
+      {
+        "name": "tremorsense",
+        "range": 20,
+        "acuity": "imprecise"
+      }
+    ]
+  },
+  "vengeful-remnant": {
+    "id": "vengeful-remnant",
+    "name": "Vengeful Remnant",
+    "feats": [
+      "vengeful-remnant"
+    ],
+    "duration": "Until the start of your next turn",
+    "note": "Once per day. Resistance 10 to all damage except force, ghost touch, spirit and vitality — doubled to 20 when the damage source is non-magical (the second entry; only one applies to a given source). If you slay a significant foe not immune to spirit damage with your Spectral Dagger while this is up, it lasts until the end of your next turn instead.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "all damage except force, ghost touch, spirit, and vitality",
+        "value": 10
+      },
+      {
+        "type": "non-magical damage (except force, ghost touch, spirit, and vitality)",
+        "value": 20
+      }
+    ]
+  },
+  "item-victory-plate": {
+    "id": "item-victory-plate",
+    "name": "Victory Plate",
+    "fromItemId": "victory-plate",
+    "duration": "1 minute",
+    "note": "Once per hour, recall one recorded triumph. Resistance 5 to one damage type set by that creature's trait — aberration or fey: mental; celestial: good; construct: poison; dragon or elemental: one matching energy type; fiend: evil; undead: void. An ooze instead gives resistance 10 to precision. Only one type applies even if several traits could.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "chosen damage type (see note)",
+        "value": 5
+      }
+    ]
+  },
+  "item-warcallers-chime-of-resistance": {
+    "id": "item-warcallers-chime-of-resistance",
+    "name": "Chime of Resistance",
+    "fromItemId": "warcallers-chime-of-resistance",
+    "duration": "10 minutes",
+    "note": "Once per week. Choose acid, cold, electricity, fire or sonic as you activate the chime. The defensive aura also gives that resistance to other creatures inside it — their sheets, not yours.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "chosen damage type (acid, cold, electricity, fire, or sonic)",
+        "value": 5
+      }
+    ]
+  },
+  "item-warming-parka": {
+    "id": "item-warming-parka",
+    "name": "Extra Warming",
+    "fromItemId": "warming-parka",
+    "duration": "1 minute",
+    "note": "Once per day, Dismissable. Drawing the hood closed gives resistance 3 to cold but a -2 item penalty to Perception. The parka's always-on protection (negates severe environmental cold, reduces extreme to severe and incredible to extreme) applies whether or not this is toggled.",
+    "modifiers": [
+      {
+        "value": -2,
+        "type": "item",
+        "target": "perception"
+      }
+    ],
+    "resistances": [
+      {
+        "type": "cold",
+        "value": 3
+      }
+    ]
+  },
+  "item-witchs-finger": {
+    "id": "item-witchs-finger",
+    "name": "Witch's Finger",
+    "fromItemId": "witchs-finger",
+    "duration": "1 hour",
+    "note": "Cold resistance 3 for 1 hour. For 8 hours it also negates the damage from severe environmental cold and reduces extreme cold damage to that of severe cold.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "cold",
+        "value": 3
+      }
+    ]
+  },
+  "item-wyrm-spindle": {
+    "id": "item-wyrm-spindle",
+    "name": "Wyrm Spindle (Armor)",
+    "fromItemId": "wyrm-spindle",
+    "duration": "1 minute",
+    "note": "Armor benefit, after you cast a non-cantrip spell by activating the spindle. The Weapon benefit instead grants a 2-action Dragon Breath (6d6 fire, force, mental or spirit in an area with a save) usable once before the end of your next turn.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "fire",
+        "value": 5
+      },
+      {
+        "type": "force",
+        "value": 5
+      },
+      {
+        "type": "mental",
+        "value": 5
+      },
+      {
+        "type": "spirit",
+        "value": 5
+      }
+    ]
+  },
+  "item-zetogeki-hide-armor": {
+    "id": "item-zetogeki-hide-armor",
+    "name": "Shift Scales",
+    "fromItemId": "zetogeki-hide-armor",
+    "duration": "until the end of your next turn",
+    "note": "Once per day. While the scales are shifted your Speeds are ALSO reduced by 10 feet (minimum 5 feet) — the app can't apply that yet, so lower your Speeds by hand.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "bludgeoning",
+        "value": 5
+      },
+      {
+        "type": "piercing",
+        "value": 5
+      },
+      {
+        "type": "slashing",
+        "value": 5
+      }
+    ]
+  },
+  "item-bioluminescent-stripes": {
+    "id": "item-bioluminescent-stripes",
+    "name": "Glowing Stripes",
+    "fromItemId": "bioluminescent-stripes",
+    "duration": "until you Dismiss the glow",
+    "note": "You shed bright light in a 20-foot radius and dim light for the next 20 feet, and you can't be undetected. Dismiss as a free action.",
+    "modifiers": [
+      {
+        "value": -4,
+        "type": "item",
+        "target": "skill",
+        "detail": "stealth",
+        "appliesWhen": "on Stealth checks to Hide and Sneak"
+      }
+    ]
+  },
+  "item-blessed-tattoo": {
+    "id": "item-blessed-tattoo",
+    "name": "Blessed Tattoo",
+    "fromItemId": "blessed-tattoo",
+    "duration": "1 minute",
+    "note": "Once per day; grants the effect of Protection (+1 status bonus to AC and saving throws). Can be activated as a reaction instead of a 2-action activity when a demon attacks you or you attempt a save against a demon's ability.",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "status",
+        "target": "ac"
+      },
+      {
+        "value": 1,
+        "type": "status",
+        "target": "save"
+      }
+    ]
+  },
+  "electric-counter": {
+    "id": "electric-counter",
+    "name": "Electric Counter",
+    "feats": [
+      "electric-counter"
+    ],
+    "duration": "until the start of your next turn",
+    "note": "Reaction while in Wild Winds Stance when you would take damage; the resistance also applies to the triggering damage if it was electricity. If the trigger was a melee attack, the attacker takes 3d6 damage.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "electricity",
+        "value": "@actor.level"
+      }
+    ]
+  },
+  "gathering-moss": {
+    "id": "gathering-moss",
+    "name": "Gathering Moss",
+    "feats": [
+      "gathering-moss"
+    ],
+    "duration": "1 minute or until Tenacious Stance ends",
+    "note": "Fast healing equal to your level (triggered when you enter Tenacious Stance). Track the healing yourself — the app has no fast-healing lane.",
+    "modifiers": []
+  },
+  "immortal-techniques": {
+    "id": "immortal-techniques",
+    "name": "Immortal Techniques",
+    "feats": [
+      "immortal-techniques"
+    ],
+    "duration": "until the start of your next turn",
+    "note": "The first time each round you use an action with both the monk and stance traits, you gain 20 temporary Hit Points. Enter them in the temporary HP box yourself.",
+    "modifiers": []
+  },
+  "item-leopards-armor": {
+    "id": "item-leopards-armor",
+    "name": "Leopard's Ferocity",
+    "fromItemId": "leopards-armor",
+    "duration": "1 hour",
+    "note": "Once per day; Activate the armor again to revert it to its original form.",
+    "modifiers": [
+      {
+        "value": 2,
+        "type": "item",
+        "target": "skill",
+        "detail": "stealth"
+      },
+      {
+        "value": 2,
+        "type": "item",
+        "target": "skill",
+        "detail": "intimidation",
+        "appliesWhen": "on Intimidation checks to Demoralize"
+      },
+      {
+        "value": -2,
+        "type": "untyped",
+        "target": "skill",
+        "detail": "diplomacy"
+      },
+      {
+        "value": -2,
+        "type": "untyped",
+        "target": "skill",
+        "detail": "society"
+      }
+    ]
+  },
+  "item-pyrefeather-token": {
+    "id": "item-pyrefeather-token",
+    "name": "Pyrefeather Token",
+    "fromItemId": "pyrefeather-token",
+    "duration": "1 minute",
+    "note": "5 temporary Hit Points — enter them in the temporary HP box yourself. Activating also reduces the triggering recovery check's DC by 1; you can Activate it while unconscious.",
+    "modifiers": []
+  },
+  "renewing-cycle": {
+    "id": "renewing-cycle",
+    "name": "Renewing Cycle",
+    "feats": [
+      "renewing-cycle"
+    ],
+    "duration": "until the start of your next turn",
+    "note": "The first time each round you Cycle Elemental Stance you gain temporary Hit Points equal to half your level — enter them yourself. You can't gain them again from the same elemental stance until you've entered every other elemental stance you know, or 10 minutes pass.",
+    "modifiers": []
+  },
+  "stone-body": {
+    "id": "stone-body",
+    "name": "Stone Body",
+    "feats": [
+      "stone-body"
+    ],
+    "duration": "until the end of your next turn",
+    "note": "Requires Tenacious Stance. Ends immediately if you are critically hit.",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "all",
+        "value": 10
+      }
+    ]
+  },
+  "raging-stories": {
+    "id": "raging-stories",
+    "name": "Raging Stories",
+    "feats": [
+      "raging-stories"
+    ],
+    "duration": "for the duration of Offer a Story",
+    "note": "Taken in place of Offer a Story's normal benefits: you wrap yourself in spectral flame and the action gains the fire trait. The extra damage is fire and applies only to melee Strikes.",
+    "modifiers": [
+      {
+        "value": 2,
+        "type": "untyped",
+        "target": "damage",
+        "appliesWhen": "on melee Strikes, as fire damage (4 if you're a master in Religion, 6 if legendary)"
+      }
+    ]
+  },
+  "item-thousand-year-dragonroot": {
+    "id": "item-thousand-year-dragonroot",
+    "name": "Dragonroot Flight",
+    "fromItemId": "thousand-year-dragonroot",
+    "duration": "1 minute",
+    "modifiers": [],
+    "speeds": {
+      "fly": 40
+    },
+    "resistances": [
+      {
+        "type": "fire",
+        "value": 5
+      }
+    ],
+    "note": "Fly Speed 40 feet and fire resistance 5 for 1 minute."
+  },
+  "item-soaring-wings-major": {
+    "id": "item-soaring-wings-major",
+    "name": "Soaring Wings",
+    "fromItemId": "soaring-wings-major",
+    "duration": "10 minutes",
+    "modifiers": [],
+    "speeds": {
+      "fly": "max(20,@actor.speed.land)"
+    },
+    "note": "Fly Speed equal to your land Speed or 20 feet, whichever is greater."
+  },
+  "item-winged": {
+    "id": "item-winged",
+    "name": "Take to the Skies",
+    "fromItemId": "winged",
+    "duration": "1 minute",
+    "modifiers": [],
+    "speeds": {
+      "fly": "min(25,@actor.speed.land)"
+    },
+    "note": "Fly Speed of 25 feet or your land Speed, whichever is slower. Once per hour."
+  },
+  "item-wyrms-flight": {
+    "id": "item-wyrms-flight",
+    "name": "Wyrm's Flight",
+    "fromItemId": "wyrms-flight",
+    "duration": "1 minute",
+    "modifiers": [],
+    "speeds": {
+      "fly": "max(20,@actor.speed.land)"
+    },
+    "note": "Fly Speed equal to your Speed or 20 feet, whichever is greater. Once per day."
+  },
+  "klingegeist": {
+    "id": "klingegeist",
+    "name": "Possess a Blade",
+    "feats": [
+      "klingegeist"
+    ],
+    "duration": "while possessing the blade",
+    "modifiers": [],
+    "speeds": {
+      "fly": 30
+    },
+    "note": "Fly Speed 30 feet while possessing the blade. You can take only Strike and Fly actions, and they do not trigger reactions."
+  },
+  "item-siccatite-buckler-standard-grade-hot": {
+    "id": "item-siccatite-buckler-standard-grade-hot",
+    "name": "Hot Siccatite Buckler",
+    "fromItemId": "siccatite-buckler-standard-grade",
+    "duration": "while the shield is Raised",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "cold",
+        "value": 5
+      }
+    ],
+    "note": "While Raised, a hot siccatite buckler grants resistance 5 to cold — the opposing energy type. Switch on the one matching your shield."
+  },
+  "item-siccatite-buckler-standard-grade-cold": {
+    "id": "item-siccatite-buckler-standard-grade-cold",
+    "name": "Cold Siccatite Buckler",
+    "fromItemId": "siccatite-buckler-standard-grade",
+    "duration": "while the shield is Raised",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "fire",
+        "value": 5
+      }
+    ],
+    "note": "While Raised, a cold siccatite buckler grants resistance 5 to fire — the opposing energy type. Switch on the one matching your shield."
+  },
+  "item-siccatite-shield-standard-grade-hot": {
+    "id": "item-siccatite-shield-standard-grade-hot",
+    "name": "Hot Siccatite Shield",
+    "fromItemId": "siccatite-shield-standard-grade",
+    "duration": "while the shield is Raised",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "cold",
+        "value": 5
+      }
+    ],
+    "note": "While Raised, a hot siccatite shield grants resistance 5 to cold — the opposing energy type. Switch on the one matching your shield."
+  },
+  "item-siccatite-shield-standard-grade-cold": {
+    "id": "item-siccatite-shield-standard-grade-cold",
+    "name": "Cold Siccatite Shield",
+    "fromItemId": "siccatite-shield-standard-grade",
+    "duration": "while the shield is Raised",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "fire",
+        "value": 5
+      }
+    ],
+    "note": "While Raised, a cold siccatite shield grants resistance 5 to fire — the opposing energy type. Switch on the one matching your shield."
+  },
+  "item-siccatite-buckler-high-grade-hot": {
+    "id": "item-siccatite-buckler-high-grade-hot",
+    "name": "Hot Siccatite Buckler",
+    "fromItemId": "siccatite-buckler-high-grade",
+    "duration": "while the shield is Raised",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "cold",
+        "value": 10
+      }
+    ],
+    "note": "While Raised, a hot siccatite buckler grants resistance 10 to cold — the opposing energy type. Switch on the one matching your shield."
+  },
+  "item-siccatite-buckler-high-grade-cold": {
+    "id": "item-siccatite-buckler-high-grade-cold",
+    "name": "Cold Siccatite Buckler",
+    "fromItemId": "siccatite-buckler-high-grade",
+    "duration": "while the shield is Raised",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "fire",
+        "value": 10
+      }
+    ],
+    "note": "While Raised, a cold siccatite buckler grants resistance 10 to fire — the opposing energy type. Switch on the one matching your shield."
+  },
+  "item-siccatite-shield-high-grade-hot": {
+    "id": "item-siccatite-shield-high-grade-hot",
+    "name": "Hot Siccatite Shield",
+    "fromItemId": "siccatite-shield-high-grade",
+    "duration": "while the shield is Raised",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "cold",
+        "value": 10
+      }
+    ],
+    "note": "While Raised, a hot siccatite shield grants resistance 10 to cold — the opposing energy type. Switch on the one matching your shield."
+  },
+  "item-siccatite-shield-high-grade-cold": {
+    "id": "item-siccatite-shield-high-grade-cold",
+    "name": "Cold Siccatite Shield",
+    "fromItemId": "siccatite-shield-high-grade",
+    "duration": "while the shield is Raised",
+    "modifiers": [],
+    "resistances": [
+      {
+        "type": "fire",
+        "value": 10
+      }
+    ],
+    "note": "While Raised, a cold siccatite shield grants resistance 10 to fire — the opposing energy type. Switch on the one matching your shield."
+  }
+}

@@ -1,0 +1,222 @@
+{"results":[
+ {
+  "id": "spiny-lodestone-major",
+  "verdict": "DECIDABLE",
+  "answer": "Fold the Armor branch into the maths — the app DOES know the affixture. Affixing writes `attachedTo: hostId` on the spellheart's inventory entry (play.ts:747) and the host's `itemType` says armor vs weapon (attachments.ts:59-66), so gate the Armor benefits (+2 item Athletics, resistance 10 nonlethal) on `attachedTo` resolving to an armor host and put them in passiveEffects, not in the situational registry: ruling B's rule is that an unrestricted flat bonus belongs in the total and only a rules-restricted one becomes a star, and 'while affixed to armor' is a build state, not a moment. The Weapon branch (+1d8 piercing until the end of your next turn after Activating) is a timed post-activation effect -> an item-driven mode (ModeDef.fromItemId/duration, types.ts:1386-1403), not a star. ⚠ Blocking gap to fix first: affixing sets worn/equipped/invested all false (play.ts:747) while every item lane gates on `worn || equipped || invested` (derive.ts:707, explain.ts:195/219) — so an affixed spellheart or talisman currently contributes nothing anywhere. Widen those gates to count `attachedTo`.",
+  "evidence": "src/rules/play.ts:747; src/rules/attachments.ts:59-66; src/rules/explain.ts:195; src/rules/derive.ts:707-709; DECISIONS.md ruling B"
+ },
+ {
+  "id": "ursine-avenger-hood",
+  "verdict": "DECIDABLE",
+  "answer": "Penalties belong in this registry and raise the same star as bonuses. The cross-cutting stacking ruling says so in the owner's own words ('this rule for penalties too'), and the shipped registry already stores penalties: barbarian-dedication `bonus: \"-1 (penalty)\"` (situationalBonuses.ts:102), brightsoul, aeon-stone-olivine-pendeloque `\"-1 status (penalty)\"` (:793). Register both entries on this record: +1 item Nature `when: \"to Command an Animal (+2 if the animal is a bear)\"`, and -1 item Diplomacy `when: \"to Gather Information or Make an Impression after 5+ days in a large town/city without 4 hours in the wilderness\"` — trimmed to roughly one line per ruling H.2, with the full text a click away in the item description.",
+  "evidence": "DECISIONS.md ★ CROSS-CUTTING ('this rule for penalties too') + ruling H.2; src/rules/situationalBonuses.ts:102, :793"
+ },
+ {
+  "id": "heartblood-ring",
+  "verdict": "DECIDABLE",
+  "answer": "Moot as asked — the staged lane already shipped. scripts/data/consumable-modes.json carries `item-heartblood-ring` ('Heartblood (Stage 1)', duration '1 week (Stage 1)', survivesRest: true). Staged boons/afflictions are MODES, not registry entries (ruling E case 2/3): add one mode per stage sharing an `exclusiveGroup` (types.ts:1371) so exactly one stage is ever live, which IS the stage tracker the question asks for. The -2 status penalty on saves against the creating vampire goes in as a negative mode modifier with `appliesWhen`, per the penalty half of the cross-cutting ruling. No situational-registry entry on this id.",
+  "evidence": "scripts/data/consumable-modes.json (item-heartblood-ring); src/rules/types.ts:1371, :1386-1403; DECISIONS.md ruling E"
+ },
+ {
+  "id": "void-fragment",
+  "verdict": "DECIDABLE",
+  "answer": "Same shape as heartblood-ring, which already ships: three item-driven modes (fromItemId 'void-fragment') in one `exclusiveGroup: \"void-fragment\"` — Stage 1 = +1 status to saves vs mental effects (Hidden Mind at +1); Stage 2 = -1 untyped Perception with `appliesWhen: \"if any creature can be detected by your thoughtsense\"`; Stage 3 = -2 the same way. Penalties are in scope (cross-cutting ruling), stages are modes not registry entries (ruling E), and the exclusiveGroup is the stage tracker. No entries in FEAT_SITUATIONAL.",
+  "evidence": "scripts/data/consumable-modes.json (item-heartblood-ring precedent); src/rules/types.ts:1371 exclusiveGroup; DECISIONS.md ruling E + cross-cutting"
+ },
+ {
+  "id": "corruption-cassock",
+  "verdict": "OWNER",
+  "why": "Option (a) — render the fake +2 as if real — is off the table on evidence: the registry is display-of-what-you-actually-have, ruling H.3 refused to model Demon's Knot's penalty on the wearer because the text says it does not apply, and the app already prints the item's full description (which states 'It does neither'), so there is no GM secret left to protect. What is NOT settled anywhere is whether a cursed item that grants nothing should be visibly FLAGGED as cursed or pass in silence — that is a house-style call about how the app talks to the player, and it will govern every cursed item in the game, not just this one.",
+  "options": [
+   {"label": "Silent — no marker at all", "looksLike": "The cassock sits in inventory like any other vestment; Religion shows its true total with no star. Only a player who opens the description learns the +2 is a lie."},
+   {"label": "Flagged — a 'Cursed: grants no bonus' tag on the item card (never a stat star)", "looksLike": "A small red/italic tag on the inventory row and at the top of the description popup; stats stay untouched, so nothing is promised that never arrives."}
+  ],
+  "recommend": "Flagged. The description already tells the truth, so the tag spoils nothing, and it answers the question the player will actually ask — 'why is my Religion not +2?' — at the place they look. Either way, register only the REAL conditional: +2 item Religion / +1 item to the deity's divine skill with `when: \"only if you follow the cassock's true unholy deity\"`.",
+  "theme": "cursed-item surfacing"
+ },
+ {
+  "id": "gaffe-glasses",
+  "verdict": "OWNER",
+  "why": "Same fork as corruption-cassock (one theme, two records). The illusory +1 must not be rendered as real — the glasses grant nothing, ever — but whether the sheet says 'cursed' out loud or stays silent is house style. Second half of the question is decidable and does not need the owner: the glasses' SUPPRESSION of other +1 item Diplomacy bonuses is not expressible in the registry (it removes a bonus rather than adding one), and ruling I is the standing answer to 'the app can't express this' — no shipped surface; the player who wants it authors it in the item editor's Advanced section.",
+  "options": [
+   {"label": "Silent — no marker at all", "looksLike": "The glasses look like ordinary worn eyewear; Diplomacy shows its true total, no star, no note."},
+   {"label": "Flagged — a 'Cursed: grants no bonus' tag on the item card", "looksLike": "A tag on the inventory row and at the head of the description; stats untouched."}
+  ],
+  "recommend": "Flagged, matching whatever corruption-cassock gets — the two must not diverge, or 'cursed' means one thing on one item and another on the next.",
+  "theme": "cursed-item surfacing"
+ },
+ {
+  "id": "words-of-wisdom",
+  "verdict": "DECIDABLE",
+  "answer": "Moot — this is the umbrella and it is ALREADY hidden. It has no price and three graded kin (words-of-wisdom-lesser/-moderate/-greater), which is exactly ruling A's test, and findUmbrellaIds (src/data/index.ts:149-176) puts it in `umbrellaIds` at every content load — I ran the shipped rule over core.json and it catches this id. Ruling A: no situational entries on the umbrella; the grades carry everything.",
+  "evidence": "src/data/index.ts:149-176 (verified against public/core.json: words-of-wisdom -> hidden); DECISIONS.md ruling A"
+ },
+ {
+  "id": "words-of-wisdom-lesser",
+  "verdict": "DECIDABLE",
+  "answer": "Store the pick on the item — do not list all three skills. The item `choices` field already ships and 33 items use it for exactly this shape of permanent, set-at-acquisition pick (core.json items.druids-crown 'Choose the crown's material (+1 item bonus)', items.eidolon-cape, items.energy-robe); tattoos are picked when applied, which is the same lane. Then the 1-minute activation is an item-driven mode (ruling E case 2): modifiers +1 item Diplomacy and +1 item to the chosen skill, duration '1 minute'. Three 'if you chose Intimidation…' registry lines are wrong because the three are mutually exclusive and would read as three bonuses you might be adding up — the reading the cross-cutting stacking ruling exists to prevent. If a mode modifier cannot yet read a stored choice, ship three modes (one per phrase) gated by the choice; do not fall back to listing them as situational entries.",
+  "evidence": "public/core.json items.druids-crown.choices / items.eidolon-cape.choices; src/rules/types.ts:1386-1403 (fromItemId modes); DECISIONS.md ruling E + ★ cross-cutting"
+ },
+ {
+  "id": "words-of-wisdom-moderate",
+  "verdict": "DECIDABLE",
+  "answer": "As words-of-wisdom-lesser: stored `choices` pick + one item-driven mode, duration '10 minutes', +2 item Diplomacy and +2 item to the chosen skill. No situational-registry entries.",
+  "evidence": "public/core.json items.druids-crown.choices; src/rules/types.ts:1386-1403; DECISIONS.md ruling E"
+ },
+ {
+  "id": "words-of-wisdom-greater",
+  "verdict": "DECIDABLE",
+  "answer": "As words-of-wisdom-lesser: stored `choices` pick + one item-driven mode, duration '1 hour', +3 item Diplomacy and +3 item to the chosen skill. No situational-registry entries.",
+  "evidence": "public/core.json items.druids-crown.choices; src/rules/types.ts:1386-1403; DECISIONS.md ruling E"
+ },
+ {
+  "id": "antidote",
+  "verdict": "DECIDABLE",
+  "answer": "Moot twice over. (1) This id is the umbrella — no price, four graded kin — and the shipped findUmbrellaIds already hides it (src/data/index.ts:149-176, verified against core.json), so ruling A gives it no entries. (2) The policy question is already answered and already built: drunk-only consumable bonuses live in the MODE lane, not the registry (ruling E case 2), and scripts/data/consumable-modes.json ships item-antidote-lesser/-moderate/-greater/-major (e.g. duration '6 hours', +2 item save/fortitude with appliesWhen 'against poisons'). The feared failure mode cannot happen anyway: explain.ts:195 only counts an item that is equipped/worn/invested, so a potion in the pack stars nothing.",
+  "evidence": "src/data/index.ts:149-176; scripts/data/consumable-modes.json (item-antidote-*); src/rules/explain.ts:195; DECISIONS.md rulings A + E"
+ },
+ {
+  "id": "antiplague",
+  "verdict": "DECIDABLE",
+  "answer": "Moot, same as antidote: umbrella auto-hidden by findUmbrellaIds (ruling A), and all four grades already ship as item modes — item-antiplague-lesser carries duration '24 hours', survivesRest: true and the note about the daily progression save. Consumables never enter the situational registry from possession; ruling E's mode lane is the answer.",
+  "evidence": "src/data/index.ts:149-176; scripts/data/consumable-modes.json (item-antiplague-lesser, survivesRest true); DECISIONS.md rulings A + E"
+ },
+ {
+  "id": "madcap-top",
+  "verdict": "DECIDABLE",
+  "answer": "No registry entry. Only one of the twenty results moves a sheet number, so give the top ONE item-driven mode (fromItemId 'madcap-top', name 'Skeletal Serenade', duration '1 minute', +1 status to strikeAttack / perception / save:all / skill:all) that the player switches on when they roll a 12; the other results are prose the description already prints, or display-only modes (ruling E case 3) where they impose a state. That a permanent held item — not a consumable — can carry an item mode is already true in shipped data: heartblood-ring and sense-dulling-hood-lesser/-greater all use fromItemId. General rule for random-table and one-off activations: one mode per result that changes a number, nothing for the rest.",
+  "evidence": "scripts/data/consumable-modes.json (heartblood-ring, sense-dulling-hood-* are non-consumables with fromItemId); src/rules/types.ts:1386-1403; DECISIONS.md ruling E cases 2/3"
+ },
+ {
+  "id": "therapeutic-snap-peas",
+  "verdict": "DECIDABLE",
+  "answer": "Moot — already built to ruling E. scripts/data/consumable-modes.json ships item-therapeutic-snap-peas (duration '1 minute', +2 item saves vs poison/disease) with a note that it only applies if you include yourself among the five targets; the HP restoration is deliberately absent because ruling E says HP and damage never move sheet stats. Consumables do not enter the situational registry — that is the standing answer for every mutagen, talisman and kit in this chunk (ruling E), and the ally-only case adds nothing to your sheet (ruling F).",
+  "evidence": "scripts/data/consumable-modes.json (item-therapeutic-snap-peas); DECISIONS.md rulings E + F"
+ },
+ {
+  "id": "prey-mutagen",
+  "verdict": "DECIDABLE",
+  "answer": "Umbrella: no price, four graded kin, already caught by findUmbrellaIds and hidden from pickers (verified against core.json). Ruling A -> no situational entries, no '+1 to +4 by grade' range; only the four purchasable grades carry anything.",
+  "evidence": "src/data/index.ts:149-176; DECISIONS.md ruling A"
+ },
+ {
+  "id": "prey-mutagen-lesser",
+  "verdict": "DECIDABLE",
+  "answer": "Mode, not a star (ruling E case 2). Add item-prey-mutagen-lesser: fromItemId 'prey-mutagen-lesser', duration '1 minute', modifier ac +1 circumstance with appliesWhen 'when you use the Timely Dodge reaction', plus the printed drawback as negative modifiers. The mutagen lane is already built and shipped for all four drakeheart grades in the same file — prey was simply not reached by that pass. Nothing goes in FEAT_SITUATIONAL: a one-shot elixir must never star a stat from sitting in the pack, and explain.ts:195 would not show it there anyway.",
+  "evidence": "scripts/data/consumable-modes.json (item-drakeheart-mutagen-* pattern); src/rules/explain.ts:195; DECISIONS.md ruling E case 2"
+ },
+ {
+  "id": "prey-mutagen-moderate",
+  "verdict": "DECIDABLE",
+  "answer": "As prey-mutagen-lesser: item mode, duration '10 minutes', ac +2 circumstance with appliesWhen 'when you use the Timely Dodge reaction', drawbacks as negative modifiers. No registry entry.",
+  "evidence": "scripts/data/consumable-modes.json (drakeheart grades); DECISIONS.md ruling E case 2"
+ },
+ {
+  "id": "prey-mutagen-greater",
+  "verdict": "DECIDABLE",
+  "answer": "As prey-mutagen-lesser: item mode, duration '1 hour', ac +3 circumstance with appliesWhen 'when you use the Timely Dodge reaction', drawbacks as negative modifiers. No registry entry.",
+  "evidence": "scripts/data/consumable-modes.json (drakeheart grades); DECISIONS.md ruling E case 2"
+ },
+ {
+  "id": "prey-mutagen-major",
+  "verdict": "DECIDABLE",
+  "answer": "As prey-mutagen-lesser: item mode, duration '1 hour', ac +4 circumstance with appliesWhen 'when you use the Timely Dodge reaction', drawbacks as negative modifiers. No registry entry.",
+  "evidence": "scripts/data/consumable-modes.json (drakeheart grades); DECISIONS.md ruling E case 2"
+ },
+ {
+  "id": "armor-polishing-kit",
+  "verdict": "DECIDABLE",
+  "answer": "Timed effect -> mode, per ruling E case 2. Add item-armor-polishing-kit: duration '24 hours', survivesRest: true (precedent: item-antiplague-lesser, the other 24-hour effect, sets survivesRest), modifier skill/diplomacy +1 circumstance with appliesWhen 'to Make an Impression on soldiers, guards, Gorumites and other martially minded characters'. The player switches it off when the armour is soiled — the app has no clock and the duration text says what they are tracking. If the kit was used on an ALLY's armour, nothing appears on your sheet (ruling F). No registry entry: a kit in the pack must not star Diplomacy.",
+  "evidence": "scripts/data/consumable-modes.json (item-antiplague-lesser survivesRest true); src/rules/types.ts:1396-1403; DECISIONS.md rulings E + F"
+ },
+ {
+  "id": "sanitizing-pin",
+  "verdict": "DECIDABLE",
+  "answer": "Registry entry, NOT a mode. The effect is instantaneous — one save — which ruling E case 1 explicitly excludes from the mode lane, and the registry already carries triggered one-shots of exactly this shape: charmed-life 'on a saving throw before you roll (triggered)' (situationalBonuses.ts:116) and all-this-has-happened-before 'on your initiative roll (once per day)' (:82). Register: save/fortitude, +2 status, when 'when you activate the affixed pin, on your save against the initial exposure to a disease or poison'. ⚠ Same blocking gap as spiny-lodestone: a talisman is affixed, and affixing sets worn/equipped/invested all false (play.ts:747) while explain.ts:195 requires one of them — so it will show nothing until that gate counts `attachedTo`.",
+  "evidence": "src/rules/situationalBonuses.ts:82, :116; src/rules/play.ts:747; src/rules/explain.ts:195; DECISIONS.md ruling E case 1"
+ },
+ {
+  "id": "fluid-form-staff",
+  "verdict": "DECIDABLE",
+  "answer": "Keep it on Perception as printed. Ruling C ('star every skill that could do it') governs bonuses that name an ACTION and no skill — Specialist's Ring's 'Recall Knowledge', Eye of the Wise's six actions. This text names the statistic outright ('Perception checks to identify morph and polymorph magic'), and specific printed text beats the general Identify Magic rule. The registry already does this for a Perception-worded notice/identify bonus: aeon-stone-cymophane-cabochon (situationalBonuses.ts:792). Register perception, +2 circumstance, when 'to identify morph and polymorph magic, while wielding the staff'. Do not add Arcana/Nature/Occultism/Religion.",
+  "evidence": "src/rules/situationalBonuses.ts:792; DECISIONS.md ruling C (scope: action named, skill not named)"
+ },
+ {
+  "id": "fluid-form-staff-greater",
+  "verdict": "DECIDABLE",
+  "answer": "Identical to fluid-form-staff: perception, +2 circumstance, when 'to identify morph and polymorph magic, while wielding the staff'. Printed text names the statistic, so ruling C does not fire.",
+  "evidence": "src/rules/situationalBonuses.ts:792; DECISIONS.md ruling C"
+ },
+ {
+  "id": "fluid-form-staff-major",
+  "verdict": "DECIDABLE",
+  "answer": "Identical to fluid-form-staff: perception, +2 circumstance, when 'to identify morph and polymorph magic, while wielding the staff'.",
+  "evidence": "src/rules/situationalBonuses.ts:792; DECISIONS.md ruling C"
+ },
+ {
+  "id": "staff-of-elemental-power-greater",
+  "verdict": "DECIDABLE",
+  "answer": "Confirmed — and the answer is already in the file: copy the base record's entry verbatim, situationalBonuses.ts:2433 = targets arcana + nature + lore:*, when 'to identify elemental creatures, while wielding the staff', +2 circumstance. Correct by the PF2e Recall Knowledge creature-type table (elemental -> Arcana or Nature), and lore:* is there because a relevant Lore can always be used. Ruling C is why all of them are starred rather than one.",
+  "evidence": "src/rules/situationalBonuses.ts:2433; PF2e Recall Knowledge skill-by-trait table (elemental = Arcana, Nature); DECISIONS.md ruling C"
+ },
+ {
+  "id": "staff-of-elemental-power-major",
+  "verdict": "DECIDABLE",
+  "answer": "Same as the Greater grade: copy situationalBonuses.ts:2433 verbatim — arcana + nature + lore:*, +2 circumstance, 'to identify elemental creatures, while wielding the staff'.",
+  "evidence": "src/rules/situationalBonuses.ts:2433; PF2e Recall Knowledge skill-by-trait table; DECISIONS.md ruling C"
+ },
+ {
+  "id": "verdant-staff-greater",
+  "verdict": "DECIDABLE",
+  "answer": "Confirmed: copy the base record's shipped entry, situationalBonuses.ts:2436 = nature + lore:*, when 'to identify plants and fungi, while wielding the staff', +2 circumstance. Both the plant and fungus traits map to Nature on the Recall Knowledge table, so Nature is the only tradition skill involved.",
+  "evidence": "src/rules/situationalBonuses.ts:2436; PF2e Recall Knowledge skill-by-trait table (plant, fungus = Nature); DECISIONS.md ruling C"
+ },
+ {
+  "id": "aeon-stone",
+  "verdict": "DECIDABLE",
+  "answer": "Moot — nothing to split and nothing to add. The 35 per-variant records already exist in core.json (aeon-stone-amplifying, -formulating, -repairing, -flickering, -black-pearl, -cymophane-cabochon, …) and the ones with bonuses are ALREADY in the registry: situationalBonuses.ts:1591 (amplifying, all four traditions), :1592 (formulating), :1593 (repairing), :1594 (flickering), :790-793, :2187. The generic parent has no price and many kin, so findUmbrellaIds hides it from every picker already (verified against core.json). Ruling A: the umbrella gets no entries. Your assumption was right.",
+  "evidence": "src/rules/situationalBonuses.ts:1591-1594, :790-793; src/data/index.ts:149-176; DECISIONS.md ruling A"
+ },
+ {
+  "id": "midnight-milk",
+  "verdict": "DECIDABLE",
+  "answer": "Umbrella: no price, three graded kin (midnight-milk-experimental / -refined / -pure), already hidden by findUmbrellaIds. Ruling A -> no entries on this id. The three concrete doses are staged consumables, so they take the heartblood-ring shape (ruling E): one item-driven mode per stage in a shared exclusiveGroup, carrying the +2/+3 item Perception (and Pure's Will save) as modifiers — not registry stars.",
+  "evidence": "src/data/index.ts:149-176 (verified: midnight-milk hidden); scripts/data/consumable-modes.json (item-heartblood-ring staged pattern); DECISIONS.md rulings A + E"
+ },
+ {
+  "id": "assassins-skin",
+  "verdict": "DECIDABLE",
+  "answer": "Register acrobatics + athletics only; do NOT star the unarmed strikeAttack. Ruling D explicitly rejected 'star the nearest roll', and the dcOnly flag was invented in the same ruling for precisely this reason — situationalBonuses.ts:44-54: 'Marking the save name would promise a bonus to a roll that never gets one.' The +3 never applies to a Strike, so a star on the attack row would promise exactly that. Ruling C is satisfied by the two skills that can perform the action, and the `when` ('to Escape') tells the player they may also add it when they Escape using their unarmed attack modifier.",
+  "evidence": "src/rules/situationalBonuses.ts:44-54 (dcOnly rationale); src/rules/explain.ts:233-237; DECISIONS.md rulings C + D"
+ },
+ {
+  "id": "bombers-eye-elixir-lesser",
+  "verdict": "DECIDABLE",
+  "answer": "Moot — already ruled, 2026-07-30. 'D leftovers — target-side bonuses': BOMBER'S EYE ELIXIR (lesser + greater) and EXECUTION POWDER get no surface, no effect, no star, because the number that changes belongs to the TARGET (its cover bonus to AC) and the app models neither target AC nor cover; the player tells the GM. Verified inert by scripts/check-inert.mjs. Do not surface it as a strikeAttack star.",
+  "evidence": "DECISIONS.md 'D leftovers — target-side bonuses — DECIDED (2026-07-30)'; scripts/check-inert.mjs"
+ },
+ {
+  "id": "bombers-eye-elixir-greater",
+  "verdict": "DECIDABLE",
+  "answer": "Moot — same ruling as the Lesser grade (DECISIONS.md, D leftovers, 2026-07-30): no surface, no effect, no star. Target-side cover reduction is not modelled and is not to be faked as an attack bonus.",
+  "evidence": "DECISIONS.md 'D leftovers — target-side bonuses — DECIDED (2026-07-30)'"
+ },
+ {
+  "id": "bestial-mutagen",
+  "verdict": "DECIDABLE",
+  "answer": "Umbrella — no price, four graded kin, already hidden by findUmbrellaIds (verified against core.json). Ruling A: no entries at all, and no '+1 to +4 by grade' range; a range on a record the player can never own is exactly what ruling A removed. The four graded records instead each get an item-driven mode carrying benefit AND drawback as modifiers (ruling E case 2) — the identical four-grade treatment already ships for drakeheart in scripts/data/consumable-modes.json; bestial was missed by that pass.",
+  "evidence": "src/data/index.ts:149-176; scripts/data/consumable-modes.json (item-drakeheart-mutagen-lesser/-moderate/-greater/-major); DECISIONS.md rulings A + E"
+ },
+ {
+  "id": "drakeheart-mutagen",
+  "verdict": "DECIDABLE",
+  "answer": "Both halves are settled. (1) The umbrella is hidden by findUmbrellaIds and gets nothing — no range entry (ruling A). (2) The AC-modelling worry is moot: item-drakeheart-mutagen-lesser/-moderate/-greater/-major already ship with ac +4..+7 item, perception +1 item, the -1 Will/Reflex/Recall-Knowledge drawbacks, and a note telling the player the AC bonus REPLACES the armour's and that the +2 Dex cap must be applied by hand. Worth one check rather than a second note: modes.ts poolTypedMods keeps only the best bonus of each type, so if the armour's AC bonus is pooled as an item bonus the 'replaces' half already falls out for free and only the Dex cap remains manual.",
+  "evidence": "src/data/index.ts:149-176; scripts/data/consumable-modes.json (item-drakeheart-mutagen-lesser); src/rules/modes.ts:89 poolTypedMods; DECISIONS.md rulings A + E"
+ },
+ {
+  "id": "freedoms-flame",
+  "verdict": "DECIDABLE",
+  "answer": "Keep save 'all'. Ruling H.1 is exactly this case: 'WHERE THE RULES ARE OPEN, STAY OPEN… Narrowing it to Fortitude would put my ruling on the sheet dressed as the book's.' Compulsion and control effects are usually Will but not always, and the text names no save. Register save/all, +3 status, when 'on the new save to break free of a compulsion or control effect, after the flame is activated'. The rest of the activation — the same bonus for every other creature within 120 feet — puts nothing on your sheet (ruling F).",
+  "evidence": "DECISIONS.md ruling H.1 (Bootstrap Respirator) + ruling F"
+ }
+]}

@@ -33,6 +33,7 @@ type BoolKey =
   | 'autoHideEmpty'
   | 'hpCommandEntry'
   | 'shieldAutoHardness'
+  | 'hpIwrButtons'
   | 'compactActions'
   | 'showSlotBadges'
   | 'consumableHighlight'
@@ -301,6 +302,14 @@ export function CustomizationEditor({
         <strong>Ask each time</strong> offers those choices whenever you rest.{' '}
         <strong>Reuse my last pick</strong> keeps what you chose before without asking; if you've never
         chosen, the next rest asks once and reuses that answer from then on.
+      </p>
+
+      <div className="menu-label">Resistances &amp; weaknesses</div>
+      <div className="menu-row">{boolChip('hpIwrButtons', 'One-tap damage adjusters')}</div>
+      <p className="settings-desc" style={{ marginTop: 0 }}>
+        In the HP entry pad, type the damage you took and tap <strong>Resistance fire 5</strong> (or a weakness) to apply the
+        maths for you. Only shown while entering damage, and only for a character that actually has one. Immunity isn't
+        offered — immune damage is 0, so there's nothing to type.
       </p>
 
       <div className="menu-label">Shield</div>

@@ -20,6 +20,7 @@ import { CLASS_ADVANCEMENT } from './advancement';
 import { conditionPenalty } from './conditions';
 import { modeModifiersFor, hasConditionalMode, activeModesTouch, type ModeTarget } from './modes';
 import { abpOn, abpSave, abpPerception, abpDefense, abpSkillBonus } from './abp';
+import type { CharacterDefenses } from './derive';
 import {
   RANK_VALUE,
   abilityMod,
@@ -926,4 +927,47 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       };
     }
   }
+}
+
+/**
+ * A resistance / weakness / immunity, explained in the SAME shape as every other stat breakdown, so
+ * it opens the app's normal StatDetailModal rather than a bespoke popup.
+ *
+ * The parts list is the whole point. "Fire 5" alone is not actionable — with several sources a player
+ * cannot tell which one disappears if they unequip something. Sources that lost the no-stacking rule
+ * are listed too, marked, because "my lesser item is contributing nothing right now" is exactly the
+ * fact worth surfacing.
+ */
+export function explainDefense(
+  defenses: CharacterDefenses,
+  kind: 'resistance' | 'weakness' | 'immunity',
+  type: string,
+): StatBreakdown {
+  const sources = defenses.sources?.[`${kind}:${type}`] ?? [];
+  const label = type.replace(/-/g, ' ');
+  const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+  const total =
+    kind === 'immunity'
+      ? 0
+      : (kind === 'resistance' ? defenses.resistances : defenses.weaknesses).find((x) => x.type === type)?.value ?? 0;
+
+  // Winners first, then superseded — reading order should match what actually applies.
+  const ordered = [...sources].sort((a, b) => Number(b.applied) - Number(a.applied) || (b.value ?? 0) - (a.value ?? 0));
+  const parts: CalcPart[] = ordered.map((s) => ({
+    label: s.from,
+    value: s.value ?? 0,
+    note: [s.applied ? undefined : 'superseded — does not stack', s.condition].filter(Boolean).join(' · ') || undefined,
+  }));
+
+  return {
+    title: `${cap(label)} ${kind}`,
+    subtitle: kind === 'immunity' ? 'Immunity' : `${sources.length} source${sources.length === 1 ? '' : 's'}`,
+    totalText: kind === 'immunity' ? 'Immune' : String(total),
+    parts,
+    timeline: [],
+    description:
+      kind === 'immunity'
+        ? undefined
+        : `Same-type ${kind}s do not stack — only the highest applies.`,
+  };
 }

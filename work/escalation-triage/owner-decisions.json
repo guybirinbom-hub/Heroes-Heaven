@@ -1,0 +1,111 @@
+{
+  "totals": { "decidable": 198, "owner": 12, "patterns": 5 },
+  "patterns": [
+    {
+      "name": "Unrecorded \"choose one of N\" build choices — record the pick, or leave it in prose",
+      "question": "When a record printed a choice the app currently drops on the floor (which weapon modification, which relic emotion, which deviation damage type, holy or unholy, the name of your demesne), do we add a pick that stores the answer — and gate any bonus on it — or stay silent and leave it to prose?",
+      "options": [
+        {
+          "label": "A. Record the pick everywhere (generic picker, or a free-text field for narrative ones)",
+          "looksLike": "At build time you answer one extra question on the feature; afterwards the feature row reads 'Weapon Innovation (Segmented Frame)', 'Emotion Surge (Anger)', 'Thaumaturge's Demesne (The Old Mill, Absalom)'. Exactly one branch's star appears, or none if the branch grants nothing."
+        },
+        {
+          "label": "B. Record nothing, star nothing",
+          "looksLike": "The feature row shows only its name and description. No extra question, no stars. The player tracks their choice on paper, or authors their own star in the item editor's Advanced section (ruling I)."
+        },
+        {
+          "label": "C. Star every branch as printed",
+          "looksLike": "Ten skills carry a '*' reading '+1 status — if your relic's emotion is Anger'; every inventor's Stealth shows the Segmented Frame +2. The player mentally filters the nine that are permanently false for their character."
+        }
+      ],
+      "recommend": "A — record the pick. The authoring side already ships (generic choose-one-of-N picker, task #8; free-text choice kind at src/rules/types.ts:631, shipped for Lore in task #9; 'record the pick even though it grants nothing' already accepted for 32 kingdom feats, task #27). One small engine gap is real: SituationalBonus (src/rules/situationalBonuses.ts:59-65) is keyed by owned-record id and has no gate field, so gating a star on a recorded pick needs one new optional field. Important scope guard: this decision buys 'record the pick' only — it must NOT be read as approval for the two big subsystems sitting behind two of these five records (Deviant Abilities Strain tracking; a sanctification field backfilled across ~485 deities). Both stay deferred; the pick alone fixes what is actually broken today. If A is rejected, take B, never C.",
+      "covers": 5,
+      "examples": ["weapon-innovation", "aon-emotion-surge"],
+      "impliedBy": "Strongly implied. Ruling A ('they should only see the options they can have') is the direct argument against option C, and DECISIONS.md already rules out starring weapon-innovation's feature for exactly that reason. Ruling C (star every skill that could do it) does NOT license C here — it covered bonuses that genuinely could hit any of several stats at the moment of use, not branches that are permanently false for this character. The choice-lane precedent (kingdom feats record the pick) points at A."
+    },
+    {
+      "name": "Cursed items that lie — flag them, or stay silent",
+      "question": "A cursed item's text promises a bonus it never grants. The fake bonus is definitely not rendered — but does the sheet say 'cursed' out loud, or does the item pass as ordinary until the player reads the description?",
+      "options": [
+        {
+          "label": "A. Flagged — a 'Cursed' tag on the inventory row and at the head of the description popup",
+          "looksLike": "A small red/italic 'Cursed — grants no bonus' tag on the item card; stats stay untouched, no star anywhere. The player who asks 'why is my Religion not +2?' gets the answer where they are looking."
+        },
+        {
+          "label": "B. Silent — no marker at all",
+          "looksLike": "The cassock sits in inventory like any other vestment and the glasses like ordinary eyewear. Only a player who opens the full description learns the bonus is a lie."
+        }
+      ],
+      "recommend": "A — flagged, and apply it to the whole family so 'cursed' does not mean one thing on one item and another on the next. This is cheaper than it looks: 75 items in core.json already carry the `cursed` trait, so the tag is a trait-to-badge render, not per-item authoring. Nothing is spoiled — the app already prints the item's own description, which says the bonus does not work. Either way, register only the REAL conditional on these records (e.g. corruption-cassock's +2 item Religion gated on `when: \"only if you follow the cassock's true unholy deity\"`).",
+      "covers": 2,
+      "examples": ["corruption-cassock", "gaffe-glasses"],
+      "impliedBy": "Half-implied. Ruling H.3 (Demon's Knot: the penalty does not apply to the wearer because the text says so, therefore no star) already settles the decidable half — never render a bonus the text says you do not get. Only the visible-tag question is open, and it governs all 75 cursed-trait items rather than these two."
+    },
+    {
+      "name": "A bonus from an aura you might not be standing in",
+      "question": "An effect you triggered creates an emanation that MAY include you, depending on where you are standing — a fact the app can never know. Does the sheet carry a permanent star for a bonus you usually will not have, a display-only pill, or a star that appears only while the effect is running?",
+      "options": [
+        {
+          "label": "A. Mode-gated star — pill on activation, star on the saves only while it is on",
+          "looksLike": "Firing the bow puts a 'Song of Soothing (1 min)' pill in the rail; while it is up, the saves show a '*' reading '+1 status vs mental effects, if you were inside the emanation'. When the pill ends, the star goes."
+        },
+        {
+          "label": "B. Display-only pill, saves never marked",
+          "looksLike": "The pill appears with the printed text on click; no stat is touched or marked. The player applies the +1 at the table if they were inside."
+        },
+        {
+          "label": "C. Permanent star with the positional trigger in the note",
+          "looksLike": "All three saves carry a '*' at all times, whether or not the bow has ever been fired."
+        }
+      ],
+      "recommend": "A — mode-gated star, falling back to B if that is more work than it is worth. It is the only option that never shows a star for a bonus that is not running, and the machinery already ships: consumable/item-driven modes landed in task #42, and a mode modifier carrying `appliesWhen` is already turned into a situational line at src/rules/explain.ts:422 (modes.ts:112 drives the highlight). So this is data authoring, not engine work. C is the over-reporting DECISIONS.md already rejected for weapon-innovation. Whatever you choose, keep the two Singing Shortbow grades in step, and note the importer stripped the emanation RADIUS from both records — a data bug to fix regardless.",
+      "covers": 2,
+      "examples": ["singing-shortbow", "singing-shortbow-greater"],
+      "impliedBy": "Mostly implied. Ruling F clause 2 (a limited-time thing you activated gets a display-only mode) gives option B for free, and ruling E-continued clause 5 ('every stat a mode affects is highlighted', for ALL modes) is precisely option A. The two rulings together point at A; the open bit is only whether to pay for the appliesWhen gating on aura items across the corpus."
+    },
+    {
+      "name": "Bonuses that belong to something other than your character sheet",
+      "question": "The trigger belongs to an entity that is not a stat on your sheet — a siege weapon you are crewing, an informant you hired for the week. Do we build that entity a marker surface, or is it 'the player remembers this'?",
+      "options": [
+        {
+          "label": "A. Marker only on entities the app already models; nothing for entities it does not",
+          "looksLike": "The siege weapon's card in the Companions tab gains a '*' reading '+2 circumstance to Load, Aim, move or Repair this weapon while you crew it' (plus the Crafting star for the Repair leg). Buying a canary changes nothing on the sheet, and the three dead canary-tail registry entries are retired."
+        },
+        {
+          "label": "B. Build a surface for both — services become 'active' purchases that fire like worn items",
+          "looksLike": "Diplomacy gains a '*' reading 'Canary Tail — +1 circumstance to Gather Information about the individual you are having tailed'. Costs an active-toggle for non-wearable purchases plus a route for services into inventory, and puts a downtime-only note on a combat-facing sheet."
+        },
+        {
+          "label": "C. No new surface for either — nearest skill star only, or nothing",
+          "looksLike": "Artillerist Dedication stars Crafting alone with a note covering all four checks; three quarters of the feat is a sentence the player carries to the table. Canary Tail is unmarked."
+        }
+      ],
+      "recommend": "A. The two records look alike but split cleanly on one test: does the app already model the entity? A siege weapon does — it is a companion with its own block — and the ★COMPANIONS ruling already says a companion item's bonus marks the COMPANION's block. A hired service does not: services are catalog-only rows never added to inventory (AddItemsModal.tsx:162), and item situationals only fire while equipped/worn/invested (explain.ts:180-182), so both the three existing canary entries and any new ones are dead code today. Retiring them fixes a real defect for free.",
+      "covers": 2,
+      "examples": ["artillerist-dedication", "canary-tail-first-week"],
+      "impliedBy": "Yes, largely decided already. Ruling D ('SKILL DCs … NO surface. The player remembers these') covers the canary; the ★COMPANIONS ruling covers the siege weapon and even lists 'a situational-marker surface on the companion block' as NEW work item (a). The only genuinely open question is whether to spend that work now, or take option C's Crafting-only star as an interim."
+    },
+    {
+      "name": "A feat that grants a real, expiring item mechanic — approximate it, do it by hand, or build expiry",
+      "question": "Battleforger installs a real +1 potency rune for a day, on one item you choose. Runes are already real numbers in this app; expiring runes are not a concept it has. Fake it with a star, tell the player to add a normal rune, or build the expiring rune?",
+      "options": [
+        {
+          "label": "A. Build a temporary rune that clears at daily preparations",
+          "looksLike": "A 'Battleforger' control on the item grants +1 potency with an 'until your next daily preparations' tag; Rest wipes it. Attack/AC totals are right and the duration is right."
+        },
+        {
+          "label": "B. No entry — the player etches an ordinary +1 potency rune",
+          "looksLike": "Nothing new on the sheet. The player adds a +1 potency rune in the existing rune editor; totals are correct today but the rune looks permanent and never expires."
+        },
+        {
+          "label": "C. Situational star on the feat",
+          "looksLike": "A '*' on AC and on every strike's attack row reading '+1 item — on a weapon or armor you spent an hour preparing'. It can never say WHICH item, and it fires for a character whose gear already has potency — the case the feat's own last sentence excludes."
+        }
+      ],
+      "recommend": "A if you will spend the work, otherwise B — and not C. The pieces exist: runes are already modelled as real numbers and the Rest / daily-preparations pass shipped (task #24), so A is a flag plus a hook into an existing pass. C is the one to avoid: it is guaranteed wrong for exactly the characters the feat excludes, and it leaves the displayed attack bonus wrong either way.",
+      "covers": 1,
+      "examples": ["battleforger"],
+      "impliedBy": "Partly. Ruling B's principle (a bonus that really is in your total belongs in the total, only a rules-restricted one becomes a star) argues against C, since this bonus is not conditional at all — it is a real rune. Nothing in DECISIONS.md decides how much engine work an expiring rune is worth."
+    }
+  ]
+}

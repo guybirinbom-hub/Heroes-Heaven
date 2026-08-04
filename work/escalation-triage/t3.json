@@ -1,0 +1,282 @@
+[
+ {
+  "collection": "items",
+  "id": "spiny-lodestone-major",
+  "name": "Spiny Lodestone (Major)",
+  "question": "Same as the base spiny lodestone: should armor-mode spellheart bonuses be folded into the maths when the app knows the affixture, or always displayed as situational?",
+  "evidence": "\"Armor You gain a +2 item bonus to Athletics checks and resistance 10 to nonlethal damage.\" / \"...deal an additional 1d8 piercing damage until the end of your next turn.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "ursine-avenger-hood",
+  "name": "Ursine Avenger Hood",
+  "question": "Should conditional PENALTIES (here –1 item to Diplomacy) live in this same registry and render with the same star as bonuses, or be excluded / rendered distinctly? The registry is named FEAT_SITUATIONAL/SituationalBonus and every existing entry is a bonus, so listing a penalty is an owner call. I have included it so the information is not lost.",
+  "evidence": "\"the wearer gains a +1 item bonus to Nature checks to Command an Animal, which increases to +2 if the animal is a bear\"; and \"takes a –1 item penalty to all Diplomacy checks to Gather Information or Make an Impression if they go more than 5 days inside a large town or city without spending at least 4 hours in the wilderness.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "heartblood-ring",
+  "name": "Heartblood Ring",
+  "question": "Same penalty-in-a-bonus-registry question as Ursine Avenger Hood, and: should staged boons/afflictions (heartblood, phoenix cinder, void fragment) be excluded from this registry entirely until the app can track which stage the character is in?",
+  "evidence": "Stage 1: \"you gain a +1 circumstance bonus to saving throws (or any other defense) against death effects, disease, paralysis, poison, and sleep.\" Purging: \"a dose of heartblood imposes a –2 status penalty to your saving throws against the powers of the vampire who created it.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "void-fragment",
+  "name": "Void Fragment",
+  "question": "Same as Heartblood Ring: exclude staged boons until a stage tracker exists, and confirm whether penalties belong in this registry.",
+  "evidence": "Stage 1: \"you are under the effects of Hidden Mind, except that its status bonus is +1\" (Hidden Mind: \"The target gains a +4 status bonus to saves against mental effects\"). Stage 2: \"If any creatures can be detected by your thoughtsense, you take a –1 penalty to Perception checks\"; stage 3: \"The mental noise increases the penalty to Perception to –2.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "corruption-cassock",
+  "name": "Corruption Cassock",
+  "question": "This is a cursed item whose printed bonus is a deliberate lie: the wearer BELIEVES they have +2 Religion / +1 divine skill and the GM secretly removes it. Should the sheet (a) show the fake bonus as if real, preserving the trap, (b) show nothing, or (c) show it flagged as cursed and spoil the GM's secret? That is an app-owner call about how cursed items are surfaced, not something the text decides.",
+  "evidence": "\"While you remain loyal to another deity, you believe the cassock grants you a +2 item bonus to Religion checks and a +1 item bonus to the divine skill of the deity to whom you believe the cassock is dedicated. It does neither… If you convert to following the cassock's true unholy deity, however, these bonuses function normally for you.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "gaffe-glasses",
+  "name": "Gaffe Glasses",
+  "question": "Cursed-item display policy, same as Corruption Cassock: should the sheet render the illusory +1 Diplomacy bonus the player thinks they have, show nothing, or show it labelled as cursed? Note the item also NEGATES real +1 item bonuses to Diplomacy from other sources, which is a suppression rule this registry cannot express.",
+  "evidence": "\"These wire-rim glasses appear to be Glasses of Sociability, making you think they grant a +1 item bonus to Diplomacy when they grant none.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "words-of-wisdom",
+  "name": "Words of Wisdom",
+  "question": "Words of Wisdom's second skill is chosen at application time (Intimidation / Deception / Performance). Should the item carry a stored choice (like a rune/variant selection) so only one skill is starred, or should all three be listed with 'if you chose ...' conditions as I did here?",
+  "evidence": "\"When the tattoo is applied, choose whether the phrase is of threatening words (Intimidation), persuasive words (Deception), or dramatic words (Performance). ... Effect You speak your meaningful phrase ... emboldening your words for 1 minute. During this time, you gain a +1 item bonus to Diplomacy checks and checks of the skill associated with your phrase.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "words-of-wisdom-lesser",
+  "name": "Words of Wisdom (Lesser)",
+  "question": "Same choice question as `words-of-wisdom`: store the chosen phrase-skill on the item, or list all three variants?",
+  "evidence": "\"emboldening your words for 1 minute. During this time, you gain a +1 item bonus to Diplomacy checks and checks of the skill associated with your phrase.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "words-of-wisdom-moderate",
+  "name": "Words of Wisdom (Moderate)",
+  "question": "Same choice question as `words-of-wisdom`: store the chosen phrase-skill on the item, or list all three variants?",
+  "evidence": "\"emboldening your words for 10 minutes. During this time, you gain a +2 item bonus to Diplomacy checks and checks of the skill associated with your phrase.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "words-of-wisdom-greater",
+  "name": "Words of Wisdom (Greater)",
+  "question": "Same choice question as `words-of-wisdom`: store the chosen phrase-skill on the item, or list all three variants?",
+  "evidence": "\"emboldening your words for 1 hour. During this time, you gain a +3 item bonus to Diplomacy checks and checks of the skill associated with your phrase.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "antidote",
+  "name": "Antidote",
+  "question": "Should consumables that grant a bonus only while their effect is running (elixirs, mutagens, potions) produce a situational star just from sitting in inventory, or should they be excluded from the registry until there is an 'active effect' toggle? Starring on possession alone will mark Fortitude for any character carrying a 3 gp antidote.",
+  "evidence": "\"Upon drinking an antidote, you gain an item bonus to Fortitude saving throws against poisons for 6 hours.\" — Lesser +2, Moderate +3, Greater +4, Major +4.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "antiplague",
+  "name": "Antiplague",
+  "question": "Same decision as Antidote — do drunk-only consumable bonuses belong in the situational registry at all, or only once an active-effect toggle exists?",
+  "evidence": "\"Upon drinking an antiplague, you gain an item bonus to Fortitude saving throws against diseases for 24 hours; this applies to your daily save against a disease's progression.\" — Lesser +2, Moderate +3, Greater +4, Major +4.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "madcap-top",
+  "name": "Madcap Top",
+  "question": "Should random, temporary results of an item activation (Madcap Top result 12: +1 status to attack rolls, Perception, saves and skills for 1 minute) be registered as situational bonuses at all, or handled only by the temporary-effects/Modes system? If they should be registered, the same rule will apply to every random-table and one-off activation item.",
+  "evidence": "\"roll a d20 on the table below to determine the top's effect\" ... \"12 | Four singing skeletons appear to serenade you and your allies for 1 minute, granting a +1 status bonus to attack rolls, Perception checks, saving throws, and skill checks.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "therapeutic-snap-peas",
+  "name": "Therapeutic Snap Peas",
+  "question": "Policy for CONSUMABLES: this is a single-use item whose bonus lasts 1 minute and can be handed to allies. Should consumables appear in the situational registry at all (a permanent star on Fort/Ref/Will just because the pods sit in the pack), or should timed consumable effects be routed to the temporary-effect / Modes lane instead? The same question governs the mutagens, talismans and kits in this chunk.",
+  "evidence": "\"Up to 5 creatures of your choice within 30 feet regain 4d8+10 Hit Points and gain a +2 item bonus to all saves against poisons or diseases for 1 minute.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "prey-mutagen",
+  "name": "Prey Mutagen",
+  "question": "Policy for CONSUMABLES (same question as Therapeutic Snap Peas): should a one-shot elixir put a permanent star on AC just for sitting in the pack, or should its timed benefits be handled by the temporary-effect / Modes lane instead?",
+  "evidence": "Family/summary record: \"Timely Dodge — Trigger You are targeted by a Strike; Effect You dart aside, gaining a circumstance bonus to AC, then Step after the Strike resolves.\" The grades give \"+1 / +2 / +3 / +4 circumstance bonus to AC when using Timely Dodge\".",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "prey-mutagen-lesser",
+  "name": "Prey Mutagen (Lesser)",
+  "question": "Consumable policy (see Therapeutic Snap Peas): star a one-shot mutagen permanently, or route its timed effects to the temporary-effect / Modes lane?",
+  "evidence": "\"Timely Dodge ... Trigger You are targeted by a Strike; Effect You dart aside, gaining a +1 circumstance bonus to AC, then Step after the Strike resolves.\" Duration 1 minute.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "prey-mutagen-moderate",
+  "name": "Prey Mutagen (Moderate)",
+  "question": "Consumable policy (see Therapeutic Snap Peas): star a one-shot mutagen permanently, or route its timed effects to the temporary-effect / Modes lane?",
+  "evidence": "\"You dart aside, gaining a +2 circumstance bonus to AC, then Step after the Strike resolves.\" Duration 10 minutes.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "prey-mutagen-greater",
+  "name": "Prey Mutagen (Greater)",
+  "question": "Consumable policy (see Therapeutic Snap Peas): star a one-shot mutagen permanently, or route its timed effects to the temporary-effect / Modes lane?",
+  "evidence": "\"You dart aside, gaining a +3 circumstance bonus to AC, then Step after the Strike resolves.\" Duration 1 hour.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "prey-mutagen-major",
+  "name": "Prey Mutagen (Major)",
+  "question": "Consumable policy (see Therapeutic Snap Peas): star a one-shot mutagen permanently, or route its timed effects to the temporary-effect / Modes lane?",
+  "evidence": "\"You dart aside, gaining a +4 circumstance bonus to AC, then Step after the Strike resolves.\" Duration 1 hour.",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "armor-polishing-kit",
+  "name": "Armor Polishing Kit",
+  "question": "Consumable policy (see Therapeutic Snap Peas): the kit is single-use with a 24-hour window and can be used on someone else's armor — star it permanently on Diplomacy, or handle it as a timed effect?",
+  "evidence": "\"Creatures wearing armor that has been maintained by this kit gain a +1 circumstance bonus on Diplomacy checks to Make an Impression on soldiers, guards, Gorumites, and other martially minded characters. This bonus expires after 24 hours, or if the armor is soiled...\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "sanitizing-pin",
+  "name": "Sanitizing Pin",
+  "question": "Consumable policy (see Therapeutic Snap Peas): a one-use talisman affixed to armor — star it permanently on Fortitude, or handle it as a triggered one-shot effect?",
+  "evidence": "\"Trigger You attempt a saving throw against a disease or poison... You gain a +2 status bonus on your Fortitude save against the initial exposure to the affliction. If you roll a critical failure on the triggering attempt, you get a failure instead.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "fluid-form-staff",
+  "name": "Fluid Form Staff",
+  "question": "The record says PERCEPTION checks to identify magic, but Identify Magic is normally the tradition skill (Arcana/Nature/Occultism/Religion). Should the marker sit on Perception as printed, or should it also/instead mark the four tradition skills? I have followed the printed text.",
+  "evidence": "\"While wielding the staff, you gain a +2 circumstance bonus to Perception checks to identify morph and polymorph magic.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "fluid-form-staff-greater",
+  "name": "Fluid Form Staff (Greater)",
+  "question": "Same as Fluid Form Staff: keep the marker on Perception as printed, or move it to the tradition skills used for Identify Magic?",
+  "evidence": "\"While wielding the staff, you gain a +2 circumstance bonus to Perception checks to identify morph and polymorph magic.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "fluid-form-staff-major",
+  "name": "Fluid Form Staff (Major)",
+  "question": "Same as Fluid Form Staff: keep the marker on Perception as printed, or move it to the tradition skills used for Identify Magic?",
+  "evidence": "\"While wielding the staff, you gain a +2 circumstance bonus to Perception checks to identify morph and polymorph magic.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-elemental-power-greater",
+  "name": "Staff of Elemental Power (Greater)",
+  "question": "Same as the base Staff of Elemental Power: confirm Arcana+Nature as the identify-an-elemental skills.",
+  "evidence": "\"While wielding the staff, you gain a +2 circumstance bonus to checks to identify elemental creatures.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-elemental-power-major",
+  "name": "Staff of Elemental Power (Major)",
+  "question": "Same as the base Staff of Elemental Power: confirm Arcana+Nature as the identify-an-elemental skills.",
+  "evidence": "\"While wielding the staff, you gain a +2 circumstance bonus to checks to identify elemental creatures.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "verdant-staff-greater",
+  "name": "Verdant Staff (Greater)",
+  "question": "Same as the base Verdant Staff: confirm Nature as the identify-plants-and-fungi skill.",
+  "evidence": "\"While wielding it, you gain a +2 circumstance bonus to checks to identify plants and fungi.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "aeon-stone",
+  "name": "Aeon Stone",
+  "question": "This generic record's description is a dump of ALL aeon stone variants (including several with bonuses: Amplifying +2 item to a tradition skill, Formulating/Repairing +1 item to Craft, Smoothing's ignore-status-penalties, Flickering's +1 circumstance initiative). Should the aggregate 'Aeon Stone' record be excluded from the situational registry entirely (my assumption), or split into the missing per-variant records first?",
+  "evidence": "The record is the generic parent entry - \"There are various types of aeon stones, each with a different appearance and magical effect\" - and its own text grants no bonus; the description merely concatenates every variant's write-up (Amplifying, Delaying, Peering, Formulating, Repairing, Flickering, ...).",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "midnight-milk",
+  "name": "Midnight Milk",
+  "question": "This id is an umbrella record whose description reprints all three graded doses, which also exist as their own item ids (midnight-milk-experimental / -refined / -pure). Should the registry carry bonuses on the umbrella record as well, or only on the three concrete items?",
+  "evidence": "\"Stage 1 +2 item bonus to Perception (1 hour)\" (Experimental), \"Stage 1 +3 item bonus to Perception (1 hour)\" (Refined), \"Stage 1 +3 item bonus to Perception checks and Will saving throws\" (Pure)",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "assassins-skin",
+  "name": "Assassin's Skin",
+  "question": "Escape may be rolled with Acrobatics, Athletics, OR your unarmed attack modifier. I registered the two skills; should the +3 also mark the unarmed strikeAttack, or would starring the attack stat mislead (since it only helps the Escape action, never a Strike)?",
+  "evidence": "\"The wearer of assassin's skin gains a +3 item bonus to Escape checks.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "bombers-eye-elixir-lesser",
+  "name": "Bomber's Eye Elixir (Lesser)",
+  "question": "Should target-side effects like cover reduction be surfaced as a strikeAttack star described as an effective +1 to hit, or omitted entirely because the app models no target AC/cover?",
+  "evidence": "\"For the next 5 minutes, your alchemical bomb Strikes reduce the circumstance bonus to AC your targets gain from cover by 1.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "bombers-eye-elixir-greater",
+  "name": "Bomber's Eye Elixir (Greater)",
+  "question": "Same call as bombers-eye-elixir-lesser: surface cover reduction as an effective strikeAttack bonus, or omit it?",
+  "evidence": "\"your alchemical bomb Strikes reduce the circumstance bonus to AC your targets gain from cover by 2.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "bestial-mutagen",
+  "name": "Bestial Mutagen",
+  "question": "Should the grade-less umbrella item records (bestial-mutagen, cognitive-mutagen, drakeheart-mutagen) carry situational entries at all — with a range like \"+1 to +4 by grade\" — or be left out so only the four graded, purchasable records are flagged?",
+  "evidence": "\"Benefit You gain an item bonus to Athletics checks and unarmed attack rolls... Drawback You take a –2 penalty to Reflex saves, Acrobatics checks, and Stealth checks.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "drakeheart-mutagen",
+  "name": "Drakeheart Mutagen",
+  "question": "For drakeheart, should the AC entry be shown at all before the engine can model \"item bonus to AC that replaces armor's, with a +2 Dex cap\" — and should the grade-less umbrella record carry a \"+4 to +7 by grade\" range or be left to the four graded records?",
+  "evidence": "\"Benefit You gain the listed bonus to AC, a Dexterity cap of +2..., and an item bonus to Perception checks... Drawback You take a –1 penalty to Will saves, Reflex saves, and all skill checks to Recall Knowledge.\"",
+  "lane": "situational"
+ },
+ {
+  "collection": "items",
+  "id": "freedoms-flame",
+  "name": "Freedom's Flame",
+  "question": "Should this be narrowed to Will only (compulsion/control effects are overwhelmingly Will saves) or kept as save 'all' to match the literal text?",
+  "evidence": "\"Any creature within 120 feet that's currently under a compulsion or control effect can immediately attempt a new saving throw to break free of the effect, with a +3 status bonus.\"",
+  "lane": "situational"
+ }
+]

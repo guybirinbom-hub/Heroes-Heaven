@@ -1,0 +1,229 @@
+{"results":[
+ {
+  "id": "the-distant-grasp",
+  "verdict": "DECIDABLE",
+  "answer": "MOOT — already built and already ruled. Ruling G: 'Distant Grasp: on the spell, since that's what you're looking at when you cast it.' The bonus is registered as a SPELL_MARKER on `dancing-blade` keyed `source: 'the-distant-grasp'`, so it shows only for a character who has the class feature, and only on the spell's row. Do NOT add a FEAT_SITUATIONAL entry on the class feature. Same shape for every other amp-only bonus.",
+  "evidence": "DECISIONS.md ruling G; src/rules/situationalBonuses.ts:2863 SPELL_MARKERS['dancing-blade'] = [{ source: 'the-distant-grasp', … }]; spellMarkersFor() at :2867"
+ },
+ {
+  "id": "the-unbound-step",
+  "verdict": "DECIDABLE",
+  "answer": "On the SPELL, not the conscious-mind feature — ruling G, identical to The Distant Grasp. Add SPELL_MARKERS['warp-step'] = [{ source: 'the-unbound-step', when: \"while amped\", bonus: \"+10-foot status to Speed instead of +5\" }]. `warp-step` exists in core.spells and `the-unbound-step` in core.classFeatures, so the source-gated lookup resolves. No entry on the class feature.",
+  "evidence": "DECISIONS.md ruling G ('the mark lives on the thing you are looking at when it matters'); src/rules/situationalBonuses.ts:2856-2872 SpellMarker + spellMarkersFor; core.json spells['warp-step'] and classFeatures['the-unbound-step'] both present"
+ },
+ {
+  "id": "sovereign-steel-object-standard-grade",
+  "verdict": "DECIDABLE",
+  "answer": "Star nothing on the bulk-material record — ruling I, extended from noqual ('raw ore in a pack protects nobody'). `sovereign-steel-object-standard-grade` is the priced-per-object crafting-material row, not a wearable. The finished gear carries the bonus: `sovereign-steel-armor*` is already registered. Separately, the 'save to protect the item' leg DOES belong on all three saves once it sits on finished gear — the precedent is already shipped as `save: 'all'`. Follow-up (not a decision, a gap): sovereign-steel-armor* currently carries only the AC leg and is missing the protect-the-item save leg that noqual-armor has.",
+  "evidence": "DECISIONS.md ruling I.1; src/rules/situationalBonuses.ts:2249 noqual-armor uses `{ kind:'save', detail:'all' }` for \"a save you make specifically to protect your noqual armor from magic\"; :887-888 sovereign-steel-armor-*"
+ },
+ {
+  "id": "sovereign-steel-object-high-grade",
+  "verdict": "DECIDABLE",
+  "answer": "Same as the standard-grade object: no star on the material row (ruling I), and the 'protect the item' save goes on all three saves (`save: 'all'`) on the finished armor/weapon records only.",
+  "evidence": "DECISIONS.md ruling I.1; src/rules/situationalBonuses.ts:2249, :888"
+ },
+ {
+  "id": "sixfingers-elixir",
+  "verdict": "DECIDABLE",
+  "answer": "MOOT twice over. (a) This id is an UMBRELLA record — no price, 3 kin, no mechanical field — so ruling A hides it from pickers and gives it no situational entries; the lesser/moderate/greater records already carry the bonus. (b) The 'does the sheet need a Reflex-DC readout' half was ruling D and is SHIPPED: `SituationalTarget.dcOnly` exists, the three graded elixirs use it, explain.ts words it '(raises the DC others roll against, not your own save)', and Customize → 'Show save DCs' renders the DC the star attaches to.",
+  "evidence": "DECISIONS.md rulings A + D; findUmbrellaIds at src/data/index.ts:149; situationalBonuses.ts:56 dcOnly, :2465-2467 sixfingers-elixir-{greater,lesser,moderate}; explain.ts:365; src/data/customization.ts:25 showSaveDCs"
+ },
+ {
+  "id": "harrow-mat",
+  "verdict": "DECIDABLE",
+  "answer": "Use the `lore:*` wildcard — it is the established convention for 'the relevant Lore', not a new invention. Register: [{skill deception},{skill diplomacy},{skill lore:*}] with when \"to convince a creature a harrow reading was accurate\", bonus \"+1 item\". Do NOT hard-code lore:fortune-telling / lore:harrow — the text says 'such as', so ruling H.1 ('where the rules are open, stay open') forbids narrowing it to two, and the player's Lore may be neither. ⚠ REQUIRED CODE FIX: `targetMatches` compares `t.detail === ref.skill` with no wildcard branch, so `lore:*` currently matches NOTHING — the 8 shipped entries that use it (wardrobe-stone x2, brooch-of-inspiration x2, silvertongue-mutagen x5) are silently dead. Add `if (t.detail === 'lore:*') return ref.skill.startsWith('lore:')`.",
+  "evidence": "situationalBonuses.ts:39 (doc: detail may be 'a lore:* key'); :1089, :1090, :1118, :1119, :1802-1806 use lore:*; BUG at :2705-2706 targetMatches has no wildcard branch; DECISIONS.md ruling H.1"
+ },
+ {
+  "id": "weapon-innovation",
+  "verdict": "OWNER",
+  "why": "The display half is already settled — DECISIONS.md rules out over-reporting outright ('starring the feature would hand +2 Stealth to every inventor, including the ten in eleven who chose a different modification'), and the buildable path is fully spec'd. What is left is purely a cost/benefit call the owner has to make and DECISIONS.md explicitly parks on their desk: spend an 11-option picker plus a two-state mode to surface one +2, or leave it in prose. Nothing about the rules decides that.",
+  "options": [
+   {"label": "Build it: effectChoices picker on weapon-innovation for the 11 initial modifications, plus a two-state Segmented Frame mode (collapsed / normal) carrying the +2", "looksLike": "Inventors pick their modification in the builder like any other choose-one-of-N. Only a Segmented Frame inventor sees a 'Collapsed' mode pill; while it is on, Stealth shows a * reading '+2 circumstance — while the weapon is collapsed'. Everyone else sees nothing new."},
+   {"label": "Leave it unbuilt: no picker, no mode, no star anywhere", "looksLike": "Weapon Innovation's description still explains the 11 modifications and the concealable trait. Stealth is unmarked. The player tracks the +2 themselves — or authors it with the item editor's Advanced section (ruling I)."}
+  ],
+  "recommend": "Build it. Both parts already exist as generic machinery (the choose-one-of-N picker ships, and a two-state mode is exactly a stance), so this is wiring rather than new subsystem, and recording WHICH modification an inventor took is worth having on its own — it is a real build choice the app currently drops on the floor. If it is not built, do NOT compromise by starring the feature: that is the one option DECISIONS.md has already excluded.",
+  "theme": "build-a-small-subsystem-or-leave-it-in-prose"
+ },
+ {
+  "id": "aon-cooperative-leadership",
+  "verdict": "DECIDABLE",
+  "answer": "Exclude every `kingdom`-trait feat from the situational registry. Kingdom checks (Focused Attention, Loyalty/Culture/Magic checks, kingdom events) belong to the KINGDOM's four attributes, not to any statistic the PC sheet holds — starring a PC skill for a +3 to a kingdom check would be wrong, and there is no other row to star. This is not a pending question: the owner already decided kingdom feats stay selectable and RECORD THE PICK while granting nothing mechanical (the `FeatChoiceDef.inert` field exists for exactly this), and separately said SKIP on building the Kingdom sheet, remind later. The feats already surface in the Kingmaker rules page.",
+  "evidence": "src/rules/types.ts:636-639 `inert` — 'Kingmaker kingdom feats: the answer belongs to a kingdom sheet that doesn't exist yet, so it is stored ready for one'; MEMORY project_hh_choice_lane_decisions ('keep them selectable AND record the pick'); MEMORY project_pf2e_codex_nav_and_rules_roadmap 'DEFERRED — Kingdom companion sheet (user said SKIP, remind later)'; src/sheet/KingmakerRules.tsx:58 kingdomFeats()"
+ },
+ {
+  "id": "aon-crush-dissent",
+  "verdict": "DECIDABLE",
+  "answer": "Exclude — same as aon-cooperative-leadership. '+1 status to checks to resolve dangerous kingdom events' is a kingdom check; the PC sheet has no such statistic. Feat stays selectable and recorded (`inert`), listed on the Kingmaker rules page, no situational entry.",
+  "evidence": "src/rules/types.ts:636-639; MEMORY project_hh_choice_lane_decisions; MEMORY nav_and_rules_roadmap (Kingdom sheet DEFERRED)"
+ },
+ {
+  "id": "aon-fortified-fiefs",
+  "verdict": "DECIDABLE",
+  "answer": "Exclude — same as aon-cooperative-leadership. Fortify Hex and 'build or repair a Barracks/Castle/…' are kingdom activities rolled on kingdom skills; nothing on the PC sheet moves. Recorded but inert, shown on the Kingmaker rules page.",
+  "evidence": "src/rules/types.ts:636-639; MEMORY project_hh_choice_lane_decisions; MEMORY nav_and_rules_roadmap"
+ },
+ {
+  "id": "aon-free-and-fair",
+  "verdict": "DECIDABLE",
+  "answer": "Exclude — same as aon-cooperative-leadership. 'Loyalty-based checks' is one of the kingdom's four attributes, not a PC statistic. Recorded but inert.",
+  "evidence": "src/rules/types.ts:636-639; MEMORY project_hh_choice_lane_decisions; MEMORY nav_and_rules_roadmap"
+ },
+ {
+  "id": "aon-insider-trading",
+  "verdict": "DECIDABLE",
+  "answer": "Exclude — same as aon-cooperative-leadership. Establish Work Site / Establish Trade Agreement / Trade Commodities are kingdom activities. Recorded but inert.",
+  "evidence": "src/rules/types.ts:636-639; MEMORY project_hh_choice_lane_decisions; MEMORY nav_and_rules_roadmap"
+ },
+ {
+  "id": "aon-inspiring-entertainment",
+  "verdict": "DECIDABLE",
+  "answer": "Exclude — same as aon-cooperative-leadership. The text says 'YOUR KINGDOM gains a +2 status bonus to all Culture-based skill checks', which is explicitly not the character. Recorded but inert.",
+  "evidence": "src/rules/types.ts:636-639; MEMORY project_hh_choice_lane_decisions; DECISIONS.md ruling F (a bonus that lands on someone other than you puts nothing on your sheet)"
+ },
+ {
+  "id": "aon-practical-magic",
+  "verdict": "DECIDABLE",
+  "answer": "Exclude — same as aon-cooperative-leadership. 'Magic checks' and 'Engineering checks' are kingdom skills, a vocabulary the app deliberately does not enumerate (types.ts:626 keeps them as free-text picks rather than inventing content). No PC row to star. Recorded but inert.",
+  "evidence": "src/rules/types.ts:626-627 and :636-639; MEMORY project_hh_choice_lane_decisions; MEMORY nav_and_rules_roadmap"
+ },
+ {
+  "id": "marked-playing-cards",
+  "verdict": "DECIDABLE",
+  "answer": "Register BOTH legs: {skill lore:games} when \"on Games Lore checks to gamble with these cards\" +1 item, AND {skill all} when \"on any other check the GM allows to gamble with these cards\" +1 item. The owner has answered this exact shape twice — ruling C 'Star every skill that could do it' and ruling H.1 'where the rules are open, stay open… narrowing it would put my ruling on the sheet dressed as the book's'. Dropping the open clause would be narrowing. `skill: 'all'` with a narrow trigger is established practice (ageless-patience, the-hidden-truth, underground-network), and the `when` string keeps the star honest.",
+  "evidence": "DECISIONS.md rulings C and H.1; situationalBonuses.ts:80 ageless-patience, :2377 the-hidden-truth, :710 underground-network all use `{ kind:'skill', detail:'all' }` with a narrow when; :1093/:1892 loaded-dice show the lore:games half"
+ },
+ {
+  "id": "fixer",
+  "verdict": "DECIDABLE",
+  "answer": "MOOT — ruling A already covers all of these. `fixer`, `redpitch-bomb`, `secret-keepers-mask`, `necrotic-bomb`, `sulfur-bomb`, `vexing-vapor` are each unpriced with 4 kin and no mechanical field, so findUmbrellaIds hides them from every picker and they get no situational entries; their purchasable variants are already registered (fixer-basic-informant, fixer-expert-informant, fixer-basic-councelor, fixer-expert-councelor). ONE EXCEPTION worth acting on: `fulcrum-lenses` is unpriced with ZERO kin (its four lenses are separate unrelated ids), so the price-and-kin rule cannot reach it — add it to UMBRELLA_EXTRA_IDS, the escape hatch built for exactly this ('summary rows no rule can reach').",
+  "evidence": "DECISIONS.md ruling A; src/data/index.ts:149-177 findUmbrellaIds, :123 UMBRELLA_EXTRA_IDS; situationalBonuses.ts:1002-1004, :2246 fixer-* variants; core.json fulcrum-lenses has no price, 0 kin, 7.2k chars containing four separately-priced lenses"
+ },
+ {
+  "id": "skeptics-elixir",
+  "verdict": "DECIDABLE",
+  "answer": "Two rulings settle it, and neither is new. (a) This id is an UMBRELLA (unpriced, 3 kin, no mechanical field) → ruling A: hidden, no entries; the three graded records already carry the bonus. (b) The general consumable policy is ruling E, and it is already SHIPPED: an unconsumed elixir in the pack must NOT star anything — the bonus lives in a hidden item mode (`ModeDef.fromItemId`, `duration`, `survivesRest`) that the Use button activates. 223 such modes ship today. So the answer for skeptics-elixir-lesser/moderate/greater, ichthyosis-mutagen, fungal-walk-musk and the rest of the batch is: build the mode, and MOVE the registry entry into it rather than leaving both (leaving both is the double-display the ruling exists to prevent).",
+  "evidence": "DECISIONS.md rulings A + E (cases 1-3) and E-continued (Use button, X to clear, clears on rest); src/rules/types.ts:1386-1403 fromItemId/duration/survivesRest; core.json `modes` — 223 item modes, e.g. item-addiction-suppressant-greater; situationalBonuses.ts:1016-1018 skeptics-elixir-* still carry carry-time stars"
+ },
+ {
+  "id": "singing-shortbow",
+  "verdict": "OWNER",
+  "why": "Ruling F does not cleanly reach this one. F is about bonuses that BY DEFINITION go to someone else (Aegis for the Innocent targets an ally). Song of Soothing hits 'every creature in the emanation from the creature you hit' and lets you choose whether the target is included — so the wielder genuinely may or may not get it, and the deciding fact is where they are standing, which the app can never know. A permanent star for a bonus you usually will not have, versus no star for one you sometimes will, is a judgement about how much a sheet may over-promise. The answer generalises to every aura/emanation item in the data, so it is worth setting once.",
+  "options": [
+   {"label": "Display-only mode on the wielder (ruling F clause 2 shape)", "looksLike": "After activating, a 'Song of Soothing (1 min)' pill appears in the rail with the printed text on click. Saves stay unmarked — no number changes. The player reads the pill and applies +1 at the table if they were inside the emanation."},
+   {"label": "Star the saves with the positional trigger", "looksLike": "Will/Fort/Ref carry a permanent * whose line reads '+1 status — vs mental effects for 1 minute, only if you were inside your own Song of Soothing's emanation'. Visible whether or not the bow was fired."},
+   {"label": "Both: display-only mode AND the star, the star pooled under the mode", "looksLike": "The pill appears on use, and only while it is on do the saves show the *. Costs an appliesWhen modifier on the mode rather than a registry entry."}
+  ],
+  "recommend": "Option 3, falling back to option 1 if that is more work than it is worth. Ruling E-continued already promises 'every stat a mode affects is highlighted', so gating the star behind the mode is the mechanism the app is heading towards anyway, and it is the only option that never shows a star for a bonus that is not running. Option 2 is the weakest — an always-on star for a once-per-hour, position-dependent bonus is the over-reporting DECISIONS.md rejected for Weapon Innovation.",
+  "theme": "aura-or-emanation-you-might-not-be-inside"
+ },
+ {
+  "id": "singing-shortbow-greater",
+  "verdict": "OWNER",
+  "why": "Identical to the base Singing Shortbow — same emanation centred on the struck enemy, only the healing die changes (5d10 vs 3d10). Whatever is chosen for the base bow applies here unchanged; listed separately only so the pair stays in step. Note also that the importer stripped the emanation's RADIUS from both records ('every creature in a from the creature you hit'), which is a data bug to fix regardless of which option wins.",
+  "options": [
+   {"label": "Display-only mode on the wielder", "looksLike": "A 'Song of Soothing (1 min)' pill; saves unmarked."},
+   {"label": "Star the saves with the positional trigger", "looksLike": "Permanent * on all three saves reading '+1 status vs mental effects, only if you were inside the emanation'."},
+   {"label": "Both: mode-gated star", "looksLike": "The * appears on the saves only while the pill is active."}
+  ],
+  "recommend": "Whatever is chosen for `singing-shortbow` — do not split the pair. My recommendation there is the mode-gated star.",
+  "theme": "aura-or-emanation-you-might-not-be-inside"
+ },
+ {
+  "id": "leopards-armor",
+  "verdict": "DECIDABLE",
+  "answer": "Yes — register the penalty alongside the bonus, as two entries on the same record. The registry already carries 104 negative entries and the cross-cutting stacking ruling says in terms 'this rule for penalties too', so penalties are first-class. Write: [{skill stealth},{skill intimidation}] when \"for 1 hour after activating the armor, on Stealth checks and on Intimidation checks to Demoralize\" bonus \"+2 item\"; and [{skill diplomacy},{skill society}] same when, bonus \"-2 untyped\". Keep the printed penalty UNTYPED — the text names no type, and poolSituationalLines deliberately never pools untyped entries, which is the correct behaviour for an unnamed penalty. Precedent for this exact both-legs-of-one-activation shape: magnetic-suit, earplugs, silvertongue-mutagen.",
+  "evidence": "DECISIONS.md ★ CROSS-CUTTING ('remember … this rule for penalties too'); situationalBonuses.ts has 104 entries with a negative bonus, e.g. :1001 earplugs (+2 saves / -2 Perception), :1039 magnetic-suit, :1802 silvertongue-mutagen uses \"-2 untyped\"; :2941-2944 poolSituationalLines excludes untyped from pooling"
+ },
+ {
+  "id": "sulfur-bomb",
+  "verdict": "DECIDABLE",
+  "answer": "MOOT — ruling A. `sulfur-bomb` is unpriced with 4 kin and no mechanical field, so it is already hidden from pickers and gets no entries; sulfur-bomb-moderate/greater/major are registered individually and carry their own grade's numbers, which is exactly what stops the naive text scan attributing major numbers to a level-1 item. Separately, the penalty in the evidence lands on the CREATURE HIT, not on you — ruling F: nothing on your sheet either way.",
+  "evidence": "DECISIONS.md rulings A and F; src/data/index.ts:149 findUmbrellaIds; situationalBonuses.ts:2623-2625 sulfur-bomb-{greater,major,moderate}"
+ },
+ {
+  "id": "malleable-mixture",
+  "verdict": "DECIDABLE",
+  "answer": "MOOT — ruling A. Unpriced with 2 kin and no mechanical field: hidden, no entries, no '+2/+3' composite string. malleable-mixture-lesser and -greater are already registered with their own numbers. (When the ruling-E consumable pass reaches them, those two entries become item modes rather than carry-time stars.)",
+  "evidence": "DECISIONS.md ruling A (and E for the graded pair); src/data/index.ts:149; situationalBonuses.ts:1064-1065"
+ },
+ {
+  "id": "vexing-vapor",
+  "verdict": "DECIDABLE",
+  "answer": "MOOT — ruling A. Unpriced with 4 kin, no mechanical field: hidden, no entries. vexing-vapor-moderate/greater/major are registered separately; the lesser grade genuinely grants no item bonus, which is precisely why the family blob must not be indexed as one thing.",
+  "evidence": "DECISIONS.md ruling A; src/data/index.ts:149; situationalBonuses.ts:2645-2647"
+ },
+ {
+  "id": "noqual",
+  "verdict": "DECIDABLE",
+  "answer": "MOOT on both halves. (a) The owner already ruled on this exact record — ruling I.1: 'NOQUAL: star nothing. The rules name no save and no trigger, and raw ore in a pack protects nobody. The description still explains what noqual is.' (b) `noqual` is also an umbrella (unpriced, 13 kin, no mechanical field) so ruling A hides it anyway. For the FINISHED gear the question is answered by shipped precedent, not by a new call: noqual-armor puts the protect-the-item leg on `save: 'all'`. Anyone who wants a different reading at their table has the item editor's Advanced section (ruling I.2).",
+  "evidence": "DECISIONS.md ruling I.1 and I.2; src/data/index.ts:149; situationalBonuses.ts:2249 noqual-armor `{kind:'save',detail:'all'}`"
+ },
+ {
+  "id": "noqual-chunk",
+  "verdict": "DECIDABLE",
+  "answer": "Star nothing — ruling I.1 verbatim ('raw ore in a pack protects nobody'). A 600 gp chunk of raw material is the ore case exactly. It is priced with no kin so the umbrella rule will not hide it; it stays visible and buyable, with the description doing the explaining. No save entry, on any track.",
+  "evidence": "DECISIONS.md ruling I.1; core.json items['noqual-chunk'] price 600 gp, 0 kin, no mechanical field"
+ },
+ {
+  "id": "noqual-ingot",
+  "verdict": "DECIDABLE",
+  "answer": "Star nothing — ruling I.1, same as noqual-chunk. A 6,000 gp ingot is raw material, not worn or wielded gear.",
+  "evidence": "DECISIONS.md ruling I.1; core.json items['noqual-ingot'] price 6000 gp, 0 kin"
+ },
+ {
+  "id": "noqual-object-standard-grade",
+  "verdict": "DECIDABLE",
+  "answer": "Star nothing — ruling I.1. 'Object (Standard-Grade)' is the generic per-object crafting-cost row, not a specific piece of gear a character equips; there is no Raise, no invest, no wear. The finished noqual armor / weapon / shield / buckler records already carry the real bonuses.",
+  "evidence": "DECISIONS.md ruling I.1; situationalBonuses.ts:1111-1115 and :2249-2251 (the finished noqual gear that does carry entries)"
+ },
+ {
+  "id": "noqual-object-high-grade",
+  "verdict": "DECIDABLE",
+  "answer": "Star nothing — ruling I.1, identical to the standard-grade object row.",
+  "evidence": "DECISIONS.md ruling I.1; situationalBonuses.ts:1111-1115, :2249-2251"
+ },
+ {
+  "id": "noqual-shield",
+  "verdict": "DECIDABLE",
+  "answer": "MOOT — already solved and shipped in the pattern the question asks about. Do NOT hard-code a number per variant and do NOT add a runtime read: the `bonus` field is a free-text display string, and the shipped answer writes the dependency in words. `noqual-shield-high-grade` and `noqual-buckler-high-grade` already read bonus: \"shield's circumstance bonus\" / \"buckler's circumstance bonus\" with when \"against spells that target you, while this noqual shield is Raised\". The same device is used for `fighting-oar` (\"+item bonus equal to the oar's potency rune (+1/+2/+3)\"). `noqual-shield` itself is the unpriced base-material row — give it the same descriptive string or leave it to the priced high-grade records; either way no number is invented.",
+  "evidence": "situationalBonuses.ts:2250-2251 noqual-buckler/shield-high-grade; :1941 fighting-oar; :59-65 SituationalBonus.bonus is documented as a display string ('the modifier … or a short effect phrase')"
+ },
+ {
+  "id": "exploration-lens",
+  "verdict": "DECIDABLE",
+  "answer": "MOOT — ruling A, and this is the textbook case for it: the owner's words were 'the summery of all of the items shouldn't be an option for the characters… they should only see the options they can have'. `exploration-lens` is unpriced with 3 kin and no mechanical field, so it is hidden and gets no entries. Never give it the union of the three — that would star stats the player's actual lens does not touch. exploration-lens-detecting / -investigating / -searching are all already registered with their own single benefit.",
+  "evidence": "DECISIONS.md ruling A; src/data/index.ts:149; situationalBonuses.ts:1125, :1126, :2252"
+ },
+ {
+  "id": "red-rib-gill-mask",
+  "verdict": "DECIDABLE",
+  "answer": "MOOT — ruling A. Unpriced with 3 kin and no mechanical field: hidden, no entries, and no range string. red-rib-gill-mask-lesser/moderate/greater are each registered with their own number. (These are also consumables, so ruling E applies to the three graded records when the consumable pass reaches them: the bonus becomes an item mode activated by Use, not a carry-time star.)",
+  "evidence": "DECISIONS.md rulings A and E; src/data/index.ts:149; situationalBonuses.ts:1127-1129"
+ },
+ {
+  "id": "spiderfoot-brew-major",
+  "verdict": "DECIDABLE",
+  "answer": "No star while it sits unused in the pack — ruling E, which is shipped machinery, not a plan. Build a hidden item mode: `{ id:'item-spiderfoot-brew-major', name:'Spiderfoot Brew', fromItemId:'spiderfoot-brew-major', duration:'1 hour', modifiers:[{ target:'skill', detail:'athletics', type:'item', value:3, appliesWhen:'on Athletics checks to Climb' }] }` — ruling E case 2 (it changes a sheet number for a duration), and the climb Speed is a Speed change for the same mode. This is the record that was MISSED: lesser/moderate/greater are in the registry as carry-time stars and major is in neither place. Fix the whole family together — modes for all four, registry entries removed.",
+  "evidence": "DECISIONS.md ruling E cases 1-3 + E-continued; src/rules/types.ts:1386-1403 fromItemId/duration/survivesRest; core.json `modes` (223 shipped item modes); situationalBonuses.ts:1351-1353 spiderfoot-brew-lesser/moderate/greater, :2256 spiderfoot-brew umbrella — no -major anywhere"
+ },
+ {
+  "id": "qat",
+  "verdict": "DECIDABLE",
+  "answer": "Modes, not registry stars — ruling E, exactly the question it answers ('create modes for all of the items that effect the user temporary and when you use them the mode activates'). Qat is priced, has no kin and carries `uses`, so it is a real ownable consumable. Build one hidden mode PER STAGE (Stage 1 '+1 item to Reflex saves', duration '10 minutes', etc.), all sharing an `exclusiveGroup: 'qat'` so you can only be in one stage at a time. The field exists (ModeDef.exclusiveGroup) and is currently unused; drugs would be the first item to need more than one mode, which is a data shape, not a new mechanism.",
+  "evidence": "DECISIONS.md ruling E case 2; src/rules/types.ts:1372 exclusiveGroup, :1386-1403 fromItemId/duration; core.json items['qat'] has price 4 sp + uses; core.json modes — 223 item modes, none with >1 per item and none using exclusiveGroup yet"
+ },
+ {
+  "id": "grit",
+  "verdict": "DECIDABLE",
+  "answer": "Both halves are already ruled. (a) Modes, not carry-time stars — ruling E, same as qat: one hidden mode per stage in an `exclusiveGroup: 'grit'`. (b) Yes, carry the penalties: the cross-cutting stacking ruling says 'this rule for penalties too', the registry already holds 104 negative entries, and ModeDef.modifiers takes negative values as readily as positive. So Stage 2's mode carries +1 item to Athletics/Crafting/Performance AND -2 item to Perception in one mode — that is the whole point of ruling E case 2, the mode is the package. Showing only the upside would misrepresent a drug.",
+  "evidence": "DECISIONS.md ruling E case 2 + ★ CROSS-CUTTING ('this rule for penalties too'); situationalBonuses.ts:1001 earplugs and :1802 silvertongue-mutagen carry both legs; src/rules/types.ts:1372 exclusiveGroup; core.json items['grit'] price 3 gp + uses"
+ },
+ {
+  "id": "demon-dust",
+  "verdict": "DECIDABLE",
+  "answer": "Modes, not carry-time stars — ruling E, same shape as qat and grit. Stage 1: +2 item to Athletics (10 minutes as printed), plus the 'treat up to 4 Bulk as negligible' text as the mode's `note` (bulk is a sheet number, so if the encumbrance maths can take it, put it in modifiers; otherwise the note is the ruling-E case-3 surface). Stage 2 repeats the +2 and adds Stupefied 1 — the stupefied condition is not a mode modifier, it goes in the note, since conditions have their own surface. Stages share an `exclusiveGroup: 'demon-dust'`.",
+  "evidence": "DECISIONS.md ruling E cases 2 and 3 ('ongoing state that does NOT change sheet numbers → DISPLAY-ONLY mode'); src/rules/types.ts:1372 exclusiveGroup, :1380-1381 ModeDef.note ('effects that aren't captured as numeric modifiers'); core.json items['demon-dust'] price 45 gp + uses"
+ }
+]}

@@ -14,6 +14,8 @@ import {
   deriveSpeeds,
   deriveSpellcasting,
   formatMod,
+  ownedFeatureIds,
+  type DefenseSource,
 } from '../rules/derive';
 import {
   addCondition,
@@ -37,7 +39,8 @@ import {
 import { useCustomization, DEFAULT_RAIL_ORDER } from '../data/customization';
 import { CATALOG_MODES, modeTargetLabel, playerModeLibrary } from '../rules/modes';
 import { resourcesForCharacter, resourceMax } from '../rules/classResources';
-import { nameOfRecord, recordMarkersFor, saveDcHasSituational, statHasSituational, statMarkClass, type StatRef } from '../rules/explain';
+import { explainDefense, nameOfRecord, recordMarkersFor, saveDcHasSituational, statHasSituational, statMarkClass, type StatBreakdown, type StatRef } from '../rules/explain';
+import { StatDetailModal } from './StatDetailModal';
 import { ConditionsModal } from './ConditionsModal';
 import { ItemDetail } from './ItemDetail';
 import { ItemEditorModal } from './ItemEditorModal';
@@ -73,6 +76,59 @@ function conditionLabel(id: string): string {
   return id.charAt(0).toUpperCase() + id.slice(1);
 }
 
+/**
+ * One resistance / weakness / immunity, clickable, showing WHERE it came from.
+ *
+ * A bare "Fire 2" is not actionable: with four resistances a player cannot tell which one disappears
+ * if they take the cloak off. So each entry opens the same description popup the rest of the sheet
+ * uses, listing every contributing source.
+ *
+ * Two things the list has to be honest about:
+ *  • Same-type resistances DO NOT stack in Pathfinder 2e — the highest applies. A source that lost is
+ *    still shown, marked superseded, because "my ring does nothing right now" is exactly what the
+ *    player needs to know.
+ *  • A grant that only applies sometimes ("while raging") gets a `*`, matching how conditional
+ *    bonuses are already marked everywhere else on the sheet.
+ */
+function IwrTerm({
+  label,
+  sources,
+  first,
+  onOpen,
+}: {
+  label: string;
+  sources?: DefenseSource[];
+  first: boolean;
+  onOpen: () => void;
+}) {
+  const conditional = sources?.some((s) => s.condition);
+  return (
+    <span>
+      {first ? '' : ', '}
+      <span
+        className="info-term"
+        role="button"
+        tabIndex={0}
+        title="How is this calculated?"
+        onClick={onOpen}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            onOpen();
+          }
+        }}
+      >
+        {label}
+      </span>
+      {conditional && (
+        <span className="iwr-cond" title="Only applies in certain situations — click for details" aria-label="conditional">
+          *
+        </span>
+      )}
+    </span>
+  );
+}
+
 /** The vitals rail that sits to the left of every tab. */
 export function VitalsRail({
   character,
@@ -102,12 +158,15 @@ export function VitalsRail({
   const [shDraft, setShDraft] = useState<string | null>(null);
   /** Damage/repair amount for the shield's own HP row (separate from the character's hpAmt). */
   const [shAmt, setShAmt] = useState('');
-  const { hpCommandEntry, shieldAutoHardness, showSaveDCs, railOrder, railHidden } = useCustomization();
+  const { hpCommandEntry, shieldAutoHardness, hpIwrButtons, showSaveDCs, railOrder, railHidden } = useCustomization();
   const [condOpen, setCondOpen] = useState(false);
   /** The mode whose detail popup is open — clicking a pill opens it. */
   const [modeInfo, setModeInfo] = useState<ModeDef | null>(null);
   /** The "what changes this condition for me" popup — ruling D's condition marker. */
   const [condMark, setCondMark] = useState<{ name: string; marks: { sourceId: string; value?: string; note: string }[] } | null>(null);
+  // A resistance/weakness/immunity opens the SAME breakdown modal every other stat uses, rather than a
+  // prose popup — one visual language for "how is this number made".
+  const [defBreak, setDefBreak] = useState<StatBreakdown | null>(null);
   const [shieldDetailOpen, setShieldDetailOpen] = useState(false);
   const [shieldEditOpen, setShieldEditOpen] = useState(false);
   const [mythicRulesOpen, setMythicRulesOpen] = useState(false);
@@ -658,19 +717,49 @@ export function VitalsRail({
           {charDefenses.resistances.length > 0 && (
             <div className="rail-kv">
               <span className="kv-label">Resistances</span>
-              <span className="iwr-val">{charDefenses.resistances.map((r) => `${typeLabel(r.type)} ${r.value}`).join(', ')}</span>
+              <span className="iwr-val">
+                {charDefenses.resistances.map((r, i) => (
+                  <IwrTerm
+                    key={r.type}
+                    first={i === 0}
+                    label={`${typeLabel(r.type)} ${r.value}`}
+                    sources={charDefenses.sources?.[`resistance:${r.type}`]}
+                    onOpen={() => setDefBreak(explainDefense(charDefenses, 'resistance', r.type))}
+                  />
+                ))}
+              </span>
             </div>
           )}
           {charDefenses.weaknesses.length > 0 && (
             <div className="rail-kv">
               <span className="kv-label">Weaknesses</span>
-              <span className="iwr-val">{charDefenses.weaknesses.map((w) => `${typeLabel(w.type)} ${w.value}`).join(', ')}</span>
+              <span className="iwr-val">
+                {charDefenses.weaknesses.map((w, i) => (
+                  <IwrTerm
+                    key={w.type}
+                    first={i === 0}
+                    label={`${typeLabel(w.type)} ${w.value}`}
+                    sources={charDefenses.sources?.[`weakness:${w.type}`]}
+                    onOpen={() => setDefBreak(explainDefense(charDefenses, 'weakness', w.type))}
+                  />
+                ))}
+              </span>
             </div>
           )}
           {charDefenses.immunities.length > 0 && (
             <div className="rail-kv">
               <span className="kv-label">Immunities</span>
-              <span className="iwr-val">{charDefenses.immunities.map(typeLabel).join(', ')}</span>
+              <span className="iwr-val">
+                {charDefenses.immunities.map((t, i) => (
+                  <IwrTerm
+                    key={t}
+                    first={i === 0}
+                    label={typeLabel(t)}
+                    sources={charDefenses.sources?.[`immunity:${t}`]}
+                    onOpen={() => setDefBreak(explainDefense(charDefenses, 'immunity', t))}
+                  />
+                ))}
+              </span>
             </div>
           )}
         </section>
@@ -988,6 +1077,8 @@ export function VitalsRail({
           onSetHp={(n) => onPlay((p) => setHp(p, n, hpMax))}
           onSetTemp={(n) => onPlay((p) => setTempHp(p, n))}
           onClose={() => setNumpadOpen(false)}
+          resistances={hpIwrButtons === false ? [] : charDefenses.resistances}
+          weaknesses={hpIwrButtons === false ? [] : charDefenses.weaknesses}
         />
       )}
 
@@ -1044,6 +1135,9 @@ export function VitalsRail({
           </div>
         </div>
       )}
+      {defBreak && (
+        <StatDetailModal breakdown={defBreak} character={character} content={content} onClose={() => setDefBreak(null)} />
+      )}
       {condOpen && onPlay && (
         <ConditionsModal
           // The Kingmaker book's conditions (Mired, Routed, Weary, …) are ALL army conditions — they
@@ -1063,7 +1157,11 @@ export function VitalsRail({
           catalog={CATALOG_MODES}
           classId={character.classId}
           ancestryId={character.ancestryId}
-          featIds={new Set(character.feats.map((f) => f.featId))}
+          // Class FEATURES too, not just feats. A mode gated on a class-feature id (an oracle's
+          // cursebound stages, a thaumaturge's Amulet benefit) could never match a set built from
+          // character.feats — those ids live in ownedFeatureIds. Every mode shipped before this
+          // gated on a dedication FEAT, so the gap never showed until class-feature modes existed.
+          featIds={new Set([...character.feats.map((f) => f.featId), ...ownedFeatureIds(character, content)])}
           charKey={charKey}
           charName={character.name}
           activeModeIds={(character.activeModes ?? []).map((m) => m.id)}

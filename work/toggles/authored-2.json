@@ -1,0 +1,182 @@
+{
+  "modes": [
+    {
+      "id": "item-energy-mutagen-major",
+      "name": "Energy Mutagen",
+      "fromItemId": "energy-mutagen-major",
+      "duration": "1 hour",
+      "note": "The mutagen is attuned to acid, cold, electricity or fire when it is made: apply the resistance 20 to that type and the weakness 5 to the other three. Benefit also adds 2d6 damage of the attuned type on every melee weapon hit, and you can end the mutagen to unleash a burst dealing 3d6 per full 10 minutes remaining (max 12d6).",
+      "modifiers": [],
+      "resistances": [{ "type": "the attuned energy type", "value": 20 }],
+      "weaknesses": [{ "type": "the other three energy types", "value": 5 }]
+    },
+    {
+      "id": "extract-vow-of-nonviolence",
+      "name": "Vow of Nonviolence",
+      "feats": ["extract-vow-of-nonviolence"],
+      "duration": "10 minutes",
+      "note": "On a critical success the weapon swears not to hurt you; on a plain success the remaining duration also drops by 1 minute each time that weapon hits you. The resistance covers only damage dealt by that one weapon.",
+      "modifiers": [],
+      "resistances": [
+        { "type": "damage from the weapon that swore the vow", "value": "floor(@actor.level/2)" }
+      ]
+    },
+    {
+      "id": "feral-senses",
+      "name": "Feral Senses",
+      "feats": ["feral-senses"],
+      "duration": "while in your hybrid or animal shape",
+      "note": "Werecreature archetype: these senses last only while the hybrid or animal shape is up.",
+      "modifiers": [],
+      "senses": [
+        { "name": "low-light-vision" },
+        { "name": "scent", "range": 30, "acuity": "imprecise" }
+      ]
+    },
+    {
+      "id": "item-fire-and-iceberg",
+      "name": "Fire and Iceberg",
+      "fromItemId": "fire-and-iceberg",
+      "duration": "1 minute",
+      "note": "Eating the salad leaves a lasting sense of heat and cold.",
+      "modifiers": [],
+      "resistances": [
+        { "type": "fire", "value": 5 },
+        { "type": "cold", "value": 5 }
+      ]
+    },
+    {
+      "id": "item-force-shield",
+      "name": "Force Bubble",
+      "fromItemId": "force-shield",
+      "duration": "1 minute",
+      "note": "Once per day. The bubble ends early if you stop holding the shield.",
+      "modifiers": [],
+      "resistances": [{ "type": "physical", "value": 5 }]
+    },
+    {
+      "id": "item-forge-warden",
+      "name": "Forge Warden",
+      "fromItemId": "forge-warden",
+      "duration": "while the shield is raised",
+      "note": "Adjacent allies gain the same fire resistance 5, but that belongs on their sheets.",
+      "modifiers": [],
+      "resistances": [{ "type": "fire", "value": 5 }]
+    },
+    {
+      "id": "form-a-flock",
+      "name": "Form a Flock",
+      "feats": ["form-a-flock"],
+      "duration": "up to 1 minute",
+      "note": "The flock also grants 25 temporary Hit Points and ends when they are gone, the minute elapses, or you Dismiss it. Enemies in the flock aura are dazzled, and you can take the Acrid Barrage action while it lasts.",
+      "modifiers": [],
+      "weaknesses": [
+        { "type": "area damage", "value": 5 },
+        { "type": "splash damage", "value": 5 }
+      ]
+    },
+    {
+      "id": "fresh-produce",
+      "name": "Fresh Produce",
+      "feats": ["fresh-produce"],
+      "duration": "10 minutes",
+      "note": "Only if you eat the produce yourself; you also feel full and can't eat another piece while it lasts. Resistance is 2 at 1st level and increases by 2 for every 2 levels.",
+      "modifiers": [],
+      "resistances": [{ "type": "void", "value": "2*floor((@actor.level+1)/2)" }]
+    },
+    {
+      "id": "item-frost-breath",
+      "name": "Frost Breath",
+      "fromItemId": "frost-breath",
+      "duration": "while the breath is held",
+      "note": "Ends when you exhale the breath as the single-action cone of frigid air.",
+      "modifiers": [],
+      "resistances": [{ "type": "cold", "value": 5 }]
+    },
+    {
+      "id": "item-galvanic-chew",
+      "name": "Galvanic Chew",
+      "fromItemId": "galvanic-chew",
+      "duration": "up to 1 hour",
+      "note": "Ends early if you spend the Secondary Effect reaction, which makes the chew inert and leaves you temporarily immune to galvanic chews for 24 hours.",
+      "modifiers": [],
+      "resistances": [{ "type": "electricity", "value": 5 }]
+    },
+    {
+      "id": "geomancer-dedication",
+      "name": "Underground Attunement",
+      "feats": ["geomancer-dedication"],
+      "duration": "1 round",
+      "note": "Terrain attunement after expending a slot on an earth spell underground. The other self-affecting attunements aren't tracked here: Aquatic grants a swim Speed, Sky lets you Fly 10 feet, Mountain gives resistance to physical damage (except adamantine) equal to the spell's rank, and Plains gives temporary Hit Points equal to the spell's rank. Arctic, Desert, Forest and Swamp affect enemies only.",
+      "modifiers": [],
+      "senses": [
+        { "name": "darkvision" },
+        { "name": "tremorsense", "range": 15, "acuity": "imprecise" }
+      ]
+    },
+    {
+      "id": "item-ghostcallers-planchette",
+      "name": "Planchette (Armor)",
+      "fromItemId": "ghostcallers-planchette",
+      "duration": "until the start of your next turn",
+      "note": "Only while the spellheart is affixed to armor, and only after you cast a spell by Activating it. Ghost touch attacks — including attacks by incorporeal creatures — ignore the resistance. Affixed to a weapon instead, it gives that weapon ghost touch until the end of your next turn.",
+      "modifiers": [],
+      "resistances": [{ "type": "physical (except ghost touch)", "value": 5 }]
+    },
+    {
+      "id": "item-goz-mask-major",
+      "name": "Goz Mask",
+      "fromItemId": "goz-mask-major",
+      "duration": "1 hour",
+      "note": "Once per day. You also ignore all concealment from environmental effects such as fog, rain and storms.",
+      "modifiers": [],
+      "senses": [{ "name": "darkvision" }]
+    },
+    {
+      "id": "item-grim-specter",
+      "name": "Grim Specter",
+      "fromItemId": "grim-specter",
+      "duration": "up to 1 minute (Sustained)",
+      "note": "Once per day. You become incorporeal, so you also gain resistance to all damage equal to half the relic's level (doubled against non-magical damage) — force damage, ghost touch attacks, spirit, void and vitality damage ignore it; track that one by hand, as the app doesn't know the relic's level. You can move through solid objects but are slowed 1 on any turn you start inside one, and you can't attempt or be the target of Strength-based checks against corporeal creatures.",
+      "modifiers": [],
+      "immunities": ["precision", "disease", "poison", "effects that require a physical body"]
+    },
+    {
+      "id": "item-grolna",
+      "name": "Grolna",
+      "fromItemId": "grolna",
+      "duration": "1 hour (stage 1, after a 1-minute onset)",
+      "note": "You are also stupefied 1 for the hour. Stage 2 is stupefied 2 for 6 hours, with a maximum duration of 8 hours; another dose during stage 1 resets stage 1 and postpones stage 2.",
+      "modifiers": [
+        { "value": 3, "type": "item", "target": "skill", "detail": "survival", "appliesWhen": "to follow tracks" }
+      ],
+      "senses": [{ "name": "scent", "range": 30, "acuity": "imprecise" }]
+    },
+    {
+      "id": "harden-flesh",
+      "name": "Harden Flesh",
+      "feats": ["harden-flesh"],
+      "duration": "until the beginning of your next turn",
+      "note": "Requires standing on earthen or stone ground. Resistance 3, increasing by 1 at 12th level and every 4 levels after, to a maximum of 6 at 20th.",
+      "modifiers": [],
+      "resistances": [
+        { "type": "physical (except adamantine)", "value": "min(6,3+floor((@actor.level-8)/4))" }
+      ]
+    },
+    {
+      "id": "item-horned-lion-amulet",
+      "name": "Horned Lion",
+      "fromItemId": "horned-lion-amulet",
+      "duration": "1 minute",
+      "note": "The triggering fire damage is instead reduced by fire resistance 10; the lasting resistance 5 is what this pill tracks. If the trigger was persistent fire damage, you immediately attempt a flat check to end it, and its DC stays 10 until it ends.",
+      "modifiers": [],
+      "resistances": [{ "type": "fire", "value": 5 }]
+    }
+  ],
+  "skipped": [
+    {
+      "id": "iron-wine",
+      "why": "The cup's actual effect is +1d4 fire damage on your unarmed Strikes for 10 minutes — needs a mode strike lane. The only other effect (weakness 5 to fire until your next daily preparations) applies solely to a SECOND cup in one day, and an item binds one mode, so encoding it here would inflict the weakness on the first cup too."
+    }
+  ]
+}

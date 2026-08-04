@@ -1,0 +1,175 @@
+{
+ "modes": [
+  {
+   "id": "kinetic-dampening",
+   "name": "Kinetic Dampening",
+   "feats": ["kinetic-dampening"],
+   "duration": "until the beginning of your next turn",
+   "note": "Resistance 5 to physical damage, increasing by 5 at 10th level and every 4 levels after. With the second Awakening you also gain the same resistance to your choice of fire, electricity or sonic — add that one by hand, since the app can't record the choice. The first Awakening's ally emanation isn't modelled.",
+   "modifiers": [],
+   "resistances": [
+    { "type": "physical", "value": "max(5,5+5*floor((@actor.level-6)/4))" }
+   ]
+  },
+  {
+   "id": "item-living-statue",
+   "name": "Living Statue",
+   "fromItemId": "living-statue",
+   "note": "Only while you are standing on the earth. The resistance increases from 5 to 8 in caves or subterranean environments.",
+   "modifiers": [],
+   "resistances": [
+    { "type": "physical (except adamantine)", "value": 5 }
+   ]
+  },
+  {
+   "id": "item-maelstromic-destabilizer-lesser",
+   "name": "Destabilizer (Lesser)",
+   "fromItemId": "maelstromic-destabilizer-lesser",
+   "duration": "1 minute",
+   "note": "The creature holding the gadget gains resistance 2 to spirit damage. The weakness 2 to spirit damage the destabilizer inflicts on creatures in its emanation is target-facing and isn't applied to your sheet.",
+   "modifiers": [],
+   "resistances": [
+    { "type": "spirit", "value": 2 }
+   ]
+  },
+  {
+   "id": "item-maelstromic-destabilizer-moderate",
+   "name": "Destabilizer (Moderate)",
+   "fromItemId": "maelstromic-destabilizer-moderate",
+   "duration": "1 minute",
+   "note": "The creature holding the gadget gains resistance 5 to spirit damage. The weakness 5 to spirit damage the destabilizer inflicts on creatures in its emanation is target-facing and isn't applied to your sheet.",
+   "modifiers": [],
+   "resistances": [
+    { "type": "spirit", "value": 5 }
+   ]
+  },
+  {
+   "id": "item-maelstromic-destabilizer-major",
+   "name": "Destabilizer (Major)",
+   "fromItemId": "maelstromic-destabilizer-major",
+   "duration": "1 minute",
+   "note": "The creature holding the gadget gains resistance 10 to spirit damage. The weakness 10 to spirit damage the destabilizer inflicts on creatures in its emanation is target-facing and isn't applied to your sheet.",
+   "modifiers": [],
+   "resistances": [
+    { "type": "spirit", "value": 10 }
+   ]
+  },
+  {
+   "id": "item-saurian-spike-major",
+   "name": "Saurian Spike (Armor)",
+   "fromItemId": "saurian-spike-major",
+   "note": "While the spellheart is affixed to armor you gain precise scent with a range of 60 feet. The weapon-affixed benefit (frightening battle forms) is target-facing.",
+   "modifiers": [],
+   "senses": [
+    { "name": "scent", "range": 60, "acuity": "precise" }
+   ]
+  },
+  {
+   "id": "scouring-spark",
+   "name": "Scouring Spark",
+   "feats": ["scouring-spark"],
+   "duration": "while Channeling your Divine Spark",
+   "note": "You are immune to confused and frightened. Your unarmed attacks deal 1d6 additional fire damage and your fire spells deal one extra die of fire damage (doubled against aberrations, fiends and undead) — those damage riders aren't applied to your Strikes yet. The 3d6 to creatures that touch or hit you is target-facing.",
+   "modifiers": [],
+   "immunities": ["confused", "frightened"]
+  },
+  {
+   "id": "shadow-master",
+   "name": "Shadow Master",
+   "feats": ["shadow-master"],
+   "note": "Only while you are in an area of dim light or darkness. The resistance doesn't apply to force damage or to damage from Strikes with the Ghost Touch property rune. In dim light or darkness you may also roll Reflex saves twice and take the higher result (fortune).",
+   "modifiers": [],
+   "resistances": [
+    { "type": "all except force", "value": 5 }
+   ]
+  },
+  {
+   "id": "shadow-sight",
+   "name": "Shadow Sight",
+   "feats": ["shadow-sight"],
+   "duration": "1 minute",
+   "note": "Once per hour, a single action: you gain greater darkvision for 1 minute.",
+   "modifiers": [],
+   "senses": [
+    { "name": "greater-darkvision" }
+   ]
+  },
+  {
+   "id": "spell-survivor",
+   "name": "Spell Survivor",
+   "feats": ["spell-survivor"],
+   "duration": "until the end of that caster's next turn",
+   "note": "Triggered by critically succeeding at a save against a spell using Orc Superstition or Pervasive Superstition. Resistance 1 to all damage dealt by that caster, increasing by 1 at 9th level and every 4 levels thereafter.",
+   "modifiers": [],
+   "resistances": [
+    { "type": "damage from that caster", "value": "max(1,1+floor((@actor.level-5)/4))" }
+   ]
+  },
+  {
+   "id": "item-spiny-lodestone",
+   "name": "Spiny Lodestone (Armor)",
+   "fromItemId": "spiny-lodestone",
+   "note": "While the spellheart is affixed to metal armor. The weapon-affixed benefit (extra 1d4 piercing on Strikes after Activating it) isn't modelled.",
+   "modifiers": [
+    { "value": 1, "type": "item", "target": "skill", "detail": "athletics" }
+   ],
+   "resistances": [
+    { "type": "nonlethal", "value": 2 }
+   ]
+  },
+  {
+   "id": "item-spiny-lodestone-greater",
+   "name": "Spiny Lodestone (Greater, Armor)",
+   "fromItemId": "spiny-lodestone-greater",
+   "note": "While the spellheart is affixed to metal armor. The weapon-affixed benefit (extra 1d6 piercing on Strikes after Activating it) isn't modelled.",
+   "modifiers": [
+    { "value": 1, "type": "item", "target": "skill", "detail": "athletics" }
+   ],
+   "resistances": [
+    { "type": "nonlethal", "value": 5 }
+   ]
+  },
+  {
+   "id": "item-spun-cloud-blue",
+   "name": "Spun Cloud (Blue)",
+   "fromItemId": "spun-cloud-blue",
+   "duration": "1 minute",
+   "note": "Only while you are inside the exhaled blue cloud, which dissipates after 1 minute. Creatures in the cloud gain resistance 5 to electricity.",
+   "modifiers": [],
+   "resistances": [
+    { "type": "electricity", "value": 5 }
+   ]
+  },
+  {
+   "id": "starlight-armor",
+   "name": "Starlight Armor",
+   "feats": ["starlight-armor"],
+   "duration": "1 minute",
+   "note": "Once per day. Resistance 7 to piercing, bludgeoning and slashing, increasing to 10 at 17th level. The armor also sheds bright light for 20 feet; the dazzling save adjacent attackers must attempt is target-facing. Paizo printed no duration — 1 minute is the value the linked effect uses.",
+   "modifiers": [],
+   "resistances": [
+    { "type": "piercing", "value": "max(7,10*floor(@actor.level/17))" },
+    { "type": "bludgeoning", "value": "max(7,10*floor(@actor.level/17))" },
+    { "type": "slashing", "value": "max(7,10*floor(@actor.level/17))" }
+   ]
+  }
+ ],
+ "skipped": [
+  {
+   "id": "siccatite-buckler-standard-grade",
+   "why": "While Raised you gain resistance 5 to the OPPOSING energy type — cold if the buckler is hot siccatite, fire if it is cold siccatite. The app doesn't record which variety a given shield is, so the resistance type is unknowable; needs a mode element-choice lane."
+  },
+  {
+   "id": "siccatite-shield-standard-grade",
+   "why": "While Raised you gain resistance 5 to the OPPOSING energy type — cold if the shield is hot siccatite, fire if it is cold siccatite. The app doesn't record which variety a given shield is, so the resistance type is unknowable; needs a mode element-choice lane."
+  },
+  {
+   "id": "siccatite-buckler-high-grade",
+   "why": "While Raised you gain resistance 10 to the OPPOSING energy type — cold if the buckler is hot siccatite, fire if it is cold siccatite. The app doesn't record which variety a given shield is, so the resistance type is unknowable; needs a mode element-choice lane."
+  },
+  {
+   "id": "siccatite-shield-high-grade",
+   "why": "While Raised you gain resistance 10 to the OPPOSING energy type — cold if the shield is hot siccatite, fire if it is cold siccatite. The app doesn't record which variety a given shield is, so the resistance type is unknowable; needs a mode element-choice lane."
+  }
+ ]
+}

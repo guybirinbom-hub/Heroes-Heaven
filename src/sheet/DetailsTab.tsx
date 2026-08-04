@@ -9,6 +9,7 @@ import { processPortrait } from './imageUtil';
 import { usePortrait } from './usePortrait';
 import { newPortraitRef, setSharpPortrait } from '../data/portraitStore';
 import { useIsMobile } from './useIsMobile';
+import { DefensesPills } from './DefensesPills';
 
 function cap(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
@@ -397,6 +398,9 @@ export function DetailsTab({
             </div>
           </div>
         )}
+        {/* Sits directly under Senses: both answer "what is this body like", and a player with
+            resistances checks them constantly. Renders nothing when there are none. */}
+        <DefensesPills character={character} content={content} />
       </section>
 
       <section className="card">
