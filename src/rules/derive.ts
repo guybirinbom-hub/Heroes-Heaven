@@ -476,7 +476,11 @@ export function deriveAc(c: Character, db: ContentDatabase): AcResult {
     const refAc = mpActive(c, worn.inv) ? mpArmorRefine(worn.inv.monsterPart, c.level).ac : 0;
     // Guard against a data-incomplete armor (missing acBonus) corrupting AC into NaN.
     armorBase = worn.armor.acBonus ?? 0;
-    acItem = abpOn(c) ? 0 : Math.max((worn.inv.runes as ArmorRunes | undefined)?.potency ?? 0, refAc);
+    // Battleforger's temporary +1 potency is an ITEM bonus like any other, so it takes the highest
+    // rather than adding — which is also exactly the feat's own "no effect if it already had a
+    // potency rune".
+    const bfAc = worn.inv.battleforged ? 1 : 0;
+    acItem = abpOn(c) ? 0 : Math.max((worn.inv.runes as ArmorRunes | undefined)?.potency ?? 0, refAc, bfAc);
   }
   // A passive AC item (Bracers of Armor), Monster Parts, and ABP defense potency are all ITEM bonuses to
   // AC — they don't stack with each other or the armor potency rune, so take the highest.
@@ -1112,6 +1116,15 @@ export function ownedFeatureIds(c: Character, db: ContentDatabase): Set<string> 
   for (const cc of c.classChoices ?? []) {
     if (cc.id && cc.level <= c.level && db.classFeatures[cc.id]) out.add(cc.id);
   }
+  // The inventor's chosen INNOVATION MODIFICATIONS are class features too — every one of the 26 weapon
+  // modifications is a classFeatures record with its own mechanics. They are stored on c.inventor
+  // rather than in classChoices, so without this the chosen modification was recorded, shown in the
+  // builder, and then ignored by everything that reads owned features: its situational bonuses never
+  // fired and a mode gated on it could never appear. Segmented Frame's +2 Stealth is the case that
+  // surfaced it.
+  for (const id of Object.values(c.inventor?.modifications ?? {})) {
+    if (typeof id === 'string' && db.classFeatures[id]) out.add(id);
+  }
   return out;
 }
 
@@ -1338,7 +1351,9 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
   );
   // ABP attack potency replaces the weapon's potency rune; a refined weapon supplies an item bonus of
   // the same class (take the higher — a refined weapon carries no runes, so this is refinement-vs-ABP).
-  const potencyBonus = Math.max(abpOn(c) ? abpAttack(c.level) : runes?.potency ?? 0, mpRef?.attack ?? 0);
+  // Battleforger's temporary +1 potency: an item bonus of the same class, so it takes the highest
+  // rather than adding — which matches the feat's "no effect if it already had a potency rune".
+  const potencyBonus = Math.max(abpOn(c) ? abpAttack(c.level) : runes?.potency ?? 0, mpRef?.attack ?? 0, inv.battleforged ? 1 : 0);
   // Clumsy penalizes EVERY ranged attack roll, including thrown weapons that use Str to hit. Status
   // penalties don't stack and both calls carry the same Frightened/Prone, so taking the worst (min) of
   // the attack-ability and Dex penalties folds in Clumsy for a thrown strike without double-counting.

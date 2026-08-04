@@ -25,7 +25,10 @@ describe('consumable modes: the data', () => {
     // +12 once a mode could also carry a SPEED: four activated fly items, plus the eight siccatite
     // shield variants (two per shield — the resistance type depends on hot vs cold siccatite, which
     // the item record does not state, so the player switches on the one matching their shield).
-    expect(itemModes().length).toBe(300);
+    // +10 for Emotion Surge: the relic's emotion decides which of ten skills gets the bonus, and the
+    // item record never says which emotion a given relic has — so, like the siccatite shields, one
+    // mode per emotion and the player switches on the true one.
+    expect(itemModes().length).toBe(310);
   });
 
   it('every item mode points at an item that actually exists', () => {

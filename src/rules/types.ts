@@ -957,6 +957,18 @@ export interface Spell extends ContentBase {
 
 interface ItemBase extends ContentBase {
   level: number;
+  /**
+   * CURSED ITEMS ONLY: the id of the ordinary item this one imitates — Gaffe Glasses imitate Glasses
+   * of Sociability. When a GM plants the item hidden, the player sees THIS record instead: its name,
+   * its description and its bonuses, exactly as the item deceives them in the fiction. Only cursed
+   * items whose own text describes a disguise carry it.
+   */
+  disguisedAs?: string;
+  /**
+   * A cursed item the wearer cannot simply take off. The app does not enforce this — the GM does —
+   * but deleting one warns the player to ask first, so they do not discover later that it came back.
+   */
+  stuck?: boolean;
   /** Innate spells the item grants while INVESTED — a Cloak of Elvenkind lets you cast Ghost Sound,
    *  a Nosoi Charm casts Sending once a day. Distinct from `heldSpells`, which is the "Activate: Cast
    *  a Spell" charge system (staves and wands); these are simply available while the item is worn. */
@@ -1748,6 +1760,19 @@ export interface InventoryItem {
   /** Doubling Rings: the instanceId of ANOTHER wielded weapon whose runes are duplicated onto THIS
    *  weapon while the rings are invested and both are wielded. Set on the lesser-ring (target) weapon. */
   copyRunesFrom?: string;
+  /**
+   * Battleforger (ruling O): an hour's work grants this weapon or armour the effects of a +1 potency
+   * rune UNTIL YOUR NEXT DAILY PREPARATIONS — a real number (+1 attack, or +1 AC), not a note.
+   *
+   * A flag rather than a written rune, for two reasons: the feat says it "has no effect if the
+   * weapon or armor already had a potency rune", so it must lose to a real one rather than stack;
+   * and it expires, so it must be distinguishable from a permanent rune the player etched. Cleared
+   * by rest(), and shown on the item card so a temporary bonus never looks permanent.
+   */
+  battleforged?: boolean;
+  /** Set by a GM who planted this cursed item WITHOUT telling the player. Its  twin
+   *  is what the player sees; the GM view shows the true item and the true numbers. */
+  hiddenCurse?: boolean;
   /** Player-tracked limited uses (legacy single counter — kept for back-compat). When
    *  resetsOnRest is set, daily preparations (rest) refill `current` to `max`. */
   charges?: { current: number; max: number; resetsOnRest?: boolean };

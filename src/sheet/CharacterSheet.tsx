@@ -33,6 +33,7 @@ import { PartyPage } from './PartyPage';
 import { loadCampaigns } from '../data/storage';
 import { useBackHandler } from './useEscapeClose';
 import { HeroesHeavenLogo } from './Logo';
+import { playerFacingContent } from '../rules/cursedItems';
 
 const TABS = SHEET_TABS;
 // Mobile gets an extra "Actions" page (actions + activities split off Main); desktop keeps them on Main.
@@ -87,7 +88,7 @@ function initialPresets(): DicePreset[] {
 
 export function CharacterSheet({
   character,
-  content,
+  content: rawContent,
   onPlay,
   onRest,
   onOpenRoster,
@@ -151,6 +152,15 @@ export function CharacterSheet({
   // unmount, revert it — otherwise closing a teammate's sheet clobbers your own sheet's overlay, and the
   // teammate's sheet would paint with YOUR customization (see review). They just inherit the ambient look.
   const primarySheet = !readOnly && !gmEdit;
+  // A cursed item a GM planted HIDDEN shows the player its uncursed twin — name, description and
+  // bonuses — so they cannot tell it apart. Swapping it in the CONTENT means every consumer below
+  // (item card, inventory, passiveEffects, the stat breakdowns) is disguised at once without any of
+  // them knowing. The GM's own view (gmEdit) deliberately keeps the true records, because the whole
+  // point of the ruling is that the GM sees the character's real numbers.
+  const content = useMemo(
+    () => (gmEdit ? rawContent : playerFacingContent(rawContent, character.inventory)),
+    [gmEdit, rawContent, character.inventory],
+  );
   // The positive-modifier "+" is a display option. Set the module flag DURING render (before children
   // render) so every stat reads the right value on this paint — only the primary sheet does this.
   if (primarySheet) setPlusOnMods(custom.plusOnMods !== false);

@@ -1141,6 +1141,9 @@ export function rest(
             ),
           };
         }
+        // Battleforger lasts "until your next daily preparations" — this IS that moment. Clearing it
+        // here is what keeps it temporary rather than a permanent rune the player never etched.
+        if (next.battleforged) next = { ...next, battleforged: undefined };
         return next;
       })
     : play.inventory;

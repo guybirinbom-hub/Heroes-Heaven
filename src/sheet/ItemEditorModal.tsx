@@ -919,6 +919,7 @@ export function ItemEditorModal({
                       {!mpActiveHere && (
                         <>
                           <RuneEditor inv={inv} item={item} content={content} onPlay={onPlay} />
+                          <BattleforgerRow inv={inv} item={item} character={character} onPlay={onPlay} />
                           <AttachmentsSection host={inv} hostItem={item} inventory={inventory} content={content} onPlay={onPlay} />
                           <span className="ie-hint">Runes and attachments apply to this specific item right away.</span>
                         </>
@@ -1151,6 +1152,58 @@ function TraitInput({ value, onChange, vocab }: { value: string[]; onChange: (t:
           <option key={t} value={t} />
         ))}
       </datalist>
+    </div>
+  );
+}
+
+/**
+ * Battleforger (ruling O): "By spending 1 hour working on a weapon or armor, you can grant it the
+ * effects of a +1 potency rune until your next daily preparations."
+ *
+ * Real numbers, not a note — +1 to attack for a weapon, +1 AC for armour — so it lives beside the
+ * rune editor and is cleared by rest(). It is deliberately NOT a written rune: the feat says it has
+ * no effect on an item that already has a potency rune, so it must lose to a real one rather than
+ * stack, and it has to stay visibly temporary.
+ *
+ * Shown only when the character has the feat. The owner also asked for it when a PARTY MEMBER has
+ * Battleforger; teammate sheets load asynchronously from the campaign, which this editor has no
+ * access to, so that half is not wired yet.
+ */
+function BattleforgerRow({
+  inv,
+  item,
+  character,
+  onPlay,
+}: {
+  inv: InventoryItem;
+  item: Item;
+  character?: Character;
+  onPlay?: PlayUpdater;
+}) {
+  if (!onPlay || !character) return null;
+  const isWeaponOrArmor = item.itemType === 'weapon' || item.itemType === 'armor';
+  if (!isWeaponOrArmor) return null;
+  if (!character.feats.some((f) => f.featId === 'battleforger')) return null;
+
+  const existing = (inv.runes as { potency?: number } | undefined)?.potency ?? 0;
+  const on = !!inv.battleforged;
+  const inert = existing > 0; // the feat's own "no effect if it already had a potency rune"
+  const toggle = () => onPlay((p) => updateInventoryItem(p, inv.instanceId, { battleforged: on ? undefined : true }));
+
+  return (
+    <div className="ie-bf">
+      <label className="ie-bf-row">
+        <input type="checkbox" checked={on} onChange={toggle} />
+        <span>
+          <strong>Battleforged</strong> — 1 hour&rsquo;s work grants the effects of a <em>+1 potency</em> rune
+          {item.itemType === 'armor' ? ' (+1 AC)' : ' (+1 to attack rolls)'}.
+        </span>
+      </label>
+      <span className="ie-hint">
+        {inert
+          ? 'This item already has a potency rune, so Battleforger adds nothing to it — the feat says so itself.'
+          : 'Cleared automatically at your next daily preparations.'}
+      </span>
     </div>
   );
 }

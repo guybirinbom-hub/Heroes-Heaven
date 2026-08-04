@@ -6354,6 +6354,29 @@ button.strike-name:hover {
   border: 1px solid var(--app-accent);
   color: var(--app-accent);
 }
+/* Battleforged expires at daily preparations. Dashed, unlike the solid permanent badges, so the
+   temporary one is distinguishable at a glance and not just by reading it. */
+.inv-badge.bf {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  border: 1px dashed var(--warn, #e0a458);
+  color: var(--warn, #e0a458);
+}
+/* Battleforger control in the item editor. */
+.ie-bf {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 10px 0 4px;
+}
+.ie-bf-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  cursor: pointer;
+  line-height: 1.4;
+}
 .inv-mp-tags {
   color: var(--app-text-dim);
 }

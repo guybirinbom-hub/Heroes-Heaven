@@ -70,6 +70,19 @@ export interface SituationalBonus {
  * examples.
  */
 export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
+  /* ---- round-2 owner rulings (work/rulings/DECISIONS-round2.md) ------------------------------
+   * Ruling M — an aura you might not be standing in. The Singing Shortbow fires an emanation from
+   * the creature you HIT, so whether it includes you depends on where you stand, which the app can
+   * never know. The owner chose a PERMANENT star with the positional condition in the note, over a
+   * mode-gated star or a display-only pill.
+   */
+  "singing-shortbow": [{ targets: [{ kind: 'save', detail: 'all' }], when: "vs mental, for 1 min after Song of Soothing if you were in the burst", bonus: "+1 status" }],
+  "singing-shortbow-greater": [{ targets: [{ kind: 'save', detail: 'all' }], when: "vs mental, for 1 min after Song of Soothing if you were in the burst", bonus: "+1 status" }],
+  /* Ruling N — a bonus belonging to something that is not your sheet. Artillerist Dedication gives
+   * +2 to Load, Aim, move or Repair a siege weapon; none of those four is a check on the character
+   * sheet. The owner chose a single Crafting star whose note covers all four, over building a
+   * marker surface on the siege weapon's companion block. */
+  "artillerist-dedication": [{ targets: [{ kind: 'skill', detail: 'crafting' }], when: "to Load, Aim, move or Repair a siege weapon you are crewing (whole crew)", bonus: "+2 circumstance" }],
   "acrobatic-performer": [{ targets: [{ kind: 'skill', detail: 'acrobatics' }], when: "when you Perform, if trained in both Acrobatics and Performance", bonus: "+1 circumstance" }],
   "adaptive-vision": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against visual effects", bonus: "+1 circumstance" }],
   "adhyabhau": [{ targets: [{ kind: 'save', detail: 'will' }], when: "against emotion effects", bonus: "+1 circumstance" }],

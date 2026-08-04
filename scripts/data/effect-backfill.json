@@ -44840,5 +44840,44 @@
         "10": 1
       }
     }
+  },
+  {
+    "category": "classFeatures",
+    "id": "dragon-deviant-classification",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "deviant-damage",
+        "prompt": "Choose your deviation's damage type",
+        "options": [
+          {
+            "value": "cold",
+            "label": "Cold"
+          },
+          {
+            "value": "electricity",
+            "label": "Electricity"
+          },
+          {
+            "value": "fire",
+            "label": "Fire"
+          },
+          {
+            "value": "sonic",
+            "label": "Sonic"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "thaumaturges-demesne",
+    "field": "choice",
+    "value": {
+      "flag": "demesne",
+      "kind": "text",
+      "prompt": "Name your demesne (the area you have claimed)"
+    }
   }
 ]

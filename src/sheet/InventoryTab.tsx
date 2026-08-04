@@ -257,6 +257,13 @@ function ItemCard({
                 {capWord(t)}
               </span>
             ))}
+          {/* Battleforger's +1 potency expires at daily preparations, so it has to be visibly
+              temporary — otherwise the item reads as if it were permanently runed. */}
+          {inv.battleforged && (
+            <span className="inv-badge bf" title="Battleforged: +1 potency until your next daily preparations">
+              <i className="ti ti-hammer" aria-hidden="true" /> Battleforged
+            </span>
+          )}
           {item.isMonsterPart && (
             <span className="inv-badge mp" title={item.monsterPartTags?.length ? item.monsterPartTags.join(', ') : 'Monster part'}>
               <i className="ti ti-bone" aria-hidden="true" /> Monster Part

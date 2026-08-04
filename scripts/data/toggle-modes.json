@@ -2196,5 +2196,173 @@
       }
     ],
     "note": "While in Stoked Flame Stance: cold and fire resistance equal to half your level. Any creature that hits you with an unarmed attack, tries to Grab or Grapple you, or otherwise touches you takes fire damage equal to your Wisdom modifier (minimum 1), no more than once per turn."
+  },
+  "segmented-frame-collapsed": {
+    "id": "segmented-frame-collapsed",
+    "name": "Innovation collapsed",
+    "category": "Inventor",
+    "feats": [
+      "segmented-frame"
+    ],
+    "duration": "while collapsed to light Bulk",
+    "modifiers": [
+      {
+        "value": 2,
+        "type": "circumstance",
+        "target": "skill",
+        "detail": "stealth"
+      }
+    ],
+    "note": "Segmented Frame: collapsed to light Bulk your innovation has the concealable trait — +2 circumstance to Stealth checks and to DCs to hide or conceal the weapon. Interact to collapse or restore it."
+  },
+  "item-emotion-surge-anger": {
+    "id": "item-emotion-surge-anger",
+    "name": "Emotion Surge (Anger)",
+    "fromItemId": "aon-emotion-surge",
+    "duration": "1 minute",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "status",
+        "target": "skill",
+        "detail": "athletics"
+      }
+    ],
+    "note": "A surge from your relic grants +1 status to Athletics checks for 1 minute. Once per hour. Switch on the emotion your relic actually has."
+  },
+  "item-emotion-surge-awe": {
+    "id": "item-emotion-surge-awe",
+    "name": "Emotion Surge (Awe)",
+    "fromItemId": "aon-emotion-surge",
+    "duration": "1 minute",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "status",
+        "target": "skill",
+        "detail": "performance"
+      }
+    ],
+    "note": "A surge from your relic grants +1 status to Performance checks for 1 minute. Once per hour. Switch on the emotion your relic actually has."
+  },
+  "item-emotion-surge-dedication": {
+    "id": "item-emotion-surge-dedication",
+    "name": "Emotion Surge (Dedication)",
+    "fromItemId": "aon-emotion-surge",
+    "duration": "1 minute",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "status",
+        "target": "all-checks",
+        "appliesWhen": "to Recall Knowledge"
+      }
+    ],
+    "note": "A surge from your relic grants +1 status to checks to Recall Knowledge for 1 minute. Once per hour. Switch on the emotion your relic actually has."
+  },
+  "item-emotion-surge-fear": {
+    "id": "item-emotion-surge-fear",
+    "name": "Emotion Surge (Fear)",
+    "fromItemId": "aon-emotion-surge",
+    "duration": "1 minute",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "status",
+        "target": "skill",
+        "detail": "stealth"
+      }
+    ],
+    "note": "A surge from your relic grants +1 status to Stealth checks for 1 minute. Once per hour. Switch on the emotion your relic actually has."
+  },
+  "item-emotion-surge-hatred": {
+    "id": "item-emotion-surge-hatred",
+    "name": "Emotion Surge (Hatred)",
+    "fromItemId": "aon-emotion-surge",
+    "duration": "1 minute",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "status",
+        "target": "skill",
+        "detail": "intimidation"
+      }
+    ],
+    "note": "A surge from your relic grants +1 status to Intimidation checks for 1 minute. Once per hour. Switch on the emotion your relic actually has."
+  },
+  "item-emotion-surge-joy": {
+    "id": "item-emotion-surge-joy",
+    "name": "Emotion Surge (Joy)",
+    "fromItemId": "aon-emotion-surge",
+    "duration": "1 minute",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "status",
+        "target": "skill",
+        "detail": "diplomacy"
+      }
+    ],
+    "note": "A surge from your relic grants +1 status to Diplomacy checks for 1 minute. Once per hour. Switch on the emotion your relic actually has."
+  },
+  "item-emotion-surge-love": {
+    "id": "item-emotion-surge-love",
+    "name": "Emotion Surge (Love)",
+    "fromItemId": "aon-emotion-surge",
+    "duration": "1 minute",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "status",
+        "target": "skill",
+        "detail": "medicine"
+      }
+    ],
+    "note": "A surge from your relic grants +1 status to Medicine checks for 1 minute. Once per hour. Switch on the emotion your relic actually has."
+  },
+  "item-emotion-surge-misery": {
+    "id": "item-emotion-surge-misery",
+    "name": "Emotion Surge (Misery)",
+    "fromItemId": "aon-emotion-surge",
+    "duration": "1 minute",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "status",
+        "target": "skill",
+        "detail": "survival"
+      }
+    ],
+    "note": "A surge from your relic grants +1 status to Survival checks for 1 minute. Once per hour. Switch on the emotion your relic actually has."
+  },
+  "item-emotion-surge-pride": {
+    "id": "item-emotion-surge-pride",
+    "name": "Emotion Surge (Pride)",
+    "fromItemId": "aon-emotion-surge",
+    "duration": "1 minute",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "status",
+        "target": "skill",
+        "detail": "society"
+      }
+    ],
+    "note": "A surge from your relic grants +1 status to Society checks for 1 minute. Once per hour. Switch on the emotion your relic actually has."
+  },
+  "item-emotion-surge-remorse": {
+    "id": "item-emotion-surge-remorse",
+    "name": "Emotion Surge (Remorse)",
+    "fromItemId": "aon-emotion-surge",
+    "duration": "1 minute",
+    "modifiers": [
+      {
+        "value": 1,
+        "type": "status",
+        "target": "skill",
+        "detail": "deception"
+      }
+    ],
+    "note": "A surge from your relic grants +1 status to Deception checks for 1 minute. Once per hour. Switch on the emotion your relic actually has."
   }
 }

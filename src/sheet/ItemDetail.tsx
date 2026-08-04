@@ -185,7 +185,20 @@ export function ItemDetail({
   // Shared by the header trash icon and the footer "Remove item" button — one confirm, one path.
   const removeItem = async () => {
     if (!onPlay) return;
-    if (!(await confirmDialog({ title: `Remove ${item.name}?`, message: 'This removes the item (and any runes or attachments on it) from your inventory. You can undo with Ctrl+Z.', confirmLabel: 'Remove', danger: true }))) return;
+    // A cursed item that STICKS cannot simply be taken off. The app does not enforce that — the GM
+    // does — so this tells the player to ask, rather than letting them discover later that it came
+    // back. Remove still works: it is a table aid, not a lock.
+    const stuckOk = item.stuck
+      ? await confirmDialog({
+          title: `${item.name} won't come off`,
+          message:
+            "This item can't simply be removed — ask your GM whether you can be rid of it, and how. Removing it here only changes your sheet; it doesn't ask anyone for you.",
+          confirmLabel: 'Remove anyway',
+          cancelLabel: 'Keep it',
+          danger: true,
+        })
+      : await confirmDialog({ title: `Remove ${item.name}?`, message: 'This removes the item (and any runes or attachments on it) from your inventory. You can undo with Ctrl+Z.', confirmLabel: 'Remove', danger: true });
+    if (!stuckOk) return;
     onPlay((p) => removeInventoryItem(p, id));
     onClose();
   };
