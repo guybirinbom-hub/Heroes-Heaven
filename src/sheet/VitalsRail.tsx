@@ -171,6 +171,8 @@ export function VitalsRail({
   const [shieldEditOpen, setShieldEditOpen] = useState(false);
   const [mythicRulesOpen, setMythicRulesOpen] = useState(false);
   const hpMax = deriveMaxHp(character, content);
+  // 5 with Diehard, else the usual 4. Doomed still steps it down from here.
+  const deathBase = character.dyingThreshold ?? 4;
   // Editable current-HP field (click the number to set it directly).
   const isMobile = useIsMobile();
   const [numpadOpen, setNumpadOpen] = useState(false);
@@ -246,7 +248,7 @@ export function VitalsRail({
   const hpNum = () => Math.abs(parseInt(hpAmt, 10)) || 0;
   const damage = () => {
     const n = hpNum();
-    if (onPlay && n) onPlay((p) => applyDamage(p, n, hpMax));
+    if (onPlay && n) onPlay((p) => applyDamage(p, n, hpMax, deathBase));
     setHpAmt('');
   };
   const heal = () => {
@@ -280,7 +282,7 @@ export function VitalsRail({
     let m: RegExpMatchArray | null;
     if ((m = raw.match(/^t\s*(\d+)$/i))) onPlay((p) => setTempHp(p, Math.max(0, parseInt(m![1], 10))));
     else if ((m = raw.match(/^-\s*(\d+)$/))) onPlay((p) => applyHeal(p, parseInt(m![1], 10), hpMax));
-    else if ((m = raw.match(/^\+?\s*(\d+)$/))) onPlay((p) => applyDamage(p, parseInt(m![1], 10), hpMax));
+    else if ((m = raw.match(/^\+?\s*(\d+)$/))) onPlay((p) => applyDamage(p, parseInt(m![1], 10), hpMax, deathBase));
   };
 
   const acTitle =
@@ -971,7 +973,7 @@ export function VitalsRail({
             // Dying at/above its death threshold (4, reduced by Doomed) means the character is DEAD —
             // make that unmistakable instead of showing the same neutral pill as Dying 1.
             const doomedVal = character.conditions.find((x) => x.id === 'doomed')?.value ?? 0;
-            const dead = c.id === 'dying' && (c.value ?? 1) >= dyingDeathThreshold(doomedVal);
+            const dead = c.id === 'dying' && (c.value ?? 1) >= dyingDeathThreshold(doomedVal, deathBase);
             // Ruling D: something that changes how a condition works FOR YOU (The Survivor and Dying)
             // marks the condition itself — there is no stat row it could sit on, and starring the
             // nearest roll would claim a bonus it does not give.
@@ -1072,7 +1074,7 @@ export function VitalsRail({
           current={character.hitPoints.current}
           max={hpMax}
           temp={character.hitPoints.temp}
-          onDamage={(n) => onPlay((p) => applyDamage(p, n, hpMax))}
+          onDamage={(n) => onPlay((p) => applyDamage(p, n, hpMax, deathBase))}
           onHeal={(n) => onPlay((p) => applyHeal(p, n, hpMax))}
           onSetHp={(n) => onPlay((p) => setHp(p, n, hpMax))}
           onSetTemp={(n) => onPlay((p) => setTempHp(p, n))}

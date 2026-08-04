@@ -1658,6 +1658,48 @@ function deriveUnarmedStrike(
   };
 }
 
+/** "deadly-d8" → "deadly", "versatile-s" → "versatile"; a plain trait is its own family. */
+const traitFamily = (t: string) => (/^(deadly|fatal|versatile)-/.test(t) ? t.split('-')[0] : t);
+
+/**
+ * Apply every owned feat's `unarmedTraits` rider to an unarmed Strike profile.
+ *
+ * "Your unarmed attacks gain the reach trait" changes an attack the character ALREADY has, which
+ * neither grantedStrikes (that creates one) nor any other field could express — so Effortless Reach,
+ * Deadly Strikes, Diamond Fists and their kin printed traits nobody ever received.
+ */
+function applyUnarmedRiders(c: Character, db: ContentDatabase, p: UnarmedProfile): UnarmedProfile {
+  let out = p;
+  for (const fc of c.feats) {
+    const r = db.feats[fc.featId]?.unarmedTraits;
+    if (!r) continue;
+    // A rider may name which attack it changes ("your beak", "your hair"); most name none = all.
+    if (r.match?.length && !r.match.some((m) => out.name.toLowerCase().includes(m.toLowerCase()))) continue;
+
+    const add = r.add ?? [];
+    // "any that already had one or both of these" — tested BEFORE the new traits are merged in.
+    const had = add.some((t) => out.traits.some((existing) => traitFamily(existing) === traitFamily(t)));
+
+    if (add.length) {
+      // A new deadly-d10 REPLACES a deadly-d6 rather than joining it — the printed clause always
+      // reads "or increase it to", never "and also". Same for versatile and fatal.
+      const families = new Set(add.map(traitFamily));
+      const kept = out.traits.filter((t) => !families.has(traitFamily(t)));
+      const rivals = out.traits.filter((t) => families.has(traitFamily(t)));
+      const dieRank = (s: string) => DIE_LADDER.indexOf((s.split('-')[1] ?? '') as (typeof DIE_LADDER)[number]);
+      const merged = [...kept];
+      for (const t of add) {
+        // Never DOWNGRADE: a deadly d12 already present beats an incoming d10.
+        const rival = rivals.find((x) => traitFamily(x) === traitFamily(t));
+        merged.push(rival && dieRank(rival) > dieRank(t) ? rival : t);
+      }
+      out = { ...out, traits: [...new Set(merged)] };
+    }
+    if (r.stepDie || (r.stepDieIfHad && had)) out = { ...out, die: stepDie(out.die) };
+  }
+  return out;
+}
+
 export function deriveStrikes(c: Character, db: ContentDatabase): Strike[] {
   // Handwraps never appear as their own Strike (under any carry flag) — their runes buff every unarmed attack.
   const weapons = c.inventory
@@ -1672,7 +1714,7 @@ export function deriveStrikes(c: Character, db: ContentDatabase): Strike[] {
     deriveUnarmedStrike(
       c,
       db,
-      {
+      applyUnarmedRiders(c, db, {
         instanceId: `natural:${i}`,
         name: na.name,
         die: na.die,
@@ -1680,7 +1722,7 @@ export function deriveStrikes(c: Character, db: ContentDatabase): Strike[] {
         traits: na.traits?.length ? na.traits : ['unarmed'],
         group: na.group ?? 'brawling',
         range: na.range,
-      },
+      }),
       hwRunes,
       false,
       mpHw,
@@ -1702,21 +1744,27 @@ export function deriveStrikes(c: Character, db: ContentDatabase): Strike[] {
     deriveUnarmedStrike(
       c,
       db,
-      {
+      applyUnarmedRiders(c, db, {
         instanceId: `stance:${i}`,
         name: s.name,
         die: s.die,
         damageType: s.damageType,
         traits: s.traits?.length ? [...new Set([...s.traits, 'unarmed'])] : ['unarmed'],
         group: s.group ?? 'brawling',
-      },
+      }),
       hwRunes,
       false,
       mpHw,
     ),
   );
   // Always offer the baseline Fist (PF2e gives every character an unarmed Strike), listed after naturals.
-  return [...stanceStrikes, ...weapons, ...deriveBlastStrikes(c, db), ...naturals, deriveUnarmedStrike(c, db, fistProfile, hwRunes, dsFist, mpHw)];
+  return [
+    ...stanceStrikes,
+    ...weapons,
+    ...deriveBlastStrikes(c, db),
+    ...naturals,
+    deriveUnarmedStrike(c, db, applyUnarmedRiders(c, db, fistProfile), hwRunes, dsFist, mpHw),
+  ];
 }
 
 export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {

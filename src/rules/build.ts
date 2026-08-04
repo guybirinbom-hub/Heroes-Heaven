@@ -2614,6 +2614,14 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     if (max > 0) advancedAlchemy = { max, source };
   }
 
+  // Diehard: "you die from the dying condition at dying 5, rather than dying 4". dyingDeathThreshold
+  // took only Doomed, so the feat changed nothing — you still died at 4 with it.
+  let dyingThreshold: number | undefined;
+  {
+    const bonus = feats.reduce((n, fc) => n + (content.feats[fc.featId]?.dyingThresholdBonus ?? 0), 0);
+    if (bonus) dyingThreshold = 4 + bonus;
+  }
+
   // Repeatable feats that SET a class resource's daily maximum ("your number of versatile vials per
   // day increases to 5", again to 6 and 7 on later takes). Indexed by how many times it was taken.
   // Both sheet call sites read the bare formula, so these were inert.
@@ -3185,6 +3193,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     ...(focus ? { focus } : {}),
     ...(advancedAlchemy ? { advancedAlchemy } : {}),
     ...(resourceFloors ? { resourceFloors } : {}),
+    ...(dyingThreshold ? { dyingThreshold } : {}),
     conditions: [],
     classResources: initialClassResources(
       build.classId,

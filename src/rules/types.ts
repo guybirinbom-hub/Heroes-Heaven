@@ -745,6 +745,29 @@ export interface Feat extends ContentBase, DefenseGrants {
    * formula — a resource that already scales higher is never pulled down.
    */
   resourceMaxSet?: { resourceId: string; values: number[] };
+  /** "You die from the dying condition at dying 5, rather than dying 4" (Diehard). Raises the death
+   *  threshold; Doomed still steps it back down. See Character.dyingThreshold. */
+  dyingThresholdBonus?: number;
+  /**
+   * Traits this feat adds to unarmed Strikes the character ALREADY has — "your unarmed attacks gain
+   * the reach trait" (Effortless Reach), "your beak unarmed attack gains versatile S" (Dogfang Bite).
+   *
+   * Distinct from `grantedStrikes`, which CREATES an attack. There was no way to say "change the one
+   * you already have", so a whole family of capstone feats printed a trait nobody received.
+   */
+  unarmedTraits?: {
+    /** Strike names this applies to, matched case-insensitively as a substring ("beak", "hair").
+     *  Omitted means every unarmed Strike, which is what most of these feats say. */
+    match?: string[];
+    /** Traits to add. A `deadly-dN` / `versatile-*` replaces a weaker one of the same family rather
+     *  than sitting beside it, which is how the printed "or increase it to" clauses read. */
+    add?: string[];
+    /** Step the damage die up one size, unconditionally (Demon's Hair). */
+    stepDie?: boolean;
+    /** Step the damage die up one size only on Strikes that ALREADY had one of `add` — Diamond
+     *  Fists gives forceful + deadly d10 and steps the die instead for attacks that had them. */
+    stepDieIfHad?: boolean;
+  };
   /** Innate spells this feat grants (cast at a fixed tradition; cantrips at-will, else 1/day). */
   innateSpells?: InnateSpellGrant[];
   /** Max-HP modifier (Toughness/Mountain's Stoutness = perLevel 1; Thick Hide Mask = flat 20;
@@ -2187,6 +2210,9 @@ export interface Character {
   /** Minimum daily maximum for a class resource, set by a feat (Additional Servings → 5 versatile
    *  vials). Read through resourceMaxFor(), never resourceMax() directly, or the feat is inert. */
   resourceFloors?: Record<string, number>;
+  /** The Dying value at which this character dies before Doomed is applied — 4, or 5 with Diehard.
+   *  Pass to dyingDeathThreshold(doomed, base); omitted means the default 4. */
+  dyingThreshold?: number;
   /** Answers to daily-preparation choices, keyed `${recordId}:${flag}`; overlaid from play-state. */
   dailyChoices?: Record<string, string>;
   /** Uses spent against each feat's `limitedUses`, by feat id; overlaid from play-state. */

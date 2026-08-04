@@ -117,8 +117,14 @@ export function drainedHpLoss(c: Character): number {
   return d ? (d.value ?? 1) * c.level : 0;
 }
 
-/** The Dying value at which a character dies: 4 normally, reduced by their Doomed
- *  value (and never below 1). Reaching this Dying value means death. */
-export function dyingDeathThreshold(doomed: number): number {
-  return Math.max(1, 4 - Math.max(0, Math.round(doomed)));
+/**
+ * The Dying value at which a character dies: 4 normally, reduced by their Doomed value (and never
+ * below 1). Reaching this Dying value means death.
+ *
+ * `base` is 4 unless a feat says otherwise — Diehard's entire content is "you die from the dying
+ * condition at dying 5, rather than dying 4", and this function ignoring it made the feat inert.
+ * Pass `character.dyingThreshold`.
+ */
+export function dyingDeathThreshold(doomed: number, base = 4): number {
+  return Math.max(1, base - Math.max(0, Math.round(doomed)));
 }

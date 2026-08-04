@@ -51182,5 +51182,77 @@
         "note": "Enforced Order"
       }
     ]
+  },
+  {
+    "category": "feats",
+    "id": "diehard",
+    "field": "dyingThresholdBonus",
+    "value": 1
+  },
+  {
+    "category": "feats",
+    "id": "soul-well",
+    "field": "dyingThresholdBonus",
+    "value": 1
+  },
+  {
+    "category": "feats",
+    "id": "effortless-reach",
+    "field": "unarmedTraits",
+    "value": {
+      "add": [
+        "reach"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "deadly-strikes",
+    "field": "unarmedTraits",
+    "value": {
+      "add": [
+        "deadly-d10"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "diamond-fists",
+    "field": "unarmedTraits",
+    "value": {
+      "add": [
+        "forceful",
+        "deadly-d10"
+      ],
+      "stepDieIfHad": true
+    }
+  },
+  {
+    "category": "feats",
+    "id": "dogfang-bite",
+    "field": "unarmedTraits",
+    "value": {
+      "match": [
+        "beak"
+      ],
+      "add": [
+        "versatile-s"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "demons-hair",
+    "field": "unarmedTraits",
+    "value": {
+      "match": [
+        "hair"
+      ],
+      "add": [
+        "reach",
+        "versatile-s"
+      ],
+      "stepDie": true
+    }
   }
 ]
