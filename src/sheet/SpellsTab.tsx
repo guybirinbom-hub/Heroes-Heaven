@@ -1416,7 +1416,7 @@ export function SpellsTab({
           const inv = character.inventory.find((iv) => iv.instanceId === itemView);
           const item = inv ? content.items[inv.itemId] : undefined;
           return inv && item ? (
-            <ItemDetail inv={inv} item={item} content={content} inventory={character.inventory} onPlay={onPlay} onClose={() => setItemView(null)} />
+            <ItemDetail inv={inv} item={item} content={content} inventory={character.inventory} onPlay={onPlay} activeModes={character.activeModes} onClose={() => setItemView(null)} />
           ) : null;
         })()}
       {manageEntry && onPlay && (

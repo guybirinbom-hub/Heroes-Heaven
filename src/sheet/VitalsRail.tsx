@@ -546,6 +546,7 @@ export function VitalsRail({
                 content={content}
                 inventory={character.inventory}
                 onPlay={onPlay}
+                activeModes={character.activeModes}
                 onClose={() => setShieldDetailOpen(false)}
                 onEdit={onCreateItem ? () => { setShieldDetailOpen(false); setShieldEditOpen(true); } : undefined}
               />

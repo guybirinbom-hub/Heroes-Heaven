@@ -808,6 +808,22 @@ export function useConsumable(play: PlayState, instanceId: string, modeDefs?: Re
   return toggleMode(next, mode.id, modeDefs);
 }
 
+/**
+ * Switch a NON-consumable item's mode on or off — a Devilwing Badge, a Paradigm Cube, an activated
+ * shield. The item is not spent, so quantity is untouched.
+ *
+ * Item modes are deliberately hidden from the Modes panel because they belong to their item rather
+ * than to the player's own list, and the only way to switch one on was the consumable "Use one"
+ * button. That left 72 shipped modes with no route to the sheet at all: the effect was modelled, the
+ * item was in the inventory, and nothing could turn it on.
+ */
+export function toggleItemMode(play: PlayState, instanceId: string, modeDefs?: Record<string, ModeDef>): PlayState {
+  const inv = (play.inventory ?? []).find((i) => i.instanceId === instanceId);
+  if (!inv) return play;
+  const mode = Object.values(modeDefs ?? {}).find((m) => m.fromItemId === inv.itemId);
+  return mode ? toggleMode(play, mode.id, modeDefs) : play;
+}
+
 /** Toggle a per-item carry flag (worn / equipped / invested). */
 export function toggleItemFlag(play: PlayState, instanceId: string, flag: ItemFlag): PlayState {
   return {

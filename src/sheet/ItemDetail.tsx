@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { ContentDatabase, InventoryItem, Item } from '../rules/types';
-import { removeInventoryItem, setItemCounter, setItemQuantity, updateInventoryItem, useConsumable, type PlayUpdater } from '../rules/play';
+import { removeInventoryItem, setItemCounter, setItemQuantity, toggleItemMode, updateInventoryItem, useConsumable, type PlayUpdater } from '../rules/play';
 import { containerOptionsFor } from '../rules/derive';
 import { formatPrice } from '../rules/wealth';
 import { useEscapeClose } from './useEscapeClose';
@@ -146,6 +146,7 @@ export function ItemDetail({
   inventory = [],
   rationsDayTracking = false,
   charLevel = 1,
+  activeModes = [],
   onEdit,
 }: {
   inv: InventoryItem;
@@ -159,12 +160,18 @@ export function ItemDetail({
   rationsDayTracking?: boolean;
   /** Character level — caps the applied Monster-Parts effect readout. */
   charLevel?: number;
+  /** The modes currently switched on — so a non-consumable's Activate button knows its own state. */
+  activeModes?: readonly { id: string }[];
   /** Opens the item editor for this item + instance (runes/attachments live there). */
   onEdit?: (item: Item, inv: InventoryItem) => void;
 }) {
   useEscapeClose(onClose);
   const [pickingSpell, setPickingSpell] = useState(false);
   const runes = runeLines(inv);
+  // The mode this item carries, if any. A consumable switches its own on when used; anything else
+  // needs the Activate control below, or the mode is unreachable.
+  const itemMode = Object.values(content.modes ?? {}).find((m) => m.fromItemId === item.id);
+  const itemModeOn = !!itemMode && activeModes.some((m) => m.id === itemMode.id);
   const counters = rationsDayTracking && item.id === 'rations' ? [] : itemCounters(item, inv);
   const id = inv.instanceId;
   const storedSpell = inv.heldSpell ? content.spells[inv.heldSpell] : undefined;
@@ -367,6 +374,24 @@ export function ItemDetail({
                   <i className="ti ti-flask" aria-hidden="true" /> Use one
                 </button>
                 {inv.quantity <= 1 && <span className="sd-uses-hint">This is your last one — using it removes the item.</span>}
+              </span>
+            </div>
+          )}
+          {/* A NON-consumable that carries a mode — a Devilwing Badge, an activated shield. Item modes
+              are hidden from the Modes panel, and "Use one" only shows for consumables, so 72 shipped
+              modes had no route to the sheet at all. Activating does not spend the item. */}
+          {onPlay && item.itemType !== 'consumable' && itemMode && (
+            <div className="sd-uses">
+              <span className="sd-uses-title">Activate</span>
+              <span className="sd-uses-row">
+                <button
+                  className={'sd-use-btn' + (itemModeOn ? ' on' : '')}
+                  onClick={() => onPlay((p) => toggleItemMode(p, id, content.modes), `mode:${id}`)}
+                >
+                  <i className={'ti ' + (itemModeOn ? 'ti-player-stop' : 'ti-player-play')} aria-hidden="true" />{' '}
+                  {itemModeOn ? `Stop ${itemMode.name}` : itemMode.name}
+                </button>
+                {itemMode.duration && <span className="sd-uses-hint">{itemMode.duration}</span>}
               </span>
             </div>
           )}

@@ -1250,6 +1250,7 @@ export function InventoryTab({
           inventory={character.inventory}
           rationsDayTracking={rationsDayTracking}
           charLevel={character.level}
+          activeModes={character.activeModes}
           onEdit={onCreateItem ? (it, iv) => setEditTarget({ item: it, inv: iv }) : undefined}
         />
       )}
