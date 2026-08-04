@@ -1,0 +1,851 @@
+[
+ {
+  "id": "bloodline-undead",
+  "collection": "classFeatures",
+  "name": "Bloodline: Undead",
+  "level": 1,
+  "traits": [
+   "sorcerer"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Sorcerer Bloodline",
+  "text": "The touch of undeath runs through your blood. Your family tree might contain powerful undead, like a vampire. **Tradition** divine **Bloodline Skills** Intimidation, Religion **Sorcerous Gifts** cantrip Void Warp, 1st: Harm, 2nd: See the Unseen, 3rd: Bind Undead, 4th: Talking Corpse, 5th: Invoke Spirits, 6th: Vampiric Exsanguination, 7th: Execute, 8th: Canticle of Everlasting Grief, 9th: Wails of the Damned **Bloodline Spells** initial: Undeath's Blessing, advanced: Drain Life, greater: Grasping Grave **Blood Magic—Stolen Life** You can channel the necromantic energy in your blood. Either you gain temporary Hit Points equal to the spell's rank that last until the start of your next turn, or a target takes 1 void damage per spell rank (if the spell already deals initial void damage, combine this with the spell's initial damage before determining weaknesses and resistances)."
+ },
+ {
+  "id": "bloodrager",
+  "collection": "classFeatures",
+  "name": "Bloodrager",
+  "level": 1,
+  "traits": [
+   "barbarian"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Barbarian Instinct",
+  "text": "You use the power of ingested blood to generate magical power and fuel you in combat, transforming you into a horrifyingly fearsome opponent. You must select Bloodrager Dedication as your 2nd-level class feat. **Prerequisites:** You must be a barbarian. **Bloodrager Adjustments:** You are trained in Athletics, Medicine, and a number of additional skills equal to 2 plus your Intelligence modifier, instead of your normal starting skill proficiencies. You must choose the bloodrager instinct for your barbarian instinct. ## Bloodrager Instinct Drinking the potent magical blood of supernatural creatures has changed you and awakened magical power within you, along with a grim thirst. **Blood Rage (Instinct Ability):** When raging, your physical attacks deal extra persistent bleed damage equal to half your additional damage from Rage. When you Cast a Spell that requires a spell attack roll while raging, apply the additional damage from Rage to that spell, even on a failure. **Specialization Ability:** When using blood rage, increase the additional damage from Rage from 2 to 4. If you have greater weapon specialization, instead increase the damage from 4 to 8. **Raging Resistance:** You resist slashing damage and persistent bleed damage, as well as damage dealt by the creature whose blood you last drank using Harvest Blood (see below), regardless of the damage type."
+ },
+ {
+  "id": "blunt-shot",
+  "collection": "classFeatures",
+  "name": "Blunt Shot",
+  "level": 1,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Ranged Only** --- Your weapon innovation can file the edges off your ammunition and adjust the blunt force of the shot to deliver an attack that can batter as much as pierce, or even knock an opponent right off their feet. Your innovation gains the concussive and ranged trip traits."
+ },
+ {
+  "id": "bomber",
+  "collection": "classFeatures",
+  "name": "Bomber",
+  "level": 1,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Alchemist Research Field",
+  "text": "You specialize in explosions and other violent reactions. **Formulas** Two common 1st-level alchemical bombs. **Field Benefit** When throwing an alchemical bomb with the splash trait, you can choose to deal splash damage to only your primary target instead of the usual splash area. **Field Vials** When you Strike with a versatile vial, you can choose to have it deal cold, electricity, or fire damage instead of acid damage. **Field Discovery (5th)** You have calculated all the angles to maximize a bomb's splash. When you throw an alchemical bomb with the splash trait, you can cause the bomb to deal splash damage equal to your Intelligence modifier (minimum 1) instead of the normal amount. **Advanced Vials (11th)** You can mix special ingredients into your vials, such as magical dust or flakes of precious minerals. When you create a versatile vial, you can choose to have it treated as one special material of your choice, chosen from adamantine, cold iron, and dawnsilver. If you're wearing or wielding an item of a different precious material when you make the vial, you can choose that material instead. **Greater Field Discovery (13th)** You can increase the splash on your bombs to damage creatures within 10 feet, or 15 feet if you have Expanded Splash."
+ },
+ {
+  "id": "bones",
+  "collection": "classFeatures",
+  "name": "Bones",
+  "level": 1,
+  "traits": [
+   "oracle"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Oracle Mystery",
+  "text": "Your mystery imparts an understanding of death and undeath in all their macabre complexity. You might have had a brush with death yourself—maybe even dying and returning to life—or carry the touch of undeath in your blood. If you commune with deities, you might speak with guardians of death like Pharasma and the psychopomp ushers (the most powerful among creatures that guide souls through the afterlife); a bringer of death like the Mantis God Achaekek or the Horseman of the Apocalypse Charon; or a herald of undeath such as Urgathoa. **Granted Spells** - **cantrip:** Void Warp - **1st:** Grim Tendrils - **2nd:** False Vitality - **3rd:** Ghostly Weapon **Revelation Spells** - **initial:** Soul Siphon - **advanced:** Armor of Bones - **greater:** Claim Undead **Related Domains** death, decay, undeath, vigil **Mystery Skill** Medicine **Oracle Feat** Nudge the Scales Curse of the Living Death"
+ },
+ {
+  "id": "bravery",
+  "collection": "classFeatures",
+  "name": "Bravery",
+  "level": 3,
+  "traits": [
+   "fighter"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Fighter automatically at level 3",
+  "text": "Having faced countless foes and the chaos of battle, you have learned how to stand strong in the face of fear. Your proficiency rank for Will saves increases to expert. When you roll a success at a Will save against a fear effect, you get a critical success instead. In addition, anytime you gain the frightened condition, reduce its value by 1."
+ },
+ {
+  "id": "breath-weapon",
+  "collection": "classFeatures",
+  "name": "Breath Weapon",
+  "level": 1,
+  "traits": [
+   "arcane",
+   "eidolon"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Your eidolon exhales a blast of destructive energy. Your eidolon deals 1d6 damage to all creatures in the area, with a basic Reflex save against your spell DC. The area and damage type of the Breath Weapon are chosen when the eidolon gains this ability. Your eidolon then can't use their Breath Weapon again for the next 1d4 rounds. At 3rd level and every 2 levels thereafter, the damage increases by 1d6."
+ },
+ {
+  "id": "buckle-cut-blitz",
+  "collection": "classFeatures",
+  "name": "Buckle-Cut Blitz",
+  "level": 1,
+  "traits": [
+   "brandish",
+   "commander",
+   "tactic"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Your squad dashes past enemies, slicing their boot laces and breaking their belt buckles. Signal up to two squadmates within the aura of your commander's banner; these squadmates can Stride up to their Speed as a reaction. Each enemy they are adjacent to at any point during this movement must attempt a save against your class DC or become Clumsy 1 for 1 round (Clumsy 2 on a critical failure)."
+ },
+ {
+  "id": "burn-out-of-time",
+  "collection": "classFeatures",
+  "name": "Burn out of Time",
+  "level": 1,
+  "traits": [
+   "spirit",
+   "transcendence",
+   "void"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "An impossible amount of energy blazes in a sphere above you before compressing itself into your weapon. Strike one creature. The Strike deals an additional 3d8 spirit damage and 3d8 void damage. If the creature is reduced to 0 Hit Points, it's immediately killed and reduced to ash, not in the present, but in the recent past, erasing the consequences of their recent actions. If a creature died within the last round as a result of the incinerated target's actions, that creature is returned to life with 5d8 Hit Points at the location that it died as its death is retroactively undone."
+ },
+ {
+  "id": "burnished-armor-expertise",
+  "collection": "classFeatures",
+  "name": "Burnished Armor Expertise",
+  "level": 13,
+  "traits": [
+   "exemplar"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Exemplar automatically at level 13",
+  "text": "Exposure to your divine spark has reinforced your armor. Your proficiency ranks for light armor, medium armor, and unarmored defense increase to expert."
+ },
+ {
+  "id": "burnished-armor-mastery",
+  "collection": "classFeatures",
+  "name": "Burnished Armor Mastery",
+  "level": 19,
+  "traits": [
+   "exemplar"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Exemplar automatically at level 19",
+  "text": "Your armor shines with divine light, flawless and unyielding. Your proficiency ranks for light armor, medium armor, and unarmored defense increase to master."
+ },
+ {
+  "id": "camouflage-pigmentation",
+  "collection": "classFeatures",
+  "name": "Camouflage Pigmentation",
+  "level": 7,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've modified your armor's exterior to let you blend into your surroundings with ease, as long as you stay still. While wearing your armor, you can Hide even without cover or concealment, as the pigmentation shifts to match your surroundings."
+ },
+ {
+  "id": "captivating-charm",
+  "collection": "classFeatures",
+  "name": "Captivating Charm",
+  "level": 1,
+  "traits": [
+   "concentrate",
+   "emotion",
+   "mental",
+   "transcendence",
+   "visual"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You focus your attention on a creature within 30 feet, overwhelming its senses. The creature must succeed at a save against your class DC or be fascinated by you until the start of your next turn. The condition ends if you use a hostile action against the target, but not if you use a hostile action against its allies."
+ },
+ {
+  "id": "caretakers-calling",
+  "collection": "classFeatures",
+  "name": "Caretaker's Calling",
+  "level": 1,
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have a deep-seated drive or divine directive to care for others, and your power might one day grow to allow you to heal an unimaginable wound. When you Treat Disease, Treat Poison, Treat Wounds, or use Battle Medicine, you can spend a Mythic Point to attempt the check at mythic proficiency. The first time each day that you critically succeed on a check to Treat Wounds, you regain a Mythic Point. --- **Edicts** give aid to others, heal those who are wounded regardless of where they come from **Anathema** deny care to the disadvantaged, refuse to heal the wounds of an enemy who has surrendered"
+ },
+ {
+  "id": "cascade-bearers",
+  "collection": "classFeatures",
+  "name": "Cascade Bearers",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Cascade Bearers spend considerable time studying the qualities of magic itself as they seek to advance magical theory. They prize imagination and often bring a sense of playful curiosity to what would otherwise be intense inquiries at the borders of known magic. Of all the branches, these students are most likely to become teachers and to continue their research after graduation. In fact, some Cascade Bearers never leave the Magaambya, whether or not they attain an official teaching or research post. Their coursework draws broadly across the uses of magic, including attacking, protecting, manipulating objects, and seeing through matter. **Additional Curriculum** - **cantrips:** Telekinetic Projectile - **1st:** Force Barrage, Mystic Armor - **2nd:** Telekinetic Maneuver - **3rd:** Levitate - **4th:** Flicker - **5th:** Telekinetic Haul - **6th:** Cursed Metamorphosis - **7th:** Contingency, Project Image - **8th:** Pinpoint - **9th:** Detonate Magic"
+ },
+ {
+  "id": "cause",
+  "collection": "classFeatures",
+  "name": "Cause",
+  "level": 1,
+  "traits": [
+   "champion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Champion automatically at level 1",
+  "text": "You devote yourself to a specific cause in your deity's name. Some are limited to sanctification, as noted in parentheses. Your cause adds to your edicts and anathema and grants you a special reaction called your champion's reaction, which appears after the divider, along with its upgrades if you gain the relentless reaction and exalted reaction class features at higher levels. **Desecration (Unholy):** You selfishly corrupt and destroy. **Grandeur (Holy):** You exemplify the glory and splendor of the celestial realms. **Iniquity (Unholy):** You destroy, take advantage, and act with dishonor. **Justice:** You follow laws and mete out just punishment. **Liberation:** You oppose tyranny and fight for freedom. **Obedience:** You enforce hierarchies and order. **Redemption (Holy):** You try to redeem those who commit wicked deeds."
+ },
+ {
+  "id": "chalice",
+  "collection": "classFeatures",
+  "name": "Chalice",
+  "level": 1,
+  "traits": [
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Chalice implements are vessels that fill with liquid, associating them with healing, nourishment, and life. Your chalice might be a traditional cup or goblet, but it could also be a small amphora, a polished gourd, or even a hollowed-out skull. Chalice implements are associated with the astrological signs of the mother and the newlyweds, as well as the sea dragon. ### **Initiate Benefit** ### **Adept Benefit** ### **Intensify Vulnerability** Your reinforced chalice can collect a creature's life force from a distance to become empowered. While you're within 30 feet of the target of your Exploit Vulnerability, you increase the effect if someone Drinks from the Chalice. Add additional temporary Hit Points equal to your level if the drinker sips, or add twice your level to the Hit Points regained if the drinker drains the chalice. ### **Paragon Benefit**"
+ },
+ {
+  "id": "champion-expertise",
+  "collection": "classFeatures",
+  "name": "Champion Expertise",
+  "level": 9,
+  "traits": [
+   "champion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Champion automatically at level 9",
+  "text": "Prayers strengthen your divine power. Your proficiency ranks for your champion class DC and divine spell attack rolls and DCs increase to expert."
+ },
+ {
+  "id": "champion-mastery",
+  "collection": "classFeatures",
+  "name": "Champion Mastery",
+  "level": 17,
+  "traits": [
+   "champion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Champion automatically at level 17",
+  "text": "You've mastered your arsenal of champion techniques and divine spells. Your proficiency ranks for your champion class DC and for divine spell attack rolls and spell DCs increase to master."
+ },
+ {
+  "id": "champions-aura",
+  "collection": "classFeatures",
+  "name": "Champion's Aura",
+  "level": 1,
+  "traits": [
+   "champion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're surrounded by an aura in a 15-foot emanation. It has the aura and divine traits. Any follower of your deity within the aura immediately knows you're a champion of your deity. This aura is used as the range for your champion's reaction and for various other effects. You can suppress or resume the aura as a single action, which has the concentrate trait, and it ends if you fall unconscious."
+ },
+ {
+  "id": "champions-reaction",
+  "collection": "classFeatures",
+  "name": "Champion's Reaction",
+  "level": 1,
+  "traits": [
+   "champion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your cause gives you a special reaction. See specific causes for more information."
+ },
+ {
+  "id": "chemical-hardiness",
+  "collection": "classFeatures",
+  "name": "Chemical Hardiness",
+  "level": 11,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Alchemist automatically at level 11",
+  "text": "Imbibing alchemical compounds has strengthened your organs. Your proficiency rank for Fortitude saves increases to master. When you roll a success on a Fortitude save, you get a critical success instead."
+ },
+ {
+  "id": "churning-mind",
+  "collection": "classFeatures",
+  "name": "Churning Mind",
+  "level": 11,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Inventor automatically at level 11",
+  "text": "The gears of your mind keep turning, making you resistant to mental manipulation. Your proficiency rank for Will saves increases to master. When you roll a success on a Will save, you get a critical success instead."
+ },
+ {
+  "id": "coiling-serpents",
+  "collection": "classFeatures",
+  "name": "Coiling Serpents",
+  "level": 1,
+  "traits": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Make a ranged Strike with your ikon. If the Strike hits, the target must succeed at a save against your class DC or the arrow transforms into a multitude of ethereal snakes that coil around the target, Immobilizing it until it succeeds at an Escape attempt against your class DC."
+ },
+ {
+  "id": "command-a-construct",
+  "collection": "classFeatures",
+  "name": "Command a Construct",
+  "level": 1,
+  "traits": [
+   "auditory",
+   "concentrate"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You instruct your construct companion to act as you instruct it, and according to its programming. Your construct companion gains 2 actions during this turn. See the minion trait for details."
+ },
+ {
+  "id": "commanding-will",
+  "collection": "classFeatures",
+  "name": "Commanding Will",
+  "level": 11,
+  "traits": [
+   "commander"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Commander automatically at level 11",
+  "text": "You know that if you break, so too will those who follow you, and so you have cultivated a will that bends to no outside force. Your proficiency rank for Will saves increases to master. When you roll a success on a Will save, you get a critical success instead."
+ },
+ {
+  "id": "complete-reconfiguration",
+  "collection": "classFeatures",
+  "name": "Complete Reconfiguration",
+  "level": 13,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Inventor automatically at level 13",
+  "text": "When it comes to crafting and tinkering, you've become incredibly adept at changing your modifications to adjust your innovation's functionality. When you spend downtime to reconfigure your innovation and succeed at your Crafting check, you can swap any number of modifications, swap your offensive boost, or retrain any number of modification feats, rather than one. You still must swap a modification only with one of the same type (initial, breakthrough, or revolutionary)."
+ },
+ {
+  "id": "complex-simplicity",
+  "collection": "classFeatures",
+  "name": "Complex Simplicity",
+  "level": 1,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Increase your innovation's weapon damage die by one step (d4 to d6, d6 to d8, d8 to d10, d10 to d12). In addition, it gains two of the following traits of your choice: versatile B, versatile P, versatile S, or razing."
+ },
+ {
+  "id": "confident-evasion",
+  "collection": "classFeatures",
+  "name": "Confident Evasion",
+  "level": 7,
+  "traits": [
+   "swashbuckler"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Swashbuckler automatically at level 7",
+  "text": "You've learned to move quickly to avoid explosions, a dragon's breath, and worse. Your proficiency rank for Reflex saves increases to master. When you roll a success on a Reflex save, you get a critical success instead."
+ },
+ {
+  "id": "confident-finisher",
+  "collection": "classFeatures",
+  "name": "Confident Finisher",
+  "level": 1,
+  "traits": [
+   "swashbuckler"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Swashbuckler automatically at level 1",
+  "text": "You gain an elegant finishing attack you can make when you have panache. The finisher trait is described below. You gain the Confident Finisher action. --- **Finisher** Finishers are spectacular finishing moves that use your panache. Finishers can be used only with weapons that deal additional damage with precise strike (agile or finesse melee weapons or unarmed attacks, for most swashbucklers). You can use a finisher only if you have panache, and you lose your panache immediately after performing a finisher. Once you use a finisher, you can't use actions that have the attack trait for the rest of your turn. Some finisher actions also grant an effect on a failure. Effects added on a failure don't apply on a critical failure. If your finisher action succeeds, you can still choose to apply the failure effect instead. For example, you might do this when an attack deals no damage due to resistance."
+ },
+ {
+  "id": "coordinating-maneuvers",
+  "collection": "classFeatures",
+  "name": "Coordinating Maneuvers",
+  "level": 1,
+  "traits": [
+   "brandish",
+   "commander",
+   "tactic"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your team works to slip enemies into a disadvantageous position. Signal one squadmate within the aura of your banner; that squadmate can immediately Step as a free action. If they end this movement next to an opponent, they can attempt to Reposition that target as a reaction."
+ },
+ {
+  "id": "corpse-crenellation",
+  "collection": "classFeatures",
+  "name": "Corpse Crenellation",
+  "level": 1,
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Frequency** once per 10 minutes --- With methodical, shocking efficiency, some Chelaxian and Hellknight squads can turn the corpses of their slain foes into temporary earthworks. Signal up to two squadmates within the aura of your commander's banner. These squadmates can Stride up to half their Speed and attempt a melee or ranged Strike against one enemy you designate as a reaction. If the enemy is reduced to 0 Hit Points by these Strikes, the enemy's body provides lesser cover to all squadmates in or adjacent to the enemy's space until the end of your next turn or until the enemy is no longer unconscious or dead. During this time, any squadmate who Takes Cover can also first Stride up to half their Speed, but they must end this movement in or adjacent to the fallen enemy's space. A squadmate who's at least two sizes smaller than the fallen enemy instead gains standard cover. --- **Special** If one of your squadmates knows or has prepared a cantrip that deals damage and requires 2 or fewer actions to cast, they can cast it targeting the designated enemy instead of taking the other actions normally granted by this tactic, gaining all other listed benefits."
+ },
+ {
+  "id": "cosmos",
+  "collection": "classFeatures",
+  "name": "Cosmos",
+  "level": 1,
+  "traits": [
+   "oracle"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Oracle Mystery",
+  "text": "Celestial bodies great and small exert influence on you, giving you sublime cosmic power. Perhaps you see the glittering stars as a divine blessing, or perhaps you feel drawn to the infinitely dark spaces between. You might uphold deities like Desna, Sarenrae, or the deific lovers Shizuru and Tsukiyo who represent the sun and the moon—or you might draw power from dark entities from beyond the stars, like certain Outer Gods, or destructive gods of the night like Zon-Kuthon or the rat goddess Lao Shu Po. **Granted Spells** - **cantrip:** Light - **1st:** Dizzying Colors - **2nd:** Darkness - **5th:** Moon Frenzy **Revelation Spells** - **initial:** Spray of Stars - **advanced:** Interstellar Void - **greater:** Moonlight Bridge **Related Domains** darkness, moon, nothingness, star **Mystery Skill** Nature **Oracle Feat** Oracular Warning Curse of the Sky's Call"
+ },
+ {
+  "id": "covered-reload",
+  "collection": "classFeatures",
+  "name": "Covered Reload",
+  "level": 1,
+  "traits": [
+   "gunslinger"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You duck into a safe position or minimize your profile while reloading to make your next attack. Either Take Cover or attempt to Hide, then Interact to reload. As normal, you must meet the requirements to Take Cover or Hide; you must be prone, benefiting from cover, or near a feature that allows you to Take Cover, and you need to be benefiting from cover or concealed to a creature to Hide from that creature."
+ },
+ {
+  "id": "crafter-in-the-vault",
+  "collection": "classFeatures",
+  "name": "Crafter in the Vault",
+  "level": 1,
+  "traits": [
+   "animist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Crafters in the vault are found in dungeons, forges, or other places where creation and injury occur concurrently. They enjoy partnering with animists who compliment them on their creations, but often become jealous when anyone else intrudes on their expertise, including casting any of the spells that appear on their apparition list. --- **Apparition Skills** Architecture Lore, Engineering Lore **Apparition Spells** - **Cantrip** Sigil - **1st** Mending - **2nd** Knock - **3rd** Ghostly Weapon - **4th** Creation - **5th** Impaling Spike - **6th** Wall of Metal - **7th** Beheading Buzz Saw - **8th** Ferrous Form - **9th** Resplendent Mansion **Vessel Spell** Traveling Workshop **Avatar** *Incarnate Dungeon* Speed 50 feet, either burrow Speed 50 feet or fly Speed 50 feet **Melee** ⟨1⟩ dungeon trap (reach 10 feet, versatile B or P), **Damage** 6d6+6 plus Grab **Ranged** ⟨1⟩ deadly darts (range 120 feet, versatile poison), **Damage** 6d6+6"
+ },
+ {
+  "id": "crash-against-me",
+  "collection": "classFeatures",
+  "name": "Crash Against Me",
+  "level": 1,
+  "traits": [
+   "transcendence"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your skin becomes virtually unbreakable. Until the start of your next turn, you have resistance equal to your level to the chosen damage type. During this time, if a creature attacking you using a weapon dealing the same damage type as your resistance misses you or hits you but deals no damage due to your resistance, the weapon clangs wildly off your skin. This painful reverberation makes the attacking enemy off-guard and gives it a –2 circumstance penalty to attacks with that weapon until the start of the enemy's next turn."
+ },
+ {
+  "id": "curse-of-ancestral-meddling",
+  "collection": "classFeatures",
+  "name": "Curse of Ancestral Meddling",
+  "level": 1,
+  "traits": [
+   "curse",
+   "divine",
+   "oracle",
+   "spirit"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The ancestral spirits you commune with haunt you and meddle with your belongings and actions, either out of a wellintentioned (but ultimately detrimental) attempt to assist you, as punishment for your audacity in circumventing the traditional means of achieving divine power, for their own amusement, or a mixture of the above. When you have the cursebound condition, you are clumsy with a value equal to your cursebound value as the spirits of your ancestors temporarily possess you and vie for control in your mind, hindering your movements."
+ },
+ {
+  "id": "curse-of-outpouring-life",
+  "collection": "classFeatures",
+  "name": "Curse of Outpouring Life",
+  "level": 1,
+  "traits": [
+   "curse",
+   "divine",
+   "oracle"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Life energy flows outward from you and connects you to all living things, but you expend your vital essence to do so. Your presence comforts the ill and injured, causes scars to fade slightly, spurs new growth in plants, and otherwise infuses your surroundings with vitality. As your life force seeps outward, it becomes more difficult to keep your body functioning. Magical effects that restore Hit Points to you take a status penalty equal to your level (minimum 1) times your cursebound value to the number of HP you recover."
+ },
+ {
+  "id": "curse-of-the-skys-call",
+  "collection": "classFeatures",
+  "name": "Curse of the Sky's Call",
+  "level": 1,
+  "traits": [
+   "curse",
+   "divine",
+   "oracle"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your body is drawn toward the heavens, making you lighter and less substantial than you should be. Your eyes glow with starry light, and your hair and clothing float and drift around you. When you have the cursebound condition, you are enfeebled with a value equal to your cursebound value, and you take a status penalty to saves and DCs against all forms of forced movement equal to your cursebound value"
+ },
+ {
+  "id": "curse-of-torrential-knowledge",
+  "collection": "classFeatures",
+  "name": "Curse of Torrential Knowledge",
+  "level": 1,
+  "traits": [
+   "curse",
+   "divine",
+   "oracle"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have a link to true divine knowledge, but your mortal mind struggles to process and act on what you know. Loose materials around you, such as dust, grains of rice, and droplets of water, slowly shift to form strange runes or faint, indecipherable writing, and you sometimes speak unintelligible truths or statements in unknown languages without realizing it. You take a status penalty to Perception checks and Will saving throws equal to your cursebound value due to the torrential distractions of unasked-for knowledge flooding your mind. If you are cursebound 4, you additionally can't speak, use linguistic effects, or otherwise communicate with your allies. You can still cast spells, but you're Stupefied 1."
+ },
+ {
+  "id": "curse-of-turbulent-moments",
+  "collection": "classFeatures",
+  "name": "Curse of Turbulent Moments",
+  "level": 1,
+  "traits": [
+   "curse",
+   "divine",
+   "oracle"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Time passes differently for you than for everyone else. You experience fluxes that might manifest as minor day-to-day changes in your apparent age, such as a gray lock of hair or a disappearing wrinkle, or as occasional ghostly temporal afterimages that slightly trail your movement. As you become more affected by your curse, time's passage becomes more disjointed for you, making it difficult for you to react to the quick actions of others. You take a status penalty to your AC against attacks made against you from reactions or free actions and a status penalty to saving throws against effects that would make you fatigued or slowed equal to your cursebound value."
+ },
+ {
+  "id": "custodian-of-groves-and-gardens",
+  "collection": "classFeatures",
+  "name": "Custodian of Groves and Gardens",
+  "level": 1,
+  "traits": [
+   "animist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Custodians of groves and gardens frequent tended greenery and farmlands cared for by loving stewards, and other places of reflection and restoration where green things grow. Some of these apparitions linger in the mortal realms not because they have lost their way, but because they believe they have already found Elysium. Others are the cultivated spiritual essence of the location itself. Custodians of groves and gardens are peaceful, quiet, and averse to conflict. --- **Apparition Skills** Farming Lore, Herbalism Lore **Apparition Spells** - **Cantrip** Tangle Vine - **1st** Protector Tree - **2nd** Gentle Breeze - **3rd** Safe Passage - **4th** Peaceful Bubble - **5th** Truespeech - **6th** Field of Life - **7th** Lifewood Cage - **8th** Moment of Renewal - **9th** Nature's Enmity **Vessel Spell** Garden of Healing **Avatar** *Peaceful Reaches* Speed 60 feet, ignore difficult terrain and greater difficult terrain **Melee** ⟨1⟩ garden's cradle (agile, nonlethal, reach 10 feet, trip), **Damage** 6d6+6 plus Grab **Ranged** ⟨1⟩ impose peace (nonlethal, range 120 feet), **Damage** 6d6+6"
+ },
+ {
+  "id": "deadly-strike",
+  "collection": "classFeatures",
+  "name": "Deadly Strike",
+  "level": 15,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Through precise calculation, you've found the perfect way for your weapon to deal damage on a well-placed strike. Your innovation gains the deadly d8 trait. If your innovation was already deadly, increase the die by up to two die sizes (d6 to d10, d8 to d12), to a maximum of deadly d12."
+ },
+ {
+  "id": "debilitating-strike",
+  "collection": "classFeatures",
+  "name": "Debilitating Strike",
+  "level": 9,
+  "traits": [
+   "rogue"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Rogue automatically at level 9",
+  "text": "When taking advantage of an opening, you both hinder and harm your foe. You gain the Debilitating Strike free action."
+ },
+ {
+  "id": "decay-instinct",
+  "collection": "classFeatures",
+  "name": "Decay Instinct",
+  "level": 1,
+  "traits": [
+   "barbarian"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Barbarian Instinct",
+  "text": "Your rage is intrinsically tied to the decomposition of organic beings, and the new growth that decay allows. You may have meddled with ancient relics created by Ghorus, been infected by exposure to Ayrzul's Blight or the Tanglebriar, or been blessed by the green man Zibik. As you unleash your rage, you rot, becoming riddled with mold and flesh-eating fungi. Though this rot recedes when you let your emotions settle, it doesn't go away completely, and the scars left behind spread bit by bit throughout your lifetime, multiplying with every rage. ## Anathema Preventing the decomposition of dead creatures or plants is anathema to your instinct, as is destroying or interfering with the growth of molds or fungi in a natural setting. This doesn't prevent you from defending yourself against fungus creatures or hazards or harvesting fungi or molds solely for sustenance. ## Rotting Rage (Instinct Ability) When you rage, you can choose to increase the additional damage from Rage from 2 to 6 and change its damage type to poison, instead of the damage type for your weapon or unarmed attack. If you do this, your Rage action gains the primal and poison traits, and you take 1 damage at the end of each of your turns as your flesh decays. This damage can't be reduced or avoided by any means. You may make this choice only when your rage begins, and it remains in effect until your rage ends. ## Specialization Ability Level 7 When you use rotting rage, increase the additional damage from Rage fro"
+ },
+ {
+  "id": "defensive-retreat",
+  "collection": "classFeatures",
+  "name": "Defensive Retreat",
+  "level": 1,
+  "traits": [
+   "brandish",
+   "commander",
+   "tactic"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You call for a careful retreat. Signal all squadmates within the aura of your banner; each can immediately Step up to three times as a free action. Each Step must take them farther away from at least one hostile creature they are observing and can only take them closer to a hostile creature if doing so is the only way for them to move toward safety (such as if they're surrounded)."
+ },
+ {
+  "id": "defensive-robes",
+  "collection": "classFeatures",
+  "name": "Defensive Robes",
+  "level": 13,
+  "traits": [
+   "sorcerer",
+   "summoner",
+   "witch",
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Sorcerer automatically at level 13",
+  "text": "The flow of magic and your defensive training combine to help you get out of the way before an attack. Your proficiency rank in unarmored defense increases to expert."
+ },
+ {
+  "id": "deific-mastery",
+  "collection": "classFeatures",
+  "name": "Deific Mastery",
+  "level": 17,
+  "traits": [
+   "exemplar"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Exemplar automatically at level 17",
+  "text": "You have achieved full mastery over your divine spark as its power flows through your body and ikons. Your proficiency rank for your exemplar class DC increases to master."
+ },
+ {
+  "id": "deific-weapon",
+  "collection": "classFeatures",
+  "name": "Deific Weapon",
+  "level": 1,
+  "traits": [
+   "champion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You zealously bear your deity's favored weapon. If it's an unarmed attack with a d4 damage die or a simple weapon, increase the damage die by one step (d4 to d6, d6 to d8, d8 to d10, d10 to d12). If the weapon is uncommon, you gain access to it, and if it's an advanced weapon, you treat it as a martial weapon for the purposes of proficiency"
+ },
+ {
+  "id": "deity-cleric",
+  "collection": "classFeatures",
+  "name": "Deity (Cleric)",
+  "level": 1,
+  "traits": [
+   "cleric"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Cleric automatically at level 1",
+  "text": "As a cleric, you are a mortal servitor of a deity you revere above all others. Your deity grants you the trained proficiency rank in one skill and with the deity's favored weapon. If the favored weapon is uncommon, you also get access to that weapon. Your deity also adds spells to your spell list. You can prepare these just like you can any spell on the divine spell list once you can prepare spells of their rank as a cleric. Any of these spells that aren't normally on the divine list are still divine spells if you prepare them this way. ## Sanctification Depending on your deity, their sanctification can make you holy or unholy. This gives you the holy or unholy trait, which commits you to one side of a struggle over the souls of the planes and may be referenced in other abilities. If you \"can be\" holy or unholy according to your deity, you make that choice, and if you \"must be\" holy or unholy you gain the trait automatically. If you gain the opposing trait in some way, you lose the previous trait until you complete an atone ritual. ## Anathema Acts fundamentally opposed to your deity's ideals are anathema to your faith. Learning or casting spells, committing acts, and using items that are anathema to your deity remove you from your deity's good graces. Casting spells with the unholy trait is almost always anathema to deities who don't allow unholy sanctification, and casting holy spells is likewise anathema to those who don't allow holy sanctification. Similarly, casting spel"
+ },
+ {
+  "id": "demagogues-calling",
+  "collection": "classFeatures",
+  "name": "Demagogue's Calling",
+  "level": 1,
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Words flow freely from a font within your soul. When you attempt a check to Coerce or Make an Impression, you can spend a Mythic Point to attempt the check at mythic proficiency. The first time each day that you critically succeed on a check to Coerce a creature who isn't your ally, Create a Diversion using your words, or Make an Impression on an indifferent or unfriendly audience, you regain a Mythic Point. --- **Edicts** tell stories to audiences who have never heard them before, use words rather than weapons to resolve conflicts **Anathema** interrupt someone telling a story, resort to violent action without trying to defuse the situation with your words"
+ },
+ {
+  "id": "demoralizing-charge",
+  "collection": "classFeatures",
+  "name": "Demoralizing Charge",
+  "level": 1,
+  "traits": [
+   "brandish",
+   "commander",
+   "tactic"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Your team's coordinated assault strikes fear into your enemies' hearts. Signal up to two squadmates within the aura of your commander's banner; as a free action, those squadmates can immediately Stride toward an enemy they are observing. If they end this movement adjacent to an enemy, they can attempt to Strike that enemy as a reaction. For each of these Strikes that are successful, the target enemy must succeed at a save against your class DC or become Frightened 1 (Frightened 2 on a critical failure); this is an emotion, fear, and mental effect. If both Strikes target the same enemy, that enemy attempts the save only once after the final attack and takes a –1 circumstance penalty to their Will save to resist this effect (this penalty increases to –2 if both Strikes are successful or to –3 if both Strikes are successful and either is a critical hit.)"
+ },
+ {
+  "id": "dense-plating",
+  "collection": "classFeatures",
+  "name": "Dense Plating",
+  "level": 7,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have encased your armor in robust plating. While wearing your armor, you gain resistance to slashing damage equal to half your level."
+ },
+ {
+  "id": "deny-advantage",
+  "collection": "classFeatures",
+  "name": "Deny Advantage",
+  "level": 3,
+  "traits": [
+   "rogue"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Rogue automatically at level 3",
+  "text": "As someone who takes advantage of openings, you are careful not to leave such gaps yourself. You aren't off-guard to hidden, undetected, or flanking creatures of your level or lower, or creatures of your level or lower using surprise attack. However, they can still help their allies flank."
+ },
+ {
+  "id": "desecration",
+  "collection": "classFeatures",
+  "name": "Desecration",
+  "level": 1,
+  "traits": [
+   "champion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Champion Cause",
+  "text": "You always take what pleases you, no matter who it hurts, and you spread a malign influence across all you touch. **Edicts** subvert or corrupt everything in your path that is pure or holy, sow doubt among those holding ideals of purity or holiness. --- **Champion's Reaction** Selfish Shield **Relentless Reaction (9th)** If your Charisma modifier is +3 or greater, your resistance against the triggering damage equals your Charisma modifier + half your level. **Exalted Reaction (11th)** Each enemy in your champion's aura takes a –1 status penalty to attack rolls against you until the start of your next turn."
+ },
+ {
+  "id": "destructive-vengeance",
+  "collection": "classFeatures",
+  "name": "Destructive Vengeance",
+  "level": 1,
+  "traits": [
+   "champion",
+   "divine"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An enemy in your champion's aura damages you --- **Effect** Bloodshed begets bloodshed as you drag your enemy toward oblivion. You increase the amount of damage you take by , and you deal damage to the triggering enemy. The damage you take and deal when you use this reaction increases to 2d6 at 5th level, 3d6 at 9th level, 4d6 at 12th level, 5d6 at 16th level, and 6d6 at 19th level. In addition, until the end of your next turn, your Strikes against the triggering creature deal 2 extra spirit damage. This extra damage increases to 4 at 9th level and 6 at 16th level."
+ },
+ {
+  "id": "desynchronized-motions",
+  "collection": "classFeatures",
+  "name": "Desynchronized Motions",
+  "level": 1,
+  "traits": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "As your body speeds faster and faster, you risk falling out of sync with reality, as the world slows around you to the point that your interactions with it become strange and unpredictable. **Mild Backlash** The friction of your motion through a slower world sets you alight. You take damage. At 5th level, and every 5 levels after, the persistent fire damage increases by 1d4. You take this persistent fire damage even if in a liquid environment, such as underwater, as your motion simply surrounds you in boiling water. **Moderate Backlash** You fall out of phase with nearby matter, becoming trapped in the process. You take the mild backlash effects, catching on fire, and your legs also partially phase into the ground, making you immobilized. You can attempt to Escape against your deviation DC, or you can slowly extract yourself without attempting a check over the course of 1 minute. **Severe Backlash** Your body accelerates to such a degree that your senses and impulses cannot keep up. You become trapped in your own mind for what seems like an eternity, taking 1d4 nonlethal mental damage for each level you have (). When you return, you are Stupefied 3 for 10 minutes, and then Stupefied 1 until your next daily preparation. Your body ages one year during this time."
+ },
+ {
+  "id": "devise-a-stratagem",
+  "collection": "classFeatures",
+  "name": "Devise a Stratagem",
+  "level": 1,
+  "traits": [
+   "investigator"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Investigator automatically at level 1",
+  "text": "You can play out a battle in your head, using brains rather than brawn to execute an attack. You gain the Devise a Stratagem action."
+ },
+ {
+  "id": "devourer-of-decay",
+  "collection": "classFeatures",
+  "name": "Devourer of Decay",
+  "level": 1,
+  "traits": [
+   "witch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Witch Patron",
+  "text": "Your patron appeared at the end or near the end of a life, flickering in feverish visions or glinting mysteriously in the eyes of waiting scavengers. Although horrifying to many, decay creates the resources needed for new life. This fate awaits you and possibly even your patron, whether they're a towering arboreal, a subterranean fungus creature, or one of the psychopomps that shepherds the entire process along. **Spell List** primal **Patron Skill** Nature **Lesson of the Hungry Scavenger** Your patron teaches ways to convert death into new life. You gain the Scrounger's Glee hex cantrip, and your familiar learns Enfeeble. **Familiar of Parasitic Might** Your familiar appears gaunt and malnourished or otherwise on the brink of death, even though it's quite healthy. When you Cast or Sustain a hex, your familiar can draw on the waning strength of another to sustain itself. One creature within 15 feet of your familiar with less than half of its maximum Hit Points becomes Sickened 1 unless it succeeds at a Fortitude saving throw against your spell DC."
+ },
+ {
+  "id": "disciplined-mind",
+  "collection": "classFeatures",
+  "name": "Disciplined Mind",
+  "level": 7,
+  "traits": [
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Thaumaturge automatically at level 7",
+  "text": "You've steeled your mind with resolve. Your proficiency rank for Will saves increases to master. When you roll a success on a Will save, you get a critical success instead."
+ }
+]

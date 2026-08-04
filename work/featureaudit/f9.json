@@ -1,0 +1,831 @@
+[
+ {
+  "id": "the-last-ruler",
+  "collection": "classFeatures",
+  "name": "The Last Ruler",
+  "level": 15,
+  "traits": [
+   "exemplar"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Whether your destiny is monarch or god, the spirit of all rulers past and future grants you an unrivaled commanding presence. After you Spark Transcendence, you can exude an air of authority until the start of your next turn. If any enemy fails at an attack roll against you during this time, you can attempt an Intimidation check to Demoralize that enemy as a free action as you rebuke it for its foolish attempt to stand against your authority."
+ },
+ {
+  "id": "the-oscillating-wave",
+  "collection": "classFeatures",
+  "name": "The Oscillating Wave",
+  "level": 1,
+  "traits": [
+   "psychic"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Psychic Conscious Mind",
+  "text": "At the heart of all things is energy. Though it may change its form or resting place, it is eternal, fundamental, the purest of building blocks. Your powers let you shift energy—either concentrating it in a single point to explosive end or freezing objects by plundering it away—in an endless oscillation of temperature. --- **Granted Spells** - 1st: Breathe Fire - 2nd: Blazing Bolt - 3rd: Fireball - 4th: Ice Storm - 5th: Howling Blizzard - 6th: Frozen Fog - 7th: Volcanic Eruption - 8th: Arctic Rift - 9th: Falling Stars **Standard Psi Cantrips** Frostbite You can freeze people from even farther away. The range of your *frostbite* increases to 120 feet. Your *frostbite* also gains the following amp. **Amp** You drain thermal energy at a distance, using what you plunder to replenish yourself. The orb deals 3d4 cold damage. You gain temporary Hit Points equal to half the damage the target takes (after applying resistances and the like). You lose any remaining temporary Hit Points after 1 minute. **Amp Heightened (+1)** The initial damage increases by 2d4 instead of 1d4. The weakness on a critical failure increases by 1. Ignition You can drastically increase the heat against targets at a distance. When using *ignition* as a ranged attack, increase the range to 60 feet. When using ignition as a melee attack, your reach increases by 5 feet. Your *ignition* also gains the following amp. **Amp** You project pure heat that causes a target to combust. The initial damage changes to 1d10 f"
+ },
+ {
+  "id": "the-resentment",
+  "collection": "classFeatures",
+  "name": "The Resentment",
+  "level": 1,
+  "traits": [
+   "witch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Witch Patron",
+  "text": "A single feeling radiated from your patron in the moment you met them, as palpable as heat from a fire: the desire to see every tall poppy felled and every proud nail hammered down, whether to righteously bring justice for small folk or the base urge to see the powerful defeated. Your patron is likely far from the upper echelons of its kind, such as a hag ousted from its coven or a quasi-divinity or a lower-rank demon. This leaves it only subtler and weaker tools to see its ends met: curses, hexes, and you. **Spell List** occult **Patron Skill** Occultism **Lesson of Strength's Impermanence** Your patron has taught you that power can be taken much more easily that it can be built. You gain the Evil Eye hex cantrip and your familiar learns Enfeeble. **Familiar of Ongoing Misery** Your familiar seems hostile to all creatures other than you, hissing at them if they get too near. When you Cast or Sustain a hex, your familiar can curse a creature within 15 feet of it, prolonging the duration of any negative conditions affecting it by 1 round. This is a curse effect. This prolongs only conditions with a timed duration (such as \"1 round\" or \"until the end of your next turn\") and doesn't prevent conditions from being removed by other means."
+ },
+ {
+  "id": "the-unseen-broker",
+  "collection": "classFeatures",
+  "name": "The Unseen Broker",
+  "level": 1,
+  "traits": [
+   "witch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Witch Patron",
+  "text": "Whether in a dream, answering a feeling in your heart, or enacting a mysterious ritual, you have agreed to act as a mediator between your patron and the rest of the world. Of course, you understand the power of deals and receive further knowledge in exchange for your service. Your patron might be a god, an enigmatic figure like a planar being, or even an alien entity. Regardless of their origin, it is clear that through the bargains you make with others, you advance your patron's agenda. **Spell List** occult **Patron Skill** Occultism **Lesson of the Bound Words** Your patron teaches you about bargains and how they can hold power over others. You gain the Pact Broker hex cantrip and your familiar learns Command. **Familiar of Enticing Negotiation** Your familiar constantly whispers distracting offers of power, wealth, and other temptations to your enemies, even if your familiar normally doesn't have the means of speaking. When you Cast or Sustain a hex and your familiar is within 10 feet of an enemy, the enemy becomes off-guard until the start of your next turn. Your familiar can only distract a single enemy per round in this way."
+ },
+ {
+  "id": "thespians-calling",
+  "collection": "classFeatures",
+  "name": "Thespian's Calling",
+  "level": 1,
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "All the world is a stage, and you're no mere player, but a playwright whose story may change the course of history. When you use Performance to Perform or Earn Income, you can spend a Mythic Point to attempt the check at mythic proficiency. The first time each day that you critically succeed on a check to Perform, you regain a Mythic Point. --- **Edicts** master new performances, seek opportunities to perform in front of new audiences, support other performers **Anathema** deny a call for an encore performance, refuse a request to perform in front of an audience, sabotage another performer"
+ },
+ {
+  "id": "thief-of-moonlight",
+  "collection": "classFeatures",
+  "name": "Thief of Moonlight",
+  "level": 15,
+  "traits": [
+   "exemplar"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Though your tales are not sung out loud, they still live on as cautionary tales, whispers, tall tales, and half-believed rumors. You walk hidden behind stars, capable of taking anything; the lights of the heavens are not safe from your avarice. After you Spark Transcendence, as a free action you can attempt a check to Palm an Object or to Steal an item from an enemy within 30 feet. The relocated objects simply disappear and reappear in your hand."
+ },
+ {
+  "id": "third-doctrine",
+  "collection": "classFeatures",
+  "name": "Third Doctrine",
+  "level": 7,
+  "traits": [
+   "cleric"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Cleric automatically at level 7",
+  "text": "You gain the third benefit of your doctrine: - Cloistered Cleric - Warpriest"
+ },
+ {
+  "id": "third-doctrine-cloistered-cleric",
+  "collection": "classFeatures",
+  "name": "Third Doctrine (Cloistered Cleric)",
+  "level": 7,
+  "traits": [
+   "cleric"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your proficiency ranks for the spell attack modifier and spell DC statistics increase to expert."
+ },
+ {
+  "id": "third-implement",
+  "collection": "classFeatures",
+  "name": "Third Implement",
+  "level": 15,
+  "traits": [
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Thaumaturge automatically at level 15",
+  "text": "As you come closer to the culmination of your journey, you gain your final implement, completing your set of three. It must be a different type of implement than your first and second implements. You gain the initiate benefit and intensify vulnerability benefit of your new implement."
+ },
+ {
+  "id": "thoughtful-reload",
+  "collection": "classFeatures",
+  "name": "Thoughtful Reload",
+  "level": 1,
+  "traits": [
+   "gunslinger"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "As you sink deep into a state of analytical calm and focus on the foe before you, your hands reload a bullet instinctively. Attempt a Recall Knowledge check against an opponent you can see and then Interact to reload."
+ },
+ {
+  "id": "time",
+  "collection": "classFeatures",
+  "name": "Time",
+  "level": 1,
+  "traits": [
+   "oracle"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Oracle Mystery",
+  "text": "Whether by accident, fate, or purposeful meddling, you exist slightly outside of time. While initially unmoored by moments, the countless march of milliseconds builds up to drift you further and further out of sync with your natural timeline, often in contradictory directions. You might view this as a blessing, perhaps as a sign you're somehow beyond mortality or you can't be contained within reality's limitations, or you might view it as a cruel curse that causes your life to slip by adrift even as you gain power over time. Many oracles of time are without faith and either come to rely upon their own instincts to survive or turn to strange rituals and forbidden magic in attempts to break free of time's grasp. Those oracles who worship deities most often venerate Pharasma, goddess of fate who sees all possible futures for all who ever lived, or Alseta, goddess of transitions and the passage through time. **Granted Spells** - **cantrip:** Time Sense - **1st:** Déjà Vu - **3rd:** Time Pocket - **7th:** Time Beacon **Revelation Spells** - **initial:** Temporal Distortion - **advanced:** Time Skip - **greater:** Manifold Lives **Related Domains** change, fate, nothingness, time **Mystery Skill** Occultism **Oracle Feat** Trance of Celerity Curse of Turbulent Moments"
+ },
+ {
+  "id": "tome",
+  "collection": "classFeatures",
+  "name": "Tome",
+  "level": 1,
+  "traits": [
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Tome implements embody lost knowledge and otherworldly insights. While a weathered book is most common, tome implements can have as many different form factors as there are ways to store knowledge, from carved clay tablets to bundles of knotted cords. Tome implements are associated with the harrow suit of books and the astrological signs of the stargazer and the underworld dragon. ### **Initiate Benefit** ### **Adept Benefit** ### **Intensify Vulnerability** Your tome's power not only reads a creature's present but even records its future actions. When you use Intensify Vulnerability, roll a d20 and set the result aside. At any time until the start of your next turn, you can use the d20 result you set aside for an attack roll to Strike the target of your Exploit Vulnerability, instead of rolling a new d20; this is a fortune effect. ### **Paragon Benefit**"
+ },
+ {
+  "id": "topple-the-pillar-of-heaven",
+  "collection": "classFeatures",
+  "name": "Topple the Pillar of Heaven",
+  "level": 1,
+  "traits": [
+   "transcendence"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Your ikon extends to an impossible length, striking all in its way. You deal damage to all creatures in a , with a save against your class DC. The damage type matches that of your weapon. At 14th level and every two levels thereafter, the damage increases by 1d8."
+ },
+ {
+  "id": "touch-and-go",
+  "collection": "classFeatures",
+  "name": "Touch and Go",
+  "level": 1,
+  "traits": [
+   "gunslinger"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You're wielding a combination weapon. --- Your body's shadows mask your hands' steel. You can Step toward an enemy, you can Interact to change your weapon between melee or ranged modes, and you then Interact to reload."
+ },
+ {
+  "id": "tough-to-kill",
+  "collection": "classFeatures",
+  "name": "Tough to Kill",
+  "level": 3,
+  "traits": [
+   "guardian"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Guardian automatically at level 3",
+  "text": "The protectiveness of your armor ensures that even if you fall, you take longer to die. You gain the Diehard general feat. If you already have the Diehard feat, you can retrain it when you get Tough to Kill. Additionally, the first time each day you'd be reduced to dying 3 or higher, you stay at dying 2 instead."
+ },
+ {
+  "id": "trackless-journey",
+  "collection": "classFeatures",
+  "name": "Trackless Journey",
+  "level": 5,
+  "traits": [
+   "ranger"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Ranger automatically at level 5",
+  "text": "When you move through natural terrains, you are hard to track. You always gain the benefits of the Cover Tracks action in such terrains, without moving at half your Speed."
+ },
+ {
+  "id": "troll-deviant-classification",
+  "collection": "classFeatures",
+  "name": "Troll Deviant Classification",
+  "level": 1,
+  "traits": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Especially common when a deviant ability is born of scientific experimentation, the troll classification connotes improved physical abilities. While often thought of as biological mutation, clockwork implants and personal magical enhancements are equally likely mechanisms. ## Backlash Strained Metabolism The same blood that lets one of the dragon-descended spit out a gout of flame is precisely what keeps the inside of their mouth from being singed in the furnace. Deviations, unfortunately, lack these safeguards, their powers coming from haphazard circumstance and interactions rather than intentional design. A character using their deviation always risks the chance of backlash. Whenever you attempt to use a deviation, roll a . On a success, you use your deviation and the DC for subsequent checks increases by 5, to a maximum of 20 ( ); on a failure, you use your deviation and then suffer a backlash effect, after which your flat check DC resets to 5. Backlash progresses from mild, to moderate, to severe. When you have already taken mild backlash in a given day, the next time you would take backlash, you take the moderate backlash instead, and if you have already taken moderate backlash, you take the severe backlash instead, and your deviation can't be used for the rest of the day—attempting to use it simply brings pain. When you make your daily preparations, your flat check DC returns to 5 and your next backlash returns to mild. Any effects from backlash can't be reduced, preven"
+ },
+ {
+  "id": "true-shapeshift",
+  "collection": "classFeatures",
+  "name": "True Shapeshift",
+  "level": 1,
+  "traits": [
+   "concentrate"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You're under the effects of Untamed Form --- **Effect** You change into any other shape on your *untamed form* list. If the duration of that shape is different from the one you were previously in, use the shorter duration to determine your duration remaining."
+ },
+ {
+  "id": "twin-juggernauts",
+  "collection": "classFeatures",
+  "name": "Twin Juggernauts",
+  "level": 11,
+  "traits": [
+   "summoner"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Summoner automatically at level 11",
+  "text": "You and your eidolon fight off physical hardship together with your shared life force. Your proficiency rank for Fortitude saves and your eidolon's proficiency rank for Fortitude saves increase to master. When you roll a success on a Fortitude save, you get a critical success instead. When your eidolon rolls a success on a Fortitude save, it gets a critical success instead."
+ },
+ {
+  "id": "unassailable-soul",
+  "collection": "classFeatures",
+  "name": "Unassailable Soul",
+  "level": 7,
+  "traits": [
+   "exemplar"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Exemplar automatically at level 7",
+  "text": "A firm knowledge of (or foolish pride in) yourself and your ability girds your mind against doubt and intrusion. Your proficiency rank for Will saves increases to master. When you roll a success at a Will save, you get a critical success instead."
+ },
+ {
+  "id": "unbreakable-expertise",
+  "collection": "classFeatures",
+  "name": "Unbreakable Expertise",
+  "level": 5,
+  "traits": [
+   "guardian"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Guardian automatically at level 5",
+  "text": "With training, you understand how to best block hits with your armor. Your proficiency rank with medium armor and heavy armor increases to expert."
+ },
+ {
+  "id": "unbreakable-legend",
+  "collection": "classFeatures",
+  "name": "Unbreakable Legend",
+  "level": 15,
+  "traits": [
+   "guardian"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Guardian automatically at level 15",
+  "text": "You have become an almost-impenetrable bulwark. Your proficiency ranks for medium and heavy armor increase to legendary. Your proficiency ranks for light armor and unarmored defense increase to master."
+ },
+ {
+  "id": "unbreakable-mastery",
+  "collection": "classFeatures",
+  "name": "Unbreakable Mastery",
+  "level": 11,
+  "traits": [
+   "guardian"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Guardian automatically at level 11",
+  "text": "When clad in steel, you fend off most attacks. Your proficiency rank with medium armor and heavy armor increases to master. Your proficiency rank with light armor and unarmored defense increases to expert."
+ },
+ {
+  "id": "unfailing-bow",
+  "collection": "classFeatures",
+  "name": "Unfailing Bow",
+  "level": 1,
+  "traits": [
+   "ikon"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Usage** a ranged weapon --- The shots fired by this weapon seem guided by divine accuracy, finding the swiftest targets. **Immanence** The unfailing bow deals 1 additional spirit damage per weapon damage die to creatures it Strikes, or 1d4 additional spirit damage per weapon die on a critical hit. **Transcendence—**Arrow Splits Arrow ⟨1⟩ (transcendence)"
+ },
+ {
+  "id": "unimpeded-journey",
+  "collection": "classFeatures",
+  "name": "Unimpeded Journey",
+  "level": 11,
+  "traits": [
+   "ranger"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Ranger automatically at level 11",
+  "text": "You move quickly through obstacles, whether they're tumbled stone or tangled undergrowth. You can ignore the effects of difficult terrain. As normal for ignoring difficult terrain, this also lets you treat the hindrances of greater difficult terrain as those of difficult terrain."
+ },
+ {
+  "id": "unleash-psyche",
+  "collection": "classFeatures",
+  "name": "Unleash Psyche",
+  "level": 1,
+  "traits": [
+   "psychic"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Psychic automatically at level 1",
+  "text": "When one thins the barrier between their inner mind and the outer world, one can unleash true psychic power. However, the mind wasn't meant to tap its full strength for long, leading to backlash once your unleashed psyche ends."
+ },
+ {
+  "id": "unlimited-esoterica",
+  "collection": "classFeatures",
+  "name": "Unlimited Esoterica",
+  "level": 19,
+  "traits": [
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Thaumaturge automatically at level 19",
+  "text": "Your understanding of your esoterica becomes so complete that you can access your mystic tools without even thinking. You can use Exploit Vulnerability or Intensify Vulnerability as a free action, rather than a single action, though still with a frequency of only once per round."
+ },
+ {
+  "id": "unlimited-signature-spells",
+  "collection": "classFeatures",
+  "name": "Unlimited Signature Spells",
+  "level": 3,
+  "traits": [
+   "summoner"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Summoner automatically at level 3",
+  "text": "All of your spells are signature spells. That means that if you know a spell, you can heighten it freely by casting it from a higher-rank spell slot, up to the maximum rank of spell you can cast. You can similarly cast any of its lower-rank versions without learning them separately."
+ },
+ {
+  "id": "untamed-order",
+  "collection": "classFeatures",
+  "name": "Untamed Order",
+  "level": 1,
+  "traits": [
+   "druid"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Druid Order",
+  "text": "The uncontrollable call of the natural world courses through your body. You might have been raised by a wild animal, or you might have come to reject the artifices of cities after growing up in one. Now, primal magic grants you the ability to wear the form of an untamed creature. **Order Skill** Intimidation **Druid Feat** Untamed Form **Order Spell** Untamed Shift **Anathema** Become fully domesticated by the temptations of civilization. (This doesn't prevent you from buying and using processed goods or staying in a city for an adventure, but you can never come to rely on these conveniences or truly call such a place your permanent home.)"
+ },
+ {
+  "id": "unyielding-resolve",
+  "collection": "classFeatures",
+  "name": "Unyielding Resolve",
+  "level": 17,
+  "traits": [
+   "guardian"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Guardian automatically at level 17",
+  "text": "Stalwart as your armor, you refuse to break. Your proficiency ranks for Will saves increases to master. When you roll a success on a Will save, you get a critical success instead."
+ },
+ {
+  "id": "uzunjati",
+  "collection": "classFeatures",
+  "name": "Uzunjati",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Uzunjati are perhaps the most iconic Magaambyans, and certainly the best known beyond the Mwangi Expanse, because they are the storytellers who roam across Golarion gathering knowledge embedded in oral traditions and folklore. While they often travel as widely as Rain-Scribes, their focus is substantially different, for their exploration is always in service to collecting and preserving the spoken knowledge of community and culture. In addition to the magic of their own stories, they emphasize magic that protects and that affects others' minds. **Additional Curriculum** - **cantrips:** Daze - **1st:** Mindlink, - **2nd:** Kgalaserke's Axes - **3rd:** Ibex's Harvest - **4th:** Telepathy - **5th:** Mind Probe, Truespeech - **6th:** Mislead - **7th:** - **8th:** Hidden Mind - **9th:**"
+ },
+ {
+  "id": "vanguard-of-roaring-waters",
+  "collection": "classFeatures",
+  "name": "Vanguard of Roaring Waters",
+  "level": 1,
+  "traits": [
+   "animist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Vanguards of roaring waters are found where rivers carve their way through mountains, creating fearsome rapids. They can also be found near bays where rivers meet the sea and create turbulent breakers and unpredictable undertows, coastal reefs that tear the bottoms from unwary ships and isolate islands, or anywhere else where water becomes violent and difficult to navigate safely. Vanguards of roaring waters encourage chaos and are easily bored. --- **Apparition Skills** Mountain Lore, River Lore **Apparition Spells** - **Cantrip** Rousing Splash - **1st** Hydraulic Push - **2nd** Mist - **3rd** Crashing Wave - **4th** Hydraulic Torrent - **5th** Control Water - **6th** Personal Ocean - **7th** Dancing Fountain - **8th** Whirlpool - **9th** Wrathful Storm **Vessel Spell** River Carving Mountains **Avatar** *River that Splits the World* Speed 50 feet, swim Speed 70 feet **Melee** ⟨1⟩ parting mountains (reach 15 feet, versatile S, water), **Damage** 6d10+6 **Ranged** ⟨1⟩ crash into the sea (range 120 feet, versatile P, water), **Damage** 6d6+6"
+ },
+ {
+  "id": "verdant-core-deviant-classification",
+  "collection": "classFeatures",
+  "name": "Verdant Core Deviant Classification",
+  "level": 1,
+  "traits": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The Verdant Core deviation represents an abundance of vitality and plant life, likely caused by being implanted with supernatural seeds, contact with the Plane of Wood or the First World, or powerful primal rituals. Regardless of the source, you're a walking garden with grass, flowers, and other small plants sprouting from your flesh. You have powers over plants, wood, and growth. ## Backlash Life-Draining The flourishing plant life that covers your body is a part of you, but it draws nutrients from your blood, making you weaker the more the flowers grow. As the plants grow, you need to spend more and more time recuperating. Recuperating in the sunshine lowers this duration, as it feeds the flowers, speeding your recovery. The same blood that lets one of the dragon-descended spit out a gout of flame is precisely what keeps the inside of their mouth from being singed in the furnace. Deviations, unfortunately, lack these safeguards, their powers coming from haphazard circumstance and interactions rather than intentional design. A character using their deviation always risks the chance of backlash. Whenever you attempt to use a deviation, roll a . On a success, you use your deviation and the DC for subsequent checks increases by 5, to a maximum of 20 ( ); on a failure, you use your deviation and then suffer a backlash effect, after which your flat check DC resets to 5. Backlash progresses from mild, to moderate, to severe. When you have already taken mild backlash in a given day"
+ },
+ {
+  "id": "verdant-rest",
+  "collection": "classFeatures",
+  "name": "Verdant Rest",
+  "level": 1,
+  "traits": [
+   "concentrate"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You turn into a tree or other non-creature plant. This has the effect of using One with Plants to turn into a plant, except that your AC is 30. You can Dismiss this effect to turn back. If you rest for 10 minutes in this form in natural sunlight, you recover half your maximum Hit Points. If you take your daily rest in this form, the rest restores you to maximum Hit Points and removes all non-permanent drained, enfeebled, clumsy, and stupefied conditions, as well as all poisons and diseases of 19th level or lower."
+ },
+ {
+  "id": "versatile-legend",
+  "collection": "classFeatures",
+  "name": "Versatile Legend",
+  "level": 19,
+  "traits": [
+   "fighter"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Fighter automatically at level 19",
+  "text": "You are nigh-unmatched with any weapon. Your proficiency ranks for simple weapons, martial weapons, and unarmed attacks increase to legendary, and your proficiency rank for advanced weapons increases to master. Your proficiency rank for your fighter class DC increases to master."
+ },
+ {
+  "id": "versatile-vials",
+  "collection": "classFeatures",
+  "name": "Versatile Vials",
+  "level": 1,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You know how to prepare fast-acting chemicals into versatile vials, special items that can be used as bombs and be turned into other alchemical items by introducing special reagents. During your daily preparations, you can create a number of versatile vials up to 2 + your Intelligence modifier, which is also your maximum number of vials. If you're below your maximum number, you can gather reagents from the environment around you. For every 10 minutes you spend in exploration mode, you regain 2 vials; this doesn't prevent you from participating in other exploration activities. Versatile vials are infused items, and are destroyed if not used by the next time you make your daily preparations. A vial you create is always the highest type you could Craft. See the sidebar for statistics on using a versatile vial as a bomb. You can also use vials for Quick Alchemy and your research field can add to the ways you can use a vial. You can store all your versatile vials within your Alchemist's Toolkit, with no increase to its Bulk. Though versatile vials are physical objects, they can't be duplicated or preserved in any way."
+ },
+ {
+  "id": "visions-of-sin",
+  "collection": "classFeatures",
+  "name": "Visions of Sin",
+  "level": 1,
+  "traits": [
+   "divine",
+   "eidolon",
+   "emotion",
+   "mental"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Frequency** once per 10 minutes Your eidolon summons images of its sin into the mind of a target creature within 30 feet, tormenting and confusing the target. The target must attempt a Will save against your spell DC with the following effects. The effects last until the end of your next turn, but your eidolon can use a single action, which has the concentrate trait, to extend the effects until the end of your next turn (like Sustaining a Spell), to a maximum duration of 1 minute. If the target is evil, it takes a -2 circumstance penalty to its save. Regardless of whether it succeeds, the target becomes temporarily immune for 1 day. --- **Critical Success** The target is unaffected. **Success** The target can't use reactions. **Failure** The target is Slowed 1 and can't use reactions. **Critical Failure** As failure, and the target is also confused for 1 round. The confusion can't be extended, but the other effects can."
+ },
+ {
+  "id": "vital-shot",
+  "collection": "classFeatures",
+  "name": "Vital Shot",
+  "level": 1,
+  "traits": [
+   "gunslinger"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Your careful shot against an unsuspecting opponent pierces a vital artery or organ. Make a ranged Strike. If the target is off-guard, the Strike deals an extra die of weapon damage, and the foe takes persistent bleed damage equal to the amount of precision damage from your One Shot, One Kill."
+ },
+ {
+  "id": "walls-of-will",
+  "collection": "classFeatures",
+  "name": "Walls of Will",
+  "level": 11,
+  "traits": [
+   "psychic"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Psychic automatically at level 11",
+  "text": "Your practiced mind resists external influence. Your proficiency rank for Will saves increases to master. When you succeed at a Will save, you get a critical success instead."
+ },
+ {
+  "id": "wandering-reverie",
+  "collection": "classFeatures",
+  "name": "Wandering Reverie",
+  "level": 1,
+  "traits": [
+   "psychic"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The subconscious is by definition buried below the surface. Thus, only by stripping away the clamor and interference of everyday thought can you bring this more fundamental part of your mind to bear. Whether through sleep, self-hypnosis, or special exercises to empty your mind, you've found a way to access a deeper, more chaotic state of free association that better channels your psychic power. Your thoughtforms come from your imagination, images, and sensations your mind freely associates. You might have a passing daydream of small creatures bringing you an object as you telekinetically attract it or you may blink to find you've teleported to your desired location. Spell manifestations from imagination thoughtforms have surreal or indistinct qualities, and the exact details fade quickly from observers' memory, as sensations from a dream. **Key Attribute** Your key attribute score is Charisma. **Psyche Action** Fade Into Daydreams"
+ },
+ {
+  "id": "wardens-endurance",
+  "collection": "classFeatures",
+  "name": "Warden's Endurance",
+  "level": 11,
+  "traits": [
+   "ranger"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Ranger automatically at level 11",
+  "text": "You shake off a grizzly's grab or a poison's ill effects with equal ease. Your proficiency rank for Fortitude saves increases to master. When you roll a success on a Fortitude save, you get a critical success instead."
+ },
+ {
+  "id": "warfare-expertise",
+  "collection": "classFeatures",
+  "name": "Warfare Expertise",
+  "level": 3,
+  "traits": [
+   "commander"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Commander automatically at level 3",
+  "text": "Your knowledge of war and strategy grows and guides your decisions in battle. You gain expert proficiency in Warfare Lore. You can use Warfare Lore to Recall Knowledge about most creatures regardless of type, but typically only to determine whether they can be reasoned with, their most notable offensive abilities, and whether one of their saving throws is particularly weak. In addition, as long as you are observing at least one opponent when initiative is rolled, you can use Warfare Lore for your initiative roll."
+ },
+ {
+  "id": "wave-order",
+  "collection": "classFeatures",
+  "name": "Wave Order",
+  "level": 1,
+  "traits": [
+   "druid"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Druid Order",
+  "text": "Water is the source of life, and you've learned to shape how it flows. **Order Skill** Medicine **Druid Feat** Shore Step **Order Spell** Rising Surf **Anathema** Polluting water or allowing those who pollute water sources to go unpunished. (this doesn't force you to take action against potential water pollution or to sacrifice yourself against an obviously superior foe)."
+ },
+ {
+  "id": "way-of-the-drifter",
+  "collection": "classFeatures",
+  "name": "Way of the Drifter",
+  "level": 1,
+  "traits": [
+   "gunslinger"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Gunslinger Way",
+  "text": "You're a wanderer traveling from land to land with your gun and a melee weapon as company. Maybe you learned to fight with blade and pistol as a Shackles pirate, mastered the hand cannon and katana in Minkai, or practiced with a hatchet and clan pistol in Dongun Hold. You win battles by relying on mobility and flexible use of your weapons. **Slinger's Reload** Reloading Strike **Deeds** *Initial* Into the Fray; *Advanced* Finish The Job; *Greater* Drifter's Wake **Way Skill** Acrobatics"
+ },
+ {
+  "id": "way-of-the-pistolero",
+  "collection": "classFeatures",
+  "name": "Way of the Pistolero",
+  "level": 1,
+  "traits": [
+   "gunslinger"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Gunslinger Way",
+  "text": "Whether you're a professional duelist or a pistol-twirling entertainer, you have quick feet and quicker hands that never seem to let you down, and an equally sharp wit and tongue that jab your foes. You might leave a hand free or cultivate the ambidexterity for twin weapons. Either way, you stay close enough to your enemies to leverage your superior reflexes while leaving enough space to safely fire. **Slinger's Reload** Raconteur's Reload **Deeds** *Initial* Ten Paces; *Advanced* Pistolero's Retort; *Greater* Grim Swagger **Way Skill** choose Deception or Intimidation"
+ },
+ {
+  "id": "way-of-the-sniper",
+  "collection": "classFeatures",
+  "name": "Way of the Sniper",
+  "level": 1,
+  "traits": [
+   "gunslinger"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Gunslinger Way",
+  "text": "You practice a style of shooting that relies on unerring accuracy and perfect placement of your first shot. You keep hidden or at a distance, staying out of the fray and bringing unseen death to your foes. **Slinger's Reload** Covered Reload **Deeds** *Initial* One Shot, One Kill; *Advanced* Vital Shot; *Greater* Ghost Shot **Way Skill** Stealth"
+ },
+ {
+  "id": "way-of-the-spellshot",
+  "collection": "classFeatures",
+  "name": "Way of the Spellshot",
+  "level": 1,
+  "traits": [
+   "gunslinger"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Gunslinger Way",
+  "text": "You've learned the intricacies of magic and technology, blending the two together with deadly results. You combine a knowledge of arcane theories with a strong connection to your chosen weapon that allows you to manifest unique effects, combining deadly skill with a firearm alongside an array of moderate spellcasting. You can imbue energy into your weapon and conjure bullets from thin air. As you progress, you eventually learn to phase bullets through walls or even to teleport yourself along the path of your bullets. You must select Spellshot Dedication as your 2nd-level class feat. **Prerequisites** You must be a gunslinger. **Spellshot Adjustments** Instead of choosing a way from the options listed in the gunslinger class, you have the way of the spellshot. It has the following way skill, slinger's reload, and deeds. You gain these abilities at the same levels as normal for the class. You use Intelligence for your class DC. **Way Skill** Arcana **Slinger's Reload** Thoughtful Reload **Deeds** *Initial* Energy Shot; *Advanced* Recall Ammunition; *Greater* Dispelling Bullet"
+ },
+ {
+  "id": "way-of-the-triggerbrand",
+  "collection": "classFeatures",
+  "name": "Way of the Triggerbrand",
+  "level": 1,
+  "traits": [
+   "gunslinger"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Gunslinger Way",
+  "text": "You prefer firearms that work well as weapons in both melee and ranged combat, particularly those that allow you to exercise a bit of style and flair. You might be a survivor who cobbled your weapon together from the City of Smog's street scrap or a noble wielder of a master smith's bespoke commission for duels among Alkenstar's elite. You gain access to combination weapons. **Slinger's Reload** Touch and Go **Deeds** *Initial Spring the Trap*; *Advanced Wind Them Up*; *Greater Break Them Down* **Way Skill** Thievery"
+ },
+ {
+  "id": "way-of-the-vanguard",
+  "collection": "classFeatures",
+  "name": "Way of the Vanguard",
+  "level": 1,
+  "traits": [
+   "gunslinger"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Gunslinger Way",
+  "text": "You practice a unique combat style originated by dwarven siege engineers, using heavy weapons with wide attack areas to blast holes through enemy lines, clear an opening for your allies, and defend the conquered territory. **Slinger's Reload** Clear a Path **Deeds** *Initial* Living Fortification; *Advanced* Spinning Crush; *Greater* **Way Skill** Athletics"
+ },
+ {
+  "id": "weapon-innovation",
+  "collection": "classFeatures",
+  "name": "Weapon Innovation",
+  "level": 1,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Inventor Innovation",
+  "text": "Your innovation is a complex and impossible-looking weapon augmented by numerous mechanisms. It begins with the same statistics as a level 0 simple or martial weapon of your choice. The chosen weapon must be common or you must otherwise have access to it. An innovation weapon can have fundamental and property runes added to it in the same way as an ordinary weapon. Because of the unique features of your innovation, everyone except you is untrained in it, even if they would normally be trained (or better) in simple or martial weapons. If you use the Overdrive action, you can choose to change the additional damage from Overdrive to fire damage. Choose one initial weapon modification to apply to your innovation, either from the following or from other initial weapon modifications to which you have access. These modifications grant additional weapon traits, sometimes with extra abilities. A modification might give your weapon the versatile trait with a damage type that the weapon could already deal, either from its base damage type or from an existing versatile trait. In that case, if you select that modification, you can instead choose to give the weapon the versatile trait for a different damage type: bludgeoning, piercing, or slashing. - **Advanced Design:** Your weapon innovation uses the statistics of a level 0 advanced weapon of your choice. It must be common or you must have access to it. You treat this as a martial weapon for the purposes of proficiency. - **Blunt Shot (r"
+ },
+ {
+  "id": "weapon-mastery",
+  "collection": "classFeatures",
+  "name": "Weapon Mastery",
+  "level": 13,
+  "traits": [
+   "barbarian",
+   "commander",
+   "guardian",
+   "magus",
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Thaumaturge automatically at level 13",
+  "text": "**Barbarian** Your rage makes you even more effective with the weapons you wield. Your proficiency ranks for simple weapons, martial weapons, and unarmed attacks increase to master. **Commander** You've drilled extensively in your weapons. Your proficiency ranks for unarmed attacks, simple weapons, and martial weapons increase to master. **Guardian** Your hours of battlefield experience grant you greater prowess. Your proficiency ranks for simple weapons, martial weapons, and unarmed attacks increase to master. **Magus, Thaumaturge** You fully understand your weapons. Your proficiency ranks for simple weapons, martial weapons, and unarmed attacks increase to master."
+ },
+ {
+  "id": "whirlwind-maul",
+  "collection": "classFeatures",
+  "name": "Whirlwind Maul",
+  "level": 1,
+  "traits": [
+   "eidolon"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Your eidolon lashes out in all directions. It makes a melee unarmed Strike against up to four enemies within reach. It can choose different unarmed attacks for each enemy. Each attack counts toward your multiple attack penalty, but you don't increase your penalty until the eidolon has made all its attacks."
+ },
+ {
+  "id": "wild-willpower",
+  "collection": "classFeatures",
+  "name": "Wild Willpower",
+  "level": 11,
+  "traits": [
+   "druid"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Druid automatically at level 11",
+  "text": "Your primal will, like that of the greatest beast, can't be tamed. Your proficiency rank for Will saves increases to master. When you roll a success at a Will save, you get a critical success instead."
+ },
+ {
+  "id": "wildsong",
+  "collection": "classFeatures",
+  "name": "Wildsong",
+  "level": 1,
+  "traits": [
+   "druid"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Druid automatically at level 1",
+  "text": "You know the Wildsong, a secret language known only within druid orders, in addition to any languages you know through your ancestry. The Wildsong is a melodic and tonal language sounding more like animal calls than a spoken tongue, and its alphabet involves fractals and spirals, like the arrangement of a seashell's chambers, a snowflake's crystals, or a fern's fronds. Teaching the Wildsong to non-druids is anathema."
+ },
+ {
+  "id": "will-expertise",
+  "collection": "classFeatures",
+  "name": "Will Expertise",
+  "level": 3,
+  "traits": [
+   "alchemist",
+   "kineticist",
+   "ranger"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Alchemist automatically at level 7",
+  "text": "Your mental defenses grow stronger. Your proficiency rank for Will saves increases to expert."
+ },
+ {
+  "id": "will-of-the-pupil",
+  "collection": "classFeatures",
+  "name": "Will of the Pupil",
+  "level": 17,
+  "traits": [
+   "witch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Witch automatically at level 17",
+  "text": "Communion with your familiar has steeled your mental fortitude. Your proficiency rank for Will saves increases to master. When you roll a success on a Will save, you get a critical success instead."
+ },
+ {
+  "id": "wind-them-up",
+  "collection": "classFeatures",
+  "name": "Wind Them Up",
+  "level": 1,
+  "traits": [
+   "gunslinger"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Should foes parry your blade or dodge your bullets? Neither—they should be watching their purse. Make a melee Strike with your combination weapon, and then attempt a Thievery check with a –5 penalty to Steal from your target; you can't Steal closely guarded objects or objects that would take a long time to pilfer. You don't need a free hand to attempt to Steal something in this manner. If your Thievery check succeeds, the target is off-guard against your ranged attacks until the start of your next turn, and you don't trigger reactions that are normally triggered by movement or a ranged attack. These effects occur even if your target has no objects to Steal."
+ },
+ {
+  "id": "wizard-weapon-expertise",
+  "collection": "classFeatures",
+  "name": "Wizard Weapon Expertise",
+  "level": 11,
+  "traits": [
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Through a combination of magic and training, you've learned how to wield wizard weapons more effectively. You gain expert proficiency in the club, crossbow, dagger, heavy crossbow, staff, and unarmed attacks."
+ },
+ {
+  "id": "wraith-deviant-classification",
+  "collection": "classFeatures",
+  "name": "Wraith Deviant Classification",
+  "level": 1,
+  "traits": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Wraith-type deviations often result from contact with otherworldly presences or artifacts, comprising a strange assortment of abilities that involve realms beyond our own. ## Backlash Encroaching Presence The same blood that lets one of the dragon-descended spit out a gout of flame is precisely what keeps the inside of their mouth from being singed in the furnace. Deviations, unfortunately, lack these safeguards, their powers coming from haphazard circumstance and interactions rather than intentional design. A character using their deviation always risks the chance of backlash. Whenever you attempt to use a deviation, roll a . On a success, you use your deviation and the DC for subsequent checks increases by 5, to a maximum of 20 ( ); on a failure, you use your deviation and then suffer a backlash effect, after which your flat check DC resets to 5. Backlash progresses from mild, to moderate, to severe. When you have already taken mild backlash in a given day, the next time you would take backlash, you take the moderate backlash instead, and if you have already taken moderate backlash, you take the severe backlash instead, and your deviation can't be used for the rest of the day—attempting to use it simply brings pain. When you make your daily preparations, your flat check DC returns to 5 and your next backlash returns to mild. Any effects from backlash can't be reduced, prevented, or otherwise bypassed. Conditions and damage you take from backlash can't be reduced or prevente"
+ },
+ {
+  "id": "wrath",
+  "collection": "classFeatures",
+  "name": "Wrath",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The Vengeful Glare fills its users with a zealous rage and the restless need to solve problems, which generally takes the form of cutting to the most direct solution. **Anathema** Use your magic to protect or create. **Sin Spells** - **cantrips:** Frostbite, Ignition - **1st:** Force Barrage, - **2nd:** Blistering Invective, Floating Flame - **3rd:** Fireball, Lightning Bolt - **4th:** Ice Storm, Wall of Fire - **5th:** Howling Blizzard, Wall of Ice - **6th:** Blinding Fury, - **7th:** Eclipse Burst, Fiery Body - **8th:** Earthquake - **9th:** Falling Stars **Initial School Spell** Vengeful Glare"
+ }
+]

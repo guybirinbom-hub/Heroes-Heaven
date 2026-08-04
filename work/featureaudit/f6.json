@@ -1,0 +1,830 @@
+[
+ {
+  "id": "natural-reflexes",
+  "collection": "classFeatures",
+  "name": "Natural Reflexes",
+  "level": 7,
+  "traits": [
+   "ranger"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Ranger automatically at level 7",
+  "text": "You've honed your reflexes dodging falling trees and pounding hail. Your proficiency rank for Reflex saves increases to master. When you roll a success on a Reflex save, you get a critical success instead."
+ },
+ {
+  "id": "natures-edge",
+  "collection": "classFeatures",
+  "name": "Nature's Edge",
+  "level": 9,
+  "traits": [
+   "ranger"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Ranger automatically at level 9",
+  "text": "You always find the weak points in your foes' defenses when they're on unfavorable terrain. Enemies are off-guard to you if they're in difficult terrain."
+ },
+ {
+  "id": "naval-training",
+  "collection": "classFeatures",
+  "name": "Naval Training",
+  "level": 1,
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your instructions make it easier for you and your allies to swim through dangerous waters. Signal all squadmates; until the end of your next turn, you and each ally gain a swim Speed of 20 feet. --- **Special** If you have this tactic prepared, you can use Warfare Lore in place of Athletics for checks you make to Swim."
+ },
+ {
+  "id": "no-scar-but-this",
+  "collection": "classFeatures",
+  "name": "No Scar but This",
+  "level": 1,
+  "traits": [
+   "concentrate",
+   "healing",
+   "transcendence",
+   "vitality"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your wounds knit shut with hardly a scratch. You regain Hit Points. At 3rd level and every 2 levels thereafter, the healing increases by 1d8."
+ },
+ {
+  "id": "noble-branch",
+  "collection": "classFeatures",
+  "name": "Noble Branch",
+  "level": 1,
+  "traits": [
+   "ikon"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Usage** a staff, bo staff, fighting stick, khakkara, or any weapon in the spear or polearm weapon group --- This humble stick-like weapon has an elegant simplicity to it, affording you reliable strikes over flashy maneuvers. **Immanence** The noble branch deals 2 additional spirit damage per weapon damage die to creatures it Strikes. **Transcendence—**Strike, Breathe, Rend ⟨1⟩ (spirit, transcendence)"
+ },
+ {
+  "id": "obedience",
+  "collection": "classFeatures",
+  "name": "Obedience",
+  "level": 1,
+  "traits": [
+   "champion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Champion Cause",
+  "text": "Society is ordered with good reason, and people should conduct themselves as appropriate for their proper place. **Edicts** enforce proper hierarchies, topple illegitimate hierarchies, lead when you're the most suited to the task **Anathema** let one who is lesser than you wield power over you or lead you --- **Champion's Reaction** Iron Command **Relentless Reaction (9th Level)** If the enemy refuses, it takes persistent spirit damage equal to your Charisma modifier. **Exalted Reaction (11th Level)** Each enemy in your champion's aura other than the triggering creature must also either drop prone or take mental damage (each enemy chooses). These creatures take only minimum damage (typically 3 damage at 11th level, 4 at 12th, 5 at 16th, and 6 at 19th), and the effects they take can't be adjusted by anything that changes your Iron Command. For instance, the Iron Repercussions feat couldn't turn the damage into persistent mental damage for creatures other than the triggering creature"
+ },
+ {
+  "id": "omnirange-stabilizers",
+  "collection": "classFeatures",
+  "name": "Omnirange Stabilizers",
+  "level": 15,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Ranged only** --- You've modified your innovation to be dangerous and effective at any range. If your innovation had the volley trait, remove the volley trait. Otherwise, increase your innovation's range increment by 50 feet or an amount equal to the weapon's base range increment, whichever is more"
+ },
+ {
+  "id": "on-the-case",
+  "collection": "classFeatures",
+  "name": "On the Case",
+  "level": 1,
+  "traits": [
+   "investigator"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Investigator automatically at level 1",
+  "text": "As an investigator, you think of your adventures as cases waiting to be solved. You gain one activity and one reaction you can use to investigate cases: Pursue a Lead and Clue In."
+ },
+ {
+  "id": "one-shot-one-kill",
+  "collection": "classFeatures",
+  "name": "One Shot, One Kill",
+  "level": 1,
+  "traits": [
+   "gunslinger"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You roll Stealth for initiative. --- Your first shot is the deadliest. Interact to draw a firearm or crossbow. Your first successful Strike with that weapon during this encounter deals an additional 1d6 precision damage. This precision damage increases to 2d6 at 9th level and 3d6 at 15th level."
+ },
+ {
+  "id": "opportune-riposte",
+  "collection": "classFeatures",
+  "name": "Opportune Riposte",
+  "level": 3,
+  "traits": [
+   "swashbuckler"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Swashbuckler automatically at level 3",
+  "text": "You turn the tables on foes who fumble, capitalizing immediately on their mistake. You gain the Opportune Riposte reaction."
+ },
+ {
+  "id": "oracular-senses",
+  "collection": "classFeatures",
+  "name": "Oracular Senses",
+  "level": 11,
+  "traits": [
+   "oracle"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Oracle automatically at level 11",
+  "text": "You have always been able to sense a bit more than others. Your proficiency rank for Perception increases to expert."
+ },
+ {
+  "id": "order-of-the-chain",
+  "collection": "classFeatures",
+  "name": "Order of the Chain",
+  "level": 1,
+  "traits": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Members of the Order of the Chain are skilled at hunting down and capturing criminals, especially those who dare flee from justice. --- **Lesser Benefit** Shackles of Law **Greater Benefit** Sturdy Bindings"
+ },
+ {
+  "id": "order-of-the-gate",
+  "collection": "classFeatures",
+  "name": "Order of the Gate",
+  "level": 1,
+  "traits": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Favored Weapon** Dagger The Hellknight signifers of the Order of the Gate seek to prevent lawlessness of all types through the use of their considerable spellcasting prowess and command of fiendish outsiders. --- **Lesser Benefit** Locate Lawbreakers **Greater Benefit** Devil Allies"
+ },
+ {
+  "id": "order-of-the-godclaw",
+  "collection": "classFeatures",
+  "name": "Order of the Godclaw",
+  "level": 1,
+  "traits": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Favored Weapon** Morningstar The Order of the Godclaw's Hellknights see their cause as a holy mandate from The Godclaw. They seek to punish criminals with a zeal rarely matched by others who enforce the law. --- **Lesser Benefit** Dedication to the Five **Greater Benefit** Blessing of the Five"
+ },
+ {
+  "id": "order-of-the-nail",
+  "collection": "classFeatures",
+  "name": "Order of the Nail",
+  "level": 1,
+  "traits": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Favored Weapons** Halberd, Lance Members of the Order of the Nail see civilized society as an ideal and seek to unite all people within their cultural baseline. They also seek to destroy anyone who does not accept Chelaxian culture along with the wild beasts that threaten the safety of civilization. --- **Lesser Benefit** Trailblazing Stride **Greater Benefit** Reveal Beasts"
+ },
+ {
+  "id": "order-of-the-pyre",
+  "collection": "classFeatures",
+  "name": "Order of the Pyre",
+  "level": 1,
+  "traits": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Favored Weapon** Glaive The Order of the Pyre is dedicated to eliminating those faiths and beliefs they consider to be a threat to the Inner Sea region. They are particularly keen on stamping out dangerous cults. --- **Lesser Benefit** Righteous Resistance **Greater Benefit** Spiritual Disruption"
+ },
+ {
+  "id": "order-of-the-rack",
+  "collection": "classFeatures",
+  "name": "Order of the Rack",
+  "level": 1,
+  "traits": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Favored Weapons** Longsword, Whip Members of the Order of the Rack seek to eliminate wastefulness throughout the Inner Sea region. They seek to quash pointless dreams, quell rebellions, and destroy dangerous inventions. --- **Lesser Benefit** **Greater Benefit** Silence Heresy"
+ },
+ {
+  "id": "order-of-the-scourge",
+  "collection": "classFeatures",
+  "name": "Order of the Scourge",
+  "level": 1,
+  "traits": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Favored Weapons** Mace, Scourge, Whip Hellknights of the Order of the Scourge hunt those who pervert the law for their own selfish ends. They seek to destroy corruption and those who hide behind unjust laws and bureaucracy. --- **Lesser Benefit** Fear No Law, Fear No One **Greater Benefit** Seek Injustice"
+ },
+ {
+  "id": "pacification-tools",
+  "collection": "classFeatures",
+  "name": "Pacification Tools",
+  "level": 1,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Softer materials make your weapon suited to knock out instead of kill, and special protrusions let you catch weapons and disarm your foes. Your innovation gains the disarm, hampering, and nonlethal traits. You can choose whether to apply the nonlethal trait on each attack with your innovation."
+ },
+ {
+  "id": "pacifying-infusion",
+  "collection": "classFeatures",
+  "name": "Pacifying Infusion",
+  "level": 1,
+  "traits": [
+   "infusion"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "If your next action is an impulse, it gains the nonlethal trait. If it has an area, you can exclude creatures you've designated with Safe Elements from its effects."
+ },
+ {
+  "id": "panache",
+  "collection": "classFeatures",
+  "name": "Panache",
+  "level": 1,
+  "traits": [
+   "swashbuckler"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Swashbuckler automatically at level 1",
+  "text": "You care as much about the way you accomplish something as whether you actually accomplish it in the first place. When you perform an action with particular style, you can leverage this moment of verve to perform spectacular, deadly maneuvers. This heightened state of flair is called panache. You gain panache by performing actions that have the bravado trait. Tumble Through and additional actions determined by your swashbuckler's style gain the bravado trait when you use them. The GM might determine that a check to perform a particularly daring action, such as swinging on a chandelier or sliding down a drapery, can gain the bravado trait. These checks typically involve at least a single action and a non-trivial DC. Normally, you gain and use panache only in combat encounters; when an encounter ends, you lose panache. Powerful finisher actions, including Confident Finisher, can be used only while you have panache and cause you to lose your panache."
+ },
+ {
+  "id": "paradox-of-opposites",
+  "collection": "classFeatures",
+  "name": "Paradox of Opposites",
+  "level": 1,
+  "traits": [
+   "witch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Witch Patron",
+  "text": "Life and death, good and evil, light and shadow, vitality and void energy—these diametrically opposed concepts exist everywhere, and your patron walks the line between them. You first encountered your patron in a place or situation of such duality, such as witnessing a baby being born in a cemetery or feeling the natural light of a sunbeam in an otherwise dark cavern. There is power to be derived from the interplay between seemingly antithetical ideas and striking a balance between the two. Your patron could be a monitor demigod interested in cultivating a cosmic balance or an entity that plays fast and loose with morality. They are the difference between the two sides of the same coin while also being the entirety of the coin. **Spell List** divine **Patron Skill** Religion **Lesson of the Twilit Soul** For your patron, life and death and sleeping and waking have the same meaning. You gain the Trade Death for Life hex cantrip and your familiar learns Sleep. **Familiar of Paired Perplexity** Your familiar has twice as many of a small feature than a normal creature would have, such a second tail or an extra pair of whiskers. When you Cast or Sustain a hex, your familiar seems to double and be in two places at once. One creature you choose within 20 feet of it is Stupefied 1 until the start of your next turn; this is a visual effect."
+ },
+ {
+  "id": "paragon-benefit-amulet",
+  "collection": "classFeatures",
+  "name": "Paragon Benefit (Amulet)",
+  "level": 17,
+  "traits": [
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your amulet provides sanctuary even against wide-scale attacks. When you use Amulet's Abeyance, you target yourself and all allies within 15 feet. Each target gains both the initial resistance against the triggering damage and the lingering resistance from your amulet's adept benefit; the allies gain the lingering resistance even if they would not have taken any of the initial triggering damage. If the foe's attack deals multiple damage types, each target can separately choose the damage type to gain lingering resistance against."
+ },
+ {
+  "id": "paragon-benefit-bell",
+  "collection": "classFeatures",
+  "name": "Paragon Benefit (Bell)",
+  "level": 17,
+  "traits": [
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "With your mastery of your bell, you can affect many foes with ease. All the condition values from Ring Bell increase to 2 (or 3 on a critical failure). Ring Bell can trigger off the Strike or spell of any enemy, not just the target of your Exploit Vulnerability; however, in that case, the condition lasts only until the start of your next turn."
+ },
+ {
+  "id": "paragon-benefit-lantern",
+  "collection": "classFeatures",
+  "name": "Paragon Benefit (Lantern)",
+  "level": 17,
+  "traits": [
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "In addition to the other benefits, your lantern reveals all things as they truly are. The lantern's aura of light increases to a . While you're holding your lantern, the GM rolls a secret counteract check against any illusion, morph, or polymorph effects that come within the lantern's aura, but only for the purpose of determining whether you and others can see through it (for instance, if the check succeeds against a polymorph spell, you can see the creature's true form, but you don't end the spell). Use half your level rounded up as the counteract rank and your class DC – 10 as the counteract modifier. On a failed counteract check, the lantern can't attempt to counteract that illusion, morph, or polymorph effect again until midnight. You can choose to leave any effect you discover intact instead of counteracting it."
+ },
+ {
+  "id": "paragon-benefit-mirror",
+  "collection": "classFeatures",
+  "name": "Paragon Benefit (Mirror)",
+  "level": 17,
+  "traits": [
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've become so skilled at reflecting yourself that you can combine making a reflection with your other movements to act right away. When you use Mirror's Reflection, you can have one of your selves immediately Interact, Seek, or Strike."
+ },
+ {
+  "id": "paragon-benefit-wand",
+  "collection": "classFeatures",
+  "name": "Paragon Benefit (Wand)",
+  "level": 17,
+  "traits": [
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your mastery of your wand grants you increased versatility, range, and area. The range of Fling Magic increases to 180 feet. You gain the ability to choose between all three damage types (cold, electricity, and fire) each time you use Fling Magic. When you Fling Magic, you can choose to target a single creature or to affect all creatures in a ."
+ },
+ {
+  "id": "paragon-benefit-weapon",
+  "collection": "classFeatures",
+  "name": "Paragon Benefit (Weapon)",
+  "level": 17,
+  "traits": [
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The way your implement connects to your foe makes its interruptions incredibly disruptive. You now disrupt the triggering action on a hit with Implement's Interruption, rather than needing a critical hit."
+ },
+ {
+  "id": "passage-of-lines",
+  "collection": "classFeatures",
+  "name": "Passage of Lines",
+  "level": 1,
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You command your allies to regroup, allowing endangered units to fall back while rested units press the advantage. Signal all squadmates within the aura of your commander's banner; each can swap positions with another willing ally adjacent to them. An ally can't swap into a space it can't fit into, and if one of the allies occupies more squares than the other, the smaller ally can move into any part of the larger ally's space as long as the two remain adjacent after the swap. --- *PFS Note:* This tactic can be used by prone PCs, but not PCs who are grabbed, immobilized, or otherwise unable to move of their own volition."
+ },
+ {
+  "id": "path-to-perfection",
+  "collection": "classFeatures",
+  "name": "Path to Perfection",
+  "level": 7,
+  "traits": [
+   "monk"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Monk automatically at level 7",
+  "text": "You have progressed along your own path to enlightenment. Choose your Fortitude, Reflex, or Will saving throw. Your proficiency rank for the chosen saving throw increases to master. When you roll a success on the chosen saving throw, you get a critical success instead."
+ },
+ {
+  "id": "patron",
+  "collection": "classFeatures",
+  "name": "Patron",
+  "level": 1,
+  "traits": [
+   "witch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Witch automatically at level 1",
+  "text": "You weren't born with the power to cast spells, nor have you spent years dedicated to worship, study, or uncovering mystical secrets. Your magic instead has been gifted to you by a potent being, one who knows that by empowering you so, you'll further the being's agenda in the world, whatever it may be. This entity is typically mysterious and distant, revealing little of their identity and motivations. They make their will known to you in abstract signs such as omens, dreams, or similar subtleties rather than words. Rather than interacting with you directly, your patron works through a familiar—a mystical creature that teaches you, serves as the conduit for your patron's magic, and maybe even keeps an eye on you to ensure you're furthering your patron's nebulous ends. At 1st level, choose your patron, which determines your spellcasting tradition and grants you the skill for that tradition of magic, your first witch's lesson and a unique familiar ability."
+ },
+ {
+  "id": "peerless-inventor",
+  "collection": "classFeatures",
+  "name": "Peerless Inventor",
+  "level": 1,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Inventor automatically at level 1",
+  "text": "You are constantly inventing, and your skill at crafting is unimpeachable. You gain the Inventor skill feat, even if you don't meet its prerequisites."
+ },
+ {
+  "id": "perception-expertise",
+  "collection": "classFeatures",
+  "name": "Perception Expertise",
+  "level": 3,
+  "traits": [
+   "alchemist",
+   "animist",
+   "champion",
+   "cleric",
+   "druid",
+   "exemplar",
+   "kineticist",
+   "monk",
+   "sorcerer",
+   "witch",
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Exemplar automatically at level 9",
+  "text": "You remain alert to threats around you. Your proficiency rank for Perception increases to expert."
+ },
+ {
+  "id": "perception-legend",
+  "collection": "classFeatures",
+  "name": "Perception Legend",
+  "level": 13,
+  "traits": [
+   "gunslinger",
+   "ranger",
+   "rogue"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Investigator automatically at level 13",
+  "text": "You notice the almost imperceptible. Your proficiency rank for Perception increases to legendary."
+ },
+ {
+  "id": "perception-mastery",
+  "collection": "classFeatures",
+  "name": "Perception Mastery",
+  "level": 7,
+  "traits": [
+   "barbarian",
+   "bard",
+   "commander",
+   "exemplar",
+   "gunslinger",
+   "investigator",
+   "ranger",
+   "rogue",
+   "swashbuckler",
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Thaumaturge automatically at level 9",
+  "text": "**Barbarian** Your instinct heightens each of your senses further. Your proficiency rank for Perception increases to master. **Bard, Gunslinger, Rogue** You've developed keen awareness and attention to detail. Your proficiency rank for Perception increases to master. **Commander** You've developed the ability to see a scenario from every side. Your proficiency rank for Perception increases to master. **Exemplar** Through your adventures, you've developed keen awareness and attention to detail, the better to watch over your wards and keep an eye out for monsters and other threats. Your proficiency rank for Perception increases to master. **Investigator, Swashbuckler, Thaumaturge** Through your adventures, you've developed keen awareness and attention to detail. Your proficiency rank for Perception increases to master. **Ranger** You have highly developed acuity and attention to detail. Your proficiency rank for Perception increases to master."
+ },
+ {
+  "id": "perfected-form",
+  "collection": "classFeatures",
+  "name": "Perfected Form",
+  "level": 19,
+  "traits": [
+   "monk"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Monk automatically at level 19",
+  "text": "You have purged incompetence from your techniques. On your first Strike of your turn, if you roll lower than 10, you can treat the attack roll as a 10. This is a fortune effect."
+ },
+ {
+  "id": "perfected-mind",
+  "collection": "classFeatures",
+  "name": "Perfected Mind",
+  "level": 13,
+  "traits": [
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Thaumaturge automatically at level 13",
+  "text": "Your unbelievable training grants you mental resiliency. Your proficiency rank for Will saves increases to legendary. When you roll a success at a Will save, you get a critical success. When you roll a critical failure at a Will save, you get a failure instead. When you roll a failure on a Will save against a damaging effect, you take half damage."
+ },
+ {
+  "id": "performers-heart",
+  "collection": "classFeatures",
+  "name": "Performer's Heart",
+  "level": 9,
+  "traits": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Bard automatically at level 9",
+  "text": "The greatest performances require an understanding of your own mind and flawless concentration. Your proficiency rank for Will saves increases to master. When you roll a success on a Will save, you get a critical success instead."
+ },
+ {
+  "id": "perpetual-infusions",
+  "collection": "classFeatures",
+  "name": "Perpetual Infusions",
+  "level": 7,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have learned how to create perpetual alchemical infusions that can provide a near-infinite supply of certain simple items. You gain the ability to create two 1st-level alchemical items using Quick Alchemy without spending a batch of infused reagents. The items you can select depend on your research field and must be in your formula book. Each time you gain a level, you can swap any number of your perpetual infusions with other eligible infusions."
+ },
+ {
+  "id": "perpetual-perfection",
+  "collection": "classFeatures",
+  "name": "Perpetual Perfection",
+  "level": 17,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have perfected your perpetual infusions, allowing you to use Quick Alchemy to create even more powerful items at no cost. The items you can select depend on your research field and must be in your formula book."
+ },
+ {
+  "id": "perpetual-perfection-toxicologist",
+  "collection": "classFeatures",
+  "name": "Perpetual Perfection (Toxicologist)",
+  "level": 17,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have perfected your perpetual infusions, allowing you to use Quick Alchemy to create even more powerful items at no cost. The items you can select depend on your research field and must be in your formula book. Choose two common 11th-level or lower alchemical poisons."
+ },
+ {
+  "id": "perpetual-potency",
+  "collection": "classFeatures",
+  "name": "Perpetual Potency",
+  "level": 11,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your perpetual infusions improve, allowing you to use Quick Alchemy to create more powerful items with no cost. The items you can select depend on your research field and must be in your formula book."
+ },
+ {
+  "id": "perpetual-potency-bomber",
+  "collection": "classFeatures",
+  "name": "Perpetual Potency (Bomber)",
+  "level": 11,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your perpetual infusions improve, allowing you to use Quick Alchemy to create more powerful items with no cost. The items you can select depend on your research field and must be in your formula book. Choose two 3rd-level or lower bombs."
+ },
+ {
+  "id": "perpetual-potency-chirurgeon",
+  "collection": "classFeatures",
+  "name": "Perpetual Potency (Chirurgeon)",
+  "level": 11,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your perpetual infusions improve, allowing you to use Quick Alchemy to create more powerful items with no cost. The items you can select depend on your research field and must be in your formula book. Choose two 6th level or lower elixirs with the healing trait."
+ },
+ {
+  "id": "perpetual-potency-mutagenist",
+  "collection": "classFeatures",
+  "name": "Perpetual Potency (Mutagenist)",
+  "level": 11,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your perpetual infusions improve, allowing you to use Quick Alchemy to create more powerful items with no cost. The items you can select depend on your research field and must be in your formula book. Choose two 3rd level or lower mutagens"
+ },
+ {
+  "id": "personal-barrier",
+  "collection": "classFeatures",
+  "name": "Personal Barrier",
+  "level": 13,
+  "traits": [
+   "psychic"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Psychic automatically at level 13",
+  "text": "Subtle telekinetic fields dampen and deflect incoming blows. Your proficiency rank in unarmored defense increases to expert."
+ },
+ {
+  "id": "pincer-attack",
+  "collection": "classFeatures",
+  "name": "Pincer Attack",
+  "level": 1,
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You call for an aggressive formation designed for exploiting enemies' vulnerabilities. Signal all squadmates; each can Step as a reaction. If any of your allies ends this movement adjacent to an opponent, that opponent is off-guard to melee attacks from you and all other squadmates who responded to Pincer Attack until the start of your next turn."
+ },
+ {
+  "id": "piranha-assault",
+  "collection": "classFeatures",
+  "name": "Piranha Assault",
+  "level": 1,
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Frequency** once per 10 minutes --- You know that a thousand small bites can fell a large foe just as surely a single well-placed hit. Designate a creature within the aura of your commander's banner and signal all squadmates; for 1 minute, each time they attack that creature and deal damage to it of a type the creature resists, they ignore an amount of that creature's resistance equal to your level."
+ },
+ {
+  "id": "pistoleros-retort",
+  "collection": "classFeatures",
+  "name": "Pistolero's Retort",
+  "level": 1,
+  "traits": [
+   "gunslinger"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Requirements** You're wielding a one-handed firearm or one-handed crossbow. **Trigger** A foe within the first range increment of the one-handed firearm or one-handed crossbow you're wielding critically fails an attack roll against you. --- You punish your foe's failure with a shot. Make a Strike against the triggering foe with a one-handed firearm or one-handed crossbow."
+ },
+ {
+  "id": "plant-thirty-barbs",
+  "collection": "classFeatures",
+  "name": "Plant Thirty Barbs",
+  "level": 1,
+  "traits": [
+   "death",
+   "transcendence"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You snap off a fragment of your ikon within your opponent's body, which threatens to burst into numerous barbs. Make a Strike with your ikon. If successful, barbs fill the target, dealing two die of weapon damage the first time the creature uses a move action on each of its turns; the barbs are made out of the same material as your weapon ikon and bypass resistances and such accordingly (for instance, a cold iron spear would create cold iron barbs). The barbs last for 1d4 rounds. If the target dies while the barbs are still in their body, the barbs burst forth in a forest of thorns covering the creature's space, which are greater difficult terrain and deal piercing damage equal to half your level for each square that is moved into."
+ },
+ {
+  "id": "polymath",
+  "collection": "classFeatures",
+  "name": "Polymath",
+  "level": 1,
+  "traits": [
+   "bard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Bard Muse",
+  "text": "Your muse is a jack of all trades, flitting between skills and pursuits. Some bards are constantly moved by new muses or draw their inspiration from an idealized being, whether it's based on a real person or purely philosophical. If your muse is a single creature, it might be an eclectic creature like a fey or one who's learned a lot over a long lifespan; if a deity, it might be Desna or Calistria. Art inspired by a polymath muse is restless, with each composition exhibiting new techniques and an ever-evolving style. As a bard with a polymath muse, you are interested in a wide array of topics but rarely dedicated to any one, and you rarely make up your mind—you want to try everything. **Muse Feat** Versatile Performance **Muse Spell** Phantasmal Minion"
+ },
+ {
+  "id": "pop-drop-and-lock",
+  "collection": "classFeatures",
+  "name": "Pop, Drop, and Lock",
+  "level": 1,
+  "traits": [
+   "brandish",
+   "commander",
+   "tactic"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Frequency** once per 10 minutes --- You command your squadmates to perform a devastating coordinated takedown. Signal up to three squadmates within the aura of your commander's banner who all have the same enemy within their reach; the squadmates can attempt to Strike, Trip, or Grapple the opponent as a reaction. Each squadmate can only attempt one specific action granted by this tactic, the actions can be attempted in any order and a specific action can only be attempted once as part of this tactic."
+ },
+ {
+  "id": "powerful-alchemy",
+  "collection": "classFeatures",
+  "name": "Powerful Alchemy",
+  "level": 5,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Alchemist automatically at level 5",
+  "text": "Alchemical items you infuse are particularly potent. When you create an infused alchemical item that allows a saving throw, you can change its DC to your class DC."
+ },
+ {
+  "id": "powerful-fist",
+  "collection": "classFeatures",
+  "name": "Powerful Fist",
+  "level": 1,
+  "traits": [
+   "monk"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Monk automatically at level 1",
+  "text": "Your fists are deadly weapons. The damage die for your fist increases to 1d6 instead of 1d4. You don't take the normal –2 circumstance penalty when making a lethal attack with your fist or any other unarmed attacks."
+ },
+ {
+  "id": "precise-discipline",
+  "collection": "classFeatures",
+  "name": "Precise Discipline",
+  "level": 1,
+  "traits": [
+   "psychic"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Determine intended outcome. Align thoughts. Identify and resolve distractions. Manifest. Intentional focus is the key to unleashing your abilities, whether that's because your power naturally tends to precise, discrete effects, or because you've adopted strict discipline to ensure your mind can change the world only when you intend it to. Your thoughtforms are calculations you make to determine the forces you need to call upon. Perhaps you mentally weigh the mass of an object against the force of gravity to levitate it or you might determine exactly how much energy is needed for an object to combust. Calculation thoughtforms tend to impart ordered visual and auditory effects to your spell manifestation, such as regular tessellations of light, mathematical spirals, or harmonic tones. **Key Attribute** Your key attribute is Intelligence. **Psyche Action** Calculate Threats"
+ },
+ {
+  "id": "precise-strike",
+  "collection": "classFeatures",
+  "name": "Precise Strike",
+  "level": 1,
+  "traits": [
+   "swashbuckler"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Swashbuckler automatically at level 1",
+  "text": "When you make a Strike with an agile or finesse melee weapon or agile or finesse unarmed attack, you deal 2 additional precision damage. If the Strike is part of a finisher, the additional damage is 2d6 precision damage instead. As your swashbuckler level increases, so does your additional damage for precise strike. At 5th, 9th, 13th, and 17th level, increase the amount of additional damage on a Strike by 1 and the additional damage on a finisher by 1d6."
+ },
+ {
+  "id": "precision",
+  "collection": "classFeatures",
+  "name": "Precision",
+  "level": 1,
+  "traits": [
+   "ranger"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Ranger Hunter's Edge",
+  "text": "You have trained to aim for your prey's weak points. The first time you hit your hunted prey in a round, you also deal 1d8 additional precision damage. (Precision damage increases the damage you already deal, using the same type, but is ineffective against creatures that lack vital organs or weak points.) At 11th level, the extra damage increases to 2d8 precision damage, and at 19th level, the extra damage increases to 3d8 precision damage."
+ },
+ {
+  "id": "precognitive-reflexes",
+  "collection": "classFeatures",
+  "name": "Precognitive Reflexes",
+  "level": 5,
+  "traits": [
+   "psychic"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Psychic automatically at level 5",
+  "text": "Minor precognition ensures you can react to threats slightly before they occur. Your proficiency rank for Reflex saves increases to expert."
+ },
+ {
+  "id": "premonition-reflexes",
+  "collection": "classFeatures",
+  "name": "Premonition Reflexes",
+  "level": 13,
+  "traits": [
+   "oracle"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Oracle automatically at level 13",
+  "text": "A chill runs through your spine as danger strikes, giving you a hair's more time to dodge or cover yourself. Your proficiency rank for Reflex saves increases to expert."
+ },
+ {
+  "id": "pride",
+  "collection": "classFeatures",
+  "name": "Pride",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The Crescent Scepter is endlessly convinced of its own superiority and the ascendance of its users. If someone's eyes show something else, clearly their eyes are mistaken. **Anathema** Use your magic to change or create physical things rather than their appearances. **Sin Spells** - **cantrips:** Bullhorn, Figment - **1st:** Dizzying Colors, Illusory Disguise - **2nd:** Illusory Creature, - **3rd:** Blindness, Levitate - **4th:** Mirage, Vision of Death - **5th:** Cloak of Colors - **6th:** Phantasmal Calamity - **7th:** Mask of Terror, Project Image - **8th:** Confusing Colors - **9th:** Overwhelming Presence **Initial School Spell** Crescent Scepter"
+ }
+]

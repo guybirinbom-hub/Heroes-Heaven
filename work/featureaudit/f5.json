@@ -1,0 +1,859 @@
+[
+ {
+  "id": "lesson-of-favors",
+  "collection": "classFeatures",
+  "name": "Lesson of Favors",
+  "level": 6,
+  "traits": [
+   "witch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the Return the Favor hex, and your familiar learns Mind of Menace."
+ },
+ {
+  "id": "lesson-of-life",
+  "collection": "classFeatures",
+  "name": "Lesson of Life",
+  "level": 2,
+  "traits": [
+   "witch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the Life Boost hex, and your familiar learns Spirit Link."
+ },
+ {
+  "id": "lesson-of-memory",
+  "collection": "classFeatures",
+  "name": "Lesson of Memory",
+  "level": 6,
+  "traits": [
+   "witch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Cobyslarni has untold years of memories, which he's learned how to shape, recalling information—or obliterating it. You gain the Unravel Knowledge hex, and your familiar learns ."
+ },
+ {
+  "id": "lesson-of-mischief",
+  "collection": "classFeatures",
+  "name": "Lesson of Mischief",
+  "level": 6,
+  "traits": [
+   "witch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the Deceiver's Cloak hex, and your familiar learns Mad Monkeys."
+ },
+ {
+  "id": "lesson-of-protection",
+  "collection": "classFeatures",
+  "name": "Lesson of Protection",
+  "level": 2,
+  "traits": [
+   "witch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the Blood Ward hex; your familiar learns Mystic Armor."
+ },
+ {
+  "id": "lesson-of-renewal",
+  "collection": "classFeatures",
+  "name": "Lesson of Renewal",
+  "level": 10,
+  "traits": [
+   "witch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the Restorative Moment hex, and your familiar learns Field of Life."
+ },
+ {
+  "id": "lesson-of-shadow",
+  "collection": "classFeatures",
+  "name": "Lesson of Shadow",
+  "level": 6,
+  "traits": [
+   "witch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the Malicious Shadow hex, and your familiar learns Chilling Darkness."
+ },
+ {
+  "id": "lesson-of-snow",
+  "collection": "classFeatures",
+  "name": "Lesson of Snow",
+  "level": 6,
+  "traits": [
+   "witch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the Personal Blizzard hex, and your familiar learns Wall of Wind."
+ },
+ {
+  "id": "lesson-of-the-flock",
+  "collection": "classFeatures",
+  "name": "Lesson of the Flock",
+  "level": 6,
+  "traits": [
+   "witch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Power flows when many work as one. You gain the Sheltering Wings hex, and your familiar learns Levitate."
+ },
+ {
+  "id": "lesson-of-the-frozen-queen",
+  "collection": "classFeatures",
+  "name": "Lesson of the Frozen Queen",
+  "level": 10,
+  "traits": [
+   "witch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the Glacial Heart hex, and your familiar learns Wall of Ice."
+ },
+ {
+  "id": "lesson-of-the-shark",
+  "collection": "classFeatures",
+  "name": "Lesson of the Shark",
+  "level": 6,
+  "traits": [
+   "witch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Learn the ways of this deadly oceanic predator. You gain the Blood in the Water hex, and your familiar learns Feet to Fins."
+ },
+ {
+  "id": "lesson-of-vengeance",
+  "collection": "classFeatures",
+  "name": "Lesson of Vengeance",
+  "level": 2,
+  "traits": [
+   "witch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the Needle of Vengeance hex, and your familiar learns Phantom Pain."
+ },
+ {
+  "id": "lesson-of-vows",
+  "collection": "classFeatures",
+  "name": "Lesson of Vows",
+  "level": 6,
+  "traits": [
+   "witch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Words have power, and those who use them to deceive should be prepared to face the consequences. You gain the Censure Falsehoods hex, and your familiar learns Ring of Truth."
+ },
+ {
+  "id": "liars-hidden-blade",
+  "collection": "classFeatures",
+  "name": "Liar's Hidden Blade",
+  "level": 1,
+  "traits": [
+   "spirit",
+   "transcendence"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your previous action was an unsuccessful Strike with the weapon from the Shadow Sheath --- **Effect** The shadow weapon you threw fades, the distraction covering your true intention all along—a second strike in hidden in the blind spot of the first! Interact to draw another weapon from the shadow sheath, then Strike with it at the same multiple attack penalty as the unsuccessful attack. The opponent is off-guard to this attack. This Strike counts toward your multiple attack penalty as normal. After the Strike resolves, you can Interact to draw another weapon from the shadow sheath."
+ },
+ {
+  "id": "liberating-step",
+  "collection": "classFeatures",
+  "name": "Liberating Step",
+  "level": 1,
+  "traits": [
+   "champion"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An enemy damages, grabs, or restrains your ally, and both are in your champion's aura --- You free an ally from restraint. If the trigger was an ally taking damage, the ally gains resistance to all damage against the triggering damage equal to 2 + your level. The ally can attempt to break free of effects grabbing, Restraining, Immobilizing, or Paralyzing them. They either attempt a new save against one such effect that allows a save, or attempt to Escape from one effect as a free action. If they can move, the ally can Step as a free action, even if they didn't need to escape."
+ },
+ {
+  "id": "liberation",
+  "collection": "classFeatures",
+  "name": "Liberation",
+  "level": 1,
+  "traits": [
+   "champion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Champion Cause",
+  "text": "You will see all people free from bondage and prohibitions. **Edicts** oppose slavery and tyranny, fight for others' freedom to make their own decisions, respect choices others make for their own lives **Anathema** force or threaten someone to act a certain way, engage in slavery or tyranny --- **Champion's Reaction** Liberating Step **Relentless Reaction (9th Level)** You punish those who ensnare your allies. If the triggering enemy was using any effects to make your ally grabbed, restrained, immobilized, or paralyzed when you used Liberating Step, that enemy takes persistent spirit damage equal to your Charisma modifier. **Exalted Reaction (11th Level)** In addition to the ally affected by Liberating Step, you and all other allies in your champion's aura can Step as a free action. You and your allies gain the benefit even if the ally who benefited from Liberating Step can't move."
+ },
+ {
+  "id": "life",
+  "collection": "classFeatures",
+  "name": "Life",
+  "level": 1,
+  "traits": [
+   "oracle"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Oracle Mystery",
+  "text": "The never-ending flow of life force within living beings is palpable to you. You might uphold the sanctity of life, or perhaps you seek to undermine it. You might draw power from the collective vitality of the world's living creatures, hold some connection to Creation's Forge, or revere a collection of deities including Irori, Pharasma, Sarenrae, and the god of medicine Qi Zhong. **Granted Spells** - **cantrip:** Vitality Lash - **1st:** Soothe - **2nd:** False Vitality - **5th:** Grisly Growths **Revelation Spells** - **initial:** Life Link - **advanced:** Delay Affliction - **greater:** Life-Giving Form **Related Domains** death, healing, pain, soul **Mystery Skill** Medicine **Oracle Feat** Nudge the Scales Curse of Outpouring Life"
+ },
+ {
+  "id": "life-draining",
+  "collection": "classFeatures",
+  "name": "Life-Draining",
+  "level": 1,
+  "traits": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The flourishing plant life that covers your body is a part of you, but it draws nutrients from your blood, making you weaker the more the flowers grow. As the plants grow, you need to spend more and more time recuperating. Recuperating in the sunshine lowers this duration, as it feeds the flowers, speeding your recovery. **Mild Backlash** You become Drained 1 as the plants feed off your life force. This condition lasts until you spend 3 consecutive actions to rest and do nothing. **Moderate Backlash** You become Drained 2 and fatigued until you spend 20 minutes recuperating by resting and doing nothing. If you spend this time basking in sunshine, it instead takes 10 minutes. **Severe Backlash** You become Drained 3 until you spend 2 hours napping. While napping, you're unconscious and can't take actions or engage in exploration activities, but a creature can wake you with a single action with the manipulate trait. If you spend this time napping in natural sunlight, it instead takes 1 hour. You're fatigued until you can get a full night's rest."
+ },
+ {
+  "id": "light-armor-expertise",
+  "collection": "classFeatures",
+  "name": "Light Armor Expertise",
+  "level": 13,
+  "traits": [
+   "bard",
+   "investigator",
+   "kineticist",
+   "oracle",
+   "rogue",
+   "swashbuckler"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Swashbuckler automatically at level 13",
+  "text": "You've learned how to dodge while wearing light or no armor. Your proficiency ranks for light armor and unarmored defense increase to expert."
+ },
+ {
+  "id": "light-armor-mastery",
+  "collection": "classFeatures",
+  "name": "Light Armor Mastery",
+  "level": 19,
+  "traits": [
+   "investigator",
+   "kineticist",
+   "rogue",
+   "swashbuckler"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Swashbuckler automatically at level 19",
+  "text": "Your skill with light armor improves, increasing your ability to dodge blows. Your proficiency ranks for light armor and unarmored defense increase to master."
+ },
+ {
+  "id": "ligneous-instinct",
+  "collection": "classFeatures",
+  "name": "Ligneous Instinct",
+  "level": 1,
+  "traits": [
+   "barbarian"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Barbarian Instinct",
+  "text": "Your rage is powered by the steady growth of the natural world, from the blossoming of flowers to the cultivation of vegetables and the towering, imposing might of the grandest trees. You might be descended from powerful druids or dryads, been exposed to powerful primal magic, or been transformed by the resurgence of the Plane of Wood. As you unleash your rage, your flesh becomes covered in woody growths, which spread like bark across your body. ## Anathema Despoiling nature and killing plants unnecessarily is anathema to your instinct. Defending yourself against plant creatures or hazards is not. ## Wooden Rage (Instinct Ability) While raging, you can increase the additional damage from Rage from 2 to 6. If you do this, reduce your Speed by 10 feet, as the bark plates covering your body are a hinderance to mobility. This speed reduction can't be overcome by any means, though it can be offset by speed increases. ## Specialization Ability Level 7 When you use wooden rage, increase the additional damage from Rage from 6 to 10. If you have greater weapon specialization, instead increase the damage from Rage when using wooden rage from 10 to 18. ## Raging Resistance Level 9 You resist piercing and slashing damage, but you gain weakness to fire equal to 3 + your Constitution modifier, as your bark-like flesh is highly flammable."
+ },
+ {
+  "id": "liturgist",
+  "collection": "classFeatures",
+  "name": "Liturgist",
+  "level": 1,
+  "traits": [
+   "animist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Animist Practice",
+  "text": "You draw forth your apparitions through the power of song and dance, connecting the spiritual to the physical. These performances can be of your own creation or follow the specific rites of your religion. **Song of Invocation (1st):** You can sing out to the spirits to have them spin and twirl around you. You gain the Circle of Spirits feat. **Dancing Invocation (9th):** The movement of your body grants power to your magic. When you Leap, Step, or Tumble Through, you also Sustain an apparition spell or vessel spell. **Invocation of Praise (17th):** Your liturgies call to the spirits even in the heat of battle. When you roll initiative, you can use Circle of Spirits as a free action. If your first action on your first turn is to cast an apparition cantrip granted by your primary apparition, you reduce the number of actions it takes to cast it by 1 (minimum 1 action)."
+ },
+ {
+  "id": "lore",
+  "collection": "classFeatures",
+  "name": "Lore",
+  "level": 1,
+  "traits": [
+   "oracle"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Oracle Mystery",
+  "text": "Knowledge and information come freely to you. You might use this lore to gain power or perhaps to understand the divine mysteries of the multiverse. You might have a conduit to the fabled Akashic Record, maintain a subtle telepathic connection to the collective subconscious of all living creatures, or follow in the footsteps of deities such as Abadar, Irori, Nethys, Irori's scholarly nephew Gruhastha, the fey triune goddess of fate Magdh, or the aeon god figure known as the Monad. **Granted Spells** - **cantrip:** Read Aura - **1st:** Mindlink - **3rd:** - **6th:** Never Mind **Revelation Spells** - **initial:** Brain Drain - **advanced:** Access Lore - **greater:** Dread Secret **Related Domains** knowledge, magic, secrecy, truth **Mystery Skill** Occultism and one Lore skill of your choice **Oracle Feat** Whispers of Weakness Curse of Torrential Knowledge"
+ },
+ {
+  "id": "lurker-in-devouring-dark",
+  "collection": "classFeatures",
+  "name": "Lurker in Devouring Dark",
+  "level": 1,
+  "traits": [
+   "animist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Lurkers in devouring dark are most often near old shipwrecks, deadly icebergs, and other places where ice and deep water are most prevalent. In places where the Dark Tapestry intrudes upon the world, there can be found variant lurkers in devouring dark who offer Dark Tapestry Lore in place of Sailing Lore and whose spells of water and ice instead deal void damage. --- **Apparition Skills** Ocean Lore, Sailing Lore **Apparition Spells** - **Cantrip** Caustic Blast - **1st** Grim Tendrils - **2nd** Acid Grip - **3rd** Aqueous Orb - **4th** Grasp of the Deep - **5th** Wall of Ice - **6th** Frost Pillar - **7th** Hungry Depths - **8th** Arctic Rift - **9th** Implosion **Vessel Spell** Devouring Dark Form **Avatar** *Tentacles from the Dark* Speed 70 feet, swim Speed 70 feet **Melee** ⟨1⟩ grasping tentacles (reach 30 feet), **Damage** 6d10+6 plus Grab"
+ },
+ {
+  "id": "lust",
+  "collection": "classFeatures",
+  "name": "Lust",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The Heart's Hook drowns rationality in desires, twisting its targets' thoughts until they gladly serve the runelord's wishes. **Anathema** Use your magic to meddle with physical forms or invoke the void. **Sin Spells** - **cantrips:** Daze, Message - **1st:** Charm, Command - **2nd:** Charitable Urge, Stupefy - **3rd:** Dream Message, Enthrall - **4th:** Confusion, Suggestion - **5th:** Mind Probe, Subconscious Suggestion - **6th:** Dominate, Never Mind - **7th:** Love's Sacrifice, Warp Mind - **8th:** Uncontrollable Dance - **9th:** Telepathic Demand **Initial School Spell** Heart's Hook"
+ },
+ {
+  "id": "maestro",
+  "collection": "classFeatures",
+  "name": "Maestro",
+  "level": 1,
+  "traits": [
+   "bard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Bard Muse",
+  "text": "Your muse constantly inspires you to greater heights of artistic prowess. For many bards, a teacher or rival fills this role, although some set their sights higher and attempt to surpass great composers of the past or blaze a new trail entirely. If your muse is a supernatural creature, it might be one who loves to perform, such as a choral angel or a lyrakien azata; if a deity, it might be Shelyn. Art inspired by a maestro muse is precise and inventive, a formalist achievement. As a bard with a maestro muse, you are an inspiration to your allies and confident of your musical and oratorical abilities. **Muse Feat** Lingering Composition **Muse Spell** Soothe"
+ },
+ {
+  "id": "magical-fortitude",
+  "collection": "classFeatures",
+  "name": "Magical Fortitude",
+  "level": 5,
+  "traits": [
+   "oracle",
+   "sorcerer",
+   "witch",
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Sorcerer automatically at level 5",
+  "text": "**Oracle, Sorcerer, Wizard** Magical power has improved your body's resiliency. Your proficiency rank for Fortitude saves increases to expert. **Witch** Your patron's power boosts your physical resiliency. Your proficiency rank for Fortitude saves increases to expert."
+ },
+ {
+  "id": "majestic-will",
+  "collection": "classFeatures",
+  "name": "Majestic Will",
+  "level": 17,
+  "traits": [
+   "sorcerer"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Sorcerer automatically at level 17",
+  "text": "Your mind and will are tempered by your mastery of magical forces. Your proficiency rank for Will saves increases to master. When you roll a success on a Will save, you get a critical success instead."
+ },
+ {
+  "id": "major-curse",
+  "collection": "classFeatures",
+  "name": "Major Curse",
+  "level": 11,
+  "traits": [
+   "oracle"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Oracle automatically at level 11",
+  "text": "You've learned to better tolerate the conflicting powers wreaking havoc on your body. The maximum cursebound value you can have increases from cursebound 2 to cursebound 3."
+ },
+ {
+  "id": "manifest-eidolon",
+  "collection": "classFeatures",
+  "name": "Manifest Eidolon",
+  "level": 1,
+  "traits": [
+   "concentrate",
+   "manipulate",
+   "summoner",
+   "teleportation"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "Your eidolon appears in an open space adjacent to you, and can then take a single action. If your eidolon was already manifested, you unmanifest it instead. The conduit that allows your eidolon to manifest is also a tether between you. Your eidolon must remain within 100 feet of you at all times and can't willingly go beyond that limit. If forced beyond this distance, or if you are reduced to 0 Hit Points, your eidolon's physical form dissolves: your eidolon unmanifests, and you need to use Manifest Eidolon to manifest it again. --- **Special** This activity has the trait matching your eidolon's tradition (arcane, divine, occult, or primal)."
+ },
+ {
+  "id": "manifold-alloy",
+  "collection": "classFeatures",
+  "name": "Manifold Alloy",
+  "level": 7,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've devised several alloys that contain useful properties of various metals, and you replace a number of parts of your weapon or its ammunition with pieces from these alloys. Your weapon innovation is cold iron and silver. This means you deal more damage to a variety of supernatural creatures, such as demons, devils, and fey."
+ },
+ {
+  "id": "marathon-dash",
+  "collection": "classFeatures",
+  "name": "Marathon Dash",
+  "level": 1,
+  "traits": [
+   "transcendence"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your feet carry you so quickly they leave a slipstream that speeds your allies on. You Stride. Each ally within 10 feet of you at the start of your movement can Stride as a reaction."
+ },
+ {
+  "id": "mark-the-center",
+  "collection": "classFeatures",
+  "name": "Mark the Center",
+  "level": 1,
+  "traits": [
+   "transcendence"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You hold a hand to your lips and exhale, releasing enchanted red ash in a . The ash clings to the vital areas of each enemy in the area for 1 minute. When a creature marked by the ash is hit and dealt damage by a Strike, it takes an additional 4d6 precision or vitality damage, then its mark ends. The damage type is whichever is worse for the creature, as determined by the GM. At 13th level and every 3 levels thereafter, the damage increases by 1d6."
+ },
+ {
+  "id": "martial-weapon-mastery",
+  "collection": "classFeatures",
+  "name": "Martial Weapon Mastery",
+  "level": 13,
+  "traits": [
+   "champion",
+   "investigator",
+   "ranger",
+   "swashbuckler"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Swashbuckler automatically at level 13",
+  "text": "You fully understand your weapons. Your proficiency ranks for simple weapons, martial weapons, and unarmed attacks increase to master."
+ },
+ {
+  "id": "master-of-mind-and-spirit",
+  "collection": "classFeatures",
+  "name": "Master of Mind and Spirit",
+  "level": 13,
+  "traits": [
+   "animist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Animist automatically at level 13",
+  "text": "Your apparitions gird your mind against hostile intrusion and shield you from the effects of entities seeking to control your mind. Your proficiency rank for Will saves increases to master. When you roll a success at a Will save, you get a critical success instead."
+ },
+ {
+  "id": "master-overdrive",
+  "collection": "classFeatures",
+  "name": "Master Overdrive",
+  "level": 7,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Inventor automatically at level 7",
+  "text": "Your mastery of invention and crafting enhances your Overdrive even further. You become a master in Crafting, and on a successful Overdrive, you increase the additional damage by a total of 2, replacing the increase from expert overdrive."
+ },
+ {
+  "id": "master-spellcaster",
+  "collection": "classFeatures",
+  "name": "Master Spellcaster",
+  "level": 15,
+  "traits": [
+   "animist",
+   "bard",
+   "druid",
+   "magus",
+   "oracle",
+   "psychic",
+   "sorcerer",
+   "summoner",
+   "witch",
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Psychic automatically at level 15",
+  "text": "**Animist** Your affinity with the apparitions you bond to has further enhanced the potency of your magic. Your proficiency ranks for spell attack modifier and spell DC increase to master. **Bard** You pluck the threads of magic like the strings of a harp. Your proficiency ranks for spell attack modifiers and spell DCs increase to master. **Druid** Primal magic answers your command. Your proficiency ranks for spell attack modifier and spell DC increase to master. **Magus** You fortify your spells with masterful prowess. Your proficiency ranks for arcane spell attack rolls and spell DCs increase to master. **Oracle** You truly understand the deep and complex divine power within your mystery. Your proficiency ranks for divine spell attack rolls and spell DCs increase to master. **Psychic** You've gained access to the deepest corners of your own mind. Your proficiency ranks for spell attack modifier and spell DC increase to master. **Sorcerer** You have achieved mastery over the magic in your blood. Your proficiency ranks for spell attack modifier and spell DC for spells of your bloodline's tradition increase to master. **Summoner** Your connection to your eidolon is strong enough to grant you mastery over associated spells. Your proficiency ranks for spell attack modifier and spell DC for spells of your eidolon's tradition increase to master. **Witch** You've achieved mastery over your patron's magic. Your proficiency ranks for spell attack modifier and spell DC increase to mas"
+ },
+ {
+  "id": "master-strikes",
+  "collection": "classFeatures",
+  "name": "Master Strikes",
+  "level": 13,
+  "traits": [
+   "monk"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Monk automatically at level 13",
+  "text": "You've honed your body into an even deadlier weapon. Your proficiency ranks for unarmed attacks and simple weapons increase to master."
+ },
+ {
+  "id": "master-tactician",
+  "collection": "classFeatures",
+  "name": "Master Tactician",
+  "level": 15,
+  "traits": [
+   "commander"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Commander automatically at level 15",
+  "text": "You are among the greatest tacticians to have ever led forces on the field of battle. Your proficiency rank for commander class DC increases to master, and you add two new tactics to your folio; these can be any mobility or offensive tactics you don't already have in your folio, or you can choose from expert tactics or master tactics you have access to. The total number of tactics you can have prepared increases to five. In addition, you gain legendary proficiency in Warfare Lore."
+ },
+ {
+  "id": "master-tricks",
+  "collection": "classFeatures",
+  "name": "Master Tricks",
+  "level": 13,
+  "traits": [
+   "rogue"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Rogue automatically at level 13",
+  "text": "You've mastered a rogue's fighting moves. Your proficiency ranks increase to master for all simple weapons, martial weapons, and unarmed attacks."
+ },
+ {
+  "id": "masterful-hunter-flurry",
+  "collection": "classFeatures",
+  "name": "Masterful Hunter (Flurry)",
+  "level": 17,
+  "traits": [
+   "ranger"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "If you have master proficiency with your weapon, your multiple attack penalty for attacks against your hunted prey is –2 (–1 with an agile weapon) on your second attack of the turn, and –4 (–2 with an agile weapon) on your third and subsequent attacks of the turn."
+ },
+ {
+  "id": "masterful-hunter-precision",
+  "collection": "classFeatures",
+  "name": "Masterful Hunter (Precision)",
+  "level": 17,
+  "traits": [
+   "ranger"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your weapon mastery allows you to hit your prey's vital areas multiple times. The second time in a round you hit your hunted prey, you also deal 1d8 precision damage. At 19th level, your second hit in a round against your hunted prey deals 2d8 precision damage, and your third hit in a round against your hunted prey deals 1d8 precision damage."
+ },
+ {
+  "id": "mastermind",
+  "collection": "classFeatures",
+  "name": "Mastermind",
+  "level": 1,
+  "traits": [
+   "rogue"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Rogue Racket",
+  "text": "You rely on your intellect to craft intricate schemes, planning 10 steps ahead where others might plan three. You might be a driven detective, a spymaster in the service of a powerful house, or an aspiring crime lord or information broker. If you successfully identify a creature using Recall Knowledge, that creature is off-guard against your attacks until the start of your next turn; if you critically succeed, it's off-guard against your attacks for 1 minute. You're trained in Society and one of the following skills of your choice: Arcana, Nature, Occultism, or Religion. You can choose Intelligence as your key attribute."
+ },
+ {
+  "id": "medium-armor-expertise",
+  "collection": "classFeatures",
+  "name": "Medium Armor Expertise",
+  "level": 11,
+  "traits": [
+   "alchemist",
+   "barbarian",
+   "druid",
+   "gunslinger",
+   "magus",
+   "ranger",
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Thaumaturge automatically at level 11",
+  "text": "You've learned to defend yourself better against attacks. Your proficiency ranks for light armor, medium armor, and unarmored defense increase to expert."
+ },
+ {
+  "id": "medium-armor-expertise-inventor",
+  "collection": "classFeatures",
+  "name": "Medium Armor Expertise (Inventor)",
+  "level": 11,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Inventor automatically at level 11",
+  "text": "You've learned to defend yourself better against attacks. Your proficiency ranks for light armor, medium armor, and unarmored defense increase to expert. If you have a medium or heavy armor innovation, you gain access to the critical specialization effect with your armor innovation."
+ },
+ {
+  "id": "medium-armor-mastery",
+  "collection": "classFeatures",
+  "name": "Medium Armor Mastery",
+  "level": 17,
+  "traits": [
+   "alchemist",
+   "gunslinger",
+   "inventor",
+   "magus",
+   "ranger",
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Thaumaturge automatically at level 19",
+  "text": "Your skill with light and medium armor improves, increasing your ability to avoid blows. Your proficiency ranks for light and medium armor, as well as for unarmored defense, increase to master."
+ },
+ {
+  "id": "metal-strikes",
+  "collection": "classFeatures",
+  "name": "Metal Strikes",
+  "level": 9,
+  "traits": [
+   "monk"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Monk automatically at level 9",
+  "text": "You can adjust your body to make unarmed attacks infused with the mystic energy of rare metals. Your unarmed attacks are treated as cold iron and silver. This allows you to deal more damage to a variety of supernatural creatures, such as demons, devils, and fey."
+ },
+ {
+  "id": "mirror",
+  "collection": "classFeatures",
+  "name": "Mirror",
+  "level": 1,
+  "traits": [
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Mirror implements represent misdirection, illusion, and sleight of hand, bending and shifting a perspective and the way you look at things. While larger mirrors hold the same mystic connotations, thaumaturges always choose small, portable, handheld mirrors as implements so they can use them easily while adventuring. Mirror implements are associated with the harrow suit of keys, and the astrological signs of the stranger and the swallow. ### **Initiate Benefit** ### **Adept Benefit** ### **Intensify Vulnerability** Reinforcing your mirror lets it play tricks on your enemy's senses as it bends light this way or that. You become concealed to the target of your Exploit Vulnerability as your mirror warps its perceptions. As normal for concealment where your overall location is still obvious, you can't use this concealment to Hide or Sneak. ### **Paragon Benefit**"
+ },
+ {
+  "id": "mirrored-wall",
+  "collection": "classFeatures",
+  "name": "Mirrored Wall",
+  "level": 1,
+  "traits": [
+   "commander",
+   "tactic",
+   "visual"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Frequency** once per 10 minutes **Requirements** At least one of your squadmates is in bright light or has a focused light source available, such as a bull's-eye lantern. --- Your squadmates have polished their shields to a reflective sheen and now position them to reflect a blinding light into your enemy's eyes. All of your squadmates can Raise a Shield or cast Shield as a reaction. Then, signal a squadmate within the aura of your commander's banner who currently has a shield raised (including spellcasting allies with an active casting of the *shield* cantrip), and choose an enemy within 60 feet. The formation bounces light off the raised shield and into the enemy's eyes; the target must succeed at a saving throw against your class DC or become blinded for 1 round (on a critical failure, the creature remains dazzled for 3 rounds after the blindness ends). You can signal additional allies with raised shields to participate in this tactic; the target takes a circumstance penalty on this save equal to the number of additional participating squadmates (to a maximum –4 circumstance penalty to the target's save)."
+ },
+ {
+  "id": "mirrors-reflection",
+  "collection": "classFeatures",
+  "name": "Mirror's Reflection",
+  "level": 1,
+  "traits": [
+   "illusion",
+   "magical",
+   "manipulate",
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You're holding your mirror implement. --- You reflect an illusory image of yourself into another unoccupied space within 15 feet that you can see. You are treated as being in both spaces until the start of your next turn. For example, you can attack, Seek, and provide flanking—even with yourself. You occupy both spaces. Your mirror self mimics your actions exactly, but any effects you generate come from only one of your positions; you decide which each time you act. For example, if you made a melee Strike against a creature within reach of the reflection, you'd mime the actions of the Strike, but only the reflection would actually make the Strike. Anything that targets or would affect your reflection affects you and uses your statistics. Something that would target or affect both of you affects you only once. For example, a fireball that included both of you in its area would require only one save from you and damage you no more than once. When you move, you choose which square to move from, but the mirror effect ends (see below). Some events force you to determine which image is the real you, and then end the effect and cause your mirror self to disappear; this happens automatically at the start of your next turn. It also happens if you choose to move out of your space. Other benefits of this implement add more events that can end the reflection. The effect also ends when you fall unconscious, at which point you decide which version is truly you."
+ },
+ {
+  "id": "modular-head",
+  "collection": "classFeatures",
+  "name": "Modular Head",
+  "level": 1,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've constructed a multi-purpose, adjustable striking surface for your weapon, or you've made special ammunition you can swiftly alter. Your innovation gains the modular trait for bludgeoning, piercing, and slashing. When you Interact to use the modular trait, you can also choose to give the weapon the nonlethal trait if it doesn't currently have it, or to remove that trait if it's currently nonlethal."
+ },
+ {
+  "id": "monarch-of-the-fey-courts",
+  "collection": "classFeatures",
+  "name": "Monarch of the Fey Courts",
+  "level": 1,
+  "traits": [
+   "animist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Monarchs of the fey courts make their homes near places with strong ties to the First World, or in places where nymphs once held sway. They are drawn to animists who blend an appreciation for art and nature's beauty with a ruler's ambition. Monarchs of fey courts are vain, capricious, and do not easily forgive slights or poor manners. --- **Apparition Skills** Art Lore, Fey Lore **Apparition Spells** - **Cantrip** Tangle Vine - **1st** Charm - **2nd** Create Food - **3rd** Enthrall - **4th** Suggestion - **5th** - **6th** Dominate - **7th** Mask of Terror - **8th** Uncontrollable Dance - **9th** Unfathomable Song **Vessel Spell** Nymph's Grace **Avatar** *Queen of the Winter Court* Speed 50 feet, fly Speed 50 feet, swim Speed 50 feet **Melee** ⟨1⟩ queen's caress (reach 15 feet, agile), **Damage** 6d10+6 **Ranged** ⟨1⟩ monarch's spite (mental, range 120 feet, versatile cold), **Damage** 6d6+6"
+ },
+ {
+  "id": "monk-expertise",
+  "collection": "classFeatures",
+  "name": "Monk Expertise",
+  "level": 9,
+  "traits": [
+   "monk"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Monk automatically at level 9",
+  "text": "Your proficiency rank for your monk class DC increases to expert. If you have qi spells, your proficiency rank for spell attacks and spell DCs increases to expert."
+ },
+ {
+  "id": "mortal-harvest",
+  "collection": "classFeatures",
+  "name": "Mortal Harvest",
+  "level": 1,
+  "traits": [
+   "ikon"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Usage** a sickle or any weapon from the axe, flail, or polearm group --- This weapon, once used for felling trees or crops, now harvests lives instead. **Immanence** The mortal harvest deals 1 persistent spirit damage per weapon damage die to creatures it Strikes. **Transcendence—**Reap the Field ⟨1⟩ (transcendence)"
+ },
+ {
+  "id": "mortality-reforged",
+  "collection": "classFeatures",
+  "name": "Mortality Reforged",
+  "level": 15,
+  "traits": [
+   "exemplar"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Exemplar automatically at level 15",
+  "text": "Inner fire has burned away the frailty of a mortal body. Your proficiency rank for Fortitude saves increases to master. When you roll a success on a Fortitude save, you get a critical success instead."
+ },
+ {
+  "id": "mosquito-witch",
+  "collection": "classFeatures",
+  "name": "Mosquito Witch",
+  "level": 1,
+  "traits": [
+   "witch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Witch Patron",
+  "text": "Your patron is a mysterious being known as the Mosquito Witch. You do not know why you were chosen, and in many cases, you wish that you hadn't been. She may have made herself known to you through terrifying prophetic visions and nightmares, or you might have instead received her patronage in the form of swarming insects, their buzzing opening your ears to magic and their bites filling your body with power. Frightening events plague your wake: strange accidents, dead animals, and glowing red eyes in the darkness. Whether or not you're aware of the Mosquito Witch's influence, you have an affinity with insects, and typically draw their attention wherever you go. **Spell List** primal **Patron Skill** Nature **Lesson of the Unbridled Hive** The Mosquito Witch grants you control over insects. You gain the Buzzing Bites hex cantrip and your familiar learns Pest Form. **Familiar of Swarm's Heart** Your familiar is surrounded by a cloud of harmless insects. When you Cast or Sustain a hex, the insects swarm to protect you and your allies. Until the start of your next turn, your familiar grants Concealment to you or any ally while sharing the same space.*.*"
+ },
+ {
+  "id": "mountaineering-training",
+  "collection": "classFeatures",
+  "name": "Mountaineering Training",
+  "level": 1,
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your instructions make it easier for you and your allies to scale dangerous surfaces. Signal all squadmates; until the end of your next turn, you and each ally gain a climb Speed of 20 feet. --- **Special** If you have this tactic prepared, you can use Warfare Lore in place of Athletics for checks you make to Climb."
+ },
+ {
+  "id": "multisensory-mask",
+  "collection": "classFeatures",
+  "name": "Multisensory Mask",
+  "level": 15,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Subterfuge Suit only** --- You've built a multisensory mask over your armor that protects you by distorting your figure from all senses, leaving behind only a hazy image, muffled sounds, and so forth. While wearing the armor, you gain concealment against all creatures, even if they are using a nonvisual precise sense, such as a bat's echolocation. As normal for effects that leave your location obvious, you can't use this concealment to Hide or Sneak. If you use a hostile action, the concealment ends until you restore the mask as a single action, which has the manipulate trait."
+ },
+ {
+  "id": "mutagenist",
+  "collection": "classFeatures",
+  "name": "Mutagenist",
+  "level": 1,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Alchemist Research Field",
+  "text": "You focus on bizarre mutagenic transformations that sacrifice one aspect of a creature's physical or psychological being in order to strengthen another. **Formulas** Two common 1st-level alchemical mutagens. **Field Benefit** When you use a mutagen, you gain a number of temporary Hit Points equal to your Intelligence modifier (minimum 0) plus half your level. These temporary Hit Points last for 1 minute or until the mutagen's duration expires, whichever comes first. You can't gain temporary HP from drinking a mutagen again for 1 minute. **Field Vials** You can drink the contents of one your versatile vials to suppress the drawback you take from one mutagen currently affecting you for 1 minute. A vial used this way loses the acid, bomb, and splash traits and gains the elixir trait. If you have more than one drawback due to Combine Elixirs or a similar ability, drinking the vial suppresses one drawback of your choice. **Field Discovery (5th)** The mutagens flowing through your blood have altered your body chemistry. When you roll a Fortitude save while affected by a mutagen and dislike the result, you can end the effect of the mutagen to reroll the save. This is a fortune effect. **Advanced Vials (11th)** When you drink one of your field vials, you also gain resistance to physical damage for the same duration. The resistance is equal to half your level. **Greater Field Discovery (13th)** If you imbibe another mutagen while you are under the effects of a mutagen, you can gain th"
+ },
+ {
+  "id": "mysterious-resolve",
+  "collection": "classFeatures",
+  "name": "Mysterious Resolve",
+  "level": 7,
+  "traits": [
+   "oracle"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Oracle automatically at level 7",
+  "text": "The power of your mystery blazing in your soul makes it harder for other powers to grip your mind. Your proficiency rank for Will saves increases to master. When you roll a success on a Will save, you get a critical success instead."
+ }
+]

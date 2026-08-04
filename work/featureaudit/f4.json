@@ -1,0 +1,829 @@
+[
+ {
+  "id": "guardians-techniques",
+  "collection": "classFeatures",
+  "name": "Guardian's Techniques",
+  "level": 1,
+  "traits": [
+   "guardian"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Guardian automatically at level 1",
+  "text": "As a guardian, you have learned certain techniques to help keep your allies safe. ### Ever Ready You always gain a reaction whenever you roll initiative for combat, but you can use it only for reactions from guardian feats or class features. The GM might still rule that you can use other reactions before your first turn based on the situation, as normal. ### Intercept Attack You keep your charges safe from harm, even if it means you get hurt yourself. You gain the Intercept Attack reaction."
+ },
+ {
+  "id": "gunslingers-way",
+  "collection": "classFeatures",
+  "name": "Gunslinger's Way",
+  "level": 1,
+  "traits": [
+   "gunslinger"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Gunslinger automatically at level 1",
+  "text": "All gunslingers have a particular way they follow, a combination of philosophy and combat style that defines both how they fight and the weapons they excel with. At 1st level, your way grants you an initial deed, a unique reload action called a slinger's reload, and proficiency with a particular skill. You also gain advanced and greater deeds at later levels, as well as access to way-specific feats. **Way of the Drifter** You wander across the battlefield, equally at home in and out of the fray. **Way of the Pistolero** You carefully maintain your distance at a duelist's 10 paces with pistol in hand. **Way of the Sniper** You practice a methodical style of shooting, striking from far cover. **Way of the Vanguard** You rely on a brutal combat style that uses heavy weapons and explosive attacks. **Way of the Triggerbrand** You prefer firearms that work well as weapons in both melee and ranged combat"
+ },
+ {
+  "id": "gunslinging-legend",
+  "collection": "classFeatures",
+  "name": "Gunslinging Legend",
+  "level": 13,
+  "traits": [
+   "gunslinger"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Gunslinger automatically at level 13",
+  "text": "You've learned unique techniques for wielding firearms and crossbows that give you unmatched skill in their use. Your proficiency rank increases to legendary with simple and martial firearms and crossbows and to master with advanced firearms and crossbows. Your proficiency rank for simple weapons, martial weapons, and unarmed attacks increases to master."
+ },
+ {
+  "id": "hampering-spikes",
+  "collection": "classFeatures",
+  "name": "Hampering Spikes",
+  "level": 1,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've added long, snagging spikes to your weapon, which you can use to impede your foes' movement. Your innovation gains the hampering, trip, and versatile P traits."
+ },
+ {
+  "id": "handlers-calling",
+  "collection": "classFeatures",
+  "name": "Handler's Calling",
+  "level": 1,
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have an instinctive urge to care for wild creatures. When you attempt a check to Command an Animal, you can spend a Mythic Point to attempt the check at mythic proficiency. The first time each day that you critically succeed on a check to Make an Impression on a wild animal or Command an Animal who isn't your pet or companion, you regain a Mythic Point. --- **Edicts** care for dangerous animals or beasts in need, respect the habitats of wild creatures **Anathema** initiate combat against an animal or beast encountered in its natural environment, kill an animal or beast when sparing it is a viable option"
+ },
+ {
+  "id": "haunting-visage",
+  "collection": "classFeatures",
+  "name": "Haunting Visage",
+  "level": 1,
+  "traits": [
+   "concentrate",
+   "eidolon",
+   "manipulate",
+   "visual"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your eidolon is condensed. --- Your eidolon suddenly shifts itself into a terrifying shape of its choosing, rather than a simple mound, by closely controlling the positioning of its component bodies. The eidolon attempts to demoralize a creature within 15 feet; this Demoralize attempt loses the auditory trait, gains the visual trait, and the eidolon doesn't take a –4 circumstance penalty to the check if they don't share a language with their target. On a success or critical success, the target is additionally off-guard for 1 round."
+ },
+ {
+  "id": "healer-of-the-world",
+  "collection": "classFeatures",
+  "name": "Healer of the World",
+  "level": 15,
+  "traits": [
+   "exemplar"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your legacy is written in the lives you save. In your presence, coughs cease and aches abate, as a soft glow fills any living being in your presence. Magic flowing from one hand stitches wounds, and vigor ebbs from the other. After you Spark Transcendence, choose any number of willing or unconscious creatures in a . Each of these creatures that's dying loses the dying condition and remains unconscious at 0 Hit Points, and each one that isn't dying gains 10 temporary Hit Points that last until the start of your next turn. This is a healing vitality effect."
+ },
+ {
+  "id": "heaven-rains-an-ending",
+  "collection": "classFeatures",
+  "name": "Heaven Rains an Ending",
+  "level": 1,
+  "traits": [
+   "transcendence"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "You shoot an arrow that multiplies into a dense cloud of weapons. Make one ranged Strike with a –2 penalty against each enemy you are aware of within a cone as long as your weapon's first range increment. Roll the damage only once for all targets, and all the Strike's damage is spirit damage instead of its normal type. Each attack counts toward your multiple attack penalty, the penalty doesn't increase until you have made all your attacks."
+ },
+ {
+  "id": "heavy-construction",
+  "collection": "classFeatures",
+  "name": "Heavy Construction",
+  "level": 7,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Power Suit only** --- You've expanded your innovation into a heavy bulwark, and your groundbreaking design ensures you don't take any of the drawbacks for such heavy defenses. Your innovation becomes heavy armor, and your proficiency in your innovation armor (but no other heavy armor) advances to be equal to your proficiency in medium armor. If your Strength modifier is at least +3, you remove the Speed penalty entirely instead of reducing it to –5 feet. The armor's adjusted statistics are: *AC Bonus* +5; *Dex Cap* +1; *Check Penalty* –2; *Speed Penalty* –10 feet; *Strength* +3; *Bulk* 3; *Group* composite; *Armor Traits* bulwark, entrench melee and ranged."
+ },
+ {
+  "id": "heavy-is-the-crown",
+  "collection": "classFeatures",
+  "name": "Heavy is the Crown",
+  "level": 1,
+  "traits": [
+   "concentrate",
+   "mental",
+   "spirit",
+   "transcendence"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "The weight of authority falls heavily upon you, as well as nearby creatures. All enemies in a within 60 feet take spirit damage damage equal to your level with a save against your class DC. Any enemy that fails its save must immediately kneel, dropping prone as a free action."
+ },
+ {
+  "id": "hefty-composition",
+  "collection": "classFeatures",
+  "name": "Hefty Composition",
+  "level": 1,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Blunt surfaces and sturdy construction make your weapon hefty and mace-like. Your innovation gains the shove, razing, and versatile B traits."
+ },
+ {
+  "id": "horn-of-plenty",
+  "collection": "classFeatures",
+  "name": "Horn of Plenty",
+  "level": 1,
+  "traits": [
+   "extradimensional",
+   "ikon"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Usage** a wallet, bag, or similar container of 1 Bulk you can wear on your body --- Whether a bag, gourd, wallet, cornucopia, or similar food receptacle, this ikon recalls the harvest and hearth. The receptacle can store up to 1 Bulk of potions and elixirs, but no other items. The receptacle can't be opened except by the ikon's immanence and transcendence abilities. Each day during your daily preparations, the ikon produces one temporary Elixir of Life. You can choose to have it make a different elixir or potion you know the formula for. The level of any elixir or potion created by the horn must be your level or lower. The number of elixirs the horn creates increases to two at 8th level and three at 16th level, and you can choose each item individually. These temporary items vanish the next time you make your daily preparations, and any remaining effects of the temporary items end. A temporary elixir or potion has no value. **Immanence** The horn of plenty shimmers, allowing access to the stored consumables inside. You can Interact to draw a consumable and drink it in a single action while your divine spark rests within the horn. Other creatures can't access the contents unless you allow them to. **Transcendence—**Feed the Masses ⟨1⟩ (transcendence)"
+ },
+ {
+  "id": "humble-strikes",
+  "collection": "classFeatures",
+  "name": "Humble Strikes",
+  "level": 1,
+  "traits": [
+   "exemplar"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Exemplar automatically at level 1",
+  "text": "Even the most unassuming weapons can accomplish great deeds. When you are wielding a simple weapon, increase the damage die size of that weapon by one step."
+ },
+ {
+  "id": "hunt-prey",
+  "collection": "classFeatures",
+  "name": "Hunt Prey",
+  "level": 1,
+  "traits": [
+   "ranger"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Ranger automatically at level 1",
+  "text": "When you focus your attention on a single foe, you become unstoppable in your pursuit. You gain the Hunt Prey action."
+ },
+ {
+  "id": "hunters-calling",
+  "collection": "classFeatures",
+  "name": "Hunter's Calling",
+  "level": 1,
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're the hunter, and somewhere, a legendary predator awaits as your ultimate challenge. When you attempt a check to Seek or Track, you can spend a Mythic Point to attempt the check at mythic proficiency. The first time each day that you critically succeed on a check to Seek or Track a hostile or unfriendly creature, you regain a Mythic Point. --- **Edicts** be first in a group to scout an unknown and potentially dangerous area, seek out creatures that are causing imbalances in the natural world and correct the imbalance **Anathema** leave an animal or beast you've wounded free to cause future harm, refuse a request to hunt a dangerous animal or beast"
+ },
+ {
+  "id": "implement-adept",
+  "collection": "classFeatures",
+  "name": "Implement Adept",
+  "level": 7,
+  "traits": [
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Thaumaturge automatically at level 7",
+  "text": "You have deepened your connection to one of your implements, unlocking its adept power. Choose one of your implements and gain the adept benefit for that implement."
+ },
+ {
+  "id": "implement-paragon",
+  "collection": "classFeatures",
+  "name": "Implement Paragon",
+  "level": 17,
+  "traits": [
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Thaumaturge automatically at level 17",
+  "text": "You have unlocked the last secrets of an implement. Choose one of your implements that already gained the adept benefit; you gain the paragon benefit for that implement."
+ },
+ {
+  "id": "implements-empowerment",
+  "collection": "classFeatures",
+  "name": "Implement's Empowerment",
+  "level": 1,
+  "traits": [
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Thaumaturge automatically at level 1",
+  "text": "The power of your implement can also be turned to the more common task of combat, its power adding to and amplifying the effects of runes and other magical empowerments. When you Strike, you can trace mystic patterns with an implement you're holding to empower the Strike, causing it to deal 2 additional Damage per weapon damage die. Channeling the power requires full use of your hands. You don't gain the benefit of implement's empowerment if you are holding anything in either hand other than a single one-handed weapon, other implements, or esoterica, and you must be holding at least one implement to gain the benefit."
+ },
+ {
+  "id": "implements-interruption",
+  "collection": "classFeatures",
+  "name": "Implement's Interruption",
+  "level": 1,
+  "traits": [
+   "magical",
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** The target of your Exploit Vulnerability uses a concentrate, manipulate, or move action, or leaves a square during a move action it's using. **Requirements** You're holding your weapon implement and are benefiting from Exploit Vulnerability against a creature. The creature must be within your reach if you're wielding a melee weapon, or within 10 feet if you're wielding a ranged weapon. --- Your weapon senses a moment of weakness and guides your hand to strike down a foe. Make a Strike against the triggering creature with your weapon implement. If your attack is a critical hit, you disrupt the triggering action. This Strike doesn't count toward your multiple attack penalty, and your multiple attack penalty doesn't apply to this Strike."
+ },
+ {
+  "id": "impossible-alloy",
+  "collection": "classFeatures",
+  "name": "Impossible Alloy",
+  "level": 15,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Other inventors claim it's not even technically possible, but you've managed to create several metal alloys that seem to work for only you. These alloys can damage opponents vulnerable to any one of the seven skymetals. Your innovation is treated as all seven skymetals (abysium, adamantine, djezet, inubrix, noqual, orichalcum, and siccatite). This means you deal more damage to a variety of creatures, though you don't apply any of the other special effects for weapons made of those skymetals."
+ },
+ {
+  "id": "impostor-in-hidden-places",
+  "collection": "classFeatures",
+  "name": "Impostor in Hidden Places",
+  "level": 1,
+  "traits": [
+   "animist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Impostors in hidden places whisper in quiet corners where mortal voices rarely resound, hoarding secrets and pondering unknowable truths. They often bring misfortune to those who disturb them, though an animist who earns their trust will find that they make effective allies. --- **Apparition Skills** Fortune-Telling Lore, Underworld Lore **Apparition Spells** - **Cantrip** Telekinetic Hand - **1st** Ill Omen - **2nd** - **3rd** Veil of Privacy - **4th** Liminal Doorway - **5th** Strange Geometry - **6th** Mislead - **7th** Planar Palace - **8th** - **9th** **Vessel Spell** Discomfiting Whispers **Avatar** *Whisper Hiding in Shadows* Speed 50 feet, fly Speed 50 feet **Melee** ⟨1⟩ shadowed touch (reach 15 feet, versatile cold), **Damage** 6d10+6 **Ranged** ⟨1⟩ whisper of despair (range 120 feet), **Damage** 6d6+6"
+ },
+ {
+  "id": "improved-flexibility",
+  "collection": "classFeatures",
+  "name": "Improved Flexibility",
+  "level": 15,
+  "traits": [
+   "fighter"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Fighter automatically at level 15",
+  "text": "Your extensive experience gives you even greater ability to adapt to each day's challenges. When you use combat flexibility, you can gain two fighter feats instead of one. While the first feat must still be 8th level or lower, the second feat can be up to 14th level, and you can use the first feat to meet the prerequisites of the second feat. You must meet all of the feats' prerequisites."
+ },
+ {
+  "id": "inconspicuous-appearance",
+  "collection": "classFeatures",
+  "name": "Inconspicuous Appearance",
+  "level": 7,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Melee Only** --- Your innovation is built for easy concealment and surprise attacks. It gains the backstabber and versatile P traits. If the weapon has light Bulk, it also gains the concealable trait."
+ },
+ {
+  "id": "indomitable-will",
+  "collection": "classFeatures",
+  "name": "Indomitable Will",
+  "level": 15,
+  "traits": [
+   "barbarian"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Barbarian automatically at level 15",
+  "text": "Your rage makes it difficult to control you. Your proficiency rank for Will saves increases to master. When you roll a success on a Will save, you get a critical success instead."
+ },
+ {
+  "id": "infinite-invention",
+  "collection": "classFeatures",
+  "name": "Infinite Invention",
+  "level": 19,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Inventor automatically at level 19",
+  "text": "Your ability to adjust your innovation has reached impossible heights, and you can use these skills to make major adjustments in your spare time. During your daily preparations, you automatically fix your innovation if it's destroyed or broken, and you can change to a different innovation (armor, construct, weapon, or other type you have access to) and change your modifications and offensive boost. If you have any feats that had your previous innovation as a prerequisite, you can't use them until you retrain the feats as normal. However, it takes you only 1 day of downtime to retrain such a feat into a feat that has your new innovation as a prerequisite, instead of 1 week."
+ },
+ {
+  "id": "infused-reagents",
+  "collection": "classFeatures",
+  "name": "Infused Reagents",
+  "level": 1,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You infuse reagents with your own alchemical essence, allowing you to create alchemical items at no cost. Each day during your daily preparations, you gain a number of batches of infused reagents equal to your level + your Intelligence modifier. You can use these reagents for either advanced alchemy or Quick Alchemy, described below. Together, these infused reagents have light Bulk. As soon as you make your next daily preparations, your infused reagents from the previous day's preparations are instantly destroyed, and nonpermanent effects of your previous day's infused items immediately end. While infused reagents are physical objects, they can't be duplicated, preserved, or created in any way other than your daily preparations. Any such artificial reagents lack the infusion and are useless for advanced alchemy or Quick Alchemy."
+ },
+ {
+  "id": "iniquity",
+  "collection": "classFeatures",
+  "name": "Iniquity",
+  "level": 1,
+  "traits": [
+   "champion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Champion Cause",
+  "text": "You're dishonorable, dishonest, and committed to breaking the false hopes of kindness. **Edicts** destroy that which offends you or stands in your way, take advantage of others, cheat, steal **Anathema** bind yourself with a law other than what your deity requires --- **Champion's Reaction** Destructive Vengeance **Relentless Reaction (9th Level)** An enemy damaged by the initial reaction's damage also takes persistent spirit damage equal to your Charisma modifier. (This applies only to the damage the reaction itself deals, not the damage you deal with subsequent Strikes.) **Exalted Reaction (11th Level)** Each enemy in your champion's aura other than the triggering creature takes half the damage you deal to the triggering enemy"
+ },
+ {
+  "id": "initiate-benefit-amulet",
+  "collection": "classFeatures",
+  "name": "Initiate Benefit (Amulet)",
+  "level": 1,
+  "traits": [
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The protective aspects of your amulet can shield you and your allies from harm. You gain the Amulet's Abeyance reaction."
+ },
+ {
+  "id": "initiate-benefit-bell",
+  "collection": "classFeatures",
+  "name": "Initiate Benefit (Bell)",
+  "level": 1,
+  "traits": [
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can use your bell implement to create three different kinds of music, each of which weakens a foe in a different way. You gain the Ring Bell activity."
+ },
+ {
+  "id": "initiate-benefit-chalice",
+  "collection": "classFeatures",
+  "name": "Initiate Benefit (Chalice)",
+  "level": 1,
+  "traits": [
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "While holding your chalice, you can drink from it or feed its liquid to an ally to improve their health. You gain the Drink from the Chalice action."
+ },
+ {
+  "id": "initiate-benefit-mirror",
+  "collection": "classFeatures",
+  "name": "Initiate Benefit (Mirror)",
+  "level": 1,
+  "traits": [
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You learn how to use your mirror to project another version of yourself whose realness is a matter of perspective. You gain the Mirror's Reflection action."
+ },
+ {
+  "id": "initiate-benefit-wand",
+  "collection": "classFeatures",
+  "name": "Initiate Benefit (Wand)",
+  "level": 1,
+  "traits": [
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your wand slowly collects ambient magic, which you can project at a foe in a barely controlled display of charged energy. When you gain this implement, choose whether your wand is attuned to cold, electricity, or fire. You gain the Fling Magic activity."
+ },
+ {
+  "id": "initiate-benefit-weapon",
+  "collection": "classFeatures",
+  "name": "Initiate Benefit (Weapon)",
+  "level": 1,
+  "traits": [
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your weapon trembles slightly in your hand, seeking out your foe's weakness to it and interrupting their actions. You gain the Implement's Interruption reaction. At 5th level, when you gain thaumaturgic weapon expertise, your instinctive knowledge of your weapon implement also grants you the weapon's critical specialization effect."
+ },
+ {
+  "id": "instant-manifestation",
+  "collection": "classFeatures",
+  "name": "Instant Manifestation",
+  "level": 19,
+  "traits": [
+   "summoner"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Summoner automatically at level 19",
+  "text": "You can manifest your eidolon with incredible speed. You can use Manifest Eidolon as a single action, instead of a three-action activity."
+ },
+ {
+  "id": "instinct",
+  "collection": "classFeatures",
+  "name": "Instinct",
+  "level": 1,
+  "traits": [
+   "barbarian"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Barbarian automatically at level 1",
+  "text": "Your rage wells up from a dominant instinct—one you learned from a tradition or that comes naturally to you. Your instinct gives you an ability, requires you to avoid certain behaviors, grants you increased damage and resistances at higher levels, and allows you to select feats tied to your instinct."
+ },
+ {
+  "id": "integrated-gauntlet",
+  "collection": "classFeatures",
+  "name": "Integrated Gauntlet",
+  "level": 7,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Combining your weapon with a gauntlet, you make it so you can quickly switch between attacking with your weapon and tinkering using your hands. Your innovation gains the free-hand trait. This cannot be used with weapons that have the two-hand or fatal aim traits."
+ },
+ {
+  "id": "intensify-vulnerability",
+  "collection": "classFeatures",
+  "name": "Intensify Vulnerability",
+  "level": 9,
+  "traits": [
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Thaumaturge automatically at level 9",
+  "text": "You've learned to use your implement to further assault your quarry. You gain the intensify vulnerability benefit of all of your implements, as well as the Intensify Vulnerability action."
+ },
+ {
+  "id": "intercept-attack",
+  "collection": "classFeatures",
+  "name": "Intercept Attack",
+  "level": 1,
+  "traits": [
+   "guardian"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An ally within 10 feet of you takes physical damage. --- You fling yourself in the way of oncoming harm to protect an ally. You can Step, but you must end your movement adjacent to the triggering ally. You take the damage instead of the triggering ally. Apply your own immunities, weaknesses, and resistances to the damage, not the ally's. --- **Special** You can extend this ability to an ally within 15 feet of you if the damage comes from your taunted enemy. If this ally is farther than you can Step to reach, you can Stride instead of Stepping; you still must end the movement adjacent to your ally."
+ },
+ {
+  "id": "into-the-fray",
+  "collection": "classFeatures",
+  "name": "Into the Fray",
+  "level": 1,
+  "traits": [
+   "gunslinger"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You roll initiative. --- You know trouble can lurk around every corner, and your hands never stray far from your holsters. You can Interact to draw a one-handed ranged weapon and can then Interact to draw a one-handed melee weapon. As your first action on your first turn, you can Stride as a free action toward an enemy you can perceive. If you can't perceive any enemies or can't end your movement closer to one, you can't use this Stride."
+ },
+ {
+  "id": "inventor-weapon-expertise",
+  "collection": "classFeatures",
+  "name": "Inventor Weapon Expertise",
+  "level": 5,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Inventor automatically at level 5",
+  "text": "You develop tricks for using your weapons more effectively. Your proficiency ranks for simple and martial weapons and unarmed attacks increase to expert. If you have a Weapon Innovation, you gain access to the critical specialization effect with your innovation."
+ },
+ {
+  "id": "inventor-weapon-mastery",
+  "collection": "classFeatures",
+  "name": "Inventor Weapon Mastery",
+  "level": 13,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Inventor automatically at level 13",
+  "text": "You fully understand your weapons. Your proficiency ranks for simple and martial weapons and unarmed attacks increase to master."
+ },
+ {
+  "id": "juggernaut",
+  "collection": "classFeatures",
+  "name": "Juggernaut",
+  "level": 7,
+  "traits": [
+   "barbarian",
+   "magus"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Barbarian automatically at level 7",
+  "text": "**Barbarian** Your body is accustomed to physical hardship and resistant to ailments. Your proficiency rank for Fortitude saves increases to master. When you roll a success on a Fortitude save, you get a critical success instead. **Magus** Your body is accustomed to physical hardship and resistant to a wide range of ailments. Your proficiency rank for Fortitude saves increases to master. When you roll a success on a Fortitude save, you get a critical success instead."
+ },
+ {
+  "id": "justice",
+  "collection": "classFeatures",
+  "name": "Justice",
+  "level": 1,
+  "traits": [
+   "champion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Champion Cause",
+  "text": "In your deity's name you seek justice, following the law and punishing those who transgress it. **Edicts** follow the law, respect legitimate authorities or leadership **Anathema** take advantage of another, cheat --- **Champion's Reaction** Retributive Strike **Relentless Reaction (9th Level)** If your Strike hits, the target takes persistent spirit damage equal to your Charisma modifier. **Exalted Reaction (11th Level)** Each ally in your champion's aura with the target in their melee reach can spend a reaction to Strike the target with a –5 penalty."
+ },
+ {
+  "id": "keen-flair",
+  "collection": "classFeatures",
+  "name": "Keen Flair",
+  "level": 15,
+  "traits": [
+   "swashbuckler"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Swashbuckler automatically at level 15",
+  "text": "You inflict particularly devastating attacks on even well-defended foes. When you Strike with a weapon or unarmed attack with which you have master proficiency, if you roll a 19 on the die and the roll is a success, you critically succeed instead."
+ },
+ {
+  "id": "kinetic-aura",
+  "collection": "classFeatures",
+  "name": "Kinetic Aura",
+  "level": 1,
+  "traits": [
+   "kineticist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Kineticist automatically at level 1",
+  "text": "Through your kinetic gate, elements flow from an elemental plane to orbit your person. The form and appearance of this kinetic aura are unique to you. Examples include a chaotic wind orbiting the body, fragments of floating gravel, colorful wicks of flame stars of raw metal always changing shape, floatin snowflakes or splinters dancing in the air. If you can channel more than one element, pieces of all your kinetic elements appear in the aura. You have the Channel Elements action, which lets you activate your kinetic aura."
+ },
+ {
+  "id": "kinetic-durability",
+  "collection": "classFeatures",
+  "name": "Kinetic Durability",
+  "level": 7,
+  "traits": [
+   "kineticist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Kineticist automatically at level 7",
+  "text": "The sustenance of your inner gate counters harm that would come to your body. Your proficiency rank for Fortitude saves increases to master. When you roll a success on a Fortitude save, you get a critical success instead."
+ },
+ {
+  "id": "kinetic-quickness",
+  "collection": "classFeatures",
+  "name": "Kinetic Quickness",
+  "level": 11,
+  "traits": [
+   "kineticist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Kineticist automatically at level 11",
+  "text": "Your body flows with the elegance of a flame a wave, a breeze. Your proficiency rank for Reflex saves increases to master. When you roll a success on a Reflex save, you get a critical success instead."
+ },
+ {
+  "id": "layered-mesh",
+  "collection": "classFeatures",
+  "name": "Layered Mesh",
+  "level": 7,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've woven an incredibly powerful network of interlocking mesh around your armor, which catches piercing attacks and diffuses them. While wearing your armor, you gain resistance to piercing damage equal to half your level."
+ },
+ {
+  "id": "lead-constitution",
+  "collection": "classFeatures",
+  "name": "Lead Constitution",
+  "level": 17,
+  "traits": [
+   "gunslinger"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Gunslinger automatically at level 17",
+  "text": "You have gunpowder in your veins. Your proficiency rank for Fortitude saves increases to master. When you roll a success on a Fortitude save, you get a critical success instead."
+ },
+ {
+  "id": "leech-deviant-classification",
+  "collection": "classFeatures",
+  "name": "Leech Deviant Classification",
+  "level": 1,
+  "traits": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "While deviations are often thought of as a gained ability—increased muscle mass, a well of unstable power, new senses—it's just as common that the events that cause a deviation result in loss. With a fundamental part of the subject's self stripped away, an absence remains. Though generally fatal, these events can rarely result in leech-type classifications, characterized by abilities that draw in energy and matter in a futile attempt to fill the void within. ## Backlash All-Consuming Hunger The emptiness within you is a hunger that pushes at your mind to fill it, causing you to fixate powerfully on a potential source of energy near you. **Mild Backlash** You glimpse the thrum of energy—the heat of a body, the flickering of synapses, the light of a soul—in a beautiful, captivating dance. You become fascinated with one creature you just affected with your deviant ability; if multiple creatures would qualify, the GM chooses. This fascination lasts for 1 minute or until the target uses a hostile action against you or your allies, as normal. **Moderate Backlash** Your fascination with the target causes you to forget your allies. As mild backlash, but you don't treat anyone as your ally (though they might still treat you as theirs), meaning that the fascination ends only if your target uses a hostile action against you. **Severe Backlash** Your mind is filled with the single, all-consuming desire to feed upon the target. You become confused, except that your target is always the cr"
+ },
+ {
+  "id": "legendary-armor",
+  "collection": "classFeatures",
+  "name": "Legendary Armor",
+  "level": 17,
+  "traits": [
+   "champion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Champion automatically at level 17",
+  "text": "You shield yourself with steel as easily as with faith. Your proficiency ranks for light, medium, and heavy armor, as well as for unarmored defense, increase to legendary."
+ },
+ {
+  "id": "legendary-overdrive",
+  "collection": "classFeatures",
+  "name": "Legendary Overdrive",
+  "level": 15,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Inventor automatically at level 15",
+  "text": "Your peerless inventing and Crafting ability has supercharged your Overdrives. You become legendary in Crafting, and on a successful Overdrive, you increase the additional damage by a total of 3, replacing the increase from master overdrive."
+ },
+ {
+  "id": "legendary-spellcaster",
+  "collection": "classFeatures",
+  "name": "Legendary Spellcaster",
+  "level": 19,
+  "traits": [
+   "animist",
+   "bard",
+   "druid",
+   "oracle",
+   "psychic",
+   "sorcerer",
+   "witch",
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Psychic automatically at level 19",
+  "text": "**Animist** You are a near-perfect channel for the magical energies of the realms beyond. Your proficiency ranks for spell attack modifier and spell DC increase to legendary. **Bard** Your command of magic is the stuff of legends. Your proficiency ranks for spell attack modifiers and spell DCs increase to legendary. **Druid** You have developed an unparalleled rapport with the magic of nature. Your proficiency ranks for spell attack modifier and spell DC increase to legendary. **Oracle** You can harness divine power at a level few others can match. Your proficiency ranks for divine spell attack rolls and spell DCs increase to legendary. **Psychic** As your training reaches its peak, you understand not just your own mind, but the collective unconscious from which all psychic power stems. Your proficiency ranks for occult spell attack modifier and spell DC increase to legendary. **Sorcerer** You demonstrate prodigious talent for spellcasting. Your proficiency ranks for spell attack modifier and spell DC for spells of your bloodline's tradition increase to legendary. **Witch** You've perfected your command of the magic your patron provides. Your proficiency ranks for spell attack modifier and spell DC increase to legendary. **Wizard** You are a consummate spellcaster, blending both arcane theory and practical spellcraft. Your proficiency ranks for spell attack modifier and spell DC increase to legendary."
+ },
+ {
+  "id": "legendary-tactician",
+  "collection": "classFeatures",
+  "name": "Legendary Tactician",
+  "level": 19,
+  "traits": [
+   "commander"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Commander automatically at level 19",
+  "text": "You are an unrivaled legend in your use of battlefield tactics. Your proficiency rank for your commander class DC increases to legendary, and you add two new tactics to your folio; these can be any mobility or offensive tactics you don't already have in your folio, or you can choose from expert tactics, master tactics, or legendary tactics you have access to. The total number of tactics you can have prepared increases to six."
+ },
+ {
+  "id": "lesson-of-bargains",
+  "collection": "classFeatures",
+  "name": "Lesson of Bargains",
+  "level": 10,
+  "traits": [
+   "witch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the Over the Coals hex, and your familiar learns Subconscious Suggestion."
+ },
+ {
+  "id": "lesson-of-calamity",
+  "collection": "classFeatures",
+  "name": "Lesson of Calamity",
+  "level": 2,
+  "traits": [
+   "witch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the Stumbling Curse hex, and your familiar learns Ill Omen."
+ },
+ {
+  "id": "lesson-of-death",
+  "collection": "classFeatures",
+  "name": "Lesson of Death",
+  "level": 10,
+  "traits": [
+   "witch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the Curse of Death hex, and your familiar learns Raise Dead."
+ },
+ {
+  "id": "lesson-of-decay",
+  "collection": "classFeatures",
+  "name": "Lesson of Decay",
+  "level": 6,
+  "traits": [
+   "witch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "All living things eventually decay, feeding fungus and insect. You gain the Mycological Malady hex, and your familiar learns Insect Form."
+ },
+ {
+  "id": "lesson-of-dreams",
+  "collection": "classFeatures",
+  "name": "Lesson of Dreams",
+  "level": 2,
+  "traits": [
+   "witch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the Veil of Dreams hex, and your familiar learns Sleep."
+ },
+ {
+  "id": "lesson-of-elements",
+  "collection": "classFeatures",
+  "name": "Lesson of Elements",
+  "level": 2,
+  "traits": [
+   "witch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the Elemental Betrayal hex. Your familiar learns your choice of Breathe Fire, Air Bubble, Hydraulic Push, or Pummeling Rubble."
+ }
+]

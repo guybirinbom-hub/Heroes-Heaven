@@ -1,0 +1,825 @@
+[
+ {
+  "id": "a-challenge-for-heroes",
+  "collection": "classFeatures",
+  "name": "A Challenge for Heroes",
+  "level": 1,
+  "traits": [
+   "concentrate",
+   "mental",
+   "spirit",
+   "transcendence"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You declare an enemy within 60 feet to be a heroic test. For 1 minute, that enemy deals an additional 10 spirit damage to you with each successful Strike or spell it targets you with. Whenever that enemy deals spirit damage to you, each ally who has the enemy in melee reach can attempt a Reactive Strike against it, even if the ally doesn't normally have that reaction. If an ally successfully slays the enemy with a Reactive Strike due to this effect, that ally immediately gains temporary Hit Points equal to your level, which persist for 1 minute."
+ },
+ {
+  "id": "a-moment-unending",
+  "collection": "classFeatures",
+  "name": "A Moment Unending",
+  "level": 1,
+  "traits": [
+   "concentrate",
+   "prediction",
+   "transcendence"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You take in every movement around you, affording you unparalleled accuracy. Your next successful Strike against an enemy before the end of your next turn deals an additional 1d6 precision damage. This damage increases to 2d6 at 10th level and 3d6 at 18th level."
+ },
+ {
+  "id": "ability-boosts",
+  "collection": "classFeatures",
+  "name": "Ability Boosts",
+  "level": 5,
+  "traits": [
+   "summoner"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "At 5th level and every 5 levels thereafter, boost four different ability scores. You can use these boosts to increase ability scores above 18. Boosting an ability score increases it by 1 if it's already 18 or above, or by 2 if it starts out below 18. Your eidolon also gets four ability boosts at these levels. The eidolon's ability boosts follow the same rules as yours."
+ },
+ {
+  "id": "abundant-vials",
+  "collection": "classFeatures",
+  "name": "Abundant Vials",
+  "level": 17,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Alchemist automatically at level 17",
+  "text": "You're permanently quickened, and can use the extra action only to use Quick Alchemy to create a quick vial. You can create only one vial with this action, even if you have Double Brew or a similar ability."
+ },
+ {
+  "id": "acrobats-calling",
+  "collection": "classFeatures",
+  "name": "Acrobat's Calling",
+  "level": 1,
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You feel a need to dance amid dangerous heights and soar across empty divides with nothing but your skill and reflexes to protect you. When you Balance, Maneuver in Flight, Tumble Through, or attempt a Long Jump, you can spend a Mythic Point to attempt the check at mythic proficiency. The first time each day that you critically succeed on an Acrobatics check while Balancing, Maneuvering in Flight, or Tumbling Through during combat, you regain a Mythic Point. --- **Edicts** leap without being sure you'll land unharmed, test your reflexes by maneuvering through the spaces of significantly more powerful enemies **Anathema** maneuver around an enemy when tumbling through their space is a viable option, use safety measures to attempt acrobatic stunts"
+ },
+ {
+  "id": "adamantine-strikes",
+  "collection": "classFeatures",
+  "name": "Adamantine Strikes",
+  "level": 17,
+  "traits": [
+   "monk"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Monk automatically at level 17",
+  "text": "When you focus your will into your limbs, your blows are as unyielding as the hardest of metals. Your unarmed attacks are treated as adamantine."
+ },
+ {
+  "id": "adept-benefit-bell",
+  "collection": "classFeatures",
+  "name": "Adept Benefit (Bell)",
+  "level": 7,
+  "traits": [
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your bell resonates powerfully, causing the effect to last longer. The conditions from Ring Bell last 3 rounds instead of 1 round."
+ },
+ {
+  "id": "adept-benefit-chalice",
+  "collection": "classFeatures",
+  "name": "Adept Benefit (Chalice)",
+  "level": 7,
+  "traits": [
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The life essence shed from blood empowers your chalice. If you or an ally within 30 feet takes piercing or slashing damage from a foe's critical hit or takes persistent bleed damage, Drinking from the Chalice before the end of your next turn grants that injured creature greater restoration to make up for its lost vitality. On a sip, the temporary Hit Points granted to the creature increase to twice your level. When drained, the chalice heals the creature 5 Hit Points for each level you have."
+ },
+ {
+  "id": "adept-benefit-lantern",
+  "collection": "classFeatures",
+  "name": "Adept Benefit (Lantern)",
+  "level": 7,
+  "traits": [
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "In addition to the initiate benefits, when you hold your lantern, its light reveals the invisible and the ethereal. The lantern's aura of light increases to a . While you're holding your lantern, invisible and ethereal creatures within the aura become visible as rippling distortions, though they're still concealed. This doesn't give you any special ability to affect a creature on the Ethereal Plane, but it ensures you're aware of the creatures' presence."
+ },
+ {
+  "id": "adept-benefit-weapon",
+  "collection": "classFeatures",
+  "name": "Adept Benefit (Weapon)",
+  "level": 7,
+  "traits": [
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When your implement lashes out at your foe, even a close miss brings the weapon close enough to do harm. When you use Implement's Interruption and your Strike fails (but doesn't critically fail), you deal 1 damage of the weapon's normal type, possibly applying any bonus damage due to the target's weakness."
+ },
+ {
+  "id": "advanced-deed",
+  "collection": "classFeatures",
+  "name": "Advanced Deed",
+  "level": 9,
+  "traits": [
+   "gunslinger"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Gunslinger automatically at level 9",
+  "text": "You've learned a powerful new technique of your chosen way. You gain the advanced deed ability of the way you chose at 1st level."
+ },
+ {
+  "id": "advanced-design",
+  "collection": "classFeatures",
+  "name": "Advanced Design",
+  "level": 1,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your weapon innovation uses the statistics of a level 0 advanced weapon of your choice. It must be common or you must have access to it. You treat this as a martial weapon for the purposes of proficiency."
+ },
+ {
+  "id": "advanced-rangefinder",
+  "collection": "classFeatures",
+  "name": "Advanced Rangefinder",
+  "level": 7,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Ranged Only** --- A carefully tuned scope or targeting device makes your weapon especially good at hitting weak points. Your innovation gains the backstabber trait and increases its range increment by 20 feet."
+ },
+ {
+  "id": "advanced-vials",
+  "collection": "classFeatures",
+  "name": "Advanced Vials",
+  "level": 11,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Alchemist automatically at level 11",
+  "text": "Your experience helps you improve your field vials with a benefit particular to your research field."
+ },
+ {
+  "id": "advanced-vials-bomber",
+  "collection": "classFeatures",
+  "name": "Advanced Vials (Bomber)",
+  "level": 11,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can mix special ingredients into your vials, such as magical dust or flakes of precious minerals. When you create a versatile vial, you can choose to have it treated as one special material of your choice, chosen from adamantine, cold iron, and dawnsilver. If you're wearing or wielding an item of a different precious material when you make the vial, you can choose that material instead."
+ },
+ {
+  "id": "advanced-vials-chirurgeon",
+  "collection": "classFeatures",
+  "name": "Advanced Vials (Chirurgeon)",
+  "level": 11,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you use a field vial to heal a creature that has half its maximum Hit Points or fewer, the coagulant trait doesn't apply to that healing."
+ },
+ {
+  "id": "advanced-vials-mutagenist",
+  "collection": "classFeatures",
+  "name": "Advanced Vials (Mutagenist)",
+  "level": 11,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you drink one of your field vials, you also gain resistance to physical damage for the same duration. The resistance is equal to half your level."
+ },
+ {
+  "id": "advanced-vials-toxicologist",
+  "collection": "classFeatures",
+  "name": "Advanced Vials (Toxicologist)",
+  "level": 1,
+  "traits": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you damage a creature with a versatile vial you've used as an injury poison, that creature takes persistent poison damage equal to the vial's splash damage in addition to the initial damage."
+ },
+ {
+  "id": "aerodynamic-construction",
+  "collection": "classFeatures",
+  "name": "Aerodynamic Construction",
+  "level": 7,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Melee Only** --- You carefully engineer the shape of your weapon to maintain its momentum in attacks against successive targets. Your innovation gains the sweep trait and the versatile S trait."
+ },
+ {
+  "id": "agile-mind",
+  "collection": "classFeatures",
+  "name": "Agile Mind",
+  "level": 17,
+  "traits": [
+   "rogue"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Rogue automatically at level 17",
+  "text": "You play mental games and employ cognitive tricks to throw off mind-altering effects. Your proficiency rank for Will saves increases to master. When you roll a success at a Will save, you get a critical success instead."
+ },
+ {
+  "id": "alchemical-alacrity",
+  "collection": "classFeatures",
+  "name": "Alchemical Alacrity",
+  "level": 15,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your comfort in concocting items is such that you can create three at a time. When using the Quick Alchemy action, you can spend up to three batches of infused reagents to make up to three alchemical items as described in that action. These items do not have to be the same."
+ },
+ {
+  "id": "alchemical-weapon-expertise",
+  "collection": "classFeatures",
+  "name": "Alchemical Weapon Expertise",
+  "level": 7,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Alchemist automatically at level 7",
+  "text": "You've trained to more effectively wield the weapons you find in your lab. Your proficiency ranks for simple weapons, alchemical bombs, and unarmed attacks increase to expert."
+ },
+ {
+  "id": "alchemical-weapon-mastery",
+  "collection": "classFeatures",
+  "name": "Alchemical Weapon Mastery",
+  "level": 15,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Alchemist automatically at level 15",
+  "text": "You've mastered full capability with your weapons. Your proficiency ranks for simple weapons, alchemical bombs, and unarmed attacks increase to master."
+ },
+ {
+  "id": "alchemist-armor-expertise-level-13",
+  "collection": "classFeatures",
+  "name": "Alchemist Armor Expertise (Level 13)",
+  "level": 13,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've learned how to dodge while wearing medium, light or no armor. Your proficiency ranks for medium armor, light armor and unarmored defense increase to expert."
+ },
+ {
+  "id": "alchemist-armor-mastery-level-19",
+  "collection": "classFeatures",
+  "name": "Alchemist Armor Mastery (Level 19)",
+  "level": 19,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your skill with light and medium armor improves, increasing your ability to dodge blows. Your proficiency ranks for medium armor, light armor and unarmored defense increase to master."
+ },
+ {
+  "id": "alchemy",
+  "collection": "classFeatures",
+  "name": "Alchemy",
+  "level": 1,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Alchemist automatically at level 1",
+  "text": "You understand the reactions between all manner of reagents and can concoct alchemical items to meet your needs. You can do this using normal reagents and the Craft activity, or you can use specially prepared chemicals that allow you to craft temporary items quickly and at no cost. Over time, you can create more and more alchemical items for free, and since each of them becomes more and more powerful, you advance in power dramatically, leaving behind those who don't understand your strange science. You gain the Alchemical Crafting feat, and you can automatically identify alchemical items that you have the formula for."
+ },
+ {
+  "id": "alertness",
+  "collection": "classFeatures",
+  "name": "Alertness",
+  "level": 3,
+  "traits": [
+   "magus"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Magus automatically at level 9",
+  "text": "Experience has made you increasingly aware of threats around you, and you react more quickly to danger. Your proficiency rank for Perception increases to expert."
+ },
+ {
+  "id": "all-consuming-hunger",
+  "collection": "classFeatures",
+  "name": "All-Consuming Hunger",
+  "level": 1,
+  "traits": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The emptiness within you is a hunger that pushes at your mind to fill it, causing you to fixate powerfully on a potential source of energy near you. **Mild Backlash** You glimpse the thrum of energy—the heat of a body, the flickering of synapses, the light of a soul—in a beautiful, captivating dance. You become fascinated with one creature you just affected with your deviant ability; if multiple creatures would qualify, the GM chooses. This fascination lasts for 1 minute or until the target uses a hostile action against you or your allies, as normal. **Moderate Backlash** Your fascination with the target causes you to forget your allies. As mild backlash, but you don't treat anyone as your ally (though they might still treat you as theirs), meaning that the fascination ends only if your target uses a hostile action against you. **Severe Backlash** Your mind is filled with the single, all-consuming desire to feed upon the target. You become confused, except that your target is always the creature affected by your deviant ability, as long as you can perceive them."
+ },
+ {
+  "id": "alley-oop",
+  "collection": "classFeatures",
+  "name": "Alley-Oop",
+  "level": 1,
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your team excels at sharing resources and delivering them exactly where they need to be. Signal a squadmate within the aura of your banner who is holding or wearing a consumable that can be activated as a single action. That squadmate can toss their consumable to any other squadmate within the aura of your banner as a free action, and the receiving squadmate can catch and activate the consumable as a reaction. If the receiving squadmate chooses not to catch the consumable or if they don't have a free hand to catch it with, it lands on the ground in their space. --- **Special** If the consumable is a piece of activated ammunition and the receiving squadmate is wielding a compatible weapon that takes 1 or fewer actions to reload, they can load the ammunition into their weapon as part of the reaction used to catch and activate it. The ammunition remains activated until the end of their next turn."
+ },
+ {
+  "id": "amulets-abeyance",
+  "collection": "classFeatures",
+  "name": "Amulet's Abeyance",
+  "level": 1,
+  "traits": [
+   "magical",
+   "manipulate",
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** The target of your Exploit Vulnerability would damage you or an ally within 15 feet of you. **Requirements** You're holding your amulet implement and are benefiting from Exploit Vulnerability. --- You forcefully present your amulet to turn away harm. You or a target ally within 15 feet gain resistance to all damage against the triggering damage. The resistance is equal to 2 + your level."
+ },
+ {
+  "id": "anathema-cleric",
+  "collection": "classFeatures",
+  "name": "Anathema (Cleric)",
+  "level": 1,
+  "traits": [
+   "cleric"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Acts fundamentally opposed to your deity's alignment or ideals are anathema to your faith. Learning or casting spells, committing acts, and using items that are anathema to your deity remove you from your deity's good graces. Casting spells with the evil trait is almost always anathema to good deities, and casting good spells is likewise anathema to evil deities; similarly, casting chaotic spells is anathema to lawful deities, and casting lawful spells is anathema to chaotic deities. A neutral cleric who worships a neutral deity isn't limited this way, but their alignment might change over time if they frequently cast spells or use abilities with a certain alignment. Similarly, casting spells that are anathema to the tenets or goals of your faith could interfere with your connection to your deity. For example, casting a spell to create undead would be anathema to Pharasma, the goddess of death. For borderline cases, you and your GM determine which acts are anathema. If you perform enough acts that are anathema to your deity, or if your alignment changes to one not allowed by your deity, you lose the magical abilities that come from your connection to your deity. The class features that you lose are determined by the GM, but they likely include your divine font and all divine spellcasting. These abilities can be regained only if you demonstrate your repentance by conducting an Atone ritual."
+ },
+ {
+  "id": "anathema-druid",
+  "collection": "classFeatures",
+  "name": "Anathema (Druid)",
+  "level": 1,
+  "traits": [
+   "druid"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Druid automatically at level 1",
+  "text": "As stewards of the natural order, druids find affronts to nature anathema. If you repeatedly perform these acts, you lose your magical abilities from the druid class, including your druid spellcasting and the benefits of your order. These abilities can be regained only if you demonstrate your repentance with an Atone ritual. The following acts are anathema to all druids. **Anathema** despoil natural places, consume more natural resources than you require to live comfortably, teach the Wildsong to non-druids. Your choice of druidic order adds further anathema, as detailed in the order's entry."
+ },
+ {
+  "id": "ancestors",
+  "collection": "classFeatures",
+  "name": "Ancestors",
+  "level": 1,
+  "traits": [
+   "oracle"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Oracle Mystery",
+  "text": "The voices of generations past speak to you, and you hear their words. You might resent the constant interruption, or you might revere the spirits of those who came before. Perhaps you hail from a culture with strong ancestral traditions, such as the Shoanti Skoan-Quah (Skull Clan), a traditional dwarven community that worships Torag's family pantheon, or a group that reveres Erastil or Pharasma. You might commune with powerful psychopomps who shepherd souls to the afterlife, with the River of Souls itself, or with those spirits who have become trapped outside of the great cycle of spiritual rebirth. You learn from their whispers and the fragments of their memories, but opening your mind to their knowledge and experience also allows them to meddle in your worldly affairs. **Granted Spells** - **cantrip:** Guidance - **1st:** Ill Omen - **2nd:** Ghostly Carrier - **5th:** Dreaming Potential **Revelation Spells** - **initial:** Ancestral Touch - **advanced:** Ancestral Defense - **greater:** Ancestral Form **Related Domains** death, duty, family, soul **Mystery Skill** Society **Oracle Feat** Whispers of Weakness Curse of Ancestral Meddling"
+ },
+ {
+  "id": "anvils-hardness",
+  "collection": "classFeatures",
+  "name": "Anvil's Hardness",
+  "level": 17,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Inventor automatically at level 17",
+  "text": "Your body is as durable as iron. Your proficiency rank for Fortitude saves increases to master. When you roll a success on a Fortitude save, you get a critical success instead."
+ },
+ {
+  "id": "arcane-bond",
+  "collection": "classFeatures",
+  "name": "Arcane Bond",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Wizard automatically at level 1",
+  "text": "You place some of your magical power in a bonded item. Each day when you prepare your spells, you can designate a single item you own as your bonded item. This is typically an item associated with spellcasting, such as a wand, ring, or staff, but you are free to designate a weapon or other item. You gain the Drain Bonded Item free action."
+ },
+ {
+  "id": "arcane-thesis",
+  "collection": "classFeatures",
+  "name": "Arcane Thesis",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Wizard automatically at level 1",
+  "text": "During your studies to become a full-fledged wizard, you produced a thesis of unique magical research. You gain a special benefit depending on the topic of your thesis research. The arcane thesis topics presented in this book are below; your specific thesis probably has a much longer and more technical title like *\"On the Methods of Spell Interpolation and the Genesis of a New Understanding of the Building Blocks of Magic.\"* Experimental Spellshaping Improved Familiar Attunement Spell Blending Spell Substitution Staff Nexus"
+ },
+ {
+  "id": "armor-expertise",
+  "collection": "classFeatures",
+  "name": "Armor Expertise",
+  "level": 7,
+  "traits": [
+   "champion",
+   "commander",
+   "fighter"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Commander automatically at level 11",
+  "text": "You have spent so much time in armor that you know how to make the most of its protection. Your proficiency ranks for light, medium, and heavy armor, as well as for unarmored defense, increase to expert. You gain the armor specialization effects of medium and heavy armor."
+ },
+ {
+  "id": "armor-mastery",
+  "collection": "classFeatures",
+  "name": "Armor Mastery",
+  "level": 13,
+  "traits": [
+   "barbarian",
+   "champion",
+   "commander",
+   "fighter"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Commander automatically at level 17",
+  "text": "**Barbarian** Your training and rage deepen your connection to your armor. Your proficiency ranks for light armor, medium armor, and unarmored defense increase to master. --- **Champion, Commander** Your skill with armor improves, helping you avoid more blows. Your proficiency ranks for light, medium, and heavy armor, as well as for unarmored defense, increase to master. --- **Fighter** Your skill with armor improves further. Your proficiency ranks for light, medium, and heavy armor, as well as for unarmored defense, increase to master."
+ },
+ {
+  "id": "armor-of-fury",
+  "collection": "classFeatures",
+  "name": "Armor of Fury",
+  "level": 19,
+  "traits": [
+   "barbarian"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your training and rage deepen your connection to your armor. Your proficiency ranks for light armor, medium armor, and unarmored defense increase to master."
+ },
+ {
+  "id": "arrow-splits-arrow",
+  "collection": "classFeatures",
+  "name": "Arrow Splits Arrow",
+  "level": 1,
+  "traits": [
+   "transcendence"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your previous action was to Strike with the Unfailing Bow --- **Effect** You repeat your motions exactly, your attack landing in the same location as your previous shot. You make a Strike against the same target. The result of your d20 roll is the same as the result of the required shot, though any penalties (such as your multiple attack penalty) apply normally to this shot and you don't automatically adjust the degree of success if the initial roll was a natural 1 or 20."
+ },
+ {
+  "id": "artisans-calling",
+  "collection": "classFeatures",
+  "name": "Artisan's Calling",
+  "level": 1,
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You feel an urge that echoes throughout your being to create, and one day you know you shall craft an achievement surpassing anything the world has ever seen. When you Craft or Repair an object (including vehicles and structures), you can spend a Mythic Point to attempt the check at mythic proficiency. The first time each day that you critically succeed on a check to Repair an object, you regain a Mythic Point. --- **Edicts** be the first to test an item or weapon crafted with your own hands, seek out or innovate formulas for evermore complex creations **Anathema** destroy the creations of other artisans, refuse an earnest request to repair something that has been broken, use a weapon or item crafted by someone else, except for the purpose of learning its function so you can understand how to create it yourself"
+ },
+ {
+  "id": "ashes",
+  "collection": "classFeatures",
+  "name": "Ashes",
+  "level": 1,
+  "traits": [
+   "oracle"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Oracle Mystery",
+  "text": "You see all things in the world as fleeting and temporary, waiting to be purified into their base essence: the ash left behind after a burning fire. While you understand fire as a necessary part of this process, you see it mostly as a tool to achieve final purity, not the true goal. You have much in common with oracles with the flames mystery, but you may consider them to be shortsighted, or at best, simply lacking in understanding of the truths that their burning fires impart. You might see ash as the only true representation of the impermanent nature of life and its pointless existence. Alternatively, you may see the benefit ash can have on soils and farmlands as part of a larger cycle of death and rebirth. Perhaps you see the phoenix, with its life cycle of being reduced to ash and reborn, as a sacred creature that has achieved a higher state of being and is worthy of imitation, or perhaps you see it as a tragic creature that can never reach the goal of perfection. If you follow a deity, you might follow gods of fire like Sarenrae, those who burn impurities to ash such as Brigh or Torag, or those who strive to burn all things to ash, such as the archdevil Moloch or the demon lord Flauros. **Granted Spells** - **cantrip:** Ignition - **1st:** Breathe Fire - **2nd:** Mist (takes the form of ash) - **6th:** **Revelation Spells** - **initial:** Ashen Wind - **advanced:** Incendiary Ashes - **greater:** Ash Form **Related Domains** destruction, dust, fire, nothingness **Mystery"
+ },
+ {
+  "id": "assured-evasion",
+  "collection": "classFeatures",
+  "name": "Assured Evasion",
+  "level": 13,
+  "traits": [
+   "swashbuckler"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Swashbuckler automatically at level 13",
+  "text": "Your ability to elude danger is matchless. Your proficiency rank for Reflex saves increases to legendary. When you roll a critical failure on a Reflex save, you get a failure instead. When you roll a failure on a Reflex save against a damaging effect, you take half damage."
+ },
+ {
+  "id": "attack-refiner",
+  "collection": "classFeatures",
+  "name": "Attack Refiner",
+  "level": 15,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your weapon makes minute recalibrations after every missed attack to ensure the next lands with vicious efficacy. Your innovation gains the backswing and forceful traits."
+ },
+ {
+  "id": "automated-impediments",
+  "collection": "classFeatures",
+  "name": "Automated Impediments",
+  "level": 15,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your armor uses electromagnetic fields, subharmonic distortions, or other techniques to make it difficult for those close to you to move unless you allow it. While wearing your armor, all spaces adjacent to you are difficult terrain for your enemies."
+ },
+ {
+  "id": "baba-yaga",
+  "collection": "classFeatures",
+  "name": "Baba Yaga",
+  "level": 1,
+  "traits": [
+   "witch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Witch Patron",
+  "text": "Your patron is Baba Yaga, the Queen of Witches. You are most likely a young woman who has been thrown into events far above your head, though you might also be a young man or a brave knight who has sworn your loyalty to the old witch. You may have demanded Baba Yaga's aid, and somehow escaped unscathed for your audacity. She may have reached out to you by sending a messenger in the form of an animated object, such as a mortar that had grown legs. She may have instead appeared before you herself, demanding you aid her with some nigh-impossible chore. While many fail these tasks and end up becoming a meal for Baba Yaga or meet even worse fates, you prevailed and earned her respect. Her gift to you is her patronage (and your life). **Spell List** occult **Patron Skill** Occultism **Lesson of Baba's Understanding** Baba Yaga teaches you to be more like her, allowing you to transfer spirits into objects and freeze your foes. You gain the Spirit Object hex cantrip and your familiar learns Chilling Spray. **Familiar of Obscuring Snowfall** Your familiar is always covered in a thin layer of snow, which it sheds as needed. When you Cast or Sustain a hex, you can cause clinging snow to fall in a centered on a square of your familiar's space. This snowfall remains until the start of your next turn, and enemies that enter these squares during that period are dazzled until the start of your next turn."
+ },
+ {
+  "id": "barrows-edge",
+  "collection": "classFeatures",
+  "name": "Barrow's Edge",
+  "level": 1,
+  "traits": [
+   "ikon"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Usage** melee weapon that deals slashing or piercing damage --- This blade subtly rattles in its scabbard, as if it wants to be unsheathed so it can consume violence. **Immanence** The barrow's edge deals 1 additional spirit damage per weapon damage die to a creature it Strikes. If the creature is below half its maximum Hit Points, the weapon deals 3 additional spirit damage per weapon damage dice instead. Barrow's edge rattles more strongly when an enemy below half its maximum Hit Points is within the weapon's reach to let you know a foe is verging closer to death. **Transcendence—**Drink of my Foes ⟨1⟩ (healing, transcendence, vitality)"
+ },
+ {
+  "id": "battle",
+  "collection": "classFeatures",
+  "name": "Battle",
+  "level": 1,
+  "traits": [
+   "oracle"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Oracle Mystery",
+  "text": "Warlike forces fill you with physical might and tactical knowledge, aiming to have you uphold the glory of combat, fight to improve the world, prepare against the necessity of conflict, or endure the inevitability of war. You might draw upon deities such as Gorum, Iomedae, Rovagug, the Horseman of War Szuriel, the Queen of the Night Eiseth, the Vudrani god Diomazul, and others, or you might find power in the unending conflict between the armies of Heaven and Hell, the Elemental Planes, the Outer Gods, or even the collective spirits of those who fought in wars over the ages. **Granted Spells** - **cantrip:** Shield - **1st:** Sure Strike - **2nd:** Telekinetic Maneuver - **4th:** Weapon Storm **Revelation Spells** - **initial:** Weapon Trance - **advanced:** Battlefield Persistence - **greater:** Revel in Retribution **Related Domains** destruction, might, protection, zeal **Mystery Skill** Athletics **Oracle Feat** Oracular Warning Curse of the Mortal Warrior"
+ },
+ {
+  "id": "battle-hardened",
+  "collection": "classFeatures",
+  "name": "Battle Hardened",
+  "level": 9,
+  "traits": [
+   "fighter",
+   "guardian"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Guardian automatically at level 9",
+  "text": "Your experience in battle helps protect you against magic and toxins alike. Your proficiency rank for Fortitude saves increases to master. When you roll a success on a Fortitude save, you get a critical success instead."
+ },
+ {
+  "id": "battlefield-intuition",
+  "collection": "classFeatures",
+  "name": "Battlefield Intuition",
+  "level": 15,
+  "traits": [
+   "commander"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Commander automatically at level 15",
+  "text": "Your experience across a wide array of battlefields gives you a preternatural ability to predict and avoid damaging effects. Your proficiency rank for Reflex saves increases to master. When you roll a success on a Reflex save, you get a critical success instead."
+ },
+ {
+  "id": "bear-allies-burdens",
+  "collection": "classFeatures",
+  "name": "Bear Allies' Burdens",
+  "level": 1,
+  "traits": [
+   "transcendence"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You move with a speed belying your strength, carrying your allies as easily as straw dolls. You Stride. At any point you are adjacent to a willing ally during the Stride, you can pick that ally up, and you can deposit them into a space adjacent to you at any other point during your movement. You ignore the ally's Bulk while carrying them during your Stride. You can Climb, Fly, or Swim instead of Striding if you have the corresponding movement type."
+ },
+ {
+  "id": "bell",
+  "collection": "classFeatures",
+  "name": "Bell",
+  "level": 1,
+  "traits": [
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Bells symbolize the power that sounds and emotions hold over others, soothing with one tone and startling with another. Bells, drums, finger cymbals, and other percussion instruments are most typical, but these implements can be any type of portable musical instrument that is played with one hand. Bell implements are associated with the astrological signs of the daughter and the blossom. ### **Initiate Benefit** ### **Adept Benefit** ### **Intensify Vulnerability** Your reinforced bell can reach into the most basal part of the target's mind, priming it to be vulnerable to the bell's effects. When you successfully Strike the target of your Exploit Vulnerability, your bell implement plays a haunting tone and the creature takes a -2 status penalty on saves against your Ring Bell for 1 round, or a -3 status penalty on a critical hit. This effect has the auditory trait. ### **Paragon Benefit**"
+ },
+ {
+  "id": "blast-dodger",
+  "collection": "classFeatures",
+  "name": "Blast Dodger",
+  "level": 11,
+  "traits": [
+   "gunslinger"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Gunslinger automatically at level 11",
+  "text": "Your reflexes have a hair trigger. Your proficiency rank for Reflex saves increases to master. When you roll a success on a Reflex save, you get a critical success instead."
+ },
+ {
+  "id": "blessed-shield",
+  "collection": "classFeatures",
+  "name": "Blessed Shield",
+  "level": 1,
+  "traits": [
+   "champion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "In your hands, a shield gains the minor Reinforcing rune. As you go up in level, the shield gains the reinforcing rune of your level (lesser at 7th level, moderate at 10th level, greater at 13th level, major at 16th level, and supreme at 19th level). If your shield already has the appropriate reinforcing rune for your level, or if it's a Sturdy Shield of the same level as the appropriate reinforcing rune, the shield's Hardness instead increases by 1."
+ },
+ {
+  "id": "blight",
+  "collection": "classFeatures",
+  "name": "Blight",
+  "level": 1,
+  "traits": [
+   "oracle"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Oracle Mystery",
+  "text": "A spring bud will wither, a mighty oak will crash to the forest floor, and a callow youth will grow into maturity, then decline into old age. You know none of these things are cause for alarm or sadness. Decay is an essential part of nature's cycle, as the old pass away to make room for, or to nourish, the new. After all, the flower must fall for the seed to grow, and the toppled tree not only makes room for new saplings to flourish, but also forms a home for many types of flora, fauna, and fungi. Disease, poison, and rot—these are all tools to dispose of creatures that have come to the end of their usefulness that rest in your hands. You might wield them to bring an end to lingering suffering or to spread contagion over once-thriving lands. Well-meaning doctors, persistent healers, or zealous adventurers may try to stand in your way, but blight will spread in the end. If you follow a deity, you might work toward the sinister ends of Rider of Disease Apollyon, the demon lord Cyth-V'sug, or the parasitic Ghlaunder. You might find allies among followers of Groetus or the cults of the Outer Gods. If you see your calling as part of the cycle of existence, you might venerate monitor demigods such as Mother Vulture or commune with nature. **Granted Spells** - **cantrip:** Caustic Blast - **1st:** Noxious Vapors - **2nd:** Fungal Infestation - **5th:** Toxic Cloud **Revelation Spells** - **initial:** Ulcerous Canker - **advanced:** Purging Toxins - **greater:** Accelerated Decomposi"
+ },
+ {
+  "id": "blight-soul-deviant-classification",
+  "collection": "classFeatures",
+  "name": "Blight Soul Deviant Classification",
+  "level": 1,
+  "traits": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Whether through planar exploration or unintended catastrophe, you've come into close contact with Ayrzul's Blight and have been forever changed. As the Blight is a realm of invasive rot, pernicious decay, and deadly radiation, so too are you capable of wielding the powers of decay. ## Backlash Fungal Rot The same blood that lets one of the dragon-descended spit out a gout of flame is precisely what keeps the inside of their mouth from being singed in the furnace. Deviations, unfortunately, lack these safeguards, their powers coming from haphazard circumstance and interactions rather than intentional design. A character using their deviation always risks the chance of backlash. As you use your powers, radioactive molds and fungi consume your flesh, making you look (and feel) like a rotting, walking corpse. Whenever you attempt to use a deviation, roll a . On a success, you use your deviation and the DC for subsequent checks increases by 5, to a maximum of 20 ( ); on a failure, you use your deviation and then suffer a backlash effect, after which your flat check DC resets to 5. Backlash progresses from mild, to moderate, to severe. When you have already taken mild backlash in a given day, the next time you would take backlash, you take the moderate backlash instead, and if you have already taken moderate backlash, you take the severe backlash instead, and your deviation can't be used for the rest of the day—attempting to use it simply brings pain. When you make your daily prepa"
+ },
+ {
+  "id": "blinding-of-the-needle",
+  "collection": "classFeatures",
+  "name": "Blinding of the Needle",
+  "level": 1,
+  "traits": [
+   "transcendence"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You aim your weapon in a superficial cut above your opponent's eye. Make a Strike with the imbued ikon. If that Strike is successful, the target must succeed at a save against your class DC or become blinded for 1 round or until it uses an Interact action to clear the blood from its vision."
+ },
+ {
+  "id": "bloodline-hag",
+  "collection": "classFeatures",
+  "name": "Bloodline: Hag",
+  "level": 1,
+  "traits": [
+   "sorcerer"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Sorcerer Bloodline",
+  "text": "A hag long ago cursed your family, or you are a descendant of a hag or changeling, and their magic infests your blood and soul. **Tradition** occult **Bloodline Skills** Deception, Occultism **Sorcerous Gifts** cantrip Daze, 1st: Illusory Disguise, 2nd: Stupefy, 3rd: Blindness, 4th: Outcast's Curse, 5th: Mariner's Curse, 6th: Cursed Metamorphosis, 7th: Warp Mind, 8th: Quandary, 9th: **Bloodline Spells** initial: Jealous Hex, advanced: Horrific Visage, greater: You're Mine **Blood Magic—Retributive Spite** Malice and acrimony take physical form around you. You deal 4 mental damage per spell rank (basic Will save) to the first creature that deals damage to you before the end of your next turn; if no creature damages you in that time, you consume that spite to gain temporary Hit Points at the beginning of your next turn equal to the spell's rank. These temporary Hit Points last until the beginning of your following turn."
+ },
+ {
+  "id": "bloodline-harrow",
+  "collection": "classFeatures",
+  "name": "Bloodline: Harrow",
+  "level": 1,
+  "traits": [
+   "sorcerer"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Sorcerer Bloodline",
+  "text": "**Spell List** occult **Bloodline Skills** Occultism, Performance **Granted Spells** cantrip: Detect Magic; 1st: Ill Omen, 2nd: Augury; 3rd: Wanderer's Guide; 4th: Suggestion; 5th: Shadow Siphon; 6th: Truesight; 7th: ; 8th: Unrelenting Observation; 9th: Weird **Bloodline Spells** initial: Unraveling Blast; advanced: Invoke the Harrow; greater: Rewrite Possibility **Blood Magic** You become enveloped in possibility, represented as multiple versions of yourself from your possible futures overlaid on each other. You gain Concealment for 1 round, but can't use the concealment to Hide."
+ },
+ {
+  "id": "bloodline-phoenix",
+  "collection": "classFeatures",
+  "name": "Bloodline: Phoenix",
+  "level": 1,
+  "traits": [
+   "sorcerer"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Sorcerer Bloodline",
+  "text": "You have been blessed by a phoenix, perhaps via some magical interaction with a similarly blessed individual. Grant this new sorcerer bloodline to players who finish the Fists of the Ruby Phoenix Adventure Path. Players can then choose this bloodline for any new sorcerer characters they create for future campaigns. **Spell List** primal **Bloodline Skills** Diplomacy, Nature **Granted Spells** cantrip: Detect Magic; 1st: Breathe Fire; 2nd: See the Unseen; 3rd: Fireball; 4th: Cleanse Affliction; 5th: Breath of Life; 6th: ; 7th: Contingency; 8th: Moment of Renewal; 9th: Falling Stars **Bloodline Spells** initial: Rejuvenating Flames; advanced: Shroud of Flame; greater: Cleansing Flames **Blood Magic** The primal fire of life and death flows through you or one target. Choose to have either you or a target of the spell gain temporary Hit Points equal to the spell's rank for 1 round, or to have a target of the spell take fire damage equal to the spell's rank (if the spell already deals initial fire damage, combine this with the spell's initial damage before determining weaknesses and resistances)."
+ }
+]

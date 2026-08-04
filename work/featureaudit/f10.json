@@ -1,0 +1,500 @@
+[
+ {
+  "id": "zoophonia",
+  "collection": "classFeatures",
+  "name": "Zoophonia",
+  "level": 1,
+  "traits": [
+   "bard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Bard Muse",
+  "text": "Your muse is a master of birdsong, wolf howls, trumpeting elephants, and other animal communication, pushing you to new heights and encouraging your connections with nature. If your muse is a creature, it might be an enlightened animal or a spirit guide. If it's a deity, it might be one of the Wardens of the Wild, Gozreh, or another representative of nature. **Muse Feat** Zoophonic Communication **Muse Spell** Summon Animal"
+ },
+ {
+  "id": "ambitious-human",
+  "collection": "heritages",
+  "name": "Ambitious Human",
+  "ancestryId": "human",
+  "traits": [],
+  "text": "You're ambitious, having accomplished more than your peers and always moving forward. You get two class abilities earlier than you normally could. Because you gain these abilities early, you can't select them again at a later level. One ability is the Fleet general feat. The second ability depends on your class. - **Barbarian:** Raging Intimidation - **Bard:** Well-Versed - **Monk:** Toughness - **Sorcerer:** Cantrip Expansion *Note: This heritage is from the Beginner Box and features non-standard heritage features*"
+ },
+ {
+  "id": "ancient-blooded-dwarf",
+  "collection": "heritages",
+  "name": "Ancient-Blooded Dwarf",
+  "ancestryId": "dwarf",
+  "traits": [],
+  "text": "Dwarven heroes of old could shrug off their enemies' magic, and some of that resistance manifests in you. You gain the Call on Ancient Blood reaction."
+ },
+ {
+  "id": "athamasi",
+  "collection": "heritages",
+  "name": "Athamasi",
+  "ancestryId": "kashrishi",
+  "traits": [],
+  "text": "You have a set of small secondary arms adapted for climbing and hanging from trees. You can't hold or retrieve objects with these limbs, but you can Climb or Grab an Edge even if one or both of your primary hands are full. You aren't off-guard while Climbing."
+ },
+ {
+  "id": "badlands-orc",
+  "collection": "heritages",
+  "name": "Badlands Orc",
+  "ancestryId": "orc",
+  "traits": [],
+  "text": "You come from sun-scorched badlands, where long legs and an ability to withstand the elements helped you thrive. You can Hustle twice as long while exploring before you have to stop, and you treat environmental heat effects as if they were one step less extreme (incredible heat becomes extreme, extreme heat becomes severe, and so on)."
+ },
+ {
+  "id": "bandaagee-vanara",
+  "collection": "heritages",
+  "name": "Bandaagee Vanara",
+  "ancestryId": "vanara",
+  "traits": [],
+  "text": "Your family is one of many who claims to be descended from the regal vanara peacekeeping family called the Bandaagee. Bandaagee are the most common kind of vanaras. You're very familiar with the trappings of civilization and move easily through the most crowded communities. You ignore difficult terrain from crowds."
+ },
+ {
+  "id": "camouflage-tripkee",
+  "collection": "heritages",
+  "name": "Camouflage Tripkee",
+  "ancestryId": "tripkee",
+  "traits": [],
+  "text": "The pattern of your skin naturally mimics natural terrain and foliage. Choose either aquatic, forest, or swamp terrain. In your selected terrain, you can Hide or Sneak without cover or being concealed."
+ },
+ {
+  "id": "caveclimber-kobold",
+  "collection": "heritages",
+  "name": "Caveclimber Kobold",
+  "ancestryId": "kobold",
+  "traits": [],
+  "text": "You live in a vertically-oriented home, and you're a consummate climber. You gain the Combat Climber skill feat, even if you don't meet the prerequisites. You can use your clawed feet and tail to Climb, leaving your hands free. Additionally, if you succeed at an Athletics check to Climb, you critically succeed instead."
+ },
+ {
+  "id": "cavernstalker-kobold",
+  "collection": "heritages",
+  "name": "Cavernstalker Kobold",
+  "ancestryId": "kobold",
+  "traits": [],
+  "text": "You hatched in a warren with narrow tunnels that was also home to a being of primal earth energy, which has made you limber and flexible. When Climbing rock walls, stalactites, and other natural stone features, you move at half your Speed on a success and at full Speed on a critical success (and you move at full Speed on a success if you have Quick Climb). This doesn't affect you if you're using a climb Speed. If you roll a success on an Acrobatics check to Squeeze, you get a critical success instead."
+ },
+ {
+  "id": "celestial-envoy-kitsune",
+  "collection": "heritages",
+  "name": "Celestial Envoy Kitsune",
+  "ancestryId": "kitsune",
+  "traits": [],
+  "text": "Whether due to Daikitsu's grace or faithful forebears, you have a strong connection to the divine, affording you certain protections. You gain the Invoke Celestial Privilege reaction. Your alternate form is a common Medium humanoid ancestry prevalent where you grew up (typically human), called a tailless form."
+ },
+ {
+  "id": "cliffscale-lizardfolk",
+  "collection": "heritages",
+  "name": "Cliffscale Lizardfolk",
+  "ancestryId": "lizardfolk",
+  "traits": [],
+  "text": "Your toes are adapted for gripping and climbing. You gain the Combat Climber feat as a bonus feat, and as long as you aren't wearing footwear, you can use the sticky pads on your feet to climb, leaving your hands free. Additionally, if you roll a success on an Athletics check to climb, you get a critical success instead."
+ },
+ {
+  "id": "cloudleaper-lizardfolk",
+  "collection": "heritages",
+  "name": "Cloudleaper Lizardfolk",
+  "ancestryId": "lizardfolk",
+  "traits": [],
+  "text": "Your body is light with flaps of skin along your limbs that catch the air that passes beneath you. As long as you can act and have enough room, you can open the flaps to slow any fall just enough to avoid taking damage (whether you have the room to do so depends on the GM's discretion)."
+ },
+ {
+  "id": "compact-skeleton",
+  "collection": "heritages",
+  "name": "Compact Skeleton",
+  "ancestryId": "skeleton",
+  "traits": [],
+  "text": "For tasks that require a lighter touch, gnome, goblin, and halfling remains are more suitable than a larger creature's. These smaller, nimbler skeletons fit well in a traveling chest, can be forced through tight spaces, and more easily avoid detection. Your size is Small instead of Medium. You gain the Quick Squeeze feat, even if you aren't trained in Acrobatics. Tight spaces not tight enough to require the Squeeze activity aren't difficult terrain for you."
+ },
+ {
+  "id": "dark-fields-kitsune",
+  "collection": "heritages",
+  "name": "Dark Fields Kitsune",
+  "ancestryId": "kitsune",
+  "traits": [],
+  "text": "You can exert your unsettling presence to subtly Demoralize others. When you do, Demoralize loses the auditory trait and gains the visual trait, and you don't take a penalty when you attempt to Demoralize a creature that doesn't understand your language. You also gain the Invigorating Fear reaction. Your alternate form is a fox, which has the statistics of 1st-rank Pest Form."
+ },
+ {
+  "id": "death-warden-dwarf",
+  "collection": "heritages",
+  "name": "Death Warden Dwarf",
+  "ancestryId": "dwarf",
+  "traits": [],
+  "text": "Your ancestors were tomb guardians, and their power to ward off death passed on to you. If you roll a success on a saving throw against an effect that has the void trait or was created by an undead creature, you get a critical success instead."
+ },
+ {
+  "id": "deep-orc",
+  "collection": "heritages",
+  "name": "Deep Orc",
+  "ancestryId": "orc",
+  "traits": [],
+  "text": "Your calloused hands and red eyes speak to a life spent in the deep darkness of mountain caverns, where you learned to battle on rocky cliffs and survive with minimal resources. You gain the Terrain Expertise skill feat for underground terrain and the Combat Climber skill feat."
+ },
+ {
+  "id": "desert-rat",
+  "collection": "heritages",
+  "name": "Desert Rat",
+  "ancestryId": "ratfolk",
+  "traits": [],
+  "text": "You are native to arid plains and likely grew up traveling the roads. If you have both hands free, you can increase your Speed to 30 feet as you run on all fours. In addition, environmental heat effects are one step less extreme for you, and you can go 10 times longer than normal before you are affected by starvation or thirst. However, unless you wear protective gear or take shelter, environmental cold effects are one step more extreme for you."
+ },
+ {
+  "id": "dijiang",
+  "collection": "heritages",
+  "name": "Dijiang",
+  "ancestryId": "sprite",
+  "traits": [
+   "sprite"
+  ],
+  "text": "You have the form of a faceless, leathery ball with short fur, six legs, and a connection to primordial chaos. While you have no face, head, mouth, eyes, or ears, you can somehow hear, speak, see, eat, and breathe just fine (though it's unclear exactly how). Your erratic nature means you often react to stimuli in unpredictable ways. When you roll a failure (though not a critical failure) on a saving throw against an emotion effect, you get a success instead."
+ },
+ {
+  "id": "discarded-fleshwarp",
+  "collection": "heritages",
+  "name": "Discarded Fleshwarp",
+  "ancestryId": "fleshwarp",
+  "traits": [],
+  "text": "The biomancers and mutagenists who warped your form labeled you a \"discard on discovery\"—a euphemism for destroying you on sight. An anomaly among anomalies, your body stubbornly repudiates the efforts of fleshcrafters seeking to mold you to their grandiose visions, and your immune responses blunt the worst effects of unwanted fleshwarping attempts. If you roll a success on a saving throw against a transmutation effect, you get a critical success instead."
+ },
+ {
+  "id": "dog-kholo",
+  "collection": "heritages",
+  "name": "Dog Kholo",
+  "ancestryId": "kholo",
+  "traits": [],
+  "text": "You're a nimble-bodied kholo with a prehistoric, almost dog-like build. Though you typically move like a quadruped, you can still stand and fight like a biped, allowing you to use all equipment normally. If you have both hands free, you can increase your Speed to 30 feet as you run on all fours."
+ },
+ {
+  "id": "dogtooth-tengu",
+  "collection": "heritages",
+  "name": "Dogtooth Tengu",
+  "ancestryId": "tengu",
+  "traits": [],
+  "text": "In addition to a beak, your mouth also features a number of vicious, pointed teeth. Some legends claim your powerful jaws can even bite through steel. While you aren't that strong yet, your fangs can still leave terrible wounds. Your beak unarmed attack gains the deadly d8 trait."
+ },
+ {
+  "id": "draxie",
+  "collection": "heritages",
+  "name": "Draxie",
+  "ancestryId": "sprite",
+  "traits": [],
+  "text": "You are kin to faerie dragons, tracing your heritage back to the death of the mightiest faerie dragon in the First World. You gain touch telepathy, allowing you to communicate silently and purely mentally with any creature you're touching, as long as you share a language."
+ },
+ {
+  "id": "elfbane-hobgoblin",
+  "collection": "heritages",
+  "name": "Elfbane Hobgoblin",
+  "ancestryId": "hobgoblin",
+  "traits": [],
+  "text": "Hobgoblins were engineered long ago from the unreliable and fecund goblins to be used as an army against the elves. Although the elves ultimately freed the hobgoblins from their bondage, some hobgoblins retain ancestral resistance to magic, which they refer to as \"elf magic.\" You gain the Resist Elf Magic reaction."
+ },
+ {
+  "id": "fishseeker-shoony",
+  "collection": "heritages",
+  "name": "Fishseeker Shoony",
+  "ancestryId": "shoony",
+  "traits": [],
+  "text": "You come from a long line of fisherfolk and have inherited the quick reflexes necessary to nab and reel in big game. If you roll a success on an attempt to Grab an Edge, you get a critical success instead; if you roll a critical failure, you get a failure instead. A creature that rolls a failure on a check to Disarm you gets a critical failure instead."
+ },
+ {
+  "id": "fodder-skeleton",
+  "collection": "heritages",
+  "name": "Fodder Skeleton",
+  "ancestryId": "skeleton",
+  "traits": [],
+  "text": "Humans, and those who are physically closest to them, are the favored material of necromancers. They are readily available, and their physiology has been studied the most extensively, so these skeletons can be easily mass-produced. Despite their name, fodder skeletons make rather mobile foot soldiers due to how efficiently they transfer necromantic energy within their bodies. You have a base Speed of 30 feet, instead of 25 feet."
+ },
+ {
+  "id": "frilled-lizardfolk",
+  "collection": "heritages",
+  "name": "Frilled Lizardfolk",
+  "ancestryId": "lizardfolk",
+  "traits": [],
+  "text": "You can flare your neck frill and flex your dorsal spines, Demoralizing your foes. When you do, Demoralize loses the auditory trait and gains the visual trait, and you don't take a penalty when you attempt to Demoralize a creature that doesn't understand your language. You also gain the Threatening Approach action."
+ },
+ {
+  "id": "fruit-leshy",
+  "collection": "heritages",
+  "name": "Fruit Leshy",
+  "ancestryId": "leshy",
+  "traits": [],
+  "text": "Your body continually produces small fruits imbued with primal magic. At dawn each day, a new fruit ripens. You or an ally can remove this fruit as an Interact action. If a living creature that can derive sustenance from fruit consumes it as an Interact action within the next hour, they regain Hit Points, plus an additional 1d8 Hit Points for every 2 of your levels beyond 1st. This effect has the healing and vitality traits."
+ },
+ {
+  "id": "full-moon-sarangay",
+  "collection": "heritages",
+  "name": "Full Moon Sarangay",
+  "ancestryId": "sarangay",
+  "traits": [
+   "sarangay"
+  ],
+  "text": "You were raised in a shamanic tradition transcending a single sarangay community or heritage. You spent your youth under the guidance of a shaman elder, who taught you to commune with spirits in the hope that you'll one day use that knowledge to advise and guide your people. Those from your tradition are priests or shamans who channel the spirits and see things others can't. You gain an ancestry attribute boost to Wisdom instead of Strength, and you gain an attribute flaw in Constitution instead of Wisdom. You gain the Folk Healer ancestry feat."
+ },
+ {
+  "id": "gourd-leshy",
+  "collection": "heritages",
+  "name": "Gourd Leshy",
+  "ancestryId": "leshy",
+  "traits": [],
+  "text": "You have a large gourd for a skull, and since you don't have a physical brain, you can use the space inside your head. You can store a collection of up to 1 Bulk of objects within your head. The DC of checks to Steal objects from inside your head increases by 4. Additionally, if you store only one object within your head, you can draw it effortlessly into your hand as part of another action to use the object. Drawing the item grants this other action the manipulate trait."
+ },
+ {
+  "id": "gutsy-halfling",
+  "collection": "heritages",
+  "name": "Gutsy Halfling",
+  "ancestryId": "halfling",
+  "traits": [],
+  "text": "Your family line is known for keeping a level head and staving off fear when the chips were down. When you roll a success on a saving throw against an emotion effect, you get a critical success instead."
+ },
+ {
+  "id": "heavenscribe-kobold",
+  "collection": "heritages",
+  "name": "Heavenscribe Kobold",
+  "ancestryId": "kobold",
+  "traits": [
+   "kobold"
+  ],
+  "text": "Your connection to wise and celestial imperial dragons has led others to seek your advice. You can speak Draconic. Whenever you critically fail a Diplomacy check to Make an Impression or Request, you get a failure instead."
+ },
+ {
+  "id": "hillock-halfling",
+  "collection": "heritages",
+  "name": "Hillock Halfling",
+  "ancestryId": "halfling",
+  "traits": [],
+  "text": "Accustomed to a calm life in the hills, your people find rest and relaxation especially replenishing, particularly when indulging in creature comforts. When you regain Hit Points overnight, add your level to the Hit Points regained. When anyone uses the Medicine skill to Treat your Wounds, you can eat a snack to add your level to the Hit Points you regain from their treatment."
+ },
+ {
+  "id": "hold-scarred-orc",
+  "collection": "heritages",
+  "name": "Hold-Scarred Orc",
+  "ancestryId": "orc",
+  "traits": [],
+  "text": "You are part of an orc community that participates in ritual scarification or tattooing. The marks on your skin show your exceptional hardiness and vitality. You gain 12 Hit Points from your ancestry instead of 10. You also gain the Diehard feat."
+ },
+ {
+  "id": "hunter-automaton",
+  "collection": "heritages",
+  "name": "Hunter Automaton",
+  "ancestryId": "automaton",
+  "traits": [],
+  "text": "You were designed to serve as a scout or assassin and have a body resembling a pack hunter like a large cat or wolf. Though you typically move like a quadruped, you can still stand and fight like a biped, allowing you to use all equipment normally. Your quadruped design allows you to move quickly; if you have both hands free, you can increase your Speed to 30 feet as you run on all fours."
+ },
+ {
+  "id": "jinxed-halfling",
+  "collection": "heritages",
+  "name": "Jinxed Halfling",
+  "ancestryId": "halfling",
+  "traits": [],
+  "text": "You were born with a strange blessing: bereft of the typical halfling luck, you can instead manipulate the fortunes of others. You can never take the Halfling Luck feat, and you gain the Jinx action."
+ },
+ {
+  "id": "jinxed-tengu",
+  "collection": "heritages",
+  "name": "Jinxed Tengu",
+  "ancestryId": "tengu",
+  "traits": [],
+  "text": "Your lineage has been exposed to curse after curse, and now they slide off your feathers like rain. If you succeed at a saving throw against a curse or misfortune effect, you get a critical success instead. When you would gain the doomed condition, attempt a . On a success, reduce the value of the doomed condition you would gain by 1."
+ },
+ {
+  "id": "jungle-catfolk",
+  "collection": "heritages",
+  "name": "Jungle Catfolk",
+  "ancestryId": "catfolk",
+  "traits": [],
+  "text": "You're descended from jungle stalkers and can move swiftly through scrub and underbrush. You ignore difficult terrain from undergrowth, and greater difficult terrain from undergrowth is only difficult terrain for you."
+ },
+ {
+  "id": "keen-venom-vishkanya",
+  "collection": "heritages",
+  "name": "Keen-Venom Vishkanya",
+  "ancestryId": "vishkanya",
+  "traits": [],
+  "text": "You're practiced with using your venom in combat, allowing you to employ your venom at a moment's notice. Your Envenom action doesn't trigger reactions that normally trigger on a manipulate action. Additionally, you gain the Venom Draw action."
+ },
+ {
+  "id": "lantern-surki",
+  "collection": "heritages",
+  "name": "Lantern Surki",
+  "ancestryId": "surki",
+  "traits": [],
+  "text": "The nodes in your abdomen are particularly luminous. You can use an Interact action to shed light from your abdomen in a 20-foot radius (and dim light for the next 20 feet). This is a magical light effect with a counteract rank equal to half your level rounded up. You can change the color of the light or extinguish it with another Interact action. - **Evolution** Your abdominal nodes have evolved into a pair of secondary limbs that project a magical focusing lens. You gain the Lantern Beam action. - **Evolution** Secondary light emitters grow from your shoulder nodes that flash in time with your lantern. You gain the Lantern Strobe action."
+ },
+ {
+  "id": "leaf-leshy",
+  "collection": "heritages",
+  "name": "Leaf Leshy",
+  "ancestryId": "leshy",
+  "traits": [],
+  "text": "Your body is made mostly from natural foliage, and like a leaf tumbling from a tree, you land from falls with particular grace. You take no damage from falling, regardless of the distance you fall."
+ },
+ {
+  "id": "littlehorn-minotaur",
+  "collection": "heritages",
+  "name": "Littlehorn Minotaur",
+  "ancestryId": "minotaur",
+  "traits": [],
+  "text": "Though no less powerful, your frame (and your horns) are smaller than those of most other minotaurs. Instead of Large, your size is Medium. Your horns unarmed attack deals 1d6 piercing damage instead of 1d8, but it has the agile trait."
+ },
+ {
+  "id": "lotus-leshy",
+  "collection": "heritages",
+  "name": "Lotus Leshy",
+  "ancestryId": "leshy",
+  "traits": [],
+  "text": "You effortlessly float on the surface of water. You can walk on the surface of still water and other non-damaging liquids, moving at half your normal Speed. You can also attempt to Balance to move across the surface of flowing water, using the DC of a Swim check to move through the water. When you do this, you can't move faster than half your Speed, and if you fail or critically fail, you fall into the water rather than the normal effects."
+ },
+ {
+  "id": "luminous-sprite",
+  "collection": "heritages",
+  "name": "Luminous Sprite",
+  "ancestryId": "sprite",
+  "traits": [],
+  "text": "You glow with magical luminance. You naturally shed light as a Torch; this light has the evocation, light, and primal traits. You can extinguish, rekindle, or change the color of this light using a single action, which has the concentrate trait."
+ },
+ {
+  "id": "melixie",
+  "collection": "heritages",
+  "name": "Melixie",
+  "ancestryId": "sprite",
+  "traits": [],
+  "text": "You have the features of a bee, butterfly, or other insect that loves sweets. You can ask questions of and receive answers from arthropods (insects, spiders, scorpions, crabs, and similar invertebrate animals), as well as use Diplomacy to Make an Impression on and Request things of them. Most bees, butterflies, moths, and beetles have an indifferent or friendly starting attitude toward you and give you time to make your case, though other arthropods react to you like any other adventurer."
+ },
+ {
+  "id": "mightyfall-kobold",
+  "collection": "heritages",
+  "name": "Mightyfall Kobold",
+  "ancestryId": "kobold",
+  "traits": [
+   "kobold"
+  ],
+  "text": "Your proximity to a mighty kaiju has caused you to grow strong and hardy. You gain 10 Hit Points from your ancestry instead of 6. Instead of the normal attribute boosts and flaws, you can choose to gain a boost to Strength, a boost to Charisma, and a flaw in Intelligence."
+ },
+ {
+  "id": "murkeyed-azarketi",
+  "collection": "heritages",
+  "name": "Murkeyed Azarketi",
+  "ancestryId": "azarketi",
+  "traits": [],
+  "text": "You live in murky waters and have grown accustomed to life in a low-visibility environment. You need only a successful when targeting a concealed creature and a successful when targeting a hidden creature."
+ },
+ {
+  "id": "mutated-fleshwarp",
+  "collection": "heritages",
+  "name": "Mutated Fleshwarp",
+  "ancestryId": "fleshwarp",
+  "traits": [],
+  "text": "Transformed by uncontrolled magic, you originated in a the Mana Wastes or another region similarly devastated by uncontrolled magic. Due to your toughened or redundant organs, the DC for your checks to recover from persistent bleed damage is 10 instead of 15, and it's reduced to instead of 10 if you have particularly effective assistance recovering from the persistent damage."
+ },
+ {
+  "id": "nine-lives-catfolk",
+  "collection": "heritages",
+  "name": "Nine Lives Catfolk",
+  "ancestryId": "catfolk",
+  "traits": [],
+  "text": "Your family has always seems to bounce back from disaster, not through physical hardiness or specialized skill, but from sheer luck. Other catfolk whisper that you have nine lives. While you're dying, you don't add your dying value to the DC of your recovery checks (this means the DC is typically 10). In addition, you gain the Diehard general feat."
+ },
+ {
+  "id": "nomadic-halfling",
+  "collection": "heritages",
+  "name": "Nomadic Halfling",
+  "ancestryId": "halfling",
+  "traits": [],
+  "text": "Your ancestors have traveled from place to place for generations, never content to settle down. You gain two additional languages of your choice, chosen from among the common and uncommon languages available to you, and every time you take the feat, you gain another new language."
+ },
+ {
+  "id": "paddler-shoony",
+  "collection": "heritages",
+  "name": "Paddler Shoony",
+  "ancestryId": "shoony",
+  "traits": [],
+  "text": "You hail from shoonies who have lived long and successfully among the reeds and cattails of swamps and marshes, and have adapted to the challenges of living near waterlogged areas. You ignore difficult terrain and greater difficult terrain from bogs. When you roll a success to Swim, you get a critical success instead."
+ },
+ {
+  "id": "palace-echoes-kitsune",
+  "collection": "heritages",
+  "name": "Palace Echoes Kitsune",
+  "ancestryId": "kitsune",
+  "traits": [
+   "kitsune"
+  ],
+  "text": "You descend from kitsune who possessed such compelling powers of persuasion that they could walk into a palace at sunrise and end up as the power behind the throne by nightfall. You gain the Nudging Whisper action. Your alternate form is a common Medium humanoid ancestry prevalent where you grew up (typically human) called a tailless form."
+ },
+ {
+  "id": "peachchild-leshy",
+  "collection": "heritages",
+  "name": "Peachchild Leshy",
+  "ancestryId": "leshy",
+  "traits": [
+   "leshy"
+  ],
+  "text": "Your leshy spirit took hold in a massive peach fruit before your body split forth from it, possibly emulating a past hero who was born in the same manner. You look like a human child, though with a perpetual flush of pink to your complexion and perhaps a few peach leaves growing from your body. The nature spirit inside you puts certain animals at ease. You can ask questions of and receive answers from household animals and livestock, such as dogs or pheasants, as well as use Diplomacy to Make an Impression on and Request things of them. Most domesticated animals have an indifferent or friendly starting attitude toward you and give you time to make your case, though other animals react to you like any other adventurer."
+ },
+ {
+  "id": "pearl-dragonet",
+  "collection": "heritages",
+  "name": "Pearl Dragonet",
+  "ancestryId": "dragonet",
+  "traits": [],
+  "text": "You have pearlescent scales and a round body, with short legs, small wings, and a long tail. The shape of your body lets you absorb a blow and roll away. **Bounce Away**⟨5⟩"
+ },
+ {
+  "id": "pelagic-merfolk",
+  "collection": "heritages",
+  "name": "Pelagic Merfolk",
+  "ancestryId": "merfolk",
+  "traits": [],
+  "text": "You're a merfolk of the open seas. Your tail is patterned after the silvery tuna and herring that school by the million in your hunting grounds. Water obeys your will, and with a quick word, you can draw a sheathe of it around you. You gain the Shielding Wave action."
+ },
+ {
+  "id": "pixie",
+  "collection": "heritages",
+  "name": "Pixie",
+  "ancestryId": "sprite",
+  "traits": [],
+  "text": "You are larger than other sprites. Instead of Tiny, your size is Small."
+ },
+ {
+  "id": "poisonhide-tripkee",
+  "collection": "heritages",
+  "name": "Poisonhide Tripkee",
+  "ancestryId": "tripkee",
+  "traits": [],
+  "text": "You may be small, but the poison glands concealed across your body hide a deadly defense. You gain the Toxic Skin reaction."
+ },
+ {
+  "id": "polyglot-android",
+  "collection": "heritages",
+  "name": "Polyglot Android",
+  "ancestryId": "android",
+  "traits": [],
+  "text": "You were preprogrammed with a multitude of linguistic proficiencies, likely to act as a translator. You learn two new languages, chosen from common languages and any uncommon languages you have access to. These languages take the same form (signed or spoken) as your other languages. If you select the feat, you learn three new languages instead of two."
+ },
+ {
+  "id": "quillcoat-shisk",
+  "collection": "heritages",
+  "name": "Quillcoat Shisk",
+  "ancestryId": "shisk",
+  "traits": [],
+  "text": "Your body has adapted a defensive mechanism to break off your quills in an attacker, allowing you to defend yourself against aggressive predators, though it takes a while for the quills to grow back. You gain the Barbed Quills reaction."
+ },
+ {
+  "id": "resolute-fetchling",
+  "collection": "heritages",
+  "name": "Resolute Fetchling",
+  "ancestryId": "fetchling",
+  "traits": [],
+  "text": "Your ancestors have long dealt with the horrific—in the Shadow Plane or elsewhere—and you bear their mental fortitude. When you roll a success on a saving throw against an emotion effect, you get a critical success instead."
+ },
+ {
+  "id": "rite-of-knowing",
+  "collection": "heritages",
+  "name": "Rite of Knowing",
+  "ancestryId": "conrasu",
+  "traits": [],
+  "text": "You enhanced your exoskeleton with a connection to Axis, allowing you to tap into the infinite knowledge of the plane. You gain the Call to Axis action."
+ }
+]

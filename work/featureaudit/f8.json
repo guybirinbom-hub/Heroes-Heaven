@@ -1,0 +1,838 @@
+[
+ {
+  "id": "second-skin",
+  "collection": "classFeatures",
+  "name": "Second Skin",
+  "level": 19,
+  "traits": [
+   "ranger"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your armor has become akin to a second skin for you. Your proficiency ranks for light armor, medium armor, and unarmored defense increase to master. When wearing light or medium armor, you can rest normally, rather than receiving poor rest that leaves you fatigued."
+ },
+ {
+  "id": "seek-and-destroy",
+  "collection": "classFeatures",
+  "name": "Seek and Destroy",
+  "level": 1,
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Frequency** once per 10 minutes --- You direct your team to uncover hidden foes and exploit newly discovered weaknesses. Signal up to two squadmates within the aura of your commander's banner; they can immediately seek as a free action. Afterward, each can spend a reaction to either Point Out an enemy, Stride toward an enemy they're observing, or attempt to Strike an enemy they're observing. Each of the squadmates deals additional precision damage equal to half your level with their next successful Strike before the end of your next turn against a creature that has become observed by them from a successful Perception check to Seek."
+ },
+ {
+  "id": "seething-frenzy",
+  "collection": "classFeatures",
+  "name": "Seething Frenzy",
+  "level": 1,
+  "traits": [
+   "concentrate",
+   "eidolon",
+   "emotion",
+   "mental"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your eidolon's fury boils over into a reckless, out-of-control frenzy. While frenzied, your eidolon is affected by *boost eidolon* and gains temporary Hit Points equal to your level, but it takes a -2 penalty to AC. Your eidolon can't voluntarily end the frenzy or start another frenzy while in the frenzy. The frenzy lasts for 1 minute, after which it's fatigued for 1 minute and can't start another frenzy for 1 minute."
+ },
+ {
+  "id": "selfish-shield",
+  "collection": "classFeatures",
+  "name": "Selfish Shield",
+  "level": 1,
+  "traits": [
+   "champion",
+   "divine"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An enemy in your champion's aura damages you --- **Effect** Your self-interest keeps you safe. You gain resistance against the triggering damage equal to 2 + half your level, regardless of damage type. In addition, your Strikes against the triggering creature deal 1 extra spirit damage until the end of your next turn. This extra damage increases to 2 at 9th level and 3 at 16th level."
+ },
+ {
+  "id": "sever-conduit",
+  "collection": "classFeatures",
+  "name": "Sever Conduit",
+  "level": 1,
+  "traits": [
+   "concentrate"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** Your eidolon takes damage that would bring you to 0 Hit Points and comes from an effect other than a death effect --- **Effect** You quickly shut the buffer in your link with your eidolon, causing your bonded ally to wink out of existence before you can be laid low. Your eidolon unmanifests, and you can't Manifest your Eidolon for 1 minute. In exchange, you don't take the triggering damage, though your eidolon still suffers any other adverse effects that accompanied the damage."
+ },
+ {
+  "id": "sever-four-dragonfly-wings",
+  "collection": "classFeatures",
+  "name": "Sever Four Dragonfly Wings",
+  "level": 1,
+  "traits": [
+   "transcendence"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "Make a Strike that deals slashing damage with your weapon ikon. If that Strike is successful, you can immediately make an additional Strike against a different target within your reach. You can continue making Strikes in this manner, each against a different target, until you have made a total of four Strikes or you miss with a Strike, whichever comes first. Each attack counts toward your multiple attack penalty, but you do not increase your penalty until you have made all your attacks."
+ },
+ {
+  "id": "shadow-sheath",
+  "collection": "classFeatures",
+  "name": "Shadow Sheath",
+  "level": 1,
+  "traits": [
+   "extradimensional",
+   "ikon"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Usage** a holster or sheath shaped for a one-handed thrown weapon of light Bulk or less --- With an infinite array of darts, throwing knives, or similar weapons, you never need worry about being unarmed. You can spend 1 minute to load a weapon meeting the shadow sheath's usage requirements into the sheath, which is hidden somewhere on your person. As long as the shadow sheath is on your person, you can Interact to draw an exact copy of the weapon from thin air. These copies retain the runes and abilities of the hidden weapon, though if you use any limited-use abilities (such as talismans or Activations with a frequency limit), they count against the weapon's normal usages. A copy disappears shortly after leaving your hand (or being used for a thrown Strike). **Immanence** You can Interact to draw a weapon from the shadow sheath as a free action. Your Strikes with a weapon produced from the shadow sheath deal 2 additional spirit damage per weapon damage die, which increases to 3 per die if the target is off-guard. **Transcendence—**Liar's Hidden Blade ⟨1⟩ (spirit, transcendence)"
+ },
+ {
+  "id": "shadows-in-the-moonlight",
+  "collection": "classFeatures",
+  "name": "Shadows in the Moonlight",
+  "level": 1,
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your commands help your team evade notice. Signal all squadmates within your banner's aura; until the end of your next turn, you and each ally count as Following the Expert for any checks to hide or sneak and can ignore the noisy trait on any armor you wear. If you spend 2 actions to use this tactic, up to two squadmates within your banner's aura can also either Hide or Sneak as a free action. --- **Special** If you have this tactic prepared, you can use Warfare Lore in place of Stealth for checks you attempt to Hide and Sneak."
+ },
+ {
+  "id": "share-senses",
+  "collection": "classFeatures",
+  "name": "Share Senses",
+  "level": 1,
+  "traits": [
+   "concentrate",
+   "scrying",
+   "summoner"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your eidolon is manifested. You project your senses into your eidolon, allowing you to perceive through it. When you do, you lose all sensory information from your own body, but can sense through your eidolon's body for up to 1 minute. You can Dismiss this effect. --- **Special** This action has the trait matching your eidolon's tradition (arcane, divine, occult, or primal). Your eidolon can also use this ability. When it does, it projects its senses into your body."
+ },
+ {
+  "id": "shared-reflexes",
+  "collection": "classFeatures",
+  "name": "Shared Reflexes",
+  "level": 9,
+  "traits": [
+   "summoner"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Summoner automatically at level 9",
+  "text": "You and your eidolon boost each other's reflexes, allowing you both to roll away from danger. Your proficiency rank for Reflex saves and your eidolon's proficiency rank for Reflex saves increase to expert."
+ },
+ {
+  "id": "shared-resolve",
+  "collection": "classFeatures",
+  "name": "Shared Resolve",
+  "level": 15,
+  "traits": [
+   "summoner"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Summoner automatically at level 15",
+  "text": "You and your eidolon steel your mind together against effects that threaten you, each protecting the others' minds from danger. Your and your eidolon's proficiency ranks for Will saves increase to master. When you roll a success on a Will save, you get a critical success instead. When your eidolon rolls a success on a Will save, it gets a critical success instead."
+ },
+ {
+  "id": "shared-vigilance",
+  "collection": "classFeatures",
+  "name": "Shared Vigilance",
+  "level": 3,
+  "traits": [
+   "summoner"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Summoner automatically at level 3",
+  "text": "You and your eidolon work together to remain alert to threats around you, allowing you to perceive far more together than you could individually. Your proficiency rank in Perception and your eidolon's proficiency rank in Perception increase to expert."
+ },
+ {
+  "id": "shed-spirit",
+  "collection": "classFeatures",
+  "name": "Shed Spirit",
+  "level": 1,
+  "traits": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Frequency** once per 10 minutes --- **Effect** Your familiar's spirit exits its body, leaving its empty shell behind, before flying at an enemy within 20 feet and dealing damage, with a save against your spell DC. If the familiar dealt damage, it then flies to an ally within 30 feet of the enemy, restoring Hit Points equal to half the damage dealt. Your familiar then re-forms in its original square. At 9th level, and every 2 levels thereafter, the attack deals an additional 2d6 damage."
+ },
+ {
+  "id": "shed-the-mortal-skin",
+  "collection": "classFeatures",
+  "name": "Shed the Mortal Skin",
+  "level": 1,
+  "traits": [
+   "healing",
+   "light",
+   "transcendence",
+   "vitality"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Like the serpent, that most ancient of immortals, you shed your skin, revealing a glowing divine form. If you are currently taking persistent fire or acid damage, you immediately end the effect. Until the beginning of your next turn, you shed bright light in a 20-foot radius (and dim light for the next 20 feet) like a torch. The next time you are dealt damage by an enemy before the beginning of your next turn, you shed glowing ichor in a square adjacent to you, and where it hits the earth, a glowing, thorned herb grows. A creature other than you can pluck and consume the herb with an Interact action to regain a number of Hit Points equal to half of the damage you were dealt by the attack that sprouted the herb."
+ },
+ {
+  "id": "shepherd-of-errant-winds",
+  "collection": "classFeatures",
+  "name": "Shepherd of Errant Winds",
+  "level": 1,
+  "traits": [
+   "animist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Often spun from eddies in the wake of air elementals, a shepherd of errant winds delights in movement and freedom. They might seek animists in breezy canyons or aboard ships cruising the trade winds, after which the apparition follows an animist to less airy locales. However, a shepherd of errant winds chafes at idleness and stirs up trouble if its surroundings seem too still. --- **Apparition Skill** Sailing Lore, Scouting Lore **Apparition Spells** - **Cantrip** Slashing Gust - **1st** Tailwind - **2nd** Propulsive Breeze - **3rd** Wall of Wind - **4th** Vapor Form - **5th** Scouting Eye - **6th** Mislead - **7th** Vacuum - **8th** Punishing Winds - **9th** Wrathful Storm **Vessel Spell** Gift of the Anemos **Avatar** *Avatar Will of the Winds* Speed 40 feet, fly 70 feet, ignore difficult terrain and greater difficult terrain **Melee** ⟨1⟩ air blast (air, reach 20 feet), **Damage** 6d8+6 bludgeoning **Ranged** ⟨1⟩ thunderclap (electricity, range 120 feet, versatile sonic), **Damage** 6d6+3 electricity"
+ },
+ {
+  "id": "shields-up",
+  "collection": "classFeatures",
+  "name": "Shields Up!",
+  "level": 1,
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You signal your allies to ready their defenses. Signal all squadmates within the aura of your commander's banner; each can immediately Raise a Shield as a reaction. Squadmates who are wielding a parry weapon can instead position that weapon defensively as a reaction. --- **Special** If one of your squadmates knows or has prepared the Shield cantrip, they can cast it as a reaction instead of taking the actions normally granted by this tactic."
+ },
+ {
+  "id": "silence-in-snow",
+  "collection": "classFeatures",
+  "name": "Silence in Snow",
+  "level": 1,
+  "traits": [
+   "witch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Witch Patron",
+  "text": "Bitter cold heralded your patron's appearance, in the depths of the winter solstice or on a frozen peak at the end of the world. Your patron might be a winter hag, ice yai, or other spirit of the cold, but one thing is clear as ice—their power is not to be underestimated. **Spell List** primal **Patron Skill** Nature **Lesson of Winter's Chill** Your patron taught you the power of winter firsthand by subjecting you to frost and snow. You learn the Clinging Ice hex cantrip and your familiar learns Gust of Wind. **Familiar of Freezing Rime** Your familiar is cold to the touch, its breath always visible. When you Cast or Sustain a hex, you can cause ice to form in a centered on a square of your familiar's space. Those squares are difficult terrain until the start of your next turn."
+ },
+ {
+  "id": "simple-weapon-expertise",
+  "collection": "classFeatures",
+  "name": "Simple Weapon Expertise",
+  "level": 11,
+  "traits": [
+   "animist",
+   "summoner"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Animist automatically at level 11",
+  "text": "**Animist** Training and magical assistance from your spiritual companions have improved your weapon technique. Your proficiency rank for simple weapons and unarmed attacks increases to expert. --- **Summoner** Training and magic improved your weapon technique. Your proficiency rank for simple weapons and unarmed attacks increases to expert."
+ },
+ {
+  "id": "skin-hard-as-horn",
+  "collection": "classFeatures",
+  "name": "Skin Hard as Horn",
+  "level": 1,
+  "traits": [
+   "ikon"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Usage** imbued in the skin --- Tempered in your spirit, your very skin is as a suit of armor, though a single location on your body remains unprotected, a curse and a challenge within your legend. During your daily preparations, you can strike your skin lightly with an object that deals bludgeoning, slashing or piecing damage to habituate your skin against this type of injury, attuning the ikon to that damage type. **Immanence** When your skin houses your divine spark, you gain resistance to the attuned damage type equal to half your level. This resistance doesn't apply against critical hits, which successfully find your unprotected spot. **Transcendence—**Crash Against Me ⟨1⟩ (transcendence)"
+ },
+ {
+  "id": "slingers-precision",
+  "collection": "classFeatures",
+  "name": "Slinger's Precision",
+  "level": 1,
+  "traits": [
+   "gunslinger"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Gunslinger automatically at level 1",
+  "text": "You deal an extra +2 precision damage with Strikes made using non-repeating crossbows and you deal an extra 1d4 precision damage on Strikes using non-repeating firearms. If you have gunslinging legend, you instead deal +3 additional precision damage with Strikes using non-repeating crossbows and an additional 1d6 precision damage with Strikes using non-repeating firearms. If you are using a combination weapon whose ranged form is a firearm or crossbow, you use your proficiency with firearms and crossbows for attacks made with the melee configuration of that weapon."
+ },
+ {
+  "id": "slip-and-sizzle",
+  "collection": "classFeatures",
+  "name": "Slip and Sizzle",
+  "level": 1,
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Your team executes a brutal technique designed to knock down an opponent and blast them with magical devastation. Signal up to two squadmates within the aura of your commander's banner; one of these squadmates must be adjacent to an opponent and the other must be capable of casting a spell that deals damage. The first squadmate can attempt to Trip the adjacent opponent as a reaction. If this Trip is successful, the second squadmate can cast a ranged spell that deals damage and takes 2 or fewer actions to cast. This spell is cast as a reaction and must either target the tripped opponent or include the tripped opponent in the spell's area. If the second squadmate cast a spell using slots or Focus Points as part of this tactic, they are Slowed 1 until the end of their next turn and do not gain a reaction when they regain actions at the start of their next turn."
+ },
+ {
+  "id": "sloth",
+  "collection": "classFeatures",
+  "name": "Sloth",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The Reclined spreads a sense of restful peace to its users, the feeling of rest after a hard day of work without the drudgery leading up to it. With its magic, runelords can cut away even the smallest drudgery. **Anathema** Use your magic to manipulate appearances or directly cause harm with the elements. **Sin Spells** - **cantrips:** Telekinetic Hand, Telekinetic Projectile - **1st:** Sleep, Enfeeble - **2nd:** Ghostly Carrier, Summon Elemental - **3rd:** Cozy Cabin, Slow - **4th:** Dull Ambition, Translocate - **5th:** Summon Dragon, Telekinetic Haul - **6th:** Collective Transposition - **7th:** Indolent Haze, Planar Palace - **8th:** Quandary - **9th:** Resplendent Mansion **Initial School Spell** Reclined Apport"
+ },
+ {
+  "id": "sneak-attack",
+  "collection": "classFeatures",
+  "name": "Sneak Attack",
+  "level": 1,
+  "traits": [
+   "rogue"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Rogue automatically at level 1",
+  "text": "When your enemy can't properly defend itself, you take advantage to deal extra damage. If you Strike a creature that has the off-guard condition with an agile or finesse melee weapon, an agile or finesse unarmed attack, a ranged weapon attack, or a ranged unarmed attack, you deal an extra 1d6 precision damage. For a ranged attack with a thrown melee weapon, that weapon must also be agile or finesse. As your level increases, so does the number of damage dice for your sneak attack. Increase the number of dice by one at 5th, 11th, and 17th levels."
+ },
+ {
+  "id": "spasm-of-the-berserker",
+  "collection": "classFeatures",
+  "name": "Spasm of the Berserker",
+  "level": 1,
+  "traits": [
+   "transcendence"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your body warps beyond recognition into a powerful, one-eyed form. You're affected by a 4th-rank Enlarge spell and a 6th-rank Moon Frenzy spell, which both last until the end of your next turn. You can't attempt to end the moon frenzy early. If this ikon becomes empowered again, you can extend Spasm of the Berserker's duration until the end of your next turn. While you're already affected by Spasm of the Berserker, the transcend action becomes a free action to extend its duration until the end of your next turn."
+ },
+ {
+  "id": "speaker-in-sibilance",
+  "collection": "classFeatures",
+  "name": "Speaker in Sibilance",
+  "level": 1,
+  "traits": [
+   "animist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Whether witnessed in hissing serpents or the whisper of pungent fumes wafting up from a forlorn cave, a speaker in sibilance offers forbidden knowledge and revels in the anguish of an unprepared mind. These apparitions often take medusa-like forms, each serpent providing different (and often contradictory) advice. --- **Apparition Skill** Fortune-Telling Lore, Mountain Lore **Apparition Spells** - **Cantrip** Puff of Poison - **1st** Ill Omen - **2nd** Stupefy - **3rd** - **4th** Snake Fangs - **5th** Slither - **6th** Petrify - **7th** Mask of Terror - **8th** Unrelenting Observation - **9th** Unfathomable Song **Vessel Spell** Crown of Prophets **Avatar** *Medusa of Merciless Mysteries* Speed 60 feet, climb 60 feet **Melee** ⟨1⟩ biting hair (poison, reach 15 feet), **Damage** 6d6+6 piercing plus 2d6 persistent poison **Ranged** ⟨1⟩ jarring prophecy (mental, range 120 feet, versatile sonic), **Damage** 6d6+3 mental"
+ },
+ {
+  "id": "spell-blending",
+  "collection": "classFeatures",
+  "name": "Spell Blending",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You theorize that spell slots are a shorthand for an underlying energy that powers all spellcasting, and you've found a way to tinker with the hierarchy of spell slots, combining them to fuel more powerful spells. During your daily preparations, you can trade two spell slots of the same spell rank for a bonus spell slot of up to 2 spell ranks higher than the traded spell slots. You can exchange as many spell slots as you have available. Bonus spell slots must be of a spell rank you can normally cast, and each bonus spell slot must be of a different spell rank. You can also trade any spell slot for two additional cantrips, though you can't trade more than one spell slot at a time for additional cantrips in this way."
+ },
+ {
+  "id": "spell-substitution",
+  "collection": "classFeatures",
+  "name": "Spell Substitution",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You don't accept the fact that once spells are prepared, they can't be changed until your next daily preparations, and you have uncovered a shortcut allowing you to substitute new spells for those you originally prepared. You can spend 10 minutes to empty one of your prepared spell slots and prepare a different spell from your spellbook in its place. If you are interrupted during such a swap, the original spell remains prepared and can still be cast. You can try again to swap out the spell later, but you must start the process over again."
+ },
+ {
+  "id": "spinning-crush",
+  "collection": "classFeatures",
+  "name": "Spinning Crush",
+  "level": 1,
+  "traits": [
+   "gunslinger"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "**Requirements** You're wielding a loaded firearm or loaded crossbow. --- You go into a vicious spin, smashing your weapon into those nearby and increasing your momentum by firing. All creatures adjacent to you take 4d6 bludgeoning damage plus your Strength modifier; this increases to 6d6 if your firearm has a striking rune, 8d6 if it has a greater striking rune, and 10d6 if it has a major striking rune. This ability does not apply other effects that increase damage with your firearm Strikes such as weapon specialization. Creatures affected by this attack must attempt a save. A creature that fails its save is also pushed 10 feet directly away from you."
+ },
+ {
+  "id": "spirit-instinct",
+  "collection": "classFeatures",
+  "name": "Spirit Instinct",
+  "level": 1,
+  "traits": [
+   "barbarian"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Barbarian Instinct",
+  "text": "Whether you are emotionally sensitive to the spirits around you; worship ancestors or apparitions; or are haunted by the specter of an ancestor, relative, friend, or foe, your rage takes the form of a spiritual possession. **Instinct Ability—Spirit Rage** When you rage, you can increase the additional damage from Rage from 2 to 3 and change its damage type to spirit, instead of the damage type for your weapon or unarmed attack (choose each time you Rage). If you choose to deal spirit damage, your weapon or unarmed attack gains the effects of the Ghost Touch property rune, which makes it more effective against incorporeal creatures, and your Rage action gains the divine and spirit traits. **Specialization Ability (7th)** When using spirit rage, increase the damage from Rage from 3 to 7. If you have greater weapon specialization, instead increase the damage when using spirit rage to 13. **Raging Resistance (9th)** You resist void damage, as well as damage dealt by the attacks and abilities of undead creatures, regardless of the damage type."
+ },
+ {
+  "id": "spring-the-trap",
+  "collection": "classFeatures",
+  "name": "Spring the Trap",
+  "level": 1,
+  "traits": [
+   "gunslinger"
+  ],
+  "actionCost": {
+   "type": "free"
+  },
+  "text": "**Trigger** You roll initiative. --- You can Interact to draw a combination weapon and set it to melee or ranged mode. On your first turn, your movement and ranged attacks don't trigger reactions that are normally triggered by movement or a ranged attack (such as Attack of Opportunity)."
+ },
+ {
+  "id": "stalker-in-darkened-boughs",
+  "collection": "classFeatures",
+  "name": "Stalker in Darkened Boughs",
+  "level": 1,
+  "traits": [
+   "animist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Stalkers in darkened boughs make their homes in ancient forests and jungles unfriendly to humanoids and others who would exert control or influence over nature's designs. These apparitions are drawn to animists who harbor violent thoughts or impulses but are more likely to linger with animists who can quell their hatred. Stalkers in darkened boughs are moody, impulsive, and prone to seeing things from the least charitable perspective. --- **Apparition Skills** Forest Lore, Hunting Lore **Apparition Spells** - **Cantrip** Gouging Claw - **1st** Runic Body - **2nd** Vomit Swarm - **3rd** Wall of Thorns - **4th** Bestial Curse - **5th** Moon Frenzy - **6th** Tangling Creepers - **7th** Unfettered Pack - **8th** Monstrosity Form - **9th** Wrathful Storm **Vessel Spell** Darkened Forest Form **Avatar** *Beast of the Boughs* Speed 70 feet, fly Speed 70 feet **Melee** ⟨1⟩ devouring jaws (deadly 3d10, reach 15 feet), **Damage** 6d10+6"
+ },
+ {
+  "id": "starless-shadow",
+  "collection": "classFeatures",
+  "name": "Starless Shadow",
+  "level": 1,
+  "traits": [
+   "witch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Witch Patron",
+  "text": "Your patron first contacted you at the witching hour, as your body lay paralyzed by sleep while your mind had yet to escape the waking world. Your patron might be a creature of the Netherworld or a long-forgotten spirit of twilight—all you remember of them are haunting eyes of moonlight, offering you power from the darkness. **Spell List** occult **Patron Skill** Occultism **Lesson of Night's Terrors** Your patron taught you that the darkness can hide all manner of things best left unseen. You gain the Shroud of Night hex cantrip, and your familiar learns Fear. **Familiar of Stalking Night** Your familiar is dark of fur or feather, and light seems to disappear into it. When you Cast or Sustain a hex, and your familiar is adjacent to an enemy to which it's concealed, hidden, or undetected, the enemy becomes Frightened 1."
+ },
+ {
+  "id": "starlit-span",
+  "collection": "classFeatures",
+  "name": "Starlit Span",
+  "level": 1,
+  "traits": [
+   "magus"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Magus Hybrid Study",
+  "text": "With magic, the sky's the limit, and you can't be bound by the confines of physical proximity. Your power reaches as far as your senses can perceive, transcending the space between you and your target even with spells that normally require direct physical contact. When you use Spellstrike, you can make a ranged weapon or ranged unarmed Strike, as long as the target is within the first range increment of your ranged weapon or ranged unarmed attack. You can deliver the spell even if its range is shorter than the range increment of your ranged attack. **Conflux Spell** Shooting Star"
+ },
+ {
+  "id": "starshot",
+  "collection": "classFeatures",
+  "name": "Starshot",
+  "level": 1,
+  "traits": [
+   "ikon"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Usage** a ranged weapon --- You might be the only one capable of stringing this bow or pulling this trigger; either way, the ikon's shots are packed with explosive power, striking like falling stars. **Immanence** Strikes with the starshot deal an additional 1 spirit splash damage per weapon damage die. **Transcendence—**Giant-Felling Comet ⟨2⟩ (spirit, transcendence)"
+ },
+ {
+  "id": "steward-of-stone-and-fire",
+  "collection": "classFeatures",
+  "name": "Steward of Stone and Fire",
+  "level": 1,
+  "traits": [
+   "animist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Stewards of stone and fire linger near volcanoes and deep places near the heart of the earth, hot springs where the water is too scorchingly hot to allow casual enjoyment, and other places where the barrier between fire and earth is thin or nonexistent, though particularly old rock formations, canyons, and other natural features of earth may also spawn or attract them. Stewards of stone and fire are quick to anger and slow to forget. --- **Apparition Skills** Mountain Lore, Volcano Lore **Apparition Spells** - **Cantrip** Ignition - **1st** Interposing Earth - **2nd** Exploding Earth - **3rd** Fireball - **4th** Wall of Fire - **5th** Wall of Stone - **6th** Petrify - **7th** Volcanic Eruption - **8th** Earthquake - **9th** Falling Stars **Vessel Spell** Earth's Bile **Avatar** *Blood of Planets* Speed 50 feet, burrow Speed 50 feet, ignore difficult terrain and greater difficult terrain **Melee** ⟨1⟩ avalanche of molten stone (reach 15 feet, versatile B), **Damage** 6d10+6 **Ranged** ⟨1⟩ cleansing eruption (fire, range 120 feet), **Damage** 6d6+6"
+ },
+ {
+  "id": "stitching-strike",
+  "collection": "classFeatures",
+  "name": "Stitching Strike",
+  "level": 1,
+  "traits": [],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Frequency** once per 10 minutes --- **Effect** Your familiar unravels into magical fibers that encompass an enemy within 30 feet and deal damage, with a save against your spell DC. On a failure, the target is also immobilized for 1 round or until it Escapes against your spell DC. Your familiar then re-forms in its original square. At 9th level, and every 2 levels thereafter, the attack deals an additional 2d6 damage."
+ },
+ {
+  "id": "stone-order",
+  "collection": "classFeatures",
+  "name": "Stone Order",
+  "level": 1,
+  "traits": [
+   "druid"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Druid Order",
+  "text": "You're as enduring as stone, and you take comfort in its steadfast presence, both natural and worked. **Order Skill** Crafting **Druid Feat** Steadying Stone **Order Spell** Crushing Ground **Anathema** Poisoning or polluting the land and heedlessly carving the earth to plunder its natural resources. (this doesn't prevent you from responsibly digging or mining)."
+ },
+ {
+  "id": "storm-order",
+  "collection": "classFeatures",
+  "name": "Storm Order",
+  "level": 1,
+  "traits": [
+   "druid"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Druid Order",
+  "text": "Whether you were born under a tempest or survived a bolt of lightning from a clear blue sky, you now carry the fury of the storm in your heart, channeling thunder to terrifying destructive effect and riding the winds through the air. **Order Skill** Acrobatics **Druid Feat** Storm Born **Order Spell** Tempest Surge **Anathema** Pollute the air, allow those who cause major air pollution or climate shifts to go unpunished. (This doesn't force you to take action against merely potential environmental harm or to sacrifice yourself against an obviously superior foe.)"
+ },
+ {
+  "id": "strained-metabolism",
+  "collection": "classFeatures",
+  "name": "Strained Metabolism",
+  "level": 1,
+  "traits": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your body's overclocked physiology requires larger-than-usual amounts of nourishment, leaving you weakened when it kicks in mid-combat. **Mild Backlash** Your metabolism immediately burns through your body's energy stores, making you Enfeebled 1 and Clumsy 1 until you take a bite of food (which usually requires 2 Interact actions: one to retrieve the food and another to consume it). **Moderate Backlash** Ravenous hunger wracks your body. You are enfeebled 1, clumsy 1, and fatigued until you can eat a full meal, which requires at least 10 minutes. **Severe Backlash** The strain on your body is truly incapacitating. You become Sickened 2 as nausea wracks you, and you are also enfeebled 1 and clumsy 1 until you can eat a full meal (which requires you to no longer be sickened). You are fatigued until you can get a full night's rest."
+ },
+ {
+  "id": "strategic-strike",
+  "collection": "classFeatures",
+  "name": "Strategic Strike",
+  "level": 1,
+  "traits": [
+   "investigator"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Investigator automatically at level 1",
+  "text": "When you strike carefully and with forethought, you deal a telling blow. When making a Strike that adds your Intelligence modifier on your attack roll due to Devising a Stratagem, you deal an additional 1d6 precision damage. As your investigator level increases, so too does the deadliness of your strategic strike. Increase the number of dice by one at 5th, 9th, 13th, and 17th levels."
+ },
+ {
+  "id": "strike-breathe-rend",
+  "collection": "classFeatures",
+  "name": "Strike, Breathe, Rend",
+  "level": 1,
+  "traits": [
+   "spirit",
+   "transcendence"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your last action this turn was a successful Strike with the Noble Branch --- **Effect** You channel a rending pulse of energy down your weapon in the moment of contact. The target of the Strike takes spirit damage equal to the noble branch's weapon damage dice. This includes any extra dice from striking runes, but not from special abilities, property runes, or the like."
+ },
+ {
+  "id": "strike-hard",
+  "collection": "classFeatures",
+  "name": "Strike Hard!",
+  "level": 1,
+  "traits": [
+   "brandish",
+   "commander",
+   "tactic"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You command an ally to attack. Signal a squadmate within the aura of your commander's banner. That ally immediately attempts a Strike as a reaction."
+ },
+ {
+  "id": "stubborn",
+  "collection": "classFeatures",
+  "name": "Stubborn",
+  "level": 3,
+  "traits": [
+   "gunslinger"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Gunslinger automatically at level 3",
+  "text": "You don't like being told what to do, and you don't give up. Your proficiency rank for Will saves increases to expert. When you fail, but don't critically fail, a Will save against an effect that would give you the controlled condition, you can attempt a second save against the effect at the start of your next turn. On a successful second save, the controlled condition ends, though any other effects remain. As normal, failing this second save doesn't allow you to attempt a third save on the subsequent turn."
+ },
+ {
+  "id": "stupefying-raid",
+  "collection": "classFeatures",
+  "name": "Stupefying Raid",
+  "level": 1,
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Your team dashes about in a series of maneuvers that leave the enemy befuddled. Signal up to two squadmates within the aura of your commander's banner; these squadmates can Stride up to their Speed as a reaction. Each enemy they are adjacent to at any point during this movement must attempt a save against your class DC or become Stupefied 1 for 1 round (Stupefied 2 on a critical failure); this is a mental effect."
+ },
+ {
+  "id": "surprise-attack",
+  "collection": "classFeatures",
+  "name": "Surprise Attack",
+  "level": 1,
+  "traits": [
+   "rogue"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Rogue automatically at level 1",
+  "text": "You spring into combat faster than foes can react. On the first round of combat, if you roll Deception or Stealth for initiative, creatures that haven't acted are off-guard to you."
+ },
+ {
+  "id": "swarming-assault",
+  "collection": "classFeatures",
+  "name": "Swarming Assault",
+  "level": 1,
+  "traits": [
+   "eidolon"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** Your eidolon is dispersed. --- Your eidolon swarms over each creature occupying its space, biting, pecking, clawing, or making similar attacks with its component bodies. It deals damage to each creature in the area, with a save against your spell DC. You choose each time your eidolon uses Swarming Assault whether it deals piercing or slashing damage. Your eidolon then can't use Swarming Assault again for the next 1d4 rounds. At 3rd level and every 2 levels thereafter, the damage increases by 1d6."
+ },
+ {
+  "id": "swift-prey",
+  "collection": "classFeatures",
+  "name": "Swift Prey",
+  "level": 19,
+  "traits": [
+   "ranger"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Ranger automatically at level 19",
+  "text": "You size up your prey with a glance. You can use Hunt Prey as a free action if it's your first action of your turn."
+ },
+ {
+  "id": "tactical-takedown",
+  "collection": "classFeatures",
+  "name": "Tactical Takedown",
+  "level": 1,
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You direct a coordinated maneuver that sends an enemy tumbling down. Signal up to two squadmates within the aura of your commander's banner. Each of those allies can Stride up to half their Speed as a reaction. If they both end this movement adjacent to an enemy, that enemy must succeed at a save against your class DC or fall prone."
+ },
+ {
+  "id": "take-the-high-ground",
+  "collection": "classFeatures",
+  "name": "Take the High Ground",
+  "level": 1,
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your ally leaps to secure the high ground with a little help from the squad. Signal a squadmate within the aura of your commander's banner; as a free action, that squadmate can Stride directly toward any other squadmate you are both observing. If the first squadmate ends this movement adjacent to another squadmate, the first squadmate can immediately Leap up to 25 feet horizontally or 15 feet vertically as a reaction, boosted by the other squadmate. This distance increases to 40 feet horizontally or 25 feet vertically if you have legendary proficiency in Warfare Lore."
+ },
+ {
+  "id": "tangle-line",
+  "collection": "classFeatures",
+  "name": "Tangle Line",
+  "level": 7,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Thrown Only** --- Your weapon has an extensible line that you can use to knock your enemies over, recall the weapon to your hand and even parry attacks. Your innovation gains the parry, ranged trip and tethered traits."
+ },
+ {
+  "id": "taunt",
+  "collection": "classFeatures",
+  "name": "Taunt",
+  "level": 1,
+  "traits": [
+   "guardian"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Guardian automatically at level 1",
+  "text": "Often, the best way to protect your allies is to have the enemy want to attack you instead. You gain the Taunt action."
+ },
+ {
+  "id": "teacher-of-heroes",
+  "collection": "classFeatures",
+  "name": "Teacher of Heroes",
+  "level": 15,
+  "traits": [
+   "exemplar"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Those who make great names for themselves as heroes are called upon to train those who follow them, and such is your destiny—to be remembered not through your own deeds but through the progeny who you hope will one day surpass you. After you Spark Transcendence, you can attempt to Recall Knowledge about one enemy you can see as a free action and instantly transmit any knowledge you gain as a result to every ally within 60 feet. The first piece of knowledge you gain when Recalling Knowledge in this way is always the enemy's immunities. If the enemy has no immunities, you learn its greatest resistance; if it also possesses no resistances, you learn its greatest weakness; if it possesses none of the above, you learn its lowest saving throw."
+ },
+ {
+  "id": "tempered-reflexes",
+  "collection": "classFeatures",
+  "name": "Tempered Reflexes",
+  "level": 15,
+  "traits": [
+   "fighter"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Fighter automatically at level 15",
+  "text": "Practiced reflexes let you find safety even in the face of cataclysmic explosions. Your proficiency rank for Reflex saves increases to master. When you roll a success on a Reflex save, you get a critical success instead."
+ },
+ {
+  "id": "tempest",
+  "collection": "classFeatures",
+  "name": "Tempest",
+  "level": 1,
+  "traits": [
+   "oracle"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Oracle Mystery",
+  "text": "The fury of the wind and waves pounds in your heart, whether your power flows from natural storms, a conduit to the elemental Planes of Air and Water, or through reverence of deities such as Gozreh, the tengu god of storms Hei Feng, the pirate queen Besmara, or the elemental lords of air and water. **Granted Spells** - **cantrip:** Electric Arc - **1st:** - **4th:** Hydraulic Torrent - **6th:** Chain Lightning **Revelation Spells** - **initial:** Tempest Touch - **advanced:** - **greater:** Tempest Form **Related Domains** air, cold, lightning, water **Mystery Skill** Nature **Oracle Feat** Foretell Harm Curse of Inclement Headwinds"
+ },
+ {
+  "id": "tempest-sun-mages",
+  "collection": "classFeatures",
+  "name": "Tempest-Sun Mages",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Tempest-Sun Mages prize physical courage as well as intellectual bravery. They feel called to defend against threats of all kinds, from tyranny and invasion to intellectual subversion and bullying. Generally having a keen sense of justice, they stand up for the downtrodden and step up whenever danger presents itself. Their classes often feature heated debates that occasionally spill over into rivalries and duels outside of class. Seeing themselves as the direct heirs to the power that the Ten Magic Warriors used to transform the world, Tempest-Sun Mages tend to see magic as a fundamental power in the service of a larger purpose to extend justice and create a better world, focusing on magic that invokes the power of the sun and strengthens their own resolve. **Additional Curriculum** - **cantrips:** Ignition - **1st:** Breathe Fire, Fleet Step - **2nd:** Blazing Bolt - **3rd:** Fireball - **4th:** Fly - **5th:** Elemental Form - **6th:** Wall of Force - **7th:** Fiery Body - **8th:** Monstrosity Form - **9th:** Implosion"
+ },
+ {
+  "id": "tendril-strike",
+  "collection": "classFeatures",
+  "name": "Tendril Strike",
+  "level": 1,
+  "traits": [
+   "eidolon"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Stretching to extend its body to its limits, your eidolon attacks a foe that would normally be beyond its reach. Your eidolon makes a melee unarmed Strike, increasing its reach by 5 feet for that Strike. If the unarmed attack has the disarm, shove, or trip trait, the eidolon can use the corresponding action instead of a Strike."
+ },
+ {
+  "id": "tensile-absorption",
+  "collection": "classFeatures",
+  "name": "Tensile Absorption",
+  "level": 7,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You've enhanced the tensile capabilities of your armor, enabling it to bend with bludgeoning attacks. While wearing your armor, you gain resistance to bludgeoning damage equal to half your level."
+ },
+ {
+  "id": "thaumaturgic-expertise",
+  "collection": "classFeatures",
+  "name": "Thaumaturgic Expertise",
+  "level": 9,
+  "traits": [
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Thaumaturge automatically at level 9",
+  "text": "You've learned deeper secrets of the supernatural, and your abilities are harder to resist. Your proficiency rank for your thaumaturge class DC increases to expert. You also gain an additional skill increase, which you can apply only to Arcana, Nature, Occultism, or Religion."
+ },
+ {
+  "id": "thaumaturgic-mastery",
+  "collection": "classFeatures",
+  "name": "Thaumaturgic Mastery",
+  "level": 17,
+  "traits": [
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Thaumaturge automatically at level 17",
+  "text": "You've become a master in paranormal phenomena, and your esoterica grow in power. Your proficiency rank for your thaumaturge class DC increases to master. You also gain an additional skill increase, which you can apply only to Arcana, Nature, Occultism, or Religion."
+ },
+ {
+  "id": "the-inscribed-one",
+  "collection": "classFeatures",
+  "name": "The Inscribed One",
+  "level": 1,
+  "traits": [
+   "witch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Witch Patron",
+  "text": "No words passed your patron's lips in the moment you met; instead, words and glyphs danced across their skin while symbols and numbers swam in the depths of their eyes, spelling out their will in a torrent of words and wisdom. Your patron might be a powerful archmage, or even one of their abandoned artifacts, searching for a successor. **Spell List** arcane **Patron Skill** Arcana **Lesson of Glyph's Supremacy** Your patron teaches that the written word can accomplish so much more than it seems. You gain the Discern Secrets hex and your familiar learns Runic Weapon. **Familiar of Flowing Script** Your familiar is covered in a pattern that looks similar to letters in an unknown language, one that seems to draw attention even as it eludes understanding. When you Cast or Sustain a hex, the letters begin to rapidly change, causing a distraction. Until the start of your next turn, your familiar can provide flanking for you and your allies as though it were able to attack and had a reach of 5 feet; this is a visual effect."
+ }
+]

@@ -4814,12 +4814,6 @@
   },
   {
     "category": "items",
-    "id": "the-tangled-briar",
-    "field": "maxHpBonus",
-    "value": 1
-  },
-  {
-    "category": "items",
     "id": "bangles-of-crowns",
     "field": "passiveEffects",
     "value": {

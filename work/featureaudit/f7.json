@@ -1,0 +1,860 @@
+[
+ {
+  "id": "primal-roar",
+  "collection": "classFeatures",
+  "name": "Primal Roar",
+  "level": 1,
+  "traits": [
+   "auditory",
+   "eidolon"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Your eidolon unleashes a primal roar or other such terrifying noise that fits your eidolon's form. Your eidolon attempts Intimidation checks to demoralize each enemy that can hear the roar; these Demoralize attempts don't take any penalty for not sharing a language."
+ },
+ {
+  "id": "prodigious-will",
+  "collection": "classFeatures",
+  "name": "Prodigious Will",
+  "level": 17,
+  "traits": [
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Wizard automatically at level 17",
+  "text": "Your mind is simply too complex and sophisticated to be tampered with. Your proficiency rank for Will saves increases to master. When you roll a success at a Will save, you get a critical success instead."
+ },
+ {
+  "id": "protective-screen",
+  "collection": "classFeatures",
+  "name": "Protective Screen",
+  "level": 1,
+  "traits": [
+   "brandish",
+   "commander",
+   "tactic"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You've trained your allies in a technique designed to protect war mages. Signal one squadmate; as a reaction, that squadmate Strides directly toward any other squadmate who is within the aura of your banner. If the first squadmate ends their movement adjacent to another squadmate, the second squadmate does not trigger reactions when casting spells or making ranged attacks until the end of their next turn or until they are no longer adjacent to the first squadmate, whichever comes first. If the first squadmate ends their movement adjacent to more than one other squadmate, the first squadmate must choose which of the adjacent squadmates gains this benefit."
+ },
+ {
+  "id": "psi-cantrips-and-amps",
+  "collection": "classFeatures",
+  "name": "Psi Cantrips and Amps",
+  "level": 1,
+  "traits": [
+   "psychic"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Psychic automatically at level 1",
+  "text": "The magic of your mind manifests as psi cantrips, which you can modify by spending Focus Points. Like other cantrips, you can cast psi cantrips as often as you like, and they are automatically heightened to half your level rounded up. Your psi cantrips are in addition to the cantrips you choose from the occult list as part of your psychic spellcasting. Generally, only feats can give you more psi cantrips. Unlike other cantrips, you can't swap out psi cantrips gained from psychic feats at a later level, unless you swap out the specific feat via retraining. At 1st level, you learn three psi cantrips determined by your choice of conscious mind; one is a unique psi cantrip and two are common cantrips, typically from the occult spellcasting tradition, that you always cast as psi cantrips. You automatically gain more psi cantrips as you progress in your career as a psychic. You start with a focus pool of 2 Focus Points. However, unlike other spellcasters, you don't gain focus spells that cost Focus Points to cast. Instead, you use your Focus Points to boost or modify your psi cantrips by applying amps—specialized thoughtforms that alter the expression of your psychic power. Each of your psi cantrips has a special amp heading. Whenever you cast a psi cantrip, you can amp it by spending 1 Focus Point as a free action. If the next action you take is to cast the psi cantrip, you add the amp effect. If the spell is a reaction or triggered free action, instead spend the Focus Point as pa"
+ },
+ {
+  "id": "quick-alchemy",
+  "collection": "classFeatures",
+  "name": "Quick Alchemy",
+  "level": 1,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the Quick Alchemy action to make the items you need on the fly."
+ },
+ {
+  "id": "quick-tempered",
+  "collection": "classFeatures",
+  "name": "Quick-Tempered",
+  "level": 1,
+  "traits": [
+   "barbarian"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Barbarian automatically at level 1",
+  "text": "You gain the Quick-Tempered free action, which lets you Rage at the slightest provocation."
+ },
+ {
+  "id": "quick-tincture",
+  "collection": "classFeatures",
+  "name": "Quick Tincture",
+  "level": 1,
+  "traits": [
+   "investigator",
+   "manipulate"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Cost** 1 versatile vial **Requirements** You know the formula for the alchemical item you're creating, you are holding or wearing alchemist's toolkit, and you have a free hand. --- You quickly brew up a short-lived tincture. You create a single alchemical elixir or tool of your level or lower without having to spend the normal monetary cost in alchemical reagents or needing to attempt a Crafting check. This item has the infused trait, but it remains potent only until the end of the current turn."
+ },
+ {
+  "id": "race-the-skies",
+  "collection": "classFeatures",
+  "name": "Race the Skies",
+  "level": 1,
+  "traits": [
+   "concentrate",
+   "transcendence"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You take your place among the heavens. For 1 minute, you gain a fly Speed equal to your Speed or 20 feet, whichever is greater."
+ },
+ {
+  "id": "raconteurs-reload",
+  "collection": "classFeatures",
+  "name": "Raconteur's Reload",
+  "level": 1,
+  "traits": [
+   "gunslinger"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your rapid or forceful words draw the enemy's attention away from your hands long enough to chamber another bullet. Interact to reload and then attempt a Deception check to Create a Diversion or an Intimidation check to demoralize."
+ },
+ {
+  "id": "rage",
+  "collection": "classFeatures",
+  "name": "Rage",
+  "level": 1,
+  "traits": [
+   "barbarian"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Barbarian automatically at level 1",
+  "text": "You gain the Rage action, which lets you fly into a frenzy."
+ },
+ {
+  "id": "raging-resistance",
+  "collection": "classFeatures",
+  "name": "Raging Resistance",
+  "level": 9,
+  "traits": [
+   "barbarian"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Barbarian automatically at level 9",
+  "text": "Repeated exposure and toughened skin allow you to fend off harm. While raging, you gain resistance equal to 3 + your Constitution modifier to damage types based on your instinct. See specific instincts for more information."
+ },
+ {
+  "id": "rain-scribes",
+  "collection": "classFeatures",
+  "name": "Rain-Scribes",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Rain-Scribes, who seek to explore the world and especially its unknown corners, draw the closest of all the branches to primal magic in their study of the arcane. They also embrace the \"practical magic\" schooling that takes them off of campus, often into the wilds of the Mwangi Expanse but sometimes beyond to other continents on Golarion or even onto distant planes. Their course of magical study includes connecting with and understanding nature, working with the elements, summoning animals, and providing for their own survival. **Additional Curriculum** - **cantrips:** Light - **1st:** Mending, Summon Animal - **2nd:** Shape Wood - **3rd:** Cozy Cabin - **4th:** Liminal Doorway, Unfettered Movement - **5th:** Magic Passage, Summon Dragon - **6th:** Chain Lightning - **7th:** Planar Palace - **8th:** Earthquake - **9th:**"
+ },
+ {
+  "id": "razor-prongs",
+  "collection": "classFeatures",
+  "name": "Razor Prongs",
+  "level": 1,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can knock down and slash your foes with sharp, curved blades. Your innovation gains the tearing, trip, and versatile S traits."
+ },
+ {
+  "id": "reaction-time",
+  "collection": "classFeatures",
+  "name": "Reaction Time",
+  "level": 7,
+  "traits": [
+   "guardian"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Guardian automatically at level 7",
+  "text": "You're always on the lookout for danger and can react to it in an instant. Your proficiency rank for Perception increases to expert. At the start of each of your turns, you gain an additional reaction that you can use only for reactions from guardian feats or class features (including Shield Block). If you have the Ever Ready class feature, you also gain this additional reaction when you roll initiative for combat."
+ },
+ {
+  "id": "reactive-strike",
+  "collection": "classFeatures",
+  "name": "Reactive Strike",
+  "level": 1,
+  "traits": [
+   "fighter"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Fighter automatically at level 1",
+  "text": "Ever watchful for weaknesses, you can quickly attack foes that leave an opening in their defenses. You gain the Reactive Strike reaction."
+ },
+ {
+  "id": "ready-aim-fire",
+  "collection": "classFeatures",
+  "name": "Ready, Aim, Fire!",
+  "level": 1,
+  "traits": [
+   "brandish",
+   "commander",
+   "tactic"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Frequency** once per 10 minutes --- You signal a volley of ranged attacks from your allies. Choose an enemy and signal up to three squadmates within the aura of your commander's banner; your squadmates can Interact to reload as a free action and attempt a ranged Strike against the enemy as a reaction --- **Special** If one of your squadmates knows or has prepared a cantrip with a range of 30 feet or more that deals damage and requires 2 or fewer actions to cast, they can cast it targeting the enemy instead of taking the other actions normally granted by this tactic."
+ },
+ {
+  "id": "reap-the-field",
+  "collection": "classFeatures",
+  "name": "Reap the Field",
+  "level": 1,
+  "traits": [
+   "transcendence"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** Your previous action was a successful Strike with the Mortal Harvest --- **Effect** Time seems to lag as you blur across the battlefield, deciding the fate of many in a moment. Stride up to half your Speed and make another melee Strike with the mortal harvest against a different creature. This Strike uses the same multiple attack penalty as your previous Strike, but counts toward your multiple attack penalty as normal."
+ },
+ {
+  "id": "recall-the-teachings",
+  "collection": "classFeatures",
+  "name": "Recall the Teachings",
+  "level": 1,
+  "traits": [
+   "occult",
+   "psyche",
+   "psychic"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "The heightened power of your psyche lets you recall every lesson you've ever learned. You search your mind for the right teaching, which at first seems cryptic but comes into clarity when it's most relevant. Until the start of your next turn, you count as having prepared to Aid all allies within 30 feet of you. If you use the Aid reaction to help one of them during that time, you roll an Occultism check for aid skill=occultism traits=auditory,linguistic as you recall a lesson to help them. Most lessons take the form of short axioms, parables, or sayings, meaning that conveying them to your ally usually grants your Aid reaction the auditory and linguistic traits."
+ },
+ {
+  "id": "reconfigure",
+  "collection": "classFeatures",
+  "name": "Reconfigure",
+  "level": 3,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Inventor automatically at level 3",
+  "text": "You've become an expert in all crafts and are always adjusting your inventions. You can attempt to change the modifications on your innovation by spending 1 day of downtime tinkering with it and attempting a Crafting check, with a high DC for your level. On a success, you can change one modification you've chosen for your innovation to a different modification of the same kind (initial, breakthrough, or revolutionary). If you have any modification feats, on a successful check you can choose to instead retrain a modification feat to a different modification feat. The new feat has to meet the standard restrictions for retraining."
+ },
+ {
+  "id": "red-mantis-magic-school",
+  "collection": "classFeatures",
+  "name": "Red Mantis Magic School",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Wizard Arcane School",
+  "text": "While any thug can commit a murder, proper assassination requires finesse and guile. Deep within the Crimson Citadel, the Red Mantis assassins have developed a specific selection of spells they teach to all magically capable members. These spells complement the assassins' clandestine and deadly methods. **Curriculum** - **cantrips:** Figment, Gouging Claw - **1st** Fleet Step, Illusory Disguise, Sure Strike - **2nd** , Mist - **3rd** , Paralyze - **4th** , Translocate - **5th** , Illusory Scene - **6th** Mislead, Phantasmal Calamity - **7th** Duplicate Foe, Project Image - **8th** , Unrelenting Observation - **9th** **School Spells** initial: Debilitating Terror; advanced: Shroud of the Mantis"
+ },
+ {
+  "id": "redemption",
+  "collection": "classFeatures",
+  "name": "Redemption",
+  "level": 1,
+  "traits": [
+   "champion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Champion Cause",
+  "text": "Yearning for all to live in harmony, you make every attempt to redeem those others might slay or dismiss. **Edicts** try to redeem those who commit wicked deeds, show compassion to others regardless of their authority or station **Anathema** kill a sapient enemy without first offering a chance at redemption --- **Champion's Reaction** Glimpse of Redemption **Relentless Reaction (9th Level)** If the enemy refuses, it takes persistent persistent spirit damage equal to your Charisma modifier. **Exalted Reaction (11th Level)** If the enemy refuses, you can choose to grant the resistance to yourself and all allies in your champion's aura, including the triggering ally. If you do, the resistance is reduced by 2 for all"
+ },
+ {
+  "id": "redistribute",
+  "collection": "classFeatures",
+  "name": "Redistribute",
+  "level": 1,
+  "traits": [
+   "eidolon"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Frequency** once per 10 minutes **Trigger** An enemy's Strike against your eidolon is a critical hit. --- Your eidolon rearranges its component bodies in response to a powerful blow, mitigating the worst of the damage they would have taken. The triggering critical hit becomes a hit. Your eidolon immediately switches forms, from condensed to dispersed or from dispersed to condensed."
+ },
+ {
+  "id": "reflex-expertise",
+  "collection": "classFeatures",
+  "name": "Reflex Expertise",
+  "level": 3,
+  "traits": [
+   "barbarian",
+   "bard",
+   "champion",
+   "cleric",
+   "druid",
+   "guardian",
+   "sorcerer",
+   "thaumaturge",
+   "witch",
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Thaumaturge automatically at level 3",
+  "text": "You've developed a knack for dodging danger. Your proficiency rank for Reflex saves increases to expert. **Guardian** Even in the heaviest of armors, you can brace yourself against widespread effects. Your proficiency rank for Reflex saves increases to expert."
+ },
+ {
+  "id": "reflow-elements",
+  "collection": "classFeatures",
+  "name": "Reflow Elements",
+  "level": 11,
+  "traits": [
+   "kineticist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Kineticist automatically at level 11",
+  "text": "You twist one of the impulses you've learned into a different but still similar magic. When you make your daily preparations, you can replace one of your impulse feats with a different impulse feat that has the same elemental trait. You can reflow only impulse feats that have exactly one elemental trait, not composite impulse feats or feats that vary by element. This follows the same rules as retraining; you can replace impulse feats gained through your class feats or through class features that grant you impulse feats."
+ },
+ {
+  "id": "reinforced-ego",
+  "collection": "classFeatures",
+  "name": "Reinforced Ego",
+  "level": 17,
+  "traits": [
+   "swashbuckler"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Swashbuckler automatically at level 17",
+  "text": "You've steeled your mind with resolve. Your proficiency rank for Will saves increases to master. When you roll a success on a Will save, you get a critical success instead."
+ },
+ {
+  "id": "rejoin-in-flight",
+  "collection": "classFeatures",
+  "name": "Rejoin in Flight",
+  "level": 1,
+  "traits": [
+   "transcendence"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You throw your weapon ikons to either side of a creature, and they seek each other out, converging on the target. Make two thrown Strikes against a target within the first range increment of both your weapon ikons. This counts as two attacks toward your multiple attack penalty, but the penalty doesn't increase until after you've made both attacks. The target is flanked for both attacks (typically making it off-guard against both attacks). If both Strikes hit, the target also takes an additional die of weapon damage. The weapons then return to your hand."
+ },
+ {
+  "id": "relentless-reaction",
+  "collection": "classFeatures",
+  "name": "Relentless Reaction",
+  "level": 9,
+  "traits": [
+   "champion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Champion automatically at level 9",
+  "text": "Your champion's reaction improves, typically to punish the attacker with spiritual backlash. It gains the relentless reaction benefit listed in your cause below your champion's reaction."
+ },
+ {
+  "id": "reload",
+  "collection": "classFeatures",
+  "name": "Reload!",
+  "level": 1,
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Your drill instruction kicks in, and your allies rapidly reload their weapons to prepare for the next volley. Signal all squadmates; each can immediately Interact to reload as a reaction. --- **Special** When leading a siege weapon crew, you can use this tactic to command your squadmates to Load a siege weapon instead."
+ },
+ {
+  "id": "reloading-strike",
+  "collection": "classFeatures",
+  "name": "Reloading Strike",
+  "level": 1,
+  "traits": [
+   "gunslinger"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** You're wielding a firearm or crossbow in one hand, and your other hand either wields a one-handed melee weapon or is empty. --- You make a melee attack and reload in one fluid movement. Strike an opponent within reach with your one-handed melee weapon (or, if your other hand is empty, with an unarmed attack), and then Interact to reload. You don't need a free hand to reload in this way and this reload does not trigger reactions."
+ },
+ {
+  "id": "research-field",
+  "collection": "classFeatures",
+  "name": "Research Field",
+  "level": 1,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Alchemist automatically at level 1",
+  "text": "Your inquiries into the alchemical nature of the universe have led you to focus on a particular field of research. At 1st level, you choose your research field. This choice gives you more formulas, a special benefit, other abilities for your versatile vials, and other benefits as you level up."
+ },
+ {
+  "id": "resolute-faith",
+  "collection": "classFeatures",
+  "name": "Resolute Faith",
+  "level": 9,
+  "traits": [
+   "cleric"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Cleric automatically at level 9",
+  "text": "Belief provides a bulwark against insidious thoughts. Your proficiency rank for Will saves increases to master. When you roll a success at a Will save, you get a critical success instead."
+ },
+ {
+  "id": "resolve",
+  "collection": "classFeatures",
+  "name": "Resolve",
+  "level": 7,
+  "traits": [
+   "magus"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Magus automatically at level 9",
+  "text": "You've steeled your mind with resolve. Your proficiency rank for Will saves increases to master. When you roll a success on a Will save, you get a critical success instead."
+ },
+ {
+  "id": "retributive-strike",
+  "collection": "classFeatures",
+  "name": "Retributive Strike",
+  "level": 1,
+  "traits": [
+   "champion",
+   "divine"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An enemy damages your ally, and both are in your champion's aura --- **Effect** You protect your ally and strike your enemy. The ally gains resistance to all damage against the triggering damage equal to 2 + your level. If the enemy is within reach, make a melee Strike against it."
+ },
+ {
+  "id": "reveler-in-lost-glee",
+  "collection": "classFeatures",
+  "name": "Reveler in Lost Glee",
+  "level": 1,
+  "traits": [
+   "animist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Revelers in lost glee are twisted apparitions that arise in desolate and abandoned places where people once found great joy. They take immense mirth in causing harm or discomfort to others and do not enjoy being attuned to animists who fail to laugh at their antics. --- **Apparition Skills** Circus Lore, Fortune-Telling Lore **Apparition Spells** - **Cantrip** - **1st** Dizzying Colors - **2nd** Laughing Fit - **3rd** Hypnotize - **4th** Confusion - **5th** Illusory Scene - **6th** Vibrant Pattern - **7th** Warp Mind - **8th** Quandary - **9th** Wails of the Damned **Vessel Spell** Trickster's Mirrors **Avatar** *Ringmaster of the Dark Celebration* Speed 50 feet, ignore difficult terrain and greater difficult terrain **Melee** ⟨1⟩ ringmaster's whip (reach 15 feet, trip), **Damage** 6d10+6 **Ranged** ⟨1⟩ feast of the lost (acid, range 120 feet, versatile void), **Damage** 6d6+6"
+ },
+ {
+  "id": "revitalizing-rage",
+  "collection": "classFeatures",
+  "name": "Revitalizing Rage",
+  "level": 17,
+  "traits": [
+   "barbarian"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Barbarian automatically at level 17",
+  "text": "Your rage sustains you more frequently, leaving you ready to jump into battle anew. Instead of needing to wait 1 minute before you can gain temporary Hit Points from Rage again, you need only to spend at least one full turn not in a Rage."
+ },
+ {
+  "id": "ring-bell",
+  "collection": "classFeatures",
+  "name": "Ring Bell",
+  "level": 1,
+  "traits": [
+   "auditory",
+   "magical",
+   "manipulate",
+   "sonic",
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** The target of your Exploit Vulnerability makes a Strike or Casts a Spell that would affect you or one of your allies. **Requirements** You are holding your bell implement, and the triggering creature is within 30 feet of you. --- Your implement sings out abruptly, disrupting your foe. The piece played depends on whether the trigger was a Strike or Spell, and it applies to the triggering Strike or Spell, except where noted otherwise. - **Distracting Cacophony** The trigger is a spell. You create a musical crash of sonic energy that assails the target and breaks its concentration. The target must succeed at a save against your class DC or become Stupefied 1 until the end of your next turn (Stupefied 2 on a critical failure). The target doesn't have to attempt a flat check to avoid losing the triggering spell, but the discordant ring does lower the spell attack modifier or spell DC of the triggering spell from stupefied. - **Disrupting Harmony** The trigger is a Strike. You create a strangely discordant harmony that sinks into your foe's body and throws its movements off. The target must succeed at a save against your class DC or become your choice of Enfeebled 1 or Clumsy 1 until the end of your next turn (Enfeebled 2 or Clumsy 2 on a critical failure)."
+ },
+ {
+  "id": "ringing-challenge",
+  "collection": "classFeatures",
+  "name": "Ringing Challenge",
+  "level": 1,
+  "traits": [
+   "sonic",
+   "spirit",
+   "transcendence"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You clang your ikon against a weapon, shield, or the ground, emitting a shock wave that deals damage to all creatures in a or ( save). A creature that critically fails its saving throw is deafened for 1 minute. At 6th level and every 2 levels thereafter, the damage increases by 1d4 spirit damage and 1d4 sonic damage."
+ },
+ {
+  "id": "ripple-in-the-deep",
+  "collection": "classFeatures",
+  "name": "Ripple in the Deep",
+  "level": 1,
+  "traits": [
+   "witch"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Witch Patron",
+  "text": "When your patron appeared, it was as an unfathomably large shadow beneath the waves, possibly as an ancient denizen of the vast waters like a kraken. Whether channeling the lethal terror of an oceanic predator or singing the ancestral wisdom of its gentle giants, your leviathan patron brings you lessons from the unplumbed depths of the world. **Spell List** primal **Patron Skill** Nature **Lesson of Surface and Seas** Your patron teaches of the dangers and wonders of its domain, even at the very edges of the water. You gain the Sting of the Sea hex cantrip, and your familiar learns Dizzying Colors or Grease. **Familiar of Overwhelming Tides** Your familiar constantly drips with ocean water. When you Cast or Sustain a hex, you can cause a small wave to surge forth from your familiar. One creature within 10 feet of your familiar is pushed 5 feet away from your familiar."
+ },
+ {
+  "id": "roaring-charge",
+  "collection": "classFeatures",
+  "name": "Roaring Charge",
+  "level": 1,
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Frequency** once per 10 minutes --- You and your squad surge forward with a mighty roar. Signal all squadmates within the aura of your commander's banner. As a reaction, these squadmates can Stride up to twice their Speed directly toward any enemy they are observing. Any creature within 10 feet of a squadmate once all movement from this tactic has been completed must attempt a save against your class DC with the following results. This is an emotion, fear, incapacitation, and mental effect. --- **Critical Success** No effect. **Success** The target is Frightened 1. **Failure** The target is Frightened 2. **Critical Failure** The target is Frightened 3 and fleeing for 1 round."
+ },
+ {
+  "id": "rogue-resilience",
+  "collection": "classFeatures",
+  "name": "Rogue Resilience",
+  "level": 9,
+  "traits": [
+   "rogue"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Rogue automatically at level 9",
+  "text": "Your physique is incredibly hardy. Your proficiency rank for Fortitude saves increases to expert. When you roll a success on a Fortitude save, you get a critical success instead."
+ },
+ {
+  "id": "root-epithet",
+  "collection": "classFeatures",
+  "name": "Root Epithet",
+  "level": 3,
+  "traits": [
+   "exemplar"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Exemplar automatically at level 3",
+  "text": "As your story unfolds, your personality and deeds begin to shape the potential of your divine spark. You come to bear an epithet—a word or phrase that seems to always stick in the mind of those describing you. (You can find examples of acquiring epithets in the Earning your Name sidebar on page 35.) Your epithets grant you additional abilities, especially when your divine spark is brought to the surface. You first gain a root epithet to describe an aspect of your personality. This grants you a skill, as well as a special effect that occurs when you Spark Transcendence. If you are already trained in the granted skill, you become trained in a different skill of your choice, as normal. An effect that occurs after you Spark Transcendence happens immediately after your transcendence action is completely resolved."
+ },
+ {
+  "id": "rope-shot",
+  "collection": "classFeatures",
+  "name": "Rope Shot",
+  "level": 7,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Ranged Only** --- Your weapon can shoot projectiles that split into simple ropes or nets around your foes' legs to trip your targets, and you can climb using the grappling hooks built into the weapon. Your weapon innovation gains the climbing and ranged trip traits, as well as the tethered trait if it is thrown."
+ },
+ {
+  "id": "rune-capacity",
+  "collection": "classFeatures",
+  "name": "Rune Capacity",
+  "level": 15,
+  "traits": [
+   "inventor"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Whether you've done some dabbling in orichalcum alloys or found another engineering solution, you've built your innovation in such a way that it can hold an additional property rune. Your innovation can have one more property rune than a normal item of its kind (to a maximum of four property runes with a +3 *potency* armor)."
+ },
+ {
+  "id": "runelords-calling",
+  "collection": "classFeatures",
+  "name": "Runelord's Calling",
+  "level": 1,
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Even before Karzoug rose, you felt something tugging to you from beyond. Strange memories, sudden insights, vivid dreams, or wild hunches that lead to discoveries or unexpected successes have been the norm for you. Once knowledge of the legacies of Thassilon began to spread anew into the modern world after Karzoug rose from slumber, you've increasingly come to realize these visions and inspirations come to you from the past—maybe even one of your past lives—and that something from the time before Earthfall in ancient Thassilon is linked to your soul. When you attempt a check to Identify Magic, Learn a Spell, or cast a ritual, you can spend a Mythic Point to attempt the check at mythic proficiency. The first time each day that you critically succeed at an Arcana, Nature, Occultism, or Religion check to Identify Magic, you regain a Mythic Point. --- **Edicts** seek out rare magic spells and items from ancient Thassilon, learn knowledge about Thassilon that has been forgotten **Anathema** willingly destroy ancient texts or other forms of written knowledge without first preserving that lore in some way, treat another's convictions or beliefs as fantasy or delusion"
+ },
+ {
+  "id": "sacred-body",
+  "collection": "classFeatures",
+  "name": "Sacred Body",
+  "level": 9,
+  "traits": [
+   "champion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Champion automatically at level 9",
+  "text": "The power of your deity keeps your body safe from harm, as true an edifice of the faith as a great temple. Your proficiency rank for Fortitude saves increases to master. When you roll a success on a Fortitude save, you get a critical success instead."
+ },
+ {
+  "id": "sagas-calling",
+  "collection": "classFeatures",
+  "name": "Saga's Calling",
+  "level": 1,
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The Saga Lands do not come by that appellation lightly, for the storied legacies of this region predate Earthfall and have roots in worlds far beyond Golarion. Whether you were born in these lands or drawn there, those storied legacies have resonated with you on a supernatural level. It seems like each time you learn of some new legend or tale of this land passed down through the generations, there's something in it that directly applies to your life. You've taken to relying upon these legends—be they ancient or modern—as guideposts for your own life's course, knowing full well that they're calling to you and that you're destined to be the focus of one yourself. When you attempt a Performance check or a check to gather-information, you can spend a Mythic Point to attempt the check at mythic proficiency. The first time each day that you critically succeed at a check to Gather Information, you regain a Mythic Point. --- **Edicts** do what you can to protect the people of the Saga Lands, preserve legends and myths in writing or other forms of art for future generations to enjoy and learn from **Anathema** allow those in the Saga Lands who need aid to suffer if there's something you can do to help them, regard your own saga as more important than anyone else's, since your tale has yet to be fully told—and not even you know its ending"
+ },
+ {
+  "id": "sages-calling",
+  "collection": "classFeatures",
+  "name": "Sage's Calling",
+  "level": 1,
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You're already an archive of knowledge, but you're driven to learn more with an unquenchable passion that might never be sated. When you attempt to Recall Knowledge, you can spend a Mythic Point to attempt the check at mythic proficiency. The first time each day that you critically succeed on a Recall Knowledge check against an enemy creature, you regain a Mythic Point. --- **Edicts** preserve your knowledge for future generations, seek out lost knowledge in dangerous or forgotten places **Anathema** destroy books or other repositories of knowledge, lie to hide knowledge from the world"
+ },
+ {
+  "id": "savvy-reflexes",
+  "collection": "classFeatures",
+  "name": "Savvy Reflexes",
+  "level": 15,
+  "traits": [
+   "investigator"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Investigator automatically at level 15",
+  "text": "With an eye for incoming danger, you masterfully keep yourself out of harm's way. Your proficiency rank for Reflex saves increases to master. When you roll a success on a Reflex save, you get a critical success instead."
+ },
+ {
+  "id": "school-of-ars-grammatica",
+  "collection": "classFeatures",
+  "name": "School of Ars Grammatica",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Wizard Arcane School",
+  "text": "Runes and wards, numbers and letters—they underpin all magic, making them the logical subject for a wizard who studies fundamental forces. Perhaps you studied at the Pathfinder Society's School of Spells or a similar institution, but whether you're lacing your words with magic to compel others, casting wards around your workshop, or destabilizing the very structure of an opponent's spells, you know this unassuming school carries elegant power. **Curriculum** - **cantrips:** Message, Sigil - **1st:** Command, Disguise Magic, Runic Body, Runic Weapon - **2nd:** Dispel Magic, Translate - **3rd:** Enthrall, Veil of Privacy - **4th:** Dispelling Globe, Suggestion - **5th:** Sending, Truespeech - **6th:** Repulsion, Spellwrack - **7th:** Contingency, Planar Seal - **8th:** Quandary, Unrelenting Observation - **9th:** Detonate Magic **School Spells** initial: Protective Wards; advanced: Rune of Observation"
+ },
+ {
+  "id": "school-of-battle-magic",
+  "collection": "classFeatures",
+  "name": "School of Battle Magic",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Wizard Arcane School",
+  "text": "Magic is power, and there are always those who will use power for the art of battle. You may have studied in the military of a nation of the brink of war—Cheliax and Andoran perhaps, or Geb and Nex. You summon whirling energies that can lay waste to both soldiers and armies, while being sure not to neglect arcane countermeasures for common tactical complications or the shields and defenses that keep combatants alive on the battlefield. **Curriculum** - **cantrips:** Shield, Telekinetic Projectile - **1st:** Breathe Fire, Force Barrage, Mystic Armor - **2nd:** Mist, Resist Energy - **3rd:** Earthbind, Fireball - **4th:** Wall of Fire, Weapon Storm - **5th:** Howling Blizzard, Impaling Spike - **6th:** Chain Lightning, - **7th:** Energy Aegis, True Target - **8th:** Arctic Rift, Desiccate - **9th:** Falling Stars **School Spells** initial: Force Bolt; advanced: Energy Absorption"
+ },
+ {
+  "id": "school-of-civic-wizardry",
+  "collection": "classFeatures",
+  "name": "School of Civic Wizardry",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Wizard Arcane School",
+  "text": "Whether you studied in Manaket's Occularium or the Academy of Applied Magic, you learned that the fruits of arcane studies—like any other field—should ultimately help the common citizen. You've learned the humble art of construction, of finding lost people and things, of moving speedily among buildings and moats—yet these same arts can be turned to demolition, and the constructs you animate to build bridges can just as easily tear them down. **Curriculum** - **cantrips:** , Read Aura - **1st:** Hydraulic Push, Pummeling Rubble, Summon Construct - **2nd:** Revealing Light, Water Walk - **3rd:** Cozy Cabin, Safe Passage - **4th:** Creation, Unfettered Movement - **5th:** Control Water, Wall of Stone - **6th:** , Wall of Force - **7th:** Planar Palace, - **8th:** Earthquake, Pinpoint - **9th:** Foresight **School Spells** initial: Earthworks; advanced: Community Restoration"
+ },
+ {
+  "id": "school-of-gates",
+  "collection": "classFeatures",
+  "name": "School of Gates",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Wizard Arcane School",
+  "text": "Some are content to stay in place and let the world shape them, but you prefer to move at your own pace. You've studied the ancient *aiudara* and other structures to learn the magic of transposition, using your knowledge to move across great distances and even planes. With knowledge as your path and magic as your key, there's no door you can't open, and no world you won't explore. **Curriculum** - **cantrips:** Message, Telekinetic Hand - **1st:** Fleet Step, Lock, Thoughtful Gift - **2nd:** Knock, Warping Pull - **3rd:** Echo Jump, Trade Items - **4th:** Flicker, Translocate - **5th:** King's Castle, Magic Passage - **6th:** Collective Transposition, Teleport - **7th:** Interplanar Teleport, Planar Seal - **8th:** Quandary, Sudden Transposition - **9th:** Forest of Gates **School Spells** initial: Friendly Push; advanced: Rapid Retreat"
+ },
+ {
+  "id": "school-of-kalistrade",
+  "collection": "classFeatures",
+  "name": "School of Kalistrade",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Wizard Arcane School",
+  "text": "Power and money are closely intertwined, and you recognize the potential for magic to assist in your pursuit of wealth and influence. Though you might study this school without joining the Prophets of Kalistrade, most who do so are either a part of the organization or local to Kerse and therefore used to the customs and culture of the Kalistocrats. You deploy magic to help you see through the illusions and trickery of others. At the same time, you push boundaries and exploit loopholes to get ahead of your competitors. **Curriculum** - **cantrips:** , Read Aura - **1st:** Alarm, Charm, Item Facade - **2nd:** Ghostly Carrier, - **3rd:** , Veil of Privacy - **4th:** Outcast's Curse, Suggestion - **5th:** Imaginary Lockbox, Subconscious Suggestion - **6th:** Repulsion, Scrying - **7th:** Project Image, - **8th:** , Hidden Mind - **9th:** Resplendent Mansion **School Spells** initial: Unexpected Windfall; advanced: Capital Dividend"
+ },
+ {
+  "id": "school-of-magical-technologies",
+  "collection": "classFeatures",
+  "name": "School of Magical Technologies",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Wizard Arcane School",
+  "text": "At the height of ancient Azlant, the study of magical technologies—better known as magitech—was considered among the most prestigious of arcane specializations, and practitioners were both well regarded and well paid. While some magitech specialists trained in academies or as apprentices, others studied at religious cloisters dedicated to the worship of Amaznen, a now-dead god of invention and magic. Today, practitioners are more likely to learn from scraps of ancient spellbooks, forgotten lore unearthed in Azlanti ruins, or from a time-displaced graduate like Anoreth Zorillen. Modern magitech schools exist today, divorced from their ancient Azlanti origins but no less prestigious, including the famed Clockwork Cathedral in Absalom and temples of Brigh, goddess of clockwork and invention. As a student of magical technologies, you've learned the art of fusing magic with mundane technology to create something truly unique. **Curriculum** **cantrips:** Needle Darts, Shield **1st:** Mending, Runic Weapon, Summon Construct **2nd:** Animated Assault, Dismantle **3rd:** Shrink Item, Wooden Double **4th:** Creation, Weapon Storm **5th:** Impaling Spike, Wall of Stone **6th:** Field of Razors, Petrify **7th:** Beheading Buzz Saw, Lifewood Cage **8th:** Ferrous Form, Quandary **9th:** Resplendent Mansion **School Spells** *initial:* Augmented Body *advanced:* Conjured Clockwork"
+ },
+ {
+  "id": "school-of-mentalism",
+  "collection": "classFeatures",
+  "name": "School of Mentalism",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Wizard Arcane School",
+  "text": "As a scholar, you know all too well the importance of a sound mind. Thus, you attended a school—like the Farseer Tower or the Stone of the Seers—that taught the arts of befuddling lesser minds with figments and illusions or implanted sensations and memories. **Curriculum** - **cantrips:** Daze, Figment - **1st:** Dizzying Colors, Sleep, Sure Strike - **2nd:** Illusory Creature, Stupefy - **3rd:** Dream Message, Mind Reading - **4th:** Nightmare, Vision of Death - **5th:** , Illusory Scene - **6th:** Never Mind, Phantasmal Calamity - **7th:** Project Image, Warp Mind - **8th:** , Uncontrollable Dance - **9th:** **School Spells** initial: Charming Push; advanced: Invisibility Cloak"
+ },
+ {
+  "id": "school-of-protean-form",
+  "collection": "classFeatures",
+  "name": "School of Protean Form",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Wizard Arcane School",
+  "text": "The uninitiated often think of wizards as cerebral, focused on their studies more than the body, yet your school of magic taught of the relationship between the two. Your magic, whether learned at a storied institution like Kintargo's Alabaster Academy or someplace more sinister, like the Fleshforges of Nex, focuses on the ways that living matter can be convinced into another shape for a time, allowing you to polymorph a seed into a vine, a human into a beast, or a harmless germ into a deadly toxin. **Curriculum** - **cantrips:** Gouging Claw, Tangle Vine - **1st:** Jump, Pest Form, Spider Sting - **2nd:** Enlarge, Humanoid Form - **3rd:** Feet to Fins, Vampiric Feast - **4th:** Mountain Resilience, Vapor Form - **5th:** Elemental Form, Toxic Cloud - **6th:** Cursed Metamorphosis, Petrify - **7th:** Duplicate Foe, Fiery Body - **8th:** Desiccate, Monstrosity Form - **9th:** **School Spells** initial: Scramble Body; advanced: Shifting Form"
+ },
+ {
+  "id": "school-of-the-boundary",
+  "collection": "classFeatures",
+  "name": "School of the Boundary",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Wizard Arcane School",
+  "text": "Why use your magic to affect something as pedestrian as the physical world? Whether you studied at the College of Dimensional Studies in Katapesh or an underground school in haunted Ustalav, you've turned your magic past the Universe to the forces beyond, summoning spirits and shades, manipulating dimensions and planes, and treading in a place not meant for mortals. **Curriculum** - **cantrips:** Telekinetic Hand, Void Warp - **1st:** Grim Tendrils, Phantasmal Minion, Summon Undead - **2nd:** Darkness, See the Unseen - **3rd:** Bind Undead, Ghostly Weapon - **4th:** Flicker, Translocate - **5th:** Banishment, Invoke Spirits - **6th:** Teleport, Vampiric Exsanguination - **7th:** Eclipse Burst, Interplanar Teleport - **8th:** Quandary, Unrelenting Observation - **9th:** Massacre **School Spells** initial: Fortify Summoning; advanced: Spiral of Horrors"
+ },
+ {
+  "id": "school-of-the-reclamation",
+  "collection": "classFeatures",
+  "name": "School of the Reclamation",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Wizard Arcane School",
+  "text": "Whether it's been lost to war, abandoned during calamity, or simply buried by the ages, there is as much important knowledge to be found in the hidden corners of the world as in the schools and libraries of the academy. Your study of magic in the service of rediscovering lost knowledge for the Sarkoris Reclamation has taught you that much that was once lost can still be found, but only if someone is willing to seek it out and retrieve it. You've focused your magic on reaching the world's hidden and forgotten places, whether they are found in a distant ruin or the depths of a lost memory, and bringing their knowledge back to the surface—whatever the cost. **Curriculum** - **cantrips:** Telekinetic Hand, Telekinetic Projectile - **1st:** Fleet Step, Gust of Wind, Mending - **2nd:** Knock, Mental Map - **3rd:** Locate, Overwhelming Memory - **4th:** Bridge of Vines, Shape Stone - **5th:** Mind Probe, Scouting Eye - **6th:** Truesight, Wall of Force - **7th:** Restore Ground, - **8th:** Pinpoint, Unrelenting Observation - **9th:** **School Spells** initial: Grasping Vine; advanced: Unsettling Knowledge"
+ },
+ {
+  "id": "second-adept",
+  "collection": "classFeatures",
+  "name": "Second Adept",
+  "level": 11,
+  "traits": [
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Thaumaturge automatically at level 11",
+  "text": "You've improved your link to your second implement. You gain the adept benefit of your second implement."
+ },
+ {
+  "id": "second-doctrine",
+  "collection": "classFeatures",
+  "name": "Second Doctrine",
+  "level": 3,
+  "traits": [
+   "cleric"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Cleric automatically at level 3",
+  "text": "You gain the second benefit of your doctrine: - Cloistered Cleric - Warpriest"
+ }
+]

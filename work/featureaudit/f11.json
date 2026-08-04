@@ -1,0 +1,328 @@
+[
+ {
+  "id": "rite-of-passage",
+  "collection": "heritages",
+  "name": "Rite of Passage",
+  "ancestryId": "conrasu",
+  "traits": [],
+  "text": "Your exoskeleton remains connected with the plants that created it. You can ignore difficult terrain and uneven ground caused by undergrowth. In addition, when you use the Acrobatics skill to Balance on narrow surfaces or uneven ground within forests, you aren't off-guard. When you roll a success attempting one of these Acrobatics checks, you get a critical success instead."
+ },
+ {
+  "id": "river-azarketi",
+  "collection": "heritages",
+  "name": "River Azarketi",
+  "ancestryId": "azarketi",
+  "traits": [],
+  "text": "You come from azarketis who abandoned the oceans for the fresh water of inland life. The varied geography of rivers required you to develop advanced physical skills to swim against rapids, leap through cascading waters, and deftly navigate shallow and narrow channels. When you succeed at an Athletics check to Swim, you get a critical success instead."
+ },
+ {
+  "id": "running-animal",
+  "collection": "heritages",
+  "name": "Running Animal",
+  "ancestryId": "awakened-animal",
+  "traits": [],
+  "text": "You are an animal meant for running at great speeds across land. Typically, you run on all fours like a dog, cheetah, or an iguana, but you could also use two legs like a kangaroo, emu, or penguin. You have a land Speed of 30 feet and one animal attack of your choice (typically claw, jaws, or tail)."
+ },
+ {
+  "id": "runtboss-hobgoblin",
+  "collection": "heritages",
+  "name": "Runtboss Hobgoblin",
+  "ancestryId": "hobgoblin",
+  "traits": [],
+  "text": "You come from a long line of hobgoblins who commanded goblins. You are smaller than other hobgoblins, but goblins still listen to any commands you bellow. You gain the Group Coercion skill feat. If you roll a success on an Intimidation check to Coerce a goblin, you get a critical success instead; if you roll a critical failure, you get a failure instead."
+ },
+ {
+  "id": "sanctuary-samsaran",
+  "collection": "heritages",
+  "name": "Sanctuary Samsaran",
+  "ancestryId": "samsaran",
+  "traits": [
+   "samsaran"
+  ],
+  "text": "Your past incarnations were reborn in sanctuaries in northern Zi Ha, and you have recollections of being trained to concentrate and focus for long periods of time. Your hazy flashbacks also reveal useful scripture in the books your past lives had eagerly consumed. You gain the Tap the Past action."
+ },
+ {
+  "id": "shadow-of-the-sailor",
+  "collection": "heritages",
+  "name": "Shadow of the Sailor",
+  "ancestryId": "wayang",
+  "traits": [
+   "wayang"
+  ],
+  "text": "Your shadow flits across the surface of the water, and so do you. You can walk on the surface of still water and other non-damaging liquids, moving at half your normal Speed. You can attempt to walk along the surface of flowing water as well, still moving at half Speed, but to do so, you must succeed at an Acrobatics check to Balance using the DC of a Swim check to move through the water; on a failure, you fall into the water. This Acrobatics check doesn't use an action."
+ },
+ {
+  "id": "shadow-of-the-smith",
+  "collection": "heritages",
+  "name": "Shadow of the Smith",
+  "ancestryId": "wayang",
+  "traits": [
+   "wayang"
+  ],
+  "text": "Your shadow is thick and liquid, like it could quench the finest ore. You gain the Inscribe Shadow Pamor action."
+ },
+ {
+  "id": "sharpshooter-automaton",
+  "collection": "heritages",
+  "name": "Sharpshooter Automaton",
+  "ancestryId": "automaton",
+  "traits": [],
+  "text": "Your lithe, humanoid shape is designed for speed and accuracy suitable for ranged combat. You gain the Automaton Aim action."
+ },
+ {
+  "id": "shifting-skeleton",
+  "collection": "heritages",
+  "name": "Shifting Skeleton",
+  "ancestryId": "skeleton",
+  "traits": [],
+  "text": "Constructed from the bones of various shapechanging creatures, shifting skeletons retain a measure of reconfigurability, allowing them to shift forms. You gain the Rearrange Bones action."
+ },
+ {
+  "id": "shortshanks-hobgoblin",
+  "collection": "heritages",
+  "name": "Shortshanks Hobgoblin",
+  "ancestryId": "hobgoblin",
+  "traits": [],
+  "text": "You have a longer torso and broader shoulders than most hobgoblins, making your legs seem short by comparison. This gives you a strong, muscular core and lowers your center of gravity—features that assist you in riding and climbing—and you've trained at riding in a saddle from an extremely early age. You gain the Ride feat. Additionally, you are not off-guard while you Climb."
+ },
+ {
+  "id": "skyborn-tengu",
+  "collection": "heritages",
+  "name": "Skyborn Tengu",
+  "ancestryId": "tengu",
+  "traits": [],
+  "text": "Your bones may be especially light, you may be a rare tengu with wings, or your connection to the spirits of wind and sky might be stronger than most, slowing your descent through the air. You take no damage from falling, regardless of the distance you fall."
+ },
+ {
+  "id": "slabsoul-minotaur",
+  "collection": "heritages",
+  "name": "Slabsoul Minotaur",
+  "ancestryId": "minotaur",
+  "traits": [],
+  "text": "Your deep connection with stone and walls allows you to conjure massive slabs of granite that collapse on your foes. You gain the Raise Slabs activity."
+ },
+ {
+  "id": "snaptongue-tripkee",
+  "collection": "heritages",
+  "name": "Snaptongue Tripkee",
+  "ancestryId": "tripkee",
+  "traits": [],
+  "text": "Your tongue is especially long, and you can launch it with extraordinary range and precision. You can use your tongue to deliver spells with a range of touch and perform extremely simple Interact actions, such as opening some types of unlocked doors. Your tongue can't perform actions that require fingers or significant manual dexterity, including any action that would require a check to accomplish, and you can't use it to hold items."
+ },
+ {
+  "id": "snaring-anadi",
+  "collection": "heritages",
+  "name": "Snaring Anadi",
+  "ancestryId": "anadi",
+  "traits": [],
+  "text": "You were hatched with hooked fangs that give you an edge when hunting in your true form. Your fangs attack gains the grapple and trip traits."
+ },
+ {
+  "id": "steelskin-hobgoblin",
+  "collection": "heritages",
+  "name": "Steelskin Hobgoblin",
+  "ancestryId": "hobgoblin",
+  "traits": [],
+  "text": "When you are cut or burned, your body responds by forming tough but flexible callouses over the site of the injury. Over time, this makes the most vulnerable sections of your body harder and more resistant to damage. Many steelskin hobgoblins intentionally use blades and flame to scar themselves in intricate patterns, though this isn't universal. Your flat check to recover from persistent physical (including bleed), energy, or poison damage is DC 13 (rather than DC 15), or when provided particularly effective assistance."
+ },
+ {
+  "id": "stonestep-shisk",
+  "collection": "heritages",
+  "name": "Stonestep Shisk",
+  "ancestryId": "shisk",
+  "traits": [],
+  "text": "Navigating mountains and other rocky terrain is second nature to you. You can ignore non-magical difficult terrain caused by rubble and uneven ground made of stone and earth."
+ },
+ {
+  "id": "stronggut-shisk",
+  "collection": "heritages",
+  "name": "Stronggut Shisk",
+  "ancestryId": "shisk",
+  "traits": [],
+  "text": "Your metabolism is slow, allowing you to go for days without food and process maladies at a slower rate. You can go for 1 week without food before you begin to starve Additionally, the onset times and lengths of stages for all diseases and poisons that affect you are increased by 50%. If the onset time or stage is instant or lasts only 1 round, this ability has no effect."
+ },
+ {
+  "id": "stuffed-poppet",
+  "collection": "heritages",
+  "name": "Stuffed Poppet",
+  "ancestryId": "poppet",
+  "traits": [],
+  "text": "You have little inside you other than cotton, sawdust, or dried leaves. You take no damage from falling, regardless of the distance you fall."
+ },
+ {
+  "id": "sturdy-skeleton",
+  "collection": "heritages",
+  "name": "Sturdy Skeleton",
+  "ancestryId": "skeleton",
+  "traits": [],
+  "text": "Certain hazardous conditions are not suitable for the average skeleton, so a necromancer might choose to reanimate the bones of a dwarf, orc, or other creature with a reputation for sturdiness. You have 10 Hit Points instead of 6 and gain the Diehard feat."
+ },
+ {
+  "id": "technological-fleshwarp",
+  "collection": "heritages",
+  "name": "Technological Fleshwarp",
+  "ancestryId": "fleshwarp",
+  "traits": [],
+  "text": "Your transformation is due to manipulation by advanced technology, like that found in Numeria. Your emotions are dulled and hard to influence. When you roll a success on a saving throw against an emotion effect, you get a critical success instead."
+ },
+ {
+  "id": "thalassic-azarketi",
+  "collection": "heritages",
+  "name": "Thalassic Azarketi",
+  "ancestryId": "azarketi",
+  "traits": [],
+  "text": "You trace your lineage from azarketis who lived their lives among the great oceans and seas of the world. You know how to use the currents and the primal magic of water to guide your attacks. You gain the Underwater Marauder skill feat, and your piercing ranged attacks don't have their range increments halved when fighting underwater targets."
+ },
+ {
+  "id": "thorned-rose",
+  "collection": "heritages",
+  "name": "Thorned Rose",
+  "ancestryId": "ghoran",
+  "traits": [],
+  "text": "Your beautiful petals and seemingly smooth skin hide silent barbs to pierce the unwary. Your body is covered with wickedly sharp thorns to discourage those that might prey upon you. You gain the Wicked Thorns reaction."
+ },
+ {
+  "id": "toy-poppet",
+  "collection": "heritages",
+  "name": "Toy Poppet",
+  "ancestryId": "poppet",
+  "traits": [],
+  "text": "You have the form of a child's tiny toy or doll, but you don't let your small size impede your joy of life. Instead of Small, your size is Tiny. Like other Tiny creatures, you don't automatically receive lesser cover from being in a larger creature's space, but circumstances might allow you to Take Cover. You can purchase weapons, armor, and other items for your size with the same statistics as normal gear, except that melee weapons have a reach of 0 for you (or a reach 5 feet shorter than normal if they have the reach trait). You can enter another creature's space, which is important because you must usually enter a creature's space to attack it with melee Strikes! Remember to adjust the Bulk of items and your Bulk limit for Tiny size."
+ },
+ {
+  "id": "trogloshi",
+  "collection": "heritages",
+  "name": "Trogloshi",
+  "ancestryId": "kashrishi",
+  "traits": [],
+  "text": "You're adapted to the sunless regions of dense jungle forests and deep caves, with soft flesh lacking pigment and unusually clear crystalline horns. You gain the Crystal Luminescence ancestry feat."
+ },
+ {
+  "id": "tunnel-rat",
+  "collection": "heritages",
+  "name": "Tunnel Rat",
+  "ancestryId": "ratfolk",
+  "traits": [],
+  "text": "You can easily compress your body and squeeze through gaps. You gain the Quick Squeeze feat as a bonus feat, even if you aren't trained in Acrobatics. Tight spaces not tight enough to require the Squeeze action aren't difficult terrain for you."
+ },
+ {
+  "id": "unbreakable-goblin",
+  "collection": "heritages",
+  "name": "Unbreakable Goblin",
+  "ancestryId": "goblin",
+  "traits": [],
+  "text": "You're able to bounce back from injuries easily due to an exceptionally thick skull, cartilaginous bones, or some other mixed blessing. You gain 10 Hit Points from your ancestry instead of 6. When you fall, reduce the falling damage you take as though you had fallen half the distance."
+ },
+ {
+  "id": "venomous-anadi",
+  "collection": "heritages",
+  "name": "Venomous Anadi",
+  "ancestryId": "anadi",
+  "traits": [],
+  "text": "Your natural form's fangs are capable of injecting foes with venom. You gain the Anadi Venom ability."
+ },
+ {
+  "id": "venomtail-kobold",
+  "collection": "heritages",
+  "name": "Venomtail Kobold",
+  "ancestryId": "kobold",
+  "traits": [],
+  "text": "Thanks to the proximity of a venomous creature to your warren, you were born with a vestigial spur in your tail that secretes deadly venom. You gain the Tail Toxin action."
+ },
+ {
+  "id": "vine-leshy",
+  "collection": "heritages",
+  "name": "Vine Leshy",
+  "ancestryId": "leshy",
+  "traits": [],
+  "text": "Your prehensile vines grant you unmatched skill at climbing. You do not need to have any hands free to Climb. Additionally, if you roll a success on an Athletics check to Climb, you get a critical success instead."
+ },
+ {
+  "id": "warmarch-hobgoblin",
+  "collection": "heritages",
+  "name": "Warmarch Hobgoblin",
+  "ancestryId": "hobgoblin",
+  "traits": [],
+  "text": "You come from a line of wandering mercenaries constantly on the march and scavenging food on the trail. If you fail, but don't critically fail, to Subsist in the wilderness, you can still keep yourself fed with poor meals. When exploring, you can Hustle twice as long before you have to stop."
+ },
+ {
+  "id": "warrenbred-hobgoblin",
+  "collection": "heritages",
+  "name": "Warrenbred Hobgoblin",
+  "ancestryId": "hobgoblin",
+  "traits": [],
+  "text": "Your ancestors lived underground. Your ears are larger than those of other hobgoblins and sensitive to echoes. While you're underground, when you target an opponent that is concealed from you or hidden from you, reduce the DC of the flat check to 3 for a concealed target or 9 for a hidden one. In addition, if you roll a success on an Acrobatics check to Squeeze, you get a critical success instead."
+ },
+ {
+  "id": "warrior-automaton",
+  "collection": "heritages",
+  "name": "Warrior Automaton",
+  "ancestryId": "automaton",
+  "traits": [],
+  "text": "Sporting a bulkier, powerful design, your body has been designed for combat. You have a bulky, humanoid shape. The damage die for your fist increases to 1d6 instead of 1d4. You don't take a penalty when making a lethal attack with your fist or any other unarmed attack."
+ },
+ {
+  "id": "warrior-jotunborn",
+  "collection": "heritages",
+  "name": "Warrior Jotunborn",
+  "ancestryId": "jotunborn",
+  "traits": [],
+  "text": "Your hardier body made you a perfect recruit for combat. The damage die for your fist increases to 1d6. You don't take a penalty when making a lethal attack with your fist."
+ },
+ {
+  "id": "whipfang-nagaji",
+  "collection": "heritages",
+  "name": "Whipfang Nagaji",
+  "ancestryId": "nagaji",
+  "traits": [],
+  "text": "You have a long, flexible neck that can curl into a striking pose like that of a snake. Your deceptively powerful muscles allow you to bite with surprising distance and speed. You gain the Raise Neck action."
+ },
+ {
+  "id": "wildwood-halfling",
+  "collection": "heritages",
+  "name": "Wildwood Halfling",
+  "ancestryId": "halfling",
+  "traits": [],
+  "text": "You hail from deep within a jungle or forest, and you've learned how to use your small size to wriggle through undergrowth and other obstacles. You ignore any difficult terrain caused by plants and fungi, such as bushes, vines, and undergrowth."
+ },
+ {
+  "id": "windup-poppet",
+  "collection": "heritages",
+  "name": "Windup Poppet",
+  "ancestryId": "poppet",
+  "traits": [],
+  "text": "You're made primarily of soft metals, such as tin or silver, and your life force dwells within an exceptional array of clockworks deep in your body. Provided you wind metal tabs on your body a few times each day, you don't need food or water to survive. You must still breathe to ventilate your internal mechanisms and sleep to give your mechanisms rest, just like other poppets."
+ },
+ {
+  "id": "windweb-tripkee",
+  "collection": "heritages",
+  "name": "Windweb Tripkee",
+  "ancestryId": "tripkee",
+  "traits": [],
+  "text": "Tough webbing along your hands and toes can slow any fall. As long as you have one hand free, you take no falling damage, regardless of the distance you fall."
+ },
+ {
+  "id": "wishborn-poppet",
+  "collection": "heritages",
+  "name": "Wishborn Poppet",
+  "ancestryId": "poppet",
+  "traits": [],
+  "text": "You were wished to life, either by a powerful spellcaster or by the earnest desire of an innocent person who loved you very much. You're living proof that a hopeful spirit can overcome any obstacle. If you roll a success on a saving throw against an emotion or fear effect, you get a critical success instead."
+ },
+ {
+  "id": "woodland-elf",
+  "collection": "heritages",
+  "name": "Woodland Elf",
+  "ancestryId": "elf",
+  "traits": [],
+  "text": "You're adapted to life in the forest, the deep jungle, or a similar environment, and you know how to climb trees and use foliage to your advantage. When Climbing trees, vines, and other foliage, you move at half your Speed on a success and at full Speed on a critical success (and you move at full Speed on a success if you have Quick Climb). This doesn't affect you if you're using a climb Speed. You can always use the Take Cover action when you are within forest terrain to gain cover, even if you're not next to an obstacle you can Take Cover behind."
+ },
+ {
+  "id": "woodstalker-lizardfolk",
+  "collection": "heritages",
+  "name": "Woodstalker Lizardfolk",
+  "ancestryId": "lizardfolk",
+  "traits": [],
+  "text": "You move easily through thick forest and jungle, using every branch or bush. You can always use the Take Cover action when in forest or jungle terrain to gain cover, even if you're not next to an obstacle you would normally be able to Take Cover behind. You gain the Terrain Stalker feat, even if you're not trained in Stealth, and you must choose underbrush as your chosen terrain."
+ }
+]

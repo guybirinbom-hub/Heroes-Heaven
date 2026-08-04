@@ -1,0 +1,832 @@
+[
+ {
+  "id": "field-discovery-bomber",
+  "collection": "classFeatures",
+  "name": "Field Discovery (Bomber)",
+  "level": 5,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You have calculated all the angles to maximize a bomb's splash. When you throw an alchemical bomb with the splash trait, you can cause the bomb to deal splash damage equal to your Intelligence modifier (minimum 1) instead of the normal amount."
+ },
+ {
+  "id": "field-discovery-chirurgeon",
+  "collection": "classFeatures",
+  "name": "Field Discovery (Chirurgeon)",
+  "level": 5,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your medicinal elixirs are quite fortifying. When a creature drinks an infused elixir with the healing trait that you have created, that creature gains a number of temporary Hit Points equal to your Intelligence modifier (minimum 0); these temporary Hit Points last for 1 minute."
+ },
+ {
+  "id": "field-discovery-mutagenist",
+  "collection": "classFeatures",
+  "name": "Field Discovery (Mutagenist)",
+  "level": 5,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The mutagens flowing through your blood have altered your body chemistry. When you roll a Fortitude save while affected by a mutagen and dislike the result, you can end the effect of the mutagen to reroll the save. This is a fortune effect."
+ },
+ {
+  "id": "field-of-roots",
+  "collection": "classFeatures",
+  "name": "Field of Roots",
+  "level": 1,
+  "traits": [
+   "eidolon"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Your eidolon extends its roots underground to entangle and possibly damage all foes nearby. All enemies within your eidolon's reach take damage of the same type and amount as your eidolon's most damaging Strike, depending on their Reflex saves against your spell DC. Any ongoing effects of the save last until the enemy either Escapes or leaves your eidolon's reach. After using Field of Roots, your eidolon is immobilized until it takes a single action, which has the manipulate trait, to detach from the ground; this also ends any remaining effects on enemies from Field of Roots. --- **Critical Success** The enemy is unaffected. **Success** The enemy takes no damage, but takes a -10 foot circumstance penalty to its Speeds. **Failure** The enemy takes half damage, takes a –10-foot circumstance penalty to its Speeds, and, at the end of each of its turns, takes half damage again. **Critical Failure** The enemy is immobilized, takes full damage, and, at the end of each of its turns, takes full damage again."
+ },
+ {
+  "id": "fifth-doctrine",
+  "collection": "classFeatures",
+  "name": "Fifth Doctrine",
+  "level": 15,
+  "traits": [
+   "cleric"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Cleric automatically at level 15",
+  "text": "You gain the fifth benefit of your doctrine: - Cloistered Cleric - Warpriest"
+ },
+ {
+  "id": "fifth-doctrine-cloistered-cleric",
+  "collection": "classFeatures",
+  "name": "Fifth Doctrine (Cloistered Cleric)",
+  "level": 15,
+  "traits": [
+   "cleric"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your proficiency ranks for the spell attack modifier and spell DC statistics increase to master."
+ },
+ {
+  "id": "final-doctrine",
+  "collection": "classFeatures",
+  "name": "Final Doctrine",
+  "level": 19,
+  "traits": [
+   "cleric"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Cleric automatically at level 19",
+  "text": "You gain the final benefit of your doctrine: - Cloistered Cleric - Warpriest"
+ },
+ {
+  "id": "final-doctrine-cloistered-cleric",
+  "collection": "classFeatures",
+  "name": "Final Doctrine (Cloistered Cleric)",
+  "level": 19,
+  "traits": [
+   "cleric"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your proficiency ranks for the spell attack modifier and spell DC statistics increase to legendary."
+ },
+ {
+  "id": "final-doctrine-warpriest",
+  "collection": "classFeatures",
+  "name": "Final Doctrine (Warpriest)",
+  "level": 19,
+  "traits": [
+   "cleric"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain master proficiency with your deity's favored weapon, spell attack modifier, and spell DC."
+ },
+ {
+  "id": "finish-the-job",
+  "collection": "classFeatures",
+  "name": "Finish The Job",
+  "level": 1,
+  "traits": [
+   "gunslinger"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "**Requirements** On your last action, you failed (but didn't critically fail) a Strike with a firearm or crossbow you're holding in one hand, and your other hand is either wielding a melee weapon or empty. --- Your last attack failed, but it set you up for another. Make a Strike with your other hand, using a one-handed melee weapon or unarmed attack. This Strike uses the same multiple attack penalty as the Strike that failed on the last action. Afterward, increase your multiple attack penalty normally."
+ },
+ {
+  "id": "fire-in-the-hole",
+  "collection": "classFeatures",
+  "name": "Fire in the Hole",
+  "level": 1,
+  "traits": [],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** A creature moves into the hazard's space --- **Effect** The hazard explodes, dealing the bombs' damage and splash damage to the inanimate object. Combine this damage for the purpose of resistances and weaknesses, and this damage ignores an amount of the object's Hardness equal to your level. Any creatures adjacent to the hazard take the bombs' splash damage, similarly combined for the purpose of resistances and weaknesses. As a reminder, since you didn't throw the bombs, Calculated Splash and similar effects don't apply."
+ },
+ {
+  "id": "first-doctrine",
+  "collection": "classFeatures",
+  "name": "First Doctrine",
+  "level": 1,
+  "traits": [
+   "cleric"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Cleric automatically at level 1",
+  "text": "You gain the first benefit of your doctrine: - Cloistered Cleric - Warpriest"
+ },
+ {
+  "id": "first-doctrine-cloistered-cleric",
+  "collection": "classFeatures",
+  "name": "First Doctrine (Cloistered Cleric)",
+  "level": 1,
+  "traits": [
+   "cleric"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You gain the Domain Initiate cleric feat."
+ },
+ {
+  "id": "flame-order",
+  "collection": "classFeatures",
+  "name": "Flame Order",
+  "level": 1,
+  "traits": [
+   "druid"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Druid Order",
+  "text": "You feel a kinship with flames and can use them for succor and destruction. **Order Skill** Acrobatics **Druid Feat** Fire Lung **Order Spell** Wildfire **Anathema** Allowing unnatural fires to spread or preventing natural fires from occurring in a way that harms the environment. (this doesn't prevent you from using fire destructively or force you to combat a controlled or natural fire)."
+ },
+ {
+  "id": "flames",
+  "collection": "classFeatures",
+  "name": "Flames",
+  "level": 1,
+  "traits": [
+   "oracle"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Oracle Mystery",
+  "text": "Fire lives at the center of the world, the center of the sun, and the center of civilization. You might revere this elemental force, siphon power from the Elemental Plane of Fire, or venerate a collection of deities such as Asmodeus, Sarenrae, the Tian goddess of disasters and volcanoes Lady Nanbyo, or the elemental lord of fire Ymeri. **Granted Spells** - **cantrip:** Ignition - **1st:** Breathe Fire - **2nd:** Blazing Bolt - **3rd:** Fireball **Revelation Spells** - **initial:** Incendiary Aura - **advanced:** Whirling Flames - **greater:** Flaming Fusillade **Related Domains** dust, fire, star, sun **Mystery Skill** Acrobatics **Oracle Feat** Foretell Harm Curse of Engulfing Flames"
+ },
+ {
+  "id": "flash-of-grandeur",
+  "collection": "classFeatures",
+  "name": "Flash of Grandeur",
+  "level": 1,
+  "traits": [
+   "champion",
+   "divine"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An enemy damages your ally, and both are in your champion's aura --- **Effect** Imperious divine light flashes out from you to surround your foe. The ally gains resistance to all damage against the triggering damage equal to 2 + your level. Until the end of your next turn, the attacker is affected by Revealing Light."
+ },
+ {
+  "id": "fleeting-arc-through-heaven-and-earth",
+  "collection": "classFeatures",
+  "name": "Fleeting Arc through Heaven and Earth",
+  "level": 1,
+  "traits": [
+   "light",
+   "spirit",
+   "teleportation",
+   "transcendence"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 3
+  },
+  "text": "You swing your weapon in a wide arc, releasing a blazing rainbow that deals damage and damage of the same type as your weapon to all enemies in a , with a save against your class DC. As the rainbow ripples out, you use it as a bridge to teleport to any location within the effect's area."
+ },
+ {
+  "id": "flicker-deviant-classification",
+  "collection": "classFeatures",
+  "name": "Flicker Deviant Classification",
+  "level": 1,
+  "traits": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Whether due to an artificially accelerated metabolism or the lingering effects of temporal phenomena, the end result of the flicker classification is largely the same—abilities that result in the perception of higher-than-average speed, kinetic acuity, and reflexes. ## Backlash Desynchronized Motions As your body speeds faster and faster, you risk falling out of sync with reality, as the world slows around you to the point that your interactions with it become strange and unpredictable. **Mild Backlash** The friction of your motion through a slower world sets you alight. You take damage. At 5th level, and every 5 levels after, the persistent fire damage increases by 1d4. You take this persistent fire damage even if in a liquid environment, such as underwater, as your motion simply surrounds you in boiling water. **Moderate Backlash** You fall out of phase with nearby matter, becoming trapped in the process. You take the mild backlash effects, catching on fire, and your legs also partially phase into the ground, making you immobilized. You can attempt to Escape against your deviation DC, or you can slowly extract yourself without attempting a check over the course of 1 minute. **Severe Backlash** Your body accelerates to such a degree that your senses and impulses cannot keep up. You become trapped in your own mind for what seems like an eternity, taking 1d4 nonlethal mental damage for each level you have (). When you return, you are Stupefied 3 for 10 minutes, and then Stupef"
+ },
+ {
+  "id": "fling-magic",
+  "collection": "classFeatures",
+  "name": "Fling Magic",
+  "level": 1,
+  "traits": [
+   "concentrate",
+   "magical",
+   "manipulate",
+   "thaumaturge"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "**Requirements** You are holding your wand implement. --- You fling magical energy at a target within 60 feet, dealing damage, with a save against your class DC. The damage is of the type you selected when you gained your wand implement. At 3rd level and every 2 levels thereafter, the damage increases by 1d4. You can expend more energy than usual to boost the effect of Fling Magic, dealing d6s of damage instead of d4s. After you do, the wand's extra energy is discharged; you can't boost the wand's damage again, but can continue to Fling Magic normally. The extra energy recharges at the end of your next turn. --- **Special** This activity has the trait corresponding to the damage type you selected."
+ },
+ {
+  "id": "flowing-spirit-strike",
+  "collection": "classFeatures",
+  "name": "Flowing Spirit Strike",
+  "level": 1,
+  "traits": [
+   "spirit",
+   "transcendence"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Make two Strikes with the gleaming blade, each against the same target and using your current multiple attack penalty. If the Gleaming Blade doesn't have the agile trait, the second Strike takes a –2 penalty. If both attacks hit, you combine their damage, which is all dealt as spirit damage. You add any precision damage only once. Combine the damage from both Strikes and apply resistances and weaknesses only once. This counts as two attacks when calculating your multiple attack penalty."
+ },
+ {
+  "id": "formula-book",
+  "collection": "classFeatures",
+  "name": "Formula Book",
+  "level": 1,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "An alchemist keeps meticulous formulas for every item they can create. You start with a standard Formula Book for free. The formula book contains the formulas for two common 1st-level alchemical items of your choice, in addition to any formulas you gained from Alchemical Crafting and your research field. Each time you gain a level, you can add the formulas for two common alchemical items to your formula book. These new formulas can be for any level of item you can create. You learn these formulas automatically, but it's also possible to find or buy additional formulas in settlements or from other alchemists, or to select the Inventor skill feat so you can invent them. As normal, having the base formula is sufficient when Crafting upgraded types of the item—you don't need to learn higher-level formulas. For instance, if you have the 1st-level formula for a minor elixir of life, you can create a minor, lesser, moderate, greater, major, or true elixir of life as long as you meet the level and other prerequisites. Items with type entries that have widely varied functions require separate formulas, but most alchemical items have a structure similar to elixir of life."
+ },
+ {
+  "id": "fortitude-expertise",
+  "collection": "classFeatures",
+  "name": "Fortitude Expertise",
+  "level": 3,
+  "traits": [
+   "animist",
+   "bard",
+   "commander",
+   "druid",
+   "investigator",
+   "psychic",
+   "swashbuckler"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Psychic automatically at level 9",
+  "text": "**Animist** Spiritual energy reinforces your body, making you more resilient. Your proficiency rank for Fortitude saves increases to expert. **Bard, Commander, Investigator, Swashbuckler** Your physique has grown hardy in your adventures. Your proficiency rank for Fortitude saves increases to expert. **Druid** Adventures have made your physique more hardy. Your proficiency rank for Fortitude saves increases to expert. **Psychic** Your mind holds your body to a subconscious mental image of yourself. Your proficiency rank for Fortitude saves increases to expert."
+ },
+ {
+  "id": "fortress-of-will",
+  "collection": "classFeatures",
+  "name": "Fortress of Will",
+  "level": 17,
+  "traits": [
+   "psychic"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Psychic automatically at level 17",
+  "text": "Your trained mind is as a fortress that none can breach. Your proficiency rank for Will saves increases to legendary. When you critically fail a Will save, you get a failure instead. When you fail a Will save against a damaging effect, you take half damage."
+ },
+ {
+  "id": "fourth-apparition",
+  "collection": "classFeatures",
+  "name": "Fourth Apparition",
+  "level": 15,
+  "traits": [
+   "animist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Animist automatically at level 15",
+  "text": "You're truly loved by the spirits, with apparitions flocking to you from far and wide. When you attune to apparitions during your daily preparations, you choose four apparitions to attune to, with one of them being your primary apparition. The number of Focus Points in your focus pool increases by 1 (maximum 3)."
+ },
+ {
+  "id": "fourth-doctrine",
+  "collection": "classFeatures",
+  "name": "Fourth Doctrine",
+  "level": 11,
+  "traits": [
+   "cleric"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Cleric automatically at level 11",
+  "text": "You gain the fourth benefit of your doctrine: - Cloistered Cleric - Warpriest"
+ },
+ {
+  "id": "fourth-doctrine-warpriest",
+  "collection": "classFeatures",
+  "name": "Fourth Doctrine (Warpriest)",
+  "level": 11,
+  "traits": [
+   "cleric"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your proficiency ranks for the spell attack modifier and spell DC statistics increase to expert."
+ },
+ {
+  "id": "fracture-mountains",
+  "collection": "classFeatures",
+  "name": "Fracture Mountains",
+  "level": 1,
+  "traits": [
+   "spirit",
+   "transcendence"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "Your spirit is so dense it takes on tangible force. Make a melee Strike with the Titan's Breaker. This counts as two attacks when calculating your multiple attack penalty. If this Strike hits, your additional spirit damage from the ikon's immanence increases to 4 plus an extra die of weapon damage. If you're at least 10th level, it's increased to 6 spirit damage and two extra dice, and if you're at least 18th level, it's increased to 8 spirit damage and three extra dice."
+ },
+ {
+  "id": "fungal-rot",
+  "collection": "classFeatures",
+  "name": "Fungal Rot",
+  "level": 1,
+  "traits": [],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "As you use your powers, radioactive molds and fungi consume your flesh, making you look (and feel) like a rotting, walking corpse. **Mild Backlash** You take damage equal to your level as your body decays. **Moderate Backlash** You take damage equal to your level and become Sickened 2. **Severe Backlash** You take damage equal to twice your level and become Sickened 4. You can't reduce the value of your sickened condition below 1 for 1 hour."
+ },
+ {
+  "id": "gather-to-me",
+  "collection": "classFeatures",
+  "name": "Gather to Me!",
+  "level": 1,
+  "traits": [
+   "commander",
+   "tactic"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "You signal your team to move into position together. Signal all squadmates; each can immediately Stride as a reaction, though each must end their movement inside your banner's aura, or as close to your banner's aura as their movement Speed allows. Squadmates can use Gather to Me! while Burrowing, Climbing, Flying, or Swimming instead of Striding if they have the corresponding movement type."
+ },
+ {
+  "id": "gathered-lore",
+  "collection": "classFeatures",
+  "name": "Gathered Lore",
+  "level": 1,
+  "traits": [
+   "psychic"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Many psychics are self-taught, frantically improvising how to best control their abilities before their power overwhelms them. Not you. Tutored by a mentor or classically trained at a facility for psychic development, you've learned techniques and teachings for best harnessing the mind, cataloging each expression of psychic power with a specific teaching, anecdote, or phrase. Your thoughtforms are mantras you associate with a given spell, which you mentally repeat as you cast. You might silently utter a teaching of resilience as you spin force into a barrier or hear the first three notes of a traveling song as you slip through space. Mantra thoughtforms often produce runes or symbols from your learnings that are unique to each spell you cast, causing your spell manifestations to resemble those of conventional spellcasters to a much greater degree than those of other psychics. **Key Attribute** Your key attribute is Intelligence. **Psyche Action** Recall the Teachings"
+ },
+ {
+  "id": "ghost-shot",
+  "collection": "classFeatures",
+  "name": "Ghost Shot",
+  "level": 1,
+  "traits": [
+   "flourish",
+   "gunslinger"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 1
+  },
+  "text": "Make a firearm or crossbow Strike. If you're hidden from or undetected by the target, the Strike adds the additional precision damage from One Shot, One Kill; if you would already receive that additional damage on the Strike, the effects aren't cumulative. If you were undetected or unnoticed by any creatures, you're now hidden from them instead, or undetected if the shot was made with a silencer."
+ },
+ {
+  "id": "giant-felling-comet",
+  "collection": "classFeatures",
+  "name": "Giant-Felling Comet",
+  "level": 1,
+  "traits": [
+   "spirit",
+   "transcendence"
+  ],
+  "actionCost": {
+   "type": "actions",
+   "value": 2
+  },
+  "text": "You shoot the Starshot, causing a detonation in a within 60 feet. Each creature in the area must succeed at a save against your class DC or take spirit damage equal to your normal Strike damage with the starshot. Creatures larger than you take a –2 circumstance penalty to their saving throws. This shot requires any ammunition that would normally be required for the weapon."
+ },
+ {
+  "id": "giant-instinct",
+  "collection": "classFeatures",
+  "name": "Giant Instinct",
+  "level": 1,
+  "traits": [
+   "barbarian"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Barbarian Instinct",
+  "text": "Your rage gives you the raw power and size of a giant. This doesn't necessarily mean you revere giants—you might scoff at them or even aspire to slay them! You could instead seem like a giant to other people due to your exceptional strength or larger-than-life emotions and ego. **Instinct Ability—Titan Mauler** You can use a weapon built for a Large creature if you are Small or Medium (both normally and when raging). If you're not Small or Medium, you can use a weapon built for a creature one size larger than you. You start with one such weapon, which you receive for free. It must be a common melee or ranged weapon, it must have a Price of 9 gp or less (not including the Price adjustment for being a larger weapon), and it must be common or you must otherwise have access to it. It is your personal weapon and has no value if sold unless you later add runes to it, and it has the normal Bulk for a weapon of its size. When wielding a larger weapon in combat, increase your additional damage from Rage from 2 to 6, but you have the Clumsy 1 condition because of the weapon's unwieldy size. You can't remove this clumsy condition or ignore its penalties by any means while wielding the weapon. **Specialization Ability (7th)** Increase the damage from Rage when using a larger weapon from 6 to 10; if you have greater weapon specialization, increase it from 10 to 18. **Raging Resistance (9th)** You resist bludgeoning damage and your choice of cold, electricity, or fire, chosen when you gain"
+ },
+ {
+  "id": "gleaming-blade",
+  "collection": "classFeatures",
+  "name": "Gleaming Blade",
+  "level": 1,
+  "traits": [
+   "ikon"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "**Usage** a weapon in the sword or knife group, or a melee unarmed attack that deals slashing damage --- This blade glitters with such sharpness it seems to cut the very air in front of it. **Immanence** Strikes with the gleaming blade deal 2 additional spirit damage per weapon damage die. **Transcendence—**Flowing Spirit Strike ⟨2⟩ (spirit, transcendence)"
+ },
+ {
+  "id": "glimpse-of-redemption",
+  "collection": "classFeatures",
+  "name": "Glimpse of Redemption",
+  "level": 1,
+  "traits": [
+   "champion",
+   "divine"
+  ],
+  "actionCost": {
+   "type": "reaction"
+  },
+  "text": "**Trigger** An enemy damages your ally, and both are in your champion's aura; --- **Effect** Your enemy hesitates under the weight of sin as visions of redemption play in their mind's eye. The enemy must choose to repent or refuse, with the following effects. If the enemy is mindless or otherwise unable to repent, use the refuse result. - **Repent** The ally is unharmed by the triggering damage. - **Refuse** The ally gains resistance to all damage against the triggering damage equal to 2 + your level. After the damaging effect is applied, the enemy becomes Enfeebled 2 until the end of its next turn"
+ },
+ {
+  "id": "gluttony",
+  "collection": "classFeatures",
+  "name": "Gluttony",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The All-Encompassing invokes a deep emptiness in its users, encouraging them to consume and consume, with nothing ever feeling like enough. **Anathema** Use your magic to protect others or manipulate minds. **Sin Spells** - **cantrips:** Caustic Blast, Void Warp - **1st:** Grim Tendrils, Summon Undead - **2nd:** Create Food, Ghoulish Cravings - **3rd:** Rouse Skeletons, Vampiric Feast - **4th:** Seal Fate, Vampiric Maiden - **5th:** Corrosive Muck, Slither - **6th:** , Vampiric Exsanguination - **7th:** Devouring Void, Eclipse Burst - **8th:** Desiccate - **9th:** Massacre **Initial School Spell** All-Encompassing Hunger"
+ },
+ {
+  "id": "godly-expertise",
+  "collection": "classFeatures",
+  "name": "Godly Expertise",
+  "level": 9,
+  "traits": [
+   "exemplar"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Exemplar automatically at level 9",
+  "text": "Your divine power increases in might. Your proficiency rank for your exemplar class DC increases to expert."
+ },
+ {
+  "id": "graceful-legend",
+  "collection": "classFeatures",
+  "name": "Graceful Legend",
+  "level": 17,
+  "traits": [
+   "monk"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Monk automatically at level 17",
+  "text": "Your sublime movement grants you unparalleled protection and offense. Your proficiency rank for unarmored defense increases to legendary, and your proficiency rank for your monk class DC increases to master. If you have qi spells, your proficiency rank for spell attack modifiers and spell DCs increases to master."
+ },
+ {
+  "id": "graceful-mastery",
+  "collection": "classFeatures",
+  "name": "Graceful Mastery",
+  "level": 13,
+  "traits": [
+   "monk"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Monk automatically at level 13",
+  "text": "You move with perpetual grace, turning aside blows. Your proficiency rank for unarmored defense increases to master."
+ },
+ {
+  "id": "grandeur",
+  "collection": "classFeatures",
+  "name": "Grandeur",
+  "level": 1,
+  "traits": [
+   "champion"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "chosenAs": "Champion Cause",
+  "text": "The glowing grandeur of the immaculate celestial realms inspires you, and you exhort their virtues to bring humility to the denizens of other grim worlds. **Edicts** provide a shining example for others, enjoy and share the beauty around you, keep yourself tidy and well groomed **Anathema** despoil yourself by associating with fiends and unholy forces. --- **Champion's Reaction** Flash of Grandeur **Relentless Reaction (9th Level)** The enemy also takes persistent spirit damage equal to your Charisma modifier, and it can't recover from this persistent damage while affected by the revealing light from your Flash of Grandeur. **Exalted Reaction (11th Level)** In addition to the enemy affected by Flash of Grandeur, each other enemy in your champion's aura is affected by the revealing light spell for 1 round."
+ },
+ {
+  "id": "greater-creed",
+  "collection": "classFeatures",
+  "name": "Greater Creed",
+  "level": 11,
+  "traits": [
+   "cleric"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your proficiency ranks for the spell attack modifier and spell DC statistics increase to expert."
+ },
+ {
+  "id": "greater-deed",
+  "collection": "classFeatures",
+  "name": "Greater Deed",
+  "level": 15,
+  "traits": [
+   "gunslinger"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Gunslinger automatically at level 15",
+  "text": "You've mastered the pinnacle technique of your chosen way. You gain the greater deed ability of the way you chose at 1st level."
+ },
+ {
+  "id": "greater-dogged-will",
+  "collection": "classFeatures",
+  "name": "Greater Dogged Will",
+  "level": 17,
+  "traits": [
+   "investigator"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Investigator automatically at level 17",
+  "text": "Your willpower becomes truly unbreakable. Your proficiency rank for Will saves increases to legendary. When you roll a success at a Will save, you get a critical success. When you roll a critical failure at a Will save, you get a failure instead. When you roll a failure on a Will save against a damaging effect, you take half damage."
+ },
+ {
+  "id": "greater-eidolon-specialization",
+  "collection": "classFeatures",
+  "name": "Greater Eidolon Specialization",
+  "level": 15,
+  "traits": [
+   "summoner"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Summoner automatically at level 15",
+  "text": "Your eidolon's damage from weapon specialization increases to 4 with unarmed attacks in which it's an expert, 6 if it's a master, and 8 if it's legendary."
+ },
+ {
+  "id": "greater-field-discovery",
+  "collection": "classFeatures",
+  "name": "Greater Field Discovery",
+  "level": 13,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Alchemist automatically at level 13",
+  "text": "You learn an incredible discovery that advances your understanding of your field, as described in your research field."
+ },
+ {
+  "id": "greater-field-discovery-bomber",
+  "collection": "classFeatures",
+  "name": "Greater Field Discovery (Bomber)",
+  "level": 13,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "You can increase the splash on your bombs to damage creatures within 10 feet, or 15 feet if you have Expanded Splash."
+ },
+ {
+  "id": "greater-field-discovery-chirurgeon",
+  "collection": "classFeatures",
+  "name": "Greater Field Discovery (Chirurgeon)",
+  "level": 13,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When you use Quick Alchemy to create any type of elixir of life, the creature healed by the item regains the maximum Hit Points possible, instead of rolling to determine the number of Hit Points regained."
+ },
+ {
+  "id": "greater-field-discovery-mutagenist",
+  "collection": "classFeatures",
+  "name": "Greater Field Discovery (Mutagenist)",
+  "level": 13,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "If you imbibe another mutagen while you are under the effects of a mutagen, you can gain the benefits and the drawbacks of both mutagens at once, despite the fact that they both have the polymorph trait and would not normally function together. If you come under the effects of any further mutagens while benefiting from two mutagens, you lose the benefit of one of the former mutagens of your choice, while retaining the drawbacks of all the mutagens. If you are under the effects of two mutagens and you come under the effect of a non-mutagen polymorph effect, you lose the benefits of the mutagens while retaining the drawbacks of both. Your field vial benefit applies to one mutagen of your choice."
+ },
+ {
+  "id": "greater-field-discovery-toxicologist",
+  "collection": "classFeatures",
+  "name": "Greater Field Discovery (Toxicologist)",
+  "level": 13,
+  "traits": [
+   "alchemist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "When a creature fails its initial saving throw against an infused injury poison you created, the wound sprays poison onto another creature adjacent to it. The attacker who caused the injury chooses which creature, if there's more than one, and can choose to forgo this effect. That creature is exposed to the poison. The second creature doesn't spread the poison further."
+ },
+ {
+  "id": "greater-juggernaut",
+  "collection": "classFeatures",
+  "name": "Greater Juggernaut",
+  "level": 13,
+  "traits": [
+   "barbarian"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Barbarian automatically at level 13",
+  "text": "You have a stalwart physiology. Your proficiency rank for Fortitude saves increases to legendary. When you roll a critical failure on a Fortitude save, you get a failure instead. When you roll a failure on a Fortitude save against an effect that deals damage, you halve the damage you take."
+ },
+ {
+  "id": "greater-kinetic-durability",
+  "collection": "classFeatures",
+  "name": "Greater Kinetic Durability",
+  "level": 15,
+  "traits": [
+   "kineticist"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Kineticist automatically at level 15",
+  "text": "Your gate protects you even more. Your proficiency rank for Fortitude saves increases to legendary. When you roll a critical failure on a Fortitude save, you get a failure instead. When you fail a Fortitude save against an effect that deals damage, you halve the damage you take."
+ },
+ {
+  "id": "greater-mysterious-resolve",
+  "collection": "classFeatures",
+  "name": "Greater Mysterious Resolve",
+  "level": 17,
+  "traits": [
+   "oracle"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Oracle automatically at level 17",
+  "text": "Your time spent in contemplation of the mysteries of creation has given you a powerful mind and soul. Your proficiency rank for Will saves increases to legendary. When you roll a success on a Will save, you get a critical success instead. When you roll a critical failure on a Will save, you get a failure instead. When you fail a Will save against a damaging effect, you take half damage."
+ },
+ {
+  "id": "greater-natural-reflexes",
+  "collection": "classFeatures",
+  "name": "Greater Natural Reflexes",
+  "level": 15,
+  "traits": [
+   "ranger"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Ranger automatically at level 15",
+  "text": "You avoid explosions with reflexes a cat would envy. Your proficiency rank for Reflex saves increases to legendary. When you roll a critical failure on a Reflex save, you get a failure instead. When you fail a Reflex save against an effect that deals damage, you halve the damage you take."
+ },
+ {
+  "id": "greater-performers-heart",
+  "collection": "classFeatures",
+  "name": "Greater Performer's Heart",
+  "level": 17,
+  "traits": [
+   "bard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Bard automatically at level 17",
+  "text": "Your performances warp the mind and cause emotions to flower, and understanding how to do this also forges an incomparable understanding of your own mind. Your proficiency rank for Will saves increases to legendary. When you roll a critical failure on a Will save, you get a failure instead. When you fail a Will save against an effect that deals damage, you take half damage."
+ },
+ {
+  "id": "greater-rogue-reflexes",
+  "collection": "classFeatures",
+  "name": "Greater Rogue Reflexes",
+  "level": 13,
+  "traits": [
+   "rogue"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Rogue automatically at level 13",
+  "text": "You elude danger to a degree that few can match. Your proficiency rank for Reflex saves increases to legendary. When you roll a critical failure on a Reflex save, you get a failure instead. When you roll a failure on a Reflex save against a damaging effect, you take half damage."
+ },
+ {
+  "id": "greater-unassailable-soul",
+  "collection": "classFeatures",
+  "name": "Greater Unassailable Soul ",
+  "level": 13,
+  "traits": [
+   "exemplar"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Exemplar automatically at level 13",
+  "text": "A wall of confidence blunts every arrow seeking to pierce your mind. Your proficiency rank for Will saves increases to legendary. When you roll a success at a Will save, you get a critical success. When you roll a critical failure at a Will save, you get a failure instead. When you fail a Will save against a damaging effect, you take half damage."
+ },
+ {
+  "id": "greed",
+  "collection": "classFeatures",
+  "name": "Greed",
+  "level": 1,
+  "traits": [
+   "wizard"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "The Precious Gleam carries knowledge that the world's problems are far beyond one's current form and resources. But forms can change and resources can be hoarded with the help of this rune's magic. **Anathema** Use your magic to affect the mind or perception rather than physical reality. **Sin Spells** - **cantrips:** Live Wire, Read Aura - **1st:** Ant Haul, Leaden Steps - **2nd:** Enlarge, Phantasmal Treasure - **3rd:** One with Stone, Shrink Item - **4th:** Aerial Form, Shape Stone - **5th:** Elemental Form, Impaling Spike - **6th:** Dragon Form, Petrify - **7th:** Chrysopoetic Curse, Lifewood Cage - **8th:** Monstrosity Form - **9th:** **Initial School Spell** Precious Gleam"
+ },
+ {
+  "id": "guardian-expertise",
+  "collection": "classFeatures",
+  "name": "Guardian Expertise",
+  "level": 9,
+  "traits": [
+   "guardian"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Guardian automatically at level 9",
+  "text": "Your armored form is more imposing. Your proficiency rank for your guardian class DC increases to expert."
+ },
+ {
+  "id": "guardians-armor",
+  "collection": "classFeatures",
+  "name": "Guardian's Armor",
+  "level": 1,
+  "traits": [
+   "guardian"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "grantedBy": "Guardian automatically at level 1",
+  "text": "Even when you are struck, your armor protects you from some harm. While wearing medium or heavy armor, you gain resistance to physical damage equal to 1 + half your level. In addition, you can rest normally while wearing medium and heavy armor."
+ },
+ {
+  "id": "guardians-calling",
+  "collection": "classFeatures",
+  "name": "Guardian's Calling",
+  "level": 1,
+  "traits": [
+   "calling",
+   "mythic"
+  ],
+  "actionCost": {
+   "type": "passive"
+  },
+  "text": "Your instinctive urge is always to protect others, pushing back aggressors and doing everything in your power to prevent them from harming your allies and charges. When you attempt to Disarm, Reposition, or Shove an opponent, you can spend a Mythic Point to make the check at mythic proficiency. You can attempt these maneuvers against a creature of any size when performing them at mythic proficiency. The first time each day that you critically succeed on a check to Disarm, Reposition, or Shove an opponent, you regain a Mythic Point. --- **Edicts** place yourself in harm's way to protect your allies or innocent creatures under threat **Anathema** retreat from a battle while your allies or innocent bystanders are in danger without taking every reasonable effort to rescue them first"
+ }
+]
