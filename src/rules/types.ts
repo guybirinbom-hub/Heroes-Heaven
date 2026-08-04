@@ -748,6 +748,15 @@ export interface Feat extends ContentBase, DefenseGrants {
   /** "You die from the dying condition at dying 5, rather than dying 4" (Diehard). Raises the death
    *  threshold; Doomed still steps it back down. See Character.dyingThreshold. */
   dyingThresholdBonus?: number;
+  /** "Increase your maximum and encumbered Bulk limits by 4" (Beast of Burden). Raises both
+   *  thresholds; deriveBulk computes them from Strength alone without it. */
+  bulkLimitBonus?: number;
+  /** "Increase the number of tactics you can have prepared by 1" (Efficient Preparation). The
+   *  commander's preparedMax was an unconditional 3, so the feat never arrived. */
+  preparedTacticsBonus?: number;
+  /** "You treat heavy armor as if it were 1 Bulk lighter" (Armor Regiment Training). Reduces the Bulk
+   *  counted for WORN armor of the listed categories, never below 0 (Bulk 'L' armor stays L). */
+  armorBulkReduction?: { by: number; categories?: ArmorCategory[] };
   /**
    * Traits this feat adds to unarmed Strikes the character ALREADY has — "your unarmed attacks gain
    * the reach trait" (Effortless Reach), "your beak unarmed attack gains versatile S" (Dogfang Bite).

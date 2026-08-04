@@ -51254,5 +51254,39 @@
       ],
       "stepDie": true
     }
+  },
+  {
+    "category": "feats",
+    "id": "beast-of-burden",
+    "field": "bulkLimitBonus",
+    "value": 4
+  },
+  {
+    "category": "feats",
+    "id": "armor-regiment-training",
+    "field": "armorBulkReduction",
+    "value": {
+      "by": 1,
+      "categories": [
+        "heavy"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "armored-regiment-training",
+    "field": "armorBulkReduction",
+    "value": {
+      "by": 1,
+      "categories": [
+        "heavy"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "efficient-preparation",
+    "field": "preparedTacticsBonus",
+    "value": 1
   }
 ]

@@ -1943,15 +1943,37 @@ export function effectiveItemBulk(c: Character, db: ContentDatabase, instanceId:
 
 export function deriveBulk(c: Character, db: ContentDatabase): BulkResult {
   const strMod = abilityMod(c.abilities.str);
+  // "Increase your maximum and encumbered Bulk limits by 4" (Beast of Burden) and "treat heavy armor
+  // as 1 Bulk lighter" (Armor Regiment Training). Both thresholds were computed from Strength alone,
+  // so these feats moved no number on the sheet at all.
+  let limitBonus = 0;
+  const armorCuts: { by: number; categories?: ArmorCategory[] }[] = [];
+  // `?? []` because deriveBulk is also called on hand-built partial characters (container-nesting tests).
+  for (const fc of c.feats ?? []) {
+    const f = db.feats[fc.featId];
+    if (f?.bulkLimitBonus) limitBonus += f.bulkLimitBonus;
+    if (f?.armorBulkReduction) armorCuts.push(f.armorBulkReduction);
+  }
+  /** How much Bulk this feat set forgives on a given worn item — armour only, and never below 0. */
+  const armorRelief = (inv: InventoryItem): number => {
+    if (!armorCuts.length || !inv.worn) return 0;
+    const item = db.items[inv.itemId];
+    if (!item || item.itemType !== 'armor') return 0;
+    const cat = item.category as ArmorCategory | undefined;
+    const by = armorCuts
+      .filter((r) => !r.categories?.length || (cat && r.categories.includes(cat)))
+      .reduce((s, r) => s + r.by, 0);
+    return Math.min(by, item.bulk * inv.quantity);
+  };
   const { effBulk, containerIds } = makeEffBulk(c, db);
   const topLevel = c.inventory.filter((i) => !(i.containerInstanceId && containerIds.has(i.containerInstanceId)));
-  let total = topLevel.reduce((s, inv) => s + effBulk(inv, new Set()), 0);
+  let total = topLevel.reduce((s, inv) => s + effBulk(inv, new Set()) - armorRelief(inv), 0);
   // 1,000 coins = 1 Bulk. NOTE: the app keeps Bulk as a precise fractional sum (informative, and the
   // container-nesting reduction relies on it) rather than RAW-flooring Light/coin remainders.
   const coins = (c.currency.pp ?? 0) + (c.currency.gp ?? 0) + (c.currency.sp ?? 0) + (c.currency.cp ?? 0);
   total += coins / 1000;
   total = Math.max(0, Math.round(total * 10) / 10);
-  return { total, encTotal: Math.floor(total), encumberedAt: 5 + strMod, max: 10 + strMod };
+  return { total, encTotal: Math.floor(total), encumberedAt: 5 + strMod + limitBonus, max: 10 + strMod + limitBonus };
 }
 
 /** How full each container is: the raw Bulk of its DIRECT contents vs its capacity. Used to

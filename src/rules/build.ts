@@ -3082,7 +3082,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         return a?.traits?.includes('tactic') && TACTIC_TIER_RANK[(a.tacticTier ?? 'basic') as TacticTier] <= maxRank;
       })
       .slice(0, folioMax);
-    commanderTactics = { folio, folioMax, preparedMax: 3, squadmates: 2 + abilityMod(abilities.int), maxTier };
+    // "Increase the number of tactics you can have prepared by 1" (Efficient Preparation) — this was
+    // an unconditional 3, so the feat's entire content never arrived. It is repeatable.
+    const preparedBonus = feats.reduce((n, fc) => n + (content.feats[fc.featId]?.preparedTacticsBonus ?? 0), 0);
+    commanderTactics = { folio, folioMax, preparedMax: 3 + preparedBonus, squadmates: 2 + abilityMod(abilities.int), maxTier };
   }
 
   // Inventor: resolve the innovation type + the tiered modification picks (each validated against the
