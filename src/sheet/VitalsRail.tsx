@@ -777,7 +777,9 @@ export function VitalsRail({
         <div className="rail-kv" key={d.classId}>
           <span className="kv-label">{d.name} DC</span>
           <span className="iwr-val">
-            {d.dc} <span className="mc-key">({d.keyAbility.toUpperCase()}, trained)</span>
+            {/* The rank was hardcoded "trained" here as well as in the DC, so Alchemical Power and
+                Officer's Expertise/Mastery could not show what they raise it to. */}
+            {d.dc} <span className="mc-key">({d.keyAbility.toUpperCase()}, {d.rank ?? 'trained'})</span>
           </span>
         </div>
       ))}

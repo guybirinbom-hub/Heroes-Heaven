@@ -51,7 +51,7 @@ import type {
 import type { ClassArchetype, DefenseGrants, EffectChoice, EffectGrant, FeatChoiceDef, FocusPool, InnateSpellGrant, ItemPassiveEffects, SourceInfo, SpellSlotBonus, SpellcastingGrant } from './types';
 import { CHARACTER_SCHEMA_VERSION, PROFICIENCY_RANKS, SKILLS } from './types';
 import { CHOOSABLE_SOURCE_MAPS } from './sources';
-import { abilityMod } from './derive';
+import { abilityMod, profBonus } from './derive';
 import { CLASS_ADVANCEMENT } from './advancement';
 import { FEAT_GRANTS, maxTakes, upgradeRankAt } from './featGrants';
 import { FEAT_FEAT_GRANTS, FEAT_FEAT_GRANTS_LEVELED } from './featFeatGrants';
@@ -2614,6 +2614,20 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     if (max > 0) advancedAlchemy = { max, source };
   }
 
+  // "Add Illusory Disguise, Illusory Object, and Illusory Scene to your spell list." The picker
+  // filtered strictly on the entry's tradition, so these feats offered nothing new to learn. They
+  // widen the POOL only — the player still has to spend a repertoire slot or prepare the spell.
+  let spellListAdditions: Record<string, string[]> | undefined;
+  for (const fc of feats) {
+    const add = content.feats[fc.featId]?.spellListAdditions;
+    if (!add?.spells?.length) continue;
+    const key = add.entryId ?? '*';
+    const known = add.spells.filter((s) => content.spells[s]); // never offer an id the picker cannot open
+    if (!known.length) continue;
+    spellListAdditions = spellListAdditions ?? {};
+    spellListAdditions[key] = [...new Set([...(spellListAdditions[key] ?? []), ...known])];
+  }
+
   // Diehard: "you die from the dying condition at dying 5, rather than dying 4". dyingDeathThreshold
   // took only Doomed, so the feat changed nothing — you still died at 4 with it.
   let dyingThreshold: number | undefined;
@@ -2689,11 +2703,16 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       seen.add(grant.classId);
       const kas = Array.isArray(cls.keyAbility) ? cls.keyAbility : [cls.keyAbility];
       const key = kas.reduce((best, a) => (abilityMod(abilities[a]) > abilityMod(abilities[best]) ? a : best), kas[0]) as AbilityId;
-      // Trained class DC = 10 + trained proficiency bonus + key ability mod. Trained bonus = level + 2
-      // (or just 2 under the Proficiency Without Level variant).
-      const trainedBonus = (build.variantRules?.proficiencyWithoutLevel ? 0 : level) + 2;
-      const dc = 10 + trainedBonus + abilityMod(abilities[key]);
-      secondaryClassDcs.push({ classId: grant.classId, name: cls.name, keyAbility: key, dc });
+      // The dedication grants TRAINED, but a later archetype feat can raise it — "you become an
+      // expert in the alchemist class DC" (Alchemical Power), Officer's Expertise/Mastery, and their
+      // kin. This was pinned at trained, so all of those feats left the number exactly where it was.
+      let rank: ProficiencyRank = 'trained';
+      for (const other of feats) {
+        const up = content.feats[other.featId]?.classDcRank;
+        if (up?.classId === grant.classId) rank = maxRank(rank, up.rank);
+      }
+      const dc = 10 + profBonus(rank, level, !!build.variantRules?.proficiencyWithoutLevel) + abilityMod(abilities[key]);
+      secondaryClassDcs.push({ classId: grant.classId, name: cls.name, keyAbility: key, dc, rank });
     }
   }
 
@@ -3197,6 +3216,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     ...(advancedAlchemy ? { advancedAlchemy } : {}),
     ...(resourceFloors ? { resourceFloors } : {}),
     ...(dyingThreshold ? { dyingThreshold } : {}),
+    ...(spellListAdditions ? { spellListAdditions } : {}),
     conditions: [],
     classResources: initialClassResources(
       build.classId,

@@ -52244,5 +52244,81 @@
     "id": "spark-of-immortality",
     "field": "dyingThresholdBonus",
     "value": 1
+  },
+  {
+    "category": "feats",
+    "id": "expert-kinetic-control",
+    "field": "classDcRank",
+    "value": {
+      "classId": "kineticist",
+      "rank": "expert"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "alchemical-power",
+    "field": "classDcRank",
+    "value": {
+      "classId": "alchemist",
+      "rank": "expert"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "exemplar-expertise",
+    "field": "classDcRank",
+    "value": {
+      "classId": "exemplar",
+      "rank": "expert"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "officers-expertise",
+    "field": "classDcRank",
+    "value": {
+      "classId": "commander",
+      "rank": "expert"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "officers-mastery",
+    "field": "classDcRank",
+    "value": {
+      "classId": "commander",
+      "rank": "master"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "dragon-arcana",
+    "field": "spellListAdditions",
+    "value": {
+      "spells": [
+        "shield",
+        "sure-strike",
+        "resist-energy",
+        "haste",
+        "spell-immunity",
+        "chromatic-wall",
+        "dragon-form",
+        "mask-of-terror",
+        "prismatic-wall",
+        "overwhelming-presence"
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "fey-caller",
+    "field": "spellListAdditions",
+    "value": {
+      "spells": [
+        "illusory-disguise",
+        "illusory-object",
+        "illusory-scene"
+      ]
+    }
   }
 ]

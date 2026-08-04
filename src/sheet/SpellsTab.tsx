@@ -239,11 +239,18 @@ function ManageSpellsModal({
   const traditionSpellsByRank = useMemo(() => {
     const byRank: Record<number, Spell[]> = {};
     const hideLegacy = character.hideLegacy;
+    // "Add Illusory Disguise, Illusory Object, and Illusory Scene to your spell list" (Fey Caller;
+    // Dragon Arcana adds ten). Those spells are not in the entry's tradition, so a strict tradition
+    // filter offered nothing and the feat was inert. They still cost a repertoire slot to learn.
+    const added = new Set([
+      ...(character.spellListAdditions?.['*'] ?? []),
+      ...(character.spellListAdditions?.[entry.id] ?? []),
+    ]);
     for (const s of listValues(content, content.spells)) {
       const e = (s as { edition?: string }).edition;
       if (e === 'superseded') continue; // renamed/outdated half of a remaster change — always hidden
       if (hideLegacy && (e === 'legacy' || e === 'legacy-era')) continue; // per-character Hide legacy data
-      if (s.traditions.includes(entry.tradition)) (byRank[s.rank] ??= []).push(s);
+      if (s.traditions.includes(entry.tradition) || added.has(s.id)) (byRank[s.rank] ??= []).push(s);
     }
     const upTo: Record<number, Spell[]> = {};
     let acc: Spell[] = [];
@@ -252,7 +259,7 @@ function ManageSpellsModal({
       upTo[r] = acc.slice().sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name));
     }
     return { byRank, upTo };
-  }, [content, entry.tradition, character.hideLegacy]);
+  }, [content, entry.tradition, entry.id, character.hideLegacy, character.spellListAdditions]);
 
   // Spells you may add (spontaneous) / prepare (prepared) at a rank — rank ≤ the slot's rank.
   const optionsFor = (rank: number): Spell[] => {

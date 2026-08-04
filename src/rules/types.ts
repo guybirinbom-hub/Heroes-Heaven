@@ -779,6 +779,23 @@ export interface Feat extends ContentBase, DefenseGrants {
    */
   untrainedProficiency?: { levelMinus: number };
   /**
+   * "You become an expert in the alchemist class DC" — an ARCHETYPE feat raising the BORROWED class
+   * DC a dedication granted. The secondary DC was pinned at trained with no way to advance it, so
+   * every one of these feats left the number where the dedication put it.
+   */
+  classDcRank?: { classId: string; rank: ProficiencyRank };
+  /**
+   * "Add Illusory Disguise, Illusory Object, and Illusory Scene to your spell list" — spells the
+   * picker should OFFER that your tradition does not contain. You must still learn them or add them
+   * to your repertoire as normal, so this widens the pool and grants nothing by itself.
+   *
+   * The prepare/repertoire picker filtered strictly on `spell.traditions.includes(entry.tradition)`,
+   * so a feat whose whole content is "you may now learn these" had nowhere to put them.
+   * `entryId` narrows it to one spellcasting entry (Aura Enhancement adds to the divine font only);
+   * omitted, the spells join every entry's pool.
+   */
+  spellListAdditions?: { spells: string[]; entryId?: string };
+  /**
    * Weakness types this feat REMOVES ("you no longer gain silver weakness from Werecreature
    * Dedication"). Every other field adds; there was no way to take one away, so a feat whose whole
    * point is undoing an earlier drawback left the drawback on the sheet.
@@ -2198,7 +2215,7 @@ export interface Character {
   effectPicks?: { recordId: string; choiceId: string; label: string; note?: string }[];
   /** Secondary class DCs from multiclass dedications (Fighter/Ranger/Rogue/Alchemist Dedication) —
    *  the borrowed class's trained DC, shown alongside the primary class DC. */
-  secondaryClassDcs?: { classId: string; name: string; keyAbility: AbilityId; dc: number }[];
+  secondaryClassDcs?: { classId: string; name: string; keyAbility: AbilityId; dc: number; rank: ProficiencyRank }[];
   /** Derived body size (ancestry size, raised by a feat/heritage sizeOverride). */
   size?: Size;
   /** Natural reach in feet (5 by default; raised by a feat/heritage — Jotun's Heart → 10). */
@@ -2252,6 +2269,9 @@ export interface Character {
   /** The Dying value at which this character dies before Doomed is applied — 4, or 5 with Diehard.
    *  Pass to dyingDeathThreshold(doomed, base); omitted means the default 4. */
   dyingThreshold?: number;
+  /** Spell ids a feat added to the pool the prepare/repertoire picker offers, beyond what the entry's
+   *  tradition contains. Keyed by spellcasting entry id; `'*'` applies to every entry. */
+  spellListAdditions?: Record<string, string[]>;
   /** Answers to daily-preparation choices, keyed `${recordId}:${flag}`; overlaid from play-state. */
   dailyChoices?: Record<string, string>;
   /** Uses spent against each feat's `limitedUses`, by feat id; overlaid from play-state. */
